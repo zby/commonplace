@@ -13,10 +13,10 @@ types/                       Global types (text, note)
 
 kb/                          Knowledge base
   WRITING.md                 Writing conventions and quality checklist
+  log.md                     Improvement log — one-line observations appended during traversal
   notes/                     Notes — the primary knowledge unit
     types/                   Note type templates (structured-claim, adr, index, ...)
     adr/                     Architecture Decision Records
-    agent-learnings/         Observations agents make during work
     related-systems/         External system comparisons
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
@@ -113,7 +113,7 @@ echo "commonplace/" >> .gitignore
 
 ```bash
 # Create directories
-mkdir -p types kb/notes/types kb/notes/agent-learnings kb/sources/types kb/tasks/types kb/tasks/backlog kb/tasks/active
+mkdir -p types kb/notes/types kb/sources/types kb/tasks/types kb/tasks/backlog kb/tasks/active
 
 # Copy operational artifacts
 cp commonplace/kb/WRITING.md kb/WRITING.md

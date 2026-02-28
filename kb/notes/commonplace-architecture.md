@@ -17,9 +17,9 @@ commonplace/
     kb/
       WRITING.md
       types/                         ← empty — see "Global types" below
+      log.md                         ← improvement log (append-only)
       notes/
         types/                       ← note types (structured-claim, adr, etc.)
-        agent-learnings/
         related-systems/
         research/
         meta/

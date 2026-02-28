@@ -46,11 +46,11 @@ The "seen twice on different dates" heuristic is simple and testable — a concr
 
 **1. Session handoff documents.** The most immediately useful pattern. A structured format for end-of-session state capture — what was in progress, what's blocked, what should happen next. We have no mechanism for this. The handoff artifact type could live in the workshop layer alongside tasks.
 
-**2. Observation capture with type taxonomy.** Our `agent-learnings/` directory accepts unstructured text files. ClawVault's observation types (decision, lesson, preference, commitment) give agents a vocabulary for what they're recording. This doesn't require their full scored format — even just "what kind of thing is this?" as a convention for agent-learnings would improve discoverability and later triage.
+**2. Observation capture with type taxonomy.** Our `kb/log.md` accepts one-line observations appended during traversal. ClawVault's observation types (decision, lesson, preference, commitment) give agents a vocabulary for what they're recording. Even just "what kind of thing is this?" as a prefix convention in the log would improve discoverability and later triage.
 
-**3. Promotion by recurrence.** A cheap signal for what matters: if the same insight surfaces across multiple sessions, it's probably worth promoting. This could be a heuristic for reviewing agent-learnings — check whether similar observations already exist, and if so, flag for promotion.
+**3. Promotion by recurrence.** A cheap signal for what matters: if the same insight surfaces across multiple sessions, it's probably worth promoting. This could be a heuristic for reviewing the log — check whether similar observations already exist, and if so, flag for promotion.
 
-**4. The reflection cycle as a skill.** Their weekly `reflect` command reviews recent observations and produces a synthesis. This could be a `/reflect` skill for us — periodic review of agent-learnings and recent notes to surface patterns, contradictions, and promotion candidates. Lower-ceremony than their automated pipeline, but the practice itself is valuable.
+**4. The reflection cycle as a skill.** Their weekly `reflect` command reviews recent observations and produces a synthesis. This could be a `/reflect` skill for us — periodic review of the log and recent notes to surface patterns, contradictions, and promotion candidates. Lower-ceremony than their automated pipeline, but the practice itself is valuable.
 
 **5. Retrieval crystallisation patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — are interesting not as retrieval mechanisms but as a [crystallisation](../deploy-time-learning-the-missing-middle.md) spectrum for how knowledge gets surfaced:
 

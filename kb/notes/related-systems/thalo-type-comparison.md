@@ -66,7 +66,7 @@ Thalo's `journal` has:
 
 Our `text` type (no frontmatter) is the capture equivalent but completely unstructured. We don't have journal-style entries. The `type` field (idea, reflection, doubt, question) is a richer classification of captured thoughts than we use.
 
-**Borrowable structure:** Not directly applicable — our agent-learnings serve a similar purpose but aren't personal reflections.
+**Borrowable structure:** Not directly applicable — our improvement log (`kb/log.md`) serves a similar purpose but is append-only one-liners, not personal reflections.
 
 ### synthesis → no equivalent
 

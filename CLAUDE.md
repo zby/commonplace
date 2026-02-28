@@ -14,7 +14,7 @@ The commonplace repo is itself a claw — it uses its own knowledge system to do
 | Structured argument | `kb/notes/` | Read `kb/notes/types/structured-claim.md` — needs Evidence/Reasoning/Caveats |
 | Architecture decision | `kb/notes/adr/` | Read `kb/notes/types/adr.md` — needs Context/Decision/Consequences |
 | Related system review | `kb/notes/related-systems/` | Read `kb/notes/types/related-system.md` |
-| Agent's own observation | `kb/notes/agent-learnings/` | Default `note` type — no tasks or ADRs without human request |
+| Improvement opportunity noticed during traversal | `kb/log.md` | Append one line — don't fix it now, don't context-switch |
 | External source snapshot | `kb/sources/` | Use `/snapshot-web` skill |
 | Source analysis | `kb/sources/` | Use `/ingest` skill — produces `.ingest.md` |
 | Task | `kb/tasks/backlog/` or `kb/tasks/active/` | Status encoded by directory, not frontmatter |

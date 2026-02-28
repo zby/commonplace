@@ -49,7 +49,7 @@ The registration tax is real but manageable at the current scale (~6 top-level d
 
 Mitigations to consider if directory count grows:
 - A single registry file that skills and config derive from (instead of N hardcoded lists)
-- Convention that subdirectories within a collection (like `notes/agent-learnings/`) don't need registration — only top-level collections do
+- Convention that subdirectories within a collection (like `notes/related-systems/`) don't need registration — only top-level collections do
 - Tooling to validate that all collections are consistently registered
 
 For now, the right default is: be reluctant to create new top-level directories. Subdirectories within existing collections are cheap. New collections are expensive.

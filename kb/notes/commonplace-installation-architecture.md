@@ -99,9 +99,9 @@ commonplace/                             ← the GitHub repo
     types/                               ← global types (text, note)
     kb/                                  ← commonplace's own knowledge base
       WRITING.md                         ← writing conventions (canonical source)
+      log.md                             ← improvement log (append-only)
       notes/
         types/                           ← note types (structured-claim, etc.)
-        agent-learnings/
         related-systems/
         research/
         meta/
@@ -133,9 +133,9 @@ my-project/
     types/                           ← copied from commonplace (global types)
     kb/                              ← user's content (project git)
       WRITING.md                     ← copied from commonplace
+      log.md                         ← improvement log (append-only)
       notes/
         types/                       ← copied from commonplace
-        agent-learnings/
       sources/
         types/                       ← copied from commonplace
       tasks/

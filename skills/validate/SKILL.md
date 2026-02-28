@@ -374,4 +374,4 @@ Checked: N files (M structured notes, K text files)
 - report specific field values in FAIL/WARN messages (not just "description is weak")
 - suggest concrete fixes for every WARN and FAIL
 - resolve link paths relative to the note's directory
-- handle subdirectories in `kb/notes/` (e.g., `research/`, `agent-learnings/`)
+- handle subdirectories in `kb/notes/` (e.g., `research/`, `related-systems/`)

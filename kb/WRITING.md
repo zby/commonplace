@@ -20,9 +20,9 @@ If any answer is "no," fix it before saving.
 Where a note goes depends on what triggered it:
 
 - **Human request or established pipeline** → main KB (`notes/`, `adr/`, tasks, etc. — see routing table in `CLAUDE.md`)
-- **Agent's own observation during work** → `notes/agent-learnings/` (notes only — no tasks or ADRs without human request)
+- **Improvement opportunity noticed during traversal** → append one line to `kb/log.md` (don't context-switch to fix it)
 
-Agent-learnings are periodically reviewed and either promoted to the main KB / CLAUDE.md, or deleted. The quality checklist above applies to both — but agent-learnings can be briefer since they'll be curated later.
+The log is periodically reviewed and entries are either acted on (description sharpened, link added, note promoted) or discarded.
 
 ## Templates
 
