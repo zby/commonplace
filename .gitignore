@@ -17,3 +17,7 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# local env settings
+
+.env
