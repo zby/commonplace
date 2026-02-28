@@ -1,0 +1,22 @@
+# qmd collection config for commonplace
+# Setup: cp scripts/qmd-collections.yml ~/.config/qmd/commonplace.yml
+# Usage: qmd --index commonplace query "..."
+collections:
+  notes:
+    path: /home/zby/llm/commonplace/kb/notes
+    pattern: "**/*.md"
+  sources:
+    path: /home/zby/llm/commonplace/kb/sources
+    pattern: "**/*.md"
+  tasks-active:
+    path: /home/zby/llm/commonplace/kb/tasks/active
+    pattern: "**/*.md"
+  tasks-backlog:
+    path: /home/zby/llm/commonplace/kb/tasks/backlog
+    pattern: "**/*.md"
+  tasks-recurring:
+    path: /home/zby/llm/commonplace/kb/tasks/recurring
+    pattern: "**/*.md"
+  skills:
+    path: /home/zby/llm/commonplace/skills
+    pattern: "**/*.md"
