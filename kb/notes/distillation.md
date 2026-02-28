@@ -8,13 +8,19 @@ status: current
 
 # Distillation
 
-The learning mechanism where a body of discursive reasoning (methodology notes, design arguments, source reviews) becomes operational procedure (skills). Both input and output are natural language consumed by an LLM — there is no phase transition. What changes is the rhetorical mode: exploratory, multi-perspective argument becomes step-sequenced instruction.
+The learning mechanism where a body of exploratory material becomes a more refined, reusable artifact — staying in the same medium (natural language for LLM consumption) but changing rhetorical mode. No phase transition. The defining operation is extraction with deliberate loss: the distillate is smaller and more focused, the residue (source reasoning) stays available for edge cases.
 
 The separation is deliberate: reasoning is factored out of the operational path, not lost. The methodology KB remains accessible for edge cases the distilled skill doesn't cover. Distillation is a context-budget operation — it exists because loading the full reasoning every session is too expensive.
 
 The distillate can't reconstruct the source. Someone reading only the skill can follow the steps but can't adapt them to novel situations. The reasoning that produced those steps is absent from the output.
 
-Examples: the `/connect` skill distils the Toulmin argument structure, Notes Without Reasons review, title-as-claim convention, and link contracts framework into a step-by-step connection procedure.
+Instances:
+
+1. **Methodology → Skills** (discursive reasoning → operational procedure). The `/connect` skill distils the Toulmin argument structure, Notes Without Reasons review, title-as-claim convention, and link contracts framework into a step-by-step connection procedure. Rhetorical mode changes from argumentative to procedural.
+
+2. **Workshop → Notes** (working artifacts → crystallized knowledge). Source reports, draft analyses, and experimental results accumulate in `kb/work/`. Patterns emerge across them. The distillate is a note that captures the insight — a claim, a design decision, a refined concept. Rhetorical mode changes from exploratory to assertive.
+
+Distillation is likely the dominant learning mechanism in a claw. Stabilisation (narrowing output distribution through stricter structures) applies in specific cases but most knowledge work is extracting refined understanding from messy exploration.
 
 Not distillation: moving a validation check to code (crystallisation — the medium changes); storing an LLM output (stabilisation — no extraction from reasoning involved).
 
