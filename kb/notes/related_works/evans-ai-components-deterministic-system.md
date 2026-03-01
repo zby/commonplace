@@ -117,21 +117,21 @@ Evans reinforces the stabilization workflow with clearer triggers:
 - Consistent output structure across runs
 - High repeatability requirement
 
-**Signals to keep stochastic**:
+**Signals to keep fuzzy** (LLM-interpreted):
 - Exploratory modeling phase
 - Evolving requirements
 - Edge cases requiring judgment
 
-## Distribution Boundaries
+## Semantic Boundaries
 
-Evans' modeling/classification distinction maps to llm-do's distribution boundaries. "Freeze a taxonomy before classification" is a specific instance of the broader pattern that [storing LLM outputs is stabilization](../storing-llm-outputs-is-stabilization.md) — collapsing a distribution to a point, then working deterministically with the result.
+Evans' modeling/classification distinction maps to llm-do's semantic boundaries — the crossings between fuzzy (LLM-interpreted) and precise (deterministic code) semantics. "Freeze a taxonomy before classification" is a specific instance of the broader pattern that [storing LLM outputs is stabilization](../storing-llm-outputs-is-stabilization.md) — resolving semantic fuzziness to a fixed interpretation, then working deterministically with the result.
 
-| Type | Input→Output | Testing Approach |
-|------|--------------|------------------|
-| Tools (classification) | Same→Same | `assert result == expected` |
-| Workers (modeling) | Same→Distribution | Sample and check invariants |
+| Type | Semantics | Testing Approach |
+|------|-----------|------------------|
+| Tools (classification) | Precise — same input, same output | `assert result == expected` |
+| Workers (modeling) | Fuzzy — spec admits multiple valid interpretations | Sample and check invariants |
 
-Schema validation sits at the trust boundary between these. The two testing approaches map to the [two distinct testing targets](../storing-llm-outputs-is-stabilization.md) for stabilized artifacts: testing the distribution (does the prompt reliably produce good output?) vs testing the sample (is this specific output good?).
+Schema validation sits at the trust boundary between these. The two testing approaches map to the [two distinct testing targets](../storing-llm-outputs-is-stabilization.md) for stabilized artifacts: testing the interpretation space (does the prompt reliably produce good output?) vs testing a specific interpretation (is this specific output good?).
 
 ## Summary
 

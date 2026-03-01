@@ -30,7 +30,7 @@ The calling convention is uniform across the chain. Each link can be independent
 With unified calling, the progression is smooth:
 
 1. **Start neural** — define an agent to handle a task. Quick to add, handles ambiguity.
-2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-crystallisation.md) — extracting deterministic patterns from stochastic behavior.
+2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-crystallisation.md) — discovering that a fuzzy spec consistently resolves to one interpretation, then committing to it in code.
 3. **Crystallise** — extract `sanitize_filename()` to Python. The agent still handles ambiguous cases. The call site doesn't change.
 4. **Extend via softening** — new requirements emerge (handle Unicode, detect dates). Add an LLM call for the new cases. Again, the call site doesn't change.
 
