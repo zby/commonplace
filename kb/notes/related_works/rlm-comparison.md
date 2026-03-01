@@ -124,7 +124,7 @@ calls and code calls is fine because you're not planning to move things across i
 
 **llm-do optimizes for evolvability** — systems that grow and mature. The core insight
 is *stabilizing*: LLM applications evolve by progressively converting stochastic
-behavior into deterministic code, and vice versa (see [agentic systems are probabilistic programs](../agentic-systems-are-probabilistic-programs.md)).
+behavior into deterministic code, and vice versa (see [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md)).
 
 ```
 Stochastic (prompt)  →  Deterministic (code)

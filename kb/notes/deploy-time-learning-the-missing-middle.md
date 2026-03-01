@@ -94,7 +94,7 @@ The individual practices are well-established. Prompt versioning and "prompts as
 
 Deploy-time learning is a **taxonomy** (three timescales of system adaptation) and a **verifiability gradient** (from prompt tweaks to deterministic code) — a synthesis of established practices into a concrete model for when and how to move between grades. Within this gradient, the [three learning mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — stabilisation, crystallisation, distillation — operate at different points.
 
-For how the verifiability gradient maps to the stabilise/soften cycle, see [agentic systems are probabilistic programs](./agentic-systems-are-probabilistic-programs.md).
+For how the verifiability gradient maps to the stabilise/soften cycle, see [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md).
 
 Topics:
 - [learning-theory](./learning-theory.md)

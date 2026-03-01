@@ -70,7 +70,7 @@ Similarly, treating crystallisation as "just more stabilisation" misses the phas
 
 ### The stabilise/soften cycle is a learning cycle
 
-The stabilise/soften cycle described in [agentic systems are probabilistic programs](./agentic-systems-are-probabilistic-programs.md) is, viewed through Simon's definition, a learning cycle. Each stabilisation step makes the system more capable for the specific case it handles. Each softening step makes it more capable for the general case. The cycle isn't maintenance — it's how the system learns.
+The stabilise/soften cycle described in [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) is, viewed through Simon's definition, a learning cycle. Each stabilisation step makes the system more capable for the specific case it handles. Each softening step makes it more capable for the general case. The cycle isn't maintenance — it's how the system learns.
 
 ### Continuous learning is stabilisation during deployment
 

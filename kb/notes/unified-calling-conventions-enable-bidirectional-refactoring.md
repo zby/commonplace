@@ -8,7 +8,7 @@ status: current
 
 # Unified calling conventions enable bidirectional refactoring between neural and symbolic
 
-The [probabilistic programs framing](./agentic-systems-are-probabilistic-programs.md) says components should move between stochastic (LLM) and deterministic (code) execution as systems evolve — stabilise patterns to code, soften rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
+The [fuzzy specifications framing](./agentic-systems-interpret-fuzzy-specifications.md) says components should move between fuzzy (LLM-interpreted) and precise (code) semantics as systems evolve — stabilise patterns to code, soften rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
 
 ## The mechanism
 
@@ -62,7 +62,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 ---
 
 Relevant Notes:
-- [agentic-systems-are-probabilistic-programs](./agentic-systems-are-probabilistic-programs.md) — foundation: the probabilistic programs framing that this note makes architecturally concrete
+- [agentic-systems-interpret-fuzzy-specifications](./agentic-systems-interpret-fuzzy-specifications.md) — foundation: the fuzzy specifications framing that this note makes architecturally concrete
 - [stabilisation](./stabilisation.md) — the mechanism that unified calling makes frictionless
 - [crystallisation](./crystallisation.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites

@@ -8,7 +8,7 @@ status: seedling
 
 # Methodology enforcement is stabilisation
 
-The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [stabilisation spectrum](./agentic-systems-are-probabilistic-programs.md). The enforcement layers parallel the [crystallisation verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) — where crystallisation moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by moving the trigger, the response, or both from stochastic to deterministic.
+The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [stabilisation spectrum](./agentic-systems-interpret-fuzzy-specifications.md). The enforcement layers parallel the [crystallisation verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) — where crystallisation moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by moving the trigger, the response, or both from stochastic to deterministic.
 
 | Layer | Trigger | Response | Reliability | Example |
 |-------|---------|----------|-------------|---------|

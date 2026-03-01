@@ -10,7 +10,7 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 
 ## Foundations
 
-- [agentic-systems-are-probabilistic-programs](./agentic-systems-are-probabilistic-programs.md) — LLM-based systems interleave deterministic and stochastic computation; the "program sampling" model, distribution shaping, distribution boundaries, and the stabilise/soften cycle
+- [agentic-systems-interpret-fuzzy-specifications](./agentic-systems-interpret-fuzzy-specifications.md) — two distinct properties (execution indeterminism and semantic fuzziness); the "program sampling" model, semantic boundaries, and the stabilise/soften cycle
 
 ## Definitions
 

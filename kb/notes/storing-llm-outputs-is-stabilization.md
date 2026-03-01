@@ -8,7 +8,7 @@ status: speculative
 
 # Storing LLM outputs is stabilization
 
-A prompt admits a distribution of outputs. Each run samples from that distribution — rerunning might give something better or worse. When you choose to keep a specific output, you're collapsing that distribution to a point. This is the same stabilizing move described in [agentic systems are probabilistic programs](./agentic-systems-are-probabilistic-programs.md) for code, but applied to the artifact rather than the implementation.
+A prompt admits a distribution of outputs. Each run samples from that distribution — rerunning might give something better or worse. When you choose to keep a specific output, you're collapsing that distribution to a point. This is the same stabilizing move described in [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) for code, but applied to the artifact rather than the implementation.
 
 The theory doc already says "version both spec and artifact" because "regeneration is a new projection from the same spec — a different sample, not a deterministic rebuild." The insight here is *why* that matters: storing an artifact is itself a stabilization decision. You're not just saving a file — you're committing to one sample from a space of possibilities.
 

@@ -148,5 +148,5 @@ The key insight: LLMs are excellent classifiers but unreliable modelers. Design 
 
 - Article: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
 - Evans' DDD work: https://www.domainlanguage.com/
-- [agentic systems are probabilistic programs](../agentic-systems-are-probabilistic-programs.md) — probabilistic programs, distribution shaping, stabilise/soften
+- [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md) — fuzzy vs precise semantics, interpretation narrowing, stabilise/soften
 - Related: [adaptation-agentic-ai-analysis.md](../research/adaptation-agentic-ai-analysis.md)

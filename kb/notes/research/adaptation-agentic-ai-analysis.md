@@ -246,5 +246,5 @@ Relevant Notes:
 ## References
 
 - Paper: https://arxiv.org/abs/2512.16301
-- [agentic systems are probabilistic programs](../agentic-systems-are-probabilistic-programs.md) — probabilistic programs, distribution shaping, stabilise/soften
+- [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md) — fuzzy vs precise semantics, interpretation narrowing, stabilise/soften
 - llm-do architecture: [architecture.md](../../../docs/architecture.md)
