@@ -1,12 +1,15 @@
 ---
-description: Auto-generated directory — run scripts/generate_notes_index.py kb/sources to rebuild
+description: Auto-generated directory — run scripts/generate_notes_index.py /home/zby/llm/commonplace/kb/sources to rebuild
 type: index
 ---
 
 # Sources Directory
 
+- [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(scientific-paper)*
+- [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.working.md) *(scientific-paper)*
+- [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
+- [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
 - [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
-- [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) *(x-article)* — Agent's first-person critique of embedding-based knowledge connections vs curated propositional links — adjacency is not connection, Goodhart's law corrupts connection-count metrics, and the scaling tension between curation and embeddings is unresolved
 - [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
 - [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
 - [Ingest: Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.ingest.md) *(scientific-paper)*
@@ -19,5 +22,6 @@ type: index
 - [Spacebot: AI Agent for Teams and Communities](./spacedriveapp-spacebot-ai-agent.md) *(web-page)*
 - [Ingest: Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.ingest.md) *(scientific-paper)*
 - [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) *(academic-paper)*
+- [{source title or key claim}](./types/source-review.md) *(source-review)*
 - [Ingest: The Bitter Lesson](./wikipedia-bitter-lesson.ingest.md) *(conceptual-essay)*
 - [The Bitter Lesson](./wikipedia-bitter-lesson.md) *(encyclopedia-article)*
