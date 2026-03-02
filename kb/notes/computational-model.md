@@ -11,15 +11,8 @@ Programming language concepts applied to LLM instructions and agent architecture
 ## Foundations
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory.md)
-
-## Medium
-
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
-
-## Scoping
-
-- [the-append-only-log-gives-llms-dynamic-scopings-pathologies](./the-append-only-log-gives-llms-dynamic-scopings-pathologies.md) — the flat conversation log is dynamic scoping: spooky action at a distance, name collision, inability to reason locally
-- [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping; sub-agents are the one mechanism for isolation, using lexically scoped frames
+- [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one mechanism for isolation, using lexically scoped frames
 
 ## Related notes in other areas
 

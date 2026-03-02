@@ -1,5 +1,5 @@
 ---
-description: LLM context has no scoping — system prompts, skills, user messages, and tool outputs are concatenated into one global namespace; sub-agents are the one mechanism that provides isolation and should get clean lexically scoped frames by default
+description: LLM context is flat concatenation — no scoping, everything global, producing dynamic scoping's pathologies (spooky action at a distance, name collision, inability to reason locally) but without even a stack; sub-agents are the one mechanism that provides isolation through lexically scoped frames
 type: note
 traits: []
 areas: [computational-model]
@@ -10,9 +10,29 @@ status: seedling
 
 An LLM's context is assembled by concatenating system prompts, skill bodies, user messages, and tool outputs into a single token stream. There is no scoping mechanism. Everything is global — every token is visible to every other token, and there is no way to say "this binding is local to this skill" or "this tool output should not influence instruction interpretation."
 
-This is not even dynamic scoping, which at least has a stack with push and pop. It is flat concatenation — the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) with no structure imposed on top. The result is the same pathologies that [dynamic scoping produces](./the-append-only-log-gives-llms-dynamic-scopings-pathologies.md) — spooky action at a distance, name collision, inability to reason locally — but without even the stack discipline that dynamic scoping provides.
+This is not even dynamic scoping, which at least has a stack with push and pop. It is flat concatenation — the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) with no structure imposed on top. But the pathologies are the same ones that dynamic scoping produces, and the analogy to dynamically scoped Lisp clarifies them:
 
-Flat concatenation also creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." The data-level use of "summarize" captures the instruction-level meaning. This is prompt injection framed as a hygiene failure — the same problem Scheme's hygienic macros solve for code generation.
+**Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./three-space-memory-separation-predicts-measurable-failure-modes.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
+
+**Name collision.** The word "table" meant an HTML element in turn 3 but a database table in turn 12, and the model conflates them. In a flat log there are no scope boundaries to disambiguate — every use of a term is in the same namespace.
+
+**Inability to reason locally.** You cannot predict what a sub-task will do by reading its prompt alone, because its behavior depends on the entire accumulated history. This is the defining problem of dynamic scope: the meaning of a name depends on the call stack, not the definition site.
+
+The structural parallel holds in both directions:
+- Bindings accumulate at runtime rather than being declared at definition time
+- Every consumer sees the full accumulated environment, not a curated subset
+- There is no mechanism for a sub-computation to limit what it inherits
+- Debugging requires inspecting the full runtime history, not just the local code
+
+## What flat context buys
+
+Dynamic scoping survived in Emacs Lisp for decades because it has a real advantage: implicit communication. Functions can influence each other without explicit parameter passing. The flat log has the same property. When a user says "use a more formal tone" in turn 5, they want that to implicitly affect all subsequent turns without re-parameterizing anything. That's dynamic binding of a `*tone*` special variable, and it works precisely because the log is flat and globally visible.
+
+The right model isn't "always avoid flat logs" but rather what Common Lisp settled on: lexical scope by default, dynamic scope when explicitly requested.
+
+## The capture problem
+
+Flat concatenation creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." The data-level use of "summarize" captures the instruction-level meaning. This is prompt injection framed as a hygiene failure — the same problem Scheme's hygienic macros solve for code generation.
 
 ## Within-frame hygiene
 
@@ -72,8 +92,9 @@ These ideas follow from the stack-frame model but don't yet have concrete exampl
 ---
 
 Relevant Notes:
-- [the append-only log gives LLMs dynamic scoping's pathologies](./the-append-only-log-gives-llms-dynamic-scopings-pathologies.md) — problem: the flat log accumulates context globally; this note addresses isolation through sub-agent frames
 - [llm context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — amplifies: the medium provides no structural boundaries, so scoping must be imposed by architecture
+- [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — exemplifies: the failure modes (search pollution, identity scatter, insight trapping) are symptoms of flat scoping applied to memory
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified instructions are sensitive to everything in context, making scope contamination especially damaging
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — existing approximation: llm-do's per-agent system prompts and arguments are frame-local context
 - [crystallisation](./crystallisation.md) — enables: frame boundaries are interface points where return values can be progressively typed
 - [context-loading-strategy](./context-loading-strategy.md) — grounds: the loading hierarchy is a form of binding-time analysis for what's in scope

@@ -28,7 +28,7 @@ The common thread across these systems: **blurring the boundary between using an
 
 The same lack of boundary that enables extensibility creates hazards:
 
-**Scoping failures have no guardrails.** The [append-only log gives LLMs dynamic scoping's pathologies](./the-append-only-log-gives-llms-dynamic-scopings-pathologies.md) — and homoiconicity makes it worse, because there is no structural way to distinguish "this is a binding the sub-task should see" from "this is leftover from an earlier computation." Both are just tokens. The [stabilisation gradient from instructions to scripts](./methodology-enforcement-is-stabilisation.md) is one response — crystallising practices into deterministic code imposes structural boundaries that the homoiconic medium itself does not provide.
+**Scoping failures have no guardrails.** [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — and homoiconicity makes it worse, because there is no structural way to distinguish "this is a binding the sub-task should see" from "this is leftover from an earlier computation." Both are just tokens. The [stabilisation gradient from instructions to scripts](./methodology-enforcement-is-stabilisation.md) is one response — crystallising practices into deterministic code imposes structural boundaries that the homoiconic medium itself does not provide.
 
 **Prompt injection.** The most direct consequence: if instructions and data are the same medium, data can contain instructions. This is the LLM equivalent of SQL injection, and it exists for the same structural reason — the program/data boundary is conventional, not enforced.
 
@@ -38,7 +38,7 @@ The same lack of boundary that enables extensibility creates hazards:
 
 Relevant Notes:
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the extensibility benefit of homoiconicity — instructions and content share a medium, so new requirements get absorbed without schema changes
-- [the append-only log gives LLMs dynamic scoping's pathologies](./the-append-only-log-gives-llms-dynamic-scopings-pathologies.md) — exemplifies: the scoping cost of homoiconicity — no structural boundary means no guardrails against scope contamination
+- [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — exemplifies: the scoping cost of homoiconicity — no structural boundary means no guardrails against scope contamination
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified semantics of the shared medium is what makes both the extensibility and the hazards distinctive
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — applies: the calling convention works because agents and tools share a homoiconic interface — names resolve to either neural or symbolic implementations
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: the structuring disciplines (typing, testing, compilation) that programming practices bring are especially needed in a homoiconic medium that provides no built-in structure
