@@ -1,7 +1,7 @@
 ---
 description: Programming practices — typing, testing, progressive compilation, version control — apply to LLM prompting and knowledge systems, with semantic underspecification and execution indeterminism making some practices harder in distinct ways
 type: note
-areas: [learning-theory]
+areas: [learning-theory, computational-model]
 status: speculative
 ---
 
@@ -45,7 +45,7 @@ Both domains solve the same problems: making behaviour predictable, making syste
 Relevant Notes:
 - [programming-language types applied to documents](./instructions-are-typed-callables.md) — typing practice applied to KB documents
 - [document types should be verifiable](../claw-design/document-types-should-be-verifiable.md) — quality criterion for document types
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — conceptual foundation: underspecified vs precise semantics, stabilise/soften, program sampling
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — conceptual foundation: underspecified vs precise semantics, stabilise/soften, spec-to-program projection
 - [crystallisation: the missing middle](./deploy-time-learning-the-missing-middle.md) — progressive compilation in practice
 - [stabilisation is learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — synthesizes: the informal programming practices accumulated by every deployed system are what crystallisation systematises
 - [storing LLM outputs is stabilization](./storing-llm-outputs-is-stabilization.md) — version control practice applied to LLM outputs
@@ -55,3 +55,4 @@ Relevant Notes:
 
 Topics:
 - [learning-theory](./learning-theory.md)
+- [computational-model](./computational-model.md)

@@ -10,16 +10,16 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 
 ## Foundations
 
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (execution indeterminism and semantic underspecification); the "program sampling" model, semantic boundaries, and the stabilise/soften cycle
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (semantic underspecification and execution indeterminism); the spec-to-program projection model, semantic boundaries, and the stabilise/soften cycle
 
 ## Definitions
 
 - [learning-is-capacity-change](./learning-is-capacity-change.md) — Simon's framework: learning is any change in a system's capacity to adapt; capacity decomposes into generality vs a reliability/speed/cost compound, and three mechanisms operate on that trade-off differently
-- [agentic-systems-learn-through-three-distinct-mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the three mechanisms named: stabilisation narrows distribution, crystallisation transitions medium, distillation extracts procedures — all are capacity change per Simon but differ in what changes
+- [agentic-systems-learn-through-three-distinct-mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the three mechanisms named: stabilisation narrows the interpretation space, crystallisation transitions medium, distillation extracts procedures — all are capacity change per Simon but differ in what changes
 
 ## Mechanisms
 
-- [stabilisation](./stabilisation.md) — definition: narrowing the output distribution, trading generality for reliability/speed/cost without changing medium
+- [stabilisation](./stabilisation.md) — definition: narrowing the space of valid interpretations, trading generality for reliability/speed/cost
 - [crystallisation](./crystallisation.md) — definition: phase transition from natural language to executable code, changing medium, consumer, and verification regime
 - [distillation](./distillation.md) — definition: extracting operational procedures from discursive reasoning, staying in the same medium but changing rhetorical mode
 - [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — repo artifacts fill the gap between training and in-context learning; the three mechanisms provide a verifiability gradient from prompt tweaks to deterministic code

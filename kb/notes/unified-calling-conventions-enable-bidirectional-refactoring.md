@@ -2,7 +2,7 @@
 description: When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do demonstrates this with name-based dispatch over a hybrid VM
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+areas: [learning-theory, computational-model]
 status: current
 ---
 
@@ -25,7 +25,7 @@ The calling convention is uniform across the chain. Each link can be independent
 
 ## Why this matters for stabilisation
 
-[Stabilisation](./stabilisation.md) and [crystallisation](./crystallisation.md) describe the learning mechanisms — narrowing distributions, changing medium. But without a unified interface, each crystallisation step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
+[Stabilisation](./stabilisation.md) and [crystallisation](./crystallisation.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each crystallisation step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
 
 With unified calling, the progression is smooth:
 
@@ -71,3 +71,4 @@ Relevant Notes:
 
 Topics:
 - [learning-theory](./learning-theory.md)
+- [computational-model](./computational-model.md)

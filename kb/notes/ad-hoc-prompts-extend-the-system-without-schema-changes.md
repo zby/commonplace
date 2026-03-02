@@ -38,17 +38,9 @@ The reason ad hoc instructions resist premature formalisation isn't just conveni
 
 This matters most for sub-agent handoff. An instructions note is a clean context boundary: the caller does the judgment-heavy work (gathering, selecting, deciding what matters) and writes it all down. The sub-agent executes with clean context — no conversation history, no search, no decisions about what's relevant. The instructions note is the interface, and it's richer than any type signature could be.
 
-## Precedents: Lisp, Emacs, Smalltalk
+## Why this works: homoiconicity
 
-This pattern has deep roots in systems designed for user-level extension.
-
-**Lisp's homoiconicity.** In Lisp, code and data share the same representation — lists. A list is both a data structure you can inspect and a program you can evaluate. In the claw, a markdown file is both content you can read/link/analyze and instructions you can hand to a sub-agent for execution. The power comes from *not* having a rigid boundary between the language and what it operates on. Lisp macros — code that writes code — map to instructions that produce reports containing further instructions. Quote/eval — toggling between treating something as data vs executing it — maps to reading an instructions note vs handing it off.
-
-**Emacs as ad hoc extension culture.** Emacs is written in Elisp — the system and its extension language are the same thing, so there's literally no boundary between built-in functionality and user extensions. Every user is potentially a programmer. The init file mixes configuration and ad hoc programs — inline `defun`, one-off lambdas bound to keys — and the line between "configuring Emacs" and "programming Emacs" doesn't exist. The stabilisation trajectory is the same: inline snippet in init.el → extracted function → published package. The claw's equivalent: ad hoc instructions note → extracted skill → registered tool.
-
-**Smalltalk's live image.** Smalltalk completes the picture: the image is both the program and the development environment, and you modify the running system from inside itself using the same language. Lisp, Emacs, and Smalltalk all share the property that the system is written in its own extension language. The claw has the same property — its methodology is written in the same markdown it operates on.
-
-The common thread: systems that blur the boundary between using and extending are more adaptable than systems with rigid extension points. The cost is discoverability — Emacs's `.emacs` files are notoriously personal and opaque, Lisp macros can make code unreadable, and ad hoc instructions notes are invisible unless you know they exist.
+Ad hoc extension without schema changes is possible because the [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — instructions and content share the same representation (natural language tokens). A markdown file is both content you can read/link/analyze and instructions you can hand to a sub-agent for execution. No registration, no type system gatekeeping, no compilation step. This is the same property that makes Lisp, Emacs, and Smalltalk extensible from within — and carries the same discoverability costs.
 
 ## Open Questions
 
