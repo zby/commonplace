@@ -19,6 +19,7 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
 - [extract-kb-as-standalone-project](./extract-kb-as-standalone-project.md) — extracting the KB framework as a reusable project
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read, unlike code where indirection is nearly free at runtime
+- [frontloading spares execution context](./frontloading-spares-execution-context.md) — pre-compute static parts of instructions and insert results; the mechanism is partial evaluation; indirection elimination and build-time generation are specific cases
 
 ## Skills & Methodology
 
