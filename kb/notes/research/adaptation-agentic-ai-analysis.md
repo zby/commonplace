@@ -235,7 +235,7 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 
 **Softening signals** (symbolic → neural):
 - Python tool has growing exception list → delegate edge cases to worker
-- Validation rules have many special cases → use LLM for fuzzy validation
+- Validation rules have many special cases → use LLM for underspecified validation
 - User frequently overrides tool behavior → add flexibility via worker
 
 ---
@@ -246,5 +246,5 @@ Relevant Notes:
 ## References
 
 - Paper: https://arxiv.org/abs/2512.16301
-- [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md) — fuzzy vs precise semantics, interpretation narrowing, stabilise/soften
+- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — underspecified vs precise semantics, interpretation narrowing, stabilise/soften
 - llm-do architecture: [architecture.md](../../../docs/architecture.md)

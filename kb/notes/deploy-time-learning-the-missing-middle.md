@@ -64,7 +64,7 @@ The [`examples/`](../../examples/) directory contains working before-and-after p
 
 The LLM agent (`write_narrative.agent`) now receives pre-computed stats and trends, and does only what requires judgment: interpreting what the numbers mean for the business.
 
-The call site in the orchestrator (`main.agent`) is unchanged — `analyze_dataset(path=...)` works the same way. The implementation committed to one precise interpretation of "compute statistics" — resolving the semantic fuzziness of the natural-language spec into deterministic code — while the interface stayed stable.
+The call site in the orchestrator (`main.agent`) is unchanged — `analyze_dataset(path=...)` works the same way. The implementation committed to one precise interpretation of "compute statistics" — resolving the semantic underspecification of the natural-language spec into deterministic code — while the interface stayed stable.
 
 ### Pitchdeck evaluation: a four-stage progression
 
@@ -77,13 +77,13 @@ The pitchdeck examples show the same task — evaluate PDF pitch decks — at fo
 | [`pitchdeck_eval_code_entry/`](../../examples/pitchdeck_eval_code_entry/) | Orchestration loop → Python; agents handle reasoning only |
 | [`pitchdeck_eval_direct/`](../../examples/pitchdeck_eval_direct/) | Direct API calls — three abstraction levels without the CLI |
 
-At each stage, mechanical work moves to code while the LLM stays focused on what requires judgment (analyzing the pitch deck content). The slug generation is a small example but an instructive one: in the unstabilised version, the LLM is asked to "generate a file slug (lowercase, hyphenated, no extension)" — a spec that looks precise but actually admits multiple valid interpretations (how to handle special characters, what counts as a "word," whether to transliterate accented characters). Each run might resolve these ambiguities differently, and inconsistency means broken file paths. In the stabilised version, `python-slugify` commits to one interpretation, in code, once — resolving the fuzziness permanently.
+At each stage, mechanical work moves to code while the LLM stays focused on what requires judgment (analyzing the pitch deck content). The slug generation is a small example but an instructive one: in the unstabilised version, the LLM is asked to "generate a file slug (lowercase, hyphenated, no extension)" — a spec that looks precise but actually admits multiple valid interpretations (how to handle special characters, what counts as a "word," whether to transliterate accented characters). Each run might resolve these ambiguities differently, and inconsistency means broken file paths. In the stabilised version, `python-slugify` commits to one interpretation, in code, once — resolving the underspecification permanently.
 
 ## Failure Modes
 
 Learning through artifacts is not a free lunch. Things that go wrong:
 
-- **Premature crystallisation.** Committing to a specific interpretation before you've observed enough runs to know which interpretation is right locks in brittle assumptions. The stabilise/soften cycle is the antidote — stabilise only when patterns have emerged across runs, and be ready to soften back to a fuzzy spec when new requirements reveal that you committed to the wrong interpretation.
+- **Premature crystallisation.** Committing to a specific interpretation before you've observed enough runs to know which interpretation is right locks in brittle assumptions. The stabilise/soften cycle is the antidote — stabilise only when patterns have emerged across runs, and be ready to soften back to an underspecified spec when new requirements reveal that you committed to the wrong interpretation.
 - **Goodharting on evals.** Prompt tests can enshrine the wrong behavior. If your eval cases aren't representative of real traffic, improvements on the eval set may regress in production.
 - **Model drift.** Vendor model updates can break crystallised prompts and schemas. Regression evals are the defense — they detect drift even when the artifact hasn't changed.
 - **Bad assumptions crystallised confidently.** An agent that writes a bad test crystallises a bad assumption that now passes CI. The quality gate is typically human review — crystallisation is a human-AI collaborative process, not a purely autonomous one.
@@ -94,7 +94,7 @@ The individual practices are well-established. Prompt versioning and "prompts as
 
 Deploy-time learning is a **taxonomy** (three timescales of system adaptation) and a **verifiability gradient** (from prompt tweaks to deterministic code) — a synthesis of established practices into a concrete model for when and how to move between grades. Within this gradient, the [three learning mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — stabilisation, crystallisation, distillation — operate at different points.
 
-For how stabilisation resolves semantic fuzziness — committing to one interpretation of a fuzzy spec in a language with precise semantics — and how the stabilise/soften cycle lets systems breathe, see [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md).
+For how stabilisation resolves semantic underspecification — committing to one interpretation of an underspecified spec in a language with precise semantics — and how the stabilise/soften cycle lets systems breathe, see [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
 
 Topics:
 - [learning-theory](./learning-theory.md)

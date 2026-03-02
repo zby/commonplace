@@ -1,5 +1,5 @@
 ---
-description: Definition — stabilisation is any act that narrows the output distribution, trading generality for gains in reliability, speed, and cost without changing medium
+description: Definition — stabilisation is any act that narrows the space of valid interpretations an underspecified spec admits, trading generality for gains in reliability, speed, and cost without changing medium
 type: note
 traits: []
 areas: [learning-theory]
@@ -8,7 +8,7 @@ status: current
 
 # Stabilisation
 
-The learning mechanism where output variance is reduced without changing the medium. Storing an LLM output, writing a convention, adding structured sections to a document type, sharpening a description — all are stabilisation. The artifact stays in the same medium (natural language, markdown) but becomes more constrained, more predictable.
+The learning mechanism where the space of valid interpretations is narrowed without changing the medium. Storing an LLM output, writing a convention, adding structured sections to a document type, sharpening a description — all are stabilisation. The artifact stays in the same medium (natural language, markdown) but becomes more constrained, more predictable. What's being narrowed is the [semantic underspecification](./agentic-systems-interpret-underspecified-instructions.md) — the range of interpretations the spec admits — not just execution variance.
 
 Stabilisation is the broadest of the three mechanisms and includes the smallest acts of learning. It starts before crystallisation and covers acts that never need to crystallise — a well-written description field is stabilised (findable, predictable) but will never become code.
 

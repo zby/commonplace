@@ -1,5 +1,5 @@
 ---
-description: Instructions, skills, hooks, and scripts form a stabilisation gradient for methodology — from fuzzy and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
+description: Instructions, skills, hooks, and scripts form a stabilisation gradient for methodology — from underspecified and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
 type: note
 traits: []
 areas: [claw-design, learning-theory]
@@ -8,29 +8,29 @@ status: seedling
 
 # Methodology enforcement is stabilisation
 
-The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [stabilisation spectrum](./agentic-systems-interpret-fuzzy-specifications.md). The enforcement layers parallel the [crystallisation verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) — where crystallisation moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by reducing two things: **semantic fuzziness** (committing to one interpretation of what the practice means) and **execution indeterminism** (ensuring the practice fires consistently across runs). Moving from instructions to scripts progressively eliminates both.
+The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [stabilisation spectrum](./agentic-systems-interpret-underspecified-instructions.md). The enforcement layers parallel the [crystallisation verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) — where crystallisation moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by reducing two things: **semantic underspecification** (committing to one interpretation of what the practice means) and **execution indeterminism** (ensuring the practice fires consistently across runs). Moving from instructions to scripts progressively eliminates both.
 
 | Layer | Trigger | Response | Reliability | Example |
 |-------|---------|----------|-------------|---------|
-| Instruction | indeterministic (LLM remembers) | fuzzy + indeterministic (LLM interprets) | lowest | "check descriptions" in CLAUDE.md |
-| Skill | deterministic (user invokes) | fuzzy + indeterministic (LLM executes) | medium | `/validate` checks note quality |
-| Hook (warn) | deterministic (event fires) | fuzzy + indeterministic (LLM acts on output) | medium-high | validate-note.sh outputs WARN on missing description |
+| Instruction | indeterministic (LLM remembers) | underspecified + indeterministic (LLM interprets) | lowest | "check descriptions" in CLAUDE.md |
+| Skill | deterministic (user invokes) | underspecified + indeterministic (LLM executes) | medium | `/validate` checks note quality |
+| Hook (warn) | deterministic (event fires) | underspecified + indeterministic (LLM acts on output) | medium-high | validate-note.sh outputs WARN on missing description |
 | Hook (block) | deterministic (event fires) | deterministic (rejected) | high | exit 1 prevents the operation |
 | Script | deterministic (user/hook runs) | deterministic (code runs) | highest | sync_topic_links.py rewrites Topics footer |
 
-Instructions have the lowest reliability because both phenomena compound: the LLM may not remember to apply the practice (indeterminism in triggering), and when it does, it interprets the instruction through fuzzy semantics ("check descriptions" admits multiple valid readings of what counts as a good description). Skills eliminate the trigger problem — the user invokes them deterministically — but the response is still an LLM interpreting a fuzzy spec. Blocking hooks and scripts eliminate both phenomena entirely.
+Instructions have the lowest reliability because both phenomena compound: the LLM may not remember to apply the practice (indeterminism in triggering), and when it does, it interprets the instruction through underspecified semantics ("check descriptions" admits multiple valid readings of what counts as a good description). Skills eliminate the trigger problem — the user invokes them deterministically — but the response is still an LLM interpreting an underspecified spec. Blocking hooks and scripts eliminate both phenomena entirely.
 
-The key insight: hooks are not cleanly "deterministic." A hook that outputs a warning is a deterministic trigger with a fuzzy, indeterministic response — the LLM decides what to do with the warning. Only blocking hooks (exit non-zero) are fully deterministic. This means the three-tier model (instruction → skill → hook) that arscontexta uses oversimplifies — the real picture is a gradient, which is just stabilisation.
+The key insight: hooks are not cleanly "deterministic." A hook that outputs a warning is a deterministic trigger with a underspecified, indeterministic response — the LLM decides what to do with the warning. Only blocking hooks (exit non-zero) are fully deterministic. This means the three-tier model (instruction → skill → hook) that arscontexta uses oversimplifies — the real picture is a gradient, which is just stabilisation.
 
 ## Maturation trajectory
 
-This is [progressive compilation applied to methodology](../notes/programming-practices-apply-to-prompting.md) — new best practices should start as fuzzy natural-language guidance and stabilise toward precise, deterministic enforcement as they prove out:
+This is [progressive compilation applied to methodology](../notes/programming-practices-apply-to-prompting.md) — new best practices should start as underspecified natural-language guidance and stabilise toward precise, deterministic enforcement as they prove out:
 
 1. **Instruction** — write it in CLAUDE.md or WRITING.md. Cheap to revise, tests whether the practice is worth encoding. If the LLM follows it inconsistently, that's signal.
 2. **Skill** — encode it as a structured prompt. Reliable when invoked, but requires explicit invocation. Good for judgment-requiring operations that shouldn't be automated.
 3. **Hook/script** — automate the deterministic parts. Only after the practice has stabilised enough that you know exactly what the check should do.
 
-**When to move down.** The strongest signal for automation is when the agent consistently proposes the same correct next step — meaning both that the LLM has converged on a single interpretation of the fuzzy spec, and that it executes it reliably across runs. If the LLM's response is predictable and always right, the prompt-to-action path is just overhead; a hook or script would do the same thing without the latency or token cost. This is the crystallisation trigger: a pattern has emerged from repeated execution, and stabilising it commits to that interpretation in precise code — resolving the semantic fuzziness by design rather than by luck, and eliminating the indeterminism entirely.
+**When to move down.** The strongest signal for automation is when the agent consistently proposes the same correct next step — meaning both that the LLM has converged on a single interpretation of the underspecified spec, and that it executes it reliably across runs. If the LLM's response is predictable and always right, the prompt-to-action path is just overhead; a hook or script would do the same thing without the latency or token cost. This is the crystallisation trigger: a pattern has emerged from repeated execution, and stabilising it commits to that interpretation in precise code — resolving the semantic underspecification by design rather than by luck, and eliminating the indeterminism entirely.
 
 Not everything should complete the trajectory. Operations requiring semantic judgment (like "is this connection genuine?") belong permanently at the skill level — their [oracle strength](../notes/oracle-strength-spectrum.md) is too low to support deterministic verification. Attempting to automate judgment produces confident systematic errors — the over-automation risk. The [topic-links-from-frontmatter case](./observations/topic-links-from-frontmatter-are-deterministic.md) is a clean example of the trajectory completing: an LLM-generated Topics footer was recognised as fully mechanical, and the operation moved to a deterministic script.
 

@@ -28,7 +28,7 @@ This gives skills type signatures:
 | `/validate` | `note → validation-report` |
 | `/convert` | `text → note` |
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to fuzzy semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [crystallise](./agentic-systems-learn-through-three-distinct-mechanisms.md) from LLM to code as patterns [stabilise](./agentic-systems-interpret-fuzzy-specifications.md) — committing to one interpretation from the space the spec admits.
+The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [crystallise](./agentic-systems-learn-through-three-distinct-mechanisms.md) from LLM to code as patterns [stabilise](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
 
 ## Open questions
 
@@ -43,7 +43,7 @@ Relevant Notes:
 - [document-classification](./document-classification.md) — the spec defining the types that would appear in skill signatures
 - [learning-is-capacity-change](./learning-is-capacity-change.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the operations afforded by types can themselves crystallise from LLM to code
-- [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) — parent framing: operations on types range from fuzzy to precise semantics; stabilisation commits to one interpretation
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; stabilisation commits to one interpretation
 
 Topics:
 - [claw-design](./claw-design.md)

@@ -1,5 +1,5 @@
 ---
-description: Programming practices — typing, testing, progressive compilation, version control — apply to LLM prompting and knowledge systems, with semantic fuzziness and execution indeterminism making some practices harder in distinct ways
+description: Programming practices — typing, testing, progressive compilation, version control — apply to LLM prompting and knowledge systems, with semantic underspecification and execution indeterminism making some practices harder in distinct ways
 type: note
 areas: [learning-theory]
 status: speculative
@@ -7,17 +7,17 @@ status: speculative
 
 # Programming practices apply to prompting
 
-Much of what we do in llm-do and this knowledge base is applying established programming practices to prompts, documents, and LLM workflows. The transfers are practical and actionable. Two properties of LLM-based systems — [semantic fuzziness and execution indeterminism](./agentic-systems-interpret-fuzzy-specifications.md) — make some practices harder than their traditional-programming originals, but in distinct ways.
+Much of what we do in llm-do and this knowledge base is applying established programming practices to prompts, documents, and LLM workflows. The transfers are practical and actionable. Two properties of LLM-based systems — [semantic underspecification and execution indeterminism](./agentic-systems-interpret-underspecified-instructions.md) — make some practices harder than their traditional-programming originals, but in distinct ways.
 
 ## Practices we apply
 
 **Typing.** We assign types to documents to mark what operations they afford — a `claim` can be verified, a `spec` can be implemented, `instructions` can be followed. This is the same practice as typing values in code: [the type determines valid operations](./instructions-are-typed-callables.md). The [verifiability criterion](../claw-design/document-types-should-be-verifiable.md) ensures types do real work — a type that doesn't enable specific operations is noise.
 
-**Progressive compilation.** We stabilise LLM behaviour into code as patterns emerge — the same move as compiling: freezing a flexible representation into a rigid, efficient one. [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) frames this explicitly. The [verifiability gradient](./deploy-time-learning-the-missing-middle.md) maps the spectrum from prompt tweaks through evals to deterministic modules. Unlike compilation, stabilisation is projection from a fuzzy spec — the natural-language specification admits multiple valid implementations, and committing to code means choosing one interpretation and fixing it in a language with precise semantics. Indeterminism adds noise on top (different runs may surface different interpretations), but the deeper operation is resolving the semantic ambiguity. The same pattern applies to [methodology enforcement](../claw-design/methodology-enforcement-is-stabilisation.md) — written instructions compile into skills, then hooks, then scripts — with the added insight that not all methodology should complete the trajectory.
+**Progressive compilation.** We stabilise LLM behaviour into code as patterns emerge — the same move as compiling: freezing a flexible representation into a rigid, efficient one. [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) frames this explicitly. The [verifiability gradient](./deploy-time-learning-the-missing-middle.md) maps the spectrum from prompt tweaks through evals to deterministic modules. Unlike compilation, stabilisation is projection from an underspecified spec — the natural-language specification admits multiple valid implementations, and committing to code means choosing one interpretation and fixing it in a language with precise semantics. Indeterminism adds noise on top (different runs may surface different interpretations), but the deeper operation is resolving the semantic ambiguity. The same pattern applies to [methodology enforcement](../claw-design/methodology-enforcement-is-stabilisation.md) — written instructions compile into skills, then hooks, then scripts — with the added insight that not all methodology should complete the trajectory.
 
-**Testing.** We test prompts and templates the way we test code. But LLM-based systems are harder to test, and the two phenomena create different challenges. Execution indeterminism means the same input produces different outputs across runs — you need statistical testing over distributions, not assertion equality. Semantic fuzziness means the spec itself admits multiple valid interpretations — you need to test whether the instructions are sufficiently constraining, not just whether individual outputs look right. The first challenge requires running N times and checking the distribution; the second requires inspecting the spec for ambiguity, consistency, and sufficient constraint. The [text testing pyramid](../claw-design/observations/automated-tests-for-text.md) sketches what this looks like concretely: deterministic checks at the base, LLM rubric grading in the middle, corpus compatibility at the top.
+**Testing.** We test prompts and templates the way we test code. But LLM-based systems are harder to test, and the two phenomena create different challenges. Execution indeterminism means the same input produces different outputs across runs — you need statistical testing over distributions, not assertion equality. Semantic underspecification means the spec itself admits multiple valid interpretations — you need to test whether the instructions are sufficiently constraining, not just whether individual outputs look right. The first challenge requires running N times and checking the distribution; the second requires inspecting the spec for ambiguity, consistency, and sufficient constraint. The [text testing pyramid](../claw-design/observations/automated-tests-for-text.md) sketches what this looks like concretely: deterministic checks at the base, LLM rubric grading in the middle, corpus compatibility at the top.
 
-**Version control.** We version prompts, templates, and knowledge artifacts in git, treating them as source code. [Storing a specific LLM output](./storing-llm-outputs-is-stabilization.md) resolves the fuzziness to a fixed interpretation — freezing one concrete value from the space the spec admits. Versioning the spec matters because regeneration is a new projection from the same fuzzy spec — potentially a different interpretation, not a deterministic rebuild.
+**Version control.** We version prompts, templates, and knowledge artifacts in git, treating them as source code. [Storing a specific LLM output](./storing-llm-outputs-is-stabilization.md) resolves the underspecification to a fixed interpretation — freezing one concrete value from the space the spec admits. Versioning the spec matters because regeneration is a new projection from the same underspecified spec — potentially a different interpretation, not a deterministic rebuild.
 
 **Design for testability.** [Crystallisation chooses repo artifacts](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) as the substrate specifically because they're inspectable — any agent can diff, test, and verify them. Testability as a design property, applied to LLM output.
 
@@ -27,9 +27,9 @@ Where prompts produce variable outputs, practices get harder, not just different
 
 **Indeterminism doubles the test runs.** The same prompt produces different outputs across runs due to sampling, so you can't assert equality — you test the distribution. This requires statistical techniques (run N times, check pass rates, set confidence thresholds) where traditional code needs a single assertion.
 
-**Fuzziness doubles the test targets.** In deterministic code there's no gap between what the code says and what it does, so you only test outputs. With natural-language specs, the instructions admit multiple valid interpretations — you need to test the instructions themselves (are they consistent? unambiguous? sufficiently constraining?) as well as the outputs. A prompt that consistently produces unwanted behavior isn't exhibiting noise; it's exhibiting a valid interpretation you didn't intend. The fix is rewriting the spec, not retrying.
+**Underspecification doubles the test targets.** In deterministic code there's no gap between what the code says and what it does, so you only test outputs. With natural-language specs, the instructions admit multiple valid interpretations — you need to test the instructions themselves (are they consistent? unambiguous? sufficiently constraining?) as well as the outputs. A prompt that consistently produces unwanted behavior isn't exhibiting noise; it's exhibiting a valid interpretation you didn't intend. The fix is rewriting the spec, not retrying.
 
-The two phenomena compound: you're testing a fuzzy specification executed by an indeterministic engine. Each requires different techniques — statistical testing for indeterminism, structural analysis for fuzziness — and conflating them leads to misdiagnosis.
+The two phenomena compound: you're testing an underspecified specification executed by an indeterministic engine. Each requires different techniques — statistical testing for indeterminism, structural analysis for underspecification — and conflating them leads to misdiagnosis.
 
 ## Why the practices transfer
 
@@ -38,14 +38,14 @@ Both domains solve the same problems: making behaviour predictable, making syste
 ## Open Questions
 
 - What other programming practices haven't been applied yet but could be? (Code review for prompts? Dependency injection for context? Refactoring patterns?)
-- Where do the practices break down — which ones mislead when applied to systems with fuzzy specifications?
+- Where do the practices break down — which ones mislead when applied to systems with underspecified instructions?
 - Can we develop prompt-native practices that have no programming equivalent?
 
 ---
 Relevant Notes:
 - [programming-language types applied to documents](./instructions-are-typed-callables.md) — typing practice applied to KB documents
 - [document types should be verifiable](../claw-design/document-types-should-be-verifiable.md) — quality criterion for document types
-- [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) — conceptual foundation: fuzzy vs precise semantics, stabilise/soften, program sampling
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — conceptual foundation: underspecified vs precise semantics, stabilise/soften, program sampling
 - [crystallisation: the missing middle](./deploy-time-learning-the-missing-middle.md) — progressive compilation in practice
 - [stabilisation is learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — synthesizes: the informal programming practices accumulated by every deployed system are what crystallisation systematises
 - [storing LLM outputs is stabilization](./storing-llm-outputs-is-stabilization.md) — version control practice applied to LLM outputs

@@ -10,7 +10,7 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 
 ## Foundations
 
-- [agentic-systems-interpret-fuzzy-specifications](./agentic-systems-interpret-fuzzy-specifications.md) — two distinct properties (execution indeterminism and semantic fuzziness); the "program sampling" model, semantic boundaries, and the stabilise/soften cycle
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (execution indeterminism and semantic underspecification); the "program sampling" model, semantic boundaries, and the stabilise/soften cycle
 
 ## Definitions
 

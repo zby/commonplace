@@ -8,7 +8,7 @@ status: current
 
 # Unified calling conventions enable bidirectional refactoring between neural and symbolic
 
-The [fuzzy specifications framing](./agentic-systems-interpret-fuzzy-specifications.md) says components should move between fuzzy (LLM-interpreted) and precise (code) semantics as systems evolve — stabilise patterns to code, soften rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
+The [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — stabilise patterns to code, soften rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
 
 ## The mechanism
 
@@ -30,7 +30,7 @@ The calling convention is uniform across the chain. Each link can be independent
 With unified calling, the progression is smooth:
 
 1. **Start neural** — define an agent to handle a task. Quick to add, handles ambiguity.
-2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-crystallisation.md) — discovering that a fuzzy spec consistently resolves to one interpretation, then committing to it in code.
+2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-crystallisation.md) — discovering that an underspecified spec consistently resolves to one interpretation, then committing to it in code.
 3. **Crystallise** — extract `sanitize_filename()` to Python. The agent still handles ambiguous cases. The call site doesn't change.
 4. **Extend via softening** — new requirements emerge (handle Unicode, detect dates). Add an LLM call for the new cases. Again, the call site doesn't change.
 
@@ -62,7 +62,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 ---
 
 Relevant Notes:
-- [agentic-systems-interpret-fuzzy-specifications](./agentic-systems-interpret-fuzzy-specifications.md) — foundation: the fuzzy specifications framing that this note makes architecturally concrete
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
 - [stabilisation](./stabilisation.md) — the mechanism that unified calling makes frictionless
 - [crystallisation](./crystallisation.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites

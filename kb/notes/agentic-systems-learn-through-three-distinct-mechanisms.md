@@ -1,5 +1,5 @@
 ---
-description: Deployed agentic systems learn through three distinct mechanisms — stabilisation (committing to an interpretation of a fuzzy spec), crystallisation (prompt→code phase transition), and distillation (extracting procedures from reasoning in the same medium). All are capacity change per Simon; they differ in what changes and whether the medium transitions.
+description: Deployed agentic systems learn through three distinct mechanisms — stabilisation (committing to an interpretation of an underspecified spec), crystallisation (prompt→code phase transition), and distillation (extracting procedures from reasoning in the same medium). All are capacity change per Simon; they differ in what changes and whether the medium transitions.
 type: structured-claim
 traits: []
 areas: [learning-theory]
@@ -12,7 +12,7 @@ Herbert Simon: learning is [any change that produces a more or less permanent ch
 
 | Mechanism | Operation | What changes | Medium transition |
 |-----------|-----------|-------------|-------------------|
-| **Stabilisation** | fuzzy spec → committed interpretation | Output predictability | No — same medium, tighter constraints |
+| **Stabilisation** | underspecified spec → committed interpretation | Output predictability | No — same medium, tighter constraints |
 | **Crystallisation** | prompt → code | Verification regime, consumer, executability | Yes — natural language → executable |
 | **Distillation** | discursive → procedural | Rhetorical mode, information density | No — same medium, different organization |
 
@@ -20,7 +20,7 @@ All three are learning in Simon's sense — they produce permanent changes in th
 
 ## Stabilisation
 
-Every act of stabilisation fits Simon's definition. When you commit to an interpretation of a fuzzy spec — store an LLM output, write a convention, extract a deterministic function — you increase the system's adaptive capacity for the specific case stabilised. In practice this narrows the distribution of outputs (the system becomes more predictable), but the deeper operation is resolving [semantic fuzziness](./agentic-systems-interpret-fuzzy-specifications.md): choosing one interpretation from the space the spec admits.
+Every act of stabilisation fits Simon's definition. When you commit to an interpretation of an underspecified spec — store an LLM output, write a convention, extract a deterministic function — you increase the system's adaptive capacity for the specific case stabilised. In practice this narrows the distribution of outputs (the system becomes more predictable), but the deeper operation is resolving [semantic underspecification](./agentic-systems-interpret-underspecified-instructions.md): choosing one interpretation from the space the spec admits.
 
 ### The spectrum of stabilisation
 
@@ -46,7 +46,7 @@ The KB itself demonstrates this. Every session that improves notes, sharpens con
 
 ## Crystallisation
 
-[Crystallisation](deploy-time-learning-the-missing-middle.md) is the most dramatic form of stabilisation — it crosses a medium boundary. Natural language instructions become executable code. The consumer changes (LLM → interpreter/runtime). The verification regime changes (fuzzy semantics → precise semantics, indeterministic execution → deterministic). It's a phase transition: the nature of the artifact changes fundamentally.
+[Crystallisation](deploy-time-learning-the-missing-middle.md) is the most dramatic form of stabilisation — it crosses a medium boundary. Natural language instructions become executable code. The consumer changes (LLM → interpreter/runtime). The verification regime changes (underspecified semantics → precise semantics, indeterministic execution → deterministic). It's a phase transition: the nature of the artifact changes fundamentally.
 
 The [verifiability gradient](deploy-time-learning-the-missing-middle.md) — from restructured prompts through schemas and evals to deterministic code — is a compound capacity gradient: reliability, speed, and cost all improve together as you move down it. At the top sit [dynamic agents](dynamic-agents-runtime-design.md) — maximum generality, minimum reliability. At the bottom sits deterministic code — minimum generality, maximum reliability. The system's learning trajectory is its movement along this gradient.
 
@@ -62,15 +62,15 @@ The separation is deliberate: reasoning is factored out of the operational path,
 
 It matters to distinguish them because conflating them produces confused designs:
 
-- If you think skills are **crystallised** methodology, you'll expect them to be more verifiable than they are (they're still natural-language instructions interpreted by an LLM — semantically fuzzy and execution-indeterministic).
+- If you think skills are **crystallised** methodology, you'll expect them to be more verifiable than they are (they're still natural-language instructions interpreted by an LLM — semantically underspecified and execution-indeterministic).
 - If you think skills are **stabilised** methodology, you'll focus on constraining agent behavior rather than on extracting the right procedures.
 - If you recognise skills as **distilled** methodology, you'll focus on the right questions: what to extract, what to leave in the source, how to maintain the derivation relationship.
 
-Similarly, treating crystallisation as "just more stabilisation" misses the phase transition — the qualitative change when an operation moves from fuzzy, indeterministic substrate to precise, deterministic substrate.
+Similarly, treating crystallisation as "just more stabilisation" misses the phase transition — the qualitative change when an operation moves from underspecified, indeterministic substrate to precise, deterministic substrate.
 
 ### The stabilise/soften cycle is a learning cycle
 
-The stabilise/soften cycle described in [agentic systems interpret fuzzy specifications](./agentic-systems-interpret-fuzzy-specifications.md) is, viewed through Simon's definition, a learning cycle. Each stabilisation step resolves semantic fuzziness — committing to an interpretation and (often) eliminating execution indeterminism — making the system more capable for the specific case it handles. Each softening step reintroduces fuzziness, making the system more capable for the general case. The cycle isn't maintenance — it's how the system learns.
+The stabilise/soften cycle described in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) is, viewed through Simon's definition, a learning cycle. Each stabilisation step resolves semantic underspecification — committing to an interpretation and (often) eliminating execution indeterminism — making the system more capable for the specific case it handles. Each softening step reintroduces underspecification, making the system more capable for the general case. The cycle isn't maintenance — it's how the system learns.
 
 ### Continuous learning is stabilisation during deployment
 

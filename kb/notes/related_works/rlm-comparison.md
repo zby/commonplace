@@ -123,8 +123,8 @@ divide-and-conquer algorithms over large contexts. An explicit boundary between 
 calls and code calls is fine because you're not planning to move things across it.
 
 **llm-do optimizes for evolvability** — systems that grow and mature. The core insight
-is *stabilizing*: LLM applications evolve by progressively replacing fuzzy natural-language
-specs with precise code, and vice versa (see [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md)).
+is *stabilizing*: LLM applications evolve by progressively replacing underspecified natural-language
+specs with precise code, and vice versa (see [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md)).
 
 ```
 Fuzzy (prompt)  →  Precise (code)
@@ -305,7 +305,7 @@ new LLM conversations — but from different motivations, with different consequ
 - **llm-do** provides a framework for evolving LLM applications. Code — whether
   human-written or LLM-generated — is versioned infrastructure that participates in
   the standard software lifecycle. The unified calling convention makes refactoring
-  across the semantic boundary cheap, so the system can breathe: stabilize fuzzy
+  across the semantic boundary cheap, so the system can breathe: stabilize underspecified
   specs into precise code as patterns emerge, soften when rigidity hurts.
 
 The two key differentiators: *code that accumulates value* (versioned, tested, reused

@@ -117,19 +117,19 @@ Evans reinforces the stabilization workflow with clearer triggers:
 - Consistent output structure across runs
 - High repeatability requirement
 
-**Signals to keep fuzzy** (LLM-interpreted):
+**Signals to keep underspecified** (LLM-interpreted):
 - Exploratory modeling phase
 - Evolving requirements
 - Edge cases requiring judgment
 
 ## Semantic Boundaries
 
-Evans' modeling/classification distinction maps to llm-do's semantic boundaries — the crossings between fuzzy (LLM-interpreted) and precise (deterministic code) semantics. "Freeze a taxonomy before classification" is a specific instance of the broader pattern that [storing LLM outputs is stabilization](../storing-llm-outputs-is-stabilization.md) — resolving semantic fuzziness to a fixed interpretation, then working deterministically with the result.
+Evans' modeling/classification distinction maps to llm-do's semantic boundaries — the crossings between underspecified (LLM-interpreted) and precise (deterministic code) semantics. "Freeze a taxonomy before classification" is a specific instance of the broader pattern that [storing LLM outputs is stabilization](../storing-llm-outputs-is-stabilization.md) — resolving semantic underspecification to a fixed interpretation, then working deterministically with the result.
 
 | Type | Semantics | Testing Approach |
 |------|-----------|------------------|
 | Tools (classification) | Precise — same input, same output | `assert result == expected` |
-| Workers (modeling) | Fuzzy — spec admits multiple valid interpretations | Sample and check invariants |
+| Workers (modeling) | Underspecified — spec admits multiple valid interpretations | Sample and check invariants |
 
 Schema validation sits at the trust boundary between these. The two testing approaches map to the [two distinct testing targets](../storing-llm-outputs-is-stabilization.md) for stabilized artifacts: testing the interpretation space (does the prompt reliably produce good output?) vs testing a specific interpretation (is this specific output good?).
 
@@ -148,5 +148,5 @@ The key insight: LLMs are excellent classifiers but unreliable modelers. Design 
 
 - Article: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
 - Evans' DDD work: https://www.domainlanguage.com/
-- [agentic systems interpret fuzzy specifications](../agentic-systems-interpret-fuzzy-specifications.md) — fuzzy vs precise semantics, interpretation narrowing, stabilise/soften
+- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — underspecified vs precise semantics, interpretation narrowing, stabilise/soften
 - Related: [adaptation-agentic-ai-analysis.md](../research/adaptation-agentic-ai-analysis.md)
