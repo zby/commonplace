@@ -6,10 +6,13 @@ type: index
 # Sources Directory
 
 - [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(scientific-paper)*
-- [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.working.md) *(scientific-paper)*
+- [Automated linking improves retrieval but may degrade navigability](./a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md)
+- [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md)
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
 - [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
 - [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
+- [Ingest: Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.ingest.md) *(scientific-paper)*
+- [Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.md) *(academic-paper)*
 - [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
 - [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
 - [Ingest: Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.ingest.md) *(scientific-paper)*

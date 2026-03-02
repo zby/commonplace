@@ -38,6 +38,16 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
 
+## Design Principles
+
+- [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — good thinking requires moving between abstraction levels; KB quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy
+- [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) correspond to different strategies for narrowing the agent's interpretation space
+
+## Workshop Layer
+
+- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion with state machines, dependencies, and expiration
+- [active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — working understanding during an active campaign needs holistic rewrite, not graph composition; theorist exemplifies this as a workshop artifact
+
 ## Gaps
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the KB already learns through manual human+agent work; the open problem is automating the judgment-heavy mutations (connections, groupings, synthesis)
@@ -56,6 +66,7 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) that grounds claim-title conventions and the `structured-claim` type
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) — practitioner validation of propositional links over embedding-based adjacency; confirms the Goodhart risk in quality signals
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper implementing Zettelkasten-inspired automated memory with link generation and memory evolution; provides empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates context-loading-strategy's content categories, provides evolution data showing stabilisation maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
 
 ## Related Areas
 

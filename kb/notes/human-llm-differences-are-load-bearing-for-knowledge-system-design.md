@@ -69,6 +69,7 @@ Relevant Notes:
 - [context loading strategy](../claw-design/context-loading-strategy.md) — addresses the loading side of the dual-audience problem; this note identifies the writing side as a separate concern
 - [crystallisation: the missing middle](./deploy-time-learning-the-missing-middle.md) — context: the three timescales framing; agent statelessness reframes in-context as "loading" not "learning"
 - [agent statelessness means the harness should inject context automatically](../claw-design/agent-statelessness-means-harness-should-inject-context-automatically.md) — complementary response: tier separation addresses writing for different audiences; context injection addresses loading what the agent can't carry from prior sessions
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — validates: empirical study of 466 OSS projects finds developers explicitly distinguish "README files for humans" from "AI context files for AI agents" — the dual-audience split observed at scale with no established conventions for resolving it
 
 Topics:
 - [document-system](./document-system.md)
