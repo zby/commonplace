@@ -42,7 +42,7 @@ The boundary isn't always sharp — some sub-procedures depend partially on know
 
 ## The mechanism: partial evaluation
 
-Frontloading is not merely analogous to partial evaluation — it is partial evaluation, applied to a domain where the "program" being specialised has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md).
+Frontloading is partial evaluation applied to a domain where the "program" being specialised has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md).
 
 Standard PE specialises a program P with respect to known **static** inputs s, producing a **residual program** Ps that needs only the remaining **dynamic** inputs d:
 
