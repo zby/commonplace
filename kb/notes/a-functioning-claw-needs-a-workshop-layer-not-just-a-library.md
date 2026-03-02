@@ -90,6 +90,7 @@ Relevant Notes:
 - [spec mining is crystallisation's operational mechanism](../notes/spec-mining-as-crystallisation.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
 - [stabilisation is learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — extraction bridges are stabilisation: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
+- [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
 
 Topics:
 - [claw-design](./claw-design.md)

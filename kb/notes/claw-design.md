@@ -54,7 +54,6 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — a claw's learning must improve action capacity (classification, planning, communication), not just retrieval; needs different knowledge types and evaluation criteria
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals to address the learning loop's quality gates problem
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — as the KB grows, /connect retrieves too many candidates; composite note scores filter and rank before agent evaluation
-- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion with state machines, dependencies, and expiration
 - [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — /connect's dual discovery and articulation testing are corpus-agnostic, so deep search means temporarily expanding the corpus with web results
 
 ## Decisions

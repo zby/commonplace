@@ -106,6 +106,11 @@ Skills live in `skills/` and are symlinked into `.claude/skills/`. In installed 
 
 Run scripts with `uv run scripts/<script>`.
 
+## Git
+
+- **Never `git add -A`** — review `git status` and stage specific files.
+- **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
+
 ## Conventions
 
 - **Links**: Standard markdown links, not wiki-links. Relative paths from source file. `[title](./title.md)`

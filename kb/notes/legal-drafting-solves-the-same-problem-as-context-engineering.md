@@ -65,6 +65,7 @@ Relevant Notes:
 - [crystallisation](./crystallisation.md) — contrast: codification is NOT crystallisation — statute is still natural language interpreted by judges; true legal crystallisation would be algorithmic sentencing or automated compliance
 - [distillation](./distillation.md) — mapped: legal commentary and restatements are distillation — extracting principles from case law without changing medium
 - [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — validated: all three mechanisms map to legal analogues, but unevenly — law is rich in stabilisation, has distillation in commentary, and largely lacks crystallisation
+- [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: the five empirically observed writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) address how instructions are framed; legal techniques address what goes inside them — and the common law/civil law question maps partially to the descriptive–prescriptive spectrum
 
 Source:
 - Prompted by a social media post observing that context engineering is close to law
