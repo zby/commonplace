@@ -128,7 +128,7 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — enables: `structured-claim` has concrete structural requirements (sections), making it verifiable in the way `has-claim` as a trait was not
 - [document-classification](./document-classification.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr
 - [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
-- [stabilisation-is-learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: the note → structured-claim promotion path is the verifiability gradient applied to the type system
+- [three distinct mechanisms](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: the note → structured-claim promotion path is the verifiability gradient applied to the type system
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
 
 Topics:

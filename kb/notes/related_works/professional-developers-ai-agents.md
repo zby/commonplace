@@ -60,4 +60,4 @@ This paper supports positioning llm-do as aligned with professional practice:
 ---
 
 Relevant Notes:
-- [stabilisation-is-learning](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the developer behaviors observed here (validate, extract patterns, stabilise) are empirical evidence of the crystallisation loop this note formalises as continuous learning
+- [three distinct mechanisms](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the developer behaviors observed here (validate, extract patterns, stabilise) are empirical evidence of the crystallisation loop this note formalises as continuous learning

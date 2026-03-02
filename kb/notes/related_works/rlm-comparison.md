@@ -127,7 +127,7 @@ is *stabilizing*: LLM applications evolve by progressively replacing underspecif
 specs with precise code, and vice versa (see [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md)).
 
 ```
-Fuzzy (prompt)  →  Precise (code)
+Underspecified (prompt)  →  Precise (code)
        ↑                  ↓
        └── soften ←── stabilize ──┘
 ```

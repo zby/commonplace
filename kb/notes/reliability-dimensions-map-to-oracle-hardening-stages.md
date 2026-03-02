@@ -41,7 +41,7 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the gradient from hard to no oracle that this note maps reliability dimensions onto
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism for hardening consistency and robustness oracles
 - [approvals-guard-against-llm-mistakes-not-active-attacks](./approvals-guard-against-llm-mistakes-not-active-attacks.md) — augmentation as a workaround for weak predictability oracles
-- [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — reliability hardening as deploy-time learning, not training-time learning
+- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — reliability hardening as deploy-time learning, not training-time learning
 - [softening-signals](./softening-signals.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a softening signal measured at scale
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
 

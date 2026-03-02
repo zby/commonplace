@@ -12,7 +12,7 @@ Herbert Simon: learning is [any change that produces a more or less permanent ch
 
 | Mechanism | Operation | What changes | Medium transition |
 |-----------|-----------|-------------|-------------------|
-| **Stabilisation** | underspecified spec → committed interpretation | Output predictability | No — same medium, tighter constraints |
+| **Stabilisation** | underspecified spec → committed interpretation | Output predictability | Not necessarily — ranges from same-medium narrowing to crystallisation |
 | **Crystallisation** | prompt → code | Verification regime, consumer, executability | Yes — natural language → executable |
 | **Distillation** | discursive → procedural | Rhetorical mode, information density | No — same medium, different organization |
 

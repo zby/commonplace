@@ -19,7 +19,7 @@ Deployed AI systems adapt at three timescales, each with a different substrate:
 
 Deploy-time learning is not a new training paradigm — the model weights don't change. It is **system-level adaptation**: the deployed system's behavior improves because its *artifacts* improve. Like in-context learning it happens during deployment; like training it persists durably. What makes it possible is encoding knowledge into repo artifacts rather than weights or context.
 
-This learning operates through [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md): **stabilisation** (narrowing distributions), **crystallisation** (prompt→code phase transition), and **distillation** (extracting procedures from reasoning). This note focuses on the verifiability gradient that runs across all three, with crystallisation — the phase transition to deterministic code — at the far end.
+This learning operates through [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md): **stabilisation** (narrowing the interpretation space), **crystallisation** (prompt→code phase transition), and **distillation** (extracting procedures from reasoning). This note focuses on the verifiability gradient that runs across all three, with crystallisation — the phase transition to deterministic code — at the far end.
 
 The machinery behind deploy-time learning — version control, diffs, tests, CI, code review — is unremarkable to programmers. But AI researchers, trained to think about adaptation in terms of weights and gradients, tend to look past it. Repo artifacts sit in a disciplinary blind spot — "just engineering" to the ML community, yet doing genuine system-level learning.
 

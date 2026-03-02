@@ -18,17 +18,17 @@ The test: after reading the type, can you say something concrete about the docum
 
 In programming, types are useful because the compiler enforces them. If nothing checked that a `List` is actually a list, the type annotation would be decoration. The value of a type comes from enforcement — something in the system acts on it.
 
-Here, the "compiler" is a mix of agents and scripts. An agent reading `type: spec` can decide to implement from it. A script can grep for `type: structured-claim` to find citable arguments with full Evidence/Reasoning sections. But they can only do this if the type asserts something checkable. `type: design` gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./observations/automated-tests-for-text.md) sketches what enforcement could look like in practice: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
+Here, the "compiler" is a mix of agents and scripts. An agent reading `type: spec` can decide to implement from it. A script can grep for `type: structured-claim` to find citable arguments with full Evidence/Reasoning sections. But they can only do this if the type asserts something checkable. `type: design` gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./automated-tests-for-text.md) sketches what enforcement could look like in practice: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
 
-Types guide what the processor — an [LLM interpreting underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — can do with the document. A `spec` tells an agent it can build against this. A `has-comparison` tells it there are alternatives to choose between. Since [agents navigate by deciding what to read next](./observations/agents-navigate-by-deciding-what-to-read-next.md), types and traits are precisely the hints that make those decisions informed rather than blind — the type tells the agent what it can do with the document *before opening it*. The type is only useful if the processor can trust it, and trust requires the ability to check.
+Types guide what the processor — an [LLM interpreting underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — can do with the document. A `spec` tells an agent it can build against this. A `has-comparison` tells it there are alternatives to choose between. Since [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md), types and traits are precisely the hints that make those decisions informed rather than blind — the type tells the agent what it can do with the document *before opening it*. The type is only useful if the processor can trust it, and trust requires the ability to check.
 
-## But our processor is stochastic
+## But our processor interprets underspecified instructions
 
 In conventional programming, types are crisp because the processor is deterministic. A compiler can verify that a value satisfies a type with certainty.
 
-Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also fuzzy. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
+Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also underspecified. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
 
-This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment is itself a case of [storing an LLM output as stabilization](../notes/storing-llm-outputs-is-stabilization.md) — choosing to label a document `type: spec` collapses a distribution of possible classifications to a single point.
+This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment is itself a case of [storing an LLM output as stabilization](../notes/storing-llm-outputs-is-stabilization.md) — choosing to label a document `type: spec` collapses a space of possible classifications to a single point.
 
 ## What went wrong with flat types
 
@@ -68,7 +68,7 @@ A note can satisfy multiple traits without conflict. What the old system called 
 
 ## The verifiability gradient
 
-`note` is the base type that makes no structural claim — like `Any` in a gradually typed language. This connects to the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md): just as code starts stochastic and stabilizes to deterministic, documents start untyped and gain type information as they mature.
+`note` is the base type that makes no structural claim — like `Any` in a gradually typed language. This connects to the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md): just as logic starts underspecified and stabilises to precise, documents start untyped and gain type information as they mature.
 
 1. New content enters as `type: note` — soft, no structural claims
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
@@ -88,7 +88,7 @@ Several type system concepts map to specific aspects of this design:
 
 ## Tolerance of misclassification
 
-Since types are assigned by a stochastic processor, the system must degrade gracefully when classifications are wrong:
+Since types are assigned by a processor that interprets underspecified instructions, the system must degrade gracefully when classifications are wrong:
 
 - Search by type should be "usually right", not "guaranteed complete"
 - A note typed `spec` that's really an exploration is a quality issue, not a system failure
@@ -101,9 +101,9 @@ The practical test: an agent that ignores the type field entirely and reads ever
 
 Relevant Notes:
 - [document-classification](./document-classification.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
-- [automated-tests-for-text](./observations/automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
-- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — grounds the stochastic processor argument: type assignment is itself a stabilization decision, and the tolerance of misclassification mirrors the generator/verifier pattern
-- [agents-navigate-by-deciding-what-to-read-next](./observations/agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
+- [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
+- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — grounds the underspecification argument: type assignment is itself a stabilization decision, and the tolerance of misclassification mirrors the generator/verifier pattern
+- [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
 - [deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md) — the verifiability gradient that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote
 - [001-generate-topic-links-from-frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — precedent: when a mapping is verifiable and deterministic (areas -> Topics), it was automated; the same principle drives the type system design
 

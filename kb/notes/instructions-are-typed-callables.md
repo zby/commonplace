@@ -7,7 +7,7 @@ status: speculative
 
 # Instructions are typed callables with document type signatures
 
-[Document types mark affordances](../claw-design/document-types-should-be-verifiable.md) — a `structured-claim` affords verification, a `spec` affords implementation, an `index` affords navigation. Each type step [trades generality for compound gains in reliability, speed, and cost](./learning-is-capacity-change.md): the structure guarantees the parts are there, making operations reliable without reading the whole document first.
+[Document types mark affordances](./document-types-should-be-verifiable.md) — a `structured-claim` affords verification, a `spec` affords implementation, an `index` affords navigation. Each type step [trades generality for compound gains in reliability, speed, and cost](./learning-is-capacity-change.md): the structure guarantees the parts are there, making operations reliable without reading the whole document first.
 
 But some documents aren't data — they're *procedures*. Skills, tasks, workflows: their primary affordance is *being followed*. A task has prerequisites, a goal, a checklist of steps, a verification plan. An agent picks it up and executes it. Skills are the same — `/ingest` is a procedure that transforms a source into a `source-review`. These are the document equivalent of callables: the content is a procedure, and the valid operation is execution.
 
@@ -39,10 +39,10 @@ The operations afforded by a type can range from precise semantics (does this `s
 ---
 
 Relevant Notes:
-- [document-types-should-be-verifiable](../claw-design/document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
+- [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
 - [document-classification](./document-classification.md) — the spec defining the types that would appear in skill signatures
 - [learning-is-capacity-change](./learning-is-capacity-change.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
-- [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the operations afforded by types can themselves crystallise from LLM to code
+- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the operations afforded by types can themselves crystallise from LLM to code
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; stabilisation commits to one interpretation
 
 Topics:

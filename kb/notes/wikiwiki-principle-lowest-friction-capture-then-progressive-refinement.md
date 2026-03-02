@@ -42,7 +42,7 @@ This connects to [crystallisation](../notes/agentic-systems-learn-through-three-
 Relevant Notes:
 - [document-classification](./document-classification.md) — the type ladder this principle animates: text → note → structured-claim
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the structured-claim type that sits at the top of the refinement ladder
-- [stabilisation-is-learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — the general pattern; the wiki principle is the UX requirement that makes crystallisation practical
+- [three distinct mechanisms](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — the general pattern; the wiki principle is the UX requirement that makes crystallisation practical
 - [learning-is-capacity-change](../notes/learning-is-capacity-change.md) — the theoretical backing: each rung on the ladder is a capacity change in Simon's sense, trading generality for reliability
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning claw needs a workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)

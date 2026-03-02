@@ -22,7 +22,7 @@ New knowledge — extracting claims, writing synthesis notes, discovering connec
 
 A KB's knowledge is in the content of its notes and in the structure of its links — neither alone is sufficient. A note without links still says something. A link without good notes on both ends is useless. But the link structure is the part that's hardest to get right and most underinvested in: adding notes is easy, discovering which notes genuinely connect and why requires judgment.
 
-This suggests that learning at scale for a KB involves improving both — better notes and better links — but that the link structure is where the most untapped value sits, because it's where understanding is encoded: which ideas support each other, which are in tension, which compose into larger arguments. When [stale indexes suppress search entirely](./observations/stale-indexes-are-worse-than-no-indexes.md), the cost of underinvestment in link structure becomes concrete: notes that exist but aren't linked become invisible.
+This suggests that learning at scale for a KB involves improving both — better notes and better links — but that the link structure is where the most untapped value sits, because it's where understanding is encoded: which ideas support each other, which are in tension, which compose into larger arguments. When [stale indexes suppress search entirely](./stale-indexes-are-worse-than-no-indexes.md), the cost of underinvestment in link structure becomes concrete: notes that exist but aren't linked become invisible.
 
 ## The boiling cauldron (aspirational)
 
@@ -56,7 +56,7 @@ The [bitter lesson boundary](../notes/bitter-lesson-boundary.md) distinguishes c
 
 Relevant Notes:
 - [learning-is-capacity-change](../notes/learning-is-capacity-change.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
-- [stabilisation-is-learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — describes the stabilise/soften cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
+- [three distinct mechanisms](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — describes the stabilise/soften cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
 - [what-works](./what-works.md) — the observation log this note recommends as interim approach; proven patterns that would feed a learning loop's evaluation
 - [what-doesnt-work](./what-doesnt-work.md) — the anti-pattern log; complements what-works as ground truth for what the loop should avoid proposing

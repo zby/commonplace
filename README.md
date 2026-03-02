@@ -1,6 +1,6 @@
 # Commonplace
 
-Reactive team knowledge system — OpenClaw with WikiWiki spirit.
+Methodology for agent-operated knowledge bases — writing conventions, progressive typing, and skills for maintaining structured markdown.
 
 Commonplace provides the methodology, type system, writing conventions, skills, and scripts that let an agent autonomously navigate, extend, and maintain a structured knowledge base of markdown files.
 

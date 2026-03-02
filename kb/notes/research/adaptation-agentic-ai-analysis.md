@@ -241,7 +241,7 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 ---
 
 Relevant Notes:
-- [stabilisation-is-learning](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the stabilising/softening signals catalogued here are the data-driven triggers for the continuous learning loop that crystallisation describes
+- [three distinct mechanisms](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the stabilising/softening signals catalogued here are the data-driven triggers for the continuous learning loop that crystallisation describes
 
 ## References
 

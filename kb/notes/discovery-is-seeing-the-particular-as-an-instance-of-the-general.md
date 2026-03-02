@@ -78,7 +78,7 @@ Relevant Notes:
 - [arscontexta](./related-systems/arscontexta.md) — refines: the "controlled disorder" claim is right about judgment-based linking but the topic-vs-mechanism framing is a false dichotomy
 - [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: Alexander's three levels of connection may map to the feature/structure/generative-model hierarchy
-- [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — analogous spectrum: stabilisation grades (store output → write description → extract code) parallel the abstraction depths here
+- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — analogous spectrum: stabilisation grades (store output → write description → extract code) parallel the abstraction depths here
 
 Topics:
 - [learning-theory](./learning-theory.md)

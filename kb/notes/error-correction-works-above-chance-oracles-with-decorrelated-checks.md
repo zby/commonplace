@@ -106,7 +106,7 @@ Relevant Notes:
 - [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
-- [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
+- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
 
 Topics:
 - [learning-theory](./learning-theory.md)

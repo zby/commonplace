@@ -30,7 +30,7 @@ The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. B
 
 **Structural health:**
 - Dangling link rate — links pointing to non-existent files. Purely deterministic, always bad.
-- Index coverage — what % of notes appear in at least one area index? (Directory indexes don't count — they're auto-generated.) Since [stale indexes are worse than no indexes](./observations/stale-indexes-are-worse-than-no-indexes.md), missing entries actively suppress search — this signal catches the highest-cost gap.
+- Index coverage — what % of notes appear in at least one area index? (Directory indexes don't count — they're auto-generated.) Since [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md), missing entries actively suppress search — this signal catches the highest-cost gap.
 - Index staleness — do all index entries point to existing files? Do indexes mention notes that have been renamed or deleted?
 - Note age vs connection count — old notes with few connections may be stale or orphaned by topic drift.
 
@@ -122,10 +122,10 @@ Relevant Notes:
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
 - [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
-- [automated-tests-for-text](./observations/automated-tests-for-text.md) — the distilled observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
+- [automated-tests-for-text](./automated-tests-for-text.md) — the distilled observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
 - [spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — prerequisite: content quality proxies (frontmatter completeness, title-as-claim ratio) depend on the type system being trustworthy
-- [stale-indexes-are-worse-than-no-indexes](./observations/stale-indexes-are-worse-than-no-indexes.md) — exemplifies why index coverage is a high-value signal: missing entries actively suppress search
+- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — exemplifies why index coverage is a high-value signal: missing entries actively suppress search
 - [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern: the composite quality signal would serve as the verifier for the learning loop's mutations, and the fix-and-re-critique calibration strategy is a metamorphic test on that pattern
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — boundary condition: all signals here are retrieval/structure oriented; action capacity (classification, planning, communication) would need different quality signals
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect

@@ -50,7 +50,7 @@ This suggests a priority order: invest in telemetry and eval harnesses *before* 
 Relevant Notes:
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient maps to oracle strength: harder oracles enable tighter iteration loops
-- [stabilisation-is-learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument
+- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism for oracle hardening: extracting deterministic rules from observed behavior
 - [softening-signals](./softening-signals.md) — provides testable indicators for where a component sits on the oracle spectrum
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work

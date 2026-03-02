@@ -67,7 +67,7 @@ Calling stabilisation "continuous learning" is not just terminological. It refra
 ---
 
 Relevant Notes:
-- [stabilisation-is-learning](agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: the general claim that stabilisation is learning; this note applies it to the specific hot topic of continuous learning during deployment
+- [three distinct mechanisms](agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: the general claim that stabilisation is learning; this note applies it to the specific hot topic of continuous learning during deployment
 - [learning-is-capacity-change](learning-is-capacity-change.md) — foundation: capacity decomposes into generality vs reliability+speed+cost compound
 - [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — the verifiability gradient that structures the progression from prompts to code
 - [adaptation-agentic-ai-analysis](research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers for when to stabilise vs soften, grounding the loop in concrete signals

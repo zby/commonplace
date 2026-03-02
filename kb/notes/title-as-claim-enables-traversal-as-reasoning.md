@@ -57,8 +57,8 @@ Relevant Notes:
 - [programming-language types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — example: a claim extracted from a multi-claim spec, enabling it to serve as a premise
 - [document classification](./document-classification.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
-- [agents navigate by deciding what to read next](./observations/agents-navigate-by-deciding-what-to-read-next.md) — grounds: claim titles make the navigation decision cheap by carrying the argument in the pointer itself
-- [two kinds of navigation](./observations/two-kinds-of-navigation.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
+- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: claim titles make the navigation decision cheap by carrying the argument in the pointer itself
+- [two kinds of navigation](./two-kinds-of-navigation.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
 - [what works](./what-works.md) — grounded by: the "prose-as-title convention" pattern this note theorizes and shows where it breaks
 - [context-loading strategy](./context-loading-strategy.md) — enables: claim titles are what make the first layer of progressive disclosure work in the loading hierarchy
 - [link contracts framework](./link-contracts-framework.md) — extends: argumentative vs referential link semantics are a concrete instance of the link intent taxonomy

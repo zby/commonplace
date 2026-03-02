@@ -158,7 +158,7 @@ Relevant Notes:
 - [document-classification](../document-classification.md) — our type system being compared
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — the design principle both systems share
 - [claim-notes-should-use-toulmin-derived-sections](../claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
-- [stabilisation-is-learning](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the validation split (script vs skill) is crystallisation applied to the validation process itself
+- [three distinct mechanisms](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the validation split (script vs skill) is crystallisation applied to the validation process itself
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — determines which checks can be deterministic (hard oracle) vs must stay LLM-judged (soft oracle)
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into
 - [thalo](./thalo.md) — the main system review note

@@ -11,8 +11,8 @@ status: current
 Framework for systematic, testable linking in knowledge bases. Received 2026-02-21.
 Saved as reference for when we start building concrete link practices.
 
-See [agents-navigate-by-deciding-what-to-read-next](./observations/agents-navigate-by-deciding-what-to-read-next.md) and
-[two-kinds-of-navigation](./observations/two-kinds-of-navigation.md) for the distilled observations.
+See [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) and
+[two-kinds-of-navigation](./two-kinds-of-navigation.md) for the distilled observations.
 
 ---
 
