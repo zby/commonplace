@@ -20,6 +20,7 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 - [extract-kb-as-standalone-project](./extract-kb-as-standalone-project.md) — extracting the KB framework as a reusable project
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read, unlike code where indirection is nearly free at runtime
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — pre-compute static parts of instructions and insert results; the mechanism is partial evaluation; indirection elimination and build-time generation are specific cases
+- [injectable configuration extends frontloading to installation-specific values](./injectable-configuration-extends-frontloading-to-installation-specific-values.md) — values static per-installation but variable across installations (sibling repo paths, local tools) are frontloadable through config the orchestrator injects into sub-agent frames
 
 ## Skills & Methodology
 
