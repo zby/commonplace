@@ -20,7 +20,7 @@ The [bitter lesson boundary](./bitter-lesson-boundary.md) draws a line between c
 - **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
 - **No oracle:** vibes and anecdotes.
 
-The bitter lesson is strongest when you have a decent training signal — hard or soft oracle. It's weakest at the no-oracle end, where there's nothing for scale to optimise against. This maps directly to the Karpathy verifiability framing that [stabilisation is learning](./agentic-systems-learn-through-three-distinct-mechanisms.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
+The bitter lesson is strongest when you have a decent training signal — hard or soft oracle. It's weakest at the no-oracle end, where there's nothing for scale to optimise against. This maps directly to the Karpathy verifiability framing that [deploy-time learning](./deploy-time-learning-the-missing-middle.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
 
 ## Reasoning
 
@@ -50,7 +50,7 @@ This suggests a priority order: invest in telemetry and eval harnesses *before* 
 Relevant Notes:
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient maps to oracle strength: harder oracles enable tighter iteration loops
-- [three distinct mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument
+- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism for oracle hardening: extracting deterministic rules from observed behavior
 - [softening-signals](./softening-signals.md) — provides testable indicators for where a component sits on the oracle spectrum
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work

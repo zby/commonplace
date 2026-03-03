@@ -125,7 +125,7 @@ Schema evolution rules (alter-entity, define ordering), type expression matching
 
 Every one of Thalo's rules is **deterministic** — a script checks them without LLM involvement. All of our checks run through an LLM (the `/validate` skill uses Sonnet), including the deterministic ones like enum validation and link resolution.
 
-This is the [crystallisation trajectory](../agentic-systems-learn-through-three-distinct-mechanisms.md) applied to validation itself: our deterministic checks (frontmatter valid, enum values, link health, areas-topics sync) could move to a Python script that runs in milliseconds — potentially as a pre-commit hook. The LLM-judged checks (description quality, composability, title-as-prose) stay at skill level because their [oracle strength](../oracle-strength-spectrum.md) is too low for deterministic verification.
+This is the [crystallisation trajectory](../crystallisation.md) applied to validation itself: our deterministic checks (frontmatter valid, enum values, link health, areas-topics sync) could move to a Python script that runs in milliseconds — potentially as a pre-commit hook. The LLM-judged checks (description quality, composability, title-as-prose) stay at skill level because their [oracle strength](../oracle-strength-spectrum.md) is too low for deterministic verification.
 
 The split would be:
 
@@ -158,7 +158,7 @@ Relevant Notes:
 - [document-classification](../document-classification.md) — our type system being compared
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — the design principle both systems share
 - [claim-notes-should-use-toulmin-derived-sections](../claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
-- [three distinct mechanisms](../agentic-systems-learn-through-three-distinct-mechanisms.md) — the validation split (script vs skill) is crystallisation applied to the validation process itself
+- [crystallisation](../crystallisation.md) — the validation split (script vs skill) is crystallisation applied to the validation process itself
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — determines which checks can be deterministic (hard oracle) vs must stay LLM-judged (soft oracle)
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into
 - [thalo](./thalo.md) — the main system review note

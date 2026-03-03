@@ -75,7 +75,7 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 **Where we diverged:**
 
-- **We built our own theory.** [Crystallisation](../agentic-systems-learn-through-three-distinct-mechanisms.md), [oracle strength](../oracle-strength-spectrum.md), [methodology enforcement as stabilisation](../../claw-design/methodology-enforcement-is-stabilisation.md) — these emerged from our own work and have no counterpart in arscontexta's research graph.
+- **We built our own theory.** [Crystallisation](../crystallisation.md), [oracle strength](../oracle-strength-spectrum.md), [methodology enforcement as stabilisation](../../claw-design/methodology-enforcement-is-stabilisation.md) — these emerged from our own work and have no counterpart in arscontexta's research graph.
 - **We simplified the structure.** Arscontexta's three-space architecture (self/notes/ops) felt over-engineered for our use. We collapsed to a flatter `project_claw/` with notes, adr, sources, claw-design, tasks. No separate identity/methodology/goals files.
 - **We developed verifiable document types.** Our [document classification](../document-classification.md) with types, traits, and status is structurally richer than arscontexta's template-with-schema approach. Types mark affordances; traits are independently checkable.
 - **We use embeddings for search.** We use embeddings (via qmd) for long-range search while rejecting them for organization. Article #23 positions the embedding critique as more absolute — embeddings produce fog. Our stance is more nuanced: embeddings are fine for search; curated links are for organization and reasoning.

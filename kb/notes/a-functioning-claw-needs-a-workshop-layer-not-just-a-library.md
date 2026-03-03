@@ -89,7 +89,7 @@ Relevant Notes:
 - [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — the action-oriented knowledge types this note identifies (preferences, procedures, precedents) are what workshop processes produce and consume; the workshop layer is where action-capacity learning happens
 - [spec mining is crystallisation's operational mechanism](../notes/spec-mining-as-crystallisation.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
-- [stabilisation is learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — extraction bridges are stabilisation: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
+- [stabilisation is learning](../notes/stabilisation.md) — extraction bridges are stabilisation: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
 
 Topics:

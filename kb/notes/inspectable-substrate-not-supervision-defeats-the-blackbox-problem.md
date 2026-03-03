@@ -22,7 +22,7 @@ An LLM can review a diff and catch a Clever Hans shortcut in generated code. It 
 
 ## The failure mode mapping
 
-Chollet's predicted ML problems map directly to [crystallisation](agentic-systems-learn-through-three-distinct-mechanisms.md) failure modes — but with mitigations that weight-based systems can't match:
+Chollet's predicted ML problems map directly to [crystallisation](crystallisation.md) failure modes — but with mitigations that weight-based systems can't match:
 
 | ML failure mode | Crystallisation equivalent | Mitigation available |
 |----------------|---------------------------|---------------------|
@@ -40,7 +40,7 @@ Chollet asks "what will be the Keras of agentic coding?" — the abstraction lay
 ---
 
 Relevant Notes:
-- [three distinct mechanisms](agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: crystallisation as system-level learning through repo artifacts
+- [crystallisation](crystallisation.md) — foundation: crystallisation as system-level learning through repo artifacts
 - [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — the verifiability gradient that determines when and how to crystallise
 
 Topics:

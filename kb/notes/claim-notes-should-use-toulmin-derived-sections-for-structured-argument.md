@@ -26,7 +26,7 @@ Three independent threads arrived at the same shape:
 
 The convergence isn't coincidence — Toulmin describes the structure of practical argument, and claim notes *are* practical arguments. The claim is in the title, the grounds are scattered in prose, the warrant is usually implicit, qualifiers are absent or buried. The notes already have Toulmin anatomy; they just lack the skeleton.
 
-Making the skeleton explicit — required sections with Toulmin-derived names — converts the informal claim convention into a structural contract: deterministic section checks verify the scaffold, bounded semantic checks verify the content within each section. This is the [stabilisation pattern](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) applied to the type system.
+Making the skeleton explicit — required sections with Toulmin-derived names — converts the informal claim convention into a structural contract: deterministic section checks verify the scaffold, bounded semantic checks verify the content within each section. This is the [stabilisation pattern](../notes/stabilisation.md) applied to the type system.
 
 ### Why a base type, not a trait
 
@@ -128,7 +128,7 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — enables: `structured-claim` has concrete structural requirements (sections), making it verifiable in the way `has-claim` as a trait was not
 - [document-classification](./document-classification.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr
 - [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
-- [three distinct mechanisms](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: the note → structured-claim promotion path is the verifiability gradient applied to the type system
+- [stabilisation](../notes/stabilisation.md) — foundation: the note → structured-claim promotion path is the stabilisation pattern applied to the type system
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
 
 Topics:

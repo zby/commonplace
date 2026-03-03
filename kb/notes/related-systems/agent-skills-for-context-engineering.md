@@ -44,7 +44,7 @@ These techniques could strengthen our [quality signals work](../../claw-design/q
 
 **Strong alignment:** Progressive disclosure, filesystem-first knowledge, start-simple philosophy, tool consolidation.
 
-**We go deeper:** Our [verifiability gradient](../agentic-systems-learn-through-three-distinct-mechanisms.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to stabilise — they have operational patterns but no learning framework. Our [methodology enforcement as stabilisation](../../claw-design/methodology-enforcement-is-stabilisation.md) has no counterpart in their work.
+**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to stabilise — they have operational patterns but no learning framework. Our [methodology enforcement as stabilisation](../../claw-design/methodology-enforcement-is-stabilisation.md) has no counterpart in their work.
 
 **They go deeper:** Attention mechanics and degradation data (model-specific thresholds, the four-bucket mitigation). Formal evaluation methodology (LLM-as-judge protocols, bias mitigation). Hosted agent infrastructure (sandboxing, warm pools, pre-built images).
 

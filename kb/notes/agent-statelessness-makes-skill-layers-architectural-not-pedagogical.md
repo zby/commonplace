@@ -60,7 +60,7 @@ Errors in the routing table — missing entries, wrong triggers, ambiguous descr
 
 ### The claw learns; the agent doesn't
 
-Since [stabilisation is learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md), and since the [crystallisation timescales](../notes/deploy-time-learning-the-missing-middle.md) identify three levels of adaptation (training, in-context, crystallisation), statelessness sharpens both claims: crystallisation isn't just the *best* form of learning available — it's the *only* form. There is no agent-internal learning to complement it. Every improvement that isn't crystallised into an artifact evaporates when the session ends. The investment in crystallisation infrastructure isn't a nice-to-have; it's the entire learning mechanism.
+Since [stabilisation is learning](../notes/stabilisation.md), and since the [crystallisation timescales](../notes/deploy-time-learning-the-missing-middle.md) identify three levels of adaptation (training, in-context, crystallisation), statelessness sharpens both claims: crystallisation isn't just the *best* form of learning available — it's the *only* form. There is no agent-internal learning to complement it. Every improvement that isn't crystallised into an artifact evaporates when the session ends. The investment in crystallisation infrastructure isn't a nice-to-have; it's the entire learning mechanism.
 
 This also reveals that "in-context learning" is a misnomer for agents. The session doesn't *adapt* the agent; it *configures* it. In-context isn't learning at all — it's loading.
 
@@ -88,7 +88,7 @@ Relevant Notes:
 - [context-loading-strategy](./context-loading-strategy.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: the stabilisation gradient describes how practices harden; this note adds that the agent never hardens with them
 - [crystallisation: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — foundation: the three timescales; this note argues in-context is really "loading" not "learning" for agents
-- [stabilisation is learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — foundation: Herbert Simon's definition; this note sharpens it — crystallisation is the *only* form of learning available
+- [stabilisation is learning](../notes/stabilisation.md) — foundation: Herbert Simon's definition; this note sharpens it — crystallisation is the *only* form of learning available
 - [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — supports: the reason lossy compilation is dangerous — the agent can't resolve omitted reasoning by loading the source at runtime
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — example: build-time generation is exactly the source→binary compilation pattern this note describes
 - [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — extends: the action-oriented knowledge types (preferences, procedures, precedents) also need the architectural-not-pedagogical treatment

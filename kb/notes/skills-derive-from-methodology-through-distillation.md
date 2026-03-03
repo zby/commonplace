@@ -22,7 +22,7 @@ The methodology→skill relationship has none of these properties. The input is 
 
 ### It is not stabilisation
 
-[Stabilisation](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
+[Stabilisation](../notes/stabilisation.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
 
 [Methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) already maps the enforcement gradient (instruction → skill → hook → script) as a stabilisation spectrum. That note is about *how reliably methodology is followed*. This note is about a different question: *what is the relationship between the methodology and the skill's content?*
 
