@@ -3,12 +3,14 @@ description: Deployed agentic systems learn through three distinct mechanisms �
 type: structured-claim
 traits: []
 areas: [learning-theory]
-status: current
+status: retired
 ---
 
 # Agentic systems learn through three distinct mechanisms
 
-Herbert Simon: learning is [any change that produces a more or less permanent change in a system's capacity](learning-is-capacity-change.md) for adapting to its environment. In deployed agentic systems — systems that combine LLMs with persistent artifacts — we've identified three distinct mechanisms by which this happens:
+> **Retired.** The "three distinct mechanisms" framing doesn't hold up. Crystallisation is the far end of the stabilisation spectrum (medium change), not an independent sibling. The real structure is two co-equal, orthogonal mechanisms — [stabilisation](./stabilisation.md) (commitment/narrowing) and [distillation](./distillation.md) (lossy extraction under context budget) — with [crystallisation](./crystallisation.md) as a qualitatively significant point on the stabilisation spectrum. See [learning-collection-refactoring-plan](./learning-collection-refactoring-plan.md) for the full analysis.
+
+Herbert Simon: learning is [any change that produces a more or less permanent change in a system's capacity](learning-is-not-only-about-generality.md) for adapting to its environment. In deployed agentic systems — systems that combine LLMs with persistent artifacts — we've identified three distinct mechanisms by which this happens:
 
 | Mechanism | Operation | What changes | Medium transition |
 |-----------|-----------|-------------|-------------------|
@@ -16,7 +18,7 @@ Herbert Simon: learning is [any change that produces a more or less permanent ch
 | **Crystallisation** | prompt → code | Verification regime, consumer, executability | Yes — natural language → executable |
 | **Distillation** | discursive → procedural | Rhetorical mode, information density | No — same medium, different organization |
 
-All three are learning in Simon's sense — they produce permanent changes in the system's capacity. They differ in what changes and whether the medium transitions. Each trades [generality for compound gains in reliability, speed, and cost](learning-is-capacity-change.md), but through different operations.
+All three are learning in Simon's sense — they produce permanent changes in the system's capacity. They differ in what changes and whether the medium transitions. Each trades [generality for compound gains in reliability, speed, and cost](stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md), but through different operations.
 
 ## Stabilisation
 
@@ -38,7 +40,7 @@ Each step trades generality (the document/process could have been anything) for 
 
 ### Softening is also learning
 
-The reverse — softening, replacing a stabilised component with a general-purpose one — is also learning. It increases generality at the cost of the compound. When scale makes a general approach good enough on reliability+speed+cost, the [bitter lesson boundary](bitter-lesson-boundary.md) tells you to soften. Both directions are capacity change; they just operate on different [dimensions of capacity](learning-is-capacity-change.md).
+The reverse — softening, replacing a stabilised component with a general-purpose one — is also learning. It increases generality at the cost of the compound. When scale makes a general approach good enough on reliability+speed+cost, the [bitter lesson boundary](bitter-lesson-boundary.md) tells you to soften. Both directions are capacity change; they just operate on different [dimensions of capacity](learning-is-not-only-about-generality.md).
 
 ### The KB as evidence
 
@@ -74,7 +76,7 @@ The stabilise/soften cycle described in [agentic systems interpret underspecifie
 
 ### Continuous learning is stabilisation during deployment
 
-AI labs frame "continuous learning" as adapting a deployed model to new data without retraining — the hot topic in production AI. The claim here is that stabilisation through versioned artifacts [achieves the same goals](./continuous-learning-is-stabilisation-during-deployment.md) — durable adaptation, task-specific knowledge accumulation, improved performance over time — and does it better on inspectability, rollback, verification, and composability. The continuous learning problem is a special case: stabilisation that happens during deployment, on the basis of deployment experience.
+AI labs frame "continuous learning" as adapting a deployed model to new data without retraining — the hot topic in production AI. The claim here is that stabilisation through versioned artifacts [achieves the same goals](./stabilisation-during-deployment-is-continuous-learning.md) — durable adaptation, task-specific knowledge accumulation, improved performance over time — and does it better on inspectability, rollback, verification, and composability. The continuous learning problem is a special case: stabilisation that happens during deployment, on the basis of deployment experience.
 
 ## Caveats
 
@@ -86,10 +88,11 @@ AI labs frame "continuous learning" as adapting a deployed model to new data wit
 ---
 
 Relevant Notes:
-- [learning-is-capacity-change](learning-is-capacity-change.md) — foundation: provides the capacity decomposition (generality vs reliability+speed+cost) that makes this claim precise
+- [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: defines the capacity decomposition (generality vs reliability+speed+cost)
+- [stabilisation and distillation both trade generality for compound](stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off mechanism that makes the three mechanisms precise
 - [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — foundation: defines the three timescales and the verifiability gradient; develops the crystallisation mechanism in detail
 - [skills-derive-from-methodology-through-distillation](../claw-design/skills-derive-from-methodology-through-distillation.md) — foundation: develops the distillation mechanism; distinguishes it from crystallisation and stabilisation
-- [continuous-learning-is-stabilisation-during-deployment](./continuous-learning-is-stabilisation-during-deployment.md) — extends: the specific argument that AI labs' continuous learning is achievable through artifact-based stabilisation
+- [stabilisation-during-deployment-is-continuous-learning](./stabilisation-during-deployment-is-continuous-learning.md) — extends: the specific argument that AI labs' continuous learning is achievable through artifact-based stabilisation
 - [bitter-lesson-boundary](bitter-lesson-boundary.md) — connects: the calculator/vision-feature boundary determines when stabilisation is permanent vs when softening is needed
 - [storing-llm-outputs-is-stabilization](storing-llm-outputs-is-stabilization.md) — instance: the simplest form of stabilisation-as-learning
 - [automating-kb-learning-is-an-open-problem](../claw-design/automating-kb-learning-is-an-open-problem.md) — applies: the KB's manual learning loop is stabilisation; automating the judgment-heavy parts is the open problem

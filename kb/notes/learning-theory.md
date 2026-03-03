@@ -1,5 +1,5 @@
 ---
-description: Index of notes about how systems learn, verify, and improve — Simon's capacity framework, stabilisation/crystallisation/distillation mechanisms, oracle theory, and memory architecture
+description: Index of notes about how systems learn, verify, and improve — capacity decomposition, stabilisation/distillation mechanisms, verifiability gradient, oracle theory, and memory architecture
 type: index
 status: current
 ---
@@ -11,20 +11,17 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 ## Foundations
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (semantic underspecification and execution indeterminism); the spec-to-program projection model, semantic boundaries, and the stabilise/soften cycle
-
-## Definitions
-
-- [learning-is-capacity-change](./learning-is-capacity-change.md) — Simon's framework: learning is any change in a system's capacity to adapt; capacity decomposes into generality vs a reliability/speed/cost compound, and three mechanisms operate on that trade-off differently
-- [agentic-systems-learn-through-three-distinct-mechanisms](./agentic-systems-learn-through-three-distinct-mechanisms.md) — the three mechanisms named: stabilisation narrows the interpretation space, crystallisation transitions medium, distillation extracts procedures — all are capacity change per Simon but differ in what changes
+- [learning-is-not-only-about-generality](./learning-is-not-only-about-generality.md) — capacity decomposes into generality (how broadly it applies) vs a reliability/speed/cost compound (how well it works where it applies); Simon's definition grounds the decomposition
 
 ## Mechanisms
 
-- [stabilisation](./stabilisation.md) — definition: narrowing the space of valid interpretations, trading generality for reliability/speed/cost
-- [crystallisation](./crystallisation.md) — definition: phase transition from natural language to executable code, changing medium, consumer, and verification regime
-- [distillation](./distillation.md) — definition: extracting operational procedures from discursive reasoning, staying in the same medium but changing rhetorical mode
-- [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — repo artifacts fill the gap between training and in-context learning; the three mechanisms provide a verifiability gradient from prompt tweaks to deterministic code
-- [continuous-learning-is-stabilisation-during-deployment](./continuous-learning-is-stabilisation-during-deployment.md) — AI labs' continuous learning is achievable through stabilisation with versioned artifacts, which beats weight updates on inspectability and rollback
-- [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — choosing to keep an LLM output collapses a distribution to a point — stabilisation applied to artifacts
+- [stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — both mechanisms sacrifice generality for compound gains in reliability, speed, and cost; they differ in the operation (constraining vs extracting) and how much compound they yield
+- [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — repo artifacts fill the gap between training and in-context learning; the verifiability gradient from prompt tweaks to deterministic code structures the progression
+- [stabilisation](./stabilisation.md) — constraining the interpretation space, from partial narrowing (conventions) to full commitment (deterministic code); [crystallisation](./crystallisation.md) is the far end where the medium changes
+- [distillation](./distillation.md) — targeted extraction from a larger body of reasoning into a focused artifact shaped by use case, context budget, or agent; orthogonal to stabilisation
+- [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — synthesis/composition: positing a new general concept and simultaneously recognizing existing particulars as instances of it; neither stabilisation nor distillation
+- [stabilisation-during-deployment-is-continuous-learning](./stabilisation-during-deployment-is-continuous-learning.md) — AI labs' continuous learning is achievable through stabilisation with versioned artifacts, which beats weight updates on inspectability and rollback
+- [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — choosing to keep an LLM output constrains the interpretation space to one point; develops the generator/verifier pattern and verbatim risk
 
 ## Oracle & Verification
 
@@ -45,7 +42,6 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — when agents and tools share a calling convention, stabilisation and crystallisation become local operations; llm-do as primary evidence
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — typing, testing, progressive compilation, and version control transfer from programming to LLM prompting, with probabilistic execution making some practices harder
 - [ad-hoc-prompts-extend-the-system-without-schema-changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — the counterpoint: sometimes staying at the prompt level is the right choice; ad hoc instructions absorb new requirements faster than schema changes
-- [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — discovery varies by abstraction depth: the hard problem is positing a new general concept and simultaneously recognizing existing particulars as instances of it
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — law as an independent source discipline for the underspecified instructions problem: precedent and codification are stabilisation; crystallisation is rare in law; legal techniques are native to the underspecified medium
 
 ## Reference material
@@ -55,4 +51,4 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 ## Related Areas
 
 - [claw-design](./claw-design.md) — applies learning theory to claw architecture and evaluation; [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) bridges both areas
-- [document-system](./document-system.md) — the type ladder (text→note→structured-claim) instantiates the stabilisation→crystallisation gradient for documents
+- [document-system](./document-system.md) — the type ladder (text→note→structured-claim) instantiates the stabilisation gradient for documents

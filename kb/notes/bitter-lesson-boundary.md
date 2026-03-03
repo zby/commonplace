@@ -32,7 +32,7 @@ The vision researchers faced exactly this. Each individual feature — edge dete
 
 ### Crystallisation and softening
 
-[Crystallisation](./deploy-time-learning-the-missing-middle.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each crystallisation step [trades generality for compound gains in reliability, speed, and cost](./learning-is-capacity-change.md). But every such artifact also encodes a decomposition of some larger problem, and the calculator/vision-feature boundary determines whether that trade-off is real:
+[Crystallisation](./deploy-time-learning-the-missing-middle.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each crystallisation step [trades generality for compound gains in reliability, speed, and cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). But every such artifact also encodes a decomposition of some larger problem, and the calculator/vision-feature boundary determines whether that trade-off is real:
 
 - **Calculator decompositions**: the spec fully captures the subproblem, so crystallisation is pure gain — reliability+speed+cost improve and there's no generality loss, because the spec exhausts the problem space. There's nothing for a general method to discover.
 - **Vision-feature decompositions**: the spec is a plausible theory, so crystallisation involves the real trade-off — you gain the compound but lose generality. When scale makes the general approach good enough on reliability+speed+cost, the generality loss isn't worth it anymore.

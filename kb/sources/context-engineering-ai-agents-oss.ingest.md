@@ -39,7 +39,7 @@ This paper presents the first systematic empirical study of AI context files (AG
 
 6. **[programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md)** (validates) -- Developers are applying version control, code review, and testing to context files, confirming that programming practices transfer to prompt-adjacent work.
 
-7. **[continuous-learning-is-stabilisation-during-deployment](../notes/continuous-learning-is-stabilisation-during-deployment.md)** (validates) -- The commit-level analysis showing iterative refinement of instructions over time is continuous learning through versioned artifacts.
+7. **[stabilisation-during-deployment-is-continuous-learning](../notes/stabilisation-during-deployment-is-continuous-learning.md)** (validates) -- The commit-level analysis showing iterative refinement of instructions over time is continuous learning through versioned artifacts.
 
 8. **[agent-skills-for-context-engineering](../notes/related-systems/agent-skills-for-context-engineering.md)** (complements) -- Academic empirical data on the same phenomenon that the agent-skills note addresses through practitioner design.
 

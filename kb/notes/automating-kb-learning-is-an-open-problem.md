@@ -8,7 +8,7 @@ status: speculative
 
 # Automating KB learning is an open problem
 
-The KB already has a learning loop — human + agent working together. Every session that improves notes, sharpens connections, or discovers principles is [learning in Simon's sense](../notes/learning-is-capacity-change.md): a change that increases the system's adaptive capacity. This happens all the time, from fixing typos (narrow scope) to discovering design principles (wide scope).
+The KB already has a learning loop — human + agent working together. Every session that improves notes, sharpens connections, or discovers principles is [learning in Simon's sense](../notes/learning-is-not-only-about-generality.md): a change that increases the system's adaptive capacity. This happens all the time, from fixing typos (narrow scope) to discovering design principles (wide scope).
 
 The open problem is not "the KB needs a learning loop" but **automating the judgment-heavy parts** of the loop we already run manually.
 
@@ -36,7 +36,26 @@ The visible KB is the production system. Learning could happen through a backgro
 - **Regroup**: a cluster of notes suggests an index that doesn't exist yet
 - **Retire**: an automated check, link, or note has outlived its usefulness — four signals: zero catches over months, false positives exceed true positives, methodology change made it irrelevant, replaced by a better mechanism (from [arscontexta](https://github.com/agenticnotetaking/arscontexta) methodology review)
 
-Each mutation would be speculative — staged separately, surfaced for human review only when it scores high enough. This is the automated version of what [stabilisation as learning](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) describes as the manual stabilise/soften cycle — the same system-level adaptation, but with the agent proposing mutations instead of a human driving each one.
+Each mutation would be speculative — staged separately, surfaced for human review only when it scores high enough. This is the automated version of what [stabilisation as learning](../notes/stabilisation.md) describes as the manual stabilise/soften cycle — the same system-level adaptation, but with the agent proposing mutations instead of a human driving each one.
+
+## Mutations differ on two axes
+
+The boiling cauldron mutations differ on both generality and crystallisability:
+
+**By generality:**
+- **Extract, reformulate** — narrow scope, improving individual notes
+- **Relink, regroup, synthesise** — medium scope, changing how knowledge connects
+- **Retire, restructure** — wide scope, changing the system's organising principles
+
+**By crystallisability** (reliability+speed+cost compound):
+- **Crystallisable operations** (link checking, section validation, index regeneration) — already automatable as scripts, gaining reliability, speed, and cost simultaneously
+- **Judgment operations** (is this claim worth keeping? should these notes merge?) — require LLM or human assessment, may crystallise later as patterns emerge
+
+Automating narrow-scope improvements is relatively tractable (ingest pipelines, LLM extraction, validation scripts). Automating wide-scope improvements is the hard part — it requires judgment about what principles generalise. Crystallisability is a separate axis — often tractable regardless of scope, because the question "can this be made deterministic?" is itself fairly deterministic.
+
+## The vocabulary gap
+
+[Stabilisation during deployment is already continuous learning](../notes/stabilisation-during-deployment-is-continuous-learning.md) — developers accumulate informal tweaks, agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions, teams version their prompts and tools. But none of it is systematic. Automating the learning loop requires a mechanistic description of the process — what the operations are, how they compose, what makes one succeed or fail. That description requires a vocabulary that doesn't yet exist in standard use: [stabilisation](../notes/stabilisation.md) and [distillation](../notes/distillation.md) as the two mechanisms, the [generality-vs-compound trade-off](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) as what they operate on, the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) as the progression path, the [bitter lesson boundary](../notes/bitter-lesson-boundary.md) as the test for when crystallisation is permanent vs temporary. Without these distinctions, "make the system learn" is a wish, not a design specification. The [adaptation taxonomy for agentic AI](../notes/research/adaptation-agentic-ai-analysis.md) begins to close the gap by identifying data-driven triggers for when to stabilise versus when to soften.
 
 ## Open problems
 
@@ -55,8 +74,8 @@ The [bitter lesson boundary](../notes/bitter-lesson-boundary.md) distinguishes c
 ---
 
 Relevant Notes:
-- [learning-is-capacity-change](../notes/learning-is-capacity-change.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
-- [three distinct mechanisms](../notes/agentic-systems-learn-through-three-distinct-mechanisms.md) — describes the stabilise/soften cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
+- [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
+- [stabilisation](../notes/stabilisation.md) — describes the stabilise/soften cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
 - [what-works](./what-works.md) — the observation log this note recommends as interim approach; proven patterns that would feed a learning loop's evaluation
 - [what-doesnt-work](./what-doesnt-work.md) — the anti-pattern log; complements what-works as ground truth for what the loop should avoid proposing
