@@ -30,13 +30,13 @@ The formal system didn't grow. A prompt absorbed the requirement.
 
 [Instructions are typed callables](./instructions-are-typed-callables.md) argues for the other end: declare type signatures, validate inputs, make skills composable. Both are correct for different moments. The typed-callable view is right for operations that recur — `/connect`, `/validate`, `/ingest`. The ad hoc view is right for operations that might happen once, or whose shape isn't clear yet.
 
-The stabilisation direction is: write ad hoc instructions first, notice when you're writing the same kind of instructions repeatedly, extract a skill. This is the prompt equivalent of "write the code three times, then extract a function." The instructions note is the prototype; the skill is the extraction.
+The stabilisation direction is: write ad hoc instructions first, notice when you're writing the same kind of instructions repeatedly, extract a skill. This is the prompt equivalent of "write the code three times, then extract a function." The instructions note is the prototype; the skill is the extraction. This trajectory — [lowest-friction capture, then progressive refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — applies to the skill layer just as it does to the document type ladder. And the extraction step itself is [distillation](./skills-derive-from-methodology-through-distillation.md): the ad hoc instructions carry discursive reasoning about what to do and why; the extracted skill keeps the procedure and factors out the justification.
 
 ## Why prompts carry what types can't
 
 The reason ad hoc instructions resist premature formalisation isn't just convenience — it's that prompts carry judgment that type signatures can't express. A prompt can say "focus on sections 3.1-3.3" or "the key tension is between X and Y." A type signature says `source → report`. The prompt carries the caller's judgment, not just the caller's data.
 
-This matters most for sub-agent handoff. An instructions note is a clean context boundary: the caller does the judgment-heavy work (gathering, selecting, deciding what matters) and writes it all down. The sub-agent executes with clean context — no conversation history, no search, no decisions about what's relevant. The instructions note is the interface, and it's richer than any type signature could be.
+This matters most for sub-agent handoff. An instructions note is a clean context boundary: the caller does the judgment-heavy work (gathering, selecting, deciding what matters) and writes it all down. The sub-agent executes with clean context — no conversation history, no search, no decisions about what's relevant. This is the [lexical scoping that sub-agents provide](./llm-context-is-composed-without-scoping.md) — the instructions note defines what's visible in the sub-agent's frame, and the sub-agent inherits nothing beyond what the caller explicitly passed. The instructions note is the interface, and it's richer than any type signature could be.
 
 ## Why this works: homoiconicity
 
@@ -56,6 +56,9 @@ Relevant Notes:
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: this note adds a practice that goes the other direction — sometimes staying at the prompt level is the right choice, not a failure to compile
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: unified calling conventions make it possible to start with a prompt and later extract to a skill without changing call sites
 - [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — extends: the workshop layer is where ad hoc instructions live; the library is where they stabilise into skills
+- [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — grounds: ad hoc instructions are the wikiwiki principle applied to the skill layer — lowest-friction capture first, progressive refinement into skills as patterns emerge
+- [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — enables: the extraction from ad hoc instructions to skills is distillation — keeping procedures, factoring out the discursive reasoning that produced them
+- [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — grounds: ad hoc instructions notes are effective sub-agent interfaces because they provide lexically scoped frames — the sub-agent sees only what the caller explicitly passed
 
 Topics:
 - [claw-design](./claw-design.md)
