@@ -14,7 +14,7 @@ argument-hint: "[url-or-file] — URL (https://...) or path to .md file in kb/so
 
 Parse the target to determine what to do:
 
-1. **No target** — list `kb/sources/` recent `.md` files (excluding .json, .ingest.md, .working.md), then ask which to ingest.
+1. **No target** — list `kb/sources/` recent `.md` files (excluding .json, .ingest.md), then ask which to ingest.
 
 2. **URL** (starts with `http://` or `https://`) — invoke `/snapshot-web <url>` to capture it. `/snapshot-web` handles all URL types (web pages, PDFs, GitHub, X/Twitter).
 
@@ -26,51 +26,51 @@ Parse the target to determine what to do:
 
 ---
 
-## Step 1: Create Working Copy
+## Step 1: Set Up Workshop
 
-Copy the snapshot file using `cp`. The snapshot already has YAML frontmatter
-that's sufficient for /connect to work with. No rewriting needed.
+Once you have the snapshot file path (from URL resolution or direct input), create a workshop directory derived from the snapshot filename:
 
 ```bash
-cp "{input_path}" "{input_path%.md}.working.md"
+mkdir -p kb/work/ingest-<source-slug>/
 ```
 
-- Input:  `kb/sources/some-article.md`
-- Working: `kb/sources/some-article.working.md`
+For example: `kb/sources/some-article.md` → `kb/work/ingest-some-article/`
 
-## Step 2: Run /connect on the Working Copy
+The workshop holds the connection report and any other artifacts from this ingestion.
 
-Invoke the /connect skill on the working copy:
+## Step 2: Run /connect on the Snapshot
+
+Run discovery-only connection finding directly on the snapshot — no working copy needed:
 
 ```
-/connect {path to .working.md file}
+/connect {path to snapshot file}
 ```
 
-This runs full connect-style discovery: index exploration, semantic search,
-keyword search, articulation-tested connections. /connect will write links
-INTO the working copy pointing at real docs/notes/ files.
+This produces a connection report in the active workshop: `<workshop>/connect-report-<name>.md`
 
-**Note:** /connect also adds reverse links FROM KB notes back TO the working
-copy (bidirectional linking). These reverse links will point to the
-`.working.md` file. Step 5b fixes these before the working copy is deleted.
+The report contains:
+- Discovery trace (what was searched, what matched)
+- Connections found with relationship types and reasons
+- Rejected candidates
+- Index membership recommendations
+- Synthesis opportunities and flags
 
-Wait for /connect to complete before proceeding.
+Wait for `/connect` to complete before proceeding.
 
-## Step 3: Read Connected Working Copy
+## Step 3: Read Connection Report
 
-Read the working copy after /connect has annotated it. Note:
-- Which docs/notes/ files were linked
-- What relationship types were identified
+Read the connection report from the workshop. Note:
+- Which `kb/notes/` files were identified as connections
+- What relationship types were found
 - Any synthesis opportunities or tensions flagged
-- The discovery trace (what was searched, what matched)
 
 This is your connection context for the analysis below.
 
 ## Step 4: Produce the Ingestion Report
 
-Now write the analysis, informed by the connections found in Step 2-3.
+Write the analysis, informed by the connections found in Steps 2-3.
 
-### 4.1 Classification
+### 3.1 Classification
 
 **Source type** — pick one and briefly justify:
 - **scientific-paper**: Peer-reviewed or preprint with methodology, data, citations
@@ -86,18 +86,18 @@ Now write the analysis, informed by the connections found in Step 2-3.
 **Author signal**: One sentence — who is this person, why attend to their
 experience? ("unknown" is fine)
 
-### 4.2 Summary
+### 3.2 Summary
 
 One paragraph. What is the source about? What is the author's main thesis or
 contribution? Write for someone deciding whether to read the full source.
 
-### 4.3 Connections Found
+### 3.3 Connections Found
 
-Summarise what /connect discovered. Which existing notes does this source
+Summarise what `/connect` discovered. Which existing notes does this source
 connect to, and how? Include the relationship types and the key insight about
 how this source fits (or doesn't) into our existing knowledge graph.
 
-### 4.4 Extractable Value
+### 3.4 Extractable Value
 
 Based on the source type AND the connections found, look for the RIGHT kind
 of value. The connections tell you what's already captured — focus on what's NEW.
@@ -131,7 +131,7 @@ List 3-7 items, each as a one-liner with enough context to evaluate.
 Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
 [just-a-reference].
 
-### 4.5 Recommended Next Action
+### 3.5 Recommended Next Action
 
 Pick ONE and be specific:
 
@@ -146,33 +146,6 @@ Save the report next to the snapshot as `.ingest.md`:
 
 - Input:  `kb/sources/some-article.md`
 - Output: `kb/sources/some-article.ingest.md`
-
-## Step 5b: Rewrite Reverse Links
-
-/connect may have added reverse links from KB notes pointing to the
-`.working.md` file. Before deleting the working copy, rewrite these to
-point to the snapshot file (the permanent source artifact).
-
-```bash
-# Find all files linking to the .working.md
-grep -rl "{basename}.working.md" kb/ --include="*.md"
-```
-
-For each file found, replace `.working.md` with `.md` in the link target:
-- `some-article.working.md` → `some-article.md`
-
-Use `sed` or edit each file. Verify the snapshot file exists at the
-rewritten path.
-
-## Step 6: Clean Up Working Copy
-
-Delete the `.working.md` file — it was a scratch space for /connect and is no longer needed:
-
-```bash
-rm "{input_path%.md}.working.md"
-```
-
-The connections found are preserved in the `.ingest.md` report. The working copy is disposable.
 
 ## Output Format
 
@@ -212,23 +185,12 @@ Author: {credibility signal}
 
 Tell the user where the report was saved and what the recommended action is.
 
----
-
-## Design Note: Connection Quality
-
-LLMs are good at finding candidate connections but tend to over-connect —
-linking everything to everything with plausible-sounding justifications. This
-is fine here because the pipeline is advisory, not autonomous. /connect writes
-its findings into the .working.md copy, the report summarises them, and the
-human evaluates which connections are genuine. No notes are created or modified
-in docs/notes/ without human decision.
-
 ## Critical Constraints
 
 **never:**
 - Extract atomic claims — this is ingestion, not decomposition
-- Write any files other than .working.md and .ingest.md
-- Modify any files in docs/notes/ — that happens in later steps if the human decides to proceed
+- Write any files other than `.ingest.md`
+- Modify any files in kb/notes/ — that happens in later steps if the human decides to proceed
 - Hallucinate connections — if the source isn't relevant, say so
 - Skip running /connect — the connections are the foundation of the analysis
 

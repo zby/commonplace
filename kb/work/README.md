@@ -7,3 +7,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/) — rethinking how sources get analysed and how analysis instructions flow from the caller
+- [connect-refactoring/](./connect-refactoring/) — splitting /connect into discovery-only + directed reading for file mutations
