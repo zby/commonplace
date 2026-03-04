@@ -10,6 +10,7 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 
 ## Architecture
 
+- [context-efficiency-is-the-central-constraint-in-agent-system-design](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) — context is the scarce resource in agent systems; nearly every architectural pattern (frontloading, progressive disclosure, sub-agent isolation, navigation design) is a response to context scarcity
 - [files-not-database](./files-not-database.md) — files with git beat a database for agent KBs: universal interface, free versioning, zero infrastructure; derived indexes solve scale without replacing the source of truth
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, skills/, scripts/, and how they compose
 - [commonplace-installation-architecture](../commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
@@ -46,7 +47,7 @@ How claws are built, installed, operated, and evaluated. Architecture decisions,
 
 ## Workshop Layer
 
-- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion with state machines, dependencies, and expiration
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion with state machines, dependencies, and expiration
 - [active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — working understanding during an active campaign needs holistic rewrite, not graph composition; theorist exemplifies this as a workshop artifact
 
 ## Gaps
