@@ -1,12 +1,12 @@
 ---
-description: Files with git beat a database for agent-facing knowledge bases — universal interface, free versioning, no infrastructure to maintain
+description: Files with git beat a database for agent-operated knowledge bases — universal interface, free versioning, no infrastructure to maintain
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: current
 ---
 
-# Files beat a database for agent knowledge bases
+# Files beat a database for agent-operated knowledge bases
 
 The temptation as a KB grows is to move to a database. But files are the universal interface — agents read/write them directly with tools they already have (Read, Write, Grep), git gives versioning and diffing for free, grep searches thousands of files in milliseconds, and markdown renders everywhere (GitHub, editors, browsers). [Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step — and the system works because the file formats are the interface.
 
@@ -38,4 +38,4 @@ Relevant Notes:
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 
 Topics:
-- [claw-design](./claw-design.md)
+- [claw-design](./kb-design.md)
