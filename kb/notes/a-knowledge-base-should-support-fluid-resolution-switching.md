@@ -2,7 +2,7 @@
 description: Good thinking requires moving between abstraction levels — broad for context, narrow for mechanism, back out for pattern. A KB's quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy.
 type: note
 traits: [has-external-sources]
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -14,7 +14,7 @@ The commonplace KB already has several mechanisms that serve resolution-switchin
 
 **Titles vs bodies are a resolution pair.** Claim titles give the zoomed-out view — the principle, the assertion. The note body gives the zoomed-in view — the mechanism, the evidence, the specifics. Scanning a list of titles is surveying the landscape; opening a note is examining the territory. Since [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), following links between claim titles reads as a chain of reasoning at the abstract level — without requiring the reader to descend into any specific note.
 
-**Indexes and notes operate at different resolutions.** An area index like `claw-design.md` is the broad view — it shows what topics exist and how they relate. Following a link from the index zooms in. Returning to the index zooms out to check bearings. This is the [two kinds of navigation](./two-kinds-of-navigation.md) distinction: local link-following is narrow and contextual; search and index browsing are broad and orienting.
+**Indexes and notes operate at different resolutions.** An area index like `kb-design.md` is the broad view — it shows what topics exist and how they relate. Following a link from the index zooms in. Returning to the index zooms out to check bearings. This is the [two kinds of navigation](./two-kinds-of-navigation.md) distinction: local link-following is narrow and contextual; search and index browsing are broad and orienting.
 
 **Link semantics encode zoom direction.** "Since [X]" zooms into a foundation — following it takes you deeper, toward the grounds of the current argument. "This extends [Y]" zooms out toward a generalization. "Contradicts [Z]" shifts laterally to a competing view at the same level. The relationship words in [link strength](./link-strength-is-encoded-in-position-and-prose.md) aren't just categorization — they tell the reader which direction in abstraction space they're moving.
 
@@ -54,4 +54,4 @@ Source:
 - Adapted from a social media post on "The Art of Good Thinking: Moving Between Levels" — the core insight about resolution-switching applied to KB design
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

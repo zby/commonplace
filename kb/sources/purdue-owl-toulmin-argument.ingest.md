@@ -25,21 +25,21 @@ Stephen Toulmin's argumentation method decomposes any argument into six componen
 
 ## Connections Found
 
-/connect discovered rich convergence between Toulmin's framework and existing claw conventions. Six connections were identified:
+/connect discovered rich convergence between Toulmin's framework and existing KB conventions. Six connections were identified:
 
-1. **title-as-claim-enables-traversal-as-reasoning** (claw-design) -- Strong match. Claim-titled notes are literally Toulmin claims; link semantics using "since" and "because" encode warrants. Toulmin provides the formal theory behind what we do intuitively with claim titles.
+1. **title-as-claim-enables-traversal-as-reasoning** (kb-design) -- Strong match. Claim-titled notes are literally Toulmin claims; link semantics using "since" and "because" encode warrants. Toulmin provides the formal theory behind what we do intuitively with claim titles.
 
 2. **Thalo type comparison** (notes/related-systems) -- Strong match. Thalo's opinion entity with Claim/Reasoning/Caveats sections maps directly to Toulmin's claim/grounds+warrant/qualifier+rebuttal. The thalo-type-comparison note already flagged that we lack structured sections for argument-shaped notes; Toulmin names what those sections should be.
 
 3. **programming-language types applied to documents mark affordances** (notes) -- Moderate match. The `claim` type's affordances (verify, gather evidence, challenge) are Toulmin operations: verifying grounds, strengthening backing, raising rebuttals. The affordance table is Toulmin without naming Toulmin.
 
-4. **link contracts framework** (claw-design) -- Moderate match. The rule "every strong claim should link to Evidence or be labeled as assumption" is Toulmin's requirement that grounds be explicit and warrants surfaced.
+4. **link contracts framework** (kb-design) -- Moderate match. The rule "every strong claim should link to Evidence or be labeled as assumption" is Toulmin's requirement that grounds be explicit and warrants surfaced.
 
-5. **text testing framework** (claw-design) -- Moderate match. Claim extraction + entailment check + contradiction check is Toulmin analysis operationalized as automated testing.
+5. **text testing framework** (kb-design) -- Moderate match. Claim extraction + entailment check + contradiction check is Toulmin analysis operationalized as automated testing.
 
-6. **document types should be verifiable** (claw-design) -- Moderate match. The `has-claim` trait's verifiability depends on Toulmin grounds and warrant being examinable.
+6. **document types should be verifiable** (kb-design) -- Moderate match. The `has-claim` trait's verifiability depends on Toulmin grounds and warrant being examinable.
 
-The overall pattern: multiple claw conventions independently converged on Toulmin-shaped structures without naming Toulmin. This source provides the canonical vocabulary for what we already do.
+The overall pattern: multiple KB conventions independently converged on Toulmin-shaped structures without naming Toulmin. This source provides the canonical vocabulary for what we already do.
 
 ## Extractable Value
 
@@ -57,4 +57,4 @@ The overall pattern: multiple claw conventions independently converged on Toulmi
 
 ## Recommended Next Action
 
-Write a note titled "Toulmin structure maps to claw claim conventions" in `project_claw/notes/` connecting to `title-as-claim-enables-traversal-as-reasoning.md`, `thalo-type-comparison.md`, and `instructions-are-typed-callables.md`. The note would argue: claw conventions independently converged on Toulmin-shaped structures; adopting Toulmin vocabulary (especially warrant, qualifier, rebuttal) makes the implicit structures explicit and enables a concrete section template for `has-claim` notes. This synthesizes the three-way convergence that /connect identified and resolves the gap flagged in thalo-type-comparison ("we lack structured sections for argument-shaped notes").
+Write a note titled "Toulmin structure maps to KB claim conventions" in `kb/notes/` connecting to `title-as-claim-enables-traversal-as-reasoning.md`, `thalo-type-comparison.md`, and `instructions-are-typed-callables.md`. The note would argue: KB conventions independently converged on Toulmin-shaped structures; adopting Toulmin vocabulary (especially warrant, qualifier, rebuttal) makes the implicit structures explicit and enables a concrete section template for `has-claim` notes. This synthesizes the three-way convergence that /connect identified and resolves the gap flagged in thalo-type-comparison ("we lack structured sections for argument-shaped notes").

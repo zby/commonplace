@@ -2,7 +2,7 @@
 description: Every traversal is a read-write opportunity — agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -43,4 +43,4 @@ Relevant Notes:
 - [Ars Contexta](./related-systems/arscontexta.md) — source: the incremental formalization insight that motivated this design
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: Instructions, skills, hooks, and scripts form a stabilisation gradient for methodology — from underspecified and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
 type: note
 traits: []
-areas: [claw-design, learning-theory]
+areas: [kb-design, learning-theory]
 status: seedling
 ---
 
@@ -59,5 +59,5 @@ Relevant Notes:
 - [context loading strategy](./context-loading-strategy.md) — mirrors: the loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies) parallels the enforcement hierarchy, but for information specificity rather than practice reliability
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)
 - [learning-theory](./learning-theory.md)

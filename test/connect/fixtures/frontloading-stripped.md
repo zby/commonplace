@@ -59,7 +59,7 @@ Standard PE specialises a program P with respect to known **static** inputs s, p
 | Binding-time analysis | The author's judgment about what depends on runtime context vs what doesn't |
 | Specialisation | The build-time/setup-time step that produces concrete instructions |
 
-Template expansion with `{{claw_root}}` → `project_claw/` is textbook PE. The [generate-at-build-time](../notes/generate-instructions-at-build-time.md) note describes a specialiser for skill templates.
+Template expansion with `{{claw_root}}` → `commonplace/kb/` is textbook PE. The [generate-at-build-time](../notes/generate-instructions-at-build-time.md) note describes a specialiser for skill templates.
 
 ### Where the PE definition stretches
 

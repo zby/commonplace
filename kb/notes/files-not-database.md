@@ -38,4 +38,4 @@ Relevant Notes:
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 
 Topics:
-- [claw-design](./kb-design.md)
+- [kb-design](./kb-design.md)

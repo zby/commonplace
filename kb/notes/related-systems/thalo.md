@@ -31,7 +31,7 @@ Thalo is the system closest to our theoretical position. They explicitly argue t
 
 The comparison illuminates a design spectrum:
 
-| Dimension | Thalo | Claw |
+| Dimension | Thalo | Commonplace |
 |-----------|-------|------|
 | Type system | Custom DSL, Tree-Sitter grammar | YAML frontmatter, convention-based |
 | Validation | 27 compiler rules, deterministic | Skills + scripts, mix of deterministic and stochastic |

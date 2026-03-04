@@ -8,7 +8,7 @@ status: seedling
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place
 
-The claw type hierarchy is a crystallisation ladder for thoughts, and the design principle behind it is Ward Cunningham's original wiki idea: make it trivially easy to save a thought, then make it easy to refine it — in place, not by moving it somewhere else.
+The KB type hierarchy is a crystallisation ladder for thoughts, and the design principle behind it is Ward Cunningham's original wiki idea: make it trivially easy to save a thought, then make it easy to refine it — in place, not by moving it somewhere else.
 
 ## Evidence
 
@@ -35,7 +35,7 @@ This connects to [crystallisation](../notes/crystallisation.md): crystallisation
 
 - **Wikis have a decay problem.** The original WikiWikiWeb eventually suffered from stale pages nobody maintained. Our `status: outdated` and seedling review process are meant to address this, but the risk remains — low friction for capture means high volume, and curation must keep up.
 - **"In place" has limits.** A `text` file that grows into a 500-line `structured-claim` might be better split. The principle is "refine in place when possible," not "never split."
-- **The ladder is a library pattern.** The refinement-in-place trajectory assumes documents move toward permanence — accumulating structure, becoming more connected, staying in the KB. [Workshop documents](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) (tasks, decision threads, experiments) follow the opposite trajectory: they consume value over time and end by being archived or discarded. The wikiwiki principle applies to knowledge capture, not to work-in-motion.
+- **The ladder is a library pattern.** The refinement-in-place trajectory assumes documents move toward permanence — accumulating structure, becoming more connected, staying in the KB. [Workshop documents](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) (tasks, decision threads, experiments) follow the opposite trajectory: they consume value over time and end by being archived or discarded. The wikiwiki principle applies to knowledge capture, not to work-in-motion.
 
 ---
 
@@ -45,7 +45,7 @@ Relevant Notes:
 - [crystallisation](../notes/crystallisation.md) — the general pattern; the wiki principle is the UX requirement that makes crystallisation practical
 - [stabilisation and distillation both trade generality for compound](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
-- [a functioning claw needs a workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
+- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
 
 Topics:
 - [document-system](./document-system.md)

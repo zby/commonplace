@@ -8,7 +8,7 @@ status: current
 
 # Claim notes should use Toulmin-derived sections for structured argument
 
-Claw conventions independently converged on [Toulmin's argumentation model](../sources/purdue-owl-toulmin-argument.md) without naming it. Adopting Toulmin's vocabulary as a new base type `structured-claim` makes the distinction explicit: any note can have a claim title (the title-as-claim convention), but only a `structured-claim` commits to the full argument scaffold.
+KB conventions independently converged on [Toulmin's argumentation model](../sources/purdue-owl-toulmin-argument.md) without naming it. Adopting Toulmin's vocabulary as a new base type `structured-claim` makes the distinction explicit: any note can have a claim title (the title-as-claim convention), but only a `structured-claim` commits to the full argument scaffold.
 
 ## Evidence
 

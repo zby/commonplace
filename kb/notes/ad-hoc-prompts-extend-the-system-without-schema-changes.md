@@ -2,13 +2,13 @@
 description: When a new requirement doesn't fit existing types or skills, writing an ad hoc instructions note absorbs it without any schema change — the collections problem is a concrete example
 type: note
 traits: []
-areas: [claw-design, learning-theory]
+areas: [kb-design, learning-theory]
 status: seedling
 ---
 
 # Ad hoc prompts extend the system without schema changes
 
-A claw has a deterministic base — files, directories, types, frontmatter schemas, validation scripts — and a prompt layer on top. The prompt layer is where new requirements get absorbed without changing the base.
+A knowledge base has a deterministic base — files, directories, types, frontmatter schemas, validation scripts — and a prompt layer on top. The prompt layer is where new requirements get absorbed without changing the base.
 
 The mechanism: when a requirement doesn't fit existing types or skills, you write an instructions note — a markdown file that tells an agent what to do. No code, no schema change, no registration. The system's vocabulary grows at the speed of writing, not the speed of coding.
 
@@ -55,11 +55,11 @@ Relevant Notes:
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — foundation: the gradient from instructions to scripts. Ad hoc instructions notes are the loosest point on this gradient.
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: this note adds a practice that goes the other direction — sometimes staying at the prompt level is the right choice, not a failure to compile
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: unified calling conventions make it possible to start with a prompt and later extract to a skill without changing call sites
-- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — extends: the workshop layer is where ad hoc instructions live; the library is where they stabilise into skills
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: the workshop layer is where ad hoc instructions live; the library is where they stabilise into skills
 - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — grounds: ad hoc instructions are the wikiwiki principle applied to the skill layer — lowest-friction capture first, progressive refinement into skills as patterns emerge
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — enables: the extraction from ad hoc instructions to skills is distillation — keeping procedures, factoring out the discursive reasoning that produced them
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — grounds: ad hoc instructions notes are effective sub-agent interfaces because they provide lexically scoped frames — the sub-agent sees only what the caller explicitly passed
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)
 - [learning-theory](./learning-theory.md)

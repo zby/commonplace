@@ -2,18 +2,18 @@
 description: "Design exploration for a deep search skill that reuses /connect's dual discovery and articulation testing on web search results, building a temporary research graph before bridging to KB"
 type: note
 traits: [has-comparison]
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
 # Deep search is connection methodology applied to a temporarily expanded corpus
 
-The claw's connection methodology (`/connect`) is corpus-agnostic — it runs the same dual discovery, articulation testing, and synthesis detection regardless of what documents it connects. This means "deep search" doesn't require new connection logic. It requires temporarily expanding the corpus with web search results, running existing connection machinery across the expanded set, then extracting durable insights.
+The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the same dual discovery, articulation testing, and synthesis detection regardless of what documents it connects. This means "deep search" doesn't require new connection logic. It requires temporarily expanding the corpus with web search results, running existing connection machinery across the expanded set, then extracting durable insights.
 
 ## Two value propositions
 
 1. **Connect retrieved pieces to each other** — build a "search result graph" where relationships between results are articulated, not just listed. This is the `/connect` pattern applied to a temporary research corpus. The process combines both [kinds of navigation](./two-kinds-of-navigation.md) in a new context: long-range search retrieves external results, then local link-following connects them into a traversable temporary graph.
-2. **Connect retrieved pieces to existing KB** — what `/ingest` already does, but at scale. The KB provides pre-existing structural understanding that elevates raw search results. This extends [the claw's action capacity](./claw-learning-is-broader-than-retrieval.md) beyond retrieval into active research — the agent doesn't just look up what it knows, it discovers what it doesn't.
+2. **Connect retrieved pieces to existing KB** — what `/ingest` already does, but at scale. The KB provides pre-existing structural understanding that elevates raw search results. This extends [the KB's action capacity](./claw-learning-is-broader-than-retrieval.md) beyond retrieval into active research — the agent doesn't just look up what it knows, it discovers what it doesn't.
 
 ## Why this differs from naive search
 
@@ -46,7 +46,7 @@ This is the [boiling cauldron](./automating-kb-learning-is-an-open-problem.md) l
 
 **Depth vs. cost.** Each iteration means more LLM calls. `/connect` already uses depth modes (deep/standard/quick). Deep search compounds this — N results x connection passes x iteration rounds. Aggressive pruning heuristics are needed — the same candidate-explosion problem that [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) identifies for /connect, but amplified by web-scale result sets. The [quality signals](./quality-signals-for-kb-evaluation.md) note has relevant metrics (centrality measures to identify which results are worth deeper investigation).
 
-**Workshop lifecycle.** Where do intermediate artifacts live? This is quintessential [workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) material — high-churn, value-consuming-over-time, needing extraction bridges to become library material. Candidate: `project_claw/research/{session-id}/` with explicit human review before anything becomes permanent.
+**Workshop lifecycle.** Where do intermediate artifacts live? This is quintessential [workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) material — high-churn, value-consuming-over-time, needing extraction bridges to become library material. Candidate: `kb/research/{session-id}/` with explicit human review before anything becomes permanent.
 
 **Stopping criterion.** Iterative search can loop forever. Each heuristic below is a proxy oracle of different strength on the [oracle-strength spectrum](./oracle-strength-spectrum.md) — the stronger the signal, the more confidently the loop can terminate:
 - Diminishing returns — new results mostly overlap with existing graph (soft oracle: structural convergence)
@@ -78,7 +78,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — provides the abstraction depth framework that distinguishes this from naive search
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
-- [a functioning claw needs a workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
+- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
 - [link contracts framework](./link-contracts-framework.md) — articulation test applies to search result connections
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — centrality metrics for pruning search result graphs
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — deep search skill would distill from this methodology note
@@ -91,4 +91,4 @@ Relevant Notes:
 - [scenarios](./scenarios.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

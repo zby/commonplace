@@ -1,7 +1,7 @@
 ---
 description: Promising ideas without enough evidence — extract/connect/review cycle, input classification before processing
 type: review
-areas: [claw-design]
+areas: [kb-design]
 status: current
 ---
 
@@ -18,4 +18,4 @@ A three-phase pipeline: extract pulls insights from source material, connect fin
 External sources (papers, articles, blog posts) may need different treatment than domain research or design explorations. Classifying input type before processing could prevent applying the wrong extraction strategy.
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

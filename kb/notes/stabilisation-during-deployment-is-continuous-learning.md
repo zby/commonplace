@@ -16,7 +16,7 @@ Herbert Simon: learning is any change that produces a more or less permanent cha
 
 This isn't hypothetical. Systems like DSPy and ProTeGi already automate one slice of stabilisation — searching over prompt components to optimize against an objective — and the ML community recognizes this as learning. Research on [professional developers using AI agents](related_works/professional-developers-ai-agents.md) shows the same pattern in manual form: developers iteratively refine prompts, tools, and workflows based on deployment experience. Agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions. All of this is continuous learning through stabilisation — it just isn't recognized as such.
 
-Weight-based learning captures distributional knowledge (style, tone, world knowledge) that doesn't reduce to explicit artifacts — not all continuous learning is stabilisation. But the extractable, testable subset that stabilisation handles covers most of what deployed systems need. The manual version works; [automating the judgment-heavy parts](../claw-design/automating-kb-learning-is-an-open-problem.md) is where the real gap is.
+Weight-based learning captures distributional knowledge (style, tone, world knowledge) that doesn't reduce to explicit artifacts — not all continuous learning is stabilisation. But the extractable, testable subset that stabilisation handles covers most of what deployed systems need. The manual version works; [automating the judgment-heavy parts](./automating-kb-learning-is-an-open-problem.md) is where the real gap is.
 
 ---
 
@@ -24,7 +24,7 @@ Relevant Notes:
 - [stabilisation](stabilisation.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [stabilisation and distillation both trade generality for compound](stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that stabilisation operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
-- [automating KB learning is an open problem](../claw-design/automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising stabilisation as continuous learning
+- [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising stabilisation as continuous learning
 - [professional-developers-ai-agents](related_works/professional-developers-ai-agents.md) — empirical evidence that developers naturally practice the stabilisation loop
 
 Topics:

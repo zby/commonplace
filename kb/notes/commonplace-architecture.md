@@ -2,13 +2,13 @@
 description: The commonplace repo's own internal layout — what exists, what's missing, and the decision to put global types in CLAUDE.md instead of kb/types/
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
 # Commonplace architecture
 
-The commonplace repo is itself a claw — it uses its own knowledge system to document the methodology for building claws. This note covers the repo's own layout, distinct from the [two-tree installation architecture](./commonplace-installation-architecture.md) that emerges when commonplace is installed into another project.
+The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. This note covers the repo's own layout, distinct from the [two-tree installation architecture](./commonplace-installation-architecture.md) that emerges when commonplace is installed into another project.
 
 ## Current layout
 
@@ -73,4 +73,4 @@ Relevant Notes:
 - [context-loading-strategy](./context-loading-strategy.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

@@ -3,16 +3,16 @@ description: Reference for borrowing recurring note shapes from Thalo — their 
 type: note
 traits: [has-comparison]
 status: current
-areas: [related-systems, claw-design]
+areas: [related-systems, kb-design]
 ---
 
-# Thalo entity types compared to claw document types
+# Thalo entity types compared to commonplace document types
 
 Both systems define types with structural expectations. Thalo commits to types upfront via a grammar; we [discover ours through practice](../document-types-should-be-verifiable.md). This comparison is a reference for borrowing — when we encounter a recurring note shape, we can check whether Thalo already has a useful structure for it.
 
 ## Type system mechanisms
 
-| Dimension | Thalo | Claw |
+| Dimension | Thalo | Commonplace |
 |-----------|-------|------|
 | Type declaration | `define-entity` in grammar | `type:` in YAML frontmatter |
 | Sections | Required/optional per entity, grammar-enforced | Implied by templates, not validated |
@@ -42,7 +42,7 @@ Thalo's `reference` has:
 - `author?`, `published?`, `status?` (`"unread" | "read" | "processed"`)
 - Sections: **Summary**, **Key Takeaways**, **Related** (all optional)
 
-Our `source-review` template (in `project_claw/sources/`) covers the "processed" case — it has Summary, Key Claims, Relevance to Project. But we don't have Thalo's `status` tracking for unprocessed references. Our `/ingest` skill handles the pipeline but doesn't track reading status as metadata.
+Our `source-review` template (in `kb/sources/`) covers the "processed" case — it has Summary, Key Claims, Relevance to Project. But we don't have Thalo's `status` tracking for unprocessed references. Our `/ingest` skill handles the pipeline but doesn't track reading status as metadata.
 
 **Borrowable structure:** The `status: unread | read | processed` field for source tracking. Their lighter structure (optional Summary + Key Takeaways) works for quick captures where a full source-review is overkill.
 
@@ -165,5 +165,5 @@ Relevant Notes:
 - [Toulmin argument](../../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model provides the canonical decomposition (claim/grounds/warrant/qualifier/rebuttal/backing) that Thalo's opinion entity approximates with Claim/Reasoning/Caveats sections
 
 Topics:
-- [claw-design](../claw-design.md)
+- [kb-design](../kb-design.md)
 - [related-systems](./related-systems-index.md)

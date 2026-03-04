@@ -63,4 +63,4 @@ This connects to [automating-kb-learning-is-an-open-problem](../notes/automating
 
 ## Next Action
 
-This analysis sharpens a question for the claw design: what's the minimal set of learning operations, and which ones need human judgment vs. which can be automated? A-MEM's answer (four operations, all automatic, all accretion) succeeds on benchmarks but may not hold for knowledge systems that need to stay navigable over time. Worth writing a note that names the accretion-vs-curation distinction in learning operations.
+This analysis sharpens a question for the KB design: what's the minimal set of learning operations, and which ones need human judgment vs. which can be automated? A-MEM's answer (four operations, all automatic, all accretion) succeeds on benchmarks but may not hold for knowledge systems that need to stay navigable over time. Worth writing a note that names the accretion-vs-curation distinction in learning operations.

@@ -1,6 +1,6 @@
 ---
 description: Techniques from cludebot worth borrowing — what we already cover, what to adopt now, and what to watch for as the KB grows
-areas: [claw-design]
+areas: [kb-design]
 status: current
 ---
 
@@ -49,4 +49,4 @@ These are premature now but worth revisiting at scale:
 **Automated importance scoring.** Cludebot uses LLM calls to score memory importance 1-10. At our scale, the human decides what's worth writing down. That implicit filter is more reliable than automated scoring.
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

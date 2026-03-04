@@ -8,7 +8,7 @@ Read this before creating or editing notes, ADRs, indexes, or source reviews. Fo
 
 For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
 
-1. **[Title as claim](claw-design/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? (Applies to single-claim documents; multi-claim specs and frameworks get topical titles instead.)
+1. **[Title as claim](notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? (Applies to single-claim documents; multi-claim specs and frameworks get topical titles instead.)
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
 3. **Index membership** — Is it linked from at least one area index? (Directory indexes are auto-generated.)
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?

@@ -1,7 +1,7 @@
 ---
 description: Skills and tasks are typed callables — they accept document types as input and produce types as output, and should declare their signatures like functions declare parameter types.
 type: note
-areas: [claw-design]
+areas: [kb-design]
 status: speculative
 ---
 
@@ -46,4 +46,4 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; stabilisation commits to one interpretation
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

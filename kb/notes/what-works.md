@@ -1,7 +1,7 @@
 ---
 description: Patterns proven valuable in practice — prose-as-title, template nudges, frontmatter queries, semantic search via qmd, discovery-first, public/internal boundary
 type: review
-areas: [claw-design]
+areas: [kb-design]
 status: current
 ---
 
@@ -44,4 +44,4 @@ Keeping the index current: `qmd update && qmd embed` re-scans and re-embeds chan
 Keeping knowledge system artifacts out of public docs (`docs/*.md`) prevents coupling. Public documentation has its own audience and conventions. Internal notes can evolve freely without worrying about external readers.
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

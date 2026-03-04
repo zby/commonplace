@@ -155,5 +155,5 @@ Relevant Notes:
 - [context efficiency is the central constraint in agent system design](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
 
 Topics:
-- [learning-theory](./learning-theory.md)
 - [computational-model](./computational-model.md)
+- [learning-theory](./learning-theory.md)

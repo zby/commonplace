@@ -28,7 +28,7 @@ The global type mostly says `note` — which tells an agent almost nothing about
 
 In programming, types are global (at least fully qualified names are) — and cheap. You can define a thousand types; only the ones you import are in scope. The compiler resolves references automatically. Declaration cost is near zero; resolution is free.
 
-In an LLM context, there's no compiler and no import mechanism. Every type the agent needs to reason about must be *in the context window*. The agent either knows what `structured-claim` means because it was loaded upfront, or it doesn't. There's no `from claw.types import StructuredClaim` that pulls in the definition on demand.
+In an LLM context, there's no compiler and no import mechanism. Every type the agent needs to reason about must be *in the context window*. The agent either knows what `structured-claim` means because it was loaded upfront, or it doesn't. There's no `from kb.types import StructuredClaim` that pulls in the definition on demand.
 
 So the cost difference isn't really about types being global vs local — it's about the resolution mechanism. Programming has cheap declaration + automatic resolution. LLM instructions have expensive pre-loading and no resolution at all. Directory-scoping is a workaround for this: the directory README is a primitive import mechanism. "You're in this directory; here's what types mean here." If we had real on-demand type resolution — "when you encounter `type: related-system-review`, load its definition from X" — types could be global names with on-demand definitions, just like programming.
 
@@ -62,7 +62,7 @@ The types that genuinely move are `text` and `note` — and those are exactly th
 
 **Validation becomes directory-aware.** Instead of one global `/validate` checking all types, validation reads the directory's conventions and checks against those. The global layer validates only the universal properties (frontmatter exists, description is non-empty, links resolve).
 
-**Templates stay where they are.** `project_claw/templates/` already provides per-type scaffolds. The change is that the template is authoritative for the directory it serves, not a convenience wrapper around a global type.
+**Templates stay where they are.** `kb/notes/types/` already provides per-type scaffolds. The change is that the template is authoritative for the directory it serves, not a convenience wrapper around a global type.
 
 ## What stays global
 
@@ -89,7 +89,7 @@ This is progressive disclosure applied to the type system: the agent always has 
 - Does `structured-claim` stay global? Its template is inlined in WRITING.md alongside `note`, so in practice it loads at the same cost. But conceptually it's a specialization of `note`, not a base type.
 - How does `/validate` discover directory-local expectations? Does it read the README? A machine-readable schema in the directory? Or does each directory get its own validation skill?
 - What happens to the `type:` frontmatter field? Does it become just `text` vs `note`? Or does it carry the directory-local type name (`type: related-system-review`) for searchability?
-- Does this make it harder to search across directories by type? `rg '^type: note'` currently finds all notes. If everything is `note`, you lose that filter. But `rg '^type: note' project_claw/notes/related-systems/` already scopes by directory.
+- Does this make it harder to search across directories by type? `rg '^type: note'` currently finds all notes. If everything is `note`, you lose that filter. But `rg '^type: note' kb/notes/related-systems/` already scopes by directory.
 
 ---
 
@@ -98,7 +98,7 @@ Relevant Notes:
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — the verifiability principle still applies, but verification becomes directory-scoped
-- [a functioning claw needs a workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — workshop subsystems (tasks, queues) already define their own types locally; this generalises that pattern
+- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop subsystems (tasks, queues) already define their own types locally; this generalises that pattern
 
 Topics:
 - [document-system](./document-system.md)

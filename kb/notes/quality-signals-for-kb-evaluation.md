@@ -2,7 +2,7 @@
 description: Catalogues graph-topology, content-proxy, and LLM-hybrid signals that could be combined into a weak composite oracle to drive a mutation-based KB learning loop without requiring usage data.
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: speculative
 ---
 
@@ -131,4 +131,4 @@ Relevant Notes:
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

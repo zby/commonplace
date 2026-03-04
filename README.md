@@ -4,7 +4,7 @@ Methodology for agent-operated knowledge bases — writing conventions, progress
 
 Commonplace provides the methodology, type system, writing conventions, skills, and scripts that let an agent autonomously navigate, extend, and maintain a structured knowledge base of markdown files.
 
-This repo is itself a commonplace knowledge base. It uses its own knowledge system to document the methodology for building them. The methodology IS the content.
+This repo is itself an agent-operated knowledge base. It uses its own knowledge system to document the methodology for building them. The methodology IS the content.
 
 ## What's in the box
 

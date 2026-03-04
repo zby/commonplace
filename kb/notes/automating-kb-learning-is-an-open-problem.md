@@ -2,7 +2,7 @@
 description: The KB already learns through manual work (every improvement is capacity change per Simon). The open problem is automating the judgment-heavy mutations — connections, groupings, synthesis — which require oracles we can't yet manufacture.
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: speculative
 ---
 
@@ -87,4 +87,4 @@ Relevant Notes:
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — extends: argues the retrieval-oriented framing here is one layer of a broader problem; a Claw's learning loop must also improve action capacity (classification, communication, planning)
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

@@ -44,7 +44,7 @@ Content starts as [text](../../types/text.md) (no frontmatter, no structure) and
 The `type` field is a string, not validated against a list. This is deliberate:
 
 - **New domains.** Workshop documents, scenario types, recurring tasks — these emerged after the initial type system. A closed enum would have required updating a global definition for each.
-- **User adaptation.** Installed claws serve different purposes. A research project might need `experiment` and `literature-review` types. A product team might need `user-story` and `retrospective`. These should be addable locally.
+- **User adaptation.** Installed knowledge bases serve different purposes. A research project might need `experiment` and `literature-review` types. A product team might need `user-story` and `retrospective`. These should be addable locally.
 - **Tolerance of fuzziness.** Types are assigned by agents and humans, not compilers. The system must tolerate misclassification — nothing breaks if a type is wrong or novel. Types are search aids, not enforcement boundaries.
 
 Convention establishes common values. Directory `types/` folders document structural expectations. But the system doesn't require permission to use a new value.
@@ -60,7 +60,7 @@ Relevant Notes:
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — develops: the failure-mode transfer argument for output quality
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — develops: the distribution-selection argument for output quality
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — develops: the readability argument for output quality
-- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions
 
 Topics:
 - [document-system](./document-system.md)

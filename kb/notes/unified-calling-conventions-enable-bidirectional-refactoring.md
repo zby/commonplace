@@ -70,5 +70,5 @@ Relevant Notes:
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
 
 Topics:
-- [learning-theory](./learning-theory.md)
 - [computational-model](./computational-model.md)
+- [learning-theory](./learning-theory.md)

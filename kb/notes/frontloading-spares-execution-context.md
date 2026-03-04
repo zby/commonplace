@@ -2,7 +2,7 @@
 description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs; the mechanism is partial evaluation applied to instructions with underspecified semantics
 type: note
 traits: [has-external-sources]
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -59,7 +59,7 @@ Standard PE specialises a program P with respect to known **static** inputs s, p
 | Binding-time analysis | The author's judgment about what depends on runtime context vs what doesn't |
 | Specialisation | The build-time/setup-time step that produces concrete instructions |
 
-Template expansion with `{{claw_root}}` → `project_claw/` is textbook PE. The [generate-at-build-time](./generate-instructions-at-build-time.md) note describes a specialiser for skill templates.
+Template expansion with `{{claw_root}}` → `commonplace/kb/` is textbook PE. The [generate-at-build-time](./generate-instructions-at-build-time.md) note describes a specialiser for skill templates.
 
 ### Where the PE definition stretches
 
@@ -82,4 +82,4 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not stabilisation — it spares context regardless of whether the result is deterministic or still underspecified
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

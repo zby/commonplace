@@ -1,24 +1,24 @@
 ---
-description: Claw skills should be generated from templates at setup time, not parameterised with runtime variables — applying the general principle that indirection is costly in LLM instructions
+description: KB skills should be generated from templates at setup time, not parameterised with runtime variables — applying the general principle that indirection is costly in LLM instructions
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
-# Generate claw skills at build time, don't parameterise them
+# Generate KB skills at build time, don't parameterise them
 
-Since [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md), claw skills should be generated from templates rather than parameterised with runtime variables.
+Since [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md), KB skills should be generated from templates rather than parameterised with runtime variables.
 
-Skills in `project_claw/skills/` hardcode `project_claw/` paths dozens of times — in grep commands, script invocations, save targets. Making the claw reusable across projects requires these paths to vary. Two options:
+Skills in `skills/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable across projects requires these paths to vary. Two options:
 
 **Runtime variables** — skills contain `$CLAW_ROOT/notes/` and the LLM substitutes on every invocation. Adds interpretation overhead to every skill use, across every substitution site. Occasionally the LLM gets it wrong.
 
-**Build-time generation** — a template contains `{{claw_root}}/notes/`, a setup script resolves it to `project_claw/notes/`, and the generated skill is literal. The LLM reads and acts directly.
+**Build-time generation** — a template contains `{{claw_root}}/notes/`, a setup script resolves it to `commonplace/kb/notes/`, and the generated skill is literal. The LLM reads and acts directly.
 
 Build-time generation is the right choice. It's [stabilisation applied to configuration](./methodology-enforcement-is-stabilisation.md) — the template is soft, the generated output is hard. You pay the flexibility cost once at setup time, not on every use.
 
-The canonical form for skills is standalone (paths relative to claw root: `./notes/`, `./scripts/`). Embedding a claw in a parent project (like llm-do's `project_claw/`) is the special case that requires a path prefix. The generation step adds that prefix.
+The canonical form for skills is standalone (paths relative to KB root: `./notes/`, `./scripts/`). Embedding a knowledge base in a parent project (like `commonplace/`) is the special case that requires a path prefix. The generation step adds that prefix.
 
 ---
 
@@ -29,4 +29,4 @@ Relevant Notes:
 - [generate topic links from frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — exemplifies: an earlier case of the same move — replacing LLM-interpreted output with a deterministic build step
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

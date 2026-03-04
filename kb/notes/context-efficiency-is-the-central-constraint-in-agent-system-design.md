@@ -76,5 +76,5 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — intensifies: extra context distorts interpretation, not just wastes space
 
 Topics:
-- [claw-design](./kb-design.md)
 - [computational-model](./computational-model.md)
+- [kb-design](./kb-design.md)

@@ -54,7 +54,7 @@ Relevant Notes:
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism for oracle hardening: extracting deterministic rules from observed behavior
 - [softening-signals](./softening-signals.md) — provides testable indicators for where a component sits on the oracle spectrum
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work
-- [quality-signals-for-kb-evaluation](../claw-design/quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals (graph topology, content proxies, LLM judgment) to drive a KB learning loop
+- [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals (graph topology, content proxies, LLM judgment) to drive a KB learning loop
 
 Topics:
 - [learning-theory](./learning-theory.md)

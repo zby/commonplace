@@ -1,15 +1,15 @@
 ---
-description: The current type system models permanent knowledge (library) but not in-flight work with state machines, dependencies, and expiration (workshop) — tasks are a prototype of the missing layer, and a functioning claw needs both plus bridges between them
+description: The current type system models permanent knowledge (library) but not in-flight work with state machines, dependencies, and expiration (workshop) — tasks are a prototype of the missing layer, and a functioning knowledge base needs both plus bridges between them
 type: note
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
-# A functioning claw needs a workshop layer, not just a library
+# A functioning knowledge base needs a workshop layer, not just a library
 
-The claw's [current type system](./document-classification.md) — text, note, structured-claim, spec, adr — is a maturity ladder for knowledge. Documents move toward permanence: a text gets promoted to a note, a note crystallises into a structured claim, insights accumulate into specs and ADRs. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this ladder: capture with zero friction, then refine in place. The status field (seedling, current, speculative) modulates commitment but not lifecycle. A seedling and a current note are structurally identical — one just hasn't been endorsed yet.
+The KB's [current type system](./document-classification.md) — text, note, structured-claim, spec, adr — is a maturity ladder for knowledge. Documents move toward permanence: a text gets promoted to a note, a note crystallises into a structured claim, insights accumulate into specs and ADRs. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this ladder: capture with zero friction, then refine in place. The status field (seedling, current, speculative) modulates commitment but not lifecycle. A seedling and a current note are structurally identical — one just hasn't been endorsed yet.
 
-This works well for **durable knowledge**. But a functioning claw also needs to support **work in motion** — documents that have lifecycles, change state, interact with each other, and eventually produce outcomes — durable artifacts in the KB, actions on the outside world (drafted emails, responses to messages, code changes), or simply get discarded. The task system (`tasks/`) is the clearest example: it has state machines (backlog → active → completed), directional dependencies (blocks/blocked-by), and expiration (completed tasks become irrelevant). None of this maps onto the existing type system.
+This works well for **durable knowledge**. But a functioning knowledge base also needs to support **work in motion** — documents that have lifecycles, change state, interact with each other, and eventually produce outcomes — durable artifacts in the KB, actions on the outside world (drafted emails, responses to messages, code changes), or simply get discarded. The task system (`tasks/`) is the clearest example: it has state machines (backlog → active → completed), directional dependencies (blocks/blocked-by), and expiration (completed tasks become irrelevant). None of this maps onto the existing type system.
 
 ## The library/workshop distinction
 
@@ -28,7 +28,7 @@ This works well for **durable knowledge**. But a functioning claw also needs to 
 
 ## Temporal document types beyond tasks
 
-Tasks aren't the only workshop documents. A claw that supports real workflows would likely need:
+Tasks aren't the only workshop documents. A knowledge base that supports real workflows would likely need:
 
 - **Decision threads** — the process that produces an ADR. Currently invisible: an ADR appears fully formed, but the discussion, alternatives weighed, and context gathered along the way are lost. Lifecycle: proposed → discussing → decided → (produces ADR).
 - **Experiments/probes** — hypothesis-driven work. "Does X actually improve Y?" Has a result that changes what happens next. Lifecycle: hypothesis → running → concluded → (produces note or nothing).
@@ -67,7 +67,7 @@ The task system is the only workshop-like subsystem, and it lives entirely outsi
 - No backlink tracking between tasks and notes
 - Indexed by qmd for search, but that's the only integration
 
-This is fine for now — the claw is primarily a knowledge system and the task system works adequately with its own conventions. But this note exists to mark the gap: when we want to build a claw that supports real workflows (not just knowledge management), the workshop layer is where most of the new design work will be needed.
+This is fine for now — the system is primarily a knowledge base and the task system works adequately with its own conventions. But this note exists to mark the gap: when we want to build a knowledge base that supports real workflows (not just knowledge management), the workshop layer is where most of the new design work will be needed.
 
 ## Open questions
 
@@ -93,4 +93,4 @@ Relevant Notes:
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

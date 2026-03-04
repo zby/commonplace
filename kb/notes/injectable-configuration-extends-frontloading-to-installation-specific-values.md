@@ -2,7 +2,7 @@
 description: Values static within an installation but variable across installations — sibling repo paths, local tool locations — are frontloadable through configuration the orchestrator resolves and injects into sub-agent frames; the context savings depend on sub-agent isolation since injection into the main context just adds tokens
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -71,4 +71,4 @@ Relevant Notes:
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — motivates: the recurring "review related systems" scenario revealed the need for installation-specific paths
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

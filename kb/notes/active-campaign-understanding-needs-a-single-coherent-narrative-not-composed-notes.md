@@ -2,13 +2,13 @@
 description: Why durable-knowledge graph composition (many linked notes) is wrong for tracking understanding during active engineering — a single holistically rewritten narrative maintains the coherence that working memory requires
 type: note
 traits: [has-external-sources]
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
 # Active-campaign understanding needs a single coherent narrative, not composed notes
 
-The claw's note graph works well for durable knowledge: many composable notes, each making a single claim, linked into a traversable structure. But for tracking understanding during an active engineering campaign — the evolving mental model of what the problem is, what's been tried, and what the current strategy is — graph composition is the wrong structure. What's needed is a single narrative document that gets holistically rewritten as understanding evolves.
+The KB's note graph works well for durable knowledge: many composable notes, each making a single claim, linked into a traversable structure. But for tracking understanding during an active engineering campaign — the evolving mental model of what the problem is, what's been tried, and what the current strategy is — graph composition is the wrong structure. What's needed is a single narrative document that gets holistically rewritten as understanding evolves.
 
 The distinction maps to different coherence requirements:
 
@@ -34,7 +34,7 @@ The [theorist](https://github.com/blader/theorist) skill (MIT, blader, 2026) imp
 
 ## Relationship to the workshop layer
 
-This is a concrete exemplar of the [workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) the claw identified as missing. THEORY.MD has all the predicted workshop properties: lifecycle (lives and dies with a campaign), consumed value (transfers into decisions and notes), state changes (rewritten as understanding evolves), and temporal sensitivity (coherence matters now, not for archival).
+This is a concrete exemplar of the [workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) the KB identified as missing. THEORY.MD has all the predicted workshop properties: lifecycle (lives and dies with a campaign), consumed value (transfers into decisions and notes), state changes (rewritten as understanding evolves), and temporal sensitivity (coherence matters now, not for archival).
 
 It fills the "session logs" slot from the workshop note, but with a crucial difference: session logs are append-only records of what happened. A theory document is a rewritten narrative of what is currently understood. The rewrite discipline is what makes it useful — it forces the author to reconcile new evidence with existing understanding rather than just stacking observations.
 
@@ -51,15 +51,15 @@ Without this bridge, THEORY.MD's insights die with the campaign. The git history
 ## Open questions
 
 - Can the rewrite discipline work for agents, or does it require human judgment about what's still true? Theorist is designed for LLM agents, but holistic rewrite is hard — it requires understanding what changed and what didn't.
-- Is one theory doc per repo the right granularity? Multiple concurrent workstreams get brief mentions rather than full treatment. A claw might need theory docs per area or per task.
+- Is one theory doc per repo the right granularity? Multiple concurrent workstreams get brief mentions rather than full treatment. A KB might need theory docs per area or per task.
 - How does the 200-line maximum interact with complex, multi-front campaigns? The constraint forces triage — what's important enough to include — which is valuable but may lose important context.
 
 ---
 
 Relevant Notes:
-- [a-functioning-claw-needs-a-workshop-layer-not-just-a-library](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — theorist exemplifies the workshop layer this note predicts; THEORY.MD has all the workshop properties (lifecycle, consumed value, temporal sensitivity)
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — theorist exemplifies the workshop layer this note predicts; THEORY.MD has all the workshop properties (lifecycle, consumed value, temporal sensitivity)
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — holistic rewrite is the opposite of append-only stabilization; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — theorist's always-on activation is automatic context injection; the theory doc is the harness injecting strategic context every session
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

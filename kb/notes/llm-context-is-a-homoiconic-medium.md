@@ -14,15 +14,15 @@ In the LLM context window, instructions and data share the same representation �
 
 **Lisp's homoiconicity.** Code and data share the same representation — lists. A list is both a data structure you can inspect and a program you can evaluate. In an LLM-based system, a markdown file is both content you can read/link/analyze and instructions you can hand to a sub-agent for execution. Lisp macros — code that writes code — map to instructions that produce reports containing further instructions. Quote/eval — toggling between treating something as data vs executing it — maps to reading an instructions note vs handing it off.
 
-**Emacs as ad hoc extension culture.** Emacs is written in Elisp — the system and its extension language are the same thing, so there is no boundary between built-in functionality and user extensions. The init file mixes configuration and ad hoc programs. The stabilisation trajectory is the same: inline snippet in init.el → extracted function → published package. The claw's equivalent: [ad hoc instructions note → extracted skill → registered tool](./ad-hoc-prompts-extend-the-system-without-schema-changes.md).
+**Emacs as ad hoc extension culture.** Emacs is written in Elisp — the system and its extension language are the same thing, so there is no boundary between built-in functionality and user extensions. The init file mixes configuration and ad hoc programs. The stabilisation trajectory is the same: inline snippet in init.el → extracted function → published package. The KB's equivalent: [ad hoc instructions note → extracted skill → registered tool](./ad-hoc-prompts-extend-the-system-without-schema-changes.md).
 
-**Smalltalk's live image.** The image is both the program and the development environment, and you modify the running system from inside itself using the same language. The claw has the same property — its methodology is written in the same markdown it operates on.
+**Smalltalk's live image.** The image is both the program and the development environment, and you modify the running system from inside itself using the same language. The KB has the same property — its methodology is written in the same markdown it operates on.
 
 **Other homoiconic languages.** Prolog (programs are clauses in the same database as facts), Tcl (everything is a string, including code), Rebol/Red (code is data blocks), XSLT (XML transforming XML). All share the property that the boundary between using and extending the system is fluid.
 
 ## What homoiconicity enables
 
-The common thread across these systems: **blurring the boundary between using and extending makes the system more adaptable than systems with rigid extension points.** In the claw, [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) precisely because instructions and content share the same medium. No registration, no type system gatekeeping, no compilation step — write a markdown file and it's both content and executable spec.
+The common thread across these systems: **blurring the boundary between using and extending makes the system more adaptable than systems with rigid extension points.** In the KB, [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) precisely because instructions and content share the same medium. No registration, no type system gatekeeping, no compilation step — write a markdown file and it's both content and executable spec.
 
 ## What homoiconicity costs
 

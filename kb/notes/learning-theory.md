@@ -6,7 +6,7 @@ status: current
 
 # Learning theory
 
-How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that claw design draws on but that aren't claw-specific — they apply to any system that adapts through inspectable artifacts.
+How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through inspectable artifacts.
 
 The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework, with two orthogonal mechanisms ([stabilisation](./stabilisation.md) and [distillation](./distillation.md)) and a third distinct operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)).
 
@@ -70,5 +70,5 @@ A third operation, distinct from both stabilisation and distillation: positing a
 
 ## Related Areas
 
-- [claw-design](./claw-design.md) — applies learning theory to claw architecture and evaluation; [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) bridges both areas
+- [kb-design](./kb-design.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) bridges both areas
 - [document-system](./document-system.md) — the type ladder (text→note→structured-claim) instantiates the stabilisation gradient for documents

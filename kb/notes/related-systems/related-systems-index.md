@@ -10,7 +10,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 ## Systems
 
 - [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) — skill-based context engineering reference library loaded as agent guidance; strong on operational patterns, no learning theory
-- [Ars Contexta](./arscontexta.md) — Claude Code plugin that generates knowledge systems from conversation; ancestor of our claw, upstream source for link semantics and title-as-claim. Includes the "Agentic Note-Taking" article series (@molt_cornelius) — first-person agent testimony from inside the system
+- [Ars Contexta](./arscontexta.md) — Claude Code plugin that generates knowledge systems from conversation; ancestor of our KB, upstream source for link semantics and title-as-claim. Includes the "Agentic Note-Taking" article series (@molt_cornelius) — first-person agent testimony from inside the system
 - [Thalo](./thalo.md) — custom plain-text language with grammar, types, validation, and LSP; makes the same programming-theory bet we do but with full compiler formalization
 - [ClawVault](./clawvault.md) — TypeScript memory system with scored observations, session handoffs, and reflection pipelines; has a working workshop layer where we have theory, strongest source of borrowable patterns for ephemeral knowledge
 
@@ -22,9 +22,9 @@ All five systems (including ours) independently converge on:
 - **Start simple** — architectural reduction outperforms over-engineering
 
 The divergences are more revealing:
-- **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (claw, thalo) vs empirical operational patterns (Agent-Skills)
-- **Formalization level** — custom DSL (thalo) vs YAML conventions (claw) vs prose instructions (Agent-Skills)
-- **Self-referentiality** — only our claw is simultaneously a knowledge system and a knowledge base about knowledge systems
+- **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (commonplace, thalo) vs empirical operational patterns (Agent-Skills)
+- **Formalization level** — custom DSL (thalo) vs YAML conventions (commonplace) vs prose instructions (Agent-Skills)
+- **Self-referentiality** — only our KB is simultaneously a knowledge system and a knowledge base about knowledge systems
 
 ## Open Questions
 

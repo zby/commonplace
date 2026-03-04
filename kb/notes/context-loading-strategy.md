@@ -2,7 +2,7 @@
 description: CLAUDE.md should be a slim router to task-specific docs, not a comprehensive manual — because it's loaded every session
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: current
 ---
 
@@ -15,7 +15,7 @@ CLAUDE.md is loaded into context every session. This makes it expensive — ever
 - **Search patterns** for the KB (always useful)
 - **Links to task-specific docs** that get loaded on demand
 
-It should NOT contain detailed instructions for specific tasks (how to write notes, template catalogs, link conventions). Those belong in targeted files that are read when needed — e.g. `project_claw/WRITING.md` for note creation.
+It should NOT contain detailed instructions for specific tasks (how to write notes, template catalogs, link conventions). Those belong in targeted files that are read when needed — e.g. `kb/WRITING.md` for note creation.
 
 ## The loading hierarchy
 
@@ -39,4 +39,4 @@ The overlap is intentional but serves different purposes. CLAUDE.md says "before
 **Key design question:** When should guidance live in CLAUDE.md vs in a skill description? If the agent must always follow it, CLAUDE.md. If the agent should know it's available and choose when to use it, skill description + skill body.
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

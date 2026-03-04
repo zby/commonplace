@@ -1,22 +1,22 @@
 ---
-description: We borrow from any source but adopt based on first-principles support — except programming patterns, which get a fast pass because the bet is that claws are a new kind of software system
+description: We borrow from any source but adopt based on first-principles support — except programming patterns, which get a fast pass because the bet is that knowledge bases are a new kind of software system
 type: note
 traits: []
 status: seedling
-areas: [claw-design]
+areas: [kb-design]
 ---
 
 # Design methodology — borrow widely, filter by first principles
 
-The claw's design draws on programming language theory, cognitive science, HCI, and empirical observation. The methodology isn't about which source to prefer — it's about what gets an idea through the adoption gate.
+The KB's design draws on programming language theory, cognitive science, HCI, and empirical observation. The methodology isn't about which source to prefer — it's about what gets an idea through the adoption gate.
 
 ## The adoption filter
 
-**Any source is valid.** Cognitive science, programming, HCI, other claw-like systems, personal friction during use. We're not dogmatic about where ideas come from. The [related-systems](../../project_claw/notes/related-systems/related-systems-index.md) reviews exist precisely to widen the input surface.
+**Any source is valid.** Cognitive science, programming, HCI, other similar systems, personal friction during use. We're not dogmatic about where ideas come from. The [related-systems](./related-systems/related-systems-index.md) reviews exist precisely to widen the input surface.
 
 **First principles reasoning is the main filter.** If we can derive *why* something works from the constraints of the domain — finite context windows, no import/resolution mechanism, agents reason over text, everything loaded must compete for attention — we adopt it with confidence. The [context loading economy](./context-loading-strategy.md) and [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) arguments are examples: they follow directly from the constraints without needing analogies.
 
-**Programming patterns get a fast pass.** We borrow programming patterns even without a complete theory for why they transfer — types, validation, testing, progressive compilation, version control, structural typing, the maturity ladder as gradual typing. The bet is that claws are a new kind of software system, not a new kind of cognitive tool. If that bet is right, programming patterns transfer structurally, not just by analogy. A compiler doesn't just *resemble* what we're doing — it *is* what we're doing, at a different point on the formalization spectrum.
+**Programming patterns get a fast pass.** We borrow programming patterns even without a complete theory for why they transfer — types, validation, testing, progressive compilation, version control, structural typing, the maturity ladder as gradual typing. The bet is that agent-operated knowledge bases are a new kind of software system, not a new kind of cognitive tool. If that bet is right, programming patterns transfer structurally, not just by analogy. A compiler doesn't just *resemble* what we're doing — it *is* what we're doing, at a different point on the formalization spectrum.
 
 Evidence for the bet: [Thalo](../notes/related-systems/thalo.md) independently arrived at building an actual compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 validation rules. Someone else looked at the same problem and reached for the same toolbox. Convergence across independent projects is stronger evidence than any single design argument.
 
@@ -43,11 +43,11 @@ The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progr
 Relevant Notes:
 - [context loading strategy](./context-loading-strategy.md) — example of first-principles design: loading economy derived directly from context window constraints
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — example of first-principles design, explicitly frames directory-scoping as workaround for absent import mechanism
-- [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "claws are software" bet
+- [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from
 - [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — the general principle behind the programming fast pass
 - [stabilisation is learning](../notes/stabilisation.md) — example of empirical observation becoming theory
 - [what works](./what-works.md) — empirical source
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

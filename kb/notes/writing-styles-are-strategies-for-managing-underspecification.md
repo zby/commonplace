@@ -2,7 +2,7 @@
 description: The five empirically observed context-file writing styles (descriptive, prescriptive, prohibitive, explanatory, conditional) are not stylistic variation — they correspond to different strategies for narrowing the interpretation space agents face, trading off constraint against generalisability
 type: note
 traits: [has-external-sources]
-areas: [claw-design, computational-model]
+areas: [kb-design, computational-model]
 status: seedling
 ---
 
@@ -39,7 +39,7 @@ This is the same tradeoff the [underspecification note](./agentic-systems-interp
 
 Style choice interacts with where an instruction lives in the [loading hierarchy](./context-loading-strategy.md). Always-loaded instructions (CLAUDE.md) compete for attention every session, so they should favour concise prescriptive and prohibitive styles — tight constraint, few tokens. On-demand instructions (skill bodies, WRITING.md) are loaded in task context where the agent needs judgment, so explanatory and descriptive styles earn their token cost by enabling better generalisation.
 
-The claw's own CLAUDE.md reflects this: universal rules are prescriptive ("No wiki-links"), guardrails are prohibitive ("Don't create files unless necessary"), and the routing table is descriptive (documenting what exists so the agent can infer where things go). The detailed writing guidance lives in WRITING.md — loaded on demand, where the explanatory style ("description is a retrieval filter, not a summary — the test: ...") justifies its token cost.
+The KB's own CLAUDE.md reflects this: universal rules are prescriptive ("No wiki-links"), guardrails are prohibitive ("Don't create files unless necessary"), and the routing table is descriptive (documenting what exists so the agent can infer where things go). The detailed writing guidance lives in WRITING.md — loaded on demand, where the explanatory style ("description is a retrieval filter, not a summary — the test: ...") justifies its token cost.
 
 ---
 
@@ -51,5 +51,5 @@ Relevant Notes:
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
 
 Topics:
-- [claw-design](./claw-design.md)
 - [computational-model](./computational-model.md)
+- [kb-design](./kb-design.md)

@@ -21,7 +21,7 @@ last-checked: 2026-02-26
 wake → checkpoint* → sleep → [recovery if crash] → recap → wake
 ```
 
-Each transition produces artifacts: handoff documents capture "what was I doing, what's next, what's blocked," checkpoints snapshot mid-session state, recovery detects context death and restores from the last good state. These are exactly the [workshop layer](../../claw-design/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) artifacts our design notes say we need but haven't built.
+Each transition produces artifacts: handoff documents capture "what was I doing, what's next, what's blocked," checkpoints snapshot mid-session state, recovery detects context death and restores from the last good state. These are exactly the [workshop layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) artifacts our design notes say we need but haven't built.
 
 **Scored observations with promotion.** Observations extracted from sessions carry structured metadata:
 
@@ -31,7 +31,7 @@ Each transition produces artifacts: handoff documents capture "what was I doing,
 - [preference|c=0.7|i=0.4] Prefer TypeScript for type safety
 ```
 
-The type taxonomy — decision, lesson, preference, commitment, fact, relationship — maps directly to what [claw learning is broader than retrieval](../../claw-design/claw-learning-is-broader-than-retrieval.md) calls "action-oriented knowledge types": preferences, procedures, judgment precedents. They have concrete types for things we've identified theoretically but not structured.
+The type taxonomy — decision, lesson, preference, commitment, fact, relationship — maps directly to what [claw learning is broader than retrieval](../claw-learning-is-broader-than-retrieval.md) calls "action-oriented knowledge types": preferences, procedures, judgment precedents. They have concrete types for things we've identified theoretically but not structured.
 
 **Promotion by recurrence.** Importance thresholds drive what gets promoted to permanent vault knowledge:
 - **structural** (i >= 0.8): auto-promotes
@@ -40,7 +40,7 @@ The type taxonomy — decision, lesson, preference, commitment, fact, relationsh
 
 The "seen twice on different dates" heuristic is simple and testable — a concrete mechanism for the text-to-seedling transition that we currently handle through pure human judgment.
 
-**Observation-reflection-promotion pipeline.** Weekly reflection reviews accumulated observations, extracts durable insights, promotes to vault categories. This is a working implementation of the [boiling cauldron](../../claw-design/automating-kb-learning-is-an-open-problem.md) mutations (extract, synthesise, regroup) that we describe as an open problem.
+**Observation-reflection-promotion pipeline.** Weekly reflection reviews accumulated observations, extracts durable insights, promotes to vault categories. This is a working implementation of the [boiling cauldron](../automating-kb-learning-is-an-open-problem.md) mutations (extract, synthesise, regroup) that we describe as an open problem.
 
 ## What We Could Borrow
 
@@ -72,13 +72,13 @@ Each step encodes more retrieval judgment into the system and removes more from 
 
 **Frontloaded context vs. agent-driven retrieval.** ClawVault pre-assembles context before the agent starts work. Their `context` command gathers from 5 sources (daily notes, observations, search results, graph neighbors, structural observations), scores and deduplicates them, caps per source by profile, fits a token budget, and injects the result into the prompt. A hook fires on `session:start` and auto-injects up to 4 results. The agent gets a curated package.
 
-Our [context-loading-strategy](../../claw-design/context-loading-strategy.md) takes the opposite approach: load CLAUDE.md (routing table + conventions) at startup, then trust the agent to navigate. Progressive disclosure — descriptions first, full content on demand. The agent reads, decides what's relevant, follows links.
+Our [context-loading-strategy](../context-loading-strategy.md) takes the opposite approach: load CLAUDE.md (routing table + conventions) at startup, then trust the agent to navigate. Progressive disclosure — descriptions first, full content on demand. The agent reads, decides what's relevant, follows links.
 
 The trade-offs are real. Frontloading means the agent starts with relevant context immediately, no wasted turns — good for weaker models or constrained tool access. But the system must guess what's relevant *before knowing what the agent will need*, and tokens spent on pre-loaded context are tokens unavailable for the task. Agent-driven retrieval loads exactly what's needed when needed and scales better (the KB can grow without ballooning startup context), but depends on the agent being good at navigation and costs turns on retrieval.
 
 These aren't mutually exclusive. You could frontload a minimal context (as we already do with CLAUDE.md) and leave the agent to retrieve the rest. But the deeper question is whether frontloading is a fundamental pattern or a workaround for agents that can't navigate well. Both frontloading and the component patterns it's built from (triggers, profiles) can be viewed as retrieval crystallisation — see "What We Could Borrow" item 5.
 
-**They automated the workshop; we're still mapping it.** ClawVault has 40+ commands and a full pipeline from session transcript to vault knowledge. We're still figuring out what the workshop layer should contain. This is a legitimate strategic difference — [our claw-design notes](../../claw-design/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) argue the workshop needs state machines, dependencies, and expiration, but we haven't committed to specific artifact types. ClawVault's choices (observations, handoffs, reflections) are one answer.
+**They automated the workshop; we're still mapping it.** ClawVault has 40+ commands and a full pipeline from session transcript to vault knowledge. We're still figuring out what the workshop layer should contain. This is a legitimate strategic difference — [our KB-design notes](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) argue the workshop needs state machines, dependencies, and expiration, but we haven't committed to specific artifact types. ClawVault's choices (observations, handoffs, reflections) are one answer.
 
 **Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated — LLMs extract, score, and route observations. Our model keeps humans in the promotion loop (text → seedling → note requires human judgment). This reflects different bets on whether LLM judgment is reliable enough for knowledge curation. We're more conservative, but their system generates evidence about whether the automated approach works.
 
@@ -94,11 +94,11 @@ These aren't mutually exclusive. You could frontload a minimal context (as we al
 ---
 
 Relevant Notes:
-- [a-functioning-claw-needs-a-workshop-layer](../../claw-design/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — foundation: ClawVault's observations, handoffs, and reflections are concrete workshop artifacts where we have only the theoretical need
-- [claw-learning-is-broader-than-retrieval](../../claw-design/claw-learning-is-broader-than-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
-- [automating-kb-learning-is-an-open-problem](../../claw-design/automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
+- [a-functioning-kb-needs-a-workshop-layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — foundation: ClawVault's observations, handoffs, and reflections are concrete workshop artifacts where we have only the theoretical need
+- [claw-learning-is-broader-than-retrieval](../claw-learning-is-broader-than-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
+- [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — contrasts: ClawVault automates promotion without a theory of when automation is premature; their results would test whether early automation helps or locks in assumptions
-- [context-loading-strategy](../../claw-design/context-loading-strategy.md) — contrasts: ClawVault frontloads context via profiles and injection; we use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
+- [context-loading-strategy](../context-loading-strategy.md) — contrasts: ClawVault frontloads context via profiles and injection; we use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), ClawVault formalised lifecycle (pipeline), we're formalising understanding (theory)
 
 Topics:

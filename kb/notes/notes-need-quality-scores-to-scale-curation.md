@@ -3,7 +3,7 @@ description: As the KB grows, /connect will retrieve too many candidates — not
 type: note
 traits: []
 status: seedling
-areas: [claw-design]
+areas: [kb-design]
 ---
 
 # Notes need quality scores to scale curation
@@ -69,4 +69,4 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — note scoring is what makes automated curation tractable at scale
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

@@ -16,7 +16,7 @@ A collection of reusable instructional modules ("skills") for building productio
 
 **Context as finite resource, not token bucket.** The central argument is that context windows are constrained by attention mechanics, not raw capacity. Lost-in-the-middle effects, context poisoning (errors compound through references), and context distraction (irrelevant info overwhelms relevant) are the real failure modes. Practical implication: optimise for signal quality, not quantity.
 
-**Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [context-loading-strategy](../../claw-design/context-loading-strategy.md).
+**Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [context-loading-strategy](../context-loading-strategy.md).
 
 **Architectural reduction.** Fewer, more general tools outperform many specialised ones. Key evidence: Vercel's d0 went from 17 specialised tools to 2 primitives (bash + SQL), improving success from 80% to 100%. Aligns with our YAGNI stance and supports the claim that [the bitter lesson boundary](../bitter-lesson-boundary.md) favours simplicity.
 
@@ -31,7 +31,7 @@ Their evaluation framework is more concrete than ours:
 - **Position-bias mitigation** — swap positions twice in pairwise comparison, check consistency
 - **Degradation testing** — run evals at different context sizes to find performance cliffs
 
-These techniques could strengthen our [quality signals work](../../claw-design/quality-signals-for-kb-evaluation.md), particularly for soft-oracle cases where we're compositing weak signals.
+These techniques could strengthen our [quality signals work](../quality-signals-for-kb-evaluation.md), particularly for soft-oracle cases where we're compositing weak signals.
 
 ## Other Notable Concepts
 
@@ -44,7 +44,7 @@ These techniques could strengthen our [quality signals work](../../claw-design/q
 
 **Strong alignment:** Progressive disclosure, filesystem-first knowledge, start-simple philosophy, tool consolidation.
 
-**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to stabilise — they have operational patterns but no learning framework. Our [methodology enforcement as stabilisation](../../claw-design/methodology-enforcement-is-stabilisation.md) has no counterpart in their work.
+**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to stabilise — they have operational patterns but no learning framework. Our [methodology enforcement as stabilisation](../methodology-enforcement-is-stabilisation.md) has no counterpart in their work.
 
 **They go deeper:** Attention mechanics and degradation data (model-specific thresholds, the four-bucket mitigation). Formal evaluation methodology (LLM-as-judge protocols, bias mitigation). Hosted agent infrastructure (sandboxing, warm pools, pre-built images).
 

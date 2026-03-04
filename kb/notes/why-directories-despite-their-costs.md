@@ -8,13 +8,13 @@ areas: [document-system]
 
 # Why directories despite their costs
 
-The claw uses [files not database](./files-not-database.md) for simplicity and human navigability. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
+The KB uses [files not database](./files-not-database.md) for simplicity and human navigability. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
 
 ## What directories give us
 
 **Scale without tooling.** A `notes/` directory with 30 files is browsable. With 300, it isn't. Splitting into `notes/`, `claw-design/`, `sources/`, `adr/` keeps each directory in the browsable range. This isn't infinite — at thousands of notes you'd need deeper nesting or actual search infrastructure — but it extends the files-not-database sweet spot considerably.
 
-**Local conventions per subsystem.** Some directories benefit from their own rules that don't need to generalise. Tasks have lifecycle subdirectories (`backlog/`, `active/`, `completed/`). Sources have an ingest pipeline. These are what the [workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) note calls "small, self-contained subsystems with their own conventions." Directories are natural boundaries for them.
+**Local conventions per subsystem.** Some directories benefit from their own rules that don't need to generalise. Tasks have lifecycle subdirectories (`backlog/`, `active/`, `completed/`). Sources have an ingest pipeline. These are what the [workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) note calls "small, self-contained subsystems with their own conventions." Directories are natural boundaries for them.
 
 **Different metabolic rates.** Sources churn fast (new ones arrive, get ingested, some get pruned). ADRs are nearly permanent. Notes are somewhere in between. Separating by metabolic rate lets you apply different lifecycle expectations — a 200-file `sources/` directory is normal; 200 files in `adr/` would signal something wrong.
 
@@ -41,7 +41,7 @@ Each new top-level directory imposes a registration tax across multiple places:
 Softer costs:
 
 6. **Cross-directory links** — relative path depth varies. `notes/foo.md` links to `../claw-design/bar.md`, but `notes/subdir/foo.md` needs `../../claw-design/bar.md`. More directories = more relative-path arithmetic.
-7. **Agent routing decisions** — every new directory is a classification decision an agent has to make. The `notes/` vs `claw-design/` heuristic is already non-trivial ("Is it about general systems connecting LLMs and software, or about a specific genre — the claw genre?"). More directories = more routing errors.
+7. **Agent routing decisions** — every new directory is a classification decision an agent has to make. The `notes/` vs `claw-design/` heuristic is already non-trivial ("Is it about general systems connecting LLMs and software, or about a specific genre — the KB genre?"). More directories = more routing errors.
 
 ## Current stance
 
@@ -58,7 +58,7 @@ For now, the right default is: be reluctant to create new top-level directories.
 
 Relevant Notes:
 - [files not database](./files-not-database.md) — the foundational bet that directories extend
-- [a functioning claw needs a workshop layer](./a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
+- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [document classification](./document-classification.md) — the type system that operates independently of directory structure
 - [context loading strategy](./context-loading-strategy.md) — routing decisions are part of the context loading problem
 

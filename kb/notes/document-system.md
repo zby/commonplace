@@ -40,6 +40,6 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Related Areas
 
-- [claw-design](./claw-design.md) — the document system is infrastructure for the claw; architecture decisions about files-not-database and context loading depend on document structure
+- [kb-design](./kb-design.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
 - [links](./links.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory.md) — the type ladder instantiates the stabilisation gradient for documents

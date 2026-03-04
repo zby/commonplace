@@ -20,7 +20,7 @@ This is what we're working toward with [structured sections per type](./related-
 
 Alexander argued that good structure emerges from step-by-step generative rules, not top-down blueprints. Each step responds to local conditions and strengthens what's already there. The builder doesn't follow a complete plan — they follow a process that produces wholeness incrementally.
 
-This maps to our [crystallisation trajectory](./stabilisation.md): start with unstructured text, let patterns emerge from practice, formalise when consistent success becomes observable. The [methodology enforcement gradient](../claw-design/methodology-enforcement-is-stabilisation.md) (instruction → skill → hook → script) is a generative process — each step responds to observed friction, not a pre-designed automation plan.
+This maps to our [crystallisation trajectory](./stabilisation.md): start with unstructured text, let patterns emerge from practice, formalise when consistent success becomes observable. The [methodology enforcement gradient](./methodology-enforcement-is-stabilisation.md) (instruction → skill → hook → script) is a generative process — each step responds to observed friction, not a pre-designed automation plan.
 
 Thalo's approach — commit to the full type system upfront via a grammar — is closer to a master plan. Our approach — discover types through practice, formalise when shapes recur — is closer to Alexander's generative process. This may explain why we resist premature formalisation even when the endpoint is similar.
 
@@ -28,7 +28,7 @@ Thalo's approach — commit to the full type system upfront via a grammar — is
 
 In "The Nature of Order," Alexander argues that living structure consists of centers that mutually reinforce each other. The quality of a building comes not from individual elements but from how centers create and intensify other centers.
 
-Notes in a knowledge graph might work the same way. Each note is a center. Links create mutual reinforcement. The graph has "life" when connections are genuine rather than mechanical. Our [link contracts](../claw-design/link-contracts-framework.md) (extends, foundation, contradicts, enables) describe *how* centers strengthen each other — they're not just navigation aids but relationship types that affect the quality of the whole.
+Notes in a knowledge graph might work the same way. Each note is a center. Links create mutual reinforcement. The graph has "life" when connections are genuine rather than mechanical. Our [link contracts](./link-contracts-framework.md) (extends, foundation, contradicts, enables) describe *how* centers strengthen each other — they're not just navigation aids but relationship types that affect the quality of the whole.
 
 This might also connect to why orphan notes feel wrong — a center with no connections to other centers weakens the structure rather than strengthening it.
 

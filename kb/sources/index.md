@@ -9,12 +9,18 @@ type: index
 - [Automated linking improves retrieval but may degrade navigability](./a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md)
 - [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md)
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
+- [Ingest: Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) *(scientific-paper)*
+- [Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.md) *(academic-paper)*
 - [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
 - [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
 - [Ingest: Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.ingest.md) *(scientific-paper)*
 - [Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.md) *(academic-paper)*
+- [Ingest: On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.ingest.md) *(scientific-paper)*
+- [On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.md) *(academic-paper)*
 - [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
 - [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
+- [Ingest: Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) *(practitioner-report)*
+- [Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.md) *(x-article)*
 - [Ingest: Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.ingest.md) *(scientific-paper)*
 - [Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.md) *(academic-paper)*
 - [Ingest: Toulmin Argument](./purdue-owl-toulmin-argument.ingest.md) *(conceptual-essay)*

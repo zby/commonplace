@@ -54,7 +54,7 @@ Six connections to existing KB notes:
 
 6. **Lost-in-middle as an architecture constraint.** 1,200-line voice guide caused drift by paragraph four. Restructuring to front-load distinctive patterns in first 100 lines fixed it. [quick-win]
 
-7. **[claw-learning-is-broader-than-retrieval](../claw-design/claw-learning-is-broader-than-retrieval.md)** (exemplifies): Personal Brain OS stores the four knowledge types that the action-oriented KB argument identifies as missing from retrieval-oriented systems: preferences (values/goals YAML), procedures (AGENT.md decision tables), judgment precedents (decisions/failures JSONL), and voice/style (brand files, voice guides). This convergence from practice supports the theoretical claim.
+7. **[claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md)** (exemplifies): Personal Brain OS stores the four knowledge types that the action-oriented KB argument identifies as missing from retrieval-oriented systems: preferences (values/goals YAML), procedures (AGENT.md decision tables), judgment precedents (decisions/failures JSONL), and voice/style (brand files, voice guides). This convergence from practice supports the theoretical claim.
 
 ## Recommended Next Action
 

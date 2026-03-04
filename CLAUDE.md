@@ -1,8 +1,8 @@
 # Commonplace
 
-A framework for building agent-operated knowledge bases (claws). This repo contains the methodology, type definitions, writing conventions, skill templates, and scripts that get installed into projects.
+A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, skill templates, and scripts that get installed into projects.
 
-The commonplace repo is itself a claw — it uses its own knowledge system to document the methodology for building claws. There is no separation between "user content" and "methodology" here; the methodology IS the content.
+The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
 ## Knowledge System
 
@@ -42,7 +42,7 @@ rg "^description:" kb/notes/ --glob "*.md"
 rg "^type: structured-claim" kb/notes/ --glob "*.md"
 
 # Find notes by area
-rg "^areas:.*claw-design" kb/notes/ --glob "*.md"
+rg "^areas:.*kb-design" kb/notes/ --glob "*.md"
 
 # Find orphan notes (no inbound links)
 for f in kb/notes/*.md; do
@@ -56,7 +56,7 @@ rg -L "^---" kb/notes/*.md
 
 ### Key Indexes
 
-- `kb/notes/claw-design.md` — main index: foundations, observations, decisions, gaps
+- `kb/notes/kb-design.md` — main index: foundations, observations, decisions, gaps
 - `kb/notes/links.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `scripts/generate_notes_index.py`)
