@@ -2,7 +2,7 @@
 description: Design for how commonplace installs into a project — two trees (user's kb/ and framework's commonplace/), operational artifacts copied for prompt simplicity, methodology referenced for deeper reasoning
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -11,7 +11,7 @@ status: seedling
 When a project adopts commonplace, two directory trees coexist at the project root:
 
 - `kb/` — the user's knowledge base. Contains their notes, sources, tasks. Tracked in the project's git.
-- `commonplace/` — the framework. Contains methodology, claw design theory, type definitions, writing guide, skill templates, scripts. A git submodule or a gitignored clone.
+- `commonplace/` — the framework. Contains methodology, KB design theory, type definitions, writing guide, skill templates, scripts. A git submodule or a gitignored clone.
 
 The install step copies **operational artifacts** into `kb/` and renders skills into `.claude/skills/`. Methodology stays in `commonplace/` and is consulted on demand.
 
@@ -83,7 +83,7 @@ Types are separate files, so upgrading is natural: the install script replaces c
 
 ## Why keep methodology as reference instead of copying
 
-Methodology notes are the reasoning behind the operational artifacts. The agent doesn't need them for routine work — [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) and handle the common cases. But distillation is not lossless: when the agent hits an edge case the skill doesn't cover, she needs the full reasoning. That's why [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — the methodology is permanent infrastructure the agent returns to, not a learning aid she graduates from.
+Methodology notes are the reasoning behind the operational artifacts. The agent doesn't need them for routine work — [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) and handle the common cases. But distillation is not lossless: when the agent hits an edge case the skill doesn't cover, she needs the full reasoning. That's why [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — the methodology is permanent infrastructure the agent returns to, not a learning aid she graduates from.
 
 Keeping methodology in `commonplace/` rather than copying it:
 - Gives the user clean ownership: everything in `kb/` is theirs
@@ -92,7 +92,7 @@ Keeping methodology in `commonplace/` rather than copying it:
 
 ## Commonplace repo layout
 
-The commonplace GitHub repo is itself a claw — it uses its own knowledge system to document the methodology for building claws.
+The commonplace GitHub repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases.
 
 ```
 commonplace/                             ← the GitHub repo
@@ -124,7 +124,7 @@ commonplace/                             ← the GitHub repo
 
 In the commonplace repo itself, there is no separation between "user content" and "methodology" — the methodology IS the content. The two-tree split (user's `kb/` vs framework's `commonplace/`) only emerges when commonplace is installed into another project.
 
-In llm-do, `claw-design/` exists as a separate directory from `notes/` because llm-do has notes about many topics (runtime design, approval system, etc.) and claw design is just one. In commonplace, everything is claw design — a separate directory would be redundant. Subdirectories within `notes/` (like `research/`, `meta/`) provide sufficient organization.
+In llm-do, `claw-design/` exists as a separate directory from `notes/` because llm-do has notes about many topics (runtime design, approval system, etc.) and KB design is just one. In commonplace, everything is KB design — a separate directory would be redundant. Subdirectories within `notes/` (like `research/`, `meta/`) provide sufficient organization.
 
 ## Installed project layout
 
@@ -197,13 +197,13 @@ However, Claude Code already uses `memory/` for its own auto-memory directory at
 ---
 
 Relevant Notes:
-- [extracting the claw system into its own repo](../notes/extract-kb-as-standalone-project.md) — parent plan: what moves vs what stays, naming, license; this note refines the installation architecture
+- [extracting the KB system into its own repo](../notes/extract-kb-as-standalone-project.md) — parent plan: what moves vs what stays, naming, license; this note refines the installation architecture
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
-- [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning progression
+- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning progression
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal
 - [context loading strategy](./context-loading-strategy.md) — constrains: the CLAUDE.md fragment must integrate into the loading hierarchy
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the install step that renders skills and copies operational artifacts
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — informs: the collection/partition distinction and the two-level types nesting limit
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

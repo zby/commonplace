@@ -2,7 +2,7 @@
 description: Deriving architectural requirements by decomposing concrete user stories into step-by-step context needs — not from abstract read/write operations but from what the agent actually has to load at each stage, in both the commonplace repo and installed projects
 type: note
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
@@ -14,7 +14,7 @@ The scenarios must work in two distinct contexts: this repo, where the methodolo
 
 ## Two operating contexts
 
-**Commonplace repo.** This repo is itself a claw — it uses its own knowledge system to document the methodology for building claws. The `kb/` directory contains methodology notes, source reviews, type definitions, everything. There's no separate `commonplace/` directory because this IS commonplace. When the agent writes a note here, it's writing about KB design, and the related notes it finds are other methodology notes. One tree, no escalation needed.
+**Commonplace repo.** This repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. The `kb/` directory contains methodology notes, source reviews, type definitions, everything. There's no separate `commonplace/` directory because this IS commonplace. When the agent writes a note here, it's writing about KB design, and the related notes it finds are other methodology notes. One tree, no escalation needed.
 
 **Installed project.** When a project adopts commonplace, the install script creates `kb/` (the user's content) and clones the commonplace repo to `commonplace/` (the framework). Operational artifacts — types, WRITING.md — are copied into `kb/` so the agent's normal workflow stays within one tree. Skills are rendered into `.claude/skills/`. In normal operation, the agent should not need to consult `commonplace/` at all — everything is [distilled](./skills-derive-from-methodology-through-distillation.md) into skills and the CLAUDE.md fragment. But distillation is not lossless. When the agent hits a case the distilled procedures don't cover, it must escalate to `commonplace/kb/notes/` for the full reasoning.
 
@@ -106,7 +106,7 @@ The decomposition reveals a layered structure that matches the [context loading 
 
 **The post-write connection gap.** Connecting new documents to existing knowledge is the final step in write and ingest scenarios — and the one most often dropped. It's modeled as a separate skill invocation rather than an integral part of the write flow.
 
-**Escalation discoverability.** In installed projects, the agent has no signal that it's in a case the distilled procedures don't cover. Since [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md), there's no "something feels off" intuition — the agent follows the procedure and may produce a suboptimal result without ever realizing methodology would have helped. The CLAUDE.md fragment is the mechanism: it must tell the agent that `commonplace/kb/` exists and when to consult it. The fragment is always loaded, so the escalation path is always discoverable — but the agent still has to recognize it's in an edge case, which no amount of routing can guarantee.
+**Escalation discoverability.** In installed projects, the agent has no signal that it's in a case the distilled procedures don't cover. Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), there's no "something feels off" intuition — the agent follows the procedure and may produce a suboptimal result without ever realizing methodology would have helped. The CLAUDE.md fragment is the mechanism: it must tell the agent that `commonplace/kb/` exists and when to consult it. The fragment is always loaded, so the escalation path is always discoverable — but the agent still has to recognize it's in an edge case, which no amount of routing can guarantee.
 
 **Scenario awareness in skills.** Current skills are operation-oriented (validate, connect, convert, ingest, snapshot-web) rather than scenario-oriented. The agent must compose them into workflows. Scenario-level orchestration could reduce this burden, but trades composability for convenience and adds a layer to the skill hierarchy.
 
@@ -130,7 +130,7 @@ Relevant Notes:
 - [context-loading-strategy](./context-loading-strategy.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimized for agent read/skip decisions
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — grounds: the escalation path is the distillation gap in action — when the distillate doesn't cover the case, the agent needs the source; the CLAUDE.md fragment makes this discoverable
-- [agent-statelessness-makes-skill-layers-architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
+- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

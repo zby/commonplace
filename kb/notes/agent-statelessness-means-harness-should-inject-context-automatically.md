@@ -2,13 +2,13 @@
 description: Since agents can't carry vocabulary or decisions between reads, the harness should auto-inject referenced context — definitions once per session, ADRs when relevant. The trigger mechanism (type, link semantics, term detection) is an open question; the need follows directly from statelessness.
 type: structured-claim
 traits: []
-areas: [claw-design]
+areas: [kb-design]
 status: speculative
 ---
 
 # Agent statelessness means the harness should inject context automatically
 
-Since [agents are stateless](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md), they can't carry definitions, decisions, or vocabulary between reads. An agent that reads a note linking to [crystallisation](../notes/crystallisation.md) doesn't know the definition unless it follows the link — at the cost of a tool call, context space, and a decision. The knowledge is in the KB but not in the context window.
+Since [agents are stateless](./agent-statelessness-makes-routing-architectural-not-learned.md), they can't carry definitions, decisions, or vocabulary between reads. An agent that reads a note linking to [crystallisation](../notes/crystallisation.md) doesn't know the definition unless it follows the link — at the cost of a tool call, context space, and a decision. The knowledge is in the KB but not in the context window.
 
 The remedy is automatic context injection: when the harness loads a document, it identifies references that the agent will need and injects appropriate content. This extends [document affordances](./document-types-should-be-verifiable.md) from "what operations can I perform on this document" to "what context gets loaded alongside this document."
 
@@ -75,10 +75,10 @@ The hierarchy becomes:
 Relevant Notes:
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — foundation: types assert checkable structural properties; this note extends affordances from operations to retrieval
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — parallel: that note gives skills type signatures; this note gives documents retrieval profiles
-- [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — motivates: the agent can't remember definitions, so the harness must provide them
+- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the agent can't remember definitions, so the harness must provide them
 - [context-loading strategy](./context-loading-strategy.md) — extends: adds an "on reference" layer between "always loaded" and "on demand"
 - [human-LLM differences are load-bearing for knowledge system design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — motivates: the "cannot fill gaps" row in the dual-audience table is exactly the problem context injection addresses; tier separation handles the writing side, injection handles the loading side
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — context: definitional notes are an identified exception to claim titles; the `definition` type would formalize this
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

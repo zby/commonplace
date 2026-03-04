@@ -71,9 +71,9 @@ Most agent frameworks use flat contexts. Sub-agent architectures that approximat
 - Claude Code's sub-agent tool spawns agents with clean context plus a task description — lexical framing
 - The [context loading strategy](./context-loading-strategy.md) (always-loaded → on-demand → task-specific) is a form of binding-time analysis for agent context
 
-Several claw-design patterns are already lexical scoping in practice:
+Several KB-design patterns are already lexical scoping in practice:
 
-- The [skill/methodology tier separation](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — skills are frame-local context loaded deterministically; methodology is out of scope unless explicitly loaded
+- The [routing tier separation](./agent-statelessness-makes-routing-architectural-not-learned.md) — skills are frame-local context loaded deterministically; methodology is out of scope unless explicitly loaded
 - [Type signatures on skills](./instructions-are-typed-callables.md) — frame interfaces that declare what bindings a sub-agent receives
 - [Automatic context injection](./agent-statelessness-means-harness-should-inject-context-automatically.md) — the harness constructs frames by determining which bindings to inject rather than exposing the full accumulated context
 
@@ -98,7 +98,7 @@ Relevant Notes:
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — existing approximation: llm-do's per-agent system prompts and arguments are frame-local context
 - [crystallisation](./crystallisation.md) — enables: frame boundaries are interface points where return values can be progressively typed
 - [context-loading-strategy](./context-loading-strategy.md) — grounds: the loading hierarchy is a form of binding-time analysis for what's in scope
-- [agent statelessness makes skill layers architectural, not pedagogical](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — exemplifies: the skill/methodology tier separation is lexical scoping in practice
+- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — exemplifies: the routing tier separation is lexical scoping in practice
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: type signatures on skills are frame interfaces — declaring what bindings a sub-agent receives
 - [agent statelessness means the harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — mechanism: automatic context injection constructs lexically scoped frames
 

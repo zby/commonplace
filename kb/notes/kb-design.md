@@ -25,7 +25,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 ## Skills & Methodology
 
-- [agent-statelessness-makes-skill-layers-architectural-not-pedagogical](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — the methodology-to-skill relationship is permanent infrastructure for LLM agents, not a learning progression; lossy compilation creates systematic blind spots
+- [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — all knowledge routing infrastructure (skills, type templates, routing tables, naming conventions) is permanent architecture for LLM agents, not scaffolding that learners outgrow
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — methodology-to-skill derivation is distillation (extracting procedures from reasoning in the same medium), distinct from crystallisation and stabilisation
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — instructions, skills, hooks, and scripts form a stabilisation gradient for methodology; practices start stochastic and harden as they prove out
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — skills and tasks are typed callables: they accept document types as input and produce types as output, and should declare their signatures

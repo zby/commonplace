@@ -2,13 +2,13 @@
 description: The methodology→skill relationship is distillation (extracting operational procedures from discursive reasoning in the same medium) — distinct from crystallisation (prompt→code phase transition) and stabilisation (narrowing output distribution)
 type: structured-claim
 traits: [has-comparison]
-areas: [claw-design]
+areas: [kb-design]
 status: seedling
 ---
 
 # Skills derive from methodology through distillation
 
-Skills in a claw are derived from the methodology KB. The `/connect` skill encodes procedures — scan descriptions, run the articulation test, check agent traversal value — that were reasoned out across a constellation of methodology notes: the [Toulmin argument structure](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md), the [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) review, the [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention, the [link contracts framework](./link-contracts-framework.md). The skill works because it encodes the right procedures. But it can't explain why those procedures are right, or help adapt them when they don't fit.
+Skills in a knowledge base are derived from the methodology KB. The `/connect` skill encodes procedures — scan descriptions, run the articulation test, check agent traversal value — that were reasoned out across a constellation of methodology notes: the [Toulmin argument structure](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md), the [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) review, the [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention, the [link contracts framework](./link-contracts-framework.md). The skill works because it encodes the right procedures. But it can't explain why those procedures are right, or help adapt them when they don't fit.
 
 What is this derivation relationship? The project already has two terms for related phenomena — crystallisation and stabilisation — but neither is quite right. Getting the term right matters because it determines how we think about maintaining, improving, and extending skills.
 
@@ -38,7 +38,7 @@ Key properties that map well:
 - **The residue has value.** In crystallisation, the "soft" form is superseded. In distillation, the source material remains useful — you return to it when the distillate doesn't cover your case. A domain where claim-titles don't work well requires going back to the methodology to reason about what to change.
 - **The process requires judgment.** Distillation isn't mechanical compilation. A different person reading the same methodology would distil a meaningfully different skill. What to extract, what to leave behind, what sequence to impose on ideas that aren't inherently sequential — these are design decisions.
 - **The distillate can't reconstruct the source.** Someone reading only the `/connect` skill can follow the steps but can't adapt them to novel situations. The reasoning that produced those steps is absent from the output.
-- **The loss is deliberate, not accidental.** The [agent-statelessness note](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) identifies "lossy compilation" as creating systematic blind spots — reasoning omitted from a skill is permanently unavailable at runtime, and the agent has no "something feels off" signal when it hits a case where the omitted reasoning would have mattered. Reframed as distillation, this sharpens: the separation of reasoning from procedure isn't an unfortunate side effect of compression. It's the *defining operation*. You deliberately factor out the warrant and keep the procedure. This points toward a remedy the compilation framing doesn't suggest: provenance links from skill steps back to the methodology that justifies them, so the agent can load the reasoning on demand when the procedure doesn't cover the case.
+- **The loss is deliberate, not accidental.** The [agent-statelessness note](./agent-statelessness-makes-routing-architectural-not-learned.md) identifies "lossy compilation" as creating systematic blind spots — reasoning omitted from a skill is permanently unavailable at runtime, and the agent has no "something feels off" signal when it hits a case where the omitted reasoning would have mattered. Reframed as distillation, this sharpens: the separation of reasoning from procedure isn't an unfortunate side effect of compression. It's the *defining operation*. You deliberately factor out the warrant and keep the procedure. This points toward a remedy the compilation framing doesn't suggest: provenance links from skill steps back to the methodology that justifies them, so the agent can load the reasoning on demand when the procedure doesn't cover the case.
 
 The word "compilation" — in its original, pre-computing sense of "gathering together from various sources" — also fits the gathering aspect. But it misses the purification aspect: a compilation (anthology, collected works) preserves its sources relatively intact. Distillation transforms them. The agent-statelessness note uses "compiled vs. source" as a productive systems-engineering metaphor, and its substantive arguments stand. But "compilation" implies a phase transition (source code → binary) that doesn't happen here. Distillation refines the metaphor: same medium, no phase change, deliberate separation rather than mechanical translation.
 
@@ -46,7 +46,7 @@ The word "compilation" — in its original, pre-computing sense of "gathering to
 
 Knowledge distillation in ML means training a smaller model to reproduce the behavior of a larger one. The student handles common cases efficiently but can't do everything the teacher can. Structurally similar: the skill (small, cheap to load) reproduces the *behavior* the full methodology KB (large, expensive to load) would produce, for common cases. Edge cases still need the teacher.
 
-But ML distillation is a one-shot training process. Claw distillation is ongoing — the methodology evolves, and skills must evolve with it. The relationship is maintained, not frozen.
+But ML distillation is a one-shot training process. KB distillation is ongoing — the methodology evolves, and skills must evolve with it. The relationship is maintained, not frozen.
 
 ## Reasoning
 
@@ -64,13 +64,13 @@ Conflating them produces confused designs. If you think skills are crystallised 
 
 ### Distillation is a context-budget operation
 
-Since [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md), the distillation isn't optional — it's driven by context economics. You can't load fifteen methodology notes every session. The skill exists because context is finite and expensive. The methodology must be maintained because the skill can't handle edge cases.
+Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), the distillation isn't optional — it's driven by context economics. You can't load fifteen methodology notes every session. The skill exists because context is finite and expensive. The methodology must be maintained because the skill can't handle edge cases.
 
 This connects to the [context-loading strategy](./context-loading-strategy.md): CLAUDE.md (always loaded, slim) → skill descriptions (always loaded, suggestive) → skill bodies (loaded on invoke) → methodology notes (loaded on demand). Distillation is the process that produces the skill tier from the methodology tier. The loading hierarchy is the architectural consequence.
 
 ### For agents, distillation is permanent infrastructure
 
-For a human, distilled procedures are a convenience that can eventually be transcended through understanding. For an LLM agent, the distillate and the source must be co-maintained indefinitely because no reader will ever internalize either. The [agent-statelessness note](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) develops this point at length — the relationship is architectural, not pedagogical, precisely because the agent never graduates from needing the loaded context.
+For a human, distilled procedures are a convenience that can eventually be transcended through understanding. For an LLM agent, the distillate and the source must be co-maintained indefinitely because no reader will ever internalize either. The [agent-statelessness note](./agent-statelessness-makes-routing-architectural-not-learned.md) develops this point at length — the relationship is architectural, not pedagogical, precisely because the agent never graduates from needing the loaded context.
 
 ## Caveats
 
@@ -82,11 +82,11 @@ For a human, distilled procedures are a convenience that can eventually be trans
 
 Relevant Notes:
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
-- [agent statelessness makes skill layers architectural](./agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship it calls "compilation"
+- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship
 - [crystallisation: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: crystallisation involves a phase transition in medium; distillation does not
 - [context-loading strategy](./context-loading-strategy.md) — enables: the loading hierarchy is the architectural consequence of distillation; skill tier exists because methodology tier is too expensive to load routinely
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
 
 Topics:
-- [claw-design](./claw-design.md)
+- [kb-design](./kb-design.md)

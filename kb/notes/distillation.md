@@ -14,7 +14,7 @@ One of two co-equal learning mechanisms in deployed agentic systems, alongside [
 
 Different operational contexts need different things from the same body of knowledge. An agent connecting notes needs a step-by-step procedure — not fifteen methodology notes about Toulmin argument structure, link contracts, and title-as-claim conventions. An agent validating notes needs a different extraction from the same methodology. A smaller-context agent needs a more compressed version of either.
 
-[Agent statelessness](../claw-design/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) makes this architectural rather than convenient. Each session starts fresh, so the reasoning that produced a procedure can't be "remembered" — it must either be loaded (expensive) or distilled into something that fits the context budget.
+[Agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) makes this architectural rather than convenient. Each session starts fresh, so the reasoning that produced a procedure can't be "remembered" — it must either be loaded (expensive) or distilled into something that fits the context budget.
 
 ## How distillation works
 
@@ -54,8 +54,8 @@ Not distillation: moving a validation check to code (crystallisation — the ope
 Relevant Notes:
 - [stabilisation](./stabilisation.md) — co-equal mechanism: constraining the interpretation space, orthogonal to distillation
 - [crystallisation](./crystallisation.md) — the far end of stabilisation; sometimes follows distillation (extract a procedure, then crystallise it to code)
-- [skills derive from methodology through distillation](../claw-design/skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
-- [agent statelessness makes skill layers architectural](../claw-design/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md) — why distillation is architecturally necessary: context budget constraints
+- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
+- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — why distillation is architecturally necessary: context budget constraints
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the substrate (repo artifacts) through which distillation operates
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: capacity decomposes into generality vs reliability+speed+cost; distillation trades source completeness for operational efficiency
 
