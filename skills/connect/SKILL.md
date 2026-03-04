@@ -57,12 +57,11 @@ Every connection must pass the articulation test: can you say WHY these notes co
 
 ## Search Scope
 
-Discovery scans three collections under `kb/`:
+Discovery scans two collections under `kb/`:
 
 | Directory | Contains |
 |-----------|----------|
 | `kb/notes/` | Main KB — claims, design notes, research |
-| `kb/claw-design/` | Knowledge system methodology and architecture |
 | `kb/sources/` | Snapshotted external sources |
 
 ## Workflow

@@ -49,11 +49,19 @@ Legal drafting has developed specific techniques to narrow the interpretation sp
 
 This doesn't replace the programming lens — typing, testing, and compilation remain powerful. But it adds a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity.
 
+## ABC as a case study
+
+Agent Behavioral Contracts ([ABC](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md)) validates this note's thesis through an independent route. The paper extends Design-by-Contract (a programming practice) to autonomous agents, but its entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary. The framework specifies behavioral requirements that constrain an interpreter exercising judgment, which is the exact structure described above.
+
+ABC's hard/soft constraint hierarchy answers the open question below about interpretation hierarchies: hard constraints (zero-tolerance invariants, deterministic rejection) take absolute precedence over soft constraints (which permit transient violations if recovered within k steps). This mirrors the legal hierarchy where constitutional provisions override statutes, which override regulations. The paper formalizes precedence rather than leaving it to interpretive convention.
+
+The paper routes through programming (Meyer's Design-by-Contract) rather than borrowing from law directly — which itself illustrates the note's claim that legal analogies deserve more attention. ABC reinvents legal enforcement patterns (compliance thresholds, violation recovery, graduated sanctions) without citing law as a source discipline.
+
 ## Open questions
 
 - Which specific legal drafting techniques haven't been applied to prompt engineering yet? Contract law's "reasonable person" standard might inform how we think about the LLM-as-interpreter.
 - Does the common law / civil law distinction map to anything? Common law (precedent-heavy, bottom-up stabilisation) vs civil law (code-heavy, top-down specification) might correspond to different prompt engineering styles.
-- Legal interpretation has explicit hierarchies (constitution > statute > regulation > case law). Is there an analogue for prompt systems — which instructions take precedence when they conflict?
+- ~~Legal interpretation has explicit hierarchies (constitution > statute > regulation > case law). Is there an analogue for prompt systems — which instructions take precedence when they conflict?~~ Partially answered by ABC's hard/soft constraint hierarchy — see above.
 
 ---
 
@@ -66,6 +74,8 @@ Relevant Notes:
 - [distillation](./distillation.md) — mapped: legal commentary and restatements are distillation — extracting principles from case law without changing medium
 - [stabilisation](./stabilisation.md) and [distillation](./distillation.md) — validated: both mechanisms map to legal analogues, but unevenly — law is rich in stabilisation, has distillation in commentary, and largely lacks crystallisation
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: the five empirically observed writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) address how instructions are framed; legal techniques address what goes inside them — and the common law/civil law question maps partially to the descriptive–prescriptive spectrum
+
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — validates: ABC reinvents legal enforcement patterns (contracts, compliance, violation, recovery) via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question
 
 Source:
 - Prompted by a social media post observing that context engineering is close to law

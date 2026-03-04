@@ -1,28 +1,24 @@
 # Phase 2: Discovery Methodology
 
-Use dual discovery: index exploration AND semantic search in parallel. These are complementary, not sequential.
+**Capture discovery trace as you go.** Record actual query strings, scores, and which candidates you evaluated or rejected. This becomes the Discovery Trace section in output — proving methodology was followed, not reconstructed after the fact. A trace that only lists keywords without query strings or scores is insufficient.
 
-**Capture discovery trace as you go.** Note which indexes you read, which queries you ran (with scores), which searches you tried. This becomes the Discovery Trace section in output — proving methodology was followed, not reconstructed after the fact.
+## Step 1: Read the Directory Index (required first step)
 
-**Primary discovery (run in parallel):**
+Read `kb/notes/index.md` before any other discovery. It lists every note with its description — a complete, cheap candidate scan that catches cross-domain connections that vocabulary-based search misses.
 
-**Path 1: Index Exploration** — curated navigation
+Scan every entry. For each, ask: does this note's description suggest a genuine connection to the source? Flag candidates with a reason. Don't filter by vocabulary overlap — a note about "legal drafting" connects to a paper about "behavioral contracts" even though they share no domain terminology, because both address specification and enforcement.
 
-If you know the topic (check the note's Topics footer), start with the index:
+This step is the primary discovery mechanism. It costs one file read and surfaces connections that semantic search would miss due to vocabulary mismatch.
 
-- Read the relevant index(s)
-- Follow curated links in Core Ideas — these are human/agent-curated connections
-- Note what is already connected to similar concepts
-- Check Tensions and Gaps for context
-- What do agent notes reveal about navigation?
+## Step 2: Topic Index Exploration (if relevant)
 
-Indexes tell you what thinking exists and how it is organized. Someone already decided what matters for this topic.
+If the source connects to a known area (check candidates from Step 1), read the relevant topic index(es). Topic indexes add curated structure that index.md lacks — groupings, tensions, gaps — which can reveal connections the flat listing misses.
 
-**Path 2: Semantic Search** — find what indexes might miss
+## Step 3: Semantic Search
 
-**Two-tier fallback for semantic search:**
+**Two-tier fallback:**
 
-**Tier 1 — bash qmd (primary):** Run `qmd` with the `commonplace` index:
+**Tier 1 — qmd (primary):** Run `qmd` with the `commonplace` index:
 ```bash
 qmd --index commonplace query "[note's core concepts]" --collection notes -n 15
 ```
@@ -31,53 +27,25 @@ Also search sources:
 qmd --index commonplace query "[note's core concepts]" --collection sources -n 10
 ```
 
+Record the actual query string and top results with scores in the discovery trace.
+
 **Tier 2 — grep only:** If qmd fails (command not found or errors), log "qmd unavailable" and rely on index + keyword search only. This degrades quality but does not block work.
 
-Evaluate results by relevance — read any result where title or snippet suggests genuine connection. Semantic search finds notes that share MEANING even when vocabulary differs. A note about "iteration cycles" might connect to "learning from friction" despite sharing no words.
+Semantic search finds notes that share MEANING even when vocabulary differs. A note about "iteration cycles" might connect to "learning from friction" despite sharing no words. But it is biased toward the source document's vocabulary — that's why Step 1 (directory index scan) comes first.
 
-**Why both paths:**
+## Step 4: Keyword Search
 
-Index = what is already curated as relevant
-Semantic search = neighbors that have not been curated yet
-
-Using only search misses curated structure. Using only index misses semantic neighbors outside the topic. Both together catch what either alone would miss.
-
-**Secondary discovery (after primary):**
-
-**Step 3: Keyword Search**
-
-For specific terms and exact matches — search all collections:
+For specific terms and exact matches — search notes and sources:
 ```bash
-grep -r "term" kb/notes/ kb/claw-design/ kb/sources/ --include="*.md"
+grep -r "term" kb/notes/ kb/sources/ --include="*.md"
 ```
 
 Use grep when:
 - You know the exact words that should appear
 - Searching for specific terminology or phrases
 - Finding all uses of a named concept
-- The vocabulary is stable and predictable
 
-**Choosing between semantic and keyword:**
-
-| Situation | Better Tool | Why |
-|-----------|-------------|-----|
-| Exploring unfamiliar territory | semantic | vocabulary might not match meaning |
-| Finding synonyms or related framings | semantic | same concept, different words |
-| Known terminology | keyword | exact match, no ambiguity |
-| Verifying coverage | keyword | ensures nothing missed |
-| Cross-domain connections | semantic | concepts bridge domains, words do not |
-| Specific phrase lookup | keyword | faster, more precise |
-
-**Step 4: Description Scan**
-
-Use ripgrep to scan note descriptions for edge cases:
-- Does this extend the source note?
-- Does this contradict or create tension?
-- Does this provide evidence or examples?
-
-Flag candidates with a reason (not just "related").
-
-**Step 5: Link Following**
+## Step 5: Link Following
 
 From promising candidates, follow their existing links:
 - What do THEY connect to?

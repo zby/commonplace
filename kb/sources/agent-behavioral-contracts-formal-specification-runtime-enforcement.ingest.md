@@ -36,6 +36,8 @@ The paper connects deeply to the KB's stabilisation and enforcement theory. The 
 
 **unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md** — ABC and instruction testing are complementary: tests verify instruction behavior at development time in controlled environments; contracts enforce behavioral bounds at runtime in production. Together they cover the full verification lifecycle.
 
+**legal-drafting-solves-the-same-problem-as-context-engineering.md** — ABC validates the legal drafting note's thesis that legal contract concepts transfer to agent systems. ABC's entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary applied to agent behavior. The paper routes through programming's Design-by-Contract rather than borrowing from law directly, but the deeper structure is identical: specifying behavioral requirements that constrain an interpreter exercising judgment. The legal note's open question about whether legal interpretation hierarchies (constitution > statute > regulation > case law) have prompt system analogues gets a concrete answer: ABC's hard > soft constraint ordering with explicit precedence rules is exactly such a hierarchy.
+
 **Tension identified**: ABC assumes contracts can be specified upfront in a DSL. Our methodology-enforcement note argues practices should start underspecified and stabilise over time. These are complementary rather than contradictory — ABC contracts could be the target format that practices mature toward — but the paper does not address the discovery or maturation process.
 
 ## Extractable Value
