@@ -24,6 +24,8 @@ These properties produce three consequences:
 
 **Attention degradation under load.** Even within the window, more content means weaker attention to any given part. The classic "lost in the middle" finding ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) established that models exhibit primacy and recency bias, performing best when relevant information appears at the beginning or end of context. Anthropic calls this **context rot** — the degradation in ability to recall and reason as the window fills. The resource doesn't just run out — it degrades before it runs out.
 
+This degradation has two distinct dimensions. **Token-volume degradation** is positional: more tokens dilute attention to any given token, producing the lost-in-the-middle effect. **Compositional-depth degradation** is structural: chaining dependent reasoning steps causes performance collapse even when token count is trivial. ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) isolates the second dimension: LLMs verifying convexity of composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, despite using only 5,331 tokens — far below context limits. The authors distinguish "long-context capability" (handling token length) from "long-horizon reasoning capability" (maintaining correctness over dependent steps). The mechanism: each step conditions on an expanding history of prior sub-steps, creating a **compositional reasoning gap** where accumulated intermediate results interfere with current-step reasoning. Scoped recursion — pruning history to retain only direct dependencies at each step — recovers F1=1.0 at all depths, confirming that the degradation is caused by flat accumulation, not by the reasoning task itself.
+
 **Interpretation cost compounds.** Traditional systems execute instructions at constant cost — a CPU doesn't slow down because the program is complex. LLMs pay interpretation overhead proportional to context complexity. Giving an agent a procedure ("first do X, then use the result to do Y") costs more than giving it the answer that procedure would have produced ("here is Z") — the agent must parse, track, and execute the procedure instead of just receiving the answer. Every layer of [indirection costs context and interpretation overhead](./indirection-is-costly-in-llm-instructions.md) on every read.
 
 ## Growing windows don't eliminate the constraint
@@ -63,6 +65,7 @@ Sources:
 - JetBrains Research (2025). [Cutting through the noise: smarter context management for LLM-powered agents](https://blog.jetbrains.com/research/2025/12/efficient-context-management/).
 - Epoch AI (2025). [LLMs now accept longer inputs, and the best models can use them more effectively](https://epoch.ai/data-insights/context-windows).
 - Liu et al. (2023). [Lost in the middle: how language models use long contexts](https://arxiv.org/abs/2307.03172).
+- Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — empirical evidence that compositional depth, not token count, drives reasoning degradation.
 
 Relevant Notes:
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the most direct response to context scarcity; this note explains *why* frontloading matters
