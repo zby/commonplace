@@ -32,12 +32,17 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the simplest instance: keeping a specific LLM output resolves underspecification to one interpretation; develops the generator/verifier pattern and verbatim risk
 - [stabilisation-during-deployment-is-continuous-learning](./stabilisation-during-deployment-is-continuous-learning.md) — AI labs' continuous learning is achievable through stabilisation with versioned artifacts, which beats weight updates on inspectability and rollback
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — crystallisation's operational mechanism: observe behavior, extract deterministic rules, grow the calculator surface monotonically
+- [error-messages-that-teach-are-a-stabilisation-technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — the dual-function property: effective enforcement artifacts simultaneously constrain and inform, because in agent systems the error channel is an instruction channel
 
 ## Distillation
 
 Targeted extraction from a larger body of reasoning into a focused artifact shaped by use case, context budget, or agent. Orthogonal to stabilisation — you can distil without stabilising (extract a skill, still underspecified) or stabilise without distilling (store an output, no extraction from reasoning).
 
 - [distillation](./distillation.md) — definition: the rhetorical mode shifts to match the target (argumentative → procedural, exploratory → assertive); the dominant mechanism in knowledge work because it creates new artifacts from existing reasoning
+
+## Information & Bounded Observers
+
+- [information-value-is-observer-relative-because-extraction-requires-computation](./information-value-is-observer-relative-because-extraction-requires-computation.md) — deterministic transformations add zero classical information but can make structure accessible to bounded observers; names the gap that distillation and discovery each describe operationally
 
 ## Discovery
 

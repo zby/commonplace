@@ -79,6 +79,7 @@ Relevant Notes:
 - [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: Alexander's three levels of connection may map to the feature/structure/generative-model hierarchy
 - [stabilisation](./stabilisation.md) — analogous spectrum: stabilisation grades (store output → write description → extract code) parallel the abstraction depths here
+- [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction (epiplexity)
 
 Topics:
 - [learning-theory](./learning-theory.md)
