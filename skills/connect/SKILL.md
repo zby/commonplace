@@ -302,3 +302,25 @@ Before saving the report, verify:
 - Explain WHY connections exist
 - Note bidirectional candidates (both directions worth linking)
 - Capture discovery trace as you work
+- Run the reflection step (Phase 5) and append observations to kb/log.md
+
+---
+
+# ═══ PHASE 5: REFLECTION ═══
+
+After saving the connection report, review what you noticed during traversal and append observations to `kb/log.md`.
+
+During Phases 1-3 you read the index, topic indexes, and many individual notes. You may have noticed improvement opportunities that are outside the scope of the current connect task. **Do not fix them — just log them.**
+
+## What to log
+
+Append one line per observation using the format: `- path/to/note.md: what needs improving`
+
+Anything you noticed that could improve the KB is worth logging — structural issues, content quality, logical problems, redundancies. Examples include weak descriptions, topic-as-title, missing index membership, stale links, missing connections, orphan notes, errors in reasoning, style problems, duplication across notes, area gaps. Use your judgment — if it caught your attention during traversal, log it.
+
+## Rules
+
+- Only log things you actually noticed during THIS traversal — don't re-read notes to look for problems
+- Skip if you genuinely noticed nothing — an empty reflection is fine, don't fabricate observations
+- Each entry is one line. No explanations, no fixes, no follow-up actions
+- This is the lowest-friction capture in the system — keep it that way
