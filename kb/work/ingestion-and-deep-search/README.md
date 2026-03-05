@@ -88,3 +88,39 @@ Directed reading is one case: "read these documents through this lens, produce a
 - Instructions notes are the right interface for delegating analytical work to sub-agents.
 - The caller's job: gather, judge, frontload. The sub-agent's job: read, synthesize, write.
 - `/connect` is a caller-side tool (helps the caller discover connections to frontload), not a sub-agent-side tool.
+
+### Experiment 3: Literature review — web search → ingest → instructions → sub-agent (2026-03-05)
+
+**Instructions note:** `kb/work/ingestion-and-deep-search/instructions-memory-systems-review.md`
+**Documents:** 5 ingest reports (Mem0, Graphiti, Cognee, Letta, A-MEM) + 4 existing related-system notes + related-systems-index
+**Goal:** Comparative review of agentic memory systems — identify architectural dimensions, place each system, surface design trade-offs
+**Report:** `kb/sources/agentic-memory-systems-comparative-review.md`
+
+**What changed from Experiment 2:**
+- Full discovery pipeline before instructions: web search → filter candidates → clone repos → read source code → write snapshots → `/ingest` each → write instructions → spawn sub-agent
+- 10 input documents (largest set yet)
+- `/ingest` ran on all four new sources, producing connection maps and classifications automatically
+- The caller (main conversation) did extensive original research (reading repo source code) before writing snapshots — the snapshots were authored artifacts, not raw downloads
+- Sub-agent was a general-purpose agent, not an explore agent
+
+**What happened:**
+- Discovery phase (web search through ingestion) took ~30 minutes of conversation, produced 4 source snapshots + 4 ingest reports
+- Instructions note written after all ingestions completed, informed by what the ingest reports surfaced (they independently flagged the same comparison dimensions)
+- Sub-agent completed in ~150s, 45K tokens. Read all 10 input documents, produced a 153-line review with dimension matrix, convergences, divergences, and implications
+- Review quality is high — the title-as-claim ("The fundamental split in agent memory is not storage format but who decides what to remember") is a genuine insight, not a label
+
+**Observations:**
+- The procedure naturally decomposed into three phases with different characteristics:
+  1. **Discovery** (human-guided, exploratory): web search, filtering, repo exploration — requires judgment about what's worth investigating
+  2. **Processing** (automated, parallelizable): `/ingest` each source — produces connection maps and classifications mechanically
+  3. **Synthesis** (sub-agent, focused): read all reports, produce cross-cutting review — requires reading everything but follows clear instructions
+- The instructions note was easier to write than Experiment 2's because `/ingest` had already surfaced the key questions. Three separate ingests independently flagged "agent memory systems vary along five architectural dimensions" as the natural synthesis. The instructions crystallized what the ingests had already discovered.
+- Having the caller write source snapshots from repo code (not just README summaries) was critical. The review's observations about actual implementation gaps (Cognee's memify shipping simpler than documented, Letta evolving toward git-backed files) came from the snapshots, which came from reading the code.
+- The sub-agent didn't need `/connect` — the ingest reports had already mapped all connections. The instructions pointed to pre-connected documents.
+
+**Design implications:**
+- Literature review has a natural three-phase structure: discover → process → synthesize. Each phase has different agency requirements (human judgment → automated pipeline → delegated execution).
+- `/ingest` is the right tool for the processing phase — it standardizes source analysis AND discovers connections, which together inform the synthesis instructions.
+- Instructions notes scale well to 10 inputs. The sub-agent read everything and produced a coherent synthesis. The constraint is the sub-agent's context window, not the instructions format.
+- The caller's research (reading source code, writing informed snapshots) is what makes the review valuable. A shallower discovery phase (just README summaries) would have produced a shallower review. Instruction quality reflects caller effort.
+- This experiment answers one of the workshop's original questions: "What other workflows naturally produce instructions notes?" Literature review is a natural fit — the discovery phase produces the knowledge needed to write good instructions.
