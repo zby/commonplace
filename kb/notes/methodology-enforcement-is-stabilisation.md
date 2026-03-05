@@ -57,6 +57,7 @@ Relevant Notes:
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — parallels: document type maturation (note -> traits -> promoted base type) follows the same gradual-typing pattern as methodology maturation (instruction -> skill -> hook -> script); both trade flexibility for reliability as verifiability increases
 - [oracle strength spectrum](../notes/oracle-strength-spectrum.md) — determines when a practice is ready to move down the enforcement gradient: cheap verification enables scripting; expensive verification keeps the practice at skill level
 - [context loading strategy](./context-loading-strategy.md) — mirrors: the loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies) parallels the enforcement hierarchy, but for information specificity rather than practice reliability
+- [error messages that teach are a stabilisation technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the most effective enforcement artifacts simultaneously constrain and teach
 
 Topics:
 - [kb-design](./kb-design.md)

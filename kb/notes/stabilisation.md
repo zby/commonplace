@@ -53,6 +53,7 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that stabilisation operates on
 - [storing LLM outputs is stabilisation](./storing-llm-outputs-is-stabilization.md) — the simplest instance: committing to one interpretation by keeping a specific output
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — applies: the instruction → skill → hook → script gradient is stabilisation applied to methodology
+- [error messages that teach are a stabilisation technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which stabilisation operates
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when stabilisation is permanent vs when softening is needed
 
