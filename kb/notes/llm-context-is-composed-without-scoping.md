@@ -1,7 +1,7 @@
 ---
 description: LLM context is flat concatenation — no scoping, everything global, producing dynamic scoping's pathologies (spooky action at a distance, name collision, inability to reason locally) but without even a stack; sub-agents are the one mechanism that provides isolation through lexically scoped frames
 type: note
-traits: []
+traits: [has-external-sources]
 areas: [computational-model]
 status: seedling
 ---
@@ -90,6 +90,9 @@ These ideas follow from the stack-frame model but don't yet have concrete exampl
 **Recursion with clean frames.** A flat context makes recursive decomposition painful because each recursive call appends to the same context. With a proper stack, each recursive call gets a clean frame and completed calls are popped — bounded by single-frame size, not cumulative size. ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) provides direct empirical validation: LLMs verifying convexity of composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, even though the total token count (5,331) is trivial relative to the context window. The failure is not about token capacity but about **compositional reasoning depth** — each recursive step conditions on an expanding history of prior sub-steps, diluting attention on the current step's actual dependencies. When the authors prune accumulated history to retain only direct dependencies at each recursive sub-step (i.e., give each call a clean frame), performance recovers to F1=1.0 at all depths. This confirms the prediction: the stack discipline's value is not just theoretical tidiness but measurable recovery of reasoning capability that flat accumulation destroys.
 
 ---
+
+Sources:
+- Anthropic (2025). [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — recommends sub-agents return 1,000–2,000 token summaries; the tens of thousands of tokens each sub-agent explores stay out of the caller's window. Validates the lexically scoped frames pattern.
 
 Relevant Notes:
 - [llm context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — amplifies: the medium provides no structural boundaries, so scoping must be imposed by architecture

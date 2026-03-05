@@ -152,7 +152,7 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — applies: the five empirically observed context-file writing styles map to different strategies for narrowing the interpretation space
-- [context efficiency is the central constraint in agent system design](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
 
 Topics:
 - [computational-model](./computational-model.md)

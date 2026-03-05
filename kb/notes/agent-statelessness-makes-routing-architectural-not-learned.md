@@ -16,7 +16,7 @@ This means every mechanism that directs the agent to the right knowledge at the 
 
 ## Progressive disclosure replaces navigation intuition
 
-A human holds an approximate mental model of the whole knowledge base. An agent can only hold what's loaded. Since [context efficiency is the central constraint](./context-efficiency-is-the-central-constraint-in-agent-system-design.md), you can't load everything — so you must route to the right layer at the right time. In this KB, the loading hierarchy is our concrete progressive disclosure system:
+A human holds an approximate mental model of the whole knowledge base. An agent can only hold what's loaded. Since [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), you can't load everything — so you must route to the right layer at the right time. In this KB, the loading hierarchy is our concrete progressive disclosure system:
 
 1. **CLAUDE.md** loads unconditionally — the agent always knows where to route
 2. **Skill descriptions** load cheaply — the agent decides whether to load the full skill
@@ -50,7 +50,7 @@ Future architectures with persistent memory across sessions would weaken the sta
 
 Relevant Notes:
 - [context-loading-strategy](./context-loading-strategy.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
-- [context efficiency is the central constraint](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) — foundation: why progressive disclosure exists; routing is the mechanism that makes context efficiency achievable
+- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: why progressive disclosure exists; routing is the mechanism that makes context efficiency achievable
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: the stabilisation gradient describes how practices harden; this note adds that the agent never hardens with them
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — supports: the reason lossy routing is dangerous — the agent can't resolve omitted reasoning by loading the source at runtime
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — example: build-time generation is exactly the source→compiled pattern this note describes

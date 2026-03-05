@@ -43,7 +43,7 @@ Relevant Notes:
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — applies: the calling convention works because agents and tools share a homoiconic interface — names resolve to either neural or symbolic implementations
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: the structuring disciplines (typing, testing, compilation) that programming practices bring are especially needed in a homoiconic medium that provides no built-in structure
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — grounds: the stabilisation gradient from instruction to script imposes structural boundaries that the homoiconic medium itself cannot provide
-- [context efficiency is the central constraint in agent system design](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) — intensified by: homoiconicity means instructions and data compete as equal tokens, removing any priority mechanism for protecting instructions from dilution
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: homoiconicity means instructions and data compete as equal tokens, removing any priority mechanism for protecting instructions from dilution
 
 Topics:
 - [computational-model](./computational-model.md)

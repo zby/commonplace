@@ -16,7 +16,7 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 ## Related notes in other areas
 
-- [context-efficiency-is-the-central-constraint-in-agent-system-design](./context-efficiency-is-the-central-constraint-in-agent-system-design.md) (kb-design) — the foundational argument for why context is the scarce resource; connects all the PL-inspired mechanisms (partial evaluation, scoping, indirection cost) to a single pressure
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) (kb-design) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
 - [frontloading-spares-execution-context](./frontloading-spares-execution-context.md) (kb-design) — partial evaluation applied to LLM instructions; the mechanism behind indirection elimination and build-time generation
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) (kb-design) — the cost model for indirection differs fundamentally between code and LLM instructions
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) (learning-theory) — typing, testing, version control transfer to prompting with modified cost models

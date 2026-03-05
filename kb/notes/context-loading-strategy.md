@@ -1,7 +1,7 @@
 ---
 description: CLAUDE.md should be a slim router to task-specific docs, not a comprehensive manual — because it's loaded every session
 type: note
-traits: []
+traits: [has-external-sources]
 areas: [kb-design]
 status: current
 ---
@@ -37,6 +37,11 @@ Both are always loaded, but they work differently:
 The overlap is intentional but serves different purposes. CLAUDE.md says "before creating notes, read WRITING.md" (imperative routing). A skill description says "/connect — find connections between notes" (available capability). Both point toward the same kind of work but through different mechanisms — one pushes, the other pulls.
 
 **Key design question:** When should guidance live in CLAUDE.md vs in a skill description? If the agent must always follow it, CLAUDE.md. If the agent should know it's available and choose when to use it, skill description + skill body.
+
+---
+
+Sources:
+- Anthropic (2025). [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — describes Claude Code following this exact pattern: a CLAUDE.md file as a slim router with grep/glob for just-in-time retrieval of everything else.
 
 Topics:
 - [kb-design](./kb-design.md)
