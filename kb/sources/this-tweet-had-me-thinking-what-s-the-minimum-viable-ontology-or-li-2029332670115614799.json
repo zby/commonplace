@@ -1,0 +1,540 @@
+{
+  "source": "https://x.com/melodyskim/status/2029332670115614799",
+  "captured": "2026-03-05T15:38:32.676423+00:00",
+  "type": "x-thread",
+  "status_id": "2029332670115614799",
+  "conversation_id": "2029332670115614799",
+  "target_post": {
+    "note_tweet": {
+      "entities": {
+        "urls": [
+          {
+            "start": 164,
+            "end": 187,
+            "url": "https://t.co/IQS0grHbB5",
+            "expanded_url": "http://domainmaps.co",
+            "display_url": "domainmaps.co"
+          }
+        ]
+      },
+      "text": "This tweet had me thinking, what\u2019s the \u201cminimum viable ontology\u201d or list of terms to quickly get situated within a new domain, and improve your prompts?\n\nVibecoded https://t.co/IQS0grHbB5 to showcase this idea on a few example domains -- been wading into 3D recently and found this initial \"domain map\" helpful.\n\nSO much to improve here but wanted to get this initial idea out! Would love thoughts / feedback :)"
+    },
+    "edit_history_tweet_ids": [
+      "2029332670115614799"
+    ],
+    "referenced_tweets": [
+      {
+        "type": "quoted",
+        "id": "2027579200635605058"
+      }
+    ],
+    "author_id": "25032757",
+    "text": "This tweet had me thinking, what\u2019s the \u201cminimum viable ontology\u201d or list of terms to quickly get situated within a new domain, and improve your prompts?\n\nVibecoded https://t.co/0ElAz3RLrm to showcase this idea on a few example domains -- been wading into 3D recently and found https://t.co/0FcjQaFONz https://t.co/CXB8hwjapF",
+    "entities": {
+      "urls": [
+        {
+          "start": 164,
+          "end": 187,
+          "url": "https://t.co/0ElAz3RLrm",
+          "expanded_url": "http://domainmaps.co",
+          "display_url": "domainmaps.co",
+          "status": 200,
+          "title": "Domain Maps",
+          "unwound_url": "https://domainmaps.co/"
+        },
+        {
+          "start": 277,
+          "end": 300,
+          "url": "https://t.co/0FcjQaFONz",
+          "expanded_url": "https://x.com/melodyskim/status/2029332670115614799/video/1",
+          "display_url": "pic.x.com/0FcjQaFONz",
+          "media_key": "13_2029330531414835200"
+        },
+        {
+          "start": 301,
+          "end": 324,
+          "url": "https://t.co/CXB8hwjapF",
+          "expanded_url": "https://twitter.com/itsandrewgao/status/2027579200635605058",
+          "display_url": "x.com/itsandrewgao/s\u2026"
+        }
+      ]
+    },
+    "conversation_id": "2029332670115614799",
+    "created_at": "2026-03-04T23:06:26.000Z",
+    "id": "2029332670115614799"
+  },
+  "posts": [
+    {
+      "note_tweet": {
+        "entities": {
+          "urls": [
+            {
+              "start": 164,
+              "end": 187,
+              "url": "https://t.co/IQS0grHbB5",
+              "expanded_url": "http://domainmaps.co",
+              "display_url": "domainmaps.co"
+            }
+          ]
+        },
+        "text": "This tweet had me thinking, what\u2019s the \u201cminimum viable ontology\u201d or list of terms to quickly get situated within a new domain, and improve your prompts?\n\nVibecoded https://t.co/IQS0grHbB5 to showcase this idea on a few example domains -- been wading into 3D recently and found this initial \"domain map\" helpful.\n\nSO much to improve here but wanted to get this initial idea out! Would love thoughts / feedback :)"
+      },
+      "edit_history_tweet_ids": [
+        "2029332670115614799"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "quoted",
+          "id": "2027579200635605058"
+        }
+      ],
+      "author_id": "25032757",
+      "text": "This tweet had me thinking, what\u2019s the \u201cminimum viable ontology\u201d or list of terms to quickly get situated within a new domain, and improve your prompts?\n\nVibecoded https://t.co/0ElAz3RLrm to showcase this idea on a few example domains -- been wading into 3D recently and found https://t.co/0FcjQaFONz https://t.co/CXB8hwjapF",
+      "entities": {
+        "urls": [
+          {
+            "start": 164,
+            "end": 187,
+            "url": "https://t.co/0ElAz3RLrm",
+            "expanded_url": "http://domainmaps.co",
+            "display_url": "domainmaps.co",
+            "status": 200,
+            "title": "Domain Maps",
+            "unwound_url": "https://domainmaps.co/"
+          },
+          {
+            "start": 277,
+            "end": 300,
+            "url": "https://t.co/0FcjQaFONz",
+            "expanded_url": "https://x.com/melodyskim/status/2029332670115614799/video/1",
+            "display_url": "pic.x.com/0FcjQaFONz",
+            "media_key": "13_2029330531414835200"
+          },
+          {
+            "start": 301,
+            "end": 324,
+            "url": "https://t.co/CXB8hwjapF",
+            "expanded_url": "https://twitter.com/itsandrewgao/status/2027579200635605058",
+            "display_url": "x.com/itsandrewgao/s\u2026"
+          }
+        ]
+      },
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-04T23:06:26.000Z",
+      "id": "2029332670115614799"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029332670115614799"
+        }
+      ],
+      "in_reply_to_user_id": "25032757",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-04T23:06:26.000Z",
+      "id": "2029332672577765708",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029332672577765708"
+      ],
+      "text": "In pedagogical terms, this would be similar to \"conceptual thresholds.\" AI generated all of these initial \"domain maps\", but obviously an expert would probably curate better lists!\n\nI went with lists vs. graph for simplicity, and linked out to examples vs. bringing them in (MVP)",
+      "entities": {
+        "annotations": [
+          {
+            "start": 72,
+            "end": 73,
+            "probability": 0.6399,
+            "type": "Organization",
+            "normalized_text": "AI"
+          }
+        ]
+      }
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029335628643532830"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "sharifelkomi",
+            "id": "1439733168140083211"
+          }
+        ],
+        "annotations": [
+          {
+            "start": 21,
+            "end": 26,
+            "probability": 0.7211,
+            "type": "Other",
+            "normalized_text": "sharif"
+          },
+          {
+            "start": 136,
+            "end": 137,
+            "probability": 0.5261,
+            "type": "Other",
+            "normalized_text": "UI"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1439733168140083211",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-04T23:25:17.000Z",
+      "id": "2029337413030437239",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029337413030437239"
+      ],
+      "text": "@sharifelkomi thanks sharif!! definitely want to bring in images for lots of the visual concepts (love how they did it in that original UI components project)"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029352010924085380"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "dilipsrajan",
+            "id": "572979764"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "572979764",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T00:34:11.000Z",
+      "id": "2029354754548060449",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029354754548060449"
+      ],
+      "text": "@dilipsrajan working on it! \ud83e\udee1 and lmk if there are other \"domains\" you'd be interested in seeing !"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029360355009347736"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "tylerangert",
+            "id": "1291224355"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1291224355",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T01:07:19.000Z",
+      "id": "2029363093063544837",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029363093063544837"
+      ],
+      "text": "@tylerangert This is super interesting!! Especially if these maps could be \u201cblessed\u201d by experts, it could help steer the agents towards the right path.\n\nI guess in that way they\u2019d act sort of like skills\u2026 I do see these domain maps as sort of \u201cskills\u201d for humans !"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029379982435168510"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "ptaranat",
+            "id": "17462737"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "17462737",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T02:19:26.000Z",
+      "id": "2029381238725742744",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029381238725742744"
+      ],
+      "text": "@ptaranat Oh nice! Curious what the project was for?"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029384702885294458"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "0xAmruth",
+            "id": "779398638846050304"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "779398638846050304",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T02:55:35.000Z",
+      "id": "2029390339086160249",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029390339086160249"
+      ],
+      "text": "@0xAmruth Considered crowdsourcing but as of right now\u2026 if anyone asks! The latter is a good question and is currently just an editorial decision, but could use a framework to think about"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029391044601688220"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "ptaranat",
+            "id": "17462737"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "17462737",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T03:08:45.000Z",
+      "id": "2029393651839668502",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029393651839668502"
+      ],
+      "text": "@ptaranat cool!"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029391939368567130"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "tombielecki",
+            "id": "13650782"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "13650782",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T03:25:55.000Z",
+      "id": "2029397970693640346",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029397970693640346"
+      ],
+      "text": "@tombielecki this is super cool!"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2029410293009289459"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 8,
+            "username": "_EricHu",
+            "id": "16753852"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "16753852",
+      "conversation_id": "2029332670115614799",
+      "created_at": "2026-03-05T04:21:46.000Z",
+      "id": "2029412025269391590",
+      "author_id": "25032757",
+      "edit_history_tweet_ids": [
+        "2029412025269391590"
+      ],
+      "text": "@_EricHu tyyy!! \ud83e\udef6"
+    }
+  ],
+  "users": {
+    "25032757": {
+      "id": "25032757",
+      "name": "melody kim",
+      "username": "melodyskim"
+    },
+    "831615153632325632": {
+      "id": "831615153632325632",
+      "name": "John Peng",
+      "username": "theRealJohnPeng"
+    },
+    "194949655": {
+      "id": "194949655",
+      "name": "father stretch my bandz",
+      "username": "MILKANDH3NNY"
+    },
+    "3289689467": {
+      "id": "3289689467",
+      "name": "Matthew(\u30de\u30b7\u30e5\u30fc)\ud83e\udd6dHendricks",
+      "username": "tinycrops"
+    },
+    "13650782": {
+      "id": "13650782",
+      "name": "Tom Bielecki",
+      "username": "tombielecki"
+    },
+    "1702558285692645376": {
+      "id": "1702558285692645376",
+      "name": "Placeholder Name",
+      "username": "aswinanilk"
+    },
+    "1144419924393242625": {
+      "id": "1144419924393242625",
+      "name": "Max Williamson",
+      "username": "MaxXWilliamson"
+    },
+    "1444135318987452418": {
+      "id": "1444135318987452418",
+      "name": "alexa",
+      "username": "AlexaKayman"
+    },
+    "1250135396455002114": {
+      "id": "1250135396455002114",
+      "name": "Vincent Lange",
+      "username": "_vincentlange"
+    },
+    "1937876947612176384": {
+      "id": "1937876947612176384",
+      "name": "Medreseli",
+      "username": "medreselikasif"
+    },
+    "1530254814": {
+      "id": "1530254814",
+      "name": "Silvan Soeters",
+      "username": "silvansoeters"
+    },
+    "2464774904": {
+      "id": "2464774904",
+      "name": "Lachlan Campbell",
+      "username": "lachlanjc"
+    },
+    "1746441276625473536": {
+      "id": "1746441276625473536",
+      "name": "sree",
+      "username": "sreedotee"
+    },
+    "25255637": {
+      "id": "25255637",
+      "name": "Alexander Flores",
+      "username": "ajflores1604"
+    },
+    "626784987": {
+      "id": "626784987",
+      "name": "Nabil",
+      "username": "nabil_kaz"
+    },
+    "16753852": {
+      "id": "16753852",
+      "name": "Eric Hu",
+      "username": "_EricHu"
+    },
+    "1381455647867297792": {
+      "id": "1381455647867297792",
+      "name": "Alex",
+      "username": "gpt_alex"
+    },
+    "17462737": {
+      "id": "17462737",
+      "name": "Panat",
+      "username": "ptaranat"
+    },
+    "1598388344253284359": {
+      "id": "1598388344253284359",
+      "name": "Aaron Mak Hoffman",
+      "username": "aaronmakhoffman"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "17250222": {
+      "id": "17250222",
+      "name": "Martin",
+      "username": "marmbiz"
+    },
+    "313486263": {
+      "id": "313486263",
+      "name": "Steve Singleton",
+      "username": "SteveDSingleton"
+    },
+    "779398638846050304": {
+      "id": "779398638846050304",
+      "name": "Amruth Niranjan",
+      "username": "0xAmruth"
+    },
+    "2826248796": {
+      "id": "2826248796",
+      "name": "Mayank Kinger",
+      "username": "kingermayank"
+    },
+    "1468768517621047297": {
+      "id": "1468768517621047297",
+      "name": "soju",
+      "username": "zksoju"
+    },
+    "296652994": {
+      "id": "296652994",
+      "name": "G",
+      "username": "GrantTBurke"
+    },
+    "1291224355": {
+      "id": "1291224355",
+      "name": "Tyler Angert",
+      "username": "tylerangert"
+    },
+    "18280363": {
+      "id": "18280363",
+      "name": "Tyler Alterman",
+      "username": "TylerAlterman"
+    },
+    "572979764": {
+      "id": "572979764",
+      "name": "dilip",
+      "username": "dilipsrajan"
+    },
+    "1439733168140083211": {
+      "id": "1439733168140083211",
+      "name": "Sharif",
+      "username": "sharifelkomi"
+    }
+  },
+  "thread_fetch_error": null
+}
