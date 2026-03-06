@@ -1,0 +1,36 @@
+---
+description: When the agent scheduler lives inside an LLM conversation it becomes bounded and degrades; three recovery strategies — compaction, externalisation, factoring into code — restore the clean separation to increasing degrees
+type: note
+traits: []
+areas: [computational-model, kb-design]
+status: seedling
+---
+
+# LLM-mediated schedulers are a degraded variant of the clean model
+
+The [symbolic scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) assumes the scheduler is a program with unbounded exact state. In practice, many current systems (Claude Code, Codex, chat-based agent loops) carry orchestration state partly in an LLM conversation. The LLM serves as both scheduler and executor — it decides what to do next based on its accumulated conversation history.
+
+This makes the scheduler effectively bounded: it suffers the same attention dilution and compositional overhead as the sub-agent calls it is trying to orchestrate. The clean separation between unbounded scheduler and bounded LLM calls collapses.
+
+## Three recovery strategies
+
+Three responses restore the separation to increasing degrees:
+
+1. **Compaction.** Keep summaries and conclusions rather than raw results in the conversation, applying [distillation](./distillation.md) to the scheduler's own state. This reduces degradation but does not eliminate it.
+
+2. **Externalisation.** Write intermediate state to files and re-read selectively. This moves scheduler state out of the conversation and into unbounded storage — partially recovering the clean model.
+
+3. **Factoring into code.** Encode the bookkeeping and recursion as a program that runs outside the LLM conversation entirely. This fully recovers the clean model. The LLM is called only for judgment steps; the scheduler is code.
+
+Each recovery moves the system closer to the clean model — bookkeeping, recursion, and exact state management in the symbolic layer; bounded LLM calls reserved for the semantic judgments they are uniquely needed for — and the architectural direction is toward the third option.
+
+---
+
+Relevant Notes:
+- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the clean model that LLM-mediated scheduling degrades from
+- [distillation](./distillation.md) — mechanism: compaction is distillation applied to the scheduler's own conversation state
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: the degradation is a context-efficiency problem within the scheduler itself
+
+Topics:
+- [computational-model](./computational-model.md)
+- [kb-design](./kb-design.md)
