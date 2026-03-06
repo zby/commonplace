@@ -22,7 +22,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read, unlike code where indirection is nearly free at runtime
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — pre-compute static parts of instructions and insert results; the mechanism is partial evaluation; indirection elimination and build-time generation are specific cases
 - [injectable configuration extends frontloading to installation-specific values](./injectable-configuration-extends-frontloading-to-installation-specific-values.md) — values static per-installation but variable across installations (sibling repo paths, local tools) are frontloadable through config the orchestrator injects into sub-agent frames
-- [the frontloading loop is an iterative optimisation over bounded context](./the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context.md) — extends frontloading from a single partial-evaluation step to a sequential optimisation loop: select, execute in sub-agent, absorb results, repeat
+- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — the clean architectural model: code holds exact state and schedules bounded LLM calls only for judgment
 
 ## Skills & Methodology
 

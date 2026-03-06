@@ -13,12 +13,12 @@ Programming language concepts applied to LLM instructions and agent architecture
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory.md)
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one mechanism for isolation, using lexically scoped frames
+- [symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — the clean model: an unbounded symbolic scheduler manages exact state and issues bounded LLM calls for semantic judgment
 
 ## Related notes in other areas
 
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) (kb-design) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
 - [frontloading-spares-execution-context](./frontloading-spares-execution-context.md) (kb-design) — partial evaluation applied to LLM instructions; the mechanism behind indirection elimination and build-time generation
-- [the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context](./the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context.md) (kb-design) — extends frontloading to an iterative loop; formalises the sequential selection problem where an orchestrator partially evaluates against growing knowledge
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) (kb-design) — the cost model for indirection differs fundamentally between code and LLM instructions
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) (learning-theory) — typing, testing, version control transfer to prompting with modified cost models
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) (learning-theory) — calling conventions that let components move between neural and symbolic implementations
@@ -31,4 +31,3 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 - [learning-theory](./learning-theory.md) — how systems learn through stabilisation, crystallisation, distillation; the computational model explains *what kind of programs* these mechanisms operate on
 - [kb-design](./kb-design.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
-
