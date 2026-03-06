@@ -80,6 +80,7 @@ Relevant Notes:
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not stabilisation — it spares context regardless of whether the result is deterministic or still underspecified
+- [the frontloading loop is an iterative optimisation over bounded context](./the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context.md) — extends: generalises the single PE step to an iterative loop where each iteration's results feed the next selection
 
 Topics:
 - [kb-design](./kb-design.md)
