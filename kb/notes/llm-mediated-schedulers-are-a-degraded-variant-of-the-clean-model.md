@@ -18,7 +18,7 @@ Three responses restore the separation to increasing degrees:
 
 1. **Compaction.** Keep summaries and conclusions rather than raw results in the conversation, applying [distillation](./distillation.md) to the scheduler's own state. This reduces degradation but does not eliminate it.
 
-2. **Externalisation.** Write intermediate state to files and re-read selectively. This moves scheduler state out of the conversation and into unbounded storage — partially recovering the clean model.
+2. **Externalisation.** Write intermediate state to files and re-read selectively. This moves scheduler state out of the conversation and into exact symbolic state outside the LLM context — partially recovering the clean model.
 
 3. **Factoring into code.** Encode the bookkeeping and recursion as a program that runs outside the LLM conversation entirely. This fully recovers the clean model. The LLM is called only for judgment steps; the scheduler is code.
 

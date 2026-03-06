@@ -16,6 +16,8 @@ Anthropic's engineering team has converged on the same framing, defining **conte
 
 Context is not just another resource to optimise. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. There is no equivalent in traditional systems — a CPU has registers, cache, RAM, disk, and network as separate tiers with different cost profiles. An LLM has one context window. Everything competes for the same space.
 
+This claim is about the LLM component itself. Agent architectures can surround that component with symbolic state and control, but they cannot remove the bottleneck inside the LLM call: for the LLM, context remains the only channel through which instructions, knowledge, and intermediate reasoning are made available.
+
 One property of the medium intensifies this scarcity beyond what traditional resource constraints produce: the medium has no strict structure. Natural language has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md), so there are no enforced boundaries — not between instructions and data ([homoiconicity](./llm-context-is-a-homoiconic-medium.md)), not between scopes, not between levels of priority. Every structural distinction is conventional and fuzzy. This means extra context doesn't just waste space — it can dilute instructions, contaminate scopes, and distort which interpretation the agent chooses.
 
 ## Two dimensions of context cost
@@ -63,6 +65,8 @@ Context scarcity is the pressure that produces most of the architectural pattern
 **Navigation design** (volume). [Agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md). Prose-as-title, retrieval-oriented descriptions, context phrases on index entries — all exist to help the agent make reading decisions *without* loading the target. Every pointer that carries enough context to decide "don't follow this" saves the tokens that loading would have cost.
 
 **Instruction notes over data dumps** (complexity). When delegating to a sub-agent, the efficient interface is an instruction note that frontloads the caller's judgment — which documents matter, which sections, what question to answer — rather than passing raw material. The instruction note carries judgment compactly; raw data forces the sub-agent to spend context on discovery the caller already did.
+
+If context is the only fundamental scarce resource, then the natural computational model is [symbolic scheduling over bounded LLM calls](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md): exact bookkeeping lives in code, while bounded context is reserved for semantic judgment.
 
 ## The analogy to algorithmic complexity
 

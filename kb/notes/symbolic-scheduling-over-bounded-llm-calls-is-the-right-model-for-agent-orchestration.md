@@ -12,6 +12,8 @@ Many agent tasks have the same surface shape as a classical bounded-working-set 
 
 This determines the right model and the right optimisation problem. Given unbounded symbolic computation and storage, what can be computed with bounded LLM calls, and how should those calls be selected, decomposed, and framed to maximise capability?
 
+This note takes [context efficiency as the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) as its cost model and asks what computational model follows if context is the only fundamental bounded resource.
+
 ## The model
 
 The model has two components:
