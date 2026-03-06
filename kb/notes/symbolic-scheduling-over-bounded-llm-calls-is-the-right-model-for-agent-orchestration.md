@@ -134,7 +134,11 @@ remaining iterations:
 
 Every step — planning, filtering, clustering, summarising, synthesising — is an iteration of the same flat loop. The hierarchical structure exists only as sub-goals and artifacts in `K`. Several [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) generalise from this pattern.
 
-## Open Questions
+## Scope and open questions
+
+The full global optimisation problem is probably too rich for clean strategy theorems: goals are underspecified, LLM calls are noisy, and decomposition is itself part of the search space. But that does not make the model useless. It is still strong enough to support **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another.
+
+Frontloading is the clearest example. If a sub-procedure can be executed before the bounded LLM call without using the LLM's runtime state, then replacing that in-call derivation with its result weakly improves context usage and usually improves reliability as well. The model is therefore useful not only for asking "what is the globally best scheduler?" but for proving that specific transformations — frontloading, externalisation, clean frame isolation, saving reusable derived items — move a system in the right direction.
 
 - Can prompt constructors be factored cleanly enough that their cost can be ignored in a first theory and reintroduced later?
 - How much selection judgment should the scheduler perform before constructing a bounded call, and how much should be delegated to the LLM inside that call?
