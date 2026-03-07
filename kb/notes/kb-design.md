@@ -15,6 +15,8 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, skills/, scripts/, and how they compose
 - [commonplace-installation-architecture](../commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
 - [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
+- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits (orphan/raw text scans) should live in externally triggered operations, not always-loaded routing docs
+- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures in kb/instructions/
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — deriving architectural requirements from concrete user stories decomposed into step-by-step context needs; confirms the loading hierarchy
 - [scenarios](./scenarios.md) — concrete use cases the knowledge system must serve
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand

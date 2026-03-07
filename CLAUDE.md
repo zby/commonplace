@@ -4,6 +4,17 @@ A framework for building agent-operated knowledge bases. This repo contains the 
 
 The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
+## Fast Path (Default)
+
+If you need to act quickly and are unsure which specialized path applies, do this:
+
+1. Write a `note` in `kb/notes/` (default type).
+2. Follow the checklist/template in `kb/WRITING.md`.
+3. Connect the note to related notes and at least one index (`/connect` or manual links with explicit relationship semantics).
+4. Run `/validate` to check structure, frontmatter, and links.
+
+Use specialized types only when the routing table explicitly points to one.
+
 ## Knowledge System
 
 ### Routing Table
@@ -29,7 +40,7 @@ The commonplace repo is itself a knowledge base — it uses its own knowledge sy
 4. **Write** the note.
 5. **Connect** — link the new note from related notes and area indexes. Use `/connect` or do it manually. Don't skip this step — an unconnected note is invisible to future search.
 
-### Search Patterns
+### Search Patterns (Core)
 
 ```bash
 # Find notes by keyword
@@ -43,16 +54,9 @@ rg "^type: structured-claim" kb/notes/ --glob "*.md"
 
 # Find notes by area
 rg "^areas:.*kb-design" kb/notes/ --glob "*.md"
-
-# Find orphan notes (no inbound links)
-for f in kb/notes/*.md; do
-  fname=$(basename "$f")
-  rg -q "$fname" --glob "*.md" kb/notes/ || echo "Orphan: $f"
-done
-
-# Find text files (no frontmatter — raw captures)
-rg -L "^---" kb/notes/*.md
 ```
+
+Use `/validate` for specialized audits and consistency checks.
 
 ### Key Indexes
 

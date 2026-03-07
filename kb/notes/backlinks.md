@@ -47,7 +47,7 @@ When a note acquires a "contradicts" link from another note, that tension is onl
 ## Non-use-cases (what backlinks don't help with)
 
 - **Creating new notes** — when writing a new note, you need to find relevant existing notes to link to. That's a search/discovery problem, not a backlink problem. Grep and index scanning handle this.
-- **Orphan detection** — already handled by the existing grep-based helper in CLAUDE.md. Backlinks would make it marginally easier but don't unlock new capability.
+- **Orphan detection** — already handled by the existing grep-based maintenance checks in [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Backlinks would make it marginally easier but don't unlock new capability.
 - **Index maintenance** — indexes are curated navigation, not mechanical link lists. Backlinks don't replace the judgment needed to decide what belongs in an index.
 
 ## Design options
@@ -58,7 +58,7 @@ A script scans all `.md` files, extracts links, inverts them, and produces a rep
 
 - Pros: zero maintenance burden, always fresh, no note pollution
 - Cons: not visible when reading a note; agents must know to run the script
-- Precedent: the orphan/dangling detection scripts in CLAUDE.md work this way
+- Precedent: the periodic grep-based checks in the maintenance operations catalogue work this way — script output as an operational view, not stored note content
 
 ### B. Generated footer sections (sync script, like Topics)
 
