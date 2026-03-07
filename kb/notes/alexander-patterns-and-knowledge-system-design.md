@@ -20,6 +20,8 @@ This is what we're working toward with [structured sections per type](./related-
 
 Alexander argued that good structure emerges from step-by-step generative rules, not top-down blueprints. Each step responds to local conditions and strengthens what's already there. The builder doesn't follow a complete plan — they follow a process that produces wholeness incrementally.
 
+One concrete sequencing rule from this view is [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md): place the least flexible element first, then fit flexible elements around it.
+
 This maps to our [crystallisation trajectory](./stabilisation.md): start with unstructured text, let patterns emerge from practice, formalise when consistent success becomes observable. The [methodology enforcement gradient](./methodology-enforcement-is-stabilisation.md) (instruction → skill → hook → script) is a generative process — each step responds to observed friction, not a pre-designed automation plan.
 
 Thalo's approach — commit to the full type system upfront via a grammar — is closer to a master plan. Our approach — discover types through practice, formalise when shapes recur — is closer to Alexander's generative process. This may explain why we resist premature formalisation even when the endpoint is similar.

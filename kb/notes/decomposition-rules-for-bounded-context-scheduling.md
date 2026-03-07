@@ -43,6 +43,8 @@ The first two are about optionality — paying context now to keep options open 
 
 **Delay expensive co-loading until interactions justify it.** Joint loading is valuable only when the task depends on relations between items rather than independent judgments about them.
 
+**Commit low-degree-of-freedom choices first.** When one decision has only a narrow feasible set and another has many workable options, decide the constrained one first. This preserves optionality and avoids consuming scarce valid placements too early.
+
 **Do not compress away needed interfaces.** If the final answer depends on tensions, contradictions, or alignments between sources, summaries should preserve pointers or extracted structures that keep those interactions recoverable.
 
 **Choose representations, not just subsets.** The main optimisation variable is often not which notes to load, but whether to expose bodies, extracts, summaries, or previous synthesis items to the bounded call.
@@ -59,6 +61,7 @@ Relevant Notes:
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the model these rules follow from
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: context is the scarce resource these rules optimise over
 - [distillation](./distillation.md) — mechanism: saved intermediate items are often distillations shaped for later reuse
+- [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
 
 Topics:
 - [computational-model](./computational-model.md)
