@@ -13,7 +13,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — context is the scarce resource in agent systems; context cost has two dimensions (volume and complexity) and nearly every architectural pattern is a response to one or both
 - [files-not-database](./files-not-database.md) — files with git beat a database for agent KBs: universal interface, free versioning, zero infrastructure; derived indexes solve scale without replacing the source of truth
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, skills/, scripts/, and how they compose
-- [commonplace-installation-architecture](../commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
+- [commonplace-installation-architecture](./commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries, nested topology, and exclusion rules
 - [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits (orphan/raw text scans) should live in externally triggered operations, not always-loaded routing docs
@@ -21,7 +21,6 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — deriving architectural requirements from concrete user stories decomposed into step-by-step context needs; confirms the loading hierarchy
 - [scenarios](./scenarios.md) — concrete use cases the knowledge system must serve
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
-- [extract-kb-as-standalone-project](./extract-kb-as-standalone-project.md) — extracting the KB framework as a reusable project
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read, unlike code where indirection is nearly free at runtime
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — pre-compute static parts of instructions and insert results; the mechanism is partial evaluation; indirection elimination and build-time generation are specific cases
 - [injectable configuration extends frontloading to installation-specific values](./injectable-configuration-extends-frontloading-to-installation-specific-values.md) — values static per-installation but variable across installations (sibling repo paths, local tools) are frontloadable through config the orchestrator injects into sub-agent frames
@@ -75,7 +74,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 ## Reference material
 
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) that grounds claim-title conventions and the `structured-claim` type
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) — practitioner validation of propositional links over embedding-based adjacency; confirms the Goodhart risk in quality signals
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — practitioner validation of propositional links over embedding-based adjacency; confirms the Goodhart risk in quality signals
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper implementing Zettelkasten-inspired automated memory with link generation and memory evolution; provides empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates context-loading-strategy's content categories, provides evolution data showing stabilisation maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
 
