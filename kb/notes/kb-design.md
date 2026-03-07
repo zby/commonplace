@@ -51,6 +51,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — good thinking requires moving between abstraction levels; KB quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy
 - [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) correspond to different strategies for narrowing the agent's interpretation space
+- [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges Popperian conjecture-and-refutation with bounded-context mechanics and proposes concrete upgrades (falsifiers, contradiction passes, oracle-aware hardening)
 
 ## Workshop Layer
 
@@ -64,6 +65,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals to address the learning loop's quality gates problem
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — as the KB grows, /connect retrieves too many candidates; composite note scores filter and rank before agent evaluation
 - [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — /connect's dual discovery and articulation testing are corpus-agnostic, so deep search means temporarily expanding the corpus with web results
+- [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags notes that may be stale, analogous to make's rebuild logic
 
 ## Decisions
 

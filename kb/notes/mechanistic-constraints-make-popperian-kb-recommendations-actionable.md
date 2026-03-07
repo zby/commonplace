@@ -33,21 +33,17 @@ Not all criticism is useful. [Error correction works with above-chance oracles a
 
 This is why falsifier blocks work: they convert criticism from "re-read and see if it still seems right" (correlated, weak) into "check whether this specific condition has been observed" (decorrelated, testable).
 
-## Three practices that follow
+## Proposed practices
 
-### 1. Falsifier blocks on claim notes
+<!-- Each proposal below should be deleted and replaced with a link to its
+     landing place (WRITING.md, skill spec, etc.) once adopted. When all
+     proposals are adopted this section can be removed entirely. -->
 
-Add a short "What would defeat this claim?" block to `note` and `structured-claim` types. The attempt to write one is diagnostic — if you cannot state what would refute a claim, that reveals something about the claim's nature (definitional? tautological? too vague to test?).
+- **Falsifier blocks on claim notes** — Add a short "What would defeat this claim?" block to `note` and `structured-claim` types. The attempt to write one is diagnostic — if you cannot state what would refute a claim, that reveals something about the claim's nature (definitional? tautological? too vague to test?). Not every claim has a clean falsifier, and that's fine. The value is in the attempt, not universal coverage. Target: `kb/WRITING.md` templates.
 
-Not every claim has a clean falsifier, and that's fine. The value is in the attempt, not universal coverage.
+- **Contradiction-first connection passes** — When `/connect` discovers relationships, it should look for tension and contradiction *before* looking for agreement and extension. The current default is to find notes that "extend" or "ground" the new note. Reversing the priority means criticism is not optional — every note gets at least one check for conflict with existing claims. Target: `/connect` skill.
 
-### 2. Contradiction-first connection passes
-
-When `/connect` discovers relationships, it should look for tension and contradiction *before* looking for agreement and extension. The current default is to find notes that "extend" or "ground" the new note. Reversing the priority means criticism is not optional — every note gets at least one check for conflict with existing claims.
-
-### 3. Rejected interpretations become instruction tests
-
-When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [stabilisation](./stabilisation.md) driven by error, and across sessions it compounds as [deploy-time learning](./deploy-time-learning-the-missing-middle.md).
+- **Rejected interpretations become instruction tests** — When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [stabilisation](./stabilisation.md) driven by error, and across sessions it compounds as [deploy-time learning](./deploy-time-learning-the-missing-middle.md). Target: workflow convention or hook.
 
 ## What would defeat this claim?
 
