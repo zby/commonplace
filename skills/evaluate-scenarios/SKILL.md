@@ -12,7 +12,7 @@ model: sonnet
 **Target: $ARGUMENTS**
 
 Parse immediately:
-- If target is empty: evaluate all scenarios in `kb/scenarios/`
+- If target is empty: evaluate all scenarios in `test/scenarios/`
 - If target is a scenario name: evaluate only that scenario
 - If target is "compare": evaluate all and compare against a previous run if one exists
 
@@ -21,7 +21,7 @@ Parse immediately:
 ### 1. Discover scenario files
 
 ```bash
-ls kb/scenarios/*.md
+ls test/scenarios/*.md
 ```
 
 Read each scenario file. Parse the frontmatter for `frequency` and the step list for **Source** paths and **Hops** values.
@@ -41,7 +41,7 @@ Common fixed sources you'll encounter:
 - `skills/ingest/SKILL.md` — ingestion skill body
 - `skills/snapshot-web/SKILL.md` — snapshot skill body
 - `kb/sources/types/source-review.md` — source review type template
-- `kb/scenarios/types/scenario.md` — scenario type template
+- `test/scenarios/types/scenario.md` — scenario type template
 
 **Important:** Count CLAUDE.md bytes once per scenario (it's always loaded, not a per-step cost). Count other fixed sources once per scenario even if referenced in multiple steps (they stay in context after first load).
 

@@ -20,7 +20,9 @@ kb/                          Knowledge base
     related-systems/         External system comparisons
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
-  scenarios/                 Concrete use cases with cost decomposition
+
+test/
+  scenarios/                 Scenario fixtures for cost decomposition and evaluation
 
 skills/                      Agent skills (Claude Code slash commands)
   validate/                  Schema and quality validation
@@ -72,7 +74,7 @@ Search the KB, read matching notes, follow links to deepen understanding. Link s
 
 1. **Search first** — find related notes before writing
 2. **Read `kb/WRITING.md`** — it's the authority on how to write, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
-3. **Read the directory type** — only if you're writing a specialized type (adr, index, related-system, scenario). Skip this step for plain notes.
+3. **Read the directory type** — only if you're writing a specialized type (adr, index, related-system, or scenario in `test/scenarios/`). Skip this step for plain notes.
 4. **Write** the note
 5. **Connect** — link the new note from related notes and indexes. Use `/connect` or do it manually. Don't skip this — an unconnected note is invisible to future search.
 

@@ -112,7 +112,7 @@ The decomposition reveals a layered structure that matches the [context loading 
 
 ## Measurable artifacts
 
-The decomposition tables above are now implemented as structured [scenario files](../scenarios/write-a-note.md) in `kb/scenarios/`. Each scenario file references actual source files by path, stores hop counts per step, and distinguishes fixed costs (always the same) from variable costs (depend on KB content). The `/evaluate-scenarios` skill reads these files, measures instruction bytes from the referenced sources, and produces a cost table — turning the architectural claims in this note into verifiable measurements.
+The decomposition tables above are now implemented as structured scenario files in `test/scenarios/` (for example `test/scenarios/write-a-note.md`). Each scenario file references actual source files by path, stores hop counts per step, and distinguishes fixed costs (always the same) from variable costs (depend on KB content). The `/evaluate-scenarios` skill reads these files, measures instruction bytes from the referenced sources, and produces a cost table — turning the architectural claims in this note into verifiable measurements.
 
 The key design: hops are stored in the scenario files (they're architectural, determined by the step structure), but instruction bytes are NOT stored — they're calculated dynamically by reading the actual source files. This means when we change the architecture (like inlining types into WRITING.md), we re-run the evaluation and get updated numbers without editing the scenario files.
 
@@ -120,7 +120,7 @@ The key design: hops are stored in the scenario files (they're architectural, de
 
 - Should connection be a step within the write/ingest workflow rather than a separate skill invocation? What's the mechanism — a skill that orchestrates the full scenario, or CLAUDE.md instructions that remind the agent to connect after writing?
 - How specific should the CLAUDE.md fragment's escalation instructions be? A blanket "for deeper reasoning, search `commonplace/kb/`" may be too vague. Per-topic hints ("for link semantics reasoning, see `commonplace/kb/notes/link-contracts-framework.md`") are more precise but harder to maintain. The right granularity is probably somewhere between — enough to direct the agent toward the right area of the methodology, not so much that the fragment becomes a second routing table.
-- ~~How do we evaluate whether end-to-end orchestration is improving? The [scenarios](./scenarios.md) describe what to evaluate against, but we don't yet have metrics for "did the agent complete the full chain?"~~ Partially addressed: the [scenario files](../scenarios/write-a-note.md) and `/evaluate-scenarios` skill provide cost metrics (hops, instruction bytes). Orchestration quality (did the agent complete the full chain correctly?) remains unmeasured.
+- ~~How do we evaluate whether end-to-end orchestration is improving? The [scenarios](./scenarios.md) describe what to evaluate against, but we don't yet have metrics for "did the agent complete the full chain?"~~ Partially addressed: the scenario files in `test/scenarios/` and `/evaluate-scenarios` skill provide cost metrics (hops, instruction bytes). Orchestration quality (did the agent complete the full chain correctly?) remains unmeasured.
 
 ---
 

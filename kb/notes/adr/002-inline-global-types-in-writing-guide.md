@@ -33,7 +33,7 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 **Easier:**
 - The common write path drops from 2 hops to 1 at the "know the structure" step. The agent reads WRITING.md and has both conventions and the template for `note` or `structured-claim`.
-- The [scenario cost evaluation](../../scenarios/write-a-note.md) confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
+- The scenario cost evaluation (`test/scenarios/write-a-note.md`) confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
 
 **Harder:**
 - Two sources of truth for the global type templates. If the template changes in `kb/notes/types/note.md`, it must also change in `kb/WRITING.md`. This is a maintenance burden, but the templates are stable — they change rarely.

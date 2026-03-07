@@ -29,14 +29,13 @@ Use specialized types only when the routing table explicitly points to one.
 | External source snapshot | `kb/sources/` | Use `/snapshot-web` skill |
 | Source analysis | `kb/sources/` | Use `/ingest` skill — produces `.ingest.md` |
 | Task | `kb/tasks/backlog/` or `kb/tasks/active/` | Status encoded by directory, not frontmatter |
-| Scenario cost evaluation | `kb/scenarios/` | Read `kb/scenarios/types/scenario.md` |
 | Area index (curated) | `kb/notes/` | Read `kb/notes/types/index.md` — entries MUST have context phrases |
 
 ### Content Workflow
 
 1. **Search first** — find related notes before writing. This is especially important in this repo where the related notes ARE the methodology the new note builds on.
 2. **Read WRITING.md** — `kb/WRITING.md` has the full checklist (title-as-claim, description quality, index membership, composability) and templates for `note` and `structured-claim`. It's the authority on how to write. For most notes, this is all you need.
-3. **Read the directory type** — only if the routing table points to a specific type template (adr, index, related-system, scenario). Skip this step for plain notes.
+3. **Read the directory type** — only if the routing table points to a specific type template (adr, index, related-system). Skip this step for plain notes.
 4. **Write** the note.
 5. **Connect** — link the new note from related notes and area indexes. Use `/connect` or do it manually. Don't skip this step — an unconnected note is invisible to future search.
 
@@ -82,7 +81,7 @@ This file is a control-plane router. It does not inventory capabilities; harness
 - `text` = no frontmatter (raw capture).
 - `note` = has frontmatter (default structured writing type).
 - For specialized structures, load the directory-local type templates only when the routing table points there:
-  `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/`, `kb/scenarios/types/`.
+  `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/`.
 - `kb/WRITING.md` is the authority for note-writing checklist and the default templates.
 
 ## Git

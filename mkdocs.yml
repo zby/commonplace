@@ -3,3 +3,18 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 theme:
   name: mkdocs
+nav:
+  - Home: index.md
+  - Core:
+      - Writing Guide: WRITING.md
+      - KB Design: notes/kb-design.md
+      - Linking Methodology: notes/links.md
+  - Indexes:
+      - Notes Directory: notes/index.md
+      - Related Systems: notes/related-systems/related-systems-index.md
+      - Sources Directory: sources/index.md
+  - Operations:
+      - Improvement Log: log.md
+validation:
+  nav:
+    omitted_files: ignore
