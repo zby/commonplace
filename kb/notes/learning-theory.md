@@ -43,6 +43,7 @@ Targeted extraction from a larger body of reasoning into a focused artifact shap
 ## Information & Bounded Observers
 
 - [information-value-is-observer-relative-because-extraction-requires-computation](./information-value-is-observer-relative-because-extraction-requires-computation.md) — deterministic transformations add zero classical information but can make structure accessible to bounded observers; names the gap that distillation and discovery each describe operationally
+- [first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — Deutsch's adaptive-vs-explanatory distinction: explanatory knowledge transfers because it captures why, not just what works; grounds the KB's first-principles filter as selecting for reach
 
 ## Discovery
 
