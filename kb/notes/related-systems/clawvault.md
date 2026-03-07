@@ -100,6 +100,7 @@ Relevant Notes:
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — contrasts: ClawVault automates promotion without a theory of when automation is premature; their results would test whether early automation helps or locks in assumptions
 - [context-loading-strategy](../context-loading-strategy.md) — contrasts: ClawVault frontloads context via profiles and injection; we use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), ClawVault formalised lifecycle (pipeline), we're formalising understanding (theory)
+- [Siftly](./siftly.md) — extends: another staged pipeline reference, but optimized for deterministic ingest throughput and resumable source loading
 
 Topics:
 - [related-systems](./related-systems-index.md)
