@@ -7,8 +7,7 @@ nav:
   - Home: index.md
   - Core:
       - Writing Guide: WRITING.md
-      - KB Design: notes/kb-design.md
-      - Linking Methodology: notes/links.md
+      - Areas: notes/areas.md
   - Indexes:
       - Notes Directory: notes/index.md
       - Related Systems: notes/related-systems/related-systems-index.md

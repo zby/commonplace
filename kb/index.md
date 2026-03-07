@@ -4,6 +4,7 @@ This site publishes the `kb/` content from this repository as browsable HTML.
 
 Start here:
 
+- [Areas](./notes/areas.md)
 - [KB design](./notes/kb-design.md)
 - [Linking methodology](./notes/links.md)
 - [Related systems index](./notes/related-systems/related-systems-index.md)
