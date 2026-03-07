@@ -1,0 +1,5 @@
+site_name: Commonplace Knowledge Base
+site_description: Commonplace knowledge base rendered as static HTML.
+docs_dir: kb
+theme:
+  name: mkdocs

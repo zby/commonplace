@@ -22,3 +22,6 @@ Thumbs.db
 
 .env
 kb/work/
+
+# static site build artifacts
+site/
