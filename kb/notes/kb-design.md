@@ -45,6 +45,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [what-doesnt-work](./what-doesnt-work.md) — anti-patterns and insufficient evidence: auto-commits, queue overhead
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
+- [process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost](./process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost.md) — design policy for verifier modes: use process-structured reasoning where oracle strength and failure cost justify the context/step overhead
 
 ## Design Principles
 

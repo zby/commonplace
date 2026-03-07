@@ -55,6 +55,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits on the automation gradient
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — error correction is viable when the oracle has discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each harden a different oracle question, mapping empirical agent evaluation onto the oracle-strength spectrum
+- [process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost](./process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost.md) — structured premise/trace/conclusion workflows harden verifier behavior in hard-oracle code tasks, but only when the reliability gain justifies added context and step cost
 
 ## Memory & Architecture
 
