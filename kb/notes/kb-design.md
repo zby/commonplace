@@ -14,6 +14,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [files-not-database](./files-not-database.md) — files with git beat a database for agent KBs: universal interface, free versioning, zero infrastructure; derived indexes solve scale without replacing the source of truth
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, skills/, scripts/, and how they compose
 - [commonplace-installation-architecture](../commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
+- [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries, nested topology, and exclusion rules
 - [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits (orphan/raw text scans) should live in externally triggered operations, not always-loaded routing docs
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures in kb/instructions/
@@ -31,6 +32,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 ## Skills & Methodology
 
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — all knowledge routing infrastructure (skills, type templates, routing tables, naming conventions) is permanent architecture for LLM agents, not scaffolding that learners outgrow
+- [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — capabilities belong in skills only when autonomy-ready; otherwise keep them in instructions or methodology artifacts, not AGENTS inventories
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — methodology-to-skill derivation is distillation (extracting procedures from reasoning in the same medium), distinct from crystallisation and stabilisation
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — instructions, skills, hooks, and scripts form a stabilisation gradient for methodology; practices start stochastic and harden as they prove out
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — skills and tasks are typed callables: they accept document types as input and produce types as output, and should declare their signatures
