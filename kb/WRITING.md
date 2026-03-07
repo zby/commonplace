@@ -175,7 +175,7 @@ There are two kinds of indexes:
 
 The rest of this section covers area indexes.
 
-Area indexes organize notes by topic. They reduce context-switching cost. When you switch to a topic, you need to know: what is known, what is in tension, what is unexplored.
+Area indexes organize notes into sets where [comparative reading](notes/areas-exist-because-useful-operations-require-reading-notes-together.md) is expected to be productive — loading the set together to detect redundancy, contradiction, tension, and merge candidates. Other uses (navigation, scoping searches) piggyback on the same boundaries.
 
 ### Index Structure
 
@@ -199,7 +199,7 @@ What is unexplored or unresolved.
 ### Lifecycle
 
 **Create** when 5+ related notes accumulate without navigation structure.
-**Split** when an index exceeds 40 notes and distinct sub-communities form.
+**Split** when an index exceeds 40 notes — that's the approximate point where an area stops fitting in working context. Optimise the split for comparative reading yield (keep high-tension pairs together), not for taxonomic cleanliness.
 **Merge** when both indexes are small with significant overlap.
 
 ## Helper Functions
