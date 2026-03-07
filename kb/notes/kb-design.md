@@ -25,9 +25,6 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read, unlike code where indirection is nearly free at runtime
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — pre-compute static parts of instructions and insert results; the mechanism is partial evaluation; indirection elimination and build-time generation are specific cases
 - [injectable configuration extends frontloading to installation-specific values](./injectable-configuration-extends-frontloading-to-installation-specific-values.md) — values static per-installation but variable across installations (sibling repo paths, local tools) are frontloadable through config the orchestrator injects into sub-agent frames
-- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — the clean architectural model: code holds exact state and schedules bounded LLM calls only for judgment
-- [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — preliminary practical rules for scheduling: separate selection from joint reasoning, choose representations not subsets
-- [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; compaction, externalisation, and factoring into code restore the separation
 
 ## Skills & Methodology
 
@@ -39,6 +36,8 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [ad-hoc-prompts-extend-the-system-without-schema-changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — the other end of the spectrum: ad hoc instructions notes absorb new requirements without any schema change; the collections problem is a concrete example
 - [design-methodology-borrow-widely-filter-by-first-principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — borrow from software engineering, library science, knowledge management — but filter through first principles before adopting
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — since agents never internalize, the harness should inject context automatically rather than relying on agent initiative
+- [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — reusable distilled procedures in kb/instructions/ — same format as skills but without activation triggers; invoked when a human points the agent at them
+- [traversal-improves-the-graph](./traversal-improves-the-graph.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 
 ## Evaluation
 
@@ -46,14 +45,12 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [what-doesnt-work](./what-doesnt-work.md) — anti-patterns and insufficient evidence: auto-commits, queue overhead
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
-- [process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost](./process-structured-reasoning-hardens-oracle-backed-code-verification-at-context-cost.md) — design policy for verifier modes: use process-structured reasoning where oracle strength and failure cost justify the context/step overhead
 
 ## Design Principles
 
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — good thinking requires moving between abstraction levels; KB quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy
-- [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) correspond to different strategies for narrowing the agent's interpretation space
-- [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — sequencing heuristic: commit least-flexible decisions first so high-flexibility choices cannot block scarce valid placements
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges Popperian conjecture-and-refutation with bounded-context mechanics and proposes concrete upgrades (falsifiers, contradiction passes, oracle-aware hardening)
+- [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as crystallisation, centers as mutual reinforcement in the note graph
 
 ## Workshop Layer
 
@@ -84,5 +81,6 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 - [document-system](./document-system.md) — types, writing conventions, and validation that the KB's documents follow
 - [learning-theory](./learning-theory.md) — the learning mechanisms (stabilisation, crystallisation, distillation) that KB operations instantiate
+- [computational-model](./computational-model.md) — PL concepts (scheduling, partial evaluation, scoping) that inform KB architecture; the scheduling notes moved here
 - [links](./links.md) — linking methodology, navigation, and link contracts
 - [related-systems](./related-systems/related-systems-index.md) — external system comparisons

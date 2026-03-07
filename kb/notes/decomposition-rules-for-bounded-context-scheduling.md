@@ -2,7 +2,7 @@
 description: Practical rules for symbolic scheduling over bounded LLM calls — separate selection from joint reasoning, choose representations not just subsets, save reusable intermediates in scheduler state
 type: note
 traits: []
-areas: [computational-model, kb-design]
+areas: [computational-model]
 status: seedling
 ---
 
@@ -65,4 +65,3 @@ Relevant Notes:
 
 Topics:
 - [computational-model](./computational-model.md)
-- [kb-design](./kb-design.md)

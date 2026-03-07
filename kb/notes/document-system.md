@@ -24,6 +24,7 @@ How documents are classified, structured, and quality-checked. These notes defin
 - [automated-tests-for-text](./automated-tests-for-text.md) — text artifacts can be tested with the same pyramid as software: deterministic checks, LLM rubrics, corpus compatibility
 - [text-testing-framework](./text-testing-framework.md) — reference framework: contracts per document type, test pyramid (deterministic/LLM rubric/corpus), production workflow
 - [deterministic-validation-should-be-a-script](./deterministic-validation-should-be-a-script.md) — half of /validate's checks are hard-oracle (enums, link resolution, frontmatter structure) and could run as a Python script instead of burning LLM tokens
+- [unit-testing-llm-instructions-requires-mocking-the-tool-boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — skills are programs whose I/O boundary is tool calls; mocking that boundary enables instruction-level testing that complements text artifact testing
 
 ## Decisions
 

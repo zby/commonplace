@@ -3,7 +3,7 @@ description: Reference for borrowing recurring note shapes from Thalo — their 
 type: note
 traits: [has-comparison]
 status: current
-areas: [related-systems, kb-design]
+areas: [related-systems]
 ---
 
 # Thalo entity types compared to commonplace document types
@@ -165,5 +165,4 @@ Relevant Notes:
 - [Toulmin argument](../../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model provides the canonical decomposition (claim/grounds/warrant/qualifier/rebuttal/backing) that Thalo's opinion entity approximates with Claim/Reasoning/Caveats sections
 
 Topics:
-- [kb-design](../kb-design.md)
 - [related-systems](./related-systems-index.md)

@@ -2,7 +2,7 @@
 description: Agent orchestration is best modelled as an unbounded symbolic scheduler making bounded LLM calls; the scheduler chooses decompositions, prompt representations, and intermediate artifacts over its evolving symbolic state
 type: note
 traits: []
-areas: [computational-model, kb-design]
+areas: [computational-model]
 status: seedling
 ---
 
@@ -153,4 +153,3 @@ Relevant Notes:
 
 Topics:
 - [computational-model](./computational-model.md)
-- [kb-design](./kb-design.md)

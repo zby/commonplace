@@ -2,7 +2,7 @@
 description: Extending frontloading from a single partial-evaluation step to an iterative loop reveals a sequential optimisation problem — at each step the orchestrator selects what to frontload into a fixed-capacity sub-agent window, with each iteration's results expanding the knowledge available for the next selection
 type: note
 traits: []
-areas: [kb-design, computational-model]
+areas: [computational-model]
 status: seedling
 ---
 
@@ -86,5 +86,4 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response (writing intermediate state to disk) is the workshop pattern — temporal documents that consume themselves as the loop progresses
 
 Topics:
-- [kb-design](./kb-design.md)
 - [computational-model](./computational-model.md)

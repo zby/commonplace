@@ -2,7 +2,7 @@
 description: Ordering heuristic for decomposition: commit first to decisions with the fewest viable options, then place flexible choices around them to preserve global optionality.
 type: note
 traits: []
-areas: [kb-design, computational-model]
+areas: [computational-model]
 status: seedling
 ---
 
@@ -36,4 +36,3 @@ Relevant Notes:
 
 Topics:
 - [computational-model](./computational-model.md)
-- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: The most effective stabilisation artifacts simultaneously constrain (block wrong output) and inform (teach the fix) — because in agent systems the error channel is an instruction channel; fills the gap between the stabilisation gradient's layers and the context they deliver
 type: note
 traits: [has-external-sources]
-areas: [learning-theory, kb-design]
+areas: [learning-theory]
 status: seedling
 ---
 
@@ -51,4 +51,3 @@ Relevant Notes:
 
 Topics:
 - [learning-theory](./learning-theory.md)
-- [kb-design](./kb-design.md)

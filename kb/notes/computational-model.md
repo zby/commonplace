@@ -11,19 +11,28 @@ Programming language concepts applied to LLM instructions and agent architecture
 ## Foundations
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory.md)
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one mechanism for isolation, using lexically scoped frames
+
+## Scheduling & Orchestration
+
 - [symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — the clean model: an unbounded symbolic scheduler manages exact state and issues bounded LLM calls for semantic judgment
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — preliminary practical rules for scheduling bounded LLM calls: separate selection from joint reasoning, choose representations not subsets, save reusable intermediates in scheduler state
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies restore the clean separation to increasing degrees
+- [the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context](./the-frontloading-loop-is-an-iterative-optimisation-over-bounded-context.md) — extending frontloading from a single step to an iterative loop reveals a sequential optimisation problem over a fixed-capacity sub-agent window
+- [solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — sequencing heuristic: commit least-flexible decisions first so high-flexibility choices cannot block scarce valid placements
+
+## Instruction Properties
+
+- [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles correspond to different strategies for narrowing the agent's interpretation space
+- [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — typing, testing, version control transfer to prompting with modified cost models
+- [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
 
 ## Related notes in other areas
 
-- [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) (kb-design) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
 - [frontloading-spares-execution-context](./frontloading-spares-execution-context.md) (kb-design) — partial evaluation applied to LLM instructions; the mechanism behind indirection elimination and build-time generation
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) (kb-design) — the cost model for indirection differs fundamentally between code and LLM instructions
-- [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) (learning-theory) — typing, testing, version control transfer to prompting with modified cost models
-- [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) (learning-theory) — calling conventions that let components move between neural and symbolic implementations
 
 ## Tensions
 

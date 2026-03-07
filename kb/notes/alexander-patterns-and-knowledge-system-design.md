@@ -3,7 +3,7 @@ description: Christopher Alexander's pattern language, generative processes, and
 type: note
 traits: []
 status: speculative
-areas: []
+areas: [kb-design]
 ---
 
 # Alexander's patterns connect to knowledge system design at multiple levels
@@ -39,3 +39,6 @@ This might also connect to why orphan notes feel wrong — a center with no conn
 - Is this analogy or something more structural? Could Alexander's 15 properties of living structure map to measurable quality properties of a knowledge base?
 - Does the "quality without a name" have a knowledge-system equivalent — something we recognise in a well-structured KB but can't reduce to metrics?
 - Alexander's patterns explicitly link at different scales (room → building → neighbourhood → city). Do our notes need explicit scale markers beyond the current type hierarchy?
+
+Topics:
+- [kb-design](./kb-design.md)

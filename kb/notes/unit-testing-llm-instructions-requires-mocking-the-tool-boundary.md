@@ -2,7 +2,7 @@
 description: Skills are programs whose I/O boundary is tool calls — mocking that boundary creates controlled environments for testing whether instructions produce correct behavior, complementing text artifact testing with instruction-level regression detection
 type: note
 traits: []
-areas: [kb-design, learning-theory]
+areas: [document-system]
 status: seedling
 ---
 
@@ -66,5 +66,4 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed
 
 Topics:
-- [kb-design](./kb-design.md)
-- [learning-theory](./learning-theory.md)
+- [document-system](./document-system.md)

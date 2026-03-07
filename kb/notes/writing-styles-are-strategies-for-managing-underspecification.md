@@ -2,7 +2,7 @@
 description: The five empirically observed context-file writing styles (descriptive, prescriptive, prohibitive, explanatory, conditional) are not stylistic variation — they correspond to different strategies for narrowing the interpretation space agents face, trading off constraint against generalisability
 type: note
 traits: [has-external-sources]
-areas: [kb-design, computational-model]
+areas: [computational-model]
 status: seedling
 ---
 
@@ -52,4 +52,3 @@ Relevant Notes:
 
 Topics:
 - [computational-model](./computational-model.md)
-- [kb-design](./kb-design.md)
