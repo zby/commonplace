@@ -10,7 +10,7 @@ For **notes and above** (any type with frontmatter), every note must be findable
 
 1. **[Title as claim](notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? (Applies to single-claim documents; multi-claim specs and frameworks get topical titles instead.)
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
-3. **Index membership** — Is it linked from at least one area index? (Directory indexes are auto-generated.)
+3. **Area membership** — Is it tagged with the most precise area whose index would help a reader find related notes? (Directory indexes are auto-generated and don't count.)
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
 
 If any answer is "no," fix it before saving.
@@ -116,7 +116,7 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | `description` | Yes | Max 200 chars, must discriminate this note from similar ones |
 | `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`. See [document-classification](notes/document-classification.md) |
 | `traits` | No | Independently checkable properties: `has-comparison`, `has-external-sources`, `has-implementation` |
-| `areas` | No | Array of area index names this note belongs to (not the auto-generated directory index) |
+| `areas` | No | Area indexes worth visiting from this note — tag the most precise area, not every ancestor. See [why areas exist](notes/areas-exist-because-useful-operations-require-reading-notes-together.md). |
 | `status` | No | current, outdated, speculative |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
@@ -166,6 +166,19 @@ Good: `[note](./note.md) — extends this by adding the runtime perspective`
 
 Every link must point to a real file. Before creating a link, verify the target exists with `ls`. If it should exist but doesn't, create it, then link.
 
+### Distillation Tracking
+
+When you distill content from notes into a focused artifact (instruction, skill body, WRITING.md section), add a "Distilled into:" entry in each source note's footer:
+
+```markdown
+Distilled into:
+- [WRITING.md](../WRITING.md) — the area assignment checklist
+```
+
+A distillation typically draws from multiple source notes. Each source gets its own "Distilled into:" link so that when any source changes, the maintainer sees the downstream artifact that may need review.
+
+The distilled artifact itself should NOT link back to its sources — it's optimized for the executing agent, not the maintainer.
+
 ## Indexes
 
 There are two kinds of indexes:
@@ -201,6 +214,15 @@ What is unexplored or unresolved.
 **Create** when 5+ related notes accumulate without navigation structure.
 **Split** when an index exceeds 40 notes — that's the approximate point where an area stops fitting in working context. Optimise the split for comparative reading yield (keep high-tension pairs together), not for taxonomic cleanliness.
 **Merge** when both indexes are small with significant overlap.
+
+### Area Assignment
+
+Areas exist because [useful operations require reading notes together](notes/areas-exist-because-useful-operations-require-reading-notes-together.md) — orientation and comparative reading both need bounded, related sets.
+
+- **Tag the most precise area** whose index would help a reader find related notes.
+- **Don't dual-tag parent and child.** If `type-system` is a sub-area of `document-system`, tag `type-system` only. The broader area is one hop away via "Related Areas" links in the index.
+- **Multiple areas are fine for independent dimensions** (e.g. `[kb-design, computational-model]`), not for parent-child relationships.
+- **Sub-area relationships live in index cross-links**, not in frontmatter. `areas.md` lists all areas flat.
 
 ## Helper Functions
 

@@ -1,7 +1,7 @@
 ---
 description: Separated Evidence and Reasoning sections let human reviewers check facts and logic independently — a purely readability argument that doesn't depend on LLM behavior at all
 type: note
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 
@@ -21,4 +21,4 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)

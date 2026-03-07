@@ -7,6 +7,8 @@ status: seedling
 
 # Areas exist because useful operations require reading notes together
 
+This note is the analytical companion to [WRITING](../WRITING.md): `WRITING.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
+
 ## The operations
 
 Two operations justify areas. Both require loading a set of notes together, and both impose the same structural constraints on that set.
@@ -63,6 +65,18 @@ These conventions have further consequences:
 
 The area system is a form of probabilistic triage: allocate the expensive read-together operations where they're most likely to produce results, and use cheaper operations (search, /connect) for the long tail of cross-area connections.
 
+## Conventions that follow
+
+**Tag the most precise useful area.** The `areas:` field generates Topics footer links, which lead readers to area indexes for comparative reading. A large area like `kb-design` (48 notes) is too imprecise — too many notes, too low a yield per context-unit. Tag the area whose index concentrates the most relevant notes.
+
+**Don't dual-tag parent and child.** `type-system` is a sub-area of `document-system` — that relationship is real. But `areas: [document-system, type-system]` forces the reader to choose between two indexes without guidance. Tag the most precise area only; the broader area is one hop away via "Related Areas" links. This mirrors the existing pattern — `document-system` notes don't carry `areas: [kb-design]`.
+
+**Multiple areas are fine for independent dimensions.** `areas: [kb-design, computational-model]` is fine — independent dimensions, not parent-child. The test: would comparative reading of each area surface useful tensions with this note?
+
+**Split when an area becomes imprecise.** The [~40 note threshold](../WRITING.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
+
+**areas.md stays flat.** All areas listed as peers. Sub-area relationships expressed in each area's "Related Areas" section, not in the hub.
+
 ## Tension: orientation and comparative reading pull index design in opposite directions
 
 Orientation benefits from synthesis — current state in prose, tensions highlighted, gaps noted. An agent reading a synthesised index gets the mental model without loading every note. Comparative reading benefits from a flat loadable list — every note visible, no editorial filtering hiding potential redundancies or tensions.
@@ -83,6 +97,9 @@ Relevant Notes:
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — areas are one resolution level; both operations work within a level
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: comparative reading yield as a potential quality signal
 - [deep search is connection methodology applied to temporarily expanded corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
+
+Distilled into:
+- [WRITING.md](../WRITING.md) — area assignment rules, lifecycle split threshold, and areas field description
 
 Topics:
 - [kb-design](./kb-design.md)

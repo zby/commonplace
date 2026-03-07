@@ -1,7 +1,7 @@
 ---
 description: Six roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality through structured writing discipline, and maturation through stabilisation
 type: note
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 
@@ -63,4 +63,4 @@ Relevant Notes:
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)

@@ -1,7 +1,7 @@
 ---
 description: Descriptions don't appear spontaneously — they exist because the note base type requires them; without enforcement, metadata degrades and navigation collapses to opening every document
 type: note
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 
@@ -24,4 +24,4 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview of all type system roles; this note develops the enforcement role
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)

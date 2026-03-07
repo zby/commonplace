@@ -3,7 +3,7 @@ description: Global types tax every session's context; directory-scoped types lo
 type: note
 traits: []
 status: seedling
-areas: [document-system]
+areas: [type-system]
 ---
 
 # Directory-scoped types are cheaper than global types

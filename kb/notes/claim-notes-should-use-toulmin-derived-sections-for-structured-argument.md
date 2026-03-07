@@ -2,7 +2,7 @@
 description: Three independent threads converged on Toulmin's argument structure — adopting Toulmin sections as base type `structured-claim` separates claim-titled notes (any note) from fully argued claims (the type)
 type: structured-claim
 traits: [has-comparison, has-external-sources]
-areas: [document-system]
+areas: [type-system]
 status: current
 ---
 
@@ -132,4 +132,4 @@ Relevant Notes:
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)

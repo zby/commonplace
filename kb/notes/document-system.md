@@ -10,23 +10,14 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Foundations
 
-- [why-notes-have-types](./why-notes-have-types.md) — six roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality, and maturation through stabilisation
-- [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — types assert verifiable structural properties, not subject matter; base type + traits model inspired by gradual and structural typing
-- [document-classification](./document-classification.md) — taxonomy overview: base types table (text, note, spec, review, index, adr), migration from old flat types
 - [note base type](../../types/note.md) — the base structured type: global fields (description, status, traits, areas), status ladder, traits system, design principles
 - [text root type](../../types/text.md) — the empty root type: no frontmatter, always valid
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — knowledge systems produce dual-audience documents (human + LLM), making cognitive differences a first-class design concern for type and convention design
-
-## Types
-
-- [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — Ward Cunningham's design principle animates the type ladder: capture with zero friction, refine in place, each step adds structure only when the thought has earned it
-- [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — global types tax every session's context; directory-scoped types load only when working in that directory
 - [why-directories-despite-their-costs](./why-directories-despite-their-costs.md) — directories buy one-two orders of magnitude of navigable scale but each new directory taxes routing, search config, and cross-directory linking
 
 ## Writing Conventions
 
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link traversal read as reasoning chains; topical titles break this, and multi-claim documents get different title conventions
-- [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — three independent threads converged on Toulmin's argument structure, leading to the `structured-claim` type with Evidence/Reasoning/Caveats sections
 
 ## Testing
 
@@ -40,6 +31,7 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Related Areas
 
+- [type-system](./type-system.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
 - [kb-design](./kb-design.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
 - [links](./links.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory.md) — the type ladder instantiates the stabilisation gradient for documents

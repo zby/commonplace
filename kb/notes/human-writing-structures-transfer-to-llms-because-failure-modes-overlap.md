@@ -1,7 +1,7 @@
 ---
 description: Human writing genres evolved to prevent specific reasoning failures; the same structures help LLMs because LLMs exhibit surprisingly human-like failure modes (conflating evidence with opinion, skipping qualifications) — suggesting per-structure transfer evaluation rather than wholesale analogy
 type: note
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 
@@ -25,4 +25,4 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)

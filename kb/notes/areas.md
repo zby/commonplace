@@ -15,9 +15,11 @@ Browse the KB by conceptual area. Each area page is a curated index with grouped
 - [Document system](./document-system.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model.md) — programming-language framing for LLM instructions and orchestration
 - [Links](./links.md) — link semantics, navigation behavior, and link-management methodology
+- [Type system](./type-system.md) — why documents have types, what roles they serve, how structured writing improves quality
 - [Related systems](./related-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
 
 ## Notes
 
+- [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — analytical model for why areas exist and how to tune boundaries for context efficiency and comparative yield
 - Area membership is encoded in each note's `areas` frontmatter field.
 - Directory indexes are auto-generated; area indexes are curated.

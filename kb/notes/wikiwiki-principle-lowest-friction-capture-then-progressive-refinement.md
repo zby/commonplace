@@ -2,7 +2,7 @@
 description: Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim crystallisation ladder
 type: note
 traits: [has-external-sources]
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 

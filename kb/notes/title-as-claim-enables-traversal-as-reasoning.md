@@ -63,7 +63,7 @@ Relevant Notes:
 - [context-loading strategy](./context-loading-strategy.md) — enables: claim titles are what make the first layer of progressive disclosure work in the loading hierarchy
 - [link contracts framework](./link-contracts-framework.md) — extends: argumentative vs referential link semantics are a concrete instance of the link intent taxonomy
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) is the theory behind what this note describes — claim titles are Toulmin claims, and "since"/"because" link semantics encode warrants
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.working.md) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism
 
 Source:
 - Adapted from [arscontexta methodology note](https://github.com/agenticnotetaking/arscontexta) on the same topic, with the multi-claim boundary analysis added

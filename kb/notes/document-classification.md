@@ -1,7 +1,7 @@
 ---
 description: Taxonomy overview — the base types table and migration from old flat types; global field definitions, status, and traits live in types/note.md
 type: spec
-areas: [document-system]
+areas: [type-system]
 status: current
 ---
 

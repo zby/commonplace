@@ -1,7 +1,7 @@
 ---
 description: Structured templates like Evidence/Reasoning sections steer autoregressive generation toward higher-quality training data (scientific papers, legal analyses) rather than unstructured web text — the structure acts as a distribution selector
 type: note
-areas: [document-system]
+areas: [type-system]
 status: seedling
 ---
 
@@ -22,4 +22,4 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 
 Topics:
-- [document-system](./document-system.md)
+- [type-system](./type-system.md)
