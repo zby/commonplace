@@ -43,8 +43,8 @@ Each mutation would be speculative — staged separately, surfaced for human rev
 The boiling cauldron mutations differ on both generality and crystallisability:
 
 **By generality:**
-- **Extract, reformulate** — narrow scope, improving individual notes
-- **Relink, regroup, synthesise** — medium scope, changing how knowledge connects
+- **Extract, reformulate** — narrow scope, improving individual notes (Extract is accumulation — adding knowledge to the store; its value depends on the reach of what's extracted)
+- **Relink, regroup, synthesise** — medium scope, changing how knowledge connects (these transform accumulated knowledge)
 - **Retire, restructure** — wide scope, changing the system's organising principles
 
 **By crystallisability** (reliability+speed+cost compound):
@@ -55,7 +55,7 @@ Automating narrow-scope improvements is relatively tractable (ingest pipelines, 
 
 ## The vocabulary gap
 
-[Stabilisation during deployment is already continuous learning](../notes/stabilisation-during-deployment-is-continuous-learning.md) — developers accumulate informal tweaks, agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions, teams version their prompts and tools. But none of it is systematic. Automating the learning loop requires a mechanistic description of the process — what the operations are, how they compose, what makes one succeed or fail. That description requires a vocabulary that doesn't yet exist in standard use: [stabilisation](../notes/stabilisation.md) and [distillation](../notes/distillation.md) as the two mechanisms, the [generality-vs-compound trade-off](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) as what they operate on, the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) as the progression path, the [bitter lesson boundary](../notes/bitter-lesson-boundary.md) as the test for when crystallisation is permanent vs temporary. Without these distinctions, "make the system learn" is a wish, not a design specification. The [adaptation taxonomy for agentic AI](../notes/research/adaptation-agentic-ai-analysis.md) begins to close the gap by identifying data-driven triggers for when to stabilise versus when to soften.
+[Stabilisation during deployment is already continuous learning](../notes/stabilisation-during-deployment-is-continuous-learning.md) — developers accumulate informal tweaks, agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions, teams version their prompts and tools. But none of it is systematic. Automating the learning loop requires a mechanistic description of the process — what the operations are, how they compose, what makes one succeed or fail. That description requires a vocabulary that doesn't yet exist in standard use: [accumulation](../notes/learning-is-not-only-about-generality.md) as the basic learning operation with [reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property (facts at the low end, theories at the high end), [stabilisation](../notes/stabilisation.md) and [distillation](../notes/distillation.md) as the two mechanisms that transform accumulated knowledge, the [generality-vs-compound trade-off](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) as what they operate on, the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) as the progression path, the [bitter lesson boundary](../notes/bitter-lesson-boundary.md) as the test for when crystallisation is permanent vs temporary. Without these distinctions, "make the system learn" is a wish, not a design specification. The [adaptation taxonomy for agentic AI](../notes/research/adaptation-agentic-ai-analysis.md) begins to close the gap by identifying data-driven triggers for when to stabilise versus when to soften.
 
 ## Open problems
 
@@ -86,6 +86,7 @@ Relevant Notes:
 - [text-testing-framework](./text-testing-framework.md) — quality gates at both note and corpus level that could serve as building blocks for the loop's evaluation, though they test artifact quality and consistency, not end-to-end question-answering capacity
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — addresses the quality gates gap: proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals that could serve as the evaluation function for the boiling cauldron, using structure alone rather than requiring usage data
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — extends: argues the retrieval-oriented framing here is one layer of a broader problem; a Claw's learning loop must also improve action capacity (classification, communication, planning)
+- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — confirms from the other direction: AgeMem shows RL can learn memory-management policy, but only because task completion provides a clear oracle; the KB's evaluation gap (no equivalent oracle) is the real bottleneck, not the learning mechanism
 
 Topics:
 

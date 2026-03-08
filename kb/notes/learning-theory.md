@@ -1,5 +1,5 @@
 ---
-description: Index of notes about how systems learn, verify, and improve — deploy-time learning framework, stabilisation and distillation as orthogonal mechanisms, discovery as synthesis, oracle theory, and memory architecture
+description: Index of notes about how systems learn, verify, and improve — accumulation as the basic operation (reach as its key property), stabilisation and distillation as transformation mechanisms, discovery as the source of high-reach theories, oracle theory, and memory architecture
 type: index
 status: current
 ---
@@ -8,12 +8,12 @@ status: current
 
 How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through inspectable artifacts.
 
-The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework, with two orthogonal mechanisms ([stabilisation](./stabilisation.md) and [distillation](./distillation.md)) and a third distinct operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)).
+The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([stabilisation](./stabilisation.md) and [distillation](./distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
 
 ## Foundations
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (semantic underspecification and execution indeterminism); the spec-to-program projection model, semantic boundaries, and the stabilise/soften cycle
-- [learning-is-not-only-about-generality](./learning-is-not-only-about-generality.md) — capacity decomposes into generality (how broadly it applies) vs a reliability/speed/cost compound (how well it works where it applies); Simon's definition grounds the decomposition
+- [learning-is-not-only-about-generality](./learning-is-not-only-about-generality.md) — accumulation is the most basic learning operation, with reach as its key property (facts at the low end, theories at the high end); capacity decomposes into generality vs a reliability/speed/cost compound; Simon's definition grounds the decomposition
 
 ## Deploy-time Learning
 
@@ -47,13 +47,13 @@ Targeted extraction from a larger body of reasoning into a focused artifact shap
 
 ## Discovery
 
-A third operation, distinct from both stabilisation and distillation: positing a new general concept and simultaneously recognizing existing particulars as instances of it.
+A third operation, distinct from both stabilisation and distillation: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-reach items accumulation can store.
 
 - [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the dual structure of discovery (posit the general, recognize the particular); three depths from shared feature through shared structure to generative model; the hard problem is recognition, not linking
 
 ## Synthesis
 
-- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — ties the three learning operations (stabilisation, distillation, discovery) to three knowledge properties (trustworthy, discoverable, composable) serving contextual competence under bounded context; Deutsch's reach criterion measures knowledge quality
+- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — accumulation as the basic operation plus three transformation operations (stabilisation, distillation, discovery) mapped to three knowledge properties (trustworthy, discoverable, composable) serving contextual competence under bounded context; reach as the quality dimension of what's accumulated
 
 ## Oracle & Verification
 
@@ -67,6 +67,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 - [three-space-memory-separation-predicts-measurable-failure-modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — the three-space claim is testable: flat memory predicts specific cross-contamination failures
 - [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — crystallisation counters the blackbox problem not by requiring human review but by choosing a substrate (repo artifacts) that any agent can inspect, diff, test, and verify
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper: Zettelkasten-inspired agent memory with automated link generation; flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale
+- [memory-management-policy-is-learnable-but-oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — AgeMem's RL-trained memory policy demonstrates low-reach accumulation (facts) and distillation (STM); confirms memory policy is vision-feature-like per the bitter lesson boundary, but requires a task-completion oracle the KB cannot yet provide
 
 ## Applications
 
