@@ -95,9 +95,11 @@ status: seedling
 ---
 
 Relevant Notes:
+
 - [text](./text.md) — the root type that note extends; promotion from text to note is the first structural step
 - [document-classification](../kb/notes/document-classification.md) — taxonomy overview: the base types table and migration history
 - [document-types-should-be-verifiable](../kb/notes/document-types-should-be-verifiable.md) — design rationale for verifiable types
 
 Topics:
+
 - [document-system](../kb/notes/document-system.md)
