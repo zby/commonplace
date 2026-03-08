@@ -14,7 +14,7 @@ In LLM instructions, the cost model is fundamentally different. Every token comp
 
 This means indirection patterns that are free in code become expensive in prompts:
 - **Config variables** in instructions add per-read interpretation cost
-- **Abstraction layers** ("use the appropriate search command" vs "run `grep -r term kb/notes/`") force the LLM to resolve the abstraction before acting
+- **Abstraction layers** ("use the appropriate search command" vs "run `rg term kb/notes/`") force the LLM to resolve the abstraction before acting
 - **Conditional paths** ("if X, do A; if Y, do B" where X is always true) waste context on dead branches
 
 The fix is the same as in compiled languages: **resolve at build time what you can**. If a value is known when the instructions are authored (or can be determined at setup time), bake it in. Generate concrete instructions from templates. The flexibility cost is paid once; the resulting instructions are literal and direct.

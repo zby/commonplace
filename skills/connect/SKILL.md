@@ -122,10 +122,10 @@ Record the actual query string and top results with scores in the discovery trac
 
 For specific terms and exact matches — search notes and sources:
 ```bash
-grep -r "term" kb/notes/ kb/sources/ --include="*.md"
+rg "term" kb/notes/ kb/sources/ --glob "*.md"
 ```
 
-Use grep when:
+Use rg when:
 - You know the exact words that should appear
 - Searching for specific terminology or phrases
 - Finding all uses of a named concept

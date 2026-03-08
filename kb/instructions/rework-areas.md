@@ -18,7 +18,7 @@ Audit area indexes against the conventions in WRITING.md and the principles in [
 
 ```bash
 # Count notes per area
-for area in $(rg -o 'areas: \[.*\]' kb/notes/ --glob '*.md' -r '$1' | grep -oP '[\w-]+' | sort | uniq); do
+for area in $(rg -o 'areas: \[.*\]' kb/notes/ --glob '*.md' -r '$1' | rg -oP '[\w-]+' | sort | uniq); do
   count=$(rg -c "areas:.*$area" kb/notes/ --glob '*.md' | wc -l)
   echo "$area: $count"
 done
