@@ -48,6 +48,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 ## Design Principles
 
+- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — unifying theory: three properties (discoverable, composable, trustworthy) serve contextual competence under bounded context; three learning operations (stabilisation, distillation, discovery) improve them; Deutsch's reach criterion measures knowledge quality
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — good thinking requires moving between abstraction levels; KB quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges Popperian conjecture-and-refutation with bounded-context mechanics and proposes concrete upgrades (falsifiers, contradiction passes, oracle-aware hardening)
 - [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as crystallisation, centers as mutual reinforcement in the note graph

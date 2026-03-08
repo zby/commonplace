@@ -51,6 +51,10 @@ A third operation, distinct from both stabilisation and distillation: positing a
 
 - [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the dual structure of discovery (posit the general, recognize the particular); three depths from shared feature through shared structure to generative model; the hard problem is recognition, not linking
 
+## Synthesis
+
+- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — ties the three learning operations (stabilisation, distillation, discovery) to three knowledge properties (trustworthy, discoverable, composable) serving contextual competence under bounded context; Deutsch's reach criterion measures knowledge quality
+
 ## Oracle & Verification
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits on the automation gradient
