@@ -17,14 +17,6 @@ Parse immediately:
 - If target contains "[note] to [type]": convert to the specified type
 - If target is empty: ask which note to convert
 
-## Prerequisite Check
-
-This skill uses `git mv` for renames. Before any rename step, verify git is available:
-```bash
-command -v git
-```
-If missing, STOP and tell the user: "git is required for tracked renames but is not installed." **Never attempt to install any software.**
-
 ## Supported conversions
 
 ### text → note (current)
