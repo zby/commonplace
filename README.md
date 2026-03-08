@@ -1,6 +1,6 @@
 # Commonplace
 
-A framework for building agent-operated knowledge bases — methodology, type system, writing conventions, skills, and scripts that let an AI agent autonomously navigate, extend, and maintain structured markdown files. This repo uses its own knowledge system to document the methodology for building them.
+A knowledge base about building agentic systems — how AI agents learn, operate, and improve through inspectable artifacts. An agent-operated knowledge base is the primary testbed: the repo uses its own methodology to document the theory, and ships the framework (type system, writing conventions, skills, scripts) for building more.
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 

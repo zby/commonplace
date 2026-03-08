@@ -1,6 +1,6 @@
 # Commonplace Knowledge Base
 
-Commonplace is a framework for building **agent-operated knowledge bases** — structured markdown files that an AI agent can autonomously navigate, extend, and maintain. This repo uses its own knowledge system to document the methodology for building them.
+Commonplace is a knowledge base about building **agentic systems** — how AI agents learn, operate, and improve through inspectable artifacts. An agent-operated knowledge base is the primary testbed: the repo uses its own methodology to document the theory, and ships the framework for building more.
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents draft, connect, and maintain the notes.
 
