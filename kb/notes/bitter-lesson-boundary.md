@@ -63,6 +63,10 @@ Working heuristics for a hybrid system:
 | **Is the spec a definition or a proxy metric?** | Output has a single correct answer verifiable without judgment | Verification requires human evaluation or proxy scores |
 | **Are failures local or compositional?** | Bugs are in individual components; fixing them fixes the system | Components work in isolation but don't compose into the target capability |
 
+Relevant Notes:
+
+- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem's architecture is the predicted hybrid — calculator operations (Add, Delete, Retrieve) composed by a learned vision-feature policy (RL-trained when-to-use); confirms the boundary's practical relevance for agent memory systems
+
 Topics:
 
 - [learning-theory](./learning-theory.md)

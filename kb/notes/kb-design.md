@@ -45,6 +45,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [what-doesnt-work](./what-doesnt-work.md) — anti-patterns and insufficient evidence: auto-commits, queue overhead
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
+- [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading; the QA layer between structural validation and full corpus consistency
 
 ## Design Principles
 
