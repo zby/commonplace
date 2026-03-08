@@ -43,6 +43,7 @@ Lopopolo's phrase captures it: "every mistake is a harness bug." When an agent m
 ---
 
 Relevant Notes:
+
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the gradient captures enforcement reliability but not the context quality of enforcement output
 - [stabilisation](./stabilisation.md) — instance: teaching error messages are a stabilisation technique that constrains interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: teaching errors are frontloading applied to the error channel — pre-computing the fix instead of leaving it for the agent to derive
@@ -50,4 +51,5 @@ Relevant Notes:
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: linter messages as remediation instructions in a 1M LOC agent-generated codebase
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

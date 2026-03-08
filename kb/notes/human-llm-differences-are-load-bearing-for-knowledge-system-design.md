@@ -62,6 +62,7 @@ The specific differences that matter most are developed elsewhere: [agent statel
 ---
 
 Relevant Notes:
+
 - [human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — exemplifies: the methodology of evaluating each human convention's specific arguments for LLM transfer
 - [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — foundation: the adoption filter this note motivates; that note says *how* to filter, this note says *why* filtering is necessary
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — extends: the most consequential specific difference; routing infrastructure is the primary mechanism for managing dual audiences
@@ -72,4 +73,5 @@ Relevant Notes:
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — validates: empirical study of 466 OSS projects finds developers explicitly distinguish "README files for humans" from "AI context files for AI agents" — the dual-audience split observed at scale with no established conventions for resolving it
 
 Topics:
+
 - [document-system](./document-system.md)

@@ -52,6 +52,7 @@ In Claude Code, skills are files in `.claude/skills/` that the agent discovers a
 ---
 
 Relevant Notes:
+
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: the distillation process that produces both skills and instructions
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — context: instructions sit on the stabilisation gradient between ad-hoc instructions notes and skills
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable distilled procedures
@@ -59,4 +60,5 @@ Relevant Notes:
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: instructions, like skills, have implicit type signatures — they accept and produce document types
 
 Topics:
+
 - [kb-design](./kb-design.md)

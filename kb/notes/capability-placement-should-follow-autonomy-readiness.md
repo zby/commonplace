@@ -34,10 +34,12 @@ This sequence prevents premature automation while avoiding AGENTS.md bloat.
 ---
 
 Relevant Notes:
+
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — parent framing: AGENTS.md is control-plane runtime context, not capability catalog space
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — defines the intermediate form between notes and skills
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — concrete staging area for operations before they are distilled
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts
 
 Topics:
+
 - [kb-design](./kb-design.md)

@@ -66,6 +66,7 @@ The inferred approach is probably right for now — position (inline vs footer) 
 ---
 
 Relevant Notes:
+
 - [link contracts framework](./link-contracts-framework.md) — defines link semantics (relationship types, context phrases); this note adds the strength dimension that link contracts don't currently address
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — note scores should weight inbound links by strength; strong inbound links count more
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — link strength is a traversal heuristic: strong links are worth following, weak links are maybes
@@ -74,4 +75,5 @@ Relevant Notes:
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the credibility erosion problem: unweighted link counts let noise drown signal; link-weighted scoring prevents this
 
 Topics:
+
 - [links](./links.md)

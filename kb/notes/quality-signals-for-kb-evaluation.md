@@ -119,6 +119,7 @@ The fix-and-re-critique approach is itself metamorphic: you're not testing absol
 ---
 
 Relevant Notes:
+
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
 - [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
@@ -131,4 +132,5 @@ Relevant Notes:
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
 
 Topics:
+
 - [kb-design](./kb-design.md)

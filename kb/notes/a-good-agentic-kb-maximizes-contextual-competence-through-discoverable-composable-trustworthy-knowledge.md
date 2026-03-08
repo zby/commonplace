@@ -78,6 +78,7 @@ A good agentic knowledge base maximizes **contextual competence** — the agent'
 ---
 
 Relevant Notes:
+
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the bounded-context constraint that makes efficiency necessary
 - [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — grounds: contextual competence as the criterion, not retrieval accuracy
 - [stabilisation](./stabilisation.md) — mechanism: one of three learning operations; improves trustworthiness, preserves reach
@@ -94,5 +95,6 @@ Relevant Notes:
 - [Siftly](./related-systems/siftly.md) — contrasts: enrichment-based system produces classified artifacts, not composable reasoning with reach
 
 Topics:
+
 - [kb-design](./kb-design.md)
 - [learning-theory](./learning-theory.md)

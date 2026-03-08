@@ -48,6 +48,7 @@ Stabilisation asks: *how constrained is this artifact?* Distillation asks: *was 
 ---
 
 Relevant Notes:
+
 - [crystallisation](./crystallisation.md) — the far end of the stabilisation spectrum: stabilisation that crosses a medium boundary
 - [distillation](./distillation.md) — co-equal mechanism: targeted extraction shaped by use case, context budget, and agent; orthogonal to stabilisation
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that stabilisation operates on
@@ -58,4 +59,5 @@ Relevant Notes:
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when stabilisation is permanent vs when softening is needed
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

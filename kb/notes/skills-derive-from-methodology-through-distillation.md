@@ -81,6 +81,7 @@ For a human, distilled procedures are a convenience that can eventually be trans
 ---
 
 Relevant Notes:
+
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship
 - [crystallisation: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: crystallisation involves a phase transition in medium; distillation does not
@@ -89,4 +90,5 @@ Relevant Notes:
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
 
 Topics:
+
 - [kb-design](./kb-design.md)

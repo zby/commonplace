@@ -43,6 +43,7 @@ Not crystallisation: writing a convention (stabilisation — constrains the inte
 ---
 
 Relevant Notes:
+
 - [stabilisation](./stabilisation.md) — parent mechanism: crystallisation is the far end of the stabilisation spectrum
 - [distillation](./distillation.md) — orthogonal mechanism: targeted extraction; crystallisation sometimes follows distillation (extract a procedure, then crystallise it to code)
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which crystallisation sits at the far end
@@ -50,4 +51,5 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines what can crystallise: hard oracles enable it, weak oracles resist it
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

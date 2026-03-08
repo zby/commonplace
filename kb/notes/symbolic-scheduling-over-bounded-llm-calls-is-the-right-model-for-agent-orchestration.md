@@ -144,6 +144,7 @@ Every step — planning, filtering, clustering, summarising, synthesising — is
 ---
 
 Relevant Notes:
+
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — foundation: frontloading removes derivation procedures from bounded context by precomputing what can be known earlier
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: context is the scarce resource and has both volume and complexity dimensions
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative-because-extraction-requires-computation.md) — explains why representation choice matters: different artifacts expose different structure to a bounded observer
@@ -152,4 +153,5 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded, and three recovery strategies
 
 Topics:
+
 - [computational-model](./computational-model.md)

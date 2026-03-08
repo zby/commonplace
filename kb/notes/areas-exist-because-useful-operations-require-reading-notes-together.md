@@ -92,6 +92,7 @@ A synthesised index saves orientation cost but may hide notes from comparative r
 ---
 
 Relevant Notes:
+
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context is the scarce resource that makes unbounded reading-together infeasible
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — consequence: a note missing from its area is invisible to both orientation and comparative reading
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — areas are one resolution level; both operations work within a level
@@ -99,7 +100,9 @@ Relevant Notes:
 - [deep search is connection methodology applied to temporarily expanded corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
 
 Distilled into:
+
 - [WRITING.md](../WRITING.md) — area assignment rules, lifecycle split threshold, and areas field description
 
 Topics:
+
 - [kb-design](./kb-design.md)

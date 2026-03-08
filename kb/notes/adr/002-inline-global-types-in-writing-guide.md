@@ -46,8 +46,10 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 ---
 
 Relevant Notes:
+
 - [context-loading-strategy](../context-loading-strategy.md) — foundation: the loading hierarchy principle (match instruction specificity to loading frequency) motivates combining two always-together loads into one
 - [scenario-decomposition-drives-architecture](../scenario-decomposition-drives-architecture.md) — grounds: the step decomposition shows "know the structure" and "know how to write well" are adjacent in every write scenario, confirming they belong in the same file
 
 Topics:
+
 - [document-system](../document-system.md)

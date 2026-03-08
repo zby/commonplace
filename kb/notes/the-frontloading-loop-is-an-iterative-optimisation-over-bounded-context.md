@@ -77,6 +77,7 @@ The practical consequence is that the loop's quality depends almost entirely on 
 ---
 
 Relevant Notes:
+
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — foundation: the single-step mechanism this note extends to an iterative loop
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: the dual-cost model (volume and complexity) that shapes what `select` must optimise for
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — explains: why framing matters in selection — the same information has different value depending on how it's presented to a bounded observer
@@ -86,4 +87,5 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response (writing intermediate state to disk) is the workshop pattern — temporal documents that consume themselves as the loop progresses
 
 Topics:
+
 - [computational-model](./computational-model.md)

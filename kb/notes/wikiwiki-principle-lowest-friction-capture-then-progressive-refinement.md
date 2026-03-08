@@ -40,6 +40,7 @@ This connects to [crystallisation](../notes/crystallisation.md): crystallisation
 ---
 
 Relevant Notes:
+
 - [document-classification](./document-classification.md) — the type ladder this principle animates: text → note → structured-claim
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the structured-claim type that sits at the top of the refinement ladder
 - [crystallisation](../notes/crystallisation.md) — the general pattern; the wiki principle is the UX requirement that makes crystallisation practical
@@ -48,4 +49,5 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
 
 Topics:
+
 - [document-system](./document-system.md)

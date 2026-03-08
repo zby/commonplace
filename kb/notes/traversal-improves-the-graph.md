@@ -37,10 +37,12 @@ The key difference from Luhmann's Zettelkasten (and arscontexta's model) is that
 ---
 
 Relevant Notes:
+
 - [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — foundation: the log is zero-friction capture; processing is progressive refinement
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — constrains: the agent shouldn't load writing methodology during traversal, which is why we defer
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — the log catches staleness that defensive creation-time checks miss
 - [Ars Contexta](./related-systems/arscontexta.md) — source: the incremental formalization insight that motivated this design
 
 Topics:
+
 - [kb-design](./kb-design.md)

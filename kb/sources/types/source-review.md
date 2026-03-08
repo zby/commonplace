@@ -24,7 +24,9 @@ status: current
 ---
 
 Relevant Notes:
+
 - [related-note](./related-note.md) — how it relates
 
 Topics:
+
 - [relevant-area-index](./relevant-area-index.md)

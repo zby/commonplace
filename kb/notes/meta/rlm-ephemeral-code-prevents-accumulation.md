@@ -57,10 +57,12 @@ The answer to the first question is ephemeral code. The answer to the second is 
 ---
 
 Relevant Notes:
+
 - [RLM Implementations vs llm-do](../related_works/rlm-comparison.md) — comprehensive five-divergence comparison
 - [RLM explained](../related_works/rlm-explained.md) — what the RLM pattern is and how it works
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — the three timescales framework that motivates versioned code
 - [storing-llm-outputs-is-stabilization](../storing-llm-outputs-is-stabilization.md) — extends this: even storing an LLM's raw output is a form of stabilization
 
 Topics:
+
 - [learning-theory](../learning-theory.md)

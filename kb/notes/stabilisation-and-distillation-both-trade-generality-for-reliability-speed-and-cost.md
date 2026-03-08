@@ -44,6 +44,7 @@ Both directions are [capacity change](./learning-is-not-only-about-generality.md
 ---
 
 Relevant Notes:
+
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: defines the capacity decomposition (generality vs compound) that this note's trade-off operates on
 - [stabilisation](./stabilisation.md) — one mechanism: constrains the interpretation space; crystallisation is the far end
 - [distillation](./distillation.md) — the other mechanism: targeted extraction under context budget constraints
@@ -51,4 +52,5 @@ Relevant Notes:
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when the generality-vs-compound trade-off is permanent (calculators) vs when softening is needed (vision features)
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

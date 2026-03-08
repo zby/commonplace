@@ -40,10 +40,12 @@ The `type` field is a free-form string. The table below lists the common values;
 ---
 
 Relevant Notes:
+
 - [note base type](../../types/note.md) — defines the global fields, status ladder, traits, and design principles
 - [text root type](../../types/text.md) — the empty root type: no frontmatter, always valid
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — design rationale for verifiable types
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types
 
 Topics:
+
 - [document-system](./document-system.md)

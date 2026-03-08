@@ -21,4 +21,5 @@ This matters for design: links need surrounding context to inform decisions, sea
 See also: [agents navigate by deciding what to read next](agents-navigate-by-deciding-what-to-read-next.md), [link contracts source material](../link-contracts-framework.md).
 
 Topics:
+
 - [links](./links.md)

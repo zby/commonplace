@@ -54,6 +54,7 @@ Not every idea decomposes into a single declarative sentence — some are relati
 ---
 
 Relevant Notes:
+
 - [programming-language types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — example: a claim extracted from a multi-claim spec, enabling it to serve as a premise
 - [document classification](./document-classification.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
@@ -69,5 +70,6 @@ Source:
 - Adapted from [arscontexta methodology note](https://github.com/agenticnotetaking/arscontexta) on the same topic, with the multi-claim boundary analysis added
 
 Topics:
+
 - [document-system](./document-system.md)
 - [links](./links.md)

@@ -81,6 +81,7 @@ This is fine for now — the system is primarily a knowledge base and the task s
 ---
 
 Relevant Notes:
+
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-maps-to-tulving-taxonomy.md) — the operational space maps to the workshop layer; different metabolic rates for different memory types
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — acknowledges tasks as a parallel subsystem; the question is whether more temporal types invalidate the "small subsystem" justification
 - [document classification](./document-classification.md) — the library-oriented type hierarchy this note identifies as insufficient for workshop documents
@@ -93,4 +94,5 @@ Relevant Notes:
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
 
 Topics:
+
 - [kb-design](./kb-design.md)

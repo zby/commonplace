@@ -58,6 +58,7 @@ The cost is real — each test execution is an API call — but the alternative 
 ---
 
 Relevant Notes:
+
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
 - [automated tests for text](./automated-tests-for-text.md) — complements: covers artifact testing (the other half of the doubled surface); this note covers instruction testing
 - [stabilisation](./stabilisation.md) — positions: instruction tests are stabilisation tooling — they constrain the interpretation space by asserting behavioral expectations
@@ -66,4 +67,5 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed
 
 Topics:
+
 - [document-system](./document-system.md)

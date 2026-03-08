@@ -94,6 +94,7 @@ These aren't mutually exclusive. You could frontload a minimal context (as we al
 ---
 
 Relevant Notes:
+
 - [a-functioning-kb-needs-a-workshop-layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — foundation: ClawVault's observations, handoffs, and reflections are concrete workshop artifacts where we have only the theoretical need
 - [claw-learning-is-broader-than-retrieval](../claw-learning-is-broader-than-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
@@ -103,4 +104,5 @@ Relevant Notes:
 - [Siftly](./siftly.md) — extends: another staged pipeline reference, but optimized for deterministic ingest throughput and resumable source loading
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

@@ -29,10 +29,12 @@ In agent workflows, low-degree-of-freedom choices usually correspond to hard con
 ---
 
 Relevant Notes:
+
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — operationalization: extracts a concrete sequencing heuristic from the broader generative-process framing
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: applies the same ordering rule to agent decomposition strategy
 - [symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — enables: symbolic state lets constrained choices be fixed before costly semantic calls
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — example: hard constraints precede softer interpretive guidance
 
 Topics:
+
 - [computational-model](./computational-model.md)

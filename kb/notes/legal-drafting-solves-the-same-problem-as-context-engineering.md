@@ -66,6 +66,7 @@ The paper routes through programming (Meyer's Design-by-Contract) rather than bo
 ---
 
 Relevant Notes:
+
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses; both face the same structural impossibility
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language rather than precise formal languages
 - [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — extends: law as another source discipline alongside computer science, with potentially equal transfer strength because it operates in the same medium
@@ -81,4 +82,5 @@ Source:
 - Prompted by a social media post observing that context engineering is close to law
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

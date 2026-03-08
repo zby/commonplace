@@ -68,9 +68,11 @@ The repo has both `kb/notes/related-systems/` (documented in the architecture sp
 ---
 
 Relevant Notes:
+
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — the two-tree design for installed projects; this note covers the repo's own layout
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
 - [context-loading-strategy](./context-loading-strategy.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand
 
 Topics:
+
 - [kb-design](./kb-design.md)

@@ -20,9 +20,11 @@ The separation keeps the default path lightweight without losing the maintenance
 ---
 
 Relevant Notes:
+
 - [context-loading-strategy](./context-loading-strategy.md) — extends this by applying always-loaded vs on-demand loading to maintenance operations
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operationalizes this by collecting periodic checks and their distillation status
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — defines the target artifact for procedures that mature beyond note-level catalogues
 
 Topics:
+
 - [kb-design](./kb-design.md)

@@ -45,6 +45,7 @@ Both domains solve the same problems: making behaviour predictable, making syste
 
 ---
 Relevant Notes:
+
 - [programming-language types applied to documents](./instructions-are-typed-callables.md) — typing practice applied to KB documents
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — quality criterion for document types
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — conceptual foundation: underspecified vs precise semantics, stabilise/soften, spec-to-program projection
@@ -56,5 +57,6 @@ Relevant Notes:
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: progressive compilation applied specifically to KB methodology, with a concrete gradient (instruction -> skill -> hook -> script) and the insight that judgment-requiring operations stay at skill level permanently
 
 Topics:
+
 - [computational-model](./computational-model.md)
 - [learning-theory](./learning-theory.md)

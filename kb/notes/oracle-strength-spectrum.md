@@ -48,6 +48,7 @@ This suggests a priority order: invest in telemetry and eval harnesses *before* 
 ---
 
 Relevant Notes:
+
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient maps to oracle strength: harder oracles enable tighter iteration loops
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument
@@ -57,4 +58,5 @@ Relevant Notes:
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals (graph topology, content proxies, LLM judgment) to drive a KB learning loop
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

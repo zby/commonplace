@@ -44,6 +44,7 @@ The KB's own CLAUDE.md reflects this: universal rules are prescriptive ("No wiki
 ---
 
 Relevant Notes:
+
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the interpretation-space model that gives these styles their theoretical grounding
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
@@ -51,4 +52,5 @@ Relevant Notes:
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
 
 Topics:
+
 - [computational-model](./computational-model.md)

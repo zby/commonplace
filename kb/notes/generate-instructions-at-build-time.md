@@ -23,10 +23,12 @@ The canonical form for skills is standalone (paths relative to KB root: `./notes
 ---
 
 Relevant Notes:
+
 - [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — foundation: the general principle this applies; in code indirection is free, in LLM instructions it costs context and interpretation on every read
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — template generation is a point on the stabilisation gradient
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
 - [generate topic links from frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — exemplifies: an earlier case of the same move — replacing LLM-interpreted output with a deterministic build step
 
 Topics:
+
 - [kb-design](./kb-design.md)

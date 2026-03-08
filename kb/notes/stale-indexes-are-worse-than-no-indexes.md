@@ -33,4 +33,5 @@ The `areas:` frontmatter field is the first defense — it declares index member
 This observation draws on arscontexta methodology research ("stale navigation actively misleads because agents trust curated maps completely"), adapted to our specific system where `areas:` frontmatter and `docs/indexes.md` provide the defense mechanisms.
 
 Topics:
+
 - [links](./links.md)

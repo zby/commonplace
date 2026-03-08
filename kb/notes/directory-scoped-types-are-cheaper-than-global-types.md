@@ -94,6 +94,7 @@ This is progressive disclosure applied to the type system: the agent always has 
 ---
 
 Relevant Notes:
+
 - [document classification](./document-classification.md) — the global type system this note proposes to thin out
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
@@ -101,4 +102,5 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop subsystems (tasks, queues) already define their own types locally; this generalises that pattern
 
 Topics:
+
 - [document-system](./document-system.md)

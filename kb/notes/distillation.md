@@ -52,6 +52,7 @@ Not distillation: moving a validation check to code (crystallisation — the ope
 ---
 
 Relevant Notes:
+
 - [stabilisation](./stabilisation.md) — co-equal mechanism: constraining the interpretation space, orthogonal to distillation
 - [crystallisation](./crystallisation.md) — the far end of stabilisation; sometimes follows distillation (extract a procedure, then crystallise it to code)
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
@@ -61,4 +62,5 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: reframes distillation as bounded information extraction; deterministic transformations create information for bounded observers
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

@@ -52,6 +52,7 @@ Convention establishes common values. Directory `types/` folders document struct
 ---
 
 Relevant Notes:
+
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that shapes what types can be
 - [document-classification](./document-classification.md) — the taxonomy: base types table and migration history
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
@@ -63,4 +64,5 @@ Relevant Notes:
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions
 
 Topics:
+
 - [type-system](./type-system.md)

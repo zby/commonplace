@@ -66,6 +66,7 @@ This means the library/workshop separation from [a functioning KB needs a worksh
 ---
 
 Relevant Notes:
+
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — extends: adds the two-boundary model to the single-constraint analysis; separates the orientation/comparative-reading tension by scale
 - [003-connect-skill-discovery-strategy](./adr/003-connect-skill-discovery-strategy.md) — grounds: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: quality scores are a response to the index boundary — filtering candidates when the full index exceeds productive scanning
@@ -75,4 +76,5 @@ Relevant Notes:
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — parallel: the loading hierarchy (always-loaded > on-demand > full-text) mirrors the resolution gradient described here
 
 Topics:
+
 - [kb-design](./kb-design.md)

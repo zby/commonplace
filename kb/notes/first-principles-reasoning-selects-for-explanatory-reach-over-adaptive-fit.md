@@ -45,6 +45,7 @@ The [design methodology](./design-methodology-borrow-widely-filter-by-first-prin
 ---
 
 Relevant Notes:
+
 - [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — grounds: first-principles filtering IS selecting for explanatory reach; this note explains why that filter works
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with reach
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: Deutsch and Popper are allied — explanatory knowledge is the kind criticism can test; falsifier blocks operationalize one of the three tests
@@ -53,7 +54,9 @@ Relevant Notes:
 - [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — extends: places reach as the quality criterion within a full theory connecting learning operations to knowledge properties
 
 Distilled into:
+
 - [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the three-part negative test (vary / reach / criticize)
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

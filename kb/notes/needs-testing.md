@@ -18,4 +18,5 @@ A three-phase pipeline: extract pulls insights from source material, connect fin
 External sources (papers, articles, blog posts) may need different treatment than domain research or design explorations. Classifying input type before processing could prevent applying the wrong extraction strategy.
 
 Topics:
+
 - [kb-design](./kb-design.md)

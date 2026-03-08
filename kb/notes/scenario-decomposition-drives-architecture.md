@@ -125,6 +125,7 @@ The key design: hops are stored in the scenario files (they're architectural, de
 ---
 
 Relevant Notes:
+
 - [scenarios](./scenarios.md) — foundation: defines the concrete use cases this note decomposes into step-by-step context needs
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — extends: the abstract read/write analysis with scenario-grounded decomposition that confirms the two-tree design and derives the escalation path
 - [context-loading-strategy](./context-loading-strategy.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
@@ -133,4 +134,5 @@ Relevant Notes:
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
 
 Topics:
+
 - [kb-design](./kb-design.md)

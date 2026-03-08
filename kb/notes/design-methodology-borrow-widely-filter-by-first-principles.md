@@ -41,6 +41,7 @@ The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progr
 ---
 
 Relevant Notes:
+
 - [context loading strategy](./context-loading-strategy.md) — example of first-principles design: loading economy derived directly from context window constraints
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — example of first-principles design, explicitly frames directory-scoping as workaround for absent import mechanism
 - [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
@@ -50,4 +51,5 @@ Relevant Notes:
 - [what works](./what-works.md) — empirical source
 
 Topics:
+
 - [kb-design](./kb-design.md)

@@ -41,4 +41,5 @@ This might also connect to why orphan notes feel wrong — a center with no conn
 - Alexander's patterns explicitly link at different scales (room → building → neighbourhood → city). Do our notes need explicit scale markers beyond the current type hierarchy?
 
 Topics:
+
 - [kb-design](./kb-design.md)

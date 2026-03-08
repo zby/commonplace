@@ -64,4 +64,5 @@ Working heuristics for a hybrid system:
 | **Are failures local or compositional?** | Bugs are in individual components; fixing them fixes the system | Components work in isolation but don't compose into the target capability |
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

@@ -60,4 +60,5 @@ This paper supports positioning llm-do as aligned with professional practice:
 ---
 
 Relevant Notes:
+
 - [three distinct mechanisms](../crystallisation.md) — the developer behaviors observed here (validate, extract patterns, stabilise) are empirical evidence of the crystallisation loop this note formalises as continuous learning

@@ -88,10 +88,12 @@ sift-kg and commonplace operate at different levels: sift-kg is a *processing pi
 ---
 
 Relevant Notes:
+
 - [Siftly](./siftly.md) — contrasts: similar ingestion ambition but uses SQLite and deterministic-first enrichment rather than LLM extraction
 - [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — foundation: deterministic cleanup around stochastic extraction follows the same hard-oracle direction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
 - [Related Systems Index](./related-systems-index.md) — master index of tracked systems
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

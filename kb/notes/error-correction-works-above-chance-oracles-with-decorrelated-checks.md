@@ -102,6 +102,7 @@ The progression from [oracle hardening](./oracle-strength-spectrum.md) to error 
 ---
 
 Relevant Notes:
+
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the spectrum of oracle strength this note extends with error correction as an amplification mechanism
 - [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
@@ -109,4 +110,5 @@ Relevant Notes:
 - [crystallisation](./crystallisation.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

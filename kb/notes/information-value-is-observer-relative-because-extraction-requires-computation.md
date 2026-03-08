@@ -32,6 +32,7 @@ This could be a practical tool. Compare two distillations of the same source by 
 ---
 
 Relevant Notes:
+
 - [distillation](./distillation.md) — instance: distillation is restructuring that makes structure accessible to bounded observers
 - [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: the recognition cost hierarchy reflects how much computation is needed to see structure that's already there
 
@@ -39,4 +40,5 @@ Relevant Notes:
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: names and formalises the gap between present information and extractable information
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

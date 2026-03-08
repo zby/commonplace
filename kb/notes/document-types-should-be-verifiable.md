@@ -100,6 +100,7 @@ The practical test: an agent that ignores the type field entirely and reads ever
 ---
 
 Relevant Notes:
+
 - [document-classification](./document-classification.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
 - [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — grounds the underspecification argument: type assignment is itself a stabilization decision, and the tolerance of misclassification mirrors the generator/verifier pattern
@@ -108,4 +109,5 @@ Relevant Notes:
 - [001-generate-topic-links-from-frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — precedent: when a mapping is verifiable and deterministic (areas -> Topics), it was automated; the same principle drives the type system design
 
 Topics:
+
 - [document-system](./document-system.md)

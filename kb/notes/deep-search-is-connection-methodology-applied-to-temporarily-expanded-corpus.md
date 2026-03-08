@@ -76,6 +76,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 ---
 
 Relevant Notes:
+
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — provides the abstraction depth framework that distinguishes this from naive search
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
@@ -91,4 +92,5 @@ Relevant Notes:
 - [scenarios](./scenarios.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes
 
 Topics:
+
 - [kb-design](./kb-design.md)

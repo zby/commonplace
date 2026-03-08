@@ -16,9 +16,11 @@ This argument doesn't depend on LLMs at all. It's purely about readability. Stru
 ---
 
 Relevant Notes:
+
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — complementary: a first independent argument for structured types (failure-mode transfer)
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — complementary: a second independent argument (distribution selection)
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 
 Topics:
+
 - [type-system](./type-system.md)

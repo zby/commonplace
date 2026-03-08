@@ -241,6 +241,7 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 ---
 
 Relevant Notes:
+
 - [stabilisation](../stabilisation.md) — the stabilising/softening signals catalogued here are the data-driven triggers for the stabilise/soften cycle
 
 ## References

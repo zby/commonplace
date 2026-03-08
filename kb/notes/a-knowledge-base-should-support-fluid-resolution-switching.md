@@ -43,6 +43,7 @@ The [discovery note](./discovery-is-seeing-the-particular-as-an-instance-of-the-
 ---
 
 Relevant Notes:
+
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles are the zoomed-out resolution layer; they carry the argument without requiring descent into the note body
 - [two kinds of navigation](./two-kinds-of-navigation.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
@@ -54,4 +55,5 @@ Source:
 - Adapted from a social media post on "The Art of Good Thinking: Moving Between Levels" — the core insight about resolution-switching applied to KB design
 
 Topics:
+
 - [kb-design](./kb-design.md)

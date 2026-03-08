@@ -63,6 +63,7 @@ These aren't mutually exclusive. The instruction path works today; templates and
 ---
 
 Relevant Notes:
+
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — foundation: injectable configuration is a specific frontloading channel for installation-variable values
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: the context savings depend on sub-agent frame isolation; without it, injected config just adds to the flat window
 - [agent statelessness means harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — parallel: auto-injection resolves KB references, injectable configuration resolves environment values; both spare execution context through harness-side resolution
@@ -71,4 +72,5 @@ Relevant Notes:
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — motivates: the recurring "review related systems" scenario revealed the need for installation-specific paths
 
 Topics:
+
 - [kb-design](./kb-design.md)

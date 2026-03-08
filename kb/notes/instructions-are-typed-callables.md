@@ -39,6 +39,7 @@ The operations afforded by a type can range from precise semantics (does this `s
 ---
 
 Relevant Notes:
+
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
 - [document-classification](./document-classification.md) — the spec defining the types that would appear in skill signatures
 - [stabilisation and distillation both trade generality for compound](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
@@ -46,4 +47,5 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; stabilisation commits to one interpretation
 
 Topics:
+
 - [kb-design](./kb-design.md)

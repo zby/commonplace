@@ -44,4 +44,5 @@ Sources:
 - Anthropic (2025). [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — describes Claude Code following this exact pattern: a CLAUDE.md file as a slim router with grep/glob for just-in-time retrieval of everything else.
 
 Topics:
+
 - [kb-design](./kb-design.md)

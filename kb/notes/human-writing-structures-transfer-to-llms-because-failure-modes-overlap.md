@@ -18,6 +18,7 @@ This is still speculative and would require empirical verification, but it's mor
 ---
 
 Relevant Notes:
+
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — complementary: a second independent argument for structured types with LLMs (distribution selection rather than failure-mode transfer)
@@ -25,4 +26,5 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 
 Topics:
+
 - [type-system](./type-system.md)

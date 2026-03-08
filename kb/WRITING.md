@@ -56,9 +56,11 @@ status: current
 ---
 
 Relevant Notes:
+
 - [related-note](./related-note.md) — how it relates
 
 Topics:
+
 - [relevant-area-index](./relevant-area-index.md)
 ```
 
@@ -98,9 +100,11 @@ status: seedling
 ---
 
 Relevant Notes:
+
 - [related-note](./related-note.md) — how it relates
 
 Topics:
+
 - [relevant-area-index](./relevant-area-index.md)
 ```
 
@@ -143,8 +147,10 @@ Internal workspace documents connect via standard markdown links. Each link is a
 ```markdown
 ---
 Relevant Notes:
+
 - [related note](./related-note.md) — extends this by adding the temporal dimension
 Topics:
+
 - [architecture-index](./architecture-index.md)
 ```
 
@@ -172,6 +178,7 @@ When you distill content from notes into a focused artifact (instruction, skill 
 
 ```markdown
 Distilled into:
+
 - [WRITING.md](../WRITING.md) — the area assignment checklist
 ```
 

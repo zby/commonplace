@@ -72,6 +72,7 @@ The comparison illuminates a design spectrum:
 ---
 
 Relevant Notes:
+
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — foundation: Thalo's 27 rules are hard oracles manufactured for knowledge quality; the comparison illuminates what "oracle hardening" looks like when pursued to full formalization
 - [instructions-are-typed-callables](../instructions-are-typed-callables.md) — foundation: Thalo's entity system is this principle taken to a full compiler; our YAML conventions occupy a different point on the same spectrum
 - [programming-practices-apply-to-prompting](../programming-practices-apply-to-prompting.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
@@ -84,4 +85,5 @@ Relevant Notes:
 - [files-not-database](../files-not-database.md) — convergence: Thalo's "plain text is paramount" independently validates the filesystem-over-databases pattern
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

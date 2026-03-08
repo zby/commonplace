@@ -52,6 +52,7 @@ If bounded-context systems could reliably detect contradictions without external
 ---
 
 Relevant Notes:
+
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: why execution already entails conjecture selection
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: why criticism must be externalized into explicit structure
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — constrains: bounded context makes ambient contradiction detection unreliable
@@ -62,4 +63,5 @@ Relevant Notes:
 - [links](./links.md) — example: existing relation semantics that already structure criticism
 
 Topics:
+
 - [kb-design](./kb-design.md)

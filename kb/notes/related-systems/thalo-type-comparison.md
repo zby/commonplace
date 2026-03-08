@@ -155,6 +155,7 @@ When we encounter:
 ---
 
 Relevant Notes:
+
 - [document-classification](../document-classification.md) — our type system being compared
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — the design principle both systems share
 - [claim-notes-should-use-toulmin-derived-sections](../claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
@@ -165,4 +166,5 @@ Relevant Notes:
 - [Toulmin argument](../../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model provides the canonical decomposition (claim/grounds/warrant/qualifier/rebuttal/backing) that Thalo's opinion entity approximates with Claim/Reasoning/Caveats sections
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

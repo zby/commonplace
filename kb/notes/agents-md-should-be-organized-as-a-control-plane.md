@@ -129,6 +129,7 @@ If most answers are "no", place it elsewhere.
 ---
 
 Relevant Notes:
+
 - [context-loading-strategy](./context-loading-strategy.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds why always-loaded routing is permanent infrastructure, not optional convenience
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — exemplifies exclusion: periodic operations should be external to routing docs
@@ -138,4 +139,5 @@ Relevant Notes:
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement
 
 Topics:
+
 - [kb-design](./kb-design.md)

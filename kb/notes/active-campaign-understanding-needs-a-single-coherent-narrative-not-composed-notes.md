@@ -57,9 +57,11 @@ Without this bridge, THEORY.MD's insights die with the campaign. The git history
 ---
 
 Relevant Notes:
+
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — theorist exemplifies the workshop layer this note predicts; THEORY.MD has all the workshop properties (lifecycle, consumed value, temporal sensitivity)
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — holistic rewrite is the opposite of append-only stabilization; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — theorist's always-on activation is automatic context injection; the theory doc is the harness injecting strategic context every session
 
 Topics:
+
 - [kb-design](./kb-design.md)

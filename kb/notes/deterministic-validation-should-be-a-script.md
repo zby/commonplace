@@ -28,4 +28,5 @@ The split follows the [oracle strength spectrum](./oracle-strength-spectrum.md):
 A validation script could run as a pre-commit hook or in CI, giving instant feedback. The `/validate` skill would then only need to run the judgment-based checks, making it cheaper and faster.
 
 Topics:
+
 - [document-system](./document-system.md)

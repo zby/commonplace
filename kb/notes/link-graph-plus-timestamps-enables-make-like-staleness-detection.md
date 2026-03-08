@@ -55,6 +55,7 @@ If most staleness comes from notes whose claims drift due to accumulated context
 ---
 
 Relevant Notes:
+
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — foundation: the high cost of stale navigation that motivates detection
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: adds dependency-aware detection alongside age-based heuristics
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — motivates: its proposal-pruning pattern is a concrete use case for this detection
@@ -62,4 +63,5 @@ Relevant Notes:
 - [links](./links.md) — foundation: the link graph that provides the dependency structure
 
 Topics:
+
 - [kb-design](./kb-design.md)

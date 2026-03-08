@@ -62,6 +62,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 ---
 
 Relevant Notes:
+
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
 - [stabilisation](./stabilisation.md) — the mechanism that unified calling makes frictionless
 - [crystallisation](./crystallisation.md) — the phase transition from neural to symbolic that unified calling makes a local operation
@@ -70,5 +71,6 @@ Relevant Notes:
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
 
 Topics:
+
 - [computational-model](./computational-model.md)
 - [learning-theory](./learning-theory.md)

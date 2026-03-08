@@ -18,10 +18,12 @@ The type system's role here is not routing (that's the [navigation claim](./type
 ---
 
 Relevant Notes:
+
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — depends on: the navigation argument that assumes descriptions exist; this note explains why they do
 - [note base type](../../types/note.md) — defines description as the only required field — the enforcement mechanism this note describes
 - [text root type](../../types/text.md) — the boundary: crossing from text to note triggers the description requirement
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview of all type system roles; this note develops the enforcement role
 
 Topics:
+
 - [type-system](./type-system.md)

@@ -60,6 +60,7 @@ The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) is i
 ---
 
 Relevant Notes:
+
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the retrieval-oriented learning loop analysis; this note argues it's one layer of a broader problem
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — addresses the retrieval layer's evaluation with a composite oracle from structural and LLM-hybrid signals; the action layer would need different signals entirely (preference consistency, procedure effectiveness, precedent alignment)
 - [three-space-agent-memory-maps-to-tulving-taxonomy](./three-space-agent-memory-maps-to-tulving-taxonomy.md) — the three memory spaces may map to different learning dynamics: semantic (knowledge), procedural (operations), episodic (self/preferences)
@@ -72,4 +73,5 @@ Relevant Notes:
 - [deep search is connection methodology applied to a temporarily expanded corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — exemplifies: deep search is active research capacity — the agent discovers what it doesn't know rather than retrieving what it does, making it a concrete case of action beyond retrieval
 
 Topics:
+
 - [kb-design](./kb-design.md)

@@ -115,4 +115,5 @@ Agents do constrained exploration. If links carry intent and cost:
 5. If something is required to proceed, summarize it — don't outsource to a link
 
 Topics:
+
 - [links](./links.md)

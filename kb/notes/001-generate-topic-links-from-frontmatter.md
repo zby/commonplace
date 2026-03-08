@@ -45,5 +45,6 @@ The `/connect` skill's Gate 6 now calls this script instead of doing manual grep
 - **Testable** — 38 unit tests cover parsing, generation, path resolution, and edge cases
 
 Topics:
+
 - [kb-design](./kb-design.md)
 - [links](./links.md)

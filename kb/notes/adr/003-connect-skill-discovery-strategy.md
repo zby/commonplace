@@ -60,9 +60,11 @@ The index-first approach works while index.md is small enough to scan in one rea
 ---
 
 Relevant Notes:
+
 - [context efficiency is the central design concern in agent systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: reading one index file vs multiple search queries is a context efficiency win
 - [notes need quality scores to scale curation](../notes-need-quality-scores-to-scale-curation.md) — extends: description quality is now load-bearing for discovery, not just nice-to-have
 - [a functioning KB needs a workshop layer not just a library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — supports: the library/workshop separation is what keeps the main index scannable
 
 Topics:
+
 - [kb-design](../kb-design.md)

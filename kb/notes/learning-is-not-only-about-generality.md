@@ -44,6 +44,7 @@ Generality and the compound don't exhaust what matters. A verified claim is more
 ---
 
 Relevant Notes:
+
 - [stabilisation and distillation both trade generality for compound](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
 - [stabilisation](./stabilisation.md) — one mechanism: constrains the interpretation space, trading generality for compound
 - [distillation](./distillation.md) — the other mechanism: targeted extraction from reasoning under context budget constraints
@@ -51,4 +52,5 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient that structures the compound dimension
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

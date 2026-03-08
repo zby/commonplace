@@ -68,6 +68,7 @@ Frontloading is a special case of the [symbolic scheduling model](./symbolic-sch
 ---
 
 Relevant Notes:
+
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [crystallisation](./crystallisation.md) (replaces underspecified template with deterministic literal)
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
@@ -75,4 +76,5 @@ Relevant Notes:
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — subsumes: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
 
 Topics:
+
 - [kb-design](./kb-design.md)

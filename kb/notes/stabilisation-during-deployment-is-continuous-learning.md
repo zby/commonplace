@@ -21,6 +21,7 @@ Weight-based learning captures distributional knowledge (style, tone, world know
 ---
 
 Relevant Notes:
+
 - [stabilisation](stabilisation.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [stabilisation and distillation both trade generality for compound](stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that stabilisation operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
@@ -28,4 +29,5 @@ Relevant Notes:
 - [professional-developers-ai-agents](related_works/professional-developers-ai-agents.md) — empirical evidence that developers naturally practice the stabilisation loop
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

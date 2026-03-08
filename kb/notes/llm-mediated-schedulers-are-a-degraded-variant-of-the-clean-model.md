@@ -27,9 +27,11 @@ Each recovery moves the system closer to the clean model — bookkeeping, recurs
 ---
 
 Relevant Notes:
+
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the clean model that LLM-mediated scheduling degrades from
 - [distillation](./distillation.md) — mechanism: compaction is distillation applied to the scheduler's own conversation state
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: the degradation is a context-efficiency problem within the scheduler itself
 
 Topics:
+
 - [computational-model](./computational-model.md)

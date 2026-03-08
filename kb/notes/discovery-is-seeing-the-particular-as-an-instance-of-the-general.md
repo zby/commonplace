@@ -75,6 +75,7 @@ The mathematical tradition offers a partial solution: **develop vocabulary for n
 ---
 
 Relevant Notes:
+
 - [arscontexta](./related-systems/arscontexta.md) — refines: the "controlled disorder" claim is right about judgment-based linking but the topic-vs-mechanism framing is a false dichotomy
 - [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: Alexander's three levels of connection may map to the feature/structure/generative-model hierarchy
@@ -82,4 +83,5 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction (epiplexity)
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

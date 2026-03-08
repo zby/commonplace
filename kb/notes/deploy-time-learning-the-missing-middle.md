@@ -97,4 +97,5 @@ Deploy-time learning is a **taxonomy** (three timescales of system adaptation) a
 For how stabilisation resolves semantic underspecification — committing to one interpretation of an underspecified spec in a language with precise semantics — and how the stabilise/soften cycle lets systems breathe, see [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

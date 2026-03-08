@@ -34,4 +34,5 @@ The question for the knowledge system: does it make step 4 faster and better tha
 Same documentation need as upstream analysis, but the direction is reversed — we're producing the argument instead of responding to one. The knowledge system should help assemble the case: what have we already decided, what constraints exist, what prior art is relevant.
 
 Topics:
+
 - [kb-design](./kb-design.md)

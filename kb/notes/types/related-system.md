@@ -32,7 +32,9 @@ last-checked: {YYYY-MM-DD}
 ---
 
 Relevant Notes:
+
 - [related-note](./related-note.md) — how it relates
 
 Topics:
+
 - [related-systems](../notes/related-systems/related-systems-index.md)

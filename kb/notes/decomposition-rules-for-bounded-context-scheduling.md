@@ -58,10 +58,12 @@ The first two are about optionality — paying context now to keep options open 
 ---
 
 Relevant Notes:
+
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the model these rules follow from
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: context is the scarce resource these rules optimise over
 - [distillation](./distillation.md) — mechanism: saved intermediate items are often distillations shaped for later reuse
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
 
 Topics:
+
 - [computational-model](./computational-model.md)

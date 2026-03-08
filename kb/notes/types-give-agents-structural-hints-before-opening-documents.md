@@ -20,10 +20,12 @@ But these structural hints only work if the metadata exists reliably. That's the
 ---
 
 Relevant Notes:
+
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that makes type-based routing trustworthy
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — enables: descriptions exist because the type system requires them; without enforcement, routing data degrades
 - [note base type](../../types/note.md) — defines description as the most important field — the retrieval filter this note's routing argument depends on
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview of all type system roles; this note develops the navigation role
 
 Topics:
+
 - [type-system](./type-system.md)

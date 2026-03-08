@@ -17,6 +17,7 @@ The dependency link belongs at the source, not the target. A distillation typica
 
 ```markdown
 Distilled into:
+
 - [WRITING.md](../WRITING.md) — the area assignment checklist
 ```
 
@@ -35,13 +36,16 @@ The distilled artifact stays focused. The source note carries the forward pointe
 ---
 
 Relevant Notes:
+
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: the distillation process that produces artifacts needing source tracking
 - [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: "Distilled into:" links provide the dependency edges that distilled artifacts deliberately omit
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — motivates: why distilled artifacts shouldn't carry links back to sources
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — motivates: distillation is a form of frontloading; source-side tracking preserves the pre-frontloaded dependency structure
 
 Distilled into:
+
 - [WRITING.md](../WRITING.md) — the distillation tracking rule
 
 Topics:
+
 - [links](./links.md)

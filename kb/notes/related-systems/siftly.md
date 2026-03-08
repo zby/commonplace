@@ -87,6 +87,7 @@ Siftly optimizes for operational throughput and resumability on a narrow artifac
 ---
 
 Relevant Notes:
+
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: Siftly's import jobs and stage counters are concrete workshop artifacts for ingestion state
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: Siftly is a concrete narrow-scope automation pipeline we can compare against our open questions
 - [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — foundation: deterministic preprocessing before LLM calls follows the same hard-oracle trajectory
@@ -96,4 +97,5 @@ Relevant Notes:
 - [sift-kg](./sift-kg.md) — contrasts: both ingest documents into knowledge structures, but sift-kg extracts entity-relation graphs via LLM while Siftly enriches and classifies fixed-schema bookmark records
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

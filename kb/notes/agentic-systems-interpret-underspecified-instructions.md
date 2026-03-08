@@ -144,6 +144,7 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 ---
 
 Relevant Notes:
+
 - [learning-theory](./learning-theory.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [stabilisation](./stabilisation.md) — defines the narrowing mechanism this note frames theoretically
 - [crystallisation](./crystallisation.md) — the stabilisation gradient from prompt tweaks to deterministic modules
@@ -155,5 +156,6 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
 
 Topics:
+
 - [computational-model](./computational-model.md)
 - [learning-theory](./learning-theory.md)

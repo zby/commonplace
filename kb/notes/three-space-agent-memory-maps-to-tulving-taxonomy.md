@@ -25,9 +25,11 @@ The mapping to Tulving is suggestive but may be decorative. The practical value 
 ---
 
 Relevant Notes:
+
 - [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — observational protocol for testing whether the separation actually helps
 - [deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md) — the three timescales framework; graduation from operational to knowledge space is a form of crystallisation
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — operationalizes metabolic rates: per-type recency decay in note scoring formalizes the intuition that knowledge and operational content age differently
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

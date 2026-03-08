@@ -55,6 +55,7 @@ This is hard to catch because it requires comparing the output against the sourc
 ---
 
 Relevant Notes:
+
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the stabilization gradient with a new application: output artifacts, not just code
 - [stabilisation](./stabilisation.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
 - [evans-ai-components-deterministic-system](./related_works/evans-ai-components-deterministic-system.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
@@ -62,4 +63,5 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate
 
 Topics:
+
 - [learning-theory](./learning-theory.md)

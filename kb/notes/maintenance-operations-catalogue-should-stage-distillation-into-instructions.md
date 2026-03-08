@@ -79,9 +79,11 @@ rg -l "$BASENAME" kb/notes --glob "*.md"
 ---
 
 Relevant Notes:
+
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — foundation: routing docs stay slim while periodic operations are externally triggered
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — target form: mature catalogue entries become reusable instructions
 - [deterministic-validation-should-be-a-script](./deterministic-validation-should-be-a-script.md) — escalation path: deterministic operations can move beyond instructions into scripts
 
 Topics:
+
 - [kb-design](./kb-design.md)

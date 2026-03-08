@@ -122,6 +122,7 @@ The other traits (`has-comparison`, `has-implementation`, `has-external-sources`
 ---
 
 Relevant Notes:
+
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles are Toulmin claims; `structured-claim` extends the convention with required argument sections while leaving the title convention available to all notes
 - [Thalo type comparison](../notes/related-systems/thalo-type-comparison.md) — converges: Thalo's opinion entity (Claim/Reasoning/Caveats) is the same Toulmin shape; this note resolves the gap they flagged
 - [programming-language types mark affordances](../notes/instructions-are-typed-callables.md) — foundation: the `claim` affordance table lists Toulmin operations without naming them
@@ -132,4 +133,5 @@ Relevant Notes:
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
 
 Topics:
+
 - [type-system](./type-system.md)

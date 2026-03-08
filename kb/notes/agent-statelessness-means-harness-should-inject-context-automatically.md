@@ -73,6 +73,7 @@ The hierarchy becomes:
 ---
 
 Relevant Notes:
+
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — foundation: types assert checkable structural properties; this note extends affordances from operations to retrieval
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — parallel: that note gives skills type signatures; this note gives documents retrieval profiles
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the agent can't remember definitions, so the harness must provide them
@@ -81,4 +82,5 @@ Relevant Notes:
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — context: definitional notes are an identified exception to claim titles; the `definition` type would formalize this
 
 Topics:
+
 - [kb-design](./kb-design.md)

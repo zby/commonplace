@@ -135,6 +135,7 @@ The deepest divergence is in grounding discipline. Arscontexta draws on **cognit
 ---
 
 Relevant Notes:
+
 - [title-as-claim-enables-traversal-as-reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — our implementation of the convention we borrowed from this lineage
 - [link-contracts-framework](../link-contracts-framework.md) — our formalization of link relationship semantics
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
@@ -144,4 +145,5 @@ Relevant Notes:
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)
 
 Topics:
+
 - [related-systems](./related-systems-index.md)

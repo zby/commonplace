@@ -24,4 +24,5 @@ The following areas showed friction, but we haven't tested them enough to draw c
 - **Connection requirements outpace connection-making** — orphan rate reached ~90%. The gap between connection rules and actual connections was noticeable, but the rules themselves may not be the problem.
 
 Topics:
+
 - [kb-design](./kb-design.md)

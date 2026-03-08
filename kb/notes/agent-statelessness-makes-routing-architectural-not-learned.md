@@ -49,6 +49,7 @@ Future architectures with persistent memory across sessions would weaken the sta
 ---
 
 Relevant Notes:
+
 - [context-loading-strategy](./context-loading-strategy.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: why progressive disclosure exists; routing is the mechanism that makes context efficiency achievable
 - [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: the stabilisation gradient describes how practices harden; this note adds that the agent never hardens with them
@@ -60,4 +61,5 @@ Relevant Notes:
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — enables: frontloading is the primary technique for making routing work within context constraints
 
 Topics:
+
 - [kb-design](./kb-design.md)

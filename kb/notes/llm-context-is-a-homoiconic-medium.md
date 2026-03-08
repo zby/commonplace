@@ -37,6 +37,7 @@ The same lack of boundary that enables extensibility creates hazards:
 ---
 
 Relevant Notes:
+
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the extensibility benefit of homoiconicity — instructions and content share a medium, so new requirements get absorbed without schema changes
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — exemplifies: the scoping cost of homoiconicity — no structural boundary means no guardrails against scope contamination
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified semantics of the shared medium is what makes both the extensibility and the hazards distinctive
@@ -46,4 +47,5 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: homoiconicity means instructions and data compete as equal tokens, removing any priority mechanism for protecting instructions from dilution
 
 Topics:
+
 - [computational-model](./computational-model.md)

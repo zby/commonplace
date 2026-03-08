@@ -24,4 +24,5 @@ A knowledge base is a collection of stored LLM outputs — each note is a stabil
 We haven't built any of this yet. Start when we hit a concrete quality problem that a check would have caught.
 
 Topics:
+
 - [document-system](./document-system.md)
