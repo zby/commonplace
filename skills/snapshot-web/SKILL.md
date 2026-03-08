@@ -20,6 +20,26 @@ If URL provided, start Step 1 immediately.
 
 ---
 
+## Step 0: Prerequisite Check
+
+Before proceeding, verify required tools exist. **Never attempt to install any software.**
+
+For GitHub/X URLs, check that `uv` is available:
+```bash
+command -v uv
+```
+If missing, STOP and tell the user: "uv is required for GitHub/X snapshots but is not installed. Install it from https://docs.astral.sh/uv/ and retry."
+
+For PDF URLs, check that `curl` is available:
+```bash
+command -v curl
+```
+If missing, STOP and tell the user: "curl is required for PDF downloads but is not installed."
+
+For web pages, no external tools are needed (uses WebFetch).
+
+Only check the tool needed for the detected URL type — don't check all tools upfront.
+
 ## Step 1: Check for Duplicates
 
 Use Grep to search for the URL in existing `.md` files in `kb/sources/`. If found, tell the user and stop:
@@ -133,6 +153,7 @@ Also tell the user where it was saved and show a 1-2 line preview.
 - Add analysis or commentary — this is capture, not ingestion
 - Modify the extracted content beyond cleaning HTML/PDF artifacts
 - Save to any directory other than `kb/sources/`
+- Install software — if a required tool is missing, bail with an error telling the user what to install
 
 **Always:**
 - Preserve the author's structure (headings, quotes, lists)

@@ -66,6 +66,13 @@ Discovery scans two collections under `kb/`:
 
 # ═══ PHASE 0: SYNC SEARCH INDEX ═══
 
+**Prerequisite check:** Before running qmd, verify it exists:
+```bash
+command -v qmd
+```
+If qmd is not found, log "qmd unavailable — skipping index sync, using grep-only fallback for semantic search" and skip directly to Phase 1. **Never attempt to install qmd or any other software.**
+
+If qmd is available:
 ```bash
 qmd --index commonplace update && qmd --index commonplace embed
 ```
@@ -108,7 +115,7 @@ If the source connects to a known area (check candidates from Step 1), read the 
 
 The index scan sees descriptions only. Semantic search reaches inside note bodies — finding connections buried in sections, examples, or open questions that descriptions don't capture.
 
-**Tier 1 — qmd (primary):**
+**Tier 1 — qmd (primary):** Only if qmd was available in Phase 0.
 ```bash
 qmd --index commonplace query "[note's core concepts]" --collection notes -n 15
 qmd --index commonplace query "[note's core concepts]" --collection sources -n 10
@@ -116,7 +123,7 @@ qmd --index commonplace query "[note's core concepts]" --collection sources -n 1
 
 Record the actual query string and top results with scores in the discovery trace.
 
-**Tier 2 — grep only:** If qmd fails (command not found or errors), log "qmd unavailable" and rely on index + keyword search only.
+**Tier 2 — grep only:** If qmd was unavailable or errors, log "qmd unavailable" and rely on index + keyword search only. **Never attempt to install qmd.**
 
 ## Step 4: Keyword Search
 
@@ -295,6 +302,7 @@ Before saving the report, verify:
 - Add "related" connections without specific reasoning
 - Force connections that are not there
 - Skip the articulation test
+- Install software — if a tool (e.g. qmd) is missing, fall back or bail with an error
 
 **Always:**
 - Save the report to the workshop

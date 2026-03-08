@@ -11,6 +11,10 @@ type: index
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
 - [Ingest: Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) *(scientific-paper)*
 - [Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.md) *(academic-paper)*
+- [Ingest: Agentic Code Reasoning](./agentic-code-reasoning.ingest.md) *(scientific-paper)*
+- [Agentic Code Reasoning](./agentic-code-reasoning.md) *(academic-paper)*
+- [Ingest: Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) *(scientific-paper)*
+- [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.md) *(academic-paper)*
 - [The fundamental split in agent memory is not storage format but who decides what to remember](./agentic-memory-systems-comparative-review.md)
 - [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
 - [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
@@ -20,6 +24,8 @@ type: index
 - [Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.md) *(academic-paper)*
 - [Ingest: ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.ingest.md) *(scientific-paper)*
 - [ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.md) *(academic-paper)*
+- [Ingest: "Creative Thinking"](./creative-thinking-by-claude-shannon.ingest.md) *(conceptual-essay)*
+- ["Creative Thinking"](./creative-thinking-by-claude-shannon.md) *(blog-post)*
 - [Ingest: From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) *(scientific-paper)*
 - [From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) *(academic-paper)*
 - [Ingest: Graphiti: Temporal Knowledge Graph for AI Agents](./graphiti-temporal-knowledge-graph.ingest.md) *(design-proposal)*
@@ -30,6 +36,8 @@ type: index
 - [On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.md) *(academic-paper)*
 - [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
 - [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
+- [Ingest: Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) *(scientific-paper)*
+- [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.md) *(academic-paper)*
 - [Ingest: Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) *(practitioner-report)*
 - [Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.md) *(x-article)*
 - [Ingest: Letta (MemGPT): Stateful Agents with Self-Managed Memory](./letta-memgpt-stateful-agents.ingest.md) *(design-proposal)*
@@ -48,6 +56,8 @@ type: index
 - [Thread by @melodyskim](./this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.md) *(x-thread)*
 - [Ingest: Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.ingest.md) *(scientific-paper)*
 - [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) *(academic-paper)*
+- [Ingest: Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.ingest.md) *(scientific-paper)*
+- [Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.md) *(academic-paper)*
 - [{source title or key claim}](./types/source-review.md) *(source-review)*
 - [Ingest: The Bitter Lesson](./wikipedia-bitter-lesson.ingest.md) *(conceptual-essay)*
 - [The Bitter Lesson](./wikipedia-bitter-lesson.md) *(encyclopedia-article)*

@@ -80,6 +80,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 ## Reference material
 
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md evolution in 466 OSS projects; commit-level analysis shows stabilisation maturation trajectory confirming continuous learning through versioned artifacts
+- [On the "Induction Bias" in Sequence Models](../sources/induction-bias-sequence-models-ebrahimi-2026.md) — 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity
 
 ## Related Areas
 

@@ -17,6 +17,14 @@ Parse immediately:
 - If target contains "[note] to [type]": convert to the specified type
 - If target is empty: ask which note to convert
 
+## Prerequisite Check
+
+This skill uses `git mv` for renames. Before any rename step, verify git is available:
+```bash
+command -v git
+```
+If missing, STOP and tell the user: "git is required for tracked renames but is not installed." **Never attempt to install any software.**
+
 ## Supported conversions
 
 ### text → note (current)
@@ -155,6 +163,7 @@ These are documented as directions, not working features. If a user requests one
 - Convert a text file that already has frontmatter (it's not a text file)
 - Write a description that merely restates the title
 - Move a file to a different directory — rename only changes the filename within its current directory
+- Install software — if a required tool is missing, bail with an error
 
 **Always:**
 - Set `status: seedling` for text → note conversions
