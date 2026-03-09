@@ -1,3 +1,11 @@
+---
+description: "Operationalizes crystallisation by extracting deterministic verifiers from observed stochastic behavior — the mechanism that converts blurry-zone components into calculators"
+type: note
+traits: []
+areas: [learning-theory]
+status: current
+---
+
 # Spec mining is crystallisation's operational mechanism
 
 [Crystallisation](./deploy-time-learning-the-missing-middle.md) says knowledge hardens into repo artifacts — tests, specs, conventions. But where do those artifacts come from? One answer: you mine them from observed behavior.
@@ -9,13 +17,15 @@
 3. Extract those regularities into deterministic artifacts: functions, schema rules, unit tests, checkers.
 4. Re-run with these constraints in place. The system becomes more reliable without weight updates.
 
-This is crystallisation as compilation: the system distills stochastic regularities into deterministic code.
+This is crystallisation as compilation: the system distills stochastic regularities into deterministic code. The output is an [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — reviewable, testable, revertable artifacts rather than opaque weight updates. Inspectability is what makes mined specs falsifiable: you can test them under distribution shift and soften them back if they break.
+
+The same pattern appears at the methodology level: the [maturation trajectory from instruction to script](./methodology-enforcement-is-stabilisation.md) is spec mining applied to methodology rather than system behavior. The crystallisation trigger ("a pattern has emerged from repeated execution") is the same observation step.
 
 ## Why this matters for the bitter lesson boundary
 
 The [bitter lesson boundary](./bitter-lesson-boundary.md) says calculators survive scaling because the spec *is* the problem. Spec mining manufactures new calculators by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into the calculator regime.
 
-This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?"
+This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?" Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [harness engineering as cybernetics](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md) thread calls "externalizing system-specific judgment."
 
 ## Concrete workflow
 
@@ -29,9 +39,19 @@ For an agentic system:
 ## Risks
 
 - Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a "vision feature" — a plausible theory that scale will eventually outperform.
-- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for softening, not permanent crystallisation.
+- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [softening](./softening-signals.md), not permanent crystallisation. The softening-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was a vision feature, not a calculator.
 
 ## Open questions
 
 - What's the right threshold for crystallising a mined pattern? Too early and you lock in a vision feature; too late and you miss easy reliability wins.
-- Can spec mining be automated? LLMs could propose candidate rules from failure clusters, then validation suites confirm or reject them.
+- Can spec mining be automated? LLMs could propose candidate rules from failure clusters, then validation suites confirm or reject them. The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) note explores a related version: the "boiling cauldron" mutations (extract, relink, synthesise) are spec mining applied to knowledge structure rather than system behavior.
+
+---
+
+Relevant Notes:
+
+- [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallels: case law stabilisation (courts converging on one reading of a statute) is spec mining in a legal medium
+
+Topics:
+
+- [learning-theory](./learning-theory.md)

@@ -59,6 +59,7 @@ Relevant Notes:
 - [oracle strength spectrum](../notes/oracle-strength-spectrum.md) — determines when a practice is ready to move down the enforcement gradient: cheap verification enables scripting; expensive verification keeps the practice at skill level
 - [context loading strategy](./context-loading-strategy.md) — mirrors: the loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies) parallels the enforcement hierarchy, but for information specificity rather than practice reliability
 - [error messages that teach are a stabilisation technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the most effective enforcement artifacts simultaneously constrain and teach
+- [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — generalizes: the maturation trajectory (instruction → script) is spec mining applied to methodology; both share the same crystallisation trigger ("a pattern has emerged from repeated execution")
 
 Topics:
 

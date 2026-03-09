@@ -108,6 +108,7 @@ Relevant Notes:
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
 - [crystallisation](./crystallisation.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
+- [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition
 
 Topics:
 

@@ -25,7 +25,7 @@ When signals fire:
 - Monitor for **composition failure** — the strongest signal that the underlying theory is wrong.
 
 When signals don't fire:
-- The component is likely in the calculator regime. Crystallise harder — more tests, stricter contracts, deterministic implementation where possible.
+- The component is likely in the calculator regime. Crystallise harder — [spec mining](./spec-mining-as-crystallisation.md) provides the operational mechanism for extracting deterministic verifiers from observed behavior. More tests, stricter contracts, deterministic implementation where possible.
 
 ## Open questions
 
