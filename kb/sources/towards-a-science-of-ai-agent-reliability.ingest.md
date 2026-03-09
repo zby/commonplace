@@ -30,7 +30,7 @@ Eight connections identified:
 
 2. **[oracle-strength-spectrum](../notes/oracle-strength-spectrum.md)** -- grounds: "reliability is independent of capability" is direct empirical support for oracle strength as the bottleneck, not compute or model scale.
 
-3. **[softening-signals](../notes/softening-signals.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the softening signal pattern confirmed across 14 models.
+3. **[softening-signals](../notes/operational-signals-that-a-component-is-a-softening-candidate.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the softening signal pattern confirmed across 14 models.
 
 4. **[error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md)** -- extends: the discrimination finding (calibration improves but discrimination does not) constrains error correction -- models are getting better at aggregate confidence but not at distinguishing individual correct from incorrect outputs, limiting amplification via voting.
 

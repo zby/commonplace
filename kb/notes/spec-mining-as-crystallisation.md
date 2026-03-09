@@ -39,7 +39,7 @@ For an agentic system:
 ## Risks
 
 - Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a "vision feature" — a plausible theory that scale will eventually outperform.
-- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [softening](./softening-signals.md), not permanent crystallisation. The softening-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was a vision feature, not a calculator.
+- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [softening](./operational-signals-that-a-component-is-a-softening-candidate.md), not permanent crystallisation. The softening-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was a vision feature, not a calculator.
 
 ## Open questions
 

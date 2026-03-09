@@ -31,7 +31,7 @@ The vision researchers made this bet at maximum disadvantage. They formalized su
 
 [Spec mining](./spec-mining-as-crystallisation.md) improves the odds by starting from a working system. You watch a system that already achieves the target behavior (however unreliably), identify regularities, and extract those into formal checks. The bet shifts from "will these pieces compose?" (which the vision researchers lost) to "is this specific pattern load-bearing?" — a narrower bet with better odds, because you've already observed the behavior composing successfully.
 
-But it's still a bet. A mined spec might capture an accidental regularity — a pattern that holds on the observed data but isn't what makes the system work. [Softening signals](./softening-signals.md) are how you detect a losing bet: distribution shift, paraphrase brittleness, and isolation-vs-integration gaps reveal when a crystallised component encodes an accident rather than a spec.
+But it's still a bet. A mined spec might capture an accidental regularity — a pattern that holds on the observed data but isn't what makes the system work. [Softening signals](./operational-signals-that-a-component-is-a-softening-candidate.md) are how you detect a losing bet: distribution shift, paraphrase brittleness, and isolation-vs-integration gaps reveal when a crystallised component encodes an accident rather than a spec.
 
 ## Working heuristics
 
@@ -49,7 +49,7 @@ Relevant Notes:
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — crystallisation's verifiability gradient
 - [stabilisation and distillation both trade generality for reliability, speed, and cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off crystallisation enacts
 - [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — the bottom-up extraction method that avoids the vision-feature failure mode
-- [softening signals](./softening-signals.md) — detects when crystallised components are encoding vision features
+- [softening signals](./operational-signals-that-a-component-is-a-softening-candidate.md) — detects when crystallised components are encoding vision features
 
 Topics:
 

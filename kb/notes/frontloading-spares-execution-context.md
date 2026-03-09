@@ -10,13 +10,9 @@ status: seedling
 
 When instructing LLMs, any part of the instructions whose inputs are known before the LLM runs should be computed beforehand and the result inserted directly. This spares execution context — the primary bottleneck in LLM-based systems.
 
-## Why execution context is the bottleneck
+## The context saving
 
-Executing a procedure inside a bounded call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
-
-This asymmetry is general: whenever a sub-procedure's inputs are known before the LLM runs, the procedure is pure overhead inside bounded context. For the broader cost model, see [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md).
-
-[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [crystallisation](./crystallisation.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
+[Context is the central scarce resource in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Frontloading addresses the complexity dimension of that scarcity: executing a procedure inside a bounded call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
 
 ## What qualifies for frontloading
 
@@ -30,9 +26,13 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 Anything that depends on the user's current request, the conversation state, or the evolving task is dynamic and not frontloadable. The boundary isn't always sharp — some sub-procedures depend partially on known and partially on runtime information. In those cases, frontload the known parts and leave the runtime-dependent parts as instructions.
 
+## Frontloading vs crystallisation
+
+[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [crystallisation](./crystallisation.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
+
 ## The mechanism: partial evaluation or divide-and-conquer?
 
-Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading is more specifically partial evaluation — and the distinction matters because it's what makes the context saving work.
+Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading is more specifically partial evaluation — and the distinction matters because it explains why the insertion is lossless.
 
 The key: LLM context is a [homoiconic medium](./llm-context-is-a-homoiconic-medium.md). Instructions and data are both natural language tokens. When you pre-compute a file listing and insert it into an instruction, the result is still a valid instruction — you've specialised a program with respect to known inputs, producing a residual program in the same medium. That's partial evaluation, not just preprocessing. In a non-homoiconic system, the pre-computed result would need a format conversion to re-enter the instruction stream; here it flows in directly because everything is text.
 
@@ -65,7 +65,7 @@ Those differences matter for theory, but not for the practical benefit. Frontloa
 
 ## Relationship to the scheduling model
 
-Frontloading is a special case of the [symbolic scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md). In that model, the scheduler performs whatever work can be done before the current bounded call — often symbolically and exactly, but frontloading also covers precomputed results that remain underspecified. Frontloading is the single-step version: pre-compute what can be known, insert the result, and let the LLM focus on what requires judgment. The scheduling model generalises this to multi-step orchestration where the scheduler iteratively builds state and issues bounded calls.
+The [symbolic scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) models frontloading as the single-step case of its separation between symbolic computation and bounded LLM calls: pre-compute what can be known, reserve the bounded call for what requires judgment.
 
 ---
 

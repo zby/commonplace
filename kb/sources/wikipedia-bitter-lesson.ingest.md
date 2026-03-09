@@ -34,7 +34,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 5. **[Spec mining is crystallisation's operational mechanism](../notes/spec-mining-as-crystallisation.md)** -- enables. Spec mining manufactures new calculators, converting soft-oracle components into hard-oracle ones -- expanding the part of a system where the bitter lesson does NOT apply.
 
-6. **[Operational signals that a component is a softening candidate](../notes/softening-signals.md)** -- enables. Provides testable operational signals for detecting when a crystallised component is a "vision feature" (bitter-lesson-vulnerable) rather than a "calculator" (durable). Makes the prediction actionable.
+6. **[Operational signals that a component is a softening candidate](../notes/operational-signals-that-a-component-is-a-softening-candidate.md)** -- enables. Provides testable operational signals for detecting when a crystallised component is a "vision feature" (bitter-lesson-vulnerable) rather than a "calculator" (durable). Makes the prediction actionable.
 
 7. **[Eric Evans: AI Components for a Deterministic System](../notes/related_works/evans-ai-components-deterministic-system.md)** -- contradicts. Evans' approach of freezing domain-specific taxonomies is a deliberate bet against the bitter lesson. The source predicts this will eventually be outperformed.
 
@@ -44,7 +44,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 ## Extractable Value
 
-Since the original ingestion (2026-02-23), the KB has developed substantial infrastructure around the bitter lesson: bitter-lesson-boundary.md, oracle-strength-spectrum.md, softening-signals.md, and spec-mining-as-crystallisation.md. The extractable value below focuses on what remains NEW relative to this expanded coverage.
+Since the original ingestion (2026-02-23), the KB has developed substantial infrastructure around the bitter lesson: bitter-lesson-boundary.md, oracle-strength-spectrum.md, operational-signals-that-a-component-is-a-softening-candidate.md, and spec-mining-as-crystallisation.md. The extractable value below focuses on what remains NEW relative to this expanded coverage.
 
 1. **The "implicit assumptions" caveat as a named concept.** Sinz et al.'s observation that "without the right (implicit) assumptions, generalisation is impossible" remains uncaptured. Even general methods embed assumptions -- they embed fewer, more general ones. The question is not "no assumptions" but "which assumptions will age well?" This nuances the bitter lesson in a way the current notes don't: the lesson is about assumption quality (generality, reach), not assumption absence. [quick-win]
 

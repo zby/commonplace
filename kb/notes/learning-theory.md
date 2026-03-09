@@ -78,7 +78,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — typing, testing, progressive compilation, and version control transfer from programming to LLM prompting, with probabilistic execution making some practices harder
 - [ad-hoc-prompts-extend-the-system-without-schema-changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — the counterpoint: sometimes staying at the prompt level is the right choice; ad hoc instructions absorb new requirements faster than schema changes
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — law as an independent source discipline for the underspecified instructions problem: precedent and codification are stabilisation; legal techniques are native to the underspecified medium
-- [RLM ephemeral code prevents accumulation](./meta/rlm-ephemeral-code-prevents-accumulation.md) — ephemeral vs persistent code as a crystallisation design choice; RLM discards code after each run while llm-do saves and versions it
+- [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — ephemeral vs persistent artifacts as inverse of crystallisation; discarding generated artifacts trades accumulation for simplicity
 
 ## Reference material
 
