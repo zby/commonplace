@@ -8,7 +8,7 @@ status: seedling
 
 # LLM-mediated schedulers are a degraded variant of the clean model
 
-The [symbolic scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) assumes the scheduler is a program with unbounded exact state. In practice, many current systems (Claude Code, Codex, chat-based agent loops) carry orchestration state partly in an LLM conversation. The LLM serves as both scheduler and executor — it decides what to do next based on its accumulated conversation history.
+The [symbolic scheduling model](./bounded-context-orchestration-model.md) assumes the scheduler is a program with unbounded exact state. In practice, many current systems (Claude Code, Codex, chat-based agent loops) carry orchestration state partly in an LLM conversation. The LLM serves as both scheduler and executor — it decides what to do next based on its accumulated conversation history.
 
 This makes the scheduler effectively bounded: it suffers the same attention dilution and compositional overhead as the sub-agent calls it is trying to orchestrate. The clean separation between unbounded scheduler and bounded LLM calls collapses.
 
@@ -28,7 +28,7 @@ Each recovery moves the system closer to the clean model — bookkeeping, recurs
 
 Relevant Notes:
 
-- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the clean model that LLM-mediated scheduling degrades from
+- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./bounded-context-orchestration-model.md) — foundation: the clean model that LLM-mediated scheduling degrades from
 - [distillation](./distillation.md) — mechanism: compaction is distillation applied to the scheduler's own conversation state
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: the degradation is a context-efficiency problem within the scheduler itself
 

@@ -8,7 +8,7 @@ status: seedling
 
 # RLM achieves the clean scheduler model but opts out of accumulation
 
-Recursive Language Models (RLMs) have the LLM write and execute code in a REPL, with a `recursive_llm(query, context)` primitive that spawns fresh LLM calls. The pattern maps directly onto the [symbolic scheduler model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md):
+Recursive Language Models (RLMs) have the LLM write and execute code in a REPL, with a `recursive_llm(query, context)` primitive that spawns fresh LLM calls. The pattern maps directly onto the [symbolic scheduler model](./bounded-context-orchestration-model.md):
 
 | Model component | RLM implementation |
 |---|---|
@@ -47,8 +47,7 @@ The third point is what [crystallisation](./deploy-time-learning-the-missing-mid
 
 Relevant Notes:
 
-- [Symbolic scheduling over bounded LLM calls](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — foundation: the model RLM instantiates
-- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/execute/absorb loop that RLM's code expresses
+- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call/absorb loop that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs
 

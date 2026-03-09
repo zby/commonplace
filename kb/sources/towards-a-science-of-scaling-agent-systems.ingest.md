@@ -31,7 +31,7 @@ The `/connect` discovery identified five strong and three moderate connections t
 
 - **context-efficiency-is-the-central-design-concern-in-agent-systems.md** — The paper's "coordination tax" (overhead 58%-515%, success-per-1K-tokens dropping from 67.7 to 13.6) is direct empirical evidence that context is the scarce resource. Multi-agent communication compresses global context into lossy inter-agent messages, which is the information fragmentation the context-efficiency note describes theoretically.
 
-- **symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md** — The centralized architecture (orchestrator + sub-agents) maps to the symbolic scheduler model. The paper shows it works for decomposable tasks (+80.8% on Finance Agent) but fails for sequential tasks (-50.3% on PlanCraft), adding a decomposability precondition the scheduling model should account for.
+- **bounded-context-orchestration-model.md** — The centralized architecture (orchestrator + sub-agents) maps to the symbolic scheduler model. The paper shows it works for decomposable tasks (+80.8% on Finance Agent) but fails for sequential tasks (-50.3% on PlanCraft), adding a decomposability precondition the scheduling model should account for.
 
 - **decomposition-rules-for-bounded-context-scheduling.md** — The paper's finding that architecture selection depends on "measurable task features (e.g., decomposability)" confirms the decomposition rules framework. The three task archetypes (planning, analysis, tool-heavy) are empirically derived decomposition categories.
 

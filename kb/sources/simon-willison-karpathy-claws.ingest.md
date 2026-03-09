@@ -31,7 +31,7 @@ The `/connect` discovery found six substantive connections, informed by the fact
 
 2. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)** -- **extends**: Claws embody deploy-time learning's "across sessions" timescale applied to agent infrastructure itself. Karpathy's emphasis on persistence and accumulated context is the Claw variant of artifact-mediated adaptation. Karpathy is also quoted in this note for the verifiability concept.
 
-3. **[symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](../notes/symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md)** -- **exemplifies**: Karpathy lists "orchestration, scheduling, context, tool calls" as defining Claw properties. Claws are a product-category instantiation of the symbolic scheduling model with persistence as an additional dimension.
+3. **[bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md)** -- **exemplifies**: Karpathy lists "orchestration, scheduling, context, tool calls" as defining Claw properties. Claws are a product-category instantiation of the symbolic scheduling model with persistence as an additional dimension.
 
 4. **[ClawVault](../notes/related-systems/clawvault.md)** -- **enables**: This source provides the category definition that ClawVault is an instance of. ClawVault's scored observations, session handoffs, and reflection pipelines are a concrete Claw implementation.
 

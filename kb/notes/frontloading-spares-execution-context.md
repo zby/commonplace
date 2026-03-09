@@ -65,7 +65,7 @@ Those differences matter for theory, but not for the practical benefit. Frontloa
 
 ## Relationship to the scheduling model
 
-The [symbolic scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) models frontloading as the single-step case of its separation between symbolic computation and bounded LLM calls: pre-compute what can be known, reserve the bounded call for what requires judgment.
+The [symbolic scheduling model](./bounded-context-orchestration-model.md) models frontloading as the single-step case of its separation between symbolic computation and bounded LLM calls: pre-compute what can be known, reserve the bounded call for what requires judgment.
 
 ---
 
@@ -77,7 +77,7 @@ Relevant Notes:
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity is what makes frontloading partial evaluation rather than just divide-and-conquer — the pre-computed result re-enters the instruction stream without format conversion
-- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
+- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
 
 Topics:
 

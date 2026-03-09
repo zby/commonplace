@@ -53,7 +53,7 @@ Context scarcity produces most architectural patterns in agent system design. Ea
 - **Navigation design** (volume) — [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md); prose-as-title and retrieval-oriented descriptions let the agent decide "don't follow this" without loading the target
 - **Instruction notes over data dumps** (complexity) — frontload the caller's judgment about which documents matter and what question to answer, rather than passing raw material
 
-If context is the only fundamental scarce resource, then the natural computational model is [symbolic scheduling over bounded LLM calls](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md): exact bookkeeping lives in code, while bounded context is reserved for semantic judgment.
+If context is the only fundamental scarce resource, then the natural computational model is [symbolic scheduling over bounded LLM calls](./bounded-context-orchestration-model.md): exact bookkeeping lives in code, while bounded context is reserved for semantic judgment.
 
 Context efficiency should be evaluated at design time, not treated as an optimisation to apply later. Architectural choices — what loads when, what gets frontloaded, where sub-agent boundaries go — determine context efficiency structurally and are hard to retrofit.
 

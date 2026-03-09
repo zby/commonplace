@@ -17,10 +17,9 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 ## Scheduling & Orchestration
 
-- [symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — the clean model: an unbounded symbolic scheduler manages exact state and issues bounded LLM calls for semantic judgment
+- [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call/absorb loop; analyses what makes selection hard and why the model supports local comparative results
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — preliminary practical rules for scheduling bounded LLM calls: separate selection from joint reasoning, choose representations not subsets, save reusable intermediates in scheduler state
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies restore the clean separation to increasing degrees
-- [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises agent orchestration as the select/execute/absorb loop over bounded context, with the selection function as the central optimisation problem
 - [rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) — RLM instantiates the symbolic-scheduler model by having the LLM write the scheduler as code; achieves clean separation but discards the scheduler after each run
 - [solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — sequencing heuristic: commit least-flexible decisions first so high-flexibility choices cannot block scarce valid placements
 

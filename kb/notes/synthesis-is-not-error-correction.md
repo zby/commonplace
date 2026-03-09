@@ -40,7 +40,7 @@ None of these are present in Kim et al.'s design: no decomposition (whole tasks 
 
 ## Why this matters for the computational model
 
-The [scheduling model](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) decomposes agent work into bounded LLM calls managed by a symbolic scheduler. The question of what to do with multiple agent outputs is a scheduler design decision, and synthesis vs voting are different scheduler operations with different properties:
+The [scheduling model](./bounded-context-orchestration-model.md) decomposes agent work into bounded LLM calls managed by a symbolic scheduler. The question of what to do with multiple agent outputs is a scheduler design decision, and synthesis vs voting are different scheduler operations with different properties:
 
 - **Synthesis** is appropriate when agents produce complementary partial information (e.g., different sections of a document, different aspects of an analysis). The scheduler's job is assembly.
 - **Voting** is appropriate when agents produce competing complete answers to the same question. The scheduler's job is selection via [error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
@@ -60,7 +60,7 @@ The [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.m
 Relevant Notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — foundation: the theoretical framework for when voting-based error correction works (TPR > FPR, decorrelated checks); this note adds that synthesis doesn't qualify
-- [symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
+- [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
 - [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
