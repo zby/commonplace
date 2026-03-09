@@ -41,7 +41,7 @@ The `/connect` discovery identified 7 genuine connections to existing notes, plu
 - [related-systems-index](../notes/related-systems/related-systems-index.md) -- **extends**: Spacebot adds a new position (Rust-level process separation, concurrent multi-user design) that no existing entry covers.
 
 **Already connected:**
-- [voooooogel-multi-agent-future](../notes/research/voooooogel-multi-agent-future.md) -- already discusses Spacebot as a concrete implementation of the forking pattern.
+- [voooooogel-multi-agent-future](./voooooogel-multi-agent-future.ingest.md) -- already discusses Spacebot as a concrete implementation of the forking pattern.
 
 Two synthesis opportunities were flagged: (1) a note arguing production frameworks are converging on the clean scheduling model, combining Spacebot, Ars Contexta, and the theoretical analysis; (2) a note arguing typed memory categories are a middle ground between flat stores and three-space separation. A tension was also flagged: whether Spacebot's five fixed process types are structural (correct) or contingent (will dissolve with stronger models).
 

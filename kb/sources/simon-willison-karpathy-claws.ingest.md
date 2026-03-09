@@ -37,7 +37,7 @@ The `/connect` discovery found six substantive connections, informed by the fact
 
 5. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** -- **exemplifies**: NanoClaw's ~4000-line core that "fits into both my head and that of AI agents" is a concrete endorsement of the inspectable substrate thesis from an independent practitioner.
 
-6. **[What Survives in Multi-Agent Systems](../notes/research/voooooogel-multi-agent-future.md)** -- **exemplifies**: Claws are the productized realization of voooooogel's prediction about what survives in multi-agent systems: filesystem collaboration, agent spawning, persistent cross-session state. What was theoretical now has a category name and commercial implementations.
+6. **[What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md)** -- **exemplifies**: Claws are the productized realization of voooooogel's prediction about what survives in multi-agent systems: filesystem collaboration, agent spawning, persistent cross-session state. What was theoretical now has a category name and commercial implementations.
 
 The strongest connection is to [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) -- the source has already done its primary work by grounding the "Claw" concept that the note theorizes about. The term's adoption into the KB vocabulary is effectively complete.
 

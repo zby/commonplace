@@ -33,7 +33,7 @@ The workflow becomes: observe failure → classify by reliability dimension → 
 
 Predictability is the hardest dimension to harden because discrimination (not just calibration) requires the model to know *what it doesn't know* at the individual-task level. The paper finds calibration improving but discrimination stagnant — models get better at aggregate confidence but not at per-instance confidence. This suggests predictability will be the last oracle to harden, and the augmentation strategy (human-in-the-loop for uncertain cases) remains the pragmatic answer.
 
-This connects to the [approval system's value](./approvals-guard-against-llm-mistakes-not-active-attacks.md): a 90%-accurate agent with poor discrimination is fine as an augmentation (human catches the 10%) but dangerous as an automation (nobody catches it). The approval gate converts a weak predictability oracle into an interactive one.
+This is the augmentation/automation boundary: a 90%-accurate agent with poor discrimination is fine as an augmentation (human catches the 10%) but dangerous as an automation (nobody catches it). An approval gate converts a weak predictability oracle into an interactive one — the human provides the discrimination the model lacks.
 
 ---
 
@@ -41,7 +41,6 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the gradient from hard to no oracle that this note maps reliability dimensions onto
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism for hardening consistency and robustness oracles
-- [approvals-guard-against-llm-mistakes-not-active-attacks](./approvals-guard-against-llm-mistakes-not-active-attacks.md) — augmentation as a workaround for weak predictability oracles
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — reliability hardening as deploy-time learning, not training-time learning
 - [softening-signals](./softening-signals.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a softening signal measured at scale
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles

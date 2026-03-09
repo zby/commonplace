@@ -38,7 +38,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 7. **[Eric Evans: AI Components for a Deterministic System](../notes/related_works/evans-ai-components-deterministic-system.md)** -- contradicts. Evans' approach of freezing domain-specific taxonomies is a deliberate bet against the bitter lesson. The source predicts this will eventually be outperformed.
 
-8. **[What Survives in Multi-Agent Systems](../notes/research/voooooogel-multi-agent-future.md)** -- exemplifies. Directly applies bitter lesson reasoning to multi-agent orchestration: hand-crafted hierarchies dissolve; filesystem, forking, spawning survive because they are general-purpose.
+8. **[What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md)** -- exemplifies. Directly applies bitter lesson reasoning to multi-agent orchestration: hand-crafted hierarchies dissolve; filesystem, forking, spawning survive because they are general-purpose.
 
 9. **[First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** -- grounds. Deutsch's "reach" concept provides a theoretical explanation for WHY general methods win: they capture deeper structure that transfers, while domain-specific knowledge is adaptive (fitted to context, not explanatory).
 

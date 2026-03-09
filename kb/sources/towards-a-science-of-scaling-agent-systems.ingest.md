@@ -41,7 +41,7 @@ The `/connect` discovery identified five strong and three moderate connections t
 
 **Moderate connections:**
 
-- **research/voooooogel-multi-agent-future.md** — Partially contradicts the "multi-agent is the future" thesis. Overall mean MAS improvement is -3.5%; multi-agent wins only for specific task types.
+- **[voooooogel-multi-agent-future](./voooooogel-multi-agent-future.ingest.md)** — Partially contradicts the "multi-agent is the future" thesis. Overall mean MAS improvement is -3.5%; multi-agent wins only for specific task types.
 
 - **bitter-lesson-boundary.md** — The ~45% capability saturation threshold is a concrete instance: as single-agent capability crosses this line, multi-agent coordination stops helping.
 
