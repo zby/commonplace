@@ -76,6 +76,14 @@ sift-kg and commonplace operate at different levels: sift-kg is a *processing pi
 - **Schema discovery as a default route.** Useful only if we have workflows where manual type assignment is the main bottleneck.
 - **Graph-first intermediate representation.** Powerful for discovery tasks, but only worth introducing if note-link traversal stops being expressive enough.
 
+## Comparison with Cognee
+
+[Cognee](../../sources/cognee-knowledge-engine.ingest.md) solves the same core problem — LLM-driven document-to-knowledge-graph extraction with explicit pipeline stages — but makes the opposite schema bet. sift-kg discovers schemas from the corpus: sample 5 chunks, ask the LLM to design entity and relation types, cache the result. Cognee requires schemas upfront: developers define custom Pydantic models specifying which entities and relationships to extract.
+
+The trade-off is cold-start cost vs. extraction precision. sift-kg avoids the "what entities should I define?" problem entirely — you point it at documents and it proposes a schema. But discovered schemas may be noisy or inconsistent across corpora. Cognee's Pydantic schemas guarantee that extraction conforms to the developer's domain model, but the developer must already understand the domain well enough to write that model — a chicken-and-egg problem for unfamiliar domains.
+
+Both systems share pipeline-first architecture with explicit stage boundaries (sift-kg: extract→build→resolve→review; Cognee: add→cognify→memify) and materialized intermediate state. The deeper difference is who does the ontology work: the LLM (sift-kg) or the developer (Cognee). This axis — schema discovery vs. schema definition — cuts across all document-to-KG systems and is orthogonal to other design choices like storage backend or confidence handling.
+
 ## What to Watch
 
 - **Per-document cost accounting is currently broken.** `extractor.py` computes `cost_for_doc` from `getattr(r, "_cost", 0.0)`, but `ExtractionResult` has no `_cost` field, so document-level `cost_usd` remains `0.0`.
@@ -89,6 +97,7 @@ sift-kg and commonplace operate at different levels: sift-kg is a *processing pi
 
 Relevant Notes:
 
+- [Cognee](../../sources/cognee-knowledge-engine.ingest.md) — contrasts: same problem (LLM document-to-KG pipeline) but opposite schema bet — Cognee requires upfront Pydantic schemas where sift-kg discovers schemas from corpus samples
 - [Siftly](./siftly.md) — contrasts: similar ingestion ambition but uses SQLite and deterministic-first enrichment rather than LLM extraction
 - [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — foundation: deterministic cleanup around stochastic extraction follows the same hard-oracle direction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
