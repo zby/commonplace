@@ -70,6 +70,20 @@ Recognition cost scales with abstraction depth:
 
 The mathematical tradition offers a partial solution: **develop vocabulary for naming structures**. Once a structure has a name (a lemma, a category, an algebraic property), recognizing new instances of it becomes cheap. The naming amortizes the discovery cost. In a knowledge system, this means the highest-value act isn't linking two notes that share a mechanism — it's **creating a new note that names the mechanism**. Once you have a note titled "Systems degrade when you exceed their structural capacity," linking cognitive load and architecture to it is trivial. The hard creative work was seeing the pattern and giving it a name.
 
+## Maturation path
+
+This note stays seedling because it bundles many claims with narrative support only. To mature, extract each as a standalone structured-claim and find adequate support — whether from literature, external sources, worked examples, or direct argument:
+
+1. **Topic and mechanism are the same cognitive operation at different depths** — the core reframing. Needs support from cognitive science or counter-examples showing they really are (or aren't) distinct operations.
+2. **Luhmann's move was judgment-based linking, not mechanism-based linking** — checkable against Luhmann scholarship and the Zettelkasten record.
+3. **Discovery has a dual structure (posit general + recognize particular as instance)** — Darwin and Fleming gesture at this but Fleming already strains the claim. More cases needed, especially from philosophy of science literature on discovery.
+4. **The three-depth hierarchy (shared feature → shared structure → generative model)** — is this a real hierarchy or three examples arranged post hoc? Existing taxonomies of analogy (e.g. Gentner's structure-mapping theory) may support or refine it.
+5. **Epistemic fragility scales with abstraction power** — the phlogiston aside is suggestive but the claim needs its own argument with historical or epistemological grounding.
+6. **Recognition, not linking, is the hard problem** — the most actionable claim for KB design. Could be supported by practitioner reports or cognitive load research on analogical reasoning.
+7. **Naming structures amortizes discovery cost** — already operationalized in the /connect skill. Could be grounded in literature on concept formation, categorization, or terminology effects on retrieval.
+
+Each extracted claim should link back here as its origin.
+
 ## Open Questions
 
 - Can you build practices that push connections from "shared feature" toward "generative model"? The [elaborative encoding requirement](./related-systems/arscontexta.md) pushes from bare adjacency to articulated connection. Is there an equivalent push toward deeper abstraction?
