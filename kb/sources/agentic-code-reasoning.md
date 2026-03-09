@@ -1,4 +1,5 @@
 ---
+description: Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp across patch equivalence, fault localization, and code QA tasks
 source: https://arxiv.org/html/2603.01896v2
 captured: 2026-03-07
 capture: web-fetch

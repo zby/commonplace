@@ -84,6 +84,8 @@ The trade-off is cold-start cost vs. extraction precision. sift-kg avoids the "w
 
 Both systems share pipeline-first architecture with explicit stage boundaries (sift-kg: extract→build→resolve→review; Cognee: add→cognify→memify) and materialized intermediate state. The deeper difference is who does the ontology work: the LLM (sift-kg) or the developer (Cognee). This axis — schema discovery vs. schema definition — cuts across all document-to-KG systems and is orthogonal to other design choices like storage backend or confidence handling.
 
+[Evans (2026)](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) provides a third position on this axis. His core claim — "creating a classification system is a modeling task, which is much harder than the classification task itself" — implies sift-kg's schema discovery is the riskier move: it asks the LLM to do the hard thing (design entity types) rather than the easy thing (apply them). Evans' recommendation is to adopt published standards for generic domains and reserve custom modeling for core domains where it's strategically justified. sift-kg automates exactly the step Evans says requires the most care, betting that LLM-discovered schemas are good enough. Whether that bet pays off is the key question in "What to Watch" above.
+
 ## What to Watch
 
 - **Per-document cost accounting is currently broken.** `extractor.py` computes `cost_for_doc` from `getattr(r, "_cost", 0.0)`, but `ExtractionResult` has no `_cost` field, so document-level `cost_usd` remains `0.0`.
@@ -101,6 +103,7 @@ Relevant Notes:
 - [Siftly](./siftly.md) — contrasts: similar ingestion ambition but uses SQLite and deterministic-first enrichment rather than LLM extraction
 - [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — foundation: deterministic cleanup around stochastic extraction follows the same hard-oracle direction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
+- [Evans: AI Components for a Deterministic System](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) — contrasts: Evans argues schema creation is harder than schema application and should use published standards where possible; sift-kg automates the step Evans says requires the most care
 - [Related Systems Index](./related-systems-index.md) — master index of tracked systems
 
 Topics:
