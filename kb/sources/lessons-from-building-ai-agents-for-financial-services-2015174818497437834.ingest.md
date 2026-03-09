@@ -56,8 +56,6 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 12. **[related-systems-index](../notes/related-systems/related-systems-index.md)** — provides additional convergence evidence. The index already documents convergence on filesystem-first and progressive disclosure across independent systems; Fintool adds commercial production-scale evidence from a zero-error-tolerance domain.
 
-13. **[Granular Software](../notes/related_works/granular-software.md)** — shares the sandbox-as-agent-environment framing. Both treat the sandbox not just as a security boundary but as the agent's programmable world.
-
 **Synthesis opportunities flagged by /connect:**
 
 - **Production-scale convergence on filesystem-first**: Three independent sources (Fintool, Koylanai, systems in related-systems-index) converge on filesystem-as-source-of-truth with derived indexes across personal/commercial/research contexts.

@@ -39,13 +39,25 @@ Oracle hardening decomposes into three steps, each with its own methods and fail
 
 **Amplify.** A mined spec doesn't need to be a perfect verifier. [Error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) works whenever the oracle has discriminative power (TPR > FPR) and checks are decorrelated — the cost scales with 1/(TPR−FPR)², so even a weak spec is useful. This sets the manufacturing bar low: you need above-chance discrimination, not certainty. One reason external manufacturing matters: Rabanser et al. find that model self-assessment improves in calibration (aggregate confidence alignment) but not reliably in discrimination (per-instance separation of correct from incorrect). If models struggle to achieve TPR > FPR through introspection alone — a finding that may shift as models evolve — then spec mining's externally constructed checks become the primary source of discriminative oracles.
 
-**Monitor.** [Softening signals](./softening-signals.md) detect when a hardened oracle encodes a vision feature rather than a genuine spec — brittleness under paraphrase, isolation-vs-integration gaps, sensitivity to distribution shift. These indicate the oracle is softer than it appears and the component may need to move back toward the learned regime.
+**Monitor.** [Softening signals](./operational-signals-that-a-component-is-a-softening-candidate.md) detect when a hardened oracle encodes a vision feature rather than a genuine spec — brittleness under paraphrase, isolation-vs-integration gaps, sensitivity to distribution shift. These indicate the oracle is softer than it appears and the component may need to move back toward the learned regime.
 
 The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were arithmetic.
 
 ## The generator/verifier pattern depends on this
 
 The [generator/verifier pattern](./storing-llm-outputs-is-stabilization.md) — high-variance generator plus quality gate — is a common architectural choice, but it only works when oracle strength is sufficient. A quality gate that can't discriminate correct from incorrect outputs (TPR ≈ FPR) adds cost without adding reliability. The manufacture/amplify pipeline above is a prerequisite for generator/verifier architectures, not an optimisation.
+
+## Maturation path
+
+This note stays seedling because it bundles several speculative claims under a coherent narrative. To mature, extract each and find adequate support — literature, external sources, worked examples, or direct argument:
+
+1. **Oracle strength is a gradient underlying the bitter lesson boundary** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
+2. **"Harden the oracle" is the primary engineering move** — plausible prescription but no practitioner evidence. Cases where teams invested in eval infrastructure before capability (or failed by not doing so) would ground this.
+3. **The manufacture/amplify/monitor decomposition** — invented here. Each step has grounding (spec mining, error correction, softening signals) but the claim that these three compose into a complete pipeline is unverified. Are there missing steps?
+4. **Capability gains and reliability gains track independently** — leaning on Rabanser et al., which the note already hedges. Needs either stronger empirical evidence or a theoretical argument for why they decouple.
+5. **Generator/verifier depends on oracle strength** — reasonable but stated as fact. Could be grounded in the broader generate-and-test / best-of-N literature.
+
+Each extracted claim should link back here as its origin.
 
 ## Open questions
 
@@ -61,7 +73,7 @@ Relevant Notes:
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the verifiability gradient maps to oracle strength
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the manufacturing step: extracting deterministic checks from observed behavior
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition
-- [softening-signals](./softening-signals.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature
+- [softening-signals](./operational-signals-that-a-component-is-a-softening-candidate.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — decomposes "which oracle to harden" into four independently targetable dimensions
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals
