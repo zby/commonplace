@@ -60,16 +60,14 @@ Eight connections identified:
 
 ## Limitations (our opinion)
 
-The paper tests relatively naive multi-agent coordination patterns. Several error correction strategies known in the literature — and discussed in this KB — were never tried:
+The paper measures single-agent reliability only. Its own Future Work section explicitly lists multi-agent extension as planned work. This means:
 
-- **No adversarial review** — no agents reviewing or critiquing other agents' outputs. Debate-style architectures and structured verification loops (generate-verify-revise) are absent from the tested topologies.
-- **Simple majority voting only** — no weighted ensembles, consistency-based filtering, or confidence-calibrated aggregation.
-- **No prompt perturbation for stability testing** — varying prompts in ways that shouldn't change the answer (a decorrelation strategy) to identify robust consensus patterns was not explored.
-- **No deliberate decorrelation** — the [error-correction-works-above-chance-oracles](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) note argues that decorrelated checks are essential for effective error correction. The paper's topologies all use identical prompts and tools, maximizing correlated failure modes.
+- **No voting or ensemble experiments** — the paper measures run-to-run variance (consistency) but never tests whether voting across runs improves outcomes. The [error-correction-works-above-chance-oracles](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) note argues that voting with decorrelated checks can amplify weak oracles. The consistency data here (K=5 runs per task) is exactly the raw material for testing this — but the paper doesn't take that step.
+- **No scaffold diversity** — each benchmark uses a single scaffold (ReAct for GAIA, tool-calling for τ-bench). The paper acknowledges this. Different architectures (generate-verify-revise, structured decomposition) could yield different reliability profiles.
+- **Discrimination measured only via post-hoc self-assessment** — confidence scores come from asking the model to rate its own output after completion. This is one specific oracle type. Other discrimination mechanisms (structural checks, cross-validation, metamorphic testing) are not tested.
+- **Two benchmarks, narrow task coverage** — GAIA and τ-bench represent web browsing / customer service. The reliability profile of agents on other task types (coding, data analysis, long-horizon planning) remains unknown.
 
-The headline finding (-3.5% mean MAS improvement) and the high error amplification ratios (up to 17.2x) may therefore reflect the limitations of naive multi-agent coordination rather than multi-agent coordination in general. The paper's own data hints at this: centralized verification already cuts error amplification to 4.4x — suggesting that more sophisticated verification (structured review, decorrelated checks) could push further.
-
-This does not diminish the paper's contribution — the controlled methodology is unusually rigorous, and the finding that naive coordination usually hurts is valuable. But the paper should not be read as evidence that multi-agent coordination is inherently negative-sum.
+The paper's discrimination finding (calibration improves but discrimination stagnates) is important but may be specific to the self-assessment oracle. Other oracle types could have different discrimination trajectories — the [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) achieves zero errors using hard per-step oracles, suggesting that oracle choice matters more than model-level discrimination.
 
 ## Recommended Next Action
 
