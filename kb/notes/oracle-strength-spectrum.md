@@ -61,7 +61,7 @@ Each extracted claim should link back here as its origin.
 
 ## Open questions
 
-- **Does oracle strength predict bitter-lessoning?** If so, the spectrum is prescriptive — invest in crystallisation where oracles are hard, invest in learned approaches where oracles are soft. But this remains conjecture.
+- **Does oracle strength predict bitter-lessoning?** If so, the spectrum is prescriptive — invest in crystallisation where oracles are hard, invest in learned approaches where oracles are soft. Deutsch's [explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) concept suggests a mechanism: hard oracles survive scaling because they ARE the problem specification — they have reach beyond any particular model's capabilities. Soft oracles encode adaptive fit (theories about what correct looks like) which scale reveals as approximations, just as it did for vision features. This would make oracle strength a proxy for how much reach the verification has. But this remains conjecture — the vocabulary is suggestive, not a testable prediction.
 - **Oracle strength and crystallisation timescales.** Hard oracles crystallise fast (you can test immediately); delayed oracles crystallise slowly (you have to wait for signal). The connection to [crystallisation timescales](./deploy-time-learning-the-missing-middle.md) seems natural but hasn't been tested.
 - **Oracle strength is itself hard to assess.** Proxy scores that seem cheap and reliable may turn out to correlate poorly with the real objective — you don't always know whether your oracle is hard or soft until you test at scale.
 
