@@ -19,6 +19,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [CrewAI Memory](./crewai-memory.md) — unified vector-memory for agent crews with LLM-driven scope inference, composite scoring, and consolidation; sophisticated retrieval infrastructure but no learning theory, treating memory as plumbing rather than a knowledge medium
 - [Siftly](./siftly.md) — Next.js + SQLite ingestion system with deterministic-first enrichment, resumable stage markers, and hybrid retrieval; strongest reference so far for high-volume source loading patterns
 - [sift-kg](./sift-kg.md) — LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-gated entity resolution, and interactive visualization; strongest reference for extraction-first knowledge construction and confidence aggregation
+- [Letta](../../sources/letta-memgpt-stateful-agents.ingest.md) — agent-self-managed three-tier memory hierarchy using OS analogy (main context ≈ RAM, archival ≈ disk, recall ≈ conversation log); strongest existing exemplar of the agent-self-managed agency model *(lightweight coverage only — ingest report, no repo review)*
 - [Fintool](../../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — AI agent for professional investors; S3-first with derived PostgreSQL, markdown skills with copy-on-write shadowing, ~2000 eval test cases; strongest production-scale evidence for filesystem-first at commercial grade *(lightweight coverage only — ingest report, no repo review)*
 
 ## Patterns Across Systems

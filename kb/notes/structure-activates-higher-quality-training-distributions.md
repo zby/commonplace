@@ -16,6 +16,8 @@ This argument is independent of [failure-mode transfer](./human-writing-structur
 
 The epiplexity framework ([Finzi et al., 2026](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md)) provides formal grounding. Epiplexity measures structurally learnable content within computational bounds, and one of its core results is that data ordering affects learning — the same data presented in different arrangements exposes different extractable structure to a bounded learner. Structured templates work by the same mechanism: they reorder and partition the generation task so that at each point, the model's bounded computation can extract more structure from its training distribution. The distribution-selection metaphor is what epiplexity formalises.
 
+**Status note:** This stays seedling deliberately. The distribution-selection mechanism is speculative — we have no direct evidence that structured templates activate higher-quality training subsets rather than simply constraining output format. The epiplexity connection is suggestive but doesn't confirm the causal claim. Past experience with `structured-claim` type showed that imposing structure can degrade quality rather than improve it, which cuts against this note's thesis.
+
 ---
 
 Sources:

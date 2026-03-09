@@ -3,7 +3,7 @@ description: Agents never develop navigation intuition — every session is day 
 type: note
 traits: [has-comparison]
 areas: [kb-design]
-status: seedling
+status: current
 ---
 
 # Agent statelessness makes routing architectural, not learned
@@ -12,7 +12,9 @@ A human developer who works in a knowledge base gradually builds intuition: "for
 
 An LLM agent never does this. Each session starts cold. It cannot learn "last time I needed the structured-claim template, I found it in `notes/types/`." It cannot develop a hunch that a relevant skill might exist. Every session is day one.
 
-This means every mechanism that directs the agent to the right knowledge at the right time — routing tables, skill descriptions, type templates, naming conventions, directory structure, activation triggers, area indexes — is permanent architecture. For a human, these are conveniences you outgrow. For an agent, they're prosthetics you never stop needing. The [methodology enforcement as stabilisation](./methodology-enforcement-is-stabilisation.md) note describes practices hardening from instruction → skill → hook → script. The *practices* mature. The *agent* stays exactly as raw as it was on day one.
+This means every mechanism that directs the agent to the right knowledge at the right time — routing tables, skill descriptions, type templates, naming conventions, directory structure, activation triggers, area indexes — is permanent architecture. For a human, these are conveniences you outgrow. For an agent, they're prosthetics you never stop needing.
+
+The [methodology enforcement](./methodology-enforcement-is-stabilisation.md) gradient describes practices hardening from instruction → skill → hook → script. The *practices* mature. The *agent* stays exactly as raw as it was on day one. This asymmetry is the core of the note: the system learns, the agent doesn't.
 
 ## Progressive disclosure replaces navigation intuition
 
@@ -36,15 +38,21 @@ This makes every omission in routing infrastructure dangerous. A routing table m
 
 ## Source vs. compiled
 
+The cliff creates a maintenance discipline: routing artifacts must stay in sync with methodology, because the agent can't bridge the gap when they drift apart.
+
 Methodology notes are source code. Skills, routing tables, type templates, and naming conventions are compiled artifacts. You maintain the source (read methodology when revising routing); you ship the binary (load routing artifacts at runtime). The [context loading strategy](./context-loading-strategy.md) says "match instruction specificity to loading frequency." Agent statelessness explains *why* this is load-bearing: the agent cannot compensate for missing specificity by drawing on remembered methodology. If the specific routing isn't loaded, it doesn't exist.
 
-The two genres have structurally different quality criteria. Source can be exploratory, tentative, argumentative — it's for reasoning. Compiled artifacts must be imperative, complete, unambiguous — they're for execution. This follows from the consumer difference: the methodology reader has rich context and time to deliberate; the routing consumer has limited context and must act. The agent isn't a learner; it's a runtime. The KB isn't a curriculum; it's a deployment environment. For why pedagogical metaphors mislead — and why ignoring human traditions entirely is equally wrong — see [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md).
+The two genres have structurally different quality criteria. Source can be exploratory, tentative, argumentative — it's for reasoning. Compiled artifacts must be imperative, complete, unambiguous — they're for execution. The methodology reader has rich context and time to deliberate; the routing consumer has limited context and must act. The agent isn't a learner; it's a runtime. The KB isn't a curriculum; it's a deployment environment. (The [human-LLM differences](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) note develops why both pedagogical and purely mechanistic metaphors mislead here.)
 
 ## Design consequences
 
-Routing infrastructure needs the same engineering discipline as production code — versioned, tested, reviewed. Routing maintenance needs a staleness mechanism: when methodology changes, routing artifacts derived from it silently drift, and the agent has no "that doesn't seem right" intuition to catch it. And all routing artifacts must be behaviourally complete within their scope — including enough reasoning for edge cases and explicit boundaries so the agent recognizes when it's outside scope.
+Three requirements follow:
 
-Future architectures with persistent memory across sessions would weaken the statelessness argument — an agent that remembers where it found things last time is closer to a human navigator. But any memory system has limits, and routing scales with the knowledge base itself. Knowing where to look is as big a problem as the knowledge it points to.
+1. **Engineering discipline.** Routing infrastructure needs the same treatment as production code — versioned, tested, reviewed.
+2. **Staleness detection.** When methodology changes, routing artifacts derived from it silently drift. The agent has no "that doesn't seem right" intuition to catch it. Some mechanism — diffing, periodic audit, dependency tracking — must detect when compiled routing has diverged from its source.
+3. **Behavioral completeness.** Each routing artifact must include enough reasoning for edge cases and explicit boundaries so the agent recognizes when it's outside scope. Partial routing produces confident execution with systematic errors — worse than no routing at all.
+
+Persistent memory across sessions would soften the statelessness assumption, but routing scales with the knowledge base itself. Even an agent that remembers where it found things last time faces a navigation problem proportional to KB size.
 
 ---
 

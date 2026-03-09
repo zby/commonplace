@@ -57,6 +57,8 @@ Relevant Notes:
 - [error messages that teach are a stabilisation technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which stabilisation operates
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when stabilisation is permanent vs when softening is needed
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the stabilisation trade-off
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is stabilisation in practitioner language at production scale
 
 Topics:
 

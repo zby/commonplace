@@ -49,6 +49,7 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which crystallisation sits at the far end
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines what can crystallise: hard oracles enable it, weak oracles resist it
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is crystallisation at production scale
 
 Topics:
 

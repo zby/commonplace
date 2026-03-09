@@ -1,5 +1,5 @@
 ---
-description: Analysis of agentic AI adaptation paper and llm-do implications
+description: Catalogues data-driven stabilising and softening signals from an agentic AI adaptation taxonomy — maps the paper's agent/tool × execution/output signal grid onto llm-do's neural/symbolic spectrum and the stabilise/soften cycle
 ---
 
 # Analysis: Adaptation of Agentic AI (arXiv:2512.16301)
@@ -243,9 +243,10 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 Relevant Notes:
 
 - [stabilisation](../stabilisation.md) — the stabilising/softening signals catalogued here are the data-driven triggers for the stabilise/soften cycle
+- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the stabilise/soften cycle applied to tool boundaries
+- [operational signals that a component is a softening candidate](../operational-signals-that-a-component-is-a-softening-candidate.md) — extends: the softening signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
+- [unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: bidirectional refactoring between neural and symbolic only works with unified interfaces; the paper's adaptation mechanisms assume this
+- [bitter-lesson-boundary](../bitter-lesson-boundary.md) — context: the stabilising/softening signals are empirical indicators of which side of the boundary a component sits on
 
-## References
-
-- Paper: https://arxiv.org/abs/2512.16301
-- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — underspecified vs precise semantics, interpretation narrowing, stabilise/soften
-- llm-do architecture: [architecture.md](../../../docs/architecture.md)
+Sources:
+- [Adaptation of Agentic AI (arXiv:2512.16301)](https://arxiv.org/abs/2512.16301)

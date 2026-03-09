@@ -44,6 +44,7 @@ Relevant Notes:
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — reliability hardening as deploy-time learning, not training-time learning
 - [softening-signals](./operational-signals-that-a-component-is-a-softening-candidate.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a softening signal measured at scale
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
 
 Topics:
 

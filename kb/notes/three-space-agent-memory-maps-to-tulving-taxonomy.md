@@ -29,6 +29,7 @@ Relevant Notes:
 - [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — observational protocol for testing whether the separation actually helps
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the three timescales framework; graduation from operational to knowledge space is a form of crystallisation
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — operationalizes metabolic rates: per-type recency decay in note scoring formalizes the intuition that knowledge and operational content age differently
+- [agentic memory systems comparative review](./related-systems/agentic-memory-systems-comparative-review.md) — validates: evaluates the three-space taxonomy's analytical utility across 11 systems; uses the knowledge/self/operational split as the framework for comparing agency models and retention policies
 
 Topics:
 

@@ -44,6 +44,7 @@ Relevant Notes:
 - [crystallisation](crystallisation.md) — foundation: crystallisation as system-level learning through repo artifacts
 - [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — the verifiability gradient that determines when and how to crystallise
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque substrate; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable substrate at production scale with zero manual code
 
 Topics:
 

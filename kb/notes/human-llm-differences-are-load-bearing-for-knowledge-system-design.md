@@ -71,6 +71,7 @@ Relevant Notes:
 - [crystallisation: the missing middle](./deploy-time-learning-the-missing-middle.md) — context: the three timescales framing; agent statelessness reframes in-context as "loading" not "learning"
 - [agent statelessness means the harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — complementary response: tier separation addresses writing for different audiences; context injection addresses loading what the agent can't carry from prior sessions
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — validates: empirical study of 466 OSS projects finds developers explicitly distinguish "README files for humans" from "AI context files for AI agents" — the dual-audience split observed at scale with no established conventions for resolving it
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — extends: "codebase optimized for Codex's legibility first" is the extreme endpoint of dual-audience design — human readability as secondary to agent readability
 
 Topics:
 

@@ -43,6 +43,10 @@ The overlap is intentional but serves different purposes. CLAUDE.md says "before
 Sources:
 - Anthropic (2025). [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — describes Claude Code following this exact pattern: a CLAUDE.md file as a slim router with grep/glob for just-in-time retrieval of everything else.
 
+Relevant Notes:
+
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md as "a map with pointers" converges independently on the routing concept at production scale
+
 Topics:
 
 - [kb-design](./kb-design.md)

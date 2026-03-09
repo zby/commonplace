@@ -60,6 +60,7 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the substrate (repo artifacts) through which distillation operates
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: capacity decomposes into generality vs reliability+speed+cost; distillation trades source completeness for operational efficiency
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: reframes distillation as bounded information extraction; deterministic transformations create information for bounded observers
+- [Epiplexity (Bates et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: epiplexity measures theoretically what distillation does operationally — quantifies extractable structure for a given observer under computational bounds
 
 Topics:
 

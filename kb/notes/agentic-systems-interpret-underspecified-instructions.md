@@ -154,6 +154,7 @@ Relevant Notes:
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — applies: the five empirically observed context-file writing styles map to different strategies for narrowing the interpretation space
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: contracts resolve semantic underspecification with formal YAML DSL; probabilistic compliance model (p,δ,k) quantifies how tightly a contract narrows the interpretation space
 
 Topics:
 
