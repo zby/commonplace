@@ -52,9 +52,9 @@ scripts/                     Standalone automation
 
 **Externalized methodology.** Knowledge accumulates in the KB, but the procedures for working with it — how to write, connect, validate — live in skills and docs, not in the agent's head. The agent reads them fresh every time. The KB is the memory; the skills are the manual.
 
-## Skills
+## Skills and instructions
 
-Skills are invoked as slash commands in Claude Code:
+Promoted skills can be exposed in both runtimes: Claude Code discovers skill subdirectories from `.claude/skills/`, and Codex can discover them from project-local `.agents/skills/`. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles routing, search patterns, and escalation boundaries.
 
 | Skill | Purpose |
 |---|---|
@@ -90,7 +90,7 @@ git clone https://github.com/anthropics/commonplace.git
 cd commonplace
 ```
 
-The `.claude/skills/` directory contains symlinks to `kb/instructions/`, so Claude Code picks up all slash commands automatically. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+The `.claude/skills/` directory contains symlinks to promoted skill subdirectories under `kb/instructions/`, so Claude Code picks up those slash commands automatically. Codex can discover the same promoted skills from project-local `.agents/skills/`; installing them into `$CODEX_HOME/skills` is optional if you want them across repositories. Plain instruction files remain AGENTS-routed procedures. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself
@@ -99,13 +99,13 @@ This is the right mode when:
 
 ### Installing into a project
 
-Commonplace can be installed into an existing project as a submodule or cloned subdirectory. See **[INSTALL.md](INSTALL.md)** for step-by-step setup instructions and the resulting layout. See `kb/notes/commonplace-installation-architecture.md` for the full design rationale.
+Commonplace can be installed into an existing project as a submodule or cloned subdirectory. See **[INSTALL.md](INSTALL.md)** for step-by-step setup instructions for both Claude Code and Codex, and the resulting layout. See `kb/notes/commonplace-installation-architecture.md` for the full design rationale.
 
 ## Prerequisites
 
 | Tool | Required | Purpose |
 |---|---|---|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | yes | Agent runtime — skills are Claude Code slash commands |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use Claude Code slash commands or Codex `AGENTS.md` routing |
 | [uv](https://docs.astral.sh/uv/) | yes | Python script runner — `uv run` handles dependencies automatically |
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `/convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |

@@ -10,9 +10,9 @@ status: seedling
 
 Instructions are not notes. Notes are for reasoning — an agent or human building understanding. Instructions are for execution — an agent that needs to act, not deliberate. They're a different kind of artifact, the way source files and task files are different, and they get their own directory (`kb/instructions/`) for the same reason sources and tasks do. The directory is the type signal.
 
-Skills have two aspects: the procedure itself (distilled from methodology, execution-optimized) and the routing machinery that makes them discoverable (descriptions in CLAUDE.md, symlinks into `.claude/skills/`, slash-command triggers). Not every distilled procedure needs automatic routing. Some procedures are used occasionally, invoked by a human saying "follow the procedure in X." These are instructions — same distillation quality as skills, but without the activation trigger plumbing.
+Skills have two aspects: the procedure itself (distilled from methodology, execution-optimized) and the routing machinery that makes them discoverable (descriptions in the control-plane file, symlinks into the runtime's skill directory such as `.claude/skills/`, `.agents/skills/`, or optionally `$CODEX_HOME/skills`, slash-command triggers where supported). Not every distilled procedure needs automatic routing. Some procedures are used occasionally, invoked by a human saying "follow the procedure in X." These are instructions — same distillation quality as skills, but without the activation trigger plumbing.
 
-Instructions include a description in frontmatter, same as skills. This helps a human scanning the directory decide which instruction to invoke, and makes promotion to a full skill frictionless — add the symlink and routing table entry, no content change needed.
+Instructions include a description in frontmatter, same as skills. This helps a human scanning the directory decide which instruction to invoke, and makes promotion to a full skill frictionless — move it into a dedicated skill subdirectory, add the symlink, and add the routing table entry.
 
 ## Optimized for execution, not understanding
 
@@ -47,7 +47,7 @@ This is the same process that produces skills. The difference is a judgment call
 
 ## Platform independence
 
-In Claude Code, skills are files in `.claude/skills/` that the agent discovers automatically, optionally with slash-command triggers. Instructions are independent of this mechanism — they work with any agent that can read a file and follow it. This keeps the knowledge base portable across agent platforms rather than coupled to one tool's skill discovery system.
+In Claude Code, skills are discovered from `.claude/skills/`; in Codex, they can be discovered from project-local `.agents/skills/`, with `$CODEX_HOME/skills` (default `~/.codex/skills`) as an optional global install location. Instructions are independent of this mechanism — they work with any agent that can read a file and follow it. This keeps the knowledge base portable across agent platforms rather than coupled to one tool's skill discovery system.
 
 ---
 

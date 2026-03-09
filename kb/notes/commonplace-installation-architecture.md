@@ -13,7 +13,7 @@ When a project adopts commonplace, two directory trees coexist at the project ro
 - `kb/` — the user's knowledge base. Contains their notes, sources, tasks. Tracked in the project's git.
 - `commonplace/` — the framework. Contains methodology, KB design theory, type definitions, writing guide, skill templates, scripts. A git submodule or a gitignored clone.
 
-The install step copies **operational artifacts** into `kb/` and symlinks skills from `commonplace/kb/instructions/` into `.claude/skills/`. Methodology stays in `commonplace/` and is consulted on demand.
+The install step copies **operational artifacts** into `kb/`. Promoted skills stay in `commonplace/kb/instructions/` as subdirectories and can be symlinked into the runtime-specific discovery directory: `.claude/skills/` for Claude Code, `.agents/skills/` for project-local Codex use. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files in `kb/instructions/` are not promoted automatically; the project control-plane file (`CLAUDE.md` or `AGENTS.md`) routes to them on demand. Methodology stays in `commonplace/` and is consulted on demand.
 
 ## Design motivation: optimizing read and write
 
@@ -25,12 +25,12 @@ Writing a document requires: (1) know where to put it, (2) know what structure i
 
 | Step | What the agent does | Hops | How the layout helps |
 |------|-------------------|------|---------------------|
-| Route | Consult CLAUDE.md routing table | 0 | Always loaded — no tool call needed |
+| Route | Consult the control-plane routing table (`CLAUDE.md` or `AGENTS.md`) | 0 | Always loaded — no tool call needed |
 | Structure | Read `kb/notes/types/` | 1 | Types are in the same tree as the target — predictable path |
 | Conventions | Read `kb/WRITING.md` | 1 | Same tree, one fixed location |
 | Write | Create file in `kb/notes/` | 1 | Direct write, no indirection |
 
-**Common case: 3 hops, all within `kb/`.** If types or WRITING.md lived in `commonplace/`, hop count stays the same but the instructions grow: the agent needs to know which tree to read from, and the CLAUDE.md routing gets more complex ("for types, look in commonplace; for content, write to kb").
+**Common case: 3 hops, all within `kb/`.** If types or WRITING.md lived in `commonplace/`, hop count stays the same but the instructions grow: the agent needs to know which tree to read from, and the control-plane routing gets more complex ("for types, look in commonplace; for content, write to kb").
 
 **Uncommon case: methodology fallback during write.** Sometimes the operational artifacts don't cover the judgment call. The skill says "use link semantics" but the agent isn't sure which semantic fits, or WRITING.md says "title as claim" but the document is a borderline case between single-claim and multi-claim. The agent then reads methodology from `commonplace/kb/notes/` — one extra search hop to a different scope. This is the write path escalating: route → types → WRITING → **methodology** → write.
 
@@ -50,7 +50,7 @@ Reading has two cases: **project knowledge** (common) and **methodology** (rare 
 
 **Rare case — methodology fallback:**
 
-When the agent hits an edge case a skill doesn't cover, she searches `commonplace/kb/notes/` for deeper reasoning. This adds one search hop to a different scope. The CLAUDE.md routing tells her when: "for why things work this way, search `commonplace/kb/`."
+When the agent hits an edge case a skill or instruction doesn't cover, she searches `commonplace/kb/notes/` for deeper reasoning. This adds one search hop to a different scope. The control-plane routing tells her when: "for why things work this way, search `commonplace/kb/`."
 
 **Why two trees beat one for reads.** If methodology were mixed into `kb/`, every search would return both project notes and framework notes. The agent would need instructions to distinguish them ("ignore notes with `source: commonplace` in frontmatter" or "filter by directory"). More results, more filtering logic, more instructions. Separating the trees makes the common-case search scope clean: `kb/` is only the user's content. The methodology tree is searched explicitly and only when needed.
 
@@ -71,7 +71,7 @@ The boundary: **copy what the agent reads on the hot path, reference what she co
 | WRITING.md | `kb/WRITING.md` | Agent reads when creating any content — must be in the same tree |
 | Methodology notes | stays in `commonplace/kb/notes/` | Fallback for edge cases where skills don't cover enough |
 | Source snapshots | stays in `commonplace/kb/sources/` | Reference material for the methodology |
-| Skill directories | symlinked to `.claude/skills/` | Agent needs concrete skills, not templates |
+| Skill directories | stay in `commonplace/kb/instructions/`; optionally symlinked to `.claude/skills/`, `.agents/skills/`, or `$CODEX_HOME/skills` | Only promoted skills are auto-discovered; plain instruction files remain explicitly invoked procedures |
 | Scripts | stays in `commonplace/scripts/` | Run from there, no need to copy |
 
 ## Why copy operational artifacts instead of reading cross-tree
@@ -118,8 +118,11 @@ commonplace/                             ← the GitHub repo
       work/                              ← workshop space (connect reports, ingest staging)
     kb/instructions/                     ← skills and instructions
     scripts/                             ← standalone tools (index generation, topic sync, etc.)
-    .claude/skills/                      ← symlinks to kb/instructions/ for commonplace's own use
-    CLAUDE.md                            ← commonplace's own instructions
+    .claude/skills/                      ← symlinks to kb/instructions/ for Claude Code use
+    .agents/skills/                      ← symlinks to kb/instructions/ for project-local Codex use
+    ~/.codex/skills/                     ← optional symlinks to kb/instructions/ for global Codex use
+    CLAUDE.md                            ← Claude Code control-plane file
+    AGENTS.md                            ← Codex control-plane file
     LICENSE                              ← CC BY 4.0
     README.md
 ```
@@ -157,18 +160,21 @@ my-project/
           types/
       kb/instructions/               ← skills and instructions
       scripts/
-    .claude/skills/                  ← symlinked from commonplace/kb/instructions/
-    CLAUDE.md                        ← includes generated routing fragment
+    .claude/skills/                  ← optional; symlinked from commonplace/kb/instructions/ for Claude Code
+    .agents/skills/                  ← optional; symlinked from commonplace/kb/instructions/ for project-local Codex
+    ~/.codex/skills/                 ← optional; symlinked from commonplace/kb/instructions/ for global Codex
+    CLAUDE.md                        ← optional; Claude Code control-plane file
+    AGENTS.md                        ← optional; Codex control-plane file
 ```
 
-## The CLAUDE.md fragment
+## The control-plane fragment
 
-The install step generates a Knowledge System section for the project's CLAUDE.md with:
+The install step generates a Knowledge System section for the project's control-plane file (`CLAUDE.md` for Claude Code, `AGENTS.md` for Codex) with:
 
 - Routing table pointing to `kb/` for content creation ("where things go")
 - Reference to `commonplace/kb/` for methodology ("why things work this way")
 - Search patterns for both trees
-- Skill descriptions
+- Skill and instruction discovery guidance
 
 ## Inclusion mechanism
 
@@ -205,7 +211,7 @@ Relevant Notes:
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning progression
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal
-- [context loading strategy](./context-loading-strategy.md) — constrains: the CLAUDE.md fragment must integrate into the loading hierarchy
+- [context loading strategy](./context-loading-strategy.md) — constrains: the control-plane fragment must integrate into the loading hierarchy
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the install step that renders skills and copies operational artifacts
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — informs: the collection/partition distinction and the two-level types nesting limit
 
