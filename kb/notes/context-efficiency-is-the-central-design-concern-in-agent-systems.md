@@ -83,6 +83,7 @@ Relevant Notes:
 - [Minimum Viable Ontology / Domain Maps](../sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) — exemplifies: MVO is distillation under context-efficiency pressure — compress domain knowledge into the smallest vocabulary that fits the context window
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "give Codex a map, not a 1,000-page instruction manual" is independent practitioner convergence on context scarcity as the binding constraint
 - [Epiplexity (Bates et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: formalizes the complexity dimension of context cost — epiplexity quantifies structural accessibility under computational bounds, giving theoretical backing to "how hard the tokens are to use"
+- [AgeMem (Yu et al., 2025)](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) — exemplifies: RL-trained STM operations (Retrieve/Summary/Filter) achieve 3-5% token reduction while maintaining performance — empirical evidence that learned context management can outperform heuristic approaches
 
 Topics:
 
