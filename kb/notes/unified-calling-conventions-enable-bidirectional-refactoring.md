@@ -69,6 +69,7 @@ Relevant Notes:
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
+- [operational-signals-that-a-component-is-a-softening-candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — extends: softening signals answer "when should you soften?" — unified calling makes the softening refactoring cheap once the signal fires
 
 Topics:
 

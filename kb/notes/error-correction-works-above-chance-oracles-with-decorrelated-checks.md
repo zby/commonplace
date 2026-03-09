@@ -109,6 +109,7 @@ Relevant Notes:
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
 - [crystallisation](./crystallisation.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
 - [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition
+- [operational signals that a component is a softening candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — enables: metamorphic checks double as softening signal detectors — measuring paraphrase brittleness classifies components on the bitter lesson spectrum
 
 Topics:
 

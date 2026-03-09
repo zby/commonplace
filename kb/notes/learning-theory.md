@@ -33,6 +33,7 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the simplest instance: keeping a specific LLM output resolves underspecification to one interpretation; develops the generator/verifier pattern and verbatim risk
 - [stabilisation-during-deployment-is-continuous-learning](./stabilisation-during-deployment-is-continuous-learning.md) — AI labs' continuous learning is achievable through stabilisation with versioned artifacts, which beats weight updates on inspectability and rollback
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — crystallisation's operational mechanism: observe behavior, extract deterministic rules, grow the calculator surface monotonically
+- [operational-signals-that-a-component-is-a-softening-candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — five testable signals (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failures, distribution sensitivity) for detecting when to reverse crystallisation
 - [error-messages-that-teach-are-a-stabilisation-technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — the dual-function property: effective enforcement artifacts simultaneously constrain and inform, because in agent systems the error channel is an instruction channel
 
 ## Distillation
