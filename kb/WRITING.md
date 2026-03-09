@@ -8,7 +8,7 @@ Read this before creating or editing notes, ADRs, indexes, or source reviews. Fo
 
 For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
 
-1. **[Title as claim](notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? (Applies to single-claim documents; multi-claim specs and frameworks get topical titles instead.)
+1. **[Title as claim](notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases.
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
 3. **Area membership** — Is it tagged with the most precise area whose index would help a reader find related notes? (Directory indexes are auto-generated and don't count.)
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
@@ -45,7 +45,7 @@ areas: []
 status: current
 ---
 
-# {prose-as-title — a proposition, not a topic label}
+# {claim title if single-claim; topical title if framework, definitional, or exploratory}
 
 {Your analysis, reasoning, or exploration. Freeform.}
 
@@ -66,7 +66,7 @@ Topics:
 
 ### structured-claim
 
-Developed arguments with Evidence/Reasoning/Caveats sections. Use when a note has matured from exploration into a defensible claim.
+Developed arguments with Evidence/Reasoning/Caveats sections. Use when a note has matured from exploration into a defensible claim. **Caution:** in practice, without additional methodology (warrant extraction, claim sharpening, post-structuring revision), the Toulmin sections create flow problems (warrant extraction, claim sharpening, post-structuring revision). The type is experimental — don't promote notes unless the argument genuinely fits the scaffold without forcing.
 
 ```markdown
 ---

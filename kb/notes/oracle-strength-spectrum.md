@@ -1,18 +1,18 @@
 ---
-description: The bitter lesson boundary is a gradient — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits and how to invest engineering effort
+description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the bitter lesson boundary, with hypotheses about engineering priorities and an oracle-hardening pipeline
 type: note
 traits: []
 areas: [learning-theory]
-status: current
+status: seedling
 ---
 
-# The bitter lesson boundary is a gradient, not a binary
+# Oracle strength spectrum
 
-The [bitter lesson boundary](./bitter-lesson-boundary.md) draws a line between calculators (spec is the problem) and vision features (spec is a theory about the problem). But real systems have components spread across a spectrum of oracle strength — how cheaply and reliably you can check whether output is correct.
+The [bitter lesson boundary](./bitter-lesson-boundary.md) draws a line between arithmetic (spec is the problem) and vision features (spec is a theory about the problem). This note proposes that the boundary is better understood as a gradient of **oracle strength** — how cheaply and reliably you can check whether output is correct — and explores what that would imply for engineering priorities. The framework is speculative; the individual hypotheses need testing.
 
 ## The spectrum
 
-- **Hard oracle:** exact, cheap, deterministic check. Unit tests, type checks, cryptographic verification. The calculator regime.
+- **Hard oracle:** exact, cheap, deterministic check. Unit tests, type checks, cryptographic verification. The arithmetic regime.
 - **Soft oracle:** proxy score that correlates but isn't the real thing. BLEU, helpfulness rubrics, heuristic checks, consistency scores.
 - **Interactive oracle:** you can ask for feedback. User edits, thumbs up/down, preference pairs.
 - **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
@@ -41,7 +41,7 @@ Oracle hardening decomposes into three steps, each with its own methods and fail
 
 **Monitor.** [Softening signals](./softening-signals.md) detect when a hardened oracle encodes a vision feature rather than a genuine spec — brittleness under paraphrase, isolation-vs-integration gaps, sensitivity to distribution shift. These indicate the oracle is softer than it appears and the component may need to move back toward the learned regime.
 
-The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were a calculator.
+The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were arithmetic.
 
 ## The generator/verifier pattern depends on this
 

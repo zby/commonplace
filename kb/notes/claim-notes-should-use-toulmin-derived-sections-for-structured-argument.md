@@ -118,6 +118,7 @@ The other traits (`has-comparison`, `has-implementation`, `has-external-sources`
 - **Warrant is often implicit.** Toulmin acknowledges warrants are frequently unstated. Forcing authors to articulate them is the point — but it adds friction. The bet is that explicit warrants produce more trustworthy claims, worth the cost.
 - **Migration effort.** Retiring `has-claim` means updating 30 notes. Most just drop the trait; a few get promoted. This should be a gradual process, not a batch migration.
 - **New type in the enum.** `structured-claim` joins `note`, `spec`, `review`, `index`, `adr` in [document-classification](./document-classification.md). The validation skill and any scripts checking type enums need updating.
+- **In practice, without additional methodology (warrant extraction, claim sharpening, revision for flow after structuring), the Toulmin sections create flow problems.** Notes written with Evidence/Reasoning/Caveats sections tend to read as stiff academic scaffolding rather than flowing argument. In multiple cases, notes promoted to `structured-claim` had to be demoted back to `note` and the Toulmin sections dissolved to restore readability. The type is experimental — don't promote notes to `structured-claim` unless the argument genuinely fits the scaffold without forcing.
 
 ---
 
