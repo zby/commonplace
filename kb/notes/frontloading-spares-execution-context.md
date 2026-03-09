@@ -12,7 +12,7 @@ When instructing LLMs, any part of the instructions whose inputs are known befor
 
 ## Why execution context is the bottleneck
 
-Procedures consume more context than their results. A procedure carries parsing overhead, error-handling branches, and step-by-step reasoning that collapse to a compact output. An instruction like "list the files in `kb/notes/`" costs the LLM a tool call, the round-trip, and the interpretation of the result — on every invocation. The pre-computed listing costs only the bytes of the listing itself, once.
+Executing a procedure inside a bounded call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
 
 This asymmetry is general: whenever a sub-procedure's inputs are known before the LLM runs, the procedure is pure overhead inside bounded context. For the broader cost model, see [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
@@ -30,9 +30,11 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 Anything that depends on the user's current request, the conversation state, or the evolving task is dynamic and not frontloadable. The boundary isn't always sharp — some sub-procedures depend partially on known and partially on runtime information. In those cases, frontload the known parts and leave the runtime-dependent parts as instructions.
 
-## The mechanism: partial evaluation
+## The mechanism: partial evaluation or divide-and-conquer?
 
-Frontloading is partial evaluation applied to a domain where the "program" being specialised has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md).
+Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading is more specifically partial evaluation — and the distinction matters because it's what makes the context saving work.
+
+The key: LLM context is a [homoiconic medium](./llm-context-is-a-homoiconic-medium.md). Instructions and data are both natural language tokens. When you pre-compute a file listing and insert it into an instruction, the result is still a valid instruction — you've specialised a program with respect to known inputs, producing a residual program in the same medium. That's partial evaluation, not just preprocessing. In a non-homoiconic system, the pre-computed result would need a format conversion to re-enter the instruction stream; here it flows in directly because everything is text.
 
 Standard PE specialises a program P with respect to known **static** inputs s, producing a **residual program** Ps that needs only the remaining **dynamic** inputs d:
 
@@ -59,7 +61,7 @@ Standard PE assumes precise denotational semantics, exact equivalence, and time 
 - Replacing a procedure with its result is only approximately equivalent
 - The gain is context and reliability, not runtime speed
 
-Those differences matter for theory, but not for the practical benefit. Frontloading saves context by removing procedures from the bounded LLM call.
+Those differences matter for theory, but not for the practical benefit. Frontloading saves context by removing procedures from the bounded LLM call. The homoiconicity of the medium is what makes the PE framing precise rather than merely metaphorical — without it, "pre-compute and insert" would be just divide-and-conquer.
 
 ## Relationship to the scheduling model
 
@@ -73,6 +75,7 @@ Relevant Notes:
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
+- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity is what makes frontloading partial evaluation rather than just divide-and-conquer — the pre-computed result re-enters the instruction stream without format conversion
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — subsumes: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
 
 Topics:
