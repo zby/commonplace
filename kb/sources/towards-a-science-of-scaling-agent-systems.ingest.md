@@ -68,7 +68,7 @@ The `/connect` discovery identified five strong and three moderate connections t
 The paper tests relatively naive multi-agent coordination patterns. Several error correction strategies known in the literature — and discussed in this KB — were never tried:
 
 1. **No adversarial review** — no agents reviewing or critiquing other agents' outputs. Debate-style architectures and structured verification loops (generate-verify-revise) are absent from the tested topologies.
-2. **Simple majority voting only** — no weighted ensembles, consistency-based filtering, or confidence-calibrated aggregation.
+2. **No majority voting** — the paper mentions voting as a possible orchestrator aggregation method but never implements it. The Independent topology uses "synthesis-only coordination" (Appendix E). Neither simple majority voting nor more sophisticated ensemble methods (weighted voting, consistency-based filtering, confidence-calibrated aggregation) were tested.
 3. **No prompt perturbation for stability testing** — varying prompts in ways that shouldn't change the answer (a decorrelation strategy) to identify robust consensus patterns was not explored.
 4. **No deliberate decorrelation** — the error-correction-works-above-chance-oracles note argues that decorrelated checks are essential for effective error correction. The paper's topologies all use identical prompts and tools, maximizing correlated failure modes.
 

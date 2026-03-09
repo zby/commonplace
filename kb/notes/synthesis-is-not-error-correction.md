@@ -26,7 +26,7 @@ The other topologies add verification but not voting:
 - **Decentralized** (7.8×): agents debate across 3 rounds — closer to adversarial review than voting
 - **Hybrid** (5.1×): combines both, but with 515% overhead
 
-The progression 17.2× → 7.8× → 4.4× tracks increasing verification strength, not voting. Even partial verification (centralized orchestrator) cuts error amplification by 4×.
+The progression 17.2× → 7.8× → 4.4× tracks increasing verification strength, not voting. Even partial verification (centralized orchestrator) cuts error amplification by 4×. The Hybrid topology (5.1×) breaks this ordering despite combining both verification mechanisms — possibly because its 515% overhead introduces coordination-failure modes that offset the verification benefit.
 
 ## What MAKER tested
 
