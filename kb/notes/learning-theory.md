@@ -35,6 +35,7 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — crystallisation's operational mechanism: observe behavior, extract deterministic rules, grow the calculator surface monotonically
 - [operational-signals-that-a-component-is-a-softening-candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — five testable signals (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failures, distribution sensitivity) for detecting when to reverse crystallisation
 - [error-messages-that-teach-are-a-stabilisation-technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — the dual-function property: effective enforcement artifacts simultaneously constrain and inform, because in agent systems the error channel is an instruction channel
+- [enforcement-without-structured-recovery-is-incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — the enforcement gradient covers detection and blocking but not recovery; maps ABC's corrective → fallback → escalation onto each enforcement layer, with oracle strength determining viable recovery strategies
 
 ## Distillation
 
@@ -63,6 +64,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits on the automation gradient
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — error correction is viable when the oracle has discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each harden a different oracle question, mapping empirical agent evaluation onto the oracle-strength spectrum
+- [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — crossing from augmentation to automation requires per-instance discrimination (knowing when you're wrong), not aggregate accuracy; discrimination is empirically stagnant, so external oracle construction (route b) is the practical path
 - [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) (computational-model) — merging agent outputs propagates errors; voting discards minorities and corrects them; aggregation operation must match call relationship
 
 ## Memory & Architecture

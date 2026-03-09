@@ -45,6 +45,7 @@ Relevant Notes:
 - [softening-signals](./operational-signals-that-a-component-is-a-softening-candidate.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a softening signal measured at scale
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
+- [the augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — deepens: extracts and develops the predictability gap paragraph into a standalone claim — the boundary depends on per-instance discrimination, which is empirically stagnant
 
 Topics:
 
