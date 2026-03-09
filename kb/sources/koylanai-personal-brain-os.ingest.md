@@ -1,7 +1,6 @@
 ---
-source: https://x.com/koylanai/status/2025286163641118915
-snapshot: koylanai-personal-brain-os.md
-ingested: 2026-02-22
+source_snapshot: koylanai-personal-brain-os.md
+ingested: 2026-03-09
 type: practitioner-report
 domains: [context-engineering, agent-architecture, knowledge-management, file-based-systems]
 ---
@@ -26,36 +25,47 @@ Koylanai describes "Personal Brain OS," a Git-repository-based personal operatin
 
 ## Connections Found
 
-Six connections to existing KB notes:
+The `/connect` discovery run found 9 new connections beyond the 6 already established in the KB. The source is one of the most densely connected practitioner reports in the sources collection, touching context efficiency theory, loading strategy, scoping, memory architecture, and writing-style constraint theory.
 
-1. **[deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md)** (exemplifies): Koylanai's progressive disclosure maps onto the verifiability gradient. His three levels (routing -> module -> data) are graduated artifact loading. His format-function mapping (JSONL for append-only logs, YAML for config, Markdown for narrative) is choosing the right hardness grade per content type -- the same principle the crystallisation gradient describes for prompts vs. schemas vs. deterministic code.
+**Already established (6 connections linked from existing KB notes):**
+- [files-not-database](../notes/files-not-database.md) -- exemplifies the files-over-database choice at 80+ file scale with format-function rationale
+- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) -- exemplifies append-only as safety mechanism (3-month data loss incident)
+- [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) -- exemplifies all four action-oriented knowledge types without theoretical framing
+- [deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md) -- exemplifies graduated artifact loading across the verifiability gradient
+- [stabilisation](../notes/stabilisation.md) -- exemplifies learning through versioned artifact accumulation
+- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) -- exemplifies Git-versioned files as inspectable substrate
 
-2. **[stabilisation-is-learning](../notes/stabilisation.md)** (exemplifies): Personal Brain OS is a concrete instance of the core claim. The system learns through accumulating versioned artifacts (decision logs, failure patterns, voice profiles), not weight updates. The feedback loop (goals -> content -> metrics -> reviews -> goals) is exactly the continuous learning loop described theoretically.
+**New connections found (9):**
+1. [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) -- **exemplifies**: the source's entire architecture is a response to context efficiency. The attention budget / lost-in-middle discussion addresses volume (1,200-line voice guide degradation, 40% token savings from module splitting), and module isolation addresses complexity (scoped rules prevent conflicting instructions). Provides practitioner evidence for the claim that context efficiency is a design-time concern.
+2. [context-loading-strategy](../notes/context-loading-strategy.md) -- **exemplifies**: implements the exact loading hierarchy. SKILL.md = routing (always loaded), module instruction files = domain context (40-100 lines each), JSONL data = task-specific (loaded on demand). "Max two hops to any information" operationalizes the loading frequency principle.
+3. [agent-statelessness-makes-routing-architectural-not-learned](../notes/agent-statelessness-makes-routing-architectural-not-learned.md) -- **exemplifies**: the three-layer instruction hierarchy (CLAUDE.md -> AGENT.md -> module files) is permanent routing architecture because the agent starts cold every session. The AGENT.md decision table is exactly the prosthetic the note describes.
+4. [agents-md-should-be-organized-as-a-control-plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) -- **exemplifies**: CLAUDE.md = invariants/onboarding, AGENT.md with decision table = routing, module-level files = task-specific constraints. The source explicitly notes this "solves the conflicting instructions problem."
+5. [llm-context-is-composed-without-scoping](../notes/llm-context-is-composed-without-scoping.md) -- **exemplifies**: 11 isolated modules implement lexical scoping in practice. "The model never sees network data during a content task." The 40% token waste from merged identity+brand modules quantifies the cost of flat-context composition.
+6. [directory-scoped-types-are-cheaper-than-global-types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) -- **exemplifies**: "module boundaries are loading decisions" directly validates the economic argument. Each module has its own instruction file with domain-specific behavioral constraints. The 40% token savings from splitting modules is empirical evidence.
+7. [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) -- **exemplifies**: the memory module maps onto Tulving's taxonomy without theoretical awareness. Knowledge = research/content/brand (semantic). Self = values, goals, voice, decisions, failures (episodic). Operations = todos, pipeline state, weekly reviews (procedural). Demonstrates three-space separation emerging from practitioner needs.
+8. [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) -- **exemplifies**: the voice system demonstrates prescriptive style (numeric 1-10 scales on five attributes), prohibitive style (50+ tiered banned words), and conditional style (four-pass editing with branching quality gates). Practitioner case for the claim that style choice encodes autonomy allocation.
+9. [agent-skills-for-context-engineering](../notes/related-systems/agent-skills-for-context-engineering.md) -- **extends**: same author. Personal Brain OS is the concrete implementation from which the Agent Skills framework was distilled. The relationship is implementation-to-methodology.
 
-3. **[voooooogel-multi-agent-future](../notes/research/voooooogel-multi-agent-future.md)** (implements): The filesystem-as-collaboration-medium prediction is realized here. Files in markdown/YAML/JSONL that both humans and LLMs read natively, with "prompt as data" via instruction files on disk.
-
-4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** (exemplifies): "No database, just Git-versioned files" is the inspectable substrate argument applied to personal knowledge management. Every change is diffable, every decision traceable.
-
-5. **[storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md)** (exemplifies): Episodic memory logs (experiences, decisions, failures) are stabilization -- each logged judgment collapses a distribution of possible advice to a specific, versioned point. Critically, Koylanai lost 3 months of engagement data when an agent overwrote a JSON file instead of appending -- concrete evidence for why the append-only/stabilization pattern matters.
-
-6. **[agent-skills-unification](../notes/agent-skills-unification.md)** (shares standard): The skill system uses the same Agent Skills specification (YAML frontmatter + Markdown instructions, auto-load vs. manual invocation) that llm-do's .agent format is aligning with.
+**Synthesis opportunities flagged by /connect:**
+- Practitioner convergence on three-level progressive disclosure as a universal pattern (Koylanai, Ars Contexta, ClawVault, commonplace all arrive at routing -> domain -> data independently)
+- Module boundaries simultaneously serve scoping, loading, and type boundary functions (unifies llm-context-is-composed-without-scoping, directory-scoped-types, and this source)
 
 ## Extractable Value
 
-1. **"Module boundaries are loading decisions" -- the 40% token reduction data point.** Koylanai split identity+brand into two modules and measured 40% token savings for voice-only tasks. Concrete evidence for the cost of wrong module boundaries. [just-a-reference]
+1. **Context efficiency as design-time architectural driver, not runtime optimization.** The source independently validates the theoretical position in context-efficiency-is-the-central-design-concern with concrete data: 40% token savings from module splitting, voice guide degradation from lost-in-middle at 1,200 lines. These data points are not yet cited in the theory note. [quick-win]
 
-2. **Append-only as agent safety mechanism (not just data pattern).** He lost 3 months of data because an agent overwrote a JSON file instead of appending. JSONL's append-only nature is framed as a safety constraint that prevents agents from destroying accumulated knowledge. The KB notes discuss stabilization theoretically; this provides the "what goes wrong when you don't" evidence. [quick-win]
+2. **Module isolation as practical scoping for LLMs.** "The model never sees network data during a content task" is a one-sentence practitioner formulation of the scoping problem described in llm-context-is-composed-without-scoping. The 40% waste from merging identity+brand is evidence that flat-context composition has measurable cost. Not yet cited in the theory note. [quick-win]
 
-3. **Voice encoding as structured data (numeric scales + banned word lists).** Rating attributes on 1-10 scales and maintaining tiered banned word lists is more actionable for an AI than prose descriptions. [just-a-reference]
+3. **Three-space memory emerging without theory.** The source's memory module (knowledge/self/operations) maps onto Tulving's taxonomy without the author knowing the framework. This is practitioner convergence evidence for three-space-agent-memory-maps-to-tulving-taxonomy. [quick-win]
 
-4. **Progressive disclosure as three-level architecture with max-two-hop guarantee.** Level 1 routing file (always loaded), Level 2 module instructions (40-100 lines each), Level 3 data files (loaded on demand). Concrete, replicable architecture for graduated artifact loading. [experiment]
+4. **Four-system convergence on three-level progressive disclosure.** Koylanai, Ars Contexta, ClawVault, and commonplace all independently arrived at a three-level loading architecture. A synthesis note could argue this convergence is not coincidence but a consequence of bounded context -- any system under context constraints converges on routing -> domain -> data. [deep-dive]
 
-5. **Schema over-engineering failure mode: sparse data confuses agents.** Initial schemas with 15+ fields per JSONL entry caused agents to fixate on empty fields. Cutting to 8-10 essential fields improved behavior. [just-a-reference]
+5. **Module boundaries unify scoping, loading, and type functions.** Three KB notes approach the same insight from different angles (scoping theory, type economics, practitioner module isolation). A synthesis note could unify them with this source as the empirical anchor. [deep-dive]
 
-6. **Lost-in-middle as an architecture constraint.** 1,200-line voice guide caused drift by paragraph four. Restructuring to front-load distinctive patterns in first 100 lines fixed it. [quick-win]
+6. **Voice encoding as structured constraints vs. prose descriptions.** The source's numeric scales (1-10 on five attributes) and tiered banned word lists demonstrate prescriptive and prohibitive style strategies from writing-styles-are-strategies-for-managing-underspecification. The voice system is a practitioner case study for the theory. [just-a-reference]
 
-7. **[claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md)** (exemplifies): Personal Brain OS stores the four knowledge types that the action-oriented KB argument identifies as missing from retrieval-oriented systems: preferences (values/goals YAML), procedures (AGENT.md decision tables), judgment precedents (decisions/failures JSONL), and voice/style (brand files, voice guides). This convergence from practice supports the theoretical claim.
+7. **Missing related-system review.** Given the density of connections (15 total), a dedicated related-system review note in kb/notes/related-systems/ would be warranted. It would sit alongside Agent Skills (same author) and provide the most concrete empirical data points in the related-systems collection. [experiment]
 
 ## Recommended Next Action
 
-Filed as reference. Strong practitioner report that exemplifies several theoretical positions already well-articulated in the KB. No new theory, contradictions, or tensions. The two quick-win items (append-only as safety mechanism, lost-in-middle as architecture constraint) could enrich existing notes as cited examples.
+Write a related-system review note titled "personal-brain-os.md" in `kb/notes/related-systems/`, linking to `agent-skills-for-context-engineering.md` (same author, theory-to-implementation relationship). This source has 15 connections to existing KB notes -- more than any other practitioner report -- and provides concrete empirical data points (40% token savings, 3-month data loss, 1,200-line degradation threshold) that strengthen multiple theoretical positions. The related-system review format would capture these connections structurally and make them navigable, whereas the ingest report leaves them as unlinked observations.
