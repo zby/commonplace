@@ -34,9 +34,9 @@ cp commonplace/kb/tasks/types/* kb/tasks/types/
 
 ```bash
 mkdir -p .claude/skills
-for skill in commonplace/skills/*/; do
+for skill in commonplace/kb/instructions/*/; do
   name=$(basename "$skill")
-  ln -sfn "../../commonplace/skills/$name" ".claude/skills/$name"
+  ln -sfn "../../commonplace/kb/instructions/$name" ".claude/skills/$name"
 done
 ```
 
@@ -57,7 +57,7 @@ my-project/
     tasks/
     work/                    Workshop space — connect reports, ingest staging
   commonplace/               Framework (submodule or clone)
-  .claude/skills/            Symlinked → commonplace/skills/
+  .claude/skills/            Symlinked → commonplace/kb/instructions/
   CLAUDE.md                  Routing table + commonplace reference
 ```
 

@@ -32,7 +32,7 @@ The test: if you could do a find-and-replace before the LLM ever sees the text, 
 
 ## Example: KB skill portability
 
-This principle surfaced during KB extraction planning. Skills in `skills/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable requires either runtime variables (`$CLAW_ROOT/notes/`) or build-time generation (template → concrete skill). Runtime variables would add interpretation overhead to every skill invocation. [Generating instructions at build time](./generate-instructions-at-build-time.md) is the [stabilisation](./methodology-enforcement-is-stabilisation.md) move: resolve the variable once, load the literal result every time.
+This principle surfaced during KB extraction planning. Skills in `kb/instructions/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable requires either runtime variables (`$CLAW_ROOT/notes/`) or build-time generation (template → concrete skill). Runtime variables would add interpretation overhead to every skill invocation. [Generating instructions at build time](./generate-instructions-at-build-time.md) is the [stabilisation](./methodology-enforcement-is-stabilisation.md) move: resolve the variable once, load the literal result every time.
 
 ---
 

@@ -10,7 +10,7 @@ status: seedling
 
 Since [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md), KB skills should be generated from templates rather than parameterised with runtime variables.
 
-Skills in `skills/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable across projects requires these paths to vary. Two options:
+Skills in `kb/instructions/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable across projects requires these paths to vary. Two options:
 
 **Runtime variables** — skills contain `$CLAW_ROOT/notes/` and the LLM substitutes on every invocation. Adds interpretation overhead to every skill use, across every substitution site. Occasionally the LLM gets it wrong.
 

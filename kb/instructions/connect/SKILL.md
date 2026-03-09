@@ -65,6 +65,7 @@ Discovery scans two collections under `kb/`:
 |-----------|----------|
 | `kb/notes/` | Main KB — claims, design notes, research |
 | `kb/sources/` | Snapshotted external sources |
+| `kb/instructions/` | Reusable procedures and skills |
 
 ---
 
@@ -123,6 +124,7 @@ The index scan sees descriptions only. Semantic search reaches inside note bodie
 ```bash
 qmd --index commonplace query "[note's core concepts]" --collection notes -n 15
 qmd --index commonplace query "[note's core concepts]" --collection sources -n 10
+qmd --index commonplace query "[note's core concepts]" --collection instructions -n 5
 ```
 
 Record the actual query string and top results with scores in the discovery trace.
@@ -133,7 +135,7 @@ Record the actual query string and top results with scores in the discovery trac
 
 For specific terms and exact matches — search notes and sources:
 ```bash
-rg "term" kb/notes/ kb/sources/ --glob "*.md"
+rg "term" kb/notes/ kb/sources/ kb/instructions/ --glob "*.md"
 ```
 
 Use rg when:

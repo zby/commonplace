@@ -1,6 +1,6 @@
 # Commonplace
 
-A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, skill templates, and scripts that get installed into projects.
+A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and scripts that get installed into projects.
 
 The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
@@ -29,6 +29,7 @@ Use specialized types only when the routing table explicitly points to one.
 | External source snapshot | `kb/sources/` | Use `/snapshot-web` skill |
 | Source analysis | `kb/sources/` | Use `/ingest` skill — produces `.ingest.md` |
 | Task | `kb/tasks/backlog/` or `kb/tasks/active/` | Status encoded by directory, not frontmatter |
+| Reusable procedure | `kb/instructions/` | Imperative steps, frontloaded, minimal reasoning |
 | Area index (curated) | `kb/notes/` | Read `kb/notes/types/index.md` — entries MUST have context phrases |
 
 ### Content Workflow
@@ -43,16 +44,16 @@ Use specialized types only when the routing table explicitly points to one.
 
 ```bash
 # Find notes by keyword
-rg "keyword" kb/notes/ --glob "*.md"
+rg "keyword" kb/notes/ kb/instructions/ --glob "*.md"
 
 # Find notes by description
-rg "^description:" kb/notes/ --glob "*.md"
+rg "^description:" kb/notes/ kb/instructions/ --glob "*.md"
 
 # Find notes by type
-rg "^type: structured-claim" kb/notes/ --glob "*.md"
+rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
 
 # Find notes by area
-rg "^areas:.*kb-design" kb/notes/ --glob "*.md"
+rg "^areas:.*kb-design" kb/notes/ kb/instructions/ --glob "*.md"
 ```
 
 Use `/validate` for specialized audits and consistency checks.

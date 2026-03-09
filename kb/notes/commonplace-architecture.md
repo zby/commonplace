@@ -32,7 +32,7 @@ commonplace/
         backlog/
         active/
         completed/
-    skills/                          ← skill templates (connect, convert, ingest, snapshot-web, validate)
+    kb/instructions/                 ← skills and instructions (connect, convert, ingest, snapshot-web, validate)
     scripts/                         ← standalone tools (index generation, topic sync, snapshots)
     LICENSE
 ```
@@ -41,7 +41,7 @@ commonplace/
 
 | Artifact | Status | Notes |
 |----------|--------|-------|
-| `.claude/skills/` | Missing | Rendered skills for commonplace's own use — need to render from `skills/` |
+| `.claude/skills/` | Missing | Symlinks for commonplace's own use — need to point to `kb/instructions/` |
 | `CLAUDE.md` | Missing | The repo's own instructions, routing table, and knowledge system section |
 | `README.md` | Missing | Project overview for GitHub |
 
@@ -62,7 +62,7 @@ The repo has both `kb/notes/related-systems/` (documented in the architecture sp
 
 ## Open Questions
 
-- Should skills/ include an install script, or is that separate tooling?
+- Should kb/instructions/ include an install script, or is that separate tooling?
 - What goes in CLAUDE.md for the commonplace repo itself vs what gets generated for installed projects?
 
 ---

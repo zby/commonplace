@@ -13,7 +13,7 @@ When a project adopts commonplace, two directory trees coexist at the project ro
 - `kb/` — the user's knowledge base. Contains their notes, sources, tasks. Tracked in the project's git.
 - `commonplace/` — the framework. Contains methodology, KB design theory, type definitions, writing guide, skill templates, scripts. A git submodule or a gitignored clone.
 
-The install step copies **operational artifacts** into `kb/` and renders skills into `.claude/skills/`. Methodology stays in `commonplace/` and is consulted on demand.
+The install step copies **operational artifacts** into `kb/` and symlinks skills from `commonplace/kb/instructions/` into `.claude/skills/`. Methodology stays in `commonplace/` and is consulted on demand.
 
 ## Design motivation: optimizing read and write
 
@@ -71,7 +71,7 @@ The boundary: **copy what the agent reads on the hot path, reference what she co
 | WRITING.md | `kb/WRITING.md` | Agent reads when creating any content — must be in the same tree |
 | Methodology notes | stays in `commonplace/kb/notes/` | Fallback for edge cases where skills don't cover enough |
 | Source snapshots | stays in `commonplace/kb/sources/` | Reference material for the methodology |
-| Skill templates | rendered to `.claude/skills/` | Agent needs concrete skills, not templates |
+| Skill directories | symlinked to `.claude/skills/` | Agent needs concrete skills, not templates |
 | Scripts | stays in `commonplace/scripts/` | Run from there, no need to copy |
 
 ## Why copy operational artifacts instead of reading cross-tree
@@ -116,9 +116,9 @@ commonplace/                             ← the GitHub repo
         active/
         completed/
       work/                              ← workshop space (connect reports, ingest staging)
-    skills/                              ← skill templates + install script
+    kb/instructions/                     ← skills and instructions
     scripts/                             ← standalone tools (index generation, topic sync, etc.)
-    .claude/skills/                      ← rendered skills for commonplace's own use
+    .claude/skills/                      ← symlinks to kb/instructions/ for commonplace's own use
     CLAUDE.md                            ← commonplace's own instructions
     LICENSE                              ← CC BY 4.0
     README.md
@@ -155,9 +155,9 @@ my-project/
           ...reference material...
         tasks/
           types/
-      skills/                        ← skill templates
+      kb/instructions/               ← skills and instructions
       scripts/
-    .claude/skills/                  ← rendered from commonplace/skills/
+    .claude/skills/                  ← symlinked from commonplace/kb/instructions/
     CLAUDE.md                        ← includes generated routing fragment
 ```
 

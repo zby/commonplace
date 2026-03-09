@@ -13,7 +13,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — context is the scarce resource in agent systems; context cost has two dimensions (volume and complexity) and nearly every architectural pattern is a response to one or both
 - [areas-exist-because-useful-operations-require-reading-notes-together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — areas are operational scopes for orientation and comparative reading; boundaries should optimize yield-per-context, not taxonomy
 - [files-not-database](./files-not-database.md) — files with git beat a database for agent KBs: universal interface, free versioning, zero infrastructure; derived indexes solve scale without replacing the source of truth
-- [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, skills/, scripts/, and how they compose
+- [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, scripts/, and how they compose
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries, nested topology, and exclusion rules
 - [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency

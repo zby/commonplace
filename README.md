@@ -19,17 +19,19 @@ kb/                          Knowledge base
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
   work/                      Workshop space — connect reports, ingest staging, explorations
+  instructions/              Instructions and skills (promoted skills have subdirectories)
+    connect/SKILL.md         Find connections, weave knowledge graph
+    convert/SKILL.md         Convert notes between types
+    evaluate-scenarios/SKILL.md  Measure scenario costs
+    ingest/SKILL.md          Ingest external sources
+    snapshot-web/SKILL.md    Capture URLs to markdown
+    validate/SKILL.md        Schema and quality validation
+    re-ingest.md             Instruction (not yet promoted to skill)
+    semantic-review.md       Instruction
+    ...
 
 test/
   scenarios/                 Scenario fixtures for cost decomposition and evaluation
-
-skills/                      Agent skills (Claude Code slash commands)
-  validate/                  Schema and quality validation
-  connect/                   Find connections, weave knowledge graph
-  convert/                   Convert notes between types
-  ingest/                    Ingest external sources
-  snapshot-web/              Capture URLs to markdown
-  evaluate-scenarios/        Measure scenario costs
 
 scripts/                     Standalone automation
   generate_notes_index.py    Regenerate directory indexes
@@ -88,7 +90,7 @@ git clone https://github.com/anthropics/commonplace.git
 cd commonplace
 ```
 
-The `.claude/skills/` directory contains symlinks to `skills/`, so Claude Code picks up all slash commands automatically. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+The `.claude/skills/` directory contains symlinks to `kb/instructions/`, so Claude Code picks up all slash commands automatically. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself

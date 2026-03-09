@@ -17,6 +17,6 @@ collections:
   tasks-recurring:
     path: /home/zby/llm/commonplace/kb/tasks/recurring
     pattern: "**/*.md"
-  skills:
-    path: /home/zby/llm/commonplace/skills
+  instructions:
+    path: /home/zby/llm/commonplace/kb/instructions
     pattern: "**/*.md"

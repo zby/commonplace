@@ -88,7 +88,7 @@ Relevant Notes:
 
 Distilled into:
 
-- [/connect skill](../../skills/connect/SKILL.md) — the "name the mechanism" insight is operationalized as abstraction opportunity logging in Phase 5 reflection
+- [/connect skill](../instructions/connect/SKILL.md) — the "name the mechanism" insight is operationalized as abstraction opportunity logging in Phase 5 reflection
 
 Topics:
 
