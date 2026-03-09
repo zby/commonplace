@@ -1,0 +1,644 @@
+{
+  "source": "https://x.com/odysseus0z/status/2030416758138634583",
+  "captured": "2026-03-09T06:54:13.921167+00:00",
+  "type": "x-article",
+  "status_id": "2030416758138634583",
+  "conversation_id": "2030416758138634583",
+  "target_post": {
+    "article": {
+      "plain_text": "Reading OpenAI's harness engineering post, I kept having a feeling I couldn't place. Then it clicked: I'd seen this pattern before. Not once \u2014 three times.\nThe first was James Watt's centrifugal governor in the 1780s. Before it, a worker stood next to the steam engine adjusting the valve by hand. After it, a weighted flyball mechanism sensed rotational speed and adjusted the valve automatically. The worker didn't disappear. The job changed: from turning the valve to designing the governor.\nThe second was Kubernetes. You declare desired state \u2014 three replicas, this image, these resource limits. A controller continuously observes actual state. When they diverge, the controller reconciles: restarts crashed pods, scales replicas, rolls back bad deployments. The engineer's job shifted from restarting services to writing the spec the system reconciles against.\nThe third is now. OpenAI describes engineers who no longer write code. Instead they design environments, build feedback loops, and codify architectural constraints \u2014 then agents write the code. A million lines in five months, zero written by hand. They call it \"harness engineering.\"\nSame pattern each time. Norbert Wiener named it in 1948: cybernetics, from the Greek \u03ba\u03c5\u03b2\u03b5\u03c1\u03bd\u03ae\u03c4\u03b7\u03c2 \u2014 steersman. You stop turning the valve. You steer.\n \nEach time the pattern appears, it's because someone built a sensor and actuator powerful enough to close the loop at that layer.\nWhy the codebase was the holdout\nThe codebase had feedback loops, but only at the lower levels. Compilers close a loop on syntax. Test suites close a loop on behavior. Linters close a loop on style. These are real cybernetic controls \u2014 but they only operate on properties that can be checked mechanically. Does it compile? Does it pass? Does it follow the rules?\nEverything above that \u2014 does this change fit the system's architecture? is this the right approach? is this abstraction going to cause problems as the codebase grows? \u2014 had no sensor and no actuator. Only humans could operate at that level, on both sides: judging quality and writing the fix.\nLLMs changed both at once. They can sense at the level humans used to own \u2014 and act at the same level: restructure a module, redesign an inconsistent interface, rewrite a test suite around the contracts that actually matter. For the first time, the feedback loop can close where the important decisions are made.\nBut closing the loop is necessary, not sufficient. Watt's governor needed to be tuned. Kubernetes controllers need the right spec. And an LLM working on your codebase needs something harder to provide.\nCalibrating the sensor and actuator\nGetting the basic feedback loop working \u2014 tests that agents can run, CI that gives parseable output, error messages that point to the fix \u2014 is table stakes. Carlini demonstrated this when he had 16 parallel agents build a C compiler: embarrassingly simple prompts, but carefully designed test infrastructure. \"Most of my effort went into designing the environment around Claude \u2014 the tests, the environment, the feedback.\"\nThe harder problem is calibrating the sensor and actuator with knowledge specific to your system. This is where most people get stuck, and where they blame the agent.\n\"It keeps doing the wrong thing. It doesn't understand our codebase.\" The diagnosis is almost always wrong. The agent isn't failing because it lacks capability. It's failing because the knowledge it needs \u2014 what \"good\" means for your system, which patterns your architecture rewards, which it avoids \u2014 is locked inside your head, and you haven't externalized it. Agents don't learn through osmosis. If you don't write it down, the agent makes the same mistakes on the hundredth run as the first.\nThe work is making your judgment machine-readable. Architecture docs that describe actual layering and dependency direction. Custom linters with remediation instructions baked in. Golden principles that encode your team's taste. OpenAI found exactly this: they spent 20% of every Friday cleaning up \"AI slop\" \u2014 until they encoded their standards into the harness itself.\nThe only way forward\nThe practices this demands \u2014 documentation, automated testing, codified architectural decisions, fast feedback loops \u2014 were always correct. Every engineering book written in the last thirty years recommends them. Most people skip them because the cost of skipping was slow and diffuse: gradual quality decline, painful onboarding, tech debt that compounds quietly.\nAgentic engineering makes the cost extreme. Skip the documentation and the agent ignores your conventions \u2014 not on one PR, but on every PR, at machine speed, around the clock. Skip the tests and the feedback loop can't close at all. Skip the architectural constraints and drift compounds faster than you can fix it. And here's the trap: you can't use agents to clean up the mess if the agents don't know what clean looks like. Without the calibration, the machines that created the problem can't solve it either.\nThe practices haven't changed. The penalty for ignoring them has become unbearable.\nThe generation-verification asymmetry \u2014 the intuition behind P vs NP, demonstrated empirically for LLMs by Cobbe et al. \u2014 points to where this goes. Generating a correct solution is harder than verifying one. You don't need to out-implement the machine. You need to out-evaluate it: specify what \"correct\" looks like, recognize when the output misses, judge whether the direction is right.\nThe workers who designed Watt's governor didn't go back to turning valves. Not because they couldn't. Because it no longer made sense.",
+      "title": "Harness Engineering Is Cybernetics ",
+      "entities": {
+        "urls": [
+          {
+            "text": "https://github.com/anthropics/claudes-c-compiler/commit/a28ff299"
+          },
+          {
+            "text": "https://openai.com/index/harness-engineering/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2110.14168"
+          },
+          {
+            "text": "https://openai.com/index/harness-engineering/"
+          },
+          {
+            "text": "https://en.wikipedia.org/wiki/Cybernetics:_Or_Control_and_Communication_in_the_Animal_and_the_Machine"
+          },
+          {
+            "text": "https://en.wikipedia.org/wiki/P_versus_NP_problem"
+          },
+          {
+            "text": "https://en.wikipedia.org/wiki/Centrifugal_governor"
+          },
+          {
+            "text": "https://openai.com/index/harness-engineering/"
+          },
+          {
+            "text": "https://www.anthropic.com/engineering/building-c-compiler"
+          },
+          {
+            "text": "https://kubernetes.io/docs/concepts/architecture/controller/"
+          }
+        ]
+      },
+      "media_entities": [
+        "3_2030504404391194624",
+        "3_2030414996266741760"
+      ],
+      "preview_text": "Reading OpenAI's harness engineering post, I kept having a feeling I couldn't place. Then it clicked: I'd seen this pattern before. Not once \u2014 three times.\nThe first was James Watt's centrifugal",
+      "cover_media": "3_2030414846668451840"
+    },
+    "conversation_id": "2030416758138634583",
+    "edit_history_tweet_ids": [
+      "2030416758138634583"
+    ],
+    "created_at": "2026-03-07T22:54:13.000Z",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/GqhyL4KRJw",
+          "expanded_url": "http://x.com/i/article/2030414577213820928",
+          "display_url": "x.com/i/article/2030\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2030414577213820928"
+        }
+      ]
+    },
+    "id": "2030416758138634583",
+    "author_id": "2821275879",
+    "text": "https://t.co/GqhyL4KRJw"
+  },
+  "posts": [
+    {
+      "article": {
+        "plain_text": "Reading OpenAI's harness engineering post, I kept having a feeling I couldn't place. Then it clicked: I'd seen this pattern before. Not once \u2014 three times.\nThe first was James Watt's centrifugal governor in the 1780s. Before it, a worker stood next to the steam engine adjusting the valve by hand. After it, a weighted flyball mechanism sensed rotational speed and adjusted the valve automatically. The worker didn't disappear. The job changed: from turning the valve to designing the governor.\nThe second was Kubernetes. You declare desired state \u2014 three replicas, this image, these resource limits. A controller continuously observes actual state. When they diverge, the controller reconciles: restarts crashed pods, scales replicas, rolls back bad deployments. The engineer's job shifted from restarting services to writing the spec the system reconciles against.\nThe third is now. OpenAI describes engineers who no longer write code. Instead they design environments, build feedback loops, and codify architectural constraints \u2014 then agents write the code. A million lines in five months, zero written by hand. They call it \"harness engineering.\"\nSame pattern each time. Norbert Wiener named it in 1948: cybernetics, from the Greek \u03ba\u03c5\u03b2\u03b5\u03c1\u03bd\u03ae\u03c4\u03b7\u03c2 \u2014 steersman. You stop turning the valve. You steer.\n \nEach time the pattern appears, it's because someone built a sensor and actuator powerful enough to close the loop at that layer.\nWhy the codebase was the holdout\nThe codebase had feedback loops, but only at the lower levels. Compilers close a loop on syntax. Test suites close a loop on behavior. Linters close a loop on style. These are real cybernetic controls \u2014 but they only operate on properties that can be checked mechanically. Does it compile? Does it pass? Does it follow the rules?\nEverything above that \u2014 does this change fit the system's architecture? is this the right approach? is this abstraction going to cause problems as the codebase grows? \u2014 had no sensor and no actuator. Only humans could operate at that level, on both sides: judging quality and writing the fix.\nLLMs changed both at once. They can sense at the level humans used to own \u2014 and act at the same level: restructure a module, redesign an inconsistent interface, rewrite a test suite around the contracts that actually matter. For the first time, the feedback loop can close where the important decisions are made.\nBut closing the loop is necessary, not sufficient. Watt's governor needed to be tuned. Kubernetes controllers need the right spec. And an LLM working on your codebase needs something harder to provide.\nCalibrating the sensor and actuator\nGetting the basic feedback loop working \u2014 tests that agents can run, CI that gives parseable output, error messages that point to the fix \u2014 is table stakes. Carlini demonstrated this when he had 16 parallel agents build a C compiler: embarrassingly simple prompts, but carefully designed test infrastructure. \"Most of my effort went into designing the environment around Claude \u2014 the tests, the environment, the feedback.\"\nThe harder problem is calibrating the sensor and actuator with knowledge specific to your system. This is where most people get stuck, and where they blame the agent.\n\"It keeps doing the wrong thing. It doesn't understand our codebase.\" The diagnosis is almost always wrong. The agent isn't failing because it lacks capability. It's failing because the knowledge it needs \u2014 what \"good\" means for your system, which patterns your architecture rewards, which it avoids \u2014 is locked inside your head, and you haven't externalized it. Agents don't learn through osmosis. If you don't write it down, the agent makes the same mistakes on the hundredth run as the first.\nThe work is making your judgment machine-readable. Architecture docs that describe actual layering and dependency direction. Custom linters with remediation instructions baked in. Golden principles that encode your team's taste. OpenAI found exactly this: they spent 20% of every Friday cleaning up \"AI slop\" \u2014 until they encoded their standards into the harness itself.\nThe only way forward\nThe practices this demands \u2014 documentation, automated testing, codified architectural decisions, fast feedback loops \u2014 were always correct. Every engineering book written in the last thirty years recommends them. Most people skip them because the cost of skipping was slow and diffuse: gradual quality decline, painful onboarding, tech debt that compounds quietly.\nAgentic engineering makes the cost extreme. Skip the documentation and the agent ignores your conventions \u2014 not on one PR, but on every PR, at machine speed, around the clock. Skip the tests and the feedback loop can't close at all. Skip the architectural constraints and drift compounds faster than you can fix it. And here's the trap: you can't use agents to clean up the mess if the agents don't know what clean looks like. Without the calibration, the machines that created the problem can't solve it either.\nThe practices haven't changed. The penalty for ignoring them has become unbearable.\nThe generation-verification asymmetry \u2014 the intuition behind P vs NP, demonstrated empirically for LLMs by Cobbe et al. \u2014 points to where this goes. Generating a correct solution is harder than verifying one. You don't need to out-implement the machine. You need to out-evaluate it: specify what \"correct\" looks like, recognize when the output misses, judge whether the direction is right.\nThe workers who designed Watt's governor didn't go back to turning valves. Not because they couldn't. Because it no longer made sense.",
+        "title": "Harness Engineering Is Cybernetics ",
+        "entities": {
+          "urls": [
+            {
+              "text": "https://github.com/anthropics/claudes-c-compiler/commit/a28ff299"
+            },
+            {
+              "text": "https://openai.com/index/harness-engineering/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2110.14168"
+            },
+            {
+              "text": "https://openai.com/index/harness-engineering/"
+            },
+            {
+              "text": "https://en.wikipedia.org/wiki/Cybernetics:_Or_Control_and_Communication_in_the_Animal_and_the_Machine"
+            },
+            {
+              "text": "https://en.wikipedia.org/wiki/P_versus_NP_problem"
+            },
+            {
+              "text": "https://en.wikipedia.org/wiki/Centrifugal_governor"
+            },
+            {
+              "text": "https://openai.com/index/harness-engineering/"
+            },
+            {
+              "text": "https://www.anthropic.com/engineering/building-c-compiler"
+            },
+            {
+              "text": "https://kubernetes.io/docs/concepts/architecture/controller/"
+            }
+          ]
+        },
+        "media_entities": [
+          "3_2030504404391194624",
+          "3_2030414996266741760"
+        ],
+        "preview_text": "Reading OpenAI's harness engineering post, I kept having a feeling I couldn't place. Then it clicked: I'd seen this pattern before. Not once \u2014 three times.\nThe first was James Watt's centrifugal",
+        "cover_media": "3_2030414846668451840"
+      },
+      "conversation_id": "2030416758138634583",
+      "edit_history_tweet_ids": [
+        "2030416758138634583"
+      ],
+      "created_at": "2026-03-07T22:54:13.000Z",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/GqhyL4KRJw",
+            "expanded_url": "http://x.com/i/article/2030414577213820928",
+            "display_url": "x.com/i/article/2030\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2030414577213820928"
+          }
+        ]
+      },
+      "id": "2030416758138634583",
+      "author_id": "2821275879",
+      "text": "https://t.co/GqhyL4KRJw"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T08:55:43.000Z",
+      "id": "2030568131320852512",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "m31uk3",
+            "id": "23966630"
+          },
+          {
+            "start": 8,
+            "end": 21,
+            "username": "pixel2Wizard",
+            "id": "426796674"
+          },
+          {
+            "start": 22,
+            "end": 27,
+            "username": "grok",
+            "id": "1720665183188922368"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "23966630",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030565127125438832"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030568131320852512"
+      ],
+      "text": "@m31uk3 @pixel2Wizard @grok haha pretty much"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T08:57:55.000Z",
+      "id": "2030568685887472069",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "m31uk3",
+            "id": "23966630"
+          },
+          {
+            "start": 8,
+            "end": 21,
+            "username": "pixel2Wizard",
+            "id": "426796674"
+          },
+          {
+            "start": 22,
+            "end": 27,
+            "username": "grok",
+            "id": "1720665183188922368"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "23966630",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030565856724619286"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030568685887472069"
+      ],
+      "text": "@m31uk3 @pixel2Wizard @grok 100%"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T09:19:56.000Z",
+      "id": "2030574228232343915",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "HieuTrLuu",
+            "id": "2444511925"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "2444511925",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030573966704922665"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030574228232343915"
+      ],
+      "text": "@HieuTrLuu Glad that you like it!"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T17:06:16.000Z",
+      "id": "2030691582165524779",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "bobsanch",
+            "id": "419263605"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "419263605",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030667634258387247"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030691582165524779"
+      ],
+      "text": "@bobsanch Thank you for the kind words!"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T17:07:48.000Z",
+      "id": "2030691968116994215",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "_kboy_",
+            "id": "1341734490"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1341734490",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030664641735458957"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030691968116994215"
+      ],
+      "text": "@_kboy_ Oh wow this is super cool! Checking it out today!!"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T17:51:46.000Z",
+      "id": "2030703035585057017",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 8,
+            "username": "dychen3",
+            "id": "2918031554"
+          },
+          {
+            "start": 9,
+            "end": 23,
+            "username": "shaunmmaguire",
+            "id": "143134601"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "2918031554",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030693866295435318"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030703035585057017"
+      ],
+      "text": "@dychen3 @shaunmmaguire \ud83e\udd23my man gets it"
+    },
+    {
+      "entities": {
+        "urls": [
+          {
+            "start": 46,
+            "end": 69,
+            "url": "https://t.co/FkkBrRVvLp",
+            "expanded_url": "https://x.com/fchollet/status/2024519439140737442",
+            "display_url": "x.com/fchollet/statu\u2026"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "totorovirus",
+            "id": "3286785824"
+          }
+        ]
+      },
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T19:13:49.000Z",
+      "id": "2030723680574341338",
+      "author_id": "2821275879",
+      "in_reply_to_user_id": "3286785824",
+      "referenced_tweets": [
+        {
+          "type": "quoted",
+          "id": "2024519439140737442"
+        },
+        {
+          "type": "replied_to",
+          "id": "2030723007627616669"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030723680574341338"
+      ],
+      "text": "@totorovirus You will then like this tweet!!\n\nhttps://t.co/FkkBrRVvLp"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "entities": {
+        "annotations": [
+          {
+            "start": 36,
+            "end": 41,
+            "probability": 0.7669,
+            "type": "Other",
+            "normalized_text": "Github"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "totorovirus",
+            "id": "3286785824"
+          }
+        ]
+      },
+      "created_at": "2026-03-08T19:33:57.000Z",
+      "id": "2030728748543480074",
+      "author_id": "2821275879",
+      "in_reply_to_user_id": "3286785824",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030728535443402798"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030728748543480074"
+      ],
+      "text": "@totorovirus \ud83e\udd23wait WTF. please post Github repo link"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-08T19:50:23.000Z",
+      "id": "2030732886324941060",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "totorovirus",
+            "id": "3286785824"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "3286785824",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030729981878558774"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030732886324941060"
+      ],
+      "text": "@totorovirus thx! will check out today"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "entities": {
+        "annotations": [
+          {
+            "start": 25,
+            "end": 28,
+            "probability": 0.58,
+            "type": "Other",
+            "normalized_text": "giga"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "_kboy_",
+            "id": "1341734490"
+          }
+        ]
+      },
+      "created_at": "2026-03-08T22:02:22.000Z",
+      "id": "2030766097583263972",
+      "author_id": "2821275879",
+      "in_reply_to_user_id": "1341734490",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030760368553791898"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030766097583263972"
+      ],
+      "text": "@_kboy_ Man this is some giga brain level prompt using control theory"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-09T01:55:24.000Z",
+      "id": "2030824743084105902",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "jmclarty",
+            "id": "12293152"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "12293152",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030824529002467804"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030824743084105902"
+      ],
+      "text": "@jmclarty yes yes yes yes yes yes yes haha"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-09T02:06:14.000Z",
+      "id": "2030827470115774531",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "jmclarty",
+            "id": "12293152"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "12293152",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030826804177436859"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030827470115774531"
+      ],
+      "text": "@jmclarty my man knows way more about it than I do. I was mostly vibing haha"
+    },
+    {
+      "conversation_id": "2030416758138634583",
+      "created_at": "2026-03-09T02:51:25.000Z",
+      "id": "2030838840760717725",
+      "author_id": "2821275879",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "dexhunt3r",
+            "id": "1272628117954158593"
+          },
+          {
+            "start": 11,
+            "end": 20,
+            "username": "karpathy",
+            "id": "33836629"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1272628117954158593",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2030838512057282769"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2030838840760717725"
+      ],
+      "text": "@dexhunt3r @karpathy Bro that is the next thing to try for me right now. Fuck too much cool shit to try right now"
+    }
+  ],
+  "users": {
+    "2821275879": {
+      "id": "2821275879",
+      "name": "George",
+      "username": "odysseus0z"
+    },
+    "1272628117954158593": {
+      "id": "1272628117954158593",
+      "name": "Dex",
+      "username": "dexhunt3r"
+    },
+    "1760202241925902337": {
+      "id": "1760202241925902337",
+      "name": "Xinran.Z",
+      "username": "Xander_zzzzz"
+    },
+    "12293152": {
+      "id": "12293152",
+      "name": "Jeff",
+      "username": "jmclarty"
+    },
+    "1341734490": {
+      "id": "1341734490",
+      "name": "Boateng",
+      "username": "_kboy_"
+    },
+    "3286785824": {
+      "id": "3286785824",
+      "name": "Jinsuk",
+      "username": "totorovirus"
+    },
+    "2918031554": {
+      "id": "2918031554",
+      "name": "Daniel Chen",
+      "username": "dychen3"
+    },
+    "419263605": {
+      "id": "419263605",
+      "name": "Robert Sanchez",
+      "username": "bobsanch"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1629286148802752513": {
+      "id": "1629286148802752513",
+      "name": "SocialSavvy",
+      "username": "SocialSavvy8"
+    },
+    "1043034122": {
+      "id": "1043034122",
+      "name": "Swamp Savant",
+      "username": "swamp_savant"
+    },
+    "1494553265207328770": {
+      "id": "1494553265207328770",
+      "name": "vhscom",
+      "username": "vhsdev"
+    },
+    "2444511925": {
+      "id": "2444511925",
+      "name": "Lewis",
+      "username": "HieuTrLuu"
+    },
+    "23966630": {
+      "id": "23966630",
+      "name": "Luke Jackson",
+      "username": "m31uk3"
+    },
+    "426796674": {
+      "id": "426796674",
+      "name": "PixelWizard",
+      "username": "pixel2Wizard"
+    },
+    "1588037175769108480": {
+      "id": "1588037175769108480",
+      "name": "biglootpig",
+      "username": "beeeeeeeegyoshi"
+    }
+  },
+  "thread_fetch_error": null
+}
