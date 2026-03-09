@@ -1,14 +1,14 @@
 ---
-description: Formalises agent orchestration as the select/execute/absorb loop over bounded context and argues that the orchestrator's selection function (what to include, how to frame it) is where all the optimisation lives
+description: Formalises agent orchestration as the select/execute/absorb loop over bounded context — analyses what makes selection hard (framing, dual cost, sequential dependence, bounded selector), the orchestrator's dilemma, and why selection dominates the other loop functions
 type: note
 traits: []
 areas: [computational-model]
 status: seedling
 ---
 
-# Agent capability is bottlenecked by selection over bounded context
+# Bounded-context orchestration model
 
-An agentic system's capability depends on model quality, tool access, and many engineering choices. But given a fixed model and toolset, the dominant variable is **how well the orchestrator selects what goes into each bounded context window** — what to include, how to frame it, and when to stop. This note formalises that claim.
+Since [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), agent orchestration is fundamentally about selecting what goes into each bounded context window — what to include, how to frame it, and when to stop. This note formalises that as the select/execute/absorb loop and analyses its properties.
 
 [Frontloading](./frontloading-spares-execution-context.md) is a single step: pre-compute static parts, insert results, hand to the LLM. But real agentic work is not a single step. The caller discovers what's relevant, delegates a piece, absorbs results, discovers more, delegates again. The single frontloading step generalises to a loop:
 
@@ -59,7 +59,7 @@ The loop has four functions: `select`, `execute`, `absorb`, and `satisfied`. All
 - **Absorb is selection applied to results.** The orchestrator deciding what to keep from results exercises the same judgment as deciding what to include — both are filtering under bounded context. The mechanism is [distillation](./distillation.md) (targeted extraction shaped by the orchestrator's context budget), but the skill it draws on is the same as `select`: what matters given the goal and the budget? Not every absorption is distillation — raw appending is possible — but effective absorption under bounded context requires it. Poor absorption degrades future selections.
 - **Satisfied is typically lightweight.** Knowing when to stop matters, but for most tasks it's a cheaper judgment than per-iteration selection. (Exception: verification-heavy tasks where the satisfaction check itself dominates — correctness proofs, completeness checks, multi-criteria evaluation.)
 
-The title claim is therefore conditional: given a fixed model, selection quality is the primary bottleneck. Across models, execution quality also matters — a weaker model extracts less from the same selection. The claim is about what the orchestrator controls, not about what's universally true.
+This is conditional on a fixed model: given the same model, selection quality is the primary bottleneck. Across models, execution quality also matters — a weaker model extracts less from the same selection. The argument is about what the orchestrator controls, not about what's universally true.
 
 ## What optimality means here
 

@@ -46,7 +46,7 @@ The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB
 
 - [Oracle-strength spectrum](../notes/oracle-strength-spectrum.md) — **exemplifies**: ConvexBench has a perfect hard oracle: DCP composition rules mechanically verify labels with zero judgment. Exemplifies the hard-oracle end of the spectrum and shows how hard oracles enable rigorous benchmarking.
 
-- [Agent capability is bottlenecked by selection over bounded context](../notes/agent-capability-is-bottlenecked-by-selection-over-bounded-context.md) — **exemplifies**: The agentic framework with focused context is a concrete instance of the select/execute/absorb loop. Each recursive step selects what to include (only direct dependencies), executes in a clean sub-agent frame, absorbs the result, and feeds it forward. Recovery of full performance validates the claim that the loop works because of clean frame isolation.
+- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **exemplifies**: The agentic framework with focused context is a concrete instance of the select/execute/absorb loop. Each recursive step selects what to include (only direct dependencies), executes in a clean sub-agent frame, absorbs the result, and feeds it forward. Recovery of full performance validates the claim that the loop works because of clean frame isolation.
 
 - [Crystallisation](../notes/crystallisation.md) — **exemplifies**: The external AST parsing tool is crystallisation — a deterministic code solution replacing LLM interpretation for the structural parsing sub-problem. The parsing specification IS the problem (parenthesis matching, operator scope), making it a natural crystallisation candidate.
 
