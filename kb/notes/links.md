@@ -16,7 +16,7 @@ Links are the edges of the knowledge graph. Every link is a decision point for t
 
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
 - [two-kinds-of-navigation](./two-kinds-of-navigation.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
-- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible
+- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible (now in [maintenance](./kb-maintenance.md))
 
 ## Decisions
 

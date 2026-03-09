@@ -17,9 +17,6 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries, nested topology, and exclusion rules
 - [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
-- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits (orphan/raw text scans) should live in externally triggered operations, not always-loaded routing docs
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures in kb/instructions/
-- [entropy-management-must-scale-with-generation-throughput](./entropy-management-must-scale-with-generation-throughput.md) — cleanup throughput must match generation throughput; agents replicate patterns including bad ones, so without proportional maintenance quality degrades with volume
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — deriving architectural requirements from concrete user stories decomposed into step-by-step context needs; confirms the loading hierarchy
 - [scenarios](./scenarios.md) — concrete use cases the knowledge system must serve
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
@@ -38,15 +35,12 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [design-methodology-borrow-widely-filter-by-first-principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — borrow from software engineering, library science, knowledge management — but filter through first principles before adopting
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — since agents never internalize, the harness should inject context automatically rather than relying on agent initiative
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — reusable distilled procedures in kb/instructions/ — same format as skills but without activation triggers; invoked when a human points the agent at them
-- [traversal-improves-the-graph](./traversal-improves-the-graph.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
-
 ## Evaluation
 
 - [what-works](./what-works.md) — proven patterns: prose-as-title, template nudges, frontmatter queries, discovery-first
 - [what-doesnt-work](./what-doesnt-work.md) — anti-patterns and insufficient evidence: auto-commits, queue overhead
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
-- [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading; the QA layer between structural validation and full corpus consistency
 
 ## Design Principles
 
@@ -64,10 +58,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the KB already learns through manual human+agent work; the open problem is automating the judgment-heavy mutations (connections, groupings, synthesis)
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — a Claw's learning must improve action capacity (classification, planning, communication), not just retrieval; needs different knowledge types and evaluation criteria
-- [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals to address the learning loop's quality gates problem
-- [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — as the KB grows, /connect retrieves too many candidates; composite note scores filter and rank before agent evaluation
 - [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — /connect's dual discovery and articulation testing are corpus-agnostic, so deep search means temporarily expanding the corpus with web results
-- [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags notes that may be stale, analogous to make's rebuild logic
 
 ## Decisions
 
@@ -86,4 +77,5 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [learning-theory](./learning-theory.md) — the learning mechanisms (stabilisation, crystallisation, distillation) that KB operations instantiate
 - [computational-model](./computational-model.md) — PL concepts (scheduling, partial evaluation, scoping) that inform KB architecture; the scheduling notes moved here
 - [links](./links.md) — linking methodology, navigation, and link contracts
+- [maintenance](./kb-maintenance.md) — detection, operations, and dynamics that keep the KB healthy over time
 - [related-systems](./related-systems/related-systems-index.md) — external system comparisons

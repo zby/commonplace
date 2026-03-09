@@ -2,7 +2,7 @@
 description: An agent trusts an index as exhaustive — a missing entry doesn't trigger search, it makes the note invisible
 type: note
 traits: []
-areas: [links]
+areas: [kb-maintenance]
 status: current
 ---
 
@@ -34,4 +34,4 @@ This observation draws on arscontexta methodology research ("stale navigation ac
 
 Topics:
 
-- [links](./links.md)
+- [maintenance](./kb-maintenance.md)

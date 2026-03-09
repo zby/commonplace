@@ -2,7 +2,7 @@
 description: Catalogues graph-topology, content-proxy, and LLM-hybrid signals that could be combined into a weak composite oracle to drive a mutation-based KB learning loop without requiring usage data.
 type: note
 traits: []
-areas: [kb-design]
+areas: [kb-maintenance]
 status: speculative
 ---
 
@@ -156,4 +156,4 @@ Relevant Notes:
 
 Topics:
 
-- [kb-design](./kb-design.md)
+- [maintenance](./kb-maintenance.md)

@@ -1,6 +1,7 @@
 ---
 description: Structured templates like Evidence/Reasoning sections steer autoregressive generation toward higher-quality training data (scientific papers, legal analyses) rather than unstructured web text — the structure acts as a distribution selector
 type: note
+traits: [has-external-sources]
 areas: [type-system]
 status: seedling
 ---
@@ -13,7 +14,12 @@ The structure acts as a distribution selector. A free-form prompt might draw fro
 
 This argument is independent of [failure-mode transfer](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md). Even if LLMs had no human-like failure modes at all, the distribution-selection effect would still apply: structured context activates structured training data, which tends to be higher quality. And it's independent of [readability for humans](./structured-output-is-easier-for-humans-to-review.md) — the quality improvement happens in the generation process itself, before any human reads the output.
 
+The epiplexity framework ([Finzi et al., 2026](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md)) provides formal grounding. Epiplexity measures structurally learnable content within computational bounds, and one of its core results is that data ordering affects learning — the same data presented in different arrangements exposes different extractable structure to a bounded learner. Structured templates work by the same mechanism: they reorder and partition the generation task so that at each point, the model's bounded computation can extract more structure from its training distribution. The distribution-selection metaphor is what epiplexity formalises.
+
 ---
+
+Sources:
+- Finzi et al. (2026). [From entropy to epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) — formalises why data ordering and structure affect extractable information for bounded learners.
 
 Relevant Notes:
 

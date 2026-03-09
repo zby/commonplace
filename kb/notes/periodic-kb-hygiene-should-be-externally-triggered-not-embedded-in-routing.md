@@ -2,7 +2,7 @@
 description: Periodic hygiene checks belong in externally triggered operations (user request, scheduler, CI), not in always-loaded routing instructions
 type: note
 traits: []
-areas: [kb-design]
+areas: [kb-maintenance]
 status: current
 ---
 
@@ -27,4 +27,4 @@ Relevant Notes:
 
 Topics:
 
-- [kb-design](./kb-design.md)
+- [maintenance](./kb-maintenance.md)

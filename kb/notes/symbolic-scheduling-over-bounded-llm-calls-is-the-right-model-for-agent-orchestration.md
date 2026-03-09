@@ -1,7 +1,7 @@
 ---
 description: Agent orchestration is best modelled as an unbounded symbolic scheduler making bounded LLM calls; the scheduler chooses decompositions, prompt representations, and intermediate artifacts over its evolving symbolic state
 type: note
-traits: []
+traits: [has-external-sources]
 areas: [computational-model]
 status: seedling
 ---
@@ -134,6 +134,14 @@ remaining iterations:
 
 Every step — planning, filtering, clustering, summarising, synthesising — is an iteration of the same flat loop. The hierarchical structure exists only as sub-goals and artifacts in `K`. Several [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) generalise from this pattern.
 
+## Empirical exemplars
+
+Two sources demonstrate the clean model in practice.
+
+ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) implements the model for compositional convex-function verification. The symbolic scheduler decomposes nested functions into an AST, then issues bounded LLM calls for each sub-function with only its direct dependencies in context. This "agentic reasoning with focused context" recovers F1=1.0 at all composition depths from F1≈0.2 under flat accumulation — despite using only 5,331 tokens. The scheduler handles decomposition, dependency tracking, and result assembly; the LLM handles only the semantic judgment ("is this sub-function convex?").
+
+MAKER ([Meyerson et al., 2025](../sources/meyerson-maker-million-step-llm-zero-errors.md)) pushes the model to its extreme: maximal decomposition (m=1, one step per bounded call) solves 1,048,575-step Towers of Hanoi with zero errors. The symbolic scheduler holds the full state (disk positions, move history), constructs each prompt with only the current configuration, and applies voting and red-flagging to LLM responses before absorbing results. Cost scales O(s ln s) — log-linear with task length — where single-agent approaches degrade exponentially. The system demonstrates that when bookkeeping stays in the scheduler and bounded calls handle only per-step judgment, task length ceases to be the binding constraint.
+
 ## Scope and open questions
 
 The full global optimisation problem is probably too rich for clean strategy theorems: goals are underspecified, LLM calls are noisy, and decomposition is itself part of the search space. But that does not make the model useless. It is still strong enough to support **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another.
@@ -146,6 +154,10 @@ Frontloading is the clearest example. If a sub-procedure can be executed before 
 - What restrictions on the model (fixed decomposition templates, bounded branching, finite sub-goal depth) yield tractable optimisation while preserving enough expressiveness to cover practical agent tasks?
 
 ---
+
+Sources:
+- Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — scoped recursion with focused context as a clean-model implementation for compositional reasoning.
+- Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — maximal decomposition (m=1) as extreme clean-model instantiation; O(s ln s) cost scaling.
 
 Relevant Notes:
 

@@ -78,6 +78,8 @@ Relevant Notes:
 - [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals
 - [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — suggestive empirical evidence that capability gains and reliability gains track independently; discrimination lags calibration
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — exemplifies: (p,δ,k)-satisfaction parameterizes oracle strength per constraint; hard constraints are hard oracles, soft constraints with probabilistic thresholds are soft oracles
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — grounds: the implicit thesis that oracle quality (verification infrastructure), not generation quality, is the leverage point — structural tests and linter rules as the bottleneck
 
 Topics:
 

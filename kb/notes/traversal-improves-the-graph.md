@@ -2,7 +2,7 @@
 description: Every traversal is a read-write opportunity — agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 type: note
 traits: []
-areas: [kb-design]
+areas: [kb-maintenance]
 status: seedling
 ---
 
@@ -45,4 +45,4 @@ Relevant Notes:
 
 Topics:
 
-- [kb-design](./kb-design.md)
+- [maintenance](./kb-maintenance.md)

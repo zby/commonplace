@@ -2,7 +2,7 @@
 description: Catalogue of periodic KB maintenance operations and distillation status, used as a staging ground before promotion into kb/instructions procedures
 type: note
 traits: [has-implementation]
-areas: [kb-design]
+areas: [kb-maintenance]
 status: current
 ---
 
@@ -86,4 +86,4 @@ Relevant Notes:
 
 Topics:
 
-- [kb-design](./kb-design.md)
+- [maintenance](./kb-maintenance.md)

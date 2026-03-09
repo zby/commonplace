@@ -64,6 +64,8 @@ Relevant Notes:
 - [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — generalizes: the maturation trajectory (instruction → script) is spec mining applied to methodology; both share the same crystallisation trigger ("a pattern has emerged from repeated execution")
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — exemplifies: the judgment/verification gradient explains why automated link generation (judgment operation) degrades quality while automated link validation (verification operation) preserves it
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: 169 annotated commits across 10 actively maintained AGENTS.md files show add-then-modify dominance (Add 78, Modify 59, Remove 23, Remove-section 2), confirming the maturation trajectory empirically
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — formalizes: hard/soft constraint vocabulary and Drift Bounds Theorem (D*=α/γ) provide mathematical grounding for the enforcement gradient; maps warning hooks to soft constraints with recovery windows
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: three harness pillars (instructions → structural tests → automated cleanup agents) map to the stabilisation gradient; "every mistake is a harness bug" is the maturation trajectory in practitioner language
 
 Topics:
 

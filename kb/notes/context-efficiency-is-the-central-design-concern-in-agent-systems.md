@@ -14,6 +14,8 @@ This is also an application of [solve low-degree-of-freedom subproblems first to
 
 Anthropic's engineering team has converged on the same framing, defining **context engineering** as "strategies for curating and maintaining the optimal set of tokens during LLM inference" and describing context as "a critical but finite resource" with an **attention budget** that "every token depletes" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)).
 
+Independent practitioner convergence comes from OpenAI's Codex team, where shipping 1M lines of agent-generated code required a 100-line AGENTS.md as a router with pointers to deeper docs — "a map, not a manual" — because the bottleneck was not model capability but the structure of what loaded into context ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)).
+
 One property of the medium intensifies this scarcity: natural language has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md) with no enforced boundaries — not between instructions and data ([homoiconicity](./llm-context-is-a-homoiconic-medium.md)), not between scopes, not between priority levels. Extra context doesn't just waste space — it can dilute instructions, contaminate scopes, and distort interpretation.
 
 ## Two dimensions of context cost
@@ -22,7 +24,7 @@ Context efficiency is not only about how many tokens are in the window. It is al
 
 ### Volume: how many tokens
 
-More tokens dilute attention. The "lost in the middle" finding ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) established primacy and recency bias. Anthropic calls this **context rot** — degradation in recall and reasoning as the window fills. The resource doesn't just run out; it degrades before it runs out.
+More tokens dilute attention. The "lost in the middle" finding ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) established primacy and recency bias. Anthropic calls this **context rot** — degradation in recall and reasoning as the window fills. The resource doesn't just run out; it degrades before it runs out. Practitioner evidence confirms dilution as the primary concern: Koylan's Personal Brain OS reduced token usage by 40% by splitting merged modules into isolated scopes ([Koylan, 2026](../sources/koylanai-personal-brain-os.md)) — a pure volume intervention with outsized impact on agent reliability.
 
 ### Complexity: how hard the tokens are to use
 
@@ -63,6 +65,8 @@ Sources:
 - Epoch AI (2025). [LLMs now accept longer inputs, and the best models can use them more effectively](https://epoch.ai/data-insights/context-windows).
 - Liu et al. (2023). [Lost in the middle: how language models use long contexts](https://arxiv.org/abs/2307.03172).
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — empirical evidence that compositional depth, not token count, drives reasoning degradation.
+- Lopopolo (2026). [Harness engineering: leveraging Codex in an agent-first world](../sources/harness-engineering-leveraging-codex-agent-first-world.md) — independent practitioner convergence on context-as-scarce-resource from 1M LOC agent-generated codebase.
+- Koylan (2026). [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.md) — 40% token reduction from module isolation demonstrates volume-dimension context efficiency.
 
 Relevant Notes:
 
@@ -77,6 +81,8 @@ Relevant Notes:
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — intensifies: instructions and data compete as equal tokens with no priority mechanism
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — intensifies: extra context distorts interpretation, not just wastes space
 - [Minimum Viable Ontology / Domain Maps](../sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) — exemplifies: MVO is distillation under context-efficiency pressure — compress domain knowledge into the smallest vocabulary that fits the context window
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "give Codex a map, not a 1,000-page instruction manual" is independent practitioner convergence on context scarcity as the binding constraint
+- [Epiplexity (Bates et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: formalizes the complexity dimension of context cost — epiplexity quantifies structural accessibility under computational bounds, giving theoretical backing to "how hard the tokens are to use"
 
 Topics:
 

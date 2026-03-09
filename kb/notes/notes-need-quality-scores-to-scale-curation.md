@@ -3,7 +3,7 @@ description: As the KB grows, /connect will retrieve too many candidates — not
 type: note
 traits: []
 status: seedling
-areas: [kb-design]
+areas: [kb-maintenance]
 ---
 
 # Notes need quality scores to scale curation
@@ -71,4 +71,4 @@ Relevant Notes:
 
 Topics:
 
-- [kb-design](./kb-design.md)
+- [maintenance](./kb-maintenance.md)

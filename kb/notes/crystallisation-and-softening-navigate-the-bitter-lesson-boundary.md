@@ -1,7 +1,7 @@
 ---
 description: Since you can't identify which side of the bitter lesson boundary you're on until scale tests it, practical systems must crystallise and soften — with spec mining avoiding the vision-feature failure mode
 type: note
-traits: []
+traits: [has-external-sources]
 areas: [learning-theory]
 status: current
 ---
@@ -33,6 +33,10 @@ The vision researchers made this bet at maximum disadvantage. They formalized su
 
 But it's still a bet. A mined spec might capture an accidental regularity — a pattern that holds on the observed data but isn't what makes the system work. [Softening signals](./operational-signals-that-a-component-is-a-softening-candidate.md) are how you detect a losing bet: distribution shift, paraphrase brittleness, and isolation-vs-integration gaps reveal when a crystallised component encodes an accident rather than a spec.
 
+Two formal results help bound when crystallisation bets are safe. The epiplexity framework ([Finzi et al., 2026](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md)) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds). High-epiplexity regularities are genuinely structural — crystallising them is safer because they reflect real patterns, not artefacts of the observer's computational budget. Low-epiplexity patterns that appear regular may be accidents visible only at current scale.
+
+The induction bias results ([Ebrahimi et al., 2026](../sources/induction-bias-sequence-models-ebrahimi-2026.md)) provide evidence from the other direction: for calculator-class state tracking, architectural induction bias (step-by-step decomposition) is a permanent advantage, not a temporary one that scale dissolves. Transformers show sharing factor κ ≈ 1 or κ < 1 across all supervision formats — they learn length-specific solutions in isolation, with training diversity actively hurting (κ = 0.28 for CoT). This means crystallisation bets in the arithmetic regime are not merely safe-for-now; the step-by-step structure that crystallisation encodes is the kind of regularity that persists under scaling.
+
 ## Working heuristics
 
 1. **Crystallise for current leverage, not permanence.** A test that checks "does this function return the right number" is in the arithmetic regime. A convention that says "always decompose agents into these three phases" is probably a vision feature. Crystallise both — but expect the second kind to eventually soften.
@@ -42,6 +46,10 @@ But it's still a bet. A mined spec might capture an accidental regularity — a 
 3. **Watch for composition failure as a softening signal.** If crystallised conventions don't compose into better systems, that's the signal to soften — replace the rigid decomposition with a learned one.
 
 ---
+
+Sources:
+- Finzi et al. (2026). [From entropy to epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) — formal framework distinguishing learnable structure from observer-relative artefacts; grounds when crystallisation targets real patterns.
+- Ebrahimi et al. (2026). [On the "induction bias" in sequence models](../sources/induction-bias-sequence-models-ebrahimi-2026.md) — 190K training runs showing architectural induction bias is permanent for calculator-class tasks; crystallisation bets in the arithmetic regime persist under scaling.
 
 Relevant Notes:
 

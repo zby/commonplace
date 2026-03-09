@@ -1,7 +1,7 @@
 ---
 description: "Operationalizes crystallisation by extracting deterministic verifiers from observed stochastic behavior — the mechanism that converts blurry-zone components into calculators"
 type: note
-traits: []
+traits: [has-external-sources]
 areas: [learning-theory]
 status: current
 ---
@@ -36,6 +36,8 @@ For an agentic system:
 4. If no → the failure mode stays in the learned regime, but you now have a regression test (partial crystallisation).
 5. Repeat. The calculator surface grows monotonically.
 
+The Codex team's harness engineering report ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)) documents this workflow at production scale. Early on, 20% of engineering time (Fridays) went to manually cleaning "AI slop" — observing failure patterns. The team then crystallised those observations into structural tests and linter rules whose error messages teach the fix, and finally automated the observation step itself with background cleanup agents that scan for drift and open refactoring PRs. The progression — manual observation, extracted rules, automated monitoring — is the spec mining loop completing.
+
 ## Risks
 
 - Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a "vision feature" — a plausible theory that scale will eventually outperform.
@@ -48,8 +50,18 @@ For an agentic system:
 
 ---
 
+Sources:
+- Lopopolo (2026). [Harness engineering: leveraging Codex in an agent-first world](../sources/harness-engineering-leveraging-codex-agent-first-world.md) — production-scale spec mining: manual failure observation → structural tests → automated cleanup agents.
+
 Relevant Notes:
 
+- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — foundation: crystallisation says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
+- [bitter-lesson-boundary](./bitter-lesson-boundary.md) — motivation: spec mining manufactures new calculators by converting implicit specs from the blurry zone into the calculator regime
+- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — mechanism: spec mining moves components from soft/delayed oracle toward hard oracle; each mined spec is a new verification target
+- [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — amplification: mined specs create oracles with TPR > FPR that error correction can then boost through decorrelated repetition
+- [operational-signals-that-a-component-is-a-softening-candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — risk mitigation: softening signals detect when a mined spec encodes an accidental regularity rather than a genuine spec
+- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — parallels: the maturation trajectory (instruction → script) is spec mining applied to methodology rather than system behavior
+- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — enables: mined specs produce inspectable, testable, revertable artifacts — inspectability is what makes them falsifiable
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallels: case law stabilisation (courts converging on one reading of a statute) is spec mining in a legal medium
 
 Topics:
