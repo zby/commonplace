@@ -36,6 +36,8 @@ This is a more mature position on the specification problem. Agile implicitly as
 
 Both innovations are responses to the same underlying problem: natural language lacks the precise semantics needed for unambiguous specification. Waterfall tried to solve this by demanding complete specs upfront. Formal methods tried to solve it by abandoning natural language for mathematics. Agile and deploy-time learning solve it by accepting the imprecision and building a process that learns its way to the right interpretation incrementally — through deployment, not through specification.
 
+Moreover, what agile calls "changing requirements" [partly conflates genuine change with late-surfacing disambiguation failures](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — downstream specs silently commit to one interpretation of an underspecified upstream spec, and the error only surfaces when deployed. Short iterations limit how far wrong interpretations can propagate, not just how fast teams respond to genuine change.
+
 The progression: waterfall (separate the media, specs first) → agile (co-evolve the media, code wins eventually) → deploy-time learning (co-evolve the media, both persist).
 
 ## Open Questions
