@@ -59,8 +59,8 @@ Each observation gets a short log entry: date, which failure mode, what happened
 
 Relevant Notes:
 
-- [deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md) — the verifiability gradient that motivates durable knowledge in the first place
-- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — graduation from operational space to knowledge graph is a form of stabilization
+- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient that motivates durable knowledge in the first place
+- [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — graduation from operational space to knowledge graph is a form of stabilization
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — argues these failure modes are symptoms of forcing action-oriented knowledge (preferences, procedures, precedents) into a retrieval-oriented structure
 
 Topics:

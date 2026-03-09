@@ -60,6 +60,7 @@ Relevant Notes:
 - [context loading strategy](./context-loading-strategy.md) — mirrors: the loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies) parallels the enforcement hierarchy, but for information specificity rather than practice reliability
 - [error messages that teach are a stabilisation technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the most effective enforcement artifacts simultaneously constrain and teach
 - [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — generalizes: the maturation trajectory (instruction → script) is spec mining applied to methodology; both share the same crystallisation trigger ("a pattern has emerged from repeated execution")
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — exemplifies: the judgment/verification gradient explains why automated link generation (judgment operation) degrades quality while automated link validation (verification operation) preserves it
 
 Topics:
 

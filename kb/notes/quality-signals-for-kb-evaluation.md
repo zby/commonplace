@@ -107,6 +107,14 @@ Possible calibration strategies:
 
 The fix-and-re-critique approach is itself metamorphic: you're not testing absolute quality, you're testing whether a transformation (the fix) changes the output of the evaluation. If the evaluation is stable under the fix, the original critique was noise. This also connects to the [verbatim risk](../notes/storing-llm-outputs-is-stabilization.md) — the hardest verification failure, where an agent produces reformatted repetition that passes all structural checks. Fix-and-re-critique would catch it: if the "fix" is just rephrasing and the critique finds equivalent faults, the original note was likely verbatim output disguised as synthesis.
 
+## Credibility erosion
+
+A failure mode not covered by individual signals: when enough links lead nowhere useful, the agent learns to discount *all* links, burying genuine connections under noise. This is qualitatively different from having too few links — it's worse than no linking infrastructure, because the agent still pays the cost of evaluating each pointer before deciding to ignore it.
+
+The mechanism is Goodhart's law applied to link generation: embedding-based systems inflate connection counts (the metric looks healthy) while the connections measure vocabulary overlap, not understanding. The [agentic note-taking testimony](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) describes this from the consumer side — an agent experiencing qualitative degradation as link trust erodes.
+
+This suggests the quality signals above need a *negative* signal specifically for link noise: not just "are there enough links?" but "do links that exist actually deliver?" A signal combining link follow-through rate (does the agent use the linked content after loading it?) with link articulation quality (can the relationship be stated in a sentence?) would catch credibility erosion before it becomes terminal. Without usage data, the articulation check — whether each link passes the "because" test from the metamorphic relations section — is the best available proxy.
+
 ## Open questions
 
 - Which signals are cheapest to compute? Start with those.

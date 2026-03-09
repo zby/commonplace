@@ -87,6 +87,7 @@ Relevant Notes:
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — addresses the quality gates gap: proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals that could serve as the evaluation function for the boiling cauldron, using structure alone rather than requiring usage data
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — extends: argues the retrieval-oriented framing here is one layer of a broader problem; a Claw's learning loop must also improve action capacity (classification, communication, planning)
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — confirms from the other direction: AgeMem shows RL can learn memory-management policy, but only because task completion provides a clear oracle; the KB's evaluation gap (no equivalent oracle) is the real bottleneck, not the learning mechanism
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — extends: the scaling question ("can curation survive at 10K-100K notes?") and the compounding-returns hypothesis are directly relevant to the automation challenge; the source also provides the strongest articulation of why retrieval and navigability are distinct system goals requiring different evaluation metrics
 
 Topics:
 

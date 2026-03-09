@@ -107,6 +107,7 @@ Relevant Notes:
 - [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — exemplifies: first-principles filtering is selecting for reach
 - [sift-kg](./related-systems/sift-kg.md) — contrasts: extraction-based KG produces adaptive knowledge (facts) where reach comes from aggregation, not individual edges
 - [Siftly](./related-systems/siftly.md) — contrasts: enrichment-based system produces classified artifacts, not composable reasoning with reach
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (trustworthiness): credibility erosion from noisy embedding-generated links shows what happens when the trustworthiness property breaks down — the agent discounts all links, destroying composability
 
 Topics:
 
