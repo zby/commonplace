@@ -12,12 +12,12 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory.md)
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
+- [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call/absorb loop; the computational model that follows from context scarcity
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one mechanism for isolation, using lexically scoped frames
 
 ## Scheduling & Orchestration
 
-- [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call/absorb loop; analyses what makes selection hard and why the model supports local comparative results
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — preliminary practical rules for scheduling bounded LLM calls: separate selection from joint reasoning, choose representations not subsets, save reusable intermediates in scheduler state
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies restore the clean separation to increasing degrees
 - [rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) — RLM instantiates the symbolic-scheduler model by having the LLM write the scheduler as code; achieves clean separation but discards the scheduler after each run
