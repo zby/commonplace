@@ -45,6 +45,12 @@ For how to operate in the hybrid regime where you can't perfectly identify which
 Relevant Notes:
 
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem's architecture is the predicted hybrid — arithmetic-regime operations (Add, Delete, Retrieve) composed by a learned vision-feature policy (RL-trained when-to-use)
+- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — refines: the boundary is not binary but a gradient; oracle strength determines how tightly you can iterate and thus how much of the system is in the "arithmetic" regime
+- [crystallisation and softening navigate the bitter lesson boundary](./crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md) — operationalizes: crystallise when the spec IS the problem; soften when scale reveals your spec was a theory
+- [What Survives in Multi-Agent Systems](../sources/voooooogel-multi-agent-future.ingest.md) — applies: bitter-lesson reasoning to agent infrastructure — fixed role hierarchies dissolve, filesystem and spawning survive because they are structural
+- [Induction bias in sequence models](../sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) — grounds quantitatively: kappa metric shows transformers learn length-isolated solutions (kappa ≈ 1) while RNNs share mechanisms across variations — destructive interference (kappa < 1) is concrete evidence that more data can hurt without the right architectural constraint
+- [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — exemplifies both regimes: fiscal period normalization (10,000+ company calendars) is a clean calculator-regime case; "the model will eat your scaffolding" is the softening prediction articulated as design principle
+- [MAKER: million-step zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — exemplifies the arithmetic regime at scale: decomposition to minimal subtasks with hard per-step oracles achieves zero errors over a million steps
 
 Topics:
 

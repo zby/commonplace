@@ -36,6 +36,7 @@ Relevant Notes:
 - [what works](./what-works.md) — provides the evidence base: frontmatter queries, semantic search via qmd, and progressive disclosure all work within the file-based architecture
 - [what cludebot teaches us](./what-cludebot-teaches-us.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
 - [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — independent practitioner report validating the same architectural choice at 80+ file scale
+- [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 
 Topics:
