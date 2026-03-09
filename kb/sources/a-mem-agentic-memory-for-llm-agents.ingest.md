@@ -49,7 +49,7 @@ A-MEM proposes an agentic memory system for LLM agents that applies Zettelkasten
 6. **[notes-need-quality-scores-to-scale-curation](../notes/notes-need-quality-scores-to-scale-curation.md)** — extends: A-MEM's scaling data (0.31us to 3.70us at 1M memories) quantifies the scaling advantage of embedding-based approaches. But as connections grow, the problem is not retrieval speed but evaluation quality. A-MEM sidesteps evaluation quality by never curating — it accumulates forever. Quality scores are needed precisely for the curation operations A-MEM lacks.
 
 **Source-to-source connections (3):**
-- [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — grounds: A-MEM is one of eleven systems analyzed along six architectural dimensions
+- [Agentic memory systems comparative review](../notes/related-systems/agentic-memory-systems-comparative-review.md) — grounds: A-MEM is one of eleven systems analyzed along six architectural dimensions
 - [Notes Without Reasons ingest](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — contradicts (on evaluation): the "adjacency is not connection" critique applies directly to A-MEM's untyped links, but they measure different things
 - [AgeMem ingest](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) — sibling: both agent memory systems; AgeMem learns when to use operations through RL while A-MEM uses hand-crafted heuristics
 

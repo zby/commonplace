@@ -88,7 +88,7 @@ CrewAI Memory and [ClawVault](./clawvault.md) represent two poles of agent memor
 
 Neither has a [learning theory](../learning-theory.md). ClawVault has operational patterns for what to do with knowledge (score, promote, reflect); CrewAI has engineering for how to store and retrieve it. What's missing from both is the meta-level: when should knowledge be [stabilised](../stabilisation.md) vs. kept fluid? When does a memory need to become a decision, a procedure, a constraint? These are the questions our [deploy-time learning framework](../deploy-time-learning-the-missing-middle.md) addresses.
 
-The earlier [comparative review of agentic memory systems](../../sources/agentic-memory-systems-comparative-review.md) (Mem0, Graphiti, Cognee, Letta) found all four systems converging on vector similarity for retrieval and LLM-driven extraction on save. CrewAI Memory continues this pattern — it's the most polished implementation of the same paradigm, with the composite scoring and consolidation as its distinctive contributions.
+The earlier [comparative review of agentic memory systems](./agentic-memory-systems-comparative-review.md) (Mem0, Graphiti, Cognee, Letta) found all four systems converging on vector similarity for retrieval and LLM-driven extraction on save. CrewAI Memory continues this pattern — it's the most polished implementation of the same paradigm, with the composite scoring and consolidation as its distinctive contributions.
 
 ## What to Watch
 

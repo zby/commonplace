@@ -7,6 +7,8 @@ type: index
 
 External systems doing similar work — knowledge management for AI agents, context engineering, structured note-taking. We track these not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
 
+**Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and the ingest report is the coverage. The [comparative review](./agentic-memory-systems-comparative-review.md) synthesises across both tiers. Database-backed memory systems (Mem0, Graphiti, Cognee, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in `kb/sources/`.
+
 ## Systems
 
 - [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) — skill-based context engineering reference library loaded as agent guidance; strong on operational patterns, no learning theory

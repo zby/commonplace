@@ -15,7 +15,7 @@ type: index
 - [Agentic Code Reasoning](./agentic-code-reasoning.md) *(academic-paper)*
 - [Ingest: Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) *(scientific-paper)*
 - [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.md) *(academic-paper)*
-- [The fundamental split in agent memory is not storage format but who decides what to remember](./agentic-memory-systems-comparative-review.md)
+- [Agentic memory systems comparative review](../notes/related-systems/agentic-memory-systems-comparative-review.md)
 - [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
 - [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
 - [Ingest: Cognee: Knowledge Engine for AI Agent Memory](./cognee-knowledge-engine.ingest.md) *(tool-announcement)*
