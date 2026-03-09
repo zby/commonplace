@@ -99,6 +99,7 @@ Relevant Notes:
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: the three levels of concreteness in that note (document types → generative processes → centers) may map to the feature/structure/generative-model hierarchy
 - [stabilisation](./stabilisation.md) — suggestive parallel: the stabilisation spectrum (constraint strength) and the discovery hierarchy (abstraction depth) are both gradients where each step trades generality for power, though they operate on different axes
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction (epiplexity)
+- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem with external support from pedagogy research (Meyer & Land's threshold concepts)
 
 Distilled into:
 

@@ -16,12 +16,13 @@ This argument is independent of [failure-mode transfer](./human-writing-structur
 
 The epiplexity framework ([Finzi et al., 2026](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md)) provides formal grounding. Epiplexity measures structurally learnable content within computational bounds, and one of its core results is that data ordering affects learning — the same data presented in different arrangements exposes different extractable structure to a bounded learner. Structured templates work by the same mechanism: they reorder and partition the generation task so that at each point, the model's bounded computation can extract more structure from its training distribution. The distribution-selection metaphor is what epiplexity formalises.
 
-**Status note:** This stays seedling deliberately. The distribution-selection mechanism is speculative — we have no direct evidence that structured templates activate higher-quality training subsets rather than simply constraining output format. The epiplexity connection is suggestive but doesn't confirm the causal claim. Past experience with `structured-claim` type showed that imposing structure can degrade quality rather than improve it, which cuts against this note's thesis.
+**Status note:** This stays seedling deliberately. The distribution-selection mechanism is partially supported but not confirmed. [Ugare & Chandra (2026)](../sources/agentic-code-reasoning.ingest.md) show that semi-formal reasoning templates yield 5-12pp accuracy gains on code verification tasks — direct evidence that structured templates improve output quality beyond what unconstrained reasoning achieves. However, the same paper shows Sonnet gains nothing from templates on code QA (84.8% vs 85.3%), and past experience with `structured-claim` type showed that imposing structure can degrade quality. The epiplexity connection is suggestive but doesn't confirm the causal claim that the mechanism is distribution selection rather than simply constraining output format. The evidence supports "structure helps sometimes" but not the stronger thesis that it works via activating higher-quality training subsets.
 
 ---
 
 Sources:
 - Finzi et al. (2026). [From entropy to epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) — formalises why data ordering and structure affect extractable information for bounded learners.
+- Ugare & Chandra (2026). [Agentic Code Reasoning](../sources/agentic-code-reasoning.ingest.md) — semi-formal templates yield 5-12pp gains on code verification; partial empirical support for the distribution-selection thesis, with a boundary condition (Sonnet non-improvement on code QA).
 
 Relevant Notes:
 
@@ -29,6 +30,7 @@ Relevant Notes:
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific)
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example: the Toulmin structure is one template that activates the distribution-selection effect
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
+- [agentic code reasoning](../sources/agentic-code-reasoning.ingest.md) — grounds: 5-12pp gains from semi-formal templates provide partial empirical support; Sonnet's non-improvement on code QA surfaces a boundary condition
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical argumentation framework behind the "Toulmin-shaped template" referenced here
 
 Topics:
