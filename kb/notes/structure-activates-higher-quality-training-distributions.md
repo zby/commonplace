@@ -37,6 +37,7 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 - [agentic code reasoning](../sources/agentic-code-reasoning.ingest.md) — grounds: 5-12pp gains from semi-formal templates provide partial empirical support; Sonnet's non-improvement on code QA surfaces a boundary condition
 - [content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) — grounds: CoT reduces content bias without degrading familiar performance; content effects survive scaling and instruction tuning, supporting structural intervention as permanent architecture
+- [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — refines: the distribution-selection effect applies differently to process constraints (activating rigorous reasoning) and output constraints (activating formally structured training data)
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical argumentation framework behind the "Toulmin-shaped template" referenced here
 
 Topics:
