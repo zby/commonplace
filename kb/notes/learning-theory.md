@@ -61,6 +61,7 @@ A third operation, distinct from both stabilisation and distillation: positing a
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits on the automation gradient
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — error correction is viable when the oracle has discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each harden a different oracle question, mapping empirical agent evaluation onto the oracle-strength spectrum
+- [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) (computational-model) — merging agent outputs propagates errors; voting discards minorities and corrects them; aggregation operation must match call relationship
 
 ## Memory & Architecture
 

@@ -34,6 +34,10 @@ Programming language concepts applied to LLM instructions and agent architecture
 - [frontloading-spares-execution-context](./frontloading-spares-execution-context.md) (kb-design) — partial evaluation applied to LLM instructions; the mechanism behind indirection elimination and build-time generation
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) (kb-design) — the cost model for indirection differs fundamentally between code and LLM instructions
 
+## Multi-Agent Aggregation
+
+- [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) — merging agent outputs (synthesis) propagates errors; voting discards minorities and corrects them; Kim et al.'s -3.5% result reflects synthesis failure, not a verdict on multi-agent error correction
+
 ## Tensions
 
 - The homoiconic medium enables extensibility (ad hoc prompts, unified calling conventions) but requires explicit scoping disciplines (lexical frames, tier separation) precisely because there are no structural boundaries. The stabilisation gradient from instructions to scripts is one response — crystallising imposes the structure the medium lacks.
