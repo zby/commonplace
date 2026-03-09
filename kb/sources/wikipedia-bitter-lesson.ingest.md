@@ -36,7 +36,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 6. **[Operational signals that a component is a softening candidate](../notes/operational-signals-that-a-component-is-a-softening-candidate.md)** -- enables. Provides testable operational signals for detecting when a crystallised component is a "vision feature" (bitter-lesson-vulnerable) rather than a "calculator" (durable). Makes the prediction actionable.
 
-7. **[Eric Evans: AI Components for a Deterministic System](../notes/related_works/evans-ai-components-deterministic-system.md)** -- contradicts. Evans' approach of freezing domain-specific taxonomies is a deliberate bet against the bitter lesson. The source predicts this will eventually be outperformed.
+7. **[Evans: AI Components for a Deterministic System](./eric-evans-ai-components-deterministic-system.ingest.md)** -- contradicts. Evans' approach of freezing domain-specific taxonomies is a deliberate bet against the bitter lesson. The source predicts this will eventually be outperformed.
 
 8. **[What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md)** -- exemplifies. Directly applies bitter lesson reasoning to multi-agent orchestration: hand-crafted hierarchies dissolve; filesystem, forking, spawning survive because they are general-purpose.
 

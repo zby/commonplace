@@ -56,10 +56,6 @@ Putting the maturity ladder in CLAUDE.md costs zero hops — it's always loaded.
 
 Decision: drop `kb/types/` as a required directory. Encode the text/note maturity boundary in CLAUDE.md. Update the installation architecture spec to match.
 
-## Naming inconsistency: related_works vs related-systems
-
-The repo has both `kb/notes/related-systems/` (documented in the architecture spec) and `kb/notes/related_works/` (undocumented, uses underscores). These should be reconciled — either merge into one or document both.
-
 ## Open Questions
 
 - Should kb/instructions/ include an install script, or is that separate tooling?

@@ -35,7 +35,7 @@ The parent note covers distribution testing ("statistical hypothesis testing, no
 
 There are two strategies for getting reliable output from a generator whose outputs vary — both because the prompt admits multiple interpretations and because each run renders differently:
 
-1. **Constrain the generator** — tighter prompts, more examples, lower temperature. Narrowing the interpretation space (more precise spec) and reducing execution variation (lower temperature) both reduce output diversity, but cap the upside. You get consistently mediocre results. Evans' framing of [separating modeling from classification](./related_works/evans-ai-components-deterministic-system.md) is a specific instance: freeze the taxonomy (constrain the interpretation space), then classify within it.
+1. **Constrain the generator** — tighter prompts, more examples, lower temperature. Narrowing the interpretation space (more precise spec) and reducing execution variation (lower temperature) both reduce output diversity, but cap the upside. You get consistently mediocre results. Evans' framing of [separating modeling from classification](../sources/eric-evans-ai-components-deterministic-system.ingest.md) is a specific instance: freeze the taxonomy (constrain the interpretation space), then classify within it.
 2. **Filter the samples** — wide interpretation space + quality gate. Keeps the upside, rejects the failures. A prompt that sometimes produces great output and sometimes garbage can outperform a "safe" prompt that always produces mediocre output — if you have a good filter.
 
 This is the generator/verifier pattern: verification is often cheaper than generation. For code, you can run tests. For text, you need the automated checks described in the testing pyramid (deterministic → LLM rubric → corpus).
@@ -58,7 +58,7 @@ Relevant Notes:
 
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the stabilization gradient with a new application: output artifacts, not just code
 - [stabilisation](./stabilisation.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
-- [evans-ai-components-deterministic-system](./related_works/evans-ai-components-deterministic-system.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
+- [Evans: AI Components for a Deterministic System](../sources/eric-evans-ai-components-deterministic-system.ingest.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
 - [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the stabilization decision this note describes
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate
 
