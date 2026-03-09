@@ -32,7 +32,7 @@ Anything that depends on the user's current request, the conversation state, or 
 
 ## The mechanism: partial evaluation or divide-and-conquer?
 
-Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading is more specifically partial evaluation — and the distinction matters because it explains why the insertion is lossless.
+Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading can also be viewed through the lens of partial evaluation.
 
 The key: LLM context is a [homoiconic medium](./llm-context-is-a-homoiconic-medium.md). Instructions and data are both natural language tokens. When you pre-compute a file listing and insert it into an instruction, the result is still a valid instruction — you've specialised a program with respect to known inputs, producing a residual program in the same medium. That's partial evaluation, not just preprocessing. In a non-homoiconic system, the pre-computed result would need a format conversion to re-enter the instruction stream; here it flows in directly because everything is text.
 
@@ -73,10 +73,11 @@ Relevant Notes:
 
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [crystallisation](./crystallisation.md) (replaces underspecified template with deterministic literal)
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity is what makes frontloading partial evaluation rather than just divide-and-conquer — the pre-computed result re-enters the instruction stream without format conversion
-- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — subsumes: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
+- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
 
 Topics:
 
