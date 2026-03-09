@@ -1,18 +1,25 @@
-site_name: Commonplace Knowledge Base
+site_name: Commonplace
 site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 theme:
   name: mkdocs
 nav:
   - Home: index.md
-  - Core:
+  - Start Here:
+      - KB Design: notes/kb-design.md
+      - Learning Theory: notes/learning-theory.md
       - Writing Guide: WRITING.md
+  - Methodology:
+      - Document System: notes/document-system.md
+      - Computational Model: notes/computational-model.md
+      - Linking Methodology: notes/links.md
+  - Browse:
       - Areas: notes/areas.md
-  - Indexes:
       - Notes Directory: notes/index.md
       - Related Systems: notes/related-systems/related-systems-index.md
       - Sources Directory: sources/index.md
-  - Operations:
+  - Maintenance:
+      - KB Maintenance: notes/kb-maintenance.md
       - Improvement Log: log.md
 hooks:
   - scripts/mkdocs_hooks.py
