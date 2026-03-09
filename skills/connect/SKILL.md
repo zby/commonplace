@@ -340,7 +340,11 @@ During Phases 1-3 you read the index, topic indexes, and many individual notes. 
 
 Append one line per observation using the format: `- path/to/note.md: what needs improving`
 
-Anything you noticed that could improve the KB is worth logging — structural issues, content quality, logical problems, redundancies. Examples include weak descriptions, topic-as-title, missing index membership, stale links, missing connections, orphan notes, errors in reasoning, style problems, duplication across notes, area gaps. Use your judgment — if it caught your attention during traversal, log it.
+Anything you noticed that could improve the KB is worth logging — structural issues, content quality, logical problems, redundancies. Examples include weak descriptions, topic-as-title, missing index membership, stale links, missing connections, orphan notes, errors in reasoning, style problems, duplication across notes, area gaps.
+
+**Abstraction opportunities** are especially worth logging: if you noticed multiple notes sharing structure that isn't yet named by any existing note, log it. The signal is link annotations that use similar language across different connections (e.g., three notes all linked as "analogous spectrum" to different targets) or the same mechanism described in different vocabulary across notes. The highest-value act in a knowledge system is creating a note that names a shared mechanism — logging the opportunity here is the capture step. Format: `- ABSTRACTION: [which notes] share [what unnamed structure]`
+
+Use your judgment — if it caught your attention during traversal, log it.
 
 ## Rules
 

@@ -1,5 +1,5 @@
 ---
-description: Critiques the topic-vs-mechanism linking dichotomy — discovery varies by abstraction depth, not link kind. The hard problem is positing a new general concept and simultaneously recognizing existing particulars as instances of it. Darwin, Fleming, and mathematical lemma extraction share this dual structure.
+description: Proposes that discovery has a dual structure — positing a new general concept while recognizing existing particulars as instances of it — and that similarity-based connections vary by abstraction depth (shared feature → shared structure → generative model), not link kind. Scoped to similarity connections; contrastive and causal links are a different axis.
 type: note
 traits: [has-external-sources]
 areas: [learning-theory]
@@ -10,7 +10,9 @@ status: seedling
 
 A common framing in Zettelkasten-adjacent writing contrasts "topical" linking (filing by category) with "semantic" or "mechanistic" linking (connecting by shared deep structure). The claim is that topical linking produces no surprise — you open the economics drawer and find economics — while mechanism-based linking engineers serendipity.
 
-This framing is useful but the dichotomy is false. Topic and mechanism are not different *kinds* of link. They are the same cognitive operation — recognizing similarity — applied at different depths of abstraction. Topic is shallow recognition (these are both about economics). Mechanism is deeper (these both describe systems that degrade under structural overload). But once you *see* the shared mechanism, linking by it is exactly as easy as linking by topic. The bottleneck is never the linking. The bottleneck is the *recognition*.
+This framing is useful but the dichotomy is false — at least for connections based on shared structure. Topic and mechanism are not different *kinds* of similarity link. They are the same cognitive operation — recognizing similarity — applied at different depths of abstraction. Topic is shallow recognition (these are both about economics). Mechanism is deeper (these both describe systems that degrade under structural overload). But once you *see* the shared mechanism, linking by it is exactly as easy as linking by topic. The bottleneck is never the linking. The bottleneck is the *recognition*.
+
+(This analysis covers similarity-based connections — the axis from surface resemblance to deep structural analogy. Knowledge systems also need contrastive links (contradicts, supersedes), causal links (caused, enabled), and temporal links (preceded). Those aren't similarity at any depth; they're different relationship types. The hierarchy below applies to the similarity axis specifically.)
 
 This matters because [controlled disorder engineers serendipity through semantic rather than topical linking](./related-systems/arscontexta.md) gets the prescription slightly wrong. Luhmann's actual move wasn't "link by mechanism instead of topic." It was **link by judgment instead of category**. A filing cabinet uses pre-determined classification. Luhmann's Zettelkasten replaces that with individual decisions: THIS note connects to THAT note for THIS specific reason. The reason might be topical, mechanistic, analogical, or contrastive — what matters is that a human judged the connection worth making and articulated why.
 
@@ -41,7 +43,9 @@ Darwin's move goes beyond lemma extraction: he didn't just find shared structure
 
 ### Fleming's discovery of penicillin
 
-This feels different — a contaminated petri dish, mold killing bacteria. Where's the "extraction"? But other microbiologists had seen mold contamination. Some had probably seen inhibition zones. Fleming's contribution was recognizing that this specific anomaly was an instance of something general — that there exists a category of substances (antimicrobials) that could be extracted, purified, and used therapeutically. The observation was particular; the insight was seeing the particular as an instance of a general category that didn't yet have a name.
+This feels different — a contaminated petri dish, mold killing bacteria. Where's the "extraction"? But other microbiologists had seen mold contamination. Some had probably seen inhibition zones. Fleming's contribution was recognizing that this specific anomaly *could be* an instance of something general — that there might exist a category of substances that could be extracted, purified, and used therapeutically.
+
+But the dual structure is less clean here than in the mathematical case. Fleming's initial recognition was narrow: this mold produces something that kills bacteria, and that's worth investigating. The full general category — antimicrobials as a therapeutic class — crystallized gradually over the next decade through the work of Florey, Chain, and others. The particular and the general didn't co-arise in a single moment; the particular prompted a *direction* and the general emerged through sustained work. Fleming's case shows the dual structure stretched across time and multiple contributors, not the tight simultaneity of lemma extraction.
 
 ## Three depths of abstraction in connection
 
@@ -53,7 +57,7 @@ These examples suggest a hierarchy of connection depth:
 | **Shared structure** | Extract a common pattern | The lemma; "both follow: load → graceful degradation → threshold → catastrophic failure" | Structural — reveals form but not cause |
 | **Generative model** | Propose an abstract machine that produces both phenomena | Natural selection; "both are outputs of: systems that optimize for efficiency under normal load sacrifice resilience to overload" | Explanatory — explains why the similarity exists and predicts new instances |
 
-Each level subsumes the previous. A generative model implies shared structure implies shared features. But they're increasingly powerful and increasingly hard to discover.
+Each level subsumes the previous. A generative model implies shared structure implies shared features. But they're increasingly powerful, increasingly hard to discover, and increasingly epistemically risky. A shared feature is easy to verify or refute. A generative model can be compellingly wrong — phlogiston, caloric theory, and luminiferous ether were all generative models that unified diverse phenomena under a single abstract machine, and all turned out to be false. The power of deep abstraction and its epistemic fragility are the same property: the model explains so much that disconfirming evidence can always be accommodated until the whole edifice collapses at once.
 
 ## The discovery problem
 
@@ -70,7 +74,7 @@ The mathematical tradition offers a partial solution: **develop vocabulary for n
 
 - Can you build practices that push connections from "shared feature" toward "generative model"? The [elaborative encoding requirement](./related-systems/arscontexta.md) pushes from bare adjacency to articulated connection. Is there an equivalent push toward deeper abstraction?
 - Two distinct discovery problems get conflated: (1) noticing that existing notes share structure (O(N^2) comparison), and (2) inventing the abstraction that makes the similarity visible (genuine theoretical creativity). These probably need different system support. LLMs might help with (1); (2) is less clear.
-- The hierarchy (feature → structure → generative model) maps loosely onto [Alexander's three levels of connection](./alexander-patterns-and-knowledge-system-design.md) (concrete → structural → vague/deep). Is this the same axis?
+- The hierarchy (feature → structure → generative model) maps loosely onto the [three levels of concreteness in the Alexander note](./alexander-patterns-and-knowledge-system-design.md) (patterns as document types → generative processes → centers strengthening centers). Is this the same axis, or just a coincidence of having three levels?
 
 ---
 
@@ -78,9 +82,13 @@ Relevant Notes:
 
 - [arscontexta](./related-systems/arscontexta.md) — refines: the "controlled disorder" claim is right about judgment-based linking but the topic-vs-mechanism framing is a false dichotomy
 - [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
-- [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: Alexander's three levels of connection may map to the feature/structure/generative-model hierarchy
-- [stabilisation](./stabilisation.md) — analogous spectrum: stabilisation grades (store output → write description → extract code) parallel the abstraction depths here
+- [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — parallels: the three levels of concreteness in that note (document types → generative processes → centers) may map to the feature/structure/generative-model hierarchy
+- [stabilisation](./stabilisation.md) — suggestive parallel: the stabilisation spectrum (constraint strength) and the discovery hierarchy (abstraction depth) are both gradients where each step trades generality for power, though they operate on different axes
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction (epiplexity)
+
+Distilled into:
+
+- [/connect skill](../../skills/connect/SKILL.md) — the "name the mechanism" insight is operationalized as abstraction opportunity logging in Phase 5 reflection
 
 Topics:
 
