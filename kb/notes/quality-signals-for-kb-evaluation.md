@@ -107,6 +107,19 @@ Possible calibration strategies:
 
 The fix-and-re-critique approach is itself metamorphic: you're not testing absolute quality, you're testing whether a transformation (the fix) changes the output of the evaluation. If the evaluation is stable under the fix, the original critique was noise. This also connects to the [verbatim risk](../notes/storing-llm-outputs-is-stabilization.md) — the hardest verification failure, where an agent produces reformatted repetition that passes all structural checks. Fix-and-re-critique would catch it: if the "fix" is just rephrasing and the critique finds equivalent faults, the original note was likely verbatim output disguised as synthesis.
 
+## Agent-centric signals (navigability)
+
+All signals above are structure-centric — they measure properties of the graph without asking whether an agent can actually use it. A-MEM's [benchmark success](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md) with embedding-based linking shows that retrieval accuracy and navigability are distinct evaluation dimensions: a system can score well on QA benchmarks while its link structure is unusable for reasoning. The [automation-quality report](../sources/a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) develops this distinction in detail.
+
+Navigability signals measure whether an agent can use the link structure to reason, not just retrieve:
+
+- **Hop cost** — how many links must an agent follow to reach relevant content from an arbitrary starting point? Lower is better, but only if hops are informative (the agent learns something at each step, not just that it took a wrong turn). Measurable by sampling random note pairs and counting traversal steps.
+- **Pruning accuracy** — can an agent correctly predict whether a link is worth following based on the link's metadata alone, without loading the target? This directly tests whether links carry enough context for the [navigation decision](./agents-navigate-by-deciding-what-to-read-next.md). Measurable by presenting link text and asking the agent to predict relevance, then comparing against actual utility.
+- **Trust calibration** — does the agent's confidence in link quality match actual link quality? The pathological case is low trust in a system with mostly good links — the credibility erosion described below. Measurable by comparing agent link-following rates against an independent quality assessment.
+- **Reasoning chain coherence** — when an agent follows a multi-hop path, does the resulting chain make structural sense? Or do hops jump between unrelated topics connected only by vocabulary overlap? Measurable by sampling 3-hop paths and evaluating whether the chain supports a coherent argument.
+
+These signals require an agent in the loop (or an LLM simulating one), making them more expensive than structural signals. But they measure what structural signals can't: whether the graph's intended design — claim titles as traversal reasoning, articulated relationships, progressive disclosure — actually works in practice.
+
 ## Credibility erosion
 
 A failure mode not covered by individual signals: when enough links lead nowhere useful, the agent learns to discount *all* links, burying genuine connections under noise. This is qualitatively different from having too few links — it's worse than no linking infrastructure, because the agent still pays the cost of evaluating each pointer before deciding to ignore it.
@@ -138,6 +151,8 @@ Relevant Notes:
 - [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern: the composite quality signal would serve as the verifier for the learning loop's mutations, and the fix-and-re-critique calibration strategy is a metamorphic test on that pattern
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — boundary condition: all signals here are retrieval/structure oriented; action capacity (classification, planning, communication) would need different quality signals
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
+- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pruning accuracy signal: link metadata must support the navigation decision without loading the target
+- [A-MEM automation-quality report](../sources/a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) — source: develops the retrieval-vs-navigability distinction that motivates the agent-centric signals section
 
 Topics:
 

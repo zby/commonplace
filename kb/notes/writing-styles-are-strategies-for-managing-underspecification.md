@@ -50,6 +50,7 @@ Relevant Notes:
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: prescriptive style is stabilisation within the instruction medium, short of extracting to code
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
+- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — grounds: the "warrant" concept used in the explanatory style description originates from Toulmin's argumentation model
 
 Topics:
 

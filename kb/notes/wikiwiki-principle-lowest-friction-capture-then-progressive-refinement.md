@@ -47,6 +47,7 @@ Relevant Notes:
 - [stabilisation and distillation both trade generality for compound](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
+- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — enables: Toulmin's argumentation model provides the Evidence/Reasoning/Caveats sections that define the top rung of the refinement ladder
 
 Topics:
 

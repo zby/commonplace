@@ -30,6 +30,7 @@ Relevant Notes:
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific at all)
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 - [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.md) — evidence: empirical demonstration of human-like content effects across three reasoning tasks, with Wason divergence as a transfer boundary
+- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the formal argumentation model used as the primary running example throughout this note
 
 Topics:
 

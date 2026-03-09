@@ -20,6 +20,7 @@ Relevant Notes:
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — complementary: a first independent argument for structured types (failure-mode transfer)
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — complementary: a second independent argument (distribution selection)
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
+- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's separation of grounds from warrant is the theoretical basis for why Evidence/Reasoning sections make review easier — each targets a different verification question
 
 Topics:
 

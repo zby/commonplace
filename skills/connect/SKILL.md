@@ -174,6 +174,16 @@ If you cannot fill in [specific reason] with something substantive, the connecti
 | synthesizes | combines insights | "emerges from combining [A](./a.md) and [B](./b.md)" |
 | enables | unlocks possibility | "makes [C](./c.md) actionable by providing..." |
 
+## Target Maturity Check
+
+For each proposed connection, check the target note's `status` field. Flag load-bearing relationships (**grounds**, **foundation**, **synthesizes**) to `seedling` or `speculative` notes — the dependency is unstable. Note the flag in the connection report:
+
+```
+- [note](kb/notes/note.md) — **grounds** ⚠️ target is seedling: [reason]
+```
+
+Additive relationships (**extends**, **exemplifies**, **enables**) to seedling/speculative notes are fine — the source note doesn't depend on the target's stability.
+
 ## Reject If
 
 - The connection is "related" without specifics

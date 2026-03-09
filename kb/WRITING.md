@@ -168,6 +168,12 @@ Every connection must articulate the relationship:
 Bad: `[note](./note.md) — related`
 Good: `[note](./note.md) — extends this by adding the runtime perspective`
 
+### Target Maturity
+
+The relationship type determines how much the linking note depends on the target's stability. **Foundation/grounds** links are load-bearing — if the target changes, the linking note's argument weakens. **Extends/exemplifies** links are additive — the linking note stands on its own regardless.
+
+When using foundation/grounds relationships to `status: seedling` or `status: speculative` notes, acknowledge the instability: either use a weaker relationship that doesn't create a dependency, or note the provisional nature in the link text (e.g., "grounds (provisional — target is speculative)").
+
 ### Dangling Link Policy
 
 Every link must point to a real file. Before creating a link, verify the target exists with `ls`. If it should exist but doesn't, create it, then link.
