@@ -29,7 +29,11 @@ Filenames use hyphens, not spaces (e.g., `my-note-title.md`).
 
 **Target: $ARGUMENTS** (exactly one note path or name — if empty, ask which note)
 
-**Step 0: Check workshop.** Look for an active workshop in the conversation context. If none is set, STOP and tell the user: "No active workshop set. Set one with: workshop is kb/work/<name>/". The connection report needs somewhere to go.
+**Step 0: Set up workshop.** Ensure the workshop directory exists:
+
+```bash
+mkdir -p kb/work/connect/
+```
 
 **Execute these steps:**
 
@@ -213,7 +217,9 @@ Write the report to the workshop directory. Derive the filename from the target 
 <workshop>/connect-report-<note-name>.md
 ```
 
-For example: `kb/work/connect-refactoring/connect-report-frontloading-spares-execution-context.md`
+For example: `kb/work/connect/connect-report-frontloading-spares-execution-context.md`
+
+After saving, tell the user: `Report saved: <full path>`
 
 ## Report Template
 

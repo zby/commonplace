@@ -65,6 +65,7 @@ The boundary: **copy what the agent reads on the hot path, reference what she co
 | Artifact | Destination | Rationale |
 |----------|-------------|-----------|
 | Directory structure | `kb/` (empty dirs) | User needs somewhere to put content |
+| `work/` directory | `kb/work/` (empty dir) | Skills write workshop artifacts here — connect reports, ingest staging |
 | Global types (`types/`) | `types/` | Agent reads for base type definitions (text, note) — at repo root for cross-collection visibility |
 | Collection types (`kb/*/types/`) | `kb/*/types/` | Agent reads constantly during creation and validation — one lookup location, no cross-tree resolution |
 | WRITING.md | `kb/WRITING.md` | Agent reads when creating any content — must be in the same tree |
@@ -114,6 +115,7 @@ commonplace/                             ← the GitHub repo
         backlog/
         active/
         completed/
+      work/                              ← workshop space (connect reports, ingest staging)
     skills/                              ← skill templates + install script
     scripts/                             ← standalone tools (index generation, topic sync, etc.)
     .claude/skills/                      ← rendered skills for commonplace's own use
@@ -140,6 +142,7 @@ my-project/
         types/                       ← copied from commonplace
       tasks/
         types/                       ← copied from commonplace
+      work/                          ← workshop space (connect reports, ingest staging)
     commonplace/                     ← framework (submodule or gitignored clone)
       types/                         ← global types (canonical source)
       kb/

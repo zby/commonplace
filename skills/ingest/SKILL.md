@@ -20,33 +20,21 @@ Parse the target to determine what to do:
 
    Parse the "Snapshot saved:" line from the output to get the file path. That becomes the input for Step 1.
 
-3. **File path** — start Step 1 immediately.
+3. **File path** — proceed to Step 1.
 
 **START NOW.**
 
 ---
 
-## Step 1: Set Up Workshop
+## Step 1: Run /connect on the Snapshot
 
-Once you have the snapshot file path (from URL resolution or direct input), create a workshop directory derived from the snapshot filename:
-
-```bash
-mkdir -p kb/work/ingest-<source-slug>/
-```
-
-For example: `kb/sources/some-article.md` → `kb/work/ingest-some-article/`
-
-The workshop holds the connection report and any other artifacts from this ingestion.
-
-## Step 2: Run /connect on the Snapshot
-
-Run discovery-only connection finding directly on the snapshot — no working copy needed:
+Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding:
 
 ```
 /connect {path to snapshot file}
 ```
 
-This produces a connection report in the active workshop: `<workshop>/connect-report-<name>.md`
+This creates a workshop at `kb/work/connect/<name>/` and saves the connection report there.
 
 The report contains:
 - Discovery trace (what was searched, what matched)
@@ -57,7 +45,7 @@ The report contains:
 
 Wait for `/connect` to complete before proceeding.
 
-## Step 3: Read Connection Report
+## Step 2: Read Connection Report
 
 Read the connection report from the workshop. Note:
 - Which `kb/notes/` files were identified as connections
@@ -66,9 +54,9 @@ Read the connection report from the workshop. Note:
 
 This is your connection context for the analysis below.
 
-## Step 4: Produce the Ingestion Report
+## Step 3: Produce the Ingestion Report
 
-Write the analysis, informed by the connections found in Steps 2-3.
+Write the analysis, informed by the connections found in Steps 1-2.
 
 ### 3.1 Classification
 
@@ -131,7 +119,36 @@ List 3-7 items, each as a one-liner with enough context to evaluate.
 Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
 [just-a-reference].
 
-### 3.5 Recommended Next Action
+### 3.5 Limitations (our opinion)
+
+Assess where the source should NOT be trusted. This is editorial judgment —
+label the section "(our opinion)". The checks differ by source type:
+
+**Scientific papers** — what was not tested:
+- Missing experimental configurations (naive baselines only, limited benchmarks)
+- Strategies known in the literature or discussed in this KB that were not tried
+- Claims that don't generalize beyond the tested configurations
+
+**Practitioner reports** — what is not visible:
+- Survivorship bias: they report what worked, not the failed attempts
+- Sample size of one: would this transfer to a different team, codebase, domain?
+- Context-specific factors they don't acknowledge (team size, model budget, existing infrastructure)
+
+**Conceptual essays / conversation threads** — what is not argued:
+- Reasoning by analogy without testing whether the analogy holds
+- Cherry-picked examples that support the thesis while ignoring counterexamples
+- Conflating naming something with explaining it
+- Unfalsifiable framings — is there any evidence that could disprove the claim?
+
+**Tool announcements / design proposals** — what is not shown:
+- Vendor bias: benchmarks chosen to flatter, no independent evaluation
+- Missing failure modes or scaling limits
+- Gaps between the announced design and what users actually experience
+
+Be specific — name what's missing, cite the KB note that discusses it if one
+exists, and state what this means for the source's conclusions.
+
+### 3.6 Recommended Next Action
 
 Pick ONE and be specific:
 
@@ -140,7 +157,7 @@ Pick ONE and be specific:
 - "Brainstorm session: this source raises questions about [topic] — explore with [specific questions]"
 - "File as reference — interesting but doesn't change our thinking or practices"
 
-## Step 5: Save the Report
+## Step 4: Save the Report
 
 Save the report next to the snapshot as `.ingest.md`:
 
@@ -153,6 +170,7 @@ The saved `.ingest.md` file should contain:
 
 ```
 ---
+description: {one-line retrieval filter — what makes this source distinctive, not a generic summary}
 source_snapshot: {input filename}
 ingested: {current UTC date}
 type: {source-type}
@@ -178,6 +196,9 @@ Author: {credibility signal}
 
 ## Extractable Value
 {numbered list of 3-7 items with effort tags}
+
+## Limitations (our opinion)
+{where should this source not be trusted — type-specific checks}
 
 ## Recommended Next Action
 {one specific action}
