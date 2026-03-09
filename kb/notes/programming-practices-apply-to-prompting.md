@@ -55,6 +55,7 @@ Relevant Notes:
 - [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts
 - [automated tests for text](./observations/automated-tests-for-text.md) — extends the testing discussion: concrete test pyramid for the doubled testing surface this note identifies
 - [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: progressive compilation applied specifically to KB methodology, with a concrete gradient (instruction -> skill -> hook -> script) and the insight that judgment-requiring operations stay at skill level permanently
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: 466 OSS projects independently apply version control, iterative refinement, and structured conventions to AI context files — empirical confirmation that programming practices transfer to prompting at scale
 
 Topics:
 

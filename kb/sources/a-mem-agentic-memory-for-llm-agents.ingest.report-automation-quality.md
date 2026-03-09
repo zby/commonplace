@@ -1,3 +1,11 @@
+---
+description: Triangulates A-MEM, Notes Without Reasons, and the open-problem note — automated linking improves retrieval (QA benchmarks) but degrades navigability (agent trust in link infrastructure); the distinction is adjacency versus connection
+type: note
+traits: [has-external-sources]
+areas: [kb-design, learning-theory]
+status: current
+---
+
 # Automated linking improves retrieval but may degrade navigability
 
 Three sources converge on a single trade-off in knowledge linking from different angles. A-MEM demonstrates empirically that automated memory evolution — constructing notes, linking by embedding similarity, and reorganizing context when new memories arrive — improves QA accuracy on long-term conversational benchmarks. Notes Without Reasons argues from first principles and agent testimony that embedding-based connections carry no reasons and erode an agent's trust in the entire linking infrastructure. The open-problem note frames the same tension structurally: the judgment-heavy mutations (connections, groupings, synthesis) are exactly the operations that automated systems execute most crudely. The question is whether these positions contradict each other or whether they measure different things.

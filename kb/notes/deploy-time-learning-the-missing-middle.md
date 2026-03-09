@@ -96,6 +96,10 @@ Deploy-time learning is a **taxonomy** (three timescales of system adaptation) a
 
 For how stabilisation resolves semantic underspecification — committing to one interpretation of an underspecified spec in a language with precise semantics — and how the stabilise/soften cycle lets systems breathe, see [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
 
+Relevant Notes:
+
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: the paper's conclusion that AI context files are "maintained software artifacts" that are "versioned, reviewed, quality-assured, and tested" is the deploy-time learning thesis stated as an empirical finding across 466 projects
+
 Topics:
 
 - [learning-theory](./learning-theory.md)
