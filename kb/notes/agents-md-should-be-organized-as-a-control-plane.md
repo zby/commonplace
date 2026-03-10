@@ -66,7 +66,7 @@ Without explicit escalation boundaries, AGENTS.md drifts into a manual.
 Concrete escalation examples:
 
 - If a task touches `kb/sources/` content and no corresponding `.ingest.md` exists, stop and run `/ingest` or load the ingestion procedure instead of improvising source classification.
-- If a write target does not map cleanly through the routing table, stop and load `kb/WRITING.md` before creating or moving files.
+- If a write target does not map cleanly through the routing table, stop and load `kb/instructions/WRITING.md` before creating or moving files.
 - If a task modifies documents in a directory with a local `types/` template, stop and load that type before editing.
 
 ## Nested AGENTS.md topology

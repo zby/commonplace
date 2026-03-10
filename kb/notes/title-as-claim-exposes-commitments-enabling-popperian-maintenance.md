@@ -25,7 +25,7 @@ Relevant Notes:
 
 Distilled into:
 
-- [WRITING.md](../WRITING.md) — the title-as-claim checklist item operationalizes this principle
+- [WRITING.md](../instructions/WRITING.md) — the title-as-claim checklist item operationalizes this principle
 
 Topics:
 

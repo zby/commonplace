@@ -4,11 +4,11 @@ Read this before creating or editing notes, ADRs, indexes, or source reviews. Fo
 
 ## Before You Write
 
-**Text files** skip this checklist entirely. A `text` file is a markdown file with no frontmatter — just create the file and write. See [document-classification](notes/document-classification.md) for the type taxonomy and [note base type](../types/note.md) for field definitions, status, and traits.
+**Text files** skip this checklist entirely. A `text` file is a markdown file with no frontmatter — just create the file and write. See [document-classification](../notes/document-classification.md) for the type taxonomy and [note base type](../../types/note.md) for field definitions, status, and traits.
 
 For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
 
-1. **[Title as claim](notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases.
+1. **[Title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases.
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
 3. **Area membership** — Is it tagged with the most precise area whose index would help a reader find related notes? (Directory indexes are auto-generated and don't count.)
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
@@ -26,7 +26,7 @@ The log is periodically reviewed and entries are either acted on (description sh
 
 ## Templates
 
-The two most common types — `note` and `structured-claim` — are inlined below. The base type specification lives in `../types/note.md` and the creation template in `../types/note.template.md`. Directory-local types live in each collection's `types/` subdirectory:
+The two most common types — `note` and `structured-claim` — are inlined below. The base type specification lives in `../../types/note.md` and the creation template in `../../types/note.template.md`. Directory-local types live in each collection's `types/` subdirectory:
 
 - `notes/types/` — `structured-claim`, `adr`, `index`, `related-system`
 - `sources/types/` — `source-review`
@@ -118,9 +118,9 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | Field | Required | Constraints |
 |-------|----------|------------|
 | `description` | Yes | Max 200 chars, must discriminate this note from similar ones |
-| `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`. See [document-classification](notes/document-classification.md) |
+| `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`. See [document-classification](../notes/document-classification.md) |
 | `traits` | No | Independently checkable properties: `has-comparison`, `has-external-sources`, `has-implementation` |
-| `areas` | No | Area indexes worth visiting from this note — tag the most precise area, not every ancestor. See [why areas exist](notes/areas-exist-because-useful-operations-require-reading-notes-together.md). |
+| `areas` | No | Area indexes worth visiting from this note — tag the most precise area, not every ancestor. See [why areas exist](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md). |
 | `status` | No | current, outdated, speculative |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
@@ -185,7 +185,7 @@ When you distill content from notes into a focused artifact (instruction, skill 
 ```markdown
 Distilled into:
 
-- [WRITING.md](../WRITING.md) — the area assignment checklist
+- [WRITING.md](../instructions/WRITING.md) — the area assignment checklist
 ```
 
 A distillation typically draws from multiple source notes. Each source gets its own "Distilled into:" link so that when any source changes, the maintainer sees the downstream artifact that may need review.
@@ -201,7 +201,7 @@ There are two kinds of indexes:
 
 The rest of this section covers area indexes.
 
-Area indexes organize notes into sets where [comparative reading](notes/areas-exist-because-useful-operations-require-reading-notes-together.md) is expected to be productive — loading the set together to detect redundancy, contradiction, tension, and merge candidates. Other uses (navigation, scoping searches) piggyback on the same boundaries.
+Area indexes organize notes into sets where [comparative reading](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) is expected to be productive — loading the set together to detect redundancy, contradiction, tension, and merge candidates. Other uses (navigation, scoping searches) piggyback on the same boundaries.
 
 ### Index Structure
 
@@ -230,7 +230,7 @@ What is unexplored or unresolved.
 
 ### Area Assignment
 
-Areas exist because [useful operations require reading notes together](notes/areas-exist-because-useful-operations-require-reading-notes-together.md) — orientation and comparative reading both need bounded, related sets.
+Areas exist because [useful operations require reading notes together](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) — orientation and comparative reading both need bounded, related sets.
 
 - **Tag the most precise area** whose index would help a reader find related notes.
 - **Don't dual-tag parent and child.** If `type-system` is a sub-area of `document-system`, tag `type-system` only. The broader area is one hop away via "Related Areas" links in the index.

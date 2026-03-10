@@ -23,7 +23,7 @@ mkdir -p types kb/notes/types kb/sources/types kb/tasks/types kb/tasks/backlog k
 touch kb/log.md
 
 # Copy operational artifacts
-cp commonplace/kb/WRITING.md kb/WRITING.md
+cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
 cp commonplace/types/* types/
 cp commonplace/kb/notes/types/* kb/notes/types/
 cp commonplace/kb/sources/types/* kb/sources/types/
@@ -54,7 +54,7 @@ for skill in commonplace/kb/instructions/*/; do
 done
 ```
 
-Codex discovers promoted skills from the repository's `.agents/skills/`, but you should still add project routing in `AGENTS.md` so it knows when to read `kb/WRITING.md`, the relevant `kb/*/types/` file, when to invoke a plain instruction under `commonplace/kb/instructions/`, and when to escalate into `commonplace/kb/` for methodology.
+Codex discovers promoted skills from the repository's `.agents/skills/`, but you should still add project routing in `AGENTS.md` so it knows when to read `kb/instructions/WRITING.md`, the relevant `kb/*/types/` file, when to invoke a plain instruction under `commonplace/kb/instructions/`, and when to escalate into `commonplace/kb/` for methodology.
 
 ### Optional: install Codex skills globally
 

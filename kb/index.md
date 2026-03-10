@@ -24,6 +24,6 @@ Commonplace is a knowledge base about building **agentic systems** — how AI ag
 - [Areas](./notes/areas.md) — all topic areas at a glance
 - [Linking methodology](./notes/links.md) — how notes connect and what link semantics mean
 - [Related systems](./notes/related-systems/related-systems-index.md) — comparisons with other knowledge and agent memory systems
-- [Writing guide](./WRITING.md) — conventions, templates, and quality checklist
+- [Writing guide](./instructions/WRITING.md) — conventions, templates, and quality checklist
 - [Notes directory](./notes/index.md) — auto-generated listing of all notes
 - [Sources](./sources/index.md) — snapshotted external sources and analyses

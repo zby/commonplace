@@ -10,7 +10,7 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 types/                       Global types (text, note)
 
 kb/                          Knowledge base
-  WRITING.md                 Writing conventions and quality checklist
+  instructions/WRITING.md     Writing conventions and quality checklist
   log.md                     Improvement log — one-line observations appended during traversal
   notes/                     Notes — the primary knowledge unit
     types/                   Note type templates (structured-claim, adr, index, ...)
@@ -74,7 +74,7 @@ Search the KB, read matching notes, follow links to deepen understanding. Link s
 ### Writing
 
 1. **Search first** — find related notes before writing
-2. **Read `kb/WRITING.md`** — it's the authority on how to write, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
+2. **Read `kb/instructions/WRITING.md`** — it's the authority on how to write, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
 3. **Read the directory type** — only if you're writing a specialized type (adr, index, related-system, or scenario in `test/scenarios/`). Skip this step for plain notes.
 4. **Write** the note
 5. **Connect** — link the new note from related notes and indexes. Use `/connect` or do it manually. Don't skip this — an unconnected note is invisible to future search.

@@ -18,7 +18,7 @@ The dependency link belongs at the source, not the target. A distillation typica
 ```markdown
 Distilled into:
 
-- [WRITING.md](../WRITING.md) — the area assignment checklist
+- [WRITING.md](../instructions/WRITING.md) — the area assignment checklist
 ```
 
 This optimizes for the primary maintenance scenario: you're editing a methodology note, you see "Distilled into: WRITING.md", you know to check whether WRITING.md needs updating. No reverse lookup needed. The reverse query ("what informed this instruction?") is cheap: `rg "WRITING.md" kb/notes/` finds all notes linking to the target. The KB is small enough that grep is the query engine.
@@ -44,7 +44,7 @@ Relevant Notes:
 
 Distilled into:
 
-- [WRITING.md](../WRITING.md) — the distillation tracking rule
+- [WRITING.md](../instructions/WRITING.md) — the distillation tracking rule
 
 Topics:
 

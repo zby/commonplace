@@ -33,14 +33,14 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 ### 4. Know the structure
 - **Context needed:** Type template for the target note type
-- **Source:** `kb/WRITING.md`
+- **Source:** `kb/instructions/WRITING.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
 - **Notes:** WRITING.md inlines the two global types (note, structured-claim). Directory-local types (adr, index, related-system) require an additional hop to `kb/notes/types/`. For the common case (note or structured-claim), one hop suffices.
 
 ### 5. Know how to write well
 - **Context needed:** Writing conventions — title-as-claim, description quality, composability
-- **Source:** `kb/WRITING.md`
+- **Source:** `kb/instructions/WRITING.md`
 - **Hops:** 0
 - **Fixed/Variable:** fixed
 - **Notes:** Same file as step 4 — already loaded. WRITING.md serves double duty: type templates and writing conventions.

@@ -15,7 +15,6 @@ The commonplace repo is itself a knowledge base — it uses its own knowledge sy
 ```
 commonplace/
     kb/
-      WRITING.md
       types/                         ← empty — see "Global types" below
       log.md                         ← improvement log (append-only)
       notes/

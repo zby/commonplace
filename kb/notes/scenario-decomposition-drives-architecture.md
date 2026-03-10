@@ -44,7 +44,7 @@ Each story involves multiple operations with different context requirements at e
 | Find related notes | Search capability + good descriptions | KB notes with frontmatter | CLAUDE.md search patterns |
 | Read related notes | The notes themselves | `kb/notes/` | Search results |
 | Know the structure | Type definition | `kb/notes/types/` | CLAUDE.md routing or WRITING.md reference |
-| Know how to write well | Writing conventions | `kb/WRITING.md` | CLAUDE.md routing |
+| Know how to write well | Writing conventions | `kb/instructions/WRITING.md` | CLAUDE.md routing |
 | Write the file | All of the above in context | — | — |
 | Connect to existing knowledge | /connect skill + index awareness | Skill body + area indexes | Skill description (always loaded) |
 

@@ -79,7 +79,7 @@ These are the real global affordances. They're thin — which is the point.
 
 The CLAUDE.md routing table and content workflow now implement this proposal:
 
-- **Global types** (`types/` at repo root) define `text` and `note`. The `note` template is inlined in `kb/WRITING.md` (per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md)), so the agent gets it in the same hop as writing conventions. This covers ~80% of writes.
+- **Global types** (`types/` at repo root) define `text` and `note`. The `note` template is inlined in `kb/instructions/WRITING.md` (per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md)), so the agent gets it in the same hop as writing conventions. This covers ~80% of writes.
 - **Directory types** (`kb/*/types/`) are loaded only when the routing table points to a specific type. The routing table says "Default `note` type" for ordinary notes and gives an explicit file path (`kb/notes/types/adr.md`) only for specialized types. The content workflow makes this explicit: "Read the directory type — only if the routing table points to a specific type template. Skip this step for plain notes."
 
 This is progressive disclosure applied to the type system: the agent always has `note`, and only loads `adr`, `structured-claim`, `index`, etc. when it's actually writing one.

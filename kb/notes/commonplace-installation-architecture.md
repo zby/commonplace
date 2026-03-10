@@ -27,7 +27,7 @@ Writing a document requires: (1) know where to put it, (2) know what structure i
 |------|-------------------|------|---------------------|
 | Route | Consult the control-plane routing table (`CLAUDE.md` or `AGENTS.md`) | 0 | Always loaded — no tool call needed |
 | Structure | Read `kb/notes/types/` | 1 | Types are in the same tree as the target — predictable path |
-| Conventions | Read `kb/WRITING.md` | 1 | Same tree, one fixed location |
+| Conventions | Read `kb/instructions/WRITING.md` | 1 | Same tree, one fixed location |
 | Write | Create file in `kb/notes/` | 1 | Direct write, no indirection |
 
 **Common case: 3 hops, all within `kb/`.** If types or WRITING.md lived in `commonplace/`, hop count stays the same but the instructions grow: the agent needs to know which tree to read from, and the control-plane routing gets more complex ("for types, look in commonplace; for content, write to kb").
@@ -68,7 +68,7 @@ The boundary: **copy what the agent reads on the hot path, reference what she co
 | `work/` directory | `kb/work/` (empty dir) | Skills write workshop artifacts here — connect reports, ingest staging |
 | Global types (`types/`) | `types/` | Agent reads for base type definitions (text, note) — at repo root for cross-collection visibility |
 | Collection types (`kb/*/types/`) | `kb/*/types/` | Agent reads constantly during creation and validation — one lookup location, no cross-tree resolution |
-| WRITING.md | `kb/WRITING.md` | Agent reads when creating any content — must be in the same tree |
+| WRITING.md | `kb/instructions/WRITING.md` | Agent reads when creating any content — must be in the same tree |
 | Methodology notes | stays in `commonplace/kb/notes/` | Fallback for edge cases where skills don't cover enough |
 | Source snapshots | stays in `commonplace/kb/sources/` | Reference material for the methodology |
 | Skill directories | stay in `commonplace/kb/instructions/`; optionally symlinked to `.claude/skills/`, `.agents/skills/`, or `$CODEX_HOME/skills` | Only promoted skills are auto-discovered; plain instruction files remain explicitly invoked procedures |

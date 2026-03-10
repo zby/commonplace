@@ -39,7 +39,7 @@ This is why falsifier blocks work: they convert criticism from "re-read and see 
      landing place (WRITING.md, skill spec, etc.) once adopted. When all
      proposals are adopted this section can be removed entirely. -->
 
-- **Falsifier blocks on claim notes** — Add a short "What would defeat this claim?" block to `note` and `structured-claim` types. The attempt to write one is diagnostic — if you cannot state what would refute a claim, that reveals something about the claim's nature (definitional? tautological? too vague to test?). Not every claim has a clean falsifier, and that's fine. The value is in the attempt, not universal coverage. Target: `kb/WRITING.md` templates.
+- **Falsifier blocks on claim notes** — Add a short "What would defeat this claim?" block to `note` and `structured-claim` types. The attempt to write one is diagnostic — if you cannot state what would refute a claim, that reveals something about the claim's nature (definitional? tautological? too vague to test?). Not every claim has a clean falsifier, and that's fine. The value is in the attempt, not universal coverage. Target: `kb/instructions/WRITING.md` templates.
 
 - **Contradiction-first connection passes** — When `/connect` discovers relationships, it should look for tension and contradiction *before* looking for agreement and extension. The current default is to find notes that "extend" or "ground" the new note. Reversing the priority means criticism is not optional — every note gets at least one check for conflict with existing claims. Target: `/connect` skill.
 

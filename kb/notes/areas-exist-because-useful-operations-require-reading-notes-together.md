@@ -7,7 +7,7 @@ status: seedling
 
 # Areas exist because useful operations require reading notes together
 
-This note is the analytical companion to [WRITING](../WRITING.md): `WRITING.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
+This note is the analytical companion to [WRITING](../instructions/WRITING.md): `WRITING.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
 
 ## The operations
 
@@ -47,7 +47,7 @@ An area defines a set of notes where reading together is expected to be producti
 
 This grounds several conventions:
 
-**Size limits follow from context limits.** The [split threshold of ~40 notes](../WRITING.md) isn't arbitrary — it's the approximate point where an area stops fitting in working context alongside the instructions and reasoning space the agent needs. An area that can't be read together can't serve either operation.
+**Size limits follow from context limits.** The [split threshold of ~40 notes](../instructions/WRITING.md) isn't arbitrary — it's the approximate point where an area stops fitting in working context alongside the instructions and reasoning space the agent needs. An area that can't be read together can't serve either operation.
 
 **Precision follows from yield.** A precise area isn't just intellectually satisfying — it's operationally necessary. An area of 48 notes where only 15 are related to each other wastes 33 notes' worth of context — noise during orientation, null results during comparative reading. Splitting into more precise areas concentrates the context budget where it's productive.
 
@@ -73,7 +73,7 @@ The area system is a form of probabilistic triage: allocate the expensive read-t
 
 **Multiple areas are fine for independent dimensions.** `areas: [kb-design, computational-model]` is fine — independent dimensions, not parent-child. The test: would comparative reading of each area surface useful tensions with this note?
 
-**Split when an area becomes imprecise.** The [~40 note threshold](../WRITING.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
+**Split when an area becomes imprecise.** The [~40 note threshold](../instructions/WRITING.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
 
 **areas.md stays flat.** All areas listed as peers. Sub-area relationships expressed in each area's "Related Areas" section, not in the hub.
 
@@ -101,7 +101,7 @@ Relevant Notes:
 
 Distilled into:
 
-- [WRITING.md](../WRITING.md) — area assignment rules, lifecycle split threshold, and areas field description
+- [WRITING.md](../instructions/WRITING.md) — area assignment rules, lifecycle split threshold, and areas field description
 
 Topics:
 

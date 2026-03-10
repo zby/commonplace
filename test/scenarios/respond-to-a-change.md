@@ -47,7 +47,7 @@ User notices an upstream change (PR, RFC, API update) or has a design idea, and 
 
 ### 6. Read writing conventions
 - **Context needed:** How to write the response document — type template, quality conventions
-- **Source:** `kb/WRITING.md`
+- **Source:** `kb/instructions/WRITING.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
 - **Notes:** Needed if the response is a KB note (analysis, ADR). May be skipped if the response is a PR comment or external message — but even then, the grounding conventions apply.

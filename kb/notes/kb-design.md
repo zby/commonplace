@@ -35,6 +35,8 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [design-methodology-borrow-widely-filter-by-first-principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — borrow from software engineering, library science, knowledge management — but filter through first principles before adopting
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — since agents never internalize, the harness should inject context automatically rather than relying on agent initiative
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — reusable distilled procedures in kb/instructions/ — same format as skills but without activation triggers; invoked when a human points the agent at them
+- [distillation-status-determines-directory-placement](./distillation-status-determines-directory-placement.md) — (seedling) hunch that procedural artifacts distilled for execution belong in kb/instructions/; the boundary is "distilled into a procedure", not just "compressed"
+
 ## Evaluation
 
 - [what-works](./what-works.md) — proven patterns: prose-as-title, template nudges, frontmatter queries, discovery-first

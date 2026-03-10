@@ -15,7 +15,7 @@ status: accepted
 When writing a note, the agent needs two things: the type template (what sections and frontmatter fields to include) and the writing conventions (title-as-claim, description quality, composability). These lived in separate files:
 
 - Type templates in `kb/notes/types/note.md` and `kb/notes/types/structured-claim.md`
-- Writing conventions in `kb/WRITING.md`
+- Writing conventions in `kb/instructions/WRITING.md`
 
 The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Since [CLAUDE.md is a router, not a manual](../context-loading-strategy.md), it points to WRITING.md for writing guidance — but WRITING.md then pointed elsewhere for the actual templates. Two hops for every write.
 
@@ -25,7 +25,7 @@ The two global types — `note` and `structured-claim` — account for ~80% of n
 
 ## Decision
 
-Inline the `note` and `structured-claim` templates directly into `kb/WRITING.md`, in a Templates section. The canonical type files in `kb/notes/types/` remain unchanged — they're still the authoritative definitions and are used by `/validate`. WRITING.md duplicates their content for loading efficiency.
+Inline the `note` and `structured-claim` templates directly into `kb/instructions/WRITING.md`, in a Templates section. The canonical type files in `kb/notes/types/` remain unchanged — they're still the authoritative definitions and are used by `/validate`. WRITING.md duplicates their content for loading efficiency.
 
 Directory-local types (`adr`, `index`, `related-system`, `source-review`, task types) are NOT inlined. They stay in their respective `types/` subdirectories. WRITING.md lists where to find them but doesn't reproduce them. These types are less common, and inlining them would bloat a file that loads for every write, not just the writes that need those types.
 
@@ -36,7 +36,7 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 - The scenario cost evaluation (`test/scenarios/write-a-note.md`) confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
 
 **Harder:**
-- Two sources of truth for the global type templates. If the template changes in `kb/notes/types/note.md`, it must also change in `kb/WRITING.md`. This is a maintenance burden, but the templates are stable — they change rarely.
+- Two sources of truth for the global type templates. If the template changes in `kb/notes/types/note.md`, it must also change in `kb/instructions/WRITING.md`. This is a maintenance burden, but the templates are stable — they change rarely.
 - WRITING.md is ~1,100 bytes larger (the two inlined templates). Since it loads for every write scenario, this adds ~1,100 bytes to every write. The hop savings (avoiding a ~400-700 byte file read plus tool call overhead) outweigh this.
 
 **Unchanged:**

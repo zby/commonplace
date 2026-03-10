@@ -15,7 +15,7 @@ CLAUDE.md is loaded into context every session. This makes it expensive — ever
 - **Search patterns** for the KB (always useful)
 - **Links to task-specific docs** that get loaded on demand
 
-It should NOT contain detailed instructions for specific tasks (how to write notes, template catalogs, link conventions). Those belong in targeted files that are read when needed — e.g. `kb/WRITING.md` for note creation.
+It should NOT contain detailed instructions for specific tasks (how to write notes, template catalogs, link conventions). Those belong in targeted files that are read when needed — e.g. `kb/instructions/WRITING.md` for note creation.
 
 ## The loading hierarchy
 
