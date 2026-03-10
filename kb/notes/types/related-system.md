@@ -31,9 +31,17 @@ After drafting the sections above, re-read the report with fresh eyes:
 - What surprises you? What triggers your curiosity?
 - Where is the cost/benefit of a design choice not obvious — what's the simpler alternative that achieves the same result?
 - For each strong claim, ask: what could this mechanism actually achieve, even if it works perfectly?
-- Investigate mechanistically. Update Core Ideas and Comparison with what you find.
 
-{This step catches claims that sound impressive but don't survive inspection. Three layers: curiosity (broad generator for surprising choices), cost/benefit (finds pointless complexity via simpler alternatives), and oracle-strength (asks what the mechanism could achieve even at its best). See `kb/work/curiosity-prompts/experiment-report.md` for the experiment behind this step.}
+Then, for each bolded phrase in Core Ideas, apply these questions:
+
+1. **What property does this claim to produce?** Name the benefit explicitly (stabilisation, verification, isolation, etc.).
+2. **Does the mechanism transform the data, or just relocate it?** If the input format equals the output format (e.g. markdown in, markdown out), the claimed property (crystallisation, compilation, distillation) may be naming, not mechanism. Check the source.
+3. **What's the simpler alternative that achieves the same result?** If a simpler mechanism produces identical behaviour, the complexity is pointless.
+4. **What could this mechanism actually achieve, even if it works perfectly?** Some mechanisms have a ceiling — e.g. symbolic checks cannot meaningfully verify freeform prose, regardless of implementation quality.
+
+Investigate mechanistically. Update Core Ideas and Comparison with what you find.
+
+{This step catches claims that sound impressive but don't survive inspection. The first pass is a broad generator (curiosity, cost/benefit, oracle-strength). The second pass forces systematic coverage — each Core Idea, not just the ones that seem interesting — and checks for representation-change illusions (mechanisms that claim transformation but just move data). See `kb/work/curiosity-prompts/experiment-report.md` for the experiment behind this step.}
 
 ## What to Watch
 
