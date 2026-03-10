@@ -24,6 +24,16 @@ last-checked: {YYYY-MM-DD}
 
 {Concrete things we could adopt — structures, patterns, framings, mechanisms. For each, note what it would look like in our system and what would need to change. Mark whether it's ready to borrow now or needs a use case first.}
 
+## Curiosity Pass
+
+After drafting the sections above, re-read the report with fresh eyes:
+
+- What surprises you? What triggers your curiosity?
+- Where is the cost/benefit of a design choice not obvious — what's the simpler alternative that achieves the same result?
+- Investigate mechanistically. Update Core Ideas and Comparison with what you find.
+
+{This step catches claims that sound impressive but don't survive mechanistic inspection — mechanisms that work correctly but add no value over simpler alternatives. See `kb/work/curiosity-prompts/experiment-report.md` for the evidence behind this step.}
+
 ## What to Watch
 
 - {How might this system evolve in ways that affect our design?}
