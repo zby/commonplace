@@ -43,6 +43,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [what-doesnt-work](./what-doesnt-work.md) — anti-patterns and insufficient evidence: auto-commits, queue overhead
 - [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — techniques from cludebot worth borrowing, what we already cover, and what to watch for at scale
+- [prompt-ablation-converts-human-insight-to-deployable-framing](./prompt-ablation-converts-human-insight-to-deployable-framing.md) — methodology for testing prompt framings: vary only the framing against a known-correct target, analyze mechanisms, deploy the winner as instruction
 
 ## Design Principles
 
