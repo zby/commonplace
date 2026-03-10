@@ -119,7 +119,16 @@ List 3-7 items, each as a one-liner with enough context to evaluate.
 Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
 [just-a-reference].
 
-### 3.5 Limitations (our opinion)
+### 3.5 Curiosity Gate
+
+Before writing Limitations, pause and re-read the source:
+
+1. **What is most surprising?** What claim, finding, or design choice is unexpected given what you know? Follow the surprise — it may reveal something the structured extraction missed.
+2. **What's the simpler account?** For the source's 1-2 strongest claims, ask: what's the simplest mechanism, explanation, or framing that produces the same outcome? If a simpler account works, the claimed sophistication is inflated.
+
+Fold findings into Extractable Value or Limitations as appropriate.
+
+### 3.6 Limitations (our opinion)
 
 Assess where the source should NOT be trusted. This is editorial judgment —
 label the section "(our opinion)". The checks differ by source type:
@@ -148,7 +157,7 @@ label the section "(our opinion)". The checks differ by source type:
 Be specific — name what's missing, cite the KB note that discusses it if one
 exists, and state what this means for the source's conclusions.
 
-### 3.6 Recommended Next Action
+### 3.7 Recommended Next Action
 
 Pick ONE and be specific:
 
