@@ -34,6 +34,10 @@ Programming language concepts applied to LLM instructions and agent architecture
 - [frontloading-spares-execution-context](./frontloading-spares-execution-context.md) (kb-design) — partial evaluation applied to LLM instructions; the mechanism behind indirection elimination and build-time generation
 - [indirection-is-costly-in-llm-instructions](./indirection-is-costly-in-llm-instructions.md) (kb-design) — the cost model for indirection differs fundamentally between code and LLM instructions
 
+## Error Correction & Reliability
+
+- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently; bridges to [learning-theory](./learning-theory.md)'s error correction framework
+
 ## Multi-Agent Aggregation
 
 - [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) — merging agent outputs (synthesis) propagates errors; voting discards minorities and corrects them; Kim et al.'s -3.5% result reflects synthesis failure, not a verdict on multi-agent error correction
@@ -46,3 +50,8 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 - [learning-theory](./learning-theory.md) — how systems learn through stabilisation, crystallisation, distillation; the computational model explains *what kind of programs* these mechanisms operate on
 - [kb-design](./kb-design.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
+
+---
+
+Agent Notes:
+- 2026-03-10: the Scheduling & Orchestration cluster plus the Multi-Agent Aggregation note form the core of a [paper outline](../work/paper-bounded-context-orchestration/outline-v2.md) presenting the scheduling model for an academic audience. The error-correction conjecture is now captured as [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md). The framework spectrum (Section 5) is not yet a standalone KB note.
