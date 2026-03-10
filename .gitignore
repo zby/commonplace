@@ -25,3 +25,6 @@ kb/work/
 
 # static site build artifacts
 site/
+
+# cloned repos for related-system reviews
+/related-systems/
