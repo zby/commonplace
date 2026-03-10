@@ -1,0 +1,309 @@
+{
+  "source": "https://x.com/amytam01/status/2031072399731675269",
+  "captured": "2026-03-10T13:19:25.932591+00:00",
+  "type": "x-article",
+  "status_id": "2031072399731675269",
+  "conversation_id": "2031072399731675269",
+  "target_post": {
+    "conversation_id": "2031072399731675269",
+    "article": {
+      "cover_media": "3_2031071892212428800",
+      "title": "When code is free, research is all that matters",
+      "plain_text": "The most important people of this new era won't be engineers; they'll be researchers. When anyone can build for free, the differentiator is knowing what's worth building and whether it\u2019s buildable at all. That's what researchers do: they take problems that might not have solutions and decide if they're worth the bet.\nThe market has priced this in for decades. Top quant firms pay $600k to undergrads who've never managed a portfolio, because someone who can reason about uncertainty well is worth more than five engineers who can implement that solution. AI labs have inherited the same dynamic at a larger scale; Meta's Superintelligence Labs has reportedly offered individual researchers packages reaching $300 million over four years. When a single training run costs hundreds of millions of dollars, a researcher who improves data efficiency by a few percent pays for themselves many times over.\nWhy is this so valuable and hard to automate? Software engineering has a defined target: the solution exists, you just have to find it. Research doesn't work that way. \"Is there a model architecture that achieves K perplexity on FineWeb in under N training hours?\" is a question you can spend a year on, and the answer might just be no. It's a version of the halting problem: you often can't know in advance whether a solution exists, let alone find it.\nHow to flip really, really valuable coins\nFor researchers, intelligence is just table stakes. What sets the best researchers apart is a willingness to stake their career on bets that might not pay off, repeatedly, and a compensation structure that enforces it. Quants get paid on P&L: if your strategies don't make money, you're out. ML researchers get promoted by shipping models that actually generalize. Mathematicians get faculty jobs by finding something genuinely new. In every case the feedback loop is: can you be right, not just once, but consistently?\nImagine research as a coin-flipping game. You\u2019re in a room with a quadrillion biased coins, and you want to maximize the number of heads in the shortest amount of time. Almost all coins are \u201cduds:\u201d they\u2019ll almost always come up tails. The novice coin-flipper might start flipping one-by-one, but heads come few and far between. The learned coin-flipper weaves through the quadrillion-coin room with a preternatural air; they flip many coins at once, which tend to come up heads time after time. What comes across as luck is really the refinement of taste: years of feeling faint differences in the weight of the metal, the subtle offsets of a mis-mint, and more. Research taste is about how well you choose your coins: how well you choose which problems are worth working on at all. When each coin is worth a million dollars, the researcher\u2019s job becomes clear: they must not only flip coins fast enough to compound what they learn, but also know which 20 are worth flipping in the first place.\nTaste transfers even as domain knowledge shifts.  Theoretical physicists become quants. Quants move into AI. Computational biologists end up running drug discovery programs that look nothing like their PhD work. As AI tools keep dropping domain-specific barriers, taste becomes the only thing left that's truly portable, and the hardest to train.\nThe shelf life of being right\nThe agentic coding tools eating SWE alive right now work precisely because engineering has a built-in feedback signal: a test to pass, a spec to meet, a benchmark to clear. You can RL on SWE-bench because the ground truth exists. Research has no equivalent. It\u2019s not clear what it means to RL on a research question, because it\u2019s not clear what definition of \u201cground truth\u201d one should optimize.\nThat doesn't mean the tools aren't getting better. Karpathy's autoresearch ran 126 experiments overnight on a single GPU: agents modifying LLM training code, running a five-minute training loop, checking if the result improved, and repeating. That's a lot more coins flipped than the average human in the same time. But look at what \u201ccoins\u201d the agent chose to flip: it explored weight decay values and initialization scales. Hyperparameter sweeps. The flipping got faster, but the weighting didn't change.\nThe best training data for research taste doesn't exist in any corpus. The most valuable research happens behind closed doors: not just successful quant strategies that never get published, but all the failures. Think internal experiments at labs that only share the wins, built upon hundreds of judgment calls about what to abandon that leave no public paper trail. You can scrape arXiv for methods and ideas; you can't scrape the hundred ideas a researcher killed before breakfast.\nSuccess makes taste legible, but it also makes it rigid. The researcher who was right about everything from 2018 to 2024 may be pattern-matching by 2026 and not know it yet. Taste is the hardest thing to train: hardest to teach a person, hardest to define a loss function for, and hardest to notice when your own has gone stale.\nThis gap will close, probably faster than most people expect. But right now the bottleneck is still the person deciding what to try, and more importantly, what to not try at all.\nCowritten by Amy Tam and E Chi (@echinaceous), with contributions from Trenton Chang (@chang_trenton). Amy Tam is an investor at Bloomberg Beta focused on the future of work, and an investor in Quadrillion. E Chi is a researcher and founder of Quadrillion. Trenton is a researcher at Quadrillion.",
+      "preview_text": "The most important people of this new era won't be engineers; they'll be researchers. When anyone can build for free, the differentiator is knowing what's worth building and whether it\u2019s buildable at",
+      "entities": {
+        "mentions": [
+          {
+            "start": 32,
+            "end": 44,
+            "username": "echinaceous"
+          },
+          {
+            "start": 86,
+            "end": 100,
+            "username": "chang_trenton"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://github.com/karpathy/autoresearch"
+          },
+          {
+            "text": "https://www.sciencedirect.com/science/article/abs/pii/S0895435616308381"
+          }
+        ]
+      }
+    },
+    "id": "2031072399731675269",
+    "created_at": "2026-03-09T18:19:30.000Z",
+    "author_id": "1105650983630041088",
+    "edit_history_tweet_ids": [
+      "2031072399731675269"
+    ],
+    "text": "https://t.co/tNsiY4fy87",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/tNsiY4fy87",
+          "expanded_url": "http://x.com/i/article/2031071818480791553",
+          "display_url": "x.com/i/article/2031\u2026",
+          "status": 500,
+          "unwound_url": "http://x.com/i/article/2031071818480791553"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "conversation_id": "2031072399731675269",
+      "article": {
+        "cover_media": "3_2031071892212428800",
+        "title": "When code is free, research is all that matters",
+        "plain_text": "The most important people of this new era won't be engineers; they'll be researchers. When anyone can build for free, the differentiator is knowing what's worth building and whether it\u2019s buildable at all. That's what researchers do: they take problems that might not have solutions and decide if they're worth the bet.\nThe market has priced this in for decades. Top quant firms pay $600k to undergrads who've never managed a portfolio, because someone who can reason about uncertainty well is worth more than five engineers who can implement that solution. AI labs have inherited the same dynamic at a larger scale; Meta's Superintelligence Labs has reportedly offered individual researchers packages reaching $300 million over four years. When a single training run costs hundreds of millions of dollars, a researcher who improves data efficiency by a few percent pays for themselves many times over.\nWhy is this so valuable and hard to automate? Software engineering has a defined target: the solution exists, you just have to find it. Research doesn't work that way. \"Is there a model architecture that achieves K perplexity on FineWeb in under N training hours?\" is a question you can spend a year on, and the answer might just be no. It's a version of the halting problem: you often can't know in advance whether a solution exists, let alone find it.\nHow to flip really, really valuable coins\nFor researchers, intelligence is just table stakes. What sets the best researchers apart is a willingness to stake their career on bets that might not pay off, repeatedly, and a compensation structure that enforces it. Quants get paid on P&L: if your strategies don't make money, you're out. ML researchers get promoted by shipping models that actually generalize. Mathematicians get faculty jobs by finding something genuinely new. In every case the feedback loop is: can you be right, not just once, but consistently?\nImagine research as a coin-flipping game. You\u2019re in a room with a quadrillion biased coins, and you want to maximize the number of heads in the shortest amount of time. Almost all coins are \u201cduds:\u201d they\u2019ll almost always come up tails. The novice coin-flipper might start flipping one-by-one, but heads come few and far between. The learned coin-flipper weaves through the quadrillion-coin room with a preternatural air; they flip many coins at once, which tend to come up heads time after time. What comes across as luck is really the refinement of taste: years of feeling faint differences in the weight of the metal, the subtle offsets of a mis-mint, and more. Research taste is about how well you choose your coins: how well you choose which problems are worth working on at all. When each coin is worth a million dollars, the researcher\u2019s job becomes clear: they must not only flip coins fast enough to compound what they learn, but also know which 20 are worth flipping in the first place.\nTaste transfers even as domain knowledge shifts.  Theoretical physicists become quants. Quants move into AI. Computational biologists end up running drug discovery programs that look nothing like their PhD work. As AI tools keep dropping domain-specific barriers, taste becomes the only thing left that's truly portable, and the hardest to train.\nThe shelf life of being right\nThe agentic coding tools eating SWE alive right now work precisely because engineering has a built-in feedback signal: a test to pass, a spec to meet, a benchmark to clear. You can RL on SWE-bench because the ground truth exists. Research has no equivalent. It\u2019s not clear what it means to RL on a research question, because it\u2019s not clear what definition of \u201cground truth\u201d one should optimize.\nThat doesn't mean the tools aren't getting better. Karpathy's autoresearch ran 126 experiments overnight on a single GPU: agents modifying LLM training code, running a five-minute training loop, checking if the result improved, and repeating. That's a lot more coins flipped than the average human in the same time. But look at what \u201ccoins\u201d the agent chose to flip: it explored weight decay values and initialization scales. Hyperparameter sweeps. The flipping got faster, but the weighting didn't change.\nThe best training data for research taste doesn't exist in any corpus. The most valuable research happens behind closed doors: not just successful quant strategies that never get published, but all the failures. Think internal experiments at labs that only share the wins, built upon hundreds of judgment calls about what to abandon that leave no public paper trail. You can scrape arXiv for methods and ideas; you can't scrape the hundred ideas a researcher killed before breakfast.\nSuccess makes taste legible, but it also makes it rigid. The researcher who was right about everything from 2018 to 2024 may be pattern-matching by 2026 and not know it yet. Taste is the hardest thing to train: hardest to teach a person, hardest to define a loss function for, and hardest to notice when your own has gone stale.\nThis gap will close, probably faster than most people expect. But right now the bottleneck is still the person deciding what to try, and more importantly, what to not try at all.\nCowritten by Amy Tam and E Chi (@echinaceous), with contributions from Trenton Chang (@chang_trenton). Amy Tam is an investor at Bloomberg Beta focused on the future of work, and an investor in Quadrillion. E Chi is a researcher and founder of Quadrillion. Trenton is a researcher at Quadrillion.",
+        "preview_text": "The most important people of this new era won't be engineers; they'll be researchers. When anyone can build for free, the differentiator is knowing what's worth building and whether it\u2019s buildable at",
+        "entities": {
+          "mentions": [
+            {
+              "start": 32,
+              "end": 44,
+              "username": "echinaceous"
+            },
+            {
+              "start": 86,
+              "end": 100,
+              "username": "chang_trenton"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://github.com/karpathy/autoresearch"
+            },
+            {
+              "text": "https://www.sciencedirect.com/science/article/abs/pii/S0895435616308381"
+            }
+          ]
+        }
+      },
+      "id": "2031072399731675269",
+      "created_at": "2026-03-09T18:19:30.000Z",
+      "author_id": "1105650983630041088",
+      "edit_history_tweet_ids": [
+        "2031072399731675269"
+      ],
+      "text": "https://t.co/tNsiY4fy87",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/tNsiY4fy87",
+            "expanded_url": "http://x.com/i/article/2031071818480791553",
+            "display_url": "x.com/i/article/2031\u2026",
+            "status": 500,
+            "unwound_url": "http://x.com/i/article/2031071818480791553"
+          }
+        ]
+      }
+    }
+  ],
+  "users": {
+    "1105650983630041088": {
+      "id": "1105650983630041088",
+      "name": "Amy Tam",
+      "username": "amytam01"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1166821946505474048": {
+      "id": "1166821946505474048",
+      "name": "luis leal \ud83e\udd4a\ud83e\udd4a\ud83e\udd4a\ud83e\udd4a\ud83e\udd4a",
+      "username": "semmassagem5"
+    },
+    "1874887123221774336": {
+      "id": "1874887123221774336",
+      "name": "Justin Hafner",
+      "username": "j_haf_"
+    },
+    "1899500563471200256": {
+      "id": "1899500563471200256",
+      "name": "Sundaram Kumar Jha",
+      "username": "skjtwts"
+    },
+    "1589027596808777728": {
+      "id": "1589027596808777728",
+      "name": "Anto Patrex",
+      "username": "antopatrex1"
+    },
+    "243706352": {
+      "id": "243706352",
+      "name": "Mauro Gonz\u00e1lez-Sierra",
+      "username": "Maurogzsa"
+    },
+    "1602313787390017536": {
+      "id": "1602313787390017536",
+      "name": "jonah",
+      "username": "realjonahlynch"
+    },
+    "946077540061343744": {
+      "id": "946077540061343744",
+      "name": "Dev",
+      "username": "devparagiri"
+    },
+    "1525713003315748864": {
+      "id": "1525713003315748864",
+      "name": "Nikshep Grampurohit",
+      "username": "Nikshep_09"
+    },
+    "1740929263162003456": {
+      "id": "1740929263162003456",
+      "name": "Riko Suminoe \ud83c\udff3\ufe0f\u200d\ud83c\udf08\ud83c\uddf5\ud83c\uddf8",
+      "username": "RikoSuminoe69"
+    },
+    "1132151165410455552": {
+      "id": "1132151165410455552",
+      "name": "amul.exe",
+      "username": "amuldotexe"
+    },
+    "1556634686084251649": {
+      "id": "1556634686084251649",
+      "name": "PlausibleDog",
+      "username": "J5Tsai"
+    },
+    "2012710014277062656": {
+      "id": "2012710014277062656",
+      "name": "BenedictChannn",
+      "username": "BenedictChannnn"
+    },
+    "166980218": {
+      "id": "166980218",
+      "name": "Avinash Dalvi",
+      "username": "AvinashDalvi_"
+    },
+    "1610340640352796672": {
+      "id": "1610340640352796672",
+      "name": "Alan",
+      "username": "plugberryox"
+    },
+    "1944668589451255808": {
+      "id": "1944668589451255808",
+      "name": "Abdul Azeem Shaikh",
+      "username": "abdulazeem_s"
+    },
+    "1479852652150337542": {
+      "id": "1479852652150337542",
+      "name": "Michael Guo",
+      "username": "Michaelzsguo"
+    },
+    "816661235571851265": {
+      "id": "816661235571851265",
+      "name": "Victor Shaw",
+      "username": "VShawHQ"
+    },
+    "1505070118061019136": {
+      "id": "1505070118061019136",
+      "name": "SuperCycle",
+      "username": "BTCSuperCycle"
+    },
+    "1175656534610710528": {
+      "id": "1175656534610710528",
+      "name": "svapnil",
+      "username": "hellosvapnil"
+    },
+    "19511482": {
+      "id": "19511482",
+      "name": "Mike",
+      "username": "mikesmith"
+    },
+    "1864690323311525889": {
+      "id": "1864690323311525889",
+      "name": "Klover.ai",
+      "username": "KloverAi"
+    },
+    "69588404": {
+      "id": "69588404",
+      "name": "Paul Roales",
+      "username": "proales"
+    },
+    "1265553421412839425": {
+      "id": "1265553421412839425",
+      "name": "e chi",
+      "username": "echinaceous"
+    },
+    "1607336127865950209": {
+      "id": "1607336127865950209",
+      "name": "Ritesh Chavan",
+      "username": "ritzchavanpatil"
+    },
+    "1872133335146971136": {
+      "id": "1872133335146971136",
+      "name": "hamza mostafa",
+      "username": "hamostaf04"
+    },
+    "981457294507507712": {
+      "id": "981457294507507712",
+      "name": "Danny",
+      "username": "Mxr_dnl"
+    },
+    "30405893": {
+      "id": "30405893",
+      "name": "Nikunj Kothari",
+      "username": "nikunj"
+    },
+    "2992704516": {
+      "id": "2992704516",
+      "name": "\ud835\udd781\ud835\udd99\ud835\udd94\ud835\udd9c\ud835\udd94\ud835\udd9d1\ud835\udd8a",
+      "username": "M1towoxie"
+    },
+    "1658986663803228161": {
+      "id": "1658986663803228161",
+      "name": "Anwesha",
+      "username": "Anweshac1211"
+    },
+    "1893042491957399552": {
+      "id": "1893042491957399552",
+      "name": "sirine",
+      "username": "torchsoftmax"
+    },
+    "1717254858158317568": {
+      "id": "1717254858158317568",
+      "name": "RewindAGI",
+      "username": "rewindAGI"
+    },
+    "3982312273": {
+      "id": "3982312273",
+      "name": "Utkarsh Nanda",
+      "username": "NandaUtkarsh"
+    },
+    "716660185213874176": {
+      "id": "716660185213874176",
+      "name": "Brian Zhan",
+      "username": "brianzhan1"
+    },
+    "1563433258427117568": {
+      "id": "1563433258427117568",
+      "name": "Yang Fan Yun",
+      "username": "YangFanYun"
+    },
+    "1097487869722140672": {
+      "id": "1097487869722140672",
+      "name": "Joseph Jojoe",
+      "username": "josephjojoe"
+    },
+    "1281372414": {
+      "id": "1281372414",
+      "name": "Kevin Yang",
+      "username": "kevinyang"
+    },
+    "1354848737575759877": {
+      "id": "1354848737575759877",
+      "name": "Max Dauber",
+      "username": "max_dauber"
+    }
+  },
+  "thread_fetch_error": null
+}

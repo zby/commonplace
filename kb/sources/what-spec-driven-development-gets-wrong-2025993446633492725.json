@@ -1,0 +1,125 @@
+{
+  "source": "https://x.com/augmentcode/status/2025993446633492725",
+  "captured": "2026-03-10T13:09:52.885228+00:00",
+  "type": "x-article",
+  "status_id": "2025993446633492725",
+  "conversation_id": "2025993446633492725",
+  "target_post": {
+    "created_at": "2026-02-23T17:57:33.000Z",
+    "article": {
+      "entities": {
+        "urls": [
+          {
+            "text": "https://www.augmentcode.com/product/intent"
+          },
+          {
+            "text": "https://www.augmentcode.com/product/intent"
+          }
+        ]
+      },
+      "preview_text": "The only documentation you can 100% trust is the code itself.\nDesign docs, changelogs, READMEs, architecture diagrams, onboarding wikis. Every one of these is almost instantly out of date.\nKeeping a",
+      "cover_media": "3_2025993380090818560",
+      "title": "What spec-driven development gets wrong",
+      "plain_text": "The only documentation you can 100% trust is the code itself.\nDesign docs, changelogs, READMEs, architecture diagrams, onboarding wikis. Every one of these is almost instantly out of date.\nKeeping a written artifact in sync with a changing system is a continuous cost, and engineers are built for bursts. Write the doc, ship the feature, move on. The updating part is invisible work that competes with everything else on a given day, and it loses that competition almost every time. We've tried process. We've tried tooling. We've tried making it a team value. None of it has worked because we keep asking humans to do a thing that humans reliably won't do.\nThis is where spec-driven development usually fails. The idea is sound: when you're working with coding agents, write down what you want before you turn them loose. Obviously better than pasting prompts into a chat window and crossing your fingers.\nBut a spec is a document. And we just established what happens to documents.\nThe difference is what's at stake. A stale design doc misleads the next engineer who happens to read it. A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently, and they won't flag that anything is wrong.\nSo when we started building Intent, the question we kept circling was: what if the spec wasn't something you maintained? What if it maintained itself?\nHere's what we landed on.\nThe spec isn't a human artifact or an agent artifact. Both sides read from it and write to it.\nYou describe what you want to build. A coordinator agent drafts a spec, breaks it into tasks. You look at it, edit it, approve before anything runs. Once agents start working, they write updates back: what they found, what changed, what constraints they hit that weren't in the plan. You can pause at any point, rewrite part of the spec, and agents pick up from the new state.\nThink about what happens when you hand a task to a good junior engineer. You give them the ticket, they go off and work on it, and when they discover the API doesn't support pagination the way the ticket assumed, they update the ticket themselves. They don't wait for you to notice something is off. They don't just build the wrong thing. They come back and say: \"this assumption was wrong, here's what I did instead, here's why.\" You review their update and either approve or push back.\nThat's the relationship we wanted between the developer and the spec. The ticket stays honest because both sides are maintaining it.\nThe junior engineer analogy goes further than you'd think. A good junior doesn't narrate every line of code. They surface the decisions that change direction: \"I found an existing auth context, so I wired into that instead of creating a new one.\" That's the signal. That's what you want from agents too. Getting this granularity right turns out to be one of the genuinely interesting design problems in the system. Too much and the spec becomes noise you learn to ignore. Too little and you're back to guessing what happened.\nHere's what a task actually looks like. You write: \"Add a dark mode toggle to the settings page that respects system preferences.\" The coordinator reads your codebase, drafts a spec with three subtasks: add the toggle component, wire it to a preference store, update the CSS variables.\nYou scan it, notice it missed the bit about persisting the choice across sessions, and add a line.\nYou approve.\nAgents pick up the work.\nFifteen minutes later, one of them has updated the spec: \"Found an existing theme context provider in the codebase. Wired into that instead of creating a new store.\"\nYou review the code change (clearly grouped by agent and task).\nThe spec now reflects what was actually built, not what was originally planned. And nobody had to remember to update it.\nEvery documentation-first initiative in software has failed for the same reason: it asked developers to do continuous maintenance work that nobody sees and nobody rewards.\nSDD will fail for the same reason unless the agents do their share of the maintenance.\nIf agents can write code, they can update the plan. Let them."
+    },
+    "id": "2025993446633492725",
+    "edit_history_tweet_ids": [
+      "2025993446633492725"
+    ],
+    "text": "https://t.co/jMSLFclZhS",
+    "conversation_id": "2025993446633492725",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/jMSLFclZhS",
+          "expanded_url": "http://x.com/i/article/2025992983758393344",
+          "display_url": "x.com/i/article/2025\u2026",
+          "status": 500,
+          "unwound_url": "http://x.com/i/article/2025992983758393344"
+        }
+      ]
+    },
+    "author_id": "1719747248031158272"
+  },
+  "posts": [
+    {
+      "created_at": "2026-02-23T17:57:33.000Z",
+      "article": {
+        "entities": {
+          "urls": [
+            {
+              "text": "https://www.augmentcode.com/product/intent"
+            },
+            {
+              "text": "https://www.augmentcode.com/product/intent"
+            }
+          ]
+        },
+        "preview_text": "The only documentation you can 100% trust is the code itself.\nDesign docs, changelogs, READMEs, architecture diagrams, onboarding wikis. Every one of these is almost instantly out of date.\nKeeping a",
+        "cover_media": "3_2025993380090818560",
+        "title": "What spec-driven development gets wrong",
+        "plain_text": "The only documentation you can 100% trust is the code itself.\nDesign docs, changelogs, READMEs, architecture diagrams, onboarding wikis. Every one of these is almost instantly out of date.\nKeeping a written artifact in sync with a changing system is a continuous cost, and engineers are built for bursts. Write the doc, ship the feature, move on. The updating part is invisible work that competes with everything else on a given day, and it loses that competition almost every time. We've tried process. We've tried tooling. We've tried making it a team value. None of it has worked because we keep asking humans to do a thing that humans reliably won't do.\nThis is where spec-driven development usually fails. The idea is sound: when you're working with coding agents, write down what you want before you turn them loose. Obviously better than pasting prompts into a chat window and crossing your fingers.\nBut a spec is a document. And we just established what happens to documents.\nThe difference is what's at stake. A stale design doc misleads the next engineer who happens to read it. A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently, and they won't flag that anything is wrong.\nSo when we started building Intent, the question we kept circling was: what if the spec wasn't something you maintained? What if it maintained itself?\nHere's what we landed on.\nThe spec isn't a human artifact or an agent artifact. Both sides read from it and write to it.\nYou describe what you want to build. A coordinator agent drafts a spec, breaks it into tasks. You look at it, edit it, approve before anything runs. Once agents start working, they write updates back: what they found, what changed, what constraints they hit that weren't in the plan. You can pause at any point, rewrite part of the spec, and agents pick up from the new state.\nThink about what happens when you hand a task to a good junior engineer. You give them the ticket, they go off and work on it, and when they discover the API doesn't support pagination the way the ticket assumed, they update the ticket themselves. They don't wait for you to notice something is off. They don't just build the wrong thing. They come back and say: \"this assumption was wrong, here's what I did instead, here's why.\" You review their update and either approve or push back.\nThat's the relationship we wanted between the developer and the spec. The ticket stays honest because both sides are maintaining it.\nThe junior engineer analogy goes further than you'd think. A good junior doesn't narrate every line of code. They surface the decisions that change direction: \"I found an existing auth context, so I wired into that instead of creating a new one.\" That's the signal. That's what you want from agents too. Getting this granularity right turns out to be one of the genuinely interesting design problems in the system. Too much and the spec becomes noise you learn to ignore. Too little and you're back to guessing what happened.\nHere's what a task actually looks like. You write: \"Add a dark mode toggle to the settings page that respects system preferences.\" The coordinator reads your codebase, drafts a spec with three subtasks: add the toggle component, wire it to a preference store, update the CSS variables.\nYou scan it, notice it missed the bit about persisting the choice across sessions, and add a line.\nYou approve.\nAgents pick up the work.\nFifteen minutes later, one of them has updated the spec: \"Found an existing theme context provider in the codebase. Wired into that instead of creating a new store.\"\nYou review the code change (clearly grouped by agent and task).\nThe spec now reflects what was actually built, not what was originally planned. And nobody had to remember to update it.\nEvery documentation-first initiative in software has failed for the same reason: it asked developers to do continuous maintenance work that nobody sees and nobody rewards.\nSDD will fail for the same reason unless the agents do their share of the maintenance.\nIf agents can write code, they can update the plan. Let them."
+      },
+      "id": "2025993446633492725",
+      "edit_history_tweet_ids": [
+        "2025993446633492725"
+      ],
+      "text": "https://t.co/jMSLFclZhS",
+      "conversation_id": "2025993446633492725",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/jMSLFclZhS",
+            "expanded_url": "http://x.com/i/article/2025992983758393344",
+            "display_url": "x.com/i/article/2025\u2026",
+            "status": 500,
+            "unwound_url": "http://x.com/i/article/2025992983758393344"
+          }
+        ]
+      },
+      "author_id": "1719747248031158272"
+    }
+  ],
+  "users": {
+    "1719747248031158272": {
+      "id": "1719747248031158272",
+      "name": "Augment Code",
+      "username": "augmentcode"
+    },
+    "6059512": {
+      "id": "6059512",
+      "name": "Zbigniew Lukasiak",
+      "username": "zby"
+    },
+    "2022447263377952770": {
+      "id": "2022447263377952770",
+      "name": "Alex H. Raber \ud83e\udd80",
+      "username": "raberhalex"
+    },
+    "3050823348": {
+      "id": "3050823348",
+      "name": "cole murray",
+      "username": "_colemurray"
+    },
+    "2796596001": {
+      "id": "2796596001",
+      "name": "Stibb",
+      "username": "stibbons31"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "426796674": {
+      "id": "426796674",
+      "name": "PixelWizard",
+      "username": "pixel2Wizard"
+    }
+  },
+  "thread_fetch_error": null
+}
