@@ -2,9 +2,11 @@
 
 ## Question
 
-After writing a related-system review of Decapod, a human reviewer noticed that the "embedded constitution" — described as "compiled into the binary" and "crystallised" — was actually verbatim markdown copied via `include_str!()` with no transformation. The same result could be achieved by reading files at runtime. The crystallisation claim was illusory.
+After writing a related-system review of Decapod, a human reviewer questioned the "embedded constitution" — described as "compiled into the binary" and "crystallised." The reviewer's reasoning was not about implementation details but about *what the mechanism could achieve even if it works perfectly*: if the constitution is crystallised into code, what can it actually do? Only symbolic checks. But the constitution is freeform prose interpreted by an LLM — symbolic checks can't meaningfully verify freeform text. So the crystallisation, even if real, can't deliver the value the framing implies. Investigation then confirmed the mechanism was even weaker than that — just verbatim `include_str!()` copying with no transformation at all.
 
-This was a valuable finding. Can we prompt agents to ask similar questions? What framing reliably surfaces insights about *pointless complexity* — mechanisms that work correctly but add no value over simpler alternatives?
+The reviewer's move was an oracle-strength question: what's the discriminative power of this verifier? The answer — "not much, because freeform prose resists symbolic verification" — followed from reasoning about the claim, not from reading the code.
+
+This was a valuable finding. Can we prompt agents to ask similar questions? What framing reliably surfaces insights about mechanisms whose *claimed value exceeds their actual power*?
 
 ## Setup
 
@@ -42,11 +44,13 @@ We tested 6 prompt framings, each given the same report and access to the Decapo
 
 ## Analysis
 
-### The core distinction: "does it work?" vs "is it worth the cost?"
+### The core distinction: "does it work?" vs "what can it achieve?"
 
-Four of six framings (impossibility, implications, adversarial, mechanistic) converge on the question "does the mechanism work as described?" The constitution embedding *does* work — `include_str!()` successfully puts markdown into the binary, and the agent can retrieve it. These framings verify the mechanism and move on.
+The human reviewer's question was not "does the compilation work?" but "what could a compiled constitution actually *do*?" This is an oracle-strength question: even if the mechanism functions perfectly, what's the discriminative power of the resulting verifier? For freeform prose interpreted by an LLM, compiling it into the binary can't add verification capability — the prose is still interpreted at runtime, not checked at compile time. The crystallisation claim implies a stabilisation property the mechanism cannot deliver, regardless of implementation quality.
 
-Only cost/benefit asks the different question: "what's the simpler alternative that achieves the same result?" This naturally leads to "the same files could be read from disk at runtime," which reveals the embedding as pointless complexity.
+Four of six agent framings (impossibility, implications, adversarial, mechanistic) converge on the question "does the mechanism work as described?" The constitution embedding *does* work — `include_str!()` successfully puts markdown into the binary, and the agent can retrieve it. These framings verify the mechanism and move on.
+
+Only cost/benefit asks a question that reaches a similar conclusion from a different direction: "what's the simpler alternative that achieves the same result?" This naturally leads to "the same files could be read from disk at runtime," which reveals the embedding as pointless complexity. The human's reasoning was stronger — it showed the mechanism can't deliver value *even if there's no simpler alternative* — but cost/benefit was the only agent-accessible framing that got there reliably.
 
 ### Why adversarial only gets partway
 
@@ -80,16 +84,23 @@ The adversarial and curiosity framings were the best at surfacing novel findings
 
 ## Conclusions
 
-1. **"Is the cost justified?" is a different question from "does it work?"** Only prompts that ask about cost/benefit reliably surface pointless complexity. Verification-oriented prompts (impossibility, implications, mechanistic) confirm working mechanisms without evaluating whether the complexity is warranted.
+1. **"Does it work?" is a different question from "what can it achieve?"** The human reviewer's insight came from asking what discriminative power the mechanism could have even if it works perfectly. No agent framing replicated this oracle-strength reasoning. The closest was cost/benefit, which arrived at a similar conclusion ("it's pointless") via a different path ("the simpler alternative works identically").
 
-2. **Curiosity is the general-purpose generator; cost/benefit is a reliable specialisation.** For reviewing designed systems (code, architectures, protocols), cost/benefit should be an explicit step. For broader review, curiosity prompts surface a wider range of insights but with less precision.
+2. **Cost/benefit is the most reliable agent-accessible framing.** For reviewing designed systems (code, architectures, protocols), "what's the simpler alternative?" reliably surfaces pointless complexity. It doesn't reach the deeper "what *could* this achieve?" question, but it gets to a useful answer.
 
-3. **The adversarial frame finds the most consequential overstatements, not the most revealing ones.** Proof self-attestation is arguably more consequential than the constitution illusion — but the constitution illusion is more *revealing* because it shows the entire framing is wrong.
+3. **Curiosity is the general-purpose generator; cost/benefit is a reliable specialisation.** Curiosity prompts surface a wider range of insights (proof self-attestation, coplayer system, eval framework) but with less precision on any specific class. Cost/benefit is narrower but reliable.
+
+4. **The adversarial frame finds the most consequential overstatements, not the most revealing ones.** Proof self-attestation is arguably more consequential than the constitution illusion — but the constitution illusion is more *revealing* because it shows the entire framing is wrong.
+
+5. **The oracle-strength question — "what could this verify?" — is the most powerful but hardest to prompt for.** The human reached it through domain knowledge (understanding that freeform prose resists symbolic verification). Whether agents can be prompted to ask this systematically remains an open question.
 
 ## Recommendation for related-system reviews
 
 After writing the initial report (Core Ideas, Comparison, Borrowable Ideas, What to Watch), add a review pass:
 
-> Read the report. What surprises you? What triggers your curiosity? Where is the cost/benefit of a design choice not obvious — what's the simpler alternative? Investigate mechanistically.
+> Read the report. What surprises you? What triggers your curiosity? Where is the cost/benefit of a design choice not obvious — what's the simpler alternative that achieves the same result? For each strong claim, ask: what could this mechanism actually achieve, even if it works perfectly? Investigate mechanistically.
 
-This combines curiosity (broad generator) with cost/benefit (reliable specialisation for designed systems) in a single prompt.
+This combines three layers:
+- **Curiosity** (broad generator) — surfaces surprising or unusual choices
+- **Cost/benefit** (reliable agent-accessible specialisation) — finds pointless complexity
+- **Oracle-strength** ("what could this achieve?") — the hardest question, included because it's the most powerful even if agents reach it inconsistently

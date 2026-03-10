@@ -30,9 +30,10 @@ After drafting the sections above, re-read the report with fresh eyes:
 
 - What surprises you? What triggers your curiosity?
 - Where is the cost/benefit of a design choice not obvious — what's the simpler alternative that achieves the same result?
+- For each strong claim, ask: what could this mechanism actually achieve, even if it works perfectly?
 - Investigate mechanistically. Update Core Ideas and Comparison with what you find.
 
-{This step catches claims that sound impressive but don't survive mechanistic inspection — mechanisms that work correctly but add no value over simpler alternatives. See `kb/work/curiosity-prompts/experiment-report.md` for the evidence behind this step.}
+{This step catches claims that sound impressive but don't survive inspection. Three layers: curiosity (broad generator for surprising choices), cost/benefit (finds pointless complexity via simpler alternatives), and oracle-strength (asks what the mechanism could achieve even at its best). See `kb/work/curiosity-prompts/experiment-report.md` for the experiment behind this step.}
 
 ## What to Watch
 
