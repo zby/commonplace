@@ -5,11 +5,9 @@ theme:
   name: mkdocs
 nav:
   - Home: index.md
-  - Start Here:
+  - Concepts:
       - KB Design: notes/kb-design.md
       - Learning Theory: notes/learning-theory.md
-      - Writing Guide: WRITING.md
-  - Methodology:
       - Document System: notes/document-system.md
       - Computational Model: notes/computational-model.md
       - Linking Methodology: notes/links.md
@@ -18,9 +16,12 @@ nav:
       - Notes Directory: notes/index.md
       - Related Systems: notes/related-systems/related-systems-index.md
       - Sources Directory: sources/index.md
-  - Maintenance:
+  - How To:
+      - Writing Guide: instructions/WRITING.md
       - KB Maintenance: notes/kb-maintenance.md
-      - Improvement Log: log.md
+      - Agents Notes: log.md
+  - Recent Changes: https://github.com/zby/commonplace/commits/main/
+  - GitHub: https://github.com/zby/commonplace
 hooks:
   - scripts/mkdocs_hooks.py
 validation:
