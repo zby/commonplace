@@ -1,5 +1,5 @@
 ---
-description: OpenProse-like DSLs expose control flow and discretion boundaries while leaving bookkeeping on the LLM substrate, creating an intermediate regime between flat prompting and symbolic scheduling
+description: OpenProse-like DSLs expose control flow and discretion boundaries while leaving scheduling and validation on the LLM substrate, creating an intermediate regime between flat prompting and symbolic scheduling
 type: note
 areas: [computational-model, llm-interpretation-errors]
 status: current
@@ -20,6 +20,8 @@ This creates an intermediate regime:
 - **Architectural separation** — bookkeeping moves to code or another hard-oracle substrate; the LLM handles only the semantic steps
 
 The intermediate regime matters because it explains why systems like OpenProse can feel substantially better than raw prompting without yet earning the full error-correction benefits of symbolic execution. Syntax and file protocols can recover scoping, resumability, and some orchestration discipline before they recover hard reliability. The scheduler note should therefore not read as a binary "either fully separated or worthless." There is a meaningful middle ground.
+
+This ordering — scoping first, error correction second — is specific to specification-level approaches that work by naming structure within the LLM's own execution. Tool-use frameworks (function calling with typed parameters, JSON schema validation) take a different path: they crystallise the interface contract, giving hard-oracle checks on output format without recovering scoping within the LLM's reasoning. That is mini-crystallisation at the boundary, not specification-level separation — a different route to partial reliability that does not pass through the intermediate regime described here.
 
 The cost of staying in that middle ground is that bookkeeping is still paid for on the stochastic substrate. The system can mark the symbolic/semantic boundary, but it cannot use hard oracles to enforce most of it. This means the asymmetry from [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) still applies; OpenProse shows where the scoping gains start, not where the error-correction argument stops.
 
