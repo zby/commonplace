@@ -61,11 +61,10 @@ A third operation, distinct from both stabilisation and distillation: positing a
 
 ## Oracle & Verification
 
-- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength (how cheaply and reliably you can verify correctness) determines where a component sits on the automation gradient
-- [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — error correction is viable when the oracle has discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
-- [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each harden a different oracle question, mapping empirical agent evaluation onto the oracle-strength spectrum
-- [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — crossing from augmentation to automation requires per-instance discrimination (knowing when you're wrong), not aggregate accuracy; discrimination is empirically stagnant, so external oracle construction (route b) is the practical path
-- [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) (computational-model) — merging agent outputs propagates errors; voting discards minorities and corrects them; aggregation operation must match call relationship
+Moved to [LLM interpretation errors](./llm-interpretation-errors.md) — oracle theory, error correction, reliability dimensions, and the augmentation/automation boundary now live in the dedicated error-theory area. Key notes:
+
+- [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the core theory of error correction via decorrelated weak oracles
+- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — the gradient from hard to no oracle that determines engineering priorities
 
 ## Memory & Architecture
 
@@ -91,5 +90,6 @@ A third operation, distinct from both stabilisation and distillation: positing a
 
 ## Related Areas
 
+- [llm-interpretation-errors](./llm-interpretation-errors.md) — oracle theory, error correction, and reliability dimensions migrated here; the error-theory area applies verification concepts specifically to LLM interpretation failures
 - [kb-design](./kb-design.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) bridges both areas
 - [document-system](./document-system.md) — the type ladder (text→note→structured-claim) instantiates the stabilisation gradient for documents

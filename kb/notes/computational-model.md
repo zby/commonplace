@@ -36,11 +36,11 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 ## Error Correction & Reliability
 
-- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently; bridges to [learning-theory](./learning-theory.md)'s error correction framework
+These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
 
-## Multi-Agent Aggregation
-
-- [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) — merging agent outputs (synthesis) propagates errors; voting discards minorities and corrects them; Kim et al.'s -3.5% result reflects synthesis failure, not a verdict on multi-agent error correction
+- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
+- [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — identifies an intermediate regime where OpenProse-like DSLs recover frame isolation without yet gaining hard-oracle bookkeeping
+- [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) (llm-interpretation-errors) — merging agent outputs propagates errors; voting discards minorities and corrects them; the aggregation operation must match the decomposition structure
 
 ## Tensions
 
@@ -48,6 +48,7 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 ## Related Areas
 
+- [llm-interpretation-errors](./llm-interpretation-errors.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
 - [learning-theory](./learning-theory.md) — how systems learn through stabilisation, crystallisation, distillation; the computational model explains *what kind of programs* these mechanisms operate on
 - [kb-design](./kb-design.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 

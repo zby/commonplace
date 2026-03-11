@@ -2,7 +2,7 @@
 description: The four reliability dimensions from Rabanser et al. (consistency, robustness, predictability, safety) each harden a different oracle question — mapping empirical agent evaluation onto the oracle-strength spectrum
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+areas: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -49,4 +49,4 @@ Relevant Notes:
 
 Topics:
 
-- [learning-theory](./learning-theory.md)
+- [llm-interpretation-errors](./llm-interpretation-errors.md)

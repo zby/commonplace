@@ -2,7 +2,7 @@
 description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the bitter lesson boundary, with hypotheses about engineering priorities and an oracle-hardening pipeline
 type: note
 traits: []
-areas: [learning-theory]
+areas: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -83,4 +83,4 @@ Relevant Notes:
 
 Topics:
 
-- [learning-theory](./learning-theory.md)
+- [llm-interpretation-errors](./llm-interpretation-errors.md)

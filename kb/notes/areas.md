@@ -16,6 +16,7 @@ Browse the KB by conceptual area. Each area page is a curated index with grouped
 - [Computational model](./computational-model.md) — programming-language framing for LLM instructions and orchestration
 - [Links](./links.md) — link semantics, navigation behavior, and link-management methodology
 - [Type system](./type-system.md) — why documents have types, what roles they serve, how structured writing improves quality
+- [LLM interpretation errors](./llm-interpretation-errors.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
 - [Related systems](./related-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
 
 ## Notes

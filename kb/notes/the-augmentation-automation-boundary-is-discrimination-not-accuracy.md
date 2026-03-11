@@ -2,7 +2,7 @@
 description: Crossing from augmentation to automation requires per-instance discrimination, not aggregate accuracy — discrimination is empirically stagnant, so scaling capability alone cannot cross the boundary
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+areas: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -61,4 +61,4 @@ Relevant Notes:
 
 Topics:
 
-- [learning-theory](./learning-theory.md)
+- [llm-interpretation-errors](./llm-interpretation-errors.md)
