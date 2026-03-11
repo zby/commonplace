@@ -36,7 +36,7 @@ This scope limitation is also what enables the oracle. The value of a stored fac
 
 To close the learning loop, AgeMem accepts a substrate split: facts go into a memory store (somewhat inspectable key-value pairs), but the policy for managing them goes into model weights (opaque, non-diffable, only changeable through retraining).
 
-Commonplace stores both in the same medium — files in a repo. A fact ("AgeMem uses GRPO") and a policy ("always search before writing") are both markdown artifacts. Policies are themselves knowledge: searchable, linkable, refinable, composable with other notes. You can [stabilise](./stabilisation.md) a policy (move it from a convention to a script), [distil](./distillation.md) it (extract a skill from methodology notes), or [discover](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) that two policies are instances of the same principle. Policies participate in the same [accumulation](./learning-is-not-only-about-generality.md) loop as everything else.
+Commonplace stores both in the same medium — files in a repo. A fact ("AgeMem uses GRPO") and a policy ("always search before writing") are both markdown artifacts. Policies are themselves knowledge: searchable, linkable, refinable, composable with other notes. You can [constrain](./constraining.md) a policy (move it from a convention to a script), [distil](./distillation.md) it (extract a skill from methodology notes), or [discover](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) that two policies are instances of the same principle. Policies participate in the same [accumulation](./learning-is-not-only-about-generality.md) loop as everything else.
 
 In AgeMem, the policy can't be searched, linked to the facts it manages, or refined incrementally. This is the deeper version of the [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) argument: not just "can you inspect the policy?" but "can the policy participate in the knowledge system it governs?" In a unified substrate, policies improve through the same mechanisms as everything else. In a split substrate, they don't.
 
@@ -70,7 +70,7 @@ Relevant Notes:
 - [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: AgeMem operates on facts (adaptive, no reach), not rules (explanatory, reach)
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through inspectable artifacts; same behavioral changes, different substrates
 - [inspectable substrate defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: AgeMem's split substrate (facts in store, policy in weights) vs commonplace's unified substrate (both in files)
-- [stabilisation during deployment is continuous learning](./stabilisation-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time stabilisation achieves; they differ on inspectability but AgeMem has closed the loop
+- [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time constraining achieves; they differ on inspectability but AgeMem has closed the loop
 
 Topics:
 

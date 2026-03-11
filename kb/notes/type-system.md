@@ -11,7 +11,7 @@ Why documents have types, what the type system does, and how structured writing 
 
 ## Overview
 
-- [why-notes-have-types](./why-notes-have-types.md) — six roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality, and maturation through stabilisation
+- [why-notes-have-types](./why-notes-have-types.md) — six roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality, and maturation through constraining
 - [document-classification](./document-classification.md) — taxonomy: base types table (text, note, spec, review, index, adr) and migration history
 
 ## Type Roles
@@ -41,4 +41,4 @@ Three independent arguments for why structured document types improve what gets 
 ## Related Areas
 
 - [document-system](./document-system.md) — parent area; type system is one component of the document infrastructure
-- [learning-theory](./learning-theory.md) — the type ladder instantiates the stabilisation gradient for documents
+- [learning-theory](./learning-theory.md) — the type ladder instantiates the constraining gradient for documents

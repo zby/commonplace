@@ -52,7 +52,7 @@ The connections are dense and coherent. This source lands squarely in the KB's e
 
 3. **"What to not try" as a missing dimension of KB automation.** The automating-kb-learning note focuses on what to try (propose mutations). Tam emphasizes that knowing what to skip is equally valuable and even harder. This reframes the KB's automation challenge: the open problem isn't just "generate good candidates" but "prune the space before generation." [experiment]
 
-4. **Taste rigidity as a failure mode.** "The researcher who was right about everything from 2018 to 2024 may be pattern-matching by 2026." This is a softening signal for human oracles — the same dynamic the KB describes for crystallised components. Could inform the softening-signals note or a new note on human-oracle degradation. [experiment]
+4. **Taste rigidity as a failure mode.** "The researcher who was right about everything from 2018 to 2024 may be pattern-matching by 2026." This is a relaxing signal for human oracles — the same dynamic the KB describes for codified components. Could inform the relaxing-signals note or a new note on human-oracle degradation. [experiment]
 
 5. **The halting problem analogy for research.** Tam frames research as a version of the halting problem: you can't know in advance whether a solution exists. This is a sharper framing than "no ground truth" — it says the oracle is not just absent but computationally impossible to construct for the general case. Worth examining whether this is technically accurate or merely suggestive. [deep-dive]
 

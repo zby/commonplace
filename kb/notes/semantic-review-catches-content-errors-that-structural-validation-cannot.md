@@ -11,7 +11,7 @@ The validate skill checks structural properties: valid frontmatter, link health,
 
 ## The motivating case
 
-The synthesis note on learning operations claimed "three learning operations (stabilisation, distillation, discovery)" as the complete set. It had valid frontmatter, healthy links, proper sections, a discriminating description. It passed every structural check. But the enumeration was incomplete — it omitted accumulation (simply adding knowledge to the store), the most basic learning operation, which doesn't fit any of the three named operations. The note's own grounding definition (Simon's "any capacity change is learning") implied a fourth operation that the enumeration silently excluded.
+The synthesis note on learning operations claimed "three learning operations (constraining, distillation, discovery)" as the complete set. It had valid frontmatter, healthy links, proper sections, a discriminating description. It passed every structural check. But the enumeration was incomplete — it omitted accumulation (simply adding knowledge to the store), the most basic learning operation, which doesn't fit any of the three named operations. The note's own grounding definition (Simon's "any capacity change is learning") implied a fourth operation that the enumeration silently excluded.
 
 This isn't a structural error. It's a content error — a claimed enumeration that doesn't cover the space defined by its own premises.
 
@@ -21,7 +21,7 @@ This isn't a structural error. It's a content error — a claimed enumeration th
 
 **Grounding alignment** — does the note's conclusion actually follow from the evidence and definitions it cites? A note might cite Simon's definition of learning but draw conclusions that don't follow from it, or cite a source and mischaracterise its claims. Method: load the cited sources, extract the claims attributed to them, check whether the attribution is accurate and the inference valid.
 
-**Boundary-case coverage** — does the framework handle the simplest and most extreme cases? The "three operations" framework failed the simplest case: an agent recording a user preference. That's learning (by Simon's definition), but it's not stabilisation, distillation, or discovery. Method: generate the simplest possible instance of the concept the note discusses, and the most extreme one, then check whether the framework accounts for both.
+**Boundary-case coverage** — does the framework handle the simplest and most extreme cases? The "three operations" framework failed the simplest case: an agent recording a user preference. That's learning (by Simon's definition), but it's not constraining, distillation, or discovery. Method: generate the simplest possible instance of the concept the note discusses, and the most extreme one, then check whether the framework accounts for both.
 
 **Internal consistency** — does the note contradict itself? A note might claim X in one section and not-X in another, or define a term one way and use it differently. Method: extract the key claims from each section, check for pairwise contradiction. This is distinct from cross-note consistency (which checks against the broader KB) — it's within a single note.
 

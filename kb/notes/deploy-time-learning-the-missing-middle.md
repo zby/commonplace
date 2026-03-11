@@ -1,5 +1,5 @@
 ---
-description: Deploy-time learning fills the gap between training and in-context — repo artifacts provide durable, inspectable adaptation through three mechanisms (stabilisation, crystallisation, distillation) with a verifiability gradient from prompt tweaks to deterministic code
+description: Deploy-time learning fills the gap between training and in-context — repo artifacts provide durable, inspectable adaptation through three mechanisms (constraining, codification, distillation) with a verifiability gradient from prompt tweaks to deterministic code
 type: note
 traits: [has-comparison]
 areas: [learning-theory]
@@ -19,7 +19,7 @@ Deployed AI systems adapt at three timescales, each with a different substrate:
 
 Deploy-time learning is not a new training paradigm — the model weights don't change. It is **system-level adaptation**: the deployed system's behavior improves because its *artifacts* improve. Like in-context learning it happens during deployment; like training it persists durably. What makes it possible is encoding knowledge into repo artifacts rather than weights or context.
 
-This learning operates through two mechanisms — [stabilisation](./stabilisation.md) (narrowing the interpretation space) and [distillation](./distillation.md) (extracting procedures from reasoning) — with crystallisation as the far end of stabilisation where prompts undergo a phase transition to deterministic code. This note focuses on the verifiability gradient that runs across both, with crystallisation at the far end.
+This learning operates through two mechanisms — [constraining](./constraining.md) (narrowing the interpretation space) and [distillation](./distillation.md) (extracting procedures from reasoning) — with codification as the far end of constraining where prompts undergo a phase transition to deterministic code. This note focuses on the verifiability gradient that runs across both, with codification at the far end.
 
 The machinery behind deploy-time learning — version control, diffs, tests, CI, code review — is unremarkable to programmers. But AI researchers, trained to think about adaptation in terms of weights and gradients, tend to look past it. Repo artifacts sit in a disciplinary blind spot — "just engineering" to the ML community, yet doing genuine system-level learning.
 
@@ -38,7 +38,7 @@ The key property of hardened artifacts is that they are **diffable, executable, 
 
 ## The Verifiability Gradient
 
-Deterministic code is the strongest form — full crystallisation — but learning is a gradient. Each step reduces reliance on the LLM and increases verifiability:
+Deterministic code is the strongest form — full codification — but learning is a gradient. Each step reduces reliance on the LLM and increases verifiability:
 
 | Grade | Example | Resettable | Efficient | Rewardable |
 |-------|---------|:---:|:---:|:---:|
@@ -51,13 +51,13 @@ Moving down the table, verification gets cheaper and sharper. Restructured promp
 
 ## Concrete Examples
 
-The [`examples/`](../../examples/) directory contains working before-and-after pairs that demonstrate stabilisation at different grades.
+The [`examples/`](../../examples/) directory contains working before-and-after pairs that demonstrate constraining at different grades.
 
 ### Data report: statistics → code, interpretation → LLM
 
-[`data_report/`](../../examples/data_report/) is the unstabilised version. A single LLM agent receives a CSV file and does *everything*: parse the CSV, compute statistics (mean, median, min, max), detect trends, and write a narrative report. The LLM is doing arithmetic it could get wrong, at token cost, for work that has a single correct answer.
+[`data_report/`](../../examples/data_report/) is the unconstrained version. A single LLM agent receives a CSV file and does *everything*: parse the CSV, compute statistics (mean, median, min, max), detect trends, and write a narrative report. The LLM is doing arithmetic it could get wrong, at token cost, for work that has a single correct answer.
 
-[`data_report_stabilized/`](../../examples/data_report_stabilized/) extracts the mechanical parts into a Python tool (`tools.py`):
+[`data_report_constrained/`](../../examples/data_report_constrained/) extracts the mechanical parts into a Python tool (`tools.py`):
 - **CSV parsing** → `csv.DictReader` (deterministic)
 - **Statistics** → Python's `statistics` module (deterministic)
 - **Trend detection** → a simple algorithm comparing first-half vs second-half averages (deterministic)
@@ -68,33 +68,33 @@ The call site in the orchestrator (`main.agent`) is unchanged — `analyze_datas
 
 ### Pitchdeck evaluation: a four-stage progression
 
-The pitchdeck examples show the same task — evaluate PDF pitch decks — at four stabilisation levels:
+The pitchdeck examples show the same task — evaluate PDF pitch decks — at four constraining levels:
 
 | Example | What moved to code |
 |---------|-------------------|
 | [`pitchdeck_eval/`](../../examples/pitchdeck_eval/) | Nothing — all LLM, including filename slug generation |
-| [`pitchdeck_eval_stabilized/`](../../examples/pitchdeck_eval_stabilized/) | File discovery, slug generation, path construction → Python tool (`list_pitchdecks()`) |
+| [`pitchdeck_eval_constrained/`](../../examples/pitchdeck_eval_constrained/) | File discovery, slug generation, path construction → Python tool (`list_pitchdecks()`) |
 | [`pitchdeck_eval_code_entry/`](../../examples/pitchdeck_eval_code_entry/) | Orchestration loop → Python; agents handle reasoning only |
 | [`pitchdeck_eval_direct/`](../../examples/pitchdeck_eval_direct/) | Direct API calls — three abstraction levels without the CLI |
 
-At each stage, mechanical work moves to code while the LLM stays focused on what requires judgment (analyzing the pitch deck content). The slug generation is a small example but an instructive one: in the unstabilised version, the LLM is asked to "generate a file slug (lowercase, hyphenated, no extension)" — a spec that looks precise but actually admits multiple valid interpretations (how to handle special characters, what counts as a "word," whether to transliterate accented characters). Each run might resolve these ambiguities differently, and inconsistency means broken file paths. In the stabilised version, `python-slugify` commits to one interpretation, in code, once — resolving the underspecification permanently.
+At each stage, mechanical work moves to code while the LLM stays focused on what requires judgment (analyzing the pitch deck content). The slug generation is a small example but an instructive one: in the unconstrained version, the LLM is asked to "generate a file slug (lowercase, hyphenated, no extension)" — a spec that looks precise but actually admits multiple valid interpretations (how to handle special characters, what counts as a "word," whether to transliterate accented characters). Each run might resolve these ambiguities differently, and inconsistency means broken file paths. In the constrained version, `python-slugify` commits to one interpretation, in code, once — resolving the underspecification permanently.
 
 ## Failure Modes
 
 Learning through artifacts is not a free lunch. Things that go wrong:
 
-- **Premature crystallisation.** Committing to a specific interpretation before you've observed enough runs to know which interpretation is right locks in brittle assumptions. The stabilise/soften cycle is the antidote — stabilise only when patterns have emerged across runs, and be ready to soften back to an underspecified spec when new requirements reveal that you committed to the wrong interpretation.
+- **Premature codification.** Committing to a specific interpretation before you've observed enough runs to know which interpretation is right locks in brittle assumptions. The constrain/relax cycle is the antidote — constrain only when patterns have emerged across runs, and be ready to relax back to an underspecified spec when new requirements reveal that you committed to the wrong interpretation.
 - **Goodharting on evals.** Prompt tests can enshrine the wrong behavior. If your eval cases aren't representative of real traffic, improvements on the eval set may regress in production.
-- **Model drift.** Vendor model updates can break crystallised prompts and schemas. Regression evals are the defense — they detect drift even when the artifact hasn't changed.
-- **Bad assumptions crystallised confidently.** An agent that writes a bad test crystallises a bad assumption that now passes CI. The quality gate is typically human review — crystallisation is a human-AI collaborative process, not a purely autonomous one.
+- **Model drift.** Vendor model updates can break codified prompts and schemas. Regression evals are the defense — they detect drift even when the artifact hasn't changed.
+- **Bad assumptions codified confidently.** An agent that writes a bad test codifies a bad assumption that now passes CI. The quality gate is typically human review — codification is a human-AI collaborative process, not a purely autonomous one.
 
 ## Related Work
 
 The individual practices are well-established. Prompt versioning and "prompts as code" are standard LLMOps advice. Eval-driven development has its own frameworks (OpenAI Evals, promptfoo) and process models ([EDDOps](https://arxiv.org/abs/2411.13768)). Automated prompt optimisation (DSPy, ProTeGi) pursues a related goal — improving system behavior without weight updates — through search over prompt components. Agent skill libraries like [Voyager](https://arxiv.org/abs/2305.16291) and evaluator-guided program evolution like [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) accumulate executable code as a form of cross-episode memory.
 
-Deploy-time learning is a **taxonomy** (three timescales of system adaptation) and a **verifiability gradient** (from prompt tweaks to deterministic code) — a synthesis of established practices into a concrete model for when and how to move between grades. Within this gradient, the two learning mechanisms — [stabilisation](./stabilisation.md) and [distillation](./distillation.md) — operate at different points, with crystallisation as the far end of the stabilisation spectrum.
+Deploy-time learning is a **taxonomy** (three timescales of system adaptation) and a **verifiability gradient** (from prompt tweaks to deterministic code) — a synthesis of established practices into a concrete model for when and how to move between grades. Within this gradient, the two learning mechanisms — [constraining](./constraining.md) and [distillation](./distillation.md) — operate at different points, with codification as the far end of the constraining spectrum.
 
-For how stabilisation resolves semantic underspecification — committing to one interpretation of an underspecified spec in a language with precise semantics — and how the stabilise/soften cycle lets systems breathe, see [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
+For how constraining resolves semantic underspecification — committing to one interpretation of an underspecified spec in a language with precise semantics — and how the constrain/relax cycle lets systems breathe, see [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
 
 Relevant Notes:
 

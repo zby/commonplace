@@ -44,7 +44,7 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 
 6. **[decomposition-rules-for-bounded-context-scheduling](../notes/decomposition-rules-for-bounded-context-scheduling.md)** — exemplifies: Maximal agentic decomposition (m=1) is the extreme case of "separate selection from joint reasoning." Each agent gets only the minimal context needed for its single step. The cost analysis (O(s ln s) for m=1 vs exponential for m>1) provides quantitative evidence for aggressive decomposition into narrow calls. Also exemplifies "use symbolic operations wherever exactness is available" — Hanoi recursion and state tracking are symbolic, not LLM-mediated.
 
-7. **[spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md)** — enables: Spec mining manufactures the hard oracles that MAKER depends on. MAKER assumes per-step oracles exist; spec mining is the operational mechanism for creating them in domains where they don't naturally exist. The progression: mine a spec (create an oracle), then MAKER-style voting amplifies it.
+7. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** — enables: Spec mining manufactures the hard oracles that MAKER depends on. MAKER assumes per-step oracles exist; spec mining is the operational mechanism for creating them in domains where they don't naturally exist. The progression: mine a spec (create an oracle), then MAKER-style voting amplifies it.
 
 8. **[towards-a-science-of-scaling-agent-systems](towards-a-science-of-scaling-agent-systems.ingest.md)** (source) — contradicts/complements: Kim et al. find naive multi-agent coordination yields -3.5% mean improvement with up to 17.2x error amplification. MAKER achieves zero errors over a million steps. The difference: MAKER's extreme decomposition + voting vs Kim et al.'s tested topologies (Independent, Centralized, Decentralized, Hybrid) which use simple coordination without deliberate decorrelation. Brackets the multi-agent question from both sides.
 
@@ -52,7 +52,7 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 
 10. **[voooooogel-multi-agent-future](./voooooogel-multi-agent-future.ingest.md)** — extends (with tension): MAKER's microagents are the extreme endpoint of multi-agent isolation. But they don't collaborate, negotiate, or share context — they independently vote on single-step decisions. Voooooogel predicts stronger models dissolve fixed multi-agent architectures; MAKER's voting is structural error correction (redundancy that survives model improvement), not a role hierarchy that better models could absorb.
 
-11. **[Evans: AI Components for a Deterministic System](./eric-evans-ai-components-deterministic-system.ingest.md)** — parallels: Evans' modeling/classification distinction maps to MAKER's insights/execution split. Both identify a boundary where LLMs are reliable (classification/execution with hard oracles) vs unreliable (modeling/insights with soft oracles). Both prescribe stabilisation strategies for the hard-oracle regime.
+11. **[Evans: AI Components for a Deterministic System](./eric-evans-ai-components-deterministic-system.ingest.md)** — parallels: Evans' modeling/classification distinction maps to MAKER's insights/execution split. Both identify a boundary where LLMs are reliable (classification/execution with hard oracles) vs unreliable (modeling/insights with soft oracles). Both prescribe constraining strategies for the hard-oracle regime.
 
 **Key synthesis insight**: Oracle strength determines the ceiling for multi-agent error correction. Voting architectures are viable only in the calculator regime; extending MDAP to soft-oracle domains (insights, creative tasks) is the genuine open problem. A synthesis note could formalize this by combining oracle-strength-spectrum, error-correction-works-above-chance-oracles, MAKER, scaling-agent-systems, and bitter-lesson-boundary.
 
@@ -64,7 +64,7 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 
 3. **Insights vs execution as oracle-strength categories**: The paper's own distinction maps cleanly onto our oracle-strength spectrum. Execution = hard oracle (deterministic correct answer); insights = soft oracle (irreducible uncertainty). This vocabulary could sharpen the spectrum note. [quick-win]
 
-4. **Small models suffice in the calculator regime**: gpt-4.1-mini outperforms o3-mini on cost-effectiveness for execution tasks. Empirical confirmation that reasoning models are overkill when the task is execution with hard oracles — directly relevant to model selection for crystallised operations. [quick-win]
+4. **Small models suffice in the calculator regime**: gpt-4.1-mini outperforms o3-mini on cost-effectiveness for execution tasks. Empirical confirmation that reasoning models are overkill when the task is execution with hard oracles — directly relevant to model selection for codified operations. [quick-win]
 
 5. **Multi-agent advantage as an empirical threshold**: A concrete case where a multi-agent system solves something a single agent provably cannot (at any temperature or prompt). The "multi-agent advantage" concept (analogous to quantum advantage) is a useful frame for reasoning about when decomposition crosses from overhead to necessity. [just-a-reference]
 

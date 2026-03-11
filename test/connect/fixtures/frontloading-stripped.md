@@ -10,7 +10,7 @@ status: seedling
 
 When instructing LLMs, any part of the instructions whose inputs are known before the LLM runs should be computed beforehand and the result inserted directly. This spares execution context — the primary bottleneck in LLM-based systems.
 
-[Indirection elimination](../notes/indirection-is-costly-in-llm-instructions.md) and [build-time generation](../notes/generate-instructions-at-build-time.md) involve frontloading, though they also involve [crystallisation](../notes/crystallisation.md) — the pre-computed result happens to be deterministic, so both principles apply simultaneously.
+[Indirection elimination](../notes/indirection-is-costly-in-llm-instructions.md) and [build-time generation](../notes/generate-instructions-at-build-time.md) involve frontloading, though they also involve [codification](../notes/codification.md) — the pre-computed result happens to be deterministic, so both principles apply simultaneously.
 
 ## Why execution context is the bottleneck
 
@@ -71,13 +71,13 @@ Standard PE assumes precise denotational semantics — `[[P]]` has an exact mean
 
 **3. The optimisation target is context, not time.** Standard PE makes the residual faster. Here the gain is freeing context window and improving reliability by removing interpretation steps.
 
-The stretches matter for understanding the mechanism, but not for the context-sparing benefit. Frontloading saves context regardless of whether the pre-computed result is deterministic (a file listing) or still underspecified when the LLM reads it (a pre-computed summary). The savings come from removing the *procedure* from context, not from changing the *semantics* of the result. Frontloading is not stabilisation — it doesn't require moving from underspecified to precise semantics. It may happen to do so (variable resolution produces a literal), but that's incidental.
+The stretches matter for understanding the mechanism, but not for the context-sparing benefit. Frontloading saves context regardless of whether the pre-computed result is deterministic (a file listing) or still underspecified when the LLM reads it (a pre-computed summary). The savings come from removing the *procedure* from context, not from changing the *semantics* of the result. Frontloading is not constraining — it doesn't require moving from underspecified to precise semantics. It may happen to do so (variable resolution produces a literal), but that's incidental.
 
 Relevant Notes:
-- [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [crystallisation](../notes/crystallisation.md) (replaces underspecified template with deterministic literal)
-- [generate instructions at build time](../notes/generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
+- [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](../notes/codification.md) (replaces underspecified template with deterministic literal)
+- [generate instructions at build time](../notes/generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and codification; the notes already link to constraining for the semantic-commitment aspect
 - [CLAUDE.md is a router, not a manual](../notes/context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
-- [agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not stabilisation — it spares context regardless of whether the result is deterministic or still underspecified
+- [agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not constraining — it spares context regardless of whether the result is deterministic or still underspecified
 - [injectable configuration extends frontloading to installation-specific values](../notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md) — extends: a third frontloading channel for values static within one installation but variable across installations
 
 Topics:

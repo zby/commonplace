@@ -24,13 +24,13 @@ Each would require defining structure, adding validation, updating the type taxo
 
 The formal system didn't grow. A prompt absorbed the requirement.
 
-## Where this sits on the stabilisation spectrum
+## Where this sits on the constraining spectrum
 
-[Methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) describes a gradient: instructions → skills → hooks → scripts. Each step trades flexibility for reliability. Ad hoc instructions notes sit at the loosest end — maximally flexible, zero infrastructure cost, but also zero validation and zero reuse.
+[Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) describes a gradient: instructions → skills → hooks → scripts. Each step trades flexibility for reliability. Ad hoc instructions notes sit at the loosest end — maximally flexible, zero infrastructure cost, but also zero validation and zero reuse.
 
 [Instructions are typed callables](./instructions-are-typed-callables.md) argues for the other end: declare type signatures, validate inputs, make skills composable. Both are correct for different moments. The typed-callable view is right for operations that recur — `/connect`, `/validate`, `/ingest`. The ad hoc view is right for operations that might happen once, or whose shape isn't clear yet.
 
-The stabilisation direction is: write ad hoc instructions first, notice when you're writing the same kind of instructions repeatedly, extract a skill. This is the prompt equivalent of "write the code three times, then extract a function." The instructions note is the prototype; the skill is the extraction. This trajectory — [lowest-friction capture, then progressive refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — applies to the skill layer just as it does to the document type ladder. And the extraction step itself is [distillation](./skills-derive-from-methodology-through-distillation.md): the ad hoc instructions carry discursive reasoning about what to do and why; the extracted skill keeps the procedure and factors out the justification.
+The constraining direction is: write ad hoc instructions first, notice when you're writing the same kind of instructions repeatedly, extract a skill. This is the prompt equivalent of "write the code three times, then extract a function." The instructions note is the prototype; the skill is the extraction. This trajectory — [lowest-friction capture, then progressive refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — applies to the skill layer just as it does to the document type ladder. And the extraction step itself is [distillation](./skills-derive-from-methodology-through-distillation.md): the ad hoc instructions carry discursive reasoning about what to do and why; the extracted skill keeps the procedure and factors out the justification.
 
 ## Why prompts carry what types can't
 
@@ -53,10 +53,10 @@ Ad hoc extension without schema changes is possible because the [LLM context is 
 Relevant Notes:
 
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the typed end of the spectrum: skills should declare signatures. This note argues for the untyped end — ad hoc instructions that absorb requirements without schema changes. Both are correct for different moments.
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — foundation: the gradient from instructions to scripts. Ad hoc instructions notes are the loosest point on this gradient.
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — foundation: the gradient from instructions to scripts. Ad hoc instructions notes are the loosest point on this gradient.
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: this note adds a practice that goes the other direction — sometimes staying at the prompt level is the right choice, not a failure to compile
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: unified calling conventions make it possible to start with a prompt and later extract to a skill without changing call sites
-- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: the workshop layer is where ad hoc instructions live; the library is where they stabilise into skills
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: the workshop layer is where ad hoc instructions live; the library is where they constrain into skills
 - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — grounds: ad hoc instructions are the wikiwiki principle applied to the skill layer — lowest-friction capture first, progressive refinement into skills as patterns emerge
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — enables: the extraction from ad hoc instructions to skills is distillation — keeping procedures, factoring out the discursive reasoning that produced them
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — grounds: ad hoc instructions notes are effective sub-agent interfaces because they provide lexically scoped frames — the sub-agent sees only what the caller explicitly passed

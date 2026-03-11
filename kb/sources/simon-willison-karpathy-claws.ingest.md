@@ -13,7 +13,7 @@ From: https://simonwillison.net/2026/Feb/21/claws/
 
 ## Classification
 
-Type: **conceptual-essay** -- Simon Willison amplifies and contextualizes Karpathy's tweet-essay, arguing that "Claw" is crystallizing as a term of art for a new category of AI system. The primary content is definitional framing, not a build report or research finding.
+Type: **conceptual-essay** -- Simon Willison amplifies and contextualizes Karpathy's tweet-essay, arguing that "Claw" is codifying as a term of art for a new category of AI system. The primary content is definitional framing, not a build report or research finding.
 
 Domains: ai-agents, terminology, agent-architecture, personal-computing
 

@@ -38,7 +38,7 @@ Article #23 links to six methodology claims from the 249-claim research base. Re
 
 **"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link contracts](../link-contracts-framework.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, foundation, contradicts, enables, example. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link contracts enforce.
 
-**"over-automation corrupts quality when hooks encode judgment rather than verification"** — Strikingly close to our [methodology enforcement gradient](../methodology-enforcement-is-stabilisation.md) and [oracle strength spectrum](../oracle-strength-spectrum.md). Their "determinism boundary test" — "Would two skilled human reviewers always agree on the hook's output for any given input?" — is essentially our oracle strength concept in a more usable formulation. Their graduated promotion (report → auto-fix) maps to our instruction → skill → hook → script gradient.
+**"over-automation corrupts quality when hooks encode judgment rather than verification"** — Strikingly close to our [methodology enforcement gradient](../methodology-enforcement-is-constraining.md) and [oracle strength spectrum](../oracle-strength-spectrum.md). Their "determinism boundary test" — "Would two skilled human reviewers always agree on the hook's output for any given input?" — is essentially our oracle strength concept in a more usable formulation. Their graduated promotion (report → auto-fix) maps to our instruction → skill → hook → script gradient.
 
 **"elaborative encoding is the quality gate for new notes"** — Their link quality gate (every link must articulate WHY) is what our /connect skill enforces. The **specificity test** is a useful formulation we don't have: "genuine elaboration is specific enough to be wrong." Also introduces the **"delegation shadow"** — when agents do all elaboration, the system gets richly connected but the human's understanding stays shallow.
 
@@ -75,7 +75,7 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 **Where we diverged:**
 
-- **We built our own theory.** [Crystallisation](../crystallisation.md), [oracle strength](../oracle-strength-spectrum.md), [methodology enforcement as stabilisation](../methodology-enforcement-is-stabilisation.md) — these emerged from our own work and have no counterpart in arscontexta's research graph.
+- **We built our own theory.** [Codification](../codification.md), [oracle strength](../oracle-strength-spectrum.md), [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) — these emerged from our own work and have no counterpart in arscontexta's research graph.
 - **We simplified the structure.** Arscontexta's three-space architecture (self/notes/ops) felt over-engineered for our use. We collapsed to a flatter `kb/` with notes, sources, and tasks. No separate identity/methodology/goals files.
 - **We developed verifiable document types.** Our [document classification](../document-classification.md) with types, traits, and status is structurally richer than arscontexta's template-with-schema approach. Types mark affordances; traits are independently checkable.
 - **We use embeddings for search.** We use embeddings (via qmd) for long-range search while rejecting them for organization. Article #23 positions the embedding critique as more absolute — embeddings produce fog. Our stance is more nuanced: embeddings are fine for search; curated links are for organization and reasoning.
@@ -92,7 +92,7 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 ## What We Do Better
 
-- **Learning theory.** We have a framework for understanding *when* to stabilise and *when* to keep things stochastic. Arscontexta has a fixed pipeline; we have a theory about pipeline evolution.
+- **Learning theory.** We have a framework for understanding *when* to constrain and *when* to keep things stochastic. Arscontexta has a fixed pipeline; we have a theory about pipeline evolution.
 - **Document affordances.** Our type system tells agents what they can do with a document before reading it. Arscontexta treats all notes as structurally similar.
 - **Lighter weight.** Our system works without hooks, queues, or session management. A KB is markdown files, skills, and CLAUDE.md. Lower barrier, less infrastructure to maintain.
 
@@ -120,11 +120,11 @@ The genuinely new contributions are: credibility erosion (a failure mode we hadn
 
 ## The Theoretical Bet
 
-The deepest divergence is in grounding discipline. Arscontexta draws on **cognitive psychology** — spreading activation, generation effect, context-switching cost (Leroy 2009), extended mind thesis. We draw on **programming language theory** — [types mark affordances](../instructions-are-typed-callables.md), verifiability gradients, stabilise/soften as compilation, [the bitter lesson boundary](../bitter-lesson-boundary.md). [Thalo](./thalo.md) independently validates the programming-theory side by building a full compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 deterministic validation rules — pushing formalization further than we do. The implicit bet: knowledge systems for LLM agents are closer to programming (formal, compositional, verifiable) than to human cognition (associative, affective, embodied). Time will tell which foundation produces better systems — or whether they converge.
+The deepest divergence is in grounding discipline. Arscontexta draws on **cognitive psychology** — spreading activation, generation effect, context-switching cost (Leroy 2009), extended mind thesis. We draw on **programming language theory** — [types mark affordances](../instructions-are-typed-callables.md), verifiability gradients, constrain/relax as compilation, [the bitter lesson boundary](../bitter-lesson-boundary.md). [Thalo](./thalo.md) independently validates the programming-theory side by building a full compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 deterministic validation rules — pushing formalization further than we do. The implicit bet: knowledge systems for LLM agents are closer to programming (formal, compositional, verifiable) than to human cognition (associative, affective, embodied). Time will tell which foundation produces better systems — or whether they converge.
 
 ## What to Watch
 
-- Does arscontexta develop learning theory (crystallisation-like concepts)?
+- Does arscontexta develop learning theory (codification-like concepts)?
 - How does the plugin marketplace model evolve — does it become a distribution channel for knowledge system patterns?
 - Do the 249 research claims get maintained and updated, or become stale?
 - Does the fresh-context-per-phase pattern prove its value in practice, and should we adopt it?

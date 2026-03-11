@@ -35,7 +35,7 @@ These techniques could strengthen our [quality signals work](../quality-signals-
 
 ## Other Notable Concepts
 
-- **Tokens-per-task, not tokens-per-request** — optimise total task cost, not individual request size. Useful framing for crystallisation decisions.
+- **Tokens-per-task, not tokens-per-request** — optimise total task cost, not individual request size. Useful framing for codification decisions.
 - **Observation masking** — tool outputs consume 80%+ of tokens; replace verbose outputs with references. Relevant when we build session infrastructure.
 - **Anchored iterative summarization** — structured session summaries (Intent / Files Modified / Decisions / State / Next Steps). Also relevant for future session work.
 - **Telephone game problem** — supervisors paraphrasing sub-agent outputs lose fidelity. Fix: direct pass-through or file-based communication.
@@ -44,13 +44,13 @@ These techniques could strengthen our [quality signals work](../quality-signals-
 
 **Strong alignment:** Progressive disclosure, filesystem-first knowledge, start-simple philosophy, tool consolidation.
 
-**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to stabilise — they have operational patterns but no learning framework. Our [methodology enforcement as stabilisation](../methodology-enforcement-is-stabilisation.md) has no counterpart in their work.
+**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to constrain — they have operational patterns but no learning framework. Our [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) has no counterpart in their work.
 
 **They go deeper:** Attention mechanics and degradation data (model-specific thresholds, the four-bucket mitigation). Formal evaluation methodology (LLM-as-judge protocols, bias mitigation). Hosted agent infrastructure (sandboxing, warm pools, pre-built images).
 
 ## What to Watch
 
-- Do they develop learning theory (moving from operational patterns toward a crystallisation-like framework)?
+- Do they develop learning theory (moving from operational patterns toward a codification-like framework)?
 - Does the skill specification evolve toward something like our document classification?
 - How does the evaluation methodology mature — could it become a reusable component?
 - Do they stay platform-agnostic or drift toward Claude Code specifics?

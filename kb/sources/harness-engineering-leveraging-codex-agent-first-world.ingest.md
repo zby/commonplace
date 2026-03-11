@@ -1,9 +1,9 @@
 ---
-description: Practitioner report on 1M LOC fully agent-generated codebase — harness engineering as constrain/inform/verify/correct, entropy management via background cleanup agents, error messages as dual-function stabilisation
+description: Practitioner report on 1M LOC fully agent-generated codebase — harness engineering as constrain/inform/verify/correct, entropy management via background cleanup agents, error messages as dual-function constraining
 source_snapshot: harness-engineering-leveraging-codex-agent-first-world.md
 ingested: 2026-03-09
 type: practitioner-report
-domains: [agent-systems, context-engineering, stabilisation, code-generation]
+domains: [agent-systems, context-engineering, constraining, code-generation]
 ---
 
 # Ingest: Harness Engineering: Leveraging Codex in an Agent-First World
@@ -14,7 +14,7 @@ From: https://openai.com/index/harness-engineering/
 
 ## Classification
 Type: practitioner-report — An engineer on OpenAI's Codex team describing what they built (1M LOC, zero manual code over five months) and the practices that emerged. Concrete practices, scale numbers, and lessons learned from direct first-person experience.
-Domains: agent-systems, context-engineering, stabilisation, code-generation
+Domains: agent-systems, context-engineering, constraining, code-generation
 Author: Ryan Lopopolo, Member of Technical Staff at OpenAI, on the Codex team that built the product described. Direct first-person experience at a scale few teams have reached with fully agent-generated codebases.
 
 ## Summary
@@ -23,19 +23,19 @@ Lopopolo reports on OpenAI's Codex team shipping an internal beta product with o
 
 ## Connections Found
 
-The `/connect` discovery validated all 7 connections from the original ingest and found 7 additional ones, for 14 total. Only one note currently links back to this source ([error-messages-that-teach-are-a-stabilisation-technique](../notes/error-messages-that-teach-are-a-stabilisation-technique.md)), meaning 13 connections remain unmaterialised as bidirectional links.
+The `/connect` discovery validated all 7 connections from the original ingest and found 7 additional ones, for 14 total. Only one note currently links back to this source ([error-messages-that-teach-are-a-constraining-technique](../notes/error-messages-that-teach-are-a-constraining-technique.md)), meaning 13 connections remain unmaterialised as bidirectional links.
 
 ### Validated from original ingest
 
 1. **[context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)** — exemplifies: "give Codex a map, not a 1,000-page instruction manual" is independent practitioner discovery of context scarcity as the binding constraint.
 
-2. **[methodology-enforcement-is-stabilisation](../notes/methodology-enforcement-is-stabilisation.md)** — exemplifies: The three harness pillars map directly onto the stabilisation gradient (instructions -> structural tests -> automated cleanup agents). "Every mistake is a harness bug" is the maturation trajectory stated as design philosophy.
+2. **[methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md)** — exemplifies: The three harness pillars map directly onto the constraining gradient (instructions -> structural tests -> automated cleanup agents). "Every mistake is a harness bug" is the maturation trajectory stated as design philosophy.
 
 3. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)** — exemplifies: "Good harnesses compound" is deploy-time learning in practitioner language. Each constraint is a repo artifact that makes future work more reliable.
 
 4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
 
-5. **[stabilisation](../notes/stabilisation.md)** — exemplifies: "Encode standards directly into the repository" is stabilisation in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the stabilisation spectrum.
+5. **[constraining](../notes/constraining.md)** — exemplifies: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
 
 6. **[context-loading-strategy](../notes/context-loading-strategy.md)** — exemplifies: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
 
@@ -43,11 +43,11 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 ### New connections from discovery
 
-8. **[error-messages-that-teach-are-a-stabilisation-technique](../notes/error-messages-that-teach-are-a-stabilisation-technique.md)** — primary evidence: This note was written directly from this source's extractable value. The note's entire argument ("linter error messages double as remediation instructions") originates here. The only note that currently links back to this source.
+8. **[error-messages-that-teach-are-a-constraining-technique](../notes/error-messages-that-teach-are-a-constraining-technique.md)** — primary evidence: This note was written directly from this source's extractable value. The note's entire argument ("linter error messages double as remediation instructions") originates here. The only note that currently links back to this source.
 
-9. **[spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md)** — exemplifies: The entropy management practice (observe pattern drift, encode standards, automate cleanup) is spec mining applied to code quality. The progression from "20% Fridays cleaning AI slop" to automated background agents is the spec mining pattern completing: observe, extract, crystallise. The note links to the cybernetics companion source but not to this one.
+9. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** — exemplifies: The entropy management practice (observe pattern drift, encode standards, automate cleanup) is spec mining applied to code quality. The progression from "20% Fridays cleaning AI slop" to automated background agents is the spec mining pattern completing: observe, extract, codify. The note links to the cybernetics companion source but not to this one.
 
-10. **[crystallisation](../notes/crystallisation.md)** — exemplifies: Encoding quality standards into linters and structural tests that replace manual judgment is crystallisation at scale. "Human taste is captured once, enforced continuously" is crystallisation's core proposition stated plainly.
+10. **[codification](../notes/codification.md)** — exemplifies: Encoding quality standards into linters and structural tests that replace manual judgment is codification at scale. "Human taste is captured once, enforced continuously" is codification's core proposition stated plainly.
 
 11. **[oracle-strength-spectrum](../notes/oracle-strength-spectrum.md)** — grounds: The implicit thesis — invest in verification infrastructure (linters, structural tests, CI) before generation capability — maps onto the oracle-strength claim that oracle quality, not generation quality, is the leverage point.
 
@@ -59,13 +59,13 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 **Companion source**: [Harness Engineering Is Cybernetics (ingest)](harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — an X thread reframing harness engineering as cybernetics (sensors, actuators, feedback loops). Together the two sources provide practice (Lopopolo) and theory (cybernetics framing) for the same phenomenon.
 
-**Convergence pattern**: Lopopolo's "harness engineering" is essentially our stabilisation + deploy-time learning + context efficiency + crystallisation framework, arrived at independently from practice rather than theory. The convergence across 14 connections is strong evidence that the theoretical framework captures something real.
+**Convergence pattern**: Lopopolo's "harness engineering" is essentially our constraining + deploy-time learning + context efficiency + codification framework, arrived at independently from practice rather than theory. The convergence across 14 connections is strong evidence that the theoretical framework captures something real.
 
 ## Extractable Value
 
-1. **Error messages as agent instructions**: "Linter error messages double as remediation instructions — every failure message teaches the agent the fix." A stabilisation technique that simultaneously constrains (blocks the merge) and informs (teaches the fix). Already captured in [error-messages-that-teach-are-a-stabilisation-technique](../notes/error-messages-that-teach-are-a-stabilisation-technique.md). [quick-win — done]
+1. **Error messages as agent instructions**: "Linter error messages double as remediation instructions — every failure message teaches the agent the fix." A constraining technique that simultaneously constrains (blocks the merge) and informs (teaches the fix). Already captured in [error-messages-that-teach-are-a-constraining-technique](../notes/error-messages-that-teach-are-a-constraining-technique.md). [quick-win — done]
 
-2. **Entropy management as continuous stabilisation at scale**: Background cleanup agents that scan for stale documentation, constraint violations, and pattern deviations, opening small refactoring PRs (most auto-merged). "Garbage collection for code quality." The key insight is that cleanup throughput must scale proportionally with generation throughput. Not yet captured as a standalone note. [experiment]
+2. **Entropy management as continuous constraining at scale**: Background cleanup agents that scan for stale documentation, constraint violations, and pattern deviations, opening small refactoring PRs (most auto-merged). "Garbage collection for code quality." The key insight is that cleanup throughput must scale proportionally with generation throughput. Not yet captured as a standalone note. [experiment]
 
 3. **"Every mistake is a harness bug" as a design philosophy**: When agents fail, the question is not "what prompt should we use?" but "what capability is missing, what constraint is unenforced?" A sharper articulation of the maturation trajectory: human effort should go into hardening the environment, not into improving prompts. [quick-win]
 
@@ -75,7 +75,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 6. **Scale data point**: 3 engineers growing to 7, averaging 3.5 PRs/engineer/day, ~1,500 PRs total, ~1M LOC in five months. The most concrete throughput data available for a fully agent-generated codebase. [just-a-reference]
 
-7. **The 20% Friday cleanup problem and its resolution**: Early on, 20% of time was spent manually cleaning "AI slop." The transition to automated cleanup agents is spec mining completing — observe drift patterns, extract standards, crystallise into automated enforcement. [just-a-reference]
+7. **The 20% Friday cleanup problem and its resolution**: Early on, 20% of time was spent manually cleaning "AI slop." The transition to automated cleanup agents is spec mining completing — observe drift patterns, extract standards, codify into automated enforcement. [just-a-reference]
 
 ## Limitations (our opinion)
 
@@ -93,4 +93,4 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 ## Recommended Next Action
 
-Write a note titled "Entropy management must scale with generation throughput" connecting to [spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md) and [methodology-enforcement-is-stabilisation](../notes/methodology-enforcement-is-stabilisation.md) — it would argue that in agent-maintained systems (code or knowledge), cleanup is not a periodic chore but a continuous process whose throughput must match generation throughput, because agents replicate existing patterns including bad ones. Lopopolo's transition from "20% Fridays" to automated background cleanup agents is the concrete evidence, and the pattern generalises to any system where agents produce artifacts faster than humans can review them. This fills a gap flagged by `/connect`: the KB has stabilisation, crystallisation, and spec-mining, but does not yet name the scaling requirement that connects them.
+Write a note titled "Entropy management must scale with generation throughput" connecting to [spec-mining-as-codification](../notes/spec-mining-as-codification.md) and [methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md) — it would argue that in agent-maintained systems (code or knowledge), cleanup is not a periodic chore but a continuous process whose throughput must match generation throughput, because agents replicate existing patterns including bad ones. Lopopolo's transition from "20% Fridays" to automated background cleanup agents is the concrete evidence, and the pattern generalises to any system where agents produce artifacts faster than humans can review them. This fills a gap flagged by `/connect`: the KB has constraining, codification, and spec-mining, but does not yet name the scaling requirement that connects them.

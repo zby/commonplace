@@ -1,5 +1,5 @@
 ---
-description: Catalogues data-driven stabilising and softening signals from an agentic AI adaptation taxonomy — maps the paper's agent/tool × execution/output signal grid onto llm-do's neural/symbolic spectrum and the stabilise/soften cycle
+description: Catalogues data-driven constraining and relaxing signals from an agentic AI adaptation taxonomy — maps the paper's agent/tool × execution/output signal grid onto llm-do's neural/symbolic spectrum and the constrain/relax cycle
 ---
 
 # Analysis: Adaptation of Agentic AI (arXiv:2512.16301)
@@ -76,7 +76,7 @@ After each run, optionally prompt user: "How did this go?" Store outcome with ta
 3. Proposes prompt modifications
 4. User approves changes
 
-This is "stabilizing" in llm-do terminology—but data-driven rather than intuition-driven.
+This is "constraining" in llm-do terminology—but data-driven rather than intuition-driven.
 
 ### 3. Tool Selection Adaptation
 
@@ -228,12 +228,12 @@ Meta-worker that reads failure logs and proposes instruction improvements.
 
 The paper reinforces llm-do's bidirectional refactoring principle with data-driven triggers:
 
-**Stabilizing signals** (neural → symbolic):
+**Constraining signals** (neural → symbolic):
 - Tool consistently fails with certain input patterns → add validation in Python
 - LLM always calls tools in same sequence → extract to Python orchestration
 - Output structure is always identical → add stricter schema
 
-**Softening signals** (symbolic → neural):
+**Relaxing signals** (symbolic → neural):
 - Python tool has growing exception list → delegate edge cases to worker
 - Validation rules have many special cases → use LLM for underspecified validation
 - User frequently overrides tool behavior → add flexibility via worker
@@ -242,11 +242,11 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 
 Relevant Notes:
 
-- [stabilisation](../stabilisation.md) — the stabilising/softening signals catalogued here are the data-driven triggers for the stabilise/soften cycle
-- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the stabilise/soften cycle applied to tool boundaries
-- [operational signals that a component is a softening candidate](../operational-signals-that-a-component-is-a-softening-candidate.md) — extends: the softening signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
+- [constraining](../constraining.md) — the constraining/relaxing signals catalogued here are the data-driven triggers for the constrain/relax cycle
+- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the constrain/relax cycle applied to tool boundaries
+- [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: the relaxing signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
 - [unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: bidirectional refactoring between neural and symbolic only works with unified interfaces; the paper's adaptation mechanisms assume this
-- [bitter-lesson-boundary](../bitter-lesson-boundary.md) — context: the stabilising/softening signals are empirical indicators of which side of the boundary a component sits on
+- [bitter-lesson-boundary](../bitter-lesson-boundary.md) — context: the constraining/relaxing signals are empirical indicators of which side of the boundary a component sits on
 
 Sources:
 - [Adaptation of Agentic AI (arXiv:2512.16301)](https://arxiv.org/abs/2512.16301)

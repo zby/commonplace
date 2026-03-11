@@ -33,7 +33,7 @@ prescriptive → prohibitive → conditional → explanatory → descriptive
 
 Moving left gives reliability at the cost of coverage — prescriptive instructions handle their specific case perfectly but say nothing about adjacent cases. Moving right gives coverage at the cost of reliability — descriptive context helps the agent handle novel situations but may lead to unexpected interpretations.
 
-This is the same tradeoff the [underspecification note](./agentic-systems-interpret-underspecified-instructions.md) identifies between narrowing interpretations and preserving ambiguity. Prescriptive style is stabilisation within the instruction medium — committing to one interpretation without extracting it to code. Descriptive style is deliberately keeping the interpretation space open because the author trusts the agent's judgment (or can't enumerate the cases).
+This is the same tradeoff the [underspecification note](./agentic-systems-interpret-underspecified-instructions.md) identifies between narrowing interpretations and preserving ambiguity. Prescriptive style is constraining within the instruction medium — committing to one interpretation without extracting it to code. Descriptive style is deliberately keeping the interpretation space open because the author trusts the agent's judgment (or can't enumerate the cases).
 
 ## Interaction with loading tier
 
@@ -48,7 +48,7 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the interpretation-space model that gives these styles their theoretical grounding
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
-- [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: prescriptive style is stabilisation within the instruction medium, short of extracting to code
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: prescriptive style is constraining within the instruction medium, short of extracting to code
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — grounds: the "warrant" concept used in the explanatory style description originates from Toulmin's argumentation model
 

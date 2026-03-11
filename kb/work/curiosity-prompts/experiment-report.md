@@ -2,7 +2,7 @@
 
 ## Question
 
-After writing a related-system review of Decapod, a human reviewer questioned the "embedded constitution" — described as "compiled into the binary" and "crystallised." The reviewer's reasoning was not about implementation details but about *what the mechanism could achieve even if it works perfectly*: if the constitution is crystallised into code, what can it actually do? Only symbolic checks. But the constitution is freeform prose interpreted by an LLM — symbolic checks can't meaningfully verify freeform text. So the crystallisation, even if real, can't deliver the value the framing implies. Investigation then confirmed the mechanism was even weaker than that — just verbatim `include_str!()` copying with no transformation at all.
+After writing a related-system review of Decapod, a human reviewer questioned the "embedded constitution" — described as "compiled into the binary" and "codified." The reviewer's reasoning was not about implementation details but about *what the mechanism could achieve even if it works perfectly*: if the constitution is codified into code, what can it actually do? Only symbolic checks. But the constitution is freeform prose interpreted by an LLM — symbolic checks can't meaningfully verify freeform text. So the codification, even if real, can't deliver the value the framing implies. Investigation then confirmed the mechanism was even weaker than that — just verbatim `include_str!()` copying with no transformation at all.
 
 The reviewer's move was an oracle-strength question: what's the discriminative power of this verifier? The answer — "not much, because freeform prose resists symbolic verification" — followed from reasoning about the claim, not from reading the code.
 
@@ -10,7 +10,7 @@ This was a valuable finding. Can we prompt agents to ask similar questions? What
 
 ## Setup
 
-We reconstructed the original report (before the mechanistic investigation) in `decapod-original.md`. This version presents the constitution uncritically: "compiled into the binary," "maximum stabilisation, zero interpretive variance," "crystallised."
+We reconstructed the original report (before the mechanistic investigation) in `decapod-original.md`. This version presents the constitution uncritically: "compiled into the binary," "maximum constraining, zero interpretive variance," "codified."
 
 We tested 6 prompt framings, each given the same report and access to the Decapod source repo. Each prompt was run twice (two batches) for 12 total runs.
 
@@ -25,7 +25,7 @@ We tested 6 prompt framings, each given the same report and access to the Decapo
 
 ## Results
 
-**Target finding**: The constitution embedding is verbatim copying with no transformation — the crystallisation claim is illusory.
+**Target finding**: The constitution embedding is verbatim copying with no transformation — the codification claim is illusory.
 
 | # | Prompt | Batch 1 | Batch 2 | Score |
 |---|---|---|---|---|
@@ -38,7 +38,7 @@ We tested 6 prompt framings, each given the same report and access to the Decapo
 
 ### Scoring criteria
 
-- **Yes**: Agent explicitly identified that `include_str!()` copies markdown verbatim with no transformation, and that the "crystallisation" or "compiled" framing is therefore misleading or illusory.
+- **Yes**: Agent explicitly identified that `include_str!()` copies markdown verbatim with no transformation, and that the "codification" or "compiled" framing is therefore misleading or illusory.
 - **Partial**: Agent found the OVERRIDE.md runtime escape hatch or noted the mechanism is "simpler than claimed," but did not reach the core insight that the compilation step itself adds nothing.
 - **No**: Agent confirmed the mechanism works as described and moved on.
 
@@ -46,7 +46,7 @@ We tested 6 prompt framings, each given the same report and access to the Decapo
 
 ### The core distinction: "does it work?" vs "what can it achieve?"
 
-The human reviewer's question was not "does the compilation work?" but "what could a compiled constitution actually *do*?" This is an oracle-strength question: even if the mechanism functions perfectly, what's the discriminative power of the resulting verifier? For freeform prose interpreted by an LLM, compiling it into the binary can't add verification capability — the prose is still interpreted at runtime, not checked at compile time. The crystallisation claim implies a stabilisation property the mechanism cannot deliver, regardless of implementation quality.
+The human reviewer's question was not "does the compilation work?" but "what could a compiled constitution actually *do*?" This is an oracle-strength question: even if the mechanism functions perfectly, what's the discriminative power of the resulting verifier? For freeform prose interpreted by an LLM, compiling it into the binary can't add verification capability — the prose is still interpreted at runtime, not checked at compile time. The codification claim implies a constraining property the mechanism cannot deliver, regardless of implementation quality.
 
 Four of six agent framings (impossibility, implications, adversarial, mechanistic) converge on the question "does the mechanism work as described?" The constitution embedding *does* work — `include_str!()` successfully puts markdown into the binary, and the agent can retrieve it. These framings verify the mechanism and move on.
 
@@ -54,7 +54,7 @@ Only cost/benefit asks a question that reaches a similar conclusion from a diffe
 
 ### Why adversarial only gets partway
 
-The adversarial framing ("assume claims are overstated") reliably found the OVERRIDE.md escape hatch — "the immutability claim is too strong because overrides exist." But this questions the *completeness* of the crystallisation, not its *existence*. The adversarial frame asks "is this claim fully true?" which lands on real gaps (overrides exist) without reaching "the whole mechanism is unnecessary."
+The adversarial framing ("assume claims are overstated") reliably found the OVERRIDE.md escape hatch — "the immutability claim is too strong because overrides exist." But this questions the *completeness* of the codification, not its *existence*. The adversarial frame asks "is this claim fully true?" which lands on real gaps (overrides exist) without reaching "the whole mechanism is unnecessary."
 
 Both adversarial runs prioritized proof self-attestation as finding #1 — a genuine and important insight (the proof system and the workunit system are disconnected; agents self-report proof results). The adversarial frame is good at finding the *most consequential* overstatement, which turned out to be a different one.
 

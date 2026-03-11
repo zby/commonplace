@@ -41,9 +41,9 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 - LLM systems make the projection explicit — every prompt invocation picks an interpretation
 - The interpretation choice is visible (you can compare outputs across runs) but not controllable (you can't predict which interpretation will be chosen)
-- [Stabilisation](./stabilisation.md) is the direct mechanism for resolving disambiguation — committing to one interpretation and hardening it into a less ambiguous form
+- [Constraining](./constraining.md) is the direct mechanism for resolving disambiguation — committing to one interpretation and hardening it into a less ambiguous form
 
-The deploy-time learning cycle (deploy → observe → stabilise → repeat) is precisely a disambiguation loop: each iteration catches interpretation errors and narrows the spec for next time.
+The deploy-time learning cycle (deploy → observe → constrain → repeat) is precisely a disambiguation loop: each iteration catches interpretation errors and narrows the spec for next time.
 
 ## Open Questions
 
@@ -57,7 +57,7 @@ Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the spec-to-program projection model that makes interpretation explicit
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: agile's loop applied to human-AI systems, where disambiguation is amplified
-- [stabilisation](./stabilisation.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
+- [constraining](./constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for preventing cascading interpretation errors in natural language specs
 
 Topics:

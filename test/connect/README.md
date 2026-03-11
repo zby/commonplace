@@ -9,8 +9,8 @@ Integration tests for the `/connect` and `/connect-new` skills. Each test runs a
 | File | Description |
 |------|-------------|
 | `fixtures/frontloading-stripped.md` | Copy of `frontloading-spares-execution-context.md` with all links and Relevant Notes removed |
-| `fixtures/stabilisation-stripped.md` | Copy of `stabilisation.md` with all links and Relevant Notes removed |
-| `fixtures/crystallisation-intact.md` | Copy of `crystallisation.md` with all links preserved |
+| `fixtures/constraining-stripped.md` | Copy of `constraining.md` with all links and Relevant Notes removed |
+| `fixtures/codification-intact.md` | Copy of `codification.md` with all links preserved |
 
 ## How to run
 
@@ -26,7 +26,7 @@ Workshop is test/connect/
 
 ### 1. Stripped note — can it recover connections?
 
-**Input:** `fixtures/frontloading-stripped.md` or `fixtures/stabilisation-stripped.md`
+**Input:** `fixtures/frontloading-stripped.md` or `fixtures/constraining-stripped.md`
 **Skill:** `/connect-new`
 **Workshop:** `test/connect/`
 
@@ -41,22 +41,22 @@ Workshop is test/connect/
 **Expected core connections for frontloading:**
 - `indirection-is-costly-in-llm-instructions.md` — overlaps
 - `generate-instructions-at-build-time.md` — overlaps
-- `crystallisation.md` — distinguishes
+- `codification.md` — distinguishes
 - `agentic-systems-interpret-underspecified-instructions.md` — grounds
 - `context-loading-strategy.md` — motivates
 
-**Expected core connections for stabilisation:**
-- `crystallisation.md` — extends
+**Expected core connections for constraining:**
+- `codification.md` — extends
 - `distillation.md` — contrasts/complements
 - `agentic-systems-interpret-underspecified-instructions.md` — grounds
-- `storing-llm-outputs-is-stabilization.md` — exemplifies
-- `methodology-enforcement-is-stabilisation.md` — exemplifies
+- `storing-llm-outputs-is-constraining.md` — exemplifies
+- `methodology-enforcement-is-constraining.md` — exemplifies
 - `deploy-time-learning-the-missing-middle.md` — grounds
 - `bitter-lesson-boundary.md` — extends
 
 ### 2. Intact note — does it handle existing links?
 
-**Input:** `fixtures/crystallisation-intact.md`
+**Input:** `fixtures/codification-intact.md`
 **Skill:** `/connect-new`
 **Workshop:** `test/connect/`
 

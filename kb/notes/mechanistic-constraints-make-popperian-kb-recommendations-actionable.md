@@ -43,7 +43,7 @@ This is why falsifier blocks work: they convert criticism from "re-read and see 
 
 - **Contradiction-first connection passes** — When `/connect` discovers relationships, it should look for tension and contradiction *before* looking for agreement and extension. The current default is to find notes that "extend" or "ground" the new note. Reversing the priority means criticism is not optional — every note gets at least one check for conflict with existing claims. Target: `/connect` skill.
 
-- **Rejected interpretations become instruction tests** — When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [stabilisation](./stabilisation.md) driven by error, and across sessions it compounds as [deploy-time learning](./deploy-time-learning-the-missing-middle.md). Target: workflow convention or hook.
+- **Rejected interpretations become instruction tests** — When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [constraining](./constraining.md) driven by error, and across sessions it compounds as [deploy-time learning](./deploy-time-learning-the-missing-middle.md). Target: workflow convention or hook.
 
 ## What would defeat this claim?
 
@@ -57,7 +57,7 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: why criticism must be externalized into explicit structure
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — constrains: bounded context makes ambient contradiction detection unreliable
 - [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: why falsifier blocks produce better criticism than re-reading
-- [stabilisation](./stabilisation.md) — mechanism: user corrections narrow interpretation space by changing instructions
+- [constraining](./constraining.md) — mechanism: user corrections narrow interpretation space by changing instructions
 - [deploy-time learning: the missing middle](./deploy-time-learning-the-missing-middle.md) — mechanism: instruction refinements persist across sessions
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example: existing convention that already externalizes conjectures
 - [links](./links.md) — example: existing relation semantics that already structure criticism

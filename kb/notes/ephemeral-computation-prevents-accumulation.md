@@ -1,5 +1,5 @@
 ---
-description: Ephemeral computation — discarding generated artifacts after use — trades accumulation for simplicity, making it the inverse of crystallisation
+description: Ephemeral computation — discarding generated artifacts after use — trades accumulation for simplicity, making it the inverse of codification
 type: note
 traits: []
 areas: [learning-theory]
@@ -40,11 +40,11 @@ Every pattern the system discovers must be rediscovered on the next run:
 - **No review.** There is no artifact for a human to inspect, approve, or improve.
 - **No reuse.** Two users with the same question trigger two independent generations.
 
-## Ephemerality as anti-crystallisation
+## Ephemerality as anti-codification
 
-[Crystallisation](./deploy-time-learning-the-missing-middle.md) converts stochastic LLM behavior into deterministic, testable artifacts — each step [trading generality for reliability, speed, and cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Ephemeral computation is the deliberate refusal to crystallise. It stays permanently in the stochastic regime, re-deriving solutions each time.
+[Codification](./codification.md) converts stochastic LLM behavior into deterministic, testable artifacts — each step [trading generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Ephemeral computation is the deliberate refusal to codify. It stays permanently in the stochastic regime, re-deriving solutions each time.
 
-This positions ephemerality and crystallisation as endpoints on a spectrum. Most practical systems sit somewhere between: some artifacts are persisted and hardened, others are generated fresh each time. The [crystallisation-softening dynamic](./crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md) is about where to place each component on this spectrum — and being willing to move components in either direction as understanding changes.
+This positions ephemerality and codification as endpoints on a spectrum. Most practical systems sit somewhere between: some artifacts are persisted and hardened, others are generated fresh each time. The [codification-relaxing dynamic](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) is about where to place each component on this spectrum — and being willing to move components in either direction as understanding changes.
 
 ## The question each system answers
 
@@ -58,9 +58,9 @@ The answer to the first is disposable computation. The answer to the second is v
 
 Relevant Notes:
 
-- [Crystallisation and softening navigate the bitter lesson boundary](./crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md) — the dynamic that moves components between ephemeral and crystallised
-- [Deploy-time learning is the missing middle](./deploy-time-learning-the-missing-middle.md) — crystallisation's verifiability gradient
-- [Stabilisation and distillation both trade generality for reliability, speed, and cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off crystallisation enacts
+- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — the dynamic that moves components between ephemeral and codified
+- [Deploy-time learning is the missing middle](./deploy-time-learning-the-missing-middle.md) — codification's verifiability gradient
+- [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 
 Topics:
 

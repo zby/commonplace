@@ -1,5 +1,5 @@
 ---
-description: Law has centuries of methodology for writing natural language specifications interpreted by a judgment-exercising processor — the same problem as context engineering for LLMs. Legal techniques (defined terms, structural conventions, precedent) are stabilisation techniques native to the underspecified medium; law mostly lacks crystallisation because statutes remain natural language.
+description: Law has centuries of methodology for writing natural language specifications interpreted by a judgment-exercising processor — the same problem as context engineering for LLMs. Legal techniques (defined terms, structural conventions, precedent) are constraining techniques native to the underspecified medium; law mostly lacks codification because statutes remain natural language.
 type: note
 traits: [has-external-sources]
 areas: [learning-theory]
@@ -28,20 +28,20 @@ Legal drafting has developed specific techniques to narrow the interpretation sp
 | **Structural conventions** | Required sections in a predictable order | Document type templates (spec, ADR, structured-claim) |
 | **Enumeration** | Exhaustive lists instead of open-ended prose | Structured output schemas, enum fields in frontmatter |
 | **Canons of interpretation** | Rules for resolving ambiguity ("specific governs general") | Skill precedence rules, CLAUDE.md routing tables |
-| **Precedent** | Past rulings narrow future interpretation | Stabilised conventions, few-shot examples |
-| **Codification** | Settled case law encoded in statute | Stabilisation — committing an interpretation to a more authoritative text (still natural language, still interpreted) |
+| **Precedent** | Past rulings narrow future interpretation | Constrained conventions, few-shot examples |
+| **Codification** | Settled case law encoded in statute | Constraining — committing an interpretation to a more authoritative text (still natural language, still interpreted) |
 
-## Law is rich in stabilisation but largely lacks crystallisation
+## Law is rich in constraining but largely lacks codification
 
-**Stabilisation is precedent.** Each court ruling that interprets a statute narrows the space of valid interpretations for future cases. A line of consistent rulings is stabilisation: the same underspecified text, repeatedly interpreted, converging on one reading. The interpretation hasn't changed medium — it's still natural language (judicial opinions) — but the space has narrowed.
+**Constraining is precedent.** Each court ruling that interprets a statute narrows the space of valid interpretations for future cases. A line of consistent rulings is constraining: the same underspecified text, repeatedly interpreted, converging on one reading. The interpretation hasn't changed medium — it's still natural language (judicial opinions) — but the space has narrowed.
 
-**Codification is stronger stabilisation, not crystallisation.** When case law stabilises enough, legislatures encode the settled interpretation in statute. But statute is still natural language, still interpreted by judges — the medium hasn't changed. Codification narrows the interpretation space further (statute is more authoritative than case law, harder to overturn) but doesn't eliminate it. This is the prompt engineering equivalent of promoting a convention to a structured template: more committed, more constrained, but still underspecified.
+**Codification is stronger constraining, not codification.** When case law constrains enough, legislatures encode the settled interpretation in statute. But statute is still natural language, still interpreted by judges — the medium hasn't changed. Codification narrows the interpretation space further (statute is more authoritative than case law, harder to overturn) but doesn't eliminate it. This is the prompt engineering equivalent of promoting a convention to a structured template: more committed, more constrained, but still underspecified.
 
-**The stabilise/soften cycle is overturning precedent.** New facts, social changes, or edge cases reveal that the settled interpretation is wrong. Courts overturn precedent (soften), then a new line of cases stabilises a different reading. The same cycle operates in prompt engineering — a stabilised convention encounters new requirements and gets relaxed back to open-ended guidance.
+**The constrain/relax cycle is overturning precedent.** New facts, social changes, or edge cases reveal that the settled interpretation is wrong. Courts overturn precedent (relax), then a new line of cases constrains a different reading. The same cycle operates in prompt engineering — a constrained convention encounters new requirements and gets relaxed back to open-ended guidance.
 
 **Distillation is legal commentary.** Treatises and restatements extract operational principles from masses of case law — staying in the same medium (natural language) but changing rhetorical mode from judicial reasoning to systematic exposition. This parallels how [distillation](./distillation.md) extracts procedures from discursive reasoning without changing medium.
 
-**Crystallisation is rare in law.** True crystallisation — where interpretation moves from judicial judgment to deterministic code — would be algorithmic sentencing, automated compliance checks, or smart contracts. These are marginal in legal practice. The rarity is itself informative: law shows that a domain can develop sophisticated stabilisation methodology while doing almost no crystallisation. This suggests that stabilisation techniques deserve more attention in prompt engineering than they currently receive — the field may be over-focused on the crystallisation end of the spectrum.
+**Codification is rare in law.** True codification — where interpretation moves from judicial judgment to deterministic code — would be algorithmic sentencing, automated compliance checks, or smart contracts. These are marginal in legal practice. The rarity is itself informative: law shows that a domain can develop sophisticated constraining methodology while doing almost no codification. This suggests that constraining techniques deserve more attention in prompt engineering than they currently receive — the field may be over-focused on the codification end of the spectrum.
 
 ## Why this matters for knowledge system design
 
@@ -60,7 +60,7 @@ The paper routes through programming (Meyer's Design-by-Contract) rather than bo
 ## Open questions
 
 - Which specific legal drafting techniques haven't been applied to prompt engineering yet? Contract law's "reasonable person" standard might inform how we think about the LLM-as-interpreter.
-- Does the common law / civil law distinction map to anything? Common law (precedent-heavy, bottom-up stabilisation) vs civil law (code-heavy, top-down specification) might correspond to different prompt engineering styles.
+- Does the common law / civil law distinction map to anything? Common law (precedent-heavy, bottom-up constraining) vs civil law (code-heavy, top-down specification) might correspond to different prompt engineering styles.
 - ~~Legal interpretation has explicit hierarchies (constitution > statute > regulation > case law). Is there an analogue for prompt systems — which instructions take precedence when they conflict?~~ Partially answered by ABC's hard/soft constraint hierarchy — see above.
 
 ---
@@ -70,10 +70,10 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses; both face the same structural impossibility
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language rather than precise formal languages
 - [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — extends: law as another source discipline alongside computer science, with potentially equal transfer strength because it operates in the same medium
-- [stabilisation](./stabilisation.md) — mapped: legal precedent is stabilisation — narrowing interpretation space through repeated consistent rulings
-- [crystallisation](./crystallisation.md) — contrast: codification is NOT crystallisation — statute is still natural language interpreted by judges; true legal crystallisation would be algorithmic sentencing or automated compliance
+- [constraining](./constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings
+- [codification](./codification.md) — contrast: codification is NOT codification — statute is still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance
 - [distillation](./distillation.md) — mapped: legal commentary and restatements are distillation — extracting principles from case law without changing medium
-- [stabilisation](./stabilisation.md) and [distillation](./distillation.md) — validated: both mechanisms map to legal analogues, but unevenly — law is rich in stabilisation, has distillation in commentary, and largely lacks crystallisation
+- [constraining](./constraining.md) and [distillation](./distillation.md) — validated: both mechanisms map to legal analogues, but unevenly — law is rich in constraining, has distillation in commentary, and largely lacks codification
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: the five empirically observed writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) address how instructions are framed; legal techniques address what goes inside them — and the common law/civil law question maps partially to the descriptive–prescriptive spectrum
 
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — validates: ABC reinvents legal enforcement patterns (contracts, compliance, violation, recovery) via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question

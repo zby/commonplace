@@ -17,7 +17,7 @@ An instructions note contains:
 - **Goal** — what to do with them (inline or by reference to another note)
 - **Output spec** — where to put results, what form they should take
 
-The key property: a sub-agent can pick up an instructions note cold and execute it, without the conversation history that produced it. This is a **clean context boundary** — the gathering phase explores broadly, then crystallizes into a compact handoff.
+The key property: a sub-agent can pick up an instructions note cold and execute it, without the conversation history that produced it. This is a **clean context boundary** — the gathering phase explores broadly, then codifys into a compact handoff.
 
 Directed reading is one case: "read these documents through this lens, produce a report." But instructions could also say "extract claims," "compare these designs," "update this index."
 
@@ -114,7 +114,7 @@ Directed reading is one case: "read these documents through this lens, produce a
   1. **Discovery** (human-guided, exploratory): web search, filtering, repo exploration — requires judgment about what's worth investigating
   2. **Processing** (automated, parallelizable): `/ingest` each source — produces connection maps and classifications mechanically
   3. **Synthesis** (sub-agent, focused): read all reports, produce cross-cutting review — requires reading everything but follows clear instructions
-- The instructions note was easier to write than Experiment 2's because `/ingest` had already surfaced the key questions. Three separate ingests independently flagged "agent memory systems vary along five architectural dimensions" as the natural synthesis. The instructions crystallized what the ingests had already discovered.
+- The instructions note was easier to write than Experiment 2's because `/ingest` had already surfaced the key questions. Three separate ingests independently flagged "agent memory systems vary along five architectural dimensions" as the natural synthesis. The instructions codified what the ingests had already discovered.
 - Having the caller write source snapshots from repo code (not just README summaries) was critical. The review's observations about actual implementation gaps (Cognee's memify shipping simpler than documented, Letta evolving toward git-backed files) came from the snapshots, which came from reading the code.
 - The sub-agent didn't need `/connect` — the ingest reports had already mapped all connections. The instructions pointed to pre-connected documents.
 

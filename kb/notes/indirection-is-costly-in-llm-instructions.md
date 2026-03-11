@@ -32,7 +32,7 @@ The test: if you could do a find-and-replace before the LLM ever sees the text, 
 
 ## Example: KB skill portability
 
-This principle surfaced during KB extraction planning. Skills in `kb/instructions/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable requires either runtime variables (`$CLAW_ROOT/notes/`) or build-time generation (template → concrete skill). Runtime variables would add interpretation overhead to every skill invocation. [Generating instructions at build time](./generate-instructions-at-build-time.md) is the [stabilisation](./methodology-enforcement-is-stabilisation.md) move: resolve the variable once, load the literal result every time.
+This principle surfaced during KB extraction planning. Skills in `kb/instructions/` hardcode paths dozens of times — in grep commands, script invocations, save targets. Making the KB reusable requires either runtime variables (`$CLAW_ROOT/notes/`) or build-time generation (template → concrete skill). Runtime variables would add interpretation overhead to every skill invocation. [Generating instructions at build time](./generate-instructions-at-build-time.md) is the [constraining](./methodology-enforcement-is-constraining.md) move: resolve the variable once, load the literal result every time.
 
 ---
 
@@ -40,7 +40,7 @@ Relevant Notes:
 
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — generalises: indirection elimination is a specific case of frontloading; this note covers the broader principle of pre-computing anything that doesn't need the LLM's runtime context
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: indirection cost is another case where a programming practice (abstraction via variables) transfers to prompting but with a different cost model
-- [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — foundation: build-time generation is a point on the stabilisation gradient — moving from stochastic interpretation to deterministic resolution
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — foundation: build-time generation is a point on the constraining gradient — moving from stochastic interpretation to deterministic resolution
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: always-loaded context is expensive; indirection mechanics make it more so
 
 Topics:

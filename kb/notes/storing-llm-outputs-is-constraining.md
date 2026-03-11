@@ -1,24 +1,24 @@
 ---
-description: Choosing to keep a specific LLM output resolves semantic underspecification to one interpretation and freezes it against execution indeterminism — the same stabilizing move the parent note describes for code, applied to artifacts
+description: Choosing to keep a specific LLM output resolves semantic underspecification to one interpretation and freezes it against execution indeterminism — the same constraining move the parent note describes for code, applied to artifacts
 type: note
 traits: []
 areas: [learning-theory]
 status: speculative
 ---
 
-# Storing LLM outputs is stabilization
+# Storing LLM outputs is constraining
 
-A natural language prompt admits a space of valid interpretations — "write a summary" doesn't pick out a unique text. On top of that, execution indeterminism means the same interpretation may render differently across runs. When you choose to keep a specific output, you're doing two things at once: **resolving semantic underspecification** (committing to one interpretation from the space the prompt admits) and **freezing against indeterminism** (locking in this particular run's rendering). The semantic commitment is the deeper operation — it's the same stabilizing move described in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) for code, but applied to the artifact rather than the implementation.
+A natural language prompt admits a space of valid interpretations — "write a summary" doesn't pick out a unique text. On top of that, execution indeterminism means the same interpretation may render differently across runs. When you choose to keep a specific output, you're doing two things at once: **resolving semantic underspecification** (committing to one interpretation from the space the prompt admits) and **freezing against indeterminism** (locking in this particular run's rendering). The semantic commitment is the deeper operation — it's the same constraining move described in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) for code, but applied to the artifact rather than the implementation.
 
-The parent note already says "version both spec and artifact" because "regeneration is a new projection from the same spec — potentially a different resolution of the same ambiguity, not a deterministic rebuild." The insight here is *why* that matters: storing an artifact is itself a stabilization decision. You're not just saving a file — you're committing to one interpretation from a space of valid possibilities, and freezing it against the variation that further runs would introduce.
+The parent note already says "version both spec and artifact" because "regeneration is a new projection from the same spec — potentially a different resolution of the same ambiguity, not a deterministic rebuild." The insight here is *why* that matters: storing an artifact is itself a constraining decision. You're not just saving a file — you're committing to one interpretation from a space of valid possibilities, and freezing it against the variation that further runs would introduce.
 
 This applies broadly:
 - **Generated code** — the prompt could produce many valid implementations; you lock down the one that works
 - **Generated documents** — a note-writing prompt produces varying quality; you keep the good one
 - **Configuration** — an LLM suggests settings; you freeze the ones that behave well
-- **Accumulated logs** — append-only formats (JSONL) enforce stabilization structurally: the agent can add but cannot overwrite. [Koylanai lost 3 months of engagement data](../sources/koylanai-personal-brain-os.ingest.md) when an agent rewrote a JSON file instead of appending — concrete evidence that without append-only constraints, agents will accidentally destroy stabilized artifacts
+- **Accumulated logs** — append-only formats (JSONL) enforce constraining structurally: the agent can add but cannot overwrite. [Koylanai lost 3 months of engagement data](../sources/koylanai-personal-brain-os.ingest.md) when an agent rewrote a JSON file instead of appending — concrete evidence that without append-only constraints, agents will accidentally destroy constrained artifacts
 
-In each case, the stored artifact is more stable than the process that created it. The prompt retains both its semantic underspecification (it still admits multiple valid interpretations) and its execution indeterminism (it still produces different outputs across runs); the artifact has neither. This is how [stabilisation is learning](./stabilisation.md) — each stored artifact is a step in the system's adaptation, narrowing behavior through versioned artifacts rather than weight updates.
+In each case, the stored artifact is more stable than the process that created it. The prompt retains both its semantic underspecification (it still admits multiple valid interpretations) and its execution indeterminism (it still produces different outputs across runs); the artifact has neither. This is how [constraining is learning](./constraining.md) — each stored artifact is a step in the system's adaptation, narrowing behavior through versioned artifacts rather than weight updates.
 
 ## Testing implications
 
@@ -42,13 +42,13 @@ This is the generator/verifier pattern: verification is often cheaper than gener
 
 Strategy 2 is only viable when verification is cheap relative to generation — which is to say, when [oracle strength](./oracle-strength-spectrum.md) is sufficient. The viability of generator/verifier varies along the oracle spectrum: it works well in the hard-to-soft oracle range but breaks down in the delayed-oracle and no-oracle zones where the quality gate can't discriminate. This also reframes the relationship between prompt testing and artifact testing: they're not just separate concerns, they're *complementary strategies*. Prompt testing tells you the distribution is worth sampling from. Artifact testing is the filter that makes a high-variance distribution usable.
 
-The implication for stabilization: a good filter lets you *not* stabilize the prompt. You keep the underspecified, indeterministic generator because the verifier handles quality. Constraining the prompt is pushing reliability into the generator instead — a different tradeoff, not a strictly better one.
+The implication for constraining: a good filter lets you *not* constrain the prompt. You keep the underspecified, indeterministic generator because the verifier handles quality. Constraining the prompt is pushing reliability into the generator instead — a different tradeoff, not a strictly better one.
 
 ## Verbatim risk: the hardest verification failure
 
 The generator/verifier pattern has a specific failure mode where the verifier *can't* discriminate: the agent produces output that looks like synthesis — headings, bullet points, "key points" — but contains no insight beyond what the source already stated. The output is reformatted repetition, not processing. This is the worst case because the quality gate passes confidently: the output is well-structured, grammatical, and topically relevant. It just doesn't add anything.
 
-The test: does the output contain claims, connections, or implications not already in the source? If not, the "processing" is illusory. This applies directly to extraction and ingestion workflows — an agent asked to extract insights from a source may produce a note that paraphrases the source with better formatting, which then gets stabilized (stored, linked, indexed) as if it were new knowledge. The KB grows in volume without growing in knowledge.
+The test: does the output contain claims, connections, or implications not already in the source? If not, the "processing" is illusory. This applies directly to extraction and ingestion workflows — an agent asked to extract insights from a source may produce a note that paraphrases the source with better formatting, which then gets constrained (stored, linked, indexed) as if it were new knowledge. The KB grows in volume without growing in knowledge.
 
 This is hard to catch because it requires comparing the output against the source, which is a judgment call with low [oracle strength](./oracle-strength-spectrum.md). Structural checks can't detect it — the output has all the right properties (frontmatter, links, claim title). Only semantic comparison reveals the gap.
 
@@ -56,10 +56,10 @@ This is hard to catch because it requires comparing the output against the sourc
 
 Relevant Notes:
 
-- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the stabilization gradient with a new application: output artifacts, not just code
-- [stabilisation](./stabilisation.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
+- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the constraining gradient with a new application: output artifacts, not just code
+- [constraining](./constraining.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
 - [Evans: AI Components for a Deterministic System](../sources/eric-evans-ai-components-deterministic-system.ingest.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
-- [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the stabilization decision this note describes
+- [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the constraining decision this note describes
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate
 
 Topics:

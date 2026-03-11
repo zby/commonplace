@@ -21,7 +21,7 @@ Herbert Simon's definition grounds this: "learning is any change in a system tha
 | Add a connection | Two notes' mutual discoverability | Navigation between these ideas now exists |
 | Define structured sections for a type | All future notes of that type | Every related-system note gets consistent structure |
 | Discover a design principle | All future decisions in that area | "Types and directories are orthogonal" applies broadly |
-| Improve methodology | All future KB operations | The verifiability gradient changes how everything stabilises |
+| Improve methodology | All future KB operations | The verifiability gradient changes how everything constrains |
 
 The scope axis contains a qualitative distinction, not just a quantitative one. **Accumulation** — adding knowledge to the store — is itself a learning operation, and the most basic one. But what you accumulate varies in [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). At the narrow end are **facts** — "the key is on the table," a specific claim, a particular observation. At the broad end are **rules and theories** — "types and directories are orthogonal," a design principle, an abstraction. Both are genuine learning through accumulation. Reach is the property that distinguishes them: facts are adaptive knowledge (useful for the immediate context but don't transfer), while theories are explanatory knowledge (they apply in contexts they weren't designed for, because they capture structure rather than circumstance).
 
@@ -31,9 +31,9 @@ Argyris's [single-loop vs double-loop learning](https://infed.org/dir/welcome/ch
 
 ## The compound — reliability, speed, cost
 
-Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [crystallisation](./crystallisation.md) is the clearest example, where moving from LLM to deterministic code improves all three at once by changing the substrate. But the compound isn't exclusive to crystallisation: conventions improve reliability, caching improves speed, distilled skills reduce cost.
+Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once by changing the substrate. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, distilled skills reduce cost.
 
-The generality-vs-compound trade-off is the primary dynamic: [stabilisation and distillation both trade generality for compound gains](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Learning cuts across Argyris's loops — it can be single-loop (crystallising one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md)).
+The generality-vs-compound trade-off is the primary dynamic: [constraining and distillation both trade generality for compound gains](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md)).
 
 ## Other dimensions
 
@@ -49,10 +49,10 @@ Generality and the compound don't exhaust what matters. A verified claim is more
 
 Relevant Notes:
 
-- [stabilisation and distillation both trade generality for compound](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
-- [stabilisation](./stabilisation.md) — one mechanism: constrains the interpretation space, trading generality for compound
+- [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
+- [constraining](./constraining.md) — one mechanism: constrains the interpretation space, trading generality for compound
 - [distillation](./distillation.md) — the other mechanism: targeted extraction from reasoning under context budget constraints
-- [crystallisation](./crystallisation.md) — the far end of stabilisation where the compound gain is largest
+- [codification](./codification.md) — the far end of constraining where the compound gain is largest
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient that structures the compound dimension
 - [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion distinguishes facts (adaptive, no reach) from rules (explanatory, reach)
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the operation that converts facts into rules by positing abstractions

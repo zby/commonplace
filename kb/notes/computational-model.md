@@ -45,12 +45,12 @@ These notes are dual-tagged with [LLM interpretation errors](./llm-interpretatio
 
 ## Tensions
 
-- The homoiconic medium enables extensibility (ad hoc prompts, unified calling conventions) but requires explicit scoping disciplines (lexical frames, tier separation) precisely because there are no structural boundaries. The stabilisation gradient from instructions to scripts is one response — crystallising imposes the structure the medium lacks.
+- The homoiconic medium enables extensibility (ad hoc prompts, unified calling conventions) but requires explicit scoping disciplines (lexical frames, tier separation) precisely because there are no structural boundaries. The constraining gradient from instructions to scripts is one response — codifying imposes the structure the medium lacks.
 
 ## Related Areas
 
 - [llm-interpretation-errors](./llm-interpretation-errors.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
-- [learning-theory](./learning-theory.md) — how systems learn through stabilisation, crystallisation, distillation; the computational model explains *what kind of programs* these mechanisms operate on
+- [learning-theory](./learning-theory.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
 - [kb-design](./kb-design.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---

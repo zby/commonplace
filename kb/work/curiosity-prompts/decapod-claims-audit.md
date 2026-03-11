@@ -23,13 +23,13 @@ This is still meaningfully better than having no gate at all (the agent must at 
 
 ## 2. The embedded constitution is overridable at runtime
 
-**Claim (report):** "the methodology is crystallised into the binary, not interpreted from instructions. No agent can drift from it because it cannot be edited at runtime."
+**Claim (report):** "the methodology is codified into the binary, not interpreted from instructions. No agent can drift from it because it cannot be edited at runtime."
 
 **What the code shows:** `assets.rs` (line 174) implements `get_merged_doc`, which takes the embedded (compiled-in) document and merges it with content from `.decapod/OVERRIDE.md` -- a file that lives in the repo and can be edited at any time. The override mechanism is structured (content goes below a "CHANGES ARE NOT PERMITTED ABOVE THIS LINE" marker, under path-specific headings), but it is a runtime text file, not a compiled artifact. The merged result appends a "## Project Overrides" section to the embedded document.
 
 The `docs show` CLI command defaults to showing merged content (embedded + override). This is the content agents actually consume.
 
-**Why it matters:** The report contrasts Decapod's "compiled constitution" with commonplace's "interpreted instructions" as opposite ends of a stabilisation spectrum, and uses this to frame the key design trade-off. In practice, Decapod occupies the same middle ground: a stable compiled base plus a runtime-mutable layer. The override mechanism is less flexible than commonplace's free-form markdown (it is additive-only and path-scoped), but it exists. The "zero interpretive variance" claim does not hold. This matters for the comparison table entry on "Methodology enforcement" -- the gap between the two systems is narrower than described.
+**Why it matters:** The report contrasts Decapod's "compiled constitution" with commonplace's "interpreted instructions" as opposite ends of a constraining spectrum, and uses this to frame the key design trade-off. In practice, Decapod occupies the same middle ground: a stable compiled base plus a runtime-mutable layer. The override mechanism is less flexible than commonplace's free-form markdown (it is additive-only and path-scoped), but it exists. The "zero interpretive variance" claim does not hold. This matters for the comparison table entry on "Methodology enforcement" -- the gap between the two systems is narrower than described.
 
 ## 3. Federation graph immutability applies only to critical types, not "critical types (Decision, Commitment)"
 

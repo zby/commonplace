@@ -29,10 +29,10 @@ The `/connect` discovery run found 9 new connections beyond the 6 already establ
 
 **Already established (6 connections linked from existing KB notes):**
 - [files-not-database](../notes/files-not-database.md) -- exemplifies the files-over-database choice at 80+ file scale with format-function rationale
-- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) -- exemplifies append-only as safety mechanism (3-month data loss incident)
+- [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) -- exemplifies append-only as safety mechanism (3-month data loss incident)
 - [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) -- exemplifies all four action-oriented knowledge types without theoretical framing
 - [deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md) -- exemplifies graduated artifact loading across the verifiability gradient
-- [stabilisation](../notes/stabilisation.md) -- exemplifies learning through versioned artifact accumulation
+- [constraining](../notes/constraining.md) -- exemplifies learning through versioned artifact accumulation
 - [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) -- exemplifies Git-versioned files as inspectable substrate
 
 **New connections found (9):**

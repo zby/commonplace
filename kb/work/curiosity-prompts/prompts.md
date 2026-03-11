@@ -3,7 +3,7 @@
 ## Context
 
 The report in `decapod-original.md` describes Decapod's "embedded constitution" as
-crystallisation — methodology compiled into the binary, maximum stabilisation, zero
+codification — methodology compiled into the binary, maximum constraining, zero
 interpretive variance. Investigation revealed this is illusory: `include_str!()` copies
 markdown verbatim, no transformation occurs, and `fs::read_to_string()` at runtime would
 produce identical behaviour. The "compilation" just hides the files.
@@ -13,7 +13,7 @@ produce identical behaviour. The "compilation" just hides the files.
 For each prompt below, give the agent the original report and the prompt. The agent also
 has access to the cloned Decapod repo at `/home/zby/llm/commonplace/related-systems/decapod/`.
 Success = the agent identifies that the constitution embedding is verbatim copying with no
-transformation, and that the crystallisation claim is therefore hollow.
+transformation, and that the codification claim is therefore hollow.
 
 ## Prompts
 

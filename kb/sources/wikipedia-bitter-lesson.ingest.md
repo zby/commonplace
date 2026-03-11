@@ -22,19 +22,19 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 ## Connections Found
 
-/connect discovered nine genuine connections to existing KB notes. The bitter lesson has become a central organising tension in the KB, anchoring the calculator/vision-feature distinction, the oracle strength spectrum, and the softening/crystallisation dynamics.
+/connect discovered nine genuine connections to existing KB notes. The bitter lesson has become a central organising tension in the KB, anchoring the calculator/vision-feature distinction, the oracle strength spectrum, and the relaxing/codification dynamics.
 
 1. **[The bitter lesson stops at calculators](../notes/bitter-lesson-boundary.md)** -- grounds. This source is the direct origin of the concept the note analyses. The note already links to this source. The source provides the empirical examples (chess, Go, speech, vision) that the calculator/vision-feature distinction organises.
 
 2. **[The bitter lesson boundary is a gradient, not a binary](../notes/oracle-strength-spectrum.md)** -- extends. Refines the bitter lesson from a binary into a gradient based on oracle strength. The source's two scaling-effective techniques (search and learning) map to the oracle spectrum's prediction that harder oracles enable tighter iteration loops.
 
-3. **[Stabilisation and distillation both trade generality for reliability, speed, and cost](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)** -- grounds tension. The bitter lesson says general methods win; stabilisation trades generality for compound gains. The unresolved question: is stabilisation competing with scaling (doomed) or complementing it (durable infrastructure)?
+3. **[Constraining and distillation both trade generality for reliability, speed, and cost](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)** -- grounds tension. The bitter lesson says general methods win; constraining trades generality for compound gains. The unresolved question: is constraining competing with scaling (doomed) or complementing it (durable infrastructure)?
 
 4. **[Deploy-time learning: The Missing Middle](../notes/deploy-time-learning-the-missing-middle.md)** -- extends. Deploy-time learning implements Sutton's two winning techniques (search and learning) at the system level through repo artifacts. It is iteration infrastructure, not domain-specific modelling.
 
-5. **[Spec mining is crystallisation's operational mechanism](../notes/spec-mining-as-crystallisation.md)** -- enables. Spec mining manufactures new calculators, converting soft-oracle components into hard-oracle ones -- expanding the part of a system where the bitter lesson does NOT apply.
+5. **[Spec mining is codification's operational mechanism](../notes/spec-mining-as-codification.md)** -- enables. Spec mining manufactures new calculators, converting soft-oracle components into hard-oracle ones -- expanding the part of a system where the bitter lesson does NOT apply.
 
-6. **[Operational signals that a component is a softening candidate](../notes/operational-signals-that-a-component-is-a-softening-candidate.md)** -- enables. Provides testable operational signals for detecting when a crystallised component is a "vision feature" (bitter-lesson-vulnerable) rather than a "calculator" (durable). Makes the prediction actionable.
+6. **[Operational signals that a component is a relaxing candidate](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md)** -- enables. Provides testable operational signals for detecting when a codified component is a "vision feature" (bitter-lesson-vulnerable) rather than a "calculator" (durable). Makes the prediction actionable.
 
 7. **[Evans: AI Components for a Deterministic System](./eric-evans-ai-components-deterministic-system.ingest.md)** -- contradicts. Evans' approach of freezing domain-specific taxonomies is a deliberate bet against the bitter lesson. The source predicts this will eventually be outperformed.
 
@@ -44,7 +44,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 ## Extractable Value
 
-Since the original ingestion (2026-02-23), the KB has developed substantial infrastructure around the bitter lesson: bitter-lesson-boundary.md, oracle-strength-spectrum.md, operational-signals-that-a-component-is-a-softening-candidate.md, and spec-mining-as-crystallisation.md. The extractable value below focuses on what remains NEW relative to this expanded coverage.
+Since the original ingestion (2026-02-23), the KB has developed substantial infrastructure around the bitter lesson: bitter-lesson-boundary.md, oracle-strength-spectrum.md, operational-signals-that-a-component-is-a-relaxing-candidate.md, and spec-mining-as-codification.md. The extractable value below focuses on what remains NEW relative to this expanded coverage.
 
 1. **The "implicit assumptions" caveat as a named concept.** Sinz et al.'s observation that "without the right (implicit) assumptions, generalisation is impossible" remains uncaptured. Even general methods embed assumptions -- they embed fewer, more general ones. The question is not "no assumptions" but "which assumptions will age well?" This nuances the bitter lesson in a way the current notes don't: the lesson is about assumption quality (generality, reach), not assumption absence. [quick-win]
 
@@ -54,7 +54,7 @@ Since the original ingestion (2026-02-23), the KB has developed substantial infr
 
 4. **"The Brain's Bitter Lesson" as evidence of domain-specific resistance.** The 2025 paper on speech decoding argues the lesson has NOT been fully learned in brain-computer interfaces. This is interesting because brain data may have characteristics (low signal-to-noise, subject variability, limited datasets) that resist scaling. If true, this extends the calculator/vision-feature boundary with a third category: domains where the bitter lesson applies in principle but data bottlenecks prevent it in practice. [experiment]
 
-5. **Sutton's two techniques as a design lens.** Search and learning are the two general-purpose methods Sutton identifies. Which KB operations implement search (eval-driven iteration, /connect discovery, /validate passes)? Which implement learning (artifact accumulation, crystallisation, distillation)? Which do neither and are therefore bitter-lesson-vulnerable? [experiment]
+5. **Sutton's two techniques as a design lens.** Search and learning are the two general-purpose methods Sutton identifies. Which KB operations implement search (eval-driven iteration, /connect discovery, /validate passes)? Which implement learning (artifact accumulation, codification, distillation)? Which do neither and are therefore bitter-lesson-vulnerable? [experiment]
 
 ## Recommended Next Action
 

@@ -39,7 +39,7 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 6. **[structured-output-is-easier-for-humans-to-review](../notes/structured-output-is-easier-for-humans-to-review.md)** (exemplifies): The paper explicitly describes semi-formal certificates as designed to be "easier to manually validate than examining full agent trajectories."
 
-7. **[methodology-enforcement-is-stabilisation](../notes/methodology-enforcement-is-stabilisation.md)** (exemplifies): Templates constrain how the agent reasons (must state premises, must trace paths, must derive conclusions) — methodology enforcement at the skill level with underspecified response, matching the note's enforcement gradient.
+7. **[methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md)** (exemplifies): Templates constrain how the agent reasons (must state premises, must trace paths, must derive conclusions) — methodology enforcement at the skill level with underspecified response, matching the note's enforcement gradient.
 
 **Source connections:** Synthesises with [ConvexBench ingest](./convexbench-can-llms-recognize-convex-functions.ingest.md) (both show structured process > free-form reasoning across different domains) and connects to [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) (reliability framework applicable to the verification approach).
 
@@ -69,7 +69,7 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 - **Accuracy ceiling may be insufficient for the stated application.** 93% on a balanced dataset means ~7% false reward signals in RL training. The paper does not evaluate whether this error rate is tolerable downstream — whether RL training with 7% noisy rewards converges to similar policies as training with test execution. The gap between "feasibility result" and "deployment result" is unaddressed.
 
-- **No comparison with formal or semi-automated verification.** The paper positions semi-formal reasoning between unstructured CoT and full formal verification (Lean, Coq, Datalog). But no hybrid approaches were tested — combining LLM reasoning with lightweight symbolic checks, type-system verification, or property-based testing. The [crystallisation](../notes/crystallisation.md) framework predicts that hybrid approaches (hard checks where possible, soft elsewhere) would outperform purely soft verification.
+- **No comparison with formal or semi-automated verification.** The paper positions semi-formal reasoning between unstructured CoT and full formal verification (Lean, Coq, Datalog). But no hybrid approaches were tested — combining LLM reasoning with lightweight symbolic checks, type-system verification, or property-based testing. The [codification](../notes/codification.md) framework predicts that hybrid approaches (hard checks where possible, soft elsewhere) would outperform purely soft verification.
 
 - **Template design is not ablated.** The templates differ by task but the paper does not ablate which components matter. Is the premises section critical? The per-test traces? The formal conclusion format? Without this, it's unclear whether the gains come from forcing evidence collection (process structure) or from the specific output format (output structure) — a distinction the KB notes would care about.
 

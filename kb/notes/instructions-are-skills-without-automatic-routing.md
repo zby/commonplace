@@ -54,7 +54,7 @@ In Claude Code, skills are discovered from `.claude/skills/`; in Codex, they can
 Relevant Notes:
 
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: the distillation process that produces both skills and instructions
-- [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — context: instructions sit on the stabilisation gradient between ad-hoc instructions notes and skills
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — context: instructions sit on the constraining gradient between ad-hoc instructions notes and skills
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable distilled procedures
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the source/compiled split applies to instructions the same way it applies to skills
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: instructions, like skills, have implicit type signatures — they accept and produce document types

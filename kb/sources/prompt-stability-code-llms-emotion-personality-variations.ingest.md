@@ -36,7 +36,7 @@ The `/connect` discovery identified nine connections, four strong and five moder
 
 - [execution-indeterminism-is-a-property-of-the-sampling-process](../notes/execution-indeterminism-is-a-property-of-the-sampling-process.md) — the paper's methodology cleanly separates the two phenomena. Temperature=0.2 with 16 samples per prompt measures indeterminism within each variant; comparing across variants measures underspecification. This is the cleanest empirical separation of the two phenomena in the KB's source collection.
 
-- [operational-signals-that-a-component-is-a-softening-candidate](../notes/operational-signals-that-a-component-is-a-softening-candidate.md) — PromptSE's emotion/personality templates are systematic metamorphic tests for paraphrase brittleness (Signal 1). The finding that smaller models achieve superior stability while larger models show greater variance supports the note's prediction that brittleness signals detect badly-fitting theories — larger models may encode more theories about prompt format rather than more robust specifications of meaning.
+- [operational-signals-that-a-component-is-a-relaxing-candidate](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) — PromptSE's emotion/personality templates are systematic metamorphic tests for paraphrase brittleness (Signal 1). The finding that smaller models achieve superior stability while larger models show greater variance supports the note's prediction that brittleness signals detect badly-fitting theories — larger models may encode more theories about prompt format rather than more robust specifications of meaning.
 
 **Moderate connections:**
 
@@ -50,7 +50,7 @@ The `/connect` discovery identified nine connections, four strong and five moder
 
 - [structure-activates-higher-quality-training-distributions](../notes/structure-activates-higher-quality-training-distributions.md) — the paper demonstrates the distribution-selection mechanism from the opposite direction: emotional coloring (frustrated, anxious) activates different training distributions, some associated with miscalibrated outputs. Direct evidence that stylistic framing selects training distributions with different calibration properties.
 
-**Synthesis opportunity flagged:** Systematic prompt variation as a dual-purpose methodology — simultaneously a verification technique (decorrelating checks for oracle amplification) and a diagnostic technique (measuring brittleness to identify softening candidates). The PromptSE framework with controlled perturbation distances could serve both purposes.
+**Synthesis opportunity flagged:** Systematic prompt variation as a dual-purpose methodology — simultaneously a verification technique (decorrelating checks for oracle amplification) and a diagnostic technique (measuring brittleness to identify relaxing candidates). The PromptSE framework with controlled perturbation distances could serve both purposes.
 
 ## Extractable Value
 

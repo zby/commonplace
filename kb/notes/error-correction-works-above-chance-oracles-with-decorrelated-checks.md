@@ -84,7 +84,7 @@ Structured document types already function as error correction: they constrain t
 - **Metamorphic checks on claims** — does rephrasing the evidence change the conclusion? Does removing one piece of evidence weaken it proportionally? These test argument robustness without requiring ground truth.
 - **Cross-note consistency** — does a new claim contradict existing notes? This uses the KB itself as an oracle.
 
-The progression from [oracle hardening](./oracle-strength-spectrum.md) to error correction is: first construct an oracle with TPR > FPR, then amplify through decorrelated repetition. [Crystallisation](./crystallisation.md) moves components toward harder oracles, making error correction cheaper — but it is not a prerequisite. Even weak oracles support error correction if you can decorrelate.
+The progression from [oracle hardening](./oracle-strength-spectrum.md) to error correction is: first construct an oracle with TPR > FPR, then amplify through decorrelated repetition. [Codification](./codification.md) moves components toward harder oracles, making error correction cheaper — but it is not a prerequisite. Even weak oracles support error correction if you can decorrelate.
 
 ---
 
@@ -94,9 +94,9 @@ Relevant Notes:
 - [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
-- [crystallisation](./crystallisation.md) — parallel: crystallisation moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
-- [spec mining as crystallisation](./spec-mining-as-crystallisation.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition
-- [operational signals that a component is a softening candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — enables: metamorphic checks double as softening signal detectors — measuring paraphrase brittleness classifies components on the bitter lesson spectrum
+- [codification](./codification.md) — parallel: codification moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
+- [spec mining as codification](./spec-mining-as-codification.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition
+- [operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — enables: metamorphic checks double as relaxing signal detectors — measuring paraphrase brittleness classifies components on the bitter lesson spectrum
 - [content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) — grounds: content bias is shared across model families and survives scaling/instruction tuning, making it a concrete example of correlated error that model diversity alone cannot decorrelate
 - [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — speculative: process constraints (forced reasoning steps) may serve as content-bias decorrelation mechanisms
 

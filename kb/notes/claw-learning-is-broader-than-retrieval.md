@@ -55,7 +55,7 @@ The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) is i
 - How do you capture feedback on actions? Query logs are comparatively simple; action outcome logs require knowing what "success" means for each action type.
 - Is the action layer's learning loop decomposable into domain-specific sub-loops (one for classification, one for communication, etc.) or is it irreducibly holistic?
 - Does the [three-space memory model](./three-space-agent-memory-maps-to-tulving-taxonomy.md) help here? Knowledge space maps to retrieval, operational space maps to procedures, self space maps to preferences and voice. Maybe each space has its own learning dynamics. The [predicted failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) of flat memory — operational debris polluting search, identity scatter, insights trapped in session state — are exactly what you'd expect when action-oriented knowledge types are forced into a retrieval-oriented structure.
-- [Stabilisation](../notes/stabilisation.md) frames system-level adaptation as artifact accumulation. The action layer's learning loop would need the same framework but applied to different artifact types — preference codifications, procedure captures, precedent consolidations — rather than the note/link mutations the boiling cauldron describes.
+- [Constraining](../notes/constraining.md) frames system-level adaptation as artifact accumulation. The action layer's learning loop would need the same framework but applied to different artifact types — preference codifications, procedure captures, precedent consolidations — rather than the note/link mutations the boiling cauldron describes.
 
 ---
 

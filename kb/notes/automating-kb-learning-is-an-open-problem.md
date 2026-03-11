@@ -36,26 +36,26 @@ The visible KB is the production system. Learning could happen through a backgro
 - **Regroup**: a cluster of notes suggests an index that doesn't exist yet
 - **Retire**: an automated check, link, or note has outlived its usefulness — four signals: zero catches over months, false positives exceed true positives, methodology change made it irrelevant, replaced by a better mechanism (from [arscontexta](https://github.com/agenticnotetaking/arscontexta) methodology review)
 
-Each mutation would be speculative — staged separately, surfaced for human review only when it scores high enough. This is the automated version of what [stabilisation as learning](../notes/stabilisation.md) describes as the manual stabilise/soften cycle — the same system-level adaptation, but with the agent proposing mutations instead of a human driving each one.
+Each mutation would be speculative — staged separately, surfaced for human review only when it scores high enough. This is the automated version of what [constraining as learning](../notes/constraining.md) describes as the manual constrain/relax cycle — the same system-level adaptation, but with the agent proposing mutations instead of a human driving each one.
 
 ## Mutations differ on two axes
 
-The boiling cauldron mutations differ on both generality and crystallisability:
+The boiling cauldron mutations differ on both generality and codifiability:
 
 **By generality:**
 - **Extract, reformulate** — narrow scope, improving individual notes (Extract is accumulation — adding knowledge to the store; its value depends on the reach of what's extracted)
 - **Relink, regroup, synthesise** — medium scope, changing how knowledge connects (these transform accumulated knowledge)
 - **Retire, restructure** — wide scope, changing the system's organising principles
 
-**By crystallisability** (reliability+speed+cost compound):
-- **Crystallisable operations** (link checking, section validation, index regeneration) — already automatable as scripts, gaining reliability, speed, and cost simultaneously
-- **Judgment operations** (is this claim worth keeping? should these notes merge?) — require LLM or human assessment, may crystallise later as patterns emerge
+**By codifiability** (reliability+speed+cost compound):
+- **Codifiable operations** (link checking, section validation, index regeneration) — already automatable as scripts, gaining reliability, speed, and cost simultaneously
+- **Judgment operations** (is this claim worth keeping? should these notes merge?) — require LLM or human assessment, may codify later as patterns emerge
 
-Automating narrow-scope improvements is relatively tractable (ingest pipelines, LLM extraction, validation scripts). Automating wide-scope improvements is the hard part — it requires judgment about what principles generalise. Crystallisability is a separate axis — often tractable regardless of scope, because the question "can this be made deterministic?" is itself fairly deterministic.
+Automating narrow-scope improvements is relatively tractable (ingest pipelines, LLM extraction, validation scripts). Automating wide-scope improvements is the hard part — it requires judgment about what principles generalise. Codifiability is a separate axis — often tractable regardless of scope, because the question "can this be made deterministic?" is itself fairly deterministic.
 
 ## The vocabulary gap
 
-[Stabilisation during deployment is already continuous learning](../notes/stabilisation-during-deployment-is-continuous-learning.md) — developers accumulate informal tweaks, agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions, teams version their prompts and tools. But none of it is systematic. Automating the learning loop requires a mechanistic description of the process — what the operations are, how they compose, what makes one succeed or fail. That description requires a vocabulary that doesn't yet exist in standard use: [accumulation](../notes/learning-is-not-only-about-generality.md) as the basic learning operation with [reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property (facts at the low end, theories at the high end), [stabilisation](../notes/stabilisation.md) and [distillation](../notes/distillation.md) as the two mechanisms that transform accumulated knowledge, the [generality-vs-compound trade-off](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) as what they operate on, the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) as the progression path, the [bitter lesson boundary](../notes/bitter-lesson-boundary.md) as the test for when crystallisation is permanent vs temporary. Without these distinctions, "make the system learn" is a wish, not a design specification. The [adaptation taxonomy for agentic AI](../notes/research/adaptation-agentic-ai-analysis.md) begins to close the gap by identifying data-driven triggers for when to stabilise versus when to soften.
+[Constraining during deployment is already continuous learning](../notes/constraining-during-deployment-is-continuous-learning.md) — developers accumulate informal tweaks, agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions, teams version their prompts and tools. But none of it is systematic. Automating the learning loop requires a mechanistic description of the process — what the operations are, how they compose, what makes one succeed or fail. That description requires a vocabulary that doesn't yet exist in standard use: [accumulation](../notes/learning-is-not-only-about-generality.md) as the basic learning operation with [reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property (facts at the low end, theories at the high end), [constraining](../notes/constraining.md) and [distillation](../notes/distillation.md) as the two mechanisms that transform accumulated knowledge, the [generality-vs-compound trade-off](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) as what they operate on, the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) as the progression path, the [bitter lesson boundary](../notes/bitter-lesson-boundary.md) as the test for when codification is permanent vs temporary. Without these distinctions, "make the system learn" is a wish, not a design specification. The [adaptation taxonomy for agentic AI](../notes/research/adaptation-agentic-ai-analysis.md) begins to close the gap by identifying data-driven triggers for when to constrain versus when to relax.
 
 ## Open problems
 
@@ -67,7 +67,7 @@ Automating narrow-scope improvements is relatively tractable (ingest pipelines, 
 
 These are all instances of the same gap: **we need more usage before we can design the learning loop properly.** The right move for now is to keep building the KB manually, pay attention to [what works](./what-works.md) and [what doesn't](./what-doesnt-work.md), and revisit this when there's enough history to learn from. Those two review notes ARE the manual observation log this approach recommends — they capture proven patterns and anti-patterns that would eventually feed a learning loop's evaluation function.
 
-## Connection to crystallisation
+## Connection to codification
 
 The [bitter lesson boundary](../notes/bitter-lesson-boundary.md) distinguishes calculator-like artifacts (spec captures the problem) from vision-feature-like artifacts (spec encodes a theory). The KB's infrastructure — file formats, frontmatter schema, sync scripts — is calculator-like. The knowledge organisation — which links exist, how notes are grouped, what gets extracted — is vision-feature-like. A learning loop would be the mechanism for continuously improving the vision-feature layer. We're not ready to build it, but the distinction tells us where it would operate.
 
@@ -76,7 +76,7 @@ The [bitter lesson boundary](../notes/bitter-lesson-boundary.md) distinguishes c
 Relevant Notes:
 
 - [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
-- [stabilisation](../notes/stabilisation.md) — describes the stabilise/soften cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
+- [constraining](../notes/constraining.md) — describes the constrain/relax cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
 - [what-works](./what-works.md) — the observation log this note recommends as interim approach; proven patterns that would feed a learning loop's evaluation
 - [what-doesnt-work](./what-doesnt-work.md) — the anti-pattern log; complements what-works as ground truth for what the loop should avoid proposing

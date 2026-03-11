@@ -28,7 +28,7 @@ In conventional programming, types are crisp because the processor is determinis
 
 Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also underspecified. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
 
-This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment is itself a case of [storing an LLM output as stabilization](../notes/storing-llm-outputs-is-stabilization.md) — choosing to label a document `type: spec` collapses a space of possible classifications to a single point.
+This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment is itself a case of [storing an LLM output as constraining](../notes/storing-llm-outputs-is-constraining.md) — choosing to label a document `type: spec` collapses a space of possible classifications to a single point.
 
 ## What went wrong with flat types
 
@@ -36,7 +36,7 @@ The original type system used a flat enum: `design`, `analysis`, `insight`, `res
 
 **"design" says nothing structural.** A design note could be a spec, an exploration, a brainstorm, or a comparison. It describes subject matter (this is about design), which is what the `areas` field is for. As a type it dominated the KB — half the notes were "design" — which means it did no discriminatory work. An agent reading `type: design` learns nothing about what it can do with the document.
 
-**Flat types force false choices.** Is a research note that reaches a crystallized conclusion an insight or research? Is an analysis that cites external sources research or analysis? A flat enum forces a single choice and loses information. In object-oriented terms, this is like having `class ResearchInsight` but being forced to inherit from only one of `Research` or `Insight`.
+**Flat types force false choices.** Is a research note that reaches a codified conclusion an insight or research? Is an analysis that cites external sources research or analysis? A flat enum forces a single choice and loses information. In object-oriented terms, this is like having `class ResearchInsight` but being forced to inherit from only one of `Research` or `Insight`.
 
 ## Base types + traits
 
@@ -64,11 +64,11 @@ traits: [has-comparison, has-external-sources]
 | `has-external-sources` | This connects to material outside the project |
 | `has-implementation` | This contains code sketches or concrete API proposals |
 
-A note can satisfy multiple traits without conflict. What the old system called "research" becomes `note` + `has-external-sources`. What it called "insight" becomes `structured-claim` (if the argument is developed) or stays `note` (if the title is a claim but the body is free-form). A research note with a crystallized conclusion is `structured-claim` + `has-external-sources` — no forced choice.
+A note can satisfy multiple traits without conflict. What the old system called "research" becomes `note` + `has-external-sources`. What it called "insight" becomes `structured-claim` (if the argument is developed) or stays `note` (if the title is a claim but the body is free-form). A research note with a codified conclusion is `structured-claim` + `has-external-sources` — no forced choice.
 
 ## The verifiability gradient
 
-`note` is the base type that makes no structural claim — like `Any` in a gradually typed language. This connects to the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md): just as logic starts underspecified and stabilises to precise, documents start untyped and gain type information as they mature.
+`note` is the base type that makes no structural claim — like `Any` in a gradually typed language. This connects to the [verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md): just as logic starts underspecified and constrains to precise, documents start untyped and gain type information as they mature.
 
 1. New content enters as `type: note` — soft, no structural claims
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
@@ -103,7 +103,7 @@ Relevant Notes:
 
 - [document-classification](./document-classification.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
-- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — grounds the underspecification argument: type assignment is itself a stabilization decision, and the tolerance of misclassification mirrors the generator/verifier pattern
+- [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — grounds the underspecification argument: type assignment is itself a constraining decision, and the tolerance of misclassification mirrors the generator/verifier pattern
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
 - [deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md) — the verifiability gradient that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote
 - [001-generate-topic-links-from-frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — precedent: when a mapping is verifiable and deterministic (areas -> Topics), it was automated; the same principle drives the type system design

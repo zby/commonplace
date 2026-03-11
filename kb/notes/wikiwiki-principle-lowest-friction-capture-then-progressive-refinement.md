@@ -1,5 +1,5 @@
 ---
-description: Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim crystallisation ladder
+description: Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim codification ladder
 type: note
 traits: [has-external-sources]
 areas: [type-system]
@@ -8,7 +8,7 @@ status: seedling
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place
 
-The KB type hierarchy is a crystallisation ladder for thoughts, and the design principle behind it is Ward Cunningham's original wiki idea: make it trivially easy to save a thought, then make it easy to refine it — in place, not by moving it somewhere else.
+The KB type hierarchy is a codification ladder for thoughts, and the design principle behind it is Ward Cunningham's original wiki idea: make it trivially easy to save a thought, then make it easy to refine it — in place, not by moving it somewhere else.
 
 ## Evidence
 
@@ -29,7 +29,7 @@ A half-formed intuition doesn't need Toulmin sections — it needs to exist befo
 
 The key property is **refinement in place**. A thought captured as `text` becomes a `note` by adding frontmatter to the same file. A `note` becomes a `structured-claim` by adding sections to the same file. No migration, no new file, no pipeline. The URL (file path) stays stable, links don't break, git history is preserved. This is what makes refinement cheap enough to actually happen — the same insight Cunningham had about wiki pages.
 
-This connects to [crystallisation](../notes/crystallisation.md): crystallisation is the general pattern (stochastic → deterministic), the wiki principle is the UX requirement that makes it work (each step must be low-friction and in-place).
+This connects to [codification](../notes/codification.md): codification is the general pattern (stochastic → deterministic), the wiki principle is the UX requirement that makes it work (each step must be low-friction and in-place).
 
 ## Caveats
 
@@ -43,8 +43,8 @@ Relevant Notes:
 
 - [document-classification](./document-classification.md) — the type ladder this principle animates: text → note → structured-claim
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the structured-claim type that sits at the top of the refinement ladder
-- [crystallisation](../notes/crystallisation.md) — the general pattern; the wiki principle is the UX requirement that makes crystallisation practical
-- [stabilisation and distillation both trade generality for compound](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
+- [codification](../notes/codification.md) — the general pattern; the wiki principle is the UX requirement that makes codification practical
+- [constraining and distillation both trade generality for compound](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — enables: Toulmin's argumentation model provides the Evidence/Reasoning/Caveats sections that define the top rung of the refinement ladder

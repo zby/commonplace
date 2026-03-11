@@ -34,8 +34,8 @@ After drafting the sections above, re-read the report with fresh eyes:
 
 Then, for each bolded phrase in Core Ideas, apply these questions:
 
-1. **What property does this claim to produce?** Name the benefit explicitly (stabilisation, verification, isolation, etc.).
-2. **Does the mechanism transform the data, or just relocate it?** If the input format equals the output format (e.g. markdown in, markdown out), the claimed property (crystallisation, compilation, distillation) may be naming, not mechanism. Check the source.
+1. **What property does this claim to produce?** Name the benefit explicitly (constraining, verification, isolation, etc.).
+2. **Does the mechanism transform the data, or just relocate it?** If the input format equals the output format (e.g. markdown in, markdown out), the claimed property (codification, compilation, distillation) may be naming, not mechanism. Check the source.
 3. **What's the simpler alternative that achieves the same result?** If a simpler mechanism produces identical behaviour, the complexity is pointless.
 4. **What could this mechanism actually achieve, even if it works perfectly?** Some mechanisms have a ceiling — e.g. symbolic checks cannot meaningfully verify freeform prose, regardless of implementation quality.
 

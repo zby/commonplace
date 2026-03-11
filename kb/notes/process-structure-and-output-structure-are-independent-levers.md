@@ -28,7 +28,7 @@ The distinction matters because the KB's two main explanatory mechanisms — dis
 
 **Interpretation narrowing** ([agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md)). Output constraints narrow the interpretation space of what a valid result looks like. Process constraints narrow the interpretation space of how to get there. Both reduce underspecification, but they address different sources of it — and combining them is not redundant, because eliminating ambiguity about format still leaves ambiguity about reasoning strategy, and vice versa.
 
-The [methodology-enforcement note](./methodology-enforcement-is-stabilisation.md) already captures the process side under "methodology enforcement at the skill level" — templates that constrain how the agent reasons. Recognising this as a distinct lever connects that observation to the distribution-selection and interpretation-narrowing mechanisms rather than leaving it as an isolated instance.
+The [methodology-enforcement note](./methodology-enforcement-is-constraining.md) already captures the process side under "methodology enforcement at the skill level" — templates that constrain how the agent reasons. Recognising this as a distinct lever connects that observation to the distribution-selection and interpretation-narrowing mechanisms rather than leaving it as an isolated instance.
 
 ## Open questions
 
@@ -41,7 +41,7 @@ Relevant Notes:
 
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — refines: the distribution-selection argument applies differently to process and output structure; this note separates what that note currently treats as one mechanism
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — extends: process constraints and output constraints narrow different parts of the interpretation space (how vs what)
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — connects: methodology enforcement is primarily process structure (constraining how the agent reasons), not output structure
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — connects: methodology enforcement is primarily process structure (constraining how the agent reasons), not output structure
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — context: human writing genres bundle both process and output structure; the per-convention transfer evaluation should assess each dimension separately
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — speculative: process steps as structurally decorrelated checks could connect process structure to error-correction amplification
 - [Agentic Code Reasoning](../sources/agentic-code-reasoning.ingest.md) — grounds: semi-formal templates with process constraints (state premises, trace paths, derive conclusions) yield 5-12pp accuracy gains; template components not individually ablated

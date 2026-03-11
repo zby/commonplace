@@ -26,7 +26,7 @@ With backlinks, the agent sees immediately: "3 notes extend this, 2 exemplify it
 
 ### 2. Source-to-theory bridge — "what practitioner evidence exists for this claim?"
 
-The new `docs/sources/` directory stores ingested external references. Ingest reports link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](../sources/koylanai-personal-brain-os.ingest.md) links to [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md)). But the theory note doesn't know it has practitioner evidence pointing at it.
+The new `docs/sources/` directory stores ingested external references. Ingest reports link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](../sources/koylanai-personal-brain-os.ingest.md) links to [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md)). But the theory note doesn't know it has practitioner evidence pointing at it.
 
 As sources accumulate, backlinks would let an agent reading a theoretical note see: "3 practitioner reports exemplify this claim." That's a signal about the claim's empirical grounding — and a synthesis opportunity when enough sources converge.
 

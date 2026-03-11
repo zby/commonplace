@@ -11,7 +11,7 @@ Browse the KB by conceptual area. Each area page is a curated index with grouped
 ## Area Indexes
 
 - [KB design](./kb-design.md) — architecture, operations, and evaluation of agent-operated knowledge bases
-- [Learning theory](./learning-theory.md) — stabilisation, distillation, verification, and memory theory used to reason about system improvement
+- [Learning theory](./learning-theory.md) — constraining, distillation, verification, and memory theory used to reason about system improvement
 - [Document system](./document-system.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model.md) — programming-language framing for LLM instructions and orchestration
 - [Links](./links.md) — link semantics, navigation behavior, and link-management methodology

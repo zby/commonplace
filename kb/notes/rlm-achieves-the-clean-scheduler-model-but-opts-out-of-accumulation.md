@@ -29,9 +29,9 @@ In the model's terms: the LLM produces the `select` function for the entire sub-
 
 RLM's architecture is genuinely elegant — it achieves the clean model naturally, without the engineering overhead of managed reentrancy, approval gates, or lifecycle hooks. The LLM writes a program, the program runs, results come back. Restricting the REPL to pure computation (no side effects, no persistent state) makes the approval problem trivial — sandboxed code needs no gating.
 
-But the scheduler is [ephemeral](./ephemeral-computation-prevents-accumulation.md). A brilliant decomposition strategy discovered for one query is gone before the next query arrives. In the framework this KB develops elsewhere — [deploy-time learning](./deploy-time-learning-the-missing-middle.md), [crystallisation](./crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md), [spec mining](./spec-mining-as-crystallisation.md) — learning happens through the repo: generated artifacts enter version control, get tested, and become reusable infrastructure. RLM opts out of this entire mechanism by discarding its artifacts.
+But the scheduler is [ephemeral](./ephemeral-computation-prevents-accumulation.md). A brilliant decomposition strategy discovered for one query is gone before the next query arrives. In the framework this KB develops elsewhere — [deploy-time learning](./deploy-time-learning-the-missing-middle.md), [codification](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), [spec mining](./spec-mining-as-codification.md) — learning happens through the repo: generated artifacts enter version control, get tested, and become reusable infrastructure. RLM opts out of this entire mechanism by discarding its artifacts.
 
-This is a genuine trade-off, not a deficiency. The repo-as-learning-substrate approach carries real costs (approval complexity, maintenance burden, the risk of [crystallising vision features](./crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md)). RLM avoids all of that. And it's possible that accumulation will come through other paths — improved model capabilities that make re-derivation cheap enough to not matter, or learned decomposition strategies encoded in weights rather than in repo artifacts. The bitter lesson suggests that if general-purpose models get good enough at writing schedulers on the fly, the accumulation advantage of versioned code may narrow.
+This is a genuine trade-off, not a deficiency. The repo-as-learning-substrate approach carries real costs (approval complexity, maintenance burden, the risk of [codifying vision features](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)). RLM avoids all of that. And it's possible that accumulation will come through other paths — improved model capabilities that make re-derivation cheap enough to not matter, or learned decomposition strategies encoded in weights rather than in repo artifacts. The bitter lesson suggests that if general-purpose models get good enough at writing schedulers on the fly, the accumulation advantage of versioned code may narrow.
 
 ## The design space this reveals
 
@@ -41,7 +41,7 @@ RLM and standard agent loops represent two points in a design space:
 - **RLM**: LLM *writes* the scheduler as ephemeral code. Context-efficient but non-accumulating.
 - **Versioned scheduler code**: LLM writes scheduler logic that persists, is tested, and improves across runs. Context-efficient and accumulating, but requires the full software lifecycle (approval, versioning, maintenance).
 
-The third point is what [crystallisation](./deploy-time-learning-the-missing-middle.md) looks like applied to orchestration: the LLM's decomposition strategies become versioned infrastructure rather than being re-derived each time.
+The third point is what [codification](./deploy-time-learning-the-missing-middle.md) looks like applied to orchestration: the LLM's decomposition strategies become versioned infrastructure rather than being re-derived each time.
 
 ---
 

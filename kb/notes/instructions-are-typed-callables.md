@@ -7,7 +7,7 @@ status: speculative
 
 # Instructions are typed callables with document type signatures
 
-[Document types mark affordances](./document-types-should-be-verifiable.md) — a `structured-claim` affords verification, a `spec` affords implementation, an `index` affords navigation. Each type step [trades generality for compound gains in reliability, speed, and cost](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md): the structure guarantees the parts are there, making operations reliable without reading the whole document first.
+[Document types mark affordances](./document-types-should-be-verifiable.md) — a `structured-claim` affords verification, a `spec` affords implementation, an `index` affords navigation. Each type step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md): the structure guarantees the parts are there, making operations reliable without reading the whole document first.
 
 But some documents aren't data — they're *procedures*. Skills, tasks, workflows: their primary affordance is *being followed*. A task has prerequisites, a goal, a checklist of steps, a verification plan. An agent picks it up and executes it. Skills are the same — `/ingest` is a procedure that transforms a source into a `source-review`. These are the document equivalent of callables: the content is a procedure, and the valid operation is execution.
 
@@ -28,7 +28,7 @@ This gives skills type signatures:
 | `/validate` | `note → validation-report` |
 | `/convert` | `text → note` |
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [crystallise](./crystallisation.md) from LLM to code as patterns [stabilise](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
+The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./codification.md) from LLM to code as patterns [constrain](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
 
 ## Open questions
 
@@ -42,9 +42,9 @@ Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
 - [document-classification](./document-classification.md) — the spec defining the types that would appear in skill signatures
-- [stabilisation and distillation both trade generality for compound](./stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
-- [crystallisation](./crystallisation.md) — the operations afforded by types can themselves crystallise from LLM to code
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; stabilisation commits to one interpretation
+- [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
+- [codification](./codification.md) — the operations afforded by types can themselves codify from LLM to code
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation
 
 Topics:
 

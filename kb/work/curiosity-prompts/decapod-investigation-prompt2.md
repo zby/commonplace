@@ -4,9 +4,9 @@ Prompt: "What choices seem unusual -- where the cost/benefit isn't obvious? Foll
 
 ## 1. The "Compiled Constitution" Is Just `include_str!()`
 
-**The claim (from the report):** "Over 200 governance documents are compiled into the binary. Agents fetch relevant slices via context capsules rather than reading files directly. This is stabilisation taken to its logical conclusion -- the methodology is crystallised into the binary, not interpreted from instructions. No agent can drift from it because it cannot be edited at runtime."
+**The claim (from the report):** "Over 200 governance documents are compiled into the binary. Agents fetch relevant slices via context capsules rather than reading files directly. This is constraining taken to its logical conclusion -- the methodology is codified into the binary, not interpreted from instructions. No agent can drift from it because it cannot be edited at runtime."
 
-**What's unusual:** Compiling documents into a binary sounds like a heavy architectural commitment -- you lose the ability to update methodology without rebuilding, you inflate binary size, and you get coupling between content and release cycles. The payoff is supposed to be "zero interpretive variance" and "crystallisation."
+**What's unusual:** Compiling documents into a binary sounds like a heavy architectural commitment -- you lose the ability to update methodology without rebuilding, you inflate binary size, and you get coupling between content and release cycles. The payoff is supposed to be "zero interpretive variance" and "codification."
 
 **What the code actually does:** In `src/core/assets.rs`, the mechanism is a macro:
 
@@ -19,11 +19,11 @@ macro_rules! embedded_docs {
         )*
 ```
 
-`include_str!()` is a Rust compile-time macro that copies the file contents verbatim into the binary as a string constant. No transformation, no compilation, no parsing, no crystallisation. The markdown is carried as-is. At runtime, `get_embedded_doc()` returns the raw string. The `docs.rs` module then does lexical keyword matching against these strings to find relevant fragments.
+`include_str!()` is a Rust compile-time macro that copies the file contents verbatim into the binary as a string constant. No transformation, no compilation, no parsing, no codification. The markdown is carried as-is. At runtime, `get_embedded_doc()` returns the raw string. The `docs.rs` module then does lexical keyword matching against these strings to find relevant fragments.
 
 Furthermore, the system explicitly supports runtime overrides. `get_merged_doc()` in `assets.rs` checks for a `.decapod/OVERRIDE.md` file and merges its contents into the embedded document. So "no agent can drift from it" is incorrect -- the override mechanism exists precisely to allow runtime modification.
 
-**The real cost/benefit:** The cost (binary-size inflation, rebuild-to-update, no runtime adaptation) is being paid. But the benefit (true crystallisation, zero interpretive variance) is not being received. The documents are still raw markdown that agents interpret just as they would from files. The `include_str!()` approach is functionally equivalent to reading files from a known path at runtime, with the single operational benefit of not requiring the constitution directory to be present on disk. This is a deployment convenience, not a semantic guarantee.
+**The real cost/benefit:** The cost (binary-size inflation, rebuild-to-update, no runtime adaptation) is being paid. But the benefit (true codification, zero interpretive variance) is not being received. The documents are still raw markdown that agents interpret just as they would from files. The `include_str!()` approach is functionally equivalent to reading files from a known path at runtime, with the single operational benefit of not requiring the constitution directory to be present on disk. This is a deployment convenience, not a semantic guarantee.
 
 ## 2. Hand-Rolled CBOR Encoding in `state_commit.rs`
 
@@ -88,6 +88,6 @@ The proof_exec capability allowing `bash` and `sh` means any proof gate can exec
 
 ## Summary
 
-The pattern across these findings is consistent: governance infrastructure that is architecturally elaborate but operationally thin. The constitution embedding is file copying called crystallisation. The CBOR encoder is a partial reimplementation with hard-coded panic limits. The obligation status is claimed to be derived but is stored and never reconciled. The two-phase audit log detects but doesn't recover. The internalization lifecycle governs an empty file. The capsule policy crypto-binds a three-entry lookup table. The capability allowlist allows bash.
+The pattern across these findings is consistent: governance infrastructure that is architecturally elaborate but operationally thin. The constitution embedding is file copying called codification. The CBOR encoder is a partial reimplementation with hard-coded panic limits. The obligation status is claimed to be derived but is stored and never reconciled. The two-phase audit log detects but doesn't recover. The internalization lifecycle governs an empty file. The capsule policy crypto-binds a three-entry lookup table. The capability allowlist allows bash.
 
-Each of these mechanisms incurs real complexity costs: code to maintain, abstractions to understand, failure modes to debug. The benefits they advertise -- crystallisation, crash recovery, deterministic governance, capability restriction -- are either not delivered by the implementation or are delivered at a level much simpler than the infrastructure suggests.
+Each of these mechanisms incurs real complexity costs: code to maintain, abstractions to understand, failure modes to debug. The benefits they advertise -- codification, crash recovery, deterministic governance, capability restriction -- are either not delivered by the implementation or are delivered at a level much simpler than the infrastructure suggests.

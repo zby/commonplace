@@ -38,7 +38,7 @@ The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB di
 
 - Should this apply retroactively to all existing artifacts, or only to new ones?
 - Does the skill/instruction distinction (automatic routing vs. manual invocation) still matter as a sub-boundary within `instructions/`, or does it collapse into a single collection?
-- How does this interact with the [stabilisation gradient](./methodology-enforcement-is-stabilisation.md)? Distillation and stabilisation are different operations — does the directory boundary conflate them?
+- How does this interact with the [constraining gradient](./methodology-enforcement-is-constraining.md)? Distillation and constraining are different operations — does the directory boundary conflate them?
 
 ---
 

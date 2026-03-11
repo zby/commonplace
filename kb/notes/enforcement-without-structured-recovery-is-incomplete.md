@@ -8,7 +8,7 @@ status: seedling
 
 # Enforcement without structured recovery is incomplete
 
-The [enforcement gradient](./methodology-enforcement-is-stabilisation.md) captures two dimensions of methodology enforcement — trigger reliability and response determinism — but says nothing about what happens *after* enforcement fires. A blocking hook rejects the operation; a warning hook outputs a signal. In both cases, the next step is left to the agent. [Teaching error messages](./error-messages-that-teach-are-a-stabilisation-technique.md) narrow the interpretation space, but whether the agent actually applies the fix remains probabilistic. Detection and blocking are systematic; recovery is ad hoc.
+The [enforcement gradient](./methodology-enforcement-is-constraining.md) captures two dimensions of methodology enforcement — trigger reliability and response determinism — but says nothing about what happens *after* enforcement fires. A blocking hook rejects the operation; a warning hook outputs a signal. In both cases, the next step is left to the agent. [Teaching error messages](./error-messages-that-teach-are-a-constraining-technique.md) narrow the interpretation space, but whether the agent actually applies the fix remains probabilistic. Detection and blocking are systematic; recovery is ad hoc.
 
 ## The gap in the current gradient
 
@@ -55,15 +55,15 @@ ABC's Drift Bounds Theorem formalises the cost of missing recovery. Behavioral d
 
 ## Open questions
 
-- Should the enforcement gradient table in [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) gain a recovery column, or does it stay focused on detection/blocking while this note handles recovery? Adding the column risks overloading a note that's already dense; keeping them separate risks the recovery layer being invisible to anyone reading only the enforcement note.
+- Should the enforcement gradient table in [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) gain a recovery column, or does it stay focused on detection/blocking while this note handles recovery? Adding the column risks overloading a note that's already dense; keeping them separate risks the recovery layer being invisible to anyone reading only the enforcement note.
 - What does a concrete recovery-aware hook look like in this KB? A warning hook that outputs a structured JSON with `{violation, fix_instruction, fallback, escalation_threshold}` rather than a prose warning would be a step toward typed recovery — but is the complexity justified at this scale?
 
 ---
 
 Relevant Notes:
 
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: adds the recovery column missing from the enforcement gradient; the gradient captures detection and blocking but not what happens after
-- [error-messages-that-teach-are-a-stabilisation-technique](./error-messages-that-teach-are-a-stabilisation-technique.md) — extends: teaching messages are the inform axis of recovery but stop at "teaches the fix" — this note adds the structured follow-through (corrective → fallback → escalation) that turns teaching into recovery
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — extends: adds the recovery column missing from the enforcement gradient; the gradient captures detection and blocking but not what happens after
+- [error-messages-that-teach-are-a-constraining-technique](./error-messages-that-teach-are-a-constraining-technique.md) — extends: teaching messages are the inform axis of recovery but stop at "teaches the fix" — this note adds the structured follow-through (corrective → fallback → escalation) that turns teaching into recovery
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines: oracle strength constrains which recovery strategies are viable; hard oracles enable auto-correction, soft oracles require agent interpretation, no-oracle means no structured recovery
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — provides framework: the corrective → fallback → escalation recovery vocabulary and Drift Bounds Theorem that formalise the missing layer
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: error correction through repetition is one implementation of automated recovery for soft-oracle domains — amplification converts weak detection into reliable correction

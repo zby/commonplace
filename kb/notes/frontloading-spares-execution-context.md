@@ -26,9 +26,9 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 Anything that depends on the user's current request, the conversation state, or the evolving task is dynamic and not frontloadable. The boundary isn't always sharp — some sub-procedures depend partially on known and partially on runtime information. In those cases, frontload the known parts and leave the runtime-dependent parts as instructions.
 
-## Frontloading vs crystallisation
+## Frontloading vs codification
 
-[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [crystallisation](./crystallisation.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
+[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [codification](./codification.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
 
 ## The mechanism: partial evaluation or divide-and-conquer?
 
@@ -71,8 +71,8 @@ The [symbolic scheduling model](./bounded-context-orchestration-model.md) models
 
 Relevant Notes:
 
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [crystallisation](./crystallisation.md) (replaces underspecified template with deterministic literal)
-- [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and crystallisation; the notes already link to stabilisation for the semantic-commitment aspect
+- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](./codification.md) (replaces underspecified template with deterministic literal)
+- [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and codification; the notes already link to constraining for the semantic-commitment aspect
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
 - [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here

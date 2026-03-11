@@ -40,11 +40,11 @@ Assertions split into two kinds that map to different [oracle strengths](./oracl
 
 The behavioral assertions are cheap and deterministic — ideal for regression testing. The output assertions require either LLM-as-judge or careful fixture design where expected connections are unambiguous enough to check with string matching.
 
-## This is stabilisation tooling
+## This is constraining tooling
 
-A test suite for instructions is a [stabilisation](./stabilisation.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what stabilisation is designed to detect and prevent.
+A test suite for instructions is a [constraining](./constraining.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what constraining is designed to detect and prevent.
 
-On the [methodology enforcement gradient](./methodology-enforcement-is-stabilisation.md), instruction tests sit between skills and hooks: they don't block operations in real-time (like hooks do), but they verify skill behavior more rigorously than manual invocation. They're the equivalent of a CI test suite for the instruction layer.
+On the [methodology enforcement gradient](./methodology-enforcement-is-constraining.md), instruction tests sit between skills and hooks: they don't block operations in real-time (like hooks do), but they verify skill behavior more rigorously than manual invocation. They're the equivalent of a CI test suite for the instruction layer.
 
 The cost is real — each test execution is an API call — but the alternative is discovering regressions during production use, which is more expensive in both tokens and trust.
 
@@ -53,7 +53,7 @@ The cost is real — each test execution is an API call — but the alternative 
 - What granularity? Test full skill execution, or test individual phases (discovery, evaluation, output)?
 - How to handle indeterminism? Run N times and check pass rate, or design fixtures with such obvious connections that any reasonable execution finds them?
 - Should the mock layer be skill-specific or generic? A reusable mock-KB harness vs per-skill test fixtures.
-- When is this worth the API cost? Probably after a skill has stabilised enough that regressions matter more than rapid iteration.
+- When is this worth the API cost? Probably after a skill has constrained enough that regressions matter more than rapid iteration.
 
 ---
 
@@ -61,8 +61,8 @@ Relevant Notes:
 
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
 - [automated tests for text](./automated-tests-for-text.md) — complements: covers artifact testing (the other half of the doubled surface); this note covers instruction testing
-- [stabilisation](./stabilisation.md) — positions: instruction tests are stabilisation tooling — they constrain the interpretation space by asserting behavioral expectations
-- [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: instruction tests sit on the enforcement gradient between skills (manual invocation) and hooks (automated blocking)
+- [constraining](./constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: instruction tests sit on the enforcement gradient between skills (manual invocation) and hooks (automated blocking)
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: behavioral assertions (tool call patterns) are hard-oracle; output assertions (connection quality) are soft-oracle, mirroring the test pyramid split
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed
 

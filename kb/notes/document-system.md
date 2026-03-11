@@ -35,4 +35,4 @@ How documents are classified, structured, and quality-checked. These notes defin
 - [type-system](./type-system.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
 - [kb-design](./kb-design.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
 - [links](./links.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
-- [learning-theory](./learning-theory.md) — the type ladder instantiates the stabilisation gradient for documents
+- [learning-theory](./learning-theory.md) — the type ladder instantiates the constraining gradient for documents

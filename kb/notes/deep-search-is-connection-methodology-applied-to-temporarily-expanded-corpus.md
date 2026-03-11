@@ -70,7 +70,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 
 - What's the right granularity for snapshotting? Full pages vs. extracted passages?
 - Should the temporary workspace use the same document types as the KB, or a lighter format? Since [skills are typed callables](./instructions-are-typed-callables.md), deep search's type signature would be something like `query + context → research-report + source-reviews` — a compound output that chains multiple existing skill signatures.
-- How does the iteration budget interact with the two learning mechanisms — is this [stabilisation](./stabilisation.md) (constraining search), [distillation](./distillation.md) (extracting procedure from exploration), or something else?
+- How does the iteration budget interact with the two learning mechanisms — is this [constraining](./constraining.md) (constraining search), [distillation](./distillation.md) (extracting procedure from exploration), or something else?
 - Can the [extract/connect/review cycle](./needs-testing.md) be validated through deep search before investing in the full boiling cauldron?
 
 ---

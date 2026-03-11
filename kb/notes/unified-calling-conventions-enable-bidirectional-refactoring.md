@@ -8,7 +8,7 @@ status: current
 
 # Unified calling conventions enable bidirectional refactoring between neural and symbolic
 
-The [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — stabilise patterns to code, soften rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
+The [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — constrain patterns to code, relax rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
 
 ## The mechanism
 
@@ -23,16 +23,16 @@ neural          symbolic         neural          symbolic
 
 The calling convention is uniform across the chain. Each link can be independently refactored without disturbing the rest.
 
-## Why this matters for stabilisation
+## Why this matters for constraining
 
-[Stabilisation](./stabilisation.md) and [crystallisation](./crystallisation.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each crystallisation step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
+[Constraining](./constraining.md) and [codification](./codification.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each codification step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
 
 With unified calling, the progression is smooth:
 
 1. **Start neural** — define an agent to handle a task. Quick to add, handles ambiguity.
-2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-crystallisation.md) — discovering that an underspecified spec consistently resolves to one interpretation, then committing to it in code.
-3. **Crystallise** — extract `sanitize_filename()` to Python. The agent still handles ambiguous cases. The call site doesn't change.
-4. **Extend via softening** — new requirements emerge (handle Unicode, detect dates). Add an LLM call for the new cases. Again, the call site doesn't change.
+2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-codification.md) — discovering that an underspecified spec consistently resolves to one interpretation, then committing to it in code.
+3. **Codify** — extract `sanitize_filename()` to Python. The agent still handles ambiguous cases. The call site doesn't change.
+4. **Extend via relaxing** — new requirements emerge (handle Unicode, detect dates). Add an LLM call for the new cases. Again, the call site doesn't change.
 
 Each step is local. The system evolves without coordination cost.
 
@@ -64,12 +64,12 @@ The imperative style means refactoring between neural and symbolic uses the same
 Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
-- [stabilisation](./stabilisation.md) — the mechanism that unified calling makes frictionless
-- [crystallisation](./crystallisation.md) — the phase transition from neural to symbolic that unified calling makes a local operation
-- [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
+- [constraining](./constraining.md) — the mechanism that unified calling makes frictionless
+- [codification](./codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
+- [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
-- [operational-signals-that-a-component-is-a-softening-candidate](./operational-signals-that-a-component-is-a-softening-candidate.md) — extends: softening signals answer "when should you soften?" — unified calling makes the softening refactoring cheap once the signal fires
+- [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: relaxing signals answer "when should you relax?" — unified calling makes the relaxing refactoring cheap once the signal fires
 
 Topics:
 

@@ -36,7 +36,7 @@ The conversion from human insight to agent framing is inherently lossy. The huma
 
 ## Design constraints
 
-**The target must be specific and verifiable.** "The report is too generous" is not a target. "The constitution embedding is verbatim copying — the crystallisation claim is illusory" is. Vague targets make Yes/Partial/No scoring impossible.
+**The target must be specific and verifiable.** "The report is too generous" is not a target. "The constitution embedding is verbatim copying — the codification claim is illusory" is. Vague targets make Yes/Partial/No scoring impossible.
 
 **The framings must elicit different cognitive moves.** The curiosity experiment tested six genuinely different approaches: broad curiosity, cost/benefit analysis, impossibility checking, implication tracing, adversarial assumption, and mechanistic tracing. Four of six converged on "does it work?" — only cost/benefit asked "is it worth the cost?" If the framings had been variations on "look more carefully," that structural insight would have been invisible.
 

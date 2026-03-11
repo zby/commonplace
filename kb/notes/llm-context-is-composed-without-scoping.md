@@ -60,7 +60,7 @@ The key word is *explicitly*. In a flat context, everything is implicitly global
 
 The stack metaphor exposes a question flat contexts dodge: what does a sub-agent *return*? A function returns a typed value. A sub-agent returns natural language, or structured data, or a partial result with caveats.
 
-This is where [crystallisation](./crystallisation.md) becomes load-bearing. Early in exploration, sub-agents return loose natural language — the equivalent of an untyped s-expression. As you crystallise, return values become structured, typed, validated. The stack architecture *enables* this progressive typing because each frame boundary is an explicit interface point where you can impose increasingly strict contracts.
+This is where [codification](./codification.md) becomes load-bearing. Early in exploration, sub-agents return loose natural language — the equivalent of an untyped s-expression. As you codify, return values become structured, typed, validated. The stack architecture *enables* this progressive typing because each frame boundary is an explicit interface point where you can impose increasingly strict contracts.
 
 The flat context has no such interface points. Everything bleeds into everything, making it impossible to even ask "what is the contract between these two stages of reasoning?"
 
@@ -100,7 +100,7 @@ Relevant Notes:
 - [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — exemplifies: the failure modes (search pollution, identity scatter, insight trapping) are symptoms of flat scoping applied to memory
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified instructions are sensitive to everything in context, making scope contamination especially damaging
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — existing approximation: llm-do's per-agent system prompts and arguments are frame-local context
-- [crystallisation](./crystallisation.md) — enables: frame boundaries are interface points where return values can be progressively typed
+- [codification](./codification.md) — enables: frame boundaries are interface points where return values can be progressively typed
 - [context-loading-strategy](./context-loading-strategy.md) — grounds: the loading hierarchy is a form of binding-time analysis for what's in scope
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — exemplifies: the routing tier separation is lexical scoping in practice
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: type signatures on skills are frame interfaces — declaring what bindings a sub-agent receives

@@ -52,11 +52,11 @@ The "seen twice on different dates" heuristic is simple and testable — a concr
 
 **4. The reflection cycle as a skill.** Their weekly `reflect` command reviews recent observations and produces a synthesis. This could be a `/reflect` skill for us — periodic review of the log and recent notes to surface patterns, contradictions, and promotion candidates. Lower-ceremony than their automated pipeline, but the practice itself is valuable.
 
-**5. Retrieval crystallisation patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — are interesting not as retrieval mechanisms but as a [crystallisation](../deploy-time-learning-the-missing-middle.md) spectrum for how knowledge gets surfaced:
+**5. Retrieval codification patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — are interesting not as retrieval mechanisms but as a [codification](../deploy-time-learning-the-missing-middle.md) spectrum for how knowledge gets surfaced:
 
-- **Triggers** in frontmatter (`triggers: ["deployment", "rollback"]`) — crystallised retrieval conditions on individual artifacts. The knowledge becomes self-routing: instead of the agent needing to find it, the system knows when to surface it.
-- **Profiles** (`planning`, `incident`, `handoff`) — crystallised retrieval strategies for classes of tasks. Someone observed "during incident response, recent observations matter most" and hardened that into a named strategy.
-- **Full frontloading** — crystallised context assembly. The system pre-loads a curated package before the agent even starts.
+- **Triggers** in frontmatter (`triggers: ["deployment", "rollback"]`) — codified retrieval conditions on individual artifacts. The knowledge becomes self-routing: instead of the agent needing to find it, the system knows when to surface it.
+- **Profiles** (`planning`, `incident`, `handoff`) — codified retrieval strategies for classes of tasks. Someone observed "during incident response, recent observations matter most" and hardened that into a named strategy.
+- **Full frontloading** — codified context assembly. The system pre-loads a curated package before the agent even starts.
 
 Each step encodes more retrieval judgment into the system and removes more from the agent. Each step is also premature if the pattern hasn't been validated through enough usage. We don't yet know which notes should have triggers, what retrieval profiles our work actually needs, or whether frontloading would help or waste tokens. ClawVault has the usage volume to discover these empirically; we're still building the KB that would be retrieved from. Worth revisiting once we have enough content and sessions to see recurring retrieval patterns.
 
@@ -76,13 +76,13 @@ Our [context-loading-strategy](../context-loading-strategy.md) takes the opposit
 
 The trade-offs are real. Frontloading means the agent starts with relevant context immediately, no wasted turns — good for weaker models or constrained tool access. But the system must guess what's relevant *before knowing what the agent will need*, and tokens spent on pre-loaded context are tokens unavailable for the task. Agent-driven retrieval loads exactly what's needed when needed and scales better (the KB can grow without ballooning startup context), but depends on the agent being good at navigation and costs turns on retrieval.
 
-These aren't mutually exclusive. You could frontload a minimal context (as we already do with CLAUDE.md) and leave the agent to retrieve the rest. But the deeper question is whether frontloading is a fundamental pattern or a workaround for agents that can't navigate well. Both frontloading and the component patterns it's built from (triggers, profiles) can be viewed as retrieval crystallisation — see "What We Could Borrow" item 5.
+These aren't mutually exclusive. You could frontload a minimal context (as we already do with CLAUDE.md) and leave the agent to retrieve the rest. But the deeper question is whether frontloading is a fundamental pattern or a workaround for agents that can't navigate well. Both frontloading and the component patterns it's built from (triggers, profiles) can be viewed as retrieval codification — see "What We Could Borrow" item 5.
 
 **They automated the workshop; we're still mapping it.** ClawVault has 40+ commands and a full pipeline from session transcript to vault knowledge. We're still figuring out what the workshop layer should contain. This is a legitimate strategic difference — [our KB-design notes](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) argue the workshop needs state machines, dependencies, and expiration, but we haven't committed to specific artifact types. ClawVault's choices (observations, handoffs, reflections) are one answer.
 
 **Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated — LLMs extract, score, and route observations. Our model keeps humans in the promotion loop (text → seedling → note requires human judgment). This reflects different bets on whether LLM judgment is reliable enough for knowledge curation. We're more conservative, but their system generates evidence about whether the automated approach works.
 
-**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something vs. leave it fluid. No [verifiability gradient](../deploy-time-learning-the-missing-middle.md), no stabilise/soften boundary. Their observation format was designed; it doesn't evolve based on what the system learns about its own learning. This is the gap between building a knowledge system and understanding knowledge systems.
+**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something vs. leave it fluid. No [verifiability gradient](../deploy-time-learning-the-missing-middle.md), no constrain/relax boundary. Their observation format was designed; it doesn't evolve based on what the system learns about its own learning. This is the gap between building a knowledge system and understanding knowledge systems.
 
 ## What to Watch
 

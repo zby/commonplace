@@ -38,7 +38,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 - [enforcement-without-structured-recovery-is-incomplete](./enforcement-without-structured-recovery-is-incomplete.md) (kb-design, learning-theory) — the enforcement gradient covers detection and blocking but not recovery; oracle strength constrains viable recovery strategies
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) (kb-maintenance) — four semantic checks that are decorrelated weak oracles for content errors
-- [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) (learning-theory) — the manufacturing step: extracting deterministic checks from observed behavior to construct oracles
+- [spec-mining-as-codification](./spec-mining-as-codification.md) (learning-theory) — the manufacturing step: extracting deterministic checks from observed behavior to construct oracles
 
 ## Sources
 

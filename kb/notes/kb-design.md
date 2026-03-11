@@ -28,8 +28,8 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — all knowledge routing infrastructure (skills, type templates, routing tables, naming conventions) is permanent architecture for LLM agents, not scaffolding that learners outgrow
 - [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — capabilities belong in skills only when autonomy-ready; otherwise keep them in instructions or methodology artifacts, not AGENTS inventories
-- [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — methodology-to-skill derivation is distillation (extracting procedures from reasoning in the same medium), distinct from crystallisation and stabilisation
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — instructions, skills, hooks, and scripts form a stabilisation gradient for methodology; practices start stochastic and harden as they prove out
+- [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — methodology-to-skill derivation is distillation (extracting procedures from reasoning in the same medium), distinct from codification and constraining
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — instructions, skills, hooks, and scripts form a constraining gradient for methodology; practices start stochastic and harden as they prove out
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — skills and tasks are typed callables: they accept document types as input and produce types as output, and should declare their signatures
 - [ad-hoc-prompts-extend-the-system-without-schema-changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — the other end of the spectrum: ad hoc instructions notes absorb new requirements without any schema change; the collections problem is a concrete example
 - [design-methodology-borrow-widely-filter-by-first-principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — borrow from software engineering, library science, knowledge management — but filter through first principles before adopting
@@ -47,10 +47,10 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 ## Design Principles
 
-- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — unifying theory: three properties (discoverable, composable, trustworthy) serve contextual competence under bounded context; three learning operations (stabilisation, distillation, discovery) improve them; Deutsch's reach criterion measures knowledge quality
+- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — unifying theory: three properties (discoverable, composable, trustworthy) serve contextual competence under bounded context; three learning operations (constraining, distillation, discovery) improve them; Deutsch's reach criterion measures knowledge quality
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — good thinking requires moving between abstraction levels; KB quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges Popperian conjecture-and-refutation with bounded-context mechanics and proposes concrete upgrades (falsifiers, contradiction passes, oracle-aware hardening)
-- [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as crystallisation, centers as mutual reinforcement in the note graph
+- [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as codification, centers as mutual reinforcement in the note graph
 
 ## Workshop Layer
 
@@ -72,12 +72,12 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) that grounds claim-title conventions and the `structured-claim` type
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — practitioner validation of propositional links over embedding-based adjacency; confirms the Goodhart risk in quality signals
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper implementing Zettelkasten-inspired automated memory with link generation and memory evolution; provides empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
-- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates context-loading-strategy's content categories, provides evolution data showing stabilisation maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates context-loading-strategy's content categories, provides evolution data showing constraining maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
 
 ## Related Areas
 
 - [document-system](./document-system.md) — types, writing conventions, and validation that the KB's documents follow
-- [learning-theory](./learning-theory.md) — the learning mechanisms (stabilisation, crystallisation, distillation) that KB operations instantiate
+- [learning-theory](./learning-theory.md) — the learning mechanisms (constraining, codification, distillation) that KB operations instantiate
 - [computational-model](./computational-model.md) — PL concepts (scheduling, partial evaluation, scoping) that inform KB architecture; the scheduling notes moved here
 - [links](./links.md) — linking methodology, navigation, and link contracts
 - [maintenance](./kb-maintenance.md) — detection, operations, and dynamics that keep the KB healthy over time

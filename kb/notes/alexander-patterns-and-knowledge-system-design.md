@@ -1,5 +1,5 @@
 ---
-description: Christopher Alexander's pattern language, generative processes, and centers may connect to our knowledge system design at multiple levels — from structured document types to crystallisation to link semantics. Vague but persistent.
+description: Christopher Alexander's pattern language, generative processes, and centers may connect to our knowledge system design at multiple levels — from structured document types to codification to link semantics. Vague but persistent.
 type: note
 traits: []
 status: speculative
@@ -22,7 +22,7 @@ Alexander argued that good structure emerges from step-by-step generative rules,
 
 One concrete sequencing rule from this view is [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md): place the least flexible element first, then fit flexible elements around it.
 
-This maps to our [crystallisation trajectory](./stabilisation.md): start with unstructured text, let patterns emerge from practice, formalise when consistent success becomes observable. The [methodology enforcement gradient](./methodology-enforcement-is-stabilisation.md) (instruction → skill → hook → script) is a generative process — each step responds to observed friction, not a pre-designed automation plan.
+This maps to our [codification trajectory](./constraining.md): start with unstructured text, let patterns emerge from practice, formalise when consistent success becomes observable. The [methodology enforcement gradient](./methodology-enforcement-is-constraining.md) (instruction → skill → hook → script) is a generative process — each step responds to observed friction, not a pre-designed automation plan.
 
 Thalo's approach — commit to the full type system upfront via a grammar — is closer to a master plan. Our approach — discover types through practice, formalise when shapes recur — is closer to Alexander's generative process. This may explain why we resist premature formalisation even when the endpoint is similar.
 

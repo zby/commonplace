@@ -103,7 +103,7 @@ Guidance should move across artifacts as it matures:
 2. AGENTS.md may hold a minimal invariant or routing pointer.
 3. Repeated operations accumulate in a maintenance/instructions staging area.
 4. Stable procedures are distilled into `kb/instructions/` or promoted to skills.
-5. Deterministic high-frequency checks can crystallize into scripts/hooks.
+5. Deterministic high-frequency checks can codify into scripts/hooks.
 
 This keeps AGENTS.md stable and short while the system still learns.
 
@@ -136,7 +136,7 @@ Relevant Notes:
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operational extension: where externally triggered operations are staged before distillation
 - [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — isolates the separate decision rule for where capabilities belong (skills vs instructions vs notes)
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — target form for mature procedures that do not need always-loaded routing
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: Table 1 shows 14 content categories practitioners actually put in context files, with no established structure — empirical evidence for why the control-plane model's normative layering is needed
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md with invariants, routing, and escalation is the control-plane model in production at 1M LOC scale
 

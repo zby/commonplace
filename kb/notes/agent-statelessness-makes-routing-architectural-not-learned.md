@@ -14,7 +14,7 @@ An LLM agent never does this. Each session starts cold. It cannot learn "last ti
 
 This means every mechanism that directs the agent to the right knowledge at the right time — routing tables, skill descriptions, type templates, naming conventions, directory structure, activation triggers, area indexes — is permanent architecture. For a human, these are conveniences you outgrow. For an agent, they're prosthetics you never stop needing.
 
-The [methodology enforcement](./methodology-enforcement-is-stabilisation.md) gradient describes practices hardening from instruction → skill → hook → script. The *practices* mature. The *agent* stays exactly as raw as it was on day one. This asymmetry is the core of the note: the system learns, the agent doesn't.
+The [methodology enforcement](./methodology-enforcement-is-constraining.md) gradient describes practices hardening from instruction → skill → hook → script. The *practices* mature. The *agent* stays exactly as raw as it was on day one. This asymmetry is the core of the note: the system learns, the agent doesn't.
 
 ## Progressive disclosure replaces navigation intuition
 
@@ -52,7 +52,7 @@ Three requirements follow:
 2. **Staleness detection.** When methodology changes, routing artifacts derived from it silently drift. The agent has no "that doesn't seem right" intuition to catch it. Some mechanism — diffing, periodic audit, dependency tracking — must detect when compiled routing has diverged from its source.
 3. **Behavioral completeness.** Each routing artifact must include enough reasoning for edge cases and explicit boundaries so the agent recognizes when it's outside scope. Partial routing produces confident execution with systematic errors — worse than no routing at all.
 
-Persistent memory across sessions would soften the statelessness assumption, but routing scales with the knowledge base itself. Even an agent that remembers where it found things last time faces a navigation problem proportional to KB size.
+Persistent memory across sessions would relax the statelessness assumption, but routing scales with the knowledge base itself. Even an agent that remembers where it found things last time faces a navigation problem proportional to KB size.
 
 ---
 
@@ -60,7 +60,7 @@ Relevant Notes:
 
 - [context-loading-strategy](./context-loading-strategy.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: why progressive disclosure exists; routing is the mechanism that makes context efficiency achievable
-- [methodology-enforcement-is-stabilisation](./methodology-enforcement-is-stabilisation.md) — extends: the stabilisation gradient describes how practices harden; this note adds that the agent never hardens with them
+- [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — extends: the constraining gradient describes how practices harden; this note adds that the agent never hardens with them
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — supports: the reason lossy routing is dangerous — the agent can't resolve omitted reasoning by loading the source at runtime
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — example: build-time generation is exactly the source→compiled pattern this note describes
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — instance: the skill-specific case of routing-as-architecture; distillation is the compilation pattern applied to methodology→skill

@@ -7,7 +7,7 @@ status: seedling
 
 # A functioning knowledge base needs a workshop layer, not just a library
 
-The KB's [current type system](./document-classification.md) — text, note, structured-claim, spec, adr — is a maturity ladder for knowledge. Documents move toward permanence: a text gets promoted to a note, a note crystallises into a structured claim, insights accumulate into specs and ADRs. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this ladder: capture with zero friction, then refine in place. The status field (seedling, current, speculative) modulates commitment but not lifecycle. A seedling and a current note are structurally identical — one just hasn't been endorsed yet.
+The KB's [current type system](./document-classification.md) — text, note, structured-claim, spec, adr — is a maturity ladder for knowledge. Documents move toward permanence: a text gets promoted to a note, a note codifies into a structured claim, insights accumulate into specs and ADRs. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this ladder: capture with zero friction, then refine in place. The status field (seedling, current, speculative) modulates commitment but not lifecycle. A seedling and a current note are structurally identical — one just hasn't been endorsed yet.
 
 This works well for **durable knowledge**. But a functioning knowledge base also needs to support **work in motion** — documents that have lifecycles, change state, interact with each other, and eventually produce outcomes — durable artifacts in the KB, actions on the outside world (drafted emails, responses to messages, code changes), or simply get discarded. The task system (`tasks/`) is the clearest example: it has state machines (backlog → active → completed), directional dependencies (blocks/blocked-by), and expiration (completed tasks become irrelevant). None of this maps onto the existing type system.
 
@@ -45,8 +45,8 @@ The relationship between library and workshop is **bidirectional**:
 
 This means there are two kinds of bridges needed:
 
-**Extraction bridges** (workshop → library) — moving durable insights out of temporal documents. At the deterministic end, this is [spec mining](../notes/spec-mining-as-crystallisation.md): extracting rules and verifiers from observed workshop behavior. But extraction is broader — it also produces non-deterministic library artifacts like notes, ADR drafts, and judgment precedents.
-- A `/crystallize` operation that extracts learnings from a completed task into a note
+**Extraction bridges** (workshop → library) — moving durable insights out of temporal documents. At the deterministic end, this is [spec mining](../notes/spec-mining-as-codification.md): extracting rules and verifiers from observed workshop behavior. But extraction is broader — it also produces non-deterministic library artifacts like notes, ADR drafts, and judgment precedents.
+- A `/codify` operation that extracts learnings from a completed task into a note
 - Decision threads that automatically produce ADR drafts when they reach the "decided" state
 - Experiment conclusions that prompt for note creation
 - Session logs that flag insights for promotion
@@ -74,7 +74,7 @@ This is fine for now — the system is primarily a knowledge base and the task s
 - Should workshop and library share a type system, or remain parallel hierarchies? The intuition is that we'll have **one big knowledge base and many smaller temporal subsystems**. Each temporal subsystem (tasks, decision threads, experiments, queues) has its own state machine, its own relationships, its own lifecycle — trying to unify them under one type hierarchy would be forced. What they share is that they all **depend on the library** (reference notes, include prompts, use established claims to make decisions), so they need to link into the KB. But their internal structure is diverse enough that local conventions per subsystem — what [why directories despite their costs](./why-directories-despite-their-costs.md) already argues for tasks — is likely the right default as more temporal types appear.
 - How much formalism do workshop documents need? Tasks work with ad-hoc markdown templates. Would validated state machines help agents, or just add ceremony?
 - Is the three-space model ([knowledge / self / operational](./three-space-agent-memory-maps-to-tulving-taxonomy.md)) the right framing? Workshop documents map roughly to the "operational space" — high churn, consolidation, graduation to knowledge. But the Tulving mapping may be decorative rather than load-bearing.
-- What's the minimum viable bridge? Probably `/crystallize` on task completion — extract learnings into a note, link back to the archived task for provenance.
+- What's the minimum viable bridge? Probably `/codify` on task completion — extract learnings into a note, link back to the archived task for provenance.
 - [Claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) argues the KB needs action-oriented knowledge types (preferences, procedures, precedents, voice). Workshop documents are precisely the kind of action-oriented artifacts that produce those knowledge types — should the workshop layer be designed with action-capacity as the success metric rather than retrieval?
 - Skills already have implicit [type signatures](../notes/instructions-are-typed-callables.md) (`/ingest: source → source-review`). Could extraction bridges be formalised as skills with workshop-input, library-output signatures?
 
@@ -88,9 +88,9 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the extraction bridge (workshop → library) is a specific instance of the broader automation challenge
 - [the wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the refinement-in-place ladder (text → note → structured-claim) is specifically a library pattern; workshop documents don't refine toward permanence, they consume themselves
 - [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — the action-oriented knowledge types this note identifies (preferences, procedures, precedents) are what workshop processes produce and consume; the workshop layer is where action-capacity learning happens
-- [spec mining is crystallisation's operational mechanism](../notes/spec-mining-as-crystallisation.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
+- [spec mining is codification's operational mechanism](../notes/spec-mining-as-codification.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
-- [stabilisation is learning](../notes/stabilisation.md) — extraction bridges are stabilisation: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
+- [constraining is learning](../notes/constraining.md) — extraction bridges are constraining: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
 
 Topics:

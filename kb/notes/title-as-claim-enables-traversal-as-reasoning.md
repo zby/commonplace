@@ -41,7 +41,7 @@ The traversal-as-reasoning framing explains why. A claim-titled note can serve a
 | Multi-claim (spec, framework) | Topical title | "see [X]", "as defined in [X]" | Reference, not premise |
 | Definitional (term pinning) | The term itself | "see [X]", "[X] means..." | Reference, not premise |
 
-**Definitional notes** are a second exception. Notes like [crystallisation](../notes/crystallisation.md), [stabilisation](../notes/stabilisation.md), and [distillation](../notes/distillation.md) pin down how a technical term is used in this project. Their titles are the terms they define — topical by nature. They function as reference entries: you link to them for precision ("as defined in [crystallisation]"), not as premises in reasoning chains. Like specs, they can link TO claim-notes for justification while carrying topical titles themselves.
+**Definitional notes** are a second exception. Notes like [codification](../notes/codification.md), [constraining](../notes/constraining.md), and [distillation](../notes/distillation.md) pin down how a technical term is used in this project. Their titles are the terms they define — topical by nature. They function as reference entries: you link to them for precision ("as defined in [codification]"), not as premises in reasoning chains. Like specs, they can link TO claim-notes for justification while carrying topical titles themselves.
 
 The two layers coexist. Specs link TO their constituent claim-notes for justification ([document types should be verifiable](./document-types-should-be-verifiable.md) is the rationale extracted from the classification spec). Claim-notes link TO specs as the system they support. But they have different title conventions because they play different roles in traversal.
 

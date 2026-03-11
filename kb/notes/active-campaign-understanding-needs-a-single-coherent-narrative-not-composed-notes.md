@@ -40,7 +40,7 @@ It fills the "session logs" slot from the workshop note, but with a crucial diff
 
 ## The bridge question
 
-The open question is what happens when a campaign ends. Theorist doesn't address this. The workshop note predicted the need for extraction bridges (workshop → library) — a `/crystallize` operation that distills durable insights from temporal documents into notes. For THEORY.MD specifically:
+The open question is what happens when a campaign ends. Theorist doesn't address this. The workshop note predicted the need for extraction bridges (workshop → library) — a `/codify` operation that distills durable insights from temporal documents into notes. For THEORY.MD specifically:
 
 - Key discoveries → notes in the KB
 - Strategy pivots → material for ADRs or structured claims
@@ -59,7 +59,7 @@ Without this bridge, THEORY.MD's insights die with the campaign. The git history
 Relevant Notes:
 
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — theorist exemplifies the workshop layer this note predicts; THEORY.MD has all the workshop properties (lifecycle, consumed value, temporal sensitivity)
-- [storing-llm-outputs-is-stabilization](./storing-llm-outputs-is-stabilization.md) — holistic rewrite is the opposite of append-only stabilization; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
+- [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — holistic rewrite is the opposite of append-only constraining; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — theorist's always-on activation is automatic context injection; the theory doc is the harness injecting strategic context every session
 
 Topics:

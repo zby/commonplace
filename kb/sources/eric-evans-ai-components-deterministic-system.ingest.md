@@ -1,9 +1,9 @@
 ---
-description: Evans argues that separating modeling (schema creation) from classification (schema application) tames LLM non-determinism — a practitioner case study of stabilisation via taxonomy freezing
+description: Evans argues that separating modeling (schema creation) from classification (schema application) tames LLM non-determinism — a practitioner case study of constraining via taxonomy freezing
 source_snapshot: eric-evans-ai-components-deterministic-system.md
 ingested: 2026-03-09
 type: practitioner-report
-domains: [stabilisation, classification-systems, LLM-integration, domain-driven-design]
+domains: [constraining, classification-systems, LLM-integration, domain-driven-design]
 ---
 
 # Ingest: AI Components for a Deterministic System (An Example)
@@ -16,7 +16,7 @@ From: https://www.domainlanguage.com/articles/ai-components-deterministic-system
 
 Type: **practitioner-report** — Evans built a concrete system (domain classification of OpenEMR code modules), reports what worked and what didn't, and extracts transferable design principles. It has a conceptual essay layer (the modeling-vs-classification distinction), but the article is grounded in a working implementation with specific results, not pure theory.
 
-Domains: stabilisation, classification-systems, LLM-integration, domain-driven-design
+Domains: constraining, classification-systems, LLM-integration, domain-driven-design
 
 Author: Eric Evans, creator of Domain-Driven Design. His authority is in software architecture and strategic design, not ML/NLP per se. His DDD lens is what makes the article distinctive — he frames the LLM integration problem as a modeling/classification boundary, which is a DDD concept transplanted into the AI domain.
 
@@ -30,20 +30,20 @@ The `/connect` discovery found 7 connections, all in the learning-theory cluster
 
 **Strong connections:**
 
-- **[stabilisation](../notes/stabilisation.md)** — exemplifies: Evans' "freeze the taxonomy" is stabilisation on the heavy end of the spectrum — committing to a single interpretation (the taxonomy) before operating deterministically within it.
-- **[storing LLM outputs is stabilisation](../notes/storing-llm-outputs-is-stabilization.md)** — exemplifies: Evans' frozen taxonomy is the specific instance already cited under "Strategy 1: Constrain the generator." The source provides the concrete OpenEMR case study behind that reference.
+- **[constraining](../notes/constraining.md)** — exemplifies: Evans' "freeze the taxonomy" is constraining on the heavy end of the spectrum — committing to a single interpretation (the taxonomy) before operating deterministically within it.
+- **[storing LLM outputs is constraining](../notes/storing-llm-outputs-is-constraining.md)** — exemplifies: Evans' frozen taxonomy is the specific instance already cited under "Strategy 1: Constrain the generator." The source provides the concrete OpenEMR case study behind that reference.
 - **[agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md)** — exemplifies: "What domain does this code address?" is semantically underspecified (admits multiple valid category schemes) AND execution-indeterminate (inconsistent formats across runs). Evans' solution is interpretation narrowing — pre-resolve the modeling ambiguity so the classification step has a single valid scheme.
-- **[spec mining as crystallisation](../notes/spec-mining-as-crystallisation.md)** — exemplifies: Evans' iterative refinement phase (sampling, critic, judge) is spec mining — observing LLM behavior and extracting a frozen schema. NAICS is the extreme case where someone else already mined the spec.
+- **[spec mining as codification](../notes/spec-mining-as-codification.md)** — exemplifies: Evans' iterative refinement phase (sampling, critic, judge) is spec mining — observing LLM behavior and extracting a frozen schema. NAICS is the extreme case where someone else already mined the spec.
 - **[bitter lesson boundary](../notes/bitter-lesson-boundary.md)** — grounds: Evans' modeling/classification split maps to the arithmetic/vision-feature distinction. Classification against a frozen schema is arithmetic-regime (spec IS the problem). Creating the schema is vision-feature-regime (spec is a theory about useful categories). Evans' advice to use NAICS is an arithmetic-regime choice: adopt a spec that already exists.
-- **[crystallisation and softening navigate the bitter lesson boundary](../notes/crystallisation-and-softening-navigate-the-bitter-lesson-boundary.md)** — exemplifies: Evans' incremental updates pattern (check against existing categories, add genuinely new ones) is the soften/re-crystallise cycle operating on a taxonomy.
+- **[codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)** — exemplifies: Evans' incremental updates pattern (check against existing categories, add genuinely new ones) is the relax/re-codify cycle operating on a taxonomy.
 
 ## Extractable Value
 
-1. **The NAICS consistency result** — Evans reports that classification against NAICS yielded identical high-confidence results across multiple runs, while custom taxonomies varied each time. This is concrete evidence for the stabilisation claim, not just a theoretical argument. [just-a-reference] — cite-worthy data point for the stabilisation note.
+1. **The NAICS consistency result** — Evans reports that classification against NAICS yielded identical high-confidence results across multiple runs, while custom taxonomies varied each time. This is concrete evidence for the constraining claim, not just a theoretical argument. [just-a-reference] — cite-worthy data point for the constraining note.
 
-2. **The critic/judge refinement pipeline failing** — Evans tried sampling + critic + judge models and found they didn't improve results for his use case. This negative result is valuable: the iterative refinement loop doesn't always help, and simpler approaches (adopt a published standard) can outperform elaborate pipelines. [quick-win] — add as a caveat to spec-mining-as-crystallisation.
+2. **The critic/judge refinement pipeline failing** — Evans tried sampling + critic + judge models and found they didn't improve results for his use case. This negative result is valuable: the iterative refinement loop doesn't always help, and simpler approaches (adopt a published standard) can outperform elaborate pipelines. [quick-win] — add as a caveat to spec-mining-as-codification.
 
-3. **The incremental update pattern** — prompting the LLM to check new items against an existing category set and only add genuinely new ones. This is a concrete implementation of the soften/re-crystallise cycle: the categories are mostly frozen but have a controlled expansion path. [experiment] — could inform how we handle schema evolution in the KB's own type system.
+3. **The incremental update pattern** — prompting the LLM to check new items against an existing category set and only add genuinely new ones. This is a concrete implementation of the relax/re-codify cycle: the categories are mostly frozen but have a controlled expansion path. [experiment] — could inform how we handle schema evolution in the KB's own type system.
 
 4. **"Generic domain" heuristic for when to use published standards** — Evans' DDD framing: if classification isn't your competitive advantage, use established taxonomies rather than inventing your own. This maps to the bitter lesson boundary but adds a practical decision heuristic. [quick-win] — strengthens the bitter-lesson-boundary note with a practitioner-friendly decision rule.
 

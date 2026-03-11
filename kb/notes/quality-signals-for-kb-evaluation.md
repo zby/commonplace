@@ -36,7 +36,7 @@ The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. B
 
 ## Metamorphic relations (testable over mutations)
 
-Instead of testing "is this KB good?", test "did this change make it better or worse?" This is [spec mining](../notes/spec-mining-as-crystallisation.md) applied to KB structure: observe the invariants that hold across mutations, then extract them as testable properties.
+Instead of testing "is this KB good?", test "did this change make it better or worse?" This is [spec mining](../notes/spec-mining-as-codification.md) applied to KB structure: observe the invariants that hold across mutations, then extract them as testable properties.
 
 - **Split invariant:** splitting a note into two should preserve or increase total inbound links. If links decrease, the split broke something.
 - **Synthesis test:** a synthesis note should link to at least 2 source notes. If it doesn't, it's not actually synthesising.
@@ -105,7 +105,7 @@ Possible calibration strategies:
 - **Fix-and-re-critique** — apply the suggested fix, critique again. If the LLM finds new faults of equal severity, the critique is noise (it will always find something). If faults genuinely resolve and aren't replaced, it was signal.
 - **Structured rubrics** — constrain what the LLM can critique (description discriminates? title reads as claim? links articulated?) rather than open-ended "find problems." Rubric items can be individually validated against the cross-note baseline. The [text testing framework](./text-testing-framework.md) already sketches this pyramid — deterministic checks at the base, LLM rubrics in the middle, corpus compatibility at the top — and these rubric items could serve as Level B checks in that pyramid.
 
-The fix-and-re-critique approach is itself metamorphic: you're not testing absolute quality, you're testing whether a transformation (the fix) changes the output of the evaluation. If the evaluation is stable under the fix, the original critique was noise. This also connects to the [verbatim risk](../notes/storing-llm-outputs-is-stabilization.md) — the hardest verification failure, where an agent produces reformatted repetition that passes all structural checks. Fix-and-re-critique would catch it: if the "fix" is just rephrasing and the critique finds equivalent faults, the original note was likely verbatim output disguised as synthesis.
+The fix-and-re-critique approach is itself metamorphic: you're not testing absolute quality, you're testing whether a transformation (the fix) changes the output of the evaluation. If the evaluation is stable under the fix, the original critique was noise. This also connects to the [verbatim risk](../notes/storing-llm-outputs-is-constraining.md) — the hardest verification failure, where an agent produces reformatted repetition that passes all structural checks. Fix-and-re-critique would catch it: if the "fix" is just rephrasing and the critique finds equivalent faults, the original note was likely verbatim output disguised as synthesis.
 
 ## Agent-centric signals (navigability)
 
@@ -145,10 +145,10 @@ Relevant Notes:
 - [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
 - [automated-tests-for-text](./automated-tests-for-text.md) — the distilled observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
-- [spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
+- [spec-mining-as-codification](../notes/spec-mining-as-codification.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — prerequisite: content quality proxies (frontmatter completeness, title-as-claim ratio) depend on the type system being trustworthy
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — exemplifies why index coverage is a high-value signal: missing entries actively suppress search
-- [storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md) — the generator/verifier pattern: the composite quality signal would serve as the verifier for the learning loop's mutations, and the fix-and-re-critique calibration strategy is a metamorphic test on that pattern
+- [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — the generator/verifier pattern: the composite quality signal would serve as the verifier for the learning loop's mutations, and the fix-and-re-critique calibration strategy is a metamorphic test on that pattern
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — boundary condition: all signals here are retrieval/structure oriented; action capacity (classification, planning, communication) would need different quality signals
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pruning accuracy signal: link metadata must support the navigation decision without loading the target

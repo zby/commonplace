@@ -30,23 +30,23 @@ Eight connections identified:
 
 2. **[oracle-strength-spectrum](../notes/oracle-strength-spectrum.md)** -- grounds: "reliability is independent of capability" is direct empirical support for oracle strength as the bottleneck, not compute or model scale.
 
-3. **[softening-signals](../notes/operational-signals-that-a-component-is-a-softening-candidate.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the softening signal pattern confirmed across 14 models.
+3. **[relaxing-signals](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the relaxing signal pattern confirmed across 14 models.
 
 4. **[error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md)** -- extends: the discrimination finding (calibration improves but discrimination does not) constrains error correction -- models are getting better at aggregate confidence but not at distinguishing individual correct from incorrect outputs, limiting amplification via voting.
 
-5. **[spec-mining-as-crystallisation](../notes/spec-mining-as-crystallisation.md)** -- exemplifies: Table 3's mapping of real-world agent failures to reliability metrics is spec mining applied to evaluation itself -- each failure class becomes a testable property.
+5. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** -- exemplifies: Table 3's mapping of real-world agent failures to reliability metrics is spec mining applied to evaluation itself -- each failure class becomes a testable property.
 
 6. **[agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
 
-7. **[stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/stabilisation-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that stabilisation and distillation trade generality for.
+7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
 
-8. **[storing-llm-outputs-is-stabilization](../notes/storing-llm-outputs-is-stabilization.md)** -- exemplifies: the consistency dimension quantifies exactly what output stabilisation prevents -- 50x cost swings and outcome variance on identical inputs.
+8. **[storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md)** -- exemplifies: the consistency dimension quantifies exactly what output constraining prevents -- 50x cost swings and outcome variance on identical inputs.
 
 ## Extractable Value
 
 1. **The four-dimension reliability decomposition as evaluation vocabulary.** Formal, operationalised definitions of consistency, robustness, predictability, and safety with computable metrics. Already integrated into the KB via the reliability-dimensions-map note, but the paper's metric definitions remain a reference for anyone building evaluation harnesses. [just-a-reference]
 
-2. **Prompt robustness as the weakest link.** Models handle genuine infrastructure faults (API timeouts, malformed responses) but break under semantically equivalent instruction rephrasings. This is counterintuitive and actionable: invest in prompt robustness testing before worrying about fault tolerance. Already captured in softening-signals note. [just-a-reference]
+2. **Prompt robustness as the weakest link.** Models handle genuine infrastructure faults (API timeouts, malformed responses) but break under semantically equivalent instruction rephrasings. This is counterintuitive and actionable: invest in prompt robustness testing before worrying about fault tolerance. Already captured in relaxing-signals note. [just-a-reference]
 
 3. **Larger models are less consistent because they have more solution strategies.** Run-to-run variability increases with capability because capable models have more valid interpretations of the same instruction. Directly extends the underspecification theory: a wider interpretation space means more variance when the LLM projects to a concrete execution. Implications for model selection when consistency matters. [experiment]
 

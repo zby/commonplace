@@ -1,5 +1,5 @@
 ---
-description: The methodology→skill relationship is distillation (extracting operational procedures from discursive reasoning in the same medium) — distinct from crystallisation (prompt→code phase transition) and stabilisation (narrowing output distribution)
+description: The methodology→skill relationship is distillation (extracting operational procedures from discursive reasoning in the same medium) — distinct from codification (prompt→code phase transition) and constraining (narrowing output distribution)
 type: structured-claim
 traits: [has-comparison]
 areas: [kb-design]
@@ -10,21 +10,21 @@ status: seedling
 
 Skills in a knowledge base are derived from the methodology KB. The `/connect` skill encodes procedures — scan descriptions, run the articulation test, check agent traversal value — that were reasoned out across a constellation of methodology notes: the [Toulmin argument structure](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md), the [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) review, the [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention, the [link contracts framework](./link-contracts-framework.md). The skill works because it encodes the right procedures. But it can't explain why those procedures are right, or help adapt them when they don't fit.
 
-What is this derivation relationship? The project already has two terms for related phenomena — crystallisation and stabilisation — but neither is quite right. Getting the term right matters because it determines how we think about maintaining, improving, and extending skills.
+What is this derivation relationship? The project already has two terms for related phenomena — codification and constraining — but neither is quite right. Getting the term right matters because it determines how we think about maintaining, improving, and extending skills.
 
 ## Evidence
 
-### It is not crystallisation
+### It is not codification
 
-[Crystallisation](../notes/deploy-time-learning-the-missing-middle.md) in this project means the prompt→code phase transition: natural language instructions becoming executable logic. The medium changes. The consumer changes (LLM → interpreter/runtime). The verification regime changes. It is like a physical phase transition — the nature of the artifact changes dramatically.
+[Codification](../notes/codification.md) in this project means the prompt→code phase transition: natural language instructions becoming executable logic. The medium changes. The consumer changes (LLM → interpreter/runtime). The verification regime changes. It is like a physical phase transition — the nature of the artifact changes dramatically.
 
 The methodology→skill relationship has none of these properties. The input is markdown consumed by an LLM. The output is markdown consumed by an LLM. There is no phase change. What changes is the *rhetorical mode* — discursive, multi-perspective, argumentative reasoning becomes procedural, step-sequenced instruction — but the substance remains natural language processed by the same kind of reader.
 
-### It is not stabilisation
+### It is not constraining
 
-[Stabilisation](../notes/stabilisation.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
+[Constraining](../notes/constraining.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
 
-[Methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) already maps the enforcement gradient (instruction → skill → hook → script) as a stabilisation spectrum. That note is about *how reliably methodology is followed*. This note is about a different question: *what is the relationship between the methodology and the skill's content?*
+[Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) already maps the enforcement gradient (instruction → skill → hook → script) as a constraining spectrum. That note is about *how reliably methodology is followed*. This note is about a different question: *what is the relationship between the methodology and the skill's content?*
 
 ### Distillation fits
 
@@ -35,7 +35,7 @@ The methodology KB is the mixture — arguments, counterarguments, examples, his
 Key properties that map well:
 
 - **Same substance, different concentration.** Both are natural language for LLM consumption. No phase change. Just purification.
-- **The residue has value.** In crystallisation, the "soft" form is superseded. In distillation, the source material remains useful — you return to it when the distillate doesn't cover your case. A domain where claim-titles don't work well requires going back to the methodology to reason about what to change.
+- **The residue has value.** In codification, the "soft" form is superseded. In distillation, the source material remains useful — you return to it when the distillate doesn't cover your case. A domain where claim-titles don't work well requires going back to the methodology to reason about what to change.
 - **The process requires judgment.** Distillation isn't mechanical compilation. A different person reading the same methodology would distil a meaningfully different skill. What to extract, what to leave behind, what sequence to impose on ideas that aren't inherently sequential — these are design decisions.
 - **The distillate can't reconstruct the source.** Someone reading only the `/connect` skill can follow the steps but can't adapt them to novel situations. The reasoning that produced those steps is absent from the output.
 - **The loss is deliberate, not accidental.** The [agent-statelessness note](./agent-statelessness-makes-routing-architectural-not-learned.md) identifies "lossy compilation" as creating systematic blind spots — reasoning omitted from a skill is permanently unavailable at runtime, and the agent has no "something feels off" signal when it hits a case where the omitted reasoning would have mattered. Reframed as distillation, this sharpens: the separation of reasoning from procedure isn't an unfortunate side effect of compression. It's the *defining operation*. You deliberately factor out the warrant and keep the procedure. This points toward a remedy the compilation framing doesn't suggest: provenance links from skill steps back to the methodology that justifies them, so the agent can load the reasoning on demand when the procedure doesn't cover the case.
@@ -52,15 +52,15 @@ But ML distillation is a one-shot training process. KB distillation is ongoing �
 
 ### Why the distinction matters
 
-The three terms — crystallisation, stabilisation, distillation — describe different operations on the same gradient:
+The three terms — codification, constraining, distillation — describe different operations on the same gradient:
 
 | Term | Operation | What changes | Medium transition |
 |------|-----------|-------------|-------------------|
-| Crystallisation | prompt → code | Verification regime, consumer, executability | Yes — natural language → executable |
-| Stabilisation | wide distribution → narrow | Output predictability | No — same medium, tighter constraints |
+| Codification | prompt → code | Verification regime, consumer, executability | Yes — natural language → executable |
+| Constraining | wide distribution → narrow | Output predictability | No — same medium, tighter constraints |
 | Distillation | discursive → procedural | Rhetorical mode, information density | No — same medium, different organization |
 
-Conflating them produces confused designs. If you think skills are crystallised methodology, you'll expect them to be more verifiable than they are (they're still stochastic). If you think skills are stabilised methodology, you'll focus on constraining agent behavior rather than on extracting the right procedures. If you recognise skills as distilled methodology, you'll focus on the right questions: what to extract, what to leave in the source, how to maintain the derivation relationship.
+Conflating them produces confused designs. If you think skills are codified methodology, you'll expect them to be more verifiable than they are (they're still stochastic). If you think skills are constrained methodology, you'll focus on constraining agent behavior rather than on extracting the right procedures. If you recognise skills as distilled methodology, you'll focus on the right questions: what to extract, what to leave in the source, how to maintain the derivation relationship.
 
 ### Distillation is a context-budget operation
 
@@ -82,9 +82,9 @@ For a human, distilled procedures are a convenience that can eventually be trans
 
 Relevant Notes:
 
-- [methodology enforcement is stabilisation](./methodology-enforcement-is-stabilisation.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship
-- [crystallisation: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: crystallisation involves a phase transition in medium; distillation does not
+- [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: codification involves a phase transition in medium; distillation does not
 - [context-loading strategy](./context-loading-strategy.md) — enables: the loading hierarchy is the architectural consequence of distillation; skill tier exists because methodology tier is too expensive to load routinely
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
