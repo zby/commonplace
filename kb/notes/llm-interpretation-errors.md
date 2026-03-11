@@ -40,6 +40,10 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) (kb-maintenance) — four semantic checks that are decorrelated weak oracles for content errors
 - [spec-mining-as-crystallisation](./spec-mining-as-crystallisation.md) (learning-theory) — the manufacturing step: extracting deterministic checks from observed behavior to construct oracles
 
+## Sources
+
+- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — empirical evidence: separates all three phenomena methodologically; performance-stability decoupling confirms they are independent
+
 ## Related Areas
 
 - [learning-theory](./learning-theory.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors

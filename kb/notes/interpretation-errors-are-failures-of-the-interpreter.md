@@ -35,6 +35,7 @@ Relevant Notes:
 - [LLM interpretation errors](./llm-interpretation-errors.md) — parent area: the three-phenomena taxonomy this note is part of
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — remedy: the general theory of error correction applicable to interpretation errors
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — architectural remedy: moving error-prone bookkeeping to a reliable substrate
+- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — evidence: emotional prompt variation produces systematic performance degradation (bias) on functionally identical tasks
 
 Topics:
 
