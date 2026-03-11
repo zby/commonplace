@@ -22,6 +22,7 @@ Programming language concepts applied to LLM instructions and agent architecture
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies restore the clean separation to increasing degrees
 - [rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) — RLM instantiates the symbolic-scheduler model by having the LLM write the scheduler as code; achieves clean separation but discards the scheduler after each run
 - [solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — sequencing heuristic: commit least-flexible decisions first so high-flexibility choices cannot block scarce valid placements
+- [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — tradeoff analysis of conversation, prompt refinement, and context cloning for sub-agent coordination; each shifts costs differently between caller and callee depending on architecture
 
 ## Instruction Properties
 
