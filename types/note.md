@@ -76,7 +76,7 @@ Traits are independently checkable properties. A document can have zero or more 
 
 **Types are verifiable.** Each type and trait asserts a structural property you can check. The question is "what structural property am I asserting?" not "what is this about?" Subject matter belongs in `areas`.
 
-**Types mature through stabilisation.** Content can start as [text](./text.md) and get promoted to `note` by adding frontmatter, then to more specific types as structure develops. A text file that persists without promotion is a candidate for pruning.
+**Types mature through constraining.** Content can start as [text](./text.md) and get promoted to `note` by adding frontmatter, then to more specific types as structure develops. A text file that persists without promotion is a candidate for pruning.
 
 **Status is orthogonal to type.** Structure and commitment are independent axes. A document can be structurally complete and connected while still being a seedling — meaning "we haven't decided to keep this."
 

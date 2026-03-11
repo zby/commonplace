@@ -24,6 +24,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Graphiti](../../sources/graphiti-temporal-knowledge-graph.ingest.md) — temporally-aware knowledge graph with bi-temporal edge invalidation; strongest counterexample to files-first architecture and strongest temporal model in the surveyed systems *(lightweight coverage only — ingest report, no repo review)*
 - [Spacebot](./spacebot.md) — Rust concurrent agent framework with code-level symbolic scheduling (cortex), context-forking branches, typed memory with graph edges and hybrid search; cleanest production implementation of the bounded-context orchestration model among reviewed systems
 - [Decapod](./decapod.md) — Rust governance kernel for AI coding agents with proof-gated completion, workspace isolation, and 120+ embedded constitution documents; strongest reference for hard-oracle verification in agent workflows, though constitution claims transformation where the code primarily relocates
+- [Hindsight](./hindsight.md) — biomimetic agent memory with LLM-driven fact extraction, four-way parallel retrieval (semantic + BM25 + graph + temporal), auto-consolidation into observations, and agentic reflection; strongest production evidence that three-space memory separation yields measurable retrieval gains (LongMemEval SOTA)
 - [Fintool](../../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — AI agent for professional investors; S3-first with derived PostgreSQL, markdown skills with copy-on-write shadowing, ~2000 eval test cases; strongest production-scale evidence for filesystem-first at commercial grade *(lightweight coverage only — ingest report, no repo review)*
 
 ## Patterns Across Systems
@@ -34,7 +35,7 @@ Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independe
 - **Start simple** — architectural reduction outperforms over-engineering
 
 The divergences are more revealing:
-- **Storage model** — Siftly uses SQLite and CrewAI uses LanceDB (embedded vector database) as operational substrates, while the others keep files as the primary storage interface. CrewAI is the furthest from filesystem-first: memories are opaque vector records, not readable files
+- **Storage model** — Siftly uses SQLite, CrewAI uses LanceDB (embedded vector database), and Hindsight uses PostgreSQL+pgvector as operational substrates, while the others keep files as the primary storage interface. Hindsight and CrewAI are the furthest from filesystem-first: memories are opaque database records, not readable files
 - **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (commonplace, thalo) vs empirical operational patterns (Agent-Skills)
 - **Formalization level** — custom DSL (thalo) vs YAML conventions (commonplace) vs prose instructions (Agent-Skills)
 - **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan), making it the only reviewed system where process compliance is structurally enforced rather than instructed
