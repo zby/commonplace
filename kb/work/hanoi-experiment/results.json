@@ -1,0 +1,267 @@
+[
+  {
+    "condition": "flat-prompt",
+    "model": "claude-haiku-4-5-20251001",
+    "raw_output": "# Towers of Hanoi - 4 Disks Solution\n\nMOVE disk 1: A \u2192 B\nMOVE disk 2: A \u2192 C\nMOVE disk 1: B \u2192 C\nMOVE disk 3: A \u2192 B\nMOVE disk 1: C \u2192 A\nMOVE disk 2: C \u2192 B\nMOVE disk 1: A \u2192 B\nMOVE disk 4: A \u2192 C\nMOVE disk 1: B \u2192 C\nMOVE disk 2: B \u2192 A\nMOVE disk 1: C \u2192 A\nMOVE disk 3: B \u2192 C\nMOVE disk 1: A \u2192 B\nMOVE disk 2: A \u2192 C\nMOVE disk 1: B \u2192 C\n\n**Total number of moves: 15**",
+    "parsed_moves": [
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        3,
+        "A",
+        "B"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        2,
+        "C",
+        "B"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        4,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        2,
+        "B",
+        "A"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        3,
+        "B",
+        "C"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ]
+    ],
+    "scores": {
+      "expected_moves": 15,
+      "actual_moves": 15,
+      "count_correct": true,
+      "positional_matches": 15,
+      "positional_accuracy": 1.0,
+      "perfect": true,
+      "first_error_at": null
+    },
+    "usage": {
+      "input_tokens": 148,
+      "output_tokens": 178
+    }
+  },
+  {
+    "condition": "openprose-vm",
+    "model": "claude-haiku-4-5-20251001",
+    "raw_output": "# OpenProse VM Execution: Towers of Hanoi\n\nI am embodying the OpenProse VM. I will execute this program according to the specification, tracking the call stack, variable bindings, and all moves generated.\n\n## Program Setup\n\n**Program:** `hanoi.prose`  \n**Initial instruction:** `do hanoi(4, \"A\", \"C\", \"B\")`\n\n**Block definition:**\n```prose\nblock hanoi(n, source, target, auxiliary):\n  if **n equals 1**:\n    session \"Move disk 1 from {source} to {target}...\"\n  else:\n    do hanoi(n - 1, source, auxiliary, target)\n    session \"Move disk {n} from {source} to {target}...\"\n    do hanoi(n - 1, auxiliary, target, source)\n```\n\n---\n\n## Execution Trace\n\nI'll track the call stack as nested invocations with execution IDs.\n\n### Call Stack Execution\n\n```\n=== START: do hanoi(4, \"A\", \"C\", \"B\") ===\n#1 hanoi(n=4, source=\"A\", target=\"C\", auxiliary=\"B\")\n\n  Evaluate: **4 equals 1** \u2192 FALSE, go to else\n\n  Execute: do hanoi(3, \"A\", \"B\", \"C\")\n  #2 hanoi(n=3, source=\"A\", target=\"B\", auxiliary=\"C\")\n\n    Evaluate: **3 equals 1** \u2192 FALSE, go to else\n\n    Execute: do hanoi(2, \"A\", \"C\", \"B\")\n    #3 hanoi(n=2, source=\"A\", target=\"C\", auxiliary=\"B\")\n\n      Evaluate: **2 equals 1** \u2192 FALSE, go to else\n\n      Execute: do hanoi(1, \"A\", \"B\", \"C\")\n      #4 hanoi(n=1, source=\"A\", target=\"B\", auxiliary=\"C\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: A \u2192 B ***\n\n      #4 done\n\n      Execute: session \"Move disk 2 from A to C\"\n      *** MOVE disk 2: A \u2192 C ***\n\n      Execute: do hanoi(1, \"B\", \"C\", \"A\")\n      #5 hanoi(n=1, source=\"B\", target=\"C\", auxiliary=\"A\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: B \u2192 C ***\n\n      #5 done\n\n    #3 done\n\n    Execute: session \"Move disk 3 from A to B\"\n    *** MOVE disk 3: A \u2192 B ***\n\n    Execute: do hanoi(2, \"C\", \"B\", \"A\")\n    #6 hanoi(n=2, source=\"C\", target=\"B\", auxiliary=\"A\")\n\n      Evaluate: **2 equals 1** \u2192 FALSE, go to else\n\n      Execute: do hanoi(1, \"C\", \"A\", \"B\")\n      #7 hanoi(n=1, source=\"C\", target=\"A\", auxiliary=\"B\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: C \u2192 A ***\n\n      #7 done\n\n      Execute: session \"Move disk 2 from C to B\"\n      *** MOVE disk 2: C \u2192 B ***\n\n      Execute: do hanoi(1, \"A\", \"B\", \"C\")\n      #8 hanoi(n=1, source=\"A\", target=\"B\", auxiliary=\"C\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: A \u2192 B ***\n\n      #8 done\n\n    #6 done\n\n  #2 done\n\n  Execute: session \"Move disk 4 from A to C\"\n  *** MOVE disk 4: A \u2192 C ***\n\n  Execute: do hanoi(3, \"B\", \"C\", \"A\")\n  #9 hanoi(n=3, source=\"B\", target=\"C\", auxiliary=\"A\")\n\n    Evaluate: **3 equals 1** \u2192 FALSE, go to else\n\n    Execute: do hanoi(2, \"B\", \"A\", \"C\")\n    #10 hanoi(n=2, source=\"B\", target=\"A\", auxiliary=\"C\")\n\n      Evaluate: **2 equals 1** \u2192 FALSE, go to else\n\n      Execute: do hanoi(1, \"B\", \"C\", \"A\")\n      #11 hanoi(n=1, source=\"B\", target=\"C\", auxiliary=\"A\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: B \u2192 C ***\n\n      #11 done\n\n      Execute: session \"Move disk 2 from B to A\"\n      *** MOVE disk 2: B \u2192 A ***\n\n      Execute: do hanoi(1, \"C\", \"A\", \"B\")\n      #12 hanoi(n=1, source=\"C\", target=\"A\", auxiliary=\"B\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: C \u2192 A ***\n\n      #12 done\n\n    #10 done\n\n    Execute: session \"Move disk 3 from B to C\"\n    *** MOVE disk 3: B \u2192 C ***\n\n    Execute: do hanoi(2, \"A\", \"C\", \"B\")\n    #13 hanoi(n=2, source=\"A\", target=\"C\", auxiliary=\"B\")\n\n      Evaluate: **2 equals 1** \u2192 FALSE, go to else\n\n      Execute: do hanoi(1, \"A\", \"B\", \"C\")\n      #14 hanoi(n=1, source=\"A\", target=\"B\", auxiliary=\"C\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: A \u2192 B ***\n\n      #14 done\n\n      Execute: session \"Move disk 2 from A to C\"\n      *** MOVE disk 2: A \u2192 C ***\n\n      Execute: do hanoi(1, \"B\", \"C\", \"A\")\n      #15 hanoi(n=1, source=\"B\", target=\"C\", auxiliary=\"A\")\n\n        Evaluate: **1 equals 1** \u2192 TRUE, if branch\n\n        MOVE 1: Session executes\n        *** MOVE disk 1: B \u2192 C ***\n\n      #15 done\n\n    #13 done\n\n  #9 done\n\n#1 done\n\n=== END: All block invocations completed ===\n```\n\n---\n\n## Moves Generated (In Order)\n\n```\nMOVE disk 1: A \u2192 B\nMOVE disk 2: A \u2192 C\nMOVE disk 1: B \u2192 C\nMOVE disk 3: A \u2192 B\nMOVE disk 1: C \u2192 A\nMOVE disk 2: C \u2192 B\nMOVE disk 1: A \u2192 B\nMOVE disk 4: A \u2192 C\nMOVE disk 1: B \u2192 C\nMOVE disk 2: B \u2192 A\nMOVE disk 1: C \u2192 A\nMOVE disk 3: B \u2192 C\nMOVE disk 1: A \u2192 B\nMOVE disk 2: A \u2192 C\nMOVE disk 1: B \u2192 C\n```\n\n---\n\n## Verification\n\n**Total moves:** **15**  \n**Expected moves for 4 disks:** 2\u2074 - 1 = 15 \u2713\n\n**Canonical order check:** The sequence follows the correct Towers of Hanoi solution:\n- All disk 1 moves occur in their proper positions\n- Larger disks move exactly once each\n- No disk is ever placed on a smaller disk (verified by the recursive structure)\n- The sequence respects the constraint: move n-1 from source\u2192auxiliary, move disk n from source\u2192target, move n-1 from auxiliary\u2192target\n\n**Call stack tracking:** 15 block invocation frames were pushed and popped correctly, with proper scope isolation of `n`, `source`, `target`, and `auxiliary` at each recursion level.\n\n**Result:** \u2705 **EXECUTION SUCCESSFUL** \u2014 The OpenProse VM correctly handled recursive block invocation, arithmetic discretion evaluation, variable scoping, and parameter swapping across 15 nested frames.",
+    "parsed_moves": [
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        3,
+        "A",
+        "B"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        2,
+        "C",
+        "B"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        4,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        2,
+        "B",
+        "A"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        3,
+        "B",
+        "C"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        3,
+        "A",
+        "B"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        2,
+        "C",
+        "B"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        4,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ],
+      [
+        2,
+        "B",
+        "A"
+      ],
+      [
+        1,
+        "C",
+        "A"
+      ],
+      [
+        3,
+        "B",
+        "C"
+      ],
+      [
+        1,
+        "A",
+        "B"
+      ],
+      [
+        2,
+        "A",
+        "C"
+      ],
+      [
+        1,
+        "B",
+        "C"
+      ]
+    ],
+    "scores": {
+      "expected_moves": 15,
+      "actual_moves": 30,
+      "count_correct": false,
+      "positional_matches": 15,
+      "positional_accuracy": 1.0,
+      "perfect": false,
+      "first_error_at": 15
+    },
+    "usage": {
+      "input_tokens": 10129,
+      "output_tokens": 2040
+    }
+  }
+]

@@ -15,6 +15,10 @@ For **notes and above** (any type with frontmatter), every note must be findable
 
 If any answer is "no," fix it before saving.
 
+## After Writing
+
+When all changes are complete (note written, links added, indexes updated), run `/validate` on the new or modified notes. This checks both structural correctness and content quality — don't skip it even if the note "looks fine."
+
 ## Where It Goes
 
 Where a note goes depends on what triggered it:
