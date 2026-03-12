@@ -1,5 +1,5 @@
 ---
-description: Files with git beat a database for agent-operated knowledge bases — universal interface, free versioning, no infrastructure to maintain
+description: Files beat a database early on — a schema commits to access patterns before you know them, and files let you constrain incrementally while getting free browsing, versioning, and agent access from day one
 type: note
 traits: []
 areas: [kb-design]
@@ -8,14 +8,22 @@ status: current
 
 # Files beat a database for agent-operated knowledge bases
 
-The temptation as a KB grows is to move to a database. But files are the universal interface — agents read/write them directly with tools they already have (Read, Write, Grep), git gives versioning and diffing for free, grep searches thousands of files in milliseconds, and markdown renders everywhere (GitHub, editors, browsers). [Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step — and the system works because the file formats are the interface.
+The temptation as a KB grows is to move to a database. But a database migration doesn't just change storage — it replaces the entire tool chain:
 
-A database migration doesn't just change storage — it replaces the entire tool chain:
-
-- **Versioning**: You'd reimplement git, badly. Database versioning is either "diffs in a table" (fragile, no branching) or "shell out to git" (then why move?).
-- **Browsing**: Files render in any editor or on GitHub with zero setup. A database needs a web UI — a whole application to build and maintain.
-- **Agent access**: Agents currently use Read/Write/Grep — tools they already have. A database requires an API layer or DB client on every interaction.
+- **Versioning**: Git gives branching, diffing, and history for free. Database versioning is either "diffs in a table" (fragile, no branching) or "shell out to git" (then why move?).
+- **Browsing**: Files render in any editor or on GitHub with zero setup. A database needs a viewing layer built for it — a whole application to build and maintain.
+- **Agent access**: Agents use Read/Write/Grep — tools they already have. A database requires an API layer or DB client on every interaction.
 - **Infrastructure**: Files need nothing. A database needs hosting, backups, migrations, and someone to maintain it.
+
+[Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step.
+
+## Premature schema commitment
+
+The practical arguments above are real, but there's a deeper reason: a database schema is a commitment to access patterns you don't yet understand. When a project is young, you don't know what queries matter, what relationships will emerge, or how knowledge will be organized six months from now. A schema encodes those assumptions in DDL — and every reorganization becomes a migration.
+
+Files let you defer that commitment and [constrain incrementally](./constraining.md) as you learn. Raw markdown first, then frontmatter conventions, then grep-based queries, then derived indexes (semantic search, quality scores). Each step adds structure only after the access pattern has been observed in practice. This is the [constrain/relax cycle](./agentic-systems-interpret-underspecified-instructions.md) applied to storage architecture — stay at the least constrained medium until you've seen enough to know what to commit to.
+
+This isn't a files-forever position. Once access patterns stabilize, a database may earn its place — either as a replacement or, more likely, as a derived layer alongside files (the way qmd already works for semantic search). The point is that starting with a database front-loads a commitment you're not yet equipped to make. Files buy time to learn what the right schema would be. The browsing cost compounds this: early on, when the methodology itself was still forming, having to build a viewing layer before anyone could browse the knowledge would have been a real barrier. Files gave us a usable system from day one.
 
 ## What actually breaks at scale
 
@@ -23,11 +31,7 @@ A database migration doesn't just change storage — it replaces the entire tool
 2. **Too many files per directory** — solved by subdirectories
 3. **Structured queries with scoring** — the real gap, but solvable with [note quality scores](./notes-need-quality-scores-to-scale-curation.md)
 
-The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index (semantic, structured, scoring) is a build artifact that can be rebuilt from files at any time.
-
-This is the same pattern qmd already uses for semantic search — it indexes files, it doesn't replace them. The [patterns proven in practice](./what-works.md) confirm this works: frontmatter makes files queryable via grep, qmd adds semantic search, and progressive disclosure keeps token costs low — all without leaving the filesystem.
-
-[Cludebot's database stack](./what-cludebot-teaches-us.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files without the infrastructure overhead.
+The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time — qmd already works this way for semantic search, and the [patterns proven in practice](./what-works.md) confirm the approach (frontmatter queries via grep, semantic search via qmd, progressive disclosure for token cost). [Cludebot's database stack](./what-cludebot-teaches-us.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
 
 ## Where the trade-off tips: Graphiti
 
