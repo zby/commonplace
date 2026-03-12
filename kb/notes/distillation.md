@@ -1,5 +1,5 @@
 ---
-description: Definition — distillation is targeted extraction from a larger body of reasoning into a focused artifact shaped by specific circumstances (use case, context budget, agent) — one of two co-equal learning mechanisms alongside constraining, and the dominant one in knowledge work
+description: Definition — distillation is compressing knowledge for a specific task under a context budget — the operation that context engineering machinery exists to perform; one of two co-equal learning mechanisms alongside constraining
 type: note
 traits: []
 areas: [learning-theory]
@@ -8,7 +8,9 @@ status: current
 
 # Distillation
 
-One of two co-equal learning mechanisms in deployed agentic systems, alongside [constraining](./constraining.md). Distillation is **targeted extraction** — taking a body of reasoning and producing a focused artifact shaped by specific circumstances: a use case, a context budget, an agent.
+One of two co-equal learning mechanisms in deployed agentic systems, alongside [constraining](./constraining.md). Distillation is **compressing knowledge for a specific task under a context budget**. The source can be anything — raw observations, methodology, prior reasoning, accumulated understanding. The target is always an artifact that equips a consumer (agent, collaborator) to perform a task.
+
+[Context engineering](./context-engineering.md) is the architecture — the loading strategy, routing, the `select` function in the [scheduling model](./bounded-context-orchestration-model.md). Distillation is the main operation that architecture performs, though not the only one (routing, scoping, and maintenance are also context engineering operations).
 
 ## Why distillation exists
 
@@ -18,19 +20,20 @@ Different operational contexts need different things from the same body of knowl
 
 ## How distillation works
 
-The rhetorical mode shifts to match the target. The content is selected and compressed to fit the circumstances. What stays constant is the medium — unlike [codification](./codification.md), distillation typically stays in natural language consumed by an LLM.
+The content is selected and compressed to fit the consumer's task and context budget. The rhetorical mode may shift if the task demands it (argumentative → procedural when the task is execution, exploratory → assertive when the task is deciding), but mode shift is incidental, not defining. What stays constant is the medium — unlike [codification](./codification.md), distillation typically stays in natural language consumed by an LLM.
 
-| Source → Distillate | Rhetorical shift | Target |
-|---|---|---|
-| Methodology → Skill | Argumentative → procedural | Agents performing a specific workflow |
-| Workshop → Note | Exploratory → assertive | Future agents and sessions needing the insight |
-| Research → Design principle | Observational → prescriptive | Decision-making in a particular area |
-| Accumulated understanding → Campaign narrative | Chronological → coherent present-tense | Collaborator joining the campaign now |
-| Caller's knowledge + sub-agent's question → Refined prompt | Dialogical → self-contained | Sub-agent facing a specific task |
+| Source → Distillate | Target |
+|---|---|
+| Methodology → Skill | Agent performing a specific workflow |
+| Workshop → Note | Future agents needing the insight |
+| Research → Design principle | Decision-making in a particular area |
+| Accumulated understanding → Campaign narrative | Collaborator joining the campaign now |
+| Caller's knowledge + sub-agent's question → Refined prompt | Sub-agent facing a specific task |
+| Many observations → Summary | Agent that can't fit them all in context |
 
 Targeting is itself information loss — selecting what's relevant to one context means discarding what's relevant to others. This is why the source persists: it serves many targets, and each distillation chooses a different subset. Multiple distillations of the same source are normal. Reading only the `/connect` skill, you can connect notes but can't adapt the procedure to a novel situation. The methodology notes handle that.
 
-The last two rows show distillation operating beyond KB infrastructure — as the general operation of packaging knowledge for a specific consumer facing a specific task. A [campaign narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) is distillation of accumulated understanding for a collaborator who needs the current strategic picture, not the history. A [refined prompt](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is distillation of the caller's knowledge for a sub-agent that needs a clean, self-contained task description. In both cases, "holistic rewrite" is what distillation looks like when the target artifact already exists — you re-distil rather than append, because appending accumulates rather than extracts.
+A [campaign narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) is distillation of accumulated understanding for a collaborator who needs the current strategic picture, not the history. A [refined prompt](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is distillation of the caller's knowledge for a sub-agent that needs a clean, self-contained task description. In both cases, "holistic rewrite" is what distillation looks like when the target artifact already exists — you re-distil rather than append, because appending accumulates rather than extracts.
 
 ## The dominant mechanism in knowledge work
 

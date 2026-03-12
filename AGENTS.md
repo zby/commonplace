@@ -89,7 +89,8 @@ This file is a control-plane router. It does not inventory capabilities; harness
 
 Terms used in this KB with specific meanings:
 
-- **Distillation** — targeted extraction from a larger body of reasoning into a focused artifact shaped by specific circumstances (use case, context budget, agent). Not ML knowledge distillation (training a student model to mimic a teacher). Here it means: take knowledge, optimize it for a specific consumer facing a specific task, produce a text artifact. Examples: methodology → skill, accumulated understanding → campaign narrative, caller's knowledge → refined sub-agent prompt. See `kb/notes/distillation.md`.
+- **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/context-engineering.md`.
+- **Distillation** — compressing knowledge for a specific task under a context budget. The main operation context engineering performs, but not the only one. Not ML knowledge distillation (training a student to mimic a teacher). See `kb/notes/distillation.md`.
 - **Constraining** — narrowing the interpretation space of an artifact (less generality, more reliability/speed/cost). Orthogonal to distillation. See `kb/notes/constraining.md`.
 - **Codification** — committing a procedure to a symbolic medium (natural language → code). The far end of constraining. See `kb/notes/codification.md`.
 - **Workshop** — a named workspace for temporal, work-in-flight documents. Lives in `kb/work/<workshop-name>/`. Value is consumed rather than accumulated — workshop artifacts have lifecycles and expiration; they produce library artifacts (notes, ADRs) when done. Contrast with the library layer (notes, indexes) where value accumulates over time. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
