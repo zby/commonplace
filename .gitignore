@@ -21,7 +21,7 @@ Thumbs.db
 # local env settings
 
 .env
-kb/work/
+kb/work/paper-bounded-context-orchestration/
 
 # static site build artifacts
 site/

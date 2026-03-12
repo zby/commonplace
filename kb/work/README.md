@@ -8,3 +8,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/) — rethinking how sources get analysed and how analysis instructions flow from the caller
 - [connect-refactoring/](./connect-refactoring/) — splitting /connect into discovery-only + directed reading for file mutations
+- [validation/](./validation/) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
