@@ -14,6 +14,8 @@ The collection is organized around [deploy-time learning](./deploy-time-learning
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (semantic underspecification and execution indeterminism); the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
 - [learning-is-not-only-about-generality](./learning-is-not-only-about-generality.md) — accumulation is the most basic learning operation, with reach as its key property (facts at the low end, theories at the high end); capacity decomposes into generality vs a reliability/speed/cost compound; Simon's definition grounds the decomposition
+- [llm-learning-phases-fall-between-human-learning-modes](./llm-learning-phases-fall-between-human-learning-modes.md) — LLM phases (pre-training, in-context, deploy-time) occupy intermediate positions on the evolution-to-reaction spectrum rather than mapping 1:1 to human learning modes; warns against literal human-LLM learning analogies
+- [in-context-learning-presupposes-context-engineering](./in-context-learning-presupposes-context-engineering.md) — in-context learning depends on deploy-time learning to select and organize the right knowledge; Amodei's "no continual learning needed" claim relocates the learning to the system layer rather than eliminating it
 
 ## Deploy-time Learning
 
