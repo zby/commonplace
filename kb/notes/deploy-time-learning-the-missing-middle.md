@@ -101,6 +101,7 @@ Relevant Notes:
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: the paper's conclusion that AI context files are "maintained software artifacts" that are "versioned, reviewed, quality-assured, and tested" is the deploy-time learning thesis stated as an empirical finding across 466 projects
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: behavioral contracts (YAML DSL specs with runtime enforcement) are the far end of the verifiability gradient for behavioral constraints — verifiable repo artifacts that improve reliability without weight updates
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "good harnesses compound" is the deploy-time learning thesis in practitioner language; each constraint makes future work more reliable across a 1M LOC agent-generated codebase
+- [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: in-context learning depends on deploy-time learning to build the context engineering machinery that selects the right knowledge; responds to Amodei's claim that continual learning is unnecessary
 
 Topics:
 
