@@ -25,6 +25,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Spacebot](./spacebot.md) — Rust concurrent agent framework with code-level symbolic scheduling (cortex), context-forking branches, typed memory with graph edges and hybrid search; cleanest production implementation of the bounded-context orchestration model among reviewed systems
 - [Decapod](./decapod.md) — Rust governance kernel for AI coding agents with proof-gated completion, workspace isolation, and 120+ embedded constitution documents; strongest reference for hard-oracle verification in agent workflows, though constitution claims transformation where the code primarily relocates
 - [Hindsight](./hindsight.md) — biomimetic agent memory with LLM-driven fact extraction, four-way parallel retrieval (semantic + BM25 + graph + temporal), auto-consolidation into observations, and agentic reflection; strongest production evidence that three-space memory separation yields measurable retrieval gains (LongMemEval SOTA)
+- [SAGE](./sage.md) — BFT-branded agent memory with CometBFT consensus, Ed25519 signing, application-level validators (sentinel, dedup, quality, consistency), confidence decay, and AES-256-GCM encryption; the consensus framing is ceremony around a deterministic validation pipeline in single-node mode, but the validation gate pattern and domain-scoped RBAC are genuinely useful
 - [Fintool](../../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — AI agent for professional investors; S3-first with derived PostgreSQL, markdown skills with copy-on-write shadowing, ~2000 eval test cases; strongest production-scale evidence for filesystem-first at commercial grade *(lightweight coverage only — ingest report, no repo review)*
 
 ## Patterns Across Systems
@@ -35,10 +36,11 @@ Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independe
 - **Start simple** — architectural reduction outperforms over-engineering
 
 The divergences are more revealing:
-- **Storage model** — Siftly uses SQLite, CrewAI uses LanceDB (embedded vector database), and Hindsight uses PostgreSQL+pgvector as operational substrates, while the others keep files as the primary storage interface. Hindsight and CrewAI are the furthest from filesystem-first: memories are opaque database records, not readable files
+- **Storage model** — Siftly uses SQLite, CrewAI uses LanceDB (embedded vector database), Hindsight uses PostgreSQL+pgvector, and SAGE uses SQLite+BadgerDB (personal) or PostgreSQL+pgvector (multi-node) as operational substrates, while the others keep files as the primary storage interface. Hindsight, CrewAI, and SAGE are the furthest from filesystem-first: memories are opaque database records, not readable files
 - **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (commonplace, thalo) vs empirical operational patterns (Agent-Skills)
 - **Formalization level** — custom DSL (thalo) vs YAML conventions (commonplace) vs prose instructions (Agent-Skills)
-- **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan), making it the only reviewed system where process compliance is structurally enforced rather than instructed
+- **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan); SAGE enforces with cryptographic gates (signed transactions, validator quorum, RBAC clearance levels) — two very different enforcement models, both structurally enforced rather than instructed
+- **Access control** — SAGE is the only reviewed system with structured multi-agent RBAC (clearance levels, domain-scoped permissions, on-chain agent identity); most systems either have no access control or rely on filesystem permissions
 - **Self-referentiality** — only our KB is simultaneously a knowledge system and a knowledge base about knowledge systems
 
 ## Open Questions

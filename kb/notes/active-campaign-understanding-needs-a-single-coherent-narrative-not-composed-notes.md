@@ -50,7 +50,7 @@ Without this bridge, THEORY.MD's insights die with the campaign. The git history
 
 ## Open questions
 
-- Can the rewrite discipline work for agents, or does it require human judgment about what's still true? Theorist is designed for LLM agents, but holistic rewrite is hard — it requires understanding what changed and what didn't.
+- Can the rewrite discipline work for agents, or does it require human judgment about what's still true? Theorist is designed for LLM agents, but holistic rewrite is hard — it requires understanding what changed and what didn't. Augment's [bidirectional spec pattern](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) offers a partial answer: instead of requiring one author to perform holistic rewrites, agents continuously surface directional discoveries (interpretation choices that changed the plan) while humans review those updates. This distributes the coherence-maintenance burden, scaling maintenance throughput with generation throughput rather than requiring manual human rewrites.
 - Is one theory doc per repo the right granularity? Multiple concurrent workstreams get brief mentions rather than full treatment. A KB might need theory docs per area or per task.
 - How does the 200-line maximum interact with complex, multi-front campaigns? The constraint forces triage — what's important enough to include — which is valuable but may lose important context.
 
@@ -61,6 +61,7 @@ Relevant Notes:
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — theorist exemplifies the workshop layer this note predicts; THEORY.MD has all the workshop properties (lifecycle, consumed value, temporal sensitivity)
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — holistic rewrite is the opposite of append-only constraining; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — theorist's always-on activation is automatic context injection; the theory doc is the harness injecting strategic context every session
+- [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — extends: distributes the rewrite burden between human review and agent-generated directional updates, scaling coherence maintenance with generation throughput
 
 Topics:
 

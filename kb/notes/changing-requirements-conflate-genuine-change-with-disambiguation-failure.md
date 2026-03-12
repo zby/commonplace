@@ -49,7 +49,7 @@ The deploy-time learning cycle (deploy → observe → constrain → repeat) is 
 
 - What fraction of "requirement changes" in real agile projects are genuine change vs disambiguation failures? Is there empirical data?
 - Does this reframing change how teams should do retrospectives — distinguishing "we learned the world changed" from "we discovered our reading of the spec was wrong"?
-- Are there spec-writing practices (from [legal drafting](./legal-drafting-solves-the-same-problem-as-context-engineering.md) or elsewhere) that specifically reduce cascading interpretation errors rather than just reducing ambiguity in a single spec?
+- Are there spec-writing practices (from [legal drafting](./legal-drafting-solves-the-same-problem-as-context-engineering.md) or elsewhere) that specifically reduce cascading interpretation errors rather than just reducing ambiguity in a single spec? Augment's [bidirectional spec pattern](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) is a candidate: agents surface directional decisions (interpretation choices that changed the plan) back to the spec in real time, catching disambiguation failures before they cascade into downstream work.
 
 ---
 
@@ -59,6 +59,7 @@ Relevant Notes:
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: agile's loop applied to human-AI systems, where disambiguation is amplified
 - [constraining](./constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for preventing cascading interpretation errors in natural language specs
+- [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — exemplifies: agents surface interpretation choices back to the spec in real time, a concrete practice for reducing cascading disambiguation errors
 
 Topics:
 
