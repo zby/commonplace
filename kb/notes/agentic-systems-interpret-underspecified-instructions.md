@@ -157,6 +157,10 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: contracts resolve semantic underspecification with formal YAML DSL; probabilistic compliance model (p,δ,k) quantifies how tightly a contract narrows the interpretation space
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — bounded by: the two-phenomena model assumes a perfect interpreter; real LLMs add a third failure mode with different remedies
 
+Sources:
+
+- Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — strongest empirical evidence for the two-phenomena separation: emotion/personality prompt variations change code output while holding task spec constant, isolating underspecification (which interpretation?) from indeterminism (which run?)
+
 Topics:
 
 - [computational-model](./computational-model.md)

@@ -28,6 +28,10 @@ Relevant Notes:
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — sibling: the third phenomenon, also unaddressed by sampling control
 - [LLM interpretation errors](./llm-interpretation-errors.md) — parent area: the three-phenomena taxonomy this note is part of
 
+Sources:
+
+- Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — cleanest empirical separation of indeterminism from underspecification: by varying prompt framing (emotion/personality) while holding task constant, they isolate the effect of interpretation choice from run-to-run sampling noise
+
 Topics:
 
 - [llm-interpretation-errors](./llm-interpretation-errors.md)

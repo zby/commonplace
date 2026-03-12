@@ -46,6 +46,7 @@ Relevant Notes:
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
 - [the augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — deepens: extracts and develops the predictability gap paragraph into a standalone claim — the boundary depends on per-instance discrimination, which is empirically stagnant
+- Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — exemplifies: AUC-E metric directly operationalizes robustness (R_Rob) hardening — measures how much prompt perturbation changes outputs, quantifying the soft-to-hard oracle transition for robustness
 
 Topics:
 

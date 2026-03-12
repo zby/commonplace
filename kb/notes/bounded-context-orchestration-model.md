@@ -128,6 +128,7 @@ The full global optimisation problem is probably too rich for clean strategy the
 Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — scoped recursion with focused context as a clean-model implementation for compositional reasoning.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — maximal decomposition (m=1) as extreme clean-model instantiation; O(s ln s) cost scaling.
+- @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.md) — the Ralph Loop (prompt → execute → observe → decide) is a concrete instance of the select/call loop; harness components map to scheduler infrastructure.
 
 Relevant Notes:
 
