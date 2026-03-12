@@ -25,8 +25,12 @@ The rhetorical mode shifts to match the target. The content is selected and comp
 | Methodology → Skill | Argumentative → procedural | Agents performing a specific workflow |
 | Workshop → Note | Exploratory → assertive | Future agents and sessions needing the insight |
 | Research → Design principle | Observational → prescriptive | Decision-making in a particular area |
+| Accumulated understanding → Campaign narrative | Chronological → coherent present-tense | Collaborator joining the campaign now |
+| Caller's knowledge + sub-agent's question → Refined prompt | Dialogical → self-contained | Sub-agent facing a specific task |
 
 Targeting is itself information loss — selecting what's relevant to one context means discarding what's relevant to others. This is why the source persists: it serves many targets, and each distillation chooses a different subset. Multiple distillations of the same source are normal. Reading only the `/connect` skill, you can connect notes but can't adapt the procedure to a novel situation. The methodology notes handle that.
+
+The last two rows show distillation operating beyond KB infrastructure — as the general operation of packaging knowledge for a specific consumer facing a specific task. A [campaign narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) is distillation of accumulated understanding for a collaborator who needs the current strategic picture, not the history. A [refined prompt](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is distillation of the caller's knowledge for a sub-agent that needs a clean, self-contained task description. In both cases, "holistic rewrite" is what distillation looks like when the target artifact already exists — you re-distil rather than append, because appending accumulates rather than extracts.
 
 ## The dominant mechanism in knowledge work
 
@@ -60,6 +64,8 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the substrate (repo artifacts) through which distillation operates
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: capacity decomposes into generality vs reliability+speed+cost; distillation trades source completeness for operational efficiency
 - [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: reframes distillation as bounded information extraction; deterministic transformations create information for bounded observers
+- [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — exemplifies: campaign narratives are distillation of accumulated understanding for a specific consumer; holistic rewrite is re-distillation
+- [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — exemplifies: prompt refinement is distillation of the caller's knowledge for a sub-agent's task
 - [Epiplexity (Finzi et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: epiplexity measures theoretically what distillation does operationally — quantifies extractable structure for a given observer under computational bounds
 
 Topics:
