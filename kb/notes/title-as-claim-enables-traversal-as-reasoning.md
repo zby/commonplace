@@ -66,6 +66,7 @@ Relevant Notes:
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) is the theory behind what this note describes — claim titles are Toulmin claims, and "since"/"because" link semantics encode warrants
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism
 - [Title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — extends: the maintenance/falsification benefit is a separate argument from the traversal benefit made here
+- [Title as claim makes overlap between notes visible](./title-as-claim-makes-overlap-between-notes-visible.md) — extends: overlap detection at the index level is a separate maintenance benefit from falsifiability
 
 Source:
 - Adapted from [arscontexta methodology note](https://github.com/agenticnotetaking/arscontexta) on the same topic, with the multi-claim boundary analysis added
