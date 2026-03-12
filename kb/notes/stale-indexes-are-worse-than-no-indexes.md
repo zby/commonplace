@@ -12,6 +12,8 @@ When an agent has no index for a topic, she falls back to search — and search 
 
 This is the core asymmetry: **absence of an index degrades to search; presence of a stale index suppresses search entirely.**
 
+The mechanism generalises beyond indexes to any authoritative artifact — specs, documentation, plans, curated lists. Any artifact that an agent treats as exhaustive will suppress fallback discovery when it goes stale. Indexes are the clearest case because their purpose is explicitly navigational, but a stale spec or an outdated architecture doc creates the same trap: the agent reads it, trusts it, and stops looking for current information.
+
 ## The critical moment is note creation
 
 The most common staleness is a new note that doesn't get added to a relevant index. This happens when the agent creating the note doesn't know which indexes exist, or misjudges which ones apply.
