@@ -76,7 +76,7 @@ The stretches matter for understanding the mechanism, but not for the context-sp
 Relevant Notes:
 - [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](../notes/codification.md) (replaces underspecified template with deterministic literal)
 - [generate instructions at build time](../notes/generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and codification; the notes already link to constraining for the semantic-commitment aspect
-- [CLAUDE.md is a router, not a manual](../notes/context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
+- [instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not constraining — it spares context regardless of whether the result is deterministic or still underspecified
 - [injectable configuration extends frontloading to installation-specific values](../notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md) — extends: a third frontloading channel for values static within one installation but variable across installations
 

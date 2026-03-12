@@ -16,7 +16,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, scripts/, and how they compose
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries, nested topology, and exclusion rules
-- [context-loading-strategy](./context-loading-strategy.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
+- [instruction-specificity-should-match-loading-frequency](./instruction-specificity-should-match-loading-frequency.md) — CLAUDE.md should be a slim router, not a manual; match instruction specificity to loading frequency
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — deriving architectural requirements from concrete user stories decomposed into step-by-step context needs; confirms the loading hierarchy
 - [scenarios](./scenarios.md) — concrete use cases the knowledge system must serve
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
@@ -72,7 +72,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) that grounds claim-title conventions and the `structured-claim` type
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — practitioner validation of propositional links over embedding-based adjacency; confirms the Goodhart risk in quality signals
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper implementing Zettelkasten-inspired automated memory with link generation and memory evolution; provides empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
-- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates context-loading-strategy's content categories, provides evolution data showing constraining maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
+- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates the loading-frequency principle's content categories, provides evolution data showing constraining maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
 
 ## Related Areas
 

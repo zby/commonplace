@@ -73,7 +73,7 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context scarcity is why the boundaries exist; the volume/complexity distinction explains why the full-text boundary may not move with growing windows
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the two boundaries define two resolution levels (index and full-text) between which the KB must support fluid switching
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: library/workshop separation keeps the main collection below the index boundary where /connect works
-- [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — parallel: the loading hierarchy (always-loaded > on-demand > full-text) mirrors the resolution gradient described here
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — parallel: the loading hierarchy (always-loaded > on-demand > full-text) mirrors the resolution gradient described here
 
 Topics:
 

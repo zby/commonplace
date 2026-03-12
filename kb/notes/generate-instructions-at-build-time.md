@@ -26,7 +26,7 @@ Relevant Notes:
 
 - [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — foundation: the general principle this applies; in code indirection is free, in LLM instructions it costs context and interpretation on every read
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — template generation is a point on the constraining gradient
-- [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
 - [generate topic links from frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — exemplifies: an earlier case of the same move — replacing LLM-interpreted output with a deterministic build step
 
 Topics:

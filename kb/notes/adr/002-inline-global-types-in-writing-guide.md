@@ -17,7 +17,7 @@ When writing a note, the agent needs two things: the type template (what section
 - Type templates in `kb/notes/types/note.md` and `kb/notes/types/structured-claim.md`
 - Writing conventions in `kb/instructions/WRITING.md`
 
-The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Since [CLAUDE.md is a router, not a manual](../context-loading-strategy.md), it points to WRITING.md for writing guidance — but WRITING.md then pointed elsewhere for the actual templates. Two hops for every write.
+The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Since [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md), it points to WRITING.md for writing guidance — but WRITING.md then pointed elsewhere for the actual templates. Two hops for every write.
 
 The [scenario decomposition](../scenario-decomposition-drives-architecture.md) confirmed this: the "know the structure" and "know how to write well" steps are adjacent in every write scenario. They always load together. Separating them costs a hop with no benefit.
 
@@ -47,7 +47,7 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 Relevant Notes:
 
-- [context-loading-strategy](../context-loading-strategy.md) — foundation: the loading hierarchy principle (match instruction specificity to loading frequency) motivates combining two always-together loads into one
+- [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy principle (match instruction specificity to loading frequency) motivates combining two always-together loads into one
 - [scenario-decomposition-drives-architecture](../scenario-decomposition-drives-architecture.md) — grounds: the step decomposition shows "know the structure" and "know how to write well" are adjacent in every write scenario, confirming they belong in the same file
 
 Topics:

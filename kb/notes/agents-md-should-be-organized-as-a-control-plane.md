@@ -130,7 +130,7 @@ If most answers are "no", place it elsewhere.
 
 Relevant Notes:
 
-- [context-loading-strategy](./context-loading-strategy.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds why always-loaded routing is permanent infrastructure, not optional convenience
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — exemplifies exclusion: periodic operations should be external to routing docs
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operational extension: where externally triggered operations are staged before distillation

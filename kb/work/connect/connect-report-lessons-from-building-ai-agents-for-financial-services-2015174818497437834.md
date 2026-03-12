@@ -49,7 +49,7 @@ The central thesis: "The model is not your product. The experience around the mo
 **Semantic search:** (via qmd)
 - query "skills as markdown files, model eats scaffolding, filesystem-first agent architecture" --collection notes -n 15:
   - [agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) (93%) -- strong, skill architecture overlap
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) (51%) -- progressive disclosure convergence
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) (51%) -- progressive disclosure convergence
   - [files-not-database](kb/notes/files-not-database.md) (46%) -- already flagged
   - [instructions-are-skills-without-automatic-routing](kb/notes/instructions-are-skills-without-automatic-routing.md) (46%) -- skill format similarity but too tangential
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (45%) -- already read
@@ -81,7 +81,7 @@ The central thesis: "The model is not your product. The experience around the mo
 **Link following:**
 - From [files-not-database](kb/notes/files-not-database.md) -- links to [what-works](kb/notes/what-works.md), [koylanai-personal-brain-os](kb/sources/koylanai-personal-brain-os.ingest.md) -- confirms convergence cluster
 - From [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md) -- links to [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md), [deploy-time-learning](kb/notes/deploy-time-learning-the-missing-middle.md) -- confirms evaluation/verification cluster
-- From [agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) -- already links to [context-loading-strategy](kb/notes/context-loading-strategy.md), [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md), [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md)
+- From [agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) -- already links to [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md), [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md), [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md)
 - From [related-systems-index](kb/notes/related-systems/related-systems-index.md) -- notes convergence on filesystem-first; Fintool is additional production-grade evidence
 
 ## Connections Found

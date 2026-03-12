@@ -66,7 +66,7 @@ Conflating them produces confused designs. If you think skills are codified meth
 
 Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), the distillation isn't optional — it's driven by context economics. You can't load fifteen methodology notes every session. The skill exists because context is finite and expensive. The methodology must be maintained because the skill can't handle edge cases.
 
-This connects to the [context-loading strategy](./context-loading-strategy.md): CLAUDE.md (always loaded, slim) → skill descriptions (always loaded, suggestive) → skill bodies (loaded on invoke) → methodology notes (loaded on demand). Distillation is the process that produces the skill tier from the methodology tier. The loading hierarchy is the architectural consequence.
+This connects to the [loading frequency hierarchy](./instruction-specificity-should-match-loading-frequency.md): CLAUDE.md (always loaded, slim) → skill descriptions (always loaded, suggestive) → skill bodies (loaded on invoke) → methodology notes (loaded on demand). Distillation is the process that produces the skill tier from the methodology tier. The loading hierarchy is the architectural consequence.
 
 ### For agents, distillation is permanent infrastructure
 
@@ -85,7 +85,7 @@ Relevant Notes:
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship
 - [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: codification involves a phase transition in medium; distillation does not
-- [context-loading strategy](./context-loading-strategy.md) — enables: the loading hierarchy is the architectural consequence of distillation; skill tier exists because methodology tier is too expensive to load routinely
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy is the architectural consequence of distillation; skill tier exists because methodology tier is too expensive to load routinely
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the formal argumentation framework referenced as methodology input to the /connect skill

@@ -60,7 +60,7 @@
 **Link following:**
 - From [research/voooooogel-multi-agent-future](kb/notes/research/voooooogel-multi-agent-future.md) -- links to spacebot source (already tracked)
 - From [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md) -- links to codification-and-relaxing, relaxing-signals, oracle-strength-spectrum (all already flagged)
-- From [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) -- links to homoiconic medium, codification, context-loading-strategy (relevant but secondary)
+- From [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) -- links to homoiconic medium, codification, instruction-specificity-should-match-loading-frequency (relevant but secondary)
 
 ## Connections Found
 

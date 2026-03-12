@@ -51,7 +51,7 @@ Each row is a hypothesis about what context is needed when. The trigger mechanis
 
 ## Reasoning
 
-The [context-loading strategy](./context-loading-strategy.md) currently describes a static hierarchy: CLAUDE.md (always) → skill descriptions (always) → skill bodies (on invoke) → task-specific docs (on demand). Automatic injection adds a dynamic layer: documents loaded reactively based on what the agent is reading.
+The [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) principle currently describes a static hierarchy: CLAUDE.md (always) → skill descriptions (always) → skill bodies (on invoke) → task-specific docs (on demand). Automatic injection adds a dynamic layer: documents loaded reactively based on what the agent is reading.
 
 This sits between "always loaded" and "on demand" — call it "on reference." The agent doesn't request the definition; the harness provides it. The agent doesn't need to know the definition exists; the injection mechanism ensures it arrives.
 
@@ -77,7 +77,8 @@ Relevant Notes:
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — foundation: types assert checkable structural properties; this note extends affordances from operations to retrieval
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — parallel: that note gives skills type signatures; this note gives documents retrieval profiles
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the agent can't remember definitions, so the harness must provide them
-- [context-loading strategy](./context-loading-strategy.md) — extends: adds an "on reference" layer between "always loaded" and "on demand"
+- [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — extends: adds an "on reference" layer between "always loaded" and "on demand"
+- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — extends: the two always-loaded surfaces (CLAUDE.md vs skill descriptions) are both candidates for automatic injection
 - [human-LLM differences are load-bearing for knowledge system design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — motivates: the "cannot fill gaps" row in the dual-audience table is exactly the problem context injection addresses; tier separation handles the writing side, injection handles the loading side
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — context: definitional notes are an identified exception to claim titles; the `definition` type would formalize this
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — extends: dynamic observability (DevTools Protocol wired into runtime) extends auto-injection from documents to runtime state

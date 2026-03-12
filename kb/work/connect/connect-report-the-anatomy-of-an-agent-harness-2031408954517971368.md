@@ -20,7 +20,7 @@
   - [entropy-management-must-scale-with-generation-throughput](kb/notes/entropy-management-must-scale-with-generation-throughput.md) — long-horizon execution and harness co-evolution
   - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — model/harness co-training is codify/relax at the training boundary
   - [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md) — AGENTS.md memory as continual learning
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) — harness manages what loads when
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — harness manages what loads when
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) — AGENTS.md architecture
   - [related-systems/agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) — progressive disclosure, context engineering
   - [related-systems/spacebot](kb/notes/related-systems/spacebot.md) — typed process architecture as clean scheduler harness
@@ -33,7 +33,7 @@
 - query "agent harness engineering context management compaction skills progressive disclosure" on notes:
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (93%) — already flagged, very strong match
   - [related-systems/arscontexta](kb/notes/related-systems/arscontexta.md) (51%) — fresh context per phase similar to Ralph Loop; evaluated below
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) (47%) — already flagged
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) (47%) — already flagged
   - [entropy-management-must-scale-with-generation-throughput](kb/notes/entropy-management-must-scale-with-generation-throughput.md) (45%) — already flagged
   - [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md) (43%) — already flagged
   - [error-messages-that-teach-are-a-constraining-technique](kb/notes/error-messages-that-teach-are-a-constraining-technique.md) (43%) — linter error messages as harness feature; evaluated below
@@ -55,11 +55,11 @@
 **Keyword search:**
 - grep "harness" in kb/notes/ — 27 files; all candidates already flagged from index scan
 - grep "compaction|context rot|context window" in kb/notes/ — 19 files; confirmed context-efficiency, llm-mediated-schedulers, bounded-context-orchestration-model, agent-skills-for-context-engineering (all already flagged)
-- grep "progressive disclosure|skills.*routing|just-in-time" in kb/notes/ — 24 files; confirmed context-efficiency, context-loading-strategy, agent-skills-for-context-engineering (all already flagged)
+- grep "progressive disclosure|skills.*routing|just-in-time" in kb/notes/ — 24 files; confirmed context-efficiency, instruction-specificity-should-match-loading-frequency, agent-skills-for-context-engineering (all already flagged)
 - grep "anatomy.*harness|Vtrivedy" in kb/ — found existing links from [llm-mediated-schedulers](kb/notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) and [context-efficiency](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (via their ingest reference)
 
 **Link following:**
-- Read context-efficiency note — links to frontloading, context-loading-strategy, bounded-context-orchestration-model, directory-scoped-types. Already cites this source via the ingest file.
+- Read context-efficiency note — links to frontloading, instruction-specificity-should-match-loading-frequency, bounded-context-orchestration-model, directory-scoped-types. Already cites this source via the ingest file.
 - Read methodology-enforcement note — links to constraining, deploy-time-learning, programming-practices, oracle-strength. Already cites Lopopolo companion source.
 - Read llm-mediated-schedulers note — already cites this source's ingest file (Ralph Loop pattern).
 - Read bounded-context-orchestration-model note — no direct citation of this source yet.
@@ -112,7 +112,7 @@
 
 ## Rejected Candidates
 
-- [related-systems/agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) — Surface overlap: "both discuss context engineering and progressive disclosure." No specific mechanism or claim in the source that the note doesn't already cover through its existing connections to context-efficiency and context-loading-strategy.
+- [related-systems/agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) — Surface overlap: "both discuss context engineering and progressive disclosure." No specific mechanism or claim in the source that the note doesn't already cover through its existing connections to context-efficiency and instruction-specificity-should-match-loading-frequency.
 
 - [related-systems/spacebot](kb/notes/related-systems/spacebot.md) — Surface overlap: "both discuss agent orchestration." The bounded-context-orchestration-model note already captures the conceptual bridge between harness orchestration and typed process architectures.
 
@@ -120,7 +120,7 @@
 
 - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) — The source mentions system prompts as a harness component but does not discuss how to structure AGENTS.md content (layering, exclusion rules, escalation). The connection would be "both mention AGENTS.md" without semantic depth.
 
-- [context-loading-strategy](kb/notes/context-loading-strategy.md) — Same reasoning. The source's "Harnesses are largely delivery mechanisms for good context engineering" is a sweeping claim, not a specific engagement with loading hierarchies or router-vs-manual design. The connection exists but only at the "both discuss context engineering" level.
+- [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — Same reasoning. The source's "Harnesses are largely delivery mechanisms for good context engineering" is a sweeping claim, not a specific engagement with loading hierarchies or router-vs-manual design. The connection exists but only at the "both discuss context engineering" level.
 
 - [entropy-management-must-scale-with-generation-throughput](kb/notes/entropy-management-must-scale-with-generation-throughput.md) — The source discusses long-horizon execution and co-evolution but does not address the specific claim that cleanup throughput must match generation throughput. The previous report's "extends" rationale (harness co-evolution creates compound entropy) was a stretch — the source doesn't discuss entropy management.
 

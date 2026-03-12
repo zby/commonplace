@@ -1,5 +1,5 @@
 ---
-description: In-context learning only works when the right knowledge reaches the context window — that selection machinery is itself learned and refined over deployment, making in-context learning dependent on deploy-time learning rather than a replacement for it
+description: In-context learning only works when the right knowledge reaches the context window — the selection machinery that ensures this is itself learned and refined over deployment
 type: note
 traits: [has-external-sources]
 areas: [learning-theory]

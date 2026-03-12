@@ -11,7 +11,7 @@
   - [error-messages-that-teach-are-a-constraining-technique](kb/notes/error-messages-that-teach-are-a-constraining-technique.md) — directly about linter messages teaching agents, the source's pillar 2
   - [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md) — constraining gradient maps to the harness concept
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — matches "context is scarce" thesis
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) — AGENTS.md as slim router matches the 100-line map philosophy
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — AGENTS.md as slim router matches the 100-line map philosophy
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) — directly about AGENTS.md organization
   - [agent-statelessness-means-harness-should-inject-context-automatically](kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md) — harness auto-injecting context
   - [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md) — "good harnesses compound" is deploy-time learning in practitioner language
@@ -27,7 +27,7 @@
   - [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md) — harness constrains interpretation space
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) — confirmed: methodology-enforcement, agents-md-control-plane, context-loading-strategy, context-efficiency all present. No additional candidates beyond index scan.
+- Read [kb-design](kb/notes/kb-design.md) — confirmed: methodology-enforcement, agents-md-control-plane, instruction-specificity-should-match-loading-frequency, context-efficiency all present. No additional candidates beyond index scan.
 - Read [learning-theory](kb/notes/learning-theory.md) — confirmed: constraining, codification, spec-mining, error-messages, inspectable-substrate, oracle-strength all present. No additional candidates.
 
 **Semantic search (qmd):**
@@ -64,7 +64,7 @@
 **Link following:**
 - From [error-messages-that-teach-are-a-constraining-technique](kb/notes/error-messages-that-teach-are-a-constraining-technique.md): already links to the source. Its outbound links (methodology-enforcement, constraining, frontloading, context-efficiency) are all already in candidates.
 - From [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md): outbound links include deploy-time-learning, constraining, programming-practices, oracle-strength — all already in candidates. Also links to spec-mining-as-codification, confirming the maturation trajectory connection.
-- From the existing ingest file: connections already identified to context-efficiency, methodology-enforcement, deploy-time-learning, inspectable-substrate, constraining, context-loading-strategy, agent-statelessness-harness-injection — these were independently confirmed by this discovery run.
+- From the existing ingest file: connections already identified to context-efficiency, methodology-enforcement, deploy-time-learning, inspectable-substrate, constraining, instruction-specificity-should-match-loading-frequency, agent-statelessness-harness-injection — these were independently confirmed by this discovery run.
 
 ## Connections Found
 
@@ -84,7 +84,7 @@ These connections were identified during ingestion and hold up under deeper eval
 
 5. [constraining](kb/notes/constraining.md) — **exemplifies**: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
 
-6. [context-loading-strategy](kb/notes/context-loading-strategy.md) — **exemplifies**: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
+6. [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — **exemplifies**: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
 
 7. [agent-statelessness-means-harness-should-inject-context-automatically](kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md) — **extends**: Dynamic observability (DevTools Protocol wired into runtime) extends automatic context injection beyond documents to runtime state — a dimension the note does not yet cover.
 
@@ -124,7 +124,7 @@ These connections were identified during ingestion and hold up under deeper eval
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — The source provides practitioner evidence for multiple KB design principles (context-loading-strategy, agents-md-control-plane, methodology-enforcement). Could be listed in Reference Material section alongside the context-engineering OSS study.
+- [kb-design](kb/notes/kb-design.md) — The source provides practitioner evidence for multiple KB design principles (instruction-specificity-should-match-loading-frequency, agents-md-control-plane, methodology-enforcement). Could be listed in Reference Material section alongside the context-engineering OSS study.
 - [learning-theory](kb/notes/learning-theory.md) — The source exemplifies constraining, codification, and deploy-time learning. Could be listed in Reference Material section.
 
 ## Synthesis Opportunities

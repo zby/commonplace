@@ -40,7 +40,7 @@ This makes every omission in routing infrastructure dangerous. A routing table m
 
 The cliff creates a maintenance discipline: routing artifacts must stay in sync with methodology, because the agent can't bridge the gap when they drift apart.
 
-Methodology notes are source code. Skills, routing tables, type templates, and naming conventions are compiled artifacts. You maintain the source (read methodology when revising routing); you ship the binary (load routing artifacts at runtime). The [context loading strategy](./context-loading-strategy.md) says "match instruction specificity to loading frequency." Agent statelessness explains *why* this is load-bearing: the agent cannot compensate for missing specificity by drawing on remembered methodology. If the specific routing isn't loaded, it doesn't exist.
+Methodology notes are source code. Skills, routing tables, type templates, and naming conventions are compiled artifacts. You maintain the source (read methodology when revising routing); you ship the binary (load routing artifacts at runtime). The [instruction specificity principle](./instruction-specificity-should-match-loading-frequency.md) says "match instruction specificity to loading frequency." Agent statelessness explains *why* this is load-bearing: the agent cannot compensate for missing specificity by drawing on remembered methodology. If the specific routing isn't loaded, it doesn't exist.
 
 The two genres have structurally different quality criteria. Source can be exploratory, tentative, argumentative — it's for reasoning. Compiled artifacts must be imperative, complete, unambiguous — they're for execution. The methodology reader has rich context and time to deliberate; the routing consumer has limited context and must act. The agent isn't a learner; it's a runtime. The KB isn't a curriculum; it's a deployment environment. (The [human-LLM differences](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) note develops why both pedagogical and purely mechanistic metaphors mislead here.)
 
@@ -58,7 +58,7 @@ Persistent memory across sessions would relax the statelessness assumption, but 
 
 Relevant Notes:
 
-- [context-loading-strategy](./context-loading-strategy.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy this note explains the deep rationale for; "match specificity to frequency" is architecturally necessary, not just convenient
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: why progressive disclosure exists; routing is the mechanism that makes context efficiency achievable
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — extends: the constraining gradient describes how practices harden; this note adds that the agent never hardens with them
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — supports: the reason lossy routing is dangerous — the agent can't resolve omitted reasoning by loading the source at runtime

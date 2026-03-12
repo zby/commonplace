@@ -72,7 +72,7 @@ Each step encodes more retrieval judgment into the system and removes more from 
 
 **Frontloaded context vs. agent-driven retrieval.** ClawVault pre-assembles context before the agent starts work. Their `context` command gathers from 5 sources (daily notes, observations, search results, graph neighbors, structural observations), scores and deduplicates them, caps per source by profile, fits a token budget, and injects the result into the prompt. A hook fires on `session:start` and auto-injects up to 4 results. The agent gets a curated package.
 
-Our [context-loading-strategy](../context-loading-strategy.md) takes the opposite approach: load CLAUDE.md (routing table + conventions) at startup, then trust the agent to navigate. Progressive disclosure — descriptions first, full content on demand. The agent reads, decides what's relevant, follows links.
+Our approach — [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — takes the opposite tack: load CLAUDE.md (routing table + conventions) at startup, then trust the agent to navigate. Progressive disclosure — descriptions first, full content on demand. The agent reads, decides what's relevant, follows links.
 
 The trade-offs are real. Frontloading means the agent starts with relevant context immediately, no wasted turns — good for weaker models or constrained tool access. But the system must guess what's relevant *before knowing what the agent will need*, and tokens spent on pre-loaded context are tokens unavailable for the task. Agent-driven retrieval loads exactly what's needed when needed and scales better (the KB can grow without ballooning startup context), but depends on the agent being good at navigation and costs turns on retrieval.
 
@@ -99,7 +99,7 @@ Relevant Notes:
 - [claw-learning-is-broader-than-retrieval](../claw-learning-is-broader-than-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — contrasts: ClawVault automates promotion without a theory of when automation is premature; their results would test whether early automation helps or locks in assumptions
-- [context-loading-strategy](../context-loading-strategy.md) — contrasts: ClawVault frontloads context via profiles and injection; we use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
+- [Always-loaded context has two surfaces with different affordances](../always-loaded-context-has-two-surfaces-with-different-affordances.md) — contrasts: ClawVault frontloads context via profiles and injection; our two always-loaded surfaces use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), ClawVault formalised lifecycle (pipeline), we're formalising understanding (theory)
 - [Siftly](./siftly.md) — extends: another staged pipeline reference, but optimized for deterministic ingest throughput and resumable source loading
 

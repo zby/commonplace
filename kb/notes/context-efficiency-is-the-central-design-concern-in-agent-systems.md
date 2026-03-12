@@ -47,7 +47,7 @@ Even for volume, the gains are partial. Context demand grows with task ambition 
 Context scarcity produces most architectural patterns in agent system design. Each responds to one or both dimensions:
 
 - **Frontloading and partial evaluation** (complexity) — [pre-compute static parts](./frontloading-spares-execution-context.md) so the agent receives answers instead of procedures to derive them
-- **Progressive disclosure** (volume) — the [context loading strategy](./context-loading-strategy.md) matches instruction specificity to loading frequency; [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) load only when working in that directory
+- **Progressive disclosure** (volume) — the [instruction specificity principle](./instruction-specificity-should-match-loading-frequency.md) matches instruction specificity to loading frequency; [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) load only when working in that directory
 - **Context management** (volume) — compaction, observation masking, and sub-agent delegation manage accumulation in long-running tasks ([JetBrains Research, 2025](https://blog.jetbrains.com/research/2025/12/efficient-context-management/))
 - **Sub-agent isolation** (both) — [sub-agents provide lexically scoped frames](./llm-context-is-composed-without-scoping.md) with only what the caller explicitly passes, addressing volume and complexity simultaneously
 - **Navigation design** (volume) — [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md); prose-as-title and retrieval-oriented descriptions let the agent decide "don't follow this" without loading the target
@@ -73,7 +73,7 @@ Relevant Notes:
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — application: this note treats context as the lowest-degree-of-freedom resource and derives architecture priorities from that constraint
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the most direct response to complexity-dimension context cost
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — mechanism: the cost model that makes indirection expensive in context but free in code
-- [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — application: progressive disclosure as a response to volume-dimension context cost
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — application: progressive disclosure as a response to volume-dimension context cost
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — foundation: flat context means everything competes; sub-agents are the scoping response
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — application: navigation design as volume-saving strategy
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — application: type system designed around context economy

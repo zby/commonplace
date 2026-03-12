@@ -37,7 +37,7 @@ This is the same tradeoff the [underspecification note](./agentic-systems-interp
 
 ## Interaction with loading tier
 
-Style choice interacts with where an instruction lives in the [loading hierarchy](./context-loading-strategy.md). Always-loaded instructions (CLAUDE.md) compete for attention every session, so they should favour concise prescriptive and prohibitive styles — tight constraint, few tokens. On-demand instructions (skill bodies, WRITING.md) are loaded in task context where the agent needs judgment, so explanatory and descriptive styles earn their token cost by enabling better generalisation.
+Style choice interacts with where an instruction lives in the [loading hierarchy](./instruction-specificity-should-match-loading-frequency.md). Always-loaded instructions (CLAUDE.md) compete for attention every session, so they should favour concise prescriptive and prohibitive styles — tight constraint, few tokens. On-demand instructions (skill bodies, WRITING.md) are loaded in task context where the agent needs judgment, so explanatory and descriptive styles earn their token cost by enabling better generalisation.
 
 The KB's own CLAUDE.md reflects this: universal rules are prescriptive ("No wiki-links"), guardrails are prohibitive ("Don't create files unless necessary"), and the routing table is descriptive (documenting what exists so the agent can infer where things go). The detailed writing guidance lives in WRITING.md — loaded on demand, where the explanatory style ("description is a retrieval filter, not a summary — the test: ...") justifies its token cost.
 
@@ -46,7 +46,7 @@ The KB's own CLAUDE.md reflects this: universal rules are prescriptive ("No wiki
 Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the interpretation-space model that gives these styles their theoretical grounding
-- [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: prescriptive style is constraining within the instruction medium, short of extracting to code
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects

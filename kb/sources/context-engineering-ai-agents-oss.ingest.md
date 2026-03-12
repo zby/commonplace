@@ -41,7 +41,7 @@ The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. Th
 4. [agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — **exemplifies**: the five writing styles are empirically observed strategies for managing the interpretation space the note theorizes. Prescriptive narrows maximally, descriptive leaves interpretation wide, conditional partitions the space.
 5. [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — **validates**: average AGENTS.md is 142 lines (SD=231), Copilot instructions 310 lines — teams are experimenting with what fits in the attention budget.
 6. [agents-md-should-be-organized-as-a-control-plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) — **validates**: Table 1 categories show the unstructured landscape without a normative model — "no established content structure yet."
-7. [context-loading-strategy](../notes/context-loading-strategy.md) — **validates**: practitioners independently arrive at the slim-router pattern; the 14 content categories map onto what should be routed to, not embedded in, always-loaded context.
+7. [instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — **validates**: practitioners independently arrive at the slim-router pattern; the 14 content categories map onto what should be routed to, not embedded in, always-loaded context.
 8. [programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md) — **validates**: version control, code review, and testing applied to context files at scale across 466 projects.
 9. [legal-drafting-solves-the-same-problem-as-context-engineering](../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) — **complements**: the five writing styles are an independent taxonomy that overlaps with the legal constraint strategies (defined terms, enumeration, canons of interpretation).
 
@@ -49,7 +49,7 @@ The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. Th
 
 **Synthesis opportunities** flagged by /connect:
 1. Context file evolution follows a growth-then-refinement pattern with a stagnation risk — combining the paper's 50% stagnation data with the methodology-enforcement maturation trajectory creates a testable prediction.
-2. The five writing styles plus loading tier form a 2D design space for context file instructions — the writing-styles note maps styles to autonomy, context-loading-strategy maps content to loading frequency; combining them makes the design space explicit.
+2. The five writing styles plus loading tier form a 2D design space for context file instructions — the writing-styles note maps styles to autonomy, instruction-specificity-should-match-loading-frequency maps content to loading frequency; combining them makes the design space explicit.
 
 ## Extractable Value
 
@@ -71,7 +71,7 @@ The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. Th
 
 - **Selection bias toward active, popular projects.** The 10,000-repo sample uses a ranking that balances popularity and maturity, which excludes small/new projects and over-represents well-maintained ones. The 5% adoption rate may be higher in this elite sample than in the general population — or lower than in cutting-edge teams not yet captured by the sampling window (October 2025). The paper acknowledges this.
 
-- **No analysis of multi-file context strategies.** The paper treats each context file as an independent artifact. It does not study how AGENTS.md interacts with CLAUDE.md or copilot-instructions.md within the same repo. The 25 repos with both AGENTS.md and CLAUDE.md are noted but not analyzed for content overlap or complementarity. This matters because the KB's [context-loading-strategy](../notes/context-loading-strategy.md) note argues for a multi-tier loading architecture — the paper provides no data on whether practitioners already do this.
+- **No analysis of multi-file context strategies.** The paper treats each context file as an independent artifact. It does not study how AGENTS.md interacts with CLAUDE.md or copilot-instructions.md within the same repo. The 25 repos with both AGENTS.md and CLAUDE.md are noted but not analyzed for content overlap or complementarity. This matters because the KB's [instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md) note argues for a multi-tier loading architecture — the paper provides no data on whether practitioners already do this.
 
 - **Evolution analysis limited to 10 files.** The commit-level analysis (169 commits) covers only the 10 most actively maintained AGENTS.md files — the top 6% by commit count. These are self-selected outliers. The add-then-modify pattern may not generalize to the 50% of files that were never changed or the 23% changed only once. The stagnation finding is actually the more interesting data point, but the paper treats it as a limitation rather than analyzing it.
 

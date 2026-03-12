@@ -37,7 +37,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 5. **[constraining](../notes/constraining.md)** — exemplifies: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
 
-6. **[context-loading-strategy](../notes/context-loading-strategy.md)** — exemplifies: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
+6. **[instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md)** — exemplifies: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
 
 7. **[agent-statelessness-means-harness-should-inject-context-automatically](../notes/agent-statelessness-means-harness-should-inject-context-automatically.md)** — extends: Dynamic observability (DevTools Protocol wired into runtime) extends automatic context injection beyond documents to runtime state — a dimension the note does not yet cover.
 

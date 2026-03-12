@@ -10,7 +10,7 @@
 - Read kb/notes/index.md — scanned all 141 entries. Flagged candidates:
   - [writing-styles-are-strategies-for-managing-underspecification](kb/notes/writing-styles-are-strategies-for-managing-underspecification.md) — directly derived from this paper's five writing styles
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) — about AGENTS.md design, which this paper studies empirically
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) — CLAUDE.md as router, validated by the paper's content categories
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — CLAUDE.md as router, validated by the paper's content categories
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — paper's subject is context engineering for agents
   - [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md) — paper's evolution data shows instruction maturation trajectory
   - [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md) — paper's "maintained software artifacts" = deploy-time learning thesis
@@ -24,7 +24,7 @@
   - [automated-tests-for-text](kb/notes/automated-tests-for-text.md) — paper observes context files are "quality-assured, and tested"
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) — confirmed: source already listed in Reference material section. Architecture subsection lists agents-md-should-be-organized-as-a-control-plane and context-loading-strategy, both strongly connected.
+- Read [kb-design](kb/notes/kb-design.md) — confirmed: source already listed in Reference material section. Architecture subsection lists agents-md-should-be-organized-as-a-control-plane and instruction-specificity-should-match-loading-frequency, both strongly connected.
 - Read [learning-theory](kb/notes/learning-theory.md) — confirmed: source already listed in Reference material section. Constraining subsection provides the theoretical framework the paper's evolution data validates.
 
 **Semantic search:** (via qmd)
@@ -34,7 +34,7 @@
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) (47%) — strong, directly about AGENTS.md
   - [learning-theory](kb/notes/learning-theory.md) (46%) — index, already has link
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (46%) — index
-  - [context-loading-strategy](kb/notes/context-loading-strategy.md) (46%) — strong, about context file design
+  - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) (46%) — strong, about context file design
   - [kb-design](kb/notes/kb-design.md) (46%) — index, already has link
   - [arscontexta](kb/notes/related-systems/arscontexta.md) (42%) — weak, different scope
   - [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) (42%) — weak, about scoping not context files
@@ -50,8 +50,8 @@
 - `rg "software artifact|maintained artifact|versioned artifact" kb/notes/` — found constraining-during-deployment-is-continuous-learning.md (already flagged)
 
 **Link following:**
-- From writing-styles note: links to agentic-systems-interpret-underspecified-instructions, context-loading-strategy, legal-drafting, methodology-enforcement — all already in candidate set
-- From agents-md-should-be-organized-as-a-control-plane: links to context-loading-strategy, capability-placement, methodology-enforcement — all already flagged
+- From writing-styles note: links to agentic-systems-interpret-underspecified-instructions, instruction-specificity-should-match-loading-frequency, legal-drafting, methodology-enforcement — all already in candidate set
+- From agents-md-should-be-organized-as-a-control-plane: links to instruction-specificity-should-match-loading-frequency, capability-placement, methodology-enforcement — all already flagged
 - From harness-engineering source: describes a practitioner instance of the same patterns the paper studies empirically — short AGENTS.md (~100 lines), router pattern, versioned context files
 
 ## Connections Found
@@ -62,7 +62,7 @@ These connections already exist in the KB:
 
 - [writing-styles-are-strategies-for-managing-underspecification](kb/notes/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: the paper is the primary source; note was derived from the paper's five-style taxonomy
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — **validates**: paper explicitly contrasts "README files for humans" with "AI context files for AI agents" — dual-audience split at empirical scale
-- [kb-design](kb/notes/kb-design.md) — **validates**: already listed in Reference material; provides empirical grounding for context-loading-strategy categories and constraining maturation in the wild
+- [kb-design](kb/notes/kb-design.md) — **validates**: already listed in Reference material; provides empirical grounding for instruction-specificity-should-match-loading-frequency categories and constraining maturation in the wild
 - [learning-theory](kb/notes/learning-theory.md) — **validates**: already listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts
 
 ### New connections to add
@@ -79,7 +79,7 @@ These connections already exist in the KB:
 
 - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) — **validates**: Table 1's content categories (conventions, contribution guidelines, architecture, build commands, goals, test execution, test strategy, tech stack) provide empirical evidence for what practitioners actually put in context files. The note's three-layer model (invariants, routing, escalation) is a normative structure; the paper shows what the unstructured landscape looks like without it — "no established content structure yet" and "a lot of variation."
 
-- [context-loading-strategy](kb/notes/context-loading-strategy.md) — **validates**: the paper confirms that practitioners independently arrive at the "slim router" pattern (the Codex/harness-engineering source describes ~100-line AGENTS.md with pointers). The 14 content categories map onto the kinds of information the note argues should be routed to, not embedded in, the always-loaded file.
+- [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) — **validates**: the paper confirms that practitioners independently arrive at the "slim router" pattern (the Codex/harness-engineering source describes ~100-line AGENTS.md with pointers). The 14 content categories map onto the kinds of information the note argues should be routed to, not embedded in, the always-loaded file.
 
 - [programming-practices-apply-to-prompting](kb/notes/programming-practices-apply-to-prompting.md) — **validates**: developers are applying version control, code review, and testing to AI context files — the paper observes this empirically across 466 projects. The commit histories and evolution categories (add/modify/remove instructions) show software engineering practices transferred to a new artifact type.
 
@@ -106,7 +106,7 @@ These connections already exist in the KB:
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — already listed in Reference material section. The source validates context-loading-strategy, AGENTS.md control-plane design, and the dual-audience split.
+- [kb-design](kb/notes/kb-design.md) — already listed in Reference material section. The source validates instruction-specificity-should-match-loading-frequency, AGENTS.md control-plane design, and the dual-audience split.
 - [learning-theory](kb/notes/learning-theory.md) — already listed in Reference material section. The source validates constraining-as-continuous-learning and the maturation trajectory.
 - Not a member of [computational-model](kb/notes/computational-model.md) — appropriately so; the paper is empirical, not about computational concepts.
 
@@ -114,9 +114,9 @@ These connections already exist in the KB:
 
 1. **"Context file evolution follows a growth-then-refinement pattern with a stagnation risk"**: The paper's data (50% never changed, add-then-modify dominance, rare removal) combined with the methodology-enforcement note's maturation trajectory and the constraining-during-deployment note's continuous learning claim suggests a synthesis: context files that DO evolve follow the constraining maturation path (add → modify → occasionally remove), but half stagnate as write-once artifacts. This creates a testable prediction: projects with active evolution should show better agent performance than stagnant ones. Notes involved: methodology-enforcement-is-constraining, constraining-during-deployment-is-continuous-learning, plus this paper's data.
 
-2. **"The five writing styles plus loading tier form a 2D design space for context file instructions"**: The writing-styles note maps styles to autonomy allocation, and the context-loading-strategy note maps content to loading frequency. Combined, each instruction has two design dimensions: how tightly it constrains (style) and when it loads (tier). The paper's observation that "there is no established content structure yet" suggests practitioners navigate this space intuitively. A synthesis note could make the 2D space explicit and provide design guidance. Notes involved: writing-styles-are-strategies-for-managing-underspecification, context-loading-strategy, agents-md-should-be-organized-as-a-control-plane.
+2. **"The five writing styles plus loading tier form a 2D design space for context file instructions"**: The writing-styles note maps styles to autonomy allocation, and the instruction-specificity-should-match-loading-frequency note maps content to loading frequency. Combined, each instruction has two design dimensions: how tightly it constrains (style) and when it loads (tier). The paper's observation that "there is no established content structure yet" suggests practitioners navigate this space intuitively. A synthesis note could make the 2D space explicit and provide design guidance. Notes involved: writing-styles-are-strategies-for-managing-underspecification, instruction-specificity-should-match-loading-frequency, agents-md-should-be-organized-as-a-control-plane.
 
 ## Flags
 
-- **Already well-connected**: This source was ingested with a thorough /ingest that identified 8 connections. Four notes and two indexes already link to it. The new connections identified here (methodology-enforcement, deploy-time-learning, constraining-during-deployment, agentic-systems, context-efficiency, agents-md-control-plane, context-loading-strategy, programming-practices, legal-drafting) would significantly extend the source's integration into the KB.
+- **Already well-connected**: This source was ingested with a thorough /ingest that identified 8 connections. Four notes and two indexes already link to it. The new connections identified here (methodology-enforcement, deploy-time-learning, constraining-during-deployment, agentic-systems, context-efficiency, agents-md-control-plane, instruction-specificity-should-match-loading-frequency, programming-practices, legal-drafting) would significantly extend the source's integration into the KB.
 - **Ingest recommendations partially acted on**: The ingest file recommended writing a note on writing styles as constraint strategies — this was done (writing-styles-are-strategies-for-managing-underspecification.md). Other ingest recommendations (stagnation deep-dive, co-evolution experiment) appear not yet acted on.

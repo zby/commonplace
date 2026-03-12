@@ -78,7 +78,7 @@ The escalation adds 2-3 hops to a different tree. It's expensive but rare — mo
 
 ## Architectural principles that fall out
 
-The decomposition reveals a layered structure that matches the [context loading strategy](./context-loading-strategy.md), but now with the escalation path as a first-class concern:
+The decomposition reveals a layered structure that matches the [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) principle, but now with the escalation path as a first-class concern:
 
 **Steps common to every scenario → always-loaded context.** Routing and search patterns appear in every story. They belong in CLAUDE.md. This includes the escalation hint: the CLAUDE.md fragment must tell the agent that `commonplace/kb/` exists and when to consult it.
 
@@ -128,7 +128,8 @@ Relevant Notes:
 
 - [scenarios](./scenarios.md) — foundation: defines the concrete use cases this note decomposes into step-by-step context needs
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — extends: the abstract read/write analysis with scenario-grounded decomposition that confirms the two-tree design and derives the escalation path
-- [context-loading-strategy](./context-loading-strategy.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
+- [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
+- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — extends: the two always-loaded surfaces map onto different scenario patterns
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimized for agent read/skip decisions
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — grounds: the escalation path is the distillation gap in action — when the distillate doesn't cover the case, the agent needs the source; the CLAUDE.md fragment makes this discoverable
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem

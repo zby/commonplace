@@ -18,7 +18,7 @@ The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB di
 
 **The boundary is legible.** "Is this a procedure an agent executes, or reasoning an agent deliberates with?" is a question agents and humans can answer quickly. It maps directly to the reading mode: follow steps vs. build understanding.
 
-**It aligns with the loading hierarchy.** [Context-loading strategy](./context-loading-strategy.md) describes a hierarchy from always-loaded to on-demand. Procedures are loaded when an agent needs to act; discursive notes are loaded when an agent needs to reason. Grouping by reading mode makes the hierarchy concrete in the filesystem.
+**It aligns with the loading hierarchy.** [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) describes a hierarchy from always-loaded to on-demand. Procedures are loaded when an agent needs to act; discursive notes are loaded when an agent needs to reason. Grouping by reading mode makes the hierarchy concrete in the filesystem.
 
 ## How to evaluate
 
@@ -46,7 +46,7 @@ Relevant Notes:
 
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: defines the distillation relationship this note proposes using as a directory boundary
 - [instructions are skills without automatic routing](./instructions-are-skills-without-automatic-routing.md) — context: the existing instruction/note boundary that this principle would sharpen
-- [context-loading strategy](./context-loading-strategy.md) — enables: the loading hierarchy that distillation-based placement aligns with
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy that distillation-based placement aligns with
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — parallel: areas organize notes for comparative reading; distillation status organizes artifacts for maintenance operations
 
 Topics:

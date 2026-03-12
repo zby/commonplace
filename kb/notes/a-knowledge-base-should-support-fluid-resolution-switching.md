@@ -18,7 +18,7 @@ The commonplace KB already has several mechanisms that serve resolution-switchin
 
 **Link semantics encode zoom direction.** "Since [X]" zooms into a foundation — following it takes you deeper, toward the grounds of the current argument. "This extends [Y]" zooms out toward a generalization. "Contradicts [Z]" shifts laterally to a competing view at the same level. The relationship words in [link strength](./link-strength-is-encoded-in-position-and-prose.md) aren't just categorization — they tell the reader which direction in abstraction space they're moving.
 
-**Progressive disclosure is a resolution gradient.** The [context loading strategy](./context-loading-strategy.md) layers information from always-loaded (CLAUDE.md — broadest, least specific) through on-demand descriptions (medium) to full note bodies (narrowest, most specific). An agent traversing this hierarchy is adjusting resolution.
+**Progressive disclosure is a resolution gradient.** The [instruction specificity matching loading frequency](./instruction-specificity-should-match-loading-frequency.md) principle layers information from always-loaded (CLAUDE.md — broadest, least specific) through on-demand descriptions (medium) to full note bodies (narrowest, most specific). An agent traversing this hierarchy is adjusting resolution.
 
 ## The evaluative criterion
 
@@ -47,7 +47,7 @@ Relevant Notes:
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles are the zoomed-out resolution layer; they carry the argument without requiring descent into the note body
 - [two kinds of navigation](./two-kinds-of-navigation.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
-- [context loading strategy](./context-loading-strategy.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
 - [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: resolution-switching is the navigation skill that makes discovery possible; three abstraction depths define how deep the zoom goes
 

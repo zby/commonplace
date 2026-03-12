@@ -61,7 +61,7 @@ Relevant Notes:
 - [files not database](./files-not-database.md) — the foundational bet that directories extend
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [document classification](./document-classification.md) — the type system that operates independently of directory structure
-- [context loading strategy](./context-loading-strategy.md) — routing decisions are part of the context loading problem
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem
 
 Topics:
 

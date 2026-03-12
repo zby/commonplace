@@ -16,7 +16,7 @@ A collection of reusable instructional modules ("skills") for building productio
 
 **Context as finite resource, not token bucket.** The central argument is that context windows are constrained by attention mechanics, not raw capacity. Lost-in-the-middle effects, context poisoning (errors compound through references), and context distraction (irrelevant info overwhelms relevant) are the real failure modes. Practical implication: optimise for signal quality, not quantity.
 
-**Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [context-loading-strategy](../context-loading-strategy.md).
+**Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [instruction specificity matching loading frequency](../instruction-specificity-should-match-loading-frequency.md).
 
 **Architectural reduction.** Fewer, more general tools outperform many specialised ones. Key evidence: Vercel's d0 went from 17 specialised tools to 2 primitives (bash + SQL), improving success from 80% to 100%. Aligns with our YAGNI stance and supports the claim that [the bitter lesson boundary](../bitter-lesson-boundary.md) favours simplicity.
 

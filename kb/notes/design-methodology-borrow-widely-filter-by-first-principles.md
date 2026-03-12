@@ -14,7 +14,7 @@ The KB's design draws on programming language theory, cognitive science, HCI, an
 
 **Any source is valid.** Cognitive science, programming, HCI, other similar systems, personal friction during use. We're not dogmatic about where ideas come from. The [related-systems](./related-systems/related-systems-index.md) reviews exist precisely to widen the input surface.
 
-**First principles reasoning is the main filter.** If we can derive *why* something works from the constraints of the domain — finite context windows, no import/resolution mechanism, agents reason over text, everything loaded must compete for attention — we adopt it with confidence. The [context loading economy](./context-loading-strategy.md) and [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) arguments are examples: they follow directly from the constraints without needing analogies.
+**First principles reasoning is the main filter.** If we can derive *why* something works from the constraints of the domain — finite context windows, no import/resolution mechanism, agents reason over text, everything loaded must compete for attention — we adopt it with confidence. The [context loading economy](./instruction-specificity-should-match-loading-frequency.md) and [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) arguments are examples: they follow directly from the constraints without needing analogies.
 
 **Programming patterns get a fast pass.** We borrow programming patterns even without a complete theory for why they transfer — types, validation, testing, progressive compilation, version control, structural typing, the maturity ladder as gradual typing. The bet is that agent-operated knowledge bases are a new kind of software system, not a new kind of cognitive tool. If that bet is right, programming patterns transfer structurally, not just by analogy. A compiler doesn't just *resemble* what we're doing — it *is* what we're doing, at a different point on the formalization spectrum.
 
@@ -42,7 +42,7 @@ The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progr
 
 Relevant Notes:
 
-- [context loading strategy](./context-loading-strategy.md) — example of first-principles design: loading economy derived directly from context window constraints
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — example of first-principles design: loading economy derived directly from context window constraints
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — example of first-principles design, explicitly frames directory-scoping as workaround for absent import mechanism
 - [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from

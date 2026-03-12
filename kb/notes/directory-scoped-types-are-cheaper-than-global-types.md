@@ -34,7 +34,7 @@ So the cost difference isn't really about types being global vs local — it's a
 
 ## The economic argument
 
-Given that we don't have automatic resolution, [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) establishes the loading hierarchy: always-loaded surfaces should be slim, task-specific detail loads on demand. The same principle applies to types:
+Given that we don't have automatic resolution, [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) establishes the loading hierarchy: always-loaded surfaces should be slim, task-specific detail loads on demand. The same principle applies to types:
 
 - **Global layer:** loaded every session. Should be as thin as possible. Only types that carry affordances relevant across all directories.
 - **Directory layer:** loaded when you work there (read the README, see the template). Types that carry affordances specific to that directory. Zero cost when elsewhere.
@@ -96,7 +96,7 @@ This is progressive disclosure applied to the type system: the agent always has 
 Relevant Notes:
 
 - [document classification](./document-classification.md) — the global type system this note proposes to thin out
-- [CLAUDE.md is a router, not a manual](./context-loading-strategy.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — the verifiability principle still applies, but verification becomes directory-scoped
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop subsystems (tasks, queues) already define their own types locally; this generalises that pattern
