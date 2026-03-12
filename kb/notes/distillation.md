@@ -53,6 +53,10 @@ You can distil without constraining (extract a skill — still natural language,
 
 Not distillation: moving a validation check to code (codification — the operation is commitment, not extraction); storing an LLM output (constraining — commitment, no extraction from reasoning).
 
+## Terminology note
+
+ML "knowledge distillation" (Hinton et al., 2015) means training a smaller model to mimic a larger model's output distribution. The term here shares the core intuition — a larger source is compressed into a smaller target optimized for a specific consumer — but differs in important ways. ML distillation is automated (gradient descent), targets model weights, and optimizes for faithfully reproducing the teacher's behavior. KB distillation involves judgment about what to extract, targets text artifacts, and optimizes for operational effectiveness in a context — the distillate doesn't try to reproduce the source, it serves a different purpose. The closest ML analogy would be task-specific distillation (fine-tuning the student for a downstream task rather than matching the teacher's full distribution), but even that is more mechanical than what happens here. The term is worth keeping for the shared intuition of purposeful compression, but readers from an ML background should note the divergence.
+
 ---
 
 Relevant Notes:

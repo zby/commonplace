@@ -85,6 +85,14 @@ This file is a control-plane router. It does not inventory capabilities; harness
   `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/`.
 - `kb/instructions/WRITING.md` is the authority for note-writing checklist and the default templates.
 
+## Vocabulary
+
+Terms used in this KB with specific meanings:
+
+- **Distillation** — targeted extraction from a larger body of reasoning into a focused artifact shaped by specific circumstances (use case, context budget, agent). Not ML knowledge distillation (training a student model to mimic a teacher). Here it means: take knowledge, optimize it for a specific consumer facing a specific task, produce a text artifact. Examples: methodology → skill, accumulated understanding → campaign narrative, caller's knowledge → refined sub-agent prompt. See `kb/notes/distillation.md`.
+- **Constraining** — narrowing the interpretation space of an artifact (less generality, more reliability/speed/cost). Orthogonal to distillation. See `kb/notes/constraining.md`.
+- **Codification** — committing a procedure to a symbolic medium (natural language → code). The far end of constraining. See `kb/notes/codification.md`.
+
 ## Git
 
 - **Never `git add -A`** — review `git status` and stage specific files.
