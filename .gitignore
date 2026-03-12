@@ -26,5 +26,10 @@ kb/work/paper-bounded-context-orchestration/
 # static site build artifacts
 site/
 
+# third-party skills
+.agents/skills/open-prose/
+.claude/skills/open-prose
+.cortex/
+
 # cloned repos for related-system reviews
 /related-systems/
