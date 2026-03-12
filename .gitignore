@@ -30,6 +30,7 @@ site/
 .agents/skills/open-prose/
 .claude/skills/open-prose
 .cortex/
+skills-lock.json
 
 # cloned repos for related-system reviews
 /related-systems/
