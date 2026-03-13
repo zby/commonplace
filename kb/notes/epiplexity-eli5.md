@@ -32,6 +32,8 @@ The same object can have high entropy and low epiplexity, or unchanged entropy a
 - **Kolmogorov complexity:** low — "print `AB` eight times" generates it.
 - **Epiplexity:** high for almost any observer — even a child extracts the rule quickly.
 
+In a case this simple, you can use `length - complexity` as a rough intuition for "how much structure is there": the string is long, but the shortest recipe is short. Epiplexity agrees here because the computational budget needed to find that recipe is tiny.
+
 The easy case: all three measures point the same way.
 
 ## Example 1: Encrypted patterned message
