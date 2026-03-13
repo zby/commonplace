@@ -24,7 +24,7 @@ Three sources arrive at this claim through different reasoning, from different d
 
 Any single source is explainable without the framework. Amodei's confidence split could be mere selection bias (he has benchmarks for coding, not for novels). Tam's labor-economics argument could be an investor thesis dressed up as analysis. The oracle-strength spectrum could be an internally consistent theory that happens not to be true.
 
-But three independent sources — theory, market economics, and supply-side capability predictions — arriving at the same structural claim through different reasoning is harder to explain away. The convergence makes this a candidate for a general principle rather than a domain-specific observation.
+But three sources — theory, market economics, and supply-side capability predictions — arriving at the same structural claim through different reasoning is harder to explain away than any single source. The convergence makes this a candidate for a general principle rather than a domain-specific observation, though the shared citations between the sources temper the evidential weight.
 
 ## The practical implication
 
@@ -36,7 +36,8 @@ This applies to KB curation directly. [Automating KB learning](./automating-kb-l
 
 - **The claim is about structure, not permanence.** Oracle construction difficulty is not fixed. Domains that are no-oracle today may become hard-oracle tomorrow through better tooling, better metrics, or domain decomposition. The claim predicts *where* automation stalls, not that it stalls forever.
 - **Convergence is not proof.** Three sources agreeing could reflect a shared assumption rather than an independent discovery. All three operate within a broadly rationalist, verification-oriented worldview — a critic from a different tradition (e.g., one that values tacit knowledge or embodied practice) might see the convergence as circular.
-- **The framework may not cover all cases.** Some tasks resist automation for reasons other than verification difficulty — regulatory constraints, trust requirements, liability concerns. The claim says verification is *a* boundary, not necessarily *the only* boundary.
+- **Error-cost tolerance is a separate variable.** Some tasks get automated despite poor verification because errors are cheap — machine translation for low-stakes content, draft generation for human review. The framework focuses on verification cost but doesn't account for domains where tolerance for unverified output is high enough that oracle construction becomes unnecessary.
+- **The framework may not cover all cases.** Some tasks resist automation for reasons other than verification difficulty — regulatory constraints, trust requirements, liability concerns. The title uses "the" boundary as a claim title, but the argument defends verification as *the primary structural* boundary, not the only one.
 
 ---
 
@@ -50,7 +51,7 @@ Relevant Notes:
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines — the bitter lesson is strongest where oracles are hardest
 - [Tam et al. — "When code is free"](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.md) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
-- [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — evidence: discrimination stagnates even as calibration improves, closing off the self-assessment route to automation
+- [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — evidence: calibration improves but discrimination trends are mixed across benchmarks, suggesting self-assessment is not reliably scaling
 
 Topics:
 
