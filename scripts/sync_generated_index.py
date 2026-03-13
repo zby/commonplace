@@ -54,8 +54,10 @@ def collect_notes_by_tag() -> dict[str, list[tuple[Path, str, str]]]:
         content = path.read_text()
         fm = parse_frontmatter(content)
 
-        # Skip index pages themselves
+        # Skip index pages and type templates
         if fm.get("type") == "index":
+            continue
+        if "types" in path.relative_to(NOTES_DIR).parts:
             continue
 
         tags = fm.get(FIELD_NAME, [])

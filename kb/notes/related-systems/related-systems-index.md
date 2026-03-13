@@ -54,4 +54,3 @@ The divergences are more revealing:
 
 ## Other tagged notes <!-- generated -->
 
-- [{System name}](../types/related-system.md)
