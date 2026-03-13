@@ -2,7 +2,7 @@
 
 ## Goal
 
-Produce a comparative review of five agentic memory systems — Mem0, Graphiti, Cognee, Letta (MemGPT), and A-MEM — plus the four filesystem-first systems already documented as related systems (Ars Contexta, Thalo, ClawVault, Agent Skills for Context Engineering, and our own commonplace/claw system).
+Produce a comparative review of five agentic memory systems — Mem0, Graphiti, Cognee, Letta (MemGPT), and A-MEM — plus the four filesystem-first systems already documented as related systems (Ars Contexta, Thalo, ClawVault, Agent Skills for Context Engineering, and our own commonplace system).
 
 The review should identify the **key architectural dimensions** along which these systems vary, place each system on those dimensions, and surface the design trade-offs that matter for anyone building an agent knowledge system.
 
@@ -40,7 +40,7 @@ Read ALL of the following documents:
 
 4. **What divergences are most revealing?** The filesystem-first vs database-first split is the most obvious. But are there deeper ones? The agency question (who decides what to remember) seems fundamental. The curation question (what happens to old knowledge) also seems important.
 
-5. **What does this mean for claw design?** Given the full landscape, what are the strongest signals about where our system should go? What are we missing? What have we gotten right?
+5. **What does this mean for KB design?** Given the full landscape, what are the strongest signals about where our system should go? What are we missing? What have we gotten right?
 
 ## Output spec
 
@@ -51,7 +51,7 @@ Structure:
 - A dimension matrix (table or structured list placing each system)
 - Convergences section
 - Divergences section
-- Implications for claw design
+- Implications for KB design
 - No frontmatter needed — this is a workshop output, not a KB note
 
 Write concisely. The review should be readable in 5 minutes, not 20.

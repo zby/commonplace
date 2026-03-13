@@ -2,7 +2,7 @@
 description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs; the mechanism is partial evaluation applied to instructions with underspecified semantics
 type: note
 traits: [has-external-sources]
-tags: [claw-design]
+tags: [kb-design]
 status: seedling
 ---
 

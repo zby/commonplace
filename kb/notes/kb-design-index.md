@@ -87,6 +87,7 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 
 ## Other tagged notes <!-- generated -->
 
+- [003-connect-skill-discovery-strategy](./adr/003-connect-skill-discovery-strategy.md) — Design options and scaling strategy for how the connect skill discovers candidate connections — index-first with semantic search backup, and what changes when the KB grows
 - [004-Replace areas with tags](./adr/004-replace-areas-with-tags.md) — Replaces the areas frontmatter field with freeform tags and restructures index pages to have both curated and generated sections, decoupling navigation from comparative reading
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — CLAUDE.md enforces universal constraints (imperative/push); skill descriptions advertise opt-in capabilities (suggestive/pull) — guidance belongs on whichever surface matches its enforcement model
 - [Enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — The enforcement gradient covers detection and blocking but has no recovery column — recovery strategies (corrective → fallback → escalation) are the missing layer, and oracle strength determines which are viable at each level

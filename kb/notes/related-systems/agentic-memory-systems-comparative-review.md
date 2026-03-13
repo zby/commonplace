@@ -146,7 +146,7 @@ No system has found a way to combine high agency (the rememberer has full contex
 
 **The curation frontier.** The most revealing divergence is in what happens to knowledge over time. Mem0 overwrites. Graphiti invalidates temporally. A-MEM evolves neighbors. AgeMem learns curation policy through RL. ClawVault promotes by recurrence. Commonplace relies on human judgment. Each is a different theory of knowledge lifecycle, and none is complete. AgeMem is the only system where curation improves from experience, but the improvement is opaque and oracle-dependent. The hardest unsolved problem -- automated synthesis and reformulation -- is attempted by none of them in production.
 
-## Implications for claw design
+## Implications for our KB design
 
 **What we got right:**
 
