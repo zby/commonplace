@@ -28,7 +28,7 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 **Static (frontloadable):**
 - Variable resolution — paths, project names, configuration values known at setup time (the [indirection elimination](../notes/indirection-is-costly-in-llm-instructions.md) case)
-- File listings — "here are the files in `kb/notes/`" rather than "list the files in `kb/notes/`"
+- File listings — "here are the files in `../../notes/`" rather than "list the files in `../../notes/`"
 - Search results — pre-run a search and include results rather than instructing the LLM to search
 - Aggregations — counts, summaries of known datasets, pre-computed indexes
 - Template expansion — [build-time generation](../notes/generate-instructions-at-build-time.md) of skills and instructions

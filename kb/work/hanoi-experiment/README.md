@@ -2,7 +2,7 @@
 
 ## Hypothesis
 
-The [specification-level separation note](../../kb/notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) predicts that OpenProse-like DSLs recover **scoping** benefits but not **error-correction** benefits. Towers of Hanoi is a pure bookkeeping task — the semantic content is trivial (move a disk) but the recursive structure demands exact tracking of:
+The [specification-level separation note](../../notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) predicts that OpenProse-like DSLs recover **scoping** benefits but not **error-correction** benefits. Towers of Hanoi is a pure bookkeeping task — the semantic content is trivial (move a disk) but the recursive structure demands exact tracking of:
 
 1. **Call stack depth and scope** — which recursive call are we in?
 2. **Arithmetic conditions** — is n == 1? What is n - 1?

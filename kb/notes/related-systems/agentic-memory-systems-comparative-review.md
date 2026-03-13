@@ -46,7 +46,7 @@ This is the most consequential dimension. Four positions:
 
 **Human+agent collaborative (Ars Contexta, Thalo, ClawVault, commonplace).** Knowledge artifacts are co-produced -- the agent writes, validation checks, human judgment gates promotion. Advantage: highest curation quality. Risk: doesn't scale without automation, and the human becomes a bottleneck.
 
-**RL-trained self-managed (AgeMem).** Like Letta, the agent decides what to remember. Unlike Letta, the memory management policy is trained through RL rather than relying on the base model's instruction-following. Advantage: the policy improves from experience, and post-training agents use memory operations significantly more (Add operations increase from 0.92 to 1.64 per episode). Risk: the learned policy is opaque — stored in model weights, not inspectable or incrementally refinable — and [the learning depends on task-completion oracles](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) that may not exist in open-ended domains.
+**RL-trained self-managed (AgeMem).** Like Letta, the agent decides what to remember. Unlike Letta, the memory management policy is trained through RL rather than relying on the base model's instruction-following. Advantage: the policy improves from experience, and post-training agents use memory operations significantly more (Add operations increase from 0.92 to 1.64 per episode). Risk: the learned policy is opaque — stored in model weights, not inspectable or incrementally refinable — and [the learning depends on task-completion oracles](../memory-management-policy-is-learnable-but-oracle-dependent.md) that may not exist in open-ended domains.
 
 **A-MEM** sits between positions: the agent triggers memory creation, but an automated pipeline handles linking and evolution without explicit agent decisions.
 
@@ -95,7 +95,7 @@ Graphiti is the clear outlier here -- its bi-temporal model is a genuine capabil
 | Cognee | Classify, chunk, extract, summarize, embed; memify promises pruning/reweighting but ships simpler | Gap between documented ambitions and implementation |
 | Letta | Agent writes/edits/archives blocks | Unbounded -- whatever the agent decides, limited by model capability |
 | A-MEM | Construct, link, evolve (update context and tags on existing notes) | Evolution is the unique operation -- notes change when new notes arrive |
-| AgeMem | Add, Update, Delete (LTM); Retrieve, Summary, Filter (STM) -- all RL-trained | Operations are hand-crafted tools; the [policy for when to use them is learned](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). No synthesis or evolution of existing entries |
+| AgeMem | Add, Update, Delete (LTM); Retrieve, Summary, Filter (STM) -- all RL-trained | Operations are hand-crafted tools; the [policy for when to use them is learned](../memory-management-policy-is-learnable-but-oracle-dependent.md). No synthesis or evolution of existing entries |
 | Ars Contexta | Record, Reduce, Reflect, Reweave, Verify, Rethink (6 Rs pipeline) | Most complete curation lifecycle; each phase has a separate skill |
 | ClawVault | Extract, score, promote, reflect | Promotion-by-recurrence is a concrete, testable curation heuristic |
 | commonplace | Write, connect, validate, convert (type promotion) | Manual curation; no automated evolution or promotion |

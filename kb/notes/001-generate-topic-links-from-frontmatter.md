@@ -21,7 +21,7 @@ Previously, `/connect` (an LLM skill) generated these Topics links using semanti
 - 6 notes had `areas:` but no Topics section
 - 5 notes had Topics linking to the wrong index (e.g., `areas: [approvals-index]` but Topics pointed to `[index]`)
 
-This is the general pattern described in [storing LLM outputs is constraining](../../notes/storing-llm-outputs-is-constraining.md): when a step is deterministic, replace the stochastic LLM step with code.
+This is the general pattern described in [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md): when a step is deterministic, replace the stochastic LLM step with code.
 
 ## Decision
 

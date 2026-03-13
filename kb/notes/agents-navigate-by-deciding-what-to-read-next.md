@@ -37,9 +37,9 @@ The knowledge system should make these decisions cheap. Every mechanism has its 
 - Skill descriptions need to say *when and why*, not just *what*
 - Notes need titles that are claims and descriptions that add information beyond them
 
-Prose-as-title is the shortcut that works across all of these — because [title as claim enables traversal as reasoning](../title-as-claim-enables-traversal-as-reasoning.md), the pointer carries the argument by itself. But bare pointers without context force the agent to open every target, which is expensive in tokens and attention.
+Prose-as-title is the shortcut that works across all of these — because [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), the pointer carries the argument by itself. But bare pointers without context force the agent to open every target, which is expensive in tokens and attention.
 
 Relevant Notes:
 
-- [title as claim enables traversal as reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles carry the argument in the pointer itself, reducing the cost of the navigation decision
+- [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles carry the argument in the pointer itself, reducing the cost of the navigation decision
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following
