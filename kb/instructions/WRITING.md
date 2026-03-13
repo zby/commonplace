@@ -131,13 +131,13 @@ Internal workspace documents connect via standard markdown links. Each link is a
 
 - `[note title](./note-title.md)` links to a note in the same directory
 - `[note title](../note-title.md)` or `[note title](./subdir/note-title.md)` for cross-directory links
-- Links work as prose: "Since [thin adapters reduce coupling between providers and runtime](./thin-adapters-reduce-coupling-between-providers-and-runtime.md), we chose..."
+- Links work as prose: "Since [title as claim enables traversal as reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md), we chose..."
 - Link text doesn't have to match the target's title — use whatever text best informs the reader's decision
 
 ### Inline vs Footer Links
 
 **Inline links** are woven into prose and carry richer relationship data:
-> The insight is that [thin adapters reduce coupling](./thin-adapters-reduce-coupling-between-providers-and-runtime.md), which informed the OAuth gating approach.
+> The insight is that [title as claim enables traversal as reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md), which informed the index design.
 
 **Footer links** appear at the bottom in a structured section:
 ```markdown

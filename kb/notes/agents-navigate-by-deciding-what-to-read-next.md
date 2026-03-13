@@ -20,7 +20,7 @@ The quality of the hint determines how well the agent can estimate that likeliho
 
 The pattern is the same everywhere. What varies is how much context the agent has at the decision point.
 
-**Inline links** carry the richest context. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since [thin adapters reduce coupling](./thin-adapters.md), we chose..." The agent knows both *what's there* and *why it matters here* before deciding.
+**Inline links** carry the richest context. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since *thin adapters reduce coupling*, we chose..." The agent knows both *what's there* and *why it matters here* before deciding.
 
 **Index entries** carry less, but more than they seem. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index itself adds implicit context: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list. The index's structure is part of the hint.
 
