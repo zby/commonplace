@@ -207,7 +207,6 @@ However, Claude Code already uses `memory/` for its own auto-memory directory at
 
 Relevant Notes:
 
-- [extracting the KB system into its own repo](../notes/extract-kb-as-standalone-project.md) — parent plan: what moves vs what stays, naming, license; this note refines the installation architecture
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning progression
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal

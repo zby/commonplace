@@ -12,7 +12,7 @@ Don't name notes like topics ("thoughts on memory"). Name them like claims ("str
 
 When you link to a claim-titled note, the link becomes part of your argument:
 
-> "because [approvals guard against LLM mistakes not active attacks](../notes/approvals-guard-against-llm-mistakes-not-active-attacks.md), we can separate the security boundary from the approval UX"
+> "because *approvals guard against LLM mistakes not active attacks*, we can separate the security boundary from the approval UX"
 
 The title IS the reasoning. Traversal IS thinking. The title functions as a typed signature — you know what you're getting before you load the full note. A topic label like "memory notes" is an undocumented function; a claim like "structure enables navigation" tells you the return value. This connects to how [types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — a claim title is an affordance declaration.
 
