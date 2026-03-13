@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Rebuild the generated 'All notes' section of tag index pages.
+"""Rebuild the generated section of tag index pages.
 
 For each index page, derives the tag from the filename (strip -index.md),
-finds all notes with that tag in their areas: field, and replaces
-everything from the <!-- generated --> marker to EOF.
+finds all notes with that tag in their tags: field, and replaces
+everything from the <!-- generated --> marker to EOF.  Notes already
+linked in the curated section above the marker are excluded.
 
 Usage:
     uv run scripts/sync_generated_index.py                    # all indexes
@@ -82,16 +83,24 @@ def tag_from_filename(index_path: Path) -> str:
     return stem
 
 
+def extract_curated_links(curated_section: str) -> set[str]:
+    """Extract link targets from the curated section above the marker."""
+    return set(re.findall(r'\]\(([^)]+)\)', curated_section))
+
+
 def build_generated_section(
-    notes: list[tuple[Path, str, str]], index_dir: Path
+    notes: list[tuple[Path, str, str]], index_dir: Path,
+    curated_links: set[str] | None = None,
 ) -> str:
-    """Build the generated listing section."""
-    lines = [f"## All notes {MARKER}", ""]
+    """Build the generated listing section, excluding already-curated notes."""
+    lines = [f"## Other tagged notes {MARKER}", ""]
 
     for path, title, desc in sorted(notes, key=lambda x: x[1].lower()):
         relpath = os.path.relpath(path, index_dir)
         if not relpath.startswith(".."):
             relpath = f"./{relpath}"
+        if curated_links and relpath in curated_links:
+            continue
         entry = f"- [{title}]({relpath})"
         if desc:
             entry += f" — {desc}"
@@ -107,12 +116,23 @@ def sync_index(index_path: Path, notes_by_tag: dict, dry_run: bool = False) -> s
     tag = tag_from_filename(index_path)
 
     notes = notes_by_tag.get(tag, [])
-    generated = build_generated_section(notes, index_path.parent)
+
+    # Extract links from the curated section (above the marker)
+    marker_pos_for_curated = content.find(MARKER)
+    if marker_pos_for_curated != -1:
+        curated_section = content[:marker_pos_for_curated]
+    else:
+        curated_section = content
+    curated_links = extract_curated_links(curated_section)
+
+    generated = build_generated_section(notes, index_path.parent, curated_links)
 
     marker_pos = content.find(MARKER)
     if marker_pos == -1:
         # No marker yet — append
-        heading_pos = content.rfind(f"\n## All notes")
+        heading_pos = content.rfind("\n## Other tagged notes")
+        if heading_pos == -1:
+            heading_pos = content.rfind("\n## All notes")
         if heading_pos != -1:
             # Has the heading but no marker — replace from heading
             new_content = content[:heading_pos].rstrip("\n") + "\n\n" + generated

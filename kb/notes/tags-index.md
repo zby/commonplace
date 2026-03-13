@@ -20,5 +20,5 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 - [KB maintenance](./kb-maintenance-index.md) — operations, audits, and maintenance methodology
 - [Related systems](./related-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
 
-## All notes <!-- generated -->
+## Other tagged notes <!-- generated -->
 
