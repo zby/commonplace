@@ -23,11 +23,11 @@ For knowledge to improve an agent's actions under bounded context, it needs thre
 
 **Composable** — pieces of knowledge combine into larger arguments and can be used as premises in new reasoning. Failure mode: the agent retrieves a note but can't use it with other notes — the knowledge is an island. Commonplace mechanisms: [typed links with articulated relationships](./link-strength-is-encoded-in-position-and-prose.md) ("since X" is a premise, "but Y" is a tension, "extends Z" is a generalization), [resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) between indexes and note bodies, the composability check in [WRITING.md](../instructions/WRITING.md) ("can this note be linked without dragging irrelevant context?").
 
-**Trustworthy** — the agent can rely on what the knowledge says without independently verifying it each time. Failure mode: the agent loads a note but can't trust its claims — the knowledge is noise. Commonplace mechanisms: the [constraining gradient](./constraining.md) from raw text to structured claims to deterministic code, the [type system](./document-classification.md) that marks what kind of artifact something is, status fields that signal maturity (seedling → current), [validation](./deterministic-validation-should-be-a-script.md) that enforces structural contracts.
+**Trustworthy** — the agent can rely on what the knowledge says without independently verifying it each time. Failure mode: the agent loads a note but can't trust its claims — the knowledge is noise. Commonplace mechanisms: the [constraining gradient](./constraining.md) from raw text to structured claims to deterministic code, the [type system](./document-classification.md) that marks what kind of artifact something is, status fields that signal maturity (seedling → current), [validation](./deterministic-validation-should-be-a-script.md) that enforces structural contracts. Note that trustworthiness has a temporal dimension these mechanisms don't fully address: a reviewed, validated, `status: current` note can become wrong because the world changed. Currency — whether knowledge is still true — is a maintenance concern that the status ladder signals but doesn't enforce.
 
 These three properties have a dependency structure. Composability depends on the other two: you can't compose what you can't find (discoverability), and you can't build on an unreliable premise (trustworthiness). Trustworthiness depends on discoverability: a note that can't be found can't be challenged, corrected, or kept current. Discoverability is the foundation — without it, the other two are inert.
 
-## Accumulation and three operations that improve these properties
+## Accumulation and four operations that improve these properties
 
 The KB doesn't stay good automatically. It improves through learning, starting with the most basic operation.
 
@@ -41,14 +41,19 @@ Three operations transform accumulated knowledge, each targeting different prope
 
 **Discovery** posits a new general concept and [simultaneously recognizes existing particulars as instances of it](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md). Unlike constraining and distillation, discovery *creates* generality rather than sacrificing it. It primarily improves **composability**: a note that names a shared mechanism ("systems degrade under structural overload") becomes a hub that connects previously isolated notes, making them available as premises in each other's arguments. It secondarily improves discoverability — once the mechanism has a name, recognizing further instances becomes cheap. The naming amortizes the discovery cost. Discovery also produces the highest-reach items for accumulation — theories are what accumulation stores when it's at its most valuable.
 
+These three transform existing knowledge. A fourth operation works by subtraction:
+
+**Pruning** removes knowledge that is outdated, contradictory, or low-value. Pruning is not distillation (nothing is extracted) and not constraining (nothing is narrowed) — it is the inverse of accumulation. It primarily improves **trustworthiness**: removing a stale note eliminates a source of wrong premises. It secondarily improves discoverability — fewer notes means less noise in search results and indexes. A KB that never prunes degrades under its own weight as currency decays.
+
 | Operation | Capacity trade-off | Primary property improved | Commonplace example |
 |---|---|---|---|
 | Accumulation | Adds knowledge (reach varies) | All three (depends on what's accumulated) | Storing a new observation, recording a discovered principle |
 | Constraining | Generality → compound | Trustworthiness | text → note → structured claim → validation script |
 | Distillation | Generality → compound | Discoverability | 15 methodology notes → 1 `/connect` skill |
 | Discovery | Creates generality | Composability | Seeing that PL scoping and agent context loading share the same mechanism |
+| Pruning | Removes knowledge | Trustworthiness | Deleting an outdated note, marking a superseded claim `outdated` |
 
-A KB that only accumulates grows but never improves what it has — a pile, not a system. One that only constrains gets rigid — trustworthy but unable to grow. One that only distils gets focused but shallow — discoverable but with nothing deep to discover. One that only discovers gets conceptually rich but unreliable and hard to navigate — composable in theory but not in practice. All four must operate continuously.
+A KB that only accumulates grows but never improves what it has — a pile, not a system. One that only constrains gets rigid — trustworthy but unable to grow. One that only distils gets focused but shallow — discoverable but with nothing deep to discover. One that only discovers gets conceptually rich but unreliable and hard to navigate — composable in theory but not in practice. One that never prunes degrades as knowledge goes stale. All five must operate continuously.
 
 ## Reach: why some knowledge serves competence better than others
 
@@ -58,7 +63,7 @@ David Deutsch [distinguishes](./first-principles-reasoning-selects-for-explanato
 
 Reach matters for an agentic KB because an agent encounters novel situations constantly — new tasks, new codebases, new user requests. Knowledge with reach transfers to these situations. Knowledge without reach doesn't. A note that says "files beat a database because agents already have Read/Write/Grep tools" is adaptive — it works now, but if the toolset changes, the conclusion changes unpredictably. A note that says "files beat a database because [the universal interface principle](./files-not-database.md) minimizes coupling between the storage layer and the consumer" has reach — it explains *why*, predicts *when* the conclusion would change, and applies to storage decisions beyond this specific system.
 
-Reach connects to accumulation and the three transformation operations asymmetrically:
+Reach connects to accumulation and the transformation operations asymmetrically:
 
 - **Accumulation** is where reach varies most. Reach is the key property of what you accumulate — facts sit at the low end (adaptive, context-bound), theories at the high end (explanatory, transferable). The same operation (adding knowledge to the store) produces vastly different value depending on the reach of what's added.
 - **Constraining** preserves reach but doesn't create it. A codified script is no more explanatory than the prompt it replaced — just more reliable. Constraining improves the compound (reliability, speed, cost) without affecting generality, and reach lives in the generality dimension.
@@ -73,7 +78,7 @@ There is a tension between reach as the primary quality criterion and contextual
 
 The tension is real but not a contradiction, for two reasons. First, under bounded context, a compact theory replaces many facts — one note explaining *why* a pattern holds is more context-efficient than twenty notes recording instances where it worked. Reach is practical, not just intellectually satisfying, because it compresses knowledge. Second, reach matters most when knowledge leaves the KB — when insights transfer to new projects, new agents, or new domains. A KB that only stores context-specific procedures is useful for its host system but produces nothing portable. One that also stores explanatory knowledge generates value beyond its immediate context.
 
-The resolution is not to choose one over the other but to recognize that the four operations serve different needs: accumulation stores both facts and theories, constraining makes procedures reliable, and discovery creates the theories that give a KB reach beyond its origin.
+The resolution is not to choose one over the other but to recognize that the operations serve different needs: accumulation stores both facts and theories, constraining makes procedures reliable, discovery creates the theories that give a KB reach beyond its origin, and pruning removes what has gone stale.
 
 ## Why this favors authored knowledge
 
@@ -89,7 +94,7 @@ This isn't a claim that extraction can never produce knowledge with reach — an
 
 A good agentic KB maximizes **contextual competence** under **bounded context** through knowledge that is **discoverable**, **composable**, and **trustworthy**.
 
-**Accumulation** is the most basic learning operation. **Reach** is its key property: facts (low reach) are adaptive; theories (high reach) are explanatory and transfer to new contexts. Three operations transform accumulated knowledge: **constraining** improves trustworthiness, **distillation** improves discoverability, **discovery** improves composability and produces the highest-reach items to accumulate.
+**Accumulation** is the most basic learning operation. **Reach** is its key property: facts (low reach) are adaptive; theories (high reach) are explanatory and transfer to new contexts. Four operations transform accumulated knowledge: **constraining** improves trustworthiness, **distillation** improves discoverability, **discovery** improves composability and produces the highest-reach items to accumulate, and **pruning** removes stale knowledge before it erodes trust.
 
 The KB's first-principles filter selects for reach — not because procedures lack value, but because theories compress knowledge under bounded context and transfer when knowledge leaves the KB. Authoring — the act of judgment that explains *why* — is the primary source of knowledge with reach.
 
