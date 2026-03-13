@@ -168,3 +168,6 @@ type: index
 - [Why notes have types](./why-notes-have-types.md) *(note)* — Six roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality through structured writing discipline, and maturation through constraining
 - [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) *(note)* — Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim codification ladder
 - [Writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) *(note)* — The five empirically observed context-file writing styles (descriptive, prescriptive, prohibitive, explanatory, conditional) are not stylistic variation — they correspond to different strategies for narrowing the interpretation space agents face, trading off constraint against generalisability
+
+## All notes <!-- generated -->
+

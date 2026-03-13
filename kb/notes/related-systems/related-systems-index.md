@@ -51,3 +51,21 @@ The divergences are more revealing:
 - Should high-volume ingestion in a file-first KB adopt a small operational database layer for stage state and indexing?
 - Will the programming-theory grounding produce better systems than the psychology grounding, or will they converge?
 - Are there systems we're missing that take a fundamentally different approach?
+
+## All notes <!-- generated -->
+
+- [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) — Skill-based context engineering framework — 14 instructional modules covering attention mechanics, multi-agent patterns, memory, evaluation. Strong on operational patterns, weaker on learning theory.
+- [Ars Contexta](./arscontexta.md) — Claude Code plugin that generates knowledge systems from conversation, backed by 249 research claims. Ancestor of our KB — we borrowed link semantics, propositional titles, and three-space architecture, then diverged in theory and structure.
+- [ClawVault](./clawvault.md) — TypeScript memory system for AI agents with scored observations, session handoffs, and reflection pipelines — has a working workshop layer where we have theory, making it the strongest source of borrowable patterns for ephemeral knowledge
+- [Cognee](./cognee.md) — Pipeline-first knowledge engine (add/cognify/memify/search) with Pydantic-schema graph extraction, poly-store backends, and multi-tenancy — the strongest database-side counterexample to files-first architecture, but treats knowledge as a data engineering problem rather than a curation problem
+- [CrewAI Memory](./crewai-memory.md) — Unified vector-memory system for agent crews with LLM-driven scope inference, composite scoring, and consolidation — sophisticated retrieval engineering but no learning theory, treating memory as infrastructure rather than a knowledge medium
+- [Decapod](./decapod.md) — Rust governance kernel for AI coding agents that forces intent codification, proof-gated completion, and workspace isolation before code touches a repo — strongest reference for hard-oracle verification in agent workflows, but constitution documents claim transformations the code does not perform
+- [getsentry/skills](./getsentry-skills.md) — Sentry's shared skills repo with a skill-writer meta-skill that codifies the skill creation process itself — source-driven synthesis with depth gates, labeled iteration, description-as-trigger optimization, and the Agent Skills cross-tool spec
+- [Hindsight](./hindsight.md) — Database-backed biomimetic agent memory with LLM-driven fact extraction, four-way parallel retrieval (semantic + BM25 + graph + temporal), auto-consolidation into observations, and agentic reflection — strongest production evidence that three-space memory separation yields measurable retrieval gains
+- [SAGE (Sovereign Agent Governed Experience)](./sage.md) — BFT-branded agent memory with CometBFT consensus, Ed25519 signing, application-level validators, confidence decay, and encryption — consensus is ceremony in single-node mode; real value is the validation gate pattern and domain-scoped RBAC
+- [sift-kg](./sift-kg.md) — LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-in-the-loop entity resolution, and interactive visualization
+- [Siftly](./siftly.md) — Next.js + SQLite bookmark ingestion system whose deterministic-first, resumable enrichment pipeline offers concrete patterns for scaling KB source loading with explicit progress state
+- [Spacebot](./spacebot.md) — Rust concurrent agent framework whose process-type architecture (channels, branches, workers, cortex) is the cleanest production implementation of code-level scheduling over bounded LLM calls among reviewed systems
+- [Thalo](./thalo.md) — Custom plain-text language for knowledge management with Tree-Sitter grammar, typed entities, 27 validation rules, and LSP. Makes the same programming-theory-over-psychology bet we do, but went further into formalization with a custom DSL.
+- [Thalo entity types compared to commonplace document types](./thalo-type-comparison.md) — Reference for borrowing recurring note shapes from Thalo — their entity types (opinion, reference, lore, journal, synthesis) map onto our types with concrete gaps still open (supersedes links, source status tracking)
+- [{System name}](../types/related-system.md)

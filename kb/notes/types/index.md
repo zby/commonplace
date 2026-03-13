@@ -23,3 +23,4 @@ type: index
 - [other-index](./other-index.md) — how they connect
 
 ## All notes <!-- generated -->
+

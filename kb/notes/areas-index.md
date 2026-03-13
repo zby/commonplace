@@ -24,3 +24,6 @@ Browse the KB by conceptual area. Each area page is a curated index with grouped
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — analytical model for why areas exist and how to tune boundaries for context efficiency and comparative yield
 - Area membership is encoded in each note's `areas` frontmatter field.
 - Directory indexes are auto-generated; area indexes are curated.
+
+## All notes <!-- generated -->
+
