@@ -57,7 +57,7 @@ When a tag's generated section grows large and internal clusters emerge:
 
 ### 5. Update tags-index.md
 
-Ensure `kb/notes/tags-index.md` lists all curated indexes. This is the hub page readers use to browse by tag.
+Ensure `kb/notes/tags-index.md` lists all tag indexes. This is the hub page readers use to browse by tag.
 
 ## Principles
 
