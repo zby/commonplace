@@ -14,13 +14,11 @@ Most knowledge work doesn't produce artifacts like that. Decisions live in Slack
 
 A knowledge base adds exactly that missing layer: structured, linked, readable artifacts for knowledge work. Notes are to reasoning what code files are to implementation — persistent state an agent can inspect, understand, and build on. You don't need to plan every note perfectly, you just need to keep writing and linking, and the accumulated structure makes each subsequent session more productive — the same flywheel that makes vibe coding work. The flywheel can also compound negatively: poorly written or incorrectly linked notes can mislead a stateless agent, making orientation worse than starting fresh. The weak oracles that make KB automation hard (see below) also mean there's no cheap way to detect this degradation.
 
-## The inflation failure mode
+## The reverse-compression failure mode
 
-The common failure mode of vibe-noting is **inflation without information gain**: a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more information than the original sentence. It reads like depth — paragraphs, structure, examples — but it's just the LLM restating the same idea with more words. Reading the whole article is a waste of time because you learn nothing beyond the seed.
+The common failure mode of vibe-noting is [reverse-compression](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md): a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more [epiplexity](./information-value-is-observer-relative-because-extraction-requires-computation.md) than the original sentence. It reads like depth — paragraphs, structure, examples — but the LLM is just expanding a compact signal without adding extractable structure for the reader.
 
-A KB that links notes to each other should resist this failure mode. When a note cites a specific practitioner report, connects to a specific theoretical framework, or extends a specific prior argument, each link adds information the original sentence didn't contain. The network, not the prose, is where the epistemic complexity lives. A note that says "Cramer's approach skips theory-building" and links to an [ingest with quantified results](../sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.ingest.md) and a [distillation framework](./skills-derive-from-methodology-through-distillation.md) carries more than a note that elaborates the same idea for three paragraphs without connecting to anything.
-
-The test is: does reading note B after note A tell you something you couldn't have derived from A alone? If the answer is consistently yes, the KB is accumulating knowledge, not inflating prose.
+A KB that links notes to each other should resist this because each link can add information the original sentence didn't contain. The network, not the prose, is where epistemic complexity accumulates. But resistance is not automatic — see the [full analysis](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) for why links must be load-bearing, not decorative.
 
 ## The tension with verification
 
