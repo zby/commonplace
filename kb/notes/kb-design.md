@@ -57,6 +57,8 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion with state machines, dependencies, and expiration
 - [active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — working understanding during an active campaign needs holistic rewrite, not graph composition; theorist exemplifies this as a workshop artifact
 
+- [vibe-noting](./vibe-noting.md) — (seedling) vibe coding works because code is inspectable, not just verifiable; a KB adds that same inspectability to knowledge work, enabling a similar flywheel for reasoning
+
 ## Gaps
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the KB already learns through manual human+agent work; the open problem is automating the judgment-heavy mutations (connections, groupings, synthesis)
