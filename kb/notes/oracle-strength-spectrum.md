@@ -81,6 +81,7 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — exemplifies: (p,δ,k)-satisfaction parameterizes oracle strength per constraint; hard constraints are hard oracles, soft constraints with probabilistic thresholds are soft oracles
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — grounds: the implicit thesis that oracle quality (verification infrastructure), not generation quality, is the leverage point — structural tests and linter rules as the bottleneck
 - [Tam et al. — "When code is free, research is all that matters"](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — exemplifies: engineering (hard oracle) is automatable while research taste (no oracle) resists automation — the oracle-strength prediction in market-economics language
+- [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: unifies this note's theoretical framework with labor-economics and capability-timeline evidence into a single claim
 
 Topics:
 

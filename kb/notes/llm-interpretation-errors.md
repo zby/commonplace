@@ -24,6 +24,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — oracle strength as a gradient from hard (deterministic) to no oracle (vibes); the engineering move is to harden oracles progressively
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each target a different oracle question; each can be hardened independently
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — crossing from augmentation to automation requires per-instance discrimination, which is empirically stagnant; external oracle construction is the practical path
+- [the-boundary-of-automation-is-the-boundary-of-verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: three independent lines of evidence (oracle theory, labor economics, frontier-lab predictions) converge on verification cost as the structural determinant of automation
 
 ## Aggregation & Correction
 

@@ -58,6 +58,7 @@ Relevant Notes:
 - [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — primary evidence: calibration improves but discrimination does not across 14 models and 18 months; the empirical basis for the stagnation claim
 - [MAKER: million-step zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — exemplifies route (b): zero errors achieved not through self-assessment but through external hard oracles (deterministic per-step verification)
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — complements: (p,δ,k)-satisfaction parameterises oracle strength per constraint, providing a vocabulary for specifying the discrimination threshold required for automated recovery
+- [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: unifies this note's discrimination mechanism with labor-economics and capability-timeline evidence into a general principle
 
 Topics:
 
