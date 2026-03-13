@@ -39,6 +39,9 @@ def generate(notes_dir: Path) -> str:
     for path in sorted(notes_dir.rglob("*.md")):
         if path == output or path.name == "README.md":
             continue
+        # Skip type templates — they're schemas, not notes
+        if "types" in path.relative_to(notes_dir).parts:
+            continue
 
         content = path.read_text()
         fm = parse_frontmatter(content)

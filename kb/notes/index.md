@@ -153,10 +153,6 @@ type: index
 - [Two kinds of navigation](./two-kinds-of-navigation.md) *(note)* — Link-following is local with context; search is long-range with titles/descriptions; indexes bridge both modes
 - [Type system enforces metadata that navigation depends on](./type-system-enforces-metadata-that-navigation-depends-on.md) *(note)* — Descriptions don't appear spontaneously — they exist because the note base type requires them; without enforcement, metadata degrades and navigation collapses to opening every document
 - [Type system](./type-system-index.md) *(index)* — Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
-- [{NNN}-{decision-title}](./types/adr.md) *(adr)*
-- [{area-name} index](./types/index.md) *(index)*
-- [{System name}](./types/related-system.md) *(note)*
-- [{Claim as title — an assertion, not a topic label}](./types/structured-claim.md) *(structured-claim)*
 - [Types give agents structural hints before opening documents](./types-give-agents-structural-hints-before-opening-documents.md) *(note)* — Types and descriptions let agents make routing decisions without loading full documents — the type says what operations a document affords, the description filters among instances of that type
 - [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) *(note)* — When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do demonstrates this with name-based dispatch over a hybrid VM
 - [Unit testing LLM instructions requires mocking the tool boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) *(note)* — Skills are programs whose I/O boundary is tool calls — mocking that boundary creates controlled environments for testing whether instructions produce correct behavior, complementing text artifact testing with instruction-level regression detection
@@ -168,6 +164,3 @@ type: index
 - [Why notes have types](./why-notes-have-types.md) *(note)* — Six roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality through structured writing discipline, and maturation through constraining
 - [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) *(note)* — Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim codification ladder
 - [Writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) *(note)* — The five empirically observed context-file writing styles (descriptive, prescriptive, prohibitive, explanatory, conditional) are not stylistic variation — they correspond to different strategies for narrowing the interpretation space agents face, trading off constraint against generalisability
-
-## All notes <!-- generated -->
-
