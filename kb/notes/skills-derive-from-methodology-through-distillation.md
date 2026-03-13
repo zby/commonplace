@@ -75,7 +75,7 @@ For a human, distilled procedures are a convenience that can eventually be trans
 ## Caveats
 
 - **The term may be imperfect.** Chemical distillation separates components of a mixture; what's happening here is more like extracting implications from reasoning. The metaphor captures purification-without-phase-change, but breaks if pushed to "what are the volatile vs. non-volatile components?"
-- **Not all skills are distilled from methodology.** Some encode procedures that were never reasoned out discursively — they were designed directly as operational instructions. Distillation describes a *derivation relationship*, not a universal property of skills.
+- **Not all skills are distilled from methodology.** [Cramer's skill synthesis](../sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.ingest.md) demonstrates an alternative path: distilling skills directly from domain artifacts (commit history, security patches, external standards) without an intermediate theory-building step. The distillation operation is the same — discursive material becomes procedural instruction — but the source is raw domain knowledge, not reasoned-out methodology. This skips theory-building entirely: you go from "here are 200 security patches" straight to "here is how to find IDORs." The tradeoff is that without the theory layer, there's no reasoned basis for adapting the skill when it encounters cases the source material didn't cover. Methodology-sourced skills degrade to "consult the methodology"; artifact-sourced skills degrade to "consult the raw artifacts" — a much harder fallback for an agent.
 - **The residue is only valuable if maintained.** Methodology notes that drift out of date while skills stay current create a false source — a designer who consults them will reason from outdated premises. The distillation metaphor doesn't inherently address this maintenance burden.
 
 ---
@@ -89,3 +89,4 @@ Relevant Notes:
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the formal argumentation framework referenced as methodology input to the /connect skill
+- [Skill Synthesis (Cramer)](../sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.ingest.md) — counterexample: skills distilled directly from domain artifacts (commit history, patches) without an intermediate theory layer
