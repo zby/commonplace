@@ -30,10 +30,11 @@ jobs:
       - name: Install build dependencies
         run: python -m pip install --upgrade mkdocs pyyaml
 
-      - name: Rebuild directory indexes
+      - name: Rebuild directory indexes and tag listings
         run: |
           python scripts/generate_notes_index.py kb/notes
           python scripts/generate_notes_index.py kb/sources
+          python scripts/sync_generated_index.py
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

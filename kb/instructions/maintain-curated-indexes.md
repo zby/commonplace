@@ -55,9 +55,9 @@ When a tag's generated section grows large and internal clusters emerge:
 - Would the resulting indexes each have 5+ notes?
 - Do the clusters represent genuinely distinct topics, or just editorial convenience?
 
-### 5. Update areas-index.md
+### 5. Update tags-index.md
 
-Ensure `kb/notes/areas-index.md` lists all curated indexes. This is the hub page readers use to browse by topic.
+Ensure `kb/notes/tags-index.md` lists all curated indexes. This is the hub page readers use to browse by tag.
 
 ## Principles
 
