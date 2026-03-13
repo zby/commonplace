@@ -34,3 +34,6 @@ skills-lock.json
 
 # cloned repos for related-system reviews
 /related-systems/
+
+# sources with scraping restrictions
+kb/sources/slate-moving-beyond-react-and-rlm.md
