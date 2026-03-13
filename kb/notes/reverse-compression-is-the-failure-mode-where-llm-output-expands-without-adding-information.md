@@ -6,7 +6,7 @@ tags: [kb-design, learning-theory]
 status: seedling
 ---
 
-# Reverse-compression is the failure mode where LLM output expands without adding information
+# Reverse-compression (inflation) is the failure mode where LLM output expands without adding information
 
 Compression removes redundancy to preserve information. Reverse-compression is the inverse: expanding a compact signal into a verbose one that is *larger* but no more informative. An LLM given one sentence can produce a full article that reads like depth — paragraphs, structure, examples — but carries no more extractable structure than the seed. The training knowledge creates the appearance of elaboration without actual information gain.
 
