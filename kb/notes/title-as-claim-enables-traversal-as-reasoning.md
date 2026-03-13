@@ -33,7 +33,7 @@ The pattern works best for ideas that ARE single claims. It breaks for **composi
 
 [Document classification](./document-classification.md) is a clear example. It contains several distinct claims: "types assert structure not subject matter," "status is orthogonal to type," "a document has exactly one base type but zero or more traits," "text is the root type." Each could be a standalone claim note. But no single claim subsumes them all — any attempt produces something so abstract it's useless ("documents should be classified").
 
-The traversal-as-reasoning framing explains why. A claim-titled note can serve as a premise: "since [X], therefore Y." A multi-claim document can't serve as a single premise because it IS multiple premises. When you write "see [document classification](…)," you're not invoking a reasoning step — you're pointing to a reference. The link semantics shift from argumentative ("since," "because") to referential ("see," "as defined in").
+The traversal-as-reasoning framing explains why. A claim-titled note can serve as a premise: "since [X], therefore Y." A multi-claim document can't serve as a single premise because it IS multiple premises. When you write "see *document classification*," you're not invoking a reasoning step — you're pointing to a reference. The link semantics shift from argumentative ("since," "because") to referential ("see," "as defined in").
 
 | Document kind | Title convention | Link semantics | Role in traversal |
 |---|---|---|---|
