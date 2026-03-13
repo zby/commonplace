@@ -2,7 +2,7 @@
 description: Crossing from augmentation to automation requires per-instance discrimination, not aggregate accuracy — discrimination is empirically stagnant, so scaling capability alone cannot cross the boundary
 type: note
 traits: [has-external-sources]
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -59,7 +59,3 @@ Relevant Notes:
 - [MAKER: million-step zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — exemplifies route (b): zero errors achieved not through self-assessment but through external hard oracles (deterministic per-step verification)
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — complements: (p,δ,k)-satisfaction parameterises oracle strength per constraint, providing a vocabulary for specifying the discrimination threshold required for automated recovery
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: unifies this note's discrimination mechanism with labor-economics and capability-timeline evidence into a general principle
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

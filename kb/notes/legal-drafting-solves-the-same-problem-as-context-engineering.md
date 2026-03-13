@@ -2,7 +2,7 @@
 description: Law has centuries of methodology for writing natural language specifications interpreted by a judgment-exercising processor — the same problem as context engineering for LLMs. Legal techniques (defined terms, structural conventions, precedent) are constraining techniques native to the underspecified medium; law mostly lacks codification because statutes remain natural language.
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -80,7 +80,3 @@ Relevant Notes:
 
 Source:
 - Prompted by a social media post observing that context engineering is close to law
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -2,7 +2,7 @@
 description: Since you can't identify which side of the bitter lesson boundary you're on until scale tests it, practical systems must codify and relax — with spec mining avoiding the vision-feature failure mode
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -58,7 +58,3 @@ Relevant Notes:
 - [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode
 - [relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — detects when codified components are encoding vision features
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

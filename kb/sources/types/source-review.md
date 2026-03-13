@@ -1,7 +1,7 @@
 ---
 description: ""
 type: source-review
-areas: []
+tags: []
 status: current
 ---
 
@@ -26,7 +26,3 @@ status: current
 Relevant Notes:
 
 - [related-note](./related-note.md) — how it relates
-
-Topics:
-
-- [relevant-area-index](./relevant-area-index.md)

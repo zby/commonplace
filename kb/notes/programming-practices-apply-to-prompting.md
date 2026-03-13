@@ -1,7 +1,7 @@
 ---
 description: Programming practices — typing, testing, progressive compilation, version control — apply to LLM prompting and knowledge systems, with semantic underspecification and execution indeterminism making some practices harder in distinct ways
 type: note
-areas: [learning-theory, computational-model]
+tags: [learning-theory, computational-model]
 status: speculative
 ---
 
@@ -57,8 +57,3 @@ Relevant Notes:
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: progressive compilation applied specifically to KB methodology, with a concrete gradient (instruction -> skill -> hook -> script) and the insight that judgment-requiring operations stay at skill level permanently
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: 466 OSS projects independently apply version control, iterative refinement, and structured conventions to AI context files — empirical confirmation that programming practices transfer to prompting at scale
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: the most extreme available case — structural tests, linters, CI, and dependency graphs applied wholesale to a 1M LOC agent-first codebase where all code is agent-generated
-
-Topics:
-
-- [computational-model](./computational-model.md)
-- [learning-theory](./learning-theory.md)

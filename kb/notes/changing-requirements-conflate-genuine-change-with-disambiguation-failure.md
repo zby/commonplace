@@ -2,7 +2,7 @@
 description: "Agile's 'changing requirements' hide two distinct phenomena — genuine change (world moved) and late discovery that downstream specs committed to a wrong interpretation of an underspecified upstream spec — short iterations limit interpretation-error propagation, not just change-response latency"
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -60,7 +60,3 @@ Relevant Notes:
 - [constraining](./constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for preventing cascading interpretation errors in natural language specs
 - [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — exemplifies: agents surface interpretation choices back to the spec in real time, a concrete practice for reducing cascading disambiguation errors
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

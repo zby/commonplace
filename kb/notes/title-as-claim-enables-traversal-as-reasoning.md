@@ -2,7 +2,7 @@
 description: When note titles are claims rather than topics, following links between them reads as a chain of reasoning — the file tree becomes a scan of arguments, and link semantics (since, because, but) encode relationship types
 type: note
 traits: [has-external-sources]
-areas: [document-system, links]
+tags: [document-system, links]
 status: current
 ---
 
@@ -70,8 +70,3 @@ Relevant Notes:
 
 Source:
 - Adapted from [arscontexta methodology note](https://github.com/agenticnotetaking/arscontexta) on the same topic, with the multi-claim boundary analysis added
-
-Topics:
-
-- [document-system](./document-system.md)
-- [links](./links.md)

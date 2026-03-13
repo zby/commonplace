@@ -2,7 +2,7 @@
 description: LLM context windows are homoiconic — instructions and data share the same representation (natural language tokens), so there is no structural boundary between program and content, producing both the extensibility benefits and the scoping hazards of Lisp, Emacs, and Smalltalk
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -45,7 +45,3 @@ Relevant Notes:
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: the structuring disciplines (typing, testing, compilation) that programming practices bring are especially needed in a homoiconic medium that provides no built-in structure
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: the constraining gradient from instruction to script imposes structural boundaries that the homoiconic medium itself cannot provide
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: homoiconicity means instructions and data compete as equal tokens, removing any priority mechanism for protecting instructions from dilution
-
-Topics:
-
-- [computational-model](./computational-model.md)

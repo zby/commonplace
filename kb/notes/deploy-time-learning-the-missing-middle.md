@@ -2,7 +2,7 @@
 description: Deploy-time learning fills the gap between training and in-context — repo artifacts provide durable, inspectable adaptation through three mechanisms (constraining, codification, distillation) with a verifiability gradient from prompt tweaks to deterministic code
 type: note
 traits: [has-comparison]
-areas: [learning-theory]
+tags: [learning-theory]
 ---
 
 # Deploy-time learning: The Missing Middle
@@ -102,7 +102,3 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: behavioral contracts (YAML DSL specs with runtime enforcement) are the far end of the verifiability gradient for behavioral constraints — verifiable repo artifacts that improve reliability without weight updates
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "good harnesses compound" is the deploy-time learning thesis in practitioner language; each constraint makes future work more reliable across a 1M LOC agent-generated codebase
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: in-context learning depends on deploy-time learning to build the context engineering machinery that selects the right knowledge; responds to Amodei's claim that continual learning is unnecessary
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -20,7 +20,7 @@
   - [sift-kg](kb/notes/related-systems/sift-kg.md) — both are LLM-driven knowledge graph systems with entity extraction and deduplication
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) — both are database-backed agent memory systems; diverge on graph vs vector
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — Graphiti has hardcoded curation policy (extract/dedup/invalidate) not learned
-  - [learning-theory](kb/notes/learning-theory.md) — Graphiti's temporal model is a concrete memory architecture reference
+  - [learning-theory](kb/notes/learning-theory-index.md) — Graphiti's temporal model is a concrete memory architecture reference
 
 - Read kb/sources/index.md — flagged candidates:
   - [graphiti-temporal-knowledge-graph.ingest.md](kb/sources/graphiti-temporal-knowledge-graph.ingest.md) — the ingest report already done for this source
@@ -32,7 +32,7 @@
 
 **Topic indexes:**
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — confirmed: Graphiti is mentioned in body text (two-tier coverage paragraph) but has no dedicated Systems list entry. No additional candidates found beyond index scan.
-- Read [learning-theory](kb/notes/learning-theory.md) — additional candidate: [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (already flagged). The Memory & Architecture section lists three-space notes and A-MEM but does not reference the Graphiti source.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — additional candidate: [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (already flagged). The Memory & Architecture section lists three-space notes and A-MEM but does not reference the Graphiti source.
 
 **Semantic search:** (via qmd)
 - query "temporal knowledge graph agent memory entity resolution deduplication" on notes — top hits:
@@ -117,7 +117,7 @@
 ## Index Membership
 
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Graphiti is mentioned in the two-tier coverage paragraph but has no dedicated entry in the Systems list. It should have a lightweight entry pointing to the ingest report, consistent with how Fintool is listed.
-- [learning-theory](kb/notes/learning-theory.md) — the Memory & Architecture section references A-MEM and AgeMem sources but not Graphiti. Graphiti's bi-temporal model is the strongest concrete temporal memory architecture in the surveyed systems and should be referenced as a sibling to the other memory system sources.
+- [learning-theory](kb/notes/learning-theory-index.md) — the Memory & Architecture section references A-MEM and AgeMem sources but not Graphiti. Graphiti's bi-temporal model is the strongest concrete temporal memory architecture in the surveyed systems and should be referenced as a sibling to the other memory system sources.
 
 ## Synthesis Opportunities
 

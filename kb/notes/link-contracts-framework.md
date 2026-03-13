@@ -2,7 +2,7 @@
 description: Reference framework for systematic, testable linking — link contracts, intent taxonomy, automated checks, agent implications
 type: note
 traits: [has-external-sources]
-areas: [links]
+tags: [links]
 status: current
 ---
 
@@ -113,7 +113,3 @@ Agents do constrained exploration. If links carry intent and cost:
 3. Group links by intent
 4. Index pages must describe each link in one line
 5. If something is required to proceed, summarize it — don't outsource to a link
-
-Topics:
-
-- [links](./links.md)

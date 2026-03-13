@@ -1,7 +1,7 @@
 ---
 description: Decision to inline note and structured-claim templates into WRITING.md so the agent gets type structure and writing conventions in a single hop — eliminates one read for the two most common note types
 type: adr
-areas: [document-system]
+tags: [document-system]
 status: accepted
 ---
 
@@ -49,7 +49,3 @@ Relevant Notes:
 
 - [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy principle (match instruction specificity to loading frequency) motivates combining two always-together loads into one
 - [scenario-decomposition-drives-architecture](../scenario-decomposition-drives-architecture.md) — grounds: the step decomposition shows "know the structure" and "know how to write well" are adjacent in every write scenario, confirming they belong in the same file
-
-Topics:
-
-- [document-system](../document-system.md)

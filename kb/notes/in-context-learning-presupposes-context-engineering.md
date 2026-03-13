@@ -2,7 +2,7 @@
 description: In-context learning only works when the right knowledge reaches the context window — the selection machinery that ensures this is itself learned and refined over deployment
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -27,7 +27,3 @@ Relevant Notes:
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: the three timescales remain necessary even if weight updates are eliminated; this note adds a dependency arrow between in-context and deploy-time
 - [Dario Amodei ingest](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md) — responds to: Amodei's claim that continual learning may be unnecessary
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

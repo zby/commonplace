@@ -2,7 +2,7 @@
 description: Choosing to keep a specific LLM output resolves semantic underspecification to one interpretation and freezes it against execution indeterminism — the same constraining move the parent note describes for code, applied to artifacts
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: speculative
 ---
 
@@ -61,7 +61,3 @@ Relevant Notes:
 - [Evans: AI Components for a Deterministic System](../sources/eric-evans-ai-components-deterministic-system.ingest.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
 - [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the constraining decision this note describes
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

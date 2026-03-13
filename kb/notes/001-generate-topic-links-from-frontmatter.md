@@ -2,7 +2,7 @@
 description: Replace LLM-generated Topics footers with a deterministic script that reads the areas: frontmatter field
 type: adr
 traits: []
-areas: [kb-design, links]
+tags: [kb-design, links]
 status: accepted
 ---
 
@@ -43,8 +43,3 @@ The `/connect` skill's Gate 6 now calls this script instead of doing manual grep
 - **Idempotent** — running the script twice produces the same result
 - **Works across directories** — `docs/notes/` and `docs/claw-design/` both supported
 - **Testable** — 38 unit tests cover parsing, generation, path resolution, and edge cases
-
-Topics:
-
-- [kb-design](./kb-design.md)
-- [links](./links.md)

@@ -1,6 +1,6 @@
 ---
 description: Agent memory split into knowledge, self, and operational spaces mirrors Tulving's semantic/episodic/procedural distinction
-areas: [learning-theory]
+tags: [learning-theory]
 status: speculative
 ---
 
@@ -31,7 +31,3 @@ Relevant Notes:
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — operationalizes metabolic rates: per-type recency decay in note scoring formalizes the intuition that knowledge and operational content age differently
 - [agentic memory systems comparative review](./related-systems/agentic-memory-systems-comparative-review.md) — validates: evaluates the three-space taxonomy's analytical utility across 11 systems; uses the knowledge/self/operational split as the framework for comparing agency models and retention policies
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — challenges: AgeMem separates memory by access pattern (persistent LTM vs active STM), not content type, and its unified RL-trained management outperforms independent optimization — evidence against structural isolation of memory spaces
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

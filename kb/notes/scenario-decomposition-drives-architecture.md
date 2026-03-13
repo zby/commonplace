@@ -2,7 +2,7 @@
 description: Deriving architectural requirements by decomposing concrete user stories into step-by-step context needs — not from abstract read/write operations but from what the agent actually has to load at each stage, in both the commonplace repo and installed projects
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -133,7 +133,3 @@ Relevant Notes:
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimized for agent read/skip decisions
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — grounds: the escalation path is the distillation gap in action — when the distillate doesn't cover the case, the agent needs the source; the CLAUDE.md fragment makes this discoverable
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
-
-Topics:
-
-- [kb-design](./kb-design.md)

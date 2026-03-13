@@ -3,7 +3,7 @@ description: Half of /validate's checks are hard-oracle (enums, link resolution,
 type: note
 traits: []
 status: seedling
-areas: [document-system]
+tags: [document-system]
 ---
 
 # Deterministic validation should be a script
@@ -26,7 +26,3 @@ The split follows the [oracle strength spectrum](./oracle-strength-spectrum.md):
 - Composability (title works as inline prose)
 
 A validation script could run as a pre-commit hook or in CI, giving instant feedback. The `/validate` skill would then only need to run the judgment-based checks, making it cheaper and faster.
-
-Topics:
-
-- [document-system](./document-system.md)

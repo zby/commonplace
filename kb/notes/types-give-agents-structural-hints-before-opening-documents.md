@@ -1,7 +1,7 @@
 ---
 description: Types and descriptions let agents make routing decisions without loading full documents — the type says what operations a document affords, the description filters among instances of that type
 type: note
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -25,7 +25,3 @@ Relevant Notes:
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — enables: descriptions exist because the type system requires them; without enforcement, routing data degrades
 - [note base type](../../types/note.md) — defines description as the most important field — the retrieval filter this note's routing argument depends on
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview of all type system roles; this note develops the navigation role
-
-Topics:
-
-- [type-system](./type-system.md)

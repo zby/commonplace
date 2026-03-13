@@ -1,7 +1,7 @@
 ---
 description: Descriptions don't appear spontaneously — they exist because the note base type requires them; without enforcement, metadata degrades and navigation collapses to opening every document
 type: note
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -23,7 +23,3 @@ Relevant Notes:
 - [note base type](../../types/note.md) — defines description as the only required field — the enforcement mechanism this note describes
 - [text root type](../../types/text.md) — the boundary: crossing from text to note triggers the description requirement
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview of all type system roles; this note develops the enforcement role
-
-Topics:
-
-- [type-system](./type-system.md)

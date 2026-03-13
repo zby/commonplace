@@ -2,7 +2,7 @@
 description: ""
 type: structured-claim
 traits: []
-areas: []
+tags: []
 status: seedling
 ---
 
@@ -38,7 +38,3 @@ The Toulmin structure works for contested empirical claims where evidence needs 
 Relevant Notes:
 
 - [related-note](./related-note.md) — how it relates
-
-Topics:
-
-- [relevant-area-index](./relevant-area-index.md)

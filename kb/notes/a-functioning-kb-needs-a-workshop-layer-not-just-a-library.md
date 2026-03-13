@@ -1,7 +1,7 @@
 ---
 description: The current type system models permanent knowledge (library) but not in-flight work with state machines, dependencies, and expiration (workshop) — tasks are a prototype of the missing layer, and a functioning knowledge base needs both plus bridges between them
 type: note
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -92,7 +92,3 @@ Relevant Notes:
 - [instructions are typed callables](../notes/instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
 - [constraining is learning](../notes/constraining.md) — extraction bridges are constraining: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — theorist's THEORY.MD exemplifies the workshop layer; a concrete instance of a workshop artifact with holistic-rewrite lifecycle
-
-Topics:
-
-- [kb-design](./kb-design.md)

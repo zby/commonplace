@@ -28,7 +28,7 @@ The source snapshot itself has no outbound links. The connections below assess w
   - [agent-capability-reduces-to-selection-quality-over-bounded-context](kb/notes/agent-capability-reduces-to-selection-quality-over-bounded-context.md) -- bounded observer in selection
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) -- confirmed the "Information & Bounded Observers" section already lists the synthesis note; no additional candidates beyond index scan
+- Read [learning-theory](kb/notes/learning-theory-index.md) -- confirmed the "Information & Bounded Observers" section already lists the synthesis note; no additional candidates beyond index scan
 
 **Semantic search:** (via qmd)
 - query "computationally bounded observer information structure extraction epiplexity" in notes --
@@ -36,7 +36,7 @@ The source snapshot itself has no outbound links. The connections below assess w
   - [agent-capability-reduces-to-selection-quality](kb/notes/agent-capability-reduces-to-selection-quality-over-bounded-context.md) (56%) -- framing matters for bounded observers, uses observer-relative concept
   - [discovery-is-seeing-the-particular](kb/notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) (43%) -- recognition cost = computational bound
   - [symbolic-scheduling-over-bounded-llm-calls](kb/notes/symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) (38%) -- bounded context model, materialised intermediates
-  - [learning-theory](kb/notes/learning-theory.md) (37%) -- the index itself
+  - [learning-theory](kb/notes/learning-theory-index.md) (37%) -- the index itself
   - [constraining-and-distillation-both-trade-generality](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) (35%) -- trade-off mechanics
   - Remaining hits below 35% -- surface overlap only, skipped
 
@@ -89,7 +89,7 @@ The ingest file already identifies connections to 7 notes, and the synthesis not
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) -- The source is already referenced in the "Reference material" section of learning-theory through its ingest. No change needed.
+- [learning-theory](kb/notes/learning-theory-index.md) -- The source is already referenced in the "Reference material" section of learning-theory through its ingest. No change needed.
 - Already represented through: ingest file listed in sources/index.md; synthesis note listed in learning-theory index
 
 ## Synthesis Opportunities

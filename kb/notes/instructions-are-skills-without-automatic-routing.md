@@ -2,7 +2,7 @@
 description: Reusable distilled procedures that live in kb/instructions/ — same format as skills but without activation triggers or CLAUDE.md routing entries; invoked when a human points the agent at them
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -58,7 +58,3 @@ Relevant Notes:
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable distilled procedures
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the source/compiled split applies to instructions the same way it applies to skills
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: instructions, like skills, have implicit type signatures — they accept and produce document types
-
-Topics:
-
-- [kb-design](./kb-design.md)

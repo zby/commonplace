@@ -2,7 +2,7 @@
 description: Human writing genres evolved to prevent specific reasoning failures; the same structures help LLMs because LLMs exhibit empirically demonstrated human-like failure modes (content effects on reasoning) — per-convention transfer evaluation, not wholesale analogy
 type: note
 traits: [has-external-sources]
-areas: [type-system]
+tags: [type-system]
 status: current
 ---
 
@@ -31,7 +31,3 @@ Relevant Notes:
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 - [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.md) — evidence: empirical demonstration of human-like content effects across three reasoning tasks, with Wason divergence as a transfer boundary
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the formal argumentation model used as the primary running example throughout this note
-
-Topics:
-
-- [type-system](./type-system.md)

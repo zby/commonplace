@@ -24,8 +24,8 @@
 
 **Topic indexes:**
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Cognee already listed in the Systems section and mentioned in Patterns Across Systems. No additional candidates beyond index scan.
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed candidates: distillation, memory architecture notes, automating-kb-learning. No new candidates.
-- Read [kb-design](kb/notes/kb-design.md) — confirmed candidates: files-not-database, context-efficiency, automating-kb-learning. No new candidates.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed candidates: distillation, memory architecture notes, automating-kb-learning. No new candidates.
+- Read [kb-design](kb/notes/kb-design-index.md) — confirmed candidates: files-not-database, context-efficiency, automating-kb-learning. No new candidates.
 
 **Semantic search:** (via qmd)
 - query "knowledge graph pipeline memory agent vector hybrid entity extraction" on notes — top hits:
@@ -36,7 +36,7 @@
   - [siftly](kb/notes/related-systems/siftly.md) (41%) — already flagged
   - [clawvault](kb/notes/related-systems/clawvault.md) (41%) — peer system, connection is through the comparative review
   - [a-good-agentic-kb](kb/notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) (41%) — already flagged
-  - [learning-theory](kb/notes/learning-theory.md) (38%) — index, not a direct connection target
+  - [learning-theory](kb/notes/learning-theory-index.md) (38%) — index, not a direct connection target
   - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (34%) — already flagged
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (34%) — already flagged
 

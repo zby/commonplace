@@ -32,8 +32,8 @@ The `/connect` report identified that this source is already well-integrated int
 
 - [claim-notes-should-use-toulmin-derived-sections](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — **source**: the canonical framework this note adapts
 - [title-as-claim-enables-traversal-as-reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
-- [links](../notes/links.md) — **reference material**: formal argumentation theory behind link semantics
-- [kb-design](../notes/kb-design.md) — **reference material**: formal argumentation model grounding claim-title conventions
+- [links](../notes/links-index.md) — **reference material**: formal argumentation theory behind link semantics
+- [kb-design](../notes/kb-design-index.md) — **reference material**: formal argumentation model grounding claim-title conventions
 - [thalo-type-comparison](../notes/related-systems/thalo-type-comparison.md) — **grounds**: Toulmin provides the canonical decomposition that Thalo's opinion entity approximates
 
 **New "last mile" connections found** — 7 notes reference Toulmin concepts (warrants, evidence/reasoning sections, structured templates) without linking back to the formal source:

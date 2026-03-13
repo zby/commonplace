@@ -2,7 +2,7 @@
 description: Skill-based context engineering framework — 14 instructional modules covering attention mechanics, multi-agent patterns, memory, evaluation. Strong on operational patterns, weaker on learning theory.
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-02-25
 ---
 
@@ -55,6 +55,6 @@ These techniques could strengthen our [quality signals work](../quality-signals-
 - How does the evaluation methodology mature — could it become a reusable component?
 - Do they stay platform-agnostic or drift toward Claude Code specifics?
 
-Topics:
+Relevant Notes:
 
-- [related-systems](./related-systems-index.md)
+- [getsentry/skills](./getsentry-skills.md) — contrasts: that review covers a production implementation with a skill-writer meta-skill and the Agent Skills spec; this review covers a reference/teaching library. Same progressive disclosure architecture, very different operational maturity

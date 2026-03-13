@@ -2,7 +2,7 @@
 description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the bitter lesson boundary, with hypotheses about engineering priorities and an oracle-hardening pipeline
 type: note
 traits: []
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -82,7 +82,3 @@ Relevant Notes:
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — grounds: the implicit thesis that oracle quality (verification infrastructure), not generation quality, is the leverage point — structural tests and linter rules as the bottleneck
 - [Tam et al. — "When code is free, research is all that matters"](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — exemplifies: engineering (hard oracle) is automatable while research taste (no oracle) resists automation — the oracle-strength prediction in market-economics language
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: unifies this note's theoretical framework with labor-economics and capability-timeline evidence into a single claim
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

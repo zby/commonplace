@@ -1,7 +1,7 @@
 ---
 description: Theory of why commonplace's arrangements work — three properties (discoverable, composable, trustworthy) serve contextual competence under bounded context; accumulation is the basic learning operation (reach distinguishes facts from theories); constraining, distillation, and discovery transform accumulated knowledge; Deutsch's reach criterion distinguishes knowledge that transfers from knowledge that merely fits
 type: note
-areas: [kb-design, learning-theory]
+tags: [kb-design, learning-theory]
 status: seedling
 ---
 
@@ -108,8 +108,3 @@ Relevant Notes:
 - [sift-kg](./related-systems/sift-kg.md) — contrasts: extraction-based KG produces adaptive knowledge (facts) where reach comes from aggregation, not individual edges
 - [Siftly](./related-systems/siftly.md) — contrasts: enrichment-based system produces classified artifacts, not composable reasoning with reach
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (trustworthiness): credibility erosion from noisy embedding-generated links shows what happens when the trustworthiness property breaks down — the agent discounts all links, destroying composability
-
-Topics:
-
-- [kb-design](./kb-design.md)
-- [learning-theory](./learning-theory.md)

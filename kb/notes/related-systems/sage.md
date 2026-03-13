@@ -1,7 +1,7 @@
 ---
 description: BFT-branded agent memory with CometBFT consensus, Ed25519 signing, application-level validators, confidence decay, and encryption — consensus is ceremony in single-node mode; real value is the validation gate pattern and domain-scoped RBAC
 type: note
-areas: [related-systems]
+tags: [related-systems]
 traits: [has-comparison, has-external-sources]
 status: current
 last-checked: 2026-03-12
@@ -93,6 +93,3 @@ Relevant Notes:
 - [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — SAGE's four memory types (fact, observation, inference, task) are a flat enum, not a structural separation; memories of all types share the same store, retrieval path, and lifecycle
 
 `#related-systems` `#memory-architecture`
-
-Topics:
-- [related-systems](./related-systems-index.md)

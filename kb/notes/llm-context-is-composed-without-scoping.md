@@ -2,7 +2,7 @@
 description: LLM context is flat concatenation — no scoping, everything global, producing dynamic scoping's pathologies (spooky action at a distance, name collision, inability to reason locally) but without even a stack; sub-agents are the one mechanism that provides isolation through lexically scoped frames
 type: note
 traits: [has-external-sources]
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -105,7 +105,3 @@ Relevant Notes:
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — exemplifies: the routing tier separation is lexical scoping in practice
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: type signatures on skills are frame interfaces — declaring what bindings a sub-agent receives
 - [agent statelessness means the harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — mechanism: automatic context injection constructs lexically scoped frames
-
-Topics:
-
-- [computational-model](./computational-model.md)

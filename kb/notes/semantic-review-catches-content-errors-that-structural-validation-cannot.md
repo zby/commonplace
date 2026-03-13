@@ -1,7 +1,7 @@
 ---
 description: Four specific semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading — structural validation catches form errors but misses content errors like incomplete enumerations that contradict their own grounding definitions
 type: note
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -50,7 +50,3 @@ Relevant Notes:
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — extends: semantic review is the single-note complement to the corpus-level signals catalogued there
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — parallel: structural validation assumes the type system is trustworthy; semantic review checks whether the content lives up to its structural claims
 - [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — motivates: the note whose "three operations" incompleteness exposed this gap
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

@@ -2,7 +2,7 @@
 description: The enforcement gradient covers detection and blocking but has no recovery column — recovery strategies (corrective → fallback → escalation) are the missing layer, and oracle strength determines which are viable at each level
 type: note
 traits: [has-external-sources]
-areas: [kb-design, learning-theory]
+tags: [kb-design, learning-theory]
 status: seedling
 ---
 
@@ -68,8 +68,3 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — provides framework: the corrective → fallback → escalation recovery vocabulary and Drift Bounds Theorem that formalise the missing layer
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: error correction through repetition is one implementation of automated recovery for soft-oracle domains — amplification converts weak detection into reliable correction
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — contextualises: the safety dimension ("what happens when it doesn't work?") is the recovery question stated as a reliability property
-
-Topics:
-
-- [kb-design](./kb-design.md)
-- [learning-theory](./learning-theory.md)

@@ -2,7 +2,7 @@
 description: When a new requirement doesn't fit existing types or skills, writing an ad hoc instructions note absorbs it without any schema change — the collections problem is a concrete example
 type: note
 traits: []
-areas: [kb-design, learning-theory]
+tags: [kb-design, learning-theory]
 status: seedling
 ---
 
@@ -60,8 +60,3 @@ Relevant Notes:
 - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — grounds: ad hoc instructions are the wikiwiki principle applied to the skill layer — lowest-friction capture first, progressive refinement into skills as patterns emerge
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — enables: the extraction from ad hoc instructions to skills is distillation — keeping procedures, factoring out the discursive reasoning that produced them
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — grounds: ad hoc instructions notes are effective sub-agent interfaces because they provide lexically scoped frames — the sub-agent sees only what the caller explicitly passed
-
-Topics:
-
-- [kb-design](./kb-design.md)
-- [learning-theory](./learning-theory.md)

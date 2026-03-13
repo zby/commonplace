@@ -1,7 +1,7 @@
 ---
 description: Audit of overstated claims in the Decapod report -- proof-gating is self-reported not decorrelated, constitution has runtime overrides, publish gate is bypassable by its own branch naming, and storage/document counts are substantially wrong
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 ---
 

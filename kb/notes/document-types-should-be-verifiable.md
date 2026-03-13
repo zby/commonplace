@@ -2,7 +2,7 @@
 description: Document types should assert verifiable structural properties, not subject matter — with a base type + traits model inspired by gradual and structural typing
 type: note
 traits: []
-areas: [type-system]
+tags: [type-system]
 status: current
 ---
 
@@ -107,7 +107,3 @@ Relevant Notes:
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
 - [deploy-time-learning](../notes/deploy-time-learning-the-missing-middle.md) — the verifiability gradient that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote
 - [001-generate-topic-links-from-frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — precedent: when a mapping is verifiable and deterministic (areas -> Topics), it was automated; the same principle drives the type system design
-
-Topics:
-
-- [document-system](./document-system.md)

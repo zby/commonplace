@@ -2,7 +2,7 @@
 description: Periodic hygiene checks belong in externally triggered operations (user request, scheduler, CI), not in always-loaded routing instructions
 type: note
 traits: []
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: current
 ---
 
@@ -24,7 +24,3 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — extends this by applying always-loaded vs on-demand loading to maintenance operations
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operationalizes this by collecting periodic checks and their distillation status
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — defines the target artifact for procedures that mature beyond note-level catalogues
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

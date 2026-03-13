@@ -3,7 +3,7 @@ description: Directories buy one–two orders of magnitude of human-navigable sc
 type: note
 traits: []
 status: seedling
-areas: [document-system]
+tags: [document-system]
 ---
 
 # Why directories despite their costs
@@ -62,7 +62,3 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [document classification](./document-classification.md) — the type system that operates independently of directory structure
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem
-
-Topics:
-
-- [document-system](./document-system.md)

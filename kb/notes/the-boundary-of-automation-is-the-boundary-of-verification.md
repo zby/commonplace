@@ -2,7 +2,7 @@
 description: Synthesis — three lines of evidence (oracle theory, labor economics, frontier-lab capability predictions) with distinct reasoning paths converge on verification cost as the primary structural determinant of automation
 type: note
 traits: [has-external-sources]
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -53,7 +53,3 @@ Relevant Notes:
 - [Tam et al. — "When code is free"](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.md) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
 - [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — evidence: calibration improves but discrimination trends are mixed across benchmarks, suggesting self-assessment is not reliably scaling
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

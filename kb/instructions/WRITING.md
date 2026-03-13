@@ -10,7 +10,7 @@ For **notes and above** (any type with frontmatter), every note must be findable
 
 1. **[Title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases.
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
-3. **Area membership** — Is it tagged with the most precise area whose index would help a reader find related notes? (Directory indexes are auto-generated and don't count.)
+3. **Tags** — Is it tagged with relevant keywords that help future readers find it? Use as many as genuinely useful.
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
 
 If any answer is "no," fix it before saving.
@@ -45,7 +45,7 @@ Freeform exploration, insights, analysis. The default type for any document with
 description: ""
 type: note
 traits: []
-areas: []
+tags: []
 status: current
 ---
 
@@ -62,10 +62,6 @@ status: current
 Relevant Notes:
 
 - [related-note](./related-note.md) — how it relates
-
-Topics:
-
-- [relevant-area-index](./relevant-area-index.md)
 ```
 
 ### structured-claim
@@ -77,7 +73,7 @@ Developed arguments with Evidence/Reasoning/Caveats sections. Use when a note ha
 description: ""
 type: structured-claim
 traits: []
-areas: []
+tags: []
 status: seedling
 ---
 
@@ -106,10 +102,6 @@ status: seedling
 Relevant Notes:
 
 - [related-note](./related-note.md) — how it relates
-
-Topics:
-
-- [relevant-area-index](./relevant-area-index.md)
 ```
 
 ## Frontmatter
@@ -124,7 +116,7 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | `description` | Yes | Max 200 chars, must discriminate this note from similar ones |
 | `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`. See [document-classification](../notes/document-classification.md) |
 | `traits` | No | Independently checkable properties: `has-comparison`, `has-external-sources`, `has-implementation` |
-| `areas` | No | Area indexes worth visiting from this note — tag the most precise area, not every ancestor. See [why areas exist](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md). |
+| `tags` | No | Tags for navigation — used to generate index listings and HTML tag links. Use as many as genuinely useful. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md). |
 | `status` | No | current, outdated, speculative |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
@@ -153,9 +145,6 @@ Internal workspace documents connect via standard markdown links. Each link is a
 Relevant Notes:
 
 - [related note](./related-note.md) — extends this by adding the temporal dimension
-Topics:
-
-- [architecture-index](./architecture-index.md)
 ```
 
 Prefer inline links — they carry more information. Footer links are for connections that don't fit naturally into prose.
@@ -200,46 +189,44 @@ The distilled artifact itself should NOT link back to its sources — it's optim
 
 There are two kinds of indexes:
 
-- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `uv run kb/scripts/generate_notes_index.py <directory>`.
-- **Area indexes** (e.g. `approvals-index.md`) — curated navigation hubs with editorial context, grouping, and open questions. Updated by /connect or manually.
+- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `uv run scripts/generate_notes_index.py <directory>`.
+- **Tag indexes** (e.g. `kb-design-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md).
 
-The rest of this section covers area indexes.
+### Tag Index Structure
 
-Area indexes organize notes into sets where [comparative reading](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) is expected to be productive — loading the set together to detect redundancy, contradiction, tension, and merge candidates. Other uses (navigation, scoping searches) piggyback on the same boundaries.
+Each tag index has two sections:
 
-### Index Structure
+**Curated section** (optional, hand-written): Editorial groupings with context phrases, tensions, related indexes. A selective "essential reading" list — not every tagged note, just the ones that tell the story. Should stay small.
+
+**Generated section** (automatic): Complete listing of all notes carrying that tag. Rebuilt by `uv run scripts/sync_generated_index.py`. Everything below the `<!-- generated -->` marker is replaced on each run.
 
 ```markdown
-# area-name index
+# tag-name
 
-Brief orientation — what this area covers.
+Brief orientation — what this tag covers.
 
 ## Notes
 - [note](./note.md) — context explaining why this matters here
 
-## Decisions
-- [NNN-decision](../adr/NNN-decision.md) — brief context
-
 ## Open Questions
 What is unexplored or unresolved.
+
+## All notes <!-- generated -->
+- [note-a](./note-a.md) — description
+- [note-b](./note-b.md) — description
 ```
 
-**Critical rule:** Entries MUST have context phrases. A bare link list without explanation is an address book, not a map.
+**Critical rule:** Curated entries MUST have context phrases. A bare link list without explanation is an address book, not a map.
 
 ### Lifecycle
 
-**Create** when 5+ related notes accumulate without navigation structure.
-**Split** when an index exceeds 40 notes — that's the approximate point where an area stops fitting in working context. Optimise the split for comparative reading yield (keep high-tension pairs together), not for taxonomic cleanliness.
+**Create** when 5+ related notes accumulate under a tag without navigation structure.
+**Curate** when the generated listing alone isn't enough — add editorial groupings above the marker.
 **Merge** when both indexes are small with significant overlap.
 
-### Area Assignment
+### Tag Assignment
 
-Areas exist because [useful operations require reading notes together](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) — orientation and comparative reading both need bounded, related sets.
-
-- **Tag the most precise area** whose index would help a reader find related notes.
-- **Don't dual-tag parent and child.** If `type-system` is a sub-area of `document-system`, tag `type-system` only. The broader area is one hop away via "Related Areas" links in the index.
-- **Multiple areas are fine for independent dimensions** (e.g. `[kb-design, computational-model]`), not for parent-child relationships.
-- **Sub-area relationships live in index cross-links**, not in frontmatter. `areas.md` lists all areas flat.
+Tags are freeform navigation aids. Use as many as genuinely useful for helping future readers find the note. No parent/child restrictions — a note can be tagged both `constraining` and `learning-theory`. The HTML rendering (MkDocs) shows tags as clickable links.
 
 ## Helper Functions
 

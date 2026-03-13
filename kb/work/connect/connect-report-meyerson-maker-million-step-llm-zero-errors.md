@@ -22,7 +22,7 @@
   - [storing-llm-outputs-is-constraining](kb/notes/storing-llm-outputs-is-constraining.md) — generator/verifier pattern
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed error-correction, oracle-strength, and reliability-dimensions notes as core cluster. Additional candidate: [induction-bias-sequence-models](kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) (brackets same problem from opposite direction).
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed error-correction, oracle-strength, and reliability-dimensions notes as core cluster. Additional candidate: [induction-bias-sequence-models](kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) (brackets same problem from opposite direction).
 - No additional candidates beyond those already flagged.
 
 **Semantic search:** (via qmd)
@@ -33,7 +33,7 @@
   - [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md) (35%) — already flagged
   - [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](kb/notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) (34%) — safety/auditing parallel
   - [voooooogel-multi-agent-future](kb/notes/research/voooooogel-multi-agent-future.md) (33%) — multi-agent architecture predictions
-  - [learning-theory](kb/notes/learning-theory.md) (33%) — index already read
+  - [learning-theory](kb/notes/learning-theory-index.md) (33%) — index already read
   - [constraining](kb/notes/constraining.md) (33%) — already flagged
 - query on sources:
   - [meyerson-maker (self)](kb/sources/meyerson-maker-million-step-llm-zero-errors.md) (93%) — self
@@ -109,7 +109,7 @@ The ingest file (kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.m
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — The source is already cited in the Oracle & Verification section (via the error-correction note). The source itself does not need separate index membership; its insights flow through the notes that reference it.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source is already cited in the Oracle & Verification section (via the error-correction note). The source itself does not need separate index membership; its insights flow through the notes that reference it.
 
 - The ingest file is already listed in kb/sources/index.md.
 

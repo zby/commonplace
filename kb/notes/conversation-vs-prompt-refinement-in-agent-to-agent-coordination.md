@@ -2,7 +2,7 @@
 description: Analyses the tradeoff between conversational Q&A, prompt refinement, and context forking for sub-agent coordination — each shifts costs differently between caller and callee, and the right choice depends on architecture and how much intermediate work the sub-agent has done
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -59,7 +59,3 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — complicates: when the caller is also an LLM, the "push complexity to the scheduler" argument weakens
 - [distillation](./distillation.md) — foundation: prompt refinement is distillation — targeted extraction of the caller's knowledge into a focused artifact shaped by the sub-agent's task
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — parallel: campaign narratives are the same operation (distillation via holistic rewrite) applied to a different target
-
-Topics:
-
-- [computational-model](./computational-model.md)

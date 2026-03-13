@@ -2,7 +2,7 @@
 description: Theory for deciding what belongs in AGENTS.md using loading frequency and failure cost, with layers, exclusion rules, and migration paths
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -139,7 +139,3 @@ Relevant Notes:
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: Table 1 shows 14 content categories practitioners actually put in context files, with no established structure — empirical evidence for why the control-plane model's normative layering is needed
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md with invariants, routing, and escalation is the control-plane model in production at 1M LOC scale
-
-Topics:
-
-- [kb-design](./kb-design.md)

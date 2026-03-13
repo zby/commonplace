@@ -2,7 +2,7 @@
 description: Proposes that discovery has a dual structure — positing a new general concept while recognizing existing particulars as instances of it — and that similarity-based connections vary by abstraction depth (shared feature → shared structure → generative model), not link kind. Scoped to similarity connections; contrastive and causal links are a different axis.
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -104,7 +104,3 @@ Relevant Notes:
 Distilled into:
 
 - [/connect skill](../instructions/connect/SKILL.md) — the "name the mechanism" insight is operationalized as abstraction opportunity logging in Phase 5 reflection
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

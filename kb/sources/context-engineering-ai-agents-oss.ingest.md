@@ -31,8 +31,8 @@ The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. Th
 **Already linked** (4 notes + 2 indexes):
 - [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — grounds: the paper is the primary source; note was derived from the paper's five-style taxonomy
 - [human-llm-differences-are-load-bearing](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — validates: paper explicitly contrasts README-for-humans vs context-file-for-agents at empirical scale
-- [kb-design](../notes/kb-design.md) — validates: listed in Reference material; provides empirical grounding for context-loading categories
-- [learning-theory](../notes/learning-theory.md) — validates: listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts
+- [kb-design](../notes/kb-design-index.md) — validates: listed in Reference material; provides empirical grounding for context-loading categories
+- [learning-theory](../notes/learning-theory-index.md) — validates: listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts
 
 **New connections identified** (9):
 1. [methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md) — **validates**: RQ3 evolution data (Add 78, Modify 59, Remove 23, Remove section 2) confirms the maturation trajectory from underspecified guidance to refined instructions. The rsyslog commit removing a stylecheck instruction is a concrete constraining exemplar.

@@ -1,7 +1,7 @@
 ---
 description: ""
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 last-checked: {YYYY-MM-DD}
 ---
@@ -53,7 +53,3 @@ Investigate mechanistically. Update Core Ideas and Comparison with what you find
 Relevant Notes:
 
 - [related-note](./related-note.md) — how it relates
-
-Topics:
-
-- [related-systems](../notes/related-systems/related-systems-index.md)

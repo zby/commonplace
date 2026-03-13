@@ -6,11 +6,11 @@ status: current
 
 # Computational model
 
-Programming language concepts applied to LLM instructions and agent architectures. Where [learning-theory](./learning-theory.md) covers how systems learn and improve, and [kb-design](./kb-design.md) covers how knowledge bases are built and operated, this area covers the computational properties of the medium itself — what kind of "programs" LLM instructions are, and what PL concepts illuminate their behavior.
+Programming language concepts applied to LLM instructions and agent architectures. Where [learning-theory](./learning-theory-index.md) covers how systems learn and improve, and [kb-design](./kb-design-index.md) covers how knowledge bases are built and operated, this area covers the computational properties of the medium itself — what kind of "programs" LLM instructions are, and what PL concepts illuminate their behavior.
 
 ## Foundations
 
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory.md)
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — the core framing: underspecified semantics and execution indeterminism as the two properties that distinguish LLM instructions from traditional programs; also foundational to [learning-theory](./learning-theory-index.md)
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — the foundational argument for why context is the scarce resource; context cost has two dimensions (volume and complexity); connects all the PL-inspired mechanisms to this dual pressure
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call/absorb loop; the computational model that follows from context scarcity
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
@@ -37,7 +37,7 @@ Programming language concepts applied to LLM instructions and agent architecture
 
 ## Error Correction & Reliability
 
-These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
+These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-index.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
 
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — identifies an intermediate regime where OpenProse-like DSLs recover frame isolation without yet gaining hard-oracle bookkeeping
@@ -47,11 +47,11 @@ These notes are dual-tagged with [LLM interpretation errors](./llm-interpretatio
 
 - The homoiconic medium enables extensibility (ad hoc prompts, unified calling conventions) but requires explicit scoping disciplines (lexical frames, tier separation) precisely because there are no structural boundaries. The constraining gradient from instructions to scripts is one response — codifying imposes the structure the medium lacks.
 
-## Related Areas
+## Related Tags
 
-- [llm-interpretation-errors](./llm-interpretation-errors.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
-- [learning-theory](./learning-theory.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
-- [kb-design](./kb-design.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
+- [llm-interpretation-errors](./llm-interpretation-errors-index.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
+- [learning-theory](./learning-theory-index.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
+- [kb-design](./kb-design-index.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---
 

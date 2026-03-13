@@ -2,7 +2,7 @@
 description: AgeMem learns on two substrates — facts accumulated in memory (low-reach) and policy learned in weights (when to accumulate, distil, curate) — confirming memory policy is vision-feature-like; but the learning depends on task-completion oracles, which is exactly the evaluation gap that makes automating KB learning hard
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -71,7 +71,3 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through inspectable artifacts; same behavioral changes, different substrates
 - [inspectable substrate defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: AgeMem's split substrate (facts in store, policy in weights) vs commonplace's unified substrate (both in files)
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time constraining achieves; they differ on inspectability but AgeMem has closed the loop
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

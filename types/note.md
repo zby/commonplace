@@ -1,7 +1,7 @@
 ---
-description: Base type for all structured documents — defines the global fields (description, status, traits, areas), status ladder, traits system, and design principles that all typed documents inherit
+description: Base type for all structured documents — defines the global fields (description, status, traits, tags), status ladder, traits system, and design principles that all typed documents inherit
 type: spec
-areas: [document-system]
+tags: [document-system]
 status: current
 ---
 
@@ -27,7 +27,7 @@ These fields are available to all types that extend `note`.
 | `description` | Yes | Max 200 chars, must discriminate this note from similar ones. A retrieval filter, not a summary. |
 | `type` | No | Free-form string identifying the document type. Defaults to `note` if absent. |
 | `traits` | No | Array of independently checkable properties (see Traits below) |
-| `areas` | No | Array of area index names this document belongs to |
+| `tags` | No | Array of tag names for navigation — each generates a link to the tag's index page |
 | `status` | No | Commitment level (see Status below). Defaults to `seedling`. |
 
 ### description
@@ -74,7 +74,7 @@ Traits are independently checkable properties. A document can have zero or more 
 
 **Types are fuzzy.** They are assigned by agents and humans, not compilers. The system must tolerate misclassification — nothing breaks if a type or trait is wrong. Types are search aids, not enforcement boundaries.
 
-**Types are verifiable.** Each type and trait asserts a structural property you can check. The question is "what structural property am I asserting?" not "what is this about?" Subject matter belongs in `areas`.
+**Types are verifiable.** Each type and trait asserts a structural property you can check. The question is "what structural property am I asserting?" not "what is this about?" Subject matter belongs in `tags`.
 
 **Types mature through constraining.** Content can start as [text](./text.md) and get promoted to `note` by adding frontmatter, then to more specific types as structure develops. A text file that persists without promotion is a candidate for pruning.
 
@@ -87,7 +87,7 @@ Traits are independently checkable properties. A document can have zero or more 
 description: Storing an LLM output collapses a distribution to a point
 type: note
 traits: [has-comparison]
-areas: [index]
+tags: [index]
 status: seedling
 ---
 ```
@@ -99,7 +99,3 @@ Relevant Notes:
 - [text](./text.md) — the root type that note extends; promotion from text to note is the first structural step
 - [document-classification](../kb/notes/document-classification.md) — taxonomy overview: the base types table and migration history
 - [document-types-should-be-verifiable](../kb/notes/document-types-should-be-verifiable.md) — design rationale for verifiable types
-
-Topics:
-
-- [document-system](../kb/notes/document-system.md)

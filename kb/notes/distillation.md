@@ -2,7 +2,7 @@
 description: Definition — distillation is compressing knowledge for a specific task under a context budget — the operation that context engineering machinery exists to perform; one of two co-equal learning mechanisms alongside constraining
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -74,7 +74,4 @@ Relevant Notes:
 - [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — exemplifies: campaign narratives are distillation of accumulated understanding for a specific consumer; holistic rewrite is re-distillation
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — exemplifies: prompt refinement is distillation of the caller's knowledge for a sub-agent's task
 - [Epiplexity (Finzi et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: epiplexity measures theoretically what distillation does operationally — quantifies extractable structure for a given observer under computational bounds
-
-Topics:
-
-- [learning-theory](./learning-theory.md)
+- [getsentry/skills](./related-systems/getsentry-skills.md) — production evidence: the skill-writer meta-skill shows that distillation quality depends primarily on source collection breadth ("keep collecting until retrieval passes no longer add new guidance"), not compression technique — a dimension this note underemphasizes

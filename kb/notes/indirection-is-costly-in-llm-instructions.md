@@ -2,7 +2,7 @@
 description: In code, indirection (variables, config, abstraction layers) is nearly free at runtime — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -42,7 +42,3 @@ Relevant Notes:
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: indirection cost is another case where a programming practice (abstraction via variables) transfers to prompting but with a different cost model
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — foundation: build-time generation is a point on the constraining gradient — moving from stochastic interpretation to deterministic resolution
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context is expensive; indirection mechanics make it more so
-
-Topics:
-
-- [kb-design](./kb-design.md)

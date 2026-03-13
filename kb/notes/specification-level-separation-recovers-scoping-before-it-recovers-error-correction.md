@@ -1,7 +1,7 @@
 ---
 description: OpenProse-like DSLs expose control flow and discretion boundaries while leaving scheduling and validation on the LLM substrate, creating an intermediate regime between flat prompting and symbolic scheduling
 type: note
-areas: [computational-model, llm-interpretation-errors]
+tags: [computational-model, llm-interpretation-errors]
 status: current
 ---
 
@@ -35,8 +35,3 @@ Relevant Notes:
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — explains why a DSL and explicit state protocols help before codification
 - [codification](./codification.md) — contrasts: OpenProse constrains orchestration practice but does not codify the runtime semantics
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: compile-time validation and `**...**` conditions remain soft-oracle operations
-
-Topics:
-
-- [computational-model](./computational-model.md)
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

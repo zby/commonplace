@@ -2,7 +2,7 @@
 description: Definition — context engineering is the architecture and machinery for getting the right knowledge into a bounded context at the right time — routing, loading, scoping, and maintenance; distillation is its main operation but not the only one
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -34,7 +34,3 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — mechanism: routing through retrieval-oriented descriptions
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for the same problem
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: in-context learning only works when context engineering has selected the right knowledge; this makes context engineering a prerequisite, not just an optimization
-
-Topics:
-
-- [computational-model](./computational-model.md)

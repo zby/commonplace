@@ -8,16 +8,16 @@
 ## Discovery Trace
 
 **Index exploration:**
-- Read [kb-design](kb/notes/kb-design.md) — the note is already listed under Architecture. Found candidates: [indirection-is-costly-in-llm-instructions](kb/notes/indirection-is-costly-in-llm-instructions.md), [generate-instructions-at-build-time](kb/notes/generate-instructions-at-build-time.md), [injectable-configuration-extends-frontloading-to-installation-specific-values](kb/notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md), [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md), [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md), [scenario-decomposition-drives-architecture](kb/notes/scenario-decomposition-drives-architecture.md), [agent-statelessness-means-harness-should-inject-context-automatically](kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md)
-- Read [computational-model](kb/notes/computational-model.md) — note is listed under "Related notes in other areas." Found candidates: [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md), [llm-context-is-a-homoiconic-medium](kb/notes/llm-context-is-a-homoiconic-medium.md)
-- Read [learning-theory](kb/notes/learning-theory.md) — found candidates: [constraining](kb/notes/constraining.md), [codification](kb/notes/codification.md), [distillation](kb/notes/distillation.md), [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)
+- Read [kb-design](kb/notes/kb-design-index.md) — the note is already listed under Architecture. Found candidates: [indirection-is-costly-in-llm-instructions](kb/notes/indirection-is-costly-in-llm-instructions.md), [generate-instructions-at-build-time](kb/notes/generate-instructions-at-build-time.md), [injectable-configuration-extends-frontloading-to-installation-specific-values](kb/notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md), [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md), [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md), [scenario-decomposition-drives-architecture](kb/notes/scenario-decomposition-drives-architecture.md), [agent-statelessness-means-harness-should-inject-context-automatically](kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md)
+- Read [computational-model](kb/notes/computational-model-index.md) — note is listed under "Related notes in other areas." Found candidates: [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md), [llm-context-is-a-homoiconic-medium](kb/notes/llm-context-is-a-homoiconic-medium.md)
+- Read [learning-theory](kb/notes/learning-theory-index.md) — found candidates: [constraining](kb/notes/constraining.md), [codification](kb/notes/codification.md), [distillation](kb/notes/distillation.md), [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)
 - Followed link from [injectable-configuration](kb/notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md) — it explicitly extends frontloading; confirmed bidirectional candidate
 
 **Semantic search:** qmd unavailable, grep-only discovery
 
 **Keyword search:**
-- grep "frontload" — found 5 files linking to frontloading: [index](kb/notes/index.md), [injectable-configuration](kb/notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md), [kb-design](kb/notes/kb-design.md), [indirection-is-costly-in-llm-instructions](kb/notes/indirection-is-costly-in-llm-instructions.md), [computational-model](kb/notes/computational-model.md)
-- grep "partial evaluation" — found: [computational-model](kb/notes/computational-model.md), [kb-design](kb/notes/kb-design.md) (both already in candidates)
+- grep "frontload" — found 5 files linking to frontloading: [index](kb/notes/index.md), [injectable-configuration](kb/notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md), [kb-design](kb/notes/kb-design-index.md), [indirection-is-costly-in-llm-instructions](kb/notes/indirection-is-costly-in-llm-instructions.md), [computational-model](kb/notes/computational-model-index.md)
+- grep "partial evaluation" — found: [computational-model](kb/notes/computational-model-index.md), [kb-design](kb/notes/kb-design-index.md) (both already in candidates)
 - grep "execution context" — found: [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [agent-statelessness-makes-skill-layers-architectural-not-pedagogical](kb/notes/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md), [skills-derive-from-methodology-through-distillation](kb/notes/skills-derive-from-methodology-through-distillation.md) (context budget theme)
 - grep "indirection|build.time|crystallis|stabilis|distillation" — 64 files; filtered to those with genuine conceptual overlap
 
@@ -65,8 +65,8 @@
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — already a member under Architecture. Entry describes frontloading correctly.
-- [computational-model](kb/notes/computational-model.md) — already listed under "Related notes in other areas" as a PE application. Not a full member, which is appropriate since the note's primary area is kb-design.
+- [kb-design](kb/notes/kb-design-index.md) — already a member under Architecture. Entry describes frontloading correctly.
+- [computational-model](kb/notes/computational-model-index.md) — already listed under "Related notes in other areas" as a PE application. Not a full member, which is appropriate since the note's primary area is kb-design.
 
 ## Synthesis Opportunities
 

@@ -2,7 +2,7 @@
 description: Ordering heuristic for decomposition: commit first to decisions with the fewest viable options, then place flexible choices around them to preserve global optionality.
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -34,7 +34,3 @@ Relevant Notes:
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: applies the same ordering rule to agent decomposition strategy
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — enables: symbolic state lets constrained choices be fixed before costly semantic calls
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — example: hard constraints precede softer interpretive guidance
-
-Topics:
-
-- [computational-model](./computational-model.md)

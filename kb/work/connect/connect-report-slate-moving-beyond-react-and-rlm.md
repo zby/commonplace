@@ -25,8 +25,8 @@
   - [related-systems/agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) — agency model dimension
 
 **Topic indexes:**
-- Read [computational-model](kb/notes/computational-model.md) — confirmed all Scheduling & Orchestration section notes as candidates. No new candidates beyond index scan.
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed distillation and ephemeral-computation candidates. No new candidates.
+- Read [computational-model](kb/notes/computational-model-index.md) — confirmed all Scheduling & Orchestration section notes as candidates. No new candidates beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed distillation and ephemeral-computation candidates. No new candidates.
 
 **Semantic search:** (via qmd)
 - query "thread weaving agent architecture bounded worker episodic memory context management orchestrator" --collection notes -n 15:
@@ -41,7 +41,7 @@
   - [the-anatomy-of-an-agent-harness](kb/sources/the-anatomy-of-an-agent-harness-2031408954517971368.md) (50%) — moderate, both describe harness components
 - query "compaction lossy compression agent context working memory degradation subagent synchronization" --collection notes -n 15:
   - [memory-management-policy](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (88%) — evaluated above
-  - [computational-model](kb/notes/computational-model.md) (51%) — already scanned as topic index
+  - [computational-model](kb/notes/computational-model-index.md) (51%) — already scanned as topic index
   - [context-efficiency](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (41%) — already flagged
   - [decomposition-rules](kb/notes/decomposition-rules-for-bounded-context-scheduling.md) (41%) — already flagged
   - [three-space-agent-memory](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (33%) — already flagged
@@ -114,7 +114,7 @@
 
 ## Index Membership
 
-- [computational-model](kb/notes/computational-model.md) — Slate exemplifies the Scheduling & Orchestration cluster; as a source it would naturally be cited by notes in this area (especially bounded-context-orchestration-model and rlm-achieves-the-clean-scheduler-model)
+- [computational-model](kb/notes/computational-model-index.md) — Slate exemplifies the Scheduling & Orchestration cluster; as a source it would naturally be cited by notes in this area (especially bounded-context-orchestration-model and rlm-achieves-the-clean-scheduler-model)
 - Not currently a member of any index (it's a source, not a note)
 
 ## Synthesis Opportunities

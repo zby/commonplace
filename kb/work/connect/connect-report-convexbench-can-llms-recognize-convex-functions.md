@@ -22,15 +22,15 @@
   - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — lazy reasoning as a human-like failure mode
 
 **Topic indexes:**
-- Read [computational-model](kb/notes/computational-model.md) — confirmed: scheduling, scoping, and frontloading notes are the core cluster. Additional candidate: [synthesis-is-not-error-correction](kb/notes/synthesis-is-not-error-correction.md) (aggregation methodology).
-- Read [learning-theory index](kb/notes/learning-theory.md) — confirmed oracle-strength and codification connections.
+- Read [computational-model](kb/notes/computational-model-index.md) — confirmed: scheduling, scoping, and frontloading notes are the core cluster. Additional candidate: [synthesis-is-not-error-correction](kb/notes/synthesis-is-not-error-correction.md) (aggregation methodology).
+- Read [learning-theory index](kb/notes/learning-theory-index.md) — confirmed oracle-strength and codification connections.
 
 **Semantic search (via qmd):**
 
 - Query 1: `"compositional reasoning failure LLM depth decomposition agentic recursive scaffolding"` in notes (n=15)
   - [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) (56%) — strong match, already cites ConvexBench
   - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) (45%) — failure mode overlap concept
-  - [computational-model](kb/notes/computational-model.md) (41%) — index, already covered
+  - [computational-model](kb/notes/computational-model-index.md) (41%) — index, already covered
   - [synthesis-is-not-error-correction](kb/notes/synthesis-is-not-error-correction.md) (39%) — aggregation vs voting
   - [symbolic-scheduling-over-bounded-llm-calls](kb/notes/symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) (38%) — strong match
   - [decomposition-rules-for-bounded-context-scheduling](kb/notes/decomposition-rules-for-bounded-context-scheduling.md) (36%) — strong match
@@ -113,8 +113,8 @@ These notes already reference ConvexBench. The reverse links (from ConvexBench b
 
 ## Index Membership
 
-- [computational-model](kb/notes/computational-model.md) — ConvexBench provides empirical evidence for multiple notes in this area (scoping, scheduling, decomposition, frontloading). The source could be added to a "Key empirical evidence" section if the index were to track source evidence.
-- [learning-theory](kb/notes/learning-theory.md) — ConvexBench's hard-oracle benchmark design and the codification of parsing exemplify concepts in this area, but less centrally.
+- [computational-model](kb/notes/computational-model-index.md) — ConvexBench provides empirical evidence for multiple notes in this area (scoping, scheduling, decomposition, frontloading). The source could be added to a "Key empirical evidence" section if the index were to track source evidence.
+- [learning-theory](kb/notes/learning-theory-index.md) — ConvexBench's hard-oracle benchmark design and the codification of parsing exemplify concepts in this area, but less centrally.
 
 ## Synthesis Opportunities
 

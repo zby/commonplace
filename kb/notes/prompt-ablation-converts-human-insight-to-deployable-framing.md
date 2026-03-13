@@ -2,7 +2,7 @@
 description: Methodology for testing prompt framings — uses controlled variation against a human-verified finding to identify which cognitive moves agents can reliably execute, then deploys the winning framing as instruction
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -64,7 +64,3 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: the experiment pattern uses a hard oracle (known finding) to evaluate a soft question (which framing works?)
 - [unit-testing-llm-instructions-requires-mocking-the-tool-boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — complements: tests skill execution via tool mocking; this note tests prompt framings via ablation against known targets
 - [curiosity-prompts experiment](../work/curiosity-prompts/experiment-report.md) — worked example: 6 framings tested against a known Decapod finding
-
-Topics:
-
-- [kb-design](./kb-design.md)

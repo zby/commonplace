@@ -2,7 +2,7 @@
 description: Six operational signals — five early-detection (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failure modes, distribution sensitivity) plus composition failure as late-stage confirmation — for shifting confidence about whether a component encodes theory or specification.
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -56,7 +56,3 @@ Relevant Notes:
 - [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — evidence (interpreted): R_prompt metric shows paraphrase brittleness is the key differentiator among robustness sub-dimensions; we interpret this as support for the paraphrase brittleness signal, though the source doesn't connect to the bitter lesson boundary
 - [Ma et al. PromptSE framework](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — refines: richer operationalization of paraphrase brittleness via controlled emotion/personality templates at three perturbation distances; non-monotonic scaling (smaller models can be more stable) supports the interpretation that brittleness detects badly-fitting theories, not capacity limitations
 - [research/adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — extends: independently catalogues domain-specific relaxing signals (growing exception lists, special cases, user overrides) in llm-do context
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

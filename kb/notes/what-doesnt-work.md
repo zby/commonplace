@@ -1,7 +1,7 @@
 ---
 description: Anti-patterns and areas with insufficient evidence — auto-commits, queue overhead, validation ceremony, session rhythm
 type: review
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -22,7 +22,3 @@ The following areas showed friction, but we haven't tested them enough to draw c
 - **Schema validation as a separate ceremony** — a dedicated FAIL/WARN/PASS phase adds machinery. The frontmatter fields themselves are useful; the question is whether formal validation justifies its cost.
 - **Session rhythm protocol** — orient → work → persist adds ceremony. Unclear whether it changes behavior beyond what good context already provides.
 - **Connection requirements outpace connection-making** — orphan rate reached ~90%. The gap between connection rules and actual connections was noticeable, but the rules themselves may not be the problem.
-
-Topics:
-
-- [kb-design](./kb-design.md)

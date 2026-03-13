@@ -1,7 +1,7 @@
 ---
 description: The same prompt can produce different outputs across runs due to token sampling — this is a property of the execution engine, theoretically eliminable but practically ubiquitous, and often confused with the deeper issue of underspecification
 type: note
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -26,12 +26,8 @@ Relevant Notes:
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — elaborates: the full framework including how indeterminism and underspecification layer on each other
 - [prompt underspecification is a property of the specification language](./prompt-underspecification-is-a-property-of-the-specification-language.md) — sibling: the deeper phenomenon that indeterminism obscures
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — sibling: the third phenomenon, also unaddressed by sampling control
-- [LLM interpretation errors](./llm-interpretation-errors.md) — parent area: the three-phenomena taxonomy this note is part of
+- [LLM interpretation errors](./llm-interpretation-errors-index.md) — parent area: the three-phenomena taxonomy this note is part of
 
 Sources:
 
 - Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — cleanest empirical separation of indeterminism from underspecification: by varying prompt framing (emotion/personality) while holding task constant, they isolate the effect of interpretation choice from run-to-run sampling noise
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

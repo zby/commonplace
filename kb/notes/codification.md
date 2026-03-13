@@ -2,7 +2,7 @@
 description: Definition — codification is constraining that crosses a medium boundary from natural language to a symbolic medium (code), where the consumer changes (LLM → interpreter) and verification becomes exact — the far end of the constraining spectrum
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -36,7 +36,3 @@ Relevant Notes:
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

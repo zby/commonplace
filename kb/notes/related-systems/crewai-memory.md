@@ -2,7 +2,7 @@
 description: Unified vector-memory system for agent crews with LLM-driven scope inference, composite scoring, and consolidation — sophisticated retrieval engineering but no learning theory, treating memory as infrastructure rather than a knowledge medium
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-03-05
 ---
 
@@ -86,7 +86,7 @@ CrewAI Memory and [ClawVault](./clawvault.md) represent two poles of agent memor
 - **ClawVault** has typed observations, explicit session lifecycles, promotion pipelines, and a reflection cycle. It models the *process* of learning.
 - **CrewAI Memory** has a unified vector store, composite scoring, and consolidation. It models the *infrastructure* of remembering.
 
-Neither has a [learning theory](../learning-theory.md). ClawVault has operational patterns for what to do with knowledge (score, promote, reflect); CrewAI has engineering for how to store and retrieve it. What's missing from both is the meta-level: when should knowledge be [constrained](../constraining.md) vs. kept fluid? When does a memory need to become a decision, a procedure, a constraint? These are the questions our [deploy-time learning framework](../deploy-time-learning-the-missing-middle.md) addresses.
+Neither has a [learning theory](../learning-theory-index.md). ClawVault has operational patterns for what to do with knowledge (score, promote, reflect); CrewAI has engineering for how to store and retrieve it. What's missing from both is the meta-level: when should knowledge be [constrained](../constraining.md) vs. kept fluid? When does a memory need to become a decision, a procedure, a constraint? These are the questions our [deploy-time learning framework](../deploy-time-learning-the-missing-middle.md) addresses.
 
 The earlier [comparative review of agentic memory systems](./agentic-memory-systems-comparative-review.md) (Mem0, Graphiti, Cognee, Letta) found all four systems converging on vector similarity for retrieval and LLM-driven extraction on save. CrewAI Memory continues this pattern — it's the most polished implementation of the same paradigm, with the composite scoring and consolidation as its distinctive contributions.
 
@@ -110,6 +110,3 @@ Relevant Notes:
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: the scope tree blurs workshop/library distinction rather than making it explicit
 - [ClawVault](./clawvault.md) — sibling: both are agent memory systems; ClawVault models the process of learning, CrewAI models the infrastructure of remembering
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: CrewAI's consolidation is an automated mutation that succeeds on deduplication but doesn't address the harder mutations (synthesise, regroup)
-
-Topics:
-- [related-systems](./related-systems-index.md)

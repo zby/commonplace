@@ -2,7 +2,7 @@
 description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs; the mechanism is partial evaluation applied to instructions with underspecified semantics
 type: note
 traits: [has-external-sources]
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -78,7 +78,3 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity is what makes frontloading partial evaluation rather than just divide-and-conquer — the pre-computed result re-enters the instruction stream without format conversion
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
-
-Topics:
-
-- [kb-design](./kb-design.md)

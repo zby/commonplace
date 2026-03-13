@@ -2,7 +2,7 @@
 description: CLAUDE.md enforces universal constraints (imperative/push); skill descriptions advertise opt-in capabilities (suggestive/pull) — guidance belongs on whichever surface matches its enforcement model
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -23,7 +23,3 @@ The overlap is intentional but serves different purposes. CLAUDE.md says "before
 Relevant Notes:
 
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy that establishes why always-loaded context must be slim; this note distinguishes the two always-loaded surfaces within that hierarchy
-
-Topics:
-
-- [kb-design](./kb-design.md)

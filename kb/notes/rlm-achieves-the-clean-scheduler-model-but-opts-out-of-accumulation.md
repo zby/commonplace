@@ -2,7 +2,7 @@
 description: RLM achieves the clean symbolic-scheduler model by having the LLM write the scheduler as code, but its ephemeral design opts out of deploy-time learning — the tension between architectural elegance and accumulation is a genuine open question
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -50,7 +50,3 @@ Relevant Notes:
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call/absorb loop that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs
-
-Topics:
-
-- [computational-model](./computational-model.md)

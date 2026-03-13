@@ -22,7 +22,7 @@
   - [related_works/evans-ai-components-deterministic-system](kb/notes/related_works/evans-ai-components-deterministic-system.md) — existing analysis note of the same article
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) implicitly via candidates — all core connections are in the learning-theory area
+- Read [learning-theory](kb/notes/learning-theory-index.md) implicitly via candidates — all core connections are in the learning-theory area
 
 **Semantic search:** (via qmd)
 - query "separating modeling from classification tasks freezing schema deterministic AI output" --collection notes:
@@ -85,7 +85,7 @@ The source snapshot is a raw capture of Evans' article. There is already an exis
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — the source exemplifies constraining and codification concepts. The analysis note at `related_works/` already carries this area membership implicitly through its links.
+- [learning-theory](kb/notes/learning-theory-index.md) — the source exemplifies constraining and codification concepts. The analysis note at `related_works/` already carries this area membership implicitly through its links.
 - The source itself (in `kb/sources/`) is listed in the auto-generated [sources/index.md](kb/sources/index.md).
 
 ## Synthesis Opportunities

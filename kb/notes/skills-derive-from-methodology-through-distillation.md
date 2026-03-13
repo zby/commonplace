@@ -2,7 +2,7 @@
 description: The methodology→skill relationship is distillation (extracting operational procedures from discursive reasoning in the same medium) — distinct from codification (prompt→code phase transition) and constraining (narrowing output distribution)
 type: structured-claim
 traits: [has-comparison]
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -89,7 +89,3 @@ Relevant Notes:
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the formal argumentation framework referenced as methodology input to the /connect skill
-
-Topics:
-
-- [kb-design](./kb-design.md)

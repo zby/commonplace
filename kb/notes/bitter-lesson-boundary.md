@@ -2,7 +2,7 @@
 description: The bitter lesson has a boundary — arithmetic vs vision features illustrate when exact solutions survive scaling and when they don't
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -51,7 +51,3 @@ Relevant Notes:
 - [Induction bias in sequence models](../sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) — grounds quantitatively: kappa metric shows transformers learn length-isolated solutions (kappa ≈ 1) while RNNs share mechanisms across variations — destructive interference (kappa < 1) is concrete evidence that more data can hurt without the right architectural constraint
 - [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — exemplifies both regimes: fiscal period normalization (10,000+ company calendars) is a clean calculator-regime case; "the model will eat your scaffolding" is the relaxing prediction articulated as design principle
 - [MAKER: million-step zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — exemplifies the arithmetic regime at scale: decomposition to minimal subtasks with hard per-step oracles achieves zero errors over a million steps
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

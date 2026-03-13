@@ -1,7 +1,7 @@
 ---
 description: Synthesis propagates errors by merging all agent outputs; voting corrects errors by discarding minorities — Kim et al.'s 17.2× amplification is a synthesis failure, not evidence against multi-agent coordination
 type: note
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -65,7 +65,3 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
 - [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
 - [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — evidence: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

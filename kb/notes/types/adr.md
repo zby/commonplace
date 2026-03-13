@@ -1,7 +1,7 @@
 ---
 description: ""
 type: adr
-areas: []
+tags: []
 status: accepted
 ---
 
@@ -27,7 +27,3 @@ status: accepted
 Relevant Notes:
 
 - [related-note](./related-note.md) — background exploration or research
-
-Topics:
-
-- [relevant-area-index](./relevant-area-index.md)

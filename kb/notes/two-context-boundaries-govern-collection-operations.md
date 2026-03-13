@@ -1,7 +1,7 @@
 ---
 description: Any note collection faces two context boundaries — a full-text boundary where all bodies can be loaded together, and an index boundary where all titles+descriptions fit — creating three operational regimes that govern areas, /connect, and whole-KB operations differently
 type: note
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -74,7 +74,3 @@ Relevant Notes:
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the two boundaries define two resolution levels (index and full-text) between which the KB must support fluid switching
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: library/workshop separation keeps the main collection below the index boundary where /connect works
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — parallel: the loading hierarchy (always-loaded > on-demand > full-text) mirrors the resolution gradient described here
-
-Topics:
-
-- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: Definition — constraining narrows the space of valid interpretations an underspecified spec admits, from partial narrowing (conventions, structured sections) to full commitment (stored outputs, deterministic code) — one of two co-equal learning mechanisms alongside distillation
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -59,7 +59,3 @@ Relevant Notes:
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when constraining is permanent vs when relaxing is needed
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

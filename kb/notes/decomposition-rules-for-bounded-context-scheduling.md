@@ -2,7 +2,7 @@
 description: Practical rules for symbolic scheduling over bounded LLM calls — separate selection from joint reasoning, choose representations not just subsets, save reusable intermediates in scheduler state
 type: note
 traits: [has-external-sources]
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -73,7 +73,3 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: context is the scarce resource these rules optimise over
 - [distillation](./distillation.md) — mechanism: saved intermediate items are often distillations shaped for later reuse
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
-
-Topics:
-
-- [computational-model](./computational-model.md)

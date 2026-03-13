@@ -2,7 +2,7 @@
 description: Capability artifacts should be placed by autonomy readiness so AGENTS.md stays free of inventories and only routes or constrains behavior
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -39,7 +39,3 @@ Relevant Notes:
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — defines the intermediate form between notes and skills
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — concrete staging area for operations before they are distilled
 - [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts
-
-Topics:
-
-- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: The five empirically observed context-file writing styles (descriptive, prescriptive, prohibitive, explanatory, conditional) are not stylistic variation — they correspond to different strategies for narrowing the interpretation space agents face, trading off constraint against generalisability
 type: note
 traits: [has-external-sources]
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -51,7 +51,3 @@ Relevant Notes:
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: prescriptive style is constraining within the instruction medium, short of extracting to code
 - [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — grounds: the "warrant" concept used in the explanatory style description originates from Toulmin's argumentation model
-
-Topics:
-
-- [computational-model](./computational-model.md)

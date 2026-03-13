@@ -2,7 +2,7 @@
 description: Instructions, skills, hooks, and scripts form a constraining gradient for methodology — from underspecified and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
 type: note
 traits: []
-areas: [kb-design, learning-theory]
+tags: [kb-design, learning-theory]
 status: seedling
 ---
 
@@ -67,8 +67,3 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — formalizes: hard/soft constraint vocabulary and Drift Bounds Theorem (D*=α/γ) provide mathematical grounding for the enforcement gradient; maps warning hooks to soft constraints with recovery windows
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: three harness pillars (instructions → structural tests → automated cleanup agents) map to the constraining gradient; "every mistake is a harness bug" is the maturation trajectory in practitioner language
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: adds the recovery column (corrective → fallback → escalation) missing from the enforcement gradient; oracle strength determines which recovery strategies are viable at each layer
-
-Topics:
-
-- [kb-design](./kb-design.md)
-- [learning-theory](./learning-theory.md)

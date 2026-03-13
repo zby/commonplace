@@ -27,8 +27,8 @@
   - [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md) — harness constrains interpretation space
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) — confirmed: methodology-enforcement, agents-md-control-plane, instruction-specificity-should-match-loading-frequency, context-efficiency all present. No additional candidates beyond index scan.
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed: constraining, codification, spec-mining, error-messages, inspectable-substrate, oracle-strength all present. No additional candidates.
+- Read [kb-design](kb/notes/kb-design-index.md) — confirmed: methodology-enforcement, agents-md-control-plane, instruction-specificity-should-match-loading-frequency, context-efficiency all present. No additional candidates beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed: constraining, codification, spec-mining, error-messages, inspectable-substrate, oracle-strength all present. No additional candidates.
 
 **Semantic search (qmd):**
 - query "harness engineering constraints verification feedback loops agent environment design" (notes, n=15):
@@ -124,8 +124,8 @@ These connections were identified during ingestion and hold up under deeper eval
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — The source provides practitioner evidence for multiple KB design principles (instruction-specificity-should-match-loading-frequency, agents-md-control-plane, methodology-enforcement). Could be listed in Reference Material section alongside the context-engineering OSS study.
-- [learning-theory](kb/notes/learning-theory.md) — The source exemplifies constraining, codification, and deploy-time learning. Could be listed in Reference Material section.
+- [kb-design](kb/notes/kb-design-index.md) — The source provides practitioner evidence for multiple KB design principles (instruction-specificity-should-match-loading-frequency, agents-md-control-plane, methodology-enforcement). Could be listed in Reference Material section alongside the context-engineering OSS study.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source exemplifies constraining, codification, and deploy-time learning. Could be listed in Reference Material section.
 
 ## Synthesis Opportunities
 

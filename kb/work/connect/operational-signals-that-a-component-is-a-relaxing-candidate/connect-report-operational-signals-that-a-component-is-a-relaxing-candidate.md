@@ -21,8 +21,8 @@
   - [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md) — underspecification is the root cause of theory-encoding components
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — the target note's natural home. Note is NOT currently listed in this index. It belongs in the Constraining section alongside spec-mining (it operationalizes the detection half of the codify/relax cycle). Additional candidates surfaced: [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
-- Read [kb-design](kb/notes/kb-design.md) — no additional candidates beyond what index scan found.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — the target note's natural home. Note is NOT currently listed in this index. It belongs in the Constraining section alongside spec-mining (it operationalizes the detection half of the codify/relax cycle). Additional candidates surfaced: [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
+- Read [kb-design](kb/notes/kb-design-index.md) — no additional candidates beyond what index scan found.
 
 **Semantic search:** (via qmd)
 - query "relaxing candidate signals theory vs specification component brittleness integration testing" --collection notes -n 15 — top hits:
@@ -32,7 +32,7 @@
   - bitter-lesson-boundary.md (42%) — already linked from target
   - automating-kb-learning-is-an-open-problem.md (41%) — weak, mentions relaxing but no specific signal overlap
   - oracle-strength-spectrum.md (39%) — already linked from target
-  - learning-theory.md (38%) — index, not direct connection
+  - learning-theory-index.md (38%) — index, not direct connection
   - constraining.md (37%) — defines relaxing as reverse operation
   - constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md (35%) — already linked via compound trade-off
   - codification.md (34%) — surface overlap only
@@ -97,7 +97,7 @@ These connections already exist in both directions — listed for completeness:
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — The note belongs in the **Constraining** section, alongside `spec-mining-as-codification`. Spec mining is the operational mechanism for codification; relaxing signals are the operational mechanism for detecting when to reverse it. Together they complete the operational toolkit for navigating the bitter lesson boundary. The note is NOT currently listed in this index despite having `areas: []` in its frontmatter (it should have `areas: [learning-theory]`).
+- [learning-theory](kb/notes/learning-theory-index.md) — The note belongs in the **Constraining** section, alongside `spec-mining-as-codification`. Spec mining is the operational mechanism for codification; relaxing signals are the operational mechanism for detecting when to reverse it. Together they complete the operational toolkit for navigating the bitter lesson boundary. The note is NOT currently listed in this index despite having `areas: []` in its frontmatter (it should have `areas: [learning-theory]`).
 
 ## Synthesis Opportunities
 

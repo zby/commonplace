@@ -2,7 +2,7 @@
 description: Catalogue of periodic KB maintenance operations and distillation status, used as a staging ground before promotion into kb/instructions procedures
 type: note
 traits: [has-implementation]
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: current
 ---
 
@@ -83,7 +83,3 @@ Relevant Notes:
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — foundation: routing docs stay slim while periodic operations are externally triggered
 - [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — target form: mature catalogue entries become reusable instructions
 - [deterministic-validation-should-be-a-script](./deterministic-validation-should-be-a-script.md) — escalation path: deterministic operations can move beyond instructions into scripts
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

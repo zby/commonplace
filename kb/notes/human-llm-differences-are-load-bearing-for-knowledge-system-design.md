@@ -2,7 +2,7 @@
 description: Knowledge systems both inherit human-oriented materials and produce dual-audience documents (human + LLM), making human-LLM cognitive differences a first-class design concern rather than a generic disclaimer
 type: note
 traits: []
-areas: [document-system]
+tags: [document-system]
 status: seedling
 ---
 
@@ -72,7 +72,3 @@ Relevant Notes:
 - [agent statelessness means the harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — complementary response: tier separation addresses writing for different audiences; context injection addresses loading what the agent can't carry from prior sessions
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — validates: empirical study of 466 OSS projects finds developers explicitly distinguish "README files for humans" from "AI context files for AI agents" — the dual-audience split observed at scale with no established conventions for resolving it
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — extends: "codebase optimized for Codex's legibility first" is the extreme endpoint of dual-audience design — human readability as secondary to agent readability
-
-Topics:
-
-- [document-system](./document-system.md)

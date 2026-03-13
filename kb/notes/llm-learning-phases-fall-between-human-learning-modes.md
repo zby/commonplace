@@ -2,7 +2,7 @@
 description: Pre-training acquires both structural priors (evolution's role in humans) and world knowledge in one pass — making it and in-context learning intermediate on the evolution-to-reaction spectrum
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -59,7 +59,3 @@ Relevant Notes:
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-maps-to-tulving-taxonomy.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change applies regardless of which human mode a phase maps to
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — example: structured templates leverage the properties of pre-training specifically (what distributions were seen), not any human learning analogy
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

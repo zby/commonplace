@@ -1,6 +1,6 @@
 ---
 name: validate
-description: Schema validation for KB notes. Checks against note type — text files (no frontmatter) are always valid; notes and above are checked for description quality, type/trait enums, link health, and areas-topics consistency. Non-blocking — warns but doesn't prevent editing. Triggers on "/validate", "/validate [note]", "/validate all", "/validate recent".
+description: Schema validation for KB notes. Checks against note type — text files (no frontmatter) are always valid; notes and above are checked for description quality, type/trait enums, and link health. Non-blocking — warns but doesn't prevent editing. Triggers on "/validate", "/validate [note]", "/validate all", "/validate recent".
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 context: fork
@@ -47,7 +47,7 @@ For notes and above, parse:
 Validation checks are cumulative — each type inherits checks from simpler types:
 
 - **text**: no checks (always valid)
-- **note**: frontmatter validity, description, enum fields, composability, link health, areas-topics
+- **note**: frontmatter validity, description, enum fields, composability, link health
 - **structured-claim**: note checks + Evidence and Reasoning sections present
 - **spec**: note checks + Design/Implementation sections present
 - **review**: note checks + Findings section present
@@ -185,19 +185,7 @@ Applies to: all types except `text`
 
 **How to verify:** For each relative markdown link, resolve the path relative to the note's directory and check if the target file exists.
 
-#### 9. Areas-Topics Consistency
-
-Applies to: all types except `text`
-
-| Check | Rule | How to Verify |
-|-------|------|---------------|
-| Areas without Topics | If `areas:` is set in frontmatter, a `Topics:` footer should exist | Scan for `Topics:` section at end of file |
-| Topics without Areas | If `Topics:` footer exists, `areas:` should be set | Check frontmatter for `areas:` field |
-| Sync suggestion | If mismatch detected, suggest running sync script | Report: `uv run kb/scripts/sync_topic_links.py <note-path>` |
-
-This check verifies that the two representations stay in sync. `areas:` is the source of truth; `Topics:` footer is generated from it.
-
-#### 10. Type-Specific Structure
+#### 9. Type-Specific Structure
 
 Applies to: `structured-claim`, `spec`, `review`, `index`, `adr` only
 
@@ -282,8 +270,6 @@ PASS:
 
 WARN:
 - description: 38 chars — below recommended minimum of 50
-- areas-topics: areas: [claw-design] set but no Topics: footer found
-  → Run: uv run kb/scripts/sync_topic_links.py kb/notes/note-title.md
 
 FAIL:
 - (none)
@@ -300,7 +286,6 @@ If WARN or FAIL items exist, include:
 ```
 ### Suggested Fixes
 - **description**: Expand to ~50-200 chars — add mechanism, scope, or implication
-- **areas-topics**: Run sync script to generate Topics footer from areas field
 ```
 
 ## Batch Mode

@@ -2,7 +2,7 @@
 description: The KB already learns through manual work (every improvement is capacity change per Simon). The open problem is automating the judgment-heavy mutations — connections, groupings, synthesis — which require oracles we can't yet manufacture.
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: speculative
 ---
 
@@ -89,7 +89,3 @@ Relevant Notes:
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — confirms from the other direction: AgeMem shows RL can learn memory-management policy, but only because task completion provides a clear oracle; the KB's evaluation gap (no equivalent oracle) is the real bottleneck, not the learning mechanism
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: the KB's automation bottleneck is an instance of the general principle that automation stalls where oracle construction stalls
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — extends: the scaling question ("can curation survive at 10K-100K notes?") and the compounding-returns hypothesis are directly relevant to the automation challenge; the source also provides the strongest articulation of why retrieval and navigability are distinct system goals requiring different evaluation metrics
-
-Topics:
-
-- [kb-design](./kb-design.md)

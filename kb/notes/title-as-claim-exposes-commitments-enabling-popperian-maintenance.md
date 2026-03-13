@@ -1,7 +1,7 @@
 ---
 description: When an index is a list of claims rather than topics, reviewing the KB becomes scanning hypotheses — each title exposes its commitment and invites the question "do I still believe this?" without opening the file
 type: note
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -26,7 +26,3 @@ Relevant Notes:
 Distilled into:
 
 - [WRITING.md](../instructions/WRITING.md) — the title-as-claim checklist item operationalizes this principle
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

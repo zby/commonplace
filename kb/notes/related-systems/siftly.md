@@ -2,7 +2,7 @@
 description: Next.js + SQLite bookmark ingestion system whose deterministic-first, resumable enrichment pipeline offers concrete patterns for scaling KB source loading with explicit progress state
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-03-07
 ---
 
@@ -95,7 +95,3 @@ Relevant Notes:
 - [ClawVault](./clawvault.md) — extends: comparative evidence for staged pipelines, with a different optimization target (workshop memory)
 - [Thalo](./thalo.md) — extends: comparative evidence for formalization choices (DSL structure vs runtime ingestion pipeline)
 - [sift-kg](./sift-kg.md) — contrasts: both ingest documents into knowledge structures, but sift-kg extracts entity-relation graphs via LLM while Siftly enriches and classifies fixed-schema bookmark records
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

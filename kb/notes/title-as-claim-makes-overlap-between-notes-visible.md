@@ -2,7 +2,7 @@
 description: When note titles are claims, overlap between notes is visible at the index level — similar assertions are obvious without opening files; topical titles hide overlap behind different labels for the same territory
 type: note
 traits: []
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -25,7 +25,3 @@ Relevant Notes:
 
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: the convention this note adds a maintenance argument for
 - [title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — sibling: a different maintenance benefit (falsifiability) from the same convention; that note asks "do I still believe this?", this one asks "is this already said elsewhere?"
-
-Topics:
-
-- [kb-maintenance](./kb-maintenance.md)

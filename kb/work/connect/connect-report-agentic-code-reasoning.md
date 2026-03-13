@@ -20,8 +20,8 @@
   - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — templates vs end-to-end scaling
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) via oracle-strength-spectrum links — confirmed oracle-strength and error-correction candidates
-- Read [type-system](kb/notes/type-system.md) via structure-activates note links — confirmed the three independent arguments for structured types cluster
+- Read [learning-theory](kb/notes/learning-theory-index.md) via oracle-strength-spectrum links — confirmed oracle-strength and error-correction candidates
+- Read [type-system](kb/notes/type-system-index.md) via structure-activates note links — confirmed the three independent arguments for structured types cluster
 
 **Semantic search:** (via qmd)
 - query "structured reasoning templates improve LLM code analysis verification accuracy" — top hits:
@@ -94,8 +94,8 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — The paper's main contributions (oracle replacement, structured reasoning as interpretation-narrowing) connect to the learning theory cluster via oracle-strength-spectrum and constraining.
-- [type-system](kb/notes/type-system.md) — The paper provides evidence for the structured-types cluster (structure-activates, human-writing-structures, structured-output) but is a source, not a note — its membership would be through the notes it exemplifies.
+- [learning-theory](kb/notes/learning-theory-index.md) — The paper's main contributions (oracle replacement, structured reasoning as interpretation-narrowing) connect to the learning theory cluster via oracle-strength-spectrum and constraining.
+- [type-system](kb/notes/type-system-index.md) — The paper provides evidence for the structured-types cluster (structure-activates, human-writing-structures, structured-output) but is a source, not a note — its membership would be through the notes it exemplifies.
 
 ## Synthesis Opportunities
 

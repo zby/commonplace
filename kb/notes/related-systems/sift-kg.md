@@ -1,7 +1,7 @@
 ---
 description: LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-in-the-loop entity resolution, and interactive visualization
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 last-checked: 2026-03-07
 ---
@@ -105,7 +105,3 @@ Relevant Notes:
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
 - [Evans: AI Components for a Deterministic System](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) — contrasts: Evans argues schema creation is harder than schema application and should use published standards where possible; sift-kg automates the step Evans says requires the most care
 - [Related Systems Index](./related-systems-index.md) — master index of tracked systems
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

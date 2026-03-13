@@ -25,7 +25,7 @@
 
 **Topic indexes:**
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Letta already mentioned in the two-tier coverage description; no additional candidates beyond what index scan found
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed memory-management-policy, three-space-memory, inspectable-substrate as relevant; added [three-space-memory-separation-predicts-measurable-failure-modes](kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md) as a candidate (Letta's architecture provides a test case)
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed memory-management-policy, three-space-memory, inspectable-substrate as relevant; added [three-space-memory-separation-predicts-measurable-failure-modes](kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md) as a candidate (Letta's architecture provides a test case)
 
 **Semantic search (via qmd):**
 - query "self-managed agent memory hierarchy context window OS analogy" on notes:
@@ -109,7 +109,7 @@
 ## Index Membership
 
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Letta is already mentioned in the description of two-tier coverage ("Database-backed memory systems... Letta... currently have only lightweight coverage via ingest reports"). No new index entry needed; coverage status is accurately described.
-- [learning-theory](kb/notes/learning-theory.md) — The source itself should not be indexed in learning-theory (it's a source snapshot, not a KB note). However, the ingest report's connection to memory-management-policy and inspectable-substrate means Letta's architecture is reachable through the Memory & Architecture section.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source itself should not be indexed in learning-theory (it's a source snapshot, not a KB note). However, the ingest report's connection to memory-management-policy and inspectable-substrate means Letta's architecture is reachable through the Memory & Architecture section.
 
 ## Synthesis Opportunities
 

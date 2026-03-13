@@ -2,7 +2,7 @@
 description: Catalogues graph-topology, content-proxy, and LLM-hybrid signals that could be combined into a weak composite oracle to drive a mutation-based KB learning loop without requiring usage data.
 type: note
 traits: []
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: speculative
 ---
 
@@ -153,7 +153,3 @@ Relevant Notes:
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pruning accuracy signal: link metadata must support the navigation decision without loading the target
 - [A-MEM automation-quality report](../sources/a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) — source: develops the retrieval-vs-navigability distinction that motivates the agent-centric signals section
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

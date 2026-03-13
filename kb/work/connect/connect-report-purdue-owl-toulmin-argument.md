@@ -20,17 +20,17 @@
   - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — promotion to structured-claim uses Toulmin sections
 
 **Topic indexes:**
-- Read [links](kb/notes/links.md) — already lists Toulmin source in Reference Material section
-- Read [kb-design](kb/notes/kb-design.md) — already lists Toulmin source in Reference Material section
-- Read [document-system](kb/notes/document-system.md) — no direct Toulmin reference but connects through type-system
-- Read [type-system](kb/notes/type-system.md) — references claim-notes-should-use-toulmin-derived-sections
+- Read [links](kb/notes/links-index.md) — already lists Toulmin source in Reference Material section
+- Read [kb-design](kb/notes/kb-design-index.md) — already lists Toulmin source in Reference Material section
+- Read [document-system](kb/notes/document-system-index.md) — no direct Toulmin reference but connects through type-system
+- Read [type-system](kb/notes/type-system-index.md) — references claim-notes-should-use-toulmin-derived-sections
 
 **Semantic search:** (via qmd)
 - query "Toulmin argument structure claim grounds warrant evidence reasoning" on notes collection — top hits:
   - types/structured-claim.md (93%) — the type template itself uses Toulmin terminology; strong, already connected
   - claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md (56%) — the primary KB note adapting Toulmin; already connected
-  - links.md (47%) — already has source in Reference Material
-  - kb-design.md (47%) — already has source in Reference Material
+  - links-index.md (47%) — already has source in Reference Material
+  - kb-design-index.md (47%) — already has source in Reference Material
   - skills-derive-from-methodology-through-distillation.md (45%) — references Toulmin as example of methodology that gets distilled into skills
   - structure-activates-higher-quality-training-distributions.md (43%) — "Toulmin-shaped template" steers toward better training data
   - structured-output-is-easier-for-humans-to-review.md (42%) — separated sections enable independent checking
@@ -38,7 +38,7 @@
   - thalo-type-comparison.md (39%) — already connected
   - wikiwiki-principle.md (37%) — references structured-claim as Toulmin-derived
   - human-writing-structures-transfer-to-llms.md (35%) — uses Toulmin as primary example
-  - type-system.md (34%) — references Toulmin via claim-notes note
+  - type-system-index.md (34%) — references Toulmin via claim-notes note
 
 - query on sources collection — top hits:
   - purdue-owl-toulmin-argument.ingest.md (93%) — the ingest of this same source
@@ -56,8 +56,8 @@ These notes already link to `purdue-owl-toulmin-argument.md`:
 
 - [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — **source**: the canonical framework this note adapts
 - [title-as-claim-enables-traversal-as-reasoning](kb/notes/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
-- [links](kb/notes/links.md) — **reference material**: formal argumentation theory behind link semantics
-- [kb-design](kb/notes/kb-design.md) — **reference material**: formal argumentation model grounding claim-title conventions and structured-claim type
+- [links](kb/notes/links-index.md) — **reference material**: formal argumentation theory behind link semantics
+- [kb-design](kb/notes/kb-design-index.md) — **reference material**: formal argumentation model grounding claim-title conventions and structured-claim type
 - [thalo-type-comparison](kb/notes/related-systems/thalo-type-comparison.md) — **grounds**: Toulmin provides the canonical decomposition that Thalo's opinion entity approximates
 
 ### New connections recommended
@@ -94,10 +94,10 @@ These notes already link to `purdue-owl-toulmin-argument.md`:
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — already listed in Reference Material section
-- [links](kb/notes/links.md) — already listed in Reference Material section
-- [type-system](kb/notes/type-system.md) — not directly listed, but connected via claim-notes-should-use-toulmin; no direct listing needed since the connection is well-served by the intermediary note
-- [document-system](kb/notes/document-system.md) — not listed; could be added since the Toulmin framework directly shapes the structured-claim document type template in WRITING.md, but the connection is better served through type-system
+- [kb-design](kb/notes/kb-design-index.md) — already listed in Reference Material section
+- [links](kb/notes/links-index.md) — already listed in Reference Material section
+- [type-system](kb/notes/type-system-index.md) — not directly listed, but connected via claim-notes-should-use-toulmin; no direct listing needed since the connection is well-served by the intermediary note
+- [document-system](kb/notes/document-system-index.md) — not listed; could be added since the Toulmin framework directly shapes the structured-claim document type template in WRITING.md, but the connection is better served through type-system
 
 ## Synthesis Opportunities
 

@@ -24,12 +24,12 @@
   - Rejected on initial scan: agent-statelessness, backlinks, document-classification, file-vs-database, indirection, legal-drafting, wikiwiki-principle — no substantive conceptual overlap beyond surface vocabulary
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — source already listed in Reference Material section. Additional candidates identified: [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)
-- Read [kb-design](kb/notes/kb-design.md) — no additional candidates beyond those from index scan
+- Read [learning-theory](kb/notes/learning-theory-index.md) — source already listed in Reference Material section. Additional candidates identified: [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)
+- Read [kb-design](kb/notes/kb-design-index.md) — no additional candidates beyond those from index scan
 
 **Semantic search:** (via qmd)
 - query "inductive bias data efficiency state tracking transformers vs recurrent models" on notes collection:
-  - [learning-theory](kb/notes/learning-theory.md) (93%) — already referenced; source listed there
+  - [learning-theory](kb/notes/learning-theory-index.md) (93%) — already referenced; source listed there
   - [symbolic-scheduling-over-bounded-llm-calls](kb/notes/symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) (50%) — surface match on bounded-computation theme, evaluated below
   - [sift-kg](kb/notes/related-systems/sift-kg.md) (38%) — no semantic connection, skip
   - [constraining-and-distillation-both-trade-generality](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) (35%) — already flagged
@@ -99,7 +99,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — Already listed in the Reference Material section with a context phrase: "190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity." No change needed.
+- [learning-theory](kb/notes/learning-theory-index.md) — Already listed in the Reference Material section with a context phrase: "190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity." No change needed.
 
 ## Synthesis Opportunities
 

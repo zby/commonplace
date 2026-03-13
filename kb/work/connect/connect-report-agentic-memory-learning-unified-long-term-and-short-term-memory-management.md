@@ -23,7 +23,7 @@
   - [learning-is-not-only-about-generality](kb/notes/learning-is-not-only-about-generality.md) -- AgeMem is learning per Simon; accumulates facts
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) -- AgeMem already listed in Memory & Architecture section, linked via the analysis note. Checked Oracle & Verification section: [error-correction-works-above-chance-oracles-with-decorrelated-checks](kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md) -- both tangential
+- Read [learning-theory](kb/notes/learning-theory-index.md) -- AgeMem already listed in Memory & Architecture section, linked via the analysis note. Checked Oracle & Verification section: [error-correction-works-above-chance-oracles-with-decorrelated-checks](kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md) -- both tangential
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) -- AgeMem listed as lightweight-coverage system via ingest report
 
 **Semantic search:** (via qmd)
@@ -36,7 +36,7 @@
   - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (43%) -- memory architecture contrast
   - [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md) (41%) -- already flagged
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) (41%) -- sibling system
-  - [areas](kb/notes/areas.md) (38%) -- hub, no direct connection
+  - [areas](kb/notes/areas-index.md) (38%) -- hub, no direct connection
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (38%) -- index, already checked
   - [operational-signals-that-a-component-is-a-relaxing-candidate](kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) (38%) -- already references AgeMem
 
@@ -118,7 +118,7 @@ These notes genuinely connect to AgeMem's findings. Most connections are already
 
 - [sources/index.md](kb/sources/index.md) -- already listed (both raw source and ingest)
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) -- already listed as lightweight-coverage system
-- [learning-theory](kb/notes/learning-theory.md) -- already referenced via the analysis note in Memory & Architecture section
+- [learning-theory](kb/notes/learning-theory-index.md) -- already referenced via the analysis note in Memory & Architecture section
 
 No new index membership needed.
 

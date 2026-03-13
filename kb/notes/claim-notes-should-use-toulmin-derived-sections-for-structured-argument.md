@@ -2,7 +2,7 @@
 description: Three independent threads converged on Toulmin's argument structure — adopting Toulmin sections as base type `structured-claim` separates claim-titled notes (any note) from fully argued claims (the type)
 type: structured-claim
 traits: [has-comparison, has-external-sources]
-areas: [type-system]
+tags: [type-system]
 status: current
 ---
 
@@ -132,7 +132,3 @@ Relevant Notes:
 - [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
 - [constraining](../notes/constraining.md) — foundation: the note → structured-claim promotion path is the constraining pattern applied to the type system
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
-
-Topics:
-
-- [type-system](./type-system.md)

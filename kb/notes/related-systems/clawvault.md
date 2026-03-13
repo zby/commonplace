@@ -2,7 +2,7 @@
 description: TypeScript memory system for AI agents with scored observations, session handoffs, and reflection pipelines — has a working workshop layer where we have theory, making it the strongest source of borrowable patterns for ephemeral knowledge
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-02-26
 ---
 
@@ -102,7 +102,3 @@ Relevant Notes:
 - [Always-loaded context has two surfaces with different affordances](../always-loaded-context-has-two-surfaces-with-different-affordances.md) — contrasts: ClawVault frontloads context via profiles and injection; our two always-loaded surfaces use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), ClawVault formalised lifecycle (pipeline), we're formalising understanding (theory)
 - [Siftly](./siftly.md) — extends: another staged pipeline reference, but optimized for deterministic ingest throughput and resumable source loading
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

@@ -28,7 +28,7 @@
   - [title-as-claim-enables-traversal-as-reasoning](kb/notes/title-as-claim-enables-traversal-as-reasoning.md) — chain of reasoning as "two small jumps"
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed discovery, distillation, and information-value notes as candidates. No additional candidates surfaced beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed discovery, distillation, and information-value notes as candidates. No additional candidates surfaced beyond index scan.
 
 **Semantic search:** (via qmd)
 - query "simplification analogy generalization problem-solving heuristics creative thinking" (notes) — top hits:
@@ -116,7 +116,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — The source could be listed under "Discovery" section as reference material. Shannon's heuristics are an independent historical articulation of the discovery problem (how to find solutions) from the practitioner's perspective, predating the theoretical framing in the discovery note by 70+ years.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source could be listed under "Discovery" section as reference material. Shannon's heuristics are an independent historical articulation of the discovery problem (how to find solutions) from the practitioner's perspective, predating the theoretical framing in the discovery note by 70+ years.
 
 - Already referenced from: [creative-thinking-by-claude-shannon.ingest.md](kb/sources/creative-thinking-by-claude-shannon.ingest.md) (the ingest report)
 

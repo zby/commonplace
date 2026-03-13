@@ -2,7 +2,7 @@
 description: The four reliability dimensions from Rabanser et al. (consistency, robustness, predictability, safety) each harden a different oracle question — mapping empirical agent evaluation onto the oracle-strength spectrum
 type: note
 traits: [has-external-sources]
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -47,7 +47,3 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
 - [the augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — deepens: extracts and develops the predictability gap paragraph into a standalone claim — the boundary depends on per-instance discrimination, which is empirically stagnant
 - Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — exemplifies: AUC-E metric directly operationalizes robustness (R_Rob) hardening — measures how much prompt perturbation changes outputs, quantifying the soft-to-hard oracle transition for robustness
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

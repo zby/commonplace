@@ -29,7 +29,7 @@
   - [storing-llm-outputs-is-constraining](kb/notes/storing-llm-outputs-is-constraining.md) — simplest constraining; spec mining is the more structured version
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — source note already listed in Constraining section. Additional candidates from index structure: error-correction, reliability-dimensions, inspectable-substrate (already flagged). The index's Applications section flagged [unified-calling-conventions](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md) which already references spec-mining.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — source note already listed in Constraining section. Additional candidates from index structure: error-correction, reliability-dimensions, inspectable-substrate (already flagged). The index's Applications section flagged [unified-calling-conventions](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md) which already references spec-mining.
 
 **Semantic search (via qmd):**
 - Query "spec mining codification deterministic rules from observed behavior oracle hardening" in notes:
@@ -39,7 +39,7 @@
   - [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md) (47%) — maturation trajectory mirrors spec mining process
   - [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md) (46%) — spec mining resolves underspecification
   - [deploy-time-learning-is-agile-for-human-ai-systems](kb/notes/deploy-time-learning-is-agile-for-human-ai-systems.md) (44%) — weak, agile parallel is indirect
-  - [learning-theory](kb/notes/learning-theory.md) (43%) — index, not a connection target
+  - [learning-theory](kb/notes/learning-theory-index.md) (43%) — index, not a connection target
   - [programming-practices-apply-to-prompting](kb/notes/programming-practices-apply-to-prompting.md) (43%) — weak, surface overlap on testing
   - [constraining](kb/notes/constraining.md) (43%) — parent mechanism
   - [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md) (41%) — already links back to spec-mining
@@ -71,7 +71,7 @@ The note already contains outbound links to three notes:
 - [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md) — spec mining moves components toward hard oracle
 
 The following notes already have inbound links to the target:
-- [codification](kb/notes/codification.md), [learning-theory](kb/notes/learning-theory.md), [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md), [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md), [unified-calling-conventions-enable-bidirectional-refactoring](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md), [quality-signals-for-kb-evaluation](kb/notes/quality-signals-for-kb-evaluation.md), [agent-behavioral-contracts ingest](kb/sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md), [towards-a-science-of-ai-agent-reliability ingest](kb/sources/towards-a-science-of-ai-agent-reliability.ingest.md), [wikipedia-bitter-lesson ingest](kb/sources/wikipedia-bitter-lesson.ingest.md)
+- [codification](kb/notes/codification.md), [learning-theory](kb/notes/learning-theory-index.md), [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md), [reliability-dimensions-map-to-oracle-hardening-stages](kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md), [unified-calling-conventions-enable-bidirectional-refactoring](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md), [quality-signals-for-kb-evaluation](kb/notes/quality-signals-for-kb-evaluation.md), [agent-behavioral-contracts ingest](kb/sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md), [towards-a-science-of-ai-agent-reliability ingest](kb/sources/towards-a-science-of-ai-agent-reliability.ingest.md), [wikipedia-bitter-lesson ingest](kb/sources/wikipedia-bitter-lesson.ingest.md)
 
 ### New connections (not yet linked in either direction)
 
@@ -115,8 +115,8 @@ The following notes already have inbound links to the target:
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — Already listed in the Constraining section. No change needed.
-- [kb-design](kb/notes/kb-design.md) — Not currently a member. Should NOT be added: spec mining is a general mechanism, not KB-design-specific. Its KB applications are reached through quality-signals and automating-kb-learning.
+- [learning-theory](kb/notes/learning-theory-index.md) — Already listed in the Constraining section. No change needed.
+- [kb-design](kb/notes/kb-design-index.md) — Not currently a member. Should NOT be added: spec mining is a general mechanism, not KB-design-specific. Its KB applications are reached through quality-signals and automating-kb-learning.
 
 ## Synthesis Opportunities
 

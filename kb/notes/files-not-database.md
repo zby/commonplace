@@ -2,7 +2,7 @@
 description: Files beat a database early on — a schema commits to access patterns before you know them, and files let you constrain incrementally while getting free browsing, versioning, and agent access from day one
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -53,7 +53,3 @@ Relevant Notes:
 - [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 - [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
-
-Topics:
-
-- [kb-design](./kb-design.md)

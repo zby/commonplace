@@ -28,19 +28,19 @@
   - [claw-learning-is-broader-than-retrieval](kb/notes/claw-learning-is-broader-than-retrieval.md) — retrieval-only evaluation limitation
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — A-MEM already listed as reference material in Memory & Architecture section; confirmed memory-management-policy note as a strong connection
-- Read [kb-design](kb/notes/kb-design.md) — A-MEM already listed as reference material; confirmed automating-kb-learning and quality-signals notes
-- Read [links](kb/notes/links.md) — A-MEM already listed as reference material (empirical counterpoint on embedding-based linking)
+- Read [learning-theory](kb/notes/learning-theory-index.md) — A-MEM already listed as reference material in Memory & Architecture section; confirmed memory-management-policy note as a strong connection
+- Read [kb-design](kb/notes/kb-design-index.md) — A-MEM already listed as reference material; confirmed automating-kb-learning and quality-signals notes
+- Read [links](kb/notes/links-index.md) — A-MEM already listed as reference material (empirical counterpoint on embedding-based linking)
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — A-MEM not listed as a system entry, but related to all database-oriented systems tracked
 
 **Semantic search:** (via qmd)
 - query "agentic memory system Zettelkasten dynamic linking knowledge organization LLM agents" (notes) — top hits:
-  - [learning-theory](kb/notes/learning-theory.md) (93%) — already known connection
+  - [learning-theory](kb/notes/learning-theory-index.md) (93%) — already known connection
   - [arscontexta](kb/notes/related-systems/arscontexta.md) (56%) — Zettelkasten-influenced ancestor system
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (47%) — already checked
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (46%) — already flagged
-  - [kb-design](kb/notes/kb-design.md) (46%) — already checked
-  - [computational-model](kb/notes/computational-model.md) (46%) — evaluated, connection too indirect
+  - [kb-design](kb/notes/kb-design-index.md) (46%) — already checked
+  - [computational-model](kb/notes/computational-model-index.md) (46%) — evaluated, connection too indirect
   - [automating-kb-learning-is-an-open-problem](kb/notes/automating-kb-learning-is-an-open-problem.md) (45%) — already flagged
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) (45%) — already flagged
   - [human-llm-differences](kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) (44%) — evaluated, connection too indirect
@@ -58,8 +58,8 @@
   - [mem0 ingest](kb/sources/mem0-memory-layer.ingest.md) (31%) — another memory system
 
 **Keyword search:**
-- grep "a-mem|A-MEM|A-Mem" in kb/notes/ — found in learning-theory.md, links.md, kb-design.md, memory-management-policy (all already flagged)
-- grep "Zettelkasten" in kb/notes/ — found in learning-theory.md, traversal-improves-the-graph.md, arscontexta.md, kb-design.md, human-llm-differences.md, discovery-is-seeing-the-particular-as-an-instance-of-the-general.md
+- grep "a-mem|A-MEM|A-Mem" in kb/notes/ — found in learning-theory-index.md, links-index.md, kb-design-index.md, memory-management-policy (all already flagged)
+- grep "Zettelkasten" in kb/notes/ — found in learning-theory-index.md, traversal-improves-the-graph.md, arscontexta.md, kb-design-index.md, human-llm-differences.md, discovery-is-seeing-the-particular-as-an-instance-of-the-general.md
 - grep "memory evolution|memory system|agent memory" in kb/notes/ — 15 files found, all already in candidate list
 
 **Link following:**
@@ -74,9 +74,9 @@
 
 The following notes already link to A-MEM:
 
-1. [learning-theory](kb/notes/learning-theory.md) — **reference material**: listed in Memory & Architecture section as "flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale"
-2. [kb-design](kb/notes/kb-design.md) — **reference material**: listed as providing "empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking"
-3. [links](kb/notes/links.md) — **reference material**: listed as "empirical counterpoint: embedding-based link generation succeeds on QA benchmarks"
+1. [learning-theory](kb/notes/learning-theory-index.md) — **reference material**: listed in Memory & Architecture section as "flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale"
+2. [kb-design](kb/notes/kb-design-index.md) — **reference material**: listed as providing "empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking"
+3. [links](kb/notes/links-index.md) — **reference material**: listed as "empirical counterpoint: embedding-based link generation succeeds on QA benchmarks"
 4. [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — **contrasts**: inline reference noting A-MEM's hand-crafted heuristics as "plausible theories about memory management, not definitions of it"
 
 ### New connections found
@@ -109,7 +109,7 @@ The following notes already link to A-MEM:
 
 ## Rejected Candidates
 
-- [computational-model](kb/notes/computational-model.md) — A-MEM is a memory system, not a computational model. The connection would only be through the scheduling sub-topic, which is too indirect.
+- [computational-model](kb/notes/computational-model-index.md) — A-MEM is a memory system, not a computational model. The connection would only be through the scheduling sub-topic, which is too indirect.
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — mentions Zettelkasten in passing but the note's concern (dual-audience documents) is not what A-MEM addresses.
 - [symbolic-scheduling-over-bounded-llm-calls](kb/notes/symbolic-scheduling-over-bounded-llm-calls-is-the-right-model-for-agent-orchestration.md) — A-MEM's pipeline is sequential, not scheduler-driven. Surface overlap only.
 - [files-not-database](kb/notes/files-not-database.md) — the architectural contrast (A-MEM uses in-memory embeddings, we use files) is real but too obvious and already captured through the inspectable-substrate connection.
@@ -127,9 +127,9 @@ The following notes already link to A-MEM:
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — already listed in Memory & Architecture section as reference material
-- [kb-design](kb/notes/kb-design.md) — already listed in Reference material section
-- [links](kb/notes/links.md) — already listed in Reference material section
+- [learning-theory](kb/notes/learning-theory-index.md) — already listed in Memory & Architecture section as reference material
+- [kb-design](kb/notes/kb-design-index.md) — already listed in Reference material section
+- [links](kb/notes/links-index.md) — already listed in Reference material section
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) — NOT listed, but A-MEM is not a related-system review note (it's a source snapshot). The comparative review covers it as one of eleven systems. No index addition needed.
 
 ## Synthesis Opportunities

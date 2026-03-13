@@ -2,7 +2,7 @@
 description: Classical information measures miss accessibility — transforms that preserve or reduce Shannon entropy can make structure visible to bounded observers. Connects distillation and discovery as instances of the same computational-bounds gap.
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -39,7 +39,3 @@ Relevant Notes:
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — instance: MVO is the vocabulary that maximally reduces extraction cost for a bounded observer entering a domain
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: names and formalises the gap between present information and extractable information
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -2,7 +2,7 @@
 description: KB skills should be generated from templates at setup time, not parameterised with runtime variables — applying the general principle that indirection is costly in LLM instructions
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -28,7 +28,3 @@ Relevant Notes:
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — template generation is a point on the constraining gradient
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
 - [generate topic links from frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — exemplifies: an earlier case of the same move — replacing LLM-interpreted output with a deterministic build step
-
-Topics:
-
-- [kb-design](./kb-design.md)

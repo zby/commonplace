@@ -2,7 +2,7 @@
 description: When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do demonstrates this with name-based dispatch over a hybrid VM
 type: note
 traits: [has-external-sources]
-areas: [learning-theory, computational-model]
+tags: [learning-theory, computational-model]
 status: current
 ---
 
@@ -70,8 +70,3 @@ Relevant Notes:
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: relaxing signals answer "when should you relax?" — unified calling makes the relaxing refactoring cheap once the signal fires
-
-Topics:
-
-- [computational-model](./computational-model.md)
-- [learning-theory](./learning-theory.md)

@@ -63,7 +63,7 @@ A third operation, distinct from both constraining and distillation: positing a 
 
 ## Oracle & Verification
 
-Moved to [LLM interpretation errors](./llm-interpretation-errors.md) — oracle theory, error correction, reliability dimensions, and the augmentation/automation boundary now live in the dedicated error-theory area. Key notes:
+Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — oracle theory, error correction, reliability dimensions, and the augmentation/automation boundary now live in the dedicated error-theory area. Key notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the core theory of error correction via decorrelated weak oracles
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — the gradient from hard to no oracle that determines engineering priorities
@@ -90,8 +90,8 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors.md) — oracle 
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md evolution in 466 OSS projects; commit-level analysis shows constraining maturation trajectory confirming continuous learning through versioned artifacts
 - [On the "Induction Bias" in Sequence Models](../sources/induction-bias-sequence-models-ebrahimi-2026.md) — 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity
 
-## Related Areas
+## Related Tags
 
-- [llm-interpretation-errors](./llm-interpretation-errors.md) — oracle theory, error correction, and reliability dimensions migrated here; the error-theory area applies verification concepts specifically to LLM interpretation failures
-- [kb-design](./kb-design.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) bridges both areas
-- [document-system](./document-system.md) — the type ladder (text→note→structured-claim) instantiates the constraining gradient for documents
+- [llm-interpretation-errors](./llm-interpretation-errors-index.md) — oracle theory, error correction, and reliability dimensions migrated here; the error-theory area applies verification concepts specifically to LLM interpretation failures
+- [kb-design](./kb-design-index.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) bridges both areas
+- [document-system](./document-system-index.md) — the type ladder (text→note→structured-claim) instantiates the constraining gradient for documents

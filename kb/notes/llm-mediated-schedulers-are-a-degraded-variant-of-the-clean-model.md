@@ -2,7 +2,7 @@
 description: When the agent scheduler lives inside an LLM conversation it becomes bounded and degrades; three recovery strategies — compaction, externalisation, factoring into code — restore the clean separation to increasing degrees
 type: note
 traits: []
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -34,7 +34,3 @@ Relevant Notes:
 - [distillation](./distillation.md) — mechanism: compaction is distillation applied to the scheduler's own conversation state
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: the degradation is a context-efficiency problem within the scheduler itself
 - [The Anatomy of an Agent Harness (Vtrivedy10, 2026)](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) — exemplifies: the Ralph Loop pattern combines externalisation and compaction to sustain long-horizon agent work across multiple clean context windows
-
-Topics:
-
-- [computational-model](./computational-model.md)

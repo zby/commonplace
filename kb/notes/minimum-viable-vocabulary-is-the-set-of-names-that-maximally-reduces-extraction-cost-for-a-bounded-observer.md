@@ -2,7 +2,7 @@
 description: Reframes "minimum viable ontology" as an optimization problem — the vocabulary that, once acquired, maximally reduces a bounded observer's extraction cost for a domain; grounds the pedagogical intuition of "conceptual thresholds" in the KB's information-theoretic framework
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -40,7 +40,3 @@ Relevant Notes:
 - [distillation](./distillation.md) — mechanism: MVV is distillation where the target is a domain newcomer and the context budget is minimal
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — enables: MVV is knowledge compressed to fit context constraints when full domain methodology won't fit
 - [agent statelessness means harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — extends: for agents, MVV must be injected each session rather than retained
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -2,7 +2,7 @@
 description: A Claw's learning loop must improve action capacity (classification, planning, communication), not just retrieval — question-answering is one mode among many
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: speculative
 ---
 
@@ -71,7 +71,3 @@ Relevant Notes:
 - [document-classification](./document-classification.md) — implication: current document types are structured for reference knowledge; action-oriented knowledge types may not fit the existing base types
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — concretizes: workshop documents (tasks, decision threads, experiments) are the action-oriented artifacts that produce preferences, procedures, and precedents; the workshop→library extraction bridge is where action-capacity learning is harvested
 - [deep search is connection methodology applied to a temporarily expanded corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — exemplifies: deep search is active research capacity — the agent discovers what it doesn't know rather than retrieving what it does, making it a concrete case of action beyond retrieval
-
-Topics:
-
-- [kb-design](./kb-design.md)

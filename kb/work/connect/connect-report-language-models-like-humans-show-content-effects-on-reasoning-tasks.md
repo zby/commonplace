@@ -18,7 +18,7 @@
   - [operational-signals-that-a-component-is-a-relaxing-candidate](kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) — distribution sensitivity signal
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — no additional candidates beyond index scan
+- Read [learning-theory](kb/notes/learning-theory-index.md) — no additional candidates beyond index scan
 
 **Semantic search:** (via qmd)
 - query "content effects reasoning LLM human belief bias prior knowledge logical inference" in notes — top hits:

@@ -2,7 +2,7 @@
 description: The most effective constraining artifacts simultaneously constrain (block wrong output) and inform (teach the fix) — because in agent systems the error channel is an instruction channel; fills the gap between the constraining gradient's layers and the context they deliver
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 
@@ -50,7 +50,3 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivates: terse errors waste context on diagnosis; teaching errors respond to the complexity dimension by eliminating interpretation overhead
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: linter messages as remediation instructions in a 1M LOC agent-generated codebase
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: teaching messages are the inform axis of recovery but stop at "teaches the fix"; structured recovery adds the follow-through (corrective → fallback → escalation)
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

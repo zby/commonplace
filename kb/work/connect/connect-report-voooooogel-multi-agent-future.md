@@ -30,8 +30,8 @@
   - [related-systems/agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) -- multi-agent for context isolation
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) -- confirmed bitter-lesson-boundary, codification-and-relaxing, oracle-strength-spectrum, memory-management-policy as relevant; added constraining-during-deployment-is-continuous-learning
-- Read [kb-design](kb/notes/kb-design.md) was not read separately (covered by index scan candidates)
+- Read [learning-theory](kb/notes/learning-theory-index.md) -- confirmed bitter-lesson-boundary, codification-and-relaxing, oracle-strength-spectrum, memory-management-policy as relevant; added constraining-during-deployment-is-continuous-learning
+- Read [kb-design](kb/notes/kb-design-index.md) was not read separately (covered by index scan candidates)
 
 **Semantic search:** (via qmd)
 - query "multi-agent forking filesystem collaboration context sparsity orchestration dissolved by stronger models" --collection notes:
@@ -108,7 +108,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) -- The source contributes to the bitter lesson / relaxing cluster by providing a practitioner's applied analysis of what gets dissolved. However, as a source snapshot it would not be listed directly; the analysis note at research/voooooogel-multi-agent-future.md could be added if it's not already there.
+- [learning-theory](kb/notes/learning-theory-index.md) -- The source contributes to the bitter lesson / relaxing cluster by providing a practitioner's applied analysis of what gets dissolved. However, as a source snapshot it would not be listed directly; the analysis note at research/voooooogel-multi-agent-future.md could be added if it's not already there.
 - The existing analysis note at [research/voooooogel-multi-agent-future](kb/notes/research/voooooogel-multi-agent-future.md) is not currently listed in any topic index. It connects most strongly to the learning-theory area (bitter lesson applied to agent infrastructure) and kb-design (filesystem, orchestration).
 
 ## Synthesis Opportunities

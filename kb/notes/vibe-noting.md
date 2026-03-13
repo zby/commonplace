@@ -2,7 +2,7 @@
 description: Vibe coding works because code is inspectable, not just verifiable — a KB adds that same inspectability to knowledge work, enabling augmentation even where automation is blocked on oracle construction
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -62,7 +62,3 @@ Relevant Notes:
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — complements: that note solves orientation through harness injection; this note argues that artifact structure (inspectability) is the prerequisite that makes injection useful
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — extends: vibe-noting is the augmentation path while full automation remains blocked on oracle construction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: currently vibe-noting produces library artifacts directly because the KB is still being built; at steady state, vibe-noting shifts to workshops — rough captures that get consumed, refined, and promoted to library or discarded
-
-Topics:
-
-- [kb-design](./kb-design.md)

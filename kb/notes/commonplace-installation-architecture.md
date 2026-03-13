@@ -2,7 +2,7 @@
 description: Design for how commonplace installs into a project — two trees (user's kb/ and framework's commonplace/), operational artifacts copied for prompt simplicity, methodology referenced for deeper reasoning
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -215,7 +215,3 @@ Relevant Notes:
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — constrains: the control-plane fragment must integrate with both always-loaded surfaces
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the install step that renders skills and copies operational artifacts
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — informs: the collection/partition distinction and the two-level types nesting limit
-
-Topics:
-
-- [kb-design](./kb-design.md)

@@ -1,7 +1,7 @@
 ---
 description: Error correction for LLM output is viable whenever the oracle has discriminative power (TPR > FPR) and checks are decorrelated — amplification cost scales with 1/(TPR-FPR)² and independence of errors
 type: note
-areas: [llm-interpretation-errors]
+tags: [llm-interpretation-errors]
 status: seedling
 ---
 
@@ -99,7 +99,3 @@ Relevant Notes:
 - [operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — enables: metamorphic checks double as relaxing signal detectors — measuring paraphrase brittleness classifies components on the bitter lesson spectrum
 - [content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) — grounds: content bias is shared across model families and survives scaling/instruction tuning, making it a concrete example of correlated error that model diversity alone cannot decorrelate
 - [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — speculative: process constraints (forced reasoning steps) may serve as content-bias decorrelation mechanisms
-
-Topics:
-
-- [llm-interpretation-errors](./llm-interpretation-errors.md)

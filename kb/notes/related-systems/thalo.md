@@ -2,7 +2,7 @@
 description: Custom plain-text language for knowledge management with Tree-Sitter grammar, typed entities, 27 validation rules, and LSP. Makes the same programming-theory-over-psychology bet we do, but went further into formalization with a custom DSL.
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-02-25
 ---
 
@@ -83,7 +83,3 @@ Relevant Notes:
 - [link-contracts-framework](../link-contracts-framework.md) — gap: Thalo's typed links have no relationship semantics; our link contracts provide the semantic layer their grammar omits
 - [Ars Contexta](./arscontexta.md) — sibling: both are compared against our theoretical position; arscontexta grounds in cognitive psychology where Thalo grounds in programming language theory, making them complementary reference points
 - [files-not-database](../files-not-database.md) — convergence: Thalo's "plain text is paramount" independently validates the filesystem-over-databases pattern
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

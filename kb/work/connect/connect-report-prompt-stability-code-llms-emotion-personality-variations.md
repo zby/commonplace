@@ -26,8 +26,8 @@ Ma et al. introduce PromptSE, a framework for measuring code generation model st
   - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — stability as property requiring explicit optimization
 
 **Topic indexes:**
-- Read [llm-interpretation-errors](kb/notes/llm-interpretation-errors.md) — already cites this source in the introduction paragraph; connection to all three phenomena established. Additional candidates from index: oracle-strength-spectrum, synthesis-is-not-error-correction (rejected -- no substantive connection).
-- Read [learning-theory](kb/notes/learning-theory.md) — constraining section confirms operational-signals and bitter-lesson-boundary connections. No additional candidates beyond index scan.
+- Read [llm-interpretation-errors](kb/notes/llm-interpretation-errors-index.md) — already cites this source in the introduction paragraph; connection to all three phenomena established. Additional candidates from index: oracle-strength-spectrum, synthesis-is-not-error-correction (rejected -- no substantive connection).
+- Read [learning-theory](kb/notes/learning-theory-index.md) — constraining section confirms operational-signals and bitter-lesson-boundary connections. No additional candidates beyond index scan.
 
 **Semantic search (via qmd):**
 - query "prompt sensitivity stability robustness model evaluation reliability" --collection notes -n 15:
@@ -59,7 +59,7 @@ Ma et al. introduce PromptSE, a framework for measuring code generation model st
 - grep "prompt stability|prompt sensitivity|prompt robustness|AUC-E|PromptSE" in kb/notes/:
   - operational-signals-that-a-component-is-a-relaxing-candidate.md — already references this source
   - interpretation-errors-are-failures-of-the-interpreter.md — checked but no substantive connection beyond shared domain
-  - llm-interpretation-errors.md — already cites this source
+  - llm-interpretation-errors-index.md — already cites this source
   - reliability-dimensions-map-to-oracle-hardening-stages.md — confirmed
 - grep "paraphrase|brittleness|perturbation|sensitivity" in kb/notes/:
   - 17 files found; most already captured. New: spec-mining-as-codification.md (mentions perturbation in passing); not a direct connection.
@@ -73,7 +73,7 @@ Ma et al. introduce PromptSE, a framework for measuring code generation model st
 
 ### Strong connections (source already referenced by target or strong mutual grounding)
 
-- [llm-interpretation-errors](kb/notes/llm-interpretation-errors.md) — **grounds**: the paper empirically separates all three phenomena in the taxonomy: temperature+sampling within each variant isolates indeterminism, cross-variant comparison isolates underspecification, and systematic degradation under emotional prompts reveals interpretation bias. The llm-interpretation-errors index already cites this source with a paragraph summarizing the separation. **Bidirectional: already established.**
+- [llm-interpretation-errors](kb/notes/llm-interpretation-errors-index.md) — **grounds**: the paper empirically separates all three phenomena in the taxonomy: temperature+sampling within each variant isolates indeterminism, cross-variant comparison isolates underspecification, and systematic degradation under emotional prompts reveals interpretation bias. The llm-interpretation-errors index already cites this source with a paragraph summarizing the separation. **Bidirectional: already established.**
 
 - [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md) — **grounds**: holding functional requirements constant while varying only emotional/stylistic expression produces up to 40% performance swings across 14 models, providing the strongest empirical evidence in the KB that semantic underspecification (not execution noise) drives meaningful output variation. The performance-stability decoupling (rho = -0.433) directly confirms that underspecification and execution quality are independent axes. The agentic-systems note does not currently cite this source.
 
@@ -113,8 +113,8 @@ Ma et al. introduce PromptSE, a framework for measuring code generation model st
 
 ## Index Membership
 
-- [llm-interpretation-errors](kb/notes/llm-interpretation-errors.md) — already listed in Sources section as primary empirical evidence for three-phenomena separation
-- [learning-theory](kb/notes/learning-theory.md) — not a direct member, but the paper's findings are evidence for constraining theory (operational-signals) and the bitter lesson boundary. Connection is indirect through member notes.
+- [llm-interpretation-errors](kb/notes/llm-interpretation-errors-index.md) — already listed in Sources section as primary empirical evidence for three-phenomena separation
+- [learning-theory](kb/notes/learning-theory-index.md) — not a direct member, but the paper's findings are evidence for constraining theory (operational-signals) and the bitter lesson boundary. Connection is indirect through member notes.
 
 ## Synthesis Opportunities
 

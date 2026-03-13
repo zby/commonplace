@@ -2,7 +2,7 @@
 description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs; the mechanism is partial evaluation applied to instructions with underspecified semantics
 type: note
 traits: [has-external-sources]
-areas: [claw-design]
+tags: [claw-design]
 status: seedling
 ---
 
@@ -79,6 +79,3 @@ Relevant Notes:
 - [CLAUDE.md is a router, not a manual](../notes/context-loading-strategy.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here; frontloading is not constraining — it spares context regardless of whether the result is deterministic or still underspecified
 - [injectable configuration extends frontloading to installation-specific values](../notes/injectable-configuration-extends-frontloading-to-installation-specific-values.md) — extends: a third frontloading channel for values static within one installation but variable across installations
-
-Topics:
-- [claw-design](./claw-design.md)

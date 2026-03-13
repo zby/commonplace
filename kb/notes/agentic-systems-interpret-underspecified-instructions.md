@@ -2,7 +2,7 @@
 description: LLM-based systems have two distinct properties — semantic underspecification of natural language specs (the deeper difference from traditional programming) and execution indeterminism (present in all practical systems) — the spec-to-program projection model captures the first, which indeterminism tends to obscure
 type: note
 traits: [has-external-sources]
-areas: [learning-theory, computational-model]
+tags: [learning-theory, computational-model]
 status: current
 ---
 
@@ -145,7 +145,7 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 
 Relevant Notes:
 
-- [learning-theory](./learning-theory.md) — parent index: learning mechanisms, oracle theory, memory architecture
+- [learning-theory](./learning-theory-index.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [constraining](./constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./codification.md) — the constraining gradient from prompt tweaks to deterministic modules
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — applies: typing, testing, and version control transfer to prompting under this framework
@@ -160,8 +160,3 @@ Relevant Notes:
 Sources:
 
 - Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — strongest empirical evidence for the two-phenomena separation: emotion/personality prompt variations change code output while holding task spec constant, isolating underspecification (which interpretation?) from indeterminism (which run?)
-
-Topics:
-
-- [computational-model](./computational-model.md)
-- [learning-theory](./learning-theory.md)

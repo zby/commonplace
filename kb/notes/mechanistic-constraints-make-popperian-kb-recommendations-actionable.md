@@ -2,7 +2,7 @@
 description: Bounded context and underspecification don't just permit conjecture-and-refutation — they require it; derives three concrete practices (falsifier blocks, contradiction-first connection, rejected-interpretation capture) from KB mechanics.
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -25,7 +25,7 @@ You might think the LLM can just "notice" when claims conflict or interpretation
 
 [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — unstructured accumulation causes interference. Contradictions between notes loaded into the same context aren't flagged; they're silently averaged. [Context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — we cannot load everything and let the model sort it out. So criticism that depends on loading two contradictory notes simultaneously is unreliable.
 
-This means criticism must be externalized into the notes themselves. Claim titles and [link semantics](./links.md) already do part of this — [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), and typed links make foundation/extension/contradiction explicit. But the current system lacks two things: a way to state what would *defeat* a claim, and a systematic pass that looks for contradiction before looking for agreement.
+This means criticism must be externalized into the notes themselves. Claim titles and [link semantics](./links-index.md) already do part of this — [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), and typed links make foundation/extension/contradiction explicit. But the current system lacks two things: a way to state what would *defeat* a claim, and a systematic pass that looks for contradiction before looking for agreement.
 
 ## Whether criticism can converge depends on oracle quality
 
@@ -60,8 +60,4 @@ Relevant Notes:
 - [constraining](./constraining.md) — mechanism: user corrections narrow interpretation space by changing instructions
 - [deploy-time learning: the missing middle](./deploy-time-learning-the-missing-middle.md) — mechanism: instruction refinements persist across sessions
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example: existing convention that already externalizes conjectures
-- [links](./links.md) — example: existing relation semantics that already structure criticism
-
-Topics:
-
-- [kb-design](./kb-design.md)
+- [links](./links-index.md) — example: existing relation semantics that already structure criticism

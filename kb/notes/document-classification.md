@@ -1,7 +1,7 @@
 ---
 description: Taxonomy overview — the base types table and migration from old flat types; global field definitions, status, and traits live in types/note.md
 type: spec
-areas: [type-system]
+tags: [type-system]
 status: current
 ---
 
@@ -45,7 +45,3 @@ Relevant Notes:
 - [text root type](../../types/text.md) — the empty root type: no frontmatter, always valid
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — design rationale for verifiable types
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types
-
-Topics:
-
-- [document-system](./document-system.md)

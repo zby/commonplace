@@ -7,9 +7,9 @@
 ## Discovery Trace
 
 **Index exploration:**
-- Read [learning-theory](kb/notes/learning-theory.md) — the target's area index. Found candidates already listed in the Constraining section: [codification](kb/notes/codification.md), [storing-llm-outputs-is-constraining](kb/notes/storing-llm-outputs-is-constraining.md), [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md), [spec-mining-as-codification](kb/notes/spec-mining-as-codification.md). Also found candidates in Deploy-time Learning section: [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md), [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md). Foundations: [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md), [learning-is-not-only-about-generality](kb/notes/learning-is-not-only-about-generality.md). Applications: [unified-calling-conventions-enable-bidirectional-refactoring](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md), [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md). Related areas: [document-system](kb/notes/document-system.md).
-- Followed link from [learning-theory](kb/notes/learning-theory.md) to [distillation](kb/notes/distillation.md) — co-equal mechanism mentioned in target note
-- Followed link from [document-system](kb/notes/document-system.md) to [wikiwiki-principle](kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — type ladder as constraining gradient
+- Read [learning-theory](kb/notes/learning-theory-index.md) — the target's area index. Found candidates already listed in the Constraining section: [codification](kb/notes/codification.md), [storing-llm-outputs-is-constraining](kb/notes/storing-llm-outputs-is-constraining.md), [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md), [spec-mining-as-codification](kb/notes/spec-mining-as-codification.md). Also found candidates in Deploy-time Learning section: [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md), [bitter-lesson-boundary](kb/notes/bitter-lesson-boundary.md). Foundations: [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md), [learning-is-not-only-about-generality](kb/notes/learning-is-not-only-about-generality.md). Applications: [unified-calling-conventions-enable-bidirectional-refactoring](kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md), [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md). Related areas: [document-system](kb/notes/document-system-index.md).
+- Followed link from [learning-theory](kb/notes/learning-theory-index.md) to [distillation](kb/notes/distillation.md) — co-equal mechanism mentioned in target note
+- Followed link from [document-system](kb/notes/document-system-index.md) to [wikiwiki-principle](kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — type ladder as constraining gradient
 
 **Semantic search:** (grep-only — qmd unavailable, MCP tools not available in this session)
 
@@ -77,8 +77,8 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — already a member, listed under the "Constraining" section as the definition note for the mechanism
-- Already member of: [learning-theory](kb/notes/learning-theory.md)
+- [learning-theory](kb/notes/learning-theory-index.md) — already a member, listed under the "Constraining" section as the definition note for the mechanism
+- Already member of: [learning-theory](kb/notes/learning-theory-index.md)
 
 ## Synthesis Opportunities
 

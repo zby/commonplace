@@ -32,8 +32,8 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Architectural Responses
 
-- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — separation works because bookkeeping admits cheap error correction (hard oracles) while semantic work resists it; mixing forces bookkeeping onto the expensive substrate (also [computational-model](./computational-model.md))
-- [specification-level-separation-recovers-scoping-before-it-recovers-error-correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — OpenProse-like DSLs recover frame isolation before gaining hard-oracle bookkeeping; an intermediate regime (also [computational-model](./computational-model.md))
+- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — separation works because bookkeeping admits cheap error correction (hard oracles) while semantic work resists it; mixing forces bookkeeping onto the expensive substrate (also [computational-model](./computational-model-index.md))
+- [specification-level-separation-recovers-scoping-before-it-recovers-error-correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — OpenProse-like DSLs recover frame isolation before gaining hard-oracle bookkeeping; an intermediate regime (also [computational-model](./computational-model-index.md))
 
 ## Related notes in other areas
 
@@ -45,7 +45,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 - [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — empirical evidence: separates all three phenomena methodologically; performance-stability decoupling confirms they are independent
 
-## Related Areas
+## Related Tags
 
-- [learning-theory](./learning-theory.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
-- [computational-model](./computational-model.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
+- [learning-theory](./learning-theory-index.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
+- [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

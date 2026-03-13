@@ -30,9 +30,9 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 - [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — inline note and structured-claim templates into WRITING.md, eliminating one hop for the two most common note types
 
-## Related Areas
+## Related Tags
 
-- [type-system](./type-system.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
-- [kb-design](./kb-design.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
-- [links](./links.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
-- [learning-theory](./learning-theory.md) — the type ladder instantiates the constraining gradient for documents
+- [type-system](./type-system-index.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
+- [kb-design](./kb-design-index.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
+- [links](./links-index.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
+- [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents

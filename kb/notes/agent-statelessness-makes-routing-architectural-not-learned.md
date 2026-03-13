@@ -2,7 +2,7 @@
 description: Agents never develop navigation intuition — every session is day one — so all knowledge routing infrastructure (skills, type templates, routing tables, naming conventions, activation triggers) is permanent architecture, not scaffolding that learners outgrow
 type: note
 traits: [has-comparison]
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -67,7 +67,3 @@ Relevant Notes:
 - [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — extends: the action-oriented knowledge types (preferences, procedures, precedents) also need routing-as-architecture treatment
 - [human-LLM differences are load-bearing](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — motivates: the upstream argument for why human-LLM differences matter; develops the dual failure modes (anthropomorphism vs mechanism-ism) that this note's metaphor section points to
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — enables: frontloading is the primary technique for making routing work within context constraints
-
-Topics:
-
-- [kb-design](./kb-design.md)

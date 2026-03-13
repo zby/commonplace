@@ -1,7 +1,7 @@
 ---
 description: Promising ideas without enough evidence — extract/connect/review cycle, input classification before processing
 type: review
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -16,7 +16,3 @@ A three-phase pipeline: extract pulls insights from source material, connect fin
 ## Input classification before processing
 
 External sources (papers, articles, blog posts) may need different treatment than domain research or design explorations. Classifying input type before processing could prevent applying the wrong extraction strategy.
-
-Topics:
-
-- [kb-design](./kb-design.md)

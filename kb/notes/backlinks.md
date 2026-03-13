@@ -2,7 +2,7 @@
 description: Analysis of where backlinks (inbound link visibility) would concretely help agents working in the KB — use cases, trade-offs, and design options
 type: note
 traits: [has-comparison]
-areas: [links]
+tags: [links]
 status: speculative
 ---
 
@@ -103,7 +103,3 @@ Relevant Notes:
 
 - [link-contracts-framework](./link-contracts-framework.md) — foundation: backlinks are a special case of link visibility; the "click decision" framework applies to deciding whether to follow an inbound link too
 - [001-generate-topic-links-from-frontmatter](./adr/001-generate-topic-links-from-frontmatter.md) — precedent: deterministic link generation from structured data, the pattern that option B would follow
-
-Topics:
-
-- [links](./links.md)

@@ -2,7 +2,7 @@
 description: Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim codification ladder
 type: note
 traits: [has-external-sources]
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -48,7 +48,3 @@ Relevant Notes:
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — enables: Toulmin's argumentation model provides the Evidence/Reasoning/Caveats sections that define the top rung of the refinement ladder
-
-Topics:
-
-- [document-system](./document-system.md)

@@ -21,10 +21,10 @@
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) — sibling memory system, same paradigm
   - [clawvault](kb/notes/related-systems/clawvault.md) — sibling memory system, different paradigm
   - [what-cludebot-teaches-us](kb/notes/what-cludebot-teaches-us.md) — another memory system comparison
-  - [learning-theory](kb/notes/learning-theory.md) — index covering memory architecture section
+  - [learning-theory](kb/notes/learning-theory-index.md) — index covering memory architecture section
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — Memory & Architecture section lists three-space notes, inspectable substrate, A-MEM, and memory-management-policy (all already flagged). No additional candidates beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — Memory & Architecture section lists three-space notes, inspectable substrate, A-MEM, and memory-management-policy (all already flagged). No additional candidates beyond index scan.
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Mem0 mentioned explicitly in two-tier coverage description. Confirmed Mem0 has lightweight coverage only (ingest report, no repo review). No new candidates.
 
 **Semantic search:** (via qmd)
@@ -115,7 +115,7 @@
 ## Index Membership
 
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) — Mem0 is already mentioned in the index description paragraph ("Database-backed memory systems (Mem0, Graphiti, Cognee, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in kb/sources/"). If a full review note were written for Mem0 under `kb/notes/related-systems/`, it would need its own entry in the Systems section. Currently covered only via the comparative review and ingest report.
-- [learning-theory](kb/notes/learning-theory.md) — The Memory & Architecture section references A-MEM and AgeMem but not Mem0 directly. If a note were written analyzing Mem0's learning properties, it would belong in this section.
+- [learning-theory](kb/notes/learning-theory-index.md) — The Memory & Architecture section references A-MEM and AgeMem but not Mem0 directly. If a note were written analyzing Mem0's learning properties, it would belong in this section.
 
 ## Synthesis Opportunities
 

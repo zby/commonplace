@@ -44,7 +44,7 @@ The central thesis: "The model is not your product. The experience around the mo
 
 **Topic indexes:**
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) -- confirmed filesystem-over-databases convergence pattern across independent systems; Fintool adds commercial-scale evidence
-- Read [kb-design](kb/notes/kb-design.md) (via index candidates) -- no additional candidates beyond index scan
+- Read [kb-design](kb/notes/kb-design-index.md) (via index candidates) -- no additional candidates beyond index scan
 
 **Semantic search:** (via qmd)
 - query "skills as markdown files, model eats scaffolding, filesystem-first agent architecture" --collection notes -n 15:
@@ -134,9 +134,9 @@ The central thesis: "The model is not your product. The experience around the mo
 
 ## Index Membership
 
-- **[kb-design](kb/notes/kb-design.md)** -- Fintool's files-first architecture, skill system, and progressive disclosure are production evidence for KB design patterns documented in this area
+- **[kb-design](kb/notes/kb-design-index.md)** -- Fintool's files-first architecture, skill system, and progressive disclosure are production evidence for KB design patterns documented in this area
 - **[related-systems-index](kb/notes/related-systems/related-systems-index.md)** -- Fintool is a comparable system that should be tracked. However, it's a source snapshot (not a repo we can clone), so it would get the lightweight coverage tier (snapshot + ingest, which already exists). The ingest report is the coverage.
-- **[learning-theory](kb/notes/learning-theory.md)** -- The "model eats scaffolding" thesis and evaluation infrastructure connect to bitter lesson boundary and oracle hardening, but the source is evidence for those notes rather than a learning-theory contribution itself
+- **[learning-theory](kb/notes/learning-theory-index.md)** -- The "model eats scaffolding" thesis and evaluation infrastructure connect to bitter lesson boundary and oracle hardening, but the source is evidence for those notes rather than a learning-theory contribution itself
 
 ## Synthesis Opportunities
 

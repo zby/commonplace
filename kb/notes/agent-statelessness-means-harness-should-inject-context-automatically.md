@@ -2,7 +2,7 @@
 description: Since agents can't carry vocabulary or decisions between reads, the harness should auto-inject referenced context — definitions once per session, ADRs when relevant. The trigger mechanism (type, link semantics, term detection) is an open question; the need follows directly from statelessness.
 type: structured-claim
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: speculative
 ---
 
@@ -82,7 +82,3 @@ Relevant Notes:
 - [human-LLM differences are load-bearing for knowledge system design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — motivates: the "cannot fill gaps" row in the dual-audience table is exactly the problem context injection addresses; tier separation handles the writing side, injection handles the loading side
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — context: definitional notes are an identified exception to claim titles; the `definition` type would formalize this
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — extends: dynamic observability (DevTools Protocol wired into runtime) extends auto-injection from documents to runtime state
-
-Topics:
-
-- [kb-design](./kb-design.md)

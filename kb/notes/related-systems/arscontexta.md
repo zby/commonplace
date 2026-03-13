@@ -2,7 +2,7 @@
 description: Claude Code plugin that generates knowledge systems from conversation, backed by 249 research claims. Ancestor of our KB — we borrowed link semantics, propositional titles, and three-space architecture, then diverged in theory and structure.
 type: note
 status: current
-areas: [related-systems]
+tags: [related-systems]
 last-checked: 2026-02-26
 ---
 
@@ -143,7 +143,3 @@ Relevant Notes:
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — our analysis of their article #19
 - [design-methodology-borrow-widely-filter-by-first-principles](../design-methodology-borrow-widely-filter-by-first-principles.md) — the cognitive science scale-mismatch concern connects to our adoption filter
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

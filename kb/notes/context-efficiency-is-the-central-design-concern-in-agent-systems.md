@@ -2,7 +2,7 @@
 description: Context — not compute, memory, or storage — is the scarce resource in agent systems; context cost has two dimensions (volume and complexity) that require different architectural responses, making context efficiency the central design concern analogous to algorithmic complexity in traditional systems
 type: note
 traits: [has-external-sources]
-areas: [kb-design, computational-model]
+tags: [kb-design, computational-model]
 status: current
 ---
 
@@ -86,8 +86,3 @@ Relevant Notes:
 - [The Anatomy of an Agent Harness (Vtrivedy10, 2026)](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) — exemplifies: derives harness components (filesystem, sandbox, context management, skills) by working backwards from model limitations — instantiates the architectural responses this note describes abstractly with concrete primitives (compaction, tool-call offloading, progressive tool loading)
 - [Epiplexity (Bates et al., 2026)](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — grounds: formalizes the complexity dimension of context cost — epiplexity quantifies structural accessibility under computational bounds, giving theoretical backing to "how hard the tokens are to use"
 - [AgeMem (Yu et al., 2025)](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) — exemplifies: RL-trained STM operations (Retrieve/Summary/Filter) achieve 3-5% token reduction while maintaining performance — empirical evidence that learned context management can outperform heuristic approaches
-
-Topics:
-
-- [computational-model](./computational-model.md)
-- [kb-design](./kb-design.md)

@@ -58,7 +58,7 @@ def find_index_relpath(area: str, note_dir: Path) -> str:
 
     This handles indexes in the same directory (approvals-index.md next to notes),
     in a sibling subdirectory (claw-design/claw-design.md from notes/), or in a sibling
-    subdirectory with a different name (claw-design/links.md from notes/).
+    subdirectory with a different name (claw-design/links-index.md from notes/).
 
     Returns a relative path like './area.md' or '../claw-design/area.md'.
     Falls back to './area.md' if not found (will trigger a warning elsewhere).

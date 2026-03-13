@@ -2,7 +2,7 @@
 description: Reference framework for automated text testing — contracts per document type, test pyramid (deterministic/LLM rubric/corpus), production workflow
 type: note
 traits: [has-external-sources]
-areas: [document-system]
+tags: [document-system]
 status: current
 ---
 
@@ -101,7 +101,3 @@ Once you have contracts, you can test them.
 Single-note: required sections, max length, next step with owner, no relative dates, acronyms defined, no PII, clarity rubric, main point in first 2 sentences.
 
 Corpus: top-5 similarity contradiction check, threshold linking, glossary alignment.
-
-Topics:
-
-- [document-system](./document-system.md)

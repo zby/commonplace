@@ -2,7 +2,7 @@
 description: Structured templates like Evidence/Reasoning sections steer autoregressive generation toward higher-quality training data (scientific papers, legal analyses) rather than unstructured web text — the structure acts as a distribution selector
 type: note
 traits: [has-external-sources]
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -39,7 +39,3 @@ Relevant Notes:
 - [content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) — grounds: CoT reduces content bias without degrading familiar performance; content effects survive scaling and instruction tuning, supporting structural intervention as permanent architecture
 - [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — refines: the distribution-selection effect applies differently to process constraints (activating rigorous reasoning) and output constraints (activating formally structured training data)
 - [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical argumentation framework behind the "Toulmin-shaped template" referenced here
-
-Topics:
-
-- [type-system](./type-system.md)

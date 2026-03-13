@@ -6,7 +6,7 @@ status: current
 
 # KB maintenance
 
-How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [kb-design](./kb-design.md). For document structure, see [document-system](./document-system.md).
+How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [kb-design](./kb-design-index.md). For document structure, see [document-system](./document-system-index.md).
 
 ## Dynamics
 
@@ -27,8 +27,8 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
 
-## Related Areas
+## Related Tags
 
-- [kb-design](./kb-design.md) — parent area: architecture and design of the KB itself
-- [document-system](./document-system.md) — type system and validation that maintenance operations check against
-- [links](./links.md) — linking methodology that staleness detection and quality signals operate on
+- [kb-design](./kb-design-index.md) — parent area: architecture and design of the KB itself
+- [document-system](./document-system-index.md) — type system and validation that maintenance operations check against
+- [links](./links-index.md) — linking methodology that staleness detection and quality signals operate on

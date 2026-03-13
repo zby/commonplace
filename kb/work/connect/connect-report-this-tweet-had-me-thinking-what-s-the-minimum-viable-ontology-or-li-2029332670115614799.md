@@ -31,7 +31,7 @@ The source proposes "minimum viable ontology" (MVO) — the smallest set of term
   - [learning-is-not-only-about-generality](kb/notes/learning-is-not-only-about-generality.md) — accumulation as learning
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed distillation and discovery as primary connection paths. No additional candidates beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed distillation and discovery as primary connection paths. No additional candidates beyond index scan.
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) — no direct candidate, but sift-kg's schema discovery parallels MVO generation.
 
 **Semantic search (via qmd):**
@@ -39,7 +39,7 @@ The source proposes "minimum viable ontology" (MVO) — the smallest set of term
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (93%) — already links to MVO ingest; strong, genuine connection
   - [areas-exist-because-useful-operations-require-reading-notes-together](kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md) (50%) — weaker; areas are KB-internal, MVO is domain-external
   - [thalo-type-comparison](kb/notes/related-systems/thalo-type-comparison.md) (38%) — surface overlap on "types"; no semantic connection
-  - [document-system](kb/notes/document-system.md) (35%) — surface overlap on classification; no semantic connection
+  - [document-system](kb/notes/document-system-index.md) (35%) — surface overlap on classification; no semantic connection
   - [two-context-boundaries-govern-collection-operations](kb/notes/two-context-boundaries-govern-collection-operations.md) (33%) — index boundary concept is structurally parallel but too abstract to be useful
   - Remaining results (33% and below): learning-theory, mechanistic-constraints, areas, Evans, discovery — either already flagged or too weak
 - Query: "minimum viable ontology domain maps curated term lists skills for agents" on sources collection

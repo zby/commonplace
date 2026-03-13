@@ -2,7 +2,7 @@
 description: MCP forces stateless tool operations through a persistent server process — most tools are pure functions that don't need session state, connections, or lifecycle management, but pay the complexity tax anyway
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -43,7 +43,3 @@ Relevant Notes:
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — stateless tool invocation is ephemeral by design; MCP's persistent server pushes toward accumulating state whether or not the tools need it
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — unnecessary intermediate layers add latency and failure modes without improving the agent's context
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — same principle: indirection through a server process costs overhead on every call, unlike code where indirection is nearly free
-
-Topics:
-
-- [kb-design](./kb-design.md)

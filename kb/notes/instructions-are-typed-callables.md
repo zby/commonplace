@@ -1,7 +1,7 @@
 ---
 description: Skills and tasks are typed callables — they accept document types as input and produce types as output, and should declare their signatures like functions declare parameter types.
 type: note
-areas: [kb-design]
+tags: [kb-design]
 status: speculative
 ---
 
@@ -45,7 +45,3 @@ Relevant Notes:
 - [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [codification](./codification.md) — the operations afforded by types can themselves codify from LLM to code
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation
-
-Topics:
-
-- [kb-design](./kb-design.md)

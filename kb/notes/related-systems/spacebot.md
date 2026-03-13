@@ -1,7 +1,7 @@
 ---
 description: Rust concurrent agent framework whose process-type architecture (channels, branches, workers, cortex) is the cleanest production implementation of code-level scheduling over bounded LLM calls among reviewed systems
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 last-checked: 2026-03-09
 ---
@@ -102,7 +102,3 @@ Relevant Notes:
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: addresses both context cost dimensions — compactor handles volume, branches provide complexity isolation
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — tests: typed-but-unified memory with 8 types in a single store is a middle ground between flat storage and full three-space separation
 - [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — extends: Spacebot adds a new position (Rust-level process separation, concurrent multi-user, graph-edged typed memory) not covered by existing entries
-
-Topics:
-
-- [related-systems-index](./related-systems-index.md)

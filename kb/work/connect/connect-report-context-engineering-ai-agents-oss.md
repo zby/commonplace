@@ -24,18 +24,18 @@
   - [automated-tests-for-text](kb/notes/automated-tests-for-text.md) — paper observes context files are "quality-assured, and tested"
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) — confirmed: source already listed in Reference material section. Architecture subsection lists agents-md-should-be-organized-as-a-control-plane and instruction-specificity-should-match-loading-frequency, both strongly connected.
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed: source already listed in Reference material section. Constraining subsection provides the theoretical framework the paper's evolution data validates.
+- Read [kb-design](kb/notes/kb-design-index.md) — confirmed: source already listed in Reference material section. Architecture subsection lists agents-md-should-be-organized-as-a-control-plane and instruction-specificity-should-match-loading-frequency, both strongly connected.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed: source already listed in Reference material section. Constraining subsection provides the theoretical framework the paper's evolution data validates.
 
 **Semantic search:** (via qmd)
 - query "context engineering AI agents AGENTS.md AI context files structured information for LLMs" on notes collection — top hits:
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (93%) — strong, core concept overlap
   - [agent-skills-for-context-engineering](kb/notes/related-systems/agent-skills-for-context-engineering.md) (56%) — strong, same domain
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) (47%) — strong, directly about AGENTS.md
-  - [learning-theory](kb/notes/learning-theory.md) (46%) — index, already has link
+  - [learning-theory](kb/notes/learning-theory-index.md) (46%) — index, already has link
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (46%) — index
   - [instruction-specificity-should-match-loading-frequency](kb/notes/instruction-specificity-should-match-loading-frequency.md) (46%) — strong, about context file design
-  - [kb-design](kb/notes/kb-design.md) (46%) — index, already has link
+  - [kb-design](kb/notes/kb-design-index.md) (46%) — index, already has link
   - [arscontexta](kb/notes/related-systems/arscontexta.md) (42%) — weak, different scope
   - [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) (42%) — weak, about scoping not context files
   - [legal-drafting-solves-the-same-problem-as-context-engineering](kb/notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) (38%) — good, parallel discipline
@@ -62,8 +62,8 @@ These connections already exist in the KB:
 
 - [writing-styles-are-strategies-for-managing-underspecification](kb/notes/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: the paper is the primary source; note was derived from the paper's five-style taxonomy
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — **validates**: paper explicitly contrasts "README files for humans" with "AI context files for AI agents" — dual-audience split at empirical scale
-- [kb-design](kb/notes/kb-design.md) — **validates**: already listed in Reference material; provides empirical grounding for instruction-specificity-should-match-loading-frequency categories and constraining maturation in the wild
-- [learning-theory](kb/notes/learning-theory.md) — **validates**: already listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts
+- [kb-design](kb/notes/kb-design-index.md) — **validates**: already listed in Reference material; provides empirical grounding for instruction-specificity-should-match-loading-frequency categories and constraining maturation in the wild
+- [learning-theory](kb/notes/learning-theory-index.md) — **validates**: already listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts
 
 ### New connections to add
 
@@ -106,9 +106,9 @@ These connections already exist in the KB:
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — already listed in Reference material section. The source validates instruction-specificity-should-match-loading-frequency, AGENTS.md control-plane design, and the dual-audience split.
-- [learning-theory](kb/notes/learning-theory.md) — already listed in Reference material section. The source validates constraining-as-continuous-learning and the maturation trajectory.
-- Not a member of [computational-model](kb/notes/computational-model.md) — appropriately so; the paper is empirical, not about computational concepts.
+- [kb-design](kb/notes/kb-design-index.md) — already listed in Reference material section. The source validates instruction-specificity-should-match-loading-frequency, AGENTS.md control-plane design, and the dual-audience split.
+- [learning-theory](kb/notes/learning-theory-index.md) — already listed in Reference material section. The source validates constraining-as-continuous-learning and the maturation trajectory.
+- Not a member of [computational-model](kb/notes/computational-model-index.md) — appropriately so; the paper is empirical, not about computational concepts.
 
 ## Synthesis Opportunities
 

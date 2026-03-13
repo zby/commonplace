@@ -2,7 +2,7 @@
 description: The commonplace repo's own internal layout — what exists, what's missing, and the decision to put global types in CLAUDE.md instead of kb/types/
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -67,7 +67,3 @@ Relevant Notes:
 - [commonplace-installation-architecture](./commonplace-installation-architecture.md) — the two-tree design for installed projects; this note covers the repo's own layout
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand
-
-Topics:
-
-- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: Formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop — analyses what makes selection hard and why the model supports local comparative results even when global optimisation is intractable
 type: note
 traits: [has-external-sources]
-areas: [computational-model]
+tags: [computational-model]
 status: seedling
 ---
 
@@ -143,7 +143,3 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
 - [paper outline v2](../work/paper-bounded-context-orchestration/outline-v2.md) — develops: presents this model for an academic audience
-
-Topics:
-
-- [computational-model](./computational-model.md)

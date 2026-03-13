@@ -2,7 +2,7 @@
 description: Definition — constraining constrains the space of valid interpretations an underspecified spec admits, from partial narrowing (conventions, structured sections) to full commitment (stored outputs, deterministic code) — one of two co-equal learning mechanisms alongside distillation
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -44,6 +44,3 @@ Constraining and distillation are orthogonal — they operate on different dimen
 You can constrain without distilling (store an LLM output — commit to one interpretation, no extraction from reasoning). You can distil without constraining (extract a skill from notes — still natural language, still underspecified). The full compound gain comes when both operations apply.
 
 Constraining asks: *how constrained is this artifact?* Distillation asks: *was this artifact extracted from something larger?*
-
-Topics:
-- [learning-theory](./learning-theory.md)

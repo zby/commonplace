@@ -2,7 +2,7 @@
 description: The loading hierarchy (CLAUDE.md → skill descriptions → skill bodies → task docs) should match instruction specificity to loading frequency — always-loaded context competes for attention every session
 type: note
 traits: [has-external-sources]
-areas: [kb-design]
+tags: [kb-design]
 status: current
 ---
 
@@ -31,7 +31,3 @@ Relevant Notes:
 
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md as "a map with pointers" converges independently on the routing concept at production scale
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — extends: distinguishes the two always-loaded surfaces (CLAUDE.md vs skill descriptions) and their design tradeoffs
-
-Topics:
-
-- [kb-design](./kb-design.md)

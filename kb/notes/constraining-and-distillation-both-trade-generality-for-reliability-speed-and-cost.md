@@ -3,7 +3,7 @@ description: Both learning mechanisms — constraining (constraining) and distil
 type: note
 traits: []
 status: current
-areas: [learning-theory]
+tags: [learning-theory]
 ---
 
 # Constraining and distillation both trade generality for reliability, speed, and cost
@@ -50,7 +50,3 @@ Relevant Notes:
 - [distillation](./distillation.md) — the other mechanism: targeted extraction under context budget constraints
 - [codification](./codification.md) — where constraining yields the largest compound gain, because the substrate itself changes
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when the generality-vs-compound trade-off is permanent (calculators) vs when relaxing is needed (vision features)
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

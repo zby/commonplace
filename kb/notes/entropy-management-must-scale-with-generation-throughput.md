@@ -2,7 +2,7 @@
 description: In agent-maintained systems, cleanup throughput must match generation throughput — agents replicate existing patterns including bad ones, so without proportional maintenance, quality degrades as a function of output volume
 type: note
 traits: [has-external-sources]
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -34,7 +34,3 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — constrains: if boiling cauldron mutations are automated, maintenance must be automated at matching throughput or quality degrades
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — detects: the credibility erosion failure mode is what happens when entropy management falls behind generation
 - [Harness Engineering](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: 1M LOC agent-generated codebase where background cleanup agents maintain quality at generation-matching throughput
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

@@ -2,7 +2,7 @@
 description: Why durable-knowledge graph composition (many linked notes) is wrong for tracking understanding during active engineering — a single holistically rewritten narrative maintains the coherence that working memory requires
 type: note
 traits: [has-external-sources]
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -62,7 +62,3 @@ Relevant Notes:
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — holistic rewrite is the opposite of append-only constraining; THEORY.MD is deliberately *un*stable, rewritten to maintain coherence rather than frozen to preserve a decision
 - [agent-statelessness-means-harness-should-inject-context-automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — theorist's always-on activation is automatic context injection; the theory doc is the harness injecting strategic context every session
 - [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — extends: distributes the rewrite burden between human review and agent-generated directional updates, scaling coherence maintenance with generation throughput
-
-Topics:
-
-- [kb-design](./kb-design.md)

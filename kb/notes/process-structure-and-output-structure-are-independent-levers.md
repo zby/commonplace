@@ -2,7 +2,7 @@
 description: Constraining what reasoning steps must occur (process structure) is an independent lever from constraining what the result looks like (output structure) — the KB's structured-reasoning cluster conflates the two, but the agentic-code-reasoning evidence shows process constraints driving accuracy gains where output format alone would not
 type: note
 traits: [has-external-sources]
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -45,7 +45,3 @@ Relevant Notes:
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — context: human writing genres bundle both process and output structure; the per-convention transfer evaluation should assess each dimension separately
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — speculative: process steps as structurally decorrelated checks could connect process structure to error-correction amplification
 - [Agentic Code Reasoning](../sources/agentic-code-reasoning.ingest.md) — grounds: semi-formal templates with process constraints (state premises, trace paths, derive conclusions) yield 5-12pp accuracy gains; template components not individually ablated
-
-Topics:
-
-- [type-system](./type-system.md)

@@ -1,13 +1,13 @@
 ---
 description: Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
 type: index
-areas: [document-system]
+tags: [document-system]
 status: current
 ---
 
 # Type system
 
-Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system.md).
+Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system-index.md).
 
 ## Overview
 
@@ -38,7 +38,7 @@ Three independent arguments for why structured document types improve what gets 
 - [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the `structured-claim` type: Toulmin-derived Evidence/Reasoning/Caveats sections
 - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the type ladder: zero-friction capture, then progressive refinement as thoughts earn structure
 
-## Related Areas
+## Related Tags
 
-- [document-system](./document-system.md) — parent area; type system is one component of the document infrastructure
-- [learning-theory](./learning-theory.md) — the type ladder instantiates the constraining gradient for documents
+- [document-system](./document-system-index.md) — parent area; type system is one component of the document infrastructure
+- [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents

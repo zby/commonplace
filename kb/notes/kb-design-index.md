@@ -6,7 +6,7 @@ status: current
 
 # KB design
 
-How agent-operated knowledge bases are built, installed, and evaluated. Architecture decisions, skill design, and the evaluation loop for the knowledge system itself. For document structure and types, see [document-system](./document-system.md). For the learning theory knowledge bases draw on, see [learning-theory](./learning-theory.md).
+How agent-operated knowledge bases are built, installed, and evaluated. Architecture decisions, skill design, and the evaluation loop for the knowledge system itself. For document structure and types, see [document-system](./document-system-index.md). For the learning theory knowledge bases draw on, see [learning-theory](./learning-theory-index.md).
 
 ## Architecture
 
@@ -76,11 +76,11 @@ How agent-operated knowledge bases are built, installed, and evaluated. Architec
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper implementing Zettelkasten-inspired automated memory with link generation and memory evolution; provides empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md adoption in 466 OSS projects; validates the loading-frequency principle's content categories, provides evolution data showing constraining maturation in the wild, and confirms the dual-audience split between human READMEs and machine context files
 
-## Related Areas
+## Related Tags
 
-- [document-system](./document-system.md) — types, writing conventions, and validation that the KB's documents follow
-- [learning-theory](./learning-theory.md) — the learning mechanisms (constraining, codification, distillation) that KB operations instantiate
-- [computational-model](./computational-model.md) — PL concepts (scheduling, partial evaluation, scoping) that inform KB architecture; the scheduling notes moved here
-- [links](./links.md) — linking methodology, navigation, and link contracts
-- [maintenance](./kb-maintenance.md) — detection, operations, and dynamics that keep the KB healthy over time
+- [document-system](./document-system-index.md) — types, writing conventions, and validation that the KB's documents follow
+- [learning-theory](./learning-theory-index.md) — the learning mechanisms (constraining, codification, distillation) that KB operations instantiate
+- [computational-model](./computational-model-index.md) — PL concepts (scheduling, partial evaluation, scoping) that inform KB architecture; the scheduling notes moved here
+- [links](./links-index.md) — linking methodology, navigation, and link contracts
+- [maintenance](./kb-maintenance-index.md) — detection, operations, and dynamics that keep the KB healthy over time
 - [related-systems](./related-systems/related-systems-index.md) — external system comparisons

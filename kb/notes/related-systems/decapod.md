@@ -1,7 +1,7 @@
 ---
 description: Rust governance kernel for AI coding agents that forces intent codification, proof-gated completion, and workspace isolation before code touches a repo — strongest reference for hard-oracle verification in agent workflows, but constitution documents claim transformations the code does not perform
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 last-checked: 2026-03-10
 ---
@@ -156,7 +156,3 @@ Relevant Notes:
 - [agentic-systems-interpret-underspecified-instructions](../agentic-systems-interpret-underspecified-instructions.md) — Decapod's constitution and scaffold attempt to reduce underspecification, but the constitution is itself natural language interpreted by the agent; only the hard gates (workspace interlock, proof gating) escape the underspecification problem
 - [automated-tests-for-text](../automated-tests-for-text.md) — Decapod's validation suite is a production example of the deterministic test layer this note describes, with 30+ parallel structural checks
 - [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — extends: Decapod adds a governance-first position (process control over knowledge management) not represented in existing entries
-
-Topics:
-
-- [related-systems-index](./related-systems-index.md)

@@ -3,7 +3,7 @@ description: Reference for borrowing recurring note shapes from Thalo — their 
 type: note
 traits: [has-comparison]
 status: current
-areas: [related-systems]
+tags: [related-systems]
 ---
 
 # Thalo entity types compared to commonplace document types
@@ -164,7 +164,3 @@ Relevant Notes:
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into
 - [thalo](./thalo.md) — the main system review note
 - [Toulmin argument](../../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model provides the canonical decomposition (claim/grounds/warrant/qualifier/rebuttal/backing) that Thalo's opinion entity approximates with Claim/Reasoning/Caveats sections
-
-Topics:
-
-- [related-systems](./related-systems-index.md)

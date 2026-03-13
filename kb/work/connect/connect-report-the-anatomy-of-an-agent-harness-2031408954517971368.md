@@ -26,8 +26,8 @@
   - [related-systems/spacebot](kb/notes/related-systems/spacebot.md) — typed process architecture as clean scheduler harness
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) — confirmed all architecture and skills candidates; no new candidates beyond index scan
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed deploy-time-learning, constraining-during-deployment, codification-and-relaxing; additionally confirmed [ephemeral-computation-prevents-accumulation](kb/notes/ephemeral-computation-prevents-accumulation.md) (filesystem bridges sessions, preventing ephemeral loss) as marginal — rejected on evaluation
+- Read [kb-design](kb/notes/kb-design-index.md) — confirmed all architecture and skills candidates; no new candidates beyond index scan
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed deploy-time-learning, constraining-during-deployment, codification-and-relaxing; additionally confirmed [ephemeral-computation-prevents-accumulation](kb/notes/ephemeral-computation-prevents-accumulation.md) (filesystem bridges sessions, preventing ephemeral loss) as marginal — rejected on evaluation
 
 **Semantic search:** (via qmd)
 - query "agent harness engineering context management compaction skills progressive disclosure" on notes:
@@ -41,7 +41,7 @@
   - [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md) (39%) — already flagged
 
 - query "model limitations filesystem durable state memory continual learning" on notes:
-  - [learning-theory](kb/notes/learning-theory.md) (89%) — index, not a connection target
+  - [learning-theory](kb/notes/learning-theory-index.md) (89%) — index, not a connection target
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (50%) — evaluated below
   - [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md) (41%) — already flagged
   - [related-systems/agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) (39%) — evaluated below
@@ -136,9 +136,9 @@
 
 ## Index Membership
 
-- [kb-design](kb/notes/kb-design.md) — The source provides a practitioner taxonomy of harness components that the KB's architecture notes describe in theory. Should appear in Reference Material alongside the Lopopolo and cybernetics companion sources.
-- [learning-theory](kb/notes/learning-theory.md) — The source's memory/search section and co-training loop are concrete evidence for deploy-time learning and the constrain/relax cycle. Should appear in Reference Material.
-- [computational-model](kb/notes/computational-model.md) — The source's orchestration logic, Ralph Loop, and compaction patterns relate to bounded-context orchestration. Could appear in Reference Material.
+- [kb-design](kb/notes/kb-design-index.md) — The source provides a practitioner taxonomy of harness components that the KB's architecture notes describe in theory. Should appear in Reference Material alongside the Lopopolo and cybernetics companion sources.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source's memory/search section and co-training loop are concrete evidence for deploy-time learning and the constrain/relax cycle. Should appear in Reference Material.
+- [computational-model](kb/notes/computational-model-index.md) — The source's orchestration logic, Ralph Loop, and compaction patterns relate to bounded-context orchestration. Could appear in Reference Material.
 
 ## Synthesis Opportunities
 

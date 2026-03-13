@@ -2,7 +2,7 @@
 description: "Operationalizes codification by extracting deterministic verifiers from observed stochastic behavior — the mechanism that converts blurry-zone components into calculators"
 type: note
 traits: [has-external-sources]
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -63,7 +63,3 @@ Relevant Notes:
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — parallels: the maturation trajectory (instruction → script) is spec mining applied to methodology rather than system behavior
 - [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — enables: mined specs produce inspectable, testable, revertable artifacts — inspectability is what makes them falsifiable
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallels: case law constraining (courts converging on one reading of a statute) is spec mining in a legal medium
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

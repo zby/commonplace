@@ -25,8 +25,8 @@
   - [error-messages-that-teach-are-a-constraining-technique](kb/notes/error-messages-that-teach-are-a-constraining-technique.md) -- recovery mechanisms echo the constrain-and-inform dual function
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) -- confirmed: methodology-enforcement, constraining, oracle-strength, error-correction, reliability-dimensions, spec-mining all indexed here. No additional candidates beyond index scan.
-- Read [kb-design](kb/notes/kb-design.md) -- confirmed: methodology-enforcement bridges both areas. No new candidates.
+- Read [learning-theory](kb/notes/learning-theory-index.md) -- confirmed: methodology-enforcement, constraining, oracle-strength, error-correction, reliability-dimensions, spec-mining all indexed here. No additional candidates beyond index scan.
+- Read [kb-design](kb/notes/kb-design-index.md) -- confirmed: methodology-enforcement bridges both areas. No new candidates.
 
 **Semantic search:** (via qmd)
 - Query "behavioral contracts formal specification runtime enforcement agent compliance" on notes collection:
@@ -97,7 +97,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) -- the source provides formal mathematical grounding (Drift Bounds Theorem, (p,delta,k)-satisfaction) for constraining and the oracle-strength spectrum. Could be listed under "Oracle & Verification" or as reference material.
+- [learning-theory](kb/notes/learning-theory-index.md) -- the source provides formal mathematical grounding (Drift Bounds Theorem, (p,delta,k)-satisfaction) for constraining and the oracle-strength spectrum. Could be listed under "Oracle & Verification" or as reference material.
 - Already referenced from: [legal-drafting-solves-the-same-problem-as-context-engineering](kb/notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) (ABC case study section) and [sources/index.md](kb/sources/index.md) (auto-generated listing).
 
 ## Synthesis Opportunities

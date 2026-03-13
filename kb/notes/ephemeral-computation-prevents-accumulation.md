@@ -2,7 +2,7 @@
 description: Ephemeral computation — discarding generated artifacts after use — trades accumulation for simplicity, making it the inverse of codification
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -61,7 +61,3 @@ Relevant Notes:
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — the dynamic that moves components between ephemeral and codified
 - [Deploy-time learning is the missing middle](./deploy-time-learning-the-missing-middle.md) — codification's verifiability gradient
 - [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -1,17 +1,17 @@
-"""MkDocs hook: inject note metadata (status, type, areas) below the first heading."""
+"""MkDocs hook: inject note metadata (status, type, tags) below the first heading."""
 
 import os
 import re
 from pathlib import Path
 
 
-def _find_area_index(area: str, note_dir: Path) -> str | None:
-    """Find relative path from note_dir to the area's index file.
+def _find_tag_index(tag: str, note_dir: Path) -> str | None:
+    """Find relative path from note_dir to the tag's index file.
 
-    Searches up to 4 levels above note_dir for {area}.md or {area}-index.md,
+    Searches up to 4 levels above note_dir for {tag}-index.md or {tag}.md,
     both flat and one subdirectory deep.
     """
-    filenames = [f"{area}.md", f"{area}-index.md"]
+    filenames = [f"{tag}-index.md", f"{tag}.md"]
     search_dir = note_dir.resolve()
     note_dir_resolved = note_dir.resolve()
 
@@ -40,8 +40,8 @@ def on_page_markdown(markdown: str, page, **kwargs) -> str:
 
     status = meta.get("status")
     note_type = meta.get("type")
-    areas = meta.get("areas", [])
-    if not status and not note_type and not areas:
+    tags = meta.get("tags", [])
+    if not status and not note_type and not tags:
         return markdown
 
     parts = []
@@ -50,16 +50,16 @@ def on_page_markdown(markdown: str, page, **kwargs) -> str:
     if status:
         parts.append(f"**Status:** {status}")
 
-    if areas:
+    if tags:
         note_dir = Path(page.file.abs_src_path).parent
-        area_links = []
-        for area in areas:
-            relpath = _find_area_index(area, note_dir)
+        tag_links = []
+        for tag in tags:
+            relpath = _find_tag_index(tag, note_dir)
             if relpath:
-                area_links.append(f"[{area}]({relpath})")
+                tag_links.append(f"[{tag}]({relpath})")
             else:
-                area_links.append(area)
-        parts.append(f"**Areas:** {', '.join(area_links)}")
+                tag_links.append(tag)
+        parts.append(f"**Tags:** {', '.join(tag_links)}")
 
     badge_line = " · ".join(parts)
 

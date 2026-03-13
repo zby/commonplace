@@ -44,7 +44,7 @@ Add YAML frontmatter at the top of the file:
 description: [50-200 chars, adds mechanism/scope/implication beyond the title]
 type: note
 traits: []
-areas: []
+tags: []
 status: seedling
 ---
 ```
@@ -53,7 +53,7 @@ status: seedling
 - `status` is always `seedling` — conversion structures the note but does not endorse it. Human review flips to `current`.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
 - `traits` is always `[]` — trait assignment is semantic work, done later by `/validate` or human review.
-- `areas` is always `[]` — area assignment is semantic work, done later by `/connect` or human review.
+- `tags` is always `[]` — tag assignment is semantic work, done later by `/connect` or human review.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.
 
 #### Step 3a: Rename the file

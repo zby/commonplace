@@ -28,7 +28,7 @@ Key concepts: research taste as problem selection, ground truth / feedback signa
   - [claw-learning-is-broader-than-retrieval](kb/notes/claw-learning-is-broader-than-retrieval.md) — learning beyond retrieval
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed oracle-strength-spectrum, bitter-lesson-boundary, memory-management-policy, first-principles-reach, discovery, information-value as relevant cluster. No additional candidates beyond index scan.
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed oracle-strength-spectrum, bitter-lesson-boundary, memory-management-policy, first-principles-reach, discovery, information-value as relevant cluster. No additional candidates beyond index scan.
 
 **Semantic search (via qmd):**
 - query "research taste problem selection automation oracle feedback signal what is worth building" on notes:
@@ -90,7 +90,7 @@ Key concepts: research taste as problem selection, ground truth / feedback signa
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — The source's claim about oracle availability as the automation bottleneck connects to the Oracle & Verification section. Not a KB note itself, so not a direct member, but connection reports from this source should be filed in the learning-theory neighborhood.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source's claim about oracle availability as the automation bottleneck connects to the Oracle & Verification section. Not a KB note itself, so not a direct member, but connection reports from this source should be filed in the learning-theory neighborhood.
 - Already exists in: kb/sources/ (captured source, no index membership yet)
 
 ## Synthesis Opportunities

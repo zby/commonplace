@@ -3,7 +3,7 @@ description: Not all links are equal — inline premise links ("since [X]") carr
 type: note
 traits: []
 status: seedling
-areas: [links]
+tags: [links]
 ---
 
 # Link strength is encoded in position and prose
@@ -73,7 +73,3 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — strong-to-weak link ratio is a graph health signal
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link strength legible: "since [claim-title]" is visibly a premise link
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the credibility erosion problem: unweighted link counts let noise drown signal; link-weighted scoring prevents this
-
-Topics:
-
-- [links](./links.md)

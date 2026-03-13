@@ -18,8 +18,8 @@
   - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — Amodei's dismissal of hand-crafted components ("diffusion isn't cope" + scaling works) is the bitter lesson asserting itself
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed candidates above; noted the LLM learning phases note already uses Amodei as a primary source
-- Read [llm-interpretation-errors](kb/notes/llm-interpretation-errors.md) (via index scan) — confirmed oracle-strength and augmentation-automation connections
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed candidates above; noted the LLM learning phases note already uses Amodei as a primary source
+- Read [llm-interpretation-errors](kb/notes/llm-interpretation-errors-index.md) (via index scan) — confirmed oracle-strength and augmentation-automation connections
 
 **Semantic search:** (via qmd)
 - Query 1: "AI scaling exponential capabilities verification uncertainty diffusion adoption" (notes) — top hits:
@@ -89,7 +89,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — the source's claims about pre-training/RL/in-context learning generalization and continual learning intersect with the learning theory framework; the llm-learning-phases note already lives here and uses Amodei as a source
+- [learning-theory](kb/notes/learning-theory-index.md) — the source's claims about pre-training/RL/in-context learning generalization and continual learning intersect with the learning theory framework; the llm-learning-phases note already lives here and uses Amodei as a source
 - Already connected to learning-theory via the llm-learning-phases note
 
 ## Synthesis Opportunities

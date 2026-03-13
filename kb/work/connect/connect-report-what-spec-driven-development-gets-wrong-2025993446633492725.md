@@ -29,8 +29,8 @@ An @augmentcode post arguing that spec-driven development (SDD) fails for the sa
   - [related-systems/decapod](kb/notes/related-systems/decapod.md) -- intent-before-mutation via spec artifacts
 
 **Topic indexes:**
-- Read [kb-design](kb/notes/kb-design.md) -- not directly relevant (KB architecture, not SDD)
-- Read [learning-theory](kb/notes/learning-theory.md) -- confirmed several candidates already flagged
+- Read [kb-design](kb/notes/kb-design-index.md) -- not directly relevant (KB architecture, not SDD)
+- Read [learning-theory](kb/notes/learning-theory-index.md) -- confirmed several candidates already flagged
 - Read [related-systems-index](kb/notes/related-systems/related-systems-index.md) -- Decapod confirmed as strongest related-system connection
 
 **Semantic search:** (via qmd)
@@ -107,7 +107,7 @@ An @augmentcode post arguing that spec-driven development (SDD) fails for the sa
 ## Index Membership
 
 - [related-systems-index](kb/notes/related-systems/related-systems-index.md) — The source describes Augment's "Intent" product, which is a related system. However, this is a single tweet-length post, not a system review. If a deeper review of Intent is done, it should be added to the related systems index. The source itself does not warrant index membership.
-- [learning-theory](kb/notes/learning-theory.md) — The source exemplifies deploy-time learning, constraining, and entropy management concepts but is a captured source, not a note. Sources are not typically added to topic indexes.
+- [learning-theory](kb/notes/learning-theory-index.md) — The source exemplifies deploy-time learning, constraining, and entropy management concepts but is a captured source, not a note. Sources are not typically added to topic indexes.
 
 ## Synthesis Opportunities
 

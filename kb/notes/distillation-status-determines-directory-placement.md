@@ -2,7 +2,7 @@
 description: Hunch that procedural artifacts distilled for execution belong in kb/instructions/ — the directory boundary is "distilled into a procedure", not "compressed" or "frequently loaded"
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -48,7 +48,3 @@ Relevant Notes:
 - [instructions are skills without automatic routing](./instructions-are-skills-without-automatic-routing.md) — context: the existing instruction/note boundary that this principle would sharpen
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy that distillation-based placement aligns with
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — parallel: areas organize notes for comparative reading; distillation status organizes artifacts for maintenance operations
-
-Topics:
-
-- [kb-design](./kb-design.md)

@@ -2,7 +2,7 @@
 description: Every traversal is a read-write opportunity — agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 type: note
 traits: []
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -42,7 +42,3 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: the agent shouldn't load writing methodology during traversal, which is why we defer
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — the log catches staleness that defensive creation-time checks miss
 - [Ars Contexta](./related-systems/arscontexta.md) — source: the incremental formalization insight that motivated this design
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)

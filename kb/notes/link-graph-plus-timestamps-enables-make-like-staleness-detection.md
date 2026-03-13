@@ -2,7 +2,7 @@
 description: Existing links already encode dependency information; comparing note and target timestamps flags notes that may be stale without any new annotation, analogous to make's file-based rebuild logic.
 type: note
 traits: []
-areas: [kb-maintenance]
+tags: [kb-maintenance]
 status: seedling
 ---
 
@@ -60,8 +60,4 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: adds dependency-aware detection alongside age-based heuristics
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — motivates: its proposal-pruning pattern is a concrete use case for this detection
 - [traversal improves the graph](./traversal-improves-the-graph.md) — mechanism: traversal is when staleness gets noticed today; this note proposes detecting it before traversal
-- [links](./links.md) — foundation: the link graph that provides the dependency structure
-
-Topics:
-
-- [maintenance](./kb-maintenance.md)
+- [links](./links-index.md) — foundation: the link graph that provides the dependency structure

@@ -3,7 +3,7 @@ description: We borrow from any source but adopt based on first-principles suppo
 type: note
 traits: []
 status: seedling
-areas: [kb-design]
+tags: [kb-design]
 ---
 
 # Design methodology — borrow widely, filter by first principles
@@ -49,7 +49,3 @@ Relevant Notes:
 - [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — the general principle behind the programming fast pass
 - [constraining is learning](../notes/constraining.md) — example of empirical observation becoming theory
 - [what works](./what-works.md) — empirical source
-
-Topics:
-
-- [kb-design](./kb-design.md)

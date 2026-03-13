@@ -46,7 +46,7 @@ The `/connect` discovery (2026-03-09) found 9 note connections and 5 source conn
 
 **Synthesis opportunity.** A note synthesising temporal models across all surveyed memory systems does not yet exist: Graphiti's bi-temporal model (valid_at/invalid_at with point-in-time queries), commonplace's git history + status field, A-MEM's timestamps with evolution, ClawVault's session timestamps with promotion-by-recurrence, and CrewAI's recency decay all represent different theories of how knowledge changes over time. The comparative review's Section 4 provides the data; the synthesis would argue what properties a good temporal model for agent memory requires and when each approach is appropriate.
 
-**Index gaps.** The [related-systems-index](../notes/related-systems/related-systems-index.md) mentions Graphiti in paragraph text but has no dedicated Systems list entry. The [learning-theory](../notes/learning-theory.md) Memory & Architecture section references A-MEM and AgeMem but not Graphiti.
+**Index gaps.** The [related-systems-index](../notes/related-systems/related-systems-index.md) mentions Graphiti in paragraph text but has no dedicated Systems list entry. The [learning-theory](../notes/learning-theory-index.md) Memory & Architecture section references A-MEM and AgeMem but not Graphiti.
 
 ## Extractable Value
 

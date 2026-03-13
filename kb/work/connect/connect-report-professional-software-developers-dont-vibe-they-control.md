@@ -11,7 +11,7 @@
 - Flagged candidates: [programming-practices-apply-to-prompting](kb/notes/programming-practices-apply-to-prompting.md), [agentic-systems-interpret-underspecified-instructions](kb/notes/agentic-systems-interpret-underspecified-instructions.md), [constraining](kb/notes/constraining.md), [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](kb/notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md), [methodology-enforcement-is-constraining](kb/notes/methodology-enforcement-is-constraining.md), [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md), [writing-styles-are-strategies-for-managing-underspecification](kb/notes/writing-styles-are-strategies-for-managing-underspecification.md), [oracle-strength-spectrum](kb/notes/oracle-strength-spectrum.md), [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md), [bounded-context-orchestration-model](kb/notes/bounded-context-orchestration-model.md), [human-llm-differences-are-load-bearing-for-knowledge-system-design](kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md), [legal-drafting-solves-the-same-problem-as-context-engineering](kb/notes/legal-drafting-solves-the-same-problem-as-context-engineering.md), [deploy-time-learning-is-agile-for-human-ai-systems](kb/notes/deploy-time-learning-is-agile-for-human-ai-systems.md), [agents-md-should-be-organized-as-a-control-plane](kb/notes/agents-md-should-be-organized-as-a-control-plane.md), [structure-activates-higher-quality-training-distributions](kb/notes/structure-activates-higher-quality-training-distributions.md), [frontloading-spares-execution-context](kb/notes/frontloading-spares-execution-context.md), [Professional Software Developers and AI Agent Use](kb/notes/related_works/professional-developers-ai-agents.md)
 
 **Topic indexes:**
-- Read [learning-theory](kb/notes/learning-theory.md) — confirmed constraining, deploy-time learning, and oracle-strength connections
+- Read [learning-theory](kb/notes/learning-theory-index.md) — confirmed constraining, deploy-time learning, and oracle-strength connections
 - No additional candidates beyond index scan
 
 **Semantic search:** (via qmd)
@@ -93,7 +93,7 @@
 
 ## Index Membership
 
-- [learning-theory](kb/notes/learning-theory.md) — the paper provides large-scale empirical evidence for multiple learning theory concepts (constraining, deploy-time learning, the oracle-strength spectrum). Worth adding as an empirical grounding source.
+- [learning-theory](kb/notes/learning-theory-index.md) — the paper provides large-scale empirical evidence for multiple learning theory concepts (constraining, deploy-time learning, the oracle-strength spectrum). Worth adding as an empirical grounding source.
 - Already referenced from: [professional-developers-ai-agents](kb/notes/related_works/professional-developers-ai-agents.md) (existing related_works note)
 
 ## Synthesis Opportunities

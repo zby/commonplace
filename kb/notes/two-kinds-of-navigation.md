@@ -2,7 +2,7 @@
 description: Link-following is local with context; search is long-range with titles/descriptions; indexes bridge both modes
 type: note
 traits: []
-areas: [links]
+tags: [links]
 status: current
 ---
 
@@ -19,7 +19,3 @@ There are two ways to move through a knowledge base:
 This matters for design: links need surrounding context to inform decisions, search results need good titles and descriptions to enable picking, and indexes need both — they're the bridge.
 
 See also: [agents navigate by deciding what to read next](agents-navigate-by-deciding-what-to-read-next.md), [link contracts source material](../link-contracts-framework.md).
-
-Topics:
-
-- [links](./links.md)

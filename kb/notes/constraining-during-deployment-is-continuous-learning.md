@@ -2,7 +2,7 @@
 description: Continuous learning — adapting deployed systems to new data and tasks — is what constraining with versioned artifacts already achieves per Simon's definition; fine-tuning and prompt optimization target the same behavioral changes through different mechanisms
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -27,7 +27,3 @@ Relevant Notes:
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising constraining as continuous learning
 - [Professional developers don't vibe — they control](../sources/professional-software-developers-dont-vibe-they-control.ingest.md) — empirical evidence that developers naturally practice the constraining loop
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

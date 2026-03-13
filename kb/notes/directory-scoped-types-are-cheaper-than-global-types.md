@@ -3,7 +3,7 @@ description: Global types tax every session's context; directory-scoped types lo
 type: note
 traits: []
 status: seedling
-areas: [type-system]
+tags: [type-system]
 ---
 
 # Directory-scoped types are cheaper than global types
@@ -100,7 +100,3 @@ Relevant Notes:
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — the verifiability principle still applies, but verification becomes directory-scoped
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop subsystems (tasks, queues) already define their own types locally; this generalises that pattern
-
-Topics:
-
-- [document-system](./document-system.md)

@@ -2,7 +2,7 @@
 description: Definition — codification is constraining that crosses a medium boundary, the phase transition from natural language to executable code where medium, consumer, and verification regime all change — the far end of the constraining spectrum
 type: note
 traits: []
-areas: [learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
@@ -48,6 +48,3 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which codification sits at the far end
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
-
-Topics:
-- [learning-theory](./learning-theory.md)

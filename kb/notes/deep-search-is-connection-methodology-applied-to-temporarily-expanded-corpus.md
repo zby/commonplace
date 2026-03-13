@@ -2,7 +2,7 @@
 description: "Design exploration for a deep search skill that reuses /connect's dual discovery and articulation testing on web search results, building a temporary research graph before bridging to KB"
 type: note
 traits: [has-comparison]
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -90,7 +90,3 @@ Relevant Notes:
 - [scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — enables: the MVP's five phases are a scenario decomposition whose context needs could be measured like other scenarios
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: deep search's compound type signature (query + context → research-report + source-reviews) chains multiple existing skill signatures
 - [scenarios](./scenarios.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes
-
-Topics:
-
-- [kb-design](./kb-design.md)

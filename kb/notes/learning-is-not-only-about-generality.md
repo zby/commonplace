@@ -3,7 +3,7 @@ description: Per Simon, any capacity change is learning; accumulation is the mos
 type: note
 traits: [has-external-sources]
 status: current
-areas: [learning-theory]
+tags: [learning-theory]
 ---
 
 # Learning is not only about generality
@@ -57,7 +57,3 @@ Relevant Notes:
 - [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion distinguishes facts (adaptive, no reach) from rules (explanatory, reach)
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the operation that converts facts into rules by positing abstractions
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem learns a policy for managing facts (when to store, retrieve, summarize) but operates entirely on facts, never producing rules or reach
-
-Topics:
-
-- [learning-theory](./learning-theory.md)

@@ -1,7 +1,7 @@
 ---
 description: Pipeline-first knowledge engine (add/cognify/memify/search) with Pydantic-schema graph extraction, poly-store backends, and multi-tenancy — the strongest database-side counterexample to files-first architecture, but treats knowledge as a data engineering problem rather than a curation problem
 type: note
-areas: [related-systems]
+tags: [related-systems]
 status: current
 last-checked: 2026-03-13
 ---
@@ -54,7 +54,7 @@ The interfaces (`GraphDBInterface`, `VectorDBInterface`) are genuinely abstract 
 
 **Where cognee is stronger.** Multi-tenancy is deeply integrated where we have none. The poly-store gives genuine retrieval flexibility — graph traversal, vector similarity, and lexical search are co-equal citizens. Pipeline composability makes processing predictable and debuggable. The MCP server makes cognee immediately usable as a memory backend for any agent. Provenance is structural (every node knows its origin) rather than reconstructed (git blame).
 
-**Where commonplace is stronger.** Knowledge has a lifecycle — notes mature through status transitions, link semantics articulate *why* notes relate (not just that they do), descriptions serve as retrieval filters for agents deciding what to load. Cognee's triplets carry relationship types but these are extracted automatically without the elaborative encoding that produces [navigable connections](../links.md). Our [progressive disclosure](../agents-navigate-by-deciding-what-to-read-next.md) addresses [context efficiency](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) proactively rather than building infrastructure for efficient retrieval after the fact. Most importantly: cognee automates extraction but has no story for curation, synthesis, or knowledge maturation — the operations that make a knowledge base improve over time rather than just grow.
+**Where commonplace is stronger.** Knowledge has a lifecycle — notes mature through status transitions, link semantics articulate *why* notes relate (not just that they do), descriptions serve as retrieval filters for agents deciding what to load. Cognee's triplets carry relationship types but these are extracted automatically without the elaborative encoding that produces [navigable connections](../links-index.md). Our [progressive disclosure](../agents-navigate-by-deciding-what-to-read-next.md) addresses [context efficiency](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) proactively rather than building infrastructure for efficient retrieval after the fact. Most importantly: cognee automates extraction but has no story for curation, synthesis, or knowledge maturation — the operations that make a knowledge base improve over time rather than just grow.
 
 **The deepest divergence** is what "knowledge" means. Cognee treats knowledge as structured data extracted from documents — triplets, entities, embeddings — optimised for retrieval accuracy. Commonplace treats knowledge as claims with evidence, linked by articulated relationships, optimised for [contextual competence](../a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — the ability to act well, not just find things. This is the same split the [comparative review](./agentic-memory-systems-comparative-review.md) identifies: the difference between a search index and a knowledge system.
 
@@ -96,7 +96,3 @@ Relevant Notes:
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: the pipeline invests multiple LLM calls at ingestion to make retrieval cheap; a specific context efficiency trade-off
 - [distillation](../distillation.md) — exemplifies: cognify is automated distillation from unstructured documents to structured graph triplets, with Pydantic schemas shaping the extraction target
 - [a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge](../a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — contrasts: knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no claim structure, no resolution-switching) and only structurally trustworthy
-
-Topics:
-
-- [related-systems-index](./related-systems-index.md)

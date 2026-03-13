@@ -2,7 +2,7 @@
 description: Values static within an installation but variable across installations — sibling repo paths, local tool locations — are frontloadable through configuration the orchestrator resolves and injects into sub-agent frames; the context savings depend on sub-agent isolation since injection into the main context just adds tokens
 type: note
 traits: []
-areas: [kb-design]
+tags: [kb-design]
 status: seedling
 ---
 
@@ -70,7 +70,3 @@ Relevant Notes:
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: typed signatures on tasks/skills can declare configuration dependencies, letting the orchestrator inject only what's needed
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — contrast: build-time generation handles values stable across all installations; injectable configuration handles values stable within one installation
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — motivates: the recurring "review related systems" scenario revealed the need for installation-specific paths
-
-Topics:
-
-- [kb-design](./kb-design.md)

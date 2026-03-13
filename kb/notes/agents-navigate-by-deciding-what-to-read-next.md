@@ -2,7 +2,7 @@
 description: An agent doing a task navigates by deciding what to read — links, index entries, search tools, and skill descriptions are all pointers with varying amounts of context for that decision
 type: note
 traits: []
-areas: [links]
+tags: [links]
 status: current
 ---
 
@@ -43,7 +43,3 @@ Relevant Notes:
 
 - [title as claim enables traversal as reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles carry the argument in the pointer itself, reducing the cost of the navigation decision
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following
-
-Topics:
-
-- [links](./links.md)

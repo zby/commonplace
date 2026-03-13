@@ -1,7 +1,7 @@
 ---
 description: Six roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality through structured writing discipline, and maturation through constraining
 type: note
-areas: [type-system]
+tags: [type-system]
 status: seedling
 ---
 
@@ -62,7 +62,3 @@ Relevant Notes:
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — develops: the distribution-selection argument for output quality
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — develops: the readability argument for output quality
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions
-
-Topics:
-
-- [type-system](./type-system.md)
