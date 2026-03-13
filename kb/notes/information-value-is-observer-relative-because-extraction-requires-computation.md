@@ -33,9 +33,10 @@ This could be a practical tool. Compare two distillations of the same source by 
 
 Relevant Notes:
 
-- [distillation](./distillation.md) — instance: distillation is restructuring that makes structure accessible to bounded observers
-- [discovery-is-seeing-the-particular-as-an-instance-of-the-general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth, which the epiplexity lens reads as computational bounds on structure extraction
-
-- [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
-- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — instance: MVO is the vocabulary that maximally reduces extraction cost for a bounded observer entering a domain
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: names and formalises the gap between present information and extractable information
+- [epiplexity-eli5](./epiplexity-eli5.md) — example: encrypted-message, shuffled-textbook, and chess cases make the observer-relative difference concrete
+- [distillation](./distillation.md) — instance: restructuring that makes structure accessible to bounded observers
+- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth, which the epiplexity lens reads as computational bounds on extraction
+- [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) — instance: uses epiplexity as the test for whether expansion adds extractable structure or just tokens
+- [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
+- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer entering a domain
