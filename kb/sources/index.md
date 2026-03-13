@@ -5,59 +5,79 @@ type: index
 
 # Sources Directory
 
-- [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(scientific-paper)*
-- [Automated linking improves retrieval but may degrade navigability](./a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md)
-- [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md)
-- [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
-- [Ingest: Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) *(scientific-paper)*
-- [Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.md) *(academic-paper)*
-- [Ingest: Agentic Code Reasoning](./agentic-code-reasoning.ingest.md) *(scientific-paper)*
-- [Agentic Code Reasoning](./agentic-code-reasoning.md) *(academic-paper)*
-- [Ingest: Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) *(scientific-paper)*
-- [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.md) *(academic-paper)*
-- [Agentic memory systems comparative review](../notes/related-systems/agentic-memory-systems-comparative-review.md)
-- [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)*
-- [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
-- [Ingest: Cognee: Knowledge Engine for AI Agent Memory](./cognee-knowledge-engine.ingest.md) *(tool-announcement)*
-- [Cognee: Knowledge Engine for AI Agent Memory](./cognee-knowledge-engine.md)
-- [Ingest: Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.ingest.md) *(scientific-paper)*
-- [Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.md) *(academic-paper)*
-- [Ingest: ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.ingest.md) *(scientific-paper)*
-- [ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.md) *(academic-paper)*
-- [Ingest: "Creative Thinking"](./creative-thinking-by-claude-shannon.ingest.md) *(conceptual-essay)*
 - ["Creative Thinking"](./creative-thinking-by-claude-shannon.md) *(blog-post)*
-- [Ingest: From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) *(scientific-paper)*
-- [From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) *(academic-paper)*
-- [Ingest: Graphiti: Temporal Knowledge Graph for AI Agents](./graphiti-temporal-knowledge-graph.ingest.md) *(design-proposal)*
-- [Graphiti: Temporal Knowledge Graph for AI Agents](./graphiti-temporal-knowledge-graph.md)
-- [Ingest: Harness Engineering: Leveraging Codex in an Agent-First World](./harness-engineering-leveraging-codex-agent-first-world.ingest.md) *(practitioner-report)*
-- [Harness Engineering: Leveraging Codex in an Agent-First World](./harness-engineering-leveraging-codex-agent-first-world.md) *(blog-post)*
-- [Ingest: On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.ingest.md) *(scientific-paper)*
-- [On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.md) *(academic-paper)*
-- [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
-- [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
-- [Ingest: Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) *(scientific-paper)*
-- [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.md) *(academic-paper)*
-- [Ingest: Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) *(practitioner-report)*
-- [Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.md) *(x-article)*
-- [Ingest: Letta (MemGPT): Stateful Agents with Self-Managed Memory](./letta-memgpt-stateful-agents.ingest.md) *(design-proposal)*
-- [Letta (MemGPT): Stateful Agents with Self-Managed Memory](./letta-memgpt-stateful-agents.md)
-- [Ingest: Mem0: Universal Memory Layer for AI Agents](./mem0-memory-layer.ingest.md) *(tool-announcement)*
-- [Mem0: Universal Memory Layer for AI Agents](./mem0-memory-layer.md)
-- [Ingest: Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.ingest.md) *(scientific-paper)*
-- [Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.md) *(academic-paper)*
-- [Ingest: Toulmin Argument](./purdue-owl-toulmin-argument.ingest.md) *(conceptual-essay)*
-- [Toulmin Argument](./purdue-owl-toulmin-argument.md) *(documentation)*
-- [Ingest: Andrej Karpathy talks about "Claws"](./simon-willison-karpathy-claws.ingest.md) *(conceptual-essay)*
+- [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
+- [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md) *(note)* — Dissects A-MEM's four fully-automatic operations (construct, link, evolve, retrieve) — all accretive, none curative — identifying the missing vocabulary (delete, split, reorganize, assess quality) that separates accumulation from curation
+- [Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.md) *(academic-paper)*
+- [Agentic Code Reasoning](./agentic-code-reasoning.md) *(academic-paper)* — Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp across patch equivalence, fault localization, and code QA tasks
+- [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.md) *(academic-paper)*
+- [Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) *(x-article)*
+- [AI Components for a Deterministic System (An Example)](./eric-evans-ai-components-deterministic-system.md) *(blog-post)*
 - [Andrej Karpathy talks about "Claws"](./simon-willison-karpathy-claws.md) *(blog-post)*
-- [Ingest: Spacebot — AI Agent for Teams and Communities](./spacedriveapp-spacebot-ai-agent.ingest.md) *(tool-announcement)*
-- [Spacebot: AI Agent for Teams and Communities](./spacedriveapp-spacebot-ai-agent.md) *(web-page)*
-- [Ingest: Minimum Viable Ontology / Domain Maps](./this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) *(conversation-thread)*
-- [Thread by @melodyskim](./this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.md) *(x-thread)*
-- [Ingest: Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.ingest.md) *(scientific-paper)*
-- [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) *(academic-paper)*
-- [Ingest: Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.ingest.md) *(scientific-paper)*
-- [Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.md) *(academic-paper)*
-- [{source title or key claim}](./types/source-review.md) *(source-review)*
+- [Automated linking improves retrieval but may degrade navigability](./a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) *(note)* — Triangulates A-MEM, Notes Without Reasons, and the open-problem note — automated linking improves retrieval (QA benchmarks) but degrades navigability (agent trust in link infrastructure); the distinction is adjacency versus connection
+- [Cognee: Knowledge Engine for AI Agent Memory](./cognee-knowledge-engine.md) *(github-repo)*
+- [Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.md) *(academic-paper)*
+- [ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.md) *(academic-paper)*
+- [Dario Amodei — "We are near the end of the exponential"](./dario-amodei-we-are-near-the-end-of-the-exponential.md) *(blog-post)* — Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged, implicitly confirming oracle-strength thesis
+- [From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) *(academic-paper)*
+- [Graphiti: Temporal Knowledge Graph for AI Agents](./graphiti-temporal-knowledge-graph.md) *(github-repo)*
+- [Harness Engineering Is Cybernetics](./harness-engineering-is-cybernetics-2030416758138634583.md) *(x-article)*
+- [Harness Engineering: Leveraging Codex in an Agent-First World](./harness-engineering-leveraging-codex-agent-first-world.md) *(blog-post)*
+- [Ingest: "Creative Thinking"](./creative-thinking-by-claude-shannon.ingest.md) *(conceptual-essay)* — Shannon's 1952 lecture cataloguing six explicit problem-solving operators (simplification, analogy, restatement, generalization, structural analysis, inversion) as a portable creative toolkit
+- [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(scientific-paper)* — Zettelkasten-inspired flat agent memory with embedding linking and LLM-driven evolution — benchmark success without curation operations or inspectable links
+- [Ingest: Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) *(scientific-paper)* — Formal framework (ABC) extending Design-by-Contract to autonomous agents — introduces probabilistic compliance model (p,delta,k), Lyapunov drift bounds, hard/soft constraint separation with typed recovery, and a YAML DSL for specifying behavioral contracts
+- [Ingest: Agentic Code Reasoning](./agentic-code-reasoning.ingest.md) *(scientific-paper)* — Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp — empirical evidence for structure-as-distribution-selector and interpretation-narrowing with quantified cost (2.8x steps)
+- [Ingest: Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](./agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) *(scientific-paper)* — RL-trained unified LTM/STM memory policy for LLM agents — confirms memory management is learnable when task-completion oracles exist, but operates on opaque weights and low-reach facts
+- [Ingest: Agentic Note-Taking 23: Notes Without Reasons](./agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) *(conceptual-essay)* — First-person agent testimony that propositional link semantics differ in kind from embedding adjacency, with a Goodhart corruption argument and an unresolved curation-scaling question
+- [Ingest: AI Components for a Deterministic System (An Example)](./eric-evans-ai-components-deterministic-system.ingest.md) *(practitioner-report)* — Evans argues that separating modeling (schema creation) from classification (schema application) tames LLM non-determinism — a practitioner case study of constraining via taxonomy freezing
+- [Ingest: Andrej Karpathy talks about "Claws"](./simon-willison-karpathy-claws.ingest.md) *(conceptual-essay)*
+- [Ingest: Cognee: Knowledge Engine for AI Agent Memory](./cognee-knowledge-engine.ingest.md) *(tool-announcement)* — Pipeline-first knowledge engine with custom Pydantic schemas for LLM entity extraction, poly-store graph+vector design, and an undersized enrichment phase that concretely marks the boundary between automatable extraction and open enrichment problems
+- [Ingest: Context Engineering for AI Agents in Open-Source Software](./context-engineering-ai-agents-oss.ingest.md) *(scientific-paper)* — First empirical study of AI context files across 466 OSS projects — provides naturalistic data on content categories, five writing styles as constraint strategies, add-then-modify evolution pattern, and 50% stagnation rate that grounds and challenges KB constraining theory
+- [Ingest: ConvexBench: Can LLMs Recognize Convex Functions?](./convexbench-can-llms-recognize-convex-functions.ingest.md) *(scientific-paper)* — Benchmark proving LLM compositional reasoning collapses with depth (not token count), recovered by recursive decomposition with focused context — quantitative evidence for scheduling model predictions
+- [Ingest: Dario Amodei — "We are near the end of the exponential"](./dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md) *(conversation-thread)* — Anthropic CEO's capability-timeline predictions implicitly confirm oracle-strength thesis — verifiable domains (coding, math) get confident timelines while unverifiable domains (novel writing, science) get hedged ones
+- [Ingest: From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence](./from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) *(scientific-paper)*
+- [Ingest: Graphiti: Temporal Knowledge Graph for AI Agents](./graphiti-temporal-knowledge-graph.ingest.md) *(design-proposal)* — Graph-first agent memory with bi-temporal edge invalidation — the strongest counterexample to files-first architecture in the surveyed memory systems
+- [Ingest: Harness Engineering Is Cybernetics](./harness-engineering-is-cybernetics-2030416758138634583.ingest.md) *(conceptual-essay)*
+- [Ingest: Harness Engineering: Leveraging Codex in an Agent-First World](./harness-engineering-leveraging-codex-agent-first-world.ingest.md) *(practitioner-report)* — Practitioner report on 1M LOC fully agent-generated codebase — harness engineering as constrain/inform/verify/correct, entropy management via background cleanup agents, error messages as dual-function constraining
+- [Ingest: Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) *(scientific-paper)* — Empirical demonstration that LLMs mirror human content effects on reasoning (syllogisms, NLI, Wason) — content bias survives scaling and instruction tuning but chain-of-thought partially restores content-independent reasoning
+- [Ingest: Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) *(practitioner-report)* — Production practitioner report on building AI agents for financial services — validates files-not-database at commercial scale (S3-first with derived PostgreSQL), documents skill shadowing as user-customization mechanism, and articulates "model eats scaffolding" as an explicit design principle with fiscal-period normalization as calculator-regime counterexample
+- [Ingest: Letta (MemGPT): Stateful Agents with Self-Managed Memory](./letta-memgpt-stateful-agents.ingest.md) *(design-proposal)* — Agent memory platform where the LLM self-manages a three-tier memory hierarchy (core/recall/archival) using an OS analogy — the strongest existing exemplar of the agent-self-managed agency model, now evolving toward git-backed memory files
+- [Ingest: Mem0: Universal Memory Layer for AI Agents](./mem0-memory-layer.ingest.md) *(tool-announcement)* — Mem0's two-phase add pipeline (extract facts + LLM-judged CRUD reconciliation) is the purest production example of automated accretion-without-synthesis — now contextualized against eleven systems in the comparative review
+- [Ingest: Minimum Viable Ontology / Domain Maps](./this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) *(conversation-thread)* — Tweet thread proposing "minimum viable ontology" — the smallest term list to orient a newcomer in a domain — with a vibecoded prototype (domainmaps.co) and pedagogical framing via "conceptual thresholds"
+- [Ingest: On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.ingest.md) *(scientific-paper)* — 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking due to absence of step-by-step induction bias; introduces sharing factor kappa quantifying cross-length mechanism reuse
+- [Ingest: Professional Software Developers Don't Vibe, They Control](./professional-software-developers-dont-vibe-they-control.ingest.md) *(scientific-paper)* — Empirical study (N=112) finding experienced developers control AI agents through SE practices, not vibe coding -- grounds constraining, underspecification, and programming-practices-transfer arguments
+- [Ingest: Prompt Stability in Code LLMs: Measuring Sensitivity across Emotion- and Personality-Driven Variations](./prompt-stability-code-llms-emotion-personality-variations.ingest.md) *(scientific-paper)* — Empirical study measuring code LLM stability under emotion/personality prompt variations — finds performance and stability are decoupled objectives, smaller models can be more stable, and emotional prompting reveals confidence miscalibration invisible to standard benchmarks
+- [Ingest: Skill Synthesis — Materializing Knowledge as Skills](./skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.ingest.md) *(practitioner-report)* — Sentry co-founder's practitioner report on synthesizing Claude Code skills from domain-specific source material (commit history, security patches, OWASP docs) — found 8 real IDORs missed by professional pen testing
+- [Ingest: Slate: Moving Beyond ReAct and RLM](./slate-moving-beyond-react-and-rlm.ingest.md) *(practitioner-report)* — Practitioner report on thread-weaving agent architecture — bounded worker threads return compressed episodes to an orchestrator, solving working memory, strategic coherence, and task decomposition simultaneously; the strongest practitioner convergence evidence for the bounded-context orchestration model to date
+- [Ingest: Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.ingest.md) *(scientific-paper)* — MAKER achieves zero errors over one million LLM steps via maximal decomposition into single-step microagents with first-to-ahead-by-k voting and red-flagging — proves O(s ln s) cost scaling when hard per-step oracles exist
+- [Ingest: Spacebot: AI Agent for Teams and Communities](./spacedriveapp-spacebot-ai-agent.ingest.md) *(tool-announcement)*
+- [Ingest: The Anatomy of an Agent Harness](./the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) *(conceptual-essay)* — Practitioner taxonomy deriving harness components (filesystem, bash, sandboxes, memory, context management, long-horizon execution) from model limitations — provides the component anatomy that bridges Lopopolo's practice and the cybernetics framing
 - [Ingest: The Bitter Lesson](./wikipedia-bitter-lesson.ingest.md) *(conceptual-essay)*
+- [Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.ingest.md) *(practitioner-report)*
+- [Ingest: Toulmin Argument](./purdue-owl-toulmin-argument.ingest.md) *(conceptual-essay)* — Pedagogical treatment of Toulmin's six-part argument model — canonical source for the structured-claim type's Evidence/Reasoning/Caveats sections
+- [Ingest: Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.ingest.md) *(scientific-paper)*
+- [Ingest: Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.ingest.md) *(scientific-paper)*
+- [Ingest: What spec-driven development gets wrong](./what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) *(practitioner-report)* — Augment's argument that spec-driven development fails unless agents co-maintain the spec — bidirectional spec as a mechanism for matching maintenance throughput to generation throughput
+- [Ingest: What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md) *(conceptual-essay)* — Applied bitter-lesson analysis predicting which multi-agent patterns survive stronger models — argues filesystem, forking, and spawning are structural while fixed orchestration is a vision feature
+- [Ingest: When code is free, research is all that matters](./when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) *(conceptual-essay)* — Investor/researcher argument that oracle availability (not capability) determines automation boundary for cognitive work — research taste is unautomatable because problem selection has no ground truth
+- [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.md) *(academic-paper)*
+- [Lessons from Building AI Agents for Financial Services](./lessons-from-building-ai-agents-for-financial-services-2015174818497437834.md) *(x-article)*
+- [Letta (MemGPT): Stateful Agents with Self-Managed Memory](./letta-memgpt-stateful-agents.md)
+- [Mem0: Universal Memory Layer for AI Agents](./mem0-memory-layer.md) *(github-repo)*
+- [On the "Induction Bias" in Sequence Models](./induction-bias-sequence-models-ebrahimi-2026.md) *(academic-paper)*
+- [Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025](./professional-software-developers-dont-vibe-they-control.md) *(academic-paper)*
+- [Prompt Stability in Code LLMs: Measuring Sensitivity across Emotion- and Personality-Driven Variations](./prompt-stability-code-llms-emotion-personality-variations.md) *(academic-paper)*
+- [Skill Synthesis: Materializing Knowledge as Skills](./skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md) *(x-post)*
+- [Slate: Moving Beyond ReAct and RLM](./slate-moving-beyond-react-and-rlm.md) *(practitioner-report)* — Thread-weaving agent architecture — bounded worker threads return compressed episodes to an orchestrator, solving working memory, strategic coherence, and task decomposition simultaneously without sacrificing expressivity
+- [Solving a Million-Step LLM Task with Zero Errors](./meyerson-maker-million-step-llm-zero-errors.md) *(academic-paper)*
+- [Spacebot: AI Agent for Teams and Communities](./spacedriveapp-spacebot-ai-agent.md) *(web-page)*
+- [The Anatomy of an Agent Harness](./the-anatomy-of-an-agent-harness-2031408954517971368.md) *(x-article)*
 - [The Bitter Lesson](./wikipedia-bitter-lesson.md) *(encyclopedia-article)*
+- [The File System Is the New Database: How I Built a Personal OS for AI Agents](./koylanai-personal-brain-os.md) *(x-article)*
+- [Thread by @melodyskim](./this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.md) *(x-thread)*
+- [Toulmin Argument](./purdue-owl-toulmin-argument.md) *(documentation)*
+- [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) *(academic-paper)*
+- [Towards a Science of Scaling Agent Systems](./towards-a-science-of-scaling-agent-systems.md) *(academic-paper)*
+- [What spec-driven development gets wrong](./what-spec-driven-development-gets-wrong-2025993446633492725.md) *(x-article)*
+- [What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.md)
+- [When code is free, research is all that matters](./when-code-is-free-research-is-all-that-matters-2031072399731675269.md) *(x-article)*

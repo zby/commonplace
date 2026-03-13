@@ -32,6 +32,12 @@ def get_title(content: str) -> str:
     return match.group(1) if match else "Untitled"
 
 
+def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
+    """Sort by visible link text first, then by path for deterministic ties."""
+    rel_path, title, _desc, _note_type = entry
+    return (title.casefold(), rel_path.casefold())
+
+
 def generate(notes_dir: Path) -> str:
     output = notes_dir / "index.md"
     entries: list[tuple[str, str, str, str]] = []  # (rel_path, title, description, type)
@@ -51,6 +57,8 @@ def generate(notes_dir: Path) -> str:
         rel = path.relative_to(notes_dir)
 
         entries.append((str(rel), title, desc, note_type))
+
+    entries.sort(key=entry_sort_key)
 
     lines = [
         "---",
