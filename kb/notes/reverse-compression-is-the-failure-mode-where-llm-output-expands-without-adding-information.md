@@ -8,33 +8,34 @@ status: seedling
 
 # Reverse-compression (inflation) is the failure mode where LLM output expands without adding information
 
-Compression removes redundancy to preserve information. Reverse-compression is the inverse: expanding a compact signal into a verbose one that is *larger* but no more informative. An LLM given one sentence can produce a full article that reads like depth — paragraphs, structure, examples — but carries no more extractable structure than the seed. The training knowledge creates the appearance of elaboration without actual information gain.
-
-This is the common failure mode of vibe-noting. A human offers a one-sentence insight, the agent builds a whole article grounded in its vast training knowledge, and the result is a waste of time to read because you learn nothing beyond the seed.
+[Compression](./distillation.md) removes redundancy to preserve information. Reverse-compression is the inverse: expanding a compact signal into a verbose one that is *larger* but no more informative. This is the common failure mode of [vibe-noting](./vibe-noting.md) — a human offers a one-sentence insight, the agent builds a whole article grounded in its training knowledge, and the result carries no more extractable structure than the seed. It reads like depth, but you learn nothing beyond what the seed already said.
 
 ## Why epiplexity is the right measure
 
-The naive test — "does the body contain claims not in the title?" — is insufficient. An LLM can generate novel-looking claims by connecting the seed to common knowledge it already has. A harder but well-defined test would be: does the body contain information not derivable from the title combined with the LLM's training knowledge? This would catch pure reverse-compression, but it's the wrong measure — because what matters is not information gain over the LLM, but information gain for the *reader*. Sometimes connecting to common knowledge *is* useful — when the connection is surprising to the reader, when the reader lacks that specific piece of common knowledge, or when the juxtaposition reveals something neither the seed nor the common knowledge contained alone.
+Three candidate tests, each more precise than the last:
 
-[Epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — epistemic complexity extractable by a bounded observer — is the right measure because it accounts for what the *reader* can extract, not just what the text contains. A reverse-compressed article has high token count but low epiplexity for its intended audience: the structure that's there was already accessible to them without the article. A genuinely informative note has high epiplexity because it makes structure accessible that wasn't before — through novel connections, specific evidence, or juxtapositions the reader wouldn't have made on their own.
+1. **Does the body contain claims not in the title?** Insufficient — an LLM can generate novel-looking claims by connecting the seed to common knowledge it already has.
+2. **Does the body contain information not derivable from the title combined with the LLM's training knowledge?** Well-defined but wrong — it measures information gain over the LLM, not over the reader.
+3. **Does the body make structure accessible to the *reader* that wasn't before?** This is the right question, because usefulness is relative to the reader, not to the model.
+
+[Epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — [epistemic complexity extractable by a bounded observer](./information-value-is-observer-relative-because-extraction-requires-computation.md) — formalizes test 3. A reverse-compressed article has high token count but low epiplexity for its intended audience: the structure was already accessible to them without the article. Connecting to common knowledge *can* be useful — when the connection is surprising to the reader, when the reader lacks that specific piece, or when the juxtaposition reveals something neither the seed nor the common knowledge contained alone. But when the connections are obvious to the audience, the elaboration adds tokens without adding epiplexity.
 
 ## How a linked KB resists reverse-compression
 
-A KB that links notes to each other should resist this failure mode because each link can add information the original sentence didn't contain. When a note cites a specific practitioner report, connects to a specific theoretical framework, or extends a specific prior argument, the link carries the reader to a node with its own epiplexity. The network, not the prose, is where epistemic complexity accumulates.
+In a linked KB, each link can carry the reader to a node with its own epiplexity — a specific practitioner report, a formal framework, a prior argument with its own evidence. The network, not the prose, is where epistemic complexity accumulates.
 
-The test: does reading note B after note A tell you something you couldn't have derived from A alone? If the answer is consistently yes, the KB is accumulating knowledge. If notes are just elaborating their own titles without connecting to anything that adds information, the KB is reverse-compressing — growing in tokens without growing in extractable structure.
+The test: does reading note B after note A tell you something you couldn't have derived from A alone? If consistently yes, the KB is accumulating knowledge. If notes are elaborating their own titles without connecting to anything that adds information, the KB is growing in tokens without growing in extractable structure.
 
-But this resistance is not automatic. A note can link to other notes and still be reverse-compressed if the links are decorative rather than load-bearing — if the linked notes don't actually add information to the argument being made. The links must be [articulated relationships](./link-contracts-framework.md) (extends, grounds, contradicts), not just "see also."
+This resistance is not automatic. Links must be [load-bearing](./link-contracts-framework.md) — the linked notes must actually add information to the argument. A note full of "see also" links to tangentially related material is still reverse-compressed; the links are decorative, not structural.
 
 ## Toward a validation gate
 
-A reverse-compression check would need to be semantic, not structural. Possible heuristics worth testing manually:
+A reverse-compression check is semantic, not structural — it can't be grepped. Two heuristics worth testing manually:
 
-- **Seed reconstruction test**: can you state the note's full contribution in one sentence? If yes, and that sentence is essentially the title, the note may be reverse-compressed.
-- **Link load-bearing test**: remove all links from the note — does the argument collapse, or does it read identically? Load-bearing links resist reverse-compression; decorative links don't.
+- **Link load-bearing test**: remove all links from the note — does the argument collapse, or does it read identically? If identical, the links are decorative and the note is likely reverse-compressed.
 - **Audience epiplexity test**: for the intended reader (an agent or human with access to this KB and general LLM training knowledge), does the body make structure accessible that wasn't before?
 
-These are judgment calls, not grep-able checks. Whether they can be mechanized into `/validate` is an open question.
+Whether these can be mechanized into `/validate` is an open question.
 
 ---
 
