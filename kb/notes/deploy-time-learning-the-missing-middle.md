@@ -90,7 +90,15 @@ Learning through artifacts is not a free lunch. Things that go wrong:
 
 ## Related Work
 
-The individual practices are well-established. Prompt versioning and "prompts as code" are standard LLMOps advice. Eval-driven development has its own frameworks (OpenAI Evals, promptfoo) and process models ([EDDOps](https://arxiv.org/abs/2411.13768)). Automated prompt optimisation (DSPy, ProTeGi) pursues a related goal — improving system behavior without weight updates — through search over prompt components. Agent skill libraries like [Voyager](https://arxiv.org/abs/2305.16291) and evaluator-guided program evolution like [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) accumulate executable code as a form of cross-episode memory.
+Systems learning through accumulated artifacts is well-studied outside ML:
+
+- **Organizational learning** (Argyris & Schön, 1978) — double-loop learning: organizations adapt by revising governing assumptions, not just actions. Deploy-time learning is double-loop learning for agent systems — constraining revises the rules, not just the outputs.
+- **Knowledge creation** (Nonaka & Takeuchi, 1995) — the SECI spiral: tacit → explicit → combination → internalization. Constraining and distillation map to externalization and combination phases.
+- **Agile** — [deploy-time learning shares agile's core innovation](./deploy-time-learning-is-agile-for-human-ai-systems.md): co-evolving prose and code through short iteration cycles. The difference is that agile assumes code wins eventually; deploy-time learning treats the hybrid as the end state.
+
+The ML/LLMOps practices are also well-established. Prompt versioning and "prompts as code" are standard advice. Eval-driven development has its own frameworks (OpenAI Evals, promptfoo) and process models ([EDDOps](https://arxiv.org/abs/2411.13768)). Automated prompt optimisation (DSPy, ProTeGi) pursues a related goal — improving system behavior without weight updates — through search over prompt components. Agent skill libraries like [Voyager](https://arxiv.org/abs/2305.16291) and evaluator-guided program evolution like [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) accumulate executable code as a form of cross-episode memory.
+
+**TODO:** The organizational learning and knowledge creation citations are from the agent's training data, not systematic. Revisit with deep search — both traditions likely have results about when formalization helps vs hinders learning.
 
 Deploy-time learning is a **taxonomy** (three timescales of system adaptation) and a **verifiability gradient** (from prompt tweaks to deterministic code) — a synthesis of established practices into a concrete model for when and how to move between grades. Within this gradient, the two learning mechanisms — [constraining](./constraining.md) and [distillation](./distillation.md) — operate at different points, with codification as the far end of the constraining spectrum.
 

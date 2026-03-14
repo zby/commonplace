@@ -12,6 +12,19 @@ One of two co-equal learning mechanisms in deployed agentic systems, alongside [
 
 [Context engineering](./context-engineering.md) is the architecture — the loading strategy, routing, the `select` function in the [scheduling model](./bounded-context-orchestration-model.md). Distillation is the main operation that architecture performs, though not the only one (routing, scoping, and maintenance are also context engineering operations).
 
+## Prior work
+
+Compressing knowledge for a specific audience is not new — it's the core of several established fields:
+
+- **Technical writing** — the discipline is built on audience analysis and purpose-driven restructuring. Progressive disclosure is distillation applied to documentation.
+- **Pedagogical adaptation** — scaffolding (Vygotsky), curriculum design, and Bloom's taxonomy all address reshaping knowledge for learners at different levels.
+- **Library science / abstracting** — professional abstracting and indexing is distillation optimized for retrieval decisions.
+- **Knowledge management** — Nonaka & Takeuchi's externalization (tacit → explicit knowledge) describes a similar transformation, though without the context-budget framing.
+
+What's specific to our use is the agent context: distillation here is driven by bounded context windows, stateless sessions, and the need for artifacts that equip an agent for a task in a single loading. The context budget is a hard constraint, not a soft guideline.
+
+**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — technical writing and pedagogy literatures likely have results about what makes distillation effective.
+
 ## Why distillation exists
 
 Different operational contexts need different things from the same body of knowledge. An agent connecting notes needs a step-by-step procedure — not fifteen methodology notes about Toulmin argument structure, link contracts, and title-as-claim conventions. An agent validating notes needs a different extraction from the same methodology. A smaller-context agent needs a more compressed version of either.

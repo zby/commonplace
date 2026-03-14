@@ -10,6 +10,19 @@ status: current
 
 One of two co-equal learning mechanisms in deployed agentic systems, alongside [distillation](./distillation.md). Constraining **narrows the interpretation space** — reducing the range of valid interpretations an [underspecified spec](./agentic-systems-interpret-underspecified-instructions.md) admits. At the light end, you add constraints: a naming convention rules out some interpretations while leaving many valid ones. At the heavy end, you commit to a single interpretation: storing a specific LLM output or extracting a deterministic function collapses the space to a point. Commitment is the extreme case of constraint — what they share is that the space gets smaller and the system becomes more predictable.
 
+## Prior work
+
+Narrowing the interpretation space is a well-established idea across several fields:
+
+- **Gradual typing** (Siek & Taha, 2006) — start dynamically typed (unconstrained), progressively add type annotations that narrow what the program can do. TypeScript's `any` → specific types is the constraining spectrum applied to code. The closest direct analogue.
+- **Formal specification** (Z, VDM, TLA+) — progressively narrowing system behavior through specification. The requirements → design → implementation trajectory is a constraining gradient.
+- **Carnap's explication** — replacing a vague everyday concept with a precise one. Constraining applied to concepts rather than systems.
+- **Ontology engineering** (SKOS, Dublin Core) — committing to specific categories and relationships that narrow what can be expressed in a knowledge system.
+
+What's specific to our use is applying constraining to the agent-operated KB setting, where the interpretation space is defined by [underspecified natural-language instructions](./agentic-systems-interpret-underspecified-instructions.md) and the constrain/relax cycle is a deploy-time learning mechanism.
+
+**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — specification theory and gradual typing literatures likely have results about when and how much to constrain.
+
 ## The constraining spectrum
 
 Constraining is a gradient, not a single operation. Each step trades generality for gains in the reliability+speed+cost compound:

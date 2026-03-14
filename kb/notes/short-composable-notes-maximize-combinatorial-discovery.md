@@ -13,6 +13,18 @@ The gain is probabilistic, not mechanical — not every pair yields a discovery.
 
 [Resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) complements this. Claim titles and descriptions give broad surface-level pairing without loading full bodies; full notes are loaded selectively where depth is needed. Short notes make both modes cheaper.
 
+## Prior work
+
+Atomic, composable units are a recurring design principle:
+
+- **Zettelkasten** (Luhmann) — one idea per note, connections between notes. "One claim, one note" is Luhmann's atomicity principle. The most direct ancestor.
+- **Modular design** (Parnas, 1972) — modules hide design decisions and expose interfaces. The Unix philosophy ("do one thing well, compose through pipes") is the same principle applied to programs.
+- **Faceted classification** (Ranganathan, 1933) — describe items along independent combinable facets rather than a single hierarchy. Composable notes are facets.
+
+What's specific to our context is the bounded-context motivation: atomicity here is driven by a hard token limit that makes co-loading capacity the scarce resource, not by filing convenience or code maintainability.
+
+**TODO:** This survey is from the agent's training data, not systematic. Zettelkasten methodology in particular has extensive practitioner literature on atomicity trade-offs worth ingesting.
+
 ## The design rule
 
 **One claim, one note.** The title states the claim, the body supports it, the footer connects it. If a note has multiple `##` sections making independent claims, that's a signal to decompose.

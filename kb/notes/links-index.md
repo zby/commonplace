@@ -8,6 +8,19 @@ status: current
 
 Links are the edges of the knowledge graph. Every link is a decision point for the reader: follow or skip? The quality of surrounding context determines whether that decision is informed or blind.
 
+## Prior work
+
+Typed relationships between knowledge units have deep roots:
+
+- **Hypertext theory** (Engelbart, 1968; Nelson, 1965) — the original vision of interlinked documents with explicit relationship types, not just navigation.
+- **Semantic Web / RDF** (Berners-Lee, 2001) — subject-predicate-object triples formalize typed links between resources. OWL adds relationship semantics (transitive, symmetric, inverse).
+- **Library science thesauri** (ISO 25964) — standardized relationship types: BT (broader term), NT (narrower term), RT (related term), USE/UF. Decades of practice in what relationship types are worth maintaining.
+- **Toulmin argumentation** — already used in the KB; listed in Reference material below.
+
+Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than RDF but heavier than untyped hyperlinks. The specific contribution is optimizing for agent navigation under bounded context — links as decision points for read/skip, not just edges in a graph.
+
+**TODO:** This survey is from the agent's training data, not systematic. Library science thesaurus standards likely have directly applicable results about relationship type taxonomies.
+
 ## Foundations
 
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link traversal read as reasoning; explains why "since [X]" works but "see [X]" is a different link intent, and where the pattern breaks for multi-claim documents

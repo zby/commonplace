@@ -18,6 +18,18 @@ Independent practitioner convergence comes from OpenAI's Codex team, where shipp
 
 One property of the medium intensifies this scarcity: natural language has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md) with no enforced boundaries — not between instructions and data ([homoiconicity](./llm-context-is-a-homoiconic-medium.md)), not between scopes, not between priority levels. Extra context doesn't just waste space — it can dilute instructions, contaminate scopes, and distort interpretation.
 
+## Prior work
+
+Scarce attention as a central design constraint is well-established:
+
+- **Attention economics** (Simon, 1971) — "a wealth of information creates a poverty of attention." The context window is the literal implementation of this.
+- **Working memory** (Miller, 1956; Cowan, 2001) — limited capacity where everything competes for slots. Context windows are working memory for agents.
+- **Information overload** (Toffler, 1970) — too much information degrades decision quality, not just slows it.
+
+What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity that the next section develops.
+
+**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — attention economics and working memory literatures likely have results about degradation curves and optimal loading strategies.
+
 ## Two dimensions of context cost
 
 Context efficiency is not only about how many tokens are in the window. It is also about what those tokens demand of the model. Conflating the two leads to architectural mistakes.

@@ -16,6 +16,19 @@ When you link to a claim-titled note, the link becomes part of your argument:
 
 The title IS the reasoning. Traversal IS thinking. The title functions as a typed signature — you know what you're getting before you load the full note. A topic label like "memory notes" is an undocumented function; a claim like "structure enables navigation" tells you the return value. This connects to how [types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — a claim title is an affordance declaration.
 
+## Prior work
+
+Propositional titles are established practice in several fields:
+
+- **Academic writing** — thesis statements and paper titles that state the conclusion. The abstract leads with the claim.
+- **Journalism** — headlines state the finding ("Scientists discover X"), not the topic ("Research about Y").
+- **Evergreen notes** (Matuschak) — explicitly advocates for note titles as complete propositions rather than topic labels.
+- **Zettelkasten practice** — Luhmann used precise descriptive titles; the community has extensive discussion of atomicity and title quality.
+
+The *traversal-as-reasoning* consequence — when titles are claims, link-following reads as argument — came to us via [arscontexta](./related-systems/arscontexta.md), which likely drew on these same traditions. The [Toulmin argumentation model](../sources/purdue-owl-toulmin-argument.md) provides the formal structure behind the "since/because" link semantics this enables.
+
+**TODO:** This survey is from the agent's training data, not systematic. Matuschak's writing on evergreen notes and Zettelkasten community resources on title conventions are worth ingesting.
+
 ## Why it works
 
 Inline links carry richer relationship data than metadata fields. The prose surrounding a link encodes WHY the linked note matters here — "because [X]" is a causal claim, "since [Y]" is a foundation claim, "but [Z]" is a tension. Claim-as-title makes these constructions possible, because topic labels don't compose grammatically. You can write "since [claims must be specific enough to be wrong]" but not "since [specificity notes]." The [link contracts framework](./link-contracts-framework.md) formalizes this as a "link intent taxonomy" — argumentative links ("since", "because") and referential links ("see", "as defined in") are different intents that require different anchor context.
