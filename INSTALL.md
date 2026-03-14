@@ -69,14 +69,35 @@ for skill in commonplace/kb/instructions/*/; do
 done
 ```
 
-## 4. Add a Knowledge System section to your project's control-plane file
+## 4. Create your project's control-plane file
 
-Add the same Knowledge System section to the file your agent runtime loads by default:
+Copy the template and rename it for your agent runtime:
 
-- Claude Code: `CLAUDE.md`
-- Codex: `AGENTS.md`
+```bash
+# Claude Code
+cp commonplace/AGENTS.md.template CLAUDE.md
 
-Include a routing table, core search patterns, and escalation boundaries. See `kb/notes/commonplace-installation-architecture.md` for the full fragment design.
+# Codex
+cp commonplace/AGENTS.md.template AGENTS.md
+```
+
+The template includes routing, search patterns, escalation boundaries, and conventions — all ready to use. The one section you must fill in is **KB Goals**.
+
+### Fill in the KB Goals section
+
+Open the control-plane file and fill in the five subsections. The HTML comments in the template have examples — remove them when done.
+
+**Purpose** — Name the decisions or actions the KB supports and who uses it. Start from the users, not the domain. "Supports the API team in making design decisions about the payment service" is actionable; "stores knowledge about payments" is not.
+
+**Domain** — Draw a scope boundary specific enough that an agent can decide "does this belong?" without asking. Name adjacent domains and clarify whether they're in or out: "adjacent systems (auth, billing) are in scope only where they interact with payments."
+
+**Include** — What types of knowledge belong: design decisions, failure analysis, integration patterns, operational procedures, etc.
+
+**Exclude** — The most valuable section. Scope creep is the default failure mode — every piece of knowledge looks relevant in isolation. Name specific things that don't belong: "business rules live in the product wiki, not here." The Exclude list is what makes the Include list meaningful.
+
+**Quality bar** — When is a piece of knowledge worth a note vs. a log entry vs. nothing? `WRITING.md` covers universal quality criteria (claim titles, descriptions, composability). This section adds domain-specific standards: "a design decision is worth a note when it affects more than one endpoint; single-endpoint details belong in code comments."
+
+The Goals section is always-loaded — the agent sees it every session and uses it to decide whether knowledge belongs in this KB before deciding where it goes.
 
 ## Resulting layout
 

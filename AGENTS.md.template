@@ -1,0 +1,159 @@
+# Control-plane template for installed KBs
+
+Template for the CLAUDE.md/AGENTS.md fragment generated when commonplace is installed into a project. The KB Goals section requires human input during installation. All other sections come from commonplace and can be regenerated on upgrade.
+
+See [KB goals in always-loaded context guide inclusion decisions](kb/notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) for design reasoning.
+
+---
+
+## Template
+
+<!-- Everything below this line is the template. HTML comments are fill-in guidance — remove them from the final output. -->
+
+# {{project_name}} Knowledge Base
+
+<!-- One sentence: what this KB is and who it serves. -->
+
+## KB Goals
+
+### Purpose
+
+<!--
+What decisions or actions does this KB support? Who uses it?
+Example: "This KB supports the API team in making design decisions about the payment service. It accumulates architectural reasoning, failure analysis, and integration patterns so that agents and developers can make informed decisions without re-deriving context from code and Slack history."
+-->
+
+### Domain
+
+<!--
+What is this KB about? Draw a scope boundary.
+Be specific enough that an agent can decide "does this belong?" without asking.
+Example: "Payment service architecture, integration patterns, and failure modes. Adjacent systems (auth, billing) are in scope only where they interact with payments. General distributed systems theory is in scope when it directly informs a specific design decision. Business rules and product requirements are out of scope — they live in the product wiki."
+-->
+
+### Include
+
+<!--
+What types of knowledge belong here? Be concrete.
+Examples: design decisions, failure analysis, integration patterns, operational procedures, team conventions.
+-->
+
+-
+-
+-
+
+### Exclude
+
+<!--
+What doesn't belong despite seeming relevant? This prevents scope creep.
+Examples: raw logs without analysis, business rules (live in product wiki), general theory without specific application, code-level documentation (belongs in code comments).
+-->
+
+-
+-
+-
+
+### Quality bar
+
+<!--
+When is a piece of knowledge worth a note vs. a log entry vs. nothing?
+This complements WRITING.md's universal criteria with domain-specific standards.
+Example: "A design decision is worth a note when it affects more than one endpoint. Single-endpoint implementation details belong in code comments. Observations about failure patterns are worth a log entry on first occurrence and a note on third."
+-->
+
+## Fast Path (Default)
+
+If you need to act quickly and are unsure which specialized path applies:
+
+1. Write a `note` in `kb/notes/` (default type).
+2. Follow the checklist/template in `kb/instructions/WRITING.md`.
+3. Connect the note to related notes and at least one index (`/connect` or manual links with explicit relationship semantics).
+4. Run `/validate` to check structure, frontmatter, and links.
+
+Use specialized types only when the routing table explicitly points to one.
+
+## Knowledge System
+
+### Routing Table
+
+| What you're doing | Where it goes | Type guidance |
+|---|---|---|
+| Design note or insight | `kb/notes/` | Default `note` type (template in `kb/instructions/WRITING.md`) |
+| Structured argument | `kb/notes/` | Read `kb/notes/types/structured-claim.md` — needs Evidence/Reasoning/Caveats |
+| Architecture decision | `kb/notes/adr/` | Read `kb/notes/types/adr.md` — needs Context/Decision/Consequences |
+| Improvement opportunity noticed during traversal | `kb/log.md` | Append one line — don't fix it now, don't context-switch |
+| External source snapshot | `kb/sources/` | Use `/snapshot-web` skill |
+| Source analysis | `kb/sources/` | Use `/ingest` skill — produces `.ingest.md` |
+| Task | `kb/tasks/backlog/` or `kb/tasks/active/` | Status encoded by directory, not frontmatter |
+| Reusable procedure | `kb/instructions/` | Imperative steps, frontloaded, minimal reasoning |
+| Area index (curated) | `kb/notes/` | Read `kb/notes/types/index.md` — entries MUST have context phrases |
+
+### Content Workflow
+
+1. **Search first** — find related notes before writing.
+2. **Read WRITING.md** — `kb/instructions/WRITING.md` has the full checklist (title-as-claim, description quality, index membership, composability). It's the authority on how to write.
+3. **Read the directory type** — only if the routing table points to a specific type template. Skip this step for plain notes.
+4. **Write** the note.
+5. **Connect** — link the new note from related notes and area indexes. Use `/connect` or do it manually. Don't skip this step — an unconnected note is invisible to future search.
+
+### Search Patterns
+
+```bash
+# Find notes by keyword
+rg "keyword" kb/notes/ kb/instructions/ --glob "*.md"
+
+# Find notes by description
+rg "^description:" kb/notes/ --glob "*.md"
+
+# Find notes by type
+rg "^type: structured-claim" kb/notes/ --glob "*.md"
+
+# Find notes by tag
+rg "^tags:.*tag-name" kb/notes/ --glob "*.md"
+```
+
+### Escalation Boundaries
+
+Stop and load deeper guidance when any of these are true:
+
+- You cannot map the artifact cleanly through the routing table → read `kb/instructions/WRITING.md` before creating or moving files.
+- You are editing notes in a directory with a local `types/` template → read that template first.
+- You touch `kb/sources/` content and there is no corresponding `.ingest.md` → run `/ingest` (or ask the user which ingest workflow to use) instead of improvising classification.
+- The artifact doesn't clearly fit the KB Goals above → ask the user before creating content.
+- For deeper reasoning about why the KB works the way it does → search `commonplace/kb/notes/`.
+
+### Key Indexes
+
+- `kb/notes/index.md` — auto-generated directory listing (rebuild with `scripts/generate_notes_index.py`)
+
+<!-- Add curated tag indexes here as they emerge. Create a tag index when 5+ related notes accumulate without navigation structure. -->
+
+## Type Routing
+
+- `text` = no frontmatter (raw capture).
+- `note` = has frontmatter (default structured writing type).
+- For specialized structures, load the directory-local type templates only when the routing table points there:
+  `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/`.
+- `kb/instructions/WRITING.md` is the authority for note-writing checklist and the default templates.
+
+## Methodology Reference
+
+For deeper reasoning about why the KB works the way it does, consult `commonplace/kb/notes/`. This is the framework's own knowledge base about building knowledge bases — search it when skills and instructions don't cover your situation.
+
+```bash
+# Search commonplace methodology
+rg "keyword" commonplace/kb/notes/ --glob "*.md"
+```
+
+## Git
+
+- **Never `git add -A`** — review `git status` and stage specific files.
+- **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
+
+## Conventions
+
+- **Links**: Standard markdown links, not wiki-links. Relative paths from source file. `[title](./title.md)`
+- **Link semantics**: Every link must articulate the relationship (extends, grounds, contradicts, enables, exemplifies). "Related" is not a relationship.
+- **Filenames**: Lowercase, hyphens for spaces, `.md` extension. Derived from the `# Title` heading.
+- **Frontmatter**: YAML between `---` delimiters. `description` is the most important field — it's a retrieval filter, not a summary.
+- **No wiki-links**: This KB uses standard markdown links exclusively.

@@ -171,10 +171,13 @@ my-project/
 
 The install step generates a Knowledge System section for the project's control-plane file (`CLAUDE.md` for Claude Code, `AGENTS.md` for Codex) with:
 
+- **KB Goals** — purpose, domain scope, inclusion/exclusion criteria, quality bar. This is the only section requiring human input; see [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md)
 - Routing table pointing to `kb/` for content creation ("where things go")
 - Reference to `commonplace/kb/` for methodology ("why things work this way")
 - Search patterns for both trees
 - Skill and instruction discovery guidance
+
+The template for the full fragment is in [AGENTS.md.template](../../AGENTS.md.template).
 
 ## Inclusion mechanism
 
