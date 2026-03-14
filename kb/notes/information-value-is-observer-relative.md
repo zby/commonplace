@@ -8,11 +8,7 @@ status: seedling
 
 # Information value is observer-relative
 
-The same information has different value for different observers. At the most basic level, a reader might simply not know a fact — a domain expert recognizes "use OAuth 2.0 with PKCE" as a specific security decision, while a newcomer lacks the context to act on it. This is obvious but already observer-relative: the value of the fact depends on what the reader brings.
-
-The less obvious case is structure extraction. A chess grandmaster and a beginner look at the same game notation — the grandmaster extracts strategic themes, preparation choices, and novelties; the beginner sees legal moves. An encrypted message is noise for Eve and a structured pattern for Bob. The observers are not seeing the same thing at different speeds — they are extracting different structure from the same data.
-
-What makes information valuable is not a property of the data alone but of the data-observer pair: the observer's prior knowledge, computational capacity, available tools, and goals. The grandmaster extracts preparation choices not just because she *can* see them but because competitive play makes them *relevant*.
+What makes information valuable is not a property of the data alone but of the data-observer pair: the observer's prior knowledge, computational capacity, available tools, and goals all determine what they can extract.
 
 ## Prior work
 
