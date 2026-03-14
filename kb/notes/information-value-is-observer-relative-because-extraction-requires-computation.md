@@ -8,35 +8,30 @@ status: seedling
 
 # Information value is observer-relative because extraction requires computation
 
-Classical information theory measures what's present in data, not what a particular observer can extract from it. Reorder training examples — Shannon entropy doesn't change, yet the reordered sequence may teach a model more. Distil a body of reasoning into a focused note — entropy decreases, information is discarded, yet the result may be more valuable to a bounded reader than the original. In both cases, classical theory misses what changed: the accessibility of structure to a computationally bounded observer — an LLM with finite context and depth, a human with finite attention.
+Classical information theory measures what's present in data, not what a particular observer can extract from it. Reorder training examples — Shannon entropy doesn't change, yet the reordered sequence may teach a model more. Distil a body of reasoning into a focused note — entropy decreases, information is discarded, yet the result may be more valuable to a bounded reader than the original. Classical theory misses what changed: the accessibility of structure to a computationally bounded observer.
 
-[Epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) (Finzi et al., 2026) formalises this phenomenon. The framework decomposes information into time-bounded entropy (irreducible randomness given computational constraints) and epiplexity (structural patterns extractable within those constraints). Epiplexity measures what a bounded observer *can* extract; the gap between that and the total structure present is what classical theory ignores. This decomposition is useful because the KB has several notes that describe the gap operationally without recognising they're talking about the same thing.
+This applies at every level. A bounded learner can't find a regularity that requires more computation than its budget allows. A fact has little value for an observer who lacks the prior knowledge to act on it. A well-ordered textbook and a shuffled one contain the same information classically, but a student extracts far more from the ordered version. The gap between what's present and what's extractable is always relative to the observer.
 
-## Where the gap shows up
+## Where the gap shows up in the KB
 
-**Distillation.** [Distillation](./distillation.md) takes a body of reasoning and extracts a focused artifact shaped by a context budget and a use case. Classically, this is lossy compression — it discards information. But for the target reader (a bounded agent), the distillate can be more valuable than the source, because the extraction makes structure accessible that was present but unreachable within the reader's budget. Multiple distillations of the same source aren't redundant — each targets a different bound, so each makes different structure accessible.
+**Distillation.** [Distillation](./distillation.md) takes a body of reasoning and extracts a focused artifact shaped by a context budget and a use case. Classically, this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer, so each makes different structure accessible.
 
-**Discovery depth.** [Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) identifies three depths of connection — shared feature, shared structure, generative model — and observes that recognition cost scales with depth. Under the epiplexity lens, this is the same gap viewed from the other side: the data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. A shallow observer (keyword search) sees shared features; a deeper observer (an LLM reasoning about mechanism) sees shared structure. The discovery note itself frames this constructively — the general concept doesn't exist until posited — but the computational-bounds reading is compatible: what counts as extractable structure in fixed data depends on the observer's computational depth.
+**Discovery.** [Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) identifies three depths of connection — shared feature, shared structure, generative model — and observes that recognition cost scales with depth. The data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. A shallow observer (keyword search) sees shared features; a deeper observer (an LLM reasoning about mechanism) sees shared structure.
 
-## Measurement
-
-Beyond naming the gap, the epiplexity paper offers a cheap estimation technique: **prequential coding** — the area under the loss curve above final loss. This measures how much learnable structure a bounded observer (a model) extracts from data as it trains. Two arrangements of the same content that yield different areas have different extractable structure for that observer.
-
-This could be a practical tool. Compare two distillations of the same source by measuring how much structure a model extracts from each. Compare two orderings of the same context window. The measurement is a byproduct of normal training or fine-tuning — no extra infrastructure needed.
+Both are instances of observer-relative value, though the operations are quite different. Distillation is deliberate restructuring for a known audience. Discovery is recognizing structure you didn't know was there. Whether these are two aspects of one phenomenon or two phenomena that share a surface shape is an open question.
 
 ## Open Questions
 
-- Is "bounded information extraction" genuinely one phenomenon, or are distillation and discovery two phenomena that happen to share a surface shape? Distillation is deliberate restructuring for a known audience. Discovery is finding structure you didn't know was there. The gap concept connects them, but the operations are quite different.
-- Has anyone applied prequential coding to compare prompt or context arrangements in practice?
+- The title claims extraction requires "computation," but the fact case is about prior knowledge, not compute budget. Is there a unifying framing, or are these genuinely different mechanisms that both produce observer-relativity?
 
 ---
 
 Relevant Notes:
 
-- [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: names and formalises the gap between present information and extractable information
-- [epiplexity-eli5](../work/information-measures/epiplexity-eli5.md) — example: encrypted-message, shuffled-textbook, and chess cases make the observer-relative difference concrete
 - [distillation](./distillation.md) — instance: restructuring that makes structure accessible to bounded observers
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth, which the epiplexity lens reads as computational bounds on extraction
-- [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) — instance: uses epiplexity as the test for whether expansion adds extractable structure or just tokens
-- [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
+- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth, readable as computational bounds on extraction
+- [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) — instance: expansion that adds tokens without making more structure accessible
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer entering a domain
+- [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
+- [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — related formalization: epiplexity captures the pattern-extraction aspect of observer-relativity (learnable structure a bounded model extracts from sequential data) but does not cover fact-level value
+- [epiplexity-eli5](../work/information-measures/epiplexity-eli5.md) — examples illustrating observer-relative structure through encrypted messages, shuffled textbooks, and chess notation

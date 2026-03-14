@@ -1,6 +1,6 @@
 # Commonplace
 
-Commonplace is a theory builder for AI agent systems — a knowledge base that doesn't just store but processes, turning accumulated observations into theories with [reach](./notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md): they can't load everything, so the knowledge they load must cover many situations, not just one.
+Commonplace is a theory builder and knowledge base for AI agent systems — it stores and processes knowledge, turning accumulated observations into theories with [reach](./notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md): they can't load everything, so the knowledge they load must cover many situations.
 
 **[Deploy-time learning](./notes/deploy-time-learning-the-missing-middle.md)** is the central theory — deployed AI systems improve through structured knowledge that accumulates in the repo alongside the code. The notes here develop that theory and apply it to the design of agent-operated knowledge bases.
 
