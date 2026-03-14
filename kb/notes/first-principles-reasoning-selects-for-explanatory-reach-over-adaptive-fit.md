@@ -50,7 +50,7 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with reach
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: Deutsch and Popper are allied — explanatory knowledge is the kind criticism can test; falsifier blocks operationalize one of the three tests
 - [computational-model](./computational-model-index.md) — exemplifies: Programming-language concepts reaching into KB design is explanatory reach in action
-- [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative-because-extraction-requires-computation.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
+- [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
 - [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — extends: places reach as the quality criterion within a full theory connecting learning operations to knowledge properties
 
 Distilled into:

@@ -14,7 +14,7 @@ Anthropic defines it as "strategies for curating and maintaining the optimal set
 
 **Routing** — deciding what knowledge is relevant before loading it. The [instruction-specificity/loading-frequency match](./instruction-specificity-should-match-loading-frequency.md) (always-loaded → on-reference → on-invoke → on-demand) is routing. [CLAUDE.md as a router](./agents-md-should-be-organized-as-a-control-plane.md) is routing. [Retrieval-oriented descriptions](./agents-navigate-by-deciding-what-to-read-next.md) that let agents decide "don't follow this" without loading the target are routing.
 
-**Loading** — assembling the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](./bounded-context-orchestration-model.md) formalizes this: given state `K` and budget `M`, build prompt `P` with `|P| ≤ M`. Loading includes both what to include and how to frame it — the same knowledge under different framing has different [extractable value](./information-value-is-observer-relative-because-extraction-requires-computation.md).
+**Loading** — assembling the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](./bounded-context-orchestration-model.md) formalizes this: given state `K` and budget `M`, build prompt `P` with `|P| ≤ M`. Loading includes both what to include and how to frame it — the same knowledge under different framing has different [extractable value](./information-value-is-observer-relative.md).
 
 **Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](./llm-context-is-composed-without-scoping.md) is scoping. The flat context has no scoping; architecture must impose it.
 

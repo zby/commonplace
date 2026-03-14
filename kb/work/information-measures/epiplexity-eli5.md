@@ -8,7 +8,7 @@ status: current
 
 # Epiplexity by example: what entropy and complexity miss
 
-**Entropy asks how surprising the symbols are. Complexity asks how short the best exact recipe is. [Epiplexity](../../notes/information-value-is-observer-relative-because-extraction-requires-computation.md) asks how much structure *this observer* can actually extract with the tools and time they have.**
+**Entropy asks how surprising the symbols are. Complexity asks how short the best exact recipe is. [Epiplexity](../../notes/information-value-is-observer-relative.md) asks how much structure *this observer* can actually extract with the tools and time they have.**
 
 Think of a locked box. Entropy and complexity describe the contents as an object. Epiplexity asks: can *this* observer open the box, and if they can, how much pattern can they recover from what is inside? "Observer" means the full toolkit — intelligence, side information, prior knowledge, keys, decompressors, domain expertise, and time.
 
@@ -152,7 +152,7 @@ This is why the same note in a KB can have different value for different readers
 
 Relevant Notes:
 
-- [information value is observer-relative](../../notes/information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
+- [information value is observer-relative](../../notes/information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
 - [Epiplexity paper](../../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
 - [distillation](../../notes/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
 - [context efficiency is the central design concern](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement

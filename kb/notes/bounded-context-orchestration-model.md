@@ -41,7 +41,7 @@ There are two kinds of computation:
 
 **Symbolic steps.** Deterministic procedures outside LLM context: file listing, retrieval by name, sorting, thresholding, prompt assembly, deduplication. In the simplest model these are cheap and unbounded.
 
-**Agent calls.** The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `|P| ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from K to include and *how* to frame them, because the same material under different framing yields different [extractable structure](./information-value-is-observer-relative-because-extraction-requires-computation.md).
+**Agent calls.** The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `|P| ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from K to include and *how* to frame them, because the same material under different framing yields different [extractable structure](./information-value-is-observer-relative.md).
 
 Executing the call produces a result `r`, appended to symbolic state. The crucial point is that `r` need not be a direct answer — it can be a relevance label, extracted claim list, cluster summary, contradiction table, partial synthesis, a set of sub-goals, or a satisfaction signal marking a goal as reached.
 
@@ -66,7 +66,7 @@ Real orchestrators routinely fan out parallel calls. Parallelism changes the sch
 
 The `select` function is where the optimisation lives. It is not a simple knapsack problem for several reasons:
 
-**Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same information, different [extractable structure](./information-value-is-observer-relative-because-extraction-requires-computation.md).
+**Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same information, different [extractable structure](./information-value-is-observer-relative.md).
 
 **Dual cost dimensions.** [Context cost](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) has two dimensions — volume (how many tokens) and complexity (how hard the tokens are to use). Selection must optimise both: include enough to be useful, but frame it so the sub-agent can actually use it.
 
@@ -135,7 +135,7 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: context is the scarce resource with volume and complexity dimensions
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — foundation: bookkeeping and semantic work have different error profiles across all three phenomena
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
-- [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative-because-extraction-requires-computation.md) — explains why framing matters in selection
+- [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
 - [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — consequence: practical rules that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded

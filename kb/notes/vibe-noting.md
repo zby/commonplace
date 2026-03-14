@@ -16,7 +16,7 @@ A knowledge base adds exactly that missing layer: structured, linked, readable a
 
 ## The reverse-compression failure mode
 
-The common failure mode of vibe-noting is [reverse-compression](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md): a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more [epiplexity](./information-value-is-observer-relative-because-extraction-requires-computation.md) than the original sentence. It reads like depth — paragraphs, structure, examples — but the LLM is just expanding a compact signal without adding extractable structure for the reader.
+The common failure mode of vibe-noting is [reverse-compression](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md): a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more [epiplexity](./information-value-is-observer-relative.md) than the original sentence. It reads like depth — paragraphs, structure, examples — but the LLM is just expanding a compact signal without adding extractable structure for the reader.
 
 A KB that links notes to each other should resist this because each link can add information the original sentence didn't contain. The network, not the prose, is where epistemic complexity accumulates. But resistance is not automatic — see the [full analysis](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) for why links must be load-bearing, not decorative.
 

@@ -50,7 +50,7 @@ Relevant Notes:
 - [arscontexta](./related-systems/arscontexta.md) — refines: the "controlled disorder" claim is right about judgment-based linking but the topic-vs-mechanism framing is a false dichotomy
 - [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [constraining](./constraining.md) — suggestive parallel: constraining and discovery are both gradients where each step trades generality for power, though on different axes
-- [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction
+- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem
 
 Distilled into:

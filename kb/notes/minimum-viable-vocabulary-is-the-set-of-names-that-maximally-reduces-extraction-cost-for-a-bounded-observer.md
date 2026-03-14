@@ -12,7 +12,7 @@ When entering an unfamiliar domain, a bounded observer — a human without domai
 
 Kim (2026) calls a curated term list that closes enough of this gap a "minimum viable ontology," framing the terms as "conceptual thresholds" — vocabulary that, once acquired, unlocks comprehension. The pedagogical intuition is sound, but the framing is imprecise: which terms? how many? what makes a term "threshold" rather than merely useful? This note uses "vocabulary" rather than Kim's "ontology" because the claim is about names that reduce extraction cost, not about a formal ontological commitment.
 
-The KB's information-theoretic framework turns this imprecise intuition into an optimization problem. [Information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) because extraction requires computation — a restructuring that preserves or even reduces Shannon entropy can still make structure accessible to a bounded observer that could not previously extract it. The minimum viable vocabulary is the smallest set of names such that, once in context, the observer can extract domain structure that was previously inaccessible. It is, in other words, the vocabulary that maximally reduces extraction cost for a given observer.
+The KB's information-theoretic framework turns this imprecise intuition into an optimization problem. [Information value is observer-relative](./information-value-is-observer-relative.md) because extraction requires computation — a restructuring that preserves or even reduces Shannon entropy can still make structure accessible to a bounded observer that could not previously extract it. The minimum viable vocabulary is the smallest set of names such that, once in context, the observer can extract domain structure that was previously inaccessible. It is, in other words, the vocabulary that maximally reduces extraction cost for a given observer.
 
 Two mechanisms already in the KB explain why a set of names can have this effect — why vocabulary, specifically, is the right unit of extraction cost reduction.
 
@@ -35,7 +35,7 @@ Sources:
 
 Relevant Notes:
 
-- [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: MVV is a concrete instance of deterministic transformation that makes structure accessible to bounded observers
+- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: MVV is a concrete instance of deterministic transformation that makes structure accessible to bounded observers
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: naming amortizes discovery cost; MVV packages pre-named structures for reuse by newcomers
 - [distillation](./distillation.md) — mechanism: MVV is distillation where the target is a domain newcomer and the context budget is minimal
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — enables: MVV is knowledge compressed to fit context constraints when full domain methodology won't fit

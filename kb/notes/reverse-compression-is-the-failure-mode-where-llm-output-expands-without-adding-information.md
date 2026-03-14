@@ -18,7 +18,7 @@ What counts as "adding information" depends on who you measure against. Three ca
 2. **Does the body contain information not derivable from the title combined with the LLM's training knowledge?** Well-defined but wrong — it measures novelty relative to the model, not usefulness to the reader.
 3. **Does the body make structure accessible to the *reader* that wasn't before?** The right question — usefulness is relative to the audience, not the source.
 
-[Epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — [epistemic complexity extractable by a bounded observer](./information-value-is-observer-relative-because-extraction-requires-computation.md) — formalizes test 3. Connecting to common knowledge *can* raise epiplexity — when the connection is surprising to the reader, when the reader lacks that specific piece, or when the juxtaposition makes a pattern visible that the reader wouldn't have extracted on their own. But when the connections are obvious to the audience, the elaboration adds tokens without adding epiplexity. A reverse-compressed article is one where the structure was already accessible to its readers without the article.
+[Epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — [epistemic complexity extractable by a bounded observer](./information-value-is-observer-relative.md) — formalizes test 3. Connecting to common knowledge *can* raise epiplexity — when the connection is surprising to the reader, when the reader lacks that specific piece, or when the juxtaposition makes a pattern visible that the reader wouldn't have extracted on their own. But when the connections are obvious to the audience, the elaboration adds tokens without adding epiplexity. A reverse-compressed article is one where the structure was already accessible to its readers without the article.
 
 ## How a linked KB resists reverse-compression
 
@@ -37,7 +37,7 @@ For the intended reader (an agent or human with access to this KB and general tr
 Relevant Notes:
 
 - [vibe-noting](./vibe-noting.md) — context: the inflation failure mode this note names and analyzes
-- [information value is observer-relative](./information-value-is-observer-relative-because-extraction-requires-computation.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
+- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
 - [distillation](./distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: the formal measure of extractable structure for bounded observers
 - [link contracts framework](./link-contracts-framework.md) — enables: articulated link relationships are what make links load-bearing rather than decorative
