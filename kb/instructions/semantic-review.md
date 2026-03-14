@@ -55,7 +55,8 @@ For each causal claim or conclusion that cites evidence or references another no
 2. **Check attribution accuracy** — does the source actually say what the note claims it says? Watch for:
    - **Vocabulary mismatch** — the note uses terms the source doesn't. If the note says "improves trustworthiness" but the source says "constrains the interpretation space," the note is making an inference, not an attribution. Report INFO if the inference is reasonable, WARN if it's a stretch.
    - **Scope mismatch** — the note claims a larger framework than the sources support. If the source says "two mechanisms" but the note promotes to "three operations," the upgrade is the note's own move and readers could mistake the links as grounding for the larger claim. Report WARN.
-3. **Check inference validity** — does the conclusion follow from the cited evidence, or is there a logical gap? Report WARN for invalid inferences, INFO for inferences that are plausible but not airtight.
+3. **Check domain coverage** — after checking individual attributions, do a whole-note pass. Ask: what is the source *about* (its domain), and does the note's argument stay within that domain? A note may accurately describe a source's claims yet silently extend them to adjacent territory. If the source formalizes X (e.g. extractable structure) but the note uses it to ground a claim about Y (e.g. information value, which includes facts), the grounding covers a subset of the claim, not the whole thing — even if every individual quote checks out. Report WARN when the note's claim domain exceeds the source's domain.
+4. **Check inference validity** — does the conclusion follow from the cited evidence, or is there a logical gap? Report WARN for invalid inferences, INFO for inferences that are plausible but not airtight.
 
 ## Step 4: Internal consistency
 
