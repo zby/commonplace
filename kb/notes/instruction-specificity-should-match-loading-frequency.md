@@ -2,7 +2,7 @@
 description: The loading hierarchy (CLAUDE.md → skill descriptions → skill bodies → task docs) should match instruction specificity to loading frequency — always-loaded context competes for attention every session
 type: note
 traits: [has-external-sources]
-tags: []
+tags: [architecture]
 status: current
 ---
 

@@ -1,7 +1,7 @@
 ---
 description: Patterns proven valuable in practice — prose-as-title, template nudges, frontmatter queries, semantic search via qmd, discovery-first, public/internal boundary
 type: review
-tags: []
+tags: [evaluation]
 status: current
 ---
 

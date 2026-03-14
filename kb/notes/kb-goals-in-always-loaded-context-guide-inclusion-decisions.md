@@ -1,7 +1,7 @@
 ---
 description: Without explicit goals in the always-loaded control-plane file, agents cannot reject well-written but off-scope material — WRITING.md provides quality criteria but not domain scope
 type: note
-tags: []
+tags: [architecture]
 status: seedling
 ---
 

@@ -3,7 +3,7 @@ description: Christopher Alexander's pattern language, generative processes, and
 type: note
 traits: []
 status: speculative
-tags: []
+tags: [foundations]
 ---
 
 # Alexander's patterns connect to knowledge system design at multiple levels

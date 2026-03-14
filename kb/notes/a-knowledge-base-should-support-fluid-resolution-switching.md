@@ -2,7 +2,7 @@
 description: Good thinking requires moving between abstraction levels — broad for context, narrow for mechanism, back out for pattern. A KB's quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy.
 type: note
 traits: [has-external-sources]
-tags: []
+tags: [foundations]
 status: seedling
 ---
 
