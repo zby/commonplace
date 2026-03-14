@@ -2,7 +2,7 @@
 description: Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently
 type: note
 traits: []
-tags: []
+tags: [learning-theory, kb-maintenance]
 status: seedling
 ---
 
@@ -46,3 +46,14 @@ The `/connect` skill's synthesis opportunity detection watches for "a pattern ac
 - Is there a practical maintenance workflow that uses reach beyond what synthesis detection already provides?
 - Should high-reach notes receive more scrutiny during review (e.g., a `/validate` check for boundary-mapping)?
 - Does reach deserve to be surfaced explicitly (frontmatter, tag), or is it better left implicit — something a reviewer recognizes rather than a field an author declares?
+
+---
+
+Relevant notes:
+
+- [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — **extends**: that note defines reach as a quality criterion; this note adds the maintenance counterweight — reach is also a fragility signal. Both share the open question of whether to surface reach explicitly.
+- [Learning is not only about generality](./learning-is-not-only-about-generality.md) — **grounds**: the reach spectrum (high/medium/low) instantiates the generality axis defined there (facts vs theories). This note adds that maintenance cost is asymmetric by reach level.
+- [A good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — **extends**: that note discusses reach in the context of accumulation; this note adds a dimension its "trustworthiness" property needs — high-reach changes silently invalidate downstream reasoning.
+- [Link-graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — **contradicts/qualifies**: high-reach changes are precisely the case where pairwise timestamp comparison fails — the defeat condition that note already anticipates.
+- [Discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — **extends**: the consolidation heuristic ("clusters of similar low-reach notes suggest an unextracted principle") is the discovery operation reframed as a maintenance signal.
+- [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — **extends**: maintenance cost is not uniform; high-reach changes require disproportionately expensive review.
