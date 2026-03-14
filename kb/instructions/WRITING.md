@@ -191,7 +191,7 @@ The distilled artifact itself should NOT link back to its sources — it's optim
 There are two kinds of indexes:
 
 - **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `uv run scripts/generate_notes_index.py <directory>`.
-- **Tag indexes** (e.g. `kb-design-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md).
+- **Tag indexes** (e.g. `learning-theory-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md).
 
 ### Tag Index Structure
 

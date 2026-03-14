@@ -1,7 +1,7 @@
 ---
 description: Skills and tasks are typed callables — they accept document types as input and produce types as output, and should declare their signatures like functions declare parameter types.
 type: note
-tags: [kb-design]
+tags: []
 status: speculative
 ---
 

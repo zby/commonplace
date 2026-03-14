@@ -2,7 +2,7 @@
 description: Values static within an installation but variable across installations — sibling repo paths, local tool locations — are frontloadable through configuration the orchestrator resolves and injects into sub-agent frames; the context savings depend on sub-agent isolation since injection into the main context just adds tokens
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

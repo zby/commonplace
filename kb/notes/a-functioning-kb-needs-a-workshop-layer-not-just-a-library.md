@@ -1,7 +1,7 @@
 ---
 description: The current type system models permanent knowledge (library) but not in-flight work with state machines, dependencies, and expiration (workshop) — tasks are a prototype of the missing layer, and a functioning knowledge base needs both plus bridges between them
 type: note
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

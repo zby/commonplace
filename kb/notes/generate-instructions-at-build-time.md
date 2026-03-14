@@ -2,7 +2,7 @@
 description: KB skills should be generated from templates at setup time, not parameterised with runtime variables — applying the general principle that indirection is costly in LLM instructions
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

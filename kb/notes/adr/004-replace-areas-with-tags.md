@@ -1,7 +1,7 @@
 ---
 description: Replaces the areas frontmatter field with freeform tags and restructures index pages to have both curated and generated sections, decoupling navigation from comparative reading
 type: adr
-tags: [kb-design]
+tags: []
 status: proposed
 ---
 
@@ -77,7 +77,7 @@ Removing Topics eliminates `sync_topic_links.py`, the areas-topics consistency c
 
 ### 5. Index pages use `-index` filename suffix
 
-All tag index pages follow the naming convention `{tag}-index.md` (e.g. `kb-design-index.md`). This distinguishes them from content notes and makes the tag-to-filename mapping mechanical.
+All tag index pages follow the naming convention `{tag}-index.md` (e.g. `learning-theory-index.md`). This distinguishes them from content notes and makes the tag-to-filename mapping mechanical.
 
 ### 6. Sub-areas dissolve into the tag graph
 

@@ -2,7 +2,7 @@
 description: Why durable-knowledge graph composition (many linked notes) is wrong for tracking understanding during active engineering — a single holistically rewritten narrative maintains the coherence that working memory requires
 type: note
 traits: [has-external-sources]
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

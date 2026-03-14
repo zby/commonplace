@@ -1,6 +1,6 @@
 ---
 description: Techniques from cludebot worth borrowing — what we already cover, what to adopt now, and what to watch for as the KB grows
-tags: [kb-design]
+tags: []
 status: current
 ---
 

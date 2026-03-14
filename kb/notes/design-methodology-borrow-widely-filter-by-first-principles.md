@@ -3,7 +3,7 @@ description: We borrow from any source but adopt based on first-principles suppo
 type: note
 traits: []
 status: seedling
-tags: [kb-design]
+tags: []
 ---
 
 # Design methodology — borrow widely, filter by first principles

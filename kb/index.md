@@ -19,7 +19,7 @@ Commonplace is a knowledge base about building **agentic systems** — how AI ag
 ## Starting points
 
 - [A good agentic KB maximizes contextual competence](./notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — the unified theory: three knowledge properties, three learning operations, and Deutsch's reach criterion
-- [KB design](./notes/kb-design-index.md) — architecture, skills, evaluation, and design principles
+- [Tags](./notes/tags-index.md) — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - [Learning theory](./notes/learning-theory-index.md) — how systems learn, verify, and improve: constraining, distillation, discovery
 - [Tags](./notes/tags-index.md) — all tag indexes at a glance
 - [Linking methodology](./notes/links-index.md) — how notes connect and what link semantics mean

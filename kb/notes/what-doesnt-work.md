@@ -1,7 +1,7 @@
 ---
 description: Anti-patterns and areas with insufficient evidence — auto-commits, queue overhead, validation ceremony, session rhythm
 type: review
-tags: [kb-design]
+tags: []
 status: current
 ---
 

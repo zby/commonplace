@@ -2,7 +2,7 @@
 description: Deriving architectural requirements by decomposing concrete user stories into step-by-step context needs — not from abstract read/write operations but from what the agent actually has to load at each stage, in both the commonplace repo and installed projects
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

@@ -2,7 +2,7 @@
 description: CLAUDE.md enforces universal constraints (imperative/push); skill descriptions advertise opt-in capabilities (suggestive/pull) — guidance belongs on whichever surface matches its enforcement model
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: current
 ---
 

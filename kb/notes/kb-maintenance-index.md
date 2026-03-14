@@ -6,7 +6,7 @@ status: current
 
 # KB maintenance
 
-How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [kb-design](./kb-design-index.md). For document structure, see [document-system](./document-system-index.md).
+How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [tags](./tags-index.md). For document structure, see [document-system](./document-system-index.md).
 
 ## Dynamics
 
@@ -29,7 +29,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Related Tags
 
-- [kb-design](./kb-design-index.md) — parent area: architecture and design of the KB itself
+- [tags](./tags-index.md) — parent area: architecture and design of the KB itself
 - [document-system](./document-system-index.md) — type system and validation that maintenance operations check against
 - [links](./links-index.md) — linking methodology that staleness detection and quality signals operate on
 

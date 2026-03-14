@@ -2,7 +2,7 @@
 description: The enforcement gradient covers detection and blocking but has no recovery column — recovery strategies (corrective → fallback → escalation) are the missing layer, and oracle strength determines which are viable at each level
 type: note
 traits: [has-external-sources]
-tags: [kb-design, learning-theory]
+tags: [learning-theory]
 status: seedling
 ---
 

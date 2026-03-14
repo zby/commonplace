@@ -2,7 +2,7 @@
 description: Hunch that procedural artifacts distilled for execution belong in kb/instructions/ — the directory boundary is "distilled into a procedure", not "compressed" or "frequently loaded"
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

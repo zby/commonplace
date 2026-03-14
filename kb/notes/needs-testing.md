@@ -1,7 +1,7 @@
 ---
 description: Promising ideas without enough evidence — extract/connect/review cycle, input classification before processing
 type: review
-tags: [kb-design]
+tags: []
 status: current
 ---
 

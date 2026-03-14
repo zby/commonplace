@@ -2,7 +2,7 @@
 description: "Design exploration for a deep search skill that reuses /connect's dual discovery and articulation testing on web search results, building a temporary research graph before bridging to KB"
 type: note
 traits: [has-comparison]
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

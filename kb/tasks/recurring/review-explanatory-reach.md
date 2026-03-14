@@ -7,7 +7,7 @@ This file is a stable runbook. Do not edit it per run; only change it when scope
 ## Scope
 
 - `kb/notes/*.md` — all notes with frontmatter (skip text files and indexes)
-- Focus on notes with areas `kb-design`, `learning-theory`, `computational-model` first — these are the areas where explanatory depth matters most
+- Focus on notes with tags `learning-theory`, `computational-model` first — these are the areas where explanatory depth matters most
 
 ## Run Procedure
 

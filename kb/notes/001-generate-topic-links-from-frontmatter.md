@@ -2,7 +2,7 @@
 description: Replace LLM-generated Topics footers with a deterministic script that reads the areas: frontmatter field
 type: adr
 traits: []
-tags: [kb-design, links]
+tags: [links]
 status: accepted
 ---
 

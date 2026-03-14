@@ -6,7 +6,7 @@ status: current
 
 # Computational model
 
-Programming language concepts applied to LLM instructions and agent architectures. Where [learning-theory](./learning-theory-index.md) covers how systems learn and improve, and [kb-design](./kb-design-index.md) covers how knowledge bases are built and operated, this area covers the computational properties of the medium itself — what kind of "programs" LLM instructions are, and what PL concepts illuminate their behavior.
+Programming language concepts applied to LLM instructions and agent architectures. Where [learning-theory](./learning-theory-index.md) covers how systems learn and improve, and [tags](./tags-index.md) covers how knowledge bases are built and operated, this area covers the computational properties of the medium itself — what kind of "programs" LLM instructions are, and what PL concepts illuminate their behavior.
 
 ## Foundations
 
@@ -51,7 +51,7 @@ These notes are dual-tagged with [LLM interpretation errors](./llm-interpretatio
 
 - [llm-interpretation-errors](./llm-interpretation-errors-index.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
 - [learning-theory](./learning-theory-index.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
-- [kb-design](./kb-design-index.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
+- [tags](./tags-index.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---
 

@@ -2,7 +2,7 @@
 description: Since agents can't carry vocabulary or decisions between reads, the harness should auto-inject referenced context — definitions once per session, ADRs when relevant. The trigger mechanism (type, link semantics, term detection) is an open question; the need follows directly from statelessness.
 type: structured-claim
 traits: []
-tags: [kb-design]
+tags: []
 status: speculative
 ---
 

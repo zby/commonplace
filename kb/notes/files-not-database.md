@@ -2,7 +2,7 @@
 description: Files beat a database early on — a schema commits to access patterns before you know them, and files let you constrain incrementally while getting free browsing, versioning, and agent access from day one
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: current
 ---
 

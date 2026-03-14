@@ -2,7 +2,7 @@
 description: Design for how commonplace installs into a project — two trees (user's kb/ and framework's commonplace/), operational artifacts copied for prompt simplicity, methodology referenced for deeper reasoning
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

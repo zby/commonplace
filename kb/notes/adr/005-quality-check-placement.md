@@ -1,7 +1,7 @@
 ---
 description: Where quality checks belong — WRITING.md pre-save checklist vs post-write instructions (semantic-review, validate) — based on cost, false-positive tolerance, and whether the check blocks creation
 type: adr
-tags: [kb-design]
+tags: []
 status: proposed
 ---
 

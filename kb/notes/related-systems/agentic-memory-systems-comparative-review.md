@@ -2,7 +2,7 @@
 description: Comparative analysis of eleven agent memory systems across six architectural dimensions — storage unit, agency model, link structure, temporal model, curation operations, and extraction schema — revealing that the agency question (who decides what to remember) is the most consequential design choice and that no system combines high agency, high throughput, and high curation quality.
 type: note
 traits: [has-external-sources]
-tags: [kb-design, learning-theory]
+tags: [learning-theory]
 status: current
 ---
 

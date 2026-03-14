@@ -2,7 +2,7 @@
 description: Dissects A-MEM's four fully-automatic operations (construct, link, evolve, retrieve) — all accretive, none curative — identifying the missing vocabulary (delete, split, reorganize, assess quality) that separates accumulation from curation
 type: note
 traits: [has-external-sources]
-tags: [kb-design, learning-theory]
+tags: [learning-theory]
 status: current
 ---
 

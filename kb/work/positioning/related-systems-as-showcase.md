@@ -2,7 +2,7 @@
 description: The related-systems reviews are a concrete demonstration of the KB's value — useful comparisons that could not have been produced by a bare LLM or a simple RAG setup
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

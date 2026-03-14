@@ -53,7 +53,7 @@ rg "^description:" kb/notes/ kb/instructions/ --glob "*.md"
 rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
 
 # Find notes by area
-rg "^tags:.*kb-design" kb/notes/ kb/instructions/ --glob "*.md"
+rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 ```
 
 Use `/validate` for specialized audits and consistency checks.
@@ -71,7 +71,7 @@ This file is a control-plane router. It does not inventory capabilities; harness
 
 ### Key Indexes
 
-- `kb/notes/kb-design-index.md` — main index: foundations, observations, decisions, gaps
+- `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `scripts/generate_notes_index.py`)

@@ -2,7 +2,7 @@
 description: Reusable distilled procedures that live in kb/instructions/ — same format as skills but without activation triggers or CLAUDE.md routing entries; invoked when a human points the agent at them
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

@@ -2,7 +2,7 @@
 description: The commonplace repo's own internal layout — what exists, what's missing, and the decision to put global types in CLAUDE.md instead of kb/types/
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

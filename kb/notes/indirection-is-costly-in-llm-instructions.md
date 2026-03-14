@@ -2,7 +2,7 @@
 description: In code, indirection (variables, config, abstraction layers) is nearly free at runtime — in LLM instructions, every layer of indirection costs context and interpretation overhead on every read
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 

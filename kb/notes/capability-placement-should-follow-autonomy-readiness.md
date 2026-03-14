@@ -2,7 +2,7 @@
 description: Capability artifacts should be placed by autonomy readiness so AGENTS.md stays free of inventories and only routes or constrains behavior
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: current
 ---
 

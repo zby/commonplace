@@ -2,7 +2,7 @@
 description: Context — not compute, memory, or storage — is the scarce resource in agent systems; context cost has two dimensions (volume and complexity) that require different architectural responses, making context efficiency the central design concern analogous to algorithmic complexity in traditional systems
 type: note
 traits: [has-external-sources]
-tags: [kb-design, computational-model]
+tags: [computational-model]
 status: current
 ---
 

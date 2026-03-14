@@ -2,7 +2,7 @@
 description: MCP forces stateless tool operations through a persistent server process — most tools are pure functions that don't need session state, connections, or lifecycle management, but pay the complexity tax anyway
 type: note
 traits: []
-tags: [kb-design]
+tags: []
 status: seedling
 ---
 
