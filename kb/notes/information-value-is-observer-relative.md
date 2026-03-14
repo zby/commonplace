@@ -8,11 +8,24 @@ status: seedling
 
 # Information value is observer-relative
 
-The same information has different value for different observers. A chess grandmaster and a beginner look at the same game notation — the grandmaster extracts strategic themes, preparation choices, and novelties; the beginner sees legal moves. An encrypted message is noise for Eve and a structured pattern for Bob. A domain fact is actionable for an expert and meaningless for a newcomer who lacks the context to interpret it.
+The same information has different value for different observers. At the most basic level, a reader might simply not know a fact — a domain expert recognizes "use OAuth 2.0 with PKCE" as a specific security decision, while a newcomer lacks the context to act on it. This is obvious but already observer-relative: the value of the fact depends on what the reader brings.
 
-This is not just about difficulty. The observers are not seeing the same thing at different speeds — they are extracting different structure from the same data. What makes information valuable is not a property of the data alone but of the data-observer pair: the observer's prior knowledge, computational capacity, available tools, and goals. The grandmaster extracts preparation choices from the game notation not just because she *can* see them but because competitive play makes them *relevant*.
+The less obvious case is structure extraction. A chess grandmaster and a beginner look at the same game notation — the grandmaster extracts strategic themes, preparation choices, and novelties; the beginner sees legal moves. An encrypted message is noise for Eve and a structured pattern for Bob. The observers are not seeing the same thing at different speeds — they are extracting different structure from the same data.
 
-Classical information theory doesn't capture this. Shannon entropy measures surprise given a probability model. Kolmogorov complexity measures the shortest program that generates the data. Neither depends on who is doing the observing. Reorder training examples — entropy doesn't change, yet the reordered sequence may teach a model more. Distil a body of reasoning into a focused note — entropy decreases, information is discarded, yet the result may be more valuable to a bounded reader. Classical theory describes data as an object; observer-relativity describes data as a relationship.
+What makes information valuable is not a property of the data alone but of the data-observer pair: the observer's prior knowledge, computational capacity, available tools, and goals. The grandmaster extracts preparation choices not just because she *can* see them but because competitive play makes them *relevant*.
+
+## Prior work
+
+Observer-relative information value is not a new idea. Several traditions have developed it independently:
+
+- **Relevance theory** (Sperber & Wilson, 1986) — information is relevant when it connects with existing assumptions to yield cognitive effects. Relevance is defined relative to the individual's cognitive environment, not as a property of the message.
+- **Value of information in decision theory** (Marschak, Radner) — information has value only if it changes a decision. Two agents facing different decisions assign different value to the same data, even with identical processing capacity.
+- **Bounded rationality** (Simon) — decision-makers have limited computational capacity, so they satisfice rather than optimize. The value of information depends on processing capacity, not just content.
+- **Bayesian decision theory** — the expected improvement from observing data depends on the observer's prior beliefs and utility function.
+
+Classical information theory (Shannon, Kolmogorov) is the exception — it deliberately abstracts away the observer. Shannon entropy measures surprise given a probability model; Kolmogorov complexity measures the shortest generating program. Neither depends on who is observing. This abstraction is powerful for communication engineering but misses exactly what matters for knowledge systems: reorder training examples and entropy doesn't change, yet the reordered sequence may teach a model more.
+
+**TODO:** This literature survey is from the agent's training data, not systematic. Revisit with deep search once that capability is operational — there are likely more relevant traditions (philosophy of information, situated cognition) and specific results worth ingesting.
 
 ## Why this matters for the KB
 
