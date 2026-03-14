@@ -23,26 +23,40 @@ Observer-relative information value is not a new idea. Several traditions have d
 - **Bounded rationality** (Simon) — decision-makers have limited computational capacity, so they satisfice rather than optimize. The value of information depends on processing capacity, not just content.
 - **Bayesian decision theory** — the expected improvement from observing data depends on the observer's prior beliefs and utility function.
 
-Classical information theory (Shannon, Kolmogorov) is the exception — it deliberately abstracts away the observer. Shannon entropy measures surprise given a probability model; Kolmogorov complexity measures the shortest generating program. Neither depends on who is observing. This abstraction is powerful for communication engineering but misses exactly what matters for knowledge systems: reorder training examples and entropy doesn't change, yet the reordered sequence may teach a model more.
+Classical information theory (Shannon, Kolmogorov) is the exception — it deliberately abstracts away the observer. Shannon entropy measures surprise given a probability model; Kolmogorov complexity measures the shortest generating program. Neither depends on who is observing. This abstraction is powerful for communication engineering but misses what matters for knowledge systems: the same content in a different arrangement can teach more, even though nothing changed by classical measures.
 
 **TODO:** This literature survey is from the agent's training data, not systematic. Revisit with deep search once that capability is operational — there are likely more relevant traditions (philosophy of information, situated cognition) and specific results worth ingesting.
 
 ## Why this matters for the KB
 
-The primary reader of this KB is an agent operating under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — every token loaded must earn its place. Observer-relativity means the same content can have different value depending on how it's arranged, what the agent already has in context, and what tools it brings.
+The idea is well-established in other fields. What's specific to our context is applying it to the design of an agent-operated knowledge base, where the primary reader is an agent under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — every token loaded must earn its place.
 
-**[Distillation](./distillation.md) creates value** by reshaping knowledge for a specific observer. Classically this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer.
+### What to keep
 
-**[Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) cost is observer-relative.** The data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. A shallow observer (keyword search) sees shared features; a deeper observer sees shared structure.
+Observer-relativity shapes inclusion decisions. A note's value depends on whether the agent can connect it to what it already has in context — an isolated fact is worth less than a design principle that links to five other notes, because the principle creates extraction opportunities across sessions. This is why [KB goals](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) matter: they define what the observer is trying to do, which determines what counts as valuable.
 
-**[Reverse-compression](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) is the failure mode.** Expanding text without adding extractable structure — more tokens, same value for the reader. Observer-relativity is what makes this a real failure, not just verbosity: the expanded text carries more classical information but no more usable structure.
+### How to present
 
-**Naming reduces extraction cost.** [Minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — the set of names that maximally reduces extraction cost for a bounded observer — is an optimization over the observer-relative gap. Once a structure has a name, recognizing instances becomes cheap.
+Several KB conventions are optimizations for the agent observer:
+
+- **[Title as claim](../instructions/WRITING.md)** — a claim title lets the agent extract the main point without loading the note. This is a distillation targeting the lowest-cost reading: scanning titles in an index.
+- **Descriptions as retrieval filters** — the description field exists because the agent needs to decide relevance before reading the full note. A good description is a distillation for the "should I read this?" decision.
+- **[Short composable notes](./short-composable-notes-maximize-combinatorial-discovery.md)** — many short notes give more combinatorial coverage than few long ones for a reader with bounded context.
+- **[Progressive refinement](./constraining.md)** — each level (text → note → structured-claim) adds structure that makes the content more extractable. A structured claim with Evidence/Reasoning/Caveats is more accessible to an agent than the same argument in prose.
+
+More broadly, [distillation](./distillation.md) creates value by reshaping knowledge for a specific observer. In information-theoretic terms this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer.
+
+### What observer-relativity doesn't help with
+
+**[Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) cost is observer-relative** but not easily optimized — the data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. [Naming](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) is the partial solution: once a structure has a name, recognizing instances becomes cheap.
+
+**[Reverse-compression](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) is the failure mode** — expanding text without adding extractable structure. More tokens, no more value for the reader.
 
 ## Open Questions
 
 - Observer-relativity applies to both patterns (require computational depth to extract) and facts (require prior knowledge to interpret). Are these the same phenomenon or two phenomena that share a surface shape?
-- Is the agent the only important reader? Humans read the KB too — during review, when directing inquiry, when evaluating quality — and the KB is published on the web for external readers. Should we optimize for the agent observer, human readers, or some compromise? And what should we assume about the agent — a frontier model with strong reasoning, or a weaker model that needs more scaffolding? The answer shapes what counts as "accessible structure."
+- Is the agent the only important reader? Humans read the KB too — during review, when directing inquiry, when evaluating quality — and the KB is published on the web for external readers.
+- What should we assume about the agent — a frontier model with strong reasoning, or a weaker model that needs more scaffolding? The answer shapes what counts as "accessible structure."
 
 ---
 
