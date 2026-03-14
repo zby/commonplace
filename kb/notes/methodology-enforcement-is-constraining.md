@@ -12,13 +12,16 @@ The ways we enforce methodology in the KB — instructions, skills, hooks, scrip
 
 | Layer | Trigger | Response | Reliability | Example |
 |-------|---------|----------|-------------|---------|
-| Instruction | indeterministic (LLM remembers) | underspecified + indeterministic (LLM interprets) | lowest | "check descriptions" in CLAUDE.md |
+| Ad hoc prompt | indeterministic (caller writes one) | underspecified + indeterministic (LLM interprets) | lowest | "read these three docs through this lens" in a one-off instructions note |
+| Instruction | indeterministic (LLM remembers) | underspecified + indeterministic (LLM interprets) | low | "check descriptions" in CLAUDE.md |
 | Skill | deterministic (user invokes) | underspecified + indeterministic (LLM executes) | medium | `/validate` checks note quality |
 | Hook (warn) | deterministic (event fires) | underspecified + indeterministic (LLM acts on output) | medium-high | validate-note.sh outputs WARN on missing description |
 | Hook (block) | deterministic (event fires) | deterministic (rejected) | high | exit 1 prevents the operation |
 | Script | deterministic (user/hook runs) | deterministic (code runs) | highest | sync_topic_links.py rewrites Topics footer |
 
-Instructions have the lowest reliability because both phenomena compound: the LLM may not remember to apply the practice (indeterminism in triggering), and when it does, it interprets the instruction through underspecified semantics ("check descriptions" admits multiple valid readings of what counts as a good description). Skills eliminate the trigger problem — the user invokes them deterministically — but the response is still an LLM interpreting an underspecified spec. Blocking hooks and scripts eliminate both phenomena entirely.
+[Ad hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are looser than persistent instructions — they're one-shot, not loaded into every session, and exist only for a single use. They sit below instructions on the gradient because they add a third source of unreliability: the prompt itself is ephemeral, so it can't even accumulate the weak consistency that comes from an instruction being present every time.
+
+Instructions have the lowest *persistent* reliability because both phenomena compound: the LLM may not remember to apply the practice (indeterminism in triggering), and when it does, it interprets the instruction through underspecified semantics ("check descriptions" admits multiple valid readings of what counts as a good description). Skills eliminate the trigger problem — the user invokes them deterministically — but the response is still an LLM interpreting an underspecified spec. Blocking hooks and scripts eliminate both phenomena entirely.
 
 The key insight: hooks are not cleanly "deterministic." A hook that outputs a warning is a deterministic trigger with an underspecified, indeterministic response — the LLM decides what to do with the warning. Only blocking hooks (exit non-zero) are fully deterministic. This means the three-tier model (instruction → skill → hook) that arscontexta uses oversimplifies — the real picture is a gradient, which is just constraining.
 
