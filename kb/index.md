@@ -8,7 +8,7 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 ## Threads worth following
 
-**How agents learn.** [Deploy-time learning](./notes/deploy-time-learning-the-missing-middle.md) fills the gap between training and in-context learning. Two mechanisms transform accumulated knowledge: [constraining](./notes/constraining.md) narrows interpretation (conventions → structured types → deterministic code), while [distillation](./notes/distillation.md) extracts focused artifacts from larger reasoning. A third operation — [discovery](./notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — produces the high-reach theories that are accumulation's most valuable items. The [learning theory index](./notes/learning-theory-index.md) maps the full landscape.
+**How agents learn.** [Deploy-time learning](./notes/deploy-time-learning-the-missing-middle.md) fills the gap between training and in-context learning. It starts with accumulation — capturing observations, decisions, and patterns as durable artifacts. Three operations transform what's accumulated: [constraining](./notes/constraining.md) narrows interpretation (conventions → structured types → deterministic code), [distillation](./notes/distillation.md) extracts focused artifacts from larger reasoning, and [discovery](./notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) produces the high-reach theories that are accumulation's most valuable items. The [learning theory index](./notes/learning-theory-index.md) maps the full landscape.
 
 **What makes knowledge agent-usable.** A [good agentic KB](./notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) maximizes contextual competence through three properties. Discoverable: agents find what they need without loading everything. Composable: notes chain into arguments via [explicit link semantics](./notes/links-index.md). Trustworthy: a [type ladder](./notes/types/structured-claim.md) from raw text to structured claims carries reliability signals.
 
@@ -28,8 +28,8 @@ Commonplace is open source. You can use it in two ways:
 
 **Clone and explore.** The repo is a functioning knowledge base out of the box. Add notes alongside the existing ones, run the agent skills (`/connect`, `/validate`, `/ingest`), and build on the theory. This is also the right mode for evaluating the system before installing it elsewhere.
 
-**Install into your own project as a theory builder for your domain.** Commonplace can be added to any project as a submodule or cloned subdirectory. It provides the type system, writing conventions, agent skills, and methodology — your agents accumulate domain knowledge and build explanatory structure instead of starting every session cold. See the [installation guide](../INSTALL.md) for setup instructions and the [installation architecture](./notes/commonplace-installation-architecture.md) for design rationale.
+**Install into your own project as a theory builder for your domain.** Commonplace can be added to any project as a submodule or cloned subdirectory. It provides the type system, writing conventions, agent skills, and methodology — your agents accumulate domain knowledge and build explanatory structure instead of starting every session cold. See the [installation guide](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup instructions and the [installation architecture](./notes/commonplace-installation-architecture.md) for design rationale.
 
 Both paths use the same framework. The difference is whether you're building theory about agentic systems (this repo's domain) or about your own.
 
-For the full technical reference — directory layout, prerequisites, scripts — see the [README](../README.md).
+For the full technical reference — directory layout, prerequisites, scripts — see the [README](https://github.com/zby/commonplace).
