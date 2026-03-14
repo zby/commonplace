@@ -37,3 +37,6 @@ skills-lock.json
 
 # sources with scraping restrictions
 kb/sources/slate-moving-beyond-react-and-rlm.md
+
+# connect reports
+kb/work/connect/
