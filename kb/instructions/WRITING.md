@@ -12,6 +12,7 @@ For **notes and above** (any type with frontmatter), every note must be findable
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
 3. **Tags** — Is it tagged with relevant keywords that help future readers find it? Use as many as genuinely useful.
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
+5. **[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** — Does the note explain *why*, not just record *what works*? Quick test: if you changed one premise, could you predict what changes in the conclusion? If yes, the note captures mechanism. If no, it may be recording a pattern without explaining it. Notes that only record "X works" are adaptive — useful but brittle. Notes that explain why X works have reach. Seedlings are exempt — reach is a maturation goal, not a gate.
 
 If any answer is "no," fix it before saving.
 

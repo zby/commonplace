@@ -119,12 +119,15 @@ List 3-7 items, each as a one-liner with enough context to evaluate.
 Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
 [just-a-reference].
 
+**Cross-cutting: assess [reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md).** Regardless of source type, ask: does this insight transfer beyond the specific context (benchmark, system, team, domain) the source describes? High-reach findings — those that explain *why* something works, not just *that* it works — go first. Context-bound observations ("X worked for us on benchmark Y") are still worth noting but should be flagged as low-reach.
+
 ### 3.5 Curiosity Gate
 
 Before writing Limitations, pause and re-read the source:
 
 1. **What is most surprising?** What claim, finding, or design choice is unexpected given what you know? Follow the surprise — it may reveal something the structured extraction missed.
 2. **What's the simpler account?** For the source's 1-2 strongest claims, ask: what's the simplest mechanism, explanation, or framing that produces the same outcome? If a simpler account works, the claimed sophistication is inflated.
+3. **Is the central claim hard to vary?** Could you swap the evidence and keep the conclusion? If the same conclusion follows from different premises, the argument may be unfalsifiable or over-fitted to a narrative. Hard-to-vary claims — where changing any component breaks the whole thing — are the ones worth extracting.
 
 Fold findings into Extractable Value or Limitations as appropriate.
 

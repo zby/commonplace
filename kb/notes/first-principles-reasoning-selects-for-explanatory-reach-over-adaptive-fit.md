@@ -56,3 +56,5 @@ Relevant Notes:
 Distilled into:
 
 - [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the three-part negative test (vary / reach / criticize)
+- [WRITING.md](../instructions/WRITING.md) — lightweight reach check (item 5 in the pre-save checklist)
+- [ingest SKILL.md](../instructions/ingest/SKILL.md) — reach assessment in extractable value and hard-to-vary test in curiosity gate
