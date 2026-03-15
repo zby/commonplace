@@ -79,7 +79,7 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the clean model supplies one important dimension, scheduler placement
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — one region of the space: scheduling inside conversation
 - [RLM achieves the clean scheduler model but opts out of accumulation](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) — boundary case: model-authored external scheduler with ephemeral persistence
-- [LLM SDKs unlock full power by exposing the loop](./llm-sdks-unlock-full-power-by-exposing-the-loop.md) — consequence: SDK design concerns one dimension of the larger space
+- [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination primitives vary independently of scheduler placement
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
 - [What Survives in Multi-Agent Systems](../sources/voooooogel-multi-agent-future.ingest.md) — extends: forking is better treated as a coordination/scoping primitive than as another point on a single scheduler ladder

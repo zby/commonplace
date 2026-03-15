@@ -12,7 +12,7 @@ The [symbolic scheduling model](./bounded-context-orchestration-model.md) assume
 
 This makes the scheduler effectively bounded: it suffers the same attention dilution and compositional overhead as the sub-agent calls it is trying to orchestrate. The clean separation between unbounded scheduler and bounded LLM calls collapses.
 
-The API-design consequence of this diagnosis is developed in [LLM SDKs unlock full power by exposing the loop](./llm-sdks-unlock-full-power-by-exposing-the-loop.md): if conversation-mediated scheduling is the degraded case, strong SDKs should expose control surfaces that let the application layer move the loop out of chat.
+The framework-design consequence of this diagnosis is developed in [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md): if conversation-mediated scheduling is the degraded case, strong frameworks should expose control surfaces that let the application layer move the loop out of chat.
 
 ## Three recovery strategies
 

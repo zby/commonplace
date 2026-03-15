@@ -25,7 +25,7 @@ The key move is that the LLM *writes* the scheduler rather than *being* the sche
 
 In the model's terms: the LLM produces the `select` function for the sub-problem, and the REPL executes it symbolically. The important boundary is that recursion depth, call-stack progression, and intermediate state live in code even if some dispatching decisions originated in the model. This is more context-efficient than iterative consultation because intermediate results live first in Python variables and the REPL stack, and only re-enter later LLM calls when the scheduler explicitly selects them into a fresh prompt.
 
-This makes RLM an important boundary case for [LLM SDKs unlock full power by exposing the loop](./llm-sdks-unlock-full-power-by-exposing-the-loop.md). That note can sound like the application programmer must directly own each loop step. RLM shows a subtler point: the decisive property is that the loop runs on an exact substrate outside the conversation. In RLM, the model may decide dispatch by writing code, but recursion depth is still maintained by the REPL rather than by the model's conversational state. The power comes from moving the loop out of chat, not from requiring a human-written imperative driver.
+This makes RLM an important boundary case for [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md). That note can sound like the application programmer must directly own each loop step. RLM shows a subtler point: the decisive property is that the loop runs on an exact substrate outside the conversation. In RLM, the model may decide dispatch by writing code, but recursion depth is still maintained by the REPL rather than by the model's conversational state. The power comes from moving the loop out of chat, not from requiring a human-written imperative driver.
 
 ## Elegance without accumulation
 
@@ -46,5 +46,5 @@ Relevant Notes:
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call/absorb loop that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs
-- [LLM SDKs unlock full power by exposing the loop](./llm-sdks-unlock-full-power-by-exposing-the-loop.md) — boundary case: RLM shows that externalising the loop matters more than whether a human or model authors the scheduler
+- [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — boundary case: RLM shows that externalising the loop matters more than whether a human or model authors the scheduler
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — context: situates RLM as one combination of scheduler placement and persistence rather than as one point on a single ladder
