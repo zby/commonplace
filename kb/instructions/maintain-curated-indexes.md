@@ -34,12 +34,11 @@ Load the curated section. Ask:
 ### 3. Check for orphaned notes
 
 ```bash
-# Notes with no tags or empty tags
-rg "^tags: \[\]" kb/notes/ --glob '*.md'
+# Notes with no tags field at all
 rg -L "^tags:" kb/notes/*.md
 ```
 
-For each orphan, assign tags that help future readers find it. No minimum — even one tag is better than none.
+For each orphan, consider whether adding tags would help future readers find it.
 
 ### 4. Split or promote
 

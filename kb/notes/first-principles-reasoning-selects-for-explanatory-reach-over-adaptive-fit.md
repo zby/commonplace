@@ -40,7 +40,7 @@ The [design methodology](./design-methodology-borrow-widely-filter-by-first-prin
 
 - Where in the KB are notes that are well-formed but merely adaptive? Those are candidates for deepening.
 - The [discovery note's](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) hierarchy (feature -> structure -> generative model) parallels Deutsch's hierarchy (adaptive -> partially explanatory -> fully explanatory). Are these the same axis?
-- Should "has explanatory reach" become a trait or quality signal, or is it better as an informal check during writing?
+- Should "has explanatory reach" become a trait or quality signal, or is it better as an informal check during writing? (See also the [reach brainstorming note's](./brainstorming-how-reach-informs-kb-design.md) parallel question on surfacing reach explicitly.)
 
 ---
 

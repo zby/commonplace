@@ -61,6 +61,7 @@ A third operation, distinct from both constraining and distillation: positing a 
 ## Synthesis
 
 - [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — accumulation as the basic operation plus three transformation operations (constraining, distillation, discovery) mapped to three knowledge properties (trustworthy, discoverable, composable) serving contextual competence under bounded context; reach as the quality dimension of what's accumulated
+- [bounded processors adapting knowledge is the shared structure across traditions](./bounded-processors-adapting-knowledge-is-the-shared-structure-across-traditions.md) — seven independent traditions converge on bounded-processor adaptation; agent context windows add literal measurability, making cross-tradition transferability testable
 
 ## Oracle & Verification
 
@@ -76,6 +77,7 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — o
 - [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — codification counters the blackbox problem not by requiring human review but by choosing a substrate (repo artifacts) that any agent can inspect, diff, test, and verify
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper: Zettelkasten-inspired agent memory with automated link generation; flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale
 - [memory-management-policy-is-learnable-but-oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — AgeMem's RL-trained memory policy demonstrates low-reach accumulation (facts) and distillation (STM); confirms memory policy is vision-feature-like per the bitter lesson boundary, but requires a task-completion oracle the KB cannot yet provide
+- [Multi-Agent Memory from a Computer Architecture Perspective](../sources/multi-agent-memory-computer-architecture-perspective.ingest.md) — computer-architecture analogy for multi-agent memory: shared/distributed paradigms, three-layer hierarchy, and consistency protocols as the critical unsolved problem
 - [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — temporally-aware knowledge graph with bi-temporal edge invalidation; strongest temporal model in the surveyed memory systems and strongest counterexample to files-first architecture
 
 ## Applications

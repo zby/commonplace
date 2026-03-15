@@ -50,7 +50,7 @@ This note adds a dependency-aware mechanism that is more precise than age-based 
 
 ## What would defeat this claim?
 
-If most staleness comes from notes whose claims drift due to accumulated context changes across many files (rather than specific target changes), then pairwise timestamp comparison would miss the important cases. The mechanism assumes staleness is traceable to specific linked targets.
+If most staleness comes from notes whose claims drift due to accumulated context changes across many files (rather than specific target changes), then pairwise timestamp comparison would miss the important cases. The mechanism assumes staleness is traceable to specific linked targets. [High-reach revisions](./brainstorming-how-reach-informs-kb-design.md) are the specific mechanism that produces this failure mode — revising a foundational principle may touch few files directly while silently invalidating downstream reasoning across many notes.
 
 ---
 

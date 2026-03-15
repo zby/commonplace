@@ -42,6 +42,7 @@ The content is selected and compressed to fit the consumer's task and context bu
 | Research → Design principle | Decision-making in a particular area |
 | Accumulated understanding → Campaign narrative | Collaborator joining the campaign now |
 | Caller's knowledge + sub-agent's question → Refined prompt | Sub-agent facing a specific task |
+| Domain artifacts (logs, patches, docs) → Detection/analysis skill | Agent diagnosing or investigating a class of problems |
 | Many observations → Summary | Agent that can't fit them all in context |
 
 Targeting is itself information loss — selecting what's relevant to one context means discarding what's relevant to others. This is why the source persists: it serves many targets, and each distillation chooses a different subset. Multiple distillations of the same source are normal. Reading only the `/connect` skill, you can connect notes but can't adapt the procedure to a novel situation. The methodology notes handle that.
