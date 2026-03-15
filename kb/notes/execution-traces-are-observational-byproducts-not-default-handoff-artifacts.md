@@ -50,7 +50,7 @@ For orchestration, that is usually the wrong trade:
 - interfaces remain implicit, because "the return value" is a transcript rather than a declared object
 - context pollution compounds as traces from many steps accumulate
 
-This is the return-value problem from the [scoping note](./llm-context-is-composed-without-scoping.md) in architectural form: if the parent sees the whole internal conversation, the frame boundary exists physically but not semantically.
+This is the return-value problem from the [scoping note](./llm-context-is-composed-without-scoping.md) in architectural form: if the parent sees the whole internal conversation, the boundary exists structurally (separate invocation, separate context) but not as an information barrier — nothing is actually scoped out.
 
 ## The right split: artifact channel vs trace channel
 
@@ -62,6 +62,7 @@ The scheduler usually wants a compact artifact shaped for the next decision:
 - a compressed episode
 - structured data
 - symbolic code
+- a structured failure or restart signal
 
 The three trace types serve different consumers:
 
@@ -69,7 +70,9 @@ The three trace types serve different consumers:
 - **Tool/action traces** → debugging tools, telemetry, reproducibility, and sometimes structured extraction (when the action record is close to being the artifact itself)
 - **Reasoning traces** → debugging, alignment research, and learning systems that later distill traces into reusable knowledge
 
-These are legitimate uses, but they are not the artifact channel. The trace is evidence about execution. The handoff artifact is what the next stage is supposed to operate on. Keeping the channels separate lets each trace type reach its consumers without polluting the orchestration path.
+These are legitimate uses, but they are not the artifact channel. The trace is evidence about execution. The handoff artifact is what the next stage is supposed to operate on, including recovery decisions such as retry, unwind, or escalation. Keeping the channels separate lets each trace type reach its consumers without polluting the orchestration path.
+
+Failure handling makes the separation especially visible. A bounded execution may return a structured failure artifact without returning the full trace that produced it. The runtime might interpret that artifact directly and choose a retry, unwind, or escalation path. Or it might make a separate bounded LLM call to interpret the failure semantically. In both cases, the important point is the same: the failure becomes an explicit handoff artifact in the loop, not an excuse to promote the whole transcript into orchestration state.
 
 ## Execution-boundary compression is a recurring design move
 
@@ -111,5 +114,6 @@ Relevant Notes:
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the caller does judgment-heavy selection before dispatch, creating a clean handoff boundary
 - [distillation](./distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
+- [llm frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — extends: recovery logic works best when the runtime can either interpret failure artifacts directly or dispatch a separate bounded call, rather than hiding both inside a framework-owned session
 - [Spacebot](./related-systems/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
