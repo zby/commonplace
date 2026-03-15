@@ -22,6 +22,8 @@ Concretely, a well-designed framework stack should:
 - offer workflow helpers or agent loops as optional higher layers, not as the only ergonomic path
 - not require application programmers to surrender orchestration just to get access to tools, retries, or structured outputs
 
+Once the loop is exposed, the application can also choose what symbolic state to persist between calls. In the minimal reading, that may be just source state and prior call results. In the more practical reading developed in the [bounded-context orchestration model](./bounded-context-orchestration-model.md), it can also include prior prompts, rankings, decompositions, retry decisions, and other deterministic projections that help later `select(K)` steps. Hiding the loop inside the framework runtime hides that state progression too, making prompt refinement and orchestration learning much harder.
+
 When those conditions hold, better models improve the quality of individual semantic steps, and application code determines how those steps compound across time. When they do not, the stack keeps asking the model to simulate its own scheduler inside the same scarce medium it is meant to reason within.
 
 ## Examples

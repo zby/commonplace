@@ -19,7 +19,7 @@ The model has two components:
 - a **symbolic scheduler** over unbounded exact state, which assembles prompts and orchestrates the workflow
 - **bounded clean context windows** for each LLM call — the only expensive, stochastic operation
 
-The scheduler's state includes source artifacts and lossy derived artifacts produced by earlier LLM calls: relevance labels, cluster summaries, extracted claims, sub-goals, partial syntheses. In practice this state may live in files, in-memory structures, databases, or a mix. The operational requirement is simple: accumulated state lives there, not in conversation history; LLM calls do judgment work and return results to code; the next prompt is assembled from stored state rather than from the model's memory of prior turns.
+The scheduler's state includes source artifacts, prior prompts, and lossy derived artifacts produced by earlier LLM calls: relevance labels, cluster summaries, extracted claims, sub-goals, partial syntheses. In practice this state may live in files, in-memory structures, databases, or a mix. The operational requirement is simple: accumulated state lives there, not in conversation history; LLM calls do judgment work and return results to code; the next prompt is assembled from stored state rather than from the model's memory of prior turns.
 
 The model also accommodates architectures where the LLM emits a symbolic control program rather than a direct natural-language answer. That still fits as long as execution and state progression remain external to the conversation. A system that keeps bookkeeping inside an LLM conversation is a [degraded variant](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) that spends bounded context on work the symbolic scheduler handles for free.
 
@@ -27,11 +27,11 @@ The model also accommodates architectures where the LLM emits a symbolic control
 
 Let:
 
-- `K` be the scheduler's full symbolic state — source artifacts, derived artifacts (including LLM responses), and goals (the user's top-level goal is the initial item in `K`; sub-goals produced by decomposition are further items)
+- `K` be the scheduler's full symbolic state
 - `M` be the maximum effective context of one agent call
 - `|P|` be the cost of prompt `P` — token count, compositional depth, or a function of both
 
-`K` can be read in two equivalent ways. In the minimal reading, it contains only persisted/source state and prior call results, `select` recomputes any deterministic projections it needs, and `K + r` means simple concatenation of the new result onto the state sequence. In the materialized reading, `K` also stores cached indexes, rankings, groupings, dependency maps, or other deterministic views for efficiency, and `K + r` stands for the corresponding state update. The theory treats these as equivalent; real orchestrators usually choose the second form.
+`K` can be read in two equivalent ways. In the minimal reading, it contains only source state and prior call results, `select` recomputes any deterministic projections it needs, and `K + r` means simple concatenation of the new result onto the state sequence. In the materialized reading, `K` also stores goals, prior prompts, cached indexes, rankings, groupings, dependency maps, or other deterministic views for efficiency, and `K + r` stands for the corresponding state update. The theory treats these as equivalent; real orchestrators usually choose the second form. In practice many orchestrators persist the generated prompt `P` itself for audit, refinement, or later reuse; the notation leaves this implicit because `P` is a deterministic projection of `K` at that step, while `r` is the new stochastic output of the call.
 
 The scheduler alternates between two kinds of step. **Symbolic steps** happen outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication. **Agent calls** are bounded LLM invocations under focused prompts.
 

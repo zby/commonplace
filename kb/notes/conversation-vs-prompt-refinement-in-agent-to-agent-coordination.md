@@ -8,7 +8,7 @@ status: seedling
 
 # Conversation vs prompt refinement in agent-to-agent coordination
 
-This note examines one local case of the broader [handoff-artifact problem](./execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md): when a sub-agent returns with a question instead of an answer, what should cross the boundary?
+This note examines one local case of the broader [handoff-artifact problem](./session-history-should-not-be-the-default-next-context.md): when a sub-agent returns with a question instead of an answer, what should cross the boundary?
 
 The calling agent has at least three options:
 
@@ -56,7 +56,7 @@ But voooooogel's forking pattern complicates this reading. The pattern is: spawn
 Relevant Notes:
 
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — foundation: sub-agents as lexically scoped frames is what makes prompt refinement produce cleaner context than conversation
-- [execution traces are observational byproducts, not default handoff artifacts](./execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md) — context: conversation, refinement, and forking are three different answers to whether the trace itself should be the handoff unit
+- [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — context: conversation, refinement, and forking are three different answers to whether execution history itself should be the unit later calls inherit
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the scheduler already holds the coordination state that prompt refinement requires
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: conversation adds volume (misframing and correction transcript) to the scarce context resource
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — complicates: when the caller is also an LLM, the "push complexity to the scheduler" argument weakens

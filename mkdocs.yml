@@ -3,6 +3,12 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 theme:
   name: mkdocs
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
+        'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
 nav:
   - Home: index.md
   - Concepts:
