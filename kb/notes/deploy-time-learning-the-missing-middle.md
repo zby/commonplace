@@ -19,6 +19,8 @@ Deployed AI systems adapt at three timescales, each with a different substrate:
 
 Deploy-time learning is not a new training paradigm — the model weights don't change. It is **system-level adaptation**: the deployed system's behavior improves because its *artifacts* improve. Like in-context learning it happens during deployment; like training it persists durably. What makes it possible is encoding knowledge into repo artifacts rather than weights or context.
 
+Weight updates during deployment are possible in principle — [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) performs live RL from user interactions — but training infrastructure is too heavy for most deployment contexts. Repo artifacts hit a pragmatic sweet spot: durable, inspectable, and operable with standard development tooling.
+
 This learning operates through two mechanisms — [constraining](./constraining.md) (narrowing the interpretation space) and [distillation](./distillation.md) (extracting procedures from reasoning) — with codification as the far end of constraining where prompts undergo a phase transition to deterministic code. This note focuses on the verifiability gradient that runs across both, with codification at the far end.
 
 The machinery behind deploy-time learning — version control, diffs, tests, CI, code review — is unremarkable to programmers. But AI researchers, trained to think about adaptation in terms of weights and gradients, tend to look past it. Repo artifacts sit in a disciplinary blind spot — "just engineering" to the ML community, yet doing genuine system-level learning.
