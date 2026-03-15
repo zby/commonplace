@@ -12,13 +12,13 @@ Capability placement is a separate decision from AGENTS.md control-plane design.
 
 ## Decision rule
 
-- **Ready for autonomous use** -> promote to **skills** (harness-discovered/injected).
+- **Ready for autonomous use** -> promote to **skills** (discovered or injected by the agent runtime).
 - **Reusable but not autonomous-ready** -> keep as **instruction** (`kb/instructions/`) invoked explicitly by user direction.
 - **Exploratory or unstable** -> keep as **methodology/operations notes** while patterns are still forming.
 
 ## Consequence for AGENTS.md
 
-AGENTS.md should not carry capability inventories. If a capability is autonomy-ready, the harness exposes it through skills. If it is not autonomy-ready, AGENTS.md should not advertise it as if it were routine runtime machinery.
+AGENTS.md should not carry capability inventories. If a capability is autonomy-ready, the agent runtime exposes it through skills. If it is not autonomy-ready, AGENTS.md should not advertise it as if it were routine runtime machinery.
 
 AGENTS.md may still contain minimal routing pointers ("for X, read Y") when omission would create high-cost failure, but not catalogues of what the system can do.
 
@@ -27,7 +27,7 @@ AGENTS.md may still contain minimal routing pointers ("for X, read Y") when omis
 1. Capture an operation in notes/catalogues during exploration.
 2. Distill stable procedure into `kb/instructions/`.
 3. Promote to skill only after repeated successful autonomous execution.
-4. Remove obsolete pointers once harness discovery is sufficient.
+4. Remove obsolete pointers once agent runtime discovery is sufficient.
 
 This sequence prevents premature automation while avoiding AGENTS.md bloat.
 

@@ -25,7 +25,7 @@ Together, the two mechanisms ground the optimization claim: naming provides the 
 ## Open Questions
 
 - Does the pedagogical literature on threshold concepts (Meyer & Land) provide selection criteria that map onto extraction cost? Their criteria — transformative, irreversible, integrative, bounded, troublesome — sound like properties of names that unlock large amounts of previously inaccessible structure, which is what extraction cost reduction measures.
-- Is there a meaningful difference between minimum viable vocabulary for humans (who retain vocabulary across sessions) and for agents (who need it injected each session)? The agent case maps directly to [context injection](./agent-statelessness-means-harness-should-inject-context-automatically.md) — the vocabulary must be loaded, not learned.
+- Is there a meaningful difference between minimum viable vocabulary for humans (who retain vocabulary across sessions) and for agents (who need it injected each session)? The agent case maps directly to [context injection](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — the vocabulary must be loaded, not learned.
 
 ---
 
@@ -39,4 +39,4 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: naming amortizes discovery cost; MVV packages pre-named structures for reuse by newcomers
 - [distillation](./distillation.md) — mechanism: MVV is distillation where the target is a domain newcomer and the context budget is minimal
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — enables: MVV is knowledge compressed to fit context constraints when full domain methodology won't fit
-- [agent statelessness means harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — extends: for agents, MVV must be injected each session rather than retained
+- [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — extends: for agents, MVV must be injected each session rather than retained

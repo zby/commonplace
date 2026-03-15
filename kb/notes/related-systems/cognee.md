@@ -66,7 +66,7 @@ The interfaces (`GraphDBInterface`, `VectorDBInterface`) are genuinely abstract 
 
 **Ontology grounding for entity validation.** Cognee's optional ontology resolver validates extracted entities against an OWL ontology using fuzzy matching. For knowledge systems, this pattern generalises: validate new knowledge against existing knowledge at write time, not just at search time. Our `/connect` skill does something analogous (find related notes before writing), but cognee's mechanism is more structural — the validation is programmatic, not judgment-based. *Just a reference — our system validates through link articulation, which is more expensive but produces higher-quality connections.*
 
-**MCP as a universal memory interface.** Exposing add/cognify/search/memify as MCP tools makes cognee usable as a backend for any agent. If commonplace exposed its operations (search, read, connect, ingest) as MCP tools, it could serve as a knowledge backend for agents outside the Claude Code harness. *Needs a use case first — currently single-harness.*
+**MCP as a universal memory interface.** Exposing add/cognify/search/memify as MCP tools makes cognee usable as a backend for any agent. If commonplace exposed its operations (search, read, connect, ingest) as MCP tools, it could serve as a knowledge backend for agents outside the Claude Code runtime. *Needs a use case first — currently tied to one runtime.*
 
 ## Curiosity Pass
 

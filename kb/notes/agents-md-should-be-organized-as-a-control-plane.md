@@ -71,7 +71,7 @@ Concrete escalation examples:
 
 ## Nested AGENTS.md topology
 
-When the harness supports nested AGENTS/CLAUDE files, the control plane should be layered by scope:
+When the agent runtime supports nested AGENTS/CLAUDE files, the control plane should be layered by scope:
 
 - **Root file**: global invariants and top-level routing.
 - **Subtree file**: local routing and local escalation triggers for that subtree.

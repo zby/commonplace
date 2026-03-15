@@ -52,7 +52,7 @@ The cost is real — each test execution is an API call — but the alternative 
 
 - What granularity? Test full skill execution, or test individual phases (discovery, evaluation, output)?
 - How to handle indeterminism? Run N times and check pass rate, or design fixtures with such obvious connections that any reasonable execution finds them?
-- Should the mock layer be skill-specific or generic? A reusable mock-KB harness vs per-skill test fixtures.
+- Should the mock layer be skill-specific or generic? A reusable mock KB runtime vs per-skill test fixtures.
 - When is this worth the API cost? Probably after a skill has constrained enough that regressions matter more than rapid iteration.
 
 ---

@@ -75,7 +75,7 @@ Several KB-design patterns are already lexical scoping in practice:
 
 - The [routing tier separation](./agent-statelessness-makes-routing-architectural-not-learned.md) — skills are frame-local context loaded deterministically; methodology is out of scope unless explicitly loaded
 - [Type signatures on skills](./instructions-are-typed-callables.md) — frame interfaces that declare what bindings a sub-agent receives
-- [Automatic context injection](./agent-statelessness-means-harness-should-inject-context-automatically.md) — the harness constructs frames by determining which bindings to inject rather than exposing the full accumulated context
+- [Automatic context injection](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — the context engine constructs frames by determining which bindings to inject rather than exposing the full accumulated context
 
 None of these frame it as a scoping discipline. Making it explicit would clarify what gets inherited and what gets isolated.
 
@@ -104,4 +104,4 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: the loading hierarchy is a form of binding-time analysis for what's in scope
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — exemplifies: the routing tier separation is lexical scoping in practice
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: type signatures on skills are frame interfaces — declaring what bindings a sub-agent receives
-- [agent statelessness means the harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — mechanism: automatic context injection constructs lexically scoped frames
+- [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — mechanism: automatic context injection constructs lexically scoped frames

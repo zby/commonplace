@@ -134,7 +134,7 @@ The full global optimisation problem is probably too rich for clean strategy the
 Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — scoped recursion with focused context as a clean-model implementation for compositional reasoning.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — maximal decomposition (m=1) as extreme clean-model instantiation; O(s ln s) cost scaling.
-- @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.md) — the Ralph Loop (prompt → execute → observe → decide) is a concrete instance of the select/call loop; harness components map to scheduler infrastructure.
+- @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.md) — the Ralph Loop (prompt → execute → observe → decide) is a concrete instance of the select/call loop; the source's runtime components map to scheduler infrastructure.
 
 Relevant Notes:
 
@@ -150,4 +150,5 @@ Relevant Notes:
 - [distillation](./distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
+- [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names the scheduler as one part of a larger runtime decomposition
 - [paper outline v2](../work/paper-bounded-context-orchestration/outline-v2.md) — develops: presents this model for an academic audience

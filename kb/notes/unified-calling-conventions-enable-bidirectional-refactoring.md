@@ -36,11 +36,11 @@ With unified calling, the progression is smooth:
 
 Each step is local. The system evolves without coordination cost.
 
-## The harness layer
+## The scheduler layer
 
-On top of the hybrid VM, llm-do adds an imperative harness — Python code that owns control flow rather than a graph DSL. This is a deliberate contrast with declarative agent frameworks (LangGraph, CrewAI) where orchestration is defined as node-edge graphs.
+On top of the hybrid VM, llm-do adds an imperative scheduler — Python code that owns control flow rather than a graph DSL. This is a deliberate contrast with declarative agent frameworks (LangGraph, CrewAI) where orchestration is defined as node-edge graphs.
 
-| Aspect | Graph DSLs | llm-do Harness |
+| Aspect | Graph DSLs | llm-do Scheduler |
 |--------|------------|----------------|
 | Orchestration | Declarative: Node A → Node B | Imperative: Agent A calls Agent B as a function |
 | State | Global context through graph | Local scope — each agent gets only its arguments |
@@ -57,7 +57,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 
 - Does unified calling break down at scale, when the namespace grows to hundreds of components and name collisions become likely?
 - How does debugging work when a call chain crosses the neural-symbolic boundary multiple times — do existing observability tools handle this, or does the hybrid VM need its own tracing?
-- Is the imperative harness pattern specific to Python, or does it transfer to other host languages?
+- Is the imperative scheduler pattern specific to Python, or does it transfer to other host languages?
 
 ---
 

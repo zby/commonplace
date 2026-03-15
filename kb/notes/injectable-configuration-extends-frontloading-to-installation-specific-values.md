@@ -33,7 +33,7 @@ For [recurring tasks](../tasks/types/task-recurring.md) this is especially clean
 
 ## Relationship to auto-injection
 
-[Auto-injection](./agent-statelessness-means-harness-should-inject-context-automatically.md) proposes that the harness inject KB content (definitions, ADRs) based on document references. Injectable configuration is a parallel but distinct channel:
+[Auto-injection](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) proposes that the context engine inject KB content (definitions, ADRs) based on document references. Injectable configuration is a parallel but distinct channel:
 
 | | Auto-injection | Injectable configuration |
 |---|---|---|
@@ -42,7 +42,7 @@ For [recurring tasks](../tasks/types/task-recurring.md) this is especially clean
 | **Varies by** | What the agent is reading | What machine it's running on |
 | **Lifetime** | Session (definition valid for duration) | Installation (path valid until repo moves) |
 
-Both are instances of the harness resolving information the agent can't or shouldn't resolve itself. Both spare execution context — but only when the harness constructs isolated frames rather than appending to the main context.
+Both are instances of the agent runtime resolving information the agent can't or shouldn't resolve itself. Both spare execution context — but only when the orchestrator constructs isolated frames rather than appending to the main context.
 
 ## Design considerations
 
@@ -66,7 +66,7 @@ Relevant Notes:
 
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — foundation: injectable configuration is a specific frontloading channel for installation-variable values
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: the context savings depend on sub-agent frame isolation; without it, injected config just adds to the flat window
-- [agent statelessness means harness should inject context automatically](./agent-statelessness-means-harness-should-inject-context-automatically.md) — parallel: auto-injection resolves KB references, injectable configuration resolves environment values; both spare execution context through harness-side resolution
+- [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — parallel: auto-injection resolves KB references, injectable configuration resolves environment values; both spare execution context through runtime-side resolution
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: typed signatures on tasks/skills can declare configuration dependencies, letting the orchestrator inject only what's needed
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — contrast: build-time generation handles values stable across all installations; injectable configuration handles values stable within one installation
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — motivates: the recurring "review related systems" scenario revealed the need for installation-specific paths

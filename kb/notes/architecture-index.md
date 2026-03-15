@@ -21,3 +21,4 @@ How commonplace is structured and installed. Repo layout, the two-tree split bet
 
 ## Other tagged notes <!-- generated -->
 
+- [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation

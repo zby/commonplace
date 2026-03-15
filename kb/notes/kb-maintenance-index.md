@@ -35,4 +35,5 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Other tagged notes <!-- generated -->
 
+- [Brainstorming: how reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently
 - [Title as claim makes overlap between notes visible](./title-as-claim-makes-overlap-between-notes-visible.md) — When note titles are claims, overlap between notes is visible at the index level — similar assertions are obvious without opening files; topical titles hide overlap behind different labels for the same territory
