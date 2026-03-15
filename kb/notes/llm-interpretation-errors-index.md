@@ -18,6 +18,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 ## Error Correction Theory
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the core theory: error correction is viable when oracles have discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
+- [systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md) — controlled framing changes do two different jobs here: decorrelate weak checks for verification and expose brittleness under semantically fixed prompts; distinct from Deutsch's explanatory-reach test
 
 ## Oracle Theory
 
