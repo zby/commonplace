@@ -1,5 +1,5 @@
 ---
-description: Analyses the tradeoff between conversational Q&A, prompt refinement, and context forking for sub-agent coordination — each shifts costs differently between caller and callee, and the right choice depends on architecture and how much intermediate work the sub-agent has done
+description: Conversation preserves the execution trace, prompt refinement compresses it into a new handoff artifact, and context forking preserves a selected prefix — the right choice depends on architecture and how much intermediate work should survive
 type: note
 traits: []
 tags: [computational-model]
@@ -8,7 +8,9 @@ status: seedling
 
 # Conversation vs prompt refinement in agent-to-agent coordination
 
-When a sub-agent returns with a question instead of an answer, the calling agent has at least three options:
+This note examines one local case of the broader [handoff-artifact problem](./execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md): when a sub-agent returns with a question instead of an answer, what should cross the boundary?
+
+The calling agent has at least three options:
 
 1. **Conversational Q&A** — answer the question and let the sub-agent continue with its accumulated context.
 2. **Prompt refinement** — incorporate the answer into a revised, self-contained prompt and re-dispatch with a clean context.
@@ -18,9 +20,9 @@ Conversation feels natural because humans can't rewind. Once we've said somethin
 
 ## The tradeoff
 
-**Conversation is cheaper for the caller.** The caller just passes the answer string. The sub-agent continues with its existing context, including whatever useful work it did before asking the question.
+**Conversation is cheaper for the caller.** The caller just passes the answer string. The sub-agent continues with its existing context, including whatever useful work it did before asking the question. This preserves the execution trace in-band.
 
-**Prompt refinement is cleaner for the callee.** Each invocation gets a fresh [lexically scoped frame](./llm-context-is-composed-without-scoping.md) without the accumulated debris of the initial misframing, the question, and the correction. The refined prompt is more compact than the conversation transcript that includes the misunderstanding and its resolution.
+**Prompt refinement is cleaner for the callee.** Each invocation gets a fresh [lexically scoped frame](./llm-context-is-composed-without-scoping.md) without the accumulated debris of the initial misframing, the question, and the correction. The refined prompt is a compressed handoff artifact: it preserves what mattered from the exchange without carrying the whole trace forward.
 
 **Prompt refinement is more work for the caller.** The caller must: parse the sub-agent's question, formulate the answer, integrate it into a revised self-contained prompt, and re-dispatch. This is genuine coordination work that conversation avoids.
 
@@ -40,7 +42,7 @@ The [voooooogel multi-agent prediction](../sources/voooooogel-multi-agent-future
 
 One reading through the refinement lens: the onboarding interview is useful not because conversation is the right interface, but because the caller's initial prompt was underspecified. The interview surfaces what the caller should have said. A refinement-oriented caller could capture those answers and build a better single-shot prompt — possibly for re-use across many similar sub-agent invocations, which a pure conversation model cannot reuse.
 
-But voooooogel's forking pattern complicates this reading. The pattern is: spawn one sub-agent, onboard it via conversation, then fork into N instances that each carry "the whole onboarding conversation in context." This is neither pure conversation (the forked instances don't continue the dialogue) nor pure refinement (the accumulated conversation is preserved, not distilled into a clean prompt). Forking is a third pattern — **context cloning** — that gets conversation's benefit (preserving the full onboarding exchange) without conversation's cost (no further accumulation in the forked instances). With KV-cache sharing, the cloned prefix is also computationally cheap.
+But voooooogel's forking pattern complicates this reading. The pattern is: spawn one sub-agent, onboard it via conversation, then fork into N instances that each carry "the whole onboarding conversation in context." This is neither pure conversation (the forked instances don't continue the dialogue) nor pure refinement (the accumulated conversation is preserved, not distilled into a clean prompt). Forking is a third pattern — **context cloning** — that preserves a selected trace prefix for reuse without continuing the same conversation indefinitely. With KV-cache sharing, the cloned prefix is also computationally cheap.
 
 ## Open Questions
 
@@ -54,6 +56,7 @@ But voooooogel's forking pattern complicates this reading. The pattern is: spawn
 Relevant Notes:
 
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — foundation: sub-agents as lexically scoped frames is what makes prompt refinement produce cleaner context than conversation
+- [execution traces are observational byproducts, not default handoff artifacts](./execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md) — context: conversation, refinement, and forking are three different answers to whether the trace itself should be the handoff unit
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the scheduler already holds the coordination state that prompt refinement requires
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: conversation adds volume (misframing and correction transcript) to the scarce context resource
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — complicates: when the caller is also an LLM, the "push complexity to the scheduler" argument weakens
