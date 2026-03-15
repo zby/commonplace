@@ -70,13 +70,28 @@ The three trace types serve different consumers:
 - **Tool/action traces** → debugging tools, telemetry, reproducibility, and sometimes structured extraction (when the action record is close to being the artifact itself)
 - **Reasoning traces** → debugging, alignment research, and learning systems that later distill traces into reusable knowledge
 
-These are legitimate uses, but they are not the artifact channel. The trace is evidence about execution. The handoff artifact is what the next stage is supposed to operate on, including recovery decisions such as retry, unwind, or escalation. Keeping the channels separate lets each trace type reach its consumers without polluting the orchestration path.
+These are legitimate uses, but they are not the artifact channel. The trace is evidence about execution. The handoff artifact is what the next stage is supposed to operate on — including when the next decision is whether to retry, unwind, or escalate. Keeping the channels separate lets each trace type reach its consumers without polluting the orchestration path.
 
-Failure handling makes the separation especially visible. A bounded execution may return a structured failure artifact without returning the full trace that produced it. The runtime might interpret that artifact directly and choose a retry, unwind, or escalation path. Or it might make a separate bounded LLM call to interpret the failure semantically. In both cases, the important point is the same: the failure becomes an explicit handoff artifact in the loop, not an excuse to promote the whole transcript into orchestration state.
+Failure handling makes the separation especially visible. A bounded execution may return a structured failure artifact without returning the full trace that produced it. The runtime might interpret that artifact directly and choose a retry, unwind, or escalation path. Or it might make a separate bounded LLM call to interpret the failure semantically. Either way, the failure becomes an explicit handoff artifact in the loop, not an excuse to promote the whole transcript into orchestration state.
+
+## Tension: compressed traces can buy memory and learning signal
+
+Slate is the main tension case for this note. Its workers do not return a minimal result artifact; they return an **episode** — a compressed representation of what happened during the bounded action. That episode is still not the raw tactical trace, so it fits the anti-transcript argument above. But it is more trace-shaped than a narrow result such as `yes/no` or `found X`.
+
+What this buys is not just richer handoff. The same object can serve several roles at once:
+
+- immediate orchestration input for the next scheduler decision
+- episodic memory for later bounded calls in the same session
+- cross-model handoff artifact between different workers
+- inspectable substrate for later learning or policy improvement
+
+This is the real tradeoff. A minimal return artifact keeps the interface clean but throws away information that might later be useful for memory, telemetry, or learning. A compressed trace artifact preserves more of the execution in a reusable form without promoting the full transcript into orchestration state.
+
+Viewed through the [bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), Slate is making a plausible bet: if future learning depends on richer trajectory data, then standardizing on compressed episodes may be better than collapsing everything into narrow result types too early. What would otherwise be delegated to passive telemetry becomes part of the agent's explicit memory substrate. The cost is that the return artifact is less minimal and more likely to carry local reasoning residue forward. The benefit is a larger inspectable dataset for future distillation, retrieval, or learned policy improvement.
 
 ## Execution-boundary compression is a recurring design move
 
-Across the systems and notes above, a recurring move is [compression at the execution boundary](./distillation.md). The execution boundary is the natural place to decide what survives:
+Across these systems, the shared move is [compression at the execution boundary](./distillation.md). The execution boundary is the natural place to decide what survives:
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
@@ -100,8 +115,8 @@ The [conversation-vs-refinement note](./conversation-vs-prompt-refinement-in-age
 For most orchestration:
 
 - use **trace-preserving return** early, when you do not yet know the right interface
-- move toward **artifact-first return** once the caller's real consumption pattern is understood
-- keep the **trace as an auxiliary channel** for UI, debugging, audit, or later learning
+- move toward **artifact-first return** once the caller's real consumption pattern is understood — but "artifact-first" does not mean "minimal"; a compressed episode that also serves memory and learning is still an artifact, not a transcript
+- keep the **raw trace as an auxiliary channel** for UI, debugging, audit, or later learning
 
 The default mistake is to let the chat interface decide the orchestration protocol. Chat wants visibility. Orchestration wants clean boundaries.
 
@@ -115,5 +130,6 @@ Relevant Notes:
 - [distillation](./distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [llm frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — extends: recovery logic works best when the runtime can either interpret failure artifacts directly or dispatch a separate bounded call, rather than hiding both inside a framework-owned session
+- [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
 - [Spacebot](./related-systems/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
