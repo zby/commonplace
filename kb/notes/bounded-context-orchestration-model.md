@@ -1,5 +1,5 @@
 ---
-description: Formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop — analyses what makes selection hard and why the model supports local comparative results even when global optimisation is intractable
+description: Formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop — explains why selection is hard while still supporting local strategy comparisons
 type: note
 traits: [has-external-sources]
 tags: [computational-model]
@@ -28,6 +28,30 @@ In practice, the scheduler's symbolic state may be implemented using files, in-m
 The model also accommodates architectures where the LLM emits a symbolic control program rather than a direct natural-language answer; the scheduler executes that program, using it to inspect symbolic state, manipulate artifacts, and trigger further bounded LLM calls.
 
 A system that keeps bookkeeping inside an LLM conversation is a [degraded variant of this model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) that spends bounded context on work the symbolic scheduler handles for free.
+
+## Is a simple LLM API with tool calls enough?
+
+Yes — but only if the host application, not the LLM conversation, owns the orchestration loop.
+
+Tool calling already gives two of the model's required ingredients:
+
+- a bounded semantic call that returns a result or a tool request
+- deterministic execution outside the model for file access, retrieval, sorting, filtering, and other symbolic operations
+
+A simple host-side loop can therefore realise the model without any elaborate agent framework:
+
+- keep `K` in program state, files, or a database
+- assemble `P = select(K)` in code
+- call the LLM API
+- execute any requested tools outside the model
+- append the result to `K`
+- issue the next fresh bounded call
+
+That is enough for the clean model. The scheduler is still symbolic even if some `select` decisions are delegated to planning calls, because those decisions return to `K` as explicit symbolic state before the next step.
+
+What is **not** enough is a chat loop where the model keeps deciding what to do next from its own accumulated conversation and happens to have tools available. In that architecture, tool calls harden the execution boundary, but the scheduler itself remains inside bounded stochastic context. Bookkeeping, branching, and partial progress all compete for attention with the semantic task. That is the [degraded variant](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md), not the clean model.
+
+So the implementation threshold is lower than "build a custom agent runtime," but higher than "turn on function calling." Tool calls are sufficient for realising the model only when combined with external state, application-owned recursion, and fresh-call prompt assembly. Function calling gives mini-codification at the tool boundary; it does not by itself move the scheduler out of the conversation.
 
 ## The select/call loop
 
@@ -139,6 +163,8 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
 - [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — consequence: practical rules that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
+- [llm sdks unlock full power by exposing the loop](./llm-sdks-unlock-full-power-by-exposing-the-loop.md) — consequence: extracts the main architectural implication of the model for real implementations
+- [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: tool and schema hardening recover part of the interface discipline without moving the scheduler fully into code
 - [distillation](./distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
