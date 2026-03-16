@@ -1,0 +1,506 @@
+{
+  "source": "https://x.com/juliandeangeIis/status/2033303156340240481",
+  "captured": "2026-03-16T09:36:38.343417+00:00",
+  "type": "x-article",
+  "status_id": "2033303156340240481",
+  "conversation_id": "2033303156340240481",
+  "target_post": {
+    "text": "https://t.co/ADVg8Ijdg7",
+    "edit_history_tweet_ids": [
+      "2033303156340240481"
+    ],
+    "created_at": "2026-03-15T22:03:44.000Z",
+    "article": {
+      "plain_text": "The Spec Is the New Code\nAI coding agents don\u2019t fail because the model is weak. They fail because the instructions are ambiguous and the agent harness is too weak.\nThat\u2019s why everyone is building specs and agent harnesses.\nIn my previous article on The Coding Agent Harness, I introduced Spec Driven Development as \"the ultimate harness\" and promised to go deeper. This is that post.\nThe Real Bottleneck\nHere's the uncomfortable truth about AI coding agents: the biggest bottleneck isn't the model, the context window, or the tooling. It's the human giving the instructions.\n \nWhen people first start using coding agents, the interaction looks something like this:\n\"Add a feature to manage items from the backoffice.\"\nThe agent reads the codebase, picks a pattern, and writes the feature. At first, it looks fine. Then you click \u201cadd item\u201d again and it inserts the same item twice. \nAll the assumptions you thought were obvious suddenly become visible: the operation should be idempotent, only admins should be allowed to do it, and \u201cthe backoffice\u201d should mean the internal one, not the seller-facing one.\nThe problem is that none of this was in the prompt. The agent had to guess: which backoffice, which API contract, which storage layer, which authorization model, which error handling strategy. \nEach one is a silent decision. Some guesses are right. Some are wrong. And as complexity increases, so does the gap between what you meant and what the agent actually built.\nThis is the ambiguity problem. It's not the agent's fault. It's a communication issue.\nWhy the Ecosystem Is Converging\nThe entire ecosystem is arriving at the same solution independently. Let's look at what's happening:\nGitHub's Spec Kit (77k stars): structures the spec-plan-task-implement cycle, agent-agnostic, works across Claude Code, Cursor and others.\nOpenAI's Symphony: monitors your issue tracker, spins up autonomous agents per issue, and requires a SPEC.md as the contract.\nThe Ralph Loop: puts a PRD in an infinite agent loop. Progress persists in files and git, not in the context window.\nEven the coding agents themselves are moving this direction natively. \nPlan mode in Claude Code and Cursor is essentially a lightweight spec-and-plan step. Task decomposition is built into most agent loops now. \nAll these tools, despite different architectures and philosophies, share the same core idea: define what you want before writing code, then let the agent implement from structured specifications.\nThat is the core idea of Spec Driven Development.\nWhat Is Spec Driven Development?\n \nSpec Driven Development (SDD) is a methodology, not a tool. It's a simple process with four steps:\nSpecify what you want to build. Plan how to build it technically. Break it down into small, ordered tasks. Implement one task at a time with the agent.\nEach step reduces ambiguity. By the time the agent starts writing code, it has everything it needs: what the feature does, how it integrates, what the edge cases are, what the tests should verify, and what architecture to follow. The coding agent does not have to guess.\nWhen you hand an agent a well-written spec and plan, you're engineering its entire context window in one shot: architecture decisions, step-by-step guidance, and acceptance criteria, all in a single set of artifacts.\nThe best part: you should use the agent to write the specs too. \nIt's far easier to correct a spec than to write it from scratch. You can also ask the agent for ambiguities from the same spec.\nThe Levels of Spec-Driven Development\n \nNot all SDD implementations are equal. On this article, Birgitta B\u00f6ckeler frames spec maturity with three levels:\nSpec-First: write a spec before coding, but discard it after delivery. Most start here, and it already eliminates the ambiguity problem for that cycle. \nSpec-Anchored: the spec lives in the repo alongside the code and evolves with it. Specs become living documentation for the team. \nSpec-as-Source: the spec is the primary artifact. You edit the spec, code is regenerated to match. This is the frontier, we're not fully there yet, but it's where the trajectory points.\nSpec Driven Development is not binary. It's a progressive methodology. Start at level one, get the value. Then, decide if you need to go deeper.\nNow let's break down each step of the SDD process.\nThe Spec: What, Not How\nThe spec is the functional layer. It describes what the feature does, not how it's implemented. It's technology-agnostic on purpose.\nA good spec defines the feature\u2019s purpose, use cases, requirements, edge cases, and success criteria in non-technical language.\nHere's the key insight: separating functional from technical reduces LLM uncertainty.\nWhen you mix \"the user can authenticate with Google and GitHub\" with \"use NextAuth.js with the JWT strategy and store sessions in Redis,\" you're forcing the agent to juggle two different concerns simultaneously. \nThe functional requirement might be clear, but the technical decisions create branching paths that compound ambiguity.\nBy keeping the spec purely functional, you give the agent a clear objective without polluting it with premature implementation decisions. You also define expected behavior for edge cases from the start, before anyone writes a line of code.\nThe acceptance criteria use the Given/When/Then format to make validation unambiguous:\nGiven a new user, When they click \"Sign in with Google\" and authorize the app, Then they are redirected to the dashboard with a valid session.\nGiven a user with an existing Google account, When they try to sign in with GitHub using the same email, Then the accounts are linked and they access the same profile.\nThese aren't just documentation. They become the test plan. The agent can verify its own implementation against them.\nThe Plan: Where the Developer Adds Expertise\n \nThe plan is the technical layer. It's the implementation guide for the agent: how to achieve everything the spec describes.\nThis is where the developer's expertise matters most. Not in writing the code, but in making the architectural decisions:\nArchitecture and technical decisions: \"Use NextJS with the App Router. Follow the existing auth pattern in @auth-rules.\" \nData models and contracts: \"Use the existing User entity. Add a provider field.\" \nTesting strategy: \"Unit tests must cover 90% of the auth flow.\" \nPerformance constraints: \"Response time under 100ms for the login endpoint.\"\nThe plan is where you reference your custom rules, point to existing patterns in the codebase, specify which MCPs the agent should use, and set technical constraints. \nIt transforms the abstract spec into a concrete, bounded implementation guide.\nOne thing that makes this work especially well: the plan can leverage automatic research and your current agent harness. \nTools like Spec Kit's /plan command will read your actual codebase before generating the technical plan. It analyzes your current structure, identifies patterns and conventions, and proposes architecture that's coherent with what already exists. \nTasks: Divide and Conquer\nThe plan gets broken down into small, ordered tasks. Each one should be completable in a single agent session and produce a verifiable change with tests. \nThe key: every task must be self-contained and unambiguous. \nThe agent shouldn't need to make assumptions or search for missing context. If a task requires the agent to guess, it's not ready yet.\nThis is also where the developer reviews the approach. Your job is to check the task list isn't overengineering the solution. \nDoes it really need seven tasks, or can three cover it? Is the agent creating unnecessary abstractions? The task breakdown is the last checkpoint before code gets written, so it's worth spending a minute making sure the plan is pragmatic.\nOnce the tasks are solid, they unlock 2 powerful things: parallelism and agent agnosticism. \nIndependent tasks can be executed by multiple agents simultaneously. \nAnd because tasks are self-contained with all context embedded, you can swap agents entirely. \nStart with Claude Code, pick up a task with Cursor, finish another with Codex. With a good framework like Spec Kit underneath, the spec and plan travel with the task, not with the agent. \nTradeoffs\n \nSpec Driven Development is not free. \nThe spec-plan-task cycle consumes (a lot of) tokens. A full SDD session can use 2-3x or more tokens than just prompting the agent directly. This is the tradeoff: you spend more upfront to get dramatically better results.\nIt also doesn't make sense for everything, at least on its current state where you must specify each step.\nSmall changes, a quick bug fix, a config update, these don't need a full spec. For those, use Plan mode or just prompt directly. \nSDD shines when the feature is complex enough that ambiguity would cause the agent to go sideways: multi-file changes, features that touch multiple domains, legacy repositories, anything where \"obvious\" business logic isn't obvious at all.\nThere's also a learning curve. \nDevelopers need to shift from \"describe the code I want\" to \"describe the behavior I need.\" That's a mindset change. \nHow We're Rolling This Out at MercadoLibre\nAt MercadoLibre, we're introducing SDD to nearly 20,000 developers. There are two big challenges at this scale.\nThe first is the habit change. Developers are used to jumping straight into code. Asking them to write a spec first feels like overhead, until they see the results. \nWe learned early on that the best way to teach the value of SDD is not to explain it. It's to practice it. That's why we went all-in on hands-on workshops, with more than 5,000 developers attending so far. \nDevelopers write a spec, generate a plan, break it into tasks, and implement with an agent, all in a single session. That experience is what drives adoption.\nThe second is the context around the methodology. SDD alone isn't enough. The agent also needs context about your internal tools, SDKs, and platform conventions. That's the agent harness from my previous post: custom rules that encode your standards, skills that bundle domain knowledge, and MCPs that connect to internal systems. \nThe methodology defines what to build. The harness gives the agent the internal context to build it right.\nWhere to Start\nIf there's one thing to take away from this post: try Plan mode. \nIt's the most accessible entry point to SDD. You get most of the benefits (reduced ambiguity, a technical outline, clearer intent) without the full ceremony. A great place to start.\nWhen you're ready to go further, adopt a dedicated SDD framework like Spec Kit. It gives you a structured flow for specs, plans, and tasks, and scales much better than ad hoc prompting as implementations grow.\nBefore starting you must know: the value of SDD compounds with practice. The first spec you write will feel slow and imperfect. \nBut over time, you develop an intuition for what to specify, when you're overengineering the spec, and what the agent actually needs to get it right. That skill builds with every iteration.\n\nVibe coding builds demos and MVPs. Spec Driven Development builds production systems. \nFor any organization serious about scaling AI agents across real codebases, with real constraints and real consequences, this is where the bar is heading.\nHappy sdd-engineering!",
+      "cover_media": "3_2033297537688371200",
+      "title": "The Spec Is the New Code. A Guide to Spec Driven Development",
+      "media_entities": [
+        "3_2033295557066682368",
+        "3_2033286554467315712",
+        "3_2033291026748571648",
+        "3_2033294722328834049",
+        "3_2033302336186040320"
+      ],
+      "preview_text": "The Spec Is the New Code\nAI coding agents don\u2019t fail because the model is weak. They fail because the instructions are ambiguous and the agent harness is too weak.\nThat\u2019s why everyone is building",
+      "entities": {
+        "mentions": [
+          {
+            "start": 107,
+            "end": 112,
+            "username": "auth"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html"
+          },
+          {
+            "text": "https://x.com/juliandeangeIis/status/2027888587975569534"
+          }
+        ]
+      }
+    },
+    "id": "2033303156340240481",
+    "author_id": "2162434277",
+    "conversation_id": "2033303156340240481",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/ADVg8Ijdg7",
+          "expanded_url": "http://x.com/i/article/2033264638939250688",
+          "display_url": "x.com/i/article/2033\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2033264638939250688"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "text": "https://t.co/ADVg8Ijdg7",
+      "edit_history_tweet_ids": [
+        "2033303156340240481"
+      ],
+      "created_at": "2026-03-15T22:03:44.000Z",
+      "article": {
+        "plain_text": "The Spec Is the New Code\nAI coding agents don\u2019t fail because the model is weak. They fail because the instructions are ambiguous and the agent harness is too weak.\nThat\u2019s why everyone is building specs and agent harnesses.\nIn my previous article on The Coding Agent Harness, I introduced Spec Driven Development as \"the ultimate harness\" and promised to go deeper. This is that post.\nThe Real Bottleneck\nHere's the uncomfortable truth about AI coding agents: the biggest bottleneck isn't the model, the context window, or the tooling. It's the human giving the instructions.\n \nWhen people first start using coding agents, the interaction looks something like this:\n\"Add a feature to manage items from the backoffice.\"\nThe agent reads the codebase, picks a pattern, and writes the feature. At first, it looks fine. Then you click \u201cadd item\u201d again and it inserts the same item twice. \nAll the assumptions you thought were obvious suddenly become visible: the operation should be idempotent, only admins should be allowed to do it, and \u201cthe backoffice\u201d should mean the internal one, not the seller-facing one.\nThe problem is that none of this was in the prompt. The agent had to guess: which backoffice, which API contract, which storage layer, which authorization model, which error handling strategy. \nEach one is a silent decision. Some guesses are right. Some are wrong. And as complexity increases, so does the gap between what you meant and what the agent actually built.\nThis is the ambiguity problem. It's not the agent's fault. It's a communication issue.\nWhy the Ecosystem Is Converging\nThe entire ecosystem is arriving at the same solution independently. Let's look at what's happening:\nGitHub's Spec Kit (77k stars): structures the spec-plan-task-implement cycle, agent-agnostic, works across Claude Code, Cursor and others.\nOpenAI's Symphony: monitors your issue tracker, spins up autonomous agents per issue, and requires a SPEC.md as the contract.\nThe Ralph Loop: puts a PRD in an infinite agent loop. Progress persists in files and git, not in the context window.\nEven the coding agents themselves are moving this direction natively. \nPlan mode in Claude Code and Cursor is essentially a lightweight spec-and-plan step. Task decomposition is built into most agent loops now. \nAll these tools, despite different architectures and philosophies, share the same core idea: define what you want before writing code, then let the agent implement from structured specifications.\nThat is the core idea of Spec Driven Development.\nWhat Is Spec Driven Development?\n \nSpec Driven Development (SDD) is a methodology, not a tool. It's a simple process with four steps:\nSpecify what you want to build. Plan how to build it technically. Break it down into small, ordered tasks. Implement one task at a time with the agent.\nEach step reduces ambiguity. By the time the agent starts writing code, it has everything it needs: what the feature does, how it integrates, what the edge cases are, what the tests should verify, and what architecture to follow. The coding agent does not have to guess.\nWhen you hand an agent a well-written spec and plan, you're engineering its entire context window in one shot: architecture decisions, step-by-step guidance, and acceptance criteria, all in a single set of artifacts.\nThe best part: you should use the agent to write the specs too. \nIt's far easier to correct a spec than to write it from scratch. You can also ask the agent for ambiguities from the same spec.\nThe Levels of Spec-Driven Development\n \nNot all SDD implementations are equal. On this article, Birgitta B\u00f6ckeler frames spec maturity with three levels:\nSpec-First: write a spec before coding, but discard it after delivery. Most start here, and it already eliminates the ambiguity problem for that cycle. \nSpec-Anchored: the spec lives in the repo alongside the code and evolves with it. Specs become living documentation for the team. \nSpec-as-Source: the spec is the primary artifact. You edit the spec, code is regenerated to match. This is the frontier, we're not fully there yet, but it's where the trajectory points.\nSpec Driven Development is not binary. It's a progressive methodology. Start at level one, get the value. Then, decide if you need to go deeper.\nNow let's break down each step of the SDD process.\nThe Spec: What, Not How\nThe spec is the functional layer. It describes what the feature does, not how it's implemented. It's technology-agnostic on purpose.\nA good spec defines the feature\u2019s purpose, use cases, requirements, edge cases, and success criteria in non-technical language.\nHere's the key insight: separating functional from technical reduces LLM uncertainty.\nWhen you mix \"the user can authenticate with Google and GitHub\" with \"use NextAuth.js with the JWT strategy and store sessions in Redis,\" you're forcing the agent to juggle two different concerns simultaneously. \nThe functional requirement might be clear, but the technical decisions create branching paths that compound ambiguity.\nBy keeping the spec purely functional, you give the agent a clear objective without polluting it with premature implementation decisions. You also define expected behavior for edge cases from the start, before anyone writes a line of code.\nThe acceptance criteria use the Given/When/Then format to make validation unambiguous:\nGiven a new user, When they click \"Sign in with Google\" and authorize the app, Then they are redirected to the dashboard with a valid session.\nGiven a user with an existing Google account, When they try to sign in with GitHub using the same email, Then the accounts are linked and they access the same profile.\nThese aren't just documentation. They become the test plan. The agent can verify its own implementation against them.\nThe Plan: Where the Developer Adds Expertise\n \nThe plan is the technical layer. It's the implementation guide for the agent: how to achieve everything the spec describes.\nThis is where the developer's expertise matters most. Not in writing the code, but in making the architectural decisions:\nArchitecture and technical decisions: \"Use NextJS with the App Router. Follow the existing auth pattern in @auth-rules.\" \nData models and contracts: \"Use the existing User entity. Add a provider field.\" \nTesting strategy: \"Unit tests must cover 90% of the auth flow.\" \nPerformance constraints: \"Response time under 100ms for the login endpoint.\"\nThe plan is where you reference your custom rules, point to existing patterns in the codebase, specify which MCPs the agent should use, and set technical constraints. \nIt transforms the abstract spec into a concrete, bounded implementation guide.\nOne thing that makes this work especially well: the plan can leverage automatic research and your current agent harness. \nTools like Spec Kit's /plan command will read your actual codebase before generating the technical plan. It analyzes your current structure, identifies patterns and conventions, and proposes architecture that's coherent with what already exists. \nTasks: Divide and Conquer\nThe plan gets broken down into small, ordered tasks. Each one should be completable in a single agent session and produce a verifiable change with tests. \nThe key: every task must be self-contained and unambiguous. \nThe agent shouldn't need to make assumptions or search for missing context. If a task requires the agent to guess, it's not ready yet.\nThis is also where the developer reviews the approach. Your job is to check the task list isn't overengineering the solution. \nDoes it really need seven tasks, or can three cover it? Is the agent creating unnecessary abstractions? The task breakdown is the last checkpoint before code gets written, so it's worth spending a minute making sure the plan is pragmatic.\nOnce the tasks are solid, they unlock 2 powerful things: parallelism and agent agnosticism. \nIndependent tasks can be executed by multiple agents simultaneously. \nAnd because tasks are self-contained with all context embedded, you can swap agents entirely. \nStart with Claude Code, pick up a task with Cursor, finish another with Codex. With a good framework like Spec Kit underneath, the spec and plan travel with the task, not with the agent. \nTradeoffs\n \nSpec Driven Development is not free. \nThe spec-plan-task cycle consumes (a lot of) tokens. A full SDD session can use 2-3x or more tokens than just prompting the agent directly. This is the tradeoff: you spend more upfront to get dramatically better results.\nIt also doesn't make sense for everything, at least on its current state where you must specify each step.\nSmall changes, a quick bug fix, a config update, these don't need a full spec. For those, use Plan mode or just prompt directly. \nSDD shines when the feature is complex enough that ambiguity would cause the agent to go sideways: multi-file changes, features that touch multiple domains, legacy repositories, anything where \"obvious\" business logic isn't obvious at all.\nThere's also a learning curve. \nDevelopers need to shift from \"describe the code I want\" to \"describe the behavior I need.\" That's a mindset change. \nHow We're Rolling This Out at MercadoLibre\nAt MercadoLibre, we're introducing SDD to nearly 20,000 developers. There are two big challenges at this scale.\nThe first is the habit change. Developers are used to jumping straight into code. Asking them to write a spec first feels like overhead, until they see the results. \nWe learned early on that the best way to teach the value of SDD is not to explain it. It's to practice it. That's why we went all-in on hands-on workshops, with more than 5,000 developers attending so far. \nDevelopers write a spec, generate a plan, break it into tasks, and implement with an agent, all in a single session. That experience is what drives adoption.\nThe second is the context around the methodology. SDD alone isn't enough. The agent also needs context about your internal tools, SDKs, and platform conventions. That's the agent harness from my previous post: custom rules that encode your standards, skills that bundle domain knowledge, and MCPs that connect to internal systems. \nThe methodology defines what to build. The harness gives the agent the internal context to build it right.\nWhere to Start\nIf there's one thing to take away from this post: try Plan mode. \nIt's the most accessible entry point to SDD. You get most of the benefits (reduced ambiguity, a technical outline, clearer intent) without the full ceremony. A great place to start.\nWhen you're ready to go further, adopt a dedicated SDD framework like Spec Kit. It gives you a structured flow for specs, plans, and tasks, and scales much better than ad hoc prompting as implementations grow.\nBefore starting you must know: the value of SDD compounds with practice. The first spec you write will feel slow and imperfect. \nBut over time, you develop an intuition for what to specify, when you're overengineering the spec, and what the agent actually needs to get it right. That skill builds with every iteration.\n\nVibe coding builds demos and MVPs. Spec Driven Development builds production systems. \nFor any organization serious about scaling AI agents across real codebases, with real constraints and real consequences, this is where the bar is heading.\nHappy sdd-engineering!",
+        "cover_media": "3_2033297537688371200",
+        "title": "The Spec Is the New Code. A Guide to Spec Driven Development",
+        "media_entities": [
+          "3_2033295557066682368",
+          "3_2033286554467315712",
+          "3_2033291026748571648",
+          "3_2033294722328834049",
+          "3_2033302336186040320"
+        ],
+        "preview_text": "The Spec Is the New Code\nAI coding agents don\u2019t fail because the model is weak. They fail because the instructions are ambiguous and the agent harness is too weak.\nThat\u2019s why everyone is building",
+        "entities": {
+          "mentions": [
+            {
+              "start": 107,
+              "end": 112,
+              "username": "auth"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html"
+            },
+            {
+              "text": "https://x.com/juliandeangeIis/status/2027888587975569534"
+            }
+          ]
+        }
+      },
+      "id": "2033303156340240481",
+      "author_id": "2162434277",
+      "conversation_id": "2033303156340240481",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/ADVg8Ijdg7",
+            "expanded_url": "http://x.com/i/article/2033264638939250688",
+            "display_url": "x.com/i/article/2033\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2033264638939250688"
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033307095253004610"
+        }
+      ],
+      "text": "@FaustoR0 Thx amigo",
+      "in_reply_to_user_id": "1390116632694042625",
+      "id": "2033310102476804441",
+      "created_at": "2026-03-15T22:31:20.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "FaustoR0",
+            "id": "1390116632694042625"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033310102476804441"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033309179113361442"
+        }
+      ],
+      "text": "@micascapino_ \ud83d\ude02",
+      "in_reply_to_user_id": "2676551710",
+      "id": "2033310217690104161",
+      "created_at": "2026-03-15T22:31:47.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "micascapino_",
+            "id": "2676551710"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033310217690104161"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033307986135847045"
+        }
+      ],
+      "text": "@yenkel Thanks Yenkel \ud83e\udee1",
+      "in_reply_to_user_id": "55565850",
+      "id": "2033315375874478207",
+      "created_at": "2026-03-15T22:52:17.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "yenkel",
+            "id": "55565850"
+          }
+        ],
+        "annotations": [
+          {
+            "start": 15,
+            "end": 20,
+            "probability": 0.4734,
+            "type": "Person",
+            "normalized_text": "Yenkel"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033315375874478207"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033345750386491836"
+        }
+      ],
+      "text": "@0800juan_ @G_Programming Me hiciste confundir porque en el laburo me dicen Alan (es mi primer nombre) jajaja\n\nMe llevo ver lo de Engram!",
+      "in_reply_to_user_id": "790850467",
+      "id": "2033352109349879817",
+      "created_at": "2026-03-16T01:18:15.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "0800juan_",
+            "id": "790850467"
+          },
+          {
+            "start": 11,
+            "end": 25,
+            "username": "G_Programming",
+            "id": "1431921074762047492"
+          }
+        ],
+        "annotations": [
+          {
+            "start": 76,
+            "end": 79,
+            "probability": 0.527,
+            "type": "Other",
+            "normalized_text": "Alan"
+          },
+          {
+            "start": 130,
+            "end": 135,
+            "probability": 0.6819,
+            "type": "Other",
+            "normalized_text": "Engram"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033352109349879817"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033321678026035657"
+        }
+      ],
+      "text": "@boyuan_chen Totally agree here, the spec is closer to product indeed.\n\nThe technical plan (or technical spec) is where the dev/eng can provide most value",
+      "in_reply_to_user_id": "828709745670356993",
+      "id": "2033352621264691493",
+      "created_at": "2026-03-16T01:20:17.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "boyuan_chen",
+            "id": "828709745670356993"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033352621264691493"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033369681273430453"
+        }
+      ],
+      "text": "@morganlinton Thank you Morgan \ud83d\ude4c",
+      "in_reply_to_user_id": "19016936",
+      "id": "2033378997896147288",
+      "created_at": "2026-03-16T03:05:06.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "morganlinton",
+            "id": "19016936"
+          }
+        ],
+        "annotations": [
+          {
+            "start": 24,
+            "end": 29,
+            "probability": 0.5863,
+            "type": "Other",
+            "normalized_text": "Morgan"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033378997896147288"
+      ]
+    },
+    {
+      "conversation_id": "2033303156340240481",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2033379660264796261"
+        }
+      ],
+      "text": "@luchoorocker Gracias Luchito, vos formas parte de esto no te hagas el desentendido! Jajajaj",
+      "in_reply_to_user_id": "1932898986735681536",
+      "id": "2033389011037720870",
+      "created_at": "2026-03-16T03:44:53.000Z",
+      "author_id": "2162434277",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "luchoorocker",
+            "id": "1932898986735681536"
+          }
+        ],
+        "annotations": [
+          {
+            "start": 22,
+            "end": 28,
+            "probability": 0.7516,
+            "type": "Person",
+            "normalized_text": "Luchito"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2033389011037720870"
+      ]
+    }
+  ],
+  "users": {
+    "2162434277": {
+      "id": "2162434277",
+      "name": "Juli\u00e1n",
+      "username": "juliandeangeIis"
+    },
+    "2002725096906194945": {
+      "id": "2002725096906194945",
+      "name": "Noah.json",
+      "username": "noah_json"
+    },
+    "1354563077799174148": {
+      "id": "1354563077799174148",
+      "name": "Peter Choi",
+      "username": "pitachoi"
+    },
+    "2864111474": {
+      "id": "2864111474",
+      "name": "Abhishek Bansal",
+      "username": "bansalab93"
+    },
+    "1932056551168045056": {
+      "id": "1932056551168045056",
+      "name": "aginaut",
+      "username": "aginaut"
+    },
+    "1949494188569231360": {
+      "id": "1949494188569231360",
+      "name": "Ambrose Little",
+      "username": "software_dad"
+    },
+    "2022618705000361984": {
+      "id": "2022618705000361984",
+      "name": "0n3With",
+      "username": "Kn0wnUnkn0wn88"
+    },
+    "2023794337730228228": {
+      "id": "2023794337730228228",
+      "name": "Rockport",
+      "username": "RockportAI"
+    },
+    "232874453": {
+      "id": "232874453",
+      "name": "Alex Barba",
+      "username": "AlexBarba"
+    },
+    "1608998407": {
+      "id": "1608998407",
+      "name": "T",
+      "username": "tyrelle_adams"
+    },
+    "559874604": {
+      "id": "559874604",
+      "name": "Robert Balicki (\ud83d\udc40 @IsographLabs)",
+      "username": "StatisticsFTW"
+    },
+    "195622492": {
+      "id": "195622492",
+      "name": "Favio V\u00e1zquez",
+      "username": "FavioVaz"
+    },
+    "1932898986735681536": {
+      "id": "1932898986735681536",
+      "name": "Lucho",
+      "username": "luchoorocker"
+    },
+    "1114753947569405954": {
+      "id": "1114753947569405954",
+      "name": "shyamal",
+      "username": "shyamalanadkat"
+    },
+    "1845463871286329355": {
+      "id": "1845463871286329355",
+      "name": "Milow",
+      "username": "itsmilow_"
+    },
+    "1096898505497563136": {
+      "id": "1096898505497563136",
+      "name": "Lucas",
+      "username": "lucerolucasok"
+    },
+    "19016936": {
+      "id": "19016936",
+      "name": "Morgan",
+      "username": "morganlinton"
+    },
+    "1461938951795662849": {
+      "id": "1461938951795662849",
+      "name": "Earth is Home",
+      "username": "earthbuddy123"
+    },
+    "1716252363327954944": {
+      "id": "1716252363327954944",
+      "name": "Hendry Avila",
+      "username": "HendryCodemind"
+    },
+    "828709745670356993": {
+      "id": "828709745670356993",
+      "name": "Boyuan (Nemo) Chen",
+      "username": "boyuan_chen"
+    },
+    "790850467": {
+      "id": "790850467",
+      "name": "juan",
+      "username": "0800juan_"
+    },
+    "15399948": {
+      "id": "15399948",
+      "name": "Jose Canciani \u1bc5",
+      "username": "josecanciani"
+    },
+    "1275434914696114177": {
+      "id": "1275434914696114177",
+      "name": "Natoshi sakamoto",
+      "username": "_Ramadan__"
+    },
+    "1847616040076709888": {
+      "id": "1847616040076709888",
+      "name": "Pedro Carre\u00f1o",
+      "username": "pedrocarreno_"
+    },
+    "104379881": {
+      "id": "104379881",
+      "name": "Gonzalo J. Poch",
+      "username": "gonzalojpoch"
+    },
+    "2022447263377952770": {
+      "id": "2022447263377952770",
+      "name": "Alex H. Raber \ud83e\udd80",
+      "username": "raberhalex"
+    },
+    "538643443": {
+      "id": "538643443",
+      "name": "Rodrigo",
+      "username": "_rodri1913"
+    },
+    "55565850": {
+      "id": "55565850",
+      "name": "yenkel",
+      "username": "yenkel"
+    },
+    "2676551710": {
+      "id": "2676551710",
+      "name": "mica",
+      "username": "micascapino_"
+    },
+    "1390116632694042625": {
+      "id": "1390116632694042625",
+      "name": "Fausto",
+      "username": "FaustoR0"
+    }
+  },
+  "thread_fetch_error": null
+}
