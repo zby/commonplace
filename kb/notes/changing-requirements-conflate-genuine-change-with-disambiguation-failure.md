@@ -58,5 +58,6 @@ Relevant Notes:
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the spec-to-program projection model that makes interpretation explicit
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: agile's loop applied to human-AI systems, where disambiguation is amplified
 - [constraining](./constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
+- [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — sharpens: the downstream cascade starts with a runtime event whose degraded status should have been surfaced when the first ambiguity was locally repaired
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for preventing cascading interpretation errors in natural language specs
 - [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — exemplifies: agents surface interpretation choices back to the spec in real time, a concrete practice for reducing cascading disambiguation errors

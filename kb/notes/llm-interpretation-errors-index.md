@@ -41,6 +41,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [enforcement-without-structured-recovery-is-incomplete](./enforcement-without-structured-recovery-is-incomplete.md) (kb-design, learning-theory) — the enforcement gradient covers detection and blocking but not recovery; oracle strength constrains viable recovery strategies
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) (kb-maintenance) — four semantic checks that are decorrelated weak oracles for content errors
 - [spec-mining-as-codification](./spec-mining-as-codification.md) (learning-theory) — the manufacturing step: extracting deterministic checks from observed behavior to construct oracles
+- [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) (observability, computational-model) — adjacent distinction: some bad outcomes come from hidden semantic recovery after an ambiguous spec, not from interpreter failure inside a clear spec
 
 ## Sources
 
@@ -52,4 +53,3 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
 
 ## Other tagged notes <!-- generated -->
-
