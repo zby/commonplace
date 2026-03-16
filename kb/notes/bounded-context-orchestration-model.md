@@ -29,16 +29,16 @@ Let:
 
 - `K` be the scheduler's full symbolic state
 - `t` be the call type or task family of the next agent step
-- `M(t)` be the maximum effective context for that kind of call
-- `|P|` be the cost of prompt `P` in the same abstract units — token count, compositional depth, or a function of both
+- `M` be the maximum effective context budget for one agent call, measured in normalized effective-cost units
+- `||P||_t` be the effective cost of prompt `P` for call type `t` — token count, compositional depth, or a task-shaped function of both
 
 `K` can be read in two equivalent ways. In the minimal reading, it contains only source state and prior call results, `select` recomputes any deterministic projections it needs, and `K + r` means simple concatenation of the new result onto the state sequence. In the materialized reading, `K` also stores goals, prior prompts, cached indexes, rankings, groupings, dependency maps, or other deterministic views for efficiency, and `K + r` stands for the corresponding state update. The theory treats these as equivalent; real orchestrators usually choose the second form. In practice many orchestrators persist the generated prompt `P` itself for audit, refinement, or later reuse; the notation leaves this implicit because `P` is a deterministic projection of `K` at that step, while `r` is the new stochastic output of the call.
 
-`M` is therefore not a universal constant for a model. It is an effective-budget measure indexed by the kind of work the call is doing. Paulsen's MECW result is one empirical reason to write `M(t)`: retrieval, summarisation, extraction, and synthesis can fail at different context sizes even on the same model. In a local analysis where the call type is fixed, we can suppress `t` and write `M` as shorthand.
+`||·||` is therefore not a universal size measure. Its definition depends on the kind of work the call is doing. Paulsen's MECW result is one empirical reason to index the norm by task type: retrieval, summarisation, extraction, and synthesis can fail at different context sizes even on the same model. Writing `||P||_t ≤ M` pushes that task dependence into the cost measure and keeps `M` as a fixed threshold in normalized units. In a local analysis where the call type is fixed, we can suppress `t` and write `||P||` as shorthand.
 
 The scheduler alternates between two kinds of step. **Symbolic steps** happen outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication. **Agent calls** are bounded LLM invocations under focused prompts.
 
-The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `|P| ≤ M(t)`. This is where the scheduling difficulty lives: `select` must choose both *which* items from `K` to include and *how* to frame them, because the same material under different framing yields different [extractable structure](./information-value-is-observer-relative.md).
+The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `||P||_t ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from `K` to include and *how* to frame them, because the same material under different framing yields different [extractable structure](./information-value-is-observer-relative.md).
 
 The result `r` is appended back into symbolic state. It need not be a direct answer — it may be a relevance label, claim list, cluster summary, contradiction table, partial synthesis, sub-goal set, or satisfaction signal.
 
@@ -86,7 +86,7 @@ for i in 1..k:
 # step 3: scheduler collects relevant notes (symbolic)
 relevant = [nᵢ for nᵢ in K where nᵢ marked relevant]
 
-if |relevant| ≤ M(synthesis):
+if ||relevant||_synthesis ≤ M:
     # step 4a: synthesis call
     P = select(K)  →  synthesis prompt over relevant notes
     r = call(P)    →  final analysis
