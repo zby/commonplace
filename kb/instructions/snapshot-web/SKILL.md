@@ -37,20 +37,20 @@ Detect the URL type and branch:
 
 ### Step 2a: GitHub Issue/PR
 
-Run the snapshot script:
+Resolve the sibling script path relative to this `SKILL.md` (do not assume the shell is running from the skill directory), then run:
 
 ```bash
-uv run kb/scripts/github_snapshot.py "{url}"
+uv run "{resolved-path-to-github_snapshot.py}" "{url}"
 ```
 
 Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
 
 ### Step 2b: X/Twitter Post
 
-Run the snapshot script:
+Resolve the sibling script path relative to this `SKILL.md` (do not assume the shell is running from the skill directory), then run:
 
 ```bash
-uv run kb/scripts/x_snapshot.py "{url}"
+uv run "{resolved-path-to-x_snapshot.py}" "{url}"
 ```
 
 Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
