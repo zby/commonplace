@@ -7,7 +7,9 @@ status: seedling
 
 # Synthesis is not error correction
 
-Kim et al.'s [Towards a Science of Scaling Agent Systems](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) reports that multi-agent systems hurt performance on average (-3.5% mean, up to 17.2× error amplification). Meyerson et al.'s [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) achieves zero errors over a million LLM steps. The results seem contradictory but aren't — the headline Independent topology result (17.2× error amplification) reflects a fundamentally different operation on agent outputs than MAKER's voting.
+Merging agent outputs and selecting among them are fundamentally different operations. Synthesis propagates errors; voting corrects them. Conflating the two leads to misleading conclusions about whether multi-agent coordination works.
+
+The concrete case: [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) report up to 17.2× error amplification in multi-agent systems. [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) achieves zero errors over a million LLM steps. The results seem contradictory but aren't — Kim et al. tested synthesis, MAKER tested voting.
 
 ## The distinction
 
@@ -22,11 +24,11 @@ Synthesis is information aggregation. Voting is error correction. They solve dif
 Kim et al.'s "Independent" topology — the one showing 17.2× error amplification — uses what the paper calls **"synthesis-only coordination"**: 3 agents run in parallel and their outputs are combined. The paper doesn't detail the synthesis mechanism, but the key point is that it's not voting — outputs are merged rather than compared for agreement. Despite mentioning "majority voting" as a design option for orchestrators, voting was not implemented in the tested configurations.
 
 The other topologies add verification but not voting:
-- **Centralized** (4.4× error amplification): an orchestrator reviews sub-agent outputs — acting as a soft oracle, partially filtering errors
-- **Decentralized** (7.8×): agents debate across 3 rounds — closer to adversarial review than voting
+- **Centralized** (4.4×): an orchestrator reviews sub-agent outputs — a soft oracle, partially filtering errors
+- **Decentralized** (7.8×): agents debate across 3 rounds — adversarial review, not voting
 - **Hybrid** (5.1×): combines both, but with 515% overhead
 
-The progression 17.2× → 7.8× → 4.4× tracks increasing verification strength, not voting. Even partial verification (centralized orchestrator) cuts error amplification by 4×. The Hybrid topology (5.1×) breaks this ordering despite combining both verification mechanisms — possibly because its 515% overhead introduces coordination-failure modes that offset the verification benefit.
+The progression 17.2× → 4.4× tracks increasing verification strength. Even partial verification (centralized orchestrator) cuts error amplification by 4×.
 
 ## What MAKER tested
 
@@ -38,28 +40,27 @@ MAKER uses first-to-ahead-by-k voting on maximally decomposed micro-steps (one H
 
 None of these are present in Kim et al.'s design: no decomposition (whole tasks given to agents), no explicit oracle, no decorrelation (identical prompts and tools across agents).
 
-## Why this matters for the computational model
+## The design rule
 
-The [scheduling model](./bounded-context-orchestration-model.md) decomposes agent work into bounded LLM calls managed by a symbolic scheduler. The question of what to do with multiple agent outputs is a scheduler design decision, and synthesis vs voting are different scheduler operations with different properties:
+In the [scheduling model](./bounded-context-orchestration-model.md), what to do with multiple agent outputs is a scheduler design decision. The aggregation operation must match the relationship between the calls:
 
-- **Synthesis** is appropriate when agents produce complementary partial information (e.g., different sections of a document, different aspects of an analysis). The scheduler's job is assembly.
-- **Voting** is appropriate when agents produce competing complete answers to the same question. The scheduler's job is selection via [error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
+- **Redundant calls** solving the same sub-problem need **voting** — the scheduler's job is selection via [error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
+- **Complementary calls** solving different sub-problems need **synthesis** — the scheduler's job is assembly.
 
-Kim et al.'s Independent topology applies synthesis where voting would be more appropriate — agents solve the same complete task independently, but their outputs are merged rather than compared. This is a gap in the experimental design (voting with decorrelation was never tested), not evidence that multi-agent coordination is inherently negative-sum.
-
-The [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) should account for this: when decomposing a task into parallel bounded calls, the aggregation operation (synthesis vs voting vs something else) must match the relationship between the calls. Redundant calls solving the same sub-problem need voting. Complementary calls solving different sub-problems need synthesis.
+Kim et al.'s Independent topology applies synthesis where voting would be appropriate: agents solve the same complete task independently, but their outputs are merged rather than compared. This is a gap in the experimental design (voting with decorrelation was never tested), not evidence that multi-agent coordination is inherently negative-sum. The [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) should encode this match explicitly.
 
 ## Open questions
 
-- Structured adversarial review (Kim et al.'s Decentralized debate) may be a third category rather than a point on a synthesis-voting spectrum. Debate is iterative refinement through disagreement — agents revise their outputs in response to criticism, rather than merging or selecting. Its 7.8× error amplification (between synthesis's 17.2× and centralized verification's 4.4×) suggests partial error-correction benefit, but the mechanism is different from both.
-- Can you combine synthesis and voting? E.g., decompose a complex task, have multiple agents attempt each sub-task (vote to select), then synthesize across sub-tasks. This would be the scheduling model operating with redundancy at the sub-task level.
-- MAKER's success depends on maximal decomposition making voting well-defined (single atomic answers). For tasks where decomposition produces sub-tasks with complex outputs, how do you define "majority agreement"? Semantic similarity? Structural equivalence? This is where the [oracle strength](./oracle-strength-spectrum.md) question bites — you need a way to determine when two complex outputs "agree."
+- Adversarial debate (Kim et al.'s Decentralized topology, 7.8×) may be a third category — iterative refinement through disagreement rather than merging or selecting. Its partial error-correction benefit suggests it is somewhere between synthesis and voting, but the mechanism is different from both.
+- Can you combine the two? Decompose a task, have multiple agents attempt each sub-task (vote to select), then synthesize across sub-tasks. This is the scheduling model with redundancy at the sub-task level.
+- MAKER's success depends on maximal decomposition making voting well-defined (single atomic answers). For complex outputs, how do you define "majority agreement"? This is where [oracle strength](./oracle-strength-spectrum.md) bites — you need a way to determine when two outputs "agree."
 
 ---
 
 Relevant Notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — foundation: the theoretical framework for when voting-based error correction works (TPR > FPR, decorrelated checks); this note adds that synthesis doesn't qualify
+- [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — extends: synthesis failures are one member of a broader family where uncoordinated composition over a shared substrate produces amplification instead of contamination or inconsistency
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
 - [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
