@@ -42,7 +42,7 @@ More tokens dilute attention. The "lost in the middle" finding ([Liu et al., 202
 
 Traditional systems execute instructions at constant cost. LLMs pay interpretation overhead proportional to context complexity. Giving an agent a procedure costs more than giving it the answer that procedure would have produced. Every layer of [indirection costs context and interpretation overhead](./indirection-is-costly-in-llm-instructions.md) on every read.
 
-ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) provides direct evidence: LLMs verifying composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, despite using only 5,331 tokens — far below context limits. Scoped recursion (pruning history to retain only direct dependencies) recovers F1=1.0 at all depths, confirming the degradation is caused by flat accumulation, not the reasoning task itself.
+ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) provides direct evidence: LLMs verifying composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, despite using only 5,331 tokens — far below context limits. Scoped recursion (pruning history to retain only direct dependencies) recovers F1=1.0 at all depths, confirming the degradation is caused by flat accumulation, not the reasoning task itself. Paulsen ([2025](../sources/paulsen-maximum-effective-context-window-mecw.md)) shows convergent results from the volume direction: measuring Maximum Effective Context Window (MECW) across 11 frontier models, effective context is up to 99% smaller than advertised, with some models failing at 100 tokens — but the tasks (exact counting, sorting, filtering) are themselves LLM-hard, so the extreme degradation reflects volume × task-difficulty interaction rather than pure volume cost.
 
 ### The interaction
 
@@ -77,6 +77,7 @@ Sources:
 - Epoch AI (2025). [LLMs now accept longer inputs, and the best models can use them more effectively](https://epoch.ai/data-insights/context-windows).
 - Liu et al. (2023). [Lost in the middle: how language models use long contexts](https://arxiv.org/abs/2307.03172).
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — empirical evidence that compositional depth, not token count, drives reasoning degradation.
+- Paulsen (2025). [Context Is What You Need — The Maximum Effective Context Window](../sources/paulsen-maximum-effective-context-window-mecw.md) — convergent evidence: MECW << MCW across 11 models, but tasks confound volume with LLM-hard exact enumeration, making this a volume × task-difficulty finding rather than pure volume degradation.
 - Lopopolo (2026). [Harness engineering: leveraging Codex in an agent-first world](../sources/harness-engineering-leveraging-codex-agent-first-world.md) — independent practitioner convergence on context-as-scarce-resource from 1M LOC agent-generated codebase.
 - Koylan (2026). [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.md) — 40% token reduction from module isolation demonstrates volume-dimension context efficiency.
 
