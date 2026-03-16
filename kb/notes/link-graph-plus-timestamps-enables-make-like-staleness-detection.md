@@ -2,7 +2,7 @@
 description: Existing links already encode dependency information; comparing note and target timestamps flags notes that may be stale without any new annotation, analogous to make's file-based rebuild logic.
 type: note
 traits: []
-tags: [kb-maintenance]
+tags: [kb-maintenance, observability]
 status: seedling
 ---
 

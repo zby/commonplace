@@ -2,7 +2,7 @@
 description: Chollet frames agentic coding as ML producing blackbox codebases — codification counters this not by requiring human review but by choosing a substrate (repo artifacts) that any agent can inspect, diff, test, and verify
 type: note
 traits: [has-external-sources]
-tags: [learning-theory]
+tags: [learning-theory, observability]
 status: current
 ---
 

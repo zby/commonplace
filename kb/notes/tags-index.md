@@ -19,6 +19,7 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 - [Links](./links-index.md) — link semantics, navigation behavior, and link-management methodology
 - [Type system](./type-system-index.md) — why documents have types, what roles they serve, how structured writing improves quality
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
+- [Observability](./observability-index.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-index.md) — operations, audits, and maintenance methodology
 - [Related systems](./related-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
 
@@ -34,4 +35,3 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 - [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — deep search means temporarily expanding the corpus with web results
 
 ## Other tagged notes <!-- generated -->
-

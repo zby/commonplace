@@ -1,7 +1,7 @@
 ---
 description: Four specific semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading — structural validation catches form errors but misses content errors like incomplete enumerations that contradict their own grounding definitions
 type: note
-tags: [kb-maintenance]
+tags: [kb-maintenance, observability]
 status: seedling
 ---
 

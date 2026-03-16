@@ -2,7 +2,7 @@
 description: Agent frameworks that hide orchestration inside tool loops push applications toward degraded scheduling; stronger frameworks keep state progression inspectable at the application layer
 type: note
 traits: []
-tags: [computational-model]
+tags: [computational-model, observability]
 status: seedling
 ---
 
@@ -40,6 +40,7 @@ Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: this note extracts the framework-design consequence of the model's symbolic-scheduler requirement
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: explains what happens when the conversation, rather than application code, owns the loop
+- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — extends: once the framework owns the loop it also controls whether successful outcomes preserve evidence that part of the intended path failed
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: loop exposure matters because bookkeeping and semantic work have different reliability properties
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: partial separation helps before loop exposure is complete
 - [context engineering](./context-engineering.md) — applies: routing, loading, and scoping become application responsibilities when the framework stack exposes the loop
