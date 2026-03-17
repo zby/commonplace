@@ -9,6 +9,14 @@ model: sonnet
 
 ## EXECUTE NOW
 
+Prefer the deterministic validator first. The validator script lives in the **same directory as this `SKILL.md`**. First resolve the full path to `validate_notes.py` by taking the directory of this skill file and joining `validate_notes.py`. Do not assume the current working directory is the skill directory. Then run the resolved script with `uv`.
+
+```bash
+uv run <path-to-this-skill-directory>/validate_notes.py "$ARGUMENTS"
+```
+
+If the script is missing, broken, or the user is explicitly asking for judgment beyond deterministic checks, fall back to the manual workflow below.
+
 **Target: $ARGUMENTS**
 
 Parse immediately:
