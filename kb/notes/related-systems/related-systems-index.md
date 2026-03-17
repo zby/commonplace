@@ -41,7 +41,7 @@ Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independe
 - **Filesystem over databases** — plain text, version-controlled, no lock-in
 - **Progressive disclosure** — load descriptions at startup, full content on demand
 - **Start simple** — architectural reduction outperforms over-engineering
-- **Session-derived workshop artifacts** — [session-mining techniques in related systems](../session-mining-techniques-in-related-systems.md) shows Napkin, Pi Self-Learning, and OpenViking converging on explicit triggers, narrow extraction schemas, and reinjection loops, with the main split being single-agent extensions versus multi-tenant backends
+- **Trace-derived learning** — [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) broadens the comparison beyond pi-adjacent session mining to include artifact-learning and weight-learning systems fed by live traces and trajectories
 
 The divergences are more revealing:
 - **Storage model** — Cognee uses a poly-store (graph + vector + relational with pluggable backends), Siftly uses SQLite, CrewAI uses LanceDB (embedded vector database), Hindsight uses PostgreSQL+pgvector, and SAGE uses SQLite+BadgerDB (personal) or PostgreSQL+pgvector (multi-node) as operational substrates, while the others keep files as the primary storage interface. OpenViking occupies a novel middle position: it presents a filesystem interface (`viking://` URIs, `ls`/`read`/`find` operations) but the substrate is AGFS + vector index — filesystem as metaphor, not mechanism. Cognee, Hindsight, CrewAI, and SAGE are the furthest from filesystem-first: memories are opaque database records, not readable files
