@@ -42,11 +42,11 @@ More tokens dilute attention. The "lost in the middle" finding ([Liu et al., 202
 
 Traditional systems execute instructions at constant cost. LLMs pay interpretation overhead proportional to context complexity. Giving an agent a procedure costs more than giving it the answer that procedure would have produced. Every layer of [indirection costs context and interpretation overhead](./indirection-is-costly-in-llm-instructions.md) on every read.
 
-ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) provides direct evidence: LLMs verifying composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, despite using only 5,331 tokens — far below context limits. Scoped recursion (pruning history to retain only direct dependencies) recovers F1=1.0 at all depths, confirming the degradation is caused by flat accumulation, not the reasoning task itself. Paulsen ([2025](../sources/paulsen-maximum-effective-context-window-mecw.md)) shows convergent results from the volume direction: measuring Maximum Effective Context Window (MECW) across 11 frontier models, effective context is up to 99% smaller than advertised, with some models failing at 100 tokens — but the tasks (exact counting, sorting, filtering) are themselves LLM-hard, so the extreme degradation reflects volume × task-difficulty interaction rather than pure volume cost.
+ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) shows complexity-driven collapse at 5,331 tokens, far below context limits, while Paulsen ([2025](../sources/paulsen-maximum-effective-context-window-mecw.md)) shows that usable token volume is much smaller than advertised and shifts by problem type. [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops that synthesis. The local point here is simpler: large windows do not remove complexity costs, and raw token count alone does not predict usable context.
 
 ### The interaction
 
-The two dimensions are not independent. High volume amplifies complexity costs. But they vary independently too: ConvexBench shows complexity-driven collapse at trivial token counts, and a long context of simple facts degrades differently from a short context of intricate procedures.
+The two dimensions interact but are analytically distinct. High volume often amplifies complexity costs, yet either dimension can dominate in different regimes.
 
 ## Growing windows address volume but not complexity
 
@@ -91,6 +91,7 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — application: navigation design as volume-saving strategy
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — application: type system designed around context economy
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — application: build-time generation as frontloading applied to skill templates
+- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens: makes explicit why usable context cannot be treated as a single per-model number
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — intensifies: instructions and data compete as equal tokens with no priority mechanism
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — intensifies: extra context distorts interpretation, not just wastes space
 - [Minimum Viable Ontology / Domain Maps](../sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) — exemplifies: MVO is distillation under context-efficiency pressure — compress domain knowledge into the smallest vocabulary that fits the context window
