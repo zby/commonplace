@@ -14,7 +14,7 @@ Inspected code paths:
 
 - **Napkin** — `related-systems/napkin/.pi/extensions/distill/index.ts`
 - **Pi Self-Learning** — `kb/notes/related-systems/pi-self-learning/extensions/self-learning.ts`
-- **OpenViking** — `kb/notes/related-systems/OpenViking/openviking/message/message.py`, `kb/notes/related-systems/OpenViking/openviking/session/session.py`, `kb/notes/related-systems/OpenViking/openviking/session/memory_extractor.py`, `kb/notes/related-systems/OpenViking/openviking/server/routers/sessions.py`
+- **OpenViking** — `related-systems/OpenViking/openviking/message/message.py`, `related-systems/OpenViking/openviking/session/session.py`, `related-systems/OpenViking/openviking/session/memory_extractor.py`, `related-systems/OpenViking/openviking/server/routers/sessions.py`
 
 I did not include ClawVault in the concrete comparison below because its repo is not cloned in this workspace, so I could not inspect the extraction path directly.
 
