@@ -28,7 +28,7 @@ Scarce attention as a central design constraint is well-established:
 
 What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity that the next section develops.
 
-**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — attention economics and working memory literatures likely have results about degradation curves and optimal loading strategies.
+**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — Paulsen partially answers the degradation-curve question with task-dependent MECW measurements, but the broader attention-economics / working-memory literature and the optimal-loading-strategy question remain open.
 
 ## Two dimensions of context cost
 
