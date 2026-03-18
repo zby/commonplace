@@ -14,7 +14,7 @@ Three content-level checks that structural validation (`/validate`) cannot perfo
 
 ## Prerequisites
 
-Read the target note in full. If it has no frontmatter (text type), report "text files are not reviewable — no claims to check" and stop.
+Read the target note in full.
 
 ## Step 1: Extract claims
 
