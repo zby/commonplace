@@ -37,6 +37,9 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [ACE](./ace.md) — playbook-learning loop with generator, reflector, and curator roles; strongest nearby artifact-learning analogue to Autocontext, with bullet-level helpful/harmful counters but an append-heavy maintenance path
 - [Dynamic Cheatsheet](./dynamic-cheatsheet.md) — test-time adaptive memory with cumulative cheatsheet carryover and optional retrieval-synthesis variants; strong artifact-learning baseline, but the actual maintenance path is whole-document rewrite rather than structured mutation
 - [Reflexion](./reflexion.md) — verbal reinforcement loop that turns failed attempts into short natural-language plans; important early trajectory-to-artifact precedent, but with a much thinner memory lifecycle than newer systems
+- [ExpeL](./expel.md) — cross-task experiential learning pipeline with separate trajectory gathering, rule extraction, prompt-time trace retrieval, and explicit `ADD`/`EDIT`/`REMOVE`/`AGREE` rule maintenance; clearest trajectory-to-rule artifact-learning example in this queue
+- [Voyager](./voyager.md) — embodied lifelong-learning loop with automatic curriculum, critic-gated retries, and promotion of successful trajectories into retrievable JavaScript skills; clearest executable-artifact learning system in this queue
+- [Agent-R](./agent-r.md) — iterative self-training pipeline that mines MCTS search trees into corrected conversation traces and fine-tuning data; clearest search-to-weights learning system in this queue
 
 ## Patterns Across Systems
 
@@ -63,3 +66,4 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
+
