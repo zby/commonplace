@@ -22,3 +22,4 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 
 ## Other tagged notes <!-- generated -->
 
+- [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — Synthesizes Paulsen MECW, ConvexBench, and the two-axis context-cost model — usable context varies with task type and prompt difficulty, so nominal window size is a misleading abstraction

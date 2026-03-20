@@ -58,3 +58,6 @@ Relevant Notes:
 - [llm-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: workarounds for hidden loops push scheduling into the conversational medium
 - ["agent" is a tool loop](./agent-is-a-tool-loop.md) — convention: grounds the sub-agent mechanism by equating "agent" with "tool loop"
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — broader context: the tool loop is one dimension; scheduler placement, persistence, coordination form, and return artifacts vary independently
+
+## Other tagged notes <!-- generated -->
+

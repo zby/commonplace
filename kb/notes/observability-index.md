@@ -34,3 +34,5 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — error correction and verification theory explain how visible signals can become actionable
 
 ## Other tagged notes <!-- generated -->
+
+- [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — Broad review of Napkin, Pi Self-Learning, OpenViking, ClawVault, Autocontext, OpenClaw-RL, and trajectory learners — compares trace formats, promotion targets, and learning loops

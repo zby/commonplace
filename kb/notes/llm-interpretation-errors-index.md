@@ -53,3 +53,4 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
 
 ## Other tagged notes <!-- generated -->
+

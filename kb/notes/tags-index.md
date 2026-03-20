@@ -35,3 +35,4 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 - [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — deep search means temporarily expanding the corpus with web results
 
 ## Other tagged notes <!-- generated -->
+
