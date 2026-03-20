@@ -2,7 +2,7 @@
 description: When framework-owned tool loops recover from broken tools via agent workarounds, final success stops being a reliable signal that the underlying scripts and workflows are healthy
 type: note
 traits: []
-tags: [computational-model, kb-maintenance, learning-theory, observability]
+tags: [computational-model, kb-maintenance, learning-theory, observability, tool-loop]
 status: seedling
 ---
 
@@ -30,7 +30,7 @@ A framework-owned tool loop is optimized for task completion inside one conversa
 - the model is already tasked with "keep going"
 - the framework usually prefers not to interrupt the user if progress is still possible
 
-This is one reason [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md). When orchestration is hidden, failure handling is hidden with it. The application cannot easily separate "the user got an acceptable result" from "the intended execution path succeeded." The framework has implicitly made that policy decision on the user's behalf.
+This is one reason [tool loop](./tool-loop-index.md) argues for keeping orchestration visible. When orchestration is hidden, failure handling is hidden with it. The application cannot easily separate "the user got an acceptable result" from "the intended execution path succeeded." The framework has implicitly made that policy decision on the user's behalf.
 
 ## Practical consequences for commonplace
 
@@ -63,7 +63,7 @@ It also sharpens [enforcement without structured recovery is incomplete](./enfor
 Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — boundary: the clean scheduler model survives; this note targets what final success can and cannot tell you about runtime health
-- [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — extends: hidden orchestration also hides the distinction between acceptable result and healthy execution path
+- [tool loop](./tool-loop-index.md) — extends: hidden orchestration also hides the distinction between acceptable result and healthy execution path
 - [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — consequence: explains why programmers systematically over-trust successful outcomes in this regime
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends: the same observability failure appears when the runtime repairs ambiguity in the spec rather than failure in the tool path
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — refines: degradation is not only context-bounded scheduling but also loss of observability about how the run succeeded

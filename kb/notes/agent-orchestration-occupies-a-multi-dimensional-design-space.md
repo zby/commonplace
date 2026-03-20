@@ -12,7 +12,7 @@ Agent orchestration architectures are often discussed as if they sit on a single
 
 ## Scheduler placement
 
-**Where the scheduler lives** — in the LLM conversation itself ([LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)) or in symbolic code / an external runtime ([bounded-context orchestration model](./bounded-context-orchestration-model.md)). This is the clean-model / degraded-model split: whether bookkeeping and recursion run on exact state or inside bounded stochastic context. [RLM](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) is a boundary case — the scheduler lives on an exact substrate outside chat even when the model authors some of that scheduler code.
+**Where the scheduler lives** — in the LLM conversation itself ([LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)) or in symbolic code / an external runtime ([bounded-context orchestration model](./bounded-context-orchestration-model.md)). This is the clean-model / degraded-model split: whether bookkeeping and recursion run on exact state or inside bounded stochastic context. [RLM](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) is a boundary case — the scheduler lives on an exact substrate outside chat even when the model authors some of that scheduler code.
 
 ## Persistence horizon
 
@@ -52,8 +52,8 @@ Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the clean model supplies one important dimension, scheduler placement
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — one region of the space: scheduling inside conversation
-- [RLM achieves the clean scheduler model but opts out of accumulation](./rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md) — boundary case: model-authored external scheduler with ephemeral persistence
-- [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — consequence: framework design concerns one dimension of the larger space
+- [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — boundary case: model-authored external scheduler with ephemeral persistence
+- [tool loop](./tool-loop-index.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination forms vary independently of scheduler placement
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly

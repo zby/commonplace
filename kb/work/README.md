@@ -10,3 +10,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [connect-refactoring/](./connect-refactoring/) — splitting /connect into discovery-only + directed reading for file mutations
 - [validation/](./validation/) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [trace-derived-systems-review/](./trace-derived-systems-review/) — review queue and execution packets for the next wave of trace-derived learning systems surfaced from web search
+- [tool-loop-control/](./tool-loop-control/) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end

@@ -9,6 +9,8 @@ plugins:
       redirect_maps:
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
+        'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
+        'notes/llm-frameworks-should-expose-the-loop.md': 'notes/tool-loop-index.md'
 nav:
   - Home: index.md
   - Concepts:

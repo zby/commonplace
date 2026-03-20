@@ -37,7 +37,7 @@ The correction is not to suppress semantic recovery — that recovery is one of 
 Relevant Notes:
 
 - [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — foundation: this note explains why that weak health signal is surprising and easy for programmers to misread
-- [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — enables: hidden framework-owned loops make the true execution path harder for programmers to inspect directly
+- [tool loop](./tool-loop-index.md) — enables: hidden framework-owned loops make the true execution path harder for programmers to inspect directly
 - [error messages that teach are a constraining technique](./error-messages-that-teach-are-a-constraining-technique.md) — contrast: in agent systems the error channel is itself a control surface, which makes semantic recovery much more available than in traditional human-debugged software
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — complements: recovery strategy needs observability, otherwise successful recovery trains programmers to trust the wrong signal
 - [unit testing LLM instructions requires mocking the tool boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — implication: artifact-level success tests are insufficient when the maintenance risk is hidden path failure

@@ -104,7 +104,7 @@ The symbolic scheduler handles the loop, the collection, and the branching — a
 
 ## Realising the model with SDKs and tool calling
 
-The model is trivially compatible with ordinary LLM SDKs. The application programmer keeps `K` in code, computes everything deterministic outside the model, and calls the LLM only when semantic judgment is needed. Nothing about the model requires a special agent runtime. [LLM frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) develops the framework-design consequence: trouble starts when higher layers hide that application-owned loop behind framework-managed tool sessions.
+The model is trivially compatible with ordinary LLM SDKs. The application programmer keeps `K` in code, computes everything deterministic outside the model, and calls the LLM only when semantic judgment is needed. Nothing about the model requires a special agent runtime. [tool loop](./tool-loop-index.md) develops the framework-design consequence: trouble starts when higher layers hide that application-owned loop behind framework-managed tool sessions.
 
 Tool calling fits this picture naturally. It is just a particular return shape from a bounded call: instead of returning only prose or structured extraction, the model can return a request for application code to run a tool and feed the result back. That is a useful inversion of control, but it does not change the architecture. The scheduler can still live entirely in application code:
 
@@ -149,7 +149,7 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
 - [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — consequence: practical rules that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
-- [llm frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — consequence: extracts the main architectural implication of the model for real implementations
+- [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: tool and schema hardening recover part of the interface discipline without moving the scheduler fully into code
 - [distillation](./distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified

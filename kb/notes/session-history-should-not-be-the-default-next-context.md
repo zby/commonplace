@@ -2,7 +2,7 @@
 description: Storing execution history and loading it into the next agent call are separate decisions; chat creates the expectation that history is state, and frameworks harden that expectation by automatically carrying session history forward as next context
 type: note
 traits: [has-external-sources]
-tags: [computational-model]
+tags: [computational-model, tool-loop]
 status: seedling
 ---
 
@@ -25,7 +25,7 @@ With raw SDK calls, there is no built-in transcript problem. Application code as
 - **framework-owned tool loops** make intermediate progression happen inside a hidden runtime
 - **continuing agent sessions** encourage "just keep talking to the same thing" instead of rebuilding the next bounded context deliberately
 
-This is the framework-level issue described in [llm frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md). This note is about what goes wrong once that packaging layer starts deciding what later calls inherit.
+This is the framework-level issue described in [tool loop](./tool-loop-index.md). This note is about what goes wrong once that packaging layer starts deciding what later calls inherit.
 
 ## Why chat sessions and tool loops default to trace-preserving state
 
@@ -130,7 +130,7 @@ Relevant Notes:
 
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — foundation: frame boundaries only become real interfaces when the parent sees a return value rather than the internal conversation
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: `K` can store more artifacts than any one prompt should load; the real control point is `select(K)`
-- [llm frameworks should expose the loop](./llm-frameworks-should-expose-the-loop.md) — foundation: the trace problem appears when bounded calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
+- [tool loop](./tool-loop-index.md) — foundation: the trace problem appears when bounded calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — special case: conversation preserves trace, prompt refinement compresses it into a cleaner handoff artifact
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the caller does judgment-heavy selection before dispatch, creating a clean handoff boundary
 - [distillation](./distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
