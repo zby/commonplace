@@ -12,8 +12,8 @@ A content-level editorial pass on a single note. You may rewrite sentences, reor
 
 ## Scope
 
-- **In scope:** everything between the frontmatter block and the `---` separator before Sources/Relevant Notes/Topics. This includes headings, prose, lists, code blocks, and inline citations.
-- **Out of scope:** frontmatter fields, the Sources list, the Relevant Notes list, and the Topics list. Do not add, remove, or reorder entries in these sections. You may fix broken markdown links if you encounter them.
+- **In scope:** everything about the target note itself. This includes the full file contents, all frontmatter fields, the title, footer sections such as Sources and Relevant Notes, and the filename.
+- **Out of scope:** changes outside the target note during the main revision pass. Do not edit other notes, indexes, instructions, or generated listings until the revision step is complete. If revising the note exposes needed follow-up changes elsewhere, handle them only in the separate follow-up step below.
 
 ## Steps
 
@@ -27,6 +27,7 @@ A content-level editorial pass on a single note. You may rewrite sentences, reor
    - Flow breaks: sections that don't connect to their neighbours.
    - Cohesion failures: terms used inconsistently, or framing that shifts mid-note.
    - Unsupported transitions: "therefore" or "this means" without the intermediate step.
+   - Throat-clearing: sentences that concede an obvious point just to set up a contrast ("Nobody doubts X. But Y…"). Cut them — the reader already accepts X; go straight to Y.
 
 4. **Revise.** Edit the file in place. You may:
    - Rewrite sentences and paragraphs.
@@ -35,14 +36,17 @@ A content-level editorial pass on a single note. You may rewrite sentences, reor
    - Add bridging sentences where logical gaps exist.
    - Sharpen vague language into precise claims.
    - Merge or split sections.
+   - Revise frontmatter, title, footer sections, and filename when needed to improve the note as a whole.
 
    Do NOT:
-   - Change the note's central claim (the title).
+   - Change the note into a substantively different note than the one you started with.
    - Add new claims or evidence not already present or implied by the existing text.
    - Remove citations or source references from the body.
-   - Touch frontmatter, Sources, Relevant Notes, or Topics sections.
+   - Edit files outside the target note as part of the main revision pass.
 
-5. **Report.** After editing, output a short report for the user:
+5. **Handle tag changes as a separate follow-up.** If you changed `tags`, spawn a sub-agent after the main revision is complete. The sub-agent should inspect nearby notes, indexes, and workflows affected by the tag change, make the minimal external edits needed to keep those connections accurate, and then report what it changed. Keep the write scope narrow: only files directly impacted by the tag change. Do not use this step for broad taxonomy cleanup or unrelated refactors.
+
+6. **Report.** After editing, output a short report for the user:
 
 ```
 === REVISION: {note-filename} ===
@@ -53,7 +57,7 @@ Changes:
 Flagged:
 - {anything you noticed but didn't fix — e.g. a claim that may be wrong,
   a link that doesn't match its context phrase, a section that needs
-  evidence you don't have}
+  evidence you don't have, or external follow-up beyond the narrow tag-update pass}
 
 ===
 ```
