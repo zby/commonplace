@@ -1,12 +1,12 @@
 ---
-description: Index of notes about how systems learn, verify, and improve — accumulation as the basic operation (reach as its key property), constraining and distillation as transformation mechanisms, discovery as the source of high-reach theories, oracle theory, and memory architecture
+description: Index of notes about how systems learn, verify, and improve — accumulation, reach, constraining, distillation, discovery, oracle theory, and memory architecture
 type: index
 status: current
 ---
 
 # Learning theory
 
-How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through inspectable artifacts.
+How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through durable substrates, including but not limited to inspectable artifacts.
 
 The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./constraining.md) and [distillation](./distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
 
@@ -14,14 +14,16 @@ The collection is organized around [deploy-time learning](./deploy-time-learning
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — two distinct properties (semantic underspecification and execution indeterminism); the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
 - [learning-is-not-only-about-generality](./learning-is-not-only-about-generality.md) — accumulation is the most basic learning operation, with reach as its key property (facts at the low end, theories at the high end); capacity decomposes into generality vs a reliability/speed/cost compound; Simon's definition grounds the decomposition
+- [continuous-learning-requires-durability-not-weight-updates](./continuous-learning-requires-durability-not-weight-updates.md) — the live disagreement is whether durable non-weight adaptation counts as learning at all; this note makes the affirmative case and turns artifact-side adaptation from metaphor into learning proper
 - [llm-learning-phases-fall-between-human-learning-modes](./llm-learning-phases-fall-between-human-learning-modes.md) — LLM phases (pre-training, in-context, deploy-time) occupy intermediate positions on the evolution-to-reaction spectrum rather than mapping 1:1 to human learning modes; warns against literal human-LLM learning analogies
 - [in-context-learning-presupposes-context-engineering](./in-context-learning-presupposes-context-engineering.md) — in-context learning depends on deploy-time learning to select and organize the right knowledge; Amodei's "no continual learning needed" claim relocates the learning to the system layer rather than eliminating it
 
 ## Deploy-time Learning
 
-The organizing framework: deployed systems adapt through repo artifacts — durable, inspectable, and verifiable — filling the gap between training and in-context learning.
+The organizing framework: deployed systems adapt through symbolic artifacts — durable, inspectable, and verifiable — filling the gap between training and in-context learning.
 
 - [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — three timescales of system adaptation; the verifiability gradient from prompt tweaks to deterministic code; concrete before-and-after examples of constraining at different grades
+- [learning-substrates-backends-and-artifact-forms](./learning-substrates-backends-and-artifact-forms.md) — separates substrate class from backend and artifact form; explains why repo files, DB rows, and memory-service objects can all host the same broad learning substrate
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — deploy-time learning and agile share the same core innovation (co-evolving prose and code); agile assumes code wins eventually, deploy-time learning treats the hybrid as the end state
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — reframes agile: "changing requirements" hide late-surfacing interpretation errors in underspecified specs; short iterations bound interpretation-error propagation, not just change-response latency
 - [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — names the lifecycle choice across spec-first, bidirectional, and behavior-extracted approaches; the right strategy depends on whether understanding is present before work, discovered during execution, or only visible after repeated runs

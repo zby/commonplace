@@ -1,5 +1,5 @@
 ---
-description: AgeMem learns on two substrates — facts accumulated in memory (low-reach) and policy learned in weights (when to accumulate, distil, curate) — confirming memory policy is vision-feature-like; but the learning depends on task-completion oracles, which is exactly the evaluation gap that makes automating KB learning hard
+description: AgeMem stores facts in memory but learns the governing policy in weights; it is a clean subsymbolic case of durable learning, but one that depends on task-completion oracles the KB lacks
 type: note
 traits: [has-external-sources]
 tags: [learning-theory]
@@ -36,9 +36,11 @@ This scope limitation is also what enables the oracle. The value of a stored fac
 
 To close the learning loop, AgeMem accepts a substrate split: facts go into a memory store (somewhat inspectable key-value pairs), but the policy for managing them goes into model weights (opaque, non-diffable, only changeable through retraining).
 
+This makes AgeMem the clean weight-side case in the KB's updated learning taxonomy. Per [continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md), the relevant criterion is not "did weights change?" but "did adaptive capacity change durably?" AgeMem obviously qualifies: the learned policy persists and later behavior depends on it. The interesting question is therefore not whether AgeMem is really learning, but what the weight substrate buys and what it gives up relative to durable symbolic artifacts.
+
 Commonplace stores both in the same medium — files in a repo. A fact ("AgeMem uses GRPO") and a policy ("always search before writing") are both markdown artifacts. Policies are themselves knowledge: searchable, linkable, refinable, composable with other notes. You can [constrain](./constraining.md) a policy (move it from a convention to a script), [distil](./distillation.md) it (extract a skill from methodology notes), or [discover](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) that two policies are instances of the same principle. Policies participate in the same [accumulation](./learning-is-not-only-about-generality.md) loop as everything else.
 
-In AgeMem, the policy can't be searched, linked to the facts it manages, or refined incrementally. This is the deeper version of the [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) argument: not just "can you inspect the policy?" but "can the policy participate in the knowledge system it governs?" In a unified substrate, policies improve through the same mechanisms as everything else. In a split substrate, they don't.
+In AgeMem, the policy can't be searched, linked to the facts it manages, or refined incrementally. This is the deeper version of the [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) argument: not just "can you inspect the policy?" but "can the policy participate in the knowledge system it governs?" In a unified substrate, policies improve through the same mechanisms as everything else. In a split substrate, they don't. [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) names the contrast cleanly: AgeMem puts the governing policy in a subsymbolic substrate, while commonplace tries to keep both policies and facts in a symbolic artifact substrate.
 
 ## Comparison to KB learning
 
@@ -62,12 +64,14 @@ But the comparison cuts both ways. **AgeMem has a closed learning loop; we don't
 
 Relevant Notes:
 
+- [continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — sharpens: AgeMem is the clean weight-side case because its adaptive change is durable, not because weight updates are the definition of learning
+- [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) — sharpens: names AgeMem's policy as a subsymbolic substrate case and contrasts it with symbolic artifact approaches
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — grounds: memory operations are calculators, the policy for composing them is a vision feature; AgeMem's hybrid architecture confirms the boundary's prediction
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: AgeMem confirms the evaluation gap is the real bottleneck — RL can learn memory policy, but only with a clear oracle, which KB learning lacks
 - [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — grounds: LTM Add value depends on discoverability (retrievability of stored facts); the three-property framework explains why weight-based memory policy can't produce the articulated relationships a KB needs
 - [distillation](./distillation.md) — applies: AgeMem's STM operations (Retrieve, Summary, Filter) are distillation — extracting focused content for working context
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: AgeMem's LTM Add is accumulation (the basic learning operation) at the low-reach end; the reach gradient from facts to theories frames what AgeMem does and doesn't do
 - [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: AgeMem operates on facts (adaptive, no reach), not rules (explanatory, reach)
-- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through inspectable artifacts; same behavioral changes, different substrates
+- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through symbolic artifacts during deployment; same behavioral changes, different substrates
 - [inspectable substrate defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: AgeMem's split substrate (facts in store, policy in weights) vs commonplace's unified substrate (both in files)
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time constraining achieves; they differ on inspectability but AgeMem has closed the loop

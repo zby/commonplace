@@ -8,7 +8,7 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Seven code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces and where they promote the result.
+Seven code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces and where they promote the result. In the KB's newer vocabulary, the second axis is mainly a **substrate-class** choice: do traces promote into durable symbolic artifacts or into model weights?
 
 The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, Autocontext, and OpenClaw-RL (source paths noted in per-system reviews). The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
@@ -22,7 +22,7 @@ Across these systems, the same five stages appear:
 4. **Promotion/storage** — how extracted items persist or get ranked
 5. **Reinjection** — how mined artifacts affect future sessions
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is artifacts, service memory, or model weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is symbolic artifacts, service-managed memory, or model weights. [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) sharpens the distinction: "service memory" is usually a backend choice within the symbolic artifact substrate, not a third top-level substrate alongside artifacts and weights.
 
 ## Napkin
 
@@ -132,11 +132,11 @@ The systems separate on two axes.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, AgeMem, and Trajectory-Informed Memory Generation fit here.
 
-### Axis 2: promotion target
+### Axis 2: promotion target / substrate class
 
-**Artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense. Their backends differ, but their substrate class is the same.
 
-**Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, and Autocontext fit here. Autocontext bridges both — artifacts first, then optionally weights.
+**Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights.
 
 ## Log formats matter more than the prompts
 
@@ -173,12 +173,14 @@ None of the reviewed systems closes the harder KB-learning mutations. They extra
 - retiring a stale learning for principled reasons
 - judging whether a mined pattern has explanatory reach or is just a recurring local patch
 
-The concrete update to [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is a solved enough pattern to copy; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed textual memory or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
+The concrete update to [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is a solved enough pattern to copy; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed symbolic artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
 
 ---
 
 Relevant Notes:
 
+- [continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — sharpens: the survey's non-weight cases count as continuous learning because their improvements persist, not because they imitate weight learning
+- [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually symbolic-artifact storage rather than a third substrate
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
 - [Napkin](./related-systems/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates
