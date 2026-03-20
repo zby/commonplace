@@ -61,3 +61,4 @@ Relevant Notes:
 
 ## Other tagged notes <!-- generated -->
 
+- [The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — Chat history persists because appending messages preserves information and avoids interface design, but that convenience trades away selective loading under bounded context

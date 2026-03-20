@@ -1,5 +1,5 @@
 ---
-description: Storing execution history and loading it into the next agent call are separate decisions; chat creates the expectation that history is state, and frameworks harden that expectation by automatically carrying session history forward as next context
+description: Storing execution history and loading it into the next agent call are separate decisions; chat and framework-owned tool loops conflate them by making session history the default next context
 type: note
 traits: [has-external-sources]
 tags: [computational-model, tool-loop]
@@ -8,14 +8,14 @@ status: seedling
 
 # Session history should not be the default next context
 
-The [bounded-context orchestration model](./bounded-context-orchestration-model.md) does **not** require chat history or a tool loop. It only requires bounded calls whose outputs are written into external symbolic state. The trace problem arises one layer up, when systems package those bounded calls as chat sessions or framework-managed tool loops and then treat the resulting history as the natural state to carry forward. That is useful for interactive UX, but it is the wrong default substrate for most agent orchestration.
-
 An execution boundary usually creates two different questions:
 
 - what should be stored in external symbolic state
 - what should actually be loaded into the next bounded call
 
-These are not the same decision. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), storage in `K` is cheap; bounded context is expensive. The mistake is not necessarily storing a trace. The mistake is letting a session runtime decide that stored history should automatically become the next call's context instead of letting `select(K)` choose what the next call should see.
+These are not the same decision. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), storage in `K` is cheap; bounded context is expensive. The mistake is not storing a trace. The mistake is letting a session runtime decide that stored history should automatically become the next call's context instead of letting `select(K)` choose what the next call should see.
+
+The conflation arises one layer above the model itself. The orchestration model only requires bounded calls whose outputs are written into external symbolic state — it does not require chat history or a tool loop. But when higher-level interfaces package those bounded calls as chat sessions or framework-managed tool loops, session history becomes the path of least resistance for passing state forward. That is useful for interactive UX, but it is the wrong default for most agent orchestration.
 
 ## Where the problem actually appears
 
@@ -25,18 +25,13 @@ With raw SDK calls, there is no built-in transcript problem. Application code as
 - **framework-owned tool loops** make intermediate progression happen inside a hidden runtime
 - **continuing agent sessions** encourage "just keep talking to the same thing" instead of rebuilding the next bounded context deliberately
 
-This is the framework-level issue described in [tool loop](./tool-loop-index.md). This note is about what goes wrong once that packaging layer starts deciding what later calls inherit.
+The [tool loop index](./tool-loop-index.md) describes the framework-level packaging. The downstream consequence is that the packaging layer starts deciding what later calls inherit — and it defaults to "everything."
 
 ## Why chat sessions and tool loops default to trace-preserving state
 
-Raw history is the easiest way to preserve maximum information. If the caller does not yet know what matters, carrying the whole interaction forward is the safest first move:
+[The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md). Raw history is the easiest way to preserve maximum information when the caller does not yet know what matters: no premature compression, no lost false starts, no need to design a return schema upfront, immediate usefulness for UI and debugging.
 
-- no premature compression
-- no lost false starts or clarifications
-- no need to design a return schema upfront
-- immediate usefulness for UI, audit, and debugging
-
-This makes transcript inheritance a sensible **exploratory default** inside chat-shaped systems. Early in a design, when the real interface between stages is still unknown, preserving the trace minimizes the risk of throwing away the wrong thing.
+This makes transcript inheritance a sensible **exploratory default**. Early in a design, when the real interface between stages is still unknown, preserving the trace minimizes the risk of throwing away the wrong thing.
 
 ## Why transcript inheritance breaks down
 
@@ -54,22 +49,13 @@ This is the return-value problem from the [scoping note](./llm-context-is-compos
 
 ## The right split: storage vs next-context loading
 
-The scheduler can afford to keep many artifact kinds in external symbolic state:
+The scheduler can afford to keep many artifact kinds in external symbolic state — judgments, extracted claims, scrubbed conclusions, compressed episodes, structured data, symbolic code, failure signals, and raw traces for audit. What matters is that the next bounded call usually wants a much stricter projection.
 
-- a yes/no judgment
-- extracted claims
-- a scrubbed conclusion
-- a compressed episode
-- structured data
-- symbolic code
-- a structured failure or restart signal
-- and, when useful, raw traces for audit or later analysis
+"History" conflates at least three trace types with different loading profiles:
 
-What matters is that the next bounded call usually wants a much stricter projection. "History" conflates at least three trace types with different storage and loading profiles:
-
-- **Conversation transcripts** — message-by-message exchanges that mix signal (clarifications, partial results) with noise (misframings, corrections, phatic turns). Worth storing for UI, audit, and onboarding replay — but rarely the right material for the next prompt.
-- **Tool/action traces** — sequences of external calls and their results. More structured, and sometimes the trace *is* the deliverable. Worth storing for debugging, telemetry, and reproducibility — and occasionally close enough to serve as the loaded artifact itself.
-- **Reasoning traces** — chain-of-thought, planning, deliberation. Reveals how the agent thought, not what it concluded. Worth storing for debugging, alignment research, and learning — but almost never worth loading into the next call.
+- **Conversation transcripts** — message-by-message exchanges mixing signal (clarifications, partial results) with noise (misframings, corrections, phatic turns). Worth storing for UI, audit, and replay — rarely the right material for the next prompt.
+- **Tool/action traces** — sequences of external calls and their results. More structured; sometimes the trace *is* the deliverable. Worth storing for debugging and reproducibility — occasionally close enough to load directly.
+- **Reasoning traces** — chain-of-thought, planning, deliberation. Reveals how the agent thought, not what it concluded. Worth storing for debugging and alignment research — almost never worth loading into the next call.
 
 The argument against loading traces as next-context is sharpest for reasoning traces, strong for conversation transcripts, and most nuanced for tool traces. All three may belong in external state. But they are rarely the right default material for the next prompt.
 
@@ -79,29 +65,20 @@ Failure handling makes the separation especially visible. A bounded execution ma
 
 ## Tension: compressed episodes are visible, but the rest of the policy is not
 
-Slate is the main tension case for this note. From the public blog post, we can tell that its workers do not return the full tactical trace; they return an **episode** — a compressed representation of what happened during the bounded action. That episode is still not the raw transcript, so it fits the anti-transcript argument above. But it is more trace-shaped than a narrow result such as `yes/no` or `found X`.
+Slate is the main tension case. From the [public description](../sources/slate-moving-beyond-react-and-rlm.ingest.md), workers return **episodes** — compressed representations of what happened during a bounded action. These are not raw transcripts, so they fit the anti-transcript argument. But they are more trace-shaped than a narrow result like `yes/no` or `found X`.
 
-What we cannot tell from the public description is the rest of the policy around that artifact:
-
-- how much of an episode is later loaded into bounded context
-- whether episodes are further summarized, indexed, or selectively projected before reuse
-- whether full traces are still kept elsewhere in symbolic state
-- whether the compression discards information that later turns out to matter
-
-So the strongest claim this note can make is narrow: Slate appears to prefer compressed handoff artifacts over raw transcript inheritance. That may be a good orchestration interface. It may also be a lossy projection that works only because other parts of the runtime recover what the blog post does not describe. From the public post alone, we cannot know.
-
-The architectural tradeoff remains real. A minimal return artifact keeps the immediate interface clean but may leave later stages with too little reusable detail. A compressed episode preserves more of what happened without forcing the full transcript into the next bounded call. But this note should not treat that as proof that Slate's compression boundary is the right one; it is only a visible design choice from limited public evidence.
+What we cannot tell from public evidence is the policy around episodes: how much is later loaded into context, whether episodes are further summarized or projected before reuse, and whether full traces are kept elsewhere. The strongest claim is that Slate appears to prefer compressed handoff artifacts over raw transcript inheritance. Whether that compression boundary is the right one — or whether other runtime mechanisms recover what the blog post does not describe — remains unknown.
 
 ## Execution-boundary compression is a recurring design move
 
-Across these systems, the shared move is [compression at the execution boundary](./distillation.md). The execution boundary is the natural place to decide what survives:
+Across these systems, the shared move is [compression at the execution boundary](./distillation.md):
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
 - [Spacebot](./related-systems/spacebot.md) branches return only a scrubbed conclusion
 - [Slate](../sources/slate-moving-beyond-react-and-rlm.ingest.md) workers return compressed episodes rather than full tactical traces
 
-This is not just summarization. It is interface design. The deeper question is what `select` should load from stored state into the next bounded context — not just what should cross the execution boundary.
+This is not just summarization — it is interface design. The execution boundary is the natural place to compress, but the deeper question is what `select` should load from stored state into the next bounded context. Compression at the boundary produces the artifact; `select` decides whether and how much to load.
 
 ## Conversation vs refinement is one instance of the general problem
 
@@ -130,6 +107,7 @@ Relevant Notes:
 
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — foundation: frame boundaries only become real interfaces when the parent sees a return value rather than the internal conversation
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: `K` can store more artifacts than any one prompt should load; the real control point is `select(K)`
+- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — grounds: explains why transcript inheritance is attractive early and why it becomes costly as architectures mature
 - [tool loop](./tool-loop-index.md) — foundation: the trace problem appears when bounded calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — special case: conversation preserves trace, prompt refinement compresses it into a cleaner handoff artifact
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the caller does judgment-heavy selection before dispatch, creating a clean handoff boundary
@@ -138,3 +116,7 @@ Relevant Notes:
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
 - [Spacebot](./related-systems/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
+
+Distilled into:
+
+- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — higher-level architectural tradeoff extracted from this mechanism-level note
