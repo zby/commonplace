@@ -36,6 +36,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Autocontext](./autocontext.md) — closed-loop control plane for iterative agent improvement via multi-role orchestration (competitor/analyst/coach/architect), tournament evaluation, accumulated playbooks, and MLX distillation; strongest reference for automated iterative learning loops, but context "compilation" is concatenation with budget-aware trimming, not transformation
 - [ACE](./ace.md) — playbook-learning loop with generator, reflector, and curator roles; strongest nearby artifact-learning analogue to Autocontext, with bullet-level helpful/harmful counters but an append-heavy maintenance path
 - [Dynamic Cheatsheet](./dynamic-cheatsheet.md) — test-time adaptive memory with cumulative cheatsheet carryover and optional retrieval-synthesis variants; strong artifact-learning baseline, but the actual maintenance path is whole-document rewrite rather than structured mutation
+- [Reflexion](./reflexion.md) — verbal reinforcement loop that turns failed attempts into short natural-language plans; important early trajectory-to-artifact precedent, but with a much thinner memory lifecycle than newer systems
 
 ## Patterns Across Systems
 
