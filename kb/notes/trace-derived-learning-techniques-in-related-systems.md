@@ -1,5 +1,5 @@
 ---
-description: Broad review of Napkin, Pi Self-Learning, OpenViking, ClawVault, Autocontext, OpenClaw-RL, and trajectory learners — compares trace formats, promotion targets, and learning loops
+description: Broad review of Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, Autocontext, OpenClaw-RL, and trajectory learners — compares trace formats, promotion targets, and learning loops
 type: note
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
@@ -8,9 +8,9 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Seven code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces and where they promote the result. In the KB's newer vocabulary, the second axis is mainly a **substrate-class** choice: do traces promote into durable symbolic artifacts or into model weights?
+Eight code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces and where they promote the result. In the KB's newer vocabulary, the second axis is mainly a **substrate-class** choice: do traces promote into durable symbolic artifacts or into model weights?
 
-The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, Autocontext, and OpenClaw-RL (source paths noted in per-system reviews). The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, Autocontext, and OpenClaw-RL (source paths noted in per-system reviews). The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 ## The recurring stages
 
@@ -80,6 +80,22 @@ Two mining paths: direct assistant-turn capture into typed markdown memories, an
 
 **Scope.** Single-agent vault with session lifecycle support. Owns its vault substrate and watches session files, but does not present as a multi-tenant backend. Best understood as a workshop-memory system around one workspace.
 
+## cass-memory
+
+The only inspected system that makes cross-agent session mining a first-class feature. Structurally a two-phase extraction pipeline (diary then reflection) feeding a scored playbook.
+
+**Trigger.** Explicit CLI commands: `cm reflect` orchestrates the full pipeline (discover → diary → reflect → curate); `cm diary <session>` extracts a single session. No event-driven hooks — triggers are manual or agent-initiated. `orchestrateReflection()` in `orchestrator.ts` coordinates the multi-session flow.
+
+**Source format.** `findUnprocessedSessions()` in `cass.ts` discovers sessions via the external `cass` search engine, using `cassTimeline()` (primary) or broad keyword searches (fallback). `cassExport()` exports sessions as markdown via `cass export --format markdown`, with fallback to direct file parsing of `.jsonl`, `.json`, or `.md` files. `formatRawSession()` in `diary.ts` normalizes multiple agent formats — Claude Code JSON, Cursor, Codex CLI, Aider, Pi — into markdown. Agent identity is pattern-matched from file paths (`.claude`, `.cursor`, `.codex`, `.aider`, `.pi/agent/sessions`). Session content is truncated to 50k chars and secrets are stripped before LLM processing.
+
+**Extraction.** Two phases. Phase 1: `extractDiary()` in `llm.ts` produces a Zod-validated `DiaryEntry` with accomplishments, decisions, challenges, preferences, key learnings, tags, and search anchors — each field asks for specific file names, function names, and error messages rather than vague summaries. Diary IDs are deterministic content hashes for idempotency. Phase 2: `runReflector()` in `llm.ts` takes the diary plus existing playbook bullets plus cross-agent history and proposes `PlaybookDelta` operations: `add`, `helpful`, `harmful`, `replace`, `deprecate`, `merge`. Runs up to 3 iterations with early exit on diminishing returns; `deduplicateDeltas()` prevents duplicates within and across iterations.
+
+**Promotion.** `curatePlaybook()` in `curate.ts` applies deltas to YAML playbook files (global at `~/.cass-memory/playbook.yaml`, optional per-repo overlays). New bullets enter as `candidate` maturity. Curation checks Jaccard similarity for duplicates, detects conflicts via negation/directive markers, and reinforces existing bullets on near-matches. `getEffectiveScore()` in `scoring.ts` computes `decayedHelpful - (4 × decayedHarmful)` with exponential decay (90-day half-life). When harmful feedback exceeds a threshold, `invertToAntiPattern()` creates a new bullet prefixed "AVOID:" with `kind: "anti_pattern"`. Maturity progresses `candidate → established → proven → deprecated` based on effective score.
+
+**Reinjection.** `cm context "<task>"` retrieves relevant bullets by keyword matching, effective score, and optional embedding similarity, returning ranked rules, anti-patterns, related session history, and warnings about deprecated patterns. Cross-agent enrichment happens during diary generation: `enrichWithRelatedSessions()` queries the `cass` search engine for sessions from *other* agents that match the current diary's challenges and learnings, with access logged to `privacy-audit.jsonl`.
+
+**Scope.** Cross-agent, multi-session. Reflects over sessions from Claude Code, Cursor, Codex, Aider, and Pi within a configurable lookback window (default 7 days, up to N sessions). A single shared playbook accumulates rules from all agents, with optional per-repo overlays. `ProcessedLog` in `tracking.ts` tracks which sessions have been reflected on to enable incremental processing.
+
 ## Autocontext
 
 The clearest inspected system spanning both artifact learning and weight promotion. Mines repeated run trajectories rather than one interactive transcript.
@@ -128,13 +144,15 @@ The systems separate on two axes.
 
 **Single-session extension.** Run inside an existing agent runtime, mine the current conversation, reuse the runtime's session representation, write back into markdown artifacts. Napkin and Pi Self-Learning fit here, though Napkin is even looser — it treats the session as an opaque file and delegates extraction to a subprocess agent.
 
+**Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
+
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, AgeMem, and Trajectory-Informed Memory Generation fit here.
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense. Their backends differ, but their substrate class is the same.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense. Their backends differ, but their substrate class is the same.
 
 **Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights.
 
@@ -148,6 +166,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | Pi Self-Learning | Pi branch events: messages + tool-result interruptions |
 | OpenViking | Own typed message schema with text/context/tool parts, JSONL |
 | ClawVault | Assistant turns + incremental OpenClaw session JSONL, noise-stripped |
+| cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
 | Autocontext | Run trajectories from SQLite metrics, competitor outputs, playbooks, hints |
 | OpenClaw-RL | Live chat-completion traces + next-state feedback → training samples |
 | AgeMem | RL trajectories over memory operations + task/context rewards |
@@ -187,6 +206,7 @@ Relevant Notes:
 - [Pi Self-Learning](./related-systems/pi-self-learning.md) — source-inspected instance: branch-event mining into strict `mistakes`/`fixes` JSON plus scored promotion
 - [OpenViking](./related-systems/openviking.md) — source-inspected instance: typed session messages, commit-triggered extraction, and multi-tenant user/agent memory spaces
 - [ClawVault](./related-systems/clawvault.md) — source-inspected instance: assistant-turn capture, incremental OpenClaw session observation, scored observation ledgers, and recurrence-based weekly reflection
+- [cass-memory](./related-systems/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [Autocontext](./related-systems/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
 - [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — source-grounded and code-inspected instance: next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
 - [the fundamental split in agent memory is not storage format but who decides what to remember](./related-systems/agentic-memory-systems-comparative-review.md) — extends: the wider survey places AgeMem and other source-only systems in the broader agency and substrate design space
