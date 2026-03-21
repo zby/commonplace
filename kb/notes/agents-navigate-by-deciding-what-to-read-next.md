@@ -24,13 +24,13 @@ The pattern is the same everywhere — what varies is how much context the agent
 
 **Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context too: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
 
-**Skill descriptions** carry only what fits in a single line. Claude Code loads all descriptions at session start: "Use when the user wants to find connections between notes." That description is the entire hint; the full SKILL.md is the target. The agent decides which skill to invoke without loading its definition.
+**Skill descriptions** carry only what fits in a single line. The runtime loads all descriptions at session start: "Use when the user wants to find connections between notes." That line is the entire hint; the full definition is the target. The agent decides which skill to invoke without reading its implementation.
 
-**Search tools** split the decision in two. First the agent decides *whether to search*, guided by earlier hints: a CLAUDE.md instruction mentioning `docs/notes/`, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter here because at that second decision point, they're often all the agent has.
+**Search tools** split the decision in two. First the agent decides *whether to search*, guided by earlier hints: an instruction mentioning a directory path, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter here — at that second decision point, they're often all the agent has.
 
 ## Design implication
 
-The knowledge system should make navigation decisions as cheap as possible. Each pointer type has its own lever:
+If navigation is deciding what to read, the knowledge system should make that decision as cheap as possible. Each pointer type has its own lever:
 
 - **Inline links** need surrounding prose that explains the relationship — the prose *is* the context
 - **Index entries** need context phrases and clear thematic structure — both the phrase and the position carry information
