@@ -8,9 +8,9 @@ status: seedling
 
 # Evaluation automation is phase-gated by comprehension
 
-Optimization loops fail not because search is weak, but because they optimize whatever objective is available—including ungrounded objectives. Evaluation automation therefore follows a necessary sequence: **comprehension first, specification second, generalization third**.
+When an evaluation loop improves score without improving real behavior, the failure is often not weak search but an objective grounded too weakly in observed failure. Evaluation automation therefore follows a necessary sequence: **comprehension first, specification second, generalization third**.
 
-The gate is verifier construction. Before automation can improve output quality, someone must inspect real outputs, identify concrete failure modes, and translate those failures into discriminative judges. Without that work, optimization improves score without improving behavior.
+Comprehension is the first gate because it supplies the observations that specification turns into verifiers. Before automation can improve output quality, someone must inspect real outputs, identify concrete failure modes, and translate those failures into discriminative judges. Without that comprehension-to-specification step, optimization improves score without improving behavior.
 
 ## The three phases
 
@@ -18,13 +18,13 @@ The gate is verifier construction. Before automation can improve output quality,
 2. **Specification**: Convert observations into a failure taxonomy and evaluators, then calibrate those evaluators against manually labeled examples.
 3. **Generalization**: Run automated optimization against calibrated evaluators with broader input coverage.
 
-This sequencing explains a repeated field pattern: teams see early score gains from auto-generated tests and judges, then discover degraded real quality. The loop functions correctly; the objective is wrong.
+This sequencing matches a practitioner pattern described in one detailed field report: auto-generated tests and judges produced early score gains, then degraded real quality exposed that the objective was wrong. The loop functioned correctly; the objective did not.
 
 ## Why this is a gate, not a style preference
 
 Skipping comprehension leaves specification unconstrained by observed reality. Skipping specification leaves optimization unconstrained by discriminative checks. Both cases amplify proxy quality rather than task quality.
 
-This is why "more automation" cannot substitute for the first phase in cold-start or subjective domains. The automation loop depends on a verifier it cannot reliably bootstrap from zero context.
+This is why "more automation" cannot reliably substitute for the early verifier-construction work in cold-start or subjective domains. Automation can help once failure patterns and judges exist, but it cannot safely assume them from zero context.
 
 ## Scope limits
 
@@ -34,7 +34,7 @@ This is why "more automation" cannot substitute for the first phase in cold-star
 
 ## Practical implication
 
-Evaluation pipelines should enforce explicit stage gates before optimization:
+Evaluation pipelines should enforce explicit verifier-construction stage gates before optimization:
 
 1. Output-read pass completed on diverse inputs
 2. Failure taxonomy written from observed failures
@@ -49,6 +49,6 @@ Relevant Notes:
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — grounds: converting observed failures into reusable evaluators is spec mining
 - [specification-strategy-should-follow-where-understanding-lives](./specification-strategy-should-follow-where-understanding-lives.md) — extends: this is the evaluation-specific case where understanding emerges through observation, not upfront
 - [the-boundary-of-automation-is-the-boundary-of-verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — narrows: identifies an intra-loop boundary where optimization depends on prior verifier construction
-- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — explains: the three phases progressively harden oracle strength before heavy automation
+- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — frames (provisional — target is speculative): the three phases can be read as a local oracle-hardening sequence before heavy automation
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: calibration ensures judges have discriminative signal before amplification
-- [Ingest: Improving AI Skills with autoresearch & evals-skills](../sources/improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.ingest.md) — evidence: practitioner report where automation improved only after manual comprehension and judge calibration
+- [Ingest: Improving AI Skills with autoresearch & evals-skills](../sources/improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.ingest.md) — evidence: practitioner report where one team saw automation improve only after manual comprehension, taxonomy design, and judge calibration
