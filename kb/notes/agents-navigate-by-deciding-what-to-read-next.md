@@ -8,36 +8,36 @@ status: current
 
 # Agents navigate by deciding what to read next
 
-An agent has a task. To accomplish it, she needs information she doesn't yet have. So she reads documentation — but she can't read everything. At every step, she encounters pointers to more information and decides which to follow. That decision is the fundamental unit of navigation.
+An agent has a task and needs information she doesn't yet have. She can't read everything, so at every step she encounters pointers — links, index entries, search results, skill descriptions — and decides which to follow. That decision is the fundamental unit of navigation.
 
-## The decision
+## What makes the decision tractable
 
-Every pointer — a link, an index entry, a search tool, a skill description — asks the agent: **should I use this to find what I need?** She can never be sure before following — the hint might be misleading, the content might not deliver. The decision is always probabilistic: how likely is it that this pointer leads to something relevant, and what does it cost to find out?
+Every pointer asks the same question: **should I follow this?** She can never be sure before following. The content might not deliver. The decision is always probabilistic: how likely is this pointer to lead somewhere relevant, and what does it cost to find out?
 
-The quality of the hint determines how well the agent can estimate that likelihood. A bare pointer forces her to load the target to find out. A pointer with context lets her judge without paying that cost.
+What makes the decision tractable is *context* — the information surrounding the pointer that hints at what the target contains. A bare filename forces the agent to load the target to judge relevance. A pointer embedded in explanatory prose lets her judge without paying that cost. The more context a pointer carries, the cheaper the navigation decision.
 
-## A spectrum of context
+## How much context different pointers carry
 
-The pattern is the same everywhere. What varies is how much context the agent has at the decision point.
+The mechanism is the same everywhere — what varies is how much context the agent has at the moment of decision.
 
-**Inline links** carry the richest context. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since *thin adapters reduce coupling*, we chose..." The agent knows both *what's there* and *why it matters here* before deciding.
+**Inline links** carry the most. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since [thin adapters reduce coupling](./thin-adapters.md), we chose..." The agent knows both *what's there* and *why it matters here* before deciding.
 
-**Index entries** carry less, but more than they seem. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index itself adds implicit context: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list. The index's structure is part of the hint.
+**Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
 
-**Skill descriptions** work at global scope. Claude Code loads all descriptions at session start: "Use when the user wants to find connections between notes." The description is the hint; the full SKILL.md is the target. The agent decides which skill to invoke without loading its definition.
+**Skill descriptions** carry only what fits in a single line. Claude Code loads all descriptions at session start: "Use when the user wants to find connections between notes." The description is the entire hint; the full SKILL.md is the target. The agent decides which skill to invoke without loading its definition.
 
-**Search tools** split the decision in two. First the agent decides *whether to search* — guided by earlier hints: a CLAUDE.md instruction mentioning `docs/notes/`, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open* — guided only by titles, snippets, and descriptions. The hint to search comes before the search; the hint to pick a result comes from the results themselves. Frontmatter descriptions matter so much because at that second stage, they're all the agent has.
+**Search tools** break the pattern — they split the decision in two. First the agent decides *whether to search*, guided by earlier hints: a CLAUDE.md instruction mentioning `docs/notes/`, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter so much because at that second decision point, they're often all the agent has.
 
 ## Design implication
 
-The knowledge system should make these decisions cheap. Every mechanism has its own lever:
+If the fundamental unit of navigation is the decision to follow a pointer, then the knowledge system should make that decision as cheap as possible. Each pointer type has its own lever:
 
-- Inline links need surrounding prose that explains the relationship
-- Index entries need context phrases — and indexes need clear thematic structure
-- Skill descriptions need to say *when and why*, not just *what*
-- Notes need titles that are claims and descriptions that add information beyond them
+- **Inline links** need surrounding prose that explains the relationship — the prose *is* the context
+- **Index entries** need context phrases and clear thematic structure — both the phrase and the position carry information
+- **Skill descriptions** need to say *when and why*, not just *what* — scope is more useful than summary
+- **Notes** need titles that are claims and descriptions that add information beyond them — because search surfaces these first
 
-Prose-as-title is the shortcut that works across all of these — because [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), the pointer carries the argument by itself. But bare pointers without context force the agent to open every target, which is expensive in tokens and attention.
+[Title as claim](./title-as-claim-enables-traversal-as-reasoning.md) is the shortcut that works across all of these. When the title carries the argument, the pointer itself becomes the hint — every link text, every search result, every index entry does navigation work for free.
 
 Relevant Notes:
 
