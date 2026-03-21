@@ -1,5 +1,5 @@
 ---
-description: Context — not compute, memory, or storage — is the scarce resource in agent systems; context cost has two dimensions (volume and complexity) that require different architectural responses, making context efficiency the central design concern analogous to algorithmic complexity in traditional systems
+description: Context is the scarce resource in agent systems — not compute, memory, or storage. This note operationalizes the soft-bound premise (volume and complexity dimensions, decomposed in the soft-degradation note) into architectural responses, making context efficiency the central design concern.
 type: note
 traits: [has-external-sources]
 tags: [computational-model, foundations]
@@ -8,13 +8,13 @@ status: current
 
 # Context efficiency is the central design concern in agent systems
 
-In traditional systems, the scarce resources are compute, memory, storage, and bandwidth, and algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context is not just another resource. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. A CPU has registers, cache, RAM, disk, and network as separate tiers. An LLM has one context window. Everything competes for the same space.
+In traditional systems, the scarce resources are compute, memory, storage, and bandwidth; algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context is not just another resource. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. A CPU has registers, cache, RAM, disk, and network as separate tiers. An LLM has one context window. Everything competes for the same space.
 
-This is also an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md). When context is both unitary and hard to expand, it is the tightest design constraint; optimizing for context first prevents later choices from being forced into low-quality tradeoffs.
+Context is the lowest-degree-of-freedom resource in agent systems: unitary, impossible to tier, and hard to expand without architectural change. This is an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — optimize the tightest constraint before others, or later choices will be forced into low-quality tradeoffs.
 
-Anthropic's engineering team has converged on the same framing, defining **context engineering** as "strategies for curating and maintaining the optimal set of tokens during LLM inference" and describing context as "a critical but finite resource" with an **attention budget** that "every token depletes" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)).
+The binding constraint is soft degradation, not hard token limits — established in [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). Hard limits are visible but rarely binding; the model degrades before hitting them. This note operationalizes that premise as a cost model and set of architectural responses.
 
-Independent practitioner convergence comes from OpenAI's Codex team, where shipping 1M lines of agent-generated code required a 100-line AGENTS.md as a router with pointers to deeper docs — "a map, not a manual" — because the bottleneck was not model capability but the structure of what loaded into context ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)).
+Anthropic's engineering team has converged on the same framing, defining **context engineering** as "strategies for curating and maintaining the optimal set of tokens during LLM inference" and describing context as "a critical but finite resource" with an **attention budget** that "every token depletes" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). Independent practitioner evidence comes from OpenAI's Codex team: shipping 1M lines of agent-generated code required a 100-line AGENTS.md as a router with pointers to deeper docs — "a map, not a manual" — because the bottleneck was not model capability but the structure of what loaded into context ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)).
 
 One property of the medium intensifies this scarcity: natural language has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md) with no enforced boundaries — not between instructions and data ([homoiconicity](./llm-context-is-a-homoiconic-medium.md)), not between scopes, not between priority levels. Extra context doesn't just waste space — it can dilute instructions, contaminate scopes, and distort interpretation.
 
@@ -26,27 +26,15 @@ Scarce attention as a central design constraint is well-established:
 - **Working memory** (Miller, 1956; Cowan, 2001) — limited capacity where everything competes for slots. Context windows are working memory for agents.
 - **Information overload** (Toffler, 1970) — too much information degrades decision quality, not just slows it.
 
-What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity that the next section develops.
+What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity.
 
 **TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — Paulsen partially answers the degradation-curve question with task-dependent MECW measurements, but the broader attention-economics / working-memory literature and the optimal-loading-strategy question remain open.
 
-## Two dimensions of context cost
+## Volume and complexity
 
-Context efficiency is not only about how many tokens are in the window. It is also about what those tokens demand of the model. Conflating the two leads to architectural mistakes.
+The soft bound operates across two dimensions — volume (how many tokens) and complexity (how hard they are to use) — decomposed in [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). The dimensions are distinguishable but not fully separable; reducing volume often reduces complexity as a side effect. Most architectural responses affect both, but each has a primary target.
 
-### Volume: how many tokens
-
-More tokens dilute attention. The "lost in the middle" finding ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) established primacy and recency bias. Anthropic calls this **context rot** — degradation in recall and reasoning as the window fills. The resource doesn't just run out; it degrades before it runs out. Practitioner evidence confirms dilution as the primary concern: Koylan's Personal Brain OS reduced token usage by 40% by splitting merged modules into isolated scopes ([Koylan, 2026](../sources/koylanai-personal-brain-os.md)) — a pure volume intervention with outsized impact on agent reliability.
-
-### Complexity: how hard the tokens are to use
-
-Traditional systems execute instructions at constant cost. LLMs pay interpretation overhead proportional to context complexity. Giving an agent a procedure costs more than giving it the answer that procedure would have produced. Every layer of [indirection costs context and interpretation overhead](./indirection-is-costly-in-llm-instructions.md) on every read.
-
-ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) shows complexity-driven collapse at 5,331 tokens, far below context limits, while Paulsen ([2025](../sources/paulsen-maximum-effective-context-window-mecw.md)) shows that usable token volume is much smaller than advertised and shifts by problem type. [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops that synthesis. The local point here is simpler: large windows do not remove complexity costs, and raw token count alone does not predict usable context.
-
-### The interaction
-
-The two dimensions interact but are analytically distinct. High volume often amplifies complexity costs, yet either dimension can dominate in different regimes.
+Practitioner evidence confirms the volume dimension as a primary concern: Koylan's Personal Brain OS reduced token usage by 40% by splitting merged modules into isolated scopes ([Koylan, 2026](../sources/koylanai-personal-brain-os.md)) — a pure volume intervention with outsized impact on agent reliability. The key point for this note: large windows do not remove complexity costs, and raw token count alone does not predict usable context.
 
 ## Growing windows address volume but not complexity
 
@@ -56,18 +44,18 @@ Even for volume, the gains are partial. Context demand grows with task ambition 
 
 ## Architectural responses
 
-Context scarcity produces most architectural patterns in agent system design. Each responds to one or both dimensions:
+Context scarcity produces most architectural patterns in agent system design. Most responses affect both dimensions, but each has a primary target:
 
-- **Frontloading and partial evaluation** (complexity) — [pre-compute static parts](./frontloading-spares-execution-context.md) so the agent receives answers instead of procedures to derive them
-- **Progressive disclosure** (volume) — the [instruction specificity principle](./instruction-specificity-should-match-loading-frequency.md) matches instruction specificity to loading frequency; [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) load only when working in that directory
-- **Context management** (volume) — compaction, observation masking, and sub-agent delegation manage accumulation in long-running tasks ([JetBrains Research, 2025](https://blog.jetbrains.com/research/2025/12/efficient-context-management/))
+- **Frontloading and partial evaluation** (primarily complexity) — [pre-compute static parts](./frontloading-spares-execution-context.md) so the agent receives answers instead of procedures to derive them
+- **Progressive disclosure** (both) — the [instruction specificity principle](./instruction-specificity-should-match-loading-frequency.md) matches instruction specificity to loading frequency; [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) load only when working in that directory. Reduces volume directly and complexity as a side effect — fewer loaded instructions means less scope contamination and fewer competing directives
+- **Context management** (primarily volume) — compaction, observation masking, and sub-agent delegation manage accumulation in long-running tasks ([JetBrains Research, 2025](https://blog.jetbrains.com/research/2025/12/efficient-context-management/))
 - **Sub-agent isolation** (both) — [sub-agents provide lexically scoped frames](./llm-context-is-composed-without-scoping.md) with only what the caller explicitly passes, addressing volume and complexity simultaneously
-- **Navigation design** (volume) — [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md); prose-as-title and retrieval-oriented descriptions let the agent decide "don't follow this" without loading the target
-- **Instruction notes over data dumps** (complexity) — frontload the caller's judgment about which documents matter and what question to answer, rather than passing raw material
+- **Navigation design** (primarily volume) — [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md); prose-as-title and retrieval-oriented descriptions let the agent decide "don't follow this" without loading the target
+- **Instruction notes over data dumps** (primarily complexity) — frontload the caller's judgment about which documents matter and what question to answer, rather than passing raw material
 
 If context is the only fundamental scarce resource, then the natural computational model is [symbolic scheduling over bounded LLM calls](./bounded-context-orchestration-model.md): exact bookkeeping lives in code, while bounded context is reserved for semantic judgment.
 
-Context efficiency should be evaluated at design time, not treated as an optimisation to apply later. Architectural choices — what loads when, what gets frontloaded, where sub-agent boundaries go — determine context efficiency structurally and are hard to retrofit.
+Context efficiency should be evaluated at design time, not treated as an optimization to apply later. Architectural choices — what loads when, what gets frontloaded, where sub-agent boundaries go — determine context efficiency structurally and are hard to retrofit.
 
 ---
 
@@ -84,6 +72,7 @@ Sources:
 Relevant Notes:
 
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — application: this note treats context as the lowest-degree-of-freedom resource and derives architecture priorities from that constraint
+- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — **grounds**: establishes the binding-constraint premise and two-dimensions decomposition this note operationalizes as architectural responses
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the most direct response to complexity-dimension context cost
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — mechanism: the cost model that makes indirection expensive in context but free in code
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — application: progressive disclosure as a response to volume-dimension context cost
