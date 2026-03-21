@@ -26,6 +26,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — Rabanser et al.'s four reliability dimensions each target a different oracle question; each can be hardened independently
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — crossing from augmentation to automation requires per-instance discrimination, which is empirically stagnant; external oracle construction is the practical path
 - [the-boundary-of-automation-is-the-boundary-of-verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: three independent lines of evidence (oracle theory, labor economics, frontier-lab predictions) converge on verification cost as the structural determinant of automation
+- [evaluation automation is phase-gated by comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — phase model inside evaluation loops: automation only generalizes after manual comprehension and calibrated specification produce discriminative judges
 
 ## Aggregation & Correction
 
@@ -53,4 +54,3 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
 
 ## Other tagged notes <!-- generated -->
-

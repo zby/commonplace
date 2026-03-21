@@ -47,6 +47,7 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the theoretical gradient this note claims is a general principle; provides the vocabulary (hard/soft/interactive/delayed/no oracle)
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — foundation: identifies the mechanism (per-instance discrimination, not aggregate accuracy) that explains why the boundary exists
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — exemplifies: KB curation stalls at the same boundary — judgment-heavy mutations lack oracles
+- [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — refines: inside one optimization loop, verifier construction is itself staged (comprehension -> specification -> generalization)
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — enables: the manufacturing step for building oracles where none exist
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: amplifying weak oracles into useful ones
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines — the bitter lesson is strongest where oracles are hardest

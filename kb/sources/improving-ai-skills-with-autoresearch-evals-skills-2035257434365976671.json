@@ -1,0 +1,218 @@
+{
+  "source": "https://x.com/nurijanian/status/2035257434365976671",
+  "captured": "2026-03-21T19:45:41.107797+00:00",
+  "type": "x-article",
+  "status_id": "2035257434365976671",
+  "conversation_id": "2035257434365976671",
+  "target_post": {
+    "id": "2035257434365976671",
+    "article": {
+      "title": "Improving AI Skills with autoresearch & evals-skills",
+      "cover_media": "3_2034580649420681216",
+      "preview_text": "I\u2019ve been trying to improve my AI skills using Auto Research, a library @karpathy shared for automatically improving AI prompts through repeated experimentation.\n \nI saw Ole on X share his fork of",
+      "media_entities": [
+        "3_2035243140379181056",
+        "3_2035244280126771200",
+        "3_2035243435192721408",
+        "3_2035243101795885057",
+        "3_2035244193585799171",
+        "3_2035244529943744512",
+        "3_2035244570515243008"
+      ],
+      "plain_text": "I\u2019ve been trying to improve my AI skills using Auto Research, a library @karpathy shared for automatically improving AI prompts through repeated experimentation.\n \nI saw Ole on X share his fork of auto-research turned into a skill that is meant to tune other skills, so I decided to try that.\nThe idea is straightforward: define some test inputs, write judges that score outputs, let the optimization loop run, wake up to a better skill.\nI ran it three times before I understood what I was actually doing wrong.\nTake one, I just pointed it at a skill.\nI picked a new set of skills I\u2019d built and was about to add to my library, handed it to Auto Research, and let the tooling do everything else. It generated the test inputs. It wrote the judges. It ran the optimization loop overnight.\nThe scores were up shortly. It all looked great until I looked at what's changed. \n \nUnfortunately, the skills were far from improved.\nThe problem wasn\u2019t the tool. Auto Research did exactly what it was designed to do: run a systematic optimization loop against whatever criteria you give it.\nThe issue was the criteria. They were machine-generated with no model of what real failure looked like, no grounding in actual observed behavior.\n \nSo the loop ran hundreds of experiments and got very good at satisfying those criteria. The skill got better at the wrong things.\nTake two, I wired in @HamelHusain's eval skills for input generation.\nHamel has done substantial work on the evals problem with @sh_reya.\n \nThe skill for synth eval generation is more principled than just asking a model to come up with test cases: you define dimensions of the input space (what feature the user wants, what persona they are, what scenario they\u2019re in), then generate structured tuples across those combinations.\n \nMy inputs got genuinely better: more diverse, better coverage of edge cases, less vibed.\nBut I still left generation to the tooling again. The inputs improved, but not by much, because the LLM was still vibing it. I wasn\u2019t providing any input or correction manually. The judges also didn\u2019t improve.\nAnd the judges are where comprehension lives.\nI still hadn\u2019t personally read any outputs. Still hadn\u2019t built any intuition from observation. The machine had better inputs to work against and still no real model of failure.\nTake three, I read the Evals course reader \ud83d\ude11\n \nI imported Hamel\u2019s evals course reader PDF into NotebookLM and worked through it using the NotebookLM CLI in Cursor before running anything.\nFrom taking the course I remembered the Three Gulfs, and the Analyze-Measure-Improve lifecycle that\u2019s built around them.\nThe Gulf of Comprehension is the gap between what you think your system does and what it actually does. What failure actually looks like in the outputs, which cases break, in which ways, for which reasons. It\u2019s the first gulf because, as far as I can tell, it has to be closed before anything else can work. No automation can close it. Only reading closes it.\nThe Gulf of Specification is the gap between what you want your system to do and what your judges actually measure. This seems to be the direct consequence of skipping comprehension. If you haven\u2019t seen real failure, I don\u2019t think you can write a judge that measures what matters. In takes one and two, my judges were measuring something they imagined. Optimizing against that was optimizing against a fantasy.\nThe Gulf of Generalization is the gap between how the system performs on your test inputs and how it performs on inputs it\u2019s never seen. This is the gulf that Auto Research\u2019s optimization loop actually addresses. But only if the first two are already closed.\nThe course is blunt about this: \u201cIf you are not willing to look at some data manually on a regular cadence you are wasting your time with evals.\u201d\nIn takes one and two, I was wasting my time with evals.\nThe manual work to close the Gulf of Comprehension is what Hamel calls error analysis \u2014 Phase 1 of the Analyze-Measure-Improve lifecycle. It works like this:\nOpen coding. Run your skill on a set of diverse inputs and read every output. Don\u2019t categorize yet. Just write freeform notes on what\u2019s wrong. Which outputs are too generic. Which miss constraints the input spelled out. Which are off in a way you can feel but couldn\u2019t have predicted. This is where you build intuition about failure that no tool can build for you.\nAxial coding. Take those freeform notes and group them into a coherent failure taxonomy: a small set of distinct, binary failure categories. \u201cToo abstract,\u201d \u201cmissed enterprise constraints,\u201d \u201cwrong level of specificity.\u201d These become the thing your judges should actually measure.\nWrite judges grounded in the taxonomy, written against what you saw.\nValidate the judges. Build a mini golden dataset: manually score fifteen to twenty outputs per criterion before trusting any judge to run autonomously. This is how you calibrate the Gulf of Specification: you check whether the judge agrees with your own labels on cases you\u2019ve already reasoned about.\nThen you run Auto Research, and only then.\nFor take three, I ran this sequence on the skill I\u2019d been trying to improve.\nI varied the inputs.\nThen I read everything it output. \nI coded failures (freeform in chat, which is not right), and the LLM grouped them, built the taxonomy, wrote judges against it, and I validated them manually on fifteen outputs. Then the loop ran.\n \nApparently this is what gave the skill all the extra juice:\n \nSo as you can see, even on take 3, I still cheated and didn\u2019t go all the way, and this is why the final result is still not where I want the skill to be. But the point still stands.\nThe pattern that repeated across all three takes: I kept wanting to skip the comprehension step and get to the automated part. It felt like moving faster. But I think I was just making the machine efficient at measuring the wrong things. \nThe challenge with evals is that the objective function is so subjective that you basically cannot get away from setting up the measurement system first manually. (Unless you can upload your taste with all the nuances into an auto-evaluator from a cold start, maybe in the future.) The judges later down the line can do some of the \"auto\" part, but that's when you're ready to productionize their judgement.\nI don\u2019t think you can automate your way past understanding. Someone has to close that first gulf, and in my experience, that someone is always you.\nThe Product Equivalent\nPMs do the same thing with product decisions that I was doing with my AI evals.\nSkipping the manual comprehension phase, just jumping to solutions or success metrics, then measuring hard against criteria that don\u2019t reflect the actual problem. \"Users need proactive insights, it's obvious.\" \"We will measure DAU/MAU.\"\nThat\u2019s how you end up shipping a feature because you\u2019re confident about what users want. Setting up dashboards before you understand what you\u2019re measuring. Running discovery without thinking deeply about what you need to learn, why and how, without personally synthesising enough to develop real intuition about where things break.\nThe Gulf of Comprehension has a product equivalent: the gap between what you think users struggle with and what they actually struggle with.\nIt doesn\u2019t close from a survey dashboard. It closes when you\u2019ve personally read enough customer conversations, support tickets, and interviews to develop a sense for failure. That feeling is what makes your assumptions specific enough to actually test and solutions to have fit.",
+      "entities": {
+        "mentions": [
+          {
+            "start": 72,
+            "end": 81,
+            "username": "karpathy"
+          },
+          {
+            "start": 21,
+            "end": 33,
+            "username": "HamelHusain"
+          },
+          {
+            "start": 58,
+            "end": 66,
+            "username": "sh_reya"
+          }
+        ],
+        "tweets": [
+          {
+            "id": "1971245503972245982"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://maven.com/parlance-labs/evals"
+          },
+          {
+            "text": "https://github.com/jacob-bd/notebooklm-mcp-cli"
+          },
+          {
+            "text": "https://abs-0.twimg.com/emoji/v2/svg/1f611.svg"
+          },
+          {
+            "text": "https://github.com/hamelsmu/evals-skills"
+          },
+          {
+            "text": "https://github.com/karpathy/autoresearch"
+          },
+          {
+            "text": "https://x.com/itsolelehmann/status/2033919415771713715"
+          },
+          {
+            "text": "https://maven.com/parlance-labs/evals"
+          },
+          {
+            "text": "https://www.prodmgmt.world/products/ai-skills?utm_source=x&utm_medium=article&utm_campaign=autoresearc"
+          }
+        ]
+      }
+    },
+    "edit_history_tweet_ids": [
+      "2035257434365976671"
+    ],
+    "conversation_id": "2035257434365976671",
+    "author_id": "999056610063351808",
+    "created_at": "2026-03-21T07:29:20.000Z",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/THBioErFj7",
+          "expanded_url": "http://x.com/i/article/2034580623201824768",
+          "display_url": "x.com/i/article/2034\u2026",
+          "status": 500,
+          "unwound_url": "http://x.com/i/article/2034580623201824768"
+        }
+      ]
+    },
+    "text": "https://t.co/THBioErFj7"
+  },
+  "posts": [
+    {
+      "article": {
+        "preview_text": "I\u2019ve been trying to improve my AI skills using Auto Research, a library @karpathy shared for automatically improving AI prompts through repeated experimentation.\n \nI saw Ole on X share his fork of",
+        "entities": {
+          "mentions": [
+            {
+              "start": 72,
+              "end": 81,
+              "username": "karpathy"
+            },
+            {
+              "start": 21,
+              "end": 33,
+              "username": "HamelHusain"
+            },
+            {
+              "start": 58,
+              "end": 66,
+              "username": "sh_reya"
+            }
+          ],
+          "tweets": [
+            {
+              "id": "1971245503972245982"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://maven.com/parlance-labs/evals"
+            },
+            {
+              "text": "https://github.com/jacob-bd/notebooklm-mcp-cli"
+            },
+            {
+              "text": "https://abs-0.twimg.com/emoji/v2/svg/1f611.svg"
+            },
+            {
+              "text": "https://github.com/hamelsmu/evals-skills"
+            },
+            {
+              "text": "https://github.com/karpathy/autoresearch"
+            },
+            {
+              "text": "https://x.com/itsolelehmann/status/2033919415771713715"
+            },
+            {
+              "text": "https://maven.com/parlance-labs/evals"
+            },
+            {
+              "text": "https://www.prodmgmt.world/products/ai-skills?utm_source=x&utm_medium=article&utm_campaign=autoresearc"
+            }
+          ]
+        },
+        "cover_media": "3_2034580649420681216",
+        "title": "Improving AI Skills with autoresearch & evals-skills",
+        "plain_text": "I\u2019ve been trying to improve my AI skills using Auto Research, a library @karpathy shared for automatically improving AI prompts through repeated experimentation.\n \nI saw Ole on X share his fork of auto-research turned into a skill that is meant to tune other skills, so I decided to try that.\nThe idea is straightforward: define some test inputs, write judges that score outputs, let the optimization loop run, wake up to a better skill.\nI ran it three times before I understood what I was actually doing wrong.\nTake one, I just pointed it at a skill.\nI picked a new set of skills I\u2019d built and was about to add to my library, handed it to Auto Research, and let the tooling do everything else. It generated the test inputs. It wrote the judges. It ran the optimization loop overnight.\nThe scores were up shortly. It all looked great until I looked at what's changed. \n \nUnfortunately, the skills were far from improved.\nThe problem wasn\u2019t the tool. Auto Research did exactly what it was designed to do: run a systematic optimization loop against whatever criteria you give it.\nThe issue was the criteria. They were machine-generated with no model of what real failure looked like, no grounding in actual observed behavior.\n \nSo the loop ran hundreds of experiments and got very good at satisfying those criteria. The skill got better at the wrong things.\nTake two, I wired in @HamelHusain's eval skills for input generation.\nHamel has done substantial work on the evals problem with @sh_reya.\n \nThe skill for synth eval generation is more principled than just asking a model to come up with test cases: you define dimensions of the input space (what feature the user wants, what persona they are, what scenario they\u2019re in), then generate structured tuples across those combinations.\n \nMy inputs got genuinely better: more diverse, better coverage of edge cases, less vibed.\nBut I still left generation to the tooling again. The inputs improved, but not by much, because the LLM was still vibing it. I wasn\u2019t providing any input or correction manually. The judges also didn\u2019t improve.\nAnd the judges are where comprehension lives.\nI still hadn\u2019t personally read any outputs. Still hadn\u2019t built any intuition from observation. The machine had better inputs to work against and still no real model of failure.\nTake three, I read the Evals course reader \ud83d\ude11\n \nI imported Hamel\u2019s evals course reader PDF into NotebookLM and worked through it using the NotebookLM CLI in Cursor before running anything.\nFrom taking the course I remembered the Three Gulfs, and the Analyze-Measure-Improve lifecycle that\u2019s built around them.\nThe Gulf of Comprehension is the gap between what you think your system does and what it actually does. What failure actually looks like in the outputs, which cases break, in which ways, for which reasons. It\u2019s the first gulf because, as far as I can tell, it has to be closed before anything else can work. No automation can close it. Only reading closes it.\nThe Gulf of Specification is the gap between what you want your system to do and what your judges actually measure. This seems to be the direct consequence of skipping comprehension. If you haven\u2019t seen real failure, I don\u2019t think you can write a judge that measures what matters. In takes one and two, my judges were measuring something they imagined. Optimizing against that was optimizing against a fantasy.\nThe Gulf of Generalization is the gap between how the system performs on your test inputs and how it performs on inputs it\u2019s never seen. This is the gulf that Auto Research\u2019s optimization loop actually addresses. But only if the first two are already closed.\nThe course is blunt about this: \u201cIf you are not willing to look at some data manually on a regular cadence you are wasting your time with evals.\u201d\nIn takes one and two, I was wasting my time with evals.\nThe manual work to close the Gulf of Comprehension is what Hamel calls error analysis \u2014 Phase 1 of the Analyze-Measure-Improve lifecycle. It works like this:\nOpen coding. Run your skill on a set of diverse inputs and read every output. Don\u2019t categorize yet. Just write freeform notes on what\u2019s wrong. Which outputs are too generic. Which miss constraints the input spelled out. Which are off in a way you can feel but couldn\u2019t have predicted. This is where you build intuition about failure that no tool can build for you.\nAxial coding. Take those freeform notes and group them into a coherent failure taxonomy: a small set of distinct, binary failure categories. \u201cToo abstract,\u201d \u201cmissed enterprise constraints,\u201d \u201cwrong level of specificity.\u201d These become the thing your judges should actually measure.\nWrite judges grounded in the taxonomy, written against what you saw.\nValidate the judges. Build a mini golden dataset: manually score fifteen to twenty outputs per criterion before trusting any judge to run autonomously. This is how you calibrate the Gulf of Specification: you check whether the judge agrees with your own labels on cases you\u2019ve already reasoned about.\nThen you run Auto Research, and only then.\nFor take three, I ran this sequence on the skill I\u2019d been trying to improve.\nI varied the inputs.\nThen I read everything it output. \nI coded failures (freeform in chat, which is not right), and the LLM grouped them, built the taxonomy, wrote judges against it, and I validated them manually on fifteen outputs. Then the loop ran.\n \nApparently this is what gave the skill all the extra juice:\n \nSo as you can see, even on take 3, I still cheated and didn\u2019t go all the way, and this is why the final result is still not where I want the skill to be. But the point still stands.\nThe pattern that repeated across all three takes: I kept wanting to skip the comprehension step and get to the automated part. It felt like moving faster. But I think I was just making the machine efficient at measuring the wrong things. \nThe challenge with evals is that the objective function is so subjective that you basically cannot get away from setting up the measurement system first manually. (Unless you can upload your taste with all the nuances into an auto-evaluator from a cold start, maybe in the future.) The judges later down the line can do some of the \"auto\" part, but that's when you're ready to productionize their judgement.\nI don\u2019t think you can automate your way past understanding. Someone has to close that first gulf, and in my experience, that someone is always you.\nThe Product Equivalent\nPMs do the same thing with product decisions that I was doing with my AI evals.\nSkipping the manual comprehension phase, just jumping to solutions or success metrics, then measuring hard against criteria that don\u2019t reflect the actual problem. \"Users need proactive insights, it's obvious.\" \"We will measure DAU/MAU.\"\nThat\u2019s how you end up shipping a feature because you\u2019re confident about what users want. Setting up dashboards before you understand what you\u2019re measuring. Running discovery without thinking deeply about what you need to learn, why and how, without personally synthesising enough to develop real intuition about where things break.\nThe Gulf of Comprehension has a product equivalent: the gap between what you think users struggle with and what they actually struggle with.\nIt doesn\u2019t close from a survey dashboard. It closes when you\u2019ve personally read enough customer conversations, support tickets, and interviews to develop a sense for failure. That feeling is what makes your assumptions specific enough to actually test and solutions to have fit.",
+        "media_entities": [
+          "3_2035243140379181056",
+          "3_2035244280126771200",
+          "3_2035243435192721408",
+          "3_2035243101795885057",
+          "3_2035244193585799171",
+          "3_2035244529943744512",
+          "3_2035244570515243008"
+        ]
+      },
+      "conversation_id": "2035257434365976671",
+      "id": "2035257434365976671",
+      "created_at": "2026-03-21T07:29:20.000Z",
+      "edit_history_tweet_ids": [
+        "2035257434365976671"
+      ],
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/THBioErFj7",
+            "expanded_url": "http://x.com/i/article/2034580623201824768",
+            "display_url": "x.com/i/article/2034\u2026",
+            "status": 500,
+            "unwound_url": "http://x.com/i/article/2034580623201824768"
+          }
+        ]
+      },
+      "text": "https://t.co/THBioErFj7",
+      "author_id": "999056610063351808"
+    }
+  ],
+  "users": {
+    "999056610063351808": {
+      "id": "999056610063351808",
+      "name": "George from \ud83d\udd79prodmgmt.world",
+      "username": "nurijanian"
+    },
+    "1987673444365045760": {
+      "id": "1987673444365045760",
+      "name": "Vaclav Miliz\u00e9",
+      "username": "clwdbot"
+    },
+    "1553496396464005127": {
+      "id": "1553496396464005127",
+      "name": "Jeremy Longshore",
+      "username": "AsphaltCowb0y"
+    },
+    "1916904726295453696": {
+      "id": "1916904726295453696",
+      "name": "Nav Toor",
+      "username": "heynavtoor"
+    },
+    "1790141603497017345": {
+      "id": "1790141603497017345",
+      "name": "Myttle",
+      "username": "myttle_web3"
+    },
+    "383459050": {
+      "id": "383459050",
+      "name": "Dan Balcauski",
+      "username": "dan_balcauski"
+    }
+  },
+  "thread_fetch_error": null
+}
