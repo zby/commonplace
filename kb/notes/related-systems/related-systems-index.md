@@ -40,6 +40,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [ExpeL](./expel.md) — cross-task experiential learning pipeline with separate trajectory gathering, rule extraction, prompt-time trace retrieval, and explicit `ADD`/`EDIT`/`REMOVE`/`AGREE` rule maintenance; clearest trajectory-to-rule artifact-learning example in this queue
 - [Voyager](./voyager.md) — embodied lifelong-learning loop with automatic curriculum, critic-gated retries, and promotion of successful trajectories into retrievable JavaScript skills; clearest executable-artifact learning system in this queue
 - [Agent-R](./agent-r.md) — iterative self-training pipeline that mines MCTS search trees into corrected conversation traces and fine-tuning data; clearest search-to-weights learning system in this queue
+- [cass-memory](./cass_memory_system.md) — cross-agent procedural memory with three-layer cognitive architecture (episodic/working/procedural), confidence-decayed playbook bullets, and trauma guard; closest production sibling to ACE's playbook-learning loop, with genuine cross-agent session mining
 
 ## Patterns Across Systems
 
@@ -56,6 +57,7 @@ The divergences are more revealing:
 - **Formalization level** — custom DSL (thalo) vs YAML conventions (commonplace) vs prose instructions (Agent-Skills)
 - **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan); SAGE enforces with cryptographic gates (signed transactions, validator quorum, RBAC clearance levels) — two very different enforcement models, both structurally enforced rather than instructed
 - **Access control** — SAGE has structured multi-agent RBAC (clearance levels, domain-scoped permissions, on-chain agent identity); Cognee has relational ACLs with tenant isolation and per-dataset permissions; most other systems either have no access control or rely on filesystem permissions
+- **Cross-agent knowledge transfer** — most systems are single-agent or agent-agnostic; cass-memory is the first reviewed system to make cross-agent session mining a first-class feature, indexing logs from Claude Code, Cursor, Codex, Aider, and others into a shared playbook
 - **Self-referentiality** — only our KB is simultaneously a knowledge system and a knowledge base about knowledge systems
 
 ## Open Questions
