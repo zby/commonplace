@@ -12,25 +12,25 @@ An agent has a task and needs information she doesn't yet have. She can't read e
 
 ## What makes the decision tractable
 
-Every pointer asks the same question: **should I follow this?** She can never be sure before following. The content might not deliver. The decision is always probabilistic: how likely is this pointer to lead somewhere relevant, and what does it cost to find out?
+Every pointer asks the same question: **should I follow this?** The agent can never be sure before following — the content might not deliver. So the decision is always probabilistic: how likely is this pointer to lead somewhere relevant, and what does it cost to find out?
 
-What makes the decision tractable is *context* — the information surrounding the pointer that hints at what the target contains. A bare filename forces the agent to load the target to judge relevance. A pointer embedded in explanatory prose lets her judge without paying that cost. The more context a pointer carries, the cheaper the navigation decision.
+What makes it tractable is *context* — information surrounding the pointer that hints at what the target contains. A bare filename forces the agent to load the target just to judge relevance. A pointer embedded in explanatory prose lets her judge without paying that cost. The more context a pointer carries, the cheaper the navigation decision.
 
 ## How much context different pointers carry
 
-The mechanism is the same everywhere — what varies is how much context the agent has at the moment of decision.
+The pattern is the same everywhere — what varies is how much context the agent gets at the moment of decision.
 
-**Inline links** carry the most. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since [thin adapters reduce coupling](./thin-adapters.md), we chose..." The agent knows both *what's there* and *why it matters here* before deciding.
+**Inline links** carry the most. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since [thin adapters reduce coupling](./thin-adapters.md), we chose..." The agent knows both what's there and why it matters before deciding.
 
-**Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
+**Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context too: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
 
-**Skill descriptions** carry only what fits in a single line. Claude Code loads all descriptions at session start: "Use when the user wants to find connections between notes." The description is the entire hint; the full SKILL.md is the target. The agent decides which skill to invoke without loading its definition.
+**Skill descriptions** carry only what fits in a single line. Claude Code loads all descriptions at session start: "Use when the user wants to find connections between notes." That description is the entire hint; the full SKILL.md is the target. The agent decides which skill to invoke without loading its definition.
 
-**Search tools** break the pattern — they split the decision in two. First the agent decides *whether to search*, guided by earlier hints: a CLAUDE.md instruction mentioning `docs/notes/`, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter so much because at that second decision point, they're often all the agent has.
+**Search tools** split the decision in two. First the agent decides *whether to search*, guided by earlier hints: a CLAUDE.md instruction mentioning `docs/notes/`, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter here because at that second decision point, they're often all the agent has.
 
 ## Design implication
 
-If the fundamental unit of navigation is the decision to follow a pointer, then the knowledge system should make that decision as cheap as possible. Each pointer type has its own lever:
+The knowledge system should make navigation decisions as cheap as possible. Each pointer type has its own lever:
 
 - **Inline links** need surrounding prose that explains the relationship — the prose *is* the context
 - **Index entries** need context phrases and clear thematic structure — both the phrase and the position carry information
