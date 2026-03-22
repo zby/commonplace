@@ -1,0 +1,532 @@
+{
+  "source": "https://x.com/neural_avb/status/2035040781074145412",
+  "captured": "2026-03-22T12:45:38.021318+00:00",
+  "type": "x-article",
+  "status_id": "2035040781074145412",
+  "conversation_id": "2035040781074145412",
+  "target_post": {
+    "article": {
+      "plain_text": "I have spent a decent chunk of last month implementing RLMs from scratch, and producing a 50 minute tutorial video on it. Throughout the process, I responded to 100+ questions on Youtube and X about RLMs. This article is a summary of what I learned answering those questions, and the specific nuances about RLMs that made me go \"aha\" when I was working on this project.\nAt the end of the article, I will also add a little FAQ on the common questions I got, and try my best to answer them clearly.\n \n\n1. Of all the complicated experiments I ran\n... the most enlightening was this stupid experiment where I asked an RLM to: \n\"Generate 50 names of fruits and count the number of R in each, return as a dictionary\"\nAnd a more advanced variation of the problem (let's called it Problem 2):\n\"Generate a dictionary of different categories: fruits, countries, animals. \n\nFor each category, generate 50 names of that and count the number of R in each, return as a nested dictionary\"\nFor problem 1, the expected output is something like:\n{\"strawberry\": 3, \"berry\": 2, ... \"grape\": 1}\n\nAnd for problem 2 it is something like:\n{\n    \"fruits\": {\"strawberry\": 3, \"berry\": 2, ... \"grape\": 1},\n    \"countries\": {\"united states of america\": 1, \"russia\": 1, ... \"france\": 1}\n    \"animals\": {\"kangaroo\": 1, \"tiger\": 1\", ... \"deer\": 1},\n}\n\nIt's a silly problem, but the way an RLM can solve this problem, vs other architectures like ReAct or CodeAct, etc is fundamentally different. \n\n2. Agentic Landscape\n2.1 Direct Generation\nThe first method is just direct generation. The LLM \"thinks\" about the user's request and auto-regressively generates a dictionary.\nNo harness, no scaffold, just a direct next-word prediction.\nProblem with this approach:\nLLM has no way to verify if its correct\nLLM is likely gonna be wrong because fundamentally letter counting is not a \"next word prediction\" problem.\nChances of hallucination or errors are high, even if the underlying LLM is intelligent.\nThis method will really test the LLM's skills just on Problem 1.\n\nIt is likely just straight up fail on Problem 2.\n\n2.2 Retrieval Augmented Generation (RAG)\nRAGs only work on retrieval tasks. Basically, given a query, we will perform a semantic search over a corpus of documents, get a list of highly similar documents, and use this as context to generate an answer to the user's query. \nThe best case scenario for our \"dictionary of fruit name r counting problem\" is: if you somehow had a database of fruit names and replaced semantic search with some kind of a specific \"r\" search - but honestly this is no niche that RAG is not a good fit for this problem.\nProblem with this approach:\nRAGs are famous but they are simply not built for general tasks like these.\n\n2.3 ReAct (Reasoning and Acting)\nThis is what we call tool calling these days. The LLM has access to a list of \"functions\" that they can call. Each function has a predefined \"schema\", that is a list of input and their datatypes.\nFor example, you could give a simple tool to the LLM that is just:\n \nUsing the above idea, the ReAct agent will be able to do the following:\nGenerate a list of fruit names\nUse the tool to pass each fruit name and receive the output integer\nFrom it's output memory reconstruct the dictionary of which fruit got what count and then return.\nThe stack trace of such a transaction would look like this:\n \nYou see what the problems are right?\nYou have to define a function `count_alphabet_in_r` before hand for this specific use-case.\nIf you don't define a function, the agent just falls back to the old way (i.e. straight generation).\nThis guarantees that the LLM has some hint about WHAT the output is, but the LLM still has to generate the tokens one at a time from it's message history. We haven't eliminated stochastic generation with this, we have just given the LLM better context.\nThe problem compounds when you extend it to the multi-category setting of Problem 2.\n\nLLM has to repeat a long trace of function calls and remember what happened at each turn and generate the answers token by token.\nAs an engineer, ReAct is great if you developing narrow applications, where you want the agent to have access to specific tools (web search, document search, calculator, terminal access, file edit, diff applier etc), but you will rarely develop a general agent and optimize for niche skills like these.\nFor general agents, only those universal tools are good. You are not gonna write tools like `count_alphabet_in_r`.\n\n2.4 CodeAct\nCodeAct allows the LLM to write a piece of code to externally interact with a system. \n \nMeaning you don't need to write exact tools anymore. You can just give the LLM the ability to write any python code and execute it in a sandboxed terminal environment, read the results and generate the output.\nIn other words, the tool call is to write a python functon and execute it!\nIt will go something like this:\n \nSo how CodeAct works is like:\nCodeAct reads the full user message (just like other methods we discussed before)\nLLM thinks, writes, and run code or arbitrary terminal commands!\nLLM loads the the output of the code into it's context window\nGenerate result given what it read\nOnce again problem compounds when you extend it to the multi-category setting of Problem 2. \n\nThe main reason for that is main agent has to do all the work by itself.\nVanilla CodeAct does not split up work into multiple subagents. Let's see how this can be done with subagents.\n\n2.5 CodeAct + Subagents\nNow we are talking about some serious power.\nSubagent architectures are rather simple. There is a main agent and they can launch smaller agents to perform sub-tasks. \nEach subagent are also CodeAct agents that does whatever tasks they are given, and returns output back to the subagents.\nThe main agent's work is to consolidate the final output of the subagents and move forward with the next phase of the plan (which could be as simple as generate the final output).\nCrucially, subagents DO NOT share any internal states with the main agent. Whatever inner steps the subagent does to fulfill the task (the message trace, or the tool-calling trace) is hidden from the main agent.\nThe benefit of the Subagent architecture is that the main agent does not suffer from context-rot since it does not need to worry about everything ever.\nWe already know the subagent architecture will easily solve Problem 1 with num_subagent = 0 (vanilla CodeAct), so let's actually see how it will work on Problem 2.\n \n\nWe made a lot of cool progress, CodeAct + Subagent can write arbitrary code to arbitrary things, it still:\nREADS the entire user prompt into its context window\nREADS the entire subagent output into its context window \nAutoregressively WRITES the final output (after processing information returned by past tool calls and subagents)\n\nWe will see how an RLM will solve this, but first let's define what an RLM is.\n\n3. Recursive Language Models\nRLMs are a scaffold that calls LLMs a certain way to make them achieve tasks. A scaffold is an external system that prompts the LLMs in specific ways to make it do things, manage it's context, and step by step achieve a larger more complex task.\nThese are 5 points that explains what RLMs do:\nA language model interacts with arbitrarily long prompts through an external programmable environment or an REPL. Printed outputs are truncated at the scaffold layer.\nThe LLM can write code to programmatically explore, and create new transformations of the prompt\nIt can recursively invoke sub-agents to complete smaller subtasks - basically zoom in on specific strategic regions of the prompt and call separate LLMs to work on them\nThe subagent responses do not get automatically loaded into the parent agent's context, it gets returned as symbols or variables inside the parent's REPL\nRLM agents can return responses in two ways - (a) auto-regressively generated answers like normal LLMs, and (b) construct answers into a python variable and return the variable instead.\nOkay, I want you to re-read all the points above after you read this sentence. We are gonna look at Problem 1 first (and then Problem 2), and as we work through Problem 1, we will understand the strange mechanics of RLMs at play.\nThis will be satisfying to read.\n3.1 The REPL\nOkay, what is an REPL? REPL is a Read-Eval-Print-Loop. Think of it like a Jupyter notebook.\nYou can have access to a python variable called context where the user's query is kept.\nYou can write python commands to look at this context. For example, whenever the LLM issues a print statement, the live python kernel prints out the expression and it can view it.\nThe LLM can iteratively read outputs and write new code based on it.\nREPL can also run in an isolated sandbox, so the LLM cannot impact the user's actual files. This is a security decision more than anything.\nHere is an example of how an RLM run will \"start\"\nBefore any LLM gets called, we will start a python sandbox environment. A common thing to do this days (how DSPy does it and how I coded it in my repo) is to run a pyodide instance inside Deno.js.\nThe Deno runtime manages the pyodide REPL's lifecycle. It instantiates the runtime by first declaring a special variable called \"context\" that contains the user's prompt.\n\nWhat we pass into the LLM is NOT the content of the context, but just the fact that it has access to an REPL and there is a variable called context present in it.\n \n\nIn our case the user's prompt is simple and short.   But remember user's prompt can be arbitrarily long.\n\n At the end of the article I will attach an example where the user's prompt is the COMPLETE TRANSCRIPTS of 300 Lex Fridman podcasts - containing over 10M tokens.  \n\nIn other words, this context can be an arbitrarily long string.\n\nThe Deno environment also hijacks the print statement available to the LLM. Instead of printing the whole string it tries to print, we forcefully TRUNCATE the string at the REPL layer.\nMeaning even if the LLM accidentally printed something more than (say 500 words) we are gonna show it as:\n```\n.............. [OUTPUT TRUNCATED TO 500 words]\n```\nEven if the LLM tries, we won't let it overload itself with sensory information.\nLet's talk about that part about FINAL(answer) in the next part.\n\n\n3.2 Programmatic Exploration\nThe LLM's prompt contains instructions to explore the prompt space and think about how it can wrangle the data to do it's task.\nIt is like how data scientists working on a fresh CSV dump of a housing prices dataset will print out random things into a jupyter notebook to understand what they are dealing with.\nWhile exploring, the LLM can also create new variables inside the python runtime that contains important transformations of the data!\nRemember, python variables persist across different REPL execution calls. I keep coming back to the Jupyter Notebook example coz it is absolutely essential that you make this connection. Each time the LLM writes a block of code and executes is equivalent to us humans writing a block of code and executing a cell!\n\nExample explorations or transformations of context can be:\nthe LLM extracts an underlying CSV structure and puts the data into a pandas dataframe to process easier later\nthe LLM extracts specific sections from a markdown file and create a dictionary of subchapter_title -> subchapter texts\nthe LLM issues regexes or find statements to search for keywords within the context (basic keyword search)\nThe exploration stage is all about distilling the complete prompt into smaller useful variables.\nFor our Problem 1 though, the task is straightforward, so the LLM's exploratory task is rather easy.\n \n\nAs you can see, the LLM can auto-adjust depending on what the REPL output is. In it's second try it already has access to the o\n\n\nEvery model has a fixed context window, and they cannot physically process more information than that limit. And even if they could, LLMs suffer from a strange condition when it comes to long context. Their retrieval performance looks like a U-shaped curve - models are better at using relevant information that occurs at the very beginning or end of its input context. Basically, it's performance degrades in the middle.\nThere's also the problem of Context Rot. Since you are asking the LLM to answer a single question, 95% of the data may just be irrelevant. The LLM might hallucinate because of this garbage data, and struggle to answer questions that requires fine grained retrieval from multiple different sub-sections within these documents.\n\n\n \n",
+      "preview_text": "I have spent a decent chunk of last month implementing RLMs from scratch, and producing a 50 minute tutorial video on it. Throughout the process, I responded to 100+ questions on Youtube and X about",
+      "cover_media": "3_2035044755512729601",
+      "entities": {
+        "code": [
+          {
+            "language": "none",
+            "code": "[[system]]\n.... # everything we talked before, and also:\nYou are given a new function called llm_query\nllm_query invokes new subagents to perform tasks\nYour subagents are quite strong and can handle long tasks well!\nTo call subagents just run llm_query(sub_context)\n\n\n[[assistant]]\nprint(context)\n\n\n[[REPL]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n\n\n[[assistant]]]\n<think> Cool I will just launch subagents to capture the R counting for each category and do the job </think>\n\"\"\"\nFRUIT_DICT = llm_query(\"generate a dictionary of 50 fruits and the number of times r occured\")\n\nCOUNTRY_DICT = llm_query(\"generate a dictionary of 50 countries and the number of times r occured\")\n\nANIMAL_DICT = llm_query(\"generate a dictionary of 50 animals and the number of times r occured\")\n\nfor dictionary in [FRUIT_DICT, COUNTRY_DICT, ANIMAL_DICT]:\n        assert isinstance(dictionary, dict) and len(dictionary) == 50\n\nanswer = {\n    \"fruits\": FRUIT_DICT,\n    \"countries\": COUNTRY_DICT,\n    \"animals\": ANIMAL_DICT\n}\nFINAL(answer)\n\"\"\"",
+            "content": "```\n[[system]]\n.... # everything we talked before, and also:\nYou are given a new function called llm_query\nllm_query invokes new subagents to perform tasks\nYour subagents are quite strong and can handle long tasks well!\nTo call subagents just run llm_query(sub_context)\n\n\n[[assistant]]\nprint(context)\n\n\n[[REPL]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n\n\n[[assistant]]]\n<think> Cool I will just launch subagents to capture the R counting for each category and do the job </think>\n\"\"\"\nFRUIT_DICT = llm_query(\"generate a dictionary of 50 fruits and the number of times r occured\")\n\nCOUNTRY_DICT = llm_query(\"generate a dictionary of 50 countries and the number of times r occured\")\n\nANIMAL_DICT = llm_query(\"generate a dictionary of 50 animals and the number of times r occured\")\n\nfor dictionary in [FRUIT_DICT, COUNTRY_DICT, ANIMAL_DICT]:\n        assert isinstance(dictionary, dict) and len(dictionary) == 50\n\nanswer = {\n    \"fruits\": FRUIT_DICT,\n    \"countries\": COUNTRY_DICT,\n    \"animals\": ANIMAL_DICT\n}\nFINAL(answer)\n\"\"\"\n```"
+          },
+          {
+            "language": "none",
+            "code": "[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> Okay let's write some python code for this. </think>\n\n[[assistant]]\npython -c '\nfruit_names = [\n     'strawberry', 'berry' 'grape', ....\n]\n\n# Count in a dict\ncount_r = {\n    k: sum(1 for c in fruit if c == 'r')\n    for k, fruit in fruit_names\n}  \n\nprint(\"Number of fruits: \", len(fruit_names))\nprint(\"Counts are: \" , count_r)\n'\n\n\n[[tool out]]\nTerminal Output:\nNumber of fruits: 50\nCounts are: {\"strawberry\": 3, \"berry\": 2 ....}\n\n\n[[assistant]]\n<think> Okay, I have read the terminal output, let me return write it down again to return the output </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}",
+            "content": "```\n[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> Okay let's write some python code for this. </think>\n\n[[assistant]]\npython -c '\nfruit_names = [\n     'strawberry', 'berry' 'grape', ....\n]\n\n# Count in a dict\ncount_r = {\n    k: sum(1 for c in fruit if c == 'r')\n    for k, fruit in fruit_names\n}  \n\nprint(\"Number of fruits: \", len(fruit_names))\nprint(\"Counts are: \" , count_r)\n'\n\n\n[[tool out]]\nTerminal Output:\nNumber of fruits: 50\nCounts are: {\"strawberry\": 3, \"berry\": 2 ....}\n\n\n[[assistant]]\n<think> Okay, I have read the terminal output, let me return write it down again to return the output </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}\n\n```"
+          },
+          {
+            "language": "none",
+            "code": "....\n\n[[assistant]]\nprint(context)\n\n[[repl]]\nCapital of France?\n\n[[assistant]]\nFINAL('Capital of France is Paris')",
+            "content": "```\n....\n\n[[assistant]]\nprint(context)\n\n[[repl]]\nCapital of France?\n\n[[assistant]]\nFINAL('Capital of France is Paris')\n```"
+          },
+          {
+            "language": "none",
+            "code": "[[user]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n[[assistant]]\n<think> Okay let's call some subagents and divide tasks among them </think>\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 fruit names and number of r in them\")\n\n[[subagent]]\n{\"strawberry\": 3, \"berry\": 2 ....}\n\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 countries names and number of r in them\")\n\n[[subagent]]\n{\"france\": 1, \"russia\": 1 ....}\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 animals names and number of r in them\")\n\n [[subagent]]\n{\"kangaroo\": 1, \"deer\": 1 ....}\n\n\n\n[[assistant]]\n<think> Okay, I have responses from all subagents, now let me write the final JSON in a good good way </think>\n\n{\n    \"fruits\": { \n         \"strawberry\": 3, \n          \"berry\": 2,\n          ....\n    },\n    \"countries\": {\n         \"france\": 1, \n         \"russia\": 1 \n         ....\n    }\n    \"animals\": {\n         \"kangaroo\": 1, \n         \"deer\": 1 \n         ....\n    }\n}",
+            "content": "```\n[[user]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n[[assistant]]\n<think> Okay let's call some subagents and divide tasks among them </think>\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 fruit names and number of r in them\")\n\n[[subagent]]\n{\"strawberry\": 3, \"berry\": 2 ....}\n\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 countries names and number of r in them\")\n\n[[subagent]]\n{\"france\": 1, \"russia\": 1 ....}\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 animals names and number of r in them\")\n\n [[subagent]]\n{\"kangaroo\": 1, \"deer\": 1 ....}\n\n\n\n[[assistant]]\n<think> Okay, I have responses from all subagents, now let me write the final JSON in a good good way </think>\n\n{\n    \"fruits\": { \n         \"strawberry\": 3, \n          \"berry\": 2,\n          ....\n    },\n    \"countries\": {\n         \"france\": 1, \n         \"russia\": 1 \n         ....\n    }\n    \"animals\": {\n         \"kangaroo\": 1, \n         \"deer\": 1 \n         ....\n    }\n}\n```"
+          },
+          {
+            "language": "none",
+            "code": "[[system]]\nYou have access to a REPL python environment. \nYour task is stored in a variable called `context`. \nYou can issue print statements.\nPrint displays truncated sections of the variable. \nFind out what the task is about.\nExplore the context\nWhen ready to answer, submit your result using: FINAL(answer)\n\n[[assistant]]\n\"\"\"\nprint(context)\n\"\"\"\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each",
+            "content": "```\n[[system]]\nYou have access to a REPL python environment. \nYour task is stored in a variable called `context`. \nYou can issue print statements.\nPrint displays truncated sections of the variable. \nFind out what the task is about.\nExplore the context\nWhen ready to answer, submit your result using: FINAL(answer)\n\n[[assistant]]\n\"\"\"\nprint(context)\n\"\"\"\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n```"
+          },
+          {
+            "language": "none",
+            "code": "def count_alphabets_in_word(word: string, alphabet: string) -> int",
+            "content": "```\ndef count_alphabets_in_word(word: string, alphabet: string) -> int\n```"
+          },
+          {
+            "language": "none",
+            "code": "[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> 50 fruit names are: \nstrawberry, berry, grape, ..... (etc) \n</think>\n\n[[assistant]]\ncount_alphabets_in_word(\"strawberry\", \"r\")\n\n[[tool out]]\n3\n\n[[assistant]]\ncount_alphabets_in_word(\"berry\", \"r\")\n\n[[tool out]]\n2\n\n.\n.\n.\n\n[[assistant]]\n<think> I now have everything I need in my message history, \nlet's construct that dictionary </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}",
+            "content": "```\n[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> 50 fruit names are: \nstrawberry, berry, grape, ..... (etc) \n</think>\n\n[[assistant]]\ncount_alphabets_in_word(\"strawberry\", \"r\")\n\n[[tool out]]\n3\n\n[[assistant]]\ncount_alphabets_in_word(\"berry\", \"r\")\n\n[[tool out]]\n2\n\n.\n.\n.\n\n[[assistant]]\n<think> I now have everything I need in my message history, \nlet's construct that dictionary </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}\n\n\n```"
+          },
+          {
+            "language": "none",
+            "code": ".... (everything that happened before)\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n\n[[assistant]]\n<think>okay I need to generate 50 fruit names</think>\n\n\"\"\"\nFRUIT_NAMES = ['grape', 'strawberry', 'berry', ....]\nprint(len(FRUIT_NAMES)) # let's check if it is 50\n\n\n[[REPL]]\n52\n\n[[assistant]]\n<think> Okay I added 2 extra by mistake. \nLet me pick first 50 and check again.\n I will also construct the output dict and return\n</think>\n\n\"\"\"\nFRUIT_NAMES_50 = FRUIT_NAMES[:50]\n\nassert len(FRUIT_NAMES_50) == 50\n\nfruit_r_count = {\n      {\n              fruit: sum([\n                       r' in f for f in fruit.lower()\n              ])\n      }\n      for fruit in FRUIT_NAMES_50\n}\n\n\nFINAL(fruit_r_count)\n\"\"\"",
+            "content": "```\n.... (everything that happened before)\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n\n[[assistant]]\n<think>okay I need to generate 50 fruit names</think>\n\n\"\"\"\nFRUIT_NAMES = ['grape', 'strawberry', 'berry', ....]\nprint(len(FRUIT_NAMES)) # let's check if it is 50\n\n\n[[REPL]]\n52\n\n[[assistant]]\n<think> Okay I added 2 extra by mistake. \nLet me pick first 50 and check again.\n I will also construct the output dict and return\n</think>\n\n\"\"\"\nFRUIT_NAMES_50 = FRUIT_NAMES[:50]\n\nassert len(FRUIT_NAMES_50) == 50\n\nfruit_r_count = {\n      {\n              fruit: sum([\n                       r' in f for f in fruit.lower()\n              ])\n      }\n      for fruit in FRUIT_NAMES_50\n}\n\n\nFINAL(fruit_r_count)\n\"\"\"\n```"
+          }
+        ],
+        "tweets": [
+          {
+            "id": "2023387617891582018"
+          },
+          {
+            "id": "2022248417003778183"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://arxiv.org/abs/2512.24601"
+          },
+          {
+            "text": "https://youtu.be/nxaVvvrezbY"
+          },
+          {
+            "text": "https://github.com/avbiswas/fast-rlm"
+          },
+          {
+            "text": "https://paperbreakdown.com/abs/2512.24601"
+          }
+        ]
+      },
+      "title": "Recursive Language Models - what finally gave me the 'aha' moment",
+      "media_entities": [
+        "3_2034974395651981312"
+      ]
+    },
+    "conversation_id": "2035040781074145412",
+    "id": "2035040781074145412",
+    "created_at": "2026-03-20T17:08:26.000Z",
+    "text": "https://t.co/QeozQY6lRH",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/QeozQY6lRH",
+          "expanded_url": "http://x.com/i/article/2030594956151377920",
+          "display_url": "x.com/i/article/2030\u2026",
+          "status": 500,
+          "unwound_url": "http://x.com/i/article/2030594956151377920"
+        }
+      ]
+    },
+    "edit_history_tweet_ids": [
+      "2035040781074145412"
+    ],
+    "author_id": "1754194661084983296"
+  },
+  "posts": [
+    {
+      "article": {
+        "entities": {
+          "code": [
+            {
+              "language": "none",
+              "code": "[[system]]\n.... # everything we talked before, and also:\nYou are given a new function called llm_query\nllm_query invokes new subagents to perform tasks\nYour subagents are quite strong and can handle long tasks well!\nTo call subagents just run llm_query(sub_context)\n\n\n[[assistant]]\nprint(context)\n\n\n[[REPL]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n\n\n[[assistant]]]\n<think> Cool I will just launch subagents to capture the R counting for each category and do the job </think>\n\"\"\"\nFRUIT_DICT = llm_query(\"generate a dictionary of 50 fruits and the number of times r occured\")\n\nCOUNTRY_DICT = llm_query(\"generate a dictionary of 50 countries and the number of times r occured\")\n\nANIMAL_DICT = llm_query(\"generate a dictionary of 50 animals and the number of times r occured\")\n\nfor dictionary in [FRUIT_DICT, COUNTRY_DICT, ANIMAL_DICT]:\n        assert isinstance(dictionary, dict) and len(dictionary) == 50\n\nanswer = {\n    \"fruits\": FRUIT_DICT,\n    \"countries\": COUNTRY_DICT,\n    \"animals\": ANIMAL_DICT\n}\nFINAL(answer)\n\"\"\"",
+              "content": "```\n[[system]]\n.... # everything we talked before, and also:\nYou are given a new function called llm_query\nllm_query invokes new subagents to perform tasks\nYour subagents are quite strong and can handle long tasks well!\nTo call subagents just run llm_query(sub_context)\n\n\n[[assistant]]\nprint(context)\n\n\n[[REPL]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n\n\n[[assistant]]]\n<think> Cool I will just launch subagents to capture the R counting for each category and do the job </think>\n\"\"\"\nFRUIT_DICT = llm_query(\"generate a dictionary of 50 fruits and the number of times r occured\")\n\nCOUNTRY_DICT = llm_query(\"generate a dictionary of 50 countries and the number of times r occured\")\n\nANIMAL_DICT = llm_query(\"generate a dictionary of 50 animals and the number of times r occured\")\n\nfor dictionary in [FRUIT_DICT, COUNTRY_DICT, ANIMAL_DICT]:\n        assert isinstance(dictionary, dict) and len(dictionary) == 50\n\nanswer = {\n    \"fruits\": FRUIT_DICT,\n    \"countries\": COUNTRY_DICT,\n    \"animals\": ANIMAL_DICT\n}\nFINAL(answer)\n\"\"\"\n```"
+            },
+            {
+              "language": "none",
+              "code": "[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> Okay let's write some python code for this. </think>\n\n[[assistant]]\npython -c '\nfruit_names = [\n     'strawberry', 'berry' 'grape', ....\n]\n\n# Count in a dict\ncount_r = {\n    k: sum(1 for c in fruit if c == 'r')\n    for k, fruit in fruit_names\n}  \n\nprint(\"Number of fruits: \", len(fruit_names))\nprint(\"Counts are: \" , count_r)\n'\n\n\n[[tool out]]\nTerminal Output:\nNumber of fruits: 50\nCounts are: {\"strawberry\": 3, \"berry\": 2 ....}\n\n\n[[assistant]]\n<think> Okay, I have read the terminal output, let me return write it down again to return the output </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}",
+              "content": "```\n[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> Okay let's write some python code for this. </think>\n\n[[assistant]]\npython -c '\nfruit_names = [\n     'strawberry', 'berry' 'grape', ....\n]\n\n# Count in a dict\ncount_r = {\n    k: sum(1 for c in fruit if c == 'r')\n    for k, fruit in fruit_names\n}  \n\nprint(\"Number of fruits: \", len(fruit_names))\nprint(\"Counts are: \" , count_r)\n'\n\n\n[[tool out]]\nTerminal Output:\nNumber of fruits: 50\nCounts are: {\"strawberry\": 3, \"berry\": 2 ....}\n\n\n[[assistant]]\n<think> Okay, I have read the terminal output, let me return write it down again to return the output </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}\n\n```"
+            },
+            {
+              "language": "none",
+              "code": "....\n\n[[assistant]]\nprint(context)\n\n[[repl]]\nCapital of France?\n\n[[assistant]]\nFINAL('Capital of France is Paris')",
+              "content": "```\n....\n\n[[assistant]]\nprint(context)\n\n[[repl]]\nCapital of France?\n\n[[assistant]]\nFINAL('Capital of France is Paris')\n```"
+            },
+            {
+              "language": "none",
+              "code": "[[user]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n[[assistant]]\n<think> Okay let's call some subagents and divide tasks among them </think>\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 fruit names and number of r in them\")\n\n[[subagent]]\n{\"strawberry\": 3, \"berry\": 2 ....}\n\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 countries names and number of r in them\")\n\n[[subagent]]\n{\"france\": 1, \"russia\": 1 ....}\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 animals names and number of r in them\")\n\n [[subagent]]\n{\"kangaroo\": 1, \"deer\": 1 ....}\n\n\n\n[[assistant]]\n<think> Okay, I have responses from all subagents, now let me write the final JSON in a good good way </think>\n\n{\n    \"fruits\": { \n         \"strawberry\": 3, \n          \"berry\": 2,\n          ....\n    },\n    \"countries\": {\n         \"france\": 1, \n         \"russia\": 1 \n         ....\n    }\n    \"animals\": {\n         \"kangaroo\": 1, \n         \"deer\": 1 \n         ....\n    }\n}",
+              "content": "```\n[[user]]\nGenerate a dictionary of different categories: \nfruits, countries, animals. \n\nFor each category, generate 50 names.\nAnd count the number of R in each, return as a nested dictionary\n\n[[assistant]]\n<think> Okay let's call some subagents and divide tasks among them </think>\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 fruit names and number of r in them\")\n\n[[subagent]]\n{\"strawberry\": 3, \"berry\": 2 ....}\n\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 countries names and number of r in them\")\n\n[[subagent]]\n{\"france\": 1, \"russia\": 1 ....}\n\n\n\n[[assistant]]\ncall_subagent(\"Return a dictionary of 50 animals names and number of r in them\")\n\n [[subagent]]\n{\"kangaroo\": 1, \"deer\": 1 ....}\n\n\n\n[[assistant]]\n<think> Okay, I have responses from all subagents, now let me write the final JSON in a good good way </think>\n\n{\n    \"fruits\": { \n         \"strawberry\": 3, \n          \"berry\": 2,\n          ....\n    },\n    \"countries\": {\n         \"france\": 1, \n         \"russia\": 1 \n         ....\n    }\n    \"animals\": {\n         \"kangaroo\": 1, \n         \"deer\": 1 \n         ....\n    }\n}\n```"
+            },
+            {
+              "language": "none",
+              "code": "[[system]]\nYou have access to a REPL python environment. \nYour task is stored in a variable called `context`. \nYou can issue print statements.\nPrint displays truncated sections of the variable. \nFind out what the task is about.\nExplore the context\nWhen ready to answer, submit your result using: FINAL(answer)\n\n[[assistant]]\n\"\"\"\nprint(context)\n\"\"\"\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each",
+              "content": "```\n[[system]]\nYou have access to a REPL python environment. \nYour task is stored in a variable called `context`. \nYou can issue print statements.\nPrint displays truncated sections of the variable. \nFind out what the task is about.\nExplore the context\nWhen ready to answer, submit your result using: FINAL(answer)\n\n[[assistant]]\n\"\"\"\nprint(context)\n\"\"\"\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n```"
+            },
+            {
+              "language": "none",
+              "code": "def count_alphabets_in_word(word: string, alphabet: string) -> int",
+              "content": "```\ndef count_alphabets_in_word(word: string, alphabet: string) -> int\n```"
+            },
+            {
+              "language": "none",
+              "code": "[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> 50 fruit names are: \nstrawberry, berry, grape, ..... (etc) \n</think>\n\n[[assistant]]\ncount_alphabets_in_word(\"strawberry\", \"r\")\n\n[[tool out]]\n3\n\n[[assistant]]\ncount_alphabets_in_word(\"berry\", \"r\")\n\n[[tool out]]\n2\n\n.\n.\n.\n\n[[assistant]]\n<think> I now have everything I need in my message history, \nlet's construct that dictionary </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}",
+              "content": "```\n[[user]]\nGenerate a dictionary with 50 fruits and the number of 'r' in each\n\n[[assistant]]\n<think> 50 fruit names are: \nstrawberry, berry, grape, ..... (etc) \n</think>\n\n[[assistant]]\ncount_alphabets_in_word(\"strawberry\", \"r\")\n\n[[tool out]]\n3\n\n[[assistant]]\ncount_alphabets_in_word(\"berry\", \"r\")\n\n[[tool out]]\n2\n\n.\n.\n.\n\n[[assistant]]\n<think> I now have everything I need in my message history, \nlet's construct that dictionary </think>\n\n{\n    \"strawberry\": 3, \n    \"berry\": 2,\n      ....\n}\n\n\n```"
+            },
+            {
+              "language": "none",
+              "code": ".... (everything that happened before)\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n\n[[assistant]]\n<think>okay I need to generate 50 fruit names</think>\n\n\"\"\"\nFRUIT_NAMES = ['grape', 'strawberry', 'berry', ....]\nprint(len(FRUIT_NAMES)) # let's check if it is 50\n\n\n[[REPL]]\n52\n\n[[assistant]]\n<think> Okay I added 2 extra by mistake. \nLet me pick first 50 and check again.\n I will also construct the output dict and return\n</think>\n\n\"\"\"\nFRUIT_NAMES_50 = FRUIT_NAMES[:50]\n\nassert len(FRUIT_NAMES_50) == 50\n\nfruit_r_count = {\n      {\n              fruit: sum([\n                       r' in f for f in fruit.lower()\n              ])\n      }\n      for fruit in FRUIT_NAMES_50\n}\n\n\nFINAL(fruit_r_count)\n\"\"\"",
+              "content": "```\n.... (everything that happened before)\n\n[[REPL output]]\nGenerate a dictionary containing 50 names of fruits and count the number of r in each\n\n[[assistant]]\n<think>okay I need to generate 50 fruit names</think>\n\n\"\"\"\nFRUIT_NAMES = ['grape', 'strawberry', 'berry', ....]\nprint(len(FRUIT_NAMES)) # let's check if it is 50\n\n\n[[REPL]]\n52\n\n[[assistant]]\n<think> Okay I added 2 extra by mistake. \nLet me pick first 50 and check again.\n I will also construct the output dict and return\n</think>\n\n\"\"\"\nFRUIT_NAMES_50 = FRUIT_NAMES[:50]\n\nassert len(FRUIT_NAMES_50) == 50\n\nfruit_r_count = {\n      {\n              fruit: sum([\n                       r' in f for f in fruit.lower()\n              ])\n      }\n      for fruit in FRUIT_NAMES_50\n}\n\n\nFINAL(fruit_r_count)\n\"\"\"\n```"
+            }
+          ],
+          "tweets": [
+            {
+              "id": "2023387617891582018"
+            },
+            {
+              "id": "2022248417003778183"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://arxiv.org/abs/2512.24601"
+            },
+            {
+              "text": "https://youtu.be/nxaVvvrezbY"
+            },
+            {
+              "text": "https://github.com/avbiswas/fast-rlm"
+            },
+            {
+              "text": "https://paperbreakdown.com/abs/2512.24601"
+            }
+          ]
+        },
+        "preview_text": "I have spent a decent chunk of last month implementing RLMs from scratch, and producing a 50 minute tutorial video on it. Throughout the process, I responded to 100+ questions on Youtube and X about",
+        "media_entities": [
+          "3_2034974395651981312"
+        ],
+        "cover_media": "3_2035044755512729601",
+        "title": "Recursive Language Models - what finally gave me the 'aha' moment",
+        "plain_text": "I have spent a decent chunk of last month implementing RLMs from scratch, and producing a 50 minute tutorial video on it. Throughout the process, I responded to 100+ questions on Youtube and X about RLMs. This article is a summary of what I learned answering those questions, and the specific nuances about RLMs that made me go \"aha\" when I was working on this project.\nAt the end of the article, I will also add a little FAQ on the common questions I got, and try my best to answer them clearly.\n \n\n1. Of all the complicated experiments I ran\n... the most enlightening was this stupid experiment where I asked an RLM to: \n\"Generate 50 names of fruits and count the number of R in each, return as a dictionary\"\nAnd a more advanced variation of the problem (let's called it Problem 2):\n\"Generate a dictionary of different categories: fruits, countries, animals. \n\nFor each category, generate 50 names of that and count the number of R in each, return as a nested dictionary\"\nFor problem 1, the expected output is something like:\n{\"strawberry\": 3, \"berry\": 2, ... \"grape\": 1}\n\nAnd for problem 2 it is something like:\n{\n    \"fruits\": {\"strawberry\": 3, \"berry\": 2, ... \"grape\": 1},\n    \"countries\": {\"united states of america\": 1, \"russia\": 1, ... \"france\": 1}\n    \"animals\": {\"kangaroo\": 1, \"tiger\": 1\", ... \"deer\": 1},\n}\n\nIt's a silly problem, but the way an RLM can solve this problem, vs other architectures like ReAct or CodeAct, etc is fundamentally different. \n\n2. Agentic Landscape\n2.1 Direct Generation\nThe first method is just direct generation. The LLM \"thinks\" about the user's request and auto-regressively generates a dictionary.\nNo harness, no scaffold, just a direct next-word prediction.\nProblem with this approach:\nLLM has no way to verify if its correct\nLLM is likely gonna be wrong because fundamentally letter counting is not a \"next word prediction\" problem.\nChances of hallucination or errors are high, even if the underlying LLM is intelligent.\nThis method will really test the LLM's skills just on Problem 1.\n\nIt is likely just straight up fail on Problem 2.\n\n2.2 Retrieval Augmented Generation (RAG)\nRAGs only work on retrieval tasks. Basically, given a query, we will perform a semantic search over a corpus of documents, get a list of highly similar documents, and use this as context to generate an answer to the user's query. \nThe best case scenario for our \"dictionary of fruit name r counting problem\" is: if you somehow had a database of fruit names and replaced semantic search with some kind of a specific \"r\" search - but honestly this is no niche that RAG is not a good fit for this problem.\nProblem with this approach:\nRAGs are famous but they are simply not built for general tasks like these.\n\n2.3 ReAct (Reasoning and Acting)\nThis is what we call tool calling these days. The LLM has access to a list of \"functions\" that they can call. Each function has a predefined \"schema\", that is a list of input and their datatypes.\nFor example, you could give a simple tool to the LLM that is just:\n \nUsing the above idea, the ReAct agent will be able to do the following:\nGenerate a list of fruit names\nUse the tool to pass each fruit name and receive the output integer\nFrom it's output memory reconstruct the dictionary of which fruit got what count and then return.\nThe stack trace of such a transaction would look like this:\n \nYou see what the problems are right?\nYou have to define a function `count_alphabet_in_r` before hand for this specific use-case.\nIf you don't define a function, the agent just falls back to the old way (i.e. straight generation).\nThis guarantees that the LLM has some hint about WHAT the output is, but the LLM still has to generate the tokens one at a time from it's message history. We haven't eliminated stochastic generation with this, we have just given the LLM better context.\nThe problem compounds when you extend it to the multi-category setting of Problem 2.\n\nLLM has to repeat a long trace of function calls and remember what happened at each turn and generate the answers token by token.\nAs an engineer, ReAct is great if you developing narrow applications, where you want the agent to have access to specific tools (web search, document search, calculator, terminal access, file edit, diff applier etc), but you will rarely develop a general agent and optimize for niche skills like these.\nFor general agents, only those universal tools are good. You are not gonna write tools like `count_alphabet_in_r`.\n\n2.4 CodeAct\nCodeAct allows the LLM to write a piece of code to externally interact with a system. \n \nMeaning you don't need to write exact tools anymore. You can just give the LLM the ability to write any python code and execute it in a sandboxed terminal environment, read the results and generate the output.\nIn other words, the tool call is to write a python functon and execute it!\nIt will go something like this:\n \nSo how CodeAct works is like:\nCodeAct reads the full user message (just like other methods we discussed before)\nLLM thinks, writes, and run code or arbitrary terminal commands!\nLLM loads the the output of the code into it's context window\nGenerate result given what it read\nOnce again problem compounds when you extend it to the multi-category setting of Problem 2. \n\nThe main reason for that is main agent has to do all the work by itself.\nVanilla CodeAct does not split up work into multiple subagents. Let's see how this can be done with subagents.\n\n2.5 CodeAct + Subagents\nNow we are talking about some serious power.\nSubagent architectures are rather simple. There is a main agent and they can launch smaller agents to perform sub-tasks. \nEach subagent are also CodeAct agents that does whatever tasks they are given, and returns output back to the subagents.\nThe main agent's work is to consolidate the final output of the subagents and move forward with the next phase of the plan (which could be as simple as generate the final output).\nCrucially, subagents DO NOT share any internal states with the main agent. Whatever inner steps the subagent does to fulfill the task (the message trace, or the tool-calling trace) is hidden from the main agent.\nThe benefit of the Subagent architecture is that the main agent does not suffer from context-rot since it does not need to worry about everything ever.\nWe already know the subagent architecture will easily solve Problem 1 with num_subagent = 0 (vanilla CodeAct), so let's actually see how it will work on Problem 2.\n \n\nWe made a lot of cool progress, CodeAct + Subagent can write arbitrary code to arbitrary things, it still:\nREADS the entire user prompt into its context window\nREADS the entire subagent output into its context window \nAutoregressively WRITES the final output (after processing information returned by past tool calls and subagents)\n\nWe will see how an RLM will solve this, but first let's define what an RLM is.\n\n3. Recursive Language Models\nRLMs are a scaffold that calls LLMs a certain way to make them achieve tasks. A scaffold is an external system that prompts the LLMs in specific ways to make it do things, manage it's context, and step by step achieve a larger more complex task.\nThese are 5 points that explains what RLMs do:\nA language model interacts with arbitrarily long prompts through an external programmable environment or an REPL. Printed outputs are truncated at the scaffold layer.\nThe LLM can write code to programmatically explore, and create new transformations of the prompt\nIt can recursively invoke sub-agents to complete smaller subtasks - basically zoom in on specific strategic regions of the prompt and call separate LLMs to work on them\nThe subagent responses do not get automatically loaded into the parent agent's context, it gets returned as symbols or variables inside the parent's REPL\nRLM agents can return responses in two ways - (a) auto-regressively generated answers like normal LLMs, and (b) construct answers into a python variable and return the variable instead.\nOkay, I want you to re-read all the points above after you read this sentence. We are gonna look at Problem 1 first (and then Problem 2), and as we work through Problem 1, we will understand the strange mechanics of RLMs at play.\nThis will be satisfying to read.\n3.1 The REPL\nOkay, what is an REPL? REPL is a Read-Eval-Print-Loop. Think of it like a Jupyter notebook.\nYou can have access to a python variable called context where the user's query is kept.\nYou can write python commands to look at this context. For example, whenever the LLM issues a print statement, the live python kernel prints out the expression and it can view it.\nThe LLM can iteratively read outputs and write new code based on it.\nREPL can also run in an isolated sandbox, so the LLM cannot impact the user's actual files. This is a security decision more than anything.\nHere is an example of how an RLM run will \"start\"\nBefore any LLM gets called, we will start a python sandbox environment. A common thing to do this days (how DSPy does it and how I coded it in my repo) is to run a pyodide instance inside Deno.js.\nThe Deno runtime manages the pyodide REPL's lifecycle. It instantiates the runtime by first declaring a special variable called \"context\" that contains the user's prompt.\n\nWhat we pass into the LLM is NOT the content of the context, but just the fact that it has access to an REPL and there is a variable called context present in it.\n \n\nIn our case the user's prompt is simple and short.   But remember user's prompt can be arbitrarily long.\n\n At the end of the article I will attach an example where the user's prompt is the COMPLETE TRANSCRIPTS of 300 Lex Fridman podcasts - containing over 10M tokens.  \n\nIn other words, this context can be an arbitrarily long string.\n\nThe Deno environment also hijacks the print statement available to the LLM. Instead of printing the whole string it tries to print, we forcefully TRUNCATE the string at the REPL layer.\nMeaning even if the LLM accidentally printed something more than (say 500 words) we are gonna show it as:\n```\n.............. [OUTPUT TRUNCATED TO 500 words]\n```\nEven if the LLM tries, we won't let it overload itself with sensory information.\nLet's talk about that part about FINAL(answer) in the next part.\n\n\n3.2 Programmatic Exploration\nThe LLM's prompt contains instructions to explore the prompt space and think about how it can wrangle the data to do it's task.\nIt is like how data scientists working on a fresh CSV dump of a housing prices dataset will print out random things into a jupyter notebook to understand what they are dealing with.\nWhile exploring, the LLM can also create new variables inside the python runtime that contains important transformations of the data!\nRemember, python variables persist across different REPL execution calls. I keep coming back to the Jupyter Notebook example coz it is absolutely essential that you make this connection. Each time the LLM writes a block of code and executes is equivalent to us humans writing a block of code and executing a cell!\n\nExample explorations or transformations of context can be:\nthe LLM extracts an underlying CSV structure and puts the data into a pandas dataframe to process easier later\nthe LLM extracts specific sections from a markdown file and create a dictionary of subchapter_title -> subchapter texts\nthe LLM issues regexes or find statements to search for keywords within the context (basic keyword search)\nThe exploration stage is all about distilling the complete prompt into smaller useful variables.\nFor our Problem 1 though, the task is straightforward, so the LLM's exploratory task is rather easy.\n \n\nAs you can see, the LLM can auto-adjust depending on what the REPL output is. In it's second try it already has access to the o\n\n\nEvery model has a fixed context window, and they cannot physically process more information than that limit. And even if they could, LLMs suffer from a strange condition when it comes to long context. Their retrieval performance looks like a U-shaped curve - models are better at using relevant information that occurs at the very beginning or end of its input context. Basically, it's performance degrades in the middle.\nThere's also the problem of Context Rot. Since you are asking the LLM to answer a single question, 95% of the data may just be irrelevant. The LLM might hallucinate because of this garbage data, and struggle to answer questions that requires fine grained retrieval from multiple different sub-sections within these documents.\n\n\n \n"
+      },
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/QeozQY6lRH",
+            "expanded_url": "http://x.com/i/article/2030594956151377920",
+            "display_url": "x.com/i/article/2030\u2026",
+            "status": 500,
+            "unwound_url": "http://x.com/i/article/2030594956151377920"
+          }
+        ]
+      },
+      "created_at": "2026-03-20T17:08:26.000Z",
+      "conversation_id": "2035040781074145412",
+      "edit_history_tweet_ids": [
+        "2035040781074145412"
+      ],
+      "text": "https://t.co/QeozQY6lRH",
+      "author_id": "1754194661084983296",
+      "id": "2035040781074145412"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035080422854406278"
+        }
+      ],
+      "created_at": "2026-03-20T19:51:04.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "1153911176",
+      "edit_history_tweet_ids": [
+        "2035081711156101251"
+      ],
+      "text": "@samuelandert Thanks man! Appreciate it a lot!",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "samuelandert",
+            "id": "1153911176"
+          }
+        ]
+      },
+      "author_id": "1754194661084983296",
+      "id": "2035081711156101251"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035095846144856430"
+        }
+      ],
+      "created_at": "2026-03-20T21:04:47.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "1965597113619726336",
+      "entities": {
+        "annotations": [
+          {
+            "start": 55,
+            "end": 61,
+            "probability": 0.4419,
+            "type": "Person",
+            "normalized_text": "Khattab"
+          },
+          {
+            "start": 66,
+            "end": 75,
+            "probability": 0.9756,
+            "type": "Person",
+            "normalized_text": "Alex Zhang"
+          },
+          {
+            "start": 158,
+            "end": 160,
+            "probability": 0.5149,
+            "type": "Other",
+            "normalized_text": "RLM"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "turbo_xo_",
+            "id": "1965597113619726336"
+          },
+          {
+            "start": 11,
+            "end": 27,
+            "username": "lateinteraction",
+            "id": "1605274291569799168"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2035100262344577438"
+      ],
+      "text": "@turbo_xo_ @lateinteraction Best if you ask this to Dr Khattab or Alex Zhang.\n\nI\u2019d personally would love to see things like:\n- straight up training models in RLM harnesses (this has already been done)\n\n- more subagent level communication. For example, often subagents are all working on similar tasks, so if",
+      "note_tweet": {
+        "text": "Best if you ask this to Dr Khattab or Alex Zhang.\n\nI\u2019d personally would love to see things like:\n- straight up training models in RLM harnesses (this has already been done)\n\n- more subagent level communication. For example, often subagents are all working on similar tasks, so if there were ways to communicate information globally somehow that could be a cool idea\n\n- ways to make RLMs give up faster. Because of truncation, they keep looking for answers sometimes even when it\u2019s not there. There\u2019s no experimental backing to this claim though, I\u2019m just speaking from my own brief playtime."
+      },
+      "author_id": "1754194661084983296",
+      "id": "2035100262344577438"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035125034402893833"
+        }
+      ],
+      "created_at": "2026-03-20T22:48:28.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "1900906747625095168",
+      "entities": {
+        "annotations": [
+          {
+            "start": 129,
+            "end": 131,
+            "probability": 0.6766,
+            "type": "Other",
+            "normalized_text": "RLM"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 16,
+            "username": "TheOtherGandhi_",
+            "id": "1900906747625095168"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2035126355487269225"
+      ],
+      "text": "@TheOtherGandhi_ Yeah optimal large scale extraction (and reasoning across long context) is one of their main benefits.\n\nA smart RLM would just start writing short regexes and searches to find addresses, PIN codes, city names etc. then load those portions into context to verify.\n\nIt\u2019ll take a",
+      "note_tweet": {
+        "text": "Yeah optimal large scale extraction (and reasoning across long context) is one of their main benefits.\n\nA smart RLM would just start writing short regexes and searches to find addresses, PIN codes, city names etc. then load those portions into context to verify.\n\nIt\u2019ll take a while but it\u2019ll very likely cost less token wise."
+      },
+      "author_id": "1754194661084983296",
+      "id": "2035126355487269225"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035104871666401624"
+        }
+      ],
+      "created_at": "2026-03-21T05:44:14.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "253888413",
+      "edit_history_tweet_ids": [
+        "2035230985877692603"
+      ],
+      "text": "@adarshsolanki @lateinteraction Nice!",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "adarshsolanki",
+            "id": "253888413"
+          },
+          {
+            "start": 15,
+            "end": 31,
+            "username": "lateinteraction",
+            "id": "1605274291569799168"
+          }
+        ]
+      },
+      "author_id": "1754194661084983296",
+      "id": "2035230985877692603"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035247241313554691"
+        }
+      ],
+      "created_at": "2026-03-21T07:15:09.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "1408037661529489413",
+      "edit_history_tweet_ids": [
+        "2035253865957011767"
+      ],
+      "text": "@zey55755455 Encourage you to read the article examples, especially the part about (1) the different ways subagents can return outputs, and (2) how the subagent outputs are loaded into the main agent's context.",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "zey55755455",
+            "id": "1408037661529489413"
+          }
+        ]
+      },
+      "author_id": "1754194661084983296",
+      "id": "2035253865957011767"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035552501295128840"
+        }
+      ],
+      "created_at": "2026-03-22T05:57:55.000Z",
+      "conversation_id": "2035040781074145412",
+      "in_reply_to_user_id": "1450714970",
+      "entities": {
+        "annotations": [
+          {
+            "start": 49,
+            "end": 52,
+            "probability": 0.7365,
+            "type": "Other",
+            "normalized_text": "LLMs"
+          },
+          {
+            "start": 116,
+            "end": 119,
+            "probability": 0.7226,
+            "type": "Other",
+            "normalized_text": "RLMs"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "sara_vananr",
+            "id": "1450714970"
+          },
+          {
+            "start": 13,
+            "end": 21,
+            "username": "a1zhang",
+            "id": "4593727300"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2035596815823990987"
+      ],
+      "text": "@sara_vananr @a1zhang Gotta remember current gen LLMs are trained on codeact/react/terminal based harnesses\n\nNot on RLMs.",
+      "author_id": "1754194661084983296",
+      "id": "2035596815823990987"
+    }
+  ],
+  "users": {
+    "1754194661084983296": {
+      "id": "1754194661084983296",
+      "name": "AVB",
+      "username": "neural_avb"
+    },
+    "1675118792634949633": {
+      "id": "1675118792634949633",
+      "name": "rexicola",
+      "username": "RexExLux"
+    },
+    "1450714970": {
+      "id": "1450714970",
+      "name": "Saravanan Ramupillai",
+      "username": "sara_vananr"
+    },
+    "1317089144250765313": {
+      "id": "1317089144250765313",
+      "name": "Synchromeshi \ud83c\udf32",
+      "username": "synchromeshi"
+    },
+    "1485572279211892737": {
+      "id": "1485572279211892737",
+      "name": "Abdel Latrache",
+      "username": "AbdelVA"
+    },
+    "1457001232699375616": {
+      "id": "1457001232699375616",
+      "name": "BoMiao",
+      "username": "BoMiaoFinance"
+    },
+    "1939709358071312384": {
+      "id": "1939709358071312384",
+      "name": "Tony",
+      "username": "halluton"
+    },
+    "1786651653527183360": {
+      "id": "1786651653527183360",
+      "name": "Michael B",
+      "username": "m1chae1_b"
+    },
+    "1153911176": {
+      "id": "1153911176",
+      "name": "Samuel Andert",
+      "username": "samuelandert"
+    },
+    "1408037661529489413": {
+      "id": "1408037661529489413",
+      "name": "zey",
+      "username": "zey55755455"
+    },
+    "832813067981484032": {
+      "id": "832813067981484032",
+      "name": "isaac \ud83e\udde9",
+      "username": "isaacbmiller1"
+    },
+    "1328778924982235138": {
+      "id": "1328778924982235138",
+      "name": "\u2b55",
+      "username": "Donogzs"
+    },
+    "1965597113619726336": {
+      "id": "1965597113619726336",
+      "name": "turbo",
+      "username": "turbo_xo_"
+    },
+    "253888413": {
+      "id": "253888413",
+      "name": "tooz",
+      "username": "adarshsolanki"
+    },
+    "22739916": {
+      "id": "22739916",
+      "name": "IMR\u039bN",
+      "username": "imrane"
+    },
+    "17802227": {
+      "id": "17802227",
+      "name": "meglio",
+      "username": "meglio"
+    },
+    "1485026422490030084": {
+      "id": "1485026422490030084",
+      "name": "caeruleum_cete",
+      "username": "protect_whales"
+    },
+    "1900906747625095168": {
+      "id": "1900906747625095168",
+      "name": "Apurv Gandhi",
+      "username": "TheOtherGandhi_"
+    }
+  },
+  "thread_fetch_error": null
+}

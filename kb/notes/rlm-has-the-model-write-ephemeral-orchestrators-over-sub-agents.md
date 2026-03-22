@@ -35,6 +35,7 @@ This is a genuine trade-off, not a deficiency. The repo-as-learning-substrate ap
 
 Relevant Notes:
 
+- [@neural_avb: Recursive Language Models — what finally gave me the 'aha' moment](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.md) — grounds: concrete practitioner walkthrough of the REPL mechanism, symbolic variable return, and scaffold-level truncation that this note abstracts ([ingest](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.ingest.md))
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call/absorb loop that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs
