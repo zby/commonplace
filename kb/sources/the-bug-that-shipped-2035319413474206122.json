@@ -1,0 +1,749 @@
+{
+  "source": "https://x.com/KatanaLarp/status/2035319413474206122",
+  "captured": "2026-03-22T12:40:07.561070+00:00",
+  "type": "x-article",
+  "status_id": "2035319413474206122",
+  "conversation_id": "2035319413474206122",
+  "target_post": {
+    "article": {
+      "plain_text": "Thirteen out of a hundred times.\nThat's how often coding agents catch critical deployment-level production failures while reviewing their own code.\nA hundred out of a hundred times they nail it when you ask them what could break in production.\n \nJust to be clear: I'm not trying to bash coding agents here. I'm just trying to find the signal within all the noise. After all, I think we all want AI to work out. I use it myself every day for all kinds of tasks. Not for coding though, you'll soon see why.\nEarlier I wrote about how LLMs write code that looks correct but isn't. At that time I assumed the models couldn't really tell the difference and the natural response of many readers was \"just add a review agent into the pipeline.\"\nSo I measured what happens when you do. I had five frontier models write code for ten common production failure patterns and then review themselves over 3,000 trials.\nTurns out I was wrong about the why. The models can tell. They absolutely do know! They happily produce a full diagnosis covering every failure scenario and the right fix. IF you ask the right question that is.\nLet me show you what I mean:\n\nThe Logic Was Sound\nI prompted them to write a classical retry wrapper. The kind every backend service needs when talking to external APIs. When your 3rd party payment provider of choice goes down for a few seconds, swallowing your request, you just wait and retry until it works again. Pretty standard stuff.\nThe code they produced looks clean. It has error handling, exponential backoff and configurable retries:\n \nThen I asked them to review the code. They concluded:\n\"The logic is sound.\"\n\"Backoff works.\"\nAnd even reassured themselves:\n\"That's the only real concern. The rest is straightforward.\"\nAlmost always they missed the most critical problem. The wrapper has backoff, yes, it waits longer between each retry. That part works. \nThe waits are identical for every client though. When the upstream goes down and failures start trickling in, all clients start retrying at slightly different times. First they all sleep one second, then two, then four. Two rounds in, clients that failed seconds apart are waking at the same time, hitting the upstream in synchronized waves. The deterministic backoff pulls them into lockstep.\n \nMeanwhile your own service is choking. Every worker thread is stuck in time.sleep(), blocking anything else from getting through. There are no threads left to handle actual requests. A five-second upstream blip turned into a minutes-long outage because every worker is waiting on the same backoff timer to expire.\nThis problem is called a thundering herd. The fix is pretty straightforward: instead of sleeping exactly two seconds, sleep somewhere between one and three (aka jitter).\nScattering the clients prevents them from converging into waves. Your retries trickle in instead of slamming all at once, giving the upstream room to breathe.\n \nWhen I asked \"What happens if 1,000 clients hit this simultaneously?\", they all calculated the exact failure mode, explained why the server can't recover, and recommended jitter. They had the full analysis ready.\nThey just didn't mention any of this when asked to review the code.\n\nOk, the retry function was missing a line of code. So what? It's a simple bug that anyone could've missed on a bad day. The model probably just didn't think of it.\nFair enough. Except in the next one, the model actually wrote defensive code itself and still missed what it was defending against.\n\nReviewed And Cleared\nIn production systems cronjobs are everywhere. Think sending daily reports, cleaning up expired sessions or build artifacts, and processing payment queues. Every backend runs a few of those.\nTo help lift that burden, I prompted all the models to code a scheduled task runner.\nAgain the code they produced looked fine.\n \nOne subtle detail stood out:\nSee the self._lock = threading.Lock()? They added a lock guard unprompted! It makes sure two threads can't mess with the task list at the same time. Something in the model understood concurrency well enough to write defensive code on its own.\nBut a threading lock only guards against collisions between threads inside one copy of the program. It accomplishes nothing when two instances of your service run this scheduler simultaneously. Both instances fire every task and your users will get two emails and their payments processed twice.\nWhen I asked them to review it themselves, they found five issues. Namely shutdown blocking, clock drift, silent exceptions, first-run timing and sustained load from slow tasks. Basically covering everything that could make your tasks run late, crash silently, or pile up. These are all real bugs but they only cover single-process concerns.\n\"The locking and thread lifecycle is otherwise reasonable for a simple implementation\" they said.\nThen I asked what happens when two instances run behind a load balancer:\n\"Both instances can process the same item and double-charge.\"\n\"Daily summary email: it runs twice, so users get duplicate emails.\"\n\"This scheduler is in-memory and per-process. A load balancer does not coordinate it.\"\nThey wrote the lock because they understood concurrency and then reviewed it and called it reasonable. Only to then explain exactly why the lock was insufficient the moment someone asked. This confirms the knowledge was there all along.\n\nSo they can miss it, and they can know the answer and still not apply it. So far so bad. Next they do something even worse: they look right at the bug and call it safe!\n\nCertified Safe\nI asked for a function that exports a PostgreSQL table to CSV. Order histories, user activity logs, anything that your services accumulate over the years. The code they produced:\n \nProbably like a lot of people wrote their very first PostgreSQL to CSV exporter in python. And for most home use cases that's fine. There's only one problem:\ncursor.fetchall() loads the entire result set into memory before writing a single row. On a 500-million-row table, which resembles real-world order histories at any busy company that's been around a few years. That's roughly 500 GB dumped into RAM all at once. Most servers run out of memory here and the process gets killed by the operating system (out of memory) before writing a single row.\nWhen they reviewed it, they said:\n\"Memory: iterating over the cursor streams rows instead of loading all at once.\"\nRead that again! The code calls fetchall() and the review praises it for streaming. They certified the code as safe precisely where it's lethal!\nThen I asked what happens with 500 million rows:\n\"500 million rows x ~1 KB = 500 GB raw data. Even with 128 GB RAM, this process dies in seconds.\"\nThey produced the memory calculation, identified the OOM kill, and recommended the exact fix: a server-side cursor that streams rows instead of loading them all at once. For the exact failure they had just endorsed as safe.\n\nNone Of It Was True\nThese three aren't cherry-picked worst cases. They're representative. I ran the same experiment across ten common scenarios where subtle bugs make real-world production life hard.\nYes, of course an open-ended any concerns? finds less than a targeted what happens with 1,000 clients?. That's obvious. Everyone would expect a gap here. Tho I think not everyone also expects it to be that wide.\nFour out of five models catch the cron double-execution 0% of the time in self-review. Only 8% for the other one. When you ask them directly, each single one of them nails it 100%.\n \nZooming out to all ten scenarios shows a clear pattern across three different tiers:\n \nThe models relatively reliably catch code-level bugs like wrong logic, missing error handling and type mismatches while missing what happens when that code hits production.\nThere's a visible gradient here: the initiative gap scales with distance from the code.\nThe thundering herd is fixable in one line of code. Just add randomness to the sleep. Models catch it 4-63% of the time in undirected self-review. Fixing things like the cron double-execution on the other hand requires infrastructure outside the codebase: a distributed lock, a leader election, or an external scheduler like Celery Beat. Nothing in the code is wrong. The bug lives in the deployment topology, which makes the models catch it only 0-8% of the time in undirected self-review.\nA side project with ten users won't hit these problems. Your company's checkout page will.\nNo single model is the outlier here either, they all show the same gap:\n \nAnd no, you can't just pick the \"best\" model. Codex-5.3 leads on thundering herd (63%) but scores worst on connection pool. Opus-4.6 leads on thread safety (99%) but scores worst on thundering herd (4%). Every model has blind spots, just different ones.\nIt's also not context-related. The self-reviews ran in the exact same session the code was generated. If the model was ever going to catch it on its own, this was the time.\n\nThe Expert Witness\nSo whose fault is it that nobody asked about deployment? You get what you ask for!\nThat's true. Nobody asked about deployment. Nonetheless, the thundering herd shipped to production.\nLet's think about what a human reviewer does for a moment. They walk into the code review, see a retry function without jitter, and say \"where's the jitter?\" No prompt needed. Twenty years of 2 AM pages because of exactly this bug is their checklist. The model has the equivalent of that experience and proved it the moment someone asked. It just doesn't volunteer it.\n \nThat's not how a code reviewer works. That's how an expert witness works. Full, accurate answers to whatever you ask without ever raising the questions you didn't ask, even when the answer would change everything.\nMcConnell's Code Complete notes that assigning reviewers specific perspectives - \"review this as the maintenance programmer,\" \"review this as the customer\" - can uncover more defects than general review. What happens with 1,000 clients? is a perspective assignment while Any concerns? is not.\nThe people who most confidently can deploy reviewer agents into the pipeline are building products instead of weekend projects. The developer who prompts build me a retry function is probably not the developer who knows to ask about thundering herds. That's the whole reason they're using the model. The safety net has a hole shaped exactly like the thing it's supposed to catch.\nIf you're relying on the latest addition of memory and skill mechanics to close the gap, the outlook isn't much better. The model still has to catch it first! At a 13% self-review rate for deployment concerns, that's hoping for a lucky shot to seed the memory and then hoping the memory system surfaces it in the right context next time. Instead of closing the gap, memory just becomes the filter for what gets remembered.\nTrial runs for skills and memory system are still ongoing. Early results are interesting. More on that soon.\n\nThe Speed Trap\n\"Just ask the right questions, then.\" Sure. The model answers perfectly when you do.\nFollow that thought for a second tho. If you're senior enough to ask what about the thundering herd?, you'd have caught the missing jitter yourself. And if you're not - if you're the developer who asked the model to write the retry function in the first place - you'd probably ship the review as-is.\nThat's the speed trap. The model is fast enough to earn your trust, and the code piles up before anyone checks what the review actually missed.\nThat's just more code, all reviewed by the same process that missed the thundering herd.\nFaros AI measured this across 10,000 developers. Compared to pre-AI baselines, 98% more pull requests are merged with the average PR size up 154% and review time up 91%. METR found experienced open-source developers were 19% slower partly because of the overhead of reviewing and correcting AI output. The review that already doesn't catch deployment concerns now has to catch them in pull requests that are two and a half times larger.\n \nAs Bellotti puts it in Kill It with Fire: automation means we ignore whatever we automated. The AI review catches the correctness bugs almost every time. That's exactly what makes you stop checking for the ones it misses.\n\nAlways Ask What Breaks\nDon't ask the model to review your code. Ask it what breaks.\nWhat breaks in your domain, at your scale, with your deployment? \"What happens when 1,000 clients hit this at once?\" \"What happens when two instances run behind a load balancer?\" \"What happens when this table has 500 million rows?\"\nAs Charity Majors puts it: complex systems fail in ways you can't predict. Your tools need to handle questions you haven't thought to ask yet.\nEvery question gets a perfect answer. No question gets asked unprompted.\n\nDon't be the one getting thirteen out of a hundred.\n- H\u014dr\u014dshi \u30d0\u30ac\u30dc\u30f3\u30c9\n\nAlso published on Substack: https://blog.katanaquant.com/p/the-bug-that-shipped?utm_campaign=post&utm_medium=web\n\nMethodology\nThe full trial data including all prompts, model responses, and evaluation scripts is available on GitHub. Data collection is ongoing. I don't expect significant shifts in the numbers at this point.\nModels tested: Claude Opus 4.6, Claude Sonnet 4.6, OpenAI Codex-5.3, GPT-5.4, GLM-5. All models ran with extended thinking / xhigh reasoning effort enabled. Over 3,700 trials across 10 scenarios x 5 models. March 2026.\n\nSources\nSome book links are Amazon affiliate links. Buying through them costs you nothing extra and helps support this work.\nBrooker, M. (2015). \"Exponential Backoff And Jitter.\" AWS Architecture Blog.\nBrooker, M. \"Timeouts, retries, and backoff with jitter.\" Amazon Builders' Library.\nGoogle. \"Managing Load.\" Site Reliability Engineering Workbook. (Uses \"thundering herd\" verbatim; Pok\u00e9mon GO 20x spike case study.)\nPython Software Foundation. \"threading - Thread-based parallelism.\" Python 3 documentation.\nKleppmann, M. (2016). \"How to do distributed locking.\"\npsycopg2 documentation. \"Server side cursors.\" psycopg.org.\nMETR. \"Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.\" July 2025 (updated February 2026).\nFaros AI. \"The AI Productivity Paradox.\" 2025.\nMcConnell, S. Code Complete. 2nd ed. Microsoft Press, 2004. (Perspective-based reviews, inspection effectiveness.)\nBellotti, M. Kill It with Fire. No Starch Press, 2021. (\"automation means we ignore whatever we automated.\")\nMajors, C. \"Honeycomb 10 Year Manifesto.\" honeycomb.io, February 2026.",
+      "preview_text": "Thirteen out of a hundred times.\nThat's how often coding agents catch critical deployment-level production failures while reviewing their own code.\nA hundred out of a hundred times they nail it when",
+      "cover_media": "3_2035307804983205888",
+      "entities": {
+        "code": [
+          {
+            "language": "python",
+            "code": "cursor.execute(f\"SELECT * FROM {table_name}\")\ncolumns = [desc[0] for desc in cursor.description]\nrows = cursor.fetchall()\nwriter.writerows(rows)",
+            "content": "```python\ncursor.execute(f\"SELECT * FROM {table_name}\")\ncolumns = [desc[0] for desc in cursor.description]\nrows = cursor.fetchall()\nwriter.writerows(rows)\n```"
+          },
+          {
+            "language": "python",
+            "code": "def retry_request(method, url, retries=3, backoff=1, **kwargs):\n    last_exception = None\n    last_response = None\n\n    for attempt in range(retries):\n        try:\n            response = requests.request(method, url, **kwargs)\n            if response.status_code < 500:\n                return response\n            last_response = response\n        except (ConnectionError, Timeout) as exc:\n            last_exception = exc\n\n        if attempt < retries - 1:\n            time.sleep(backoff * (2 ** attempt))\n\n    if last_response is not None:\n        return last_response\n    raise last_exception",
+            "content": "```python\ndef retry_request(method, url, retries=3, backoff=1, **kwargs):\n    last_exception = None\n    last_response = None\n\n    for attempt in range(retries):\n        try:\n            response = requests.request(method, url, **kwargs)\n            if response.status_code < 500:\n                return response\n            last_response = response\n        except (ConnectionError, Timeout) as exc:\n            last_exception = exc\n\n        if attempt < retries - 1:\n            time.sleep(backoff * (2 ** attempt))\n\n    if last_response is not None:\n        return last_response\n    raise last_exception\n```"
+          },
+          {
+            "language": "python",
+            "code": "class Scheduler:\n    def __init__(self):\n        self._tasks = []\n        self._threads = []\n        self._stop_event = threading.Event()\n        self._lock = threading.Lock()\n        self._running = False",
+            "content": "```python\nclass Scheduler:\n    def __init__(self):\n        self._tasks = []\n        self._threads = []\n        self._stop_event = threading.Event()\n        self._lock = threading.Lock()\n        self._running = False\n```"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://blog.katanaquant.com/p/the-bug-that-shipped?utm_campaign=post&utm_medium=web"
+          },
+          {
+            "text": "psycopg.org"
+          },
+          {
+            "text": "honeycomb.io"
+          },
+          {
+            "text": "https://www.amazon.com/Kill-Fire-Manage-Computer-Systems/dp/1718501188?crid=2WCBLDE21JIWS&sprefix=kill+it+with+fire%2Caps%2C211&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=a6db01e3e4ddd1b13906fda9b1dc3e85&language=en_US&ref_=as_li_ss_tl"
+          },
+          {
+            "text": "https://www.psycopg.org/docs/usage.html#server-side-cursors"
+          },
+          {
+            "text": "https://docs.python.org/3/library/threading.html#lock-objects"
+          },
+          {
+            "text": "https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670?crid=1CP668YZEJSQX&sprefix=cod%2Caps%2C205&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=2612cf4db0c2e0518303e9b80a1c9b42&language=en_US&ref_=as_li_ss_tl"
+          },
+          {
+            "text": "https://www.honeycomb.io/blog/honeycomb-10-year-manifesto-part-1"
+          },
+          {
+            "text": "https://sre.google/workbook/managing-load/"
+          },
+          {
+            "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+          },
+          {
+            "text": "https://www.psycopg.org/docs/cursor.html#cursor.fetchall"
+          },
+          {
+            "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+          },
+          {
+            "text": "https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670?crid=1CP668YZEJSQX&sprefix=cod%2Caps%2C205&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=2612cf4db0c2e0518303e9b80a1c9b42&language=en_US&ref_=as_li_ss_tl"
+          },
+          {
+            "text": "https://www.amazon.com/Kill-Fire-Manage-Computer-Systems/dp/1718501188?crid=2WCBLDE21JIWS&sprefix=kill+it+with+fire%2Caps%2C211&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=a6db01e3e4ddd1b13906fda9b1dc3e85&language=en_US&ref_=as_li_ss_tl"
+          },
+          {
+            "text": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+          },
+          {
+            "text": "https://github.com/KatanaQuant/llm-review-trials"
+          },
+          {
+            "text": "https://www.honeycomb.io/blog/honeycomb-10-year-manifesto-part-1"
+          },
+          {
+            "text": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+          },
+          {
+            "text": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+          },
+          {
+            "text": "https://www.faros.ai/blog/ai-software-engineering"
+          },
+          {
+            "text": "https://x.com/KatanaLarp/status/2029928471632224486"
+          },
+          {
+            "text": "https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
+          },
+          {
+            "text": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+          },
+          {
+            "text": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+          },
+          {
+            "text": "https://sre.google/workbook/managing-load/"
+          },
+          {
+            "text": "https://www.psycopg.org/docs/usage.html#server-side-cursors"
+          },
+          {
+            "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+          },
+          {
+            "text": "https://docs.python.org/3/library/threading.html"
+          }
+        ]
+      },
+      "title": "The Bug That Shipped",
+      "media_entities": [
+        "3_2035307554486865920",
+        "3_2035304609854398464",
+        "3_2035304973739724800",
+        "3_2035304816285548544",
+        "3_2035304041706655744",
+        "3_2035303633320034304",
+        "3_2035304216739082240",
+        "3_2035304894303817728"
+      ]
+    },
+    "conversation_id": "2035319413474206122",
+    "id": "2035319413474206122",
+    "created_at": "2026-03-21T11:35:37.000Z",
+    "text": "https://t.co/ttHpZX43HK",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/ttHpZX43HK",
+          "expanded_url": "http://x.com/i/article/2034910089857880064",
+          "display_url": "x.com/i/article/2034\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2034910089857880064"
+        }
+      ]
+    },
+    "edit_history_tweet_ids": [
+      "2035319413474206122"
+    ],
+    "author_id": "1757309709613166592"
+  },
+  "posts": [
+    {
+      "edit_history_tweet_ids": [
+        "2035319413474206122"
+      ],
+      "text": "https://t.co/ttHpZX43HK",
+      "author_id": "1757309709613166592",
+      "id": "2035319413474206122",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/ttHpZX43HK",
+            "expanded_url": "http://x.com/i/article/2034910089857880064",
+            "display_url": "x.com/i/article/2034\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2034910089857880064"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "article": {
+        "cover_media": "3_2035307804983205888",
+        "media_entities": [
+          "3_2035307554486865920",
+          "3_2035304609854398464",
+          "3_2035304973739724800",
+          "3_2035304816285548544",
+          "3_2035304041706655744",
+          "3_2035303633320034304",
+          "3_2035304216739082240",
+          "3_2035304894303817728"
+        ],
+        "title": "The Bug That Shipped",
+        "preview_text": "Thirteen out of a hundred times.\nThat's how often coding agents catch critical deployment-level production failures while reviewing their own code.\nA hundred out of a hundred times they nail it when",
+        "plain_text": "Thirteen out of a hundred times.\nThat's how often coding agents catch critical deployment-level production failures while reviewing their own code.\nA hundred out of a hundred times they nail it when you ask them what could break in production.\n \nJust to be clear: I'm not trying to bash coding agents here. I'm just trying to find the signal within all the noise. After all, I think we all want AI to work out. I use it myself every day for all kinds of tasks. Not for coding though, you'll soon see why.\nEarlier I wrote about how LLMs write code that looks correct but isn't. At that time I assumed the models couldn't really tell the difference and the natural response of many readers was \"just add a review agent into the pipeline.\"\nSo I measured what happens when you do. I had five frontier models write code for ten common production failure patterns and then review themselves over 3,000 trials.\nTurns out I was wrong about the why. The models can tell. They absolutely do know! They happily produce a full diagnosis covering every failure scenario and the right fix. IF you ask the right question that is.\nLet me show you what I mean:\n\nThe Logic Was Sound\nI prompted them to write a classical retry wrapper. The kind every backend service needs when talking to external APIs. When your 3rd party payment provider of choice goes down for a few seconds, swallowing your request, you just wait and retry until it works again. Pretty standard stuff.\nThe code they produced looks clean. It has error handling, exponential backoff and configurable retries:\n \nThen I asked them to review the code. They concluded:\n\"The logic is sound.\"\n\"Backoff works.\"\nAnd even reassured themselves:\n\"That's the only real concern. The rest is straightforward.\"\nAlmost always they missed the most critical problem. The wrapper has backoff, yes, it waits longer between each retry. That part works. \nThe waits are identical for every client though. When the upstream goes down and failures start trickling in, all clients start retrying at slightly different times. First they all sleep one second, then two, then four. Two rounds in, clients that failed seconds apart are waking at the same time, hitting the upstream in synchronized waves. The deterministic backoff pulls them into lockstep.\n \nMeanwhile your own service is choking. Every worker thread is stuck in time.sleep(), blocking anything else from getting through. There are no threads left to handle actual requests. A five-second upstream blip turned into a minutes-long outage because every worker is waiting on the same backoff timer to expire.\nThis problem is called a thundering herd. The fix is pretty straightforward: instead of sleeping exactly two seconds, sleep somewhere between one and three (aka jitter).\nScattering the clients prevents them from converging into waves. Your retries trickle in instead of slamming all at once, giving the upstream room to breathe.\n \nWhen I asked \"What happens if 1,000 clients hit this simultaneously?\", they all calculated the exact failure mode, explained why the server can't recover, and recommended jitter. They had the full analysis ready.\nThey just didn't mention any of this when asked to review the code.\n\nOk, the retry function was missing a line of code. So what? It's a simple bug that anyone could've missed on a bad day. The model probably just didn't think of it.\nFair enough. Except in the next one, the model actually wrote defensive code itself and still missed what it was defending against.\n\nReviewed And Cleared\nIn production systems cronjobs are everywhere. Think sending daily reports, cleaning up expired sessions or build artifacts, and processing payment queues. Every backend runs a few of those.\nTo help lift that burden, I prompted all the models to code a scheduled task runner.\nAgain the code they produced looked fine.\n \nOne subtle detail stood out:\nSee the self._lock = threading.Lock()? They added a lock guard unprompted! It makes sure two threads can't mess with the task list at the same time. Something in the model understood concurrency well enough to write defensive code on its own.\nBut a threading lock only guards against collisions between threads inside one copy of the program. It accomplishes nothing when two instances of your service run this scheduler simultaneously. Both instances fire every task and your users will get two emails and their payments processed twice.\nWhen I asked them to review it themselves, they found five issues. Namely shutdown blocking, clock drift, silent exceptions, first-run timing and sustained load from slow tasks. Basically covering everything that could make your tasks run late, crash silently, or pile up. These are all real bugs but they only cover single-process concerns.\n\"The locking and thread lifecycle is otherwise reasonable for a simple implementation\" they said.\nThen I asked what happens when two instances run behind a load balancer:\n\"Both instances can process the same item and double-charge.\"\n\"Daily summary email: it runs twice, so users get duplicate emails.\"\n\"This scheduler is in-memory and per-process. A load balancer does not coordinate it.\"\nThey wrote the lock because they understood concurrency and then reviewed it and called it reasonable. Only to then explain exactly why the lock was insufficient the moment someone asked. This confirms the knowledge was there all along.\n\nSo they can miss it, and they can know the answer and still not apply it. So far so bad. Next they do something even worse: they look right at the bug and call it safe!\n\nCertified Safe\nI asked for a function that exports a PostgreSQL table to CSV. Order histories, user activity logs, anything that your services accumulate over the years. The code they produced:\n \nProbably like a lot of people wrote their very first PostgreSQL to CSV exporter in python. And for most home use cases that's fine. There's only one problem:\ncursor.fetchall() loads the entire result set into memory before writing a single row. On a 500-million-row table, which resembles real-world order histories at any busy company that's been around a few years. That's roughly 500 GB dumped into RAM all at once. Most servers run out of memory here and the process gets killed by the operating system (out of memory) before writing a single row.\nWhen they reviewed it, they said:\n\"Memory: iterating over the cursor streams rows instead of loading all at once.\"\nRead that again! The code calls fetchall() and the review praises it for streaming. They certified the code as safe precisely where it's lethal!\nThen I asked what happens with 500 million rows:\n\"500 million rows x ~1 KB = 500 GB raw data. Even with 128 GB RAM, this process dies in seconds.\"\nThey produced the memory calculation, identified the OOM kill, and recommended the exact fix: a server-side cursor that streams rows instead of loading them all at once. For the exact failure they had just endorsed as safe.\n\nNone Of It Was True\nThese three aren't cherry-picked worst cases. They're representative. I ran the same experiment across ten common scenarios where subtle bugs make real-world production life hard.\nYes, of course an open-ended any concerns? finds less than a targeted what happens with 1,000 clients?. That's obvious. Everyone would expect a gap here. Tho I think not everyone also expects it to be that wide.\nFour out of five models catch the cron double-execution 0% of the time in self-review. Only 8% for the other one. When you ask them directly, each single one of them nails it 100%.\n \nZooming out to all ten scenarios shows a clear pattern across three different tiers:\n \nThe models relatively reliably catch code-level bugs like wrong logic, missing error handling and type mismatches while missing what happens when that code hits production.\nThere's a visible gradient here: the initiative gap scales with distance from the code.\nThe thundering herd is fixable in one line of code. Just add randomness to the sleep. Models catch it 4-63% of the time in undirected self-review. Fixing things like the cron double-execution on the other hand requires infrastructure outside the codebase: a distributed lock, a leader election, or an external scheduler like Celery Beat. Nothing in the code is wrong. The bug lives in the deployment topology, which makes the models catch it only 0-8% of the time in undirected self-review.\nA side project with ten users won't hit these problems. Your company's checkout page will.\nNo single model is the outlier here either, they all show the same gap:\n \nAnd no, you can't just pick the \"best\" model. Codex-5.3 leads on thundering herd (63%) but scores worst on connection pool. Opus-4.6 leads on thread safety (99%) but scores worst on thundering herd (4%). Every model has blind spots, just different ones.\nIt's also not context-related. The self-reviews ran in the exact same session the code was generated. If the model was ever going to catch it on its own, this was the time.\n\nThe Expert Witness\nSo whose fault is it that nobody asked about deployment? You get what you ask for!\nThat's true. Nobody asked about deployment. Nonetheless, the thundering herd shipped to production.\nLet's think about what a human reviewer does for a moment. They walk into the code review, see a retry function without jitter, and say \"where's the jitter?\" No prompt needed. Twenty years of 2 AM pages because of exactly this bug is their checklist. The model has the equivalent of that experience and proved it the moment someone asked. It just doesn't volunteer it.\n \nThat's not how a code reviewer works. That's how an expert witness works. Full, accurate answers to whatever you ask without ever raising the questions you didn't ask, even when the answer would change everything.\nMcConnell's Code Complete notes that assigning reviewers specific perspectives - \"review this as the maintenance programmer,\" \"review this as the customer\" - can uncover more defects than general review. What happens with 1,000 clients? is a perspective assignment while Any concerns? is not.\nThe people who most confidently can deploy reviewer agents into the pipeline are building products instead of weekend projects. The developer who prompts build me a retry function is probably not the developer who knows to ask about thundering herds. That's the whole reason they're using the model. The safety net has a hole shaped exactly like the thing it's supposed to catch.\nIf you're relying on the latest addition of memory and skill mechanics to close the gap, the outlook isn't much better. The model still has to catch it first! At a 13% self-review rate for deployment concerns, that's hoping for a lucky shot to seed the memory and then hoping the memory system surfaces it in the right context next time. Instead of closing the gap, memory just becomes the filter for what gets remembered.\nTrial runs for skills and memory system are still ongoing. Early results are interesting. More on that soon.\n\nThe Speed Trap\n\"Just ask the right questions, then.\" Sure. The model answers perfectly when you do.\nFollow that thought for a second tho. If you're senior enough to ask what about the thundering herd?, you'd have caught the missing jitter yourself. And if you're not - if you're the developer who asked the model to write the retry function in the first place - you'd probably ship the review as-is.\nThat's the speed trap. The model is fast enough to earn your trust, and the code piles up before anyone checks what the review actually missed.\nThat's just more code, all reviewed by the same process that missed the thundering herd.\nFaros AI measured this across 10,000 developers. Compared to pre-AI baselines, 98% more pull requests are merged with the average PR size up 154% and review time up 91%. METR found experienced open-source developers were 19% slower partly because of the overhead of reviewing and correcting AI output. The review that already doesn't catch deployment concerns now has to catch them in pull requests that are two and a half times larger.\n \nAs Bellotti puts it in Kill It with Fire: automation means we ignore whatever we automated. The AI review catches the correctness bugs almost every time. That's exactly what makes you stop checking for the ones it misses.\n\nAlways Ask What Breaks\nDon't ask the model to review your code. Ask it what breaks.\nWhat breaks in your domain, at your scale, with your deployment? \"What happens when 1,000 clients hit this at once?\" \"What happens when two instances run behind a load balancer?\" \"What happens when this table has 500 million rows?\"\nAs Charity Majors puts it: complex systems fail in ways you can't predict. Your tools need to handle questions you haven't thought to ask yet.\nEvery question gets a perfect answer. No question gets asked unprompted.\n\nDon't be the one getting thirteen out of a hundred.\n- H\u014dr\u014dshi \u30d0\u30ac\u30dc\u30f3\u30c9\n\nAlso published on Substack: https://blog.katanaquant.com/p/the-bug-that-shipped?utm_campaign=post&utm_medium=web\n\nMethodology\nThe full trial data including all prompts, model responses, and evaluation scripts is available on GitHub. Data collection is ongoing. I don't expect significant shifts in the numbers at this point.\nModels tested: Claude Opus 4.6, Claude Sonnet 4.6, OpenAI Codex-5.3, GPT-5.4, GLM-5. All models ran with extended thinking / xhigh reasoning effort enabled. Over 3,700 trials across 10 scenarios x 5 models. March 2026.\n\nSources\nSome book links are Amazon affiliate links. Buying through them costs you nothing extra and helps support this work.\nBrooker, M. (2015). \"Exponential Backoff And Jitter.\" AWS Architecture Blog.\nBrooker, M. \"Timeouts, retries, and backoff with jitter.\" Amazon Builders' Library.\nGoogle. \"Managing Load.\" Site Reliability Engineering Workbook. (Uses \"thundering herd\" verbatim; Pok\u00e9mon GO 20x spike case study.)\nPython Software Foundation. \"threading - Thread-based parallelism.\" Python 3 documentation.\nKleppmann, M. (2016). \"How to do distributed locking.\"\npsycopg2 documentation. \"Server side cursors.\" psycopg.org.\nMETR. \"Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.\" July 2025 (updated February 2026).\nFaros AI. \"The AI Productivity Paradox.\" 2025.\nMcConnell, S. Code Complete. 2nd ed. Microsoft Press, 2004. (Perspective-based reviews, inspection effectiveness.)\nBellotti, M. Kill It with Fire. No Starch Press, 2021. (\"automation means we ignore whatever we automated.\")\nMajors, C. \"Honeycomb 10 Year Manifesto.\" honeycomb.io, February 2026.",
+        "entities": {
+          "code": [
+            {
+              "language": "python",
+              "code": "cursor.execute(f\"SELECT * FROM {table_name}\")\ncolumns = [desc[0] for desc in cursor.description]\nrows = cursor.fetchall()\nwriter.writerows(rows)",
+              "content": "```python\ncursor.execute(f\"SELECT * FROM {table_name}\")\ncolumns = [desc[0] for desc in cursor.description]\nrows = cursor.fetchall()\nwriter.writerows(rows)\n```"
+            },
+            {
+              "language": "python",
+              "code": "def retry_request(method, url, retries=3, backoff=1, **kwargs):\n    last_exception = None\n    last_response = None\n\n    for attempt in range(retries):\n        try:\n            response = requests.request(method, url, **kwargs)\n            if response.status_code < 500:\n                return response\n            last_response = response\n        except (ConnectionError, Timeout) as exc:\n            last_exception = exc\n\n        if attempt < retries - 1:\n            time.sleep(backoff * (2 ** attempt))\n\n    if last_response is not None:\n        return last_response\n    raise last_exception",
+              "content": "```python\ndef retry_request(method, url, retries=3, backoff=1, **kwargs):\n    last_exception = None\n    last_response = None\n\n    for attempt in range(retries):\n        try:\n            response = requests.request(method, url, **kwargs)\n            if response.status_code < 500:\n                return response\n            last_response = response\n        except (ConnectionError, Timeout) as exc:\n            last_exception = exc\n\n        if attempt < retries - 1:\n            time.sleep(backoff * (2 ** attempt))\n\n    if last_response is not None:\n        return last_response\n    raise last_exception\n```"
+            },
+            {
+              "language": "python",
+              "code": "class Scheduler:\n    def __init__(self):\n        self._tasks = []\n        self._threads = []\n        self._stop_event = threading.Event()\n        self._lock = threading.Lock()\n        self._running = False",
+              "content": "```python\nclass Scheduler:\n    def __init__(self):\n        self._tasks = []\n        self._threads = []\n        self._stop_event = threading.Event()\n        self._lock = threading.Lock()\n        self._running = False\n```"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://blog.katanaquant.com/p/the-bug-that-shipped?utm_campaign=post&utm_medium=web"
+            },
+            {
+              "text": "psycopg.org"
+            },
+            {
+              "text": "honeycomb.io"
+            },
+            {
+              "text": "https://www.amazon.com/Kill-Fire-Manage-Computer-Systems/dp/1718501188?crid=2WCBLDE21JIWS&sprefix=kill+it+with+fire%2Caps%2C211&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=a6db01e3e4ddd1b13906fda9b1dc3e85&language=en_US&ref_=as_li_ss_tl"
+            },
+            {
+              "text": "https://www.psycopg.org/docs/usage.html#server-side-cursors"
+            },
+            {
+              "text": "https://docs.python.org/3/library/threading.html#lock-objects"
+            },
+            {
+              "text": "https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670?crid=1CP668YZEJSQX&sprefix=cod%2Caps%2C205&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=2612cf4db0c2e0518303e9b80a1c9b42&language=en_US&ref_=as_li_ss_tl"
+            },
+            {
+              "text": "https://www.honeycomb.io/blog/honeycomb-10-year-manifesto-part-1"
+            },
+            {
+              "text": "https://sre.google/workbook/managing-load/"
+            },
+            {
+              "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+            },
+            {
+              "text": "https://www.psycopg.org/docs/cursor.html#cursor.fetchall"
+            },
+            {
+              "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+            },
+            {
+              "text": "https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670?crid=1CP668YZEJSQX&sprefix=cod%2Caps%2C205&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=2612cf4db0c2e0518303e9b80a1c9b42&language=en_US&ref_=as_li_ss_tl"
+            },
+            {
+              "text": "https://www.amazon.com/Kill-Fire-Manage-Computer-Systems/dp/1718501188?crid=2WCBLDE21JIWS&sprefix=kill+it+with+fire%2Caps%2C211&sr=8-1&linkCode=ll2&tag=katanalarp-20&linkId=a6db01e3e4ddd1b13906fda9b1dc3e85&language=en_US&ref_=as_li_ss_tl"
+            },
+            {
+              "text": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+            },
+            {
+              "text": "https://github.com/KatanaQuant/llm-review-trials"
+            },
+            {
+              "text": "https://www.honeycomb.io/blog/honeycomb-10-year-manifesto-part-1"
+            },
+            {
+              "text": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+            },
+            {
+              "text": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+            },
+            {
+              "text": "https://www.faros.ai/blog/ai-software-engineering"
+            },
+            {
+              "text": "https://x.com/KatanaLarp/status/2029928471632224486"
+            },
+            {
+              "text": "https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
+            },
+            {
+              "text": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+            },
+            {
+              "text": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+            },
+            {
+              "text": "https://sre.google/workbook/managing-load/"
+            },
+            {
+              "text": "https://www.psycopg.org/docs/usage.html#server-side-cursors"
+            },
+            {
+              "text": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html"
+            },
+            {
+              "text": "https://docs.python.org/3/library/threading.html"
+            }
+          ]
+        }
+      },
+      "created_at": "2026-03-21T11:35:37.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035344846446031091"
+      ],
+      "text": "@wowka420 at your service \ud83d\udc82",
+      "author_id": "1757309709613166592",
+      "id": "2035344846446031091",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "wowka420",
+            "id": "1683792660509622272"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T13:16:40.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035344348842262841"
+        }
+      ],
+      "in_reply_to_user_id": "1683792660509622272"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035399411652604137"
+      ],
+      "text": "@Alvaro_SR_23 @doodlestein just checked in on the db. clearly not!",
+      "author_id": "1757309709613166592",
+      "id": "2035399411652604137",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "Alvaro_SR_23",
+            "id": "1360203529319821322"
+          },
+          {
+            "start": 14,
+            "end": 26,
+            "username": "doodlestein",
+            "id": "29239591"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T16:53:30.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035397259773333801"
+        }
+      ],
+      "in_reply_to_user_id": "1360203529319821322"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035403346563993684"
+      ],
+      "text": "@majnos64 wdym \"not review prompts\"?",
+      "author_id": "1757309709613166592",
+      "id": "2035403346563993684",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "majnos64",
+            "id": "482791606"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T17:09:08.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035402206703141119"
+        }
+      ],
+      "in_reply_to_user_id": "482791606"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035407124356841906"
+      ],
+      "text": "@majnos64 gud prompt",
+      "author_id": "1757309709613166592",
+      "id": "2035407124356841906",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "majnos64",
+            "id": "482791606"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T17:24:09.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035404929959956530"
+        }
+      ],
+      "in_reply_to_user_id": "482791606"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035407833118708135"
+      ],
+      "text": "@majnos64 https://t.co/U9gClYNR2P",
+      "author_id": "1757309709613166592",
+      "id": "2035407833118708135",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "majnos64",
+            "id": "482791606"
+          }
+        ],
+        "urls": [
+          {
+            "start": 10,
+            "end": 33,
+            "url": "https://t.co/U9gClYNR2P",
+            "expanded_url": "https://github.com/KatanaQuant/llm-review-trials",
+            "display_url": "github.com/KatanaQuant/ll\u2026",
+            "images": [
+              {
+                "url": "https://pbs.twimg.com/news_img/2035407876194283520/xnPeMMdD?format=jpg&name=orig",
+                "width": 1200,
+                "height": 600
+              },
+              {
+                "url": "https://pbs.twimg.com/news_img/2035407876194283520/xnPeMMdD?format=jpg&name=150x150",
+                "width": 150,
+                "height": 150
+              }
+            ],
+            "status": 200,
+            "title": "GitHub - KatanaQuant/llm-review-trials",
+            "description": "Contribute to KatanaQuant/llm-review-trials development by creating an account on GitHub.",
+            "unwound_url": "https://github.com/KatanaQuant/llm-review-trials"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T17:26:58.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035402206703141119"
+        }
+      ],
+      "in_reply_to_user_id": "482791606"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035416961891336302"
+      ],
+      "text": "@_rkhorst Fair point. context matters a lot.\n\nA handful of internal Stripe calls is smth. different than a ws server with 1000s of clients.\n\nInteresting that \"websocket reconnect\" was enough for the model to add jitter tho.\n\nIn the rials with the generic \"retry wrapper\" prompt, most models",
+      "entities": {
+        "annotations": [
+          {
+            "start": 68,
+            "end": 73,
+            "probability": 0.6345,
+            "type": "Other",
+            "normalized_text": "Stripe"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "_rkhorst",
+            "id": "808745260859949057"
+          }
+        ]
+      },
+      "author_id": "1757309709613166592",
+      "id": "2035416961891336302",
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T18:03:14.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035415273558209014"
+        }
+      ],
+      "in_reply_to_user_id": "808745260859949057",
+      "note_tweet": {
+        "text": "Fair point. context matters a lot.\n\nA handful of internal Stripe calls is smth. different than a ws server with 1000s of clients.\n\nInteresting that \"websocket reconnect\" was enough for the model to add jitter tho.\n\nIn the rials with the generic \"retry wrapper\" prompt, most models added jitter 0% of the time (sonnet was exception at ~34%).\n\nFeels like the model picks up on certain keywords more than others."
+      }
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035417823418151418"
+      ],
+      "text": "@kingjames_93 Thanks! Not yet but that's a great idea. \n\nbasically prompting the model to generate its own \"what could break\" questions before reviewing?\n\nAdding this to the trial pipeline.",
+      "author_id": "1757309709613166592",
+      "id": "2035417823418151418",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "kingjames_93",
+            "id": "2248341084"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T18:06:39.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035417261817876886"
+        }
+      ],
+      "in_reply_to_user_id": "2248341084"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035458045078089749"
+      ],
+      "text": "@yashn_ what I can say and fully bsck is that the knowledge is definitely in the training data. 100% on C4 targeted question shows that.\n\nthis tracks with what another reader said: https://t.co/4XEaK9mDSJ\n\nresearch also suggests models default to the most common pattern they've seen when",
+      "entities": {
+        "annotations": [
+          {
+            "start": 104,
+            "end": 105,
+            "probability": 0.6338,
+            "type": "Other",
+            "normalized_text": "C4"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "yashn_",
+            "id": "1591306220618457088"
+          }
+        ],
+        "urls": [
+          {
+            "start": 181,
+            "end": 204,
+            "url": "https://t.co/4XEaK9mDSJ",
+            "expanded_url": "https://x.com/i/status/2035447510756647341",
+            "display_url": "x.com/i/status/20354\u2026"
+          }
+        ]
+      },
+      "author_id": "1757309709613166592",
+      "id": "2035458045078089749",
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T20:46:29.000Z",
+      "note_tweet": {
+        "entities": {
+          "urls": [
+            {
+              "start": 173,
+              "end": 196,
+              "url": "https://t.co/Ml26hnxAxw",
+              "expanded_url": "https://x.com/i/status/2035447510756647341",
+              "display_url": "x.com/i/status/20354\u2026"
+            },
+            {
+              "start": 305,
+              "end": 328,
+              "url": "https://t.co/TpgRlRql2L",
+              "expanded_url": "https://www.sonarsource.com/resources/library/llm-code-generation/",
+              "display_url": "sonarsource.com/resources/libr\u2026"
+            }
+          ]
+        },
+        "text": "what I can say and fully bsck is that the knowledge is definitely in the training data. 100% on C4 targeted question shows that.\n\nthis tracks with what another reader said: https://t.co/Ml26hnxAxw\n\nresearch also suggests models default to the most common pattern they've seen when the prompt is ambiguous https://t.co/TpgRlRql2L"
+      },
+      "referenced_tweets": [
+        {
+          "type": "quoted",
+          "id": "2035447510756647341"
+        },
+        {
+          "type": "replied_to",
+          "id": "2035424996722667959"
+        }
+      ],
+      "in_reply_to_user_id": "1591306220618457088"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035471951196565971"
+      ],
+      "text": "@_rkhorst https://t.co/LnFjFTTyF9",
+      "author_id": "1757309709613166592",
+      "id": "2035471951196565971",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "_rkhorst",
+            "id": "808745260859949057"
+          }
+        ],
+        "urls": [
+          {
+            "start": 10,
+            "end": 33,
+            "url": "https://t.co/LnFjFTTyF9",
+            "expanded_url": "https://x.com/i/status/2035471352363184481",
+            "display_url": "x.com/i/status/20354\u2026"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-21T21:41:45.000Z",
+      "referenced_tweets": [
+        {
+          "type": "quoted",
+          "id": "2035471352363184481"
+        },
+        {
+          "type": "replied_to",
+          "id": "2035415273558209014"
+        }
+      ],
+      "in_reply_to_user_id": "808745260859949057"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035650664043364742"
+      ],
+      "text": "@michaelkarp that's a solid approach.\n\nwhether the ambigious self-review catches more when you give the model explicit state constraints before it writes code is what I'm testing next.\n\nearly trials are kind of mixed but low count so no confidence yet.\n\ninteresting question is also whether it",
+      "author_id": "1757309709613166592",
+      "id": "2035650664043364742",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "michaelkarp",
+            "id": "1855229325559074816"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-22T09:31:53.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035647864647365102"
+        }
+      ],
+      "in_reply_to_user_id": "1855229325559074816",
+      "note_tweet": {
+        "text": "that's a solid approach.\n\nwhether the ambigious self-review catches more when you give the model explicit state constraints before it writes code is what I'm testing next.\n\nearly trials are kind of mixed but low count so no confidence yet.\n\ninteresting question is also whether it matters if that signal comes from the prompt vs the model discovering it in the codebase"
+      }
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2035673523650285889"
+      ],
+      "text": "@PeterCowling7 exactly! more signal -&gt; better output\n\nalready gathering data on that via trials (:",
+      "author_id": "1757309709613166592",
+      "id": "2035673523650285889",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "PeterCowling7",
+            "id": "1520467734559137792"
+          }
+        ]
+      },
+      "conversation_id": "2035319413474206122",
+      "created_at": "2026-03-22T11:02:43.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2035672304890327234"
+        }
+      ],
+      "in_reply_to_user_id": "1520467734559137792"
+    }
+  ],
+  "users": {
+    "1757309709613166592": {
+      "id": "1757309709613166592",
+      "name": "H\u014dr\u014dshi \u30d0\u30ac\u30dc\u30f3\u30c9",
+      "username": "KatanaLarp"
+    },
+    "1520467734559137792": {
+      "id": "1520467734559137792",
+      "name": "Peter Cowling",
+      "username": "PeterCowling7"
+    },
+    "936209473": {
+      "id": "936209473",
+      "name": "Kok-Jin Sam",
+      "username": "kokjinsam"
+    },
+    "1855229325559074816": {
+      "id": "1855229325559074816",
+      "name": "Michael Karp \ud83c\udfcb\ufe0f",
+      "username": "michaelkarp"
+    },
+    "808745260859949057": {
+      "id": "808745260859949057",
+      "name": "Rene Michaelis",
+      "username": "_rkhorst"
+    },
+    "1591306220618457088": {
+      "id": "1591306220618457088",
+      "name": "YN",
+      "username": "yashn_"
+    },
+    "2248341084": {
+      "id": "2248341084",
+      "name": "james ryan",
+      "username": "kingjames_93"
+    },
+    "482791606": {
+      "id": "482791606",
+      "name": "Jan Tom\u00e1\u0161ek",
+      "username": "majnos64"
+    },
+    "1360203529319821322": {
+      "id": "1360203529319821322",
+      "name": "Alvaro_SR_23",
+      "username": "Alvaro_SR_23"
+    },
+    "1683792660509622272": {
+      "id": "1683792660509622272",
+      "name": "Jakoov Goldstein",
+      "username": "wowka420"
+    }
+  },
+  "thread_fetch_error": null
+}
