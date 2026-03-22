@@ -8,9 +8,9 @@ status: seedling
 
 # Evaluation automation is phase-gated by comprehension
 
-When an evaluation loop improves score without improving real behavior, the failure is often not weak search but an objective grounded too weakly in observed failure. Evaluation automation therefore follows a necessary sequence: **comprehension first, specification second, generalization third**.
+When an evaluation loop improves score without improving real behavior, the failure is often not weak search but an objective grounded too weakly in observed failure. Evaluation automation in practice follows a characteristic sequence: **comprehension first, specification second, generalization third**.
 
-Comprehension is the first gate because it supplies the observations that specification turns into verifiers. Before automation can improve output quality, someone must inspect real outputs, identify concrete failure modes, and translate those failures into discriminative judges. Without that comprehension-to-specification step, optimization improves score without improving behavior.
+Comprehension is the first gate because it supplies the observations that specification turns into verifiers. Before automation can improve output quality, someone must inspect real outputs, identify concrete failure modes, and translate those failures into discriminative judges.
 
 ## The three phases
 
