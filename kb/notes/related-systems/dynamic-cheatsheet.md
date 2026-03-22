@@ -58,6 +58,8 @@ The weaker part is maintenance fidelity. The prompts ask the model to preserve, 
 
 So Dynamic Cheatsheet is genuinely more than retrieval, but less than a structured memory system. It is best understood as test-time artifact learning through prompt-mediated state carryover.
 
+The follow-up paper [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) evaluates Dynamic Cheatsheet directly and makes this maintenance-risk more concrete: agents in that setup often remain weakly sensitive to interventions on condensed experience. In other words, carrying forward a cheatsheet can improve the system while still failing to make the cheatsheet strongly behaviorally binding.
+
 ## What to Watch
 
 - Whether later versions move from full cheatsheet rewrite to operation-level maintenance
@@ -74,3 +76,4 @@ Relevant Notes:
 - [Autocontext](./autocontext.md) — contrasts: both learn across runs into artifacts, but Autocontext has richer orchestration and optional weight export, while Dynamic Cheatsheet stays at prompt-state artifacts
 - [memory management policy is learnable but oracle-dependent](../memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Dynamic Cheatsheet is the artifact-side counterpart to weight-learning systems that also depend on strong recurring task signals
 - [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — sharpens: this system sits squarely in the deploy-time artifact-update space, using persistent prompt-state rather than weights
+- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: evaluates Dynamic Cheatsheet directly and finds condensed cheatsheet-style experience has limited causal influence under intervention

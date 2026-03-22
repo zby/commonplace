@@ -51,6 +51,8 @@ On axis 2, ExpeL is a strong **trace-derived artifact-learning** system. The pro
 
 The interesting subtype signal is this: ExpeL does not just summarize trajectories into tips. It maintains a rule set with explicit mutation verbs and counters. Within the artifact-learning branch, that makes it one of the clearest examples of trajectory-to-rule consolidation rather than trajectory-to-summary compression.
 
+The later paper [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) evaluates ExpeL directly and sharpens an important limit: ExpeL's raw trajectories remain more causally active than its condensed experience. That does not refute the rule-maintenance loop here, but it does show that successful compression into prompt-visible artifacts is not the same thing as preserving behavioral influence at inference time.
+
 ## Borrowable Ideas
 
 **Separate gathering from consolidation.** Ready now as a workshop pattern. ExpeL makes the boundary explicit: first collect traces, then run a later pass that generalizes across them. That is cleaner than trying to decide permanence inline during every run.
@@ -87,3 +89,4 @@ Relevant Notes:
 - [trajectory-informed-memory-generation-self-improving-agents ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — compares: both extract guidance from trajectories, but ExpeL's code shows a more explicit rule-maintenance lifecycle
 - [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — sharpens: ExpeL shows the same artifact-learning mechanism through prompt-visible rules and retrieved traces, even though the repo packages it as a benchmark-loop research pipeline rather than a production deployment system
 - [memory management policy is learnable but oracle-dependent](../memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: ExpeL also depends on the strength of its task oracle, but keeps the learned result inspectable instead of training it into weights
+- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: evaluates ExpeL directly and finds raw trajectories remain more behaviorally binding than condensed experience
