@@ -1,5 +1,5 @@
 ---
-description: Ward Cunningham's wiki design principle — minimize capture friction, then refine in place — is the animating idea behind the text→note→structured-claim codification ladder
+description: Ward Cunningham's wiki design principle — minimize capture friction, refine in place — drives the text→note→structured-claim codification ladder
 type: note
 traits: [has-external-sources]
 tags: [type-system]
@@ -8,34 +8,34 @@ status: seedling
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place
 
-The KB type hierarchy is a codification ladder for thoughts, and the design principle behind it is Ward Cunningham's original wiki idea: make it trivially easy to save a thought, then make it easy to refine it — in place, not by moving it somewhere else.
+The KB type hierarchy is a codification ladder for thoughts. Its design principle comes from Ward Cunningham's original wiki: make saving a thought trivially easy, then make refining it easy — in place, not by moving it elsewhere.
 
 ## Evidence
 
-1. **The original wiki.** Cunningham's WikiWikiWeb (1995) was designed around two properties: anyone can create a page instantly (lowest capture friction), and anyone can edit it later (progressive refinement). The name "wiki" comes from Hawaiian "wikiwiki" meaning "quick" — the speed of capture was the core design value. Pages started rough and improved through repeated editing, not through a pipeline of draft→review→publish.
+1. **The original wiki.** Cunningham's WikiWikiWeb (1995) was built around two properties: anyone can create a page instantly (lowest capture friction), and anyone can edit it later (progressive refinement). The name "wiki" comes from Hawaiian "wikiwiki" meaning "quick" — speed of capture was the core design value. Pages started rough and improved through repeated editing, not through a draft→review→publish pipeline.
 
 2. **Our type ladder mirrors this.** The [document classification](./document-classification.md) hierarchy follows the same pattern:
    - **`text`** — no frontmatter, just write. Zero friction, like creating a wiki page.
-   - **`note`** — add frontmatter, give it a claim title, connect it. Now findable.
+   - **`note`** — add frontmatter, claim title, connections. Now findable.
    - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md).
 
-   Each step adds structure only when the thought has earned it. The file never moves, never gets copied — it grows structure in place.
+   Each step adds structure only when the thought has earned it. The file never moves or gets copied — it grows structure in place.
 
-3. **The status axis reinforces it.** `seedling` → `current` is orthogonal to the type ladder but serves the same principle: you can have a structurally complete `structured-claim` that's still a seedling (not yet reviewed). Structure and commitment are independent — you can refine the shape without committing to the content.
+3. **The status axis reinforces it.** `seedling` → `current` is orthogonal to the type ladder but serves the same principle: a structurally complete `structured-claim` can still be a seedling (not yet reviewed). Structure and commitment are independent — you can refine shape without committing to content.
 
 ## Reasoning
 
-A half-formed intuition doesn't need Toulmin sections — it needs to exist before it's forgotten. A mature argument that other notes depend on as a premise does need sections — because now it's load-bearing and we need to trust it. The wiki principle says: don't force the mature structure at capture time, because the friction will prevent capture. And don't leave the mature argument unstructured, because then you can't verify it.
+A half-formed intuition doesn't need Toulmin sections — it needs to exist before it's forgotten. A mature argument that other notes depend on as a premise does need sections — it's load-bearing and must be trustworthy. The wiki principle says: don't force mature structure at capture time, because friction prevents capture. Don't leave mature arguments unstructured, because you can't verify them.
 
-The key property is **refinement in place**. A thought captured as `text` becomes a `note` by adding frontmatter to the same file. A `note` becomes a `structured-claim` by adding sections to the same file. No migration, no new file, no pipeline. The URL (file path) stays stable, links don't break, git history is preserved. This is what makes refinement cheap enough to actually happen — the same insight Cunningham had about wiki pages.
+The key property is **refinement in place**. A `text` file becomes a `note` by adding frontmatter. A `note` becomes a `structured-claim` by adding sections. No migration, no new file, no pipeline. The file path stays stable, links don't break, git history is preserved. This makes refinement cheap enough to actually happen — the same insight Cunningham had about wiki pages.
 
 This connects to [codification](../notes/codification.md): codification is the general pattern (stochastic → deterministic), the wiki principle is the UX requirement that makes it work (each step must be low-friction and in-place).
 
 ## Caveats
 
-- **Wikis have a decay problem.** The original WikiWikiWeb eventually suffered from stale pages nobody maintained. Our `status: outdated` and seedling review process are meant to address this, but the risk remains — low friction for capture means high volume, and curation must keep up.
+- **Wikis have a decay problem.** The original WikiWikiWeb suffered from stale pages nobody maintained. Our `status: outdated` and seedling review process address this, but the risk remains — low capture friction means high volume, and curation must keep up.
 - **"In place" has limits.** A `text` file that grows into a 500-line `structured-claim` might be better split. The principle is "refine in place when possible," not "never split."
-- **The ladder is a library pattern.** The refinement-in-place trajectory assumes documents move toward permanence — accumulating structure, becoming more connected, staying in the KB. [Workshop documents](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) (tasks, decision threads, experiments) follow the opposite trajectory: they consume value over time and end by being archived or discarded. The wikiwiki principle applies to knowledge capture, not to work-in-motion.
+- **The ladder is a library pattern.** Refinement-in-place assumes documents move toward permanence — accumulating structure, becoming more connected, staying in the KB. [Workshop documents](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) (tasks, decision threads, experiments) follow the opposite trajectory: they consume value over time and end by being archived or discarded. The wikiwiki principle applies to knowledge capture, not work-in-motion.
 
 ---
 
