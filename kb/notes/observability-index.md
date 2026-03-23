@@ -35,4 +35,4 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Other tagged notes <!-- generated -->
 
-- [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — Broad review of Napkin, Pi Self-Learning, OpenViking, ClawVault, Autocontext, OpenClaw-RL, and trajectory learners — compares trace formats, promotion targets, and learning loops
+- [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — Fifteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths

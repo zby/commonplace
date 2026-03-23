@@ -17,3 +17,7 @@ What works, what doesn't, what needs testing. Empirical observations about KB op
 - [brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) — experimental ladder for comparing scalar and pairwise judges before treating pairwise ranking as a stronger soft oracle
 
 ## Other tagged notes <!-- generated -->
+
+- [Elicitation requires maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md) — Four elicitation strategies ordered by user expertise required, composable into review architectures with maintenance loops that prevent ossification
+- [Evaluation automation is phase-gated by comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — Optimization loops require manual error analysis and judge calibration before automation can improve behavior rather than just score
+- [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — Distinguishes stored knowledge (retrievable on direct probe) from contextually activated knowledge (brought to bear during task execution without being directly queried); formalizes the activation gap and the expertise gap

@@ -56,3 +56,5 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 - [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
 
 ## Other tagged notes <!-- generated -->
+
+- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) — Brainstorming note that turns the pairwise-comparison hypothesis into a staged test plan for open-ended LLM evaluation loops

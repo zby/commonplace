@@ -16,6 +16,7 @@ Summaries: `SUMMARY.{review-type}.md` (per type) or `SUMMARY.md` (all types comb
 ## CSV tables (`csv/`)
 
 Normalized data for analysis. Prefixed by review type when run per-type, unprefixed when combined.
+These CSVs are generated artifacts and are not tracked in git.
 
 | File | Contents |
 |------|----------|
