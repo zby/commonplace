@@ -45,6 +45,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [ReasoningBank](./reasoning-bank.md) — reasoning-as-memory pipeline that extracts structured memory items from both successful and failed trajectories, retrieves by embedding similarity, and proposes test-time scaling via parallel trajectory comparison; sits between Reflexion (simpler) and ExpeL (richer lifecycle) on the artifact-learning spectrum
 - [G-Memory](./g-memory.md) — multi-agent memory harness with state-graph trajectory capture, task-neighborhood retrieval, and scored text insights; strongest reviewed example so far of mixed memory substrates inside one benchmark agent system
 - [Zikkaron](./Zikkaron.md) — MCP memory server for Claude Code with 26 neuroscience-branded subsystems (Hopfield retrieval, predictive coding write gate, engram allocation, hippocampal replay) all implemented as heuristic Python without LLM calls; the neuroscience framing is vocabulary over mechanism, but the 9-signal retrieval fusion and compaction hooks are genuinely useful
+- [OpenSage](./OpenSage.md) — Google ADK-based agent framework with runtime subagent creation, AI-written tools, Neo4j graph memory, Docker sandbox isolation, agent ensemble coordination, and RL training integration; strongest reference for self-modifying agent topology, but knowledge structure is flat and the self-programming claims outrun the implementation
 
 ## Patterns Across Systems
 
@@ -62,6 +63,7 @@ The divergences are more revealing:
 - **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan); SAGE enforces with cryptographic gates (signed transactions, validator quorum, RBAC clearance levels) — two very different enforcement models, both structurally enforced rather than instructed
 - **Access control** — SAGE has structured multi-agent RBAC (clearance levels, domain-scoped permissions, on-chain agent identity); Cognee has relational ACLs with tenant isolation and per-dataset permissions; most other systems either have no access control or rely on filesystem permissions
 - **Cross-agent knowledge transfer** — most systems are single-agent or agent-agnostic; cass-memory is the first reviewed system to make cross-agent session mining a first-class feature, indexing logs from Claude Code, Cursor, Codex, Aider, and others into a shared playbook
+- **Runtime self-modification** — most frameworks have fixed agent topology defined at build time; OpenSage is the first reviewed system where agents can create subagents and scaffold new tools at runtime, though without quality gates on the created artifacts
 - **Self-referentiality** — only our KB is simultaneously a knowledge system and a knowledge base about knowledge systems
 
 ## Open Questions
@@ -72,3 +74,4 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
+
