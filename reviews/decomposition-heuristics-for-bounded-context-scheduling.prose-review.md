@@ -1,11 +1,15 @@
 <!-- REVIEW-METADATA
-reviewed-path: kb/notes/decomposition-rules-for-bounded-context-scheduling.md
-reviewed-blob-sha: 8dd312aa093473ed973f5e11317dcf6cbe644cfc
-reviewed-at: 2026-03-23T09:32:55+01:00
-reviewed-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+note-path: kb/notes/decomposition-heuristics-for-bounded-context-scheduling.md
+last-full-review-note-sha: 8dd312aa093473ed973f5e11317dcf6cbe644cfc
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: ba8d2449533b4150dd180dafbc118aa18bf1c3f4
+last-accepted-note-commit: 6b5b381a4b973131eb8ebd0e202a9057a5f97dd9
+last-accepted-at: 2026-03-23T22:26:46+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: prose-review
 -->
-=== PROSE REVIEW: decomposition-rules-for-bounded-context-scheduling.md ===
+=== PROSE REVIEW: decomposition-heuristics-for-bounded-context-scheduling.md ===
 
 Checks applied: 8
 

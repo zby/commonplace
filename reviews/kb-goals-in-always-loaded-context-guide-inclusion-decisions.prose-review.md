@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md
+last-full-review-note-sha: 4e1dc6b6886e4f91e6355225fa35f036d3c007e4
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 4e1dc6b6886e4f91e6355225fa35f036d3c007e4
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: kb-goals-in-always-loaded-context-guide-inclusion-decisions.md ===
 
 Checks applied: 8

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md
+last-full-review-note-sha: 97d5de2309e76a9ddcb38fed54c49de7429e8e8e
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 97d5de2309e76a9ddcb38fed54c49de7429e8e8e
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: link-graph-plus-timestamps-enables-make-like-staleness-detection.md ===
 
 Checks applied: 8

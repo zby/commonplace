@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md
+last-full-review-note-sha: f48dd8d6db2f4d0b808d85889d2be7238f666b56
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: f48dd8d6db2f4d0b808d85889d2be7238f666b56
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md ===
 
 Checks applied: 8

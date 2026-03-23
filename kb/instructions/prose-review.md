@@ -24,6 +24,17 @@ A read-only review that catches cases where the prose misrepresents what the not
 
 Read the target note in full.
 
+Before writing the review, capture the note revision you are actually reviewing:
+
+- `note-path`: the target note path (for example `kb/notes/backlinks.md`)
+- `last-full-review-note-sha`: `git hash-object {note-path}`
+- `last-full-review-note-commit`: `git log -1 --format=%H -- {note-path}` if the note is tracked
+- `last-full-review-at`: current ISO 8601 time (for example `date -Iseconds`)
+- `last-accepted-note-sha`: same as `last-full-review-note-sha` for a new full review
+- `last-accepted-note-commit`: same as `last-full-review-note-commit` for a new full review
+- `last-accepted-at`: same as `last-full-review-at` for a new full review
+- `last-acceptance-kind`: `full-review`
+
 ## Checks
 
 ### 1. Source residue
@@ -93,6 +104,18 @@ Read the target note in full.
 ## Output format
 
 ```
+<!-- REVIEW-METADATA
+note-path: {note-path}
+last-full-review-note-sha: {git-blob-sha-for-the-note-content-you-reviewed}
+last-full-review-note-commit: {last-commit-touching-note-if-available}
+last-full-review-at: {iso-8601 timestamp}
+last-accepted-note-sha: {same-git-blob-sha-for-a-full-review}
+last-accepted-note-commit: {same-last-commit-touching-note-if-available}
+last-accepted-at: {same-iso-8601 timestamp-for-a-full-review}
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
+
 === PROSE REVIEW: {note-filename} ===
 
 Checks applied: 8
@@ -112,3 +135,5 @@ Overall: {CLEAN / {N} warnings, {M} info}
 ```
 
 Report every check — WARN, INFO, or CLEAN. Showing clean checks calibrates trust in the review.
+
+The metadata block is operational state, not prose. The selector compares the current note against `last-accepted-note-sha`, while `last-full-review-*` preserves the note revision that actually received a full review.

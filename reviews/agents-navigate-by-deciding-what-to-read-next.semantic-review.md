@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/agents-navigate-by-deciding-what-to-read-next.md
+last-full-review-note-sha: c3ac9804782d91ba09304e79a07ace91b6258e32
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: c3ac9804782d91ba09304e79a07ace91b6258e32
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: agents-navigate-by-deciding-what-to-read-next.md ===
 
 Claims identified: 11

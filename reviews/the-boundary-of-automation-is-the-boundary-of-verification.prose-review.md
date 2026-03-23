@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md
+last-full-review-note-sha: b820728585a289660140797464c75ee932f80f75
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: b820728585a289660140797464c75ee932f80f75
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: the-boundary-of-automation-is-the-boundary-of-verification.md ===
 
 Checks applied: 8

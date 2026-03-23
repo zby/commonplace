@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md
+last-full-review-note-sha: 402948b2ceece92ab98a70af4c03b771e2398059
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 402948b2ceece92ab98a70af4c03b771e2398059
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md ===
 
 Claims identified: 14

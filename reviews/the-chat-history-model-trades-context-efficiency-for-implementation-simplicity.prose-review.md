@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md
+last-full-review-note-sha: a09cc7ba20890f507c3251a93a6354d8b3799e85
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: a09cc7ba20890f507c3251a93a6354d8b3799e85
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md ===
 
 Checks applied: 8

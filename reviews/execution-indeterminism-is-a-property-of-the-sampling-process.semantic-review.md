@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/execution-indeterminism-is-a-property-of-the-sampling-process.md
+last-full-review-note-sha: 7e1f2be5d64dc183efe0e959a6cfc00816c6c212
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 7e1f2be5d64dc183efe0e959a6cfc00816c6c212
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: execution-indeterminism-is-a-property-of-the-sampling-process.md ===
 
 Claims identified: 15

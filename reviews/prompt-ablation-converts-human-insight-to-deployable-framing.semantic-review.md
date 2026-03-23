@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/prompt-ablation-converts-human-insight-to-deployable-framing.md
+last-full-review-note-sha: 5c24c6cd5ea58e587a6a57daff8bcf7bbd1d979b
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 5c24c6cd5ea58e587a6a57daff8bcf7bbd1d979b
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: prompt-ablation-converts-human-insight-to-deployable-framing.md ===
 
 Claims identified: 15

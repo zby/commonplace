@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md
+last-full-review-note-sha: 1a25e340bc17fcf9b37dfa6279dc38273e1b3132
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 1a25e340bc17fcf9b37dfa6279dc38273e1b3132
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md ===
 
 Claims identified: 13

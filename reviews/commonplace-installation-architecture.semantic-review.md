@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/commonplace-installation-architecture.md
+last-full-review-note-sha: 021c6c109e4bba811daae90d794c931e9f63bdeb
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 021c6c109e4bba811daae90d794c931e9f63bdeb
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: commonplace-installation-architecture.md ===
 
 Claims identified: 18

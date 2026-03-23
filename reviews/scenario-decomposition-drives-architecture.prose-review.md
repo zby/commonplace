@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/scenario-decomposition-drives-architecture.md
+last-full-review-note-sha: a8169b5756031952d7b865b96f220b89a4e831c2
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: a8169b5756031952d7b865b96f220b89a4e831c2
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: scenario-decomposition-drives-architecture.md ===
 
 Checks applied: 8

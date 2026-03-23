@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/two-context-boundaries-govern-collection-operations.md
+last-full-review-note-sha: 0b64c56a0ce0665abfc7233ecf727741a76a4791
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 0b64c56a0ce0665abfc7233ecf727741a76a4791
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: two-context-boundaries-govern-collection-operations.md ===
 
 Checks applied: 8

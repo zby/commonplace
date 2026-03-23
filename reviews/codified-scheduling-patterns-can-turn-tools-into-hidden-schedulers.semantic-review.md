@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md
+last-full-review-note-sha: b692385dcf89ca0bc7da9a303b3e1c2a700559c3
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: b692385dcf89ca0bc7da9a303b3e1c2a700559c3
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md ===
 
 Claims identified: 9

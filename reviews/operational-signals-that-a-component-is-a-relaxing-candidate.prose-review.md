@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md
+last-full-review-note-sha: 699de925797c502d8968d08dd7c5baef97b696ce
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 699de925797c502d8968d08dd7c5baef97b696ce
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: operational-signals-that-a-component-is-a-relaxing-candidate.md ===
 
 Checks applied: 8

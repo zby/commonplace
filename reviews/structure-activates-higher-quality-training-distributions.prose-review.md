@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/structure-activates-higher-quality-training-distributions.md
+last-full-review-note-sha: 3ad9d6f2d9fc131339690dafb9cb870d0ca16d1a
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 3ad9d6f2d9fc131339690dafb9cb870d0ca16d1a
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: structure-activates-higher-quality-training-distributions.md ===
 
 Checks applied: 8

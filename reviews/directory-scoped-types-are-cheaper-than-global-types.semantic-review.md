@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/directory-scoped-types-are-cheaper-than-global-types.md
+last-full-review-note-sha: 356796374e0455f43f8d2fda4ad603732fb8c1c9
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 356796374e0455f43f8d2fda4ad603732fb8c1c9
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: directory-scoped-types-are-cheaper-than-global-types.md ===
 
 Claims identified: 14

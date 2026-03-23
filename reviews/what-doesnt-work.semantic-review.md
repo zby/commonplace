@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/what-doesnt-work.md
+last-full-review-note-sha: ab90f0b2d063379ad850c58e7ebd99e8d68ca034
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: ab90f0b2d063379ad850c58e7ebd99e8d68ca034
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: what-doesnt-work.md ===
 
 Claims identified: 8

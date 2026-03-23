@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/storing-llm-outputs-is-constraining.md
+last-full-review-note-sha: d6185194fbba4c6719cb59e060df2a16f3656233
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: d6185194fbba4c6719cb59e060df2a16f3656233
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: storing-llm-outputs-is-constraining.md ===
 
 Claims identified: 19

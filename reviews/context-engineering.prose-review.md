@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/context-engineering.md
+last-full-review-note-sha: a2297b307ec3efda1379da39140b48e8d32a2d21
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: a2297b307ec3efda1379da39140b48e8d32a2d21
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: context-engineering.md ===
 
 Checks applied: 8

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/indirection-is-costly-in-llm-instructions.md
+last-full-review-note-sha: be0292335f5208c66c204d1c13c0b4caaf71b3f8
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: be0292335f5208c66c204d1c13c0b4caaf71b3f8
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: indirection-is-costly-in-llm-instructions.md ===
 
 Claims identified: 13

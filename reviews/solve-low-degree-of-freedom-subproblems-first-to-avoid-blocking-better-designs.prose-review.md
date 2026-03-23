@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md
+last-full-review-note-sha: 4aa858fa9b4b1580b1dc09aa435af414a940fb2b
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 4aa858fa9b4b1580b1dc09aa435af414a940fb2b
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md ===
 
 Checks applied: 8

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md
+last-full-review-note-sha: 5c428a69e09d5d16662c2c4e75e5a0be98ef35f6
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 5c428a69e09d5d16662c2c4e75e5a0be98ef35f6
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: unified-calling-conventions-enable-bidirectional-refactoring.md ===
 
 Claims identified: 14

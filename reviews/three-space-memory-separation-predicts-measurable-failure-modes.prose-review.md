@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md
+last-full-review-note-sha: dc61629866e1b0e19b03c3d0bc1ea0469cc53e13
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: dc61629866e1b0e19b03c3d0bc1ea0469cc53e13
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: three-space-memory-separation-predicts-measurable-failure-modes.md ===
 
 Checks applied: 8

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md
+last-full-review-note-sha: 6361a37f4160b89a2063db21c9a334e348a5c0b7
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 6361a37f4160b89a2063db21c9a334e348a5c0b7
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: human-llm-differences-are-load-bearing-for-knowledge-system-design.md ===
 
 Claims identified: 14

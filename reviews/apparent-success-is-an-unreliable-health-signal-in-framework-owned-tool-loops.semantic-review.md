@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md
+last-full-review-note-sha: 347f2f6285a6ac6ae0d56021413382ddfb62d36a
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 347f2f6285a6ac6ae0d56021413382ddfb62d36a
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md ===
 
 Claims identified: 14

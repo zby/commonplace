@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md
+last-full-review-note-sha: a8273536f231424237b2032d737776d8667ac911
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: a8273536f231424237b2032d737776d8667ac911
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: soft-bound-traditions-as-sources-for-context-engineering-strategies.md ===
 
 Claims identified: 13

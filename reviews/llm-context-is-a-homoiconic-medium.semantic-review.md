@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/llm-context-is-a-homoiconic-medium.md
+last-full-review-note-sha: c627bda889595df6c56a62a3269278b5c754fcf1
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: c627bda889595df6c56a62a3269278b5c754fcf1
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: llm-context-is-a-homoiconic-medium.md ===
 
 Claims identified: 9

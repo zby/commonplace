@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/epiplexity-eli5.md
+last-full-review-note-sha: 265052ccae24e9e23bf98c17eb73b41674bb3e41
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 265052ccae24e9e23bf98c17eb73b41674bb3e41
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: epiplexity-eli5.md ===
 
 Checks applied: 8

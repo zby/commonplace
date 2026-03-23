@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/changing-requirements-conflate-genuine-change-with-disambiguation-failure.md
+last-full-review-note-sha: da7af115706eb5288454c787333be6b7186ccf2f
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: da7af115706eb5288454c787333be6b7186ccf2f
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: changing-requirements-conflate-genuine-change-with-disambiguation-failure.md ===
 
 Checks applied: 8

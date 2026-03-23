@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/agents-md-should-be-organized-as-a-control-plane.md
+last-full-review-note-sha: ae6fbde449c6736b3e59b2a1d9dc15c5cf991dee
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: ae6fbde449c6736b3e59b2a1d9dc15c5cf991dee
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: agents-md-should-be-organized-as-a-control-plane.md ===
 
 Claims identified: 15

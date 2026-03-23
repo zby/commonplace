@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/instructions-are-typed-callables.md
+last-full-review-note-sha: 7949fedfdeebc8bc24495d601366202d5cc0f192
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 7949fedfdeebc8bc24495d601366202d5cc0f192
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: instructions-are-typed-callables.md ===
 
 Claims identified: 11

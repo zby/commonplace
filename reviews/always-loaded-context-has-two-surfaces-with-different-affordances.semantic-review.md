@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/always-loaded-context-has-two-surfaces-with-different-affordances.md
+last-full-review-note-sha: 6f6cd6e0de0b4daae6d0798d43cade2c94836ddb
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 6f6cd6e0de0b4daae6d0798d43cade2c94836ddb
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: always-loaded-context-has-two-surfaces-with-different-affordances.md ===
 
 Claims identified: 9

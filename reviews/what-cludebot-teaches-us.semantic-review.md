@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/what-cludebot-teaches-us.md
+last-full-review-note-sha: f6b907c7b56b85219b6341c54c3acf6a6b65ac5d
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: f6b907c7b56b85219b6341c54c3acf6a6b65ac5d
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: what-cludebot-teaches-us.md ===
 
 Claims identified: 16

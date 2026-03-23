@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/interpretation-errors-are-failures-of-the-interpreter.md
+last-full-review-note-sha: 448515250548aeb21d2b18438f217db6f2861119
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 448515250548aeb21d2b18438f217db6f2861119
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: interpretation-errors-are-failures-of-the-interpreter.md ===
 
 Claims identified: 12

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/traversal-improves-the-graph.md
+last-full-review-note-sha: 7f705df566619b1089fb66c03bf3e7eba0fda57b
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 7f705df566619b1089fb66c03bf3e7eba0fda57b
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: traversal-improves-the-graph.md ===
 
 Claims identified: 12

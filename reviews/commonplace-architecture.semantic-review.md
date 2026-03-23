@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/commonplace-architecture.md
+last-full-review-note-sha: 405d9e4c819188bd71ce1e311984471c66d376f9
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 405d9e4c819188bd71ce1e311984471c66d376f9
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: commonplace-architecture.md ===
 
 Claims identified: 14

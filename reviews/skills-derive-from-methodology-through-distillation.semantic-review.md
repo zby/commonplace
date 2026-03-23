@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/skills-derive-from-methodology-through-distillation.md
+last-full-review-note-sha: b77fba10cf230acc0770eb96e4e53e7f9e7986d8
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: b77fba10cf230acc0770eb96e4e53e7f9e7986d8
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: skills-derive-from-methodology-through-distillation.md ===
 
 Claims identified: 14

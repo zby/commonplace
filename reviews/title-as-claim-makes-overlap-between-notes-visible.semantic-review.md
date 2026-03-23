@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/title-as-claim-makes-overlap-between-notes-visible.md
+last-full-review-note-sha: 5c8bba837e0eae52220379ec43d862d166af2f9e
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 5c8bba837e0eae52220379ec43d862d166af2f9e
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: title-as-claim-makes-overlap-between-notes-visible.md ===
 
 Claims identified: 8

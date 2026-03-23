@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md
+last-full-review-note-sha: 81602af66150464039e1b67fedaba6f715c986cb
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 81602af66150464039e1b67fedaba6f715c986cb
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md ===
 
 Claims identified: 12

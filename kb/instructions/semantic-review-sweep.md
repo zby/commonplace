@@ -10,13 +10,19 @@ Run the [semantic review](./semantic-review.md) across all notes in `kb/notes/`.
 
 ### 1. Inventory
 
-Run `uv run scripts/list_notes.py semantic-review` to get the list of notes to review. The script compares each top-level note in `kb/notes/` against `reviews/{note-stem}.semantic-review.md` and returns only notes whose review is missing or older than the note.
+Run `uv run scripts/notes_selector.py semantic-review --json` to get the changed-note queue. The script compares each top-level note's current blob hash against the `last-accepted-note-sha` stored in `reviews/{note-stem}.semantic-review.md`, filters out notes whose content did not change at all, and includes a compact diff for changed notes.
 
-This is intentionally make-like and timestamp-based. It reduces needless re-review, but it still treats trivial edits as changes because it compares file mtimes rather than semantic diffs.
+If you only need note paths, omit `--json`.
 
 ### 2. Delegate
 
-Launch sub-agents to review notes in parallel. Each sub-agent receives this prompt:
+Launch sub-agents to review notes in parallel. The orchestrator should inspect each diff first; purely cosmetic edits may not justify a fresh semantic review. For notes whose diffs are trivial, acknowledge them with:
+
+```
+uv run scripts/ack_review.py semantic-review {note-path}
+```
+
+For notes that do need a full review, each sub-agent receives this prompt:
 
 ```
 Read kb/instructions/semantic-review.md for the review procedure.
@@ -40,7 +46,7 @@ After all reviews are complete, run:
 uv run scripts/summarize_reviews.py semantic-review
 ```
 
-This reads all `reviews/*.semantic-review.md` files and writes `reviews/SUMMARY.semantic-review.md` with WARN tables, check distribution, most common findings, and clean notes.
+This writes ranked CSV tables in `reviews/csv/` and a compact `reviews/SUMMARY.semantic-review.md` built from the top rows of those tables.
 
 ### 4. Report to user
 

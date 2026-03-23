@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/llm-context-is-composed-without-scoping.md
+last-full-review-note-sha: cfe3bacee167706de2ebc3c6f54da1bd5913ffff
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: cfe3bacee167706de2ebc3c6f54da1bd5913ffff
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: llm-context-is-composed-without-scoping.md ===
 
 Checks applied: 8

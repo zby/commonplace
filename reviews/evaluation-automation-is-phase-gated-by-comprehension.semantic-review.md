@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/evaluation-automation-is-phase-gated-by-comprehension.md
+last-full-review-note-sha: 00a2aee140c0d902b2f587f53a90b28d703ea2a7
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 00a2aee140c0d902b2f587f53a90b28d703ea2a7
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: evaluation-automation-is-phase-gated-by-comprehension.md ===
 
 Claims identified: 11

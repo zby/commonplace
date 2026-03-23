@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md
+last-full-review-note-sha: 01930c59c012749e454bbb81d61dce1b3a912ea5
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 01930c59c012749e454bbb81d61dce1b3a912ea5
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md ===
 
 Claims identified: 10

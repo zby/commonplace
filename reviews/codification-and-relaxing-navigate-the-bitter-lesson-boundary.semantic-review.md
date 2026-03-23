@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md
+last-full-review-note-sha: be331741b7118e82a07e275ad30e32d98134756c
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: be331741b7118e82a07e275ad30e32d98134756c
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: codification-and-relaxing-navigate-the-bitter-lesson-boundary.md ===
 
 Claims identified: 14

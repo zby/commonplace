@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/capability-placement-should-follow-autonomy-readiness.md
+last-full-review-note-sha: f589a0cedda8823d9f274b51e43bc397449a661e
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: f589a0cedda8823d9f274b51e43bc397449a661e
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: capability-placement-should-follow-autonomy-readiness.md ===
 
 Claims identified: 8

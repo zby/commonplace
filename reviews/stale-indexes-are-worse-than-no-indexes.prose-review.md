@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/stale-indexes-are-worse-than-no-indexes.md
+last-full-review-note-sha: b48b793b4e4f772a02af9186e0008dd10a6d2bf0
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: b48b793b4e4f772a02af9186e0008dd10a6d2bf0
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: stale-indexes-are-worse-than-no-indexes.md ===
 
 Checks applied: 8

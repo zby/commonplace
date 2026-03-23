@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md
+last-full-review-note-sha: 9fbb46263da8a9d2c9effe957282df563320cfde
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 9fbb46263da8a9d2c9effe957282df563320cfde
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: stateful-tools-recover-control-by-becoming-hidden-schedulers.md ===
 
 Checks applied: 8

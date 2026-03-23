@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/distillation-status-determines-directory-placement.md
+last-full-review-note-sha: 7c675c4d5662c549f96aebce5937cd60f5c2f51c
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 7c675c4d5662c549f96aebce5937cd60f5c2f51c
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: distillation-status-determines-directory-placement.md ===
 
 Checks applied: 8

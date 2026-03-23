@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md
+last-full-review-note-sha: dec45995e13d4c20772c4e43a32654d22f9916c4
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: dec45995e13d4c20772c4e43a32654d22f9916c4
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md ===
 
 Claims identified: 9

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/deploy-time-learning-is-agile-for-human-ai-systems.md
+last-full-review-note-sha: 9e4a4e68290357b7bfacf14acf5176bcc94df0fb
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 9e4a4e68290357b7bfacf14acf5176bcc94df0fb
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: deploy-time-learning-is-agile-for-human-ai-systems.md ===
 
 Checks applied: 8

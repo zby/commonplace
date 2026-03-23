@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
+last-full-review-note-sha: 998e87d0d53a362a69e060c95461ce7ff5259fc3
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 998e87d0d53a362a69e060c95461ce7ff5259fc3
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: the-augmentation-automation-boundary-is-discrimination-not-accuracy.md ===
 
 Claims identified: 16

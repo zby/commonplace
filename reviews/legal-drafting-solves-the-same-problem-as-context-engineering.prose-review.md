@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/legal-drafting-solves-the-same-problem-as-context-engineering.md
+last-full-review-note-sha: 35ab9c7cc13fb9bb720e8e86100c4c9ffed4c9b8
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: 35ab9c7cc13fb9bb720e8e86100c4c9ffed4c9b8
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: legal-drafting-solves-the-same-problem-as-context-engineering.md ===
 
 Checks applied: 8

@@ -1,3 +1,14 @@
+<!-- REVIEW-METADATA
+note-path: kb/notes/methodology-enforcement-is-constraining.md
+last-full-review-note-sha: bdc9b61fc19a90d9ff311f8aa4865e108e545896
+last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-full-review-at: 2026-03-23T09:32:55+01:00
+last-accepted-note-sha: bdc9b61fc19a90d9ff311f8aa4865e108e545896
+last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+last-accepted-at: 2026-03-23T09:32:55+01:00
+last-acceptance-kind: full-review
+review-type: prose-review
+-->
 === PROSE REVIEW: methodology-enforcement-is-constraining.md ===
 
 Checks applied: 8
