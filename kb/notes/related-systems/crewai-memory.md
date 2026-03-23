@@ -77,7 +77,7 @@ The `extract_memories()` function — which breaks raw text into atomic facts be
 
 **Importance as a float.** Importance scores between 0 and 1, inferred by an LLM on save, imply a precision that doesn't exist. What does 0.7 importance mean? The composite scoring formula works despite this because the relative ranking is what matters, not the absolute values. But if we adopted importance scoring, we'd want discrete buckets (structural / potential / contextual, as ClawVault does) rather than continuous floats.
 
-**The unification itself.** Collapsing short-term, long-term, entity, and operational memory into one API simplifies the programming model but erases distinctions that matter for [knowledge lifecycle](../claw-learning-is-broader-than-retrieval.md). Session-scoped observations need different retention policies than domain knowledge. Agent preferences need different retrieval strategies than project facts. The scope tree approximates these distinctions but doesn't enforce them.
+**The unification itself.** Collapsing short-term, long-term, entity, and operational memory into one API simplifies the programming model but erases distinctions that matter for [knowledge lifecycle](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md). Session-scoped observations need different retention policies than domain knowledge. Agent preferences need different retrieval strategies than project facts. The scope tree approximates these distinctions but doesn't enforce them.
 
 ## Relation to Other Reviewed Systems
 
@@ -106,7 +106,7 @@ Relevant Notes:
 - [distillation](../distillation.md) — extends: `extract_memories()` is one-shot distillation without refinement or reconnection
 - [constraining](../constraining.md) — contrasts: consolidation is a form of constraining (reducing redundancy) but without the interpretation-narrowing that characterises our definition
 - [deploy-time-learning-the-missing-middle](../deploy-time-learning-the-missing-middle.md) — contrasts: CrewAI Memory operates at the in-context timescale (accumulate during runs) with persistence, but has no theory of when to codify patterns into durable artifacts
-- [claw-learning-is-broader-than-retrieval](../claw-learning-is-broader-than-retrieval.md) — contrasts: CrewAI Memory is purely retrieval-oriented; no mechanism for action-oriented knowledge types
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — contrasts: CrewAI Memory is purely retrieval-oriented; no mechanism for action-oriented knowledge types
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: the scope tree blurs workshop/library distinction rather than making it explicit
 - [ClawVault](./clawvault.md) — sibling: both are agent memory systems; ClawVault models the process of learning, CrewAI models the infrastructure of remembering
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: CrewAI's consolidation is an automated mutation that succeeds on deduplication but doesn't address the harder mutations (synthesise, regroup)

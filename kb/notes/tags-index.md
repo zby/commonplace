@@ -31,7 +31,7 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 ## Gaps
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
-- [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — learning must improve action capacity, not just retrieval
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
 - [brainstorming-how-to-enrich-web-search](./brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology
 
 ## Other tagged notes <!-- generated -->

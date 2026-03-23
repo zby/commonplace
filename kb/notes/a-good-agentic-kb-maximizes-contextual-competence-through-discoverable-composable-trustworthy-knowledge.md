@@ -9,7 +9,7 @@ status: seedling
 
 ## What is a good agentic knowledge base?
 
-A knowledge base for an agent is not a search engine. An agent doesn't just retrieve facts — it classifies, plans, communicates, and reasons on behalf of a user. The accumulated knowledge must make all of these actions more competent. [KB learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) names this directly: the learning loop must improve *action capacity*, not just answer-finding.
+A knowledge base for an agent is not a search engine. An agent doesn't just retrieve facts — it classifies, plans, communicates, and reasons on behalf of a user. The accumulated knowledge must make all of these actions more competent. [KB learning is broader than retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) names this directly: the learning loop must improve *action capacity*, not just answer-finding.
 
 The criterion is **contextual competence**: the agent's ability to act appropriately given what it knows about the domain, the user, and the project. A good agentic KB maximizes contextual competence under the constraint of [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — the finite window through which the agent receives everything it can attend to.
 
@@ -103,7 +103,7 @@ The KB's first-principles filter selects for reach — not because procedures la
 Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the bounded-context constraint that makes efficiency necessary
-- [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — grounds: contextual competence as the criterion, not retrieval accuracy
+- [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — grounds: contextual competence as the criterion, not retrieval accuracy
 - [constraining](./constraining.md) — mechanism: one of three learning operations; improves trustworthiness, preserves reach
 - [distillation](./distillation.md) — mechanism: one of three learning operations; improves discoverability, preserves or destroys reach
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: one of three learning operations; improves composability, creates reach

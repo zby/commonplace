@@ -13,7 +13,7 @@ The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the 
 ## Two value propositions
 
 1. **Connect retrieved pieces to each other** — build a "search result graph" where relationships between results are articulated, not just listed. This is the `/connect` pattern applied to a temporary research corpus. The process combines both [kinds of navigation](./two-kinds-of-navigation.md) in a new context: long-range search retrieves external results, then local link-following connects them into a traversable temporary graph.
-2. **Connect retrieved pieces to existing KB** — what `/ingest` already does, but at scale. The KB provides pre-existing structural understanding that elevates raw search results. This extends [the KB's action capacity](./claw-learning-is-broader-than-retrieval.md) beyond retrieval into active research — the agent doesn't just look up what it knows, it discovers what it doesn't.
+2. **Connect retrieved pieces to existing KB** — what `/ingest` already does, but at scale. The KB provides pre-existing structural understanding that elevates raw search results. This extends [the KB's action capacity](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) beyond retrieval into active research — the agent doesn't just look up what it knows, it discovers what it doesn't.
 
 ## Why this differs from naive search
 
@@ -86,7 +86,7 @@ Relevant Notes:
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — deep search skill would distill from this methodology note
 - [oracle-strength spectrum](./oracle-strength-spectrum.md) — stopping criteria for the iteration loop map to oracle types of varying strength
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: deep search amplifies the candidate-explosion problem /connect faces at KB scale
-- [claw learning is broader than retrieval](./claw-learning-is-broader-than-retrieval.md) — exemplifies: deep search is active research capacity, not retrieval; the agent discovers what it doesn't know rather than looking up what it does
+- [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — exemplifies: deep search is active research capacity, not retrieval; the agent discovers what it doesn't know rather than looking up what it does
 - [two kinds of navigation](./two-kinds-of-navigation.md) — synthesizes: deep search creates a temporary corpus where both navigation modes operate — long-range search retrieves, then local link-following inter-connects
 - [scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — enables: the MVP's five phases are a scenario decomposition whose context needs could be measured like other scenarios
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: deep search's compound type signature (query + context → research-report + source-reviews) chains multiple existing skill signatures

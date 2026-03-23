@@ -31,7 +31,7 @@ Each transition produces artifacts: handoff documents capture "what was I doing,
 - [preference|c=0.7|i=0.4] Prefer TypeScript for type safety
 ```
 
-The type taxonomy — decision, lesson, preference, commitment, fact, relationship — maps directly to what [claw learning is broader than retrieval](../claw-learning-is-broader-than-retrieval.md) calls "action-oriented knowledge types": preferences, procedures, judgment precedents. They have concrete types for things we've identified theoretically but not structured.
+The type taxonomy — decision, lesson, preference, commitment, fact, relationship — maps directly to what [claw learning loops must improve action capacity not just retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) calls "action-oriented knowledge types": preferences, procedures, judgment precedents. They have concrete types for things we've identified theoretically but not structured.
 
 **Promotion by recurrence.** Importance thresholds drive what gets promoted to permanent vault knowledge:
 - **structural** (i >= 0.8): auto-promotes
@@ -96,7 +96,7 @@ These aren't mutually exclusive. You could frontload a minimal context (as we al
 Relevant Notes:
 
 - [a-functioning-kb-needs-a-workshop-layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — foundation: ClawVault's observations, handoffs, and reflections are concrete workshop artifacts where we have only the theoretical need
-- [claw-learning-is-broader-than-retrieval](../claw-learning-is-broader-than-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — contrasts: ClawVault automates promotion without a theory of when automation is premature; their results would test whether early automation helps or locks in assumptions
 - [Always-loaded context has two surfaces with different affordances](../always-loaded-context-mechanisms-in-agent-harnesses.md) — contrasts: ClawVault frontloads context via profiles and injection; our two always-loaded surfaces use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant

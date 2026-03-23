@@ -27,7 +27,7 @@ Karpathy describes "Claws" as a new layer of the AI stack sitting on top of LLM 
 
 The `/connect` discovery found six substantive connections, informed by the fact that the "Claw" term has already been deeply absorbed into the KB's vocabulary (20+ files reference it across notes, ingest reports, and comparative analyses):
 
-1. **[claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md)** -- **grounds**: This source is the definitional anchor that note builds on. The note explicitly cites this snapshot as the source for what a "Claw" is and argues the learning loop must serve action capacity (classification, planning, communication), not just retrieval.
+1. **[claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)** -- **grounds**: This source is the definitional anchor that note builds on. The note explicitly cites this snapshot as the source for what a "Claw" is and argues the learning loop must serve action capacity (classification, planning, communication), not just retrieval.
 
 2. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)** -- **extends**: Claws embody deploy-time learning's "across sessions" timescale applied to agent infrastructure itself. Karpathy's emphasis on persistence and accumulated context is the Claw variant of artifact-mediated adaptation. Karpathy is also quoted in this note for the verifiability concept.
 
@@ -39,7 +39,7 @@ The `/connect` discovery found six substantive connections, informed by the fact
 
 6. **[What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md)** -- **exemplifies**: Claws are the productized realization of voooooogel's prediction about what survives in multi-agent systems: filesystem collaboration, agent spawning, persistent cross-session state. What was theoretical now has a category name and commercial implementations.
 
-The strongest connection is to [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) -- the source has already done its primary work by grounding the "Claw" concept that the note theorizes about. The term's adoption into the KB vocabulary is effectively complete.
+The strongest connection is to [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- the source has already done its primary work by grounding the "Claw" concept that the note theorizes about. The term's adoption into the KB vocabulary is effectively complete.
 
 ## Extractable Value
 
@@ -57,4 +57,4 @@ The strongest connection is to [claw-learning-is-broader-than-retrieval](../note
 
 ## Recommended Next Action
 
-File as reference -- the source's primary value (the "Claw" category definition and terminology) has already been fully absorbed into the KB through the [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) note and its downstream connections. The extractable value items marked [experiment] (three-layer stack model, cross-session scheduling) are genuinely interesting but would need separate source material on specific Claw implementations to develop further -- this blog post is too thin on technical detail to ground new notes.
+File as reference -- the source's primary value (the "Claw" category definition and terminology) has already been fully absorbed into the KB through the [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) note and its downstream connections. The extractable value items marked [experiment] (three-layer stack model, cross-session scheduling) are genuinely interesting but would need separate source material on specific Claw implementations to develop further -- this blog post is too thin on technical detail to ground new notes.

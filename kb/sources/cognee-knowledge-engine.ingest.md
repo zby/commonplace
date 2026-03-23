@@ -46,7 +46,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [three-space-memory-separation-predicts-measurable-failure-modes](../notes/three-space-memory-separation-predicts-measurable-failure-modes.md) (exemplifies) — Concrete system with no three-space separation, a candidate for observing predicted failure modes (search pollution, identity scatter) as data volume grows.
 
-- [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
 
 - [a-good-agentic-kb-maximizes-contextual-competence](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
 

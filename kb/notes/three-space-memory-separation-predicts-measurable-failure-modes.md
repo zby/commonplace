@@ -61,4 +61,4 @@ Relevant Notes:
 
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient that motivates durable knowledge in the first place
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — graduation from operational space to knowledge graph is a form of constraining
-- [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — argues these failure modes are symptoms of forcing action-oriented knowledge (preferences, procedures, precedents) into a retrieval-oriented structure
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — argues these failure modes are symptoms of forcing action-oriented knowledge (preferences, procedures, precedents) into a retrieval-oriented structure

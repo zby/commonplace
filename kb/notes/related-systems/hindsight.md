@@ -97,6 +97,6 @@ Exemplifies [constraining and distillation both trade generality for reliability
 
 Extends [memory management policy is learnable but oracle-dependent](../memory-management-policy-is-learnable-but-oracle-dependent.md) — Hindsight's consolidation engine learns what to consolidate using task-completion oracles (LLM judgement); the same oracle-dependency limitation applies.
 
-Tests [CLAW learning is broader than retrieval](../claw-learning-is-broader-than-retrieval.md) — Hindsight's reflect operation goes beyond retrieval into reasoning (tool-calling loop with hierarchical knowledge access), but the retain/recall path remains retrieval-focused. The system partially validates the claim that learning requires more than search.
+Tests [CLAW learning is broader than retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — Hindsight's reflect operation goes beyond retrieval into reasoning (tool-calling loop with hierarchical knowledge access), but the retain/recall path remains retrieval-focused. The system partially validates the claim that learning requires more than search.
 
 `#related-systems` `#learning-theory` `#memory-architecture`

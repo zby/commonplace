@@ -23,7 +23,7 @@
   - [synthesis-is-not-error-correction](kb/notes/synthesis-is-not-error-correction.md) — multi-agent error amplification patterns
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) — agent crew memory
   - [cognee](kb/notes/related-systems/cognee.md) — pipeline-first knowledge engine
-  - Rejected at index scan: claw-learning-is-broader-than-retrieval (tangential), spacebot (process architecture, not memory), clawvault (session lifecycle, not architecture analogy)
+  - Rejected at index scan: claw-learning-loops-must-improve-action-capacity-not-just-retrieval (tangential), spacebot (process architecture, not memory), clawvault (session lifecycle, not architecture analogy)
 
 **Topic indexes:**
 - Read [learning-theory-index](kb/notes/learning-theory-index.md) — Memory & Architecture section confirmed candidates; no additional finds
@@ -94,7 +94,7 @@
 - [crewai-memory](kb/notes/related-systems/crewai-memory.md) — CrewAI is a multi-agent memory system, but the existing note focuses on retrieval engineering and lacks the architectural depth needed for a meaningful connection. The connection would reduce to "both are about multi-agent memory" without articulating why.
 - [cognee](kb/notes/related-systems/cognee.md) — Pipeline-first knowledge engine, but single-agent oriented. The paper's multi-agent consistency challenge doesn't apply to Cognee's architecture.
 - [towards-a-science-of-scaling-agent-systems](kb/sources/towards-a-science-of-scaling-agent-systems.md) — The scaling paper discusses multi-agent coordination overhead and error amplification, but its focus is on task performance scaling, not memory architecture. The connection would be indirect — via synthesis-is-not-error-correction which already bridges them.
-- [claw-learning-is-broader-than-retrieval](kb/notes/claw-learning-is-broader-than-retrieval.md) — Learning breadth vs. the paper's architectural memory model; no specific mechanism connects them.
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — Learning breadth vs. the paper's architectural memory model; no specific mechanism connects them.
 
 ## Index Membership
 

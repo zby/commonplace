@@ -38,7 +38,7 @@ The `/connect` discovery (2026-03-09) found 9 note connections and 5 source conn
 
 **Context efficiency trade-off.** The LLM-heavy pipeline (multiple calls per episode) grounds [context-efficiency-is-the-central-design-concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — Graphiti explicitly invests context at ingestion time to save it at retrieval time.
 
-**Retrieval-only scope.** Graphiti exemplifies [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) — it extracts entities and relationships for later retrieval but does not capture preferences, procedures, judgment precedents, or voice.
+**Retrieval-only scope.** Graphiti exemplifies [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — it extracts entities and relationships for later retrieval but does not capture preferences, procedures, judgment precedents, or voice.
 
 **Graph-vs-vector contrast with CrewAI.** Graphiti **contrasts** with [CrewAI Memory](../notes/related-systems/crewai-memory.md) — both are database-backed agent memory systems with LLM-driven ingestion, but they diverge on the fundamental data model. CrewAI uses a flat vector store with composite scoring and consolidation (merge/replace near-duplicates); Graphiti uses a typed knowledge graph with temporal edge invalidation (old facts survive with timestamps). The comparison illuminates the graph-vs-vector trade-off within the database-first camp.
 

@@ -39,7 +39,7 @@ Connected notes that bear on this:
 - kb/notes/automating-kb-learning-is-an-open-problem.md — frames
   automated re-organization as "boiling cauldron mutations." A-MEM's
   memory evolution is an empirical instance of this.
-- kb/notes/claw-learning-is-broader-than-retrieval.md — argues that
+- kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md — argues that
   retrieval-only benchmarks miss most of what learning means. A-MEM's
   evaluations are retrieval-only.
 
