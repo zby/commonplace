@@ -80,7 +80,7 @@ Napkin is strongest where we are still comparatively thin: agent-shaped UX on to
 Relevant Notes:
 
 - [Instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — foundation: Napkin's `NAPKIN.md` -> overview -> search -> read ladder is a concrete tool-level implementation of the same loading hierarchy
-- [Always-loaded context has two surfaces with different affordances](../always-loaded-context-has-two-surfaces-with-different-affordances.md) — extends: Napkin's injected overview plus CLI hint text make the always-loaded/tool-output boundary especially explicit
+- [Always-loaded context has two surfaces with different affordances](../always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: Napkin's injected overview plus CLI hint text make the always-loaded/tool-output boundary especially explicit
 - [Pointer design tradeoffs in progressive disclosure](../pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: Napkin supplies concrete examples of fixed pointers (overview keywords) and query-time pointers (search snippets), and shows how output defaults change their usefulness to agents
 - [Distillation](../distillation.md) — contrasts: Napkin's auto-distill captures and routes structured notes, but does not yet provide the stronger synthesis and task-specific compression this note argues for
 - [Inspectable substrate, not supervision, defeats the blackbox problem](../inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — foundation: Napkin keeps the substrate inspectable because even its richer querying and automation still terminate in plain files

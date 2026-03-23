@@ -13,7 +13,7 @@ Every line in always-loaded context competes for attention with the actual task.
 ## The loading hierarchy
 
 1. **CLAUDE.md** — always loaded. Slim. Routes to everything else. Contains universal instructions (coding conventions, git rules, guardrails), routing tables, search patterns, and links to task-specific docs.
-2. **Skill descriptions** — always loaded as a list of available `/slash` commands with short descriptions. A second always-loaded surface with [different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md).
+2. **Skill descriptions** — always loaded as a list of available `/slash` commands with short descriptions. A second always-loaded surface with [different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md).
 3. **Skill bodies** — loaded on demand when a `/slash` command is invoked. Each skill pulls in its own detailed instructions. Good container for task-specific guidance that doesn't belong in CLAUDE.md.
 4. **Task-specific docs** (WRITING.md, tasks/README.md) — read explicitly when the agent is about to do that kind of work. Referenced from CLAUDE.md so the agent knows they exist.
 
@@ -30,4 +30,4 @@ Sources:
 Relevant Notes:
 
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md as "a map with pointers" converges independently on the routing concept at production scale
-- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — extends: distinguishes the two always-loaded surfaces (CLAUDE.md vs skill descriptions) and their design tradeoffs
+- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: distinguishes the two always-loaded surfaces (CLAUDE.md vs skill descriptions) and their design tradeoffs

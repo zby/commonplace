@@ -1,5 +1,5 @@
 ---
-description: Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — with practitioner evidence for how each is used and what content belongs where
+description: Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are
 type: note
 traits: []
 tags: []

@@ -214,6 +214,6 @@ Relevant Notes:
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning progression
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: the control-plane fragment must integrate into the loading hierarchy
-- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-has-two-surfaces-with-different-affordances.md) — constrains: the control-plane fragment must integrate with both always-loaded surfaces
+- [Always-loaded context has two surfaces with different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md) — constrains: the control-plane fragment must integrate with both always-loaded surfaces
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the install step that renders skills and copies operational artifacts
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — informs: the collection/partition distinction and the two-level types nesting limit
