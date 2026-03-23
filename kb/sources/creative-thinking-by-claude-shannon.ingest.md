@@ -43,7 +43,7 @@ Shannon's lecture lays out a two-tier model of creative research. The first tier
 
 - **[first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** — exemplifies: Shannon's generalization heuristic is Deutsch's reach criterion stated as a practitioner's instinct. "Can I apply the same principle in more general ways? Can I use this same clever idea to solve a larger class of problems?" is an explicit instruction to select for explanatory reach.
 
-- **[deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](../notes/deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md)** — grounds: Shannon's analogy method (search for a similar solved problem, bridge back) is exactly the deep-search value proposition: expand the corpus of known solutions, then map connections to the current problem.
+- **[brainstorming-how-to-enrich-web-search](../notes/brainstorming-how-to-enrich-web-search.md)** — grounds: Shannon's analogy method (search for a similar solved problem, bridge back) is exactly the enriched web search value proposition: expand the corpus of known solutions, then map connections to the current problem.
 
 ## Extractable Value
 

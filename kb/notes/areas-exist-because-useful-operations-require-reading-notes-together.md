@@ -97,7 +97,7 @@ Relevant Notes:
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — consequence: a note missing from its area is invisible to both orientation and comparative reading
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — areas are one resolution level; both operations work within a level
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: comparative reading yield as a potential quality signal
-- [deep search is connection methodology applied to temporarily expanded corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
+- [brainstorming how to enrich web search](./brainstorming-how-to-enrich-web-search.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
 
 Distilled into:
 

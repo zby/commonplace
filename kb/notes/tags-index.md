@@ -32,7 +32,7 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
 - [claw-learning-is-broader-than-retrieval](./claw-learning-is-broader-than-retrieval.md) — learning must improve action capacity, not just retrieval
-- [deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) — deep search means temporarily expanding the corpus with web results
+- [brainstorming-how-to-enrich-web-search](./brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology
 
 ## Other tagged notes <!-- generated -->
 

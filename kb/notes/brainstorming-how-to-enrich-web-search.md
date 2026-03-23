@@ -1,14 +1,14 @@
 ---
-description: "Design exploration for a deep search skill that reuses /connect's dual discovery and articulation testing on web search results, building a temporary research graph before bridging to KB"
+description: "Design exploration for enriching web search by reusing /connect's dual discovery and articulation testing on results, building a temporary research graph before bridging to KB"
 type: note
 traits: [has-comparison]
 tags: []
 status: seedling
 ---
 
-# Deep search is connection methodology applied to a temporarily expanded corpus
+# Brainstorming how to enrich web search
 
-The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the same dual discovery, articulation testing, and synthesis detection regardless of what documents it connects. This means "deep search" doesn't require new connection logic. It requires temporarily expanding the corpus with web search results, running existing connection machinery across the expanded set, then extracting durable insights.
+The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the same dual discovery, articulation testing, and synthesis detection regardless of what documents it connects. The core idea: temporarily expand the corpus with web search results, run existing connection machinery across the expanded set, then extract durable insights. Phase 3 below goes beyond pure `/connect` reuse (it adds synthesis and query generation), so this is connection methodology as a starting point, not a complete design.
 
 ## Two value propositions
 
@@ -29,7 +29,7 @@ Naive deep search stays at level 1. The `/connect` skill already operates at lev
 
 **Phase 1: Seed search.** User provides a query + optional KB context. Run multiple web searches with query variations.
 
-**Phase 2: Snapshot & inter-connect.** Snapshot top results into a temporary workspace. Run a lightweight `/connect`-like pass across them — not to the KB yet, just among themselves. The [articulation test](./link-contracts-framework.md) applies: "Result A connects to Result B because [specific reason]."
+**Phase 2: Snapshot & inter-connect.** Snapshot top results into a temporary workspace. Run a lightweight `/connect`-like pass across them — not to the KB yet, just among themselves. The articulation test from `/connect` applies: "Result A connects to Result B because [specific reason]."
 
 **Phase 3: Synthesize & redirect.** After building the inter-result graph, look for:
 - **Gaps** — clusters of results that don't connect to each other suggest missing concepts
@@ -51,7 +51,7 @@ This is the [boiling cauldron](./automating-kb-learning-is-an-open-problem.md) l
 **Stopping criterion.** Iterative search can loop forever. Each heuristic below is a proxy oracle of different strength on the [oracle-strength spectrum](./oracle-strength-spectrum.md) — the stronger the signal, the more confidently the loop can terminate:
 - Diminishing returns — new results mostly overlap with existing graph (soft oracle: structural convergence)
 - Query exhaustion — synthesis step generates no new queries (soft oracle: generative capacity depleted)
-- Budget — hard cap on iterations/API calls (no oracle: pure cost control)
+- Budget — hard cap on iterations/API calls (deterministic but says nothing about output quality — verifies cost compliance, not result value)
 - User checkpoint — pause after N rounds for human steering (interactive oracle: human judgment)
 
 ## Minimum viable version
@@ -71,7 +71,8 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 - What's the right granularity for snapshotting? Full pages vs. extracted passages?
 - Should the temporary workspace use the same document types as the KB, or a lighter format? Since [skills are typed callables](./instructions-are-typed-callables.md), deep search's type signature would be something like `query + context → research-report + source-reviews` — a compound output that chains multiple existing skill signatures.
 - How does the iteration budget interact with the two learning mechanisms — is this [constraining](./constraining.md) (constraining search), [distillation](./distillation.md) (extracting procedure from exploration), or something else?
-- Can the [extract/connect/review cycle](./needs-testing.md) be validated through deep search before investing in the full boiling cauldron?
+- Can the [extract/connect/review cycle](./needs-testing.md) be validated through enriched search before investing in the full boiling cauldron?
+- How should the process handle search results that *contradict* existing KB content? The two value propositions are both additive (connect results to each other, connect to KB). Contradiction detection is a different operation — it challenges the KB rather than extending it.
 
 ---
 
@@ -80,7 +81,7 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — provides the abstraction depth framework that distinguishes this from naive search
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
-- [link contracts framework](./link-contracts-framework.md) — articulation test applies to search result connections
+- [link contracts framework](./link-contracts-framework.md) — link quality criteria (descriptive anchors, intent taxonomy) inform how inter-result connections should be expressed
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — centrality metrics for pruning search result graphs
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — deep search skill would distill from this methodology note
 - [oracle-strength spectrum](./oracle-strength-spectrum.md) — stopping criteria for the iteration loop map to oracle types of varying strength
