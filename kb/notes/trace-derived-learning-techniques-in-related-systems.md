@@ -12,15 +12,19 @@ Fifteen code-inspected systems and two source-only systems all learn from traces
 
 The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, Autocontext, OpenClaw-RL, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). The first seven mine live sessions or service-owned event streams; the latter eight learn from repeated task trajectories or search trees. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
+**What the survey finds.** The systems separate on two axes: ingestion pattern (single-session extension, cross-agent aggregator, service-owned backend, or trajectory-run) and promotion target (symbolic artifacts vs model weights). Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is a solved-enough pattern to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
+
 ## The recurring stages
 
-Across these systems, the same five stages appear:
+We organize each system around five recurring stages:
 
 1. **Trigger** — when mining runs
 2. **Source format** — what raw session representation is consumed
 3. **Extraction schema** — what target shape the model or code writes
 4. **Promotion/storage** — how extracted items persist or get ranked
 5. **Reinjection** — how mined artifacts affect future sessions
+
+Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
 What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is symbolic artifacts, service-managed memory, or model weights. [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) sharpens the distinction: "service memory" is usually a backend choice within the symbolic artifact substrate, not a third top-level substrate alongside artifacts and weights.
 
@@ -260,7 +264,7 @@ The systems separate on two axes.
 
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
-**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure.
+**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
@@ -331,9 +335,9 @@ None of the reviewed systems closes the harder KB-learning mutations. They extra
 - retiring a stale learning for principled reasons
 - judging whether a mined pattern has explanatory reach or is just a recurring local patch
 
-The eight additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). None of the fifteen systems demonstrates principled retirement, cross-domain abstraction, or explanatory-reach judgment in open-ended settings.
+The eight additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). cass-memory's score-based deprecation and `invertToAntiPattern()` mechanism are the closest to principled retirement, but they are mechanical (threshold-driven) rather than explanatory — they retire artifacts that stop working without reasoning about why. None of the fifteen systems demonstrates retirement grounded in explanatory reach, cross-domain abstraction, or open-ended judgment.
 
-The concrete update to [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is a solved enough pattern to copy; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed symbolic artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
+The concrete update to [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed symbolic artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
 
 ---
 
