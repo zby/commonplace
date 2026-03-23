@@ -4,7 +4,7 @@ description: Batch prose review across all notes in kb/notes/. Delegates each no
 
 # Prose Review Sweep
 
-Run the [prose review](./prose-review.md) across all notes in `kb/notes/`. Each note is reviewed by a sub-agent. Individual reports are saved to `reviews/prose-review/` and a summary aggregates findings across the KB.
+Run the [prose review](./prose-review.md) across all notes in `kb/notes/`. Each note is reviewed by a sub-agent. Individual reports are saved to `reviews/` and a summary aggregates findings across the KB.
 
 ## Steps
 
@@ -21,7 +21,7 @@ Read kb/instructions/prose-review.md for the review procedure.
 Apply it to: {note-path}
 
 Write the full report (in the output format specified by the instruction)
-to: reviews/prose-review/{note-stem}.prose-review.md
+to: reviews/{note-stem}.prose-review.md
 
 Do not modify the note. Only write the review file.
 ```
@@ -32,38 +32,17 @@ Batch sub-agents in groups of 5–8 to manage concurrency. Wait for each batch t
 
 ### 3. Summarize
 
-After all reviews are complete, read every `reviews/prose-review/*.prose-review.md` file. Write a summary to `reviews/prose-review/SUMMARY.md` with this structure:
+After all reviews are complete, run:
 
-```markdown
-# Prose Review Sweep — {date}
-
-Reviewed: {N} notes
-
-## Findings
-
-### WARN ({count})
-
-| Note | Check | Finding |
-|------|-------|---------|
-| [note](../../kb/notes/note.md) | check-name | one-line finding |
-
-## Checks with no warnings
-
-{List the checks (from the 8 defined in prose-review.md) that produced
-zero WARN findings across all reviewed notes.}
-
-## Most common findings
-
-{Top 3 recurring patterns, with examples}
-
-## Notes with no findings
-
-{List of notes that passed all checks clean}
 ```
+uv run scripts/summarize_reviews.py prose-review
+```
+
+This reads all `reviews/*.prose-review.md` files and writes `reviews/SUMMARY.prose-review.md` with WARN tables, check distribution, most common findings, and clean notes.
 
 ### 4. Report to user
 
-Print the WARN table and the "most common findings" section. Link to the full summary.
+Print the "most common findings" section from the summary. Link to the full summary.
 
 ## Re-running
 
