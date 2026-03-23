@@ -39,4 +39,4 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: names the implication of that note's two-axis model for how effective context should be treated
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — sharpens: explains why task dependence belongs naturally in the effective-cost measure rather than only in the threshold
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: clean local frames reduce effective cost by stripping irrelevant dependencies
-- [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — consequence: if effective context is relational, decomposition and representation choice become first-class scheduling decisions
+- [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: if effective context is relational, decomposition and representation choice become first-class scheduling decisions

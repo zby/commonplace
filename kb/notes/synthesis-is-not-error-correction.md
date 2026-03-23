@@ -47,7 +47,7 @@ In the [scheduling model](./bounded-context-orchestration-model.md), what to do 
 - **Redundant calls** solving the same sub-problem need **voting** — the scheduler's job is selection via [error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
 - **Complementary calls** solving different sub-problems need **synthesis** — the scheduler's job is assembly.
 
-Kim et al.'s Independent topology applies synthesis where voting would be appropriate: agents solve the same complete task independently, but their outputs are merged rather than compared. This is a gap in the experimental design (voting with decorrelation was never tested), not evidence that multi-agent coordination is inherently negative-sum. The [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) should encode this match explicitly.
+Kim et al.'s Independent topology applies synthesis where voting would be appropriate: agents solve the same complete task independently, but their outputs are merged rather than compared. This is a gap in the experimental design (voting with decorrelation was never tested), not evidence that multi-agent coordination is inherently negative-sum. The [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) should encode this match explicitly.
 
 ## Open questions
 
@@ -62,7 +62,7 @@ Relevant Notes:
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — foundation: the theoretical framework for when voting-based error correction works (TPR > FPR, decorrelated checks); this note adds that synthesis doesn't qualify
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — extends: synthesis failures are one member of a broader family where uncoordinated composition over a shared substrate produces amplification instead of contamination or inconsistency
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
-- [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
+- [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
 - [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
 - [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — evidence: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation

@@ -34,7 +34,7 @@ The /connect discovery identified 7 KB notes and 1 sibling source with genuine c
 
 - [bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md) — The model uses `M` as "the maximum effective context of one agent call." Paulsen empirically measures what `M` is for real models and shows it varies by task type. This means `M` is not a constant but a function `MECW(model, task_type)`.
 
-- [decomposition-rules-for-bounded-context-scheduling](../notes/decomposition-rules-for-bounded-context-scheduling.md) — If MECW for multi-needle retrieval is measured in hundreds of tokens, decomposition rules like "separate selection from joint reasoning" are necessities, not optimizations.
+- [decomposition-heuristics-for-bounded-context-scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — If MECW for multi-needle retrieval is measured in hundreds of tokens, decomposition rules like "separate selection from joint reasoning" are necessities, not optimizations.
 
 - [distillation](../notes/distillation.md) — RAG improves accuracy only under MECW; above it, RAG actively degrades performance. Distillation becomes a gatekeeper for RAG effectiveness, not a nice-to-have.
 

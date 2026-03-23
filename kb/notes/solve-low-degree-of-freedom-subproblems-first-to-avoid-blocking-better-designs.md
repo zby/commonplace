@@ -19,7 +19,7 @@ This is not domain-specific advice about kitchens; it is a general sequencing ru
 
 The reason this works is optionality preservation. Early decisions with many alternatives should not be allowed to block decisions with very few alternatives.
 
-In agent workflows, low-degree-of-freedom choices usually correspond to hard constraints: required output schema, tool contracts, file locations, deterministic validation requirements, or precedence rules. High-degree choices are often rhetorical or representational: phrasing, narrative order, or which equivalent summary format to use. This matches [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md): selection and constraint-setting happen first; expensive synthesis calls happen after the constrained frame is established.
+In agent workflows, low-degree-of-freedom choices usually correspond to hard constraints: required output schema, tool contracts, file locations, deterministic validation requirements, or precedence rules. High-degree choices are often rhetorical or representational: phrasing, narrative order, or which equivalent summary format to use. This matches [decomposition rules for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md): selection and constraint-setting happen first; expensive synthesis calls happen after the constrained frame is established.
 
 ## Open Questions
 
@@ -31,6 +31,6 @@ In agent workflows, low-degree-of-freedom choices usually correspond to hard con
 Relevant Notes:
 
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — operationalization: extracts a concrete sequencing heuristic from the broader generative-process framing
-- [decomposition-rules-for-bounded-context-scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — extends: applies the same ordering rule to agent decomposition strategy
+- [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: applies the same ordering rule to agent decomposition strategy
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — enables: symbolic state lets constrained choices be fixed before costly semantic calls
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — example: hard constraints precede softer interpretive guidance

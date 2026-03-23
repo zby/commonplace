@@ -33,7 +33,7 @@ The `/connect` discovery identified five strong and three moderate connections t
 
 - **bounded-context-orchestration-model.md** — The centralized architecture (orchestrator + sub-agents) maps to the symbolic scheduler model. The paper shows it works for decomposable tasks (+80.8% on Finance Agent) but fails for sequential tasks (-50.3% on PlanCraft), adding a decomposability precondition the scheduling model should account for.
 
-- **decomposition-rules-for-bounded-context-scheduling.md** — The paper's finding that architecture selection depends on "measurable task features (e.g., decomposability)" confirms the decomposition rules framework. The three task archetypes (planning, analysis, tool-heavy) are empirically derived decomposition categories.
+- **decomposition-heuristics-for-bounded-context-scheduling.md** — The paper's finding that architecture selection depends on "measurable task features (e.g., decomposability)" confirms the decomposition rules framework. The three task archetypes (planning, analysis, tool-heavy) are empirically derived decomposition categories.
 
 - **error-correction-works-above-chance-oracles-with-decorrelated-checks.md** — Error amplification data (Independent 17.2x, Centralized 4.4x) and the error taxonomy (logical contradiction, numerical drift, context omission, coordination failure) provide empirical grounding for the oracle/error-correction theory. Centralized verification acts as an above-chance oracle.
 
@@ -78,7 +78,7 @@ This does not diminish the paper's contribution — the controlled methodology i
 
 ## Recommended Next Action
 
-Write a note titled "Naive multi-agent coordination usually hurts — sophisticated error correction is the open question" connecting to `error-correction-works-above-chance-oracles-with-decorrelated-checks.md`, `context-efficiency-is-the-central-design-concern-in-agent-systems.md`, and `decomposition-rules-for-bounded-context-scheduling.md`. The note should argue that:
+Write a note titled "Naive multi-agent coordination usually hurts — sophisticated error correction is the open question" connecting to `error-correction-works-above-chance-oracles-with-decorrelated-checks.md`, `context-efficiency-is-the-central-design-concern-in-agent-systems.md`, and `decomposition-heuristics-for-bounded-context-scheduling.md`. The note should argue that:
 
 1. The paper's -3.5% mean result and error amplification data (up to 17.2x) are strong evidence against naive multi-agent coordination (independent agents, simple voting, identical prompts).
 2. The 45% capability saturation threshold and coordination overhead data are valid for the tested configurations but should not be generalized to multi-agent setups that use adversarial review, prompt perturbation for decorrelation, or structured verification loops.

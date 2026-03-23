@@ -100,7 +100,7 @@ else:
     r = call(P)    →  final analysis
 ```
 
-The symbolic scheduler handles the loop, the collection, and the branching — all deterministic. LLM calls handle only the semantic judgments: relevance filtering, summarisation, synthesis. Several [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) generalise from this pattern.
+The symbolic scheduler handles the loop, the collection, and the branching — all deterministic. LLM calls handle only the semantic judgments: relevance filtering, summarisation, synthesis. Several [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) generalise from this pattern.
 
 ## Realising the model with SDKs and tool calling
 
@@ -123,7 +123,7 @@ So tool calling is not the threshold. Plain SDK calls already suffice; tool call
 
 ## Scope and open questions
 
-The full global optimisation problem is probably too rich for clean strategy theorems: goals are [underspecified](./agentic-systems-interpret-underspecified-instructions.md), LLM calls are noisy, the `satisfied` check is itself a judgment call, and the value of including item X depends on the sub-agent's stochastic interpretation. There is no clean objective function. But the model supports **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another. The [decomposition rules](./decomposition-rules-for-bounded-context-scheduling.md) catalogue specific transformations that the model shows move a system in the right direction.
+The full global optimisation problem is probably too rich for clean strategy theorems: goals are [underspecified](./agentic-systems-interpret-underspecified-instructions.md), LLM calls are noisy, the `satisfied` check is itself a judgment call, and the value of including item X depends on the sub-agent's stochastic interpretation. There is no clean objective function. But the model supports **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another. The [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) catalogue specific transformations that the model shows move a system in the right direction.
 
 - Can the framing decisions within `select` be factored cleanly enough that their cost can be ignored in a first theory and reintroduced later?
 - How much selection judgment should the scheduler perform before constructing a bounded call, and how much should be delegated to the LLM inside that call?
@@ -147,7 +147,7 @@ Relevant Notes:
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
-- [decomposition rules for bounded-context scheduling](./decomposition-rules-for-bounded-context-scheduling.md) — consequence: practical rules that follow from the model
+- [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: practical heuristics that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: tool and schema hardening recover part of the interface discipline without moving the scheduler fully into code

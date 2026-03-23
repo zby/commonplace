@@ -1,3 +1,10 @@
+<!-- REVIEW-METADATA
+reviewed-path: kb/notes/decomposition-rules-for-bounded-context-scheduling.md
+reviewed-blob-sha: 8dd312aa093473ed973f5e11317dcf6cbe644cfc
+reviewed-at: 2026-03-23T09:32:55+01:00
+reviewed-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
+review-type: semantic-review
+-->
 === SEMANTIC REVIEW: decomposition-rules-for-bounded-context-scheduling.md ===
 
 Claims identified: 19
