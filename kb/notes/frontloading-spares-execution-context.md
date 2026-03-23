@@ -14,6 +14,8 @@ When instructing LLMs, any part of the instructions whose inputs are known befor
 
 [Context is the central scarce resource in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Frontloading addresses the complexity dimension of that scarcity: executing a procedure inside a bounded call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
 
+The saving extends beyond procedure execution to **discovery avoidance**. When values like paths, endpoints, or configuration are pre-resolved, the agent never spends tokens determining them at runtime — no searching, no trial-and-error, no asking the user. The resolution can happen entirely outside the agent: at installation time, build time, or session start. This is the most basic form of frontloading — replacing what the agent would have to figure out with what is already known.
+
 ## What qualifies for frontloading
 
 The test: can this be computed without the LLM's runtime state (the conversation, the user's query, the evolving task)?
