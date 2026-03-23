@@ -8,7 +8,7 @@ status: seedling
 
 # Commonplace architecture
 
-The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. This note covers the repo's own layout, distinct from the [two-tree installation architecture](./commonplace-installation-architecture.md) that emerges when commonplace is installed into another project.
+The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. This note covers the repo's own layout, distinct from the [two-tree installation layout](./adr/006-two-tree-installation-layout.md) that emerges when commonplace is installed into another project.
 
 ## Current layout
 
@@ -46,7 +46,7 @@ commonplace/
 
 ## Global types belong in CLAUDE.md, not kb/types/
 
-The [installation architecture](./commonplace-installation-architecture.md) spec calls for `kb/types/` to hold global types — the maturity ladder (`text` and `note`). But these types are policy rules, not structural templates. The distinction:
+The [installation layout ADR](./adr/006-two-tree-installation-layout.md) calls for `kb/types/` to hold global types — the maturity ladder (`text` and `note`). But these types are policy rules, not structural templates. The distinction:
 
 - **Collection types** (notes/types/, sources/types/, tasks/types/) define concrete structural templates the agent reads when creating a specific document kind. They earn their own files because each is a multi-section scaffold.
 - **Global types** define when a document promotes from one maturity level to another: no frontmatter means `text`, has frontmatter means `note`. This is a two-sentence rule, not a template.
@@ -64,6 +64,6 @@ Decision: drop `kb/types/` as a required directory. Encode the text/note maturit
 
 Relevant Notes:
 
-- [commonplace-installation-architecture](./commonplace-installation-architecture.md) — the two-tree design for installed projects; this note covers the repo's own layout
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — the two-tree design for installed projects; this note covers the repo's own layout
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand

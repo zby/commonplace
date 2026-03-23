@@ -69,7 +69,7 @@ Goals are set at installation time but domains evolve. When a KB's scope shifts 
 Relevant Notes:
 
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: adds domain scope as a new invariant (Layer 1) in the control-plane model
-- [commonplace installation architecture](./commonplace-installation-architecture.md) — enables: the installation step that generates the control-plane fragment
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — enables: the installation step that generates the control-plane fragment
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: goals must be always-loaded because the inclusion question arises every session
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the structural sections of the fragment are generated; only goals require human input
 - [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — grounds: the reach criterion and quality theory that goals complement but don't replace

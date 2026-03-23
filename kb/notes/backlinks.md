@@ -10,96 +10,86 @@ status: speculative
 
 ## The gap
 
-The knowledge system tracks outbound links well: notes have inline links and "Relevant Notes" footers declaring what they depend on. But no note knows who links TO it. An agent reading `deploy-time-learning-the-missing-middle.md` — which is referenced by 10+ files — sees only the notes it cites, not the notes that cite it.
+The knowledge system tracks outbound links well: notes have inline links and "Relevant Notes" footers declaring what they depend on. But no note knows who links TO it. An agent reading `deploy-time-learning-the-missing-middle.md` — referenced by 40+ files — sees only the notes it cites, not the notes that cite it.
 
-The system provides grep-based discovery (`rg 'note-title\.md' --glob '*.md'`), but that's a manual step agents have to think to perform. Backlinks would make inbound connections visible at reading time, not just searchable.
+Grep-based discovery exists (`rg 'note-title\.md' --glob '*.md'`), but agents have to think to run it. The question is whether inbound connections should be visible at reading time, and if so, how.
 
 ## Concrete use cases
 
 ### 1. Hub identification — "is this note foundational or peripheral?"
 
-An agent lands on a note via an index. The outbound links show what informed this note. But the agent can't tell: is this note a hub that 10 other notes build on, or a leaf that nobody references?
+An agent lands on a note via an index. Outbound links show what informed it, but nothing shows whether 10 other notes build on it or nobody references it at all. Seeing "3 notes extend this, 2 exemplify it, 1 contradicts it" would change how carefully the agent reads and whether it risks editing.
 
-With backlinks, the agent sees immediately: "3 notes extend this, 2 exemplify it, 1 contradicts it." That changes how carefully they read it and whether they consider editing it.
-
-**Who benefits:** Any agent starting a session in an unfamiliar area. Reduces cold-start orientation cost.
+This matters most during cold-start orientation in an unfamiliar area.
 
 ### 2. Source-to-theory bridge — "what practitioner evidence exists for this claim?"
 
-The new `docs/sources/` directory stores ingested external references. Ingest reports link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](../sources/koylanai-personal-brain-os.ingest.md) links to [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md)). But the theory note doesn't know it has practitioner evidence pointing at it.
+Ingest reports in `kb/sources/` link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](../sources/koylanai-personal-brain-os.ingest.md) links to [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md)). But the theory note doesn't know it has practitioner evidence pointing at it. As sources accumulate, backlinks would let an agent see how well-grounded a theoretical claim is — and spot synthesis opportunities when enough sources converge.
 
-As sources accumulate, backlinks would let an agent reading a theoretical note see: "3 practitioner reports exemplify this claim." That's a signal about the claim's empirical grounding — and a synthesis opportunity when enough sources converge.
+### 3. Impact assessment — "what breaks if I change this?"
 
-**Who benefits:** The /ingest skill and any agent evaluating whether a theoretical claim has real-world evidence.
-
-### 3. Impact assessment before editing — "what breaks if I change this?"
-
-Before editing a claim in a highly-referenced note, an agent needs to know what depends on it. Currently this requires a manual grep + reading each result. Backlinks with relationship types would let the agent see at a glance: "3 notes use this as foundation — changing the core claim affects them. 2 notes merely exemplify it — those are safe."
-
-**Who benefits:** Any agent editing an established note. Prevents unintentional downstream breakage.
+Before editing a claim in a highly-referenced note, an agent needs to know what depends on it. Backlinks with relationship types would show this at a glance: "3 notes use this as foundation — changing the core claim affects them. 2 notes merely exemplify it — those are safe." Currently this requires a manual grep plus reading each result.
 
 ### 4. Tension surfacing — "who disagrees with this?"
 
-When a note acquires a "contradicts" link from another note, that tension is only visible if you happen to read the contradicting note. Backlinks would surface tensions from both sides, making unresolved debates visible regardless of which note you're reading.
+When a note acquires a "contradicts" link from another note, the tension is only visible if you happen to read the contradicting note. Backlinks could surface tensions from both sides, making unresolved debates visible regardless of which note you enter through.
 
-**Who benefits:** Agents doing synthesis or reviewing note consistency.
+## Non-use-cases
 
-## Non-use-cases (what backlinks don't help with)
-
-- **Creating new notes** — when writing a new note, you need to find relevant existing notes to link to. That's a search/discovery problem, not a backlink problem. Grep and index scanning handle this.
-- **Orphan detection** — already handled by the existing grep-based maintenance checks in [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Backlinks would make it marginally easier but don't unlock new capability.
+- **Creating new notes** — finding relevant existing notes to link to is a search/discovery problem, not a backlink problem.
+- **Orphan detection** — a batch maintenance task already handled by [grep-based checks](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Backlinks measure the same thing as hub identification (inbound link count), but orphan detection doesn't need read-time visibility.
 - **Index maintenance** — indexes are curated navigation, not mechanical link lists. Backlinks don't replace the judgment needed to decide what belongs in an index.
 
 ## Design options
 
-### A. Generated report (computed view, not stored in notes)
+The use cases above all need the same underlying data — an inverted link index. They differ in whether that data should be visible in the note, computed on demand, or both.
 
-A script scans all `.md` files, extracts links, inverts them, and produces a report or queryable artifact. Notes themselves don't change.
+### A. Generated report (computed, not stored in notes)
+
+A script scans all `.md` files, extracts links, inverts them, and produces a report. Notes themselves don't change.
 
 - Pros: zero maintenance burden, always fresh, no note pollution
 - Cons: not visible when reading a note; agents must know to run the script
-- Precedent: the periodic grep-based checks in the maintenance operations catalogue work this way — script output as an operational view, not stored note content
+- Precedent: the grep-based maintenance checks already work this way
 
-### B. Generated footer sections (sync script, like Topics)
+### B. Generated footer sections (sync script)
 
-A script generates a "Referenced by:" footer in each note, similar to how `sync_topic_links.py` generates Topics footers from frontmatter areas. Run periodically or on commit.
+A script generates a "Referenced by:" footer in each note, similar to how `sync_topic_links.py` generates Topics footers from frontmatter. Run periodically or on commit.
 
 - Pros: visible at read time, deterministic, no agent judgment needed
 - Cons: generated sections add noise; relationship semantics can't be inferred mechanically (is this link "extends" or "exemplifies"?); merge conflicts if agents edit notes while footers are regenerating
-- Precedent: ADR-001 (generate topic links from frontmatter) — same pattern, different link type
 
 ### C. Manual bidirectional links (agent discipline)
 
 Agents add backlinks manually whenever they create an outbound link. The /connect skill already has a "Bidirectional Check" gate, but it's applied sporadically.
 
 - Pros: semantic relationship types preserved; curated, not mechanical
-- Cons: maintenance burden; inconsistent unless enforced; 44% of notes currently lack Relevant Notes sections at all
-- Precedent: the current system's aspiration, partially realized
+- Cons: maintenance burden; inconsistent unless enforced; ~16% of notes still lack even outbound Relevant Notes sections
 
 ### D. Hybrid — generated index + manual enrichment
 
-A script generates a bare list of inbound links (no semantics). Agents can optionally annotate the relationship type when they encounter the generated list. The generated list serves as a "these exist" signal; the annotation adds the "why it matters" layer.
+A script generates a bare list of inbound links (no semantics). Agents optionally annotate the relationship type when they encounter the generated list. The script handles "these exist"; agents add "why it matters."
 
-- Pros: zero-cost discovery + optional depth; script handles mechanical work, agents add judgment only when useful
+- Pros: zero-cost discovery + optional depth
 - Cons: two-layer system adds complexity; unannotated backlinks are noisy
 
-## Trade-offs to consider
+## Trade-offs
 
-**Prose readability vs completeness.** The system prioritises inline links as prose. A backlinks footer with 12 entries is metadata, not prose. Notes with many inbound links would get long footer sections that don't read naturally.
+**Prose readability vs completeness.** The system prioritises inline links as prose. A backlinks footer with 12 entries is metadata, not prose — notes with many inbound links would get long sections that don't read naturally.
 
-**Maintenance consistency.** Manual backlinks (option C) fail unless enforced. 44% of notes lack even outbound Relevant Notes sections. Adding a second direction doubles the surface area for inconsistency.
+**Maintenance consistency.** Manual backlinks (option C) fail unless enforced. Even outbound Relevant Notes sections are incomplete. Adding a second direction doubles the surface area for inconsistency.
 
-**Source integration.** The /ingest pipeline deliberately keeps connections in the ingest report rather than modifying KB notes. Backlinks would create implicit two-way relationships between sources and notes. That's useful (use case 2) but changes the boundary between sources and notes.
+**Source boundary.** The /ingest pipeline deliberately keeps connections in the ingest report rather than modifying KB notes. Backlinks would create implicit two-way relationships between sources and notes — useful (use case 2) but it changes the boundary between the two layers.
 
 ## Open questions
 
 - Which use cases justify the cost? Hub identification and source bridging seem highest value; tension surfacing is lower frequency.
-- Should backlinks be visible in the note itself, or only via a tool/script? The answer depends on how often agents would benefit from seeing them during normal reading vs on-demand.
-- If generated, should the script run at commit time, on demand, or as part of session start?
+- Should the script run at commit time, on demand, or as part of session start?
+- Is there a threshold below which backlinks add noise rather than signal (e.g., a note with one inbound link)?
 
 ---
 
 Relevant Notes:
 
 - [link-contracts-framework](./link-contracts-framework.md) — foundation: backlinks are a special case of link visibility; the "click decision" framework applies to deciding whether to follow an inbound link too
-- [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — precedent: deterministic link generation from structured data, the pattern that option B would follow
+- [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — related pattern: deterministic generation from structured data, the approach that option B would follow

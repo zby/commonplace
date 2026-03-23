@@ -99,7 +99,7 @@ This is the right mode when:
 
 ### Installing into a project
 
-Commonplace can be installed into an existing project as a submodule or cloned subdirectory. See **[INSTALL.md](INSTALL.md)** for step-by-step setup instructions for both Claude Code and Codex, and the resulting layout. See `kb/notes/commonplace-installation-architecture.md` for the full design rationale.
+Commonplace can be installed into an existing project as a submodule or cloned subdirectory. See **[INSTALL.md](INSTALL.md)** for step-by-step setup instructions for both Claude Code and Codex, and the resulting layout. See `kb/notes/adr/006-two-tree-installation-layout.md` for the full design rationale.
 
 ## Prerequisites
 

@@ -11,7 +11,7 @@ How commonplace is structured and installed. Repo layout, the two-tree split bet
 ## Notes
 
 - [commonplace-architecture](./commonplace-architecture.md) — the commonplace repo structure: kb/, scripts/, and how they compose
-- [commonplace-installation-architecture](./commonplace-installation-architecture.md) — how commonplace installs into projects: symlinks, CLAUDE.md generation, directory layout
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — how commonplace installs into projects: two-tree layout, copy-vs-reference boundary, design rationale
 - [kb-goals-in-always-loaded-context-guide-inclusion-decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — installed KBs need explicit domain goals in the control-plane file
 - [files-not-database](./files-not-database.md) — files with git beat a database: universal interface, free versioning, zero infrastructure
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries

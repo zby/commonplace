@@ -8,7 +8,7 @@ status: seedling
 
 # Scenario decomposition drives architecture
 
-The [installation architecture](./commonplace-installation-architecture.md) reasons about read and write as abstract operations and optimizes for hop count. [Scenarios](./scenarios.md) describes what the KB is used for. What's missing is the bridge: start from concrete user stories, decompose them into steps, identify what the agent needs at each step, and derive architectural requirements from that analysis.
+The [installation layout ADR](./adr/006-two-tree-installation-layout.md) reasons about read and write as abstract operations and optimizes for hop count. [Scenarios](./scenarios.md) describes what the KB is used for. What's missing is the bridge: start from concrete user stories, decompose them into steps, identify what the agent needs at each step, and derive architectural requirements from that analysis.
 
 The scenarios must work in two distinct contexts: this repo, where the methodology is the content; and installed projects, where user content and methodology are separate trees.
 
@@ -127,7 +127,7 @@ The key design: hops are stored in the scenario files (they're architectural, de
 Relevant Notes:
 
 - [scenarios](./scenarios.md) — foundation: defines the concrete use cases this note decomposes into step-by-step context needs
-- [commonplace-installation-architecture](./commonplace-installation-architecture.md) — extends: the abstract read/write analysis with scenario-grounded decomposition that confirms the two-tree design and derives the escalation path
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — extends: the abstract read/write analysis with scenario-grounded decomposition that confirms the two-tree design and derives the escalation path
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: the two always-loaded surfaces map onto different scenario patterns
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimized for agent read/skip decisions

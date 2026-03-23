@@ -17,7 +17,7 @@ echo "commonplace/" >> .gitignore
 
 ```bash
 # Create directories
-mkdir -p types kb/notes/types kb/sources/types kb/tasks/types kb/tasks/backlog kb/tasks/active kb/work
+mkdir -p types kb/notes/types kb/sources/types kb/tasks/types kb/tasks/backlog kb/tasks/active kb/work reviews/csv
 
 # Create the improvement log
 touch kb/log.md
@@ -111,6 +111,8 @@ my-project/
     sources/
     tasks/
     work/                    Workshop space — connect reports, ingest staging
+  reviews/                   Review outputs and CSV stats
+    csv/
   commonplace/               Framework (submodule or clone)
   .claude/skills/            Optional, Claude Code only; symlinked → commonplace/kb/instructions/
   .agents/skills/            Optional, Codex only; symlinked → commonplace/kb/instructions/
@@ -123,4 +125,4 @@ my-project/
 
 Pull new changes (`git submodule update --remote` or `cd commonplace && git pull`), then re-copy operational artifacts. Commonplace-provided type files are replaced; any custom types you've added are left untouched.
 
-See `kb/notes/commonplace-installation-architecture.md` for the full design rationale.
+See `kb/notes/adr/006-two-tree-installation-layout.md` for the full design rationale.
