@@ -67,7 +67,7 @@ Automating narrow-scope improvements is relatively tractable (ingest pipelines, 
 
 **Oracle difficulty varies by learning type.** [Pi Self-Learning](./related-systems/pi-self-learning.md) sidesteps the oracle problem entirely by picking the easiest available oracle: mistakes have a natural verifier (the fix). Extract what went wrong, score by recurrence, inject the top patterns — no quality judgment needed beyond "did this keep happening?" The KB's harder learning problems — "should these notes be linked?", "is this synthesis correct?", "does this index need a new entry?" — lack that natural verifier. The [quality signals brainstorm](./quality-signals-for-kb-evaluation.md) proposes manufacturing a soft oracle from many weak structural signals, but that's still speculative. Pi-self-learning's success at the easy end of the oracle spectrum clarifies where the hard end actually is: not in the learning mechanism (scoring, ranking, injection are all straightforward) but in manufacturing evaluation for judgment-heavy mutations.
 
-These are all instances of the same gap: **we need more usage before we can design the learning loop properly.** The right move for now is to keep building the KB manually, pay attention to [what works](./what-works.md) and [what doesn't](./what-doesnt-work.md), and revisit this when there's enough history to learn from. Those two review notes ARE the manual observation log this approach recommends — they capture proven patterns and anti-patterns that would eventually feed a learning loop's evaluation function.
+These are all instances of the same gap: **we need more usage before we can design the learning loop properly.** The right move for now is to keep building the KB manually, pay attention to what works and what doesn't, and revisit this when there's enough history to learn from.
 
 ## Connection to codification
 
@@ -80,8 +80,6 @@ Relevant Notes:
 - [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
 - [constraining](../notes/constraining.md) — describes the constrain/relax cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
 - [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
-- [what-works](./what-works.md) — the observation log this note recommends as interim approach; proven patterns that would feed a learning loop's evaluation
-- [what-doesnt-work](./what-doesnt-work.md) — the anti-pattern log; complements what-works as ground truth for what the loop should avoid proposing
 - [needs-testing](./needs-testing.md) — the extract/connect/review cycle is a primitive version of the boiling cauldron, already partially operational
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — note scoring addresses part of the quality gates problem: composite scores from status, type, inbound links, and recency make automated curation tractable at scale
 - [scenarios](./scenarios.md) — the actual use cases the learning loop's evaluation function would need to optimise against

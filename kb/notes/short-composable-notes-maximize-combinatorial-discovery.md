@@ -42,7 +42,7 @@ The structure emerged from the *juxtaposition* of independent perspectives. A si
 
 ## Tension with argument coherence
 
-Some arguments genuinely need space — the reasoning from premises to conclusion loses force when atomized. The [active-campaign note](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) argues that working understanding during an active campaign needs holistic rewrite, not graph composition.
+Some arguments genuinely need space — the reasoning from premises to conclusion loses force when atomized. [Evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — when a consumer needs the whole picture, re-distilling into a single narrative beats composing fragments.
 
 The resolution: coherent narratives are workshop artifacts, not library artifacts. The library stores premises and conclusions as separate composable notes. The workshop assembles them into narratives for a specific purpose. When the narrative expires, the atomic notes remain.
 
@@ -54,5 +54,5 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: discovery requires co-presence of multiple particulars
 - [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — extends: composability as one of three properties; short notes compose better
 - [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
-- [active-campaign understanding needs a single coherent narrative](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — tension: some arguments need narrative coherence; resolved by placing narratives in workshops
+- [evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: title-level scanning for breadth, full loading for depth

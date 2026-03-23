@@ -26,7 +26,7 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 ## Workshop Layer
 
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
-- [active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes](./active-campaign-understanding-needs-a-single-coherent-narrative-not-composed-notes.md) — working understanding needs holistic rewrite, not graph composition
+- [evolving-understanding-needs-re-distillation-not-composition](./evolving-understanding-needs-re-distillation-not-composition.md) — when a consumer needs the whole evolving picture, re-distill into a single narrative rather than composing notes
 
 ## Gaps
 

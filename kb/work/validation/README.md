@@ -41,5 +41,4 @@ Exploring how to make validation a reliable part of the KB workflow. The current
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](../../notes/semantic-review-catches-content-errors-that-structural-validation-cannot.md) — the four semantic checks and their text-testing-pyramid placement
 - [methodology-enforcement-is-constraining](../../notes/methodology-enforcement-is-constraining.md) — the enforcement gradient (instruction → skill → hook → script)
 - [enforcement-without-structured-recovery-is-incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md) — what happens after validation fires
-- [what-doesnt-work](../../notes/what-doesnt-work.md) — auto-commit hooks as cautionary tale
 - [SAGE review](../../notes/related-systems/sage.md) — validation gate pattern (multiple independent checks with quorum)

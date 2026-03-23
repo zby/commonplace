@@ -31,7 +31,7 @@ This isn't a files-forever position. Once access patterns stabilize, a database 
 2. **Too many files per directory** — solved by subdirectories
 3. **Structured queries with scoring** — the real gap, but solvable with [note quality scores](./notes-need-quality-scores-to-scale-curation.md)
 
-The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time — qmd already works this way for semantic search, and the [patterns proven in practice](./what-works.md) confirm the approach (frontmatter queries via grep, semantic search via qmd, progressive disclosure for token cost). [Cludebot's database stack](./what-cludebot-teaches-us.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
+The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time — qmd already works this way for semantic search, and proven patterns confirm the approach (frontmatter queries via grep, semantic search via qmd, progressive disclosure for token cost). [Cludebot's database stack](./what-cludebot-teaches-us.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
 
 ## Where the trade-off tips: Graphiti
 
@@ -47,7 +47,6 @@ The lesson is not that files are wrong for our KB — they remain the right choi
 
 Relevant Notes:
 
-- [what works](./what-works.md) — provides the evidence base: frontmatter queries, semantic search via qmd, and progressive disclosure all work within the file-based architecture
 - [what cludebot teaches us](./what-cludebot-teaches-us.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
 - [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — independent practitioner report validating the same architectural choice at 80+ file scale
 - [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
