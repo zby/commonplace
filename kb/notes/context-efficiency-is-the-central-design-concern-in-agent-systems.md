@@ -1,5 +1,5 @@
 ---
-description: Context is the scarce resource in agent systems — not compute, memory, or storage. This note operationalizes the soft-bound premise (volume and complexity dimensions, decomposed in the soft-degradation note) into architectural responses, making context efficiency the central design concern.
+description: Context is the single scarce resource in agent systems — this note is the basis for deriving architectural responses from the soft-degradation cost model
 type: note
 traits: [has-external-sources]
 tags: [computational-model, foundations]
@@ -10,11 +10,11 @@ status: current
 
 In traditional systems, the scarce resources are compute, memory, storage, and bandwidth; algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context is not just another resource. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. A CPU has registers, cache, RAM, disk, and network as separate tiers. An LLM has one context window. Everything competes for the same space.
 
-Context is the lowest-degree-of-freedom resource in agent systems: unitary, impossible to tier, and hard to expand without architectural change. This is an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — optimize the tightest constraint before others, or later choices will be forced into low-quality tradeoffs.
+Context is the lowest-degree-of-freedom resource in agent systems: unitary within each inference call, impossible to tier at the attention level (though system architecture can build tiers around it), and hard to expand without architectural change. This is an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — optimize the tightest constraint before others, or later choices will be forced into low-quality tradeoffs.
 
 The binding constraint is soft degradation, not hard token limits — established in [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). Hard limits are visible but rarely binding; the model degrades before hitting them. This note operationalizes that premise as a cost model and set of architectural responses.
 
-Anthropic's engineering team has converged on the same framing, defining **context engineering** as "strategies for curating and maintaining the optimal set of tokens during LLM inference" and describing context as "a critical but finite resource" with an **attention budget** that "every token depletes" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). Independent practitioner evidence comes from OpenAI's Codex team: shipping 1M lines of agent-generated code required a 100-line AGENTS.md as a router with pointers to deeper docs — "a map, not a manual" — because the bottleneck was not model capability but the structure of what loaded into context ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)).
+Anthropic's engineering team has converged on the same framing, defining **context engineering** as "strategies for curating and maintaining the optimal set of tokens during LLM inference" and describing context as "a critical but finite resource" with an **attention budget** that "every token depletes" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). Independent practitioner evidence comes from OpenAI's Codex team: shipping 1M lines of agent-generated code required a 100-line AGENTS.md as a router with pointers to deeper docs — "a map, not a manual" — because the bottleneck was not model capability but the structure of the environment — tools, feedback, and constraints, of which context structure is a central component ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)).
 
 One property of the medium intensifies this scarcity: natural language has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md) with no enforced boundaries — not between instructions and data ([homoiconicity](./llm-context-is-a-homoiconic-medium.md)), not between scopes, not between priority levels. Extra context doesn't just waste space — it can dilute instructions, contaminate scopes, and distort interpretation.
 
@@ -26,7 +26,7 @@ Scarce attention as a central design constraint is well-established:
 - **Working memory** (Miller, 1956; Cowan, 2001) — limited capacity where everything competes for slots. Context windows are working memory for agents.
 - **Information overload** (Toffler, 1970) — too much information degrades decision quality, not just slows it.
 
-What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity.
+The shared mechanism is structural: both human working memory and LLM context windows are fixed-capacity buffers where all content competes for influence on the next output. What's specific to agent systems is the unitary channel (one context window, no separate tiers), the hard token limit, and the interaction between volume and complexity.
 
 **TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — Paulsen partially answers the degradation-curve question with task-dependent MECW measurements, but the broader attention-economics / working-memory literature and the optimal-loading-strategy question remain open.
 
@@ -34,7 +34,7 @@ What's specific to agent systems is the unitary channel (one context window, no 
 
 The soft bound operates across two dimensions — volume (how many tokens) and complexity (how hard they are to use) — decomposed in [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). The dimensions are distinguishable but not fully separable; reducing volume often reduces complexity as a side effect. Most architectural responses affect both, but each has a primary target.
 
-Practitioner evidence confirms the volume dimension as a primary concern: Koylan's Personal Brain OS reduced token usage by 40% by splitting merged modules into isolated scopes ([Koylan, 2026](../sources/koylanai-personal-brain-os.md)) — a pure volume intervention with outsized impact on agent reliability. The key point for this note: large windows do not remove complexity costs, and raw token count alone does not predict usable context.
+Practitioner evidence confirms the volume dimension as a primary concern: Koylan's Personal Brain OS reduced token usage for voice-only tasks by 40% by splitting merged modules into isolated scopes ([Koylan, 2026](../sources/koylanai-personal-brain-os.md)) — a pure volume intervention. The key point for this note: large windows do not remove complexity costs, and raw token count alone does not predict usable context.
 
 ## Growing windows address volume but not complexity
 
