@@ -1,0 +1,398 @@
+check,warn_count,info_count,clean_count
+Amplification condition — TPR > FPR,0,0,1
+Anthropomorphic framing,4,41,116
+Completeness,225,208,30
+Completeness -- Costs enumeration,1,0,0
+Completeness -- Definition,1,0,0
+Completeness -- Precedents,0,2,0
+Completeness / Dual-audience table,1,0,0
+Completeness / Failure modes,1,0,0
+Completeness / Two reasons structure,0,0,1
+Completeness / boundary case,4,8,0
+"Completeness / boundary case — ""every codification is a bet""",0,1,0
+Completeness / boundary case — between enumerated items,0,1,0
+Completeness / boundary case — relaxing,1,0,0
+Completeness / boundary case — simplest instance,0,1,0
+Completeness / boundary case — the simplest possible instance,0,1,0
+Completeness / boundary case: review of non-argumentative content,0,1,0
+Completeness / boundary case: structure that hinders review,1,0,0
+Completeness / boundary cases,4,3,0
+Completeness — Boundary case: hardening without moving on the oracle spectrum,0,1,0
+Completeness — Boundary case: overlapping dimensions,0,1,0
+Completeness — Consistency oracle classification,1,0,0
+Completeness — Failure Modes,0,1,0
+Completeness — FlashAttention and tokenizer examples,0,0,1
+"Completeness — Safety as ""already a hard oracle by design""",1,0,0
+Completeness — Three Timescales,1,0,0
+Completeness — Toulmin component coverage,0,0,1
+Completeness — Two Mechanisms,1,0,0
+Completeness — Verifiability Table,0,1,0
+Completeness — adjacent concept,0,1,0
+Completeness — affordances table,0,0,1
+Completeness — between-items case,0,1,0
+Completeness — boundary between silent disambiguation and delegated discretion,1,0,0
+Completeness — boundary between silent disambiguation and interpretation error is porous in practice,0,1,0
+Completeness — boundary case,4,23,0
+Completeness — boundary case: audience-dependent classification,0,1,0
+Completeness — boundary case: cleanup that generates entropy,0,1,0
+Completeness — boundary case: conflicting definitions,0,1,0
+Completeness — boundary case: correct but unoriginal synthesis,0,1,0
+Completeness — boundary case: implicit-warrant notes,1,0,0
+Completeness — boundary case: index type,0,1,0
+Completeness — boundary case: injection depth,0,1,0
+Completeness — boundary case: inspectable but not structured,0,1,0
+Completeness — boundary case: inspectable but unstructured artifacts,1,0,0
+Completeness — boundary case: low-entropy generation,0,1,0
+Completeness — boundary case: notes with mixed argument shapes,0,1,0
+Completeness — boundary case: on-demand loading already exists,0,1,0
+Completeness — boundary case: resumability,0,1,0
+Completeness — boundary case: structured-claim portability,1,0,0
+Completeness — boundary case: the reviewed note itself,0,1,0
+Completeness — boundary cases for test 3,1,0,0
+Completeness — boundary zone,1,0,0
+Completeness — caveats coverage,0,0,1
+Completeness — claim 13,0,1,0
+Completeness — claim 4,0,1,0
+Completeness — claim 5,0,1,0
+Completeness — claim 7,1,0,0
+Completeness — cost asymmetry,1,0,0
+Completeness — decorrelation strategies,1,0,0
+Completeness — expertise gap,0,1,0
+Completeness — heuristics,0,1,0
+Completeness — incremental constraining sequence,0,0,1
+Completeness — initiative gradient,1,0,0
+Completeness — knowledge types vs. Koylanai,0,0,1
+Completeness — missing boundary case,0,1,0
+Completeness — no treatment of severity or frequency,0,1,0
+Completeness — operations enumeration,0,0,1
+Completeness — oracle construction methods,0,1,0
+Completeness — prior work,0,1,0
+Completeness — reach and retrieval,0,1,0
+Completeness — reach spectrum,1,0,0
+Completeness — scaling law boundary,0,1,0
+Completeness — spec mining framing,0,0,1
+"Completeness — the ""identical"" observability claim is stronger than the analogy supports",1,0,0
+"Completeness — the ""imported constants"" analogy",0,1,0
+Completeness/Boundary,2,4,0
+Completeness/boundary,1,2,0
+Completeness/boundary case,0,1,0
+Completeness: boundary case -- pre-loaded context without iteration,1,0,0
+Completeness: boundary case -- trivial in-context learning,1,0,0
+Completeness: four-operation enumeration,0,1,0
+Confidence miscalibration,132,34,4
+Consistency,1,7,19
+"Consistency — ""Not a Training Paradigm"" vs. OpenClaw-RL",0,1,0
+Consistency — implicit dependency,0,1,0
+Consistency — unresolved tension,0,1,0
+Consistency/definition-drift,0,1,0
+Content bias grounding,0,0,1
+Grounding,49,78,226
+Grounding -- Domain coverage,1,0,0
+Grounding -- ad-hoc-prompts link,0,0,1
+Grounding -- constraining gradient claim,0,0,1
+Grounding -- domain coverage,1,0,0
+Grounding -- scoping link,0,0,1
+Grounding / Context Engineering OSS source,0,1,0
+Grounding / Domain,0,1,0
+Grounding / Domain coverage,1,0,0
+Grounding / Harness Engineering source,1,0,0
+Grounding / Scope mismatch,1,0,0
+Grounding / Vocabulary,0,1,0
+Grounding / agent-statelessness note,0,0,1
+Grounding / context-injection note,0,0,1
+Grounding / design-methodology note,0,1,0
+Grounding / domain coverage,1,0,0
+Grounding / domain coverage — Finzi et al.,1,0,0
+Grounding / failure-mode overlap note,0,0,1
+Grounding / scope mismatch — Ebrahimi et al.,1,0,0
+Grounding / vocabulary — Finzi et al.,0,1,0
+Grounding alignment,20,52,92
+Grounding alignment / domain coverage,5,0,0
+Grounding alignment / inference validity,1,1,0
+Grounding alignment / linked notes,0,0,1
+Grounding alignment / scope mismatch,3,0,0
+Grounding alignment / vocabulary,0,1,0
+Grounding alignment / vocabulary mismatch,1,0,0
+"Grounding alignment — ""named but not hardened""",0,1,0
+Grounding alignment — ConvexBench core claim,0,0,1
+Grounding alignment — Harness Engineering link,1,0,0
+Grounding alignment — Paulsen core claim,0,0,1
+Grounding alignment — Thalo comparison,0,0,1
+Grounding alignment — Toulmin source coverage,0,1,0
+Grounding alignment — affordance table,1,0,0
+Grounding alignment — agent statelessness source,0,0,1
+Grounding alignment — arscontexta,0,0,1
+Grounding alignment — arscontexta quote,1,0,0
+Grounding alignment — attribution accuracy,1,0,0
+Grounding alignment — bitter lesson boundary,0,0,1
+Grounding alignment — bounded-context orchestration model,0,0,1
+Grounding alignment — build-time generation,0,0,1
+Grounding alignment — codification,0,0,1
+Grounding alignment — codification contrast,0,0,1
+Grounding alignment — constraining pattern,0,0,1
+Grounding alignment — context efficiency note,0,0,1
+Grounding alignment — context-efficiency note,0,0,1
+Grounding alignment — cybernetics source,0,0,1
+Grounding alignment — deep search note,0,0,1
+Grounding alignment — distillation contrast,0,0,1
+Grounding alignment — domain coverage,5,2,0
+Grounding alignment — domain drift,1,0,0
+Grounding alignment — epiplexity scope,1,0,0
+Grounding alignment — error correction,0,0,1
+Grounding alignment — error-correction link,0,0,1
+Grounding alignment — homoiconicity,0,0,1
+Grounding alignment — human-LLM differences link,0,1,0
+Grounding alignment — indirection note,0,0,1
+Grounding alignment — information-value-is-observer-relative,0,0,1
+Grounding alignment — inspectable substrate,0,0,1
+Grounding alignment — instruction specificity,0,0,2
+Grounding alignment — instruction specificity source,0,0,1
+Grounding alignment — interpretation-narrowing link,0,0,1
+Grounding alignment — link contracts framework,0,0,1
+Grounding alignment — link semantics as warrants,1,0,0
+Grounding alignment — link-contracts-framework,0,1,0
+Grounding alignment — methodology-enforcement link,0,0,1
+Grounding alignment — oracle strength spectrum,0,0,1
+Grounding alignment — oracle-strength-spectrum,0,1,0
+Grounding alignment — quality signals note,0,0,1
+Grounding alignment — scope mismatch,3,0,0
+"Grounding alignment — scope mismatch with ""document types should be verifiable""",1,0,0
+"Grounding alignment — scope of ""scoping benefits""",1,0,0
+Grounding alignment — stale indexes,0,0,1
+Grounding alignment — stale indexes note,0,0,1
+Grounding alignment — tool-use as different path,0,0,1
+Grounding alignment — type-system-index,0,0,1
+Grounding alignment — underspecified semantics,0,0,1
+Grounding alignment — vibe-noting,0,0,1
+Grounding alignment — vocabulary,0,3,0
+Grounding alignment — wikiwiki principle,0,1,0
+Grounding – domain coverage,1,0,0
+Grounding – inference validity,0,1,0
+Grounding – vocabulary mismatch,0,1,0
+"Grounding — ""changing requirements"" link claim is slightly stronger than the source supports",0,1,0
+"Grounding — ""contradicts/qualifies"" link to staleness note",0,1,0
+"Grounding — ""most valuable property""",1,0,0
+"Grounding — ""the oracle-strength prediction confirmed at scale""",0,1,0
+Grounding — ADR-002,0,0,1
+Grounding — AgeMem,0,0,1
+Grounding — Agile Comparison,0,0,1
+Grounding — Augment bidirectional spec reference,0,0,1
+Grounding — Augmentation/automation boundary,0,0,1
+Grounding — CoT as content-bias decorrelation,1,0,0
+Grounding — DeAngelis source,0,0,1
+"Grounding — Discrimination ""stagnant""",1,0,0
+Grounding — Double-Loop Learning,1,0,0
+Grounding — Fintool,0,0,1
+Grounding — Graphiti,0,0,1
+Grounding — Harness Engineering core claims,0,0,1
+Grounding — Karpathy Verifiability,0,0,1
+Grounding — Kim source,0,0,1
+Grounding — Kirsch Attribution,0,1,0
+Grounding — Kirsch attribution,0,0,1
+Grounding — MAKER and consistency,1,0,0
+Grounding — MAKER attribution,0,1,0
+"Grounding — Rabanser et al., specific claim",0,0,1
+Grounding — Rabanser four dimensions,0,0,1
+Grounding — SECI Mapping,1,0,0
+Grounding — Simon,0,0,1
+Grounding — Slate attribution,1,0,0
+Grounding — Spec mining connection,0,0,1
+Grounding — Toulmin warrant,0,0,1
+Grounding — ablation section,0,0,1
+Grounding — attribution,0,2,4
+Grounding — attribution accuracy,0,0,2
+Grounding — auto-injection alignment,0,0,1
+Grounding — automating-kb-learning-is-an-open-problem.md,0,0,1
+Grounding — bitter-lesson-boundary,0,0,1
+Grounding — bitter-lesson-boundary note,0,0,1
+Grounding — boundary-of-automation attribution,0,0,1
+Grounding — bounded-context orchestration model,0,0,1
+Grounding — changing-requirements note,0,0,1
+Grounding — chat-history note,0,0,1
+Grounding — claim 10,0,0,1
+Grounding — claim 15,1,0,0
+Grounding — claim count mismatch with document-classification.md,1,0,0
+Grounding — codification,0,0,1
+Grounding — codification-and-relaxing,0,0,1
+Grounding — constraining trade-off note,0,0,1
+Grounding — constraining.md,0,0,1
+Grounding — context-efficiency note,0,0,1
+Grounding — control-plane model,0,0,1
+Grounding — deploy-time-learning note,0,0,1
+Grounding — deployment claims,0,1,0
+Grounding — diagnosis section,0,0,1
+Grounding — discovery,0,0,1
+Grounding — discovery note,0,0,2
+Grounding — distillation note,0,0,2
+Grounding — document-classification.md,0,0,1
+Grounding — domain coverage,21,1,0
+"Grounding — domain coverage, Rabanser et al.",1,0,0
+Grounding — elicitation-requires-maintained-question-generation-systems,0,0,1
+Grounding — error correction framework,0,0,1
+Grounding — error-correction link,0,0,1
+Grounding — evidence strength,0,1,0
+Grounding — evolving-understanding note,0,0,1
+Grounding — experiment report,0,0,1
+Grounding — frontloading alignment,0,0,1
+Grounding — hedging mismatch,0,1,0
+Grounding — inference,0,1,0
+Grounding — inference gap,0,1,0
+Grounding — inference step,0,1,0
+Grounding — inference validity,0,3,0
+Grounding — information-value note,0,0,1
+Grounding — installation architecture,0,0,1
+Grounding — instruction-specificity-should-match-loading-frequency.md,0,0,1
+Grounding — interpreter failure distinction,0,0,1
+Grounding — learning-is-not-only-about-generality,0,0,1
+Grounding — loading frequency,0,0,1
+Grounding — oracle-strength-spectrum,0,0,3
+Grounding — prompt ablation,0,1,0
+Grounding — reach note,0,0,1
+Grounding — reach section,0,0,1
+Grounding — relationship semantics,0,0,1
+Grounding — reverse-compression attribution,0,0,1
+Grounding — scope,0,1,0
+Grounding — scope mismatch,12,1,0
+Grounding — scope mismatch with why-directories-despite-their-costs.md,1,0,0
+"Grounding — scope mismatch, Ma et al.",1,0,0
+Grounding — scoping note alignment,0,0,1
+Grounding — scoping note sub-agents,0,0,1
+Grounding — source ingest alignment,0,0,1
+Grounding — spec-mining note,0,0,1
+Grounding — specification-strategy link,0,0,1
+Grounding — stagnation evidence,0,0,1
+Grounding — staleness note cross-reference,0,0,1
+Grounding — testability claim,0,1,0
+Grounding — text testing framework,0,0,1
+Grounding — the-bug-that-shipped,0,1,1
+Grounding — tool-fallback analogy,0,0,1
+Grounding — typed-callables alignment,0,0,1
+Grounding — underspecification foundation,0,0,1
+Grounding — underspecification note alignment,0,0,1
+Grounding — unit testing link,0,0,1
+Grounding — verification section,0,0,1
+Grounding — vocabulary,0,12,0
+Grounding — vocabulary mismatch,0,4,0
+Grounding — vocabulary vs. ontology,0,1,0
+Grounding — what-works,0,0,1
+Grounding — workshop layer note,0,0,1
+Grounding — workshop note,0,0,1
+Grounding/Attribution,1,0,0
+Grounding/Domain,1,2,0
+Grounding/Domain coverage,2,0,0
+Grounding/Inference,0,1,0
+Grounding/attribution,0,1,0
+Grounding/domain coverage,1,0,0
+Grounding/domain-coverage,0,1,0
+Grounding/scope mismatch,1,0,0
+Grounding: Amodei attribution,1,0,0
+Grounding: Amodei source content,0,0,1
+Grounding: Simon attribution,0,1,0
+Grounding: context-engineering operations,0,0,1
+Grounding: deploy-time learning framework,0,0,1
+Grounding: three timescales,0,0,1
+Internal Consistency,0,1,2
+Internal Consistency — Body vs. Summary,0,0,1
+Internal Consistency — Constraining/Distillation,0,0,1
+Internal Consistency — Verifiability Table,0,0,1
+Internal consistency,7,112,234
+Internal consistency -- Definition stability,0,0,1
+Internal consistency -- Enables/Costs structure,0,0,1
+Internal consistency -- SQL injection analogy,0,1,0
+Internal consistency / Methodological claim vs. body,0,0,1
+Internal consistency / Naive anthropomorphism vs. naive mechanism-ism,0,0,1
+Internal consistency / definition drift,0,1,0
+Internal consistency / tension,0,1,0
+"Internal consistency — ""What stays global"" list vs. body",0,1,0
+"Internal consistency — ""a gate, not a gradient"" vs. elsewhere",0,1,0
+"Internal consistency — ""feel substantially better""",0,1,0
+"Internal consistency — ""independent"" axes may not be independent",0,1,0
+"Internal consistency — ""on reference"" placement",0,1,0
+"Internal consistency — ""replaces many narrow notes""",0,1,0
+"Internal consistency — ""structured types as error correction""",0,1,0
+"Internal consistency — ""trajectory, not a law"" vs. ""persist under scaling""",0,1,0
+"Internal consistency — ""volume not time""",0,1,0
+"Internal consistency — ""what this framing does and doesn't explain""",0,1,0
+Internal consistency — Caveats tension,0,1,0
+Internal consistency — Evidence/Reasoning separation,0,0,1
+Internal consistency — Graphiti section vs. body,0,0,1
+Internal consistency — Predictability gap,0,0,1
+Internal consistency — TPR/FPR framework,0,0,1
+Internal consistency — Title claim and body,0,0,1
+Internal consistency — causal chain,0,0,1
+Internal consistency — caveats vs body,0,0,1
+Internal consistency — claim 7 vs claim 6,0,1,0
+Internal consistency — claims 3 and 4,0,0,1
+Internal consistency — claims 7 and 8,0,1,0
+Internal consistency — claims 9 and 14,0,0,1
+Internal consistency — codification distinction,0,0,1
+Internal consistency — comparison table,0,0,1
+Internal consistency — compressed summary,0,0,1
+Internal consistency — compressed summary absent,0,0,1
+Internal consistency — compressed summary alignment,0,0,1
+Internal consistency — core argument,0,0,2
+Internal consistency — cost claim,0,0,1
+Internal consistency — definition drift,0,3,1
+Internal consistency — definition of reach,0,0,1
+Internal consistency — definition stability,0,0,6
+Internal consistency — definition type proposal,0,0,1
+Internal consistency — definitions,0,0,1
+Internal consistency — enumeration structure,0,0,1
+Internal consistency — link semantics,0,0,1
+Internal consistency — link-removal test vs. network accumulation,0,1,0
+Internal consistency — motivating case to framework,0,0,1
+Internal consistency — naming rationale,0,0,1
+Internal consistency — negative compounding,0,0,1
+Internal consistency — no pairwise contradictions,0,0,1
+Internal consistency — open questions,0,0,3
+Internal consistency — open questions vs body,0,0,1
+Internal consistency — open questions vs claims,0,0,1
+Internal consistency — ordering claim,0,1,0
+Internal consistency — overall,0,0,2
+Internal consistency — pairwise consistency,0,0,1
+Internal consistency — pairwise contradiction,0,0,2
+Internal consistency — potential tension,0,1,0
+Internal consistency — process section,0,0,1
+Internal consistency — programming analogy,0,0,1
+Internal consistency — relationship to scheduler note,0,0,1
+Internal consistency — risks vs. pattern,0,0,1
+Internal consistency — schema commitment argument,0,0,1
+Internal consistency — section alignment,0,0,1
+Internal consistency — section coherence,0,0,1
+Internal consistency — store vs. load separation,0,0,1
+Internal consistency — summary faithfulness,0,0,1
+Internal consistency — summary vs body,0,0,1
+Internal consistency — summary vs. body,0,0,1
+Internal consistency — tension acknowledged but unresolved,0,1,0
+"Internal consistency — tension between ""current implementation"" and body argument",0,1,0
+Internal consistency — tension between flywheel claim and weak-claim framing,0,1,0
+Internal consistency — three-level taxonomy vs. body,0,0,1
+Internal consistency — title and body,0,0,1
+Internal consistency — title and body alignment,0,0,1
+Internal consistency — title vs body,0,0,1
+"Internal consistency: ""everything that in-context learning alone is not""",0,1,0
+Internal consistency: no definition drift,0,0,1
+Internal consistency: no pairwise contradictions,0,0,1
+MAKER as motivating example,0,0,1
+Orphan references,10,10,141
+Proportion mismatch,90,53,22
+Pseudo-formalism,6,14,141
+Redundant restatement,5,33,123
+Scaling law derivation,0,0,1
+Scope,0,0,1
+Source residue,25,76,82
+Unbridged cross-domain evidence,7,13,142
+anthropomorphic-framing,0,0,1
+completeness,11,13,0
+completeness-boundary,0,2,0
+confidence-miscalibration,1,0,0
+grounding,6,7,15
+grounding-alignment,1,1,2
+internal consistency,0,2,8
+internal-consistency,0,4,8
+orphan-references,0,0,1
+proportion-mismatch,1,0,0
+pseudo-formalism,0,0,1
+redundant-restatement,0,1,0
+source-residue,0,1,0
+unbridged-cross-domain-evidence,0,0,1

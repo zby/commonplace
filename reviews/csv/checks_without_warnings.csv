@@ -1,0 +1,307 @@
+check
+Amplification condition — TPR > FPR
+Completeness -- Precedents
+Completeness / Two reasons structure
+"Completeness / boundary case — ""every codification is a bet"""
+Completeness / boundary case — between enumerated items
+Completeness / boundary case — simplest instance
+Completeness / boundary case — the simplest possible instance
+Completeness / boundary case: review of non-argumentative content
+Completeness — Boundary case: hardening without moving on the oracle spectrum
+Completeness — Boundary case: overlapping dimensions
+Completeness — Failure Modes
+Completeness — FlashAttention and tokenizer examples
+Completeness — Toulmin component coverage
+Completeness — Verifiability Table
+Completeness — adjacent concept
+Completeness — affordances table
+Completeness — between-items case
+Completeness — boundary between silent disambiguation and interpretation error is porous in practice
+Completeness — boundary case: audience-dependent classification
+Completeness — boundary case: cleanup that generates entropy
+Completeness — boundary case: conflicting definitions
+Completeness — boundary case: correct but unoriginal synthesis
+Completeness — boundary case: index type
+Completeness — boundary case: injection depth
+Completeness — boundary case: inspectable but not structured
+Completeness — boundary case: low-entropy generation
+Completeness — boundary case: notes with mixed argument shapes
+Completeness — boundary case: on-demand loading already exists
+Completeness — boundary case: resumability
+Completeness — boundary case: the reviewed note itself
+Completeness — caveats coverage
+Completeness — claim 13
+Completeness — claim 4
+Completeness — claim 5
+Completeness — expertise gap
+Completeness — heuristics
+Completeness — incremental constraining sequence
+Completeness — knowledge types vs. Koylanai
+Completeness — missing boundary case
+Completeness — no treatment of severity or frequency
+Completeness — operations enumeration
+Completeness — oracle construction methods
+Completeness — prior work
+Completeness — reach and retrieval
+Completeness — scaling law boundary
+Completeness — spec mining framing
+"Completeness — the ""imported constants"" analogy"
+Completeness/boundary case
+Completeness: four-operation enumeration
+"Consistency — ""Not a Training Paradigm"" vs. OpenClaw-RL"
+Consistency — implicit dependency
+Consistency — unresolved tension
+Consistency/definition-drift
+Content bias grounding
+Grounding -- ad-hoc-prompts link
+Grounding -- constraining gradient claim
+Grounding -- scoping link
+Grounding / Context Engineering OSS source
+Grounding / Domain
+Grounding / Vocabulary
+Grounding / agent-statelessness note
+Grounding / context-injection note
+Grounding / design-methodology note
+Grounding / failure-mode overlap note
+Grounding / vocabulary — Finzi et al.
+Grounding alignment / linked notes
+Grounding alignment / vocabulary
+"Grounding alignment — ""named but not hardened"""
+Grounding alignment — ConvexBench core claim
+Grounding alignment — Paulsen core claim
+Grounding alignment — Thalo comparison
+Grounding alignment — Toulmin source coverage
+Grounding alignment — agent statelessness source
+Grounding alignment — arscontexta
+Grounding alignment — bitter lesson boundary
+Grounding alignment — bounded-context orchestration model
+Grounding alignment — build-time generation
+Grounding alignment — codification
+Grounding alignment — codification contrast
+Grounding alignment — constraining pattern
+Grounding alignment — context efficiency note
+Grounding alignment — context-efficiency note
+Grounding alignment — cybernetics source
+Grounding alignment — deep search note
+Grounding alignment — distillation contrast
+Grounding alignment — error correction
+Grounding alignment — error-correction link
+Grounding alignment — homoiconicity
+Grounding alignment — human-LLM differences link
+Grounding alignment — indirection note
+Grounding alignment — information-value-is-observer-relative
+Grounding alignment — inspectable substrate
+Grounding alignment — instruction specificity
+Grounding alignment — instruction specificity source
+Grounding alignment — interpretation-narrowing link
+Grounding alignment — link contracts framework
+Grounding alignment — link-contracts-framework
+Grounding alignment — methodology-enforcement link
+Grounding alignment — oracle strength spectrum
+Grounding alignment — oracle-strength-spectrum
+Grounding alignment — quality signals note
+Grounding alignment — stale indexes
+Grounding alignment — stale indexes note
+Grounding alignment — tool-use as different path
+Grounding alignment — type-system-index
+Grounding alignment — underspecified semantics
+Grounding alignment — vibe-noting
+Grounding alignment — vocabulary
+Grounding alignment — wikiwiki principle
+Grounding – inference validity
+Grounding – vocabulary mismatch
+"Grounding — ""changing requirements"" link claim is slightly stronger than the source supports"
+"Grounding — ""contradicts/qualifies"" link to staleness note"
+"Grounding — ""the oracle-strength prediction confirmed at scale"""
+Grounding — ADR-002
+Grounding — AgeMem
+Grounding — Agile Comparison
+Grounding — Augment bidirectional spec reference
+Grounding — Augmentation/automation boundary
+Grounding — DeAngelis source
+Grounding — Fintool
+Grounding — Graphiti
+Grounding — Harness Engineering core claims
+Grounding — Karpathy Verifiability
+Grounding — Kim source
+Grounding — Kirsch Attribution
+Grounding — Kirsch attribution
+Grounding — MAKER attribution
+"Grounding — Rabanser et al., specific claim"
+Grounding — Rabanser four dimensions
+Grounding — Simon
+Grounding — Spec mining connection
+Grounding — Toulmin warrant
+Grounding — ablation section
+Grounding — attribution
+Grounding — attribution accuracy
+Grounding — auto-injection alignment
+Grounding — automating-kb-learning-is-an-open-problem.md
+Grounding — bitter-lesson-boundary
+Grounding — bitter-lesson-boundary note
+Grounding — boundary-of-automation attribution
+Grounding — bounded-context orchestration model
+Grounding — changing-requirements note
+Grounding — chat-history note
+Grounding — claim 10
+Grounding — codification
+Grounding — codification-and-relaxing
+Grounding — constraining trade-off note
+Grounding — constraining.md
+Grounding — context-efficiency note
+Grounding — control-plane model
+Grounding — deploy-time-learning note
+Grounding — deployment claims
+Grounding — diagnosis section
+Grounding — discovery
+Grounding — discovery note
+Grounding — distillation note
+Grounding — document-classification.md
+Grounding — elicitation-requires-maintained-question-generation-systems
+Grounding — error correction framework
+Grounding — error-correction link
+Grounding — evidence strength
+Grounding — evolving-understanding note
+Grounding — experiment report
+Grounding — frontloading alignment
+Grounding — hedging mismatch
+Grounding — inference
+Grounding — inference gap
+Grounding — inference step
+Grounding — inference validity
+Grounding — information-value note
+Grounding — installation architecture
+Grounding — instruction-specificity-should-match-loading-frequency.md
+Grounding — interpreter failure distinction
+Grounding — learning-is-not-only-about-generality
+Grounding — loading frequency
+Grounding — oracle-strength-spectrum
+Grounding — prompt ablation
+Grounding — reach note
+Grounding — reach section
+Grounding — relationship semantics
+Grounding — reverse-compression attribution
+Grounding — scope
+Grounding — scoping note alignment
+Grounding — scoping note sub-agents
+Grounding — source ingest alignment
+Grounding — spec-mining note
+Grounding — specification-strategy link
+Grounding — stagnation evidence
+Grounding — staleness note cross-reference
+Grounding — testability claim
+Grounding — text testing framework
+Grounding — the-bug-that-shipped
+Grounding — tool-fallback analogy
+Grounding — typed-callables alignment
+Grounding — underspecification foundation
+Grounding — underspecification note alignment
+Grounding — unit testing link
+Grounding — verification section
+Grounding — vocabulary
+Grounding — vocabulary mismatch
+Grounding — vocabulary vs. ontology
+Grounding — what-works
+Grounding — workshop layer note
+Grounding — workshop note
+Grounding/Inference
+Grounding/attribution
+Grounding/domain-coverage
+Grounding: Amodei source content
+Grounding: Simon attribution
+Grounding: context-engineering operations
+Grounding: deploy-time learning framework
+Grounding: three timescales
+Internal Consistency
+Internal Consistency — Body vs. Summary
+Internal Consistency — Constraining/Distillation
+Internal Consistency — Verifiability Table
+Internal consistency -- Definition stability
+Internal consistency -- Enables/Costs structure
+Internal consistency -- SQL injection analogy
+Internal consistency / Methodological claim vs. body
+Internal consistency / Naive anthropomorphism vs. naive mechanism-ism
+Internal consistency / definition drift
+Internal consistency / tension
+"Internal consistency — ""What stays global"" list vs. body"
+"Internal consistency — ""a gate, not a gradient"" vs. elsewhere"
+"Internal consistency — ""feel substantially better"""
+"Internal consistency — ""independent"" axes may not be independent"
+"Internal consistency — ""on reference"" placement"
+"Internal consistency — ""replaces many narrow notes"""
+"Internal consistency — ""structured types as error correction"""
+"Internal consistency — ""trajectory, not a law"" vs. ""persist under scaling"""
+"Internal consistency — ""volume not time"""
+"Internal consistency — ""what this framing does and doesn't explain"""
+Internal consistency — Caveats tension
+Internal consistency — Evidence/Reasoning separation
+Internal consistency — Graphiti section vs. body
+Internal consistency — Predictability gap
+Internal consistency — TPR/FPR framework
+Internal consistency — Title claim and body
+Internal consistency — causal chain
+Internal consistency — caveats vs body
+Internal consistency — claim 7 vs claim 6
+Internal consistency — claims 3 and 4
+Internal consistency — claims 7 and 8
+Internal consistency — claims 9 and 14
+Internal consistency — codification distinction
+Internal consistency — comparison table
+Internal consistency — compressed summary
+Internal consistency — compressed summary absent
+Internal consistency — compressed summary alignment
+Internal consistency — core argument
+Internal consistency — cost claim
+Internal consistency — definition drift
+Internal consistency — definition of reach
+Internal consistency — definition stability
+Internal consistency — definition type proposal
+Internal consistency — definitions
+Internal consistency — enumeration structure
+Internal consistency — link semantics
+Internal consistency — link-removal test vs. network accumulation
+Internal consistency — motivating case to framework
+Internal consistency — naming rationale
+Internal consistency — negative compounding
+Internal consistency — no pairwise contradictions
+Internal consistency — open questions
+Internal consistency — open questions vs body
+Internal consistency — open questions vs claims
+Internal consistency — ordering claim
+Internal consistency — overall
+Internal consistency — pairwise consistency
+Internal consistency — pairwise contradiction
+Internal consistency — potential tension
+Internal consistency — process section
+Internal consistency — programming analogy
+Internal consistency — relationship to scheduler note
+Internal consistency — risks vs. pattern
+Internal consistency — schema commitment argument
+Internal consistency — section alignment
+Internal consistency — section coherence
+Internal consistency — store vs. load separation
+Internal consistency — summary faithfulness
+Internal consistency — summary vs body
+Internal consistency — summary vs. body
+Internal consistency — tension acknowledged but unresolved
+"Internal consistency — tension between ""current implementation"" and body argument"
+Internal consistency — tension between flywheel claim and weak-claim framing
+Internal consistency — three-level taxonomy vs. body
+Internal consistency — title and body
+Internal consistency — title and body alignment
+Internal consistency — title vs body
+"Internal consistency: ""everything that in-context learning alone is not"""
+Internal consistency: no definition drift
+Internal consistency: no pairwise contradictions
+MAKER as motivating example
+Scaling law derivation
+Scope
+anthropomorphic-framing
+completeness-boundary
+internal consistency
+internal-consistency
+orphan-references
+pseudo-formalism
+redundant-restatement
+source-residue
+unbridged-cross-domain-evidence

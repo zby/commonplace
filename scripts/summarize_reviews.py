@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Summarize review files into a SUMMARY report.
+"""Summarize review files into a SUMMARY report and CSV tables.
 
 Without arguments, reads ALL review files (*.prose-review.md,
 *.semantic-review.md, etc.) and writes reviews/SUMMARY.md.
 
 With a review-type argument, reads only that type and writes
 reviews/SUMMARY.{review-type}.md.
+
+In both modes, writes normalized CSV tables to reviews/csv/.
 
 Usage: uv run scripts/summarize_reviews.py [review-type]
 
@@ -14,6 +16,7 @@ Examples: uv run scripts/summarize_reviews.py           # all review types
           uv run scripts/summarize_reviews.py semantic-review
 """
 
+import csv
 import re
 import sys
 from collections import Counter
@@ -30,15 +33,14 @@ class Finding:
     check: str
     text: str
     review_type: str
+    level: str  # WARN, INFO, CLEAN
 
 
 @dataclass
 class NoteReview:
     note: str
     review_type: str
-    warns: list[Finding] = field(default_factory=list)
-    infos: list[Finding] = field(default_factory=list)
-    cleans: list[str] = field(default_factory=list)
+    findings: list[Finding] = field(default_factory=list)
 
 
 def detect_review_type(path: Path) -> str | None:
@@ -86,16 +88,16 @@ def parse_review(path: Path) -> NoteReview | None:
         check = match.group(1)
         text = match.group(2)
 
-        if current_section == "WARN":
-            review.warns.append(
-                Finding(note=note, check=check, text=text, review_type=review_type)
+        if current_section in ("WARN", "INFO", "CLEAN"):
+            review.findings.append(
+                Finding(
+                    note=note,
+                    check=check,
+                    text=text,
+                    review_type=review_type,
+                    level=current_section,
+                )
             )
-        elif current_section == "INFO":
-            review.infos.append(
-                Finding(note=note, check=check, text=text, review_type=review_type)
-            )
-        elif current_section == "CLEAN":
-            review.cleans.append(check)
 
     return review
 
@@ -107,67 +109,133 @@ def truncate(text: str, max_len: int = 120) -> str:
     return text[: max_len - 3] + "..."
 
 
-def main() -> None:
-    review_type = sys.argv[1] if len(sys.argv) > 1 else None
-    reviews_dir = Path("reviews")
+def write_csv(path: Path, headers: list[str], rows: list[list[str]]) -> None:
+    """Write a CSV file with headers and rows."""
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(headers)
+        writer.writerows(rows)
 
-    if review_type:
-        suffix = f".{review_type}.md"
-        files = sorted(reviews_dir.glob(f"*{suffix}"))
-        title = review_type.replace("-", " ").title() + " Sweep"
-        output_name = f"{SUMMARY_PREFIX}.{review_type}.md"
-    else:
-        # All review files: anything with a double-extension pattern,
-        # excluding SUMMARY files
-        files = sorted(
-            f
-            for f in reviews_dir.glob("*.*-review.md")
-            if not f.name.startswith(SUMMARY_PREFIX)
-        )
-        title = "Review Sweep (All Types)"
-        output_name = f"{SUMMARY_PREFIX}.md"
 
-    if not files:
-        label = suffix if review_type else "*.*-review.md"
-        print(f"No {label} files found in {reviews_dir}/", file=sys.stderr)
-        sys.exit(1)
+def export_csvs(
+    reviews: list[NoteReview], csv_dir: Path, review_type: str | None
+) -> None:
+    """Write normalized CSV tables to csv_dir."""
+    csv_dir.mkdir(parents=True, exist_ok=True)
 
-    # Parse all reviews
-    reviews: list[NoteReview] = []
-    for f in files:
-        r = parse_review(f)
-        if r:
-            reviews.append(r)
+    # Prefix for filenames when filtering by type
+    prefix = f"{review_type}." if review_type else ""
 
-    # Collect all findings
+    # 1. findings.csv — one row per finding (the raw data)
+    findings_rows = []
+    for r in reviews:
+        for f in r.findings:
+            findings_rows.append(
+                [f.note, f.review_type, f.level, f.check, f.text]
+            )
+    write_csv(
+        csv_dir / f"{prefix}findings.csv",
+        ["note", "review_type", "level", "check", "finding"],
+        findings_rows,
+    )
+
+    # 2. notes_summary.csv — aggregated per note
+    note_counts: dict[str, Counter[str]] = {}
+    for r in reviews:
+        for f in r.findings:
+            key = f.note
+            if key not in note_counts:
+                note_counts[key] = Counter()
+            note_counts[key][f.level] += 1
+    write_csv(
+        csv_dir / f"{prefix}notes_summary.csv",
+        ["note", "warn_count", "info_count", "clean_count"],
+        [
+            [
+                note,
+                str(counts.get("WARN", 0)),
+                str(counts.get("INFO", 0)),
+                str(counts.get("CLEAN", 0)),
+            ]
+            for note, counts in sorted(note_counts.items())
+        ],
+    )
+
+    # 3. checks_summary.csv — aggregated per check
+    check_counts: dict[str, Counter[str]] = {}
+    for r in reviews:
+        for f in r.findings:
+            if f.check not in check_counts:
+                check_counts[f.check] = Counter()
+            check_counts[f.check][f.level] += 1
+    write_csv(
+        csv_dir / f"{prefix}checks_summary.csv",
+        ["check", "warn_count", "info_count", "clean_count"],
+        [
+            [
+                check,
+                str(counts.get("WARN", 0)),
+                str(counts.get("INFO", 0)),
+                str(counts.get("CLEAN", 0)),
+            ]
+            for check, counts in sorted(check_counts.items())
+        ],
+    )
+
+    # 4. notes_by_warnings.csv — notes ranked by warning count (desc)
+    notes_warn_count: Counter[str] = Counter()
+    for r in reviews:
+        for f in r.findings:
+            if f.level == "WARN":
+                notes_warn_count[f.note] += 1
+    write_csv(
+        csv_dir / f"{prefix}notes_by_warnings.csv",
+        ["note", "warn_count"],
+        [[note, str(count)] for note, count in notes_warn_count.most_common()],
+    )
+
+    # 5. checks_without_warnings.csv — checks with zero warnings
+    all_checks = set(check_counts.keys())
+    warn_checks = {
+        c for c, counts in check_counts.items() if counts.get("WARN", 0) > 0
+    }
+    no_warn = sorted(all_checks - warn_checks)
+    write_csv(
+        csv_dir / f"{prefix}checks_without_warnings.csv",
+        ["check"],
+        [[c] for c in no_warn],
+    )
+
+
+def build_markdown(
+    reviews: list[NoteReview], review_type: str | None, title: str
+) -> str:
+    """Build the markdown summary."""
     all_warns: list[Finding] = []
-    all_infos: list[Finding] = []
     warn_checks: Counter[str] = Counter()
-    info_checks: Counter[str] = Counter()
-    clean_checks: Counter[str] = Counter()
     clean_notes: list[str] = []
-
-    # Track which review types are included
     review_types_seen: set[str] = set()
+    all_check_names: set[str] = set()
+    warn_check_names: set[str] = set()
 
     for r in reviews:
         review_types_seen.add(r.review_type)
-        all_warns.extend(r.warns)
-        all_infos.extend(r.infos)
-        for w in r.warns:
-            warn_checks[w.check] += 1
-        for i in r.infos:
-            info_checks[i.check] += 1
-        for c in r.cleans:
-            clean_checks[c] += 1
-        if not r.warns and not r.infos:
+        has_warn = False
+        has_info = False
+        for f in r.findings:
+            all_check_names.add(f.check)
+            if f.level == "WARN":
+                all_warns.append(f)
+                warn_checks[f.check] += 1
+                warn_check_names.add(f.check)
+                has_warn = True
+            elif f.level == "INFO":
+                has_info = True
+        if not has_warn and not has_info:
             clean_notes.append(r.note)
 
-    # Collect all check names seen
-    all_check_names = set(warn_checks) | set(info_checks) | set(clean_checks)
-    no_warn_checks = sorted(all_check_names - set(warn_checks))
+    no_warn_checks = sorted(all_check_names - warn_check_names)
 
-    # Build summary
     lines: list[str] = []
     lines.append(f"# {title} — {date.today()}")
     lines.append("")
@@ -240,9 +308,55 @@ def main() -> None:
         lines.append("All notes had at least one finding.")
     lines.append("")
 
+    return "\n".join(lines)
+
+
+def main() -> None:
+    review_type = sys.argv[1] if len(sys.argv) > 1 else None
+    reviews_dir = Path("reviews")
+    csv_dir = reviews_dir / "csv"
+
+    if review_type:
+        suffix = f".{review_type}.md"
+        files = sorted(reviews_dir.glob(f"*{suffix}"))
+        title = review_type.replace("-", " ").title() + " Sweep"
+        output_name = f"{SUMMARY_PREFIX}.{review_type}.md"
+    else:
+        files = sorted(
+            f
+            for f in reviews_dir.glob("*.*-review.md")
+            if not f.name.startswith(SUMMARY_PREFIX)
+        )
+        title = "Review Sweep (All Types)"
+        output_name = f"{SUMMARY_PREFIX}.md"
+
+    if not files:
+        label = suffix if review_type else "*.*-review.md"
+        print(f"No {label} files found in {reviews_dir}/", file=sys.stderr)
+        sys.exit(1)
+
+    # Parse all reviews
+    reviews: list[NoteReview] = []
+    for f in files:
+        r = parse_review(f)
+        if r:
+            reviews.append(r)
+
+    # Count warnings for reporting
+    warn_count = sum(
+        1 for r in reviews for f in r.findings if f.level == "WARN"
+    )
+
+    # Write markdown summary
+    md = build_markdown(reviews, review_type, title)
     output = reviews_dir / output_name
-    output.write_text("\n".join(lines), encoding="utf-8")
-    print(f"Wrote {output} ({len(reviews)} notes, {len(all_warns)} warnings)")
+    output.write_text(md, encoding="utf-8")
+    print(f"Wrote {output} ({len(reviews)} notes, {warn_count} warnings)")
+
+    # Write CSV tables
+    export_csvs(reviews, csv_dir, review_type)
+    prefix = f"{review_type}." if review_type else ""
+    print(f"Wrote CSV tables to {csv_dir}/{prefix}*.csv")
 
 
 if __name__ == "__main__":

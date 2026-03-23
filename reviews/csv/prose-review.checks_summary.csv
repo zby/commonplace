@@ -1,0 +1,17 @@
+check,warn_count,info_count,clean_count
+Anthropomorphic framing,4,41,116
+Confidence miscalibration,132,34,4
+Orphan references,10,10,141
+Proportion mismatch,90,53,22
+Pseudo-formalism,6,14,141
+Redundant restatement,5,33,123
+Source residue,25,76,82
+Unbridged cross-domain evidence,7,13,142
+anthropomorphic-framing,0,0,1
+confidence-miscalibration,1,0,0
+orphan-references,0,0,1
+proportion-mismatch,1,0,0
+pseudo-formalism,0,0,1
+redundant-restatement,0,1,0
+source-residue,0,1,0
+unbridged-cross-domain-evidence,0,0,1
