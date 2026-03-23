@@ -8,11 +8,11 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Fifteen code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces and where they promote the result. In the KB's newer vocabulary, the second axis is mainly a **substrate-class** choice: do traces promote into durable symbolic artifacts or into model weights?
+Fifteen code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
 The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, Autocontext, OpenClaw-RL, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). The first seven mine live sessions or service-owned event streams; the latter eight learn from repeated task trajectories or search trees. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
-**What the survey finds.** The systems separate on two axes: ingestion pattern (single-session extension, cross-agent aggregator, service-owned backend, or trajectory-run) and promotion target (symbolic artifacts vs model weights). Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is a solved-enough pattern to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
+**What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
 ## The recurring stages
 
@@ -254,7 +254,7 @@ From the [trajectory-informed ingest](../sources/trajectory-informed-memory-gene
 
 ## What the comparison makes concrete
 
-The systems separate on two axes.
+With the per-system evidence in place, the two axes previewed in the introduction become concrete.
 
 ### Axis 1: trace ingestion pattern
 
@@ -328,7 +328,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 
 ## What remains open
 
-None of the reviewed systems closes the harder KB-learning mutations. They extract and persist candidates well, and some close the loop for scenario-bounded updates, but that is still different from:
+None of the reviewed systems closes the harder learning-loop mutations — the ones that require judgment beyond local task success. They extract and persist candidates well, and some close the loop for scenario-bounded updates, but that is still different from:
 
 - deciding whether two notes should be linked
 - synthesizing a better abstraction from several sessions
