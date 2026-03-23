@@ -1,0 +1,52 @@
+=== SEMANTIC REVIEW: specification-strategy-should-follow-where-understanding-lives.md ===
+
+Claims identified: 14
+
+1. [Intro] "Spec-first, bidirectional spec, and spec mining solve different failure modes because they store disambiguation in different places"
+2. [Intro] "They feel incompatible because they are choosing different storage locations for the same kind of work"
+3. [Intro] "Specification strategy is therefore a policy for when that collapse happens and which artifact records it"
+4. [Scope] The note is specifically about durable artifacts, not interactive clarification
+5. [Spec-first] "Spec-first fits cases where the relevant understanding already exists before execution"
+6. [Spec-first] Its failure mode is "committing to projections that only execution could validate"
+7. [Bidirectional] "Bidirectional spec maintenance fits cases where important understanding emerges while doing the work"
+8. [Bidirectional] Its failure mode is "turning the spec into an execution diary"
+9. [Spec mining] "Behavior-extracted specification fits cases where understanding is not legible until after enough observation"
+10. [Spec mining] Its failure mode is "overfitting accidents"
+11. [Spec mining] "The key difference from bidirectional spec is temporal resolution" — bidirectional captures discoveries during one evolving line of work; mining captures regularities convincing only in aggregate
+12. [Phase error] "These strategies look like competing ideologies only if you assume a system should stay in one mode" — a single component can move through all three
+13. [Strongest claim] "Move the disambiguation burden to the earliest artifact that can carry it truthfully"
+14. [Predictions] The framework predicts specific advocacy patterns (each strategy looks right in its zone) and specific pathologies (spec staleness, spec noise, brittle mined rules)
+
+---
+
+WARN:
+- [Completeness] The three-strategy enumeration omits interactive clarification by explicit scoping ("This note is specifically about durable artifacts"), but the scoping boundary is porous. Bidirectional spec as described by the Augment source includes an interactive element: the human reviews agent-surfaced interpretation choices and approves or rejects them during execution. This is both a durable artifact update and interactive clarification happening simultaneously. The note draws a clean line between "interactive clarification inside a conversation" and durable artifact strategies, but the bidirectional spec straddles that line. A reader may be confused about whether an agent asking "I found an existing auth context, should I wire into that?" and the human approving it in the spec counts as interactive clarification, bidirectional spec maintenance, or both. The boundary case is real because removing the interactive review component from bidirectional spec would leave it as just an execution diary — the very failure mode the note identifies.
+
+- [Completeness] The three strategies are presented as exhausting the durable-artifact space, but test-driven development (TDD) / acceptance-test-driven development (ATDD) is a fourth pattern that does not map cleanly to any of the three. In TDD, the durable artifact is a test suite written before implementation. The understanding exists upfront (like spec-first), but the artifact is executable verification rather than a prose spec, and the disambiguation is performed by the test's pass/fail semantics rather than by natural-language narrowing. The note could absorb TDD under spec-first ("tests are a kind of spec"), but the fit is strained because tests disambiguate through execution feedback, which is closer to the bidirectional regime. This sits between items in the enumeration.
+
+- [Grounding — domain coverage] The note claims that the Augment source grounds "bidirectional spec maintenance." The Augment source's core argument is about maintenance throughput: specs decay because maintenance is invisible work, and the bidirectional pattern solves this by making agents maintain the spec as a side effect of execution. The note's framing of bidirectional spec — "ambiguity that is only exposed during execution" — captures one aspect (discovery during execution) but underplays the source's central concern (maintenance economics / entropy management). The source is primarily about why specs go stale and how to prevent it; the note uses it primarily as evidence for a timing-of-understanding framework. The note accurately describes what the source proposes, but the reason the source proposes it (maintenance cost, not timing of understanding) is a different argument than what the note attributes to it.
+
+INFO:
+- [Completeness] The maturation sequence (spec-first -> bidirectional -> spec mining) is presented as "a common maturation path, not a law," with qualifications that some systems stop or skip phases. However, the note does not consider backward movement through the sequence. A mined rule that proves too rigid could be relaxed back into a live spec (bidirectional regime), and a live spec whose domain stabilizes could be frozen into an upfront spec for future work. The note references the relaxing-signals note for the mining-to-relaxing direction, but does not discuss backward movement between its own three phases. This is a minor gap since the note explicitly disclaims that the sequence is a law, but the strongest version of the claim ("move the disambiguation burden to the earliest artifact that can carry it truthfully") implies that understanding can regress, which would require backward phase movement.
+
+- [Grounding — vocabulary] The note says Augment's pattern "keeps the spec live: discovery updates the artifact rather than invalidating it." The Augment source actually frames this more specifically as the agent writing interpretation choices back into a shared document, with the human able to review "at any point." The note's "keeps the spec live" is a reasonable compression but loses the Augment source's emphasis on the specific mechanism: it is the agent, not the human, that performs the update, and the human's role is review, not co-authorship. This distinction matters for the note's own framework because it determines who is performing the disambiguation — the agent discovers and proposes, the human approves.
+
+- [Internal consistency] The note defines "truthfully" in the strongest claim as: "the artifact should not pretend the knowledge is firmer, earlier-available, or more general than it really is." This is a property of the artifact's content. But the three strategies are distinguished by timing (when understanding becomes available), not by the epistemic honesty of the artifact. A spec-first document could be truthful or dishonest; so could a mined rule. The "truthfully" qualifier does important work in the strongest claim but is orthogonal to the timing framework that structures the rest of the note. The note could benefit from connecting "truthfully" more explicitly to the failure modes — each failure mode (fossilized guess, execution diary, overfitted accident) is a specific way an artifact becomes untruthful.
+
+- [Completeness] The "What this predicts" section identifies three pathologies, one per strategy. But there is a cross-strategy pathology the note does not name: using the wrong strategy not because you stayed too long but because you misdiagnosed where understanding lives. For instance, a team might use spec-first when the understanding is actually only available through execution (not "staying too long" but "starting in the wrong phase"). The note's phase-error framing ("the disagreement is usually a phase error") implies this, but the predictions section only lists within-strategy pathologies, not between-strategy misdiagnosis pathologies.
+
+PASS:
+- [Grounding — DeAngelis source] The note claims DeAngelis targets the spec-first case: "specify, plan, decompose, then implement." The ingest confirms this accurately. DeAngelis's four-step methodology (specify functional requirements, plan technical decisions, decompose into ordered tasks, implement one at a time) is indeed a spec-first approach where understanding is assumed available upfront. The note's characterization of the gain ("front-loaded constraint") and the failure mode ("committing to projections that only execution could validate") aligns with the ingest's limitation section, which notes DeAngelis does not address spec maintenance.
+
+- [Grounding — spec-mining note] The note claims spec mining is "the late move: observe behavior, extract the regularity, then harden it into tests, helpers, or rules." The spec-mining note confirms this pattern precisely (watch, identify, extract, re-run). The note's characterization of the failure mode ("overfitting accidents") matches the spec-mining note's risk section ("Mining specs from observed behavior can encode biases or accidents as rules").
+
+- [Grounding — changing-requirements note] The note claims that what looks like "requirements changed" is often that "the upfront spec committed too early to one reading." The changing-requirements note confirms this with the specific mechanism: "the requirements didn't change, they were never precise enough to prevent divergent readings." Attribution is accurate.
+
+- [Grounding — deploy-time-learning note] The note claims deploy-time-learning "needs a finer breakdown than 'prose and code co-evolve.'" The deploy-time-learning note's description says it argues that deploy-time learning and agile share "co-evolving prose and code." The note under review extends this by splitting co-evolution into three distinct strategies. The "extends" relationship is accurately described — the deploy-time-learning note treats co-evolution as one undifferentiated process, and this note adds phase structure.
+
+- [Internal consistency — definition stability] The term "understanding" is used consistently throughout: it means the knowledge needed to disambiguate a specification. In spec-first, understanding exists before execution. In bidirectional, it emerges during execution. In spec mining, it appears after accumulated observation. The term does not drift.
+
+- [Internal consistency — summary vs body] The title claim ("specification strategy should follow where understanding lives") is faithfully represented by the body. The body does not smuggle in claims that the title does not commit to, and the three sections deliver on the three-way distinction the introduction promises.
+
+Overall: 3 warnings, 4 info
+===

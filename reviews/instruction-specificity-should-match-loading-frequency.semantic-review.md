@@ -1,0 +1,34 @@
+=== SEMANTIC REVIEW: instruction-specificity-should-match-loading-frequency.md ===
+
+Claims identified: 11
+
+1. "Every line in always-loaded context competes for attention with the actual task." (Opening line — causal claim)
+2. "The design response is progressive disclosure: match how specific an instruction is to how often it needs to be present." (Opening paragraph — definitional claim)
+3. The loading hierarchy is a four-tier system: CLAUDE.md, Skill descriptions, Skill bodies, Task-specific docs. (The loading hierarchy — enumeration claim, implicitly exhaustive)
+4. CLAUDE.md is "always loaded. Slim. Routes to everything else. Contains universal instructions (coding conventions, git rules, guardrails), routing tables, search patterns, and links to task-specific docs." (Item 1 — scope claim)
+5. Skill descriptions are "always loaded as a list of available /slash commands with short descriptions. A second always-loaded surface." (Item 2 — definitional claim)
+6. Skill bodies are "loaded on demand when a /slash command is invoked." (Item 3 — definitional claim)
+7. Task-specific docs are "read explicitly when the agent is about to do that kind of work." (Item 4 — definitional claim)
+8. "The principle: match instruction specificity to loading frequency. Universal rules load always. Task-specific rules load when doing that task." (After hierarchy — the core thesis, restated)
+9. "CLAUDE.md should NOT contain detailed instructions for specific tasks." (Prescriptive claim)
+10. Anthropic source "describes Claude Code following this exact pattern: a CLAUDE.md file as a slim router with grep/glob for just-in-time retrieval of everything else." (Source attribution)
+11. Lopopolo source "exemplifies: 100-line AGENTS.md as 'a map with pointers' converges independently on the routing concept at production scale." (Source attribution)
+
+WARN:
+- [Completeness] The four-tier hierarchy omits retrieval-injected context — content that is neither always-loaded nor explicitly read, but dynamically surfaced by the harness (e.g., grep/glob results, MCP tool outputs, memory files, auto-injected project-level MEMORY.md). The note's own Anthropic source citation mentions "grep/glob for just-in-time retrieval," which implies a fifth loading mechanism that does not map cleanly to any of the four tiers. Tier 3 (skill bodies) covers on-demand skill loading, and Tier 4 (task-specific docs) covers explicit reads, but neither captures the pattern where the harness or agent dynamically retrieves context based on task signals without the user invoking a slash command or the agent explicitly deciding to read a known file. This is a boundary case that sits between tiers 3 and 4 but has its own distinct loading semantics (search-triggered, content-unknown-in-advance).
+- [Grounding] The note claims the Anthropic source "describes Claude Code following this exact pattern: a CLAUDE.md file as a slim router with grep/glob for just-in-time retrieval of everything else." The phrase "this exact pattern" asserts a precise match between the note's four-tier hierarchy and the source's description. The Anthropic blog post describes CLAUDE.md and just-in-time retrieval, but does not articulate a four-tier hierarchy with skill descriptions and skill bodies as distinct loading tiers. The four-tier decomposition is the note's own analytical contribution, not something the source provides. "This exact pattern" overstates the alignment — the source grounds the general principle (slim always-loaded file + on-demand retrieval) but not the specific four-tier structure.
+
+INFO:
+- [Completeness] The hierarchy presents four discrete tiers but the boundary between Tier 3 (skill bodies, loaded on slash command invocation) and Tier 4 (task-specific docs, read explicitly) is blurry in practice. A skill body that instructs the agent to "read WRITING.md before proceeding" converts a Tier 4 artifact into a Tier 3 dependency — the doc is loaded as a consequence of skill invocation, not as an independent explicit read. The tiers may be better understood as a continuum of loading eagerness rather than four distinct mechanisms, though the discrete framing is useful for design guidance.
+- [Completeness] The simplest possible instance of loading-frequency matching would be a single-file system with no loading tiers at all — everything in one file. The note implicitly assumes a system complex enough to warrant multiple tiers, but does not state when the hierarchy becomes necessary versus when a single file suffices. This is a minor scope gap — the note is clearly written for systems at the complexity level of Claude Code or similar agent harnesses.
+- [Grounding] The Lopopolo attribution says the 100-line AGENTS.md "converges independently on the routing concept at production scale." The ingest confirms Lopopolo describes "a map with pointers to deeper sources of truth," which does support convergence on the router concept. However, the Lopopolo source describes a different loading architecture (AGENTS.md pointing to deeper docs in a Codex environment) that may not have the same four-tier structure. The note uses "converges independently" appropriately — it claims convergence on the principle, not on the specific tier decomposition.
+
+PASS:
+- [Internal consistency] The note's title claim ("instruction specificity should match loading frequency"), opening paragraph, hierarchy description, restated principle, and prescriptive conclusion all express the same idea without contradiction. The hierarchy's ordering (always-loaded → on-demand → explicit read) consistently maps to the specificity gradient (universal → task-specific). No definition drift detected.
+- [Internal consistency] The prescriptive claim "CLAUDE.md should NOT contain detailed instructions for specific tasks" follows logically from the principle that specificity should match loading frequency. If CLAUDE.md is always-loaded, and detailed task instructions are high-specificity, they violate the matching principle.
+- [Grounding] The Lopopolo source attribution is accurate in substance. The ingest confirms connection #6: "100-line AGENTS.md as 'a map with pointers to deeper sources of truth' is independent convergence on 'CLAUDE.md is a router, not a manual.'" The note's characterization of independent convergence is supported.
+- [Grounding] The linked note "Always-loaded context has two surfaces with different affordances" is accurately referenced as distinguishing the two always-loaded surfaces (Tiers 1 and 2). That note's content confirms the push/pull distinction the hierarchy implies. The cross-reference is sound.
+- [Internal consistency] The compressed form (title + opening paragraph) faithfully represents the body. The body adds the four-tier hierarchy and source grounding but does not introduce tensions the summary elides.
+
+Overall: 2 warnings, 3 info
+===

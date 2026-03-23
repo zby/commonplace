@@ -1,0 +1,29 @@
+=== PROSE REVIEW: constraining.md ===
+
+Checks applied: 8
+
+WARN:
+- [Confidence miscalibration] The note presents its own taxonomy — the constraining spectrum, the orthogonality claim, the constrain/relax cycle as a "learning cycle" — with fully assertive language throughout. "Constraining is a gradient, not a single operation." "Constraining and distillation are orthogonal." "The cycle isn't maintenance — it's how the system adapts." These are the note's own theoretical constructions, not cited results. The Prior work section surveys related ideas but explicitly disclaims systematic grounding ("This survey is from the agent's training data, not systematic"). The core framework is proposed, but the prose reads as established.
+  Recommendation: Add hedging signals for the note's own constructions. For example, "We model constraining as a gradient" rather than "Constraining is a gradient, not a single operation." The orthogonality claim (the 2x2 matrix) is a proposed decomposition and could be introduced as "a useful decomposition" rather than stated as fact. The constrain/relax cycle could read "functions as a learning cycle" rather than asserting it definitively.
+
+- [Proportion mismatch] The note's title claim is that constraining narrows the interpretation space. The section that carries the most weight for this claim — the opening paragraph — is roughly 100 words. The "Relationship to distillation" section, which is about how constraining relates to a different concept, runs roughly 130 words plus a 2x2 table. The "Prior work" section, which is a literature survey, runs roughly 120 words plus a TODO disclaimer. The core mechanism gets one paragraph of development while the relationship to a sibling concept and a self-admittedly unsystematic literature survey each receive comparable or greater space. The constraining spectrum table partially compensates, but the conceptual development of *why* narrowing the interpretation space matters — the mechanism itself — is thin relative to the framing apparatus around it.
+  Recommendation: Develop the opening section further. The claim that constraining "trades generality for gains in the reliability+speed+cost compound" is introduced but not argued. Why does narrowing the interpretation space produce reliability gains? Why does generality cost speed? A paragraph making the mechanism explicit would anchor the rest of the note more firmly.
+
+INFO:
+- [Source residue] The note claims generality ("one of two co-equal learning mechanisms in deployed agentic systems") but the examples in the constraining spectrum table are all from the knowledge-base domain: "Store an LLM output," "Write a description field," "Create a convention," "Add structured sections," "Extract a deterministic function." These are natural examples for the KB-building context of this repo, not arbitrary choices. This is borderline — the note's scope IS agentic systems with KBs, so these examples are within domain. But the opening sentence claims "deployed agentic systems" broadly, which is wider than KB operation.
+  Recommendation: Either narrow the opening claim to agent-operated KBs specifically, or add one example from outside KB management (e.g., constraining an agent's API call patterns, or adding a schema to a tool's input) to justify the broader claim. The current examples are fine as the primary illustrations but don't demonstrate the full generality the opening asserts.
+
+- [Anthropomorphic framing] The note is mostly clean on this front, but "the system adapts" in the Relaxing section ("it's how the system adapts") attributes adaptation — a cognitive or biological property — to a system that is a collection of artifacts and procedures. This is mild and possibly intentional (the note is about learning mechanisms), but "adapts" implies autonomous agency that the constrain/relax cycle doesn't necessarily have — it requires human or agent decisions at each step.
+  Recommendation: Consider whether "adapts" is the intended claim. If the constrain/relax cycle is driven by deliberate operator decisions, "evolves" or "is tuned" may be more precise. If the note does intend to claim the system adapts (in some meaningful sense), this is worth a sentence of justification.
+
+CLEAN:
+- [Pseudo-formalism] The 2x2 matrix (constrained/not constrained vs. distilled/not distilled) and the constraining spectrum table are both doing real work — the matrix makes the orthogonality claim testable by providing concrete examples in each cell, and the spectrum table orders examples along the gradient. Neither pretends to be mathematical. Removing either would lose clarity. No variables, equations, or notation appear.
+
+- [Orphan references] No unsourced empirical claims, specific numbers, or named studies appear without context. The Prior work section cites Siek & Taha (2006) with sufficient context. The TODO explicitly flags the survey's limitations. All other references are to internal notes with clear relationship semantics.
+
+- [Unbridged cross-domain evidence] The Prior work section cites gradual typing, formal specification, Carnap's explication, and ontology engineering — all from outside the agentic-systems domain. However, the note does not claim these findings transfer directly; it presents them as analogues ("The closest direct analogue") and then explicitly states what is domain-specific ("What's specific to our use is applying constraining to the agent-operated KB setting"). The bridging is adequate.
+
+- [Redundant restatement] Each section opens with new content. "The constraining spectrum" does not re-explain the opening definition. "Relaxing" introduces the reverse operation without restating the forward direction. "Relationship to distillation" opens with the orthogonality claim, not a recap of constraining. No section could lose its opening paragraph without damage.
+
+Overall: 2 warnings, 2 info
+===

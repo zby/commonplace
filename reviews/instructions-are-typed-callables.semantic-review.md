@@ -1,0 +1,39 @@
+=== SEMANTIC REVIEW: instructions-are-typed-callables.md ===
+
+Claims identified: 11
+
+1. "Document types mark affordances" (opening sentence, attributed to document-types-should-be-verifiable.md)
+2. "Each type step trades generality for compound gains in reliability, speed, and cost" (opening paragraph, attributed to constraining-and-distillation note)
+3. "the structure guarantees the parts are there, making operations reliable without reading the whole document first" (opening paragraph)
+4. "Skills, tasks, workflows: their primary affordance is *being followed*" (second paragraph) — definition claim
+5. "These are the document equivalent of callables: the content is a procedure, and the valid operation is execution" (second paragraph) — analogy/definition claim
+6. "instructions that operate on documents should declare which types they accept" (Skills have type signatures section) — the central prescriptive claim
+7. "Currently KB operations take a path and hope for the best" (Skills have type signatures section) — status quo claim
+8. Skill signature table enumerating four skills with their input/output types (Skills have type signatures section) — enumeration claim
+9. "The operations afforded by a type can range from precise semantics ... to underspecified semantics" (post-table paragraph) — scope claim about a spectrum
+10. "The type is the interface; the implementation can codify from LLM to code as patterns constrain" (post-table paragraph, attributed to codification.md and agentic-systems-interpret-underspecified-instructions.md)
+11. "committing to one interpretation from the space the spec admits" (post-table paragraph, attributed to agentic-systems-interpret-underspecified-instructions.md)
+
+WARN:
+- [Completeness] The skill signature table lists four skills (`/ingest`, `/connect`, `/validate`, `/convert`) as the illustration of typed callables, but the note's claim is general: "instructions that operate on documents should declare which types they accept." The table omits skills whose signatures are harder to express in the `type -> type` pattern. For example, `/snapshot-web` takes a URL (not a document type) and produces a source; `/connect` actually takes *two* notes (or a note and an index) and mutates both, not a single `note | index -> note | index`. The semantic-review instruction itself takes a `note` and produces a `validation-report`, but its primary input is really a *pair* (the note + the procedure). The table presents signatures as single-input/single-output, which works for the listed cases but may not generalize cleanly to multi-input or side-effecting skills. The note does not acknowledge this tension; the open questions section asks about union types but not about arity or side effects.
+
+- [Grounding/Domain coverage] The opening sentence claims "Document types mark affordances" and attributes this to document-types-should-be-verifiable.md. That source note does discuss types as marking what an agent "can do with" a document, which is reasonably paraphrased as "affordances." However, the source focuses on *data* types (note, spec, index) and their *structural* verifiability. It does not discuss procedure types or callable types. The reviewed note extends the affordance framework from data documents to procedure documents (skills, tasks) — this extension is the note's own contribution, but readers may mistake the link as grounding the full claim (including callable types) rather than just the data-type half. The note could be clearer that the callable extension is its own move, not something found in the source.
+
+- [Completeness] The note claims skills are "the document equivalent of callables" and draws the analogy to functions with type signatures. But the analogy has a structural gap: in programming, callables are *invoked by a runtime* and the runtime enforces types. In the KB, skills are *read and followed by an LLM agent* — there is no runtime that dispatches on type. The note mentions "early validation" as a benefit ("this document is an index, but this workflow operates on structured-claim — wrong type") but does not specify *what* performs that validation. The document-types-should-be-verifiable source explicitly discusses who the "compiler" is (a mix of agents and scripts) and that enforcement requires a checker. The callable analogy implies a dispatch mechanism that the note does not address. The open question "Should skill signatures be declared in the skill file itself (machine-readable) or just documented?" partially acknowledges this, but the gap between "callables" and "procedures agents follow" is larger than the open question suggests.
+
+INFO:
+- [Completeness/boundary case] The simplest possible instance of a "typed callable" would be a trivial instruction like "delete this file" — it takes a path, not a typed document. Is this a typed callable with signature `path -> void`? The note's framing centers on document-to-document transformations, but many KB operations are side-effecting (delete, rename, move) or take non-document inputs (URLs, search queries). The boundary between "typed callable" and "ordinary command" is not drawn.
+
+- [Grounding] The note says the type is "the interface" and the implementation can "codify from LLM to code as patterns constrain," linking to codification.md. The codification source defines codification as crossing a medium boundary from natural language to code. The note's usage is reasonable — it's saying that as patterns stabilize, the implementation of a type-check can move from LLM judgment to deterministic code. But the phrasing "the type is the interface; the implementation can codify" compresses two distinct ideas (interface/implementation separation and the codification spectrum) into one clause, which could be read as saying the type *itself* codifies, rather than the enforcement of the type.
+
+- [Internal consistency] The `/connect` signature is listed as `note | index -> note | index`, implying it returns a modified document. But the parenthetical says "(mutates links)" — mutation implies side effects, not a pure input-output transformation. This is a minor tension: the function-signature framing suggests pure transformations, while the actual operation is mutation. This is acknowledged by the parenthetical but the table format pulls toward the pure-function reading.
+
+PASS:
+- [Grounding] The attribution to constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md is accurate. That source explicitly states "each constraint narrows what the system can do (less generality) but makes what it does do more reliable, faster, and cheaper," which matches the note's claim that "each type step trades generality for compound gains in reliability, speed, and cost."
+- [Grounding] The link to agentic-systems-interpret-underspecified-instructions.md for "committing to one interpretation from the space the spec admits" is accurate. That source's section on constraining explicitly uses this language: "choosing one interpretation from the space the spec admits and committing to it."
+- [Grounding] The link to codification.md is accurately used. Codification is correctly characterized as the far end of the constraining spectrum where the medium changes.
+- [Internal consistency] The note's central argument is internally consistent: types mark affordances on data documents -> some documents are procedures -> procedures should declare which types they accept -> this gives skills type signatures. Each step follows from the previous. No section contradicts another.
+- [Internal consistency] The open questions section is well-calibrated — it flags genuine unresolved issues (machine-readable vs documented, union types, compound documents) without undermining the main claim.
+
+Overall: 3 warnings, 3 info
+===

@@ -1,0 +1,24 @@
+=== PROSE REVIEW: process-structure-and-output-structure-are-independent-levers.md ===
+
+Checks applied: 8
+
+WARN:
+- [Confidence miscalibration] The opening sentence asserts "two distinct ways that the KB has been treating as one" as established fact, but the note provides one empirical source (Ugare & Chandra) which, by the note's own admission, "does not ablate individual template components, so it cannot isolate how much of the gain comes from process constraints versus the incidental output formatting." The independence claim — the note's central thesis — is a proposed analytical decomposition, not an empirically established result. Yet the title and framing use direct assertion ("are independent levers") throughout, with no hedging until the empirical-support section partially qualifies the evidence. The open-questions section correctly hedges its speculations, but the core framework should receive similar epistemic marking.
+  Recommendation: Add a brief qualifier near the opening — e.g., "a useful decomposition" or "can be usefully separated" — and consider softening the title-level claim to reflect that independence is analytically motivated rather than experimentally demonstrated.
+
+- [Proportion mismatch] The core claim is that process structure and output structure are independent. The section that most directly argues for this — the opening paragraphs and the "Empirical support" section — runs roughly 180 words for the empirical case. Meanwhile "Two mechanisms, split two ways" runs roughly 200 words developing how distribution selection and interpretation narrowing apply to the distinction. The mechanism-mapping section is useful but secondary; the note's load-bearing argument (that the two really are independent and that independence matters) deserves at least comparable development. In particular, the independence argument currently rests on a single paper and a brief logical observation ("you can have output structure without process structure..."). Strengthening the independence case with additional examples or reasoning would better match the confidence of the downstream mechanism analysis.
+  Recommendation: Develop the independence argument more fully — additional empirical examples, a concrete case where output-only constraints fail and process constraints succeed, or vice versa. Consider whether the mechanism-mapping material could be trimmed or split into its own note if the current note's scope is specifically the independence claim.
+
+INFO:
+- [Source residue] The note claims general scope (structured templates constraining LLM generation) but the sole empirical evidence comes from code verification (Ugare & Chandra on agentic code reasoning). Terms like "trace each execution path" and "enumerate all cases" in the opening definition of process structure lean toward code-domain framing. The human-methodology examples (peer review, style guides, scientific papers) help generalize, but the empirical grounding remains single-domain. This is not residue in the strict sense — the source is properly cited — but the generality of the claim outpaces the breadth of the evidence.
+
+- [Redundant restatement] The final paragraph of "Two mechanisms, split two ways" ("The methodology-enforcement note already captures the process side...") partially restates what the relevant-notes section says about the methodology-enforcement link. The paragraph does add the connective claim ("connects that observation to the distribution-selection and interpretation-narrowing mechanisms"), so it is not pure restatement, but the overlap is noticeable.
+
+CLEAN:
+- [Pseudo-formalism] No formal notation, variables, or equations. The note uses only prose and conceptual distinctions. No issue.
+- [Orphan references] The one specific empirical claim ("5-12pp accuracy gains") is attributed to Ugare & Chandra (2026) with a link to the ingest. The Sonnet non-improvement claim in open questions is also attributed to the same source. No uncontextualized numbers or uncited claims.
+- [Unbridged cross-domain evidence] The human-methodology examples (peer review checklists, style guides, scientific papers) are used as illustrative parallels, not as evidence for the LLM claim. The LLM evidence comes from Ugare & Chandra, which directly studies LLM agents. No unbridged transfer.
+- [Anthropomorphic framing] The note uses "the agent arrives at the result," "the agent reasons," and "model has already internalised the reasoning patterns." "Arrives at" and "reasons" are acceptable agent-framework language (the note is about agentic systems). "Internalised" in the open-questions section is mildly anthropomorphic but appears in a speculative context where the imprecision is flagged by hedging ("is consistent with"). No actionable issue.
+
+Overall: 2 warnings, 2 info
+===

@@ -1,0 +1,28 @@
+=== PROSE REVIEW: elicitation-requires-maintained-question-generation-systems.md ===
+
+Checks applied: 8
+
+WARN:
+- [Confidence miscalibration] The four strategies are the note's own construction but are presented with assertive framing: "Strategies ordered by expertise required" as a section heading, numbered 1–4 as if the ordering is established, and "Activation is near-perfect" (strategy 1), "Activation is weaker than with targeted probes but substantially better than with undirected review" (strategy 4). These comparative activation claims are not grounded in cited evidence — they are plausible but proposed. The ordering is stated as fact rather than flagged as a proposed framework.
+  Recommendation: Add a framing sentence at the top of the section like "The following is a proposed ordering..." (the current sentence "The following strategies are ordered from most to least expertise required" asserts rather than proposes). Soften the comparative activation claims to "likely near-perfect" / "plausibly weaker...but likely better" or cite evidence for the ranking.
+
+- [Unbridged cross-domain evidence] "In human code review, McConnell's *Code Complete* found that perspective-assigned reviewers uncover more defects than undirected review — the same principle applies to LLMs, where the role assignment shapes which stored knowledge gets activated." The bridge ("the same principle applies to LLMs") is asserted but not argued. McConnell's finding is about human cognition under review conditions. The note needs to state *why* the mechanism transfers — what shared property of human reviewers and LLMs makes perspective assignment effective in both? The parenthetical foundation note establishes that LLMs and humans share a cue-based activation structure, but this note does not invoke that bridge.
+  Recommendation: Add a bridging clause that states the shared mechanism, e.g., "Because LLMs show the same cue-dependent activation pattern (see knowledge-storage note), perspective assignment shapes retrieval in a structurally similar way." Alternatively, weaken to analogy: "By analogy with human review, where McConnell found..."
+
+- [Source residue] The note's title and opening claim generality — "elicitation" and "question-generation systems" — is domain-neutral. But the body leans heavily on software engineering examples: "on-call engineer at 2AM," "1,000 concurrent users," "network-calling code, address thundering herd, connection exhaustion, timeout propagation," "100x scale," "two instances of this run simultaneously," "runs for a year." The non-software examples ("opposing counsel," "contract review, address jurisdiction conflicts, liability caps, termination triggers," "end user who will encounter this at scale") exist but are outnumbered. The framing is closer to "elicitation for code review" than the title promises.
+  Recommendation: This is borderline — the software examples are individually fine and sometimes framed as illustrative. But the cumulative effect narrows the perceived scope. Consider either (a) adding one more non-software example to the adversarial prompts section (strategy 4) to balance the body, or (b) accepting the software-heavy framing and adjusting the description/title to reflect the primary domain.
+
+INFO:
+- [Proportion mismatch] The core claim (title) is that elicitation requires *maintained* question-generation systems. The "Checklist lifecycle" section (which carries the "maintained" part of the claim) gets roughly 90 words across 5 bullet points. The "Strategies ordered by expertise required" section (which is about elicitation techniques, not maintenance) gets roughly 350 words. The maintenance argument — the thing that distinguishes this note from a simple strategies catalog — is underdeveloped relative to the strategies it depends on. The closing sentence ("Without it, checklists decay: they cover yesterday's failures while tomorrow's slip through") carries weight but arrives after a thin enumeration.
+  Recommendation: Consider whether the lifecycle section deserves more development — e.g., a concrete example of checklist decay, or expansion of what "distill updates" and "prune stale probes" look like in practice. Alternatively, if the strategies section is the real contribution, the title may overstate the maintenance claim.
+
+- [Anthropomorphic framing] "the model activates on its own" (in "Composing strategies" section) attributes self-directed initiative to the model. The note is generally careful about this (it uses "surfaces," "activated," "stored"), but "activates on its own" is a mild anthropomorphism. Similarly, "the model systematically misses" attributes systematic oversight rather than describing an output pattern.
+  Recommendation: Minor. Consider "the model activates without probing" and "the model systematically fails to surface" for precision, but this is not a significant problem.
+
+CLEAN:
+- [Pseudo-formalism] No formal notation or mathematical apparatus present. The note uses prose throughout, with numbered lists that serve organizational rather than formal-logical functions. Clean.
+- [Orphan references] All specific claims are either self-contained (framework is the note's own) or cited. The McConnell reference is attributed. The metric definitions in "Measurement" are self-documenting. No unattributed empirical claims found.
+- [Redundant restatement] Section openings advance the argument rather than restating prior conclusions. The opening paragraph of "Beyond known failure families" transitions cleanly from known to unknown unknowns. "Composing strategies" does not re-explain the individual strategies. Clean.
+
+Overall: 3 warnings, 2 info
+===

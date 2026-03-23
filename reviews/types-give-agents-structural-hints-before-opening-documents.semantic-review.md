@@ -1,0 +1,40 @@
+=== SEMANTIC REVIEW: types-give-agents-structural-hints-before-opening-documents.md ===
+
+Claims identified: 15
+
+1. "Agents are stateless -- they start fresh every session with no memory of what they've read before." (paragraph 1)
+2. "Context is finite and expensive." (paragraph 1)
+3. "Without types, an agent must either load everything (wasteful) or guess what's relevant (error-prone)." (paragraph 1) -- disjunctive scope claim
+4. "Types solve this by giving agents structural hints *before* opening a document." (paragraph 2) -- causal
+5. Three type examples: spec -> implement, structured-claim -> developed argument, index -> navigation hub (paragraph 2) -- enumeration
+6. "These hints enable informed routing decisions: the agent reads a type and description, then decides whether to load the full document." (paragraph 2) -- mechanism claim
+7. "description is the most important field -- it's a retrieval filter, not a summary." (paragraph 3) -- definition
+8. "The type tells the agent *what kind of thing* a document is; the description tells it *which instance* among documents of that kind is relevant." (paragraph 3) -- definitional distinction
+9. "Together they let an agent narrow from hundreds of files to the few it needs without opening any of them." (paragraph 3) -- causal claim about joint effect
+10. "The verifiability criterion is what makes this work: types must assert structural properties, not subject matter." (paragraph 4) -- dependency claim
+11. "'This is a design note' tells an agent nothing it can act on." (paragraph 4) -- claim about subject-matter types
+12. "'This has Evidence and Reasoning sections' tells the agent it can extract a citable argument." (paragraph 4) -- claim about structural types
+13. "The structural promise is what makes the routing decision informed rather than blind." (paragraph 4) -- dependency claim
+14. "These structural hints only work if the metadata exists reliably." (paragraph 5) -- dependency claim
+15. "descriptions don't appear spontaneously; the type system is what makes them exist." (paragraph 5) -- causal claim
+
+WARN:
+- [Completeness] The note claims "Without types, an agent must either load everything (wasteful) or guess what's relevant (error-prone)." This is a false dilemma. A third option exists and is prominent in the KB itself: agents can search file contents (e.g., grep descriptions or titles) without a type system. The note's own linked source (note base type, types/note.md) says "an agent that ignores the type field entirely and reads every document should still work -- just less efficiently." This concession from the verifiability note undermines the either/or framing. The actual claim is about efficiency, not about the only two alternatives.
+- [Completeness] The enumeration of type examples (claim 5) lists spec, structured-claim, and index. Boundary case: what about the `note` base type itself? The note base type is the most common type in the KB. According to the linked verifiability note, "`note` is the base type that makes no structural claim -- like `Any` in a gradually typed language." This means the most frequently encountered type gives an agent no structural hint at all -- it tells the agent "read it to find out what you can do with it." The note's argument that types enable routing decisions breaks down for the dominant type. The note never addresses how the routing mechanism works when most documents are `note`, which is precisely the case where description must do all the work alone.
+- [Grounding] The note claims "description is the most important field" and links to the note base type (types/note.md). The source does say "The most important field" in its description heading. However, the note frames this as "it's a retrieval filter, not a summary" and presents description as enabling type+description routing without opening documents. The source (types/note.md) says description "helps agents decide whether to load the full document" -- this aligns. But the note's claim 9 says "Together they let an agent narrow from hundreds of files to the few it needs without opening any of them." This "without opening any of them" is stronger than the source supports. Reading frontmatter (type + description) requires opening the file (or at minimum, reading its header). The claim seems to conflate "without reading the full document" with "without opening any of them." Unless there is an external metadata index that caches frontmatter, the agent must still open each file to read its frontmatter.
+
+INFO:
+- [Completeness] Boundary case: tags and directory structure. The note presents type + description as the routing mechanism, but in practice agents also route by directory path (e.g., `kb/notes/adr/` signals architecture decisions) and by tags (e.g., `tags: [type-system]` for filtering). These are parallel routing mechanisms that the note does not acknowledge. The note's argument is not wrong -- types and descriptions do aid routing -- but the framing as "the" solution to agent navigation omits other mechanisms that serve the same function.
+- [Completeness] Boundary case: what about very small knowledge bases (< 20 files)? The note argues types solve the problem of navigating "hundreds of files." For a small KB, an agent can feasibly load all file titles and descriptions without types playing a discriminating role. The argument's force depends on scale, which the note does not qualify.
+- [Internal consistency] The note says types give hints "before opening a document" (title and paragraph 2), but the hints (type and description) are stored in the document's own YAML frontmatter. An agent must open the file to read the frontmatter. The note seems to use "opening" to mean "reading the full body," but this is never clarified. The title claim "before opening documents" is potentially misleading without this distinction.
+- [Grounding] The note says "The verifiability criterion is what makes this work" and links to document-types-should-be-verifiable.md. That source develops the verifiability argument extensively and does support this claim. However, the source also introduces an important nuance the note omits: "The practical test: an agent that ignores the type field entirely and reads every document should still work -- just less efficiently. Types are an optimization for navigation, not a correctness requirement." The note's framing presents types as solving the navigation problem; the source frames them as an optimization. The difference in framing is worth noting -- the note is more emphatic than its source.
+
+PASS:
+- [Grounding] The claim that types assert structural properties, not subject matter (claim 10) aligns accurately with the linked verifiability note, which uses the same "design note" counter-example and the same "Evidence and Reasoning sections" positive example. The attribution is faithful.
+- [Grounding] The claim that the type system enforces metadata existence (claims 14-15) aligns with the linked enforcement note (type-system-enforces-metadata-that-navigation-depends-on.md), which says "descriptions exist because the note base type requires them" and develops the catalogue analogy. The dependency relationship is accurately represented.
+- [Grounding] The note's framing of the type/description division of labor (claim 8: type = what kind, description = which instance) is consistent with the note base type spec (types/note.md), which defines description as answering "why THIS document?" and type as identifying the document kind.
+- [Internal consistency] The note's five paragraphs follow a coherent logical chain: problem (statelessness + finite context) -> solution (types as hints) -> mechanism (type + description) -> enabling condition (verifiability) -> prerequisite (enforcement). No pairwise contradictions found between sections. Terms are used consistently throughout.
+- [Internal consistency] The linked "why-notes-have-types" overview note's Navigation section paraphrases this note's argument faithfully, confirming the note is internally consistent with how the KB represents it elsewhere.
+
+Overall: 3 warnings, 4 info
+===

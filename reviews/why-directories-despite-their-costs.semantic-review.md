@@ -1,0 +1,34 @@
+=== SEMANTIC REVIEW: why-directories-despite-their-costs.md ===
+
+Claims identified: 10
+
+1. Directories preserve the human-navigability guarantee at scale (intro)
+2. Directories extend navigability by one-two orders of magnitude (intro)
+3. A notes/ directory with 30 files is browsable; with 300, it isn't (What directories give us)
+4. Directories provide three benefits: scale without tooling, local conventions per subsystem, different metabolic rates (What directories give us)
+5. Types and directories are orthogonal (section heading)
+6. If types depended on directories, you'd need to redefine types whenever someone creates a new subdirectory (Types section)
+7. The document classification system should work across any directory structure (Types section)
+8. Each new top-level directory imposes a registration tax across 5 hard costs and 2 soft costs (Operational costs)
+9. The registration tax is real but manageable at the current scale (~6 top-level directories) (Current stance)
+10. Subdirectories within existing collections are cheap; new collections are expensive (Current stance)
+
+WARN:
+- [Completeness] The three-benefit enumeration (scale without tooling, local conventions, different metabolic rates) omits a fourth benefit the note itself implicitly relies on: **semantic grouping as a browsing aid**. The note argues directories keep each directory "in the browsable range," but browsability is not only about file count -- it also depends on whether the files in a directory are related enough that scanning their names gives you orientation. A directory of 30 unrelated files is harder to browse than 30 topically coherent files. The note treats directory benefits as purely quantitative (more files per directory = less browsable) without acknowledging the qualitative axis (grouping related files aids comprehension even at small scale). This is arguably a fourth benefit distinct from "scale without tooling."
+- [Completeness] The operational-costs enumeration lists 5 hard costs and 2 soft costs but omits a cost the note's own linked sources surface: **cognitive load on humans choosing where to put things**. The note mentions "agent routing decisions" (cost #7) but treats the human equivalent as fully covered by the CLAUDE.md routing table (cost #1). In practice, human contributors also face routing ambiguity (e.g., "Is this a source analysis or a note?"), and a routing table row doesn't eliminate that ambiguity -- it just documents the heuristic. This is a distinct soft cost from agent routing errors.
+
+INFO:
+- [Completeness] The "one or two orders of magnitude" claim (intro) is presented without grounding. The note gives one data point -- 30 files is browsable, 300 isn't -- which suggests roughly one order of magnitude, not two. Two orders of magnitude would mean directories extend from ~30 to ~3000 navigable files, but the note itself says "at thousands of notes you'd need deeper nesting or actual search infrastructure." The claim of "two" orders of magnitude appears unsupported by the note's own reasoning. The "one" order is defensible.
+- [Completeness] The boundary case of **deeply nested subdirectories** is not clearly addressed by the enumeration of benefits or costs. The note says "subdirectories within existing collections are cheap," but this assumes shallow nesting (one level). At two or three levels of nesting (e.g., `notes/related-systems/subtype/`), the cross-directory linking cost (relative path depth) compounds, and the "cheap" claim weakens. The note doesn't articulate where subdirectory depth stops being cheap.
+- [Grounding] The note attributes "small, self-contained subsystems with their own conventions" to the workshop-layer note. The workshop-layer note does discuss local conventions per subsystem and even back-links to this note, so the attribution is directionally accurate. However, the workshop-layer note frames "local conventions per subsystem" in the context of temporal/workshop documents (tasks, decision threads, experiments), whereas this note uses the phrase to also cover library-layer directories like `sources/` and `adr/`. The workshop note's concept is narrower than how it is cited here -- though the extension is reasonable, it is an inference rather than a direct attribution.
+- [Internal consistency] The note says the registration tax is "manageable at the current scale (~6 top-level directories)" in the Current Stance section. The Operational Costs section gives specific examples: CLAUDE.md routing table, qmd-collections.yml (11 entries), skills hardcoding three directories, WRITING.md, generate_notes_index.py. The "11 entries" in qmd-collections.yml does not match "~6 top-level directories" -- the 11 entries likely include subdirectories and non-KB collections, but this discrepancy is not explained. A reader could wonder whether there are 6 or 11 "directories" being managed.
+
+PASS:
+- [Grounding] The link to files-not-database.md is accurate. The note says "the foundational bet that directories extend," and files-not-database.md does establish that files beat a database for agent-operated KBs, with "too many files per directory" explicitly listed as a scaling problem that directories solve (point #2 in "What actually breaks at scale"). The dependency relationship is faithfully represented.
+- [Grounding] The link to document-classification.md is accurate. The note claims the type system "should work across any directory structure," and document-classification.md confirms this: types are structural tests on individual documents via frontmatter, with no directory dependency. The orthogonality claim is well-grounded.
+- [Grounding] The link to instruction-specificity-should-match-loading-frequency.md is accurate. That note discusses how routing decisions are part of the context loading problem -- each routing rule competes for attention in always-loaded context. The relationship semantic ("routing decisions are part of the context loading problem") faithfully represents the source.
+- [Internal consistency] The note's argument is internally coherent: the intro frames directories as extending the files-not-database bet, the body enumerates benefits and costs, and the conclusion weighs them against each other while acknowledging the scaling limit. No section contradicts another. The "types are orthogonal" section is consistent with the rest -- it clarifies a potential confusion rather than introducing a competing claim.
+- [Internal consistency] The description field ("Directories buy one-two orders of magnitude of human-navigable scale over flat files, and enable local conventions per subsystem -- but each new directory taxes routing, search config, skills, and cross-directory linking") faithfully represents the body. It captures the benefit-cost structure without eliding the tensions.
+
+Overall: 2 warnings, 4 info
+===

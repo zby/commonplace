@@ -1,0 +1,23 @@
+=== PROSE REVIEW: instructions-are-typed-callables.md ===
+
+Checks applied: 8
+
+WARN:
+- [Confidence miscalibration] The note's frontmatter marks it as `status: speculative`, which is appropriate. However, the body prose does not consistently reflect this status. The opening paragraph asserts structural claims as established: "Each type step trades generality for compound gains in reliability, speed, and cost: the structure guarantees the parts are there, making operations reliable without reading the whole document first." The word "guarantees" is strong for a speculative note — types in this KB are conventions, not compiler-enforced contracts. Similarly, "These are the document equivalent of callables: the content is a procedure, and the valid operation is execution" reads as definitional fact rather than a proposed framing. The speculative status is only visible in the frontmatter, never surfaced in the prose itself.
+  Recommendation: Add a brief framing signal in the opening or at the section boundary — e.g., "A useful way to model these is as typed callables" instead of flat assertion. Consider softening "guarantees" to "helps ensure" or "makes it likely that."
+
+- [Proportion mismatch] The core claim is that instructions are typed callables with document type signatures (the title). The section that carries this claim — "Skills have type signatures" — is well-developed (~180 words including the table). However, the opening paragraph (~120 words) spends significant space re-explaining the document-types-as-affordances idea from a linked note, establishing context that the reader could get from the link. The actual novel contribution — the move from "types mark affordances on data" to "instructions are callables that should declare type signatures" — gets only the second paragraph (~90 words) before handing off to the section. The setup outweighs the core move.
+  Recommendation: Trim the opening re-explanation of the affordances idea. A single sentence with the link would suffice as context. Use the recovered space to develop the transition from data types to function types, which is the note's actual contribution.
+
+INFO:
+- [Source residue] The note uses KB-specific vocabulary throughout: `/ingest`, `/connect`, `/validate`, `/convert`, `source-review`, `structured-claim`, `index`, `note`. These are not residue from an external domain — they are the note's intended domain. However, the programming-language analogy (callables, type signatures, parameter types, union types, function types) is imported from software engineering without explicit framing as analogy. The title itself uses "typed callables" as if this is a literal classification rather than a metaphor drawn from programming. Given that the note's audience likely has software engineering context, this is mild — but the analogy is never flagged as an analogy, which could mislead a reader into thinking there is actual type-checking machinery.
+
+CLEAN:
+- [Pseudo-formalism] The signature table (`source -> source-review`, etc.) uses arrow notation that resembles type theory. However, this notation does real work: it concisely communicates input-output relationships that would be wordier in prose, and a reader could use it to determine whether a skill applies to a given document. The table is a compact reference, not decorative formalism.
+- [Orphan references] No specific figures, percentages, named studies, or empirical claims appear. The note is entirely conceptual and framework-building. All claims are structural rather than empirical.
+- [Unbridged cross-domain evidence] No empirical findings from external domains are cited. The programming-language analogy (typed callables, function signatures) is a framing device rather than evidence, so no bridge is needed in the evidence sense. The note does not claim "because programming languages benefit from type signatures, KB skills will too" — it proposes the structure directly.
+- [Redundant restatement] The "Skills have type signatures" section opens with "If types mark valid operations on documents, then instructions that operate on documents should declare which types they accept." This is a logical extension of the opening, not a restatement — it moves from "types mark affordances" to the prescriptive "instructions should declare types." The conditional "If...then" structure signals this as a derivation step. No redundancy detected.
+- [Anthropomorphic framing] "An agent picks it up and executes it" uses "agent" in the technical sense (an LLM-based executor), not anthropomorphically. No verbs attributing mental states to models appear. The note avoids "understands," "knows," "believes" throughout.
+
+Overall: 2 warnings, 1 info
+===

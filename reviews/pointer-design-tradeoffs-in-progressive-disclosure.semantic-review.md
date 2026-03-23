@@ -1,0 +1,45 @@
+=== SEMANTIC REVIEW: pointer-design-tradeoffs-in-progressive-disclosure.md ===
+
+Claims identified: 14
+
+1. [Context-specificity § intro] "A pointer is any lower-resolution representation that helps decide whether to load a knowledge item"
+2. [Context-specificity § intro] Pointers vary on three axes: context-specificity, cost, and reliability
+3. [Context-specificity § body] Three pointer types: fixed (write-time), query-time, crafted (authoring-time) — forming a complete taxonomy
+4. [Context-specificity § fixed] Fixed descriptions are "enough for global operations (search, comparative reading, index building) where there's no surrounding argument to leverage"
+5. [Context-specificity § crafted] Crafted link phrases are "the densest pointer type"
+6. [Reliability §] "If context-specificity were the only axis, the answer would be simple: compute the most specific pointer you can afford. As inference gets cheaper, query-time computation replaces fixed pointers."
+7. [Reliability §] Agent statelessness complicates the specificity-only calculus via the degradation cliff
+8. [Reliability §] "Fixed pointers are reliable. They're there every time, same content, no query-time dependency."
+9. [Reliability §] The three axes "pull in different directions" — no single type wins all three
+10. [Comparison table] OpenViking's L0 abstract is ~100 tokens; Commonplace's description is ~50 tokens; there is no Commonplace equivalent to OpenViking's L1 intermediate overview (~2000 tokens)
+11. [Comparison §] "OpenViking does have relation annotations via `.relations.json` reason strings, but its main retrieval path still centers fixed pointers (`uri` + `abstract`) rather than per-link argumentative characterizations"
+12. [Comparison §] "Neither system uses query-time computation for navigation pointers yet"
+13. [Design implications table] Crafted pointers do not scale to global operations
+14. [Design implications §] "The practical path: invest in crafted link phrases for local navigation (the common agent case), use `/validate` to pressure notes toward reliable fixed descriptions for global operations, and watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement."
+
+WARN:
+- [Completeness] The three-axis framework (context-specificity, cost, reliability) omits a plausible fourth axis: **staleness / maintenance cost**. The note mentions staleness only once, in the Design Implications table ("Stale if source changes" as a failure mode of fixed pointers), but does not treat it as a design axis. Crafted link phrases can become stale too — the surrounding argument may evolve while the characterization stays frozen — and query-time pointers are immune to staleness by construction. Staleness is partially captured by "reliability" (a stale pointer is unreliable), but the note defines reliability as *presence and determinism*, not *accuracy over time*. A pointer can be reliably present yet stale. This is a boundary case that sits between the enumerated axes rather than mapping cleanly to one.
+
+- [Completeness] The taxonomy of three pointer types (fixed, query-time, crafted) does not cleanly accommodate **hybrid pointers** — specifically, LLM-generated descriptions produced at write time but regenerated periodically or on change. OpenViking's L0 abstracts are auto-generated at write time (making them "fixed" in the note's sense), but they are re-generated when content changes (making them partially "query-time" in the sense that LLM inference is involved). The note classifies OpenViking's L0 as fixed, but their auto-regeneration property means they have different staleness characteristics than a human-written description. This is an INFO-level gap that becomes WARN because the OpenViking comparison is central to the note and this distinction matters for the "borrowable ideas" discussion in the OpenViking note itself.
+
+INFO:
+- [Completeness] The claim that crafted pointers "do not scale to global operations" (Design Implications table) is stated without qualification. A global operation like index building could in principle scan all link phrases mentioning a target note and synthesize them — each crafted pointer contributes a facet. The note's framing assumes crafted pointers are consumed one-at-a-time at their link site, but a collection of crafted pointers about the same target is itself a rich signal for global operations. This is a boundary case: the claim holds for the current system (no tooling aggregates link phrases), but is not inherent to the pointer type.
+
+- [Completeness] The simplest possible instance of a pointer — a bare filename or URL with no additional context — is mentioned in the opening paragraph ("even a title") but is absent from the three-type taxonomy and the comparison table. A bare filename is not fixed (no distillation was performed), not query-time (no computation), and not crafted (no authoring judgment). It is a degenerate pointer that predates all three types. The note could acknowledge this as the zero-cost baseline that all three types improve upon.
+
+- [Grounding] The note claims agent statelessness "complicates this" (the pointer design space) and links to the statelessness note for both "the reliability axis" and "the degradation cliff." The statelessness note does establish the degradation cliff and the permanence of routing architecture, but it discusses routing infrastructure generally — it does not discuss pointer types or pointer reliability specifically. The inference from "routing is permanent architecture" to "fixed pointers are the reliable tier in a pointer taxonomy" is reasonable but is the reviewed note's own move, not something the statelessness note directly states. The link attribution ("grounds: the reliability axis") slightly overstates the directness of the grounding.
+
+- [Grounding] The note links to the context-efficiency note with "grounds: the cost spectrum is a context efficiency trade-off." The context-efficiency note discusses context scarcity broadly and mentions progressive disclosure and navigation design as architectural responses, but does not discuss a pointer cost spectrum or compare pointer types by cost. The link is thematically accurate (pointers exist because of context scarcity) but the specific "cost spectrum" framing is the reviewed note's contribution, not something grounded in the linked source.
+
+- [Internal consistency] The note defines crafted pointers as having "Highest — argument-specific" specificity in the summary table, but the opening of the crafted section says they achieve this by leveraging "the surrounding argument the agent already has loaded." This means the specificity of a crafted pointer depends on the quality of the surrounding prose, not just the link phrase itself. The table's unqualified "Highest" rating does not capture the conditional nature of this specificity — a crafted link phrase in poor surrounding prose may be less specific than a good query-time summary. This is a minor tension rather than a contradiction.
+
+PASS:
+- [Internal consistency] The three-type taxonomy is used consistently across all sections — the opening framework, the reliability discussion, the comparison table, and the design implications table all use the same three types with consistent characterizations. No definition drift detected.
+- [Internal consistency] The summary table's characterizations (specificity, cost, reliability per type) are consistent with the prose in each section. The table is a faithful compression of the body.
+- [Grounding] The OpenViking comparison aligns well with the OpenViking related-system note. The reviewed note's claims about L0/L1/L2 tiers, `.relations.json` reason strings, and the emphasis on fixed pointers in OpenViking's retrieval path all check out against the source note. The characterization of OpenViking's relation annotations as "weaker, relation-level" is supported by the OpenViking note's description of reason strings as "user-provided annotations, not the elaborative encoding."
+- [Grounding] The link to "agents navigate by deciding what to read next" with "grounds: the navigation decision is what pointers optimize for" is accurate — that note explicitly frames navigation as deciding what to read, with pointer context as the key variable.
+- [Grounding] The link to the distillation note with "exemplifies: each pointer type is a distillation at different cost/quality/reliability trade-offs" is sound — the distillation note defines distillation as compressing knowledge for a consumer within bounded context, which is precisely what fixed and crafted pointers do.
+- [Internal consistency] The "practical path" recommendation in the final section follows logically from the three-axis framework: invest in the highest-specificity type (crafted) for the common case, maintain the most reliable type (fixed) for global operations, monitor the middle type (query-time) as costs change. No logical gap between the analysis and the recommendation.
+
+Overall: 2 warnings, 4 info
+===

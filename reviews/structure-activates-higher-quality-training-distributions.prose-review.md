@@ -1,0 +1,25 @@
+=== PROSE REVIEW: structure-activates-higher-quality-training-distributions.md ===
+
+Checks applied: 8
+
+WARN:
+- [Confidence miscalibration] The title and opening two paragraphs assert the distribution-selection mechanism as established fact — "The structure acts as a distribution selector," "Structure activates higher-quality training distributions" — but the status note explicitly states "The distribution-selection mechanism is partially supported but not confirmed" and the closing paragraph says the evidence does not support "the stronger thesis that it works specifically via activating higher-quality training subsets." The title claims exactly what the closing disclaims. Additionally, the Lampinen paragraph states "This is the distribution-selection effect observed directly" while the status note says the mechanism is unconfirmed — a within-note contradiction in confidence level.
+  Recommendation: Either hedge the opening framing to match the closing epistemic status ("Structure may activate higher-quality training distributions" or "Structure as distribution selector: a partially supported thesis"), or strengthen the closing if the author believes the evidence warrants the assertive framing. The Lampinen sentence should be weakened to something like "This is consistent with the distribution-selection hypothesis" to match the stated seedling status.
+
+- [Unbridged cross-domain evidence] The Lampinen et al. finding — that CoT prompting reduces content bias on reasoning tasks — is interpreted as "the distribution-selection effect observed directly." But CoT's benefit could be explained by other mechanisms (e.g., step decomposition reducing compounding errors, or format-induced slower reasoning). The note bridges from "structured prompting helps reasoning" to "this is distribution selection" without justifying why distribution selection, specifically, is the operative mechanism rather than any other explanation for CoT's benefit.
+  Recommendation: Weaken the interpretive claim. Instead of "This is the distribution-selection effect observed directly," frame it as evidence consistent with the hypothesis: "This pattern is consistent with the distribution-selection hypothesis: structured prompting shifts generation away from content-biased defaults." The current phrasing claims observational confirmation that the evidence doesn't provide.
+
+INFO:
+- [Unbridged cross-domain evidence] The epiplexity framework (Finzi et al.) is about extractable information for "computationally bounded learners" in general. The note claims "The distribution-selection metaphor is what epiplexity formalises" and that structured templates work "by the same mechanism." The bridge assumes that LLM autoregressive generation maps cleanly onto epiplexity's model of bounded learning — this may be defensible but the mapping is asserted rather than argued. A reader unfamiliar with epiplexity cannot evaluate whether the formalism actually covers this case.
+  Recommendation: Add one sentence stating what property of autoregressive LLM generation makes epiplexity applicable — e.g., that the model's per-token computation is bounded and context-dependent, matching epiplexity's bounded-learner framing.
+
+CLEAN:
+- [Source residue] The note's claimed generality level is LLM generation and structured prompting. Domain-specific references (code verification, Toulmin, scientific papers, legal analyses) are all framed as examples or cited evidence, not leaked source vocabulary. The KB-specific reference to `structured-claim` type is used as an illustrative case from experience.
+- [Pseudo-formalism] The note contains no equations, variables, or formal notation. The epiplexity discussion references a formal framework without reproducing its apparatus. All argumentation is in prose.
+- [Proportion mismatch] The core mechanism (opening two paragraphs, ~150 words) is proportionate to the evidence landscape (status note and evidence paragraphs, ~250 words). For a seedling note documenting an unconfirmed thesis, heavier evidence discussion relative to mechanism statement is appropriate.
+- [Orphan references] All specific claims are sourced: "5-12pp accuracy gains" and "84.8% vs 85.3%" to Ugare & Chandra (2026); content effects and scaling findings to Lampinen et al. (2024); formal grounding to Finzi et al. (2026). No unsupported empirical claims detected.
+- [Redundant restatement] The note has no formal section breaks, but each paragraph introduces new material (mechanism, independence from other arguments, formal grounding, evidence status, additional evidence, caveats). No paragraph restates a prior paragraph's conclusion as setup.
+- [Anthropomorphic framing] Language is technically precise throughout. "The model's bounded computation can extract more structure" uses "extract" in a standard computational sense. "LLMs exhibit human-like content effects" reports the cited paper's finding accurately. No verbs implying agency or mental states beyond what the note intends to claim.
+
+Overall: 2 warnings, 1 info
+===
