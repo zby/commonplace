@@ -8,75 +8,78 @@ status: seedling
 
 # Legal drafting solves the same problem as context engineering
 
-Context engineering for LLMs is writing natural language instructions that will be interpreted by a processor exercising judgment. Law is the same problem with centuries of accumulated methodology. The parallel is not metaphorical — both domains face [semantic underspecification](./agentic-systems-interpret-underspecified-instructions.md) as a structural property of natural language, and both have developed techniques to manage it.
+Context engineering for LLMs is writing natural language instructions interpreted by a processor exercising judgment. Law has been doing this for centuries. The parallel is structural, not just metaphorical — both domains face [semantic underspecification](./agentic-systems-interpret-underspecified-instructions.md) as a property of natural language, and both have developed techniques to manage it.
+
+The parallel has limits. Judges have decades of domain training, access to external context (legislative history, prior rulings), and operate under institutional constraints (stare decisis, appellate review). LLMs have none of these. The shared structure is: a spec in a language with irreducible ambiguity, interpreted by a processor that selects one reading from the space the spec admits. The interpreters differ significantly, but the spec-writing problem is the same.
 
 ## The structural parallel
 
-A statute is a natural language specification. A judge is a processor that interprets it. The specification admits multiple valid readings. The processor resolves the ambiguity through judgment, not compilation. This is the exact structure of the [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md): a spec in a language with underspecified semantics, projected onto a concrete outcome by a processor that selects one interpretation from the space the spec admits.
+A statute is a natural language specification that a judge must interpret, resolving its ambiguity through judgment rather than compilation. This is precisely the structure the [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) describes: a spec that admits multiple valid interpretations, resolved by a processor exercising judgment.
 
-Both domains face the same impossibility: you cannot write a natural language specification that eliminates all ambiguity. Legal drafters have known this for centuries. Context engineers are learning it now.
+No natural language specification eliminates all ambiguity. Legal drafters have known this for centuries; context engineers are learning it now.
 
-**Spec-to-program projection is judicial application.** A judge reading a statute and applying it to a specific case IS projecting an underspecified spec onto a concrete outcome. The "space of valid interpretations" is what lawyers call "the range of reasonable readings." Two judges can reach different conclusions from the same statute and the same facts — just as two LLM runs can produce different outputs from the same prompt.
+**Judicial application is spec-to-program projection.** A judge reading a statute and applying it to a specific case is resolving an underspecified spec into a concrete outcome. What lawyers call "the range of reasonable readings" is what the underspecified instructions framing calls the space of valid interpretations. Two judges can reach different conclusions from the same statute and the same facts — just as two LLM runs can produce different outputs from the same prompt.
+
+In common law systems, judicial application is also constraining: each ruling generates precedent that narrows future interpretation, fusing what the KB vocabulary separates (projection and constraining). Civil law systems work differently — judges apply comprehensive codes without their rulings binding future courts. The spec-to-program projection is the same, but the constraining feedback loop is absent. This split is itself informative: it shows that projection and constraining are genuinely separable, not inevitably fused. Common law fuses them; civil law keeps them apart.
 
 ## Techniques that transfer
 
-Legal drafting has developed specific techniques to narrow the interpretation space — all of which have direct analogues in prompt and knowledge system design:
+Legal drafting has developed specific techniques to narrow the interpretation space. Most have analogues in prompt and knowledge system design, though the mappings vary in tightness:
 
-| Legal technique | What it does | Context engineering analogue |
-|---|---|---|
-| **Defined terms** | Pin a word to one meaning within the document | Glossaries, type definitions, naming conventions |
-| **Structural conventions** | Required sections in a predictable order | Document type templates (spec, ADR, structured-claim) |
-| **Enumeration** | Exhaustive lists instead of open-ended prose | Structured output schemas, enum fields in frontmatter |
-| **Canons of interpretation** | Rules for resolving ambiguity ("specific governs general") | Skill precedence rules, CLAUDE.md routing tables |
-| **Precedent** | Past rulings narrow future interpretation | Constrained conventions, few-shot examples |
-| **Codification** | Settled case law encoded in statute | Constraining — committing an interpretation to a more authoritative text (still natural language, still interpreted) |
+| Legal technique | What it does | Context engineering analogue | Mapping tightness |
+|---|---|---|---|
+| **Defined terms** | Pin a word to one meaning within the document | Glossaries, type definitions, naming conventions | Tight — same mechanism |
+| **Structural conventions** | Required sections in a predictable order | Document type templates (spec, ADR, structured-claim) | Tight — same mechanism |
+| **Enumeration** | Exhaustive lists instead of open-ended prose | Structured output schemas, enum fields in frontmatter | Tight — same mechanism |
+| **Canons of interpretation** | Rules for resolving ambiguity ("specific governs general") | Skill precedence rules, CLAUDE.md routing tables | Moderate — both are meta-rules, but legal canons are institutionally enforced |
+| **Precedent** | Past rulings narrow future interpretation | Conventions, few-shot examples | Loose — precedent is binding and accumulative; conventions are advisory |
+| **Statute codification** | Settled case law encoded in authoritative text | Promoting a convention to a template or routing rule | Moderate — both commit an interpretation, but statutes carry legal authority |
+
+Two major legal techniques are absent from this table: **boilerplate** (pre-drafted reusable language that eliminates negotiation variance — analogous to skill libraries or reusable prompt components) and **provisos/exceptions** (explicit carve-outs from general rules — analogous to conditional overrides in routing tables). Both deserve exploration.
 
 ## Law is rich in constraining but largely lacks codification
 
-**Constraining is precedent.** Each court ruling that interprets a statute narrows the space of valid interpretations for future cases. A line of consistent rulings is constraining: the same underspecified text, repeatedly interpreted, converging on one reading. The interpretation hasn't changed medium — it's still natural language (judicial opinions) — but the space has narrowed.
+**Constraining is precedent (in common law).** Each court ruling that interprets a statute narrows the space of valid interpretations for future cases. A line of consistent rulings is constraining: the same underspecified text, repeatedly interpreted, converging on one reading. Civil law systems constrain differently — through comprehensive codes drafted to minimize interpretation rather than through accumulated rulings.
 
-**Codification is stronger constraining, not codification.** When case law constrains enough, legislatures encode the settled interpretation in statute. But statute is still natural language, still interpreted by judges — the medium hasn't changed. Codification narrows the interpretation space further (statute is more authoritative than case law, harder to overturn) but doesn't eliminate it. This is the prompt engineering equivalent of promoting a convention to a structured template: more committed, more constrained, but still underspecified.
+**Statute codification is stronger constraining, not KB-codification.** When case law constrains enough, legislatures encode the settled interpretation in statute. But statute is still natural language, still interpreted by judges — the medium hasn't changed. In the KB's vocabulary, [codification](./codification.md) requires crossing a medium boundary (natural language to executable code, changing the consumer from a judgment-exercising interpreter to a deterministic runtime). Statute-writing doesn't cross that boundary. It narrows the interpretation space further (statute is more authoritative than case law) but doesn't eliminate it.
 
 **The constrain/relax cycle is overturning precedent.** New facts, social changes, or edge cases reveal that the settled interpretation is wrong. Courts overturn precedent (relax), then a new line of cases constrains a different reading. The same cycle operates in prompt engineering — a constrained convention encounters new requirements and gets relaxed back to open-ended guidance.
 
-**Distillation is legal commentary.** Treatises and restatements extract operational principles from masses of case law — staying in the same medium (natural language) but changing rhetorical mode from judicial reasoning to systematic exposition. This parallels how [distillation](./distillation.md) extracts procedures from discursive reasoning without changing medium.
+**Distillation is legal commentary.** Treatises and restatements extract operational principles from masses of case law — staying in the same medium but changing rhetorical mode from judicial reasoning to systematic exposition. This parallels how [distillation](./distillation.md) extracts procedures from discursive reasoning without changing medium.
 
-**Codification is rare in law.** True codification — where interpretation moves from judicial judgment to deterministic code — would be algorithmic sentencing, automated compliance checks, or smart contracts. These are marginal in legal practice. The rarity is itself informative: law shows that a domain can develop sophisticated constraining methodology while doing almost no codification. This suggests that constraining techniques deserve more attention in prompt engineering than they currently receive — the field may be over-focused on the codification end of the spectrum.
+**True codification is rare in law.** Algorithmic sentencing, automated compliance checks, smart contracts — these cross the medium boundary. They are marginal in legal practice. The rarity is itself informative: law shows that a domain can develop sophisticated constraining methodology while doing almost no codification, suggesting that constraining techniques deserve more attention in prompt engineering than they currently receive.
 
 ## Why this matters for knowledge system design
 
-[Programming practices apply to prompting](./programming-practices-apply-to-prompting.md) because claws are a kind of software system. But legal drafting may be an equally strong source discipline, because law operates in natural language — the actual medium of prompts and knowledge bases. Programming analogies require a translation step (code is precise, prompts are underspecified). Legal analogies don't — law has always worked in the underspecified medium and has developed techniques native to it.
+[Programming practices apply to prompting](./programming-practices-apply-to-prompting.md) because LLM-based systems are a kind of software system. Legal drafting is a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity. Programming analogies require translating from a precise medium to an underspecified one; legal analogies require translating from one kind of interpreter (institutionally constrained judges with external memory) to another (stateless LLMs with bounded context). Neither transfer is free, but they address different gaps.
 
-This doesn't replace the programming lens — typing, testing, and compilation remain powerful. But it adds a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity.
+This doesn't replace the programming lens — typing, testing, and compilation remain powerful. But it adds a complementary perspective native to the underspecified medium.
 
 ## ABC as a case study
 
-Agent Behavioral Contracts ([ABC](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md)) validates this note's thesis through an independent route. The paper extends Design-by-Contract (a programming practice) to autonomous agents, but its entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary. The framework specifies behavioral requirements that constrain an interpreter exercising judgment, which is the exact structure described above.
+Agent Behavioral Contracts ([ABC](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md)) provides independent support for this note's thesis. The paper extends Design-by-Contract (a programming practice) to autonomous agents, but its entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary. The convergence could reflect shared problem structure (as this note argues) or simply shared metaphorical vocabulary; the paper doesn't cite law as a source discipline, so the connection is circumstantial.
 
-ABC's hard/soft constraint hierarchy answers the open question below about interpretation hierarchies: hard constraints (zero-tolerance invariants, deterministic rejection) take absolute precedence over soft constraints (which permit transient violations if recovered within k steps). This mirrors the legal hierarchy where constitutional provisions override statutes, which override regulations. The paper formalizes precedence rather than leaving it to interpretive convention.
-
-The paper routes through programming (Meyer's Design-by-Contract) rather than borrowing from law directly — which itself illustrates the note's claim that legal analogies deserve more attention. ABC reinvents legal enforcement patterns (compliance thresholds, violation recovery, graduated sanctions) without citing law as a source discipline.
+ABC's hard/soft constraint hierarchy answers the open question below about interpretation hierarchies: hard constraints (zero-tolerance invariants, deterministic rejection) take absolute precedence over soft constraints (which permit transient violations if recovered within k steps). This mirrors the legal hierarchy where constitutional provisions override statutes, which override regulations.
 
 ## Open questions
 
 - Which specific legal drafting techniques haven't been applied to prompt engineering yet? Contract law's "reasonable person" standard might inform how we think about the LLM-as-interpreter.
-- Does the common law / civil law distinction map to anything? Common law (precedent-heavy, bottom-up constraining) vs civil law (code-heavy, top-down specification) might correspond to different prompt engineering styles.
+- Does the common law / civil law distinction map to prompt engineering styles? Common law (bottom-up constraining through precedent) vs civil law (top-down constraining through comprehensive codes) — the body text now notes the split but the prompt engineering mapping remains open.
 - ~~Legal interpretation has explicit hierarchies (constitution > statute > regulation > case law). Is there an analogue for prompt systems — which instructions take precedence when they conflict?~~ Partially answered by ABC's hard/soft constraint hierarchy — see above.
 
 ---
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses; both face the same structural impossibility
-- [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language rather than precise formal languages
-- [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — extends: law as another source discipline alongside computer science, with potentially equal transfer strength because it operates in the same medium
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
+- [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
+- [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — extends: law as another source discipline alongside computer science
 - [constraining](./constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings
-- [codification](./codification.md) — contrast: codification is NOT codification — statute is still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance
+- [codification](./codification.md) — contrast: statute-writing is NOT KB-codification — still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance
 - [distillation](./distillation.md) — mapped: legal commentary and restatements are distillation — extracting principles from case law without changing medium
-- [constraining](./constraining.md) and [distillation](./distillation.md) — validated: both mechanisms map to legal analogues, but unevenly — law is rich in constraining, has distillation in commentary, and largely lacks codification
-- [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: the five empirically observed writing styles (prescriptive, prohibitive, conditional, explanatory, descriptive) address how instructions are framed; legal techniques address what goes inside them — and the common law/civil law question maps partially to the descriptive–prescriptive spectrum
+- [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: legal techniques address what goes inside instructions; writing styles address how instructions are framed
 
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — validates: ABC reinvents legal enforcement patterns (contracts, compliance, violation, recovery) via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question
+- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — validates: ABC reinvents legal enforcement patterns via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question
 
 Source:
 - Prompted by a social media post observing that context engineering is close to law
