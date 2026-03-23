@@ -10,7 +10,9 @@ Run the [semantic review](./semantic-review.md) across all notes in `kb/notes/`.
 
 ### 1. Inventory
 
-Run `uv run scripts/list_notes.py` to get the list of notes to review. The script finds all frontmatter notes in `kb/notes/`, excluding indexes and subdirectories.
+Run `uv run scripts/list_notes.py semantic-review` to get the list of notes to review. The script compares each top-level note in `kb/notes/` against `reviews/{note-stem}.semantic-review.md` and returns only notes whose review is missing or older than the note.
+
+This is intentionally make-like and timestamp-based. It reduces needless re-review, but it still treats trivial edits as changes because it compares file mtimes rather than semantic diffs.
 
 ### 2. Delegate
 

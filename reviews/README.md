@@ -28,13 +28,21 @@ Normalized data for analysis. Prefixed by review type when run per-type, unprefi
 ## Running
 
 ```bash
-# Inventory notes
-uv run scripts/list_notes.py
+# Notes needing prose review
+uv run scripts/list_notes.py prose-review
+
+# Notes needing semantic review
+uv run scripts/list_notes.py semantic-review
+
+# Full inventory, ignoring review timestamps
+uv run scripts/list_notes.py --all
 
 # Regenerate summaries and CSVs from existing review files
 uv run scripts/summarize_reviews.py              # all types
 uv run scripts/summarize_reviews.py prose-review  # single type
 ```
+
+The selector is timestamp-based: a note is listed when its review file is missing or older than the note. This behaves like a coarse `make` dependency check, so link-only or other trivial note edits still count as changes.
 
 Full sweep instructions (including sub-agent delegation): `kb/instructions/prose-review-sweep.md`, `kb/instructions/semantic-review-sweep.md`
 
