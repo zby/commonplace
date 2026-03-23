@@ -1,0 +1,111 @@
+{
+  "source": "https://x.com/koylanai/status/2035982137539559616",
+  "captured": "2026-03-23T08:06:15.726975+00:00",
+  "type": "x-post",
+  "status_id": "2035982137539559616",
+  "conversation_id": "2035982137539559616",
+  "target_post": {
+    "entities": {
+      "annotations": [
+        {
+          "start": 126,
+          "end": 129,
+          "probability": 0.6713,
+          "type": "Person",
+          "normalized_text": "Hume"
+        }
+      ],
+      "urls": [
+        {
+          "start": 274,
+          "end": 297,
+          "url": "https://t.co/KyORyrjKh4",
+          "expanded_url": "https://x.com/koylanai/status/2035982137539559616/photo/1",
+          "display_url": "pic.x.com/KyORyrjKh4",
+          "media_key": "3_2035982037816107008"
+        },
+        {
+          "start": 298,
+          "end": 321,
+          "url": "https://t.co/P1BgRW159w",
+          "expanded_url": "https://twitter.com/askalphaxiv/status/2035614942812950906",
+          "display_url": "x.com/askalphaxiv/st\u2026"
+        }
+      ]
+    },
+    "id": "2035982137539559616",
+    "referenced_tweets": [
+      {
+        "type": "quoted",
+        "id": "2035614942812950906"
+      }
+    ],
+    "edit_history_tweet_ids": [
+      "2035982137539559616"
+    ],
+    "text": "Even if you set aside whether citations are the right proxy for scientific taste and there are real reasons to question that (Hume's \"joint verdict of qualified judges\" breaks down when the signal is popularity), there's still valuable learning.\n\nScoring a single output in https://t.co/KyORyrjKh4 https://t.co/P1BgRW159w",
+    "created_at": "2026-03-23T07:29:02.000Z",
+    "conversation_id": "2035982137539559616",
+    "author_id": "1603551009854423040",
+    "note_tweet": {
+      "text": "Even if you set aside whether citations are the right proxy for scientific taste and there are real reasons to question that (Hume's \"joint verdict of qualified judges\" breaks down when the signal is popularity), there's still valuable learning.\n\nScoring a single output in open-ended tasks with LLMs is so unreliable (especially when there's no verifiable ground truth), but comparing two outputs is natural and more consistent. The paper uses this by having the policy generate a group of candidates, running round-robin pairwise comparisons via a reward model, and using normalized win rate as the training signal.\n\n1. Pairwise comparison avoids the absolute scoring problem. You don't need to define what a \"4 out of 5\" means. You just need to reliably say \"A is better than B.\" \n\n2. The round-robin tournament creates a rank ordering from binary signals. Each candidate competes against every other candidate. Win rate emerges as a scalar reward without ever requiring an absolute score. This converts an open-ended evaluation problem into something GRPO can optimize.\n\nThe paper implements this through RL training, but the pattern works without it. I'm noticing that pairwise comparison pattern is powerful and underused in context engineering. Absolute scoring is unreliable in LLM-as-judge variance. Instead of scoring candidate outputs 1-5, we can generate N candidates, run pairwise comparisons with the evaluator, and rank by win rate."
+    }
+  },
+  "posts": [
+    {
+      "text": "Even if you set aside whether citations are the right proxy for scientific taste and there are real reasons to question that (Hume's \"joint verdict of qualified judges\" breaks down when the signal is popularity), there's still valuable learning.\n\nScoring a single output in https://t.co/KyORyrjKh4 https://t.co/P1BgRW159w",
+      "note_tweet": {
+        "text": "Even if you set aside whether citations are the right proxy for scientific taste and there are real reasons to question that (Hume's \"joint verdict of qualified judges\" breaks down when the signal is popularity), there's still valuable learning.\n\nScoring a single output in open-ended tasks with LLMs is so unreliable (especially when there's no verifiable ground truth), but comparing two outputs is natural and more consistent. The paper uses this by having the policy generate a group of candidates, running round-robin pairwise comparisons via a reward model, and using normalized win rate as the training signal.\n\n1. Pairwise comparison avoids the absolute scoring problem. You don't need to define what a \"4 out of 5\" means. You just need to reliably say \"A is better than B.\" \n\n2. The round-robin tournament creates a rank ordering from binary signals. Each candidate competes against every other candidate. Win rate emerges as a scalar reward without ever requiring an absolute score. This converts an open-ended evaluation problem into something GRPO can optimize.\n\nThe paper implements this through RL training, but the pattern works without it. I'm noticing that pairwise comparison pattern is powerful and underused in context engineering. Absolute scoring is unreliable in LLM-as-judge variance. Instead of scoring candidate outputs 1-5, we can generate N candidates, run pairwise comparisons with the evaluator, and rank by win rate."
+      },
+      "referenced_tweets": [
+        {
+          "type": "quoted",
+          "id": "2035614942812950906"
+        }
+      ],
+      "conversation_id": "2035982137539559616",
+      "edit_history_tweet_ids": [
+        "2035982137539559616"
+      ],
+      "created_at": "2026-03-23T07:29:02.000Z",
+      "id": "2035982137539559616",
+      "author_id": "1603551009854423040",
+      "entities": {
+        "annotations": [
+          {
+            "start": 126,
+            "end": 129,
+            "probability": 0.6713,
+            "type": "Person",
+            "normalized_text": "Hume"
+          }
+        ],
+        "urls": [
+          {
+            "start": 274,
+            "end": 297,
+            "url": "https://t.co/KyORyrjKh4",
+            "expanded_url": "https://x.com/koylanai/status/2035982137539559616/photo/1",
+            "display_url": "pic.x.com/KyORyrjKh4",
+            "media_key": "3_2035982037816107008"
+          },
+          {
+            "start": 298,
+            "end": 321,
+            "url": "https://t.co/P1BgRW159w",
+            "expanded_url": "https://twitter.com/askalphaxiv/status/2035614942812950906",
+            "display_url": "x.com/askalphaxiv/st\u2026"
+          }
+        ]
+      }
+    }
+  ],
+  "users": {
+    "1603551009854423040": {
+      "id": "1603551009854423040",
+      "name": "Muratcan Koylan",
+      "username": "koylanai"
+    }
+  },
+  "thread_fetch_error": null
+}
