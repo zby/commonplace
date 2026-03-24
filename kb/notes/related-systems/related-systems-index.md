@@ -17,6 +17,7 @@ External systems doing similar work — knowledge management for AI agents, cont
   - [Thalo entity types compared to commonplace document types](./thalo-type-comparison.md) — detailed type mapping showing gaps (supersedes links, source status tracking) and borrowable patterns
 - [ClawVault](./clawvault.md) — TypeScript memory system with scored observations, session handoffs, and reflection pipelines; has a working workshop layer where we have theory, strongest source of borrowable patterns for ephemeral knowledge
 - [CrewAI Memory](./crewai-memory.md) — unified vector-memory for agent crews with LLM-driven scope inference, composite scoring, and consolidation; sophisticated retrieval infrastructure but no learning theory, treating memory as plumbing rather than a knowledge medium
+- [cq](./cq.md) — Mozilla.ai's local-first shared agent knowledge commons with SQLite local/team stores, approval-gated team sharing, and plugin-packaged query/propose/confirm loop; strongest reviewed reference so far for lightweight cross-agent operational learning, though the richer trust and guardrails layers remain mostly conceptual
 - [Siftly](./siftly.md) — Next.js + SQLite ingestion system with deterministic-first enrichment, resumable stage markers, and hybrid retrieval; strongest reference so far for high-volume source loading patterns
 - [sift-kg](./sift-kg.md) — LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-gated entity resolution, and interactive visualization; strongest reference for extraction-first knowledge construction and confidence aggregation
 - [Letta](../../sources/letta-memgpt-stateful-agents.ingest.md) — agent-self-managed three-tier memory hierarchy using OS analogy (main context ≈ RAM, archival ≈ disk, recall ≈ conversation log); strongest existing exemplar of the agent-self-managed agency model *(lightweight coverage only — ingest report, no repo review)*
@@ -41,6 +42,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [ExpeL](./expel.md) — cross-task experiential learning pipeline with separate trajectory gathering, rule extraction, prompt-time trace retrieval, and explicit `ADD`/`EDIT`/`REMOVE`/`AGREE` rule maintenance; clearest trajectory-to-rule artifact-learning example in this queue
 - [Voyager](./voyager.md) — embodied lifelong-learning loop with automatic curriculum, critic-gated retries, and promotion of successful trajectories into retrievable JavaScript skills; clearest executable-artifact learning system in this queue
 - [Agent-R](./agent-r.md) — iterative self-training pipeline that mines MCTS search trees into corrected conversation traces and fine-tuning data; clearest search-to-weights learning system in this queue
+- [HyperAgents](./hyperagents.md) — self-referential code-agent evolution harness with diff archives, Docker lineage replay, staged benchmark evaluation, and scored parent selection; strongest reference here for outer-loop self-editing over executable agent code, though the checked-in meta agent is much thinner than the framing suggests
 - [cass-memory](./cass_memory_system.md) — cross-agent procedural memory with three-layer cognitive architecture (episodic/working/procedural), confidence-decayed playbook bullets, and trauma guard; closest production sibling to ACE's playbook-learning loop, with genuine cross-agent session mining
 - [ReasoningBank](./reasoning-bank.md) — reasoning-as-memory pipeline that extracts structured memory items from both successful and failed trajectories, retrieves by embedding similarity, and proposes test-time scaling via parallel trajectory comparison; sits between Reflexion (simpler) and ExpeL (richer lifecycle) on the artifact-learning spectrum
 - [G-Memory](./g-memory.md) — multi-agent memory harness with state-graph trajectory capture, task-neighborhood retrieval, and scored text insights; strongest reviewed example so far of mixed memory substrates inside one benchmark agent system
@@ -74,4 +76,3 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
-
