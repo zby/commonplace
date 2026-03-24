@@ -131,41 +131,40 @@ def main() -> None:
     lines.append("## Text → Note")
     lines.append("")
     if text_with_links:
-        lines.append("| File | Links in | Sources |")
-        lines.append("|------|----------|---------|")
         for rel, title, count, sources in text_with_links:
-            source_names = ", ".join(
+            source_list = ", ".join(
                 f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(NOTES_DIR)})"
                 for s in sources[:3]
             )
             if len(sources) > 3:
-                source_names += f" +{len(sources) - 3} more"
-            lines.append(
-                f"| [{title}](../notes/{rel}) | {count} | {source_names} |"
-            )
+                source_list += f" +{len(sources) - 3} more"
+            lines.append(f"- [{title}](../notes/{rel}) — **{count} links in**")
+            if source_list:
+                lines.append(f"  Sources: {source_list}")
+            lines.append("")
     else:
         lines.append("No text files found.")
-    lines.append("")
+        lines.append("")
 
     # Seedling → current section
     lines.append("## Seedling → Current (top 20 by incoming links)")
     lines.append("")
     top_seedlings = seedling_ranked[:20]
     if top_seedlings:
-        lines.append("| Note | Links in | Top sources |")
-        lines.append("|------|----------|-------------|")
         for rel, title, count, sources in top_seedlings:
-            source_names = ", ".join(
+            source_list = ", ".join(
                 f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(NOTES_DIR)})"
                 for s in sources[:3]
             )
             if len(sources) > 3:
-                source_names += f" +{len(sources) - 3} more"
-            lines.append(
-                f"| [{title}](../notes/{rel}) | {count} | {source_names} |"
-            )
+                source_list += f" +{len(sources) - 3} more"
+            lines.append(f"- [{title}](../notes/{rel}) — **{count} links in**")
+            if source_list:
+                lines.append(f"  Sources: {source_list}")
+            lines.append("")
     else:
         lines.append("No seedling notes found.")
+        lines.append("")
     lines.append("")
 
     # Orphan seedlings (zero incoming links)
