@@ -3,10 +3,10 @@ note-path: kb/notes/agent-statelessness-means-the-context-engine-should-inject-c
 last-full-review-note-sha: 7ed509aecb5256eb938fbfbed609bd35f4304ce9
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 7ed509aecb5256eb938fbfbed609bd35f4304ce9
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: de8d3a0671b46cd00810fd582098a54eb6de6500
+last-accepted-note-commit: 6e2e74d37a330987366c2d846513e4b52f97a11f
+last-accepted-at: 2026-03-24T10:05:52+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: agent-statelessness-means-the-context-engine-should-inject-context-automatically.md ===

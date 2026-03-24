@@ -3,10 +3,10 @@ note-path: kb/notes/three-space-memory-separation-predicts-measurable-failure-mo
 last-full-review-note-sha: dc61629866e1b0e19b03c3d0bc1ea0469cc53e13
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: dc61629866e1b0e19b03c3d0bc1ea0469cc53e13
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 2aaae23d3756fc6700781d6d72145280ba2dfa6c
+last-accepted-note-commit: d1d69393d519758d93ae3c6987b3fc2350077c45
+last-accepted-at: 2026-03-24T10:05:57+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: three-space-memory-separation-predicts-measurable-failure-modes.md ===

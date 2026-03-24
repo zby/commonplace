@@ -3,10 +3,10 @@ note-path: kb/notes/agent-statelessness-makes-routing-architectural-not-learned.
 last-full-review-note-sha: 7ffdbdbd2f493825243461d42a15a5c014567b2d
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 7ffdbdbd2f493825243461d42a15a5c014567b2d
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 6fa79f5a6fac6d778a3cd5c28fd3522e94eaafb2
+last-accepted-note-commit: d1d69393d519758d93ae3c6987b3fc2350077c45
+last-accepted-at: 2026-03-24T10:05:52+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: agent-statelessness-makes-routing-architectural-not-learned.md ===

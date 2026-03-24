@@ -3,10 +3,10 @@ note-path: kb/notes/instruction-specificity-should-match-loading-frequency.md
 last-full-review-note-sha: 4944432807c7f4dde7eeac872f4cfb7cdfe70f98
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 4944432807c7f4dde7eeac872f4cfb7cdfe70f98
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 7e9624d2815f8f4421e0f9bd30f5f3eb78b97df5
+last-accepted-note-commit: 6e2e74d37a330987366c2d846513e4b52f97a11f
+last-accepted-at: 2026-03-24T10:05:54+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: instruction-specificity-should-match-loading-frequency.md ===

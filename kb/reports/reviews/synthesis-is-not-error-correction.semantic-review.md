@@ -3,10 +3,10 @@ note-path: kb/notes/synthesis-is-not-error-correction.md
 last-full-review-note-sha: 618f3826404d61face1409870c5616f35b4b13eb
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 618f3826404d61face1409870c5616f35b4b13eb
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 0b71cd23f8bae70af3ffef8231fa45ff7501a652
+last-accepted-note-commit: 6b5b381a4b973131eb8ebd0e202a9057a5f97dd9
+last-accepted-at: 2026-03-24T10:05:56+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: synthesis-is-not-error-correction.md ===

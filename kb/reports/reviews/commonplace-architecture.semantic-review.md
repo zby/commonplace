@@ -3,10 +3,10 @@ note-path: kb/notes/commonplace-architecture.md
 last-full-review-note-sha: 405d9e4c819188bd71ce1e311984471c66d376f9
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 405d9e4c819188bd71ce1e311984471c66d376f9
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: c1473803fe61adee0a1baa80a276e8c629ccd9ab
+last-accepted-note-commit: cfa5a80e97f831f42b58fa223260538a6c79282f
+last-accepted-at: 2026-03-24T10:05:52+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: commonplace-architecture.md ===

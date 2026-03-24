@@ -3,10 +3,10 @@ note-path: kb/notes/areas-exist-because-useful-operations-require-reading-notes-
 last-full-review-note-sha: 5d6cda0431c4ddb72437f981450423d2abe4efe9
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 5d6cda0431c4ddb72437f981450423d2abe4efe9
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 18bb85e504a2835c832bcdd8b5ac14962c8534ec
+last-accepted-note-commit: c90b57d069a521443aa37ebdf70df514d8fd2736
+last-accepted-at: 2026-03-24T10:05:52+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: areas-exist-because-useful-operations-require-reading-notes-together.md ===

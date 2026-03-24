@@ -3,10 +3,10 @@ note-path: kb/notes/claw-learning-is-broader-than-retrieval.md
 last-full-review-note-sha: 83386f194ef91bb42be9f56deee1531b4501c9f5
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 83386f194ef91bb42be9f56deee1531b4501c9f5
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: d110dc5ddbad75f9a360b9e4bdea944499596513
+last-accepted-note-commit: c90b57d069a521443aa37ebdf70df514d8fd2736
+last-accepted-at: 2026-03-24T10:05:52+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: claw-learning-is-broader-than-retrieval.md ===

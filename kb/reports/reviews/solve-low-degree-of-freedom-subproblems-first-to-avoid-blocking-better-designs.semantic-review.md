@@ -3,10 +3,10 @@ note-path: kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-block
 last-full-review-note-sha: 4aa858fa9b4b1580b1dc09aa435af414a940fb2b
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: 4aa858fa9b4b1580b1dc09aa435af414a940fb2b
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 8a83e2b64e374af8aee083f0f7b094688685e42b
+last-accepted-note-commit: c5670f42129a9b389e107404846653de1c8c7167
+last-accepted-at: 2026-03-24T10:05:56+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md ===

@@ -3,10 +3,10 @@ note-path: kb/notes/methodology-enforcement-is-constraining.md
 last-full-review-note-sha: bdc9b61fc19a90d9ff311f8aa4865e108e545896
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
-last-accepted-note-sha: bdc9b61fc19a90d9ff311f8aa4865e108e545896
-last-accepted-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
-last-accepted-at: 2026-03-23T09:32:55+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 190a4ef0ca928a36446555f63724057509121700
+last-accepted-note-commit: 77b36d90b09b102404f4e2800ecad318640838d0
+last-accepted-at: 2026-03-24T10:05:55+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: semantic-review
 -->
 === SEMANTIC REVIEW: methodology-enforcement-is-constraining.md ===
