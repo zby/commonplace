@@ -17,7 +17,7 @@ How commonplace is structured and installed. Repo layout, the two-tree split bet
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries
 - [instruction-specificity-should-match-loading-frequency](./instruction-specificity-should-match-loading-frequency.md) — CLAUDE.md should be a slim router; match instruction specificity to loading frequency
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
-- [scenarios](./scenarios.md) — concrete use cases the knowledge system must serve
+- [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — concrete use cases decomposed into step-by-step context needs
 
 ## Other tagged notes <!-- generated -->
 

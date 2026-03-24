@@ -8,7 +8,7 @@ status: seedling
 
 # Scenario decomposition drives architecture
 
-The [installation layout ADR](./adr/006-two-tree-installation-layout.md) reasons about read and write as abstract operations and optimizes for hop count. [Scenarios](./scenarios.md) describes what the KB is used for. What's missing is the bridge: start from concrete user stories, decompose them into steps, identify what the agent needs at each step, and derive architectural requirements from that analysis.
+The [installation layout ADR](./adr/006-two-tree-installation-layout.md) reasons about read and write as abstract operations and optimizes for hop count. The knowledge system serves two primary scenarios — upstream change analysis and proposing our own changes — and in both, the KB earns its keep at the evidence-grounding step: assembling prior decisions, existing notes, and design rationale into a response that's grounded rather than ad hoc. The question is whether it makes that step faster and better than just reading code and grepping. This note bridges from those scenarios to architecture: start from concrete user stories, decompose them into steps, identify what the agent needs at each step, and derive architectural requirements from that analysis.
 
 The scenarios must work in two distinct contexts: this repo, where the methodology is the content; and installed projects, where user content and methodology are separate trees.
 
@@ -120,13 +120,12 @@ The key design: hops are stored in the scenario files (they're architectural, de
 
 - Should connection be a step within the write/ingest workflow rather than a separate skill invocation? What's the mechanism — a skill that orchestrates the full scenario, or CLAUDE.md instructions that remind the agent to connect after writing?
 - How specific should the CLAUDE.md fragment's escalation instructions be? A blanket "for deeper reasoning, search `commonplace/kb/`" may be too vague. Per-topic hints ("for link semantics reasoning, see `commonplace/kb/notes/adr/009-link-relationship-semantics.md`") are more precise but harder to maintain. The right granularity is probably somewhere between — enough to direct the agent toward the right area of the methodology, not so much that the fragment becomes a second routing table.
-- ~~How do we evaluate whether end-to-end orchestration is improving? The [scenarios](./scenarios.md) describe what to evaluate against, but we don't yet have metrics for "did the agent complete the full chain?"~~ Partially addressed: the scenario files in `test/scenarios/` and `/evaluate-scenarios` skill provide cost metrics (hops, instruction bytes). Orchestration quality (did the agent complete the full chain correctly?) remains unmeasured.
+- ~~How do we evaluate whether end-to-end orchestration is improving?~~ Partially addressed: the scenario files in `test/scenarios/` and `/evaluate-scenarios` skill provide cost metrics (hops, instruction bytes). Orchestration quality (did the agent complete the full chain correctly?) remains unmeasured.
 
 ---
 
 Relevant Notes:
 
-- [scenarios](./scenarios.md) — foundation: defines the concrete use cases this note decomposes into step-by-step context needs
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — extends: the abstract read/write analysis with scenario-grounded decomposition that confirms the two-tree design and derives the escalation path
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: the two always-loaded surfaces map onto different scenario patterns

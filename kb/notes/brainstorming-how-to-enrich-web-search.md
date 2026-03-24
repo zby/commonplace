@@ -90,4 +90,4 @@ Relevant Notes:
 - [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — synthesizes: deep search creates a temporary corpus where both navigation modes operate — long-range search retrieves, then local link-following inter-connects
 - [scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — enables: the MVP's five phases are a scenario decomposition whose context needs could be measured like other scenarios
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: deep search's compound type signature (query + context → research-report + source-reviews) chains multiple existing skill signatures
-- [scenarios](./scenarios.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes
+- [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes

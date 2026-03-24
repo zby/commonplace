@@ -16,7 +16,7 @@ The open problem is not "the KB needs a learning loop" but **automating the judg
 
 A knowledge base exists to answer questions about the project. This defines value for every artifact: a note is valuable if it helps answer a question, a link is valuable if it helps navigate from a question to an answer, a grouping is valuable if it makes related answers findable together.
 
-New knowledge — extracting claims, writing synthesis notes, discovering connections — is valuable only insofar as it improves future question-answering. The [scenarios](./scenarios.md) that define actual KB usage (upstream change analysis, proposing our own changes) are the closest thing we have to a requirements spec for what this question-answering capacity must serve.
+New knowledge — extracting claims, writing synthesis notes, discovering connections — is valuable only insofar as it improves future question-answering. The [scenarios](./scenario-decomposition-drives-architecture.md) that define actual KB usage (upstream change analysis, proposing our own changes) are the closest thing we have to a requirements spec for what this question-answering capacity must serve.
 
 ## Knowledge lives in both notes and links
 
@@ -82,7 +82,7 @@ Relevant Notes:
 - [cludebot](./related-systems/cludebot.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
 - [needs-testing](./needs-testing.md) — the extract/connect/review cycle is a primitive version of the boiling cauldron, already partially operational
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — note scoring addresses part of the quality gates problem: composite scores from status, type, inbound links, and recency make automated curation tractable at scale
-- [scenarios](./scenarios.md) — the actual use cases the learning loop's evaluation function would need to optimise against
+- [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — the actual use cases the learning loop's evaluation function would need to optimise against
 - [text-testing-framework](./text-testing-framework.md) — quality gates at both note and corpus level that could serve as building blocks for the loop's evaluation, though they test artifact quality and consistency, not end-to-end question-answering capacity
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — addresses the quality gates gap: proposes a composite oracle from graph-topology, content-proxy, and LLM-hybrid signals that could serve as the evaluation function for the boiling cauldron, using structure alone rather than requiring usage data
 - [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — sharpens: the extraction side of the loop is now concrete in source code across session miners and weight-learning systems; what remains open is evaluation of whether mined candidates deserve durable KB status
