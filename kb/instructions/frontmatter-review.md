@@ -1,5 +1,5 @@
 ---
-description: Frontmatter review — checks whether description discriminates from the title and whether the title composes as a claim. Soft-oracle counterpart to the deterministic validate script; this checks whether metadata serves its retrieval and composability purposes.
+description: Frontmatter review — checks description discrimination, title composability, claim strength, and title-body alignment. Soft-oracle counterpart to the deterministic validate script; this checks whether metadata serves its retrieval and composability purposes.
 ---
 
 # Frontmatter Review
@@ -68,20 +68,39 @@ Good (adds scope — reader knows WHEN this applies):
 
 ### 2. Title composability
 
-**Failure mode:** The title is a topic label rather than a claim — it categorizes but doesn't assert. A topic label can't be disagreed with, linked as prose, or composed into an argument.
+**Failure mode:** The title doesn't work as a linkable prose fragment — it can't be woven into a sentence in another note.
 
-**Test:** Three sub-checks:
+**Test:** Does `since [title]...` or `because [title]...` read naturally as a sentence fragment? A title that forces awkward grammar when linked hurts composability across the KB.
 
-- **Prose fitness:** Does `since [title]...` read naturally as a sentence fragment?
-- **Not a topic label:** Does the title make a claim or describe a specific thing, not just name a category?
-- **Specificity:** Is the claim specific enough that someone could reasonably argue the opposite?
+**Examples:**
+- "knowledge management" — bare topic, doesn't compose: "since knowledge management" is incomplete, WARN
+- "knowledge management requires curation not accumulation" — composes: "since knowledge management requires curation not accumulation, we designed...", PASS
+- "context-loading-strategy" — descriptive name for a concrete artifact, PASS
 
-**Topic labels vs claims:**
-- "knowledge management" — topic label, WARN
-- "knowledge management requires curation not accumulation" — claim, PASS
-- "context-loading-strategy" — descriptive name for a specific thing, PASS (names a concrete artifact)
+### 3. Claim strength
+
+**Failure mode:** The title is phrased as a claim but asserts something nobody would disagree with. A weak claim is worse than a topical title — it looks like it's saying something specific but carries no information. A topical title is at least honest about being a category label.
+
+**Test:** Could someone knowledgeable reasonably argue the opposite? If the claim is a truism ("testing improves quality," "documentation helps understanding"), it fails. The fix is usually to sharpen the claim to the specific, non-obvious insight the note actually establishes — or to switch to a topical title if the note genuinely covers a topic rather than arguing a point.
+
+**Examples:**
+- "continuous learning is substrate-independent" — nobody would push back; the classification isn't revealing enough to contest, WARN
+- "continuous learning can happen outside of weights" — names the thing people actually doubt, PASS
+- "validation should be fast" — truism, WARN
+- "deterministic validation should be a script" — specific, contestable (someone might argue LLM validation is better), PASS
 
 **Exceptions:** Topical titles are correct for multi-claim specs and frameworks, definitional notes (term pinning), index pages, and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Check the note's `type` and `status` before flagging.
+
+### 4. Title-body alignment
+
+**Failure mode:** The title promises one thing but the body delivers another. This happens through drift — the note evolves during writing or editing but the title isn't updated to match, or the body gets extended beyond the title's scope.
+
+**Test:** Read the title, then read the body. Ask: does the body actually support this title? Two common failure patterns:
+
+- **Claim drift:** A claim title asserts X, but the body's actual argument establishes Y (a related but different point). The title should be updated to match what the body actually argues.
+- **Scope drift:** A topical title names a narrow topic, but the body covers a broader area (or vice versa). The title and body should agree on scope.
+
+If the title and body are misaligned, WARN. Include what the body actually establishes so the fix is clear.
 
 ## Output format
 
@@ -100,7 +119,7 @@ review-type: frontmatter-review
 
 === FRONTMATTER REVIEW: {note-filename} ===
 
-Checks applied: 2
+Checks applied: 4
 
 WARN:
 - [{check-name}] {finding with specific quote from the note}
