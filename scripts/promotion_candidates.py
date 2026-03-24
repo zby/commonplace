@@ -18,32 +18,24 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
+import frontmatter as fm_mod
+
 NOTES_DIR = Path("kb/notes")
 REPORTS_DIR = Path("kb/reports")
 
 
 def parse_frontmatter(content: str) -> dict | None:
-    """Extract YAML frontmatter from markdown content.
-
-    Returns None if no frontmatter delimiters found (genuine text file).
-    Returns a dict (possibly with partial data) if delimiters are present.
-    """
-    import yaml
-
-    match = re.match(r"^---\n(.*?)\n---\n", content, re.DOTALL)
-    if not match:
+    """Parse frontmatter, returning None for genuine text files (no delimiters)."""
+    if not content.startswith("---\n"):
         return None
-    try:
-        return yaml.safe_load(match.group(1)) or {}
-    except yaml.YAMLError:
-        # Has frontmatter delimiters but YAML is broken — still a note, not text
-        return {}
+    result = fm_mod.parse(content)
+    return result.data
 
 
 def get_title(content: str) -> str:
     """Extract first H1 heading from markdown."""
-    content_no_fm = re.sub(r"^---\n.*?\n---\n", "", content, flags=re.DOTALL)
-    match = re.search(r"^#\s+(.+)$", content_no_fm, re.MULTILINE)
+    body = fm_mod.strip(content)
+    match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
     return match.group(1) if match else "Untitled"
 
 

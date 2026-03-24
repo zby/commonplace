@@ -448,7 +448,8 @@ Overall: CLEAN
             review_type="prose-review",
         ),
     )
-    write(tmp_path / "reviews" / "ackable.prose-review.md", review_text)
+    review_file = tmp_path / "kb" / "reports" / "reviews" / "ackable.prose-review.md"
+    write(review_file, review_text)
     note(
         note_path,
         "Ackable",
@@ -465,9 +466,7 @@ Overall: CLEAN
         sys.argv = old_argv
 
     metadata = review_metadata.parse_review_metadata(
-        (tmp_path / "reviews" / "ackable.prose-review.md").read_text(
-            encoding="utf-8"
-        )
+        review_file.read_text(encoding="utf-8")
     )
     assert metadata is not None
     assert metadata.last_full_review_note_sha == first_blob_sha

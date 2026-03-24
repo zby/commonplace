@@ -11,24 +11,13 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
-
-
-def parse_frontmatter(content: str) -> dict:
-    """Extract YAML frontmatter from markdown content."""
-    match = re.match(r"^---\n(.*?)\n---\n", content, re.DOTALL)
-    if not match:
-        return {}
-    try:
-        return yaml.safe_load(match.group(1)) or {}
-    except yaml.YAMLError:
-        return {}
+import frontmatter
 
 
 def get_title(content: str) -> str:
     """Extract first H1 heading from markdown."""
-    content = re.sub(r"^---\n.*?\n---\n", "", content, flags=re.DOTALL)
-    match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+    body = frontmatter.strip(content)
+    match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
     return match.group(1) if match else "Untitled"
 
 
@@ -50,7 +39,7 @@ def generate(notes_dir: Path) -> str:
             continue
 
         content = path.read_text()
-        fm = parse_frontmatter(content)
+        fm = frontmatter.parse(content).data
         title = get_title(content)
         desc = fm.get("description", "")
         note_type = fm.get("type", "")

@@ -17,10 +17,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-import yaml
-
-
+# Add scripts/ to import path for the shared frontmatter module
 REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import frontmatter as fm_mod  # noqa: E402
+
 NOTES_ROOT = REPO_ROOT / "kb" / "notes"
 VALID_TRAITS = {"has-comparison", "has-external-sources", "has-implementation"}
 VALID_STATUS = {"seedling", "current", "speculative", "outdated"}
@@ -55,24 +56,6 @@ CLAIMISH_MARKERS = (
 )
 
 
-class DuplicateKeyLoader(yaml.SafeLoader):
-    """YAML loader that rejects duplicate keys."""
-
-
-def _construct_mapping(loader: DuplicateKeyLoader, node: yaml.nodes.MappingNode, deep: bool = False) -> dict[str, Any]:
-    mapping: dict[str, Any] = {}
-    for key_node, value_node in node.value:
-        key = loader.construct_object(key_node, deep=deep)
-        if key in mapping:
-            raise yaml.YAMLError(f"duplicate key: {key}")
-        mapping[key] = loader.construct_object(value_node, deep=deep)
-    return mapping
-
-
-DuplicateKeyLoader.add_constructor(
-    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-    _construct_mapping,
-)
 
 
 @dataclass
@@ -95,28 +78,19 @@ class ParsedNote:
 
 
 def strip_frontmatter(content: str) -> str:
-    return re.sub(r"^---\n.*?\n---\n?", "", content, count=1, flags=re.DOTALL)
+    return fm_mod.strip(content)
 
 
 def parse_frontmatter(content: str) -> tuple[dict[str, Any] | None, str | None]:
     if not content.startswith("---\n"):
         return None, None
 
-    match = re.match(r"^---\n(.*?)\n---\n?", content, flags=re.DOTALL)
-    if not match:
+    result = fm_mod.parse(content)
+    if not result.raw and not result.data:
         return None, "frontmatter: missing closing delimiter"
-
-    raw = match.group(1)
-    try:
-        data = yaml.load(raw, Loader=DuplicateKeyLoader)
-    except yaml.YAMLError as exc:
-        return None, f"frontmatter: invalid YAML ({exc})"
-
-    if data is None:
-        data = {}
-    if not isinstance(data, dict):
-        return None, "frontmatter: top-level YAML must be a mapping"
-    return data, None
+    if result.errors:
+        return None, "; ".join(result.errors)
+    return result.data, None
 
 
 def extract_title(content: str) -> str:

@@ -118,22 +118,35 @@ wheels = [
 name = "commonplace"
 version = "0.1.0"
 source = { virtual = "." }
-dependencies = [
+
+[package.optional-dependencies]
+all = [
     { name = "mkdocs" },
     { name = "mkdocs-redirects" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
+    { name = "xdk" },
+]
+docs = [
+    { name = "mkdocs" },
+    { name = "mkdocs-redirects" },
+]
+snapshot = [
     { name = "xdk" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "mkdocs" },
-    { name = "mkdocs-redirects" },
-    { name = "python-dotenv" },
-    { name = "pyyaml" },
-    { name = "xdk" },
+    { name = "mkdocs", marker = "extra == 'all'" },
+    { name = "mkdocs", marker = "extra == 'docs'" },
+    { name = "mkdocs-redirects", marker = "extra == 'all'" },
+    { name = "mkdocs-redirects", marker = "extra == 'docs'" },
+    { name = "python-dotenv", marker = "extra == 'all'" },
+    { name = "pyyaml", marker = "extra == 'all'" },
+    { name = "xdk", marker = "extra == 'all'" },
+    { name = "xdk", marker = "extra == 'snapshot'" },
 ]
+provides-extras = ["docs", "snapshot", "all"]
 
 [[package]]
 name = "ghp-import"

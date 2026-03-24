@@ -92,11 +92,14 @@ def test_build_markdown_only_uses_top_five_rows() -> None:
         )
 
     tables = summarize_reviews.build_tables(reviews)
+    empty_tables = summarize_reviews.build_tables([])
     markdown = summarize_reviews.build_markdown(
         reviews,
         "semantic-review",
         "Semantic Review Sweep",
         tables,
+        [],
+        empty_tables,
     )
 
     assert "note-0" in markdown
@@ -108,7 +111,7 @@ def test_build_markdown_only_uses_top_five_rows() -> None:
 
 
 def test_main_skips_stale_reviews_in_csv_outputs(tmp_path, monkeypatch) -> None:
-    reviews_dir = tmp_path / "reviews"
+    reviews_dir = tmp_path / "kb" / "reports" / "reviews"
     notes_dir = tmp_path / "kb" / "notes"
     reviews_dir.mkdir(parents=True)
     notes_dir.mkdir(parents=True)

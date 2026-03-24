@@ -17,7 +17,7 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
+import frontmatter
 
 KB_ROOT = Path(__file__).parent.parent / "kb"
 NOTES_DIR = KB_ROOT / "notes"
@@ -25,21 +25,10 @@ FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
 
 
-def parse_frontmatter(content: str) -> dict:
-    """Extract YAML frontmatter from markdown content."""
-    match = re.match(r"^---\n(.*?)\n---\n", content, re.DOTALL)
-    if not match:
-        return {}
-    try:
-        return yaml.safe_load(match.group(1)) or {}
-    except yaml.YAMLError:
-        return {}
-
-
 def get_title(content: str) -> str:
     """Extract first H1 heading from markdown."""
-    content_no_fm = re.sub(r"^---\n.*?\n---\n", "", content, flags=re.DOTALL)
-    match = re.search(r"^#\s+(.+)$", content_no_fm, re.MULTILINE)
+    body = frontmatter.strip(content)
+    match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
     return match.group(1) if match else "Untitled"
 
 
@@ -52,7 +41,7 @@ def collect_notes_by_tag() -> dict[str, list[tuple[Path, str, str]]]:
 
     for path in sorted(NOTES_DIR.rglob("*.md")):
         content = path.read_text()
-        fm = parse_frontmatter(content)
+        fm = frontmatter.parse(content).data
 
         # Skip index pages and type templates
         if fm.get("type") == "index":
@@ -167,7 +156,7 @@ def find_index_files(args: list[str]) -> list[Path]:
     indexes = []
     for path in sorted(NOTES_DIR.rglob("*.md")):
         content = path.read_text()
-        fm = parse_frontmatter(content)
+        fm = frontmatter.parse(content).data
         if fm.get("type") == "index":
             indexes.append(path)
     return indexes
