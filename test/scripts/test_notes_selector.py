@@ -474,3 +474,120 @@ Overall: CLEAN
     assert metadata.last_accepted_note_sha == review_metadata.git_blob_sha(note_path)
     assert metadata.last_accepted_note_commit == second_commit
     assert metadata.last_acceptance_kind == "trivial-change-ack"
+
+
+def test_ack_review_updates_multiple_notes_in_one_invocation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    init_repo(tmp_path)
+    note_one_path = note(
+        tmp_path / "kb" / "notes" / "one.md",
+        "One",
+        "\nFirst version.\n",
+    )
+    note_two_path = note(
+        tmp_path / "kb" / "notes" / "two.md",
+        "Two",
+        "\nFirst version.\n",
+    )
+    first_commit = commit_all(tmp_path, "Add ackable notes")
+    first_blob_one = review_metadata.git_blob_sha(note_one_path)
+    first_blob_two = review_metadata.git_blob_sha(note_two_path)
+    review_one_text = review_metadata.inject_review_metadata(
+        """=== PROSE REVIEW: one.md ===
+
+Checks applied: 8
+
+CLEAN:
+- [Pseudo-formalism] Clean.
+
+Overall: CLEAN
+===
+""",
+        review_metadata.ReviewMetadata(
+            note_path="kb/notes/one.md",
+            last_full_review_note_sha=first_blob_one,
+            last_full_review_note_commit=first_commit,
+            last_full_review_at="2026-03-23T10:00:00+01:00",
+            last_accepted_note_sha=first_blob_one,
+            last_accepted_note_commit=first_commit,
+            last_accepted_at="2026-03-23T10:00:00+01:00",
+            last_acceptance_kind="full-review",
+            review_type="prose-review",
+        ),
+    )
+    review_two_text = review_metadata.inject_review_metadata(
+        """=== PROSE REVIEW: two.md ===
+
+Checks applied: 8
+
+CLEAN:
+- [Pseudo-formalism] Clean.
+
+Overall: CLEAN
+===
+""",
+        review_metadata.ReviewMetadata(
+            note_path="kb/notes/two.md",
+            last_full_review_note_sha=first_blob_two,
+            last_full_review_note_commit=first_commit,
+            last_full_review_at="2026-03-23T10:00:00+01:00",
+            last_accepted_note_sha=first_blob_two,
+            last_accepted_note_commit=first_commit,
+            last_accepted_at="2026-03-23T10:00:00+01:00",
+            last_acceptance_kind="full-review",
+            review_type="prose-review",
+        ),
+    )
+    review_one_file = tmp_path / "kb" / "reports" / "reviews" / "one.prose-review.md"
+    review_two_file = tmp_path / "kb" / "reports" / "reviews" / "two.prose-review.md"
+    write(review_one_file, review_one_text)
+    write(review_two_file, review_two_text)
+    note(
+        note_one_path,
+        "One",
+        "\nFirst version.\nTrivial extra line.\n",
+    )
+    note(
+        note_two_path,
+        "Two",
+        "\nFirst version.\nAnother trivial extra line.\n",
+    )
+    second_commit = commit_all(tmp_path, "Trivial note changes")
+
+    monkeypatch.chdir(tmp_path)
+    old_argv = sys.argv
+    sys.argv = [
+        "ack_review.py",
+        "prose-review",
+        "kb/notes/one.md",
+        "kb/notes/two.md",
+    ]
+    try:
+        ack_review.main()
+    finally:
+        sys.argv = old_argv
+
+    metadata_one = review_metadata.parse_review_metadata(
+        review_one_file.read_text(encoding="utf-8")
+    )
+    metadata_two = review_metadata.parse_review_metadata(
+        review_two_file.read_text(encoding="utf-8")
+    )
+    assert metadata_one is not None
+    assert metadata_two is not None
+    assert metadata_one.last_full_review_note_sha == first_blob_one
+    assert metadata_two.last_full_review_note_sha == first_blob_two
+    assert metadata_one.last_full_review_note_commit == first_commit
+    assert metadata_two.last_full_review_note_commit == first_commit
+    assert metadata_one.last_accepted_note_sha == review_metadata.git_blob_sha(
+        note_one_path
+    )
+    assert metadata_two.last_accepted_note_sha == review_metadata.git_blob_sha(
+        note_two_path
+    )
+    assert metadata_one.last_accepted_note_commit == second_commit
+    assert metadata_two.last_accepted_note_commit == second_commit
+    assert metadata_one.last_acceptance_kind == "trivial-change-ack"
+    assert metadata_two.last_acceptance_kind == "trivial-change-ack"

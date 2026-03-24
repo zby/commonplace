@@ -7,6 +7,7 @@ preserving the last full-review revision.
 Usage:
     uv run scripts/ack_review.py prose-review kb/notes/backlinks.md
     uv run scripts/ack_review.py semantic-review kb/notes/backlinks.md
+    uv run scripts/ack_review.py semantic-review kb/notes/foo.md kb/notes/bar.md
 """
 
 from __future__ import annotations
@@ -23,6 +24,10 @@ from review_metadata import (
     last_commit_for_path,
     parse_review_metadata,
 )
+
+
+class AckReviewError(Exception):
+    """Raised when a review acknowledgement target cannot be processed."""
 
 
 def iso_now() -> str:
@@ -47,47 +52,38 @@ def build_parser() -> argparse.ArgumentParser:
         help="Review suffix such as prose-review or semantic-review.",
     )
     parser.add_argument(
-        "note_path",
-        help="Path to the reviewed note, for example kb/notes/backlinks.md.",
+        "note_paths",
+        nargs="+",
+        help="One or more reviewed note paths, for example kb/notes/backlinks.md.",
     )
     return parser
 
 
-def main() -> None:
-    parser = build_parser()
-    args = parser.parse_args()
-    repo_root = Path.cwd()
-
-    note_path = (repo_root / args.note_path).resolve()
+def acknowledge_note(repo_root: Path, review_type: str, raw_note_path: str) -> str:
+    """Advance the accepted revision for one reviewed note."""
+    note_path = (repo_root / raw_note_path).resolve()
     if not note_path.is_file():
-        print(f"Note not found: {args.note_path}", file=sys.stderr)
-        sys.exit(1)
+        raise AckReviewError(f"Note not found: {raw_note_path}")
 
     try:
         note_rel = note_path.relative_to(repo_root)
     except ValueError:
-        print(
-            f"Note must be inside the repository: {note_path}",
-            file=sys.stderr,
+        raise AckReviewError(
+            f"Note must be inside the repository: {note_path}"
         )
-        sys.exit(1)
 
-    review_path = review_path_for(repo_root, note_path, args.review_type)
+    review_path = review_path_for(repo_root, note_path, review_type)
     if not review_path.is_file():
-        print(
+        raise AckReviewError(
             f"Review file not found: {review_path.relative_to(repo_root)}",
-            file=sys.stderr,
         )
-        sys.exit(1)
 
     review_text = review_path.read_text(encoding="utf-8")
     metadata = parse_review_metadata(review_text)
     if metadata is None:
-        print(
+        raise AckReviewError(
             f"Review metadata missing or invalid in {review_path.relative_to(repo_root)}",
-            file=sys.stderr,
         )
-        sys.exit(1)
 
     note_commit = last_commit_for_path(repo_root, note_rel)
     accepted_at = iso_now()
@@ -100,16 +96,33 @@ def main() -> None:
         last_accepted_note_commit=note_commit,
         last_accepted_at=accepted_at,
         last_acceptance_kind="trivial-change-ack",
-        review_type=metadata.review_type or args.review_type,
+        review_type=metadata.review_type or review_type,
     )
     review_path.write_text(
         inject_review_metadata(review_text, updated_metadata),
         encoding="utf-8",
     )
-    print(
+    return (
         f"Updated {review_path.relative_to(repo_root)} "
         f"to accept {note_rel.as_posix()} at {accepted_at}"
     )
+
+
+def main() -> None:
+    parser = build_parser()
+    args = parser.parse_args()
+    repo_root = Path.cwd()
+
+    failures = 0
+    for raw_note_path in args.note_paths:
+        try:
+            print(acknowledge_note(repo_root, args.review_type, raw_note_path))
+        except AckReviewError as exc:
+            failures += 1
+            print(str(exc), file=sys.stderr)
+
+    if failures:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

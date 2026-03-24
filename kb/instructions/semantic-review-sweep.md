@@ -20,6 +20,7 @@ Launch sub-agents to review notes in parallel. The orchestrator should inspect e
 
 ```
 uv run scripts/ack_review.py semantic-review {note-path}
+uv run scripts/ack_review.py semantic-review {note-path-1} {note-path-2} ...
 ```
 
 For notes that do need a full review, each sub-agent receives this prompt:
