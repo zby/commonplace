@@ -43,3 +43,5 @@ kb/work/connect/
 
 # generated review tables
 reviews/csv/*.csv
+
+tmp/
