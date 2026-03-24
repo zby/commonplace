@@ -1,5 +1,5 @@
 ---
-description: Both learning mechanisms — constraining (constraining) and distillation (extracting) — sacrifice generality for compound gains in reliability, speed, and cost; they differ in the operation and how much compound they yield
+description: Constraining narrows interpretation (largest gain at codification, where substrate changes); distillation extracts under a context budget. Same capacity decomposition, different operations
 type: note
 traits: []
 status: current

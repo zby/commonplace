@@ -1,5 +1,5 @@
 ---
-description: An agent doing a task navigates by deciding what to read — links, index entries, search tools, and skill descriptions are all pointers with varying amounts of context for that decision
+description: Context surrounding a pointer determines how cheaply an agent judges relevance without loading the target; inline links carry most, search results least — descriptions are load-bearing
 type: note
 traits: []
 tags: [links]

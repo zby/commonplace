@@ -1,5 +1,5 @@
 ---
-description: The bitter lesson has a boundary — arithmetic vs vision features illustrate when exact solutions survive scaling and when they don't
+description: The boundary is whether the spec fully captures the problem — arithmetic specs define the problem (scale can't replace them), vision-feature specs approximate it (scale eats them)
 type: note
 traits: []
 tags: [learning-theory]

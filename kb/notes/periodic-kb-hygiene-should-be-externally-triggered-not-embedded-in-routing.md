@@ -1,5 +1,5 @@
 ---
-description: Periodic hygiene checks belong in externally triggered operations (user request, scheduler, CI), not in always-loaded routing instructions
+description: Routing instructions load every session for high-frequency decisions; periodic hygiene adds noise on every session while helping only occasionally, blurring routing and operations
 type: note
 traits: []
 tags: [kb-maintenance]

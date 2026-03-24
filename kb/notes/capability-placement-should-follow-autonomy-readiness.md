@@ -1,5 +1,5 @@
 ---
-description: Capability artifacts should be placed by autonomy readiness so AGENTS.md stays free of inventories and only routes or constrains behavior
+description: Three tiers — skills (autonomous-ready), instructions (reusable-but-steered), methodology notes (exploratory) — keep AGENTS.md free of capability inventories with a clear promotion path
 type: note
 traits: []
 tags: []
