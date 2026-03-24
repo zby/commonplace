@@ -28,7 +28,7 @@ A Claude Code plugin that generates complete knowledge systems from conversation
 
 **Self-evolution through friction.** Observations (friction signals) and tensions (contradictions) accumulate during work. When thresholds are hit (10+ observations, 5+ tensions), `/rethink` triggers triage. The system grows at pain points, not before.
 
-**Propositional wiki links with relationship markers.** Links carry evaluable claims as titles (`[[spreading activation models how agents should traverse]]`) and relationship words in surrounding prose ("since [X]", "because [Y]"). This is the convention our [title-as-claim](../title-as-claim-enables-traversal-as-reasoning.md) and [link contracts](../link-contracts-framework.md) descend from — we borrowed it from this system's wiki/Zettelkasten lineage.
+**Propositional wiki links with relationship markers.** Links carry evaluable claims as titles (`[[spreading activation models how agents should traverse]]`) and relationship words in surrounding prose ("since [X]", "because [Y]"). This is the convention our [title-as-claim](../title-as-claim-enables-traversal-as-reasoning.md) and [link relationship semantics](../adr/009-link-relationship-semantics.md) descend from — we borrowed it from this system's wiki/Zettelkasten lineage.
 
 **Adjacency is not connection** (article #23). Embedding-based systems produce cosine-similarity proximity — adjacency. Curated links with articulated reasons produce connections. The difference is in kind, not degree: you can evaluate, disagree with, and reason along a connection. You cannot disagree with a cosine similarity score. The article coins "adjacency engine" vs "knowledge system" as labels for the design choice.
 
@@ -36,7 +36,7 @@ A Claude Code plugin that generates complete knowledge systems from conversation
 
 Article #23 links to six methodology claims from the 249-claim research base. Reviewing them reveals the depth of the underlying research and several parallels to our design that go beyond what the articles show.
 
-**"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link contracts](../link-contracts-framework.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, foundation, contradicts, enables, example. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link contracts enforce.
+**"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link relationship semantics](../adr/009-link-relationship-semantics.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, grounds, contradicts, enables, exemplifies. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link semantics enforce.
 
 **"over-automation corrupts quality when hooks encode judgment rather than verification"** — Strikingly close to our [methodology enforcement gradient](../methodology-enforcement-is-constraining.md) and [oracle strength spectrum](../oracle-strength-spectrum.md). Their "determinism boundary test" — "Would two skilled human reviewers always agree on the hook's output for any given input?" — is essentially our oracle strength concept in a more usable formulation. Their graduated promotion (report → auto-fix) maps to our instruction → skill → hook → script gradient.
 
@@ -69,7 +69,7 @@ Arscontexta is the **ancestor** of our KB. We installed it, used its pipeline, a
 - Link relationship semantics in prose (our "extends", "foundation", "contradicts")
 - Curated links as primary organization, not embeddings
 - The intuition that traversal through reasoned links is a form of reasoning
-- Three-space memory separation (which we [documented](../three-space-agent-memory-maps-to-tulving-taxonomy.md) and remain uncertain about)
+- Three-space memory separation (which we [documented](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) and remain uncertain about)
 
 These are not independent convergences — they're shared inheritance from wiki/Zettelkasten tradition, with arscontexta as the direct upstream source.
 
@@ -137,9 +137,9 @@ The deepest divergence is in grounding discipline. Arscontexta draws on **cognit
 Relevant Notes:
 
 - [title-as-claim-enables-traversal-as-reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — our implementation of the convention we borrowed from this lineage
-- [link-contracts-framework](../link-contracts-framework.md) — our formalization of link relationship semantics
+- [009-link-relationship-semantics](../adr/009-link-relationship-semantics.md) — our formalization of link relationship semantics
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — the scaling question connects here
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — our analysis of their article #19
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — our analysis of their article #19
 - [design-methodology-borrow-widely-filter-by-first-principles](../design-methodology-borrow-widely-filter-by-first-principles.md) — the cognitive science scale-mismatch concern connects to our adoption filter
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)

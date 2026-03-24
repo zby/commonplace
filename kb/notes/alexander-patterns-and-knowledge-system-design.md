@@ -1,5 +1,5 @@
 ---
-description: Christopher Alexander's pattern language, generative processes, and centers may connect to our knowledge system design at multiple levels — from structured document types to codification to link semantics. Vague but persistent.
+description: "Alexander's pattern structure (Context/Problem/Forces/Solution) anticipates typed document contracts; his generative-process argument supports incremental codification over upfront type systems. Connection strengthens at concrete levels, grows vague at the 'centers' level."
 type: note
 traits: []
 status: speculative
@@ -30,7 +30,7 @@ Thalo's approach — commit to the full type system upfront via a grammar — is
 
 In "The Nature of Order," Alexander argues that living structure consists of centers that mutually reinforce each other. The quality of a building comes not from individual elements but from how centers create and intensify other centers.
 
-Notes in a knowledge graph might work the same way. Each note is a center. Links create mutual reinforcement. The graph has "life" when connections are genuine rather than mechanical. Our [link contracts](./link-contracts-framework.md) (extends, foundation, contradicts, enables) describe *how* centers strengthen each other — they're not just navigation aids but relationship types that affect the quality of the whole.
+Notes in a knowledge graph might work the same way. Each note is a center. Links create mutual reinforcement. The graph has "life" when connections are genuine rather than mechanical. Our [link relationship semantics](./adr/009-link-relationship-semantics.md) (extends, grounds, contradicts, enables) describe *how* centers strengthen each other — they're not just navigation aids but relationship types that affect the quality of the whole.
 
 This might also connect to why orphan notes feel wrong — a center with no connections to other centers weakens the structure rather than strengthening it.
 

@@ -24,7 +24,7 @@ What counts as "adding information" depends on who you measure against. Three ca
 
 In a linked KB, each link can carry the reader to a node with its own epiplexity — a practitioner report with quantified results, a formal framework, a prior argument with independent evidence. The network is where epistemic complexity accumulates, not the prose of any single note.
 
-But this resistance requires that links are [load-bearing](./link-contracts-framework.md) — the linked notes must actually contribute to the argument. A note full of "see also" links to tangentially related material is still reverse-compressed; the links are decorative, not structural. The test: remove the links — does the argument collapse, or does it read identically?
+But this resistance requires that links are [load-bearing](./linking-theory.md) — the linked notes must actually contribute to the argument. A note full of "see also" links to tangentially related material is still reverse-compressed; the links are decorative, not structural. The test: remove the links — does the argument collapse, or does it read identically?
 
 ## Toward a validation gate
 
@@ -40,5 +40,5 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
 - [distillation](./distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: the formal measure of extractable structure for bounded observers
-- [link contracts framework](./link-contracts-framework.md) — enables: articulated link relationships are what make links load-bearing rather than decorative
+- [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — contrasts: distillation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing

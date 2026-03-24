@@ -12,7 +12,7 @@ The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the 
 
 ## Two value propositions
 
-1. **Connect retrieved pieces to each other** — build a "search result graph" where relationships between results are articulated, not just listed. This is the `/connect` pattern applied to a temporary research corpus. The process combines both [kinds of navigation](./two-kinds-of-navigation.md) in a new context: long-range search retrieves external results, then local link-following connects them into a traversable temporary graph.
+1. **Connect retrieved pieces to each other** — build a "search result graph" where relationships between results are articulated, not just listed. This is the `/connect` pattern applied to a temporary research corpus. The process combines both [kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) in a new context: long-range search retrieves external results, then local link-following connects them into a traversable temporary graph.
 2. **Connect retrieved pieces to existing KB** — what `/ingest` already does, but at scale. The KB provides pre-existing structural understanding that elevates raw search results. This extends [the KB's action capacity](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) beyond retrieval into active research — the agent doesn't just look up what it knows, it discovers what it doesn't.
 
 ## Why this differs from naive search
@@ -81,13 +81,13 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — provides the abstraction depth framework that distinguishes this from naive search
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
-- [link contracts framework](./link-contracts-framework.md) — link quality criteria (descriptive anchors, intent taxonomy) inform how inter-result connections should be expressed
+- [linking-theory](./linking-theory.md) — link quality criteria inform how inter-result connections should be expressed
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — centrality metrics for pruning search result graphs
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — deep search skill would distill from this methodology note
 - [oracle-strength spectrum](./oracle-strength-spectrum.md) — stopping criteria for the iteration loop map to oracle types of varying strength
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: deep search amplifies the candidate-explosion problem /connect faces at KB scale
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — exemplifies: deep search is active research capacity, not retrieval; the agent discovers what it doesn't know rather than looking up what it does
-- [two kinds of navigation](./two-kinds-of-navigation.md) — synthesizes: deep search creates a temporary corpus where both navigation modes operate — long-range search retrieves, then local link-following inter-connects
+- [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — synthesizes: deep search creates a temporary corpus where both navigation modes operate — long-range search retrieves, then local link-following inter-connects
 - [scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — enables: the MVP's five phases are a scenario decomposition whose context needs could be measured like other scenarios
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: deep search's compound type signature (query + context → research-report + source-reviews) chains multiple existing skill signatures
 - [scenarios](./scenarios.md) — extends: deep search defines a third scenario type ("research a topic deeply") beyond upstream change analysis and proposing changes

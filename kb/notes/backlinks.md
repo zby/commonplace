@@ -91,5 +91,5 @@ A script generates a bare list of inbound links (no semantics). Agents optionall
 
 Relevant Notes:
 
-- [link-contracts-framework](./link-contracts-framework.md) — foundation: backlinks are a special case of link visibility; the "click decision" framework applies to deciding whether to follow an inbound link too
+- [linking-theory](./linking-theory.md) — foundation: backlinks are a special case of link visibility; what makes a link worth following applies to inbound links too
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — related pattern: deterministic generation from structured data, the approach that option B would follow

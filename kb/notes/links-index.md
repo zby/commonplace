@@ -28,12 +28,8 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 ## Observations
 
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
-- [two-kinds-of-navigation](./two-kinds-of-navigation.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
+- [two-kinds-of-navigation](./link-following-and-search-impose-different-metadata-requirements.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible (now in [maintenance](./kb-maintenance-index.md))
-
-## Decisions
-
-- [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — replace LLM-generated Topics footers with deterministic script
 
 ## Analysis
 
@@ -41,9 +37,17 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 - [link-strength-is-encoded-in-position-and-prose](./link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
 - [distilled-artifacts-need-source-tracking-at-the-source](./distilled-artifacts-need-source-tracking-at-the-source.md) — distilled artifacts shouldn't link back to sources (focus), but sources should link forward via "Distilled into:" so source changes trigger staleness review
 
+## Decisions
+
+- [009-link-relationship-semantics](./adr/009-link-relationship-semantics.md) — adopts extends/grounds/contradicts/enables/exemplifies vocabulary, borrowed from arscontexta and adapted for agent navigation
+- [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — replace LLM-generated Topics footers with deterministic script
+
+## Theory
+
+- [linking-theory](./linking-theory.md) — seedling: open questions about what makes links load-bearing, how relationship types interact with position, and what a principled linking theory would predict
+
 ## Reference material
 
-- [link-contracts-framework](./link-contracts-framework.md) — framework for systematic, testable linking: link contracts, intent taxonomy, agent implications
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation theory behind link semantics: "since [X]" and "because [Y]" links encode Toulmin warrants connecting grounds to claims; the six-part model (claim/grounds/warrant/qualifier/rebuttal/backing) names the structure argumentative links carry
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — practitioner validation: an agent inside a curated graph contrasts propositional link semantics ("since [X]") with embedding-based adjacency, arguing the difference is one of kind not degree; strongest external evidence for why link quality (not quantity) determines graph health
 - [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — empirical counterpoint: embedding-based link generation succeeds on QA benchmarks, demonstrating that adjacency-as-linking works for retrieval accuracy even if it lacks propositional semantics; the question is whether the quality gap matters only for navigability and agent reasoning
