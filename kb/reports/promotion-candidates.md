@@ -1,6 +1,6 @@
 # Promotion Candidates — 2026-03-24
 
-Text files: 3 | Seedlings: 101
+Text files: 3 | Seedlings: 102
 
 ## Text → Note
 
@@ -70,8 +70,8 @@ Text files: 3 | Seedlings: 101
 - [Design methodology — borrow widely, filter by first principles](../notes/design-methodology-borrow-widely-filter-by-first-principles.md) — **12 links in**
   Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) +9 more
 
-- [Effective context is task-relative and complexity-relative not a fixed model constant](../notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — **12 links in**
-  Sources: [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) +9 more
+- [Deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — **12 links in**
+  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [008-Stdlib-only core scripts](../notes/adr/008-stdlib-only-core-scripts.md), [Claim notes should use Toulmin-derived sections for structured argument](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) +9 more
 
 
 ## Orphan Seedlings (2 with zero incoming links)
