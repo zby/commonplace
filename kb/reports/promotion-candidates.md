@@ -1,14 +1,11 @@
 # Promotion Candidates — 2026-03-24
 
-Text files: 4 | Seedlings: 101
+Text files: 3 | Seedlings: 101
 
 ## Text → Note
 
 - [Text testing framework — source material](../notes/text-testing-framework.md) — **8 links in**
   Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Document system](../notes/document-system-index.md) +5 more
-
-- [Solve low-degree-of-freedom subproblems first to avoid blocking better designs](../notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — **5 links in**
-  Sources: [Alexander's patterns connect to knowledge system design at multiple levels](../notes/alexander-patterns-and-knowledge-system-design.md), [Computational model](../notes/computational-model-index.md), [Context efficiency is the central design concern in agent systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) +2 more
 
 - [Convert still requires semantic description](../notes/convert-still-requires-semantic-description.md) — **0 links in**
 

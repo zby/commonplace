@@ -22,16 +22,21 @@ NOTES_DIR = Path("kb/notes")
 REPORTS_DIR = Path("kb/reports")
 
 
-def parse_frontmatter(content: str) -> dict:
-    """Extract YAML frontmatter from markdown content."""
+def parse_frontmatter(content: str) -> dict | None:
+    """Extract YAML frontmatter from markdown content.
+
+    Returns None if no frontmatter delimiters found (genuine text file).
+    Returns a dict (possibly with partial data) if delimiters are present.
+    """
     import yaml
 
     match = re.match(r"^---\n(.*?)\n---\n", content, re.DOTALL)
     if not match:
-        return {}
+        return None
     try:
         return yaml.safe_load(match.group(1)) or {}
     except yaml.YAMLError:
+        # Has frontmatter delimiters but YAML is broken — still a note, not text
         return {}
 
 
@@ -81,7 +86,7 @@ def main() -> None:
         title = get_title(content)
         all_notes[abs_path] = {"fm": fm, "title": title, "content": content, "rel": path}
 
-        if not fm:
+        if fm is None:
             text_files[abs_path] = title
         elif fm.get("status") == "seedling":
             seedlings[abs_path] = title
