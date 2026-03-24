@@ -79,7 +79,7 @@ Relevant Notes:
 
 - [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change; every KB improvement is learning, the spectrum of generalisation scope shows why automating wide-scope mutations is the hard part
 - [constraining](../notes/constraining.md) — describes the constrain/relax cycle in both human-driven and automated forms (DSPy, ProTeGi); the boiling cauldron is a KB-specific instantiation of that cycle, applying it to note and link mutations rather than prompts and code
-- [what-cludebot-teaches-us](./what-cludebot-teaches-us.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
+- [cludebot](./related-systems/cludebot.md) — co-retrieval reinforcement and consolidation passes are concrete mechanisms for the boiling cauldron; cludebot's "need enough query volume" conclusion mirrors the "need usage first" gap here
 - [needs-testing](./needs-testing.md) — the extract/connect/review cycle is a primitive version of the boiling cauldron, already partially operational
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — note scoring addresses part of the quality gates problem: composite scores from status, type, inbound links, and recency make automated curation tractable at scale
 - [scenarios](./scenarios.md) — the actual use cases the learning loop's evaluation function would need to optimise against
