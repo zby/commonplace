@@ -11,7 +11,7 @@ If you need to act quickly and are unsure which specialized path applies, do thi
 1. Write a `note` in `kb/notes/` (default type).
 2. Follow the checklist/template in `kb/instructions/WRITING.md`.
 3. Connect the note to related notes and at least one index (`/connect` or manual links with explicit relationship semantics).
-4. Run `/validate` to check structure, frontmatter, and links.
+4. Run `uv run kb/instructions/validate/validate_notes.py <note-path>` to check structure, frontmatter, and links.
 
 Use specialized types only when the routing table explicitly points to one.
 
@@ -56,7 +56,7 @@ rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
 rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 ```
 
-Use `/validate` for specialized audits and consistency checks.
+Use `uv run kb/instructions/validate/validate_notes.py all` for batch validation audits.
 
 ### Escalation Boundaries
 

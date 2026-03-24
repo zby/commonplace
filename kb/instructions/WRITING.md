@@ -18,7 +18,13 @@ If any answer is "no," fix it before saving.
 
 ## After Writing
 
-When all changes are complete (note written, links added, indexes updated), run `/validate` on the new or modified notes. This checks both structural correctness and content quality — don't skip it even if the note "looks fine."
+When all changes are complete (note written, links added, indexes updated), run the validation script on new or modified notes:
+
+```bash
+uv run kb/instructions/validate/validate_notes.py <note-path>
+```
+
+This checks structural correctness — frontmatter validity, enum values, link health, required sections. Don't skip it even if the note "looks fine."
 
 ## Where It Goes
 
