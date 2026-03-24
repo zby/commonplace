@@ -1,11 +1,3 @@
----
-description: Reference framework for automated text testing — contracts per document type, test pyramid (deterministic/LLM rubric/corpus), production workflow
-type: note
-traits: [has-external-sources]
-tags: [document-system]
-status: current
----
-
 # Text testing framework — source material
 
 Full framework for automated testing of text artifacts, received 2026-02-21.
