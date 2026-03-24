@@ -10,7 +10,6 @@ What works, what doesn't, what needs testing. Empirical observations about KB op
 
 ## Notes
 
-- [needs-testing](./needs-testing.md) — promising but unconfirmed: extract/connect/review cycle, input classification
 - [cludebot](./related-systems/cludebot.md) — techniques from cludebot worth borrowing; richest trajectory-to-lesson loop reviewed
 - [prompt-ablation-converts-human-insight-to-deployable-framing](./prompt-ablation-converts-human-insight-to-deployable-framing.md) — methodology for testing prompt framings
 - [systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md) — controlled variation as a family of methods: decorrelating checks, measuring brittleness, and distinguishing both from Deutsch-style reach review
