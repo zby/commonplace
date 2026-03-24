@@ -209,6 +209,174 @@ Overall: CLEAN
     assert "Updated body line." in record.diff
 
 
+def test_body_change_ratio_ignores_frontmatter_and_detects_major_rewrite() -> None:
+    reviewed_text = """---
+description: First description
+type: note
+---
+
+# Example
+line 1
+line 2
+line 3
+line 4
+"""
+    current_text = """---
+description: Updated description
+type: note
+---
+
+# Example
+new 1
+new 2
+new 3
+new 4
+"""
+
+    ratio = notes_selector.body_change_ratio(reviewed_text, current_text)
+
+    assert ratio == pytest.approx(1.0)
+    assert notes_selector.body_changed_substantially(reviewed_text, current_text)
+
+
+def test_body_changed_substantially_requires_more_than_half_the_body() -> None:
+    reviewed_text = """---
+description: Stable description
+type: note
+---
+
+# Example
+line 1
+line 2
+line 3
+line 4
+"""
+    current_text = """---
+description: Stable description
+type: note
+---
+
+# Example
+line 1
+line 2
+new 3
+new 4
+"""
+
+    ratio = notes_selector.body_change_ratio(reviewed_text, current_text)
+
+    assert ratio == pytest.approx(0.5)
+    assert not notes_selector.body_changed_substantially(reviewed_text, current_text)
+
+
+def test_frontmatter_review_marks_major_body_rewrite_as_changed(
+    tmp_path: Path,
+) -> None:
+    init_repo(tmp_path)
+    note_path = note(
+        tmp_path / "kb" / "notes" / "rewrite.md",
+        "Rewrite",
+        "\nLine 1.\nLine 2.\nLine 3.\nLine 4.\n",
+    )
+    commit_all(tmp_path, "Add rewrite note")
+    old_blob_sha = review_metadata.git_blob_sha(note_path)
+    review_text = review_metadata.inject_review_metadata(
+        """=== FRONTMATTER REVIEW: rewrite.md ===
+
+Checks applied: 4
+
+CLEAN:
+- [Title-body alignment] Clean.
+
+Overall: CLEAN
+===
+""",
+        review_metadata.ReviewMetadata(
+            note_path="kb/notes/rewrite.md",
+            last_full_review_note_sha=old_blob_sha,
+            last_full_review_note_commit="review-commit",
+            last_full_review_at="2026-03-23T10:00:00+01:00",
+            last_accepted_note_sha=old_blob_sha,
+            last_accepted_note_commit="review-commit",
+            last_accepted_at="2026-03-23T10:00:00+01:00",
+            last_acceptance_kind="full-review",
+            review_type="frontmatter-review",
+        ),
+    )
+    write(tmp_path / "reviews" / "rewrite.frontmatter-review.md", review_text)
+    note(
+        note_path,
+        "Rewrite",
+        "\nNew 1.\nNew 2.\nNew 3.\nNew 4.\n",
+    )
+
+    record = notes_selector.build_change_record(
+        note_path,
+        "frontmatter-review",
+        tmp_path / "reviews",
+        tmp_path,
+        frontmatter_only=True,
+    )
+
+    assert record.status == "changed"
+    assert record.reason == "body-major-rewrite"
+    assert "New 1." in record.diff
+
+
+def test_frontmatter_review_skips_minor_body_change_when_frontmatter_is_stable(
+    tmp_path: Path,
+) -> None:
+    init_repo(tmp_path)
+    note_path = note(
+        tmp_path / "kb" / "notes" / "minor.md",
+        "Minor",
+        "\nLine 1.\nLine 2.\nLine 3.\nLine 4.\n",
+    )
+    commit_all(tmp_path, "Add minor note")
+    old_blob_sha = review_metadata.git_blob_sha(note_path)
+    review_text = review_metadata.inject_review_metadata(
+        """=== FRONTMATTER REVIEW: minor.md ===
+
+Checks applied: 4
+
+CLEAN:
+- [Title-body alignment] Clean.
+
+Overall: CLEAN
+===
+""",
+        review_metadata.ReviewMetadata(
+            note_path="kb/notes/minor.md",
+            last_full_review_note_sha=old_blob_sha,
+            last_full_review_note_commit="review-commit",
+            last_full_review_at="2026-03-23T10:00:00+01:00",
+            last_accepted_note_sha=old_blob_sha,
+            last_accepted_note_commit="review-commit",
+            last_accepted_at="2026-03-23T10:00:00+01:00",
+            last_acceptance_kind="full-review",
+            review_type="frontmatter-review",
+        ),
+    )
+    write(tmp_path / "reviews" / "minor.frontmatter-review.md", review_text)
+    note(
+        note_path,
+        "Minor",
+        "\nLine 1.\nLine 2.\nNew 3.\nNew 4.\n",
+    )
+
+    record = notes_selector.build_change_record(
+        note_path,
+        "frontmatter-review",
+        tmp_path / "reviews",
+        tmp_path,
+        frontmatter_only=True,
+    )
+
+    assert record.status == "unchanged"
+    assert record.reason == "frontmatter-unchanged"
+    assert record.diff is None
+
+
 def test_commit_path_metadata_is_resolved_without_crashing(tmp_path: Path) -> None:
     init_repo(tmp_path)
     note_path = note(
