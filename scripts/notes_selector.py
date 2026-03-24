@@ -22,6 +22,7 @@ import argparse
 import difflib
 import json
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -283,7 +284,20 @@ def build_change_record(
             accepted_at=metadata.last_accepted_at,
         )
 
-    reviewed_text = read_blob(repo_root, accepted_note_sha)
+    try:
+        reviewed_text = read_blob(repo_root, accepted_note_sha)
+    except subprocess.CalledProcessError:
+        return ReviewChange(
+            note_path=note.relative_to(repo_root).as_posix(),
+            review_path=review_path.relative_to(repo_root).as_posix(),
+            review_type=review_type,
+            status="changed",
+            reason="invalid-accepted-note-sha",
+            current_blob_sha=current_blob_sha,
+            accepted_note_sha=metadata.last_accepted_note_sha,
+            accepted_note_commit=metadata.last_accepted_note_commit,
+            accepted_at=metadata.last_accepted_at,
+        )
     current_text = note.read_text(encoding="utf-8")
 
     if frontmatter_only:

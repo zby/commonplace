@@ -424,6 +424,52 @@ def test_commit_path_metadata_is_resolved_without_crashing(tmp_path: Path) -> No
     assert "Second version." in record.diff
 
 
+def test_unreadable_accepted_blob_returns_invalid_record_instead_of_crashing(
+    tmp_path: Path,
+) -> None:
+    init_repo(tmp_path)
+    note_path = note(
+        tmp_path / "kb" / "notes" / "broken.md",
+        "Broken",
+        "\nCurrent version.\n",
+    )
+    review_text = review_metadata.inject_review_metadata(
+        """=== PROSE REVIEW: broken.md ===
+
+Checks applied: 8
+
+CLEAN:
+- [Pseudo-formalism] Clean.
+
+Overall: CLEAN
+===
+""",
+        review_metadata.ReviewMetadata(
+            note_path="kb/notes/broken.md",
+            last_full_review_note_sha="3" * 40,
+            last_full_review_note_commit=None,
+            last_full_review_at="2026-03-23T10:00:00+01:00",
+            last_accepted_note_sha="3" * 40,
+            last_accepted_note_commit=None,
+            last_accepted_at="2026-03-23T10:00:00+01:00",
+            last_acceptance_kind="full-review",
+            review_type="prose-review",
+        ),
+    )
+    write(tmp_path / "reviews" / "broken.prose-review.md", review_text)
+
+    record = notes_selector.build_change_record(
+        note_path,
+        "prose-review",
+        tmp_path / "reviews",
+        tmp_path,
+    )
+
+    assert record.status == "changed"
+    assert record.reason == "invalid-accepted-note-sha"
+    assert record.accepted_note_sha == "3" * 40
+
+
 def test_migrate_review_file_uses_note_blob_from_review_commit(tmp_path: Path) -> None:
     init_repo(tmp_path)
     note_path = note(
