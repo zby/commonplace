@@ -26,7 +26,7 @@ We organize each system around five recurring stages:
 
 Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is symbolic artifacts, service-managed memory, or model weights. [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) sharpens the distinction: "service memory" is usually a backend choice within the symbolic artifact substrate, not a third top-level substrate alongside artifacts and weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is symbolic artifacts, service-managed memory, or model weights. [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) sharpens the distinction: "service memory" is usually a backend choice within the symbolic artifact substrate, not a third top-level substrate alongside artifacts and weights.
 
 ## Napkin
 
@@ -344,7 +344,7 @@ The concrete update to [automating KB learning is an open problem](./automating-
 Relevant Notes:
 
 - [continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — sharpens: the survey's non-weight cases count as continuous learning because their improvements persist, not because they imitate weight learning
-- [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually symbolic-artifact storage rather than a third substrate
+- [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually symbolic-artifact storage rather than a third substrate
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
 - [Napkin](./related-systems/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates

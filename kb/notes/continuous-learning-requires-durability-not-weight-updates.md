@@ -27,6 +27,6 @@ Relevant Notes:
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition makes capacity change, not weight change, the criterion
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — exemplifies: versioned prompts, schemas, tools, and tests are one concrete artifact-side learning loop
 - [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — extends: artifact-side learning fills the durable middle between weight training and ephemeral context
-- [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) — extends: names the main non-weight substrate family and separates substrate class from storage and artifact choices
+- [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — extends: names the main non-weight substrate family and separates substrate class from storage and artifact choices
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is the unsurprising weight-side case; this note argues the artifact-side case is learning too
 - [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — grounds: surveyed systems already split cleanly into weight-promotion and artifact-promotion loops

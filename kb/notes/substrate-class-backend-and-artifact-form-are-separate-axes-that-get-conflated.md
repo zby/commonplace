@@ -6,7 +6,7 @@ tags: [learning-theory]
 status: current
 ---
 
-# Learning substrates, backends, and artifact forms
+# Substrate class, backend, and artifact form are separate axes that get conflated
 
 "Weights," "tips," and "repo artifacts" look like parallel terms, but they name things at three different levels. Weights names a **substrate class** — what kind of thing changes when the system learns. Tips names one **artifact form** within a substrate. Repo names a **storage backend**. Conflating the three makes the comparison space blurry: you end up arguing "tips vs weights" when the real contrast is between substrate classes, and treating "repo artifacts" as an umbrella when it is one backend choice.
 

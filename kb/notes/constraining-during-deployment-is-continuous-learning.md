@@ -25,7 +25,7 @@ Weight-based learning captures distributional knowledge (style, tone, world know
 Relevant Notes:
 
 - [Continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — foundation: this note is one concrete non-weight case, not the general claim
-- [Learning substrates, backends, and artifact forms](./learning-substrates-backends-and-artifact-forms.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
+- [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
 - [constraining](constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [constraining and distillation both trade generality for compound](constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that constraining operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
