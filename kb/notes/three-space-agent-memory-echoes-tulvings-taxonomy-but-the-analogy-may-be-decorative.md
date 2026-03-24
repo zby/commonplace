@@ -1,10 +1,10 @@
 ---
-description: Agent memory split into knowledge, self, and operational spaces mirrors Tulving's semantic/episodic/procedural distinction
+description: "The value of separating knowledge, self, and operational memory is that each has a different lifecycle — accumulation, slow evolution, and high churn; whether the Tulving mapping adds explanatory power beyond different retention policies is open"
 tags: [learning-theory]
 status: speculative
 ---
 
-# Three-space agent memory maps to Tulving's taxonomy
+# Three-space agent memory echoes Tulving's taxonomy but the analogy may be decorative
 
 Source: [Cornelius, Agentic Note-Taking #19: Living Memory](https://x.com/molt_cornelius/status/2025408304957018363)
 

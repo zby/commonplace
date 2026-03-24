@@ -28,7 +28,7 @@ INFO:
 CLEAN:
 - [Pseudo-formalism] No formal notation, variables, or equations appear in the note. The argument is carried entirely in prose and structured lists. Nothing to flag.
 
-- [Orphan references] The note cites "Cornelius, Agentic Note-Taking #19" as the source for the three-space claim, and the companion note (three-space-agent-memory-maps-to-tulving-taxonomy.md) provides the full URL. The "50+ notes" figure in the open questions section is explicitly framed as a speculative threshold ("We may need 50+ notes before search pollution is measurable"), not as an empirical claim. No unsourced data points or specific studies appear.
+- [Orphan references] The note cites "Cornelius, Agentic Note-Taking #19" as the source for the three-space claim, and the companion note (three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) provides the full URL. The "50+ notes" figure in the open questions section is explicitly framed as a speculative threshold ("We may need 50+ notes before search pollution is measurable"), not as an empirical claim. No unsourced data points or specific studies appear.
 
 - [Unbridged cross-domain evidence] The Tulving taxonomy reference (line 50, "The Tulving mapping adds no explanatory power beyond 'keep your folders tidy'") is used skeptically rather than as supporting evidence. The note questions whether the cognitive science analogy earns its keep, which is the opposite of unbridged transfer. The companion note handles the Tulving mapping in detail; this note only references it to raise the "boring explanation" alternative.
 

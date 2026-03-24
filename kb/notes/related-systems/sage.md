@@ -90,6 +90,6 @@ Relevant Notes:
 - [ephemeral computation prevents accumulation](../ephemeral-computation-prevents-accumulation.md) — SAGE is maximally anti-ephemeral: every agent interaction produces a signed, stored, consensus-validated record; but without consolidation, the accumulation is flat (facts pile up, never synthesized)
 - [memory management policy is learnable but oracle-dependent](../memory-management-policy-is-learnable-but-oracle-dependent.md) — SAGE's validators are hand-coded policy (deterministic checks), not learned; the system has no mechanism to improve its acceptance criteria from experience
 - [claw learning loops must improve action capacity not just retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — SAGE addresses storage and retrieval but not the broader action-capacity loop; no mechanism for preferences, procedures, or judgment precedents
-- [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — SAGE's four memory types (fact, observation, inference, task) are a flat enum, not a structural separation; memories of all types share the same store, retrieval path, and lifecycle
+- [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — SAGE's four memory types (fact, observation, inference, task) are a flat enum, not a structural separation; memories of all types share the same store, retrieval path, and lifecycle
 
 `#related-systems` `#memory-architecture`

@@ -8,7 +8,7 @@
 
 **Index scan:**
 - Read kb/notes/index.md (lines 1-169, all entries) — flagged candidates:
-  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) — memory taxonomy for agents
+  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — memory taxonomy for agents
   - [three-space-memory-separation-predicts-measurable-failure-modes](kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md) — memory separation testing
   - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) — 11-system comparison across memory dimensions
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — AgeMem's learned memory management
@@ -35,7 +35,7 @@
   - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) (56%) — strong match, memory system survey
   - [related-systems-index](kb/notes/related-systems/related-systems-index.md) (43%) — routing only
   - [sage](kb/notes/related-systems/sage.md) (41%) — memory consistency/consensus
-  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (40%) — memory taxonomy
+  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (40%) — memory taxonomy
   - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](kb/notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) (33%) — multi-agent coordination but weak match; evaluated, kept
   - Below 33%: bitter-lesson-boundary, injectable-configuration, enforcement-without-structured-recovery, claw-learning — all surface overlap only, rejected
 
@@ -47,7 +47,7 @@
 
 - query "agent memory coherence scoping coordination shared state" --collection notes -n 15:
   - [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) (52%) — strong match, scoping as coherence mechanism
-  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (44%) — already flagged
+  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (44%) — already flagged
   - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) (38%) — already flagged
   - [sage](kb/notes/related-systems/sage.md) (35%) — consensus/consistency
   - [spacebot](kb/notes/related-systems/spacebot.md) (34%) — rejected, process architecture not memory consistency
@@ -62,7 +62,7 @@
 
 - [The fundamental split in agent memory is not storage format but who decides what to remember](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) — **extends**: The paper provides a complementary architectural lens to the comparative review's six-dimensional analysis. Where the review identifies agency model as the most consequential design choice, the paper reframes the same design space through computer architecture abstractions — shared vs. distributed memory paradigms, three-layer hierarchy (I/O, cache, memory), and consistency protocols. The paper's consistency challenge directly addresses what the review identifies as unsolved: no system combines high agency, high throughput, and high curation quality. The consistency models the paper calls for are precisely the missing coordination layer.
 
-- [Three-space agent memory maps to Tulving's taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) — **extends** (status: speculative): The paper's three-layer hierarchy (I/O, cache, memory) is an independent decomposition of agent memory from a different tradition (computer architecture vs. cognitive science). The Tulving mapping splits by content type and lifecycle; the paper splits by access latency and capacity. Together they form a two-axis model: content type (what kind of knowledge) and hierarchy level (how fast/limited the storage). The paper's hierarchy could explain why the three-space separation matters operationally — different content types naturally have different cache/persistence characteristics.
+- [Three-space agent memory maps to Tulving's taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — **extends** (status: speculative): The paper's three-layer hierarchy (I/O, cache, memory) is an independent decomposition of agent memory from a different tradition (computer architecture vs. cognitive science). The Tulving mapping splits by content type and lifecycle; the paper splits by access latency and capacity. Together they form a two-axis model: content type (what kind of knowledge) and hierarchy level (how fast/limited the storage). The paper's hierarchy could explain why the three-space separation matters operationally — different content types naturally have different cache/persistence characteristics.
 
 - [LLM context is composed without scoping](kb/notes/llm-context-is-composed-without-scoping.md) — **grounds** (status: seedling): The paper's memory consistency challenge — "read-time conflict handling under iterative revisions" and "update visibility and ordering" — is the multi-agent version of the scoping problem this note identifies for single contexts. The flat context has no scoping; the multi-agent setting has no consistency protocol. Both are the same underlying problem (shared mutable state without coordination primitives) at different scales. The paper's proposed consistency models would serve as inter-agent scoping mechanisms, complementing the sub-agent lexical scoping this note proposes within a single agent.
 
@@ -84,7 +84,7 @@
 
 **Bidirectional candidates** (reverse link also worth adding):
 - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) <-> source — **extends**: The review provides the empirical landscape; the paper provides the architectural theory. Both would benefit from cross-reference.
-- [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) <-> source — **extends**: Two independent decompositions of the same design space from different intellectual traditions.
+- [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) <-> source — **extends**: Two independent decompositions of the same design space from different intellectual traditions.
 - [llm-context-is-composed-without-scoping](kb/notes/llm-context-is-composed-without-scoping.md) <-> source — **grounds**: The paper provides the multi-agent extension that makes the single-agent scoping analysis more general.
 
 ## Rejected Candidates

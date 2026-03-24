@@ -1,5 +1,5 @@
 <!-- REVIEW-METADATA
-note-path: kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md
+note-path: kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md
 last-full-review-note-sha: c17c75b3c8c601e5dc6fb70603926574028ef921
 last-full-review-note-commit: 5d0771d0710a683a620be574bcc3f3b86bbdb60b
 last-full-review-at: 2026-03-23T09:32:55+01:00
@@ -9,7 +9,7 @@ last-accepted-at: 2026-03-23T09:32:55+01:00
 last-acceptance-kind: full-review
 review-type: prose-review
 -->
-=== PROSE REVIEW: three-space-agent-memory-maps-to-tulving-taxonomy.md ===
+=== PROSE REVIEW: three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md ===
 
 Checks applied: 8
 

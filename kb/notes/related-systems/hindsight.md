@@ -83,7 +83,7 @@ Hindsight ([vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)) 
 
 ---
 
-Extends [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-maps-to-tulving-taxonomy.md) — Hindsight's world/experience/observation taxonomy is the closest production implementation of the theoretical three-space separation, with benchmark evidence that the separation improves retrieval.
+Extends [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — Hindsight's world/experience/observation taxonomy is the closest production implementation of the theoretical three-space separation, with benchmark evidence that the separation improves retrieval.
 
 Extends [three-space memory separation predicts measurable failure modes](../three-space-memory-separation-predicts-measurable-failure-modes.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
 

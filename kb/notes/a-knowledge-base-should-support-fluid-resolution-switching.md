@@ -14,7 +14,7 @@ The commonplace KB already has several mechanisms that serve resolution-switchin
 
 **Titles vs bodies are a resolution pair.** Claim titles give the zoomed-out view — the principle, the assertion. The note body gives the zoomed-in view — the mechanism, the evidence, the specifics. Scanning a list of titles is surveying the landscape; opening a note is examining the territory. Since [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), following links between claim titles reads as a chain of reasoning at the abstract level — without requiring the reader to descend into any specific note.
 
-**Indexes and notes operate at different resolutions.** An area index like `tags-index.md` is the broad view — it shows what topics exist and how they relate. Following a link from the index zooms in. Returning to the index zooms out to check bearings. This is the [two kinds of navigation](./two-kinds-of-navigation.md) distinction: local link-following is narrow and contextual; search and index browsing are broad and orienting.
+**Indexes and notes operate at different resolutions.** An area index like `tags-index.md` is the broad view — it shows what topics exist and how they relate. Following a link from the index zooms in. Returning to the index zooms out to check bearings. This is the [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) distinction: local link-following is narrow and contextual; search and index browsing are broad and orienting.
 
 **Link semantics encode zoom direction.** "Since [X]" zooms into a foundation — following it takes you deeper, toward the grounds of the current argument. "This extends [Y]" zooms out toward a generalization. "Contradicts [Z]" shifts laterally to a competing view at the same level. The relationship words in [link strength](./link-strength-is-encoded-in-position-and-prose.md) aren't just categorization — they tell the reader which direction in abstraction space they're moving.
 
@@ -45,7 +45,7 @@ The [discovery note](./discovery-is-seeing-the-particular-as-an-instance-of-the-
 Relevant Notes:
 
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles are the zoomed-out resolution layer; they carry the argument without requiring descent into the note body
-- [two kinds of navigation](./two-kinds-of-navigation.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
+- [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
 - [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations

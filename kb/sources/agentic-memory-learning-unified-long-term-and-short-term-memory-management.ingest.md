@@ -40,7 +40,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 
 **Connections flagged for reverse linking (actionable):**
 
-- [Three-space agent memory maps to Tulving's taxonomy](../notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) -- **challenges**: AgeMem separates memory by access pattern (persistent LTM vs active STM), not content type (semantic/episodic/procedural). Unified RL-trained management is evidence against structurally isolating memory spaces. The three-space note does not currently link to the analysis note.
+- [Three-space agent memory maps to Tulving's taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) -- **challenges**: AgeMem separates memory by access pattern (persistent LTM vs active STM), not content type (semantic/episodic/procedural). Unified RL-trained management is evidence against structurally isolating memory spaces. The three-space note does not currently link to the analysis note.
 - [Context efficiency is the central design concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) -- **exemplifies**: STM operations achieve 3.1-5.1% token reduction while maintaining performance. Empirical evidence that learned context management outperforms heuristic approaches. Neither the context-efficiency note nor this source currently link to each other.
 
 **Sibling source connections:**
@@ -83,6 +83,6 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 
 Add reverse links from two notes that the `/connect` report flagged as missing:
 
-1. Update [three-space-agent-memory-maps-to-tulving-taxonomy.md](../notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) to cite [the analysis note](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) as a counterexample -- AgeMem's access-pattern separation (LTM/STM) challenges the content-type separation (semantic/episodic/procedural) and its unified management outperforms independent optimization.
+1. Update [three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) to cite [the analysis note](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) as a counterexample -- AgeMem's access-pattern separation (LTM/STM) challenges the content-type separation (semantic/episodic/procedural) and its unified management outperforms independent optimization.
 
 2. Update [context-efficiency-is-the-central-design-concern-in-agent-systems.md](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) to cite AgeMem's STM results (3.1-5.1% token reduction via learned Retrieve/Summary/Filter operations) as empirical evidence that learned context management can work.

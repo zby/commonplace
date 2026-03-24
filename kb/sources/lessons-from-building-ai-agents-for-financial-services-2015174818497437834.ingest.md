@@ -50,7 +50,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 9. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies inspectable substrate choice. "YAML files are human-readable. You can debug with `cat`" is the inspectable substrate argument applied to production agent architecture.
 
-10. **[three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-maps-to-tulving-taxonomy.md)** — partially exemplifies knowledge/self separation. Fintool separates knowledge (financial data), self/preferences (UserMemories.md), and procedural (skills). The separation is implicit in their S3 mount points (public/shared/private) rather than theorized.
+10. **[three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md)** — partially exemplifies knowledge/self separation. Fintool separates knowledge (financial data), self/preferences (UserMemories.md), and procedural (skills). The separation is implicit in their S3 mount points (public/shared/private) rather than theorized.
 
 11. **[Koylanai Personal Brain OS](./koylanai-personal-brain-os.ingest.md)** — parallel practitioner in a different domain. Both independently arrive at filesystem-as-knowledge-base, markdown-as-universal-format, and skills-as-product. Convergence across personal productivity and commercial finance strengthens the signal that these patterns are durable.
 

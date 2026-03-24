@@ -12,7 +12,7 @@
   - [automating-kb-learning-is-an-open-problem](kb/notes/automating-kb-learning-is-an-open-problem.md) — the "boiling cauldron" mutations and oracle gap; this paper offers a working closed loop
   - [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md) — the paper's framework IS continuous learning from deployment
   - [deploy-time-learning-the-missing-middle](kb/notes/deploy-time-learning-the-missing-middle.md) — the three timescales framework; paper provides a concrete mechanism
-  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) — tip categories may map onto memory spaces
+  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — tip categories may map onto memory spaces
   - [distillation](kb/notes/distillation.md) — tip extraction IS distillation
   - [learning-is-not-only-about-generality](kb/notes/learning-is-not-only-about-generality.md) — tips are low-reach accumulation
   - [related-systems/agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) — new data point for the survey
@@ -29,7 +29,7 @@
 
 **Semantic search:** (via qmd)
 - query "agent trajectory learning memory extraction tips from execution experience self-improvement" on notes — top hits:
-  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (93%) — strong match, already flagged
+  - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (93%) — strong match, already flagged
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (56%) — strong match, already flagged
   - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) (43%) — already flagged
   - [crewai-memory](kb/notes/related-systems/crewai-memory.md) (41%) — weak, different architecture (crew-level memory, not trajectory learning)
@@ -78,7 +78,7 @@
 
 - [constraining-during-deployment-is-continuous-learning](kb/notes/constraining-during-deployment-is-continuous-learning.md) — **exemplifies**: the paper's framework constrains agent behavior during deployment through accumulated tips — the same mechanism the note describes, with trajectory analysis as the data source instead of human iteration. Each tip narrows the interpretation space for future similar tasks, trading generality for reliability.
 
-- [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) — **exemplifies**: the paper's tips map primarily to the procedural/operational space (how to do things, high churn). Strategy tips are procedural knowledge about task execution. Recovery tips are operational knowledge about failure handling. Optimization tips are procedural knowledge about efficiency. None of the tips are semantic knowledge (facts about the world) or episodic/self knowledge (the agent's identity or calibration). This is a clean example of memory that is purely procedural.
+- [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — **exemplifies**: the paper's tips map primarily to the procedural/operational space (how to do things, high churn). Strategy tips are procedural knowledge about task execution. Recovery tips are operational knowledge about failure handling. Optimization tips are procedural knowledge about efficiency. None of the tips are semantic knowledge (facts about the world) or episodic/self knowledge (the agent's identity or calibration). This is a clean example of memory that is purely procedural.
 
 **Bidirectional candidates** (reverse link also worth adding):
 - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) <-> source — **contrasts**: both directions useful because the paper provides a complementary approach (learning content vs learning policy) that the AgeMem analysis note could contrast directly

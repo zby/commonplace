@@ -42,7 +42,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [distillation](../notes/distillation.md) (exemplifies) — The cognify phase is automated distillation from unstructured documents to structured graph triplets, with Pydantic schemas shaping the extraction target. Distillation without medium change (stays machine-readable throughout).
 
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-maps-to-tulving-taxonomy.md) (grounds) — Cognee partially maps to the three-space model (cognify produces semantic knowledge, temporal_cognify edges toward episodic) but has no structural separation between memory types.
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (grounds) — Cognee partially maps to the three-space model (cognify produces semantic knowledge, temporal_cognify edges toward episodic) but has no structural separation between memory types.
 
 - [three-space-memory-separation-predicts-measurable-failure-modes](../notes/three-space-memory-separation-predicts-measurable-failure-modes.md) (exemplifies) — Concrete system with no three-space separation, a candidate for observing predicted failure modes (search pollution, identity scatter) as data volume grows.
 

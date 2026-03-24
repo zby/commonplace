@@ -38,7 +38,7 @@ The temptation is to find 1:1 correspondences: training = education, in-context 
 
 3. **No LLM analogue for embodied procedural learning.** Humans learn through physical practice in ways that have no LLM counterpart. Riding a bicycle changes the cerebellum; no amount of text about bicycles produces an equivalent.
 
-The implication for knowledge system design: rather than mapping agent memory to human memory taxonomies (the [Tulving mapping](./three-space-agent-memory-maps-to-tulving-taxonomy.md) is a partial example), we should work from the actual properties of each LLM phase. The [human-LLM differences note](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) already argues for evaluating each convention individually rather than wholesale adopting human analogies — the Amodei spectrum shows why this is necessary at the level of learning mechanisms themselves, not just at the level of document conventions.
+The implication for knowledge system design: rather than mapping agent memory to human memory taxonomies (the [Tulving mapping](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) is a partial example), we should work from the actual properties of each LLM phase. The [human-LLM differences note](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) already argues for evaluating each convention individually rather than wholesale adopting human analogies — the Amodei spectrum shows why this is necessary at the level of learning mechanisms themselves, not just at the level of document conventions.
 
 ## Open Questions
 
@@ -56,6 +56,6 @@ Relevant Notes:
 
 - [deploy-time learning: the missing middle](./deploy-time-learning-the-missing-middle.md) — extends: adds deploy-time as a fourth phase that also falls between human modes; the three-timescale framework is the KB's version of the spectrum Amodei describes
 - [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: argues for evaluating each convention individually; this note extends the argument to learning mechanisms themselves
-- [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-maps-to-tulving-taxonomy.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
+- [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change applies regardless of which human mode a phase maps to
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — example: structured templates leverage the properties of pre-training specifically (what distributions were seen), not any human learning analogy
