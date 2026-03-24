@@ -176,6 +176,10 @@ If you cannot fill in [specific reason] with something substantive, the connecti
 | synthesizes | combines insights | "emerges from combining [A](./a.md) and [B](./b.md)" |
 | enables | unlocks possibility | "makes [C](./c.md) actionable by providing..." |
 
+## Text File Check
+
+If a candidate has no frontmatter (a `text` file), do **not** propose it as a regular connection. Instead, route it to the `### Raw text (needs /convert)` subsection in the report. Still apply the articulation test — explain why the text file is relevant — but do not add it to "Connections Found." Text files are unstructured, unvalidated material; linking to them from notes would give them unearned authority. The raw text subsection serves as a promotion signal: accumulating mentions indicate the text is worth converting to a note.
+
 ## Target Maturity Check
 
 For each proposed connection, check the target note's `status` field. Flag load-bearing relationships (**grounds**, **foundation**, **synthesizes**) to `seedling` or `speculative` notes — the dependency is unstable. Note the flag in the connection report:
@@ -267,6 +271,10 @@ After saving, tell the user: `Report saved: <full path>`
 **Bidirectional candidates** (reverse link also worth adding):
 - [target](kb/notes/target.md) ↔ source — **contradicts**: [reason the return path is also useful]
 
+### Raw text (needs /convert)
+
+- [text-file](kb/notes/text-file.md) — potential **extends**: [reason this text is relevant]
+
 ## Rejected Candidates
 
 - [rejected](kb/notes/rejected.md) — surface vocabulary overlap only, no semantic connection
@@ -320,6 +328,7 @@ Before saving the report, verify:
 - Add "related" connections without specific reasoning
 - Force connections that are not there
 - Skip the articulation test
+- Propose connections to text files (no frontmatter) — route to "Raw text" subsection instead
 - Install software — if a tool (e.g. qmd) is missing, fall back or bail with an error
 
 **Always:**

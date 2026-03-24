@@ -4,13 +4,13 @@ description: Batch prose review across all notes in kb/notes/. Delegates each no
 
 # Prose Review Sweep
 
-Run the [prose review](./prose-review.md) across all notes in `kb/notes/`. Each note is reviewed by a sub-agent. Individual reports are saved to `reviews/` and a summary aggregates findings across the KB.
+Run the [prose review](./prose-review.md) across all notes in `kb/notes/`. Each note is reviewed by a sub-agent. Individual reports are saved to `kb/reports/reviews/` and a summary aggregates findings across the KB.
 
 ## Steps
 
 ### 1. Inventory
 
-Run `uv run scripts/notes_selector.py prose-review --json` to get the changed-note queue. The script compares each top-level note's current blob hash against the `last-accepted-note-sha` stored in `reviews/{note-stem}.prose-review.md`, filters out notes whose content did not change at all, and includes a compact diff for changed notes.
+Run `uv run scripts/notes_selector.py prose-review --json` to get the changed-note queue. The script compares each top-level note's current blob hash against the `last-accepted-note-sha` stored in `kb/reports/reviews/{note-stem}.prose-review.md`, filters out notes whose content did not change at all, and includes a compact diff for changed notes.
 
 If you only need note paths, omit `--json`.
 
@@ -29,7 +29,7 @@ Read kb/instructions/prose-review.md for the review procedure.
 Apply it to: {note-path}
 
 Write the full report (in the output format specified by the instruction)
-to: reviews/{note-stem}.prose-review.md
+to: kb/reports/reviews/{note-stem}.prose-review.md
 
 Do not modify the note. Only write the review file.
 ```
@@ -46,7 +46,7 @@ After all reviews are complete, run:
 uv run scripts/summarize_reviews.py prose-review
 ```
 
-This writes ranked CSV tables in `reviews/csv/` and a compact `reviews/SUMMARY.prose-review.md` built from the top rows of those tables.
+This writes ranked CSV tables in `kb/reports/reviews/csv/` and a compact `kb/reports/SUMMARY.prose-review.md` built from the top rows of those tables.
 
 ### 4. Report to user
 

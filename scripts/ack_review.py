@@ -32,7 +32,7 @@ def iso_now() -> str:
 
 def review_path_for(repo_root: Path, note_path: Path, review_type: str) -> Path:
     """Return the review file path for a note/review pair."""
-    return repo_root / "reviews" / f"{note_path.stem}.{review_type}.md"
+    return repo_root / "kb" / "reports" / "reviews" / f"{note_path.stem}.{review_type}.md"
 
 
 def build_parser() -> argparse.ArgumentParser:

@@ -1,12 +1,27 @@
-# Prose Review Sweep — 2026-03-23
+# Prose Review Sweep — 2026-03-24
 
 Reviewed: 153 notes
 WARN: 265
 INFO: 260
 Clean notes: 0
 
+Current notes reviewed: 40
+Current WARN: 67
+Current INFO: 64
+Current clean notes: 0
+
 This summary is built from the top rows of the ranked CSV tables.
 For the full dataset, read `reviews/csv/`.
+
+## Priority Current Notes
+
+| Note | WARN | INFO | Top checks | Sample warning |
+|------|------|------|------------|----------------|
+| [context-efficiency-is-the-central-design-concern-in-agent-systems](../kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) | 3 | 2 | Confidence miscalibration, Proportion... | "Context is the scarce resource in agent systems — not compute, memory, or storage" and "context is the lowest-degree-of-freedom resource... |
+| [learning-is-not-only-about-generality](../kb/notes/learning-is-not-only-about-generality.md) | 2 | 3 | Source residue | The table in "Generality" (lines 17-24) uses exclusively KB-domain examples: "Fix a typo," "Sharpen a description," "Add a connection," "... |
+| [title-as-claim-enables-traversal-as-reasoning](../kb/notes/title-as-claim-enables-traversal-as-reasoning.md) | 2 | 3 | Source residue, Proportion mismatch | The opening example uses a domain-specific claim title — "approvals guard against LLM mistakes not active attacks" — that belongs to a se... |
+| [agentic-systems-interpret-underspecified-instructions](../kb/notes/agentic-systems-interpret-underspecified-instructions.md) | 2 | 2 | Source residue, Proportion mismatch | The note claims broad generality ("A theoretical framing for LLM-based agentic systems") but several examples are narrowly from software ... |
+| [automated-tests-for-text](../kb/notes/automated-tests-for-text.md) | 2 | 2 | Confidence miscalibration, Proportion... | "The same test pyramid applies" — this asserts an established equivalence between software test pyramids and text testing, but the note's... |
 
 ## Priority Notes
 
@@ -45,3 +60,6 @@ For the full dataset, read `reviews/csv/`.
 - `reviews/csv/prose-review.checks_low_signal.csv` — checks with the fewest warnings, useful for pruning or redesign
 - `reviews/csv/prose-review.notes_summary.csv` — full per-note totals, warning-heavy notes first
 - `reviews/csv/prose-review.findings.csv` — raw finding rows for deeper drill-down, not used in this summary
+- `reviews/csv/prose-review.current.notes_by_warnings.csv` — current-note priority queue for manual fixes
+- `reviews/csv/prose-review.current.notes_summary.csv` — per-current-note totals, warning-heavy notes first
+- `reviews/csv/prose-review.current.checks_summary.csv` — warning-producing checks within current notes

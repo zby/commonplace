@@ -36,7 +36,7 @@ from review_metadata import (
 
 REPO_ROOT = Path.cwd()
 NOTES_DIR = REPO_ROOT / "kb" / "notes"
-REVIEWS_DIR = REPO_ROOT / "reviews"
+REVIEWS_DIR = REPO_ROOT / "kb" / "reports" / "reviews"
 DIFF_OUTPUT_LIMIT = 1000
 
 

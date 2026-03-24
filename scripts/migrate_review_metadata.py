@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Backfill review metadata into existing review files from git history.
 
-For each individual review file in `reviews/`, this script finds the commit that
+For each individual review file in `kb/reports/reviews/`, this script finds the commit that
 last touched the review, resolves the corresponding note blob at that commit,
 and prepends a metadata block. Existing metadata is preserved unless
 `--rewrite` is passed.
@@ -34,7 +34,7 @@ from review_metadata import (
 
 REPO_ROOT = Path.cwd()
 NOTES_DIR = REPO_ROOT / "kb" / "notes"
-REVIEWS_DIR = REPO_ROOT / "reviews"
+REVIEWS_DIR = REPO_ROOT / "kb" / "reports" / "reviews"
 
 
 @dataclass

@@ -1,12 +1,27 @@
-# Semantic Review Sweep — 2026-03-23
+# Semantic Review Sweep — 2026-03-24
 
 Reviewed: 155 notes
 WARN: 425
 INFO: 639
 Clean notes: 0
 
+Current notes reviewed: 40
+Current WARN: 107
+Current INFO: 158
+Current clean notes: 0
+
 This summary is built from the top rows of the ranked CSV tables.
 For the full dataset, read `reviews/csv/`.
+
+## Priority Current Notes
+
+| Note | WARN | INFO | Top checks | Sample warning |
+|------|------|------|------------|----------------|
+| [text-testing-framework](../kb/notes/text-testing-framework.md) | 4 | 5 | Completeness | The six contract types in Section 1 omit an **accessibility contract** (readability level, alt text for images, plain-language requiremen... |
+| [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../kb/notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) | 4 | 4 | Completeness, Grounding | The failure mode mapping table claims four ML failure modes map to codification equivalents "with mitigations that weight-based systems c... |
+| [stale-indexes-are-worse-than-no-indexes](../kb/notes/stale-indexes-are-worse-than-no-indexes.md) | 4 | 3 | Grounding, Completeness | The note claims the mechanism "generalises beyond indexes to any authoritative artifact — specs, documentation, plans, curated lists." Th... |
+| [agent-statelessness-makes-routing-architectural-not-learned](../kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md) | 3 | 5 | Completeness, Grounding | The five-level loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies -> type templates -> methodology notes) omits conversat... |
+| [bitter-lesson-boundary](../kb/notes/bitter-lesson-boundary.md) | 3 | 5 | Completeness, Grounding | The confidence signals table enumerates three signals (specifiability, definition-vs-proxy, local-vs-compositional failures), but the not... |
 
 ## Priority Notes
 
@@ -45,3 +60,6 @@ For the full dataset, read `reviews/csv/`.
 - `reviews/csv/semantic-review.checks_low_signal.csv` — checks with the fewest warnings, useful for pruning or redesign
 - `reviews/csv/semantic-review.notes_summary.csv` — full per-note totals, warning-heavy notes first
 - `reviews/csv/semantic-review.findings.csv` — raw finding rows for deeper drill-down, not used in this summary
+- `reviews/csv/semantic-review.current.notes_by_warnings.csv` — current-note priority queue for manual fixes
+- `reviews/csv/semantic-review.current.notes_summary.csv` — per-current-note totals, warning-heavy notes first
+- `reviews/csv/semantic-review.current.checks_summary.csv` — warning-producing checks within current notes

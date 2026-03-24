@@ -42,6 +42,6 @@ kb/sources/slate-moving-beyond-react-and-rlm.md
 kb/work/connect/
 
 # generated review tables
-reviews/csv/*.csv
+kb/reports/reviews/csv/*.csv
 
 tmp/

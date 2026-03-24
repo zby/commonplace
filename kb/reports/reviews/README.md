@@ -16,6 +16,8 @@ Summaries: `SUMMARY.{review-type}.md` (per type) or `SUMMARY.md` (all types comb
 ## CSV tables (`csv/`)
 
 Normalized data for analysis. Prefixed by review type when run per-type, unprefixed when combined.
+Each run also writes a parallel `current.*` set limited to notes with
+`status: current` so manual-fix queues can prioritize endorsed notes first.
 These CSVs are generated artifacts and are not tracked in git.
 
 | File | Contents |
@@ -25,6 +27,11 @@ These CSVs are generated artifacts and are not tracked in git.
 | `checks_summary.csv` | Per-check aggregation with sample finding, ordered by warning count descending |
 | `checks_low_signal.csv` | Per-check aggregation ordered by the fewest warnings first |
 | `notes_by_warnings.csv` | Note-level priority queue with top checks and sample warning |
+
+Examples:
+
+- `current.notes_by_warnings.csv` — combined current-note queue
+- `prose-review.current.notes_by_warnings.csv` — prose-review queue for current notes only
 
 ## Running
 
@@ -58,7 +65,7 @@ uv run scripts/summarize_reviews.py prose-review  # single type
 
 The selector is revision-based: each review stores both the last note revision that received a full review and the last note revision accepted by the sweep. The selector compares against `last-accepted-note-sha`, unchanged notes are filtered out entirely, and changed notes can be surfaced with compact diffs so the sweep orchestrator can decide whether to run a full review or just acknowledge a trivial change.
 
-The summary generator is intentionally thin: it writes ranked CSV tables for orchestration and a compact markdown summary built from only the top rows of those tables.
+The summary generator is intentionally thin: it writes ranked CSV tables for orchestration, includes separate `status: current` stats and queues, and builds a compact markdown summary from only the top rows of those tables.
 
 Full sweep instructions (including sub-agent delegation): `kb/instructions/prose-review-sweep.md`, `kb/instructions/semantic-review-sweep.md`
 
