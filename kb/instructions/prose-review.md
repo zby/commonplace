@@ -24,16 +24,13 @@ A read-only review that catches cases where the prose misrepresents what the not
 
 Read the target note in full.
 
-Before writing the review, capture the note revision you are actually reviewing:
+Before writing the review, capture the note revision you are actually reviewing by running:
 
-- `note-path`: the target note path (for example `kb/notes/backlinks.md`)
-- `last-full-review-note-sha`: `git hash-object {note-path}`
-- `last-full-review-note-commit`: `git log -1 --format=%H -- {note-path}` if the note is tracked
-- `last-full-review-at`: current ISO 8601 time (for example `date -Iseconds`)
-- `last-accepted-note-sha`: same as `last-full-review-note-sha` for a new full review
-- `last-accepted-note-commit`: same as `last-full-review-note-commit` for a new full review
-- `last-accepted-at`: same as `last-full-review-at` for a new full review
-- `last-acceptance-kind`: `full-review`
+```
+scripts/review_prereqs.sh {note-path}
+```
+
+This emits all metadata fields (`note-path`, `last-full-review-note-sha`, `last-full-review-note-commit`, timestamps, `last-acceptance-kind`) ready to paste into the review header.
 
 ## Checks
 
