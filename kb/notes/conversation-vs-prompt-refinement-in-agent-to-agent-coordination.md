@@ -1,5 +1,5 @@
 ---
-description: Conversation preserves the execution trace, prompt refinement compresses it into a new handoff artifact, and context forking preserves a selected prefix — the right choice depends on architecture and how much intermediate work should survive
+description: Conversation preserves the execution trace; prompt refinement compresses it into a clean handoff. The right choice depends on architecture and how much intermediate work should survive
 type: note
 traits: []
 tags: [computational-model]
@@ -42,14 +42,14 @@ The [voooooogel multi-agent prediction](../sources/voooooogel-multi-agent-future
 
 One reading through the refinement lens: the onboarding interview is useful not because conversation is the right interface, but because the caller's initial prompt was underspecified. The interview surfaces what the caller should have said. A refinement-oriented caller could capture those answers and build a better single-shot prompt — possibly for re-use across many similar sub-agent invocations, which a pure conversation model cannot reuse.
 
-But voooooogel's forking pattern complicates this reading. The pattern is: spawn one sub-agent, onboard it via conversation, then fork into N instances that each carry "the whole onboarding conversation in context." This is neither pure conversation (the forked instances don't continue the dialogue) nor pure refinement (the accumulated conversation is preserved, not distilled into a clean prompt). Forking is a third pattern — **context cloning** — that preserves a selected trace prefix for reuse without continuing the same conversation indefinitely. With KV-cache sharing, the cloned prefix is also computationally cheap.
+But voooooogel's forking pattern adds a twist. The pattern is: spawn one sub-agent, onboard it via conversation, then fork into N instances that each carry "the whole onboarding conversation in context." The forked instances don't continue the dialogue — they branch from a shared prefix. This is a sub-pattern within conversation, not a third option: the onboarding is conversational, and forking is an optimization that amortizes that conversation across N workers via KV-cache sharing. The prefix is preserved, not distilled into a clean prompt, so it inherits conversation's strengths (preserves intermediate context) and weaknesses (carries the full trace, including any misframing).
 
 ## Open Questions
 
 - When does the sub-agent's partial work (before asking the question) outweigh the cost of re-doing it from a clean prompt? Is there a useful heuristic based on task progress?
 - Can the refinement loop be made cheaper by having the caller maintain prompt templates that get progressively refined across multiple sub-agent invocations?
 - Does the conversation/refinement distinction collapse with KV-cache sharing? If forked instances share cached prefixes, clean context may be achievable even within a conversational interface.
-- Is context cloning (forking) the pattern that subsumes both, or does it have its own failure modes?
+- Does forking have failure modes beyond those inherited from conversation (e.g., prefix staleness as the task evolves)?
 
 ---
 
