@@ -1,27 +1,23 @@
 <!-- REVIEW-METADATA
 note-path: kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md
-last-full-review-note-sha: 8cb0d1cc4daffc06ce1d646f5f86b80182cbb182
+last-full-review-note-sha: c2956a6035e5830c6dbfa2a33463b8e02dd68681
 last-full-review-note-commit: fd0b8fb01d3e8c63e580847019636c0e1e2eff01
-last-full-review-at: 2026-03-24T20:54:08+01:00
-last-accepted-note-sha: 8cb0d1cc4daffc06ce1d646f5f86b80182cbb182
-last-accepted-note-commit: fd0b8fb01d3e8c63e580847019636c0e1e2eff01
-last-accepted-at: 2026-03-24T20:54:08+01:00
-last-acceptance-kind: full-review
+last-full-review-at: 2026-03-24T22:33:41+01:00
+last-accepted-note-sha: d5f8fe1419449917674d478062880ce79a48066f
+last-accepted-note-commit: 09d91abac8ab71a82447d352a0fe42f760f1a853
+last-accepted-at: 2026-03-24T22:54:57+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md ===
 
 Checks applied: 4
 
-WARN:
-- [Description discrimination] The description "Both learning mechanisms — constraining (constraining) and distillation (extracting) — sacrifice generality for compound gains in reliability, speed, and cost; they differ in the operation and how much compound they yield" closely paraphrases the title. The title already says both trade generality for the compound; the description restates this and adds only that they "differ in the operation and how much compound they yield," which is implied by naming two distinct mechanisms. The parenthetical "(constraining)" after "constraining" is also tautological. A discriminating description would add mechanism or implication — for example, that constraining yields its largest compound gain at codification (substrate change) while distillation yields moderate gains through reduced context size, or that the note unifies two mechanisms under one capacity decomposition framework.
-  Recommendation: Replace the description with one that names the key differentiator the body establishes — e.g., "Constraining yields its largest compound gain at codification, where the substrate changes; distillation yields moderate gains by compressing source material into smaller context loads. Both reduce generality along the same capacity decomposition."
-
 CLEAN:
-- [Title composability] "since constraining and distillation both trade generality for reliability, speed, and cost, we designed..." reads naturally as a sentence fragment. The title works as a linkable prose clause.
-- [Claim strength] The claim that both mechanisms make the same fundamental trade-off is contestable — someone could argue distillation merely compresses without sacrificing generality, or that the two mechanisms operate on fundamentally different axes. The note argues against this, making the title a genuine claim.
-- [Title-body alignment] The body delivers what the title promises. It defines the trade-off via the calculator example, walks through how each mechanism enacts it, and contrasts the two in a comparison table. No drift detected.
+- [Description discrimination] The description adds mechanism for both concepts ("narrows interpretation," "extracts under a context budget") and scope for where gains peak ("largest compound gain at codification, where the substrate changes" vs "moderate gain from reduced size"). Against a search for "constraining distillation trade-off," this would clearly distinguish this note from related notes like constraining.md or distillation.md which cover individual mechanisms rather than the shared trade-off structure.
+- [Title composability] "since constraining and distillation both trade generality for reliability, speed, and cost, we designed..." reads as a natural sentence fragment. The title works as a linkable clause.
+- [Claim strength] The claim that both mechanisms trade generality for the same compound (reliability, speed, cost) is contestable. Someone could argue distillation is pure compression without generality loss, or that constraining's gains are not always in all three compound dimensions simultaneously. The claim is specific enough to carry information.
+- [Title-body alignment] The title claims both mechanisms trade generality for reliability/speed/cost. The body delivers exactly this: defines the capacity decomposition, gives the calculator example to make the trade-off concrete, then shows how constraining and distillation each perform the trade-off through different operations. The comparison table in "The mechanisms differ in operation" serves the title's claim by showing the two different paths to the same trade-off, not drifting into unrelated territory.
 
-Overall: 1 warning, 0 info
+Overall: CLEAN
 ===

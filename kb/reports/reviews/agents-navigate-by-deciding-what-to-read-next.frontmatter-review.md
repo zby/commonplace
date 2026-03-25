@@ -1,27 +1,23 @@
 <!-- REVIEW-METADATA
 note-path: kb/notes/agents-navigate-by-deciding-what-to-read-next.md
-last-full-review-note-sha: c3ac9804782d91ba09304e79a07ace91b6258e32
+last-full-review-note-sha: 33d215b103b904f2ed806817a72e53ead08514fc
 last-full-review-note-commit: 0d4ee7df7ed3293f4d6e0a7d48ed2ac46ea46a9f
-last-full-review-at: 2026-03-24T14:34:00+01:00
-last-accepted-note-sha: c3ac9804782d91ba09304e79a07ace91b6258e32
-last-accepted-note-commit: 0d4ee7df7ed3293f4d6e0a7d48ed2ac46ea46a9f
-last-accepted-at: 2026-03-24T14:34:00+01:00
-last-acceptance-kind: full-review
+last-full-review-at: 2026-03-24T22:33:37+01:00
+last-accepted-note-sha: 8565eacd5bd7bb2f52a5213451e198e65ee89adc
+last-accepted-note-commit: 09d91abac8ab71a82447d352a0fe42f760f1a853
+last-accepted-at: 2026-03-24T22:54:57+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: agents-navigate-by-deciding-what-to-read-next.md ===
 
 Checks applied: 4
 
-WARN:
-- [Description discrimination] The description "An agent doing a task navigates by deciding what to read — links, index entries, search tools, and skill descriptions are all pointers with varying amounts of context for that decision" restates the title's core claim and then enumerates pointer types. The note's central mechanism — that context surrounding a pointer reduces the cost of the navigation decision, and that different pointer types carry different amounts of context — is only gestured at with "varying amounts of context." The cost argument (why context matters, what it saves) is the note's main contribution and is absent from the description. In a search result list alongside other navigation/links notes, this description would not clearly distinguish this note from a general "types of pointers" note.
-  Recommendation: Lead with the mechanism: context around a pointer lets the agent judge relevance without loading the target, making navigation cheaper. The enumeration of pointer types is scope, not mechanism — it can follow if space permits.
-
 CLEAN:
-- [Title composability] "Since agents navigate by deciding what to read next, the knowledge system should make that decision cheap" reads naturally. The title works as a linkable prose fragment.
-- [Claim strength] The title frames navigation as a decision problem about what to read, rather than about what to do or what plan to execute. This is a specific, non-obvious framing — someone could reasonably argue agents navigate by following instructions or executing plans rather than by making per-pointer read decisions. The claim carries information.
-- [Title-body alignment] The title claims agents navigate by deciding what to read next. The body supports this framing directly, then extends it with a cost/context analysis and design implications. The extensions are natural consequences of the title's claim, not drift — the body delivers on the title's promise and builds from it.
+- [Description discrimination] The description adds mechanism ("context surrounding a pointer ... determines how cheaply an agent can judge relevance without loading the target") and scope ("inline links carry most context, search results carry least") beyond the title's general claim. An agent searching for "pointer context" or "navigation cost" would immediately distinguish this note from others about agent navigation. The prior review's WARN about description restating the title has been addressed — the description now leads with the cost mechanism and names the pointer-type spectrum.
+- [Title composability] "since agents navigate by deciding what to read next, we designed..." reads naturally as a sentence fragment. Works as inline link text.
+- [Claim strength] The claim that navigation reduces to a per-pointer read/skip decision is a specific framing, not the only one — someone could argue agents navigate via structured plans, exhaustive scanning, or orchestrator routing. The claim is contestable and carries information.
+- [Title-body alignment] The body opens by establishing the per-pointer decision framing, then develops what makes that decision tractable (context richness of different pointer types) and closes with design implications. The title captures the framing; the body delivers on it. The note's deeper contribution (the context-cost analysis) lives in the description, which is the intended division of labor between title and description in this KB.
 
-Overall: 1 warning, 0 info
+Overall: CLEAN
 ===
