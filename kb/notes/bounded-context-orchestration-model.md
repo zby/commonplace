@@ -130,7 +130,7 @@ The full global optimisation problem is probably too rich for clean strategy the
 - What restrictions on the model (fixed decomposition templates, bounded branching, finite sub-goal depth) yield tractable optimisation while preserving enough expressiveness?
 - What heuristics make `select` good in practice?
 - When should the orchestrator compact vs externalise vs recurse?
-- Can the loop be made self-improving — can later iterations learn from the quality of earlier selections? This would connect to [deploy-time learning](./deploy-time-learning-the-missing-middle.md).
+- Can the loop be made self-improving — can later iterations learn from the quality of earlier selections? This would connect to [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md).
 
 ---
 

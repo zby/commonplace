@@ -54,7 +54,7 @@ Sources:
 Relevant Notes:
 
 - [the bitter lesson has a boundary](./bitter-lesson-boundary.md) — foundation: the arithmetic/vision-feature distinction this note operationalizes
-- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — codification's verifiability gradient
+- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — codification's verifiability gradient
 - [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode
 - [relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — detects when codified components are encoding vision features

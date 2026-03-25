@@ -8,7 +8,7 @@ status: seedling
 
 # Methodology enforcement is constraining
 
-The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [constraining spectrum](./agentic-systems-interpret-underspecified-instructions.md). The enforcement layers parallel the [codification verifiability gradient](../notes/deploy-time-learning-the-missing-middle.md) — where codification moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by reducing two things: **semantic underspecification** (committing to one interpretation of what the practice means) and **execution indeterminism** (ensuring the practice fires consistently across runs). Moving from instructions to scripts progressively eliminates both.
+The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [constraining spectrum](./agentic-systems-interpret-underspecified-instructions.md). The enforcement layers parallel the [codification verifiability gradient](./deploy-time-learning-is-the-missing-middle.md) — where codification moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by reducing two things: **semantic underspecification** (committing to one interpretation of what the practice means) and **execution indeterminism** (ensuring the practice fires consistently across runs). Moving from instructions to scripts progressively eliminates both.
 
 | Layer | Trigger | Response | Reliability | Example |
 |-------|---------|----------|-------------|---------|
@@ -55,7 +55,7 @@ We have hooks in `.claude/hooks/` but they aren't wired up (`"hooks": {}` in set
 
 Relevant Notes:
 
-- [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — grounds: the verifiability gradient for code (prompt tweaks -> schemas -> evals -> deterministic modules) is the general pattern this note instantiates for methodology
+- [codification: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — grounds: the verifiability gradient for code (prompt tweaks -> schemas -> evals -> deterministic modules) is the general pattern this note instantiates for methodology
 - [constraining is learning](./definitions/constraining.md) — foundation: the constraining gradient for code; this note applies the same gradient to methodology
 - [programming practices apply to prompting](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — synthesizes: the maturation trajectory is progressive compilation applied to methodology — flexible instructions frozen into rigid, efficient automation
 - [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — exemplifies: a skill-level operation that completed the maturation trajectory into a deterministic script

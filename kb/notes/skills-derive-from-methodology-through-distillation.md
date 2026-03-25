@@ -84,7 +84,7 @@ Relevant Notes:
 
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — distinguishes: that note covers enforcement reliability (how reliably is methodology followed); this note covers derivation (how skill content relates to methodology content)
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — refines: that note's substantive arguments (permanent infrastructure, systematic blind spots, no graceful degradation) stand; this note offers "distillation" as a more precise term for the methodology→skill relationship
-- [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — distinguishes: codification involves a phase transition in medium; distillation does not
+- [codification: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — distinguishes: codification involves a phase transition in medium; distillation does not
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy is the architectural consequence of distillation; skill tier exists because methodology tier is too expensive to load routinely
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes that the /connect skill distils
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — example source: Toulmin structure is distilled into the skill's articulation test

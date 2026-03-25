@@ -26,7 +26,7 @@ In-context learning splits the difference. It can handle surprisingly complex ad
 
 ## Deploy-time learning as a further intermediate
 
-The KB's [three-timescale framework](./deploy-time-learning-the-missing-middle.md) adds deploy-time learning — adaptation through repo artifacts that are durable and inspectable but don't change weights. This is another phase that falls between human modes. It's durable like long-term human learning, but it works through external artifacts rather than internalized change. It resembles cultural evolution — knowledge accumulated in books, tools, and institutions rather than in individual minds — more than it resembles individual human learning.
+The KB's [three-timescale framework](./deploy-time-learning-is-the-missing-middle.md) adds deploy-time learning — adaptation through repo artifacts that are durable and inspectable but don't change weights. This is another phase that falls between human modes. It's durable like long-term human learning, but it works through external artifacts rather than internalized change. It resembles cultural evolution — knowledge accumulated in books, tools, and institutions rather than in individual minds — more than it resembles individual human learning.
 
 ## Why the non-mapping matters
 
@@ -54,7 +54,7 @@ Sources:
 
 Relevant Notes:
 
-- [deploy-time learning: the missing middle](./deploy-time-learning-the-missing-middle.md) — extends: adds deploy-time as a fourth phase that also falls between human modes; the three-timescale framework is the KB's version of the spectrum Amodei describes
+- [deploy-time learning: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: adds deploy-time as a fourth phase that also falls between human modes; the three-timescale framework is the KB's version of the spectrum Amodei describes
 - [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: argues for evaluating each convention individually; this note extends the argument to learning mechanisms themselves
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change applies regardless of which human mode a phase maps to

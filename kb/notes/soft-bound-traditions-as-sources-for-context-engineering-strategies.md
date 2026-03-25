@@ -103,7 +103,7 @@ Relevant Notes:
 - [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens: the soft bound that justifies transfer is itself task-dependent
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — instance: modularity under bounds; roots in Parnas, Ranganathan, Zettelkasten
 - [links index](./links-index.md) — instance: typed relationships for bounded navigation; roots in hypertext theory, semantic web, library science
-- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
+- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — instance: propositional titles for bounded scanners
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity that makes adaptation necessary
 - [first-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — test: if the shared structure has reach, results transfer; if not, the pattern is superficial

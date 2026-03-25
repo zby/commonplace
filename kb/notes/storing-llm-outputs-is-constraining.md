@@ -56,7 +56,7 @@ This is hard to catch because it requires comparing the output against the sourc
 
 Relevant Notes:
 
-- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the constraining gradient with a new application: output artifacts, not just code
+- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — extends the constraining gradient with a new application: output artifacts, not just code
 - [constraining](./definitions/constraining.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
 - [Evans: AI Components for a Deterministic System](../sources/eric-evans-ai-components-deterministic-system.ingest.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
 - [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the constraining decision this note describes

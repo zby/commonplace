@@ -30,7 +30,7 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 3. **[Constraining and distillation both trade generality for reliability, speed, and cost](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md)** -- grounds tension. The bitter lesson says general methods win; constraining trades generality for compound gains. The unresolved question: is constraining competing with scaling (doomed) or complementing it (durable infrastructure)?
 
-4. **[Deploy-time learning: The Missing Middle](../notes/deploy-time-learning-the-missing-middle.md)** -- extends. Deploy-time learning implements Sutton's two winning techniques (search and learning) at the system level through repo artifacts. It is iteration infrastructure, not domain-specific modelling.
+4. **[Deploy-time learning: The Missing Middle](../notes/deploy-time-learning-is-the-missing-middle.md)** -- extends. Deploy-time learning implements Sutton's two winning techniques (search and learning) at the system level through repo artifacts. It is iteration infrastructure, not domain-specific modelling.
 
 5. **[Spec mining is codification's operational mechanism](../notes/spec-mining-as-codification.md)** -- enables. Spec mining manufactures new calculators, converting soft-oracle components into hard-oracle ones -- expanding the part of a system where the bitter lesson does NOT apply.
 

@@ -8,7 +8,7 @@ status: current
 
 How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through durable substrates, including but not limited to inspectable artifacts.
 
-The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
+The collection is organized around [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
 
 ## Foundations
 
@@ -22,7 +22,7 @@ The collection is organized around [deploy-time learning](./deploy-time-learning
 
 The organizing framework: deployed systems adapt through symbolic artifacts — durable, inspectable, and verifiable — filling the gap between training and in-context learning.
 
-- [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — three timescales of system adaptation; the verifiability gradient from prompt tweaks to deterministic code; concrete before-and-after examples of constraining at different grades
+- [deploy-time-learning-the-missing-middle](./deploy-time-learning-is-the-missing-middle.md) — three timescales of system adaptation; the verifiability gradient from prompt tweaks to deterministic code; concrete before-and-after examples of constraining at different grades
 - [learning-substrates-backends-and-artifact-forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — separates substrate class from backend and artifact form; explains why repo files, DB rows, and memory-service objects can all host the same broad learning substrate
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — deploy-time learning and agile share the same core innovation (co-evolving prose and code); agile assumes code wins eventually, deploy-time learning treats the hybrid as the end state
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — reframes agile: "changing requirements" hide late-surfacing interpretation errors in underspecified specs; short iterations bound interpretation-error propagation, not just change-response latency

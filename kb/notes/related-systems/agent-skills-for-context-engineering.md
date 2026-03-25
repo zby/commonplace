@@ -44,7 +44,7 @@ These techniques could strengthen our [quality signals work](../quality-signals-
 
 **Strong alignment:** Progressive disclosure, filesystem-first knowledge, start-simple philosophy, tool consolidation.
 
-**We go deeper:** Our [verifiability gradient](../deploy-time-learning-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to constrain — they have operational patterns but no learning framework. Our [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) has no counterpart in their work.
+**We go deeper:** Our [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to constrain — they have operational patterns but no learning framework. Our [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) has no counterpart in their work.
 
 **They go deeper:** Attention mechanics and degradation data (model-specific thresholds, the four-bucket mitigation). Formal evaluation methodology (LLM-as-judge protocols, bias mitigation). Hosted agent infrastructure (sandboxing, warm pools, pre-built images).
 

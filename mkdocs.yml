@@ -7,6 +7,7 @@ plugins:
   - search
   - redirects:
       redirect_maps:
+        'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
         'notes/epiplexity-eli5.md': 'work/information-measures/epiplexity-eli5.md'
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'

@@ -29,7 +29,7 @@ The `/connect` discovery found six substantive connections, informed by the fact
 
 1. **[claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)** -- **grounds**: This source is the definitional anchor that note builds on. The note explicitly cites this snapshot as the source for what a "Claw" is and argues the learning loop must serve action capacity (classification, planning, communication), not just retrieval.
 
-2. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)** -- **extends**: Claws embody deploy-time learning's "across sessions" timescale applied to agent infrastructure itself. Karpathy's emphasis on persistence and accumulated context is the Claw variant of artifact-mediated adaptation. Karpathy is also quoted in this note for the verifiability concept.
+2. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md)** -- **extends**: Claws embody deploy-time learning's "across sessions" timescale applied to agent infrastructure itself. Karpathy's emphasis on persistence and accumulated context is the Claw variant of artifact-mediated adaptation. Karpathy is also quoted in this note for the verifiability concept.
 
 3. **[bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md)** -- **exemplifies**: Karpathy lists "orchestration, scheduling, context, tool calls" as defining Claw properties. Claws are a product-category instantiation of the symbolic scheduling model with persistence as an additional dimension.
 

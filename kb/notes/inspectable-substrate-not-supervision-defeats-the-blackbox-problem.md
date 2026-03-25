@@ -35,14 +35,14 @@ Every mitigation relies on the same property: the artifact is inspectable. You c
 
 ## The real question
 
-Chollet asks "what will be the Keras of agentic coding?" — the abstraction layer that lets humans steer codebase "training" with minimal cognitive overhead. The [verifiability gradient](deploy-time-learning-the-missing-middle.md) is a candidate answer: it tells you which grade of codification to use for each piece of your system, based on how verifiable you need it to be. The constrain/relax cycle is the steering mechanism — codify when patterns emerge, relax when new requirements appear. And crucially, neither the gradient nor the cycle requires a human in the loop. They require an inspectable substrate.
+Chollet asks "what will be the Keras of agentic coding?" — the abstraction layer that lets humans steer codebase "training" with minimal cognitive overhead. The [verifiability gradient](./deploy-time-learning-is-the-missing-middle.md) is a candidate answer: it tells you which grade of codification to use for each piece of your system, based on how verifiable you need it to be. The constrain/relax cycle is the steering mechanism — codify when patterns emerge, relax when new requirements appear. And crucially, neither the gradient nor the cycle requires a human in the loop. They require an inspectable substrate.
 
 ---
 
 Relevant Notes:
 
 - [codification](./definitions/codification.md) — foundation: codification as system-level learning through repo artifacts
-- [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — the verifiability gradient that determines when and how to codify
+- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — the verifiability gradient that determines when and how to codify
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque substrate; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable substrate at production scale with zero manual code
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names inspectable repo artifacts and tools as the execution substrate layer of the runtime

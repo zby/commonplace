@@ -75,7 +75,7 @@ That makes Voyager a useful counterpoint to note-based systems. It solves a prob
 Relevant Notes:
 
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Voyager is a clear trajectory-to-executable-artifact case that broadens the artifact-learning side beyond notes, observations, and tips
-- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — sharpens: Voyager uses the same artifact-accumulation mechanism inside a benchmarked embodied loop, without retraining weights, even though the repo is research infrastructure rather than a production deployment system
+- [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — sharpens: Voyager uses the same artifact-accumulation mechanism inside a benchmarked embodied loop, without retraining weights, even though the repo is research infrastructure rather than a production deployment system
 - [Autocontext](./autocontext.md) — compares: both run repeated improvement loops over trajectories, but Autocontext promotes mostly textual playbooks and optional weights while Voyager promotes executable skills
 - [ExpeL](./expel.md) — contrasts: both consolidate across repeated runs, but ExpeL promotes maintained natural-language rules while Voyager promotes callable code
 - [codification](../definitions/codification.md) — exemplifies: Voyager is one of the clearest cases where successful natural-language-guided behavior is hardened into executable code artifacts

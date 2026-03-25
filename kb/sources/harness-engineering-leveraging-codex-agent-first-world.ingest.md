@@ -31,7 +31,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 2. **[methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md)** — exemplifies: The three harness pillars map directly onto the constraining gradient (instructions -> structural tests -> automated cleanup agents). "Every mistake is a harness bug" is the maturation trajectory stated as design philosophy.
 
-3. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)** — exemplifies: "Good harnesses compound" is deploy-time learning in practitioner language. Each constraint is a repo artifact that makes future work more reliable.
+3. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md)** — exemplifies: "Good harnesses compound" is deploy-time learning in practitioner language. Each constraint is a repo artifact that makes future work more reliable.
 
 4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
 

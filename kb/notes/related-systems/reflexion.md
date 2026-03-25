@@ -72,4 +72,4 @@ Relevant Notes:
 - [ClawVault](./clawvault.md) — contrasts: both preserve inspectable text, but ClawVault has a richer artifact lifecycle and typed promotion path
 - [memory management policy is learnable but oracle-dependent](../memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Reflexion also depends on strong local oracles, but keeps the result in prompt-visible text rather than weights
 - [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — contrasts: same broad idea of learning from ongoing interaction, different promotion target and much weaker training machinery
-- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — sharpens: Reflexion sits in the deploy-time artifact-update space, where learning happens by changing prompt-visible text rather than training weights
+- [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — sharpens: Reflexion sits in the deploy-time artifact-update space, where learning happens by changing prompt-visible text rather than training weights

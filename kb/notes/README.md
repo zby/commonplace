@@ -4,7 +4,7 @@ Observations and design work toward a knowledge base for design history.
 
 ## Goal
 
-Build a knowledge base that applies [deploy-time learning](./deploy-time-learning-the-missing-middle.md), [constraining](./definitions/constraining.md), and the generator/verifier pattern to managing design notes, decisions, and architecture.
+Build a knowledge base that applies [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md), [constraining](./definitions/constraining.md), and the generator/verifier pattern to managing design notes, decisions, and architecture.
 
 ## Constraint: Claude Code as runtime
 

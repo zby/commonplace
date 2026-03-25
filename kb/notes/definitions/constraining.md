@@ -68,7 +68,7 @@ Relevant Notes:
 - [storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) — the simplest instance: committing to one interpretation by keeping a specific output
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
 - [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
-- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which constraining operates
+- [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — the verifiability gradient across which constraining operates
 - [bitter lesson boundary](../bitter-lesson-boundary.md) — determines when constraining is permanent vs when relaxing is needed
 - [ABC: Agent Behavioral Contracts](../../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
 - [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale

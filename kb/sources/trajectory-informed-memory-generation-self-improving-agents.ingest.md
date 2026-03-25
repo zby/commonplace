@@ -34,7 +34,7 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 **Extends the comparative review** ([agentic-memory-systems-comparative-review](../notes/related-systems/agentic-memory-systems-comparative-review.md)): Adds a 12th system with a distinctive position — developer-managed external service agency model, no link structure between tips, and two-strategy retrieval. The tip consolidation step edges toward automated synthesis of operational knowledge, which is notable given the review's finding that "everyone automates extraction, nobody automates synthesis."
 
-**Exemplifies deploy-time learning** ([deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)): Tips are durable, inspectable artifacts that persist across sessions and improve behavior without weight updates — precisely the "missing middle" between prompt engineering and fine-tuning.
+**Exemplifies deploy-time learning** ([deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md)): Tips are durable, inspectable artifacts that persist across sessions and improve behavior without weight updates — precisely the "missing middle" between prompt engineering and fine-tuning.
 
 **Exemplifies distillation** ([distillation](../notes/definitions/distillation.md)): Trajectory-to-tip extraction is distillation — compressing full execution traces into focused operational guidance. The subtask-level outperforming task-level is evidence that distillation granularity matters.
 

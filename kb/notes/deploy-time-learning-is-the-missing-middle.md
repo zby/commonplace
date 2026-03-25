@@ -5,7 +5,7 @@ traits: [has-comparison]
 tags: [learning-theory]
 ---
 
-# Deploy-time learning: The Missing Middle
+# Deploy-time learning is the missing middle
 
 ## Three Timescales
 

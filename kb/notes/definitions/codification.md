@@ -32,7 +32,7 @@ Relevant Notes:
 
 - [constraining](./constraining.md) — parent mechanism: codification is the far end of the constraining spectrum
 - [distillation](./distillation.md) — orthogonal mechanism: targeted extraction; codification sometimes follows distillation (extract a procedure, then codify it to code)
-- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which codification sits at the far end
+- [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — the verifiability gradient across which codification sits at the far end
 - [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
 - [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale

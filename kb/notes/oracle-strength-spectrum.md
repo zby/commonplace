@@ -18,11 +18,11 @@ The [bitter lesson boundary](./bitter-lesson-boundary.md) draws a line between a
 - **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
 - **No oracle:** vibes and anecdotes.
 
-The bitter lesson is strongest at the hard-oracle end, where there's a clear training signal for scale to optimise against, and weakest at the no-oracle end, where there's nothing. This maps to the Karpathy verifiability framing that [deploy-time learning](./deploy-time-learning-the-missing-middle.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
+The bitter lesson is strongest at the hard-oracle end, where there's a clear training signal for scale to optimise against, and weakest at the no-oracle end, where there's nothing. This maps to the Karpathy verifiability framing that [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
 
 ## The engineering move: harden the oracle
 
-If the boundary is a gradient, the core engineering challenge becomes: move components toward the hard-oracle end. Convert no-oracle into some-oracle, then tighten. This is [codification](./deploy-time-learning-the-missing-middle.md) applied to *the objective itself*, not just to the implementation.
+If the boundary is a gradient, the core engineering challenge becomes: move components toward the hard-oracle end. Convert no-oracle into some-oracle, then tighten. This is [codification](./deploy-time-learning-is-the-missing-middle.md) applied to *the objective itself*, not just to the implementation.
 
 The priority follows: invest in telemetry and eval harnesses *before* investing in capability, because verification quality is the bottleneck, not generation quality. The [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) offers suggestive evidence: across 14 models and 18 months of releases, capability gains yielded only small reliability improvements. If this pattern holds broadly — and it may not, since such findings are sensitive to the specific models and benchmarks used — it confirms that generation and verification improve on independent tracks, with verification lagging.
 
@@ -62,7 +62,7 @@ Each extracted claim should link back here as its origin.
 ## Open questions
 
 - **Does oracle strength predict bitter-lessoning?** If so, the spectrum is prescriptive — invest in codification where oracles are hard, invest in learned approaches where oracles are soft. Deutsch's [explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) concept suggests a mechanism: hard oracles survive scaling because they ARE the problem specification — they have reach beyond any particular model's capabilities. Soft oracles encode adaptive fit (theories about what correct looks like) which scale reveals as approximations, just as it did for vision features. This would make oracle strength a proxy for how much reach the verification has. External support: [Tam et al.](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) observe that agentic coding tools automate engineering (hard oracle — tests, specs, benchmarks) while research problem selection (no oracle — "you can't know in advance whether a solution exists") resists automation entirely. Quant firms pay $600k for "research taste" precisely because it's a no-oracle domain. This is the oracle-strength prediction stated in market-economics language.
-- **Oracle strength and codification timescales.** Hard oracles codify fast (you can test immediately); delayed oracles codify slowly (you have to wait for signal). The connection to [codification timescales](./deploy-time-learning-the-missing-middle.md) seems natural but hasn't been tested.
+- **Oracle strength and codification timescales.** Hard oracles codify fast (you can test immediately); delayed oracles codify slowly (you have to wait for signal). The connection to [codification timescales](./deploy-time-learning-is-the-missing-middle.md) seems natural but hasn't been tested.
 - **Oracle strength is itself hard to assess.** Proxy scores that seem cheap and reliable may turn out to correlate poorly with the real objective — you don't always know whether your oracle is hard or soft until you test at scale.
 
 ---
@@ -70,7 +70,7 @@ Each extracted claim should link back here as its origin.
 Relevant Notes:
 
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
-- [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the verifiability gradient maps to oracle strength
+- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the verifiability gradient maps to oracle strength
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the manufacturing step: extracting deterministic checks from observed behavior
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition
 - [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature

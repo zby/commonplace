@@ -74,7 +74,7 @@ That difference matters. HyperAgents can afford aggressive autonomous mutation b
 
 Relevant Notes:
 
-- [deploy-time-learning-the-missing-middle](../deploy-time-learning-the-missing-middle.md) — exemplifies: HyperAgents is a concrete deploy-time learning system built from durable symbolic artifacts rather than weight updates
+- [deploy-time-learning-the-missing-middle](../deploy-time-learning-is-the-missing-middle.md) — exemplifies: HyperAgents is a concrete deploy-time learning system built from durable symbolic artifacts rather than weight updates
 - [the-boundary-of-automation-is-the-boundary-of-verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: HyperAgents works best exactly where cheap evaluators exist and can reject bad descendants automatically
 - [trace-derived-learning-techniques-in-related-systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: adds a code-diff lineage case where the promoted artifact is executable patch history rather than prose memory
 - [ephemeral-computation-prevents-accumulation](../ephemeral-computation-prevents-accumulation.md) — contrasts: HyperAgents persists mutations across runs, which is what lets it improve instead of re-deriving from scratch each time

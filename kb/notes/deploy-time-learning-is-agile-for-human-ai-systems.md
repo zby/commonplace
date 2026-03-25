@@ -49,6 +49,6 @@ The progression: waterfall (separate the media, specs first) → agile (co-evolv
 
 Relevant Notes:
 
-- [deploy-time-learning-the-missing-middle](./deploy-time-learning-the-missing-middle.md) — parent framework: the broader timescale and verifiability model this agile analogy sits inside
+- [deploy-time-learning-the-missing-middle](./deploy-time-learning-is-the-missing-middle.md) — parent framework: the broader timescale and verifiability model this agile analogy sits inside
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — sharpens: explains why short iterations matter even when the world did not genuinely change
 - [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — extends: splits prose-code co-evolution into spec-first, bidirectional, and behavior-extracted phases

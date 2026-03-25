@@ -47,7 +47,7 @@ The fundamental difference: CrewAI Memory is **infrastructure** — a storage-an
 
 **Where they're stronger:** The composite scoring formula, non-blocking save architecture, and consolidation pipeline are well-engineered. The scope/slice access-control model is genuinely useful for multi-agent scenarios. The graceful degradation when LLMs fail is thoughtful — memory still works, just with defaults.
 
-**Where we're stronger:** Knowledge in our system has a lifecycle (status, type transitions, link semantics). A note can be challenged, refined, connected, promoted. In CrewAI Memory, a record is either present or consolidated — there's no maturation path. Our system also makes the [verifiability gradient](../deploy-time-learning-the-missing-middle.md) explicit: you can see what's speculative vs. what's been validated. Their importance scores have no such grounding.
+**Where we're stronger:** Knowledge in our system has a lifecycle (status, type transitions, link semantics). A note can be challenged, refined, connected, promoted. In CrewAI Memory, a record is either present or consolidated — there's no maturation path. Our system also makes the [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md) explicit: you can see what's speculative vs. what's been validated. Their importance scores have no such grounding.
 
 ### The Three-Space Problem
 
@@ -86,7 +86,7 @@ CrewAI Memory and [ClawVault](./clawvault.md) represent two poles of agent memor
 - **ClawVault** has typed observations, explicit session lifecycles, promotion pipelines, and a reflection cycle. It models the *process* of learning.
 - **CrewAI Memory** has a unified vector store, composite scoring, and consolidation. It models the *infrastructure* of remembering.
 
-Neither has a [learning theory](../learning-theory-index.md). ClawVault has operational patterns for what to do with knowledge (score, promote, reflect); CrewAI has engineering for how to store and retrieve it. What's missing from both is the meta-level: when should knowledge be [constrained](../definitions/constraining.md) vs. kept fluid? When does a memory need to become a decision, a procedure, a constraint? These are the questions our [deploy-time learning framework](../deploy-time-learning-the-missing-middle.md) addresses.
+Neither has a [learning theory](../learning-theory-index.md). ClawVault has operational patterns for what to do with knowledge (score, promote, reflect); CrewAI has engineering for how to store and retrieve it. What's missing from both is the meta-level: when should knowledge be [constrained](../definitions/constraining.md) vs. kept fluid? When does a memory need to become a decision, a procedure, a constraint? These are the questions our [deploy-time learning framework](../deploy-time-learning-is-the-missing-middle.md) addresses.
 
 The earlier [comparative review of agentic memory systems](./agentic-memory-systems-comparative-review.md) (Mem0, Graphiti, Cognee, Letta) found all four systems converging on vector similarity for retrieval and LLM-driven extraction on save. CrewAI Memory continues this pattern — it's the most polished implementation of the same paradigm, with the composite scoring and consolidation as its distinctive contributions.
 
@@ -105,7 +105,7 @@ Relevant Notes:
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: CrewAI Memory has no context-efficiency model; full-content storage ignores the volume dimension
 - [distillation](../definitions/distillation.md) — extends: `extract_memories()` is one-shot distillation without refinement or reconnection
 - [constraining](../definitions/constraining.md) — contrasts: consolidation is a form of constraining (reducing redundancy) but without the interpretation-narrowing that characterises our definition
-- [deploy-time-learning-the-missing-middle](../deploy-time-learning-the-missing-middle.md) — contrasts: CrewAI Memory operates at the in-context timescale (accumulate during runs) with persistence, but has no theory of when to codify patterns into durable artifacts
+- [deploy-time-learning-the-missing-middle](../deploy-time-learning-is-the-missing-middle.md) — contrasts: CrewAI Memory operates at the in-context timescale (accumulate during runs) with persistence, but has no theory of when to codify patterns into durable artifacts
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — contrasts: CrewAI Memory is purely retrieval-oriented; no mechanism for action-oriented knowledge types
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: the scope tree blurs workshop/library distinction rather than making it explicit
 - [ClawVault](./clawvault.md) — sibling: both are agent memory systems; ClawVault models the process of learning, CrewAI models the infrastructure of remembering

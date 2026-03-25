@@ -72,7 +72,7 @@ Relevant Notes:
 - [codification](./codification.md) — the far end of constraining; sometimes follows distillation (extract a procedure, then codify it to code)
 - [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
 - [agent statelessness makes routing architectural](../agent-statelessness-makes-routing-architectural-not-learned.md) — driver: each session starts fresh, so reasoning must be distilled rather than remembered
-- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — the substrate (repo artifacts) through which distillation operates
+- [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — the substrate (repo artifacts) through which distillation operates
 - [learning is not only about generality](../learning-is-not-only-about-generality.md) — foundation: capacity decomposes into generality vs reliability+speed+cost; distillation trades source completeness for operational efficiency
 - [information value is observer-relative](../information-value-is-observer-relative.md) — grounds: reframes distillation as bounded information extraction; deterministic transformations create information for bounded observers
 - [evolving understanding needs re-distillation not composition](../evolving-understanding-needs-re-distillation-not-composition.md) — exemplifies: when a consumer needs the whole evolving picture, holistic rewrite is re-distillation

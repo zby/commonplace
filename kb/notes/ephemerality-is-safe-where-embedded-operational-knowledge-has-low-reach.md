@@ -58,7 +58,7 @@ The asymmetry remains: AI can make re-derivation cheaper, but it cannot remove t
 
 Relevant Notes:
 
-- [Deploy-time learning is the missing middle](./deploy-time-learning-the-missing-middle.md) — complements: the malleable software section names the whole-system framing that this note sharpens with reach
+- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — complements: the malleable software section names the whole-system framing that this note sharpens with reach
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — foundation: accumulation is only worth its overhead when what you'd accumulate has reach; this note adds reach as the criterion that determines when the fork matters
 - [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — foundation: Deutsch's reach concept provides the vocabulary for why some operational knowledge transfers and some doesn't
 - [Vibe-noting](./vibe-noting.md) — extends: reach explains when inspectability becomes load-bearing for accumulation; low-reach coding tolerates discard more often than high-reach knowledge work does

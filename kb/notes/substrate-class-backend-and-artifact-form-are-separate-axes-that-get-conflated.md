@@ -31,7 +31,7 @@ The three-level split prevents category mistakes that keep recurring in comparis
 
 The comparison between [trajectory-informed memory generation](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) and [AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md) sharpens the same way. The real contrast is not "tips vs weights" but **symbolic artifact substrate vs subsymbolic substrate**. "Tips" are just one artifact form on the symbolic side.
 
-[Deploy-time learning](./deploy-time-learning-the-missing-middle.md) in Commonplace mostly operates through repo-hosted symbolic artifacts, but the repo is a backend choice. A different system could do deploy-time learning through a memory service or database and still remain in the same substrate class.
+[Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) in Commonplace mostly operates through repo-hosted symbolic artifacts, but the repo is a backend choice. A different system could do deploy-time learning through a memory service or database and still remain in the same substrate class.
 
 The taxonomy that falls out:
 
@@ -48,7 +48,7 @@ At this level, substrate trade-offs become easier to state. Subsymbolic learning
 Relevant Notes:
 
 - [Continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — foundation: argues that non-weight adaptation is still learning if it durably changes capacity
-- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — applies: commonplace's main symbolic-artifact loop, currently implemented mostly through repo-hosted artifacts
+- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — applies: commonplace's main symbolic-artifact loop, currently implemented mostly through repo-hosted artifacts
 - [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — grounds: already distinguishes promotion targets, but this note separates substrate class from backend and artifact form
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — sharpens: backend choice is downstream of substrate choice
 - [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: the core benefit of the symbolic artifact side is inspectability

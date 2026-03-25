@@ -74,7 +74,7 @@ The systems also make opposite substrate bets. `cq` optimizes for low-friction a
 
 Relevant Notes:
 
-- [deploy-time-learning-the-missing-middle](../deploy-time-learning-the-missing-middle.md) — exemplifies: `cq` improves deployed agent behavior through durable symbolic artifacts rather than weight updates
+- [deploy-time-learning-the-missing-middle](../deploy-time-learning-is-the-missing-middle.md) — exemplifies: `cq` improves deployed agent behavior through durable symbolic artifacts rather than weight updates
 - [files-not-database](../files-not-database.md) — contrasts: `cq` chooses SQLite records and API surfaces where Commonplace chooses inspectable files
 - [the-boundary-of-automation-is-the-boundary-of-verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the team review gate exists because shared knowledge quality cannot be cheaply verified automatically
 - [instruction-specificity-should-match-loading-frequency](../instruction-specificity-should-match-loading-frequency.md) — exemplifies: the plugin bundles manifest, skill, commands, and MCP server so usage instructions load at the right boundary
