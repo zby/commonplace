@@ -9,7 +9,7 @@
 **Index scan:**
 - Read kb/notes/index.md (lines 1-169, all entries) — flagged candidates:
   - [three-space-agent-memory-maps-to-tulving-taxonomy](kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — memory taxonomy for agents
-  - [three-space-memory-separation-predicts-measurable-failure-modes](kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md) — memory separation testing
+  - [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — memory separation testing
   - [agentic-memory-systems-comparative-review](kb/notes/related-systems/agentic-memory-systems-comparative-review.md) — 11-system comparison across memory dimensions
   - [memory-management-policy-is-learnable-but-oracle-dependent](kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — AgeMem's learned memory management
   - [context-efficiency-is-the-central-design-concern-in-agent-systems](kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — context as the scarce resource

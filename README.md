@@ -35,6 +35,7 @@ test/
 
 scripts/                     Standalone automation
   generate_notes_index.py    Regenerate directory indexes
+  rename_note.py             Rename a note, rewrite links, add MkDocs redirect
   sync_topic_links.py        Sync areas ↔ topics frontmatter
   github_snapshot.py         Snapshot GitHub issues/PRs
   x_snapshot.py              Snapshot X/Twitter posts
@@ -147,6 +148,7 @@ Scripts require uv. Dependencies are declared in `pyproject.toml` — `uv run` i
 
 ```bash
 uv run scripts/generate_notes_index.py kb/notes   # Rebuild directory index
+uv run scripts/rename_note.py old-note "New note title" --apply
 uv run scripts/sync_topic_links.py kb/notes/       # Sync areas ↔ topics
 uv run scripts/github_snapshot.py <url>             # Snapshot a GitHub issue/PR
 uv run scripts/x_snapshot.py <url>                  # Snapshot an X/Twitter post

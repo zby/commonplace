@@ -11,7 +11,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 ## Dynamics
 
 - [entropy-management-must-scale-with-generation-throughput](./entropy-management-must-scale-with-generation-throughput.md) — cleanup throughput must match generation throughput; agents replicate patterns including bad ones, so without proportional maintenance quality degrades with volume
-- [traversal-improves-the-graph](./traversal-improves-the-graph.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
+- [traversal-improves-the-graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 - [title-as-claim-exposes-commitments-enabling-popperian-maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — claim titles make maintenance cheap: scan the index, ask "do I still believe this?", open only the doubtful ones
 
 ## Detection

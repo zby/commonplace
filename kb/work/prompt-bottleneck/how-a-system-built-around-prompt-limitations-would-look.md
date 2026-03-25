@@ -119,5 +119,5 @@ Related KB notes (for context, not formal links):
 - [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md)
 - [agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md)
 - [agent runtimes decompose into scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md)
-- [three-space memory separation predicts measurable failure modes](../../notes/three-space-memory-separation-predicts-measurable-failure-modes.md)
+- [three-space memory separation predicts measurable failure modes](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md)
 - [agentic memory systems comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)

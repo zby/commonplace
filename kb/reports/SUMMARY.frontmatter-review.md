@@ -37,7 +37,7 @@ For the full dataset, read `kb/reports/reviews/csv/`.
 | Title-body alignment | 8 | 13 | [a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) | The title promises "contextual competence through discoverable, composable, trustworthy knowledge" — the three-properties framing — but t... |
 | Title composability | 3 | 24 | [context-engineering](../notes/definitions/context-engineering.md) | Title "Context engineering" is a bare topic noun phrase. "since context engineering..." does not complete as a sentence fragment. However... |
 | Claim strength | 1 | 7 | [programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md) | The title "Programming practices apply to prompting" is close to conventional wisdom — few practitioners in the LLM space would argue the... |
-| claim-strength | 1 | 3 | [traversal-improves-the-graph](../notes/traversal-improves-the-graph.md) | Title "Traversal improves the graph" is broad enough that most KB practitioners would nod along without pushback. The note's actual non-o... |
+| claim-strength | 1 | 3 | [traversal-improves-the-graph](../notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md) | Title "Traversal improves the graph" is broad enough that most KB practitioners would nod along without pushback. The note's actual non-o... |
 
 ## Low-Yield Checks
 

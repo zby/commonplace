@@ -6,7 +6,7 @@ tags: [kb-maintenance]
 status: seedling
 ---
 
-# Traversal improves the graph
+# Traversal improvements should be deferred via logging to avoid mid-task context switching
 
 Every time an agent traverses a note — following a link, searching for context, reading during `/connect` — it may notice something worth improving: a weak description, a missing link, a title that's a topic instead of a claim, a stale reference. The insight from arscontexta's [incremental formalization](https://raw.githubusercontent.com/agenticnotetaking/arscontexta/refs/heads/main/methodology/incremental%20formalization%20happens%20through%20repeated%20touching%20of%20old%20notes.md) is that these traversals are not just reads — they're opportunities for the graph to improve through use.
 
