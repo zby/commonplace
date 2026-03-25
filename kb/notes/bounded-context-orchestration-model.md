@@ -8,7 +8,7 @@ status: seedling
 
 # Bounded-context orchestration model
 
-Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment.
+Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, there is reason to think that [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment. (The second argument is [conjectural](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md); the first is well-established.)
 
 Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls.
 
@@ -17,7 +17,7 @@ Together these imply a natural architecture: a symbolic scheduler over bounded L
 The model has two components:
 
 - a **symbolic scheduler** over unbounded exact state, which assembles prompts and orchestrates the workflow
-- **bounded clean context windows** for each LLM call — the only expensive, stochastic operation
+- **bounded clean context windows** for each LLM call — the expensive, stochastic operation that the architecture is designed around
 
 The scheduler's state includes source artifacts, prior prompts, and outputs from earlier LLM calls: relevance labels, cluster summaries, extracted claims, sub-goals, partial syntheses. In practice this state may live in files, in-memory structures, databases, or a mix. The operational requirement is simple: accumulated state lives there, not in conversation history; LLM calls do judgment work and return results to code; the next prompt is assembled from stored state rather than from the model's memory of prior turns.
 
@@ -51,7 +51,9 @@ while not satisfied(K):
     K  = K + r
 ```
 
-Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem, but not the core structure. `select` is still symbolic code, even when it asks an LLM planning question: the planning call returns a plan into `K`, and the next step reads that plan from symbolic state and proceeds deterministically. Hierarchical decomposition is therefore not a separate mechanism but a pattern of use.
+Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem (the scheduler must merge or arbitrate when parallel results interact), but not the core structure — `select` is still symbolic code assembling prompts from `K`.
+
+Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. This is not `select` invoking an LLM call internally; it is the loop doing two iterations (one to plan, one to act on the plan). Hierarchical decomposition is therefore not a separate mechanism but a pattern of use.
 
 ## What makes selection hard
 
@@ -67,7 +69,7 @@ The `select` function is where the optimisation lives. The first problem is that
 
 Suppose the task is: given many notes, find the relevant ones and write an analysis. The full set of notes does not fit in one context window.
 
-Traced through `solve`:
+Traced through the select/call loop:
 
 ```
 K = {goal: "analyse notes", notes: [n₁ ... nₖ]}
