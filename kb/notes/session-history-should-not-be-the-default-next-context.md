@@ -13,9 +13,7 @@ An execution boundary — any point where one LLM call ends and another begins �
 1. **What to persist** in external state
 2. **What to load** into the next call's context
 
-These are not the same decision. Persistence is cheap; context window space is expensive. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), the scheduler's state can store everything — but the prompt for the next call should be assembled by a deliberate selection step, not inherited from the last session. The mistake is not storing a trace. The mistake is letting stored history automatically become the next call's context.
-
-The conflation arises one layer above the model itself. The orchestration model only requires bounded calls whose outputs are written into external symbolic state — it does not require chat history or a tool loop. But when higher-level interfaces package those bounded calls as chat sessions or framework-managed tool loops, session history becomes the path of least resistance for passing state forward.
+These are not the same decision. Persistence is cheap; context window space is expensive. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), the scheduler's state can store everything — but the prompt for the next call should be assembled by a deliberate selection step, not inherited from the last session. Storing a trace is fine — the mistake is letting stored history automatically become the next call's context.
 
 ## How the conflation arises
 
@@ -31,29 +29,14 @@ Why does it default this way? Because [raw history is the easiest way to preserv
 
 ## Why transcript inheritance breaks down
 
-The same property that makes trace-preserving handoff safe early makes it expensive later: it preserves everything.
+The same property that makes trace-preserving handoff safe early makes it expensive later: it preserves everything. LLMs [degrade with context complexity](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — every token spent parsing irrelevant history is cognitive budget not spent on the actual task:
 
-For orchestration, that is usually the wrong trade:
-
-- the caller receives more than it needs
 - local tactical debris survives beyond the stage where it mattered
-- downstream stages must re-interpret rather than consume a clean artifact
-- interfaces remain implicit, because "the return value" is a transcript rather than a declared object
+- the model must re-interpret prior interaction rather than consume a clean artifact
+- interfaces remain implicit — "the return value" is a transcript rather than a declared object
 - context pollution compounds as traces from many steps accumulate
 
-This is the [return-value problem](./llm-context-is-composed-without-scoping.md) in architectural form. Sub-agents should expose only their result, not their internal conversation. The discipline breaks when implementations package many bounded steps as one continuing session, letting history inheritance replace selective loading.
-
-## Three trace types, three loading profiles
-
-"History" conflates at least three kinds of trace:
-
-- **Conversation transcripts** — message-by-message exchanges mixing signal (clarifications, partial results) with noise (misframings, corrections, phatic turns). Worth storing for UI, audit, and replay — rarely the right material for the next prompt.
-- **Tool/action traces** — sequences of external calls and their results. More structured; sometimes the trace *is* the deliverable. Worth storing for debugging and reproducibility — occasionally close enough to load directly.
-- **Reasoning traces** — chain-of-thought, planning, deliberation. Reveals how the agent thought, not what it concluded. Worth storing for debugging and alignment research — almost never worth loading into the next call, unless the trace contains an explicit error diagnosis the next call should avoid repeating.
-
-The argument against loading traces as next-context is sharpest for reasoning traces, strong for conversation transcripts, and most nuanced for tool traces. All three belong in external state. They are rarely the right default material for the next prompt.
-
-The next bounded call should see a representation chosen for its task — including when the next decision is whether to retry, unwind, or escalate. Failure handling makes this especially visible: a bounded execution may return a structured failure artifact for the scheduler to act on, while the raw trace is stored separately for audit. The existence of a trace does not imply that the trace should be loaded into the recovery prompt.
+In a [properly scoped system](./llm-context-is-composed-without-scoping.md), each sub-agent gets a clean frame and the caller sees only the return value, not the internal conversation. Transcript inheritance defeats that discipline — and it also conflates several trace types (conversation transcripts, tool/action logs, reasoning chains) that are each worth storing but rarely worth loading. The next bounded call should see a representation chosen for its task, not the raw record of how the previous call got there.
 
 ## Execution-boundary compression is a recurring design move
 
