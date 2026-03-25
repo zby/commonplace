@@ -1,5 +1,5 @@
 <!-- REVIEW-METADATA
-note-path: kb/notes/programming-practices-apply-to-prompting.md
+note-path: kb/notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md
 last-full-review-note-sha: 2ae0ce4c09bb624062b8e246406dd4d4eef1ab77
 last-full-review-note-commit: d4237bd4b4d2593667e2675f27766515cdacba25
 last-full-review-at: 2026-03-24T20:56:17+01:00
@@ -10,7 +10,7 @@ last-acceptance-kind: full-review
 review-type: frontmatter-review
 -->
 
-=== FRONTMATTER REVIEW: programming-practices-apply-to-prompting.md ===
+=== FRONTMATTER REVIEW: underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md ===
 
 Checks applied: 4
 

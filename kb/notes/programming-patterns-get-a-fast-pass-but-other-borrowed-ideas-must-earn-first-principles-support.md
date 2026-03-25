@@ -46,5 +46,5 @@ Relevant Notes:
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — example of first-principles design, explicitly frames directory-scoping as workaround for absent import mechanism
 - [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from
-- [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — the general principle behind the programming fast pass
+- [underspecification and indeterminism complicate the transfer](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — develops: the practices transfer but two LLM properties make them harder in distinct ways; testing is doubled for two different reasons
 - [constraining](./definitions/constraining.md) — example of empirical observation becoming theory

@@ -27,7 +27,7 @@ last-checked: 2026-02-25
 
 ## The Shared Bet
 
-Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../programming-practices-apply-to-prompting.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../document-classification.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
+Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../document-classification.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
 
 The comparison illuminates a design spectrum:
 
@@ -75,7 +75,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — foundation: Thalo's 27 rules are hard oracles manufactured for knowledge quality; the comparison illuminates what "oracle hardening" looks like when pursued to full formalization
 - [instructions-are-typed-callables](../instructions-are-typed-callables.md) — foundation: Thalo's entity system is this principle taken to a full compiler; our YAML conventions occupy a different point on the same spectrum
-- [programming-practices-apply-to-prompting](../programming-practices-apply-to-prompting.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
+- [programming-practices-apply-to-prompting](../underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
 - [deploy-time-learning](../deploy-time-learning-the-missing-middle.md) — contrasts: Thalo has no verifiability gradient; their rules are fixed at design time, while the verifiability gradient explains why progressive formalization (prompt -> schema -> code) beats upfront commitment
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — converges: same goal (types with defined sections, checkable structure), different trajectory — they committed upfront via grammar, we discover through practice
 - [document-classification](../document-classification.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages

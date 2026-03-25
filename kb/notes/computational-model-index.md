@@ -55,7 +55,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 ## Instruction Properties
 
 - [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles correspond to different strategies for narrowing the agent's interpretation space
-- [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — typing, testing, version control transfer to prompting with modified cost models
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — typing, testing, version control transfer to prompting with modified cost models
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
 
 ## Related notes in other areas

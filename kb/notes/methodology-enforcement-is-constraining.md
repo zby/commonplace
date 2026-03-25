@@ -27,7 +27,7 @@ The key insight: hooks are not cleanly "deterministic." A hook that outputs a wa
 
 ## Maturation trajectory
 
-This is [progressive compilation applied to methodology](../notes/programming-practices-apply-to-prompting.md) — new best practices should start as underspecified natural-language guidance and constrain toward precise, deterministic enforcement as they prove out:
+This is [progressive compilation applied to methodology](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — new best practices should start as underspecified natural-language guidance and constrain toward precise, deterministic enforcement as they prove out:
 
 1. **Instruction** — write it in CLAUDE.md or WRITING.md. Cheap to revise, tests whether the practice is worth encoding. If the LLM follows it inconsistently, that's signal.
 2. **Skill** — encode it as a structured prompt. Reliable when invoked, but requires explicit invocation. Good for judgment-requiring operations that shouldn't be automated.
@@ -57,7 +57,7 @@ Relevant Notes:
 
 - [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — grounds: the verifiability gradient for code (prompt tweaks -> schemas -> evals -> deterministic modules) is the general pattern this note instantiates for methodology
 - [constraining is learning](./definitions/constraining.md) — foundation: the constraining gradient for code; this note applies the same gradient to methodology
-- [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — synthesizes: the maturation trajectory is progressive compilation applied to methodology — flexible instructions frozen into rigid, efficient automation
+- [programming practices apply to prompting](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — synthesizes: the maturation trajectory is progressive compilation applied to methodology — flexible instructions frozen into rigid, efficient automation
 - [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — exemplifies: a skill-level operation that completed the maturation trajectory into a deterministic script
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — parallels: document type maturation (note -> traits -> promoted base type) follows the same gradual-typing pattern as methodology maturation (instruction -> skill -> hook -> script); both trade flexibility for reliability as verifiability increases
 - [oracle strength spectrum](../notes/oracle-strength-spectrum.md) — determines when a practice is ready to move down the enforcement gradient: cheap verification enables scripting; expensive verification keeps the practice at skill level

@@ -36,7 +36,7 @@ The `/connect` discovery found 11 genuine connections, concentrated in two clust
 
 **Exemplification cluster — ABC demonstrates existing KB theses in a concrete system:**
 
-- [programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md) — **exemplifies**: Design-by-Contract adapted for probabilistic execution, addressing both semantic underspecification and execution indeterminism.
+- [programming-practices-apply-to-prompting](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — **exemplifies**: Design-by-Contract adapted for probabilistic execution, addressing both semantic underspecification and execution indeterminism.
 - [legal-drafting-solves-the-same-problem-as-context-engineering](../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) — **validates**: already linked; ABC's entire vocabulary (contracts, enforcement, compliance, violation, recovery) is legal vocabulary routed through programming.
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **complements**: soft constraints with compliance probability p are above-chance oracles (TPR > FPR) that error correction can amplify; the recovery window k bounds how many amplification steps are needed.
 - [spec-mining-as-codification](../notes/spec-mining-as-codification.md) — **enables**: ContractSpec DSL provides a concrete target format for mined behavioral specs; mined regularities could be expressed as hard or soft constraints classified by oracle strength.

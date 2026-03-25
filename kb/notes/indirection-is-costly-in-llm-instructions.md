@@ -39,6 +39,6 @@ This principle surfaced during KB extraction planning. Skills in `kb/instruction
 Relevant Notes:
 
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — generalises: indirection elimination is a specific case of frontloading; this note covers the broader principle of pre-computing anything that doesn't need the LLM's runtime context
-- [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — context: indirection cost is another case where a programming practice (abstraction via variables) transfers to prompting but with a different cost model
+- [programming practices apply to prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — context: indirection cost is another case where a programming practice (abstraction via variables) transfers to prompting but with a different cost model
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — foundation: build-time generation is a point on the constraining gradient — moving from stochastic interpretation to deterministic resolution
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context is expensive; indirection mechanics make it more so

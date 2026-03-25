@@ -55,7 +55,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 13. **[human-llm-differences-are-load-bearing-for-knowledge-system-design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md)** — extends: "The codebase is optimized for Codex's legibility first" inverts the dual-audience assumption. When agents are the primary consumer, human legibility becomes secondary. This is an extreme point on the dual-audience spectrum.
 
-14. **[programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md)** — exemplifies: Structural tests, linters, CI, dependency graphs — all transferred wholesale from programming to agent-first development. The most extreme available example: all standard programming practices applied to a codebase where no human writes code.
+14. **[programming-practices-apply-to-prompting](../notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md)** — exemplifies: Structural tests, linters, CI, dependency graphs — all transferred wholesale from programming to agent-first development. The most extreme available example: all standard programming practices applied to a codebase where no human writes code.
 
 **Companion source**: [Harness Engineering Is Cybernetics (ingest)](harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — an X thread reframing harness engineering as cybernetics (sensors, actuators, feedback loops). Together the two sources provide practice (Lopopolo) and theory (cybernetics framing) for the same phenomenon.
 

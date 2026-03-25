@@ -51,7 +51,7 @@ Two major legal techniques are absent from this table: **boilerplate** (pre-draf
 
 ## Why this matters for knowledge system design
 
-[Programming practices apply to prompting](./programming-practices-apply-to-prompting.md) because LLM-based systems are a kind of software system. Legal drafting is a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity. Programming analogies require translating from a precise medium to an underspecified one; legal analogies require translating from one kind of interpreter (institutionally constrained judges with external memory) to another (stateless LLMs with bounded context). Neither transfer is free, but they address different gaps.
+[Programming practices apply to prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) because LLM-based systems are a kind of software system. Legal drafting is a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity. Programming analogies require translating from a precise medium to an underspecified one; legal analogies require translating from one kind of interpreter (institutionally constrained judges with external memory) to another (stateless LLMs with bounded context). Neither transfer is free, but they address different gaps.
 
 This doesn't replace the programming lens — typing, testing, and compilation remain powerful. But it adds a complementary perspective native to the underspecified medium.
 
@@ -72,7 +72,7 @@ ABC's hard/soft constraint hierarchy answers the open question below about inter
 Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
-- [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
+- [programming practices apply to prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
 - [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — extends: law as another source discipline alongside computer science
 - [constraining](./definitions/constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings
 - [codification](./definitions/codification.md) — contrast: statute-writing is NOT KB-codification — still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance

@@ -148,7 +148,7 @@ Relevant Notes:
 - [learning-theory](./learning-theory-index.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
-- [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — applies: typing, testing, and version control transfer to prompting under this framework
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — applies: typing, testing, and version control transfer to prompting under this framework
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — applies: keeping an LLM output resolves underspecification to a fixed interpretation
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions
