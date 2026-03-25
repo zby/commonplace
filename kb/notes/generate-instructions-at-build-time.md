@@ -1,5 +1,5 @@
 ---
-description: KB skills should be generated from templates at setup time, not parameterised with runtime variables — applying the general principle that indirection is costly in LLM instructions
+description: Template generation pays the flexibility cost once at setup; runtime variables pay it on every use across every substitution site, with occasional LLM misreads
 type: note
 traits: []
 tags: [architecture]

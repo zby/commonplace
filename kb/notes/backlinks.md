@@ -1,5 +1,5 @@
 ---
-description: Analysis of where backlinks (inbound link visibility) would concretely help agents working in the KB — use cases, trade-offs, and design options
+description: Four use cases for inbound link visibility (hub identification, source-to-theory bridging, impact assessment, tension surfacing) with four design options and their maintenance trade-offs
 type: note
 traits: [has-comparison]
 tags: [links]

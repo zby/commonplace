@@ -1,5 +1,5 @@
 ---
-description: Brainstorming note that turns the pairwise-comparison hypothesis into a staged test plan for open-ended LLM evaluation loops
+description: Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
 type: note
 traits: [has-external-sources]
 tags: [evaluation, llm-interpretation-errors, context-engineering]

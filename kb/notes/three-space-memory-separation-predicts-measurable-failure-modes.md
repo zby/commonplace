@@ -1,5 +1,5 @@
 ---
-description: The three-space memory claim is testable because flat memory predicts specific cross-contamination failures
+description: Flat memory predicts three cross-contamination failures — search pollution, identity scatter, insight trapping — testable via an observation protocol against real agent systems
 tags: [learning-theory]
 status: speculative
 ---

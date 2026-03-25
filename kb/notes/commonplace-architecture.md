@@ -1,5 +1,5 @@
 ---
-description: The commonplace repo's own internal layout — what exists, what's missing, and the decision to put global types in CLAUDE.md instead of kb/types/
+description: The repo's own layout (kb/, sources, instructions, scripts) as distinct from the two-tree installed layout; global types inlined in CLAUDE.md rather than kb/types/
 type: note
 traits: []
 tags: [architecture]
