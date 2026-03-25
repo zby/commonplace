@@ -53,7 +53,7 @@ The fundamental difference: CrewAI Memory is **infrastructure** — a storage-an
 
 CrewAI Memory stores everything in one flat vector space partitioned by scope paths. Our [three-space analysis](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) predicts this will produce specific failure modes: operational details (task outputs) pollute semantic search for domain knowledge; agent self-knowledge (preferences, learned strategies) has no natural home distinct from project facts. The scope tree partially mitigates this — `/agent/researcher` vs `/project/alpha` is a namespace separation — but it's convention rather than structure. Nothing prevents operational trivia from landing in `/project/alpha` alongside architectural decisions.
 
-The [predicted failures](../three-space-memory-separation-predicts-measurable-failure-modes.md) — search pollution, identity scatter, insight trapping — would be testable against CrewAI crews running real tasks over time.
+The [predicted failures](../flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — search pollution, identity scatter, insight trapping — would be testable against CrewAI crews running real tasks over time.
 
 ### Context Efficiency
 
@@ -101,7 +101,7 @@ The earlier [comparative review of agentic memory systems](./agentic-memory-syst
 
 Relevant Notes:
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — grounds: CrewAI's unified single-space design is the alternative to the three-space separation this note argues for
-- [three-space-memory-separation-predicts-measurable-failure-modes](../three-space-memory-separation-predicts-measurable-failure-modes.md) — grounds: predicted failures (search pollution, identity scatter) are testable against CrewAI crews
+- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — grounds: predicted failures (search pollution, identity scatter) are testable against CrewAI crews
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: CrewAI Memory has no context-efficiency model; full-content storage ignores the volume dimension
 - [distillation](../definitions/distillation.md) — extends: `extract_memories()` is one-shot distillation without refinement or reconnection
 - [constraining](../definitions/constraining.md) — contrasts: consolidation is a form of constraining (reducing redundancy) but without the interpretation-narrowing that characterises our definition

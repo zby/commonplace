@@ -12,7 +12,7 @@ An LLM's context is assembled by concatenating system prompts, skill bodies, use
 
 This is not even dynamic scoping, which at least has a stack with push and pop. It is flat concatenation — the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) with no structure imposed on top. But the pathologies are the same ones that dynamic scoping produces, and the analogy to dynamically scoped Lisp clarifies them:
 
-**Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./three-space-memory-separation-predicts-measurable-failure-modes.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
+**Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
 
 **Name collision.** The word "table" meant an HTML element in turn 3 but a database table in turn 12, and the model conflates them. In a flat log there are no scope boundaries to disambiguate — every use of a term is in the same namespace.
 
@@ -98,7 +98,7 @@ Relevant Notes:
 
 - [llm context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — amplifies: the medium provides no structural boundaries, so scoping must be imposed by architecture
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — extends: scoping is one coordination guarantee family; without it, flat context fails by contamination rather than by inconsistency or amplification
-- [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — exemplifies: the failure modes (search pollution, identity scatter, insight trapping) are symptoms of flat scoping applied to memory
+- [three-space memory separation predicts measurable failure modes](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — exemplifies: the failure modes (search pollution, identity scatter, insight trapping) are symptoms of flat scoping applied to memory
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified instructions are sensitive to everything in context, making scope contamination especially damaging
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — existing approximation: llm-do's per-agent system prompts and arguments are frame-local context
 - [codification](./definitions/codification.md) — enables: frame boundaries are interface points where return values can be progressively typed

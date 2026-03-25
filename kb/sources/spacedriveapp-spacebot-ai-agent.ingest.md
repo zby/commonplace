@@ -35,7 +35,7 @@ The `/connect` discovery identified 7 genuine connections to existing notes, plu
 
 **Memory (second cluster):**
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) -- **exemplifies**: Spacebot's 8 memory types partially map onto the three spaces (Identity to self-space, Goal/Todo to operational, Fact/Event to knowledge) but remain flat categories in a single store, making it a hybrid test case.
-- [three-space-memory-separation-predicts-measurable-failure-modes](../notes/three-space-memory-separation-predicts-measurable-failure-modes.md) -- **enables**: Spacebot's typed-but-unified memory with graph edges is a strong test case for whether typed categories within a single store mitigate the predicted failure modes (search pollution, identity scatter, insight trapping).
+- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) -- **enables**: Spacebot's typed-but-unified memory with graph edges is a strong test case for whether typed categories within a single store mitigate the predicted failure modes (search pollution, identity scatter, insight trapping).
 
 **Index membership:**
 - [related-systems-index](../notes/related-systems/related-systems-index.md) -- **extends**: Spacebot adds a new position (Rust-level process separation, concurrent multi-user design) that no existing entry covers.

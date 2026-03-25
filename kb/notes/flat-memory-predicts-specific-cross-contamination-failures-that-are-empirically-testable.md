@@ -4,7 +4,7 @@ tags: [learning-theory]
 status: speculative
 ---
 
-# Three-space memory separation predicts measurable failure modes
+# Flat memory predicts specific cross-contamination failures that are empirically testable
 
 The "living memory" article (Cornelius, Agentic Note-Taking #19) claims that agent memory should be split into three spaces — knowledge (semantic), self (episodic), and operational (procedural) — because conflating them produces specific failure modes. This claim is worth validating because the alternative — a single flat memory — is simpler and cheaper to build.
 

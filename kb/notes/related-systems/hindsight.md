@@ -85,7 +85,7 @@ Hindsight ([vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)) 
 
 Extends [three-space agent memory maps to Tulving taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — Hindsight's world/experience/observation taxonomy is the closest production implementation of the theoretical three-space separation, with benchmark evidence that the separation improves retrieval.
 
-Extends [three-space memory separation predicts measurable failure modes](../three-space-memory-separation-predicts-measurable-failure-modes.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
+Extends [three-space memory separation predicts measurable failure modes](../flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
 
 Grounds [distillation](../definitions/distillation.md) — Hindsight's consolidation engine (facts → observations → mental models) is a concrete implementation of automated distillation; trend tracking shows the temporal dynamics of distilled knowledge.
 

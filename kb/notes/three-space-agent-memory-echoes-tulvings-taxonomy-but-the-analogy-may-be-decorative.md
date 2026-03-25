@@ -18,7 +18,7 @@ The article argues that agent memory systems should not be a single store but th
 
 The key insight is not just that these are different *topics* but that they have different *lifecycles*. Knowledge accumulates and rarely gets deleted. Self-knowledge evolves slowly through accumulated experience. Operational artifacts churn — they arrive raw, consolidate, and either graduate to knowledge or get archived.
 
-The article claims that conflating these spaces produces three failure modes: operational debris polluting knowledge search, identity scattering across ephemeral logs, and insights trapped in session state. Whether these failures actually manifest at practical scale is an [open empirical question](./three-space-memory-separation-predicts-measurable-failure-modes.md).
+The article claims that conflating these spaces produces three failure modes: operational debris polluting knowledge search, identity scattering across ephemeral logs, and insights trapped in session state. Whether these failures actually manifest at practical scale is an [open empirical question](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md).
 
 The mapping to Tulving is suggestive but may be decorative. The practical value could reduce to simpler advice: separate persistent knowledge from transient working files, and give them different retention policies. Whether the cognitive science analogy adds explanatory power beyond that remains to be seen.
 
@@ -26,7 +26,7 @@ The mapping to Tulving is suggestive but may be decorative. The practical value 
 
 Relevant Notes:
 
-- [three-space memory separation predicts measurable failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) — observational protocol for testing whether the separation actually helps
+- [three-space memory separation predicts measurable failure modes](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — observational protocol for testing whether the separation actually helps
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — the three timescales framework; graduation from operational to knowledge space is a form of codification
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — operationalizes metabolic rates: per-type recency decay in note scoring formalizes the intuition that knowledge and operational content age differently
 - [agentic memory systems comparative review](./related-systems/agentic-memory-systems-comparative-review.md) — validates: evaluates the three-space taxonomy's analytical utility across 11 systems; uses the knowledge/self/operational split as the framework for comparing agency models and retention policies

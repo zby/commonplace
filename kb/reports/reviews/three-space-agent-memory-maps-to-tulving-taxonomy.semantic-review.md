@@ -32,7 +32,7 @@ INFO:
 
 PASS:
 - [Internal consistency] The note is internally coherent. It presents the three-space framework from the source, then immediately hedges that the Tulving mapping "may be decorative" and "the practical value could reduce to simpler advice." The speculative status is appropriate and the hedging is consistent throughout.
-- [Grounding] The link to three-space-memory-separation-predicts-measurable-failure-modes accurately characterizes that note as an "observational protocol for testing whether the separation actually helps." The linked note does exactly this.
+- [Grounding] The link to flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable accurately characterizes that note as an "observational protocol for testing whether the separation actually helps." The linked note does exactly this.
 - [Grounding] The link to memory-management-policy-is-learnable-but-oracle-dependent is accurately characterized as "challenges" — AgeMem's two-tier (LTM/STM) access-pattern separation and its unified RL-trained management do provide evidence against structural isolation by content type. The relationship is well-described.
 - [Completeness] The three failure modes (search pollution, identity scatter, insight trapping) are well-defined and distinct. Each describes a different cross-contamination direction. No obvious fourth failure mode is missing from the framework as stated (given that the framework only claims three spaces, the three pairwise contamination patterns are the natural set).
 

@@ -1,5 +1,5 @@
 <!-- REVIEW-METADATA
-note-path: kb/notes/three-space-memory-separation-predicts-measurable-failure-modes.md
+note-path: kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md
 last-full-review-note-sha: 2aaae23d3756fc6700781d6d72145280ba2dfa6c
 last-full-review-note-commit: d1d69393d519758d93ae3c6987b3fc2350077c45
 last-full-review-at: 2026-03-24T20:57:19+01:00
@@ -10,7 +10,7 @@ last-acceptance-kind: full-review
 review-type: frontmatter-review
 -->
 
-=== FRONTMATTER REVIEW: three-space-memory-separation-predicts-measurable-failure-modes.md ===
+=== FRONTMATTER REVIEW: flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md ===
 
 Checks applied: 4
 

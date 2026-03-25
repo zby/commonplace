@@ -50,7 +50,7 @@ Workers independently check context every 15 turns, deduplicating stale tool res
 
 Eight memory types (Fact, Preference, Decision, Identity, Event, Observation, Goal, Todo) with per-type default importance scores (Identity=1.0, Observation=0.3). Six edge types (RelatedTo, Updates, Contradicts, CausedBy, ResultOf, PartOf) stored in SQLite with a `UNIQUE(source, target, relation)` constraint. Retrieval uses Reciprocal Rank Fusion across three sources: vector similarity (LanceDB/HNSW), full-text search (Tantivy), and graph traversal (iterative BFS up to depth 3 from high-importance seed nodes).
 
-The memory is typed but unified — all eight types live in one store, searched through one API. This is a middle ground between flat accumulation (Mem0) and full structural separation. Whether the unified store produces the cross-contamination failures predicted by [three-space memory separation](../three-space-memory-separation-predicts-measurable-failure-modes.md) is an open question; the graph edges (Updates, Contradicts) may partially mitigate search pollution by giving the retriever relationship-aware traversal paths.
+The memory is typed but unified — all eight types live in one store, searched through one API. This is a middle ground between flat accumulation (Mem0) and full structural separation. Whether the unified store produces the cross-contamination failures predicted by [three-space memory separation](../flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) is an open question; the graph edges (Updates, Contradicts) may partially mitigate search pollution by giving the retriever relationship-aware traversal paths.
 
 ## Secondary Mechanisms
 
@@ -90,7 +90,7 @@ Spacebot is a runtime agent framework; commonplace is a knowledge system with ag
 ## What to Watch
 
 - Whether the five fixed process types survive as stronger models emerge. The [multi-agent future prediction](../../sources/voooooogel-multi-agent-future.ingest.md) suggests fixed roles dissolve, but Spacebot's types encode concurrency guarantees and tool-set isolation, not persona-style roles — structural constraints may prove more durable than role assignments.
-- Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../three-space-memory-separation-predicts-measurable-failure-modes.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
+- Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
 - Whether the cortex's signal buffer evolves beyond observability. The 100-item rolling window of process events is currently used for health checks and circuit breakers. If it starts informing adaptive scheduling (learning which branch configurations succeed), it becomes a deploy-time learning mechanism.
 
 ---
