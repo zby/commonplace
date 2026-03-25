@@ -73,7 +73,7 @@ Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
-- [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — extends: law as another source discipline alongside computer science
+- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — extends: law as another source discipline alongside computer science
 - [constraining](./definitions/constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings
 - [codification](./definitions/codification.md) — contrast: statute-writing is NOT KB-codification — still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance
 - [distillation](./definitions/distillation.md) — mapped, loosely: legal commentary extracts principles from case law without changing medium; legal briefs are the tighter analogue for task-targeted compression

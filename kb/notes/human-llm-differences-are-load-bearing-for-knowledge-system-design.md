@@ -20,7 +20,7 @@ Knowledge systems don't start from scratch. They draw on existing traditions and
 
 None of this means the materials are useless. It means each convention needs individual evaluation: *what specific problem does this convention solve, and does the LLM agent have the same problem?* The [failure-mode overlap argument](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) demonstrates this methodology — Toulmin structure works for LLMs not because of blind analogy but because LLMs exhibit the specific human-like failures that the structure prevents.
 
-The [design methodology](./design-methodology-borrow-widely-filter-by-first-principles.md) note establishes the adoption filter: first principles reasoning is the main gate, programming patterns get a fast pass, everything else earns its way in. But that note addresses *which sources to trust*. The point here is upstream: *why* the filter is necessary. It's necessary because the target system's consumer differs fundamentally from the consumer these traditions were designed for.
+The [design methodology](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) note establishes the adoption filter: first principles reasoning is the main gate, programming patterns get a fast pass, everything else earns its way in. But that note addresses *which sources to trust*. The point here is upstream: *why* the filter is necessary. It's necessary because the target system's consumer differs fundamentally from the consumer these traditions were designed for.
 
 ## Reason 2: KB documents serve dual audiences
 
@@ -64,7 +64,7 @@ The specific differences that matter most are developed elsewhere: [agent statel
 Relevant Notes:
 
 - [human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — exemplifies: the methodology of evaluating each human convention's specific arguments for LLM transfer
-- [design methodology — borrow widely, filter by first principles](./design-methodology-borrow-widely-filter-by-first-principles.md) — foundation: the adoption filter this note motivates; that note says *how* to filter, this note says *why* filtering is necessary
+- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — foundation: the adoption filter this note motivates; that note says *how* to filter, this note says *why* filtering is necessary
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — extends: the most consequential specific difference; routing infrastructure is the primary mechanism for managing dual audiences
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — example: a specific difference (context budget vs cognitive load) that produces a similar design response (resolve at build time) for different reasons
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — addresses the loading side of the dual-audience problem; this note identifies the writing side as a separate concern

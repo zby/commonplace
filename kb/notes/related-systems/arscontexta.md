@@ -58,7 +58,7 @@ This is interesting but the analogy operates across a vast scale difference. Neu
 
 The same question applies to elaborative encoding — the original research is about human memory formation through effortful connection. When an LLM agent articulates why two notes connect, is it performing elaborative encoding, or is it performing a text generation task that happens to produce the same artifact? The output (articulated connection) is the same, but the mechanism is different. The note itself acknowledges this tension as the "delegation shadow."
 
-Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../design-methodology-borrow-widely-filter-by-first-principles.md): we borrow from cognitive science but require first-principles support before adoption.
+Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md): we borrow from cognitive science but require first-principles support before adoption.
 
 ## Our Relationship
 
@@ -141,5 +141,5 @@ Relevant Notes:
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — the scaling question connects here
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — our analysis of their article #19
-- [design-methodology-borrow-widely-filter-by-first-principles](../design-methodology-borrow-widely-filter-by-first-principles.md) — the cognitive science scale-mismatch concern connects to our adoption filter
+- [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](../programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — the cognitive science scale-mismatch concern connects to our adoption filter
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)
