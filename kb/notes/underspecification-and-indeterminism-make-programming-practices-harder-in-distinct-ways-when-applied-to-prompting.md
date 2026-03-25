@@ -1,5 +1,5 @@
 ---
-description: Programming practices — typing, testing, progressive compilation, version control — apply to LLM prompting and knowledge systems, with semantic underspecification and execution indeterminism making some practices harder in distinct ways
+description: Indeterminism doubles test runs (statistical testing over distributions); underspecification doubles test targets (spec analysis for ambiguity). Conflating the two leads to misdiagnosis
 type: note
 tags: [learning-theory, computational-model]
 status: speculative

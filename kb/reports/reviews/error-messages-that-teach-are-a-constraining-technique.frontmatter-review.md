@@ -3,13 +3,12 @@ note-path: kb/notes/error-messages-that-teach-are-a-constraining-technique.md
 last-full-review-note-sha: 2ece79fbace4aeebd1ffaed47b8076d0d56fc7b3
 last-full-review-note-commit: fd0b8fb01d3e8c63e580847019636c0e1e2eff01
 last-full-review-at: 2026-03-24T20:54:56+01:00
-last-accepted-note-sha: 2ece79fbace4aeebd1ffaed47b8076d0d56fc7b3
-last-accepted-note-commit: fd0b8fb01d3e8c63e580847019636c0e1e2eff01
-last-accepted-at: 2026-03-24T20:54:56+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 367aec66cd9dc647a123b3e749fdc97b93736eea
+last-accepted-note-commit: 454a3421d6c4539edb4d8cf1275a588ac89c1062
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: error-messages-that-teach-are-a-constraining-technique.md ===
 
 Checks applied: 4

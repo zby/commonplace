@@ -3,13 +3,12 @@ note-path: kb/notes/commonplace-architecture.md
 last-full-review-note-sha: c1473803fe61adee0a1baa80a276e8c629ccd9ab
 last-full-review-note-commit: cfa5a80e97f831f42b58fa223260538a6c79282f
 last-full-review-at: 2026-03-24T20:54:05+01:00
-last-accepted-note-sha: c1473803fe61adee0a1baa80a276e8c629ccd9ab
-last-accepted-note-commit: cfa5a80e97f831f42b58fa223260538a6c79282f
-last-accepted-at: 2026-03-24T20:54:05+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: 113618ed5f1f7d2266e33c9a739fbf1441546e1f
+last-accepted-note-commit: 54940c69ea2daa628e8e28ba00f26e0f3b203f2a
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: commonplace-architecture.md ===
 
 Checks applied: 4

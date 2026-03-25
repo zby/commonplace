@@ -3,13 +3,12 @@ note-path: kb/notes/backlinks.md
 last-full-review-note-sha: 435bea6c25549bd7ec10d7bf8217c14df2144be6
 last-full-review-note-commit: cfa5a80e97f831f42b58fa223260538a6c79282f
 last-full-review-at: 2026-03-24T14:34:00+01:00
-last-accepted-note-sha: 435bea6c25549bd7ec10d7bf8217c14df2144be6
-last-accepted-note-commit: cfa5a80e97f831f42b58fa223260538a6c79282f
-last-accepted-at: 2026-03-24T14:34:00+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: d87b84c0d5844d877748a60003af7957a76d372c
+last-accepted-note-commit: 54940c69ea2daa628e8e28ba00f26e0f3b203f2a
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: backlinks.md ===
 
 Checks applied: 4

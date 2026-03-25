@@ -3,13 +3,12 @@ note-path: kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-ha
 last-full-review-note-sha: 4153e0186b9fd1dfa17415ad22a7f890cdb08b87
 last-full-review-note-commit: 328009802f9033ab971afc8a1f0918d052115c52
 last-full-review-at: 2026-03-24T20:53:51+01:00
-last-accepted-note-sha: 4153e0186b9fd1dfa17415ad22a7f890cdb08b87
-last-accepted-note-commit: 328009802f9033ab971afc8a1f0918d052115c52
-last-accepted-at: 2026-03-24T20:53:51+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: ad14ad7fc5e6f8491e19fe4fe343cbc166c9b389
+last-accepted-note-commit: 54940c69ea2daa628e8e28ba00f26e0f3b203f2a
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md ===
 
 Checks applied: 4

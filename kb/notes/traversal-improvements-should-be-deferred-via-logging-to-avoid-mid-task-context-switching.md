@@ -1,5 +1,5 @@
 ---
-description: Every traversal is a read-write opportunity — agents should log improvement opportunities during reading, then process them separately to avoid context-switching
+description: Loading writing methodology into an already-committed context window is expensive; a one-line log entry preserves the improvement signal at near-zero cost and lets a separate pass do the fix
 type: note
 traits: []
 tags: [kb-maintenance]

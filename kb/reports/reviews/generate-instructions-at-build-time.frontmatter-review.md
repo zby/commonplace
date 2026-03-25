@@ -3,13 +3,12 @@ note-path: kb/notes/generate-instructions-at-build-time.md
 last-full-review-note-sha: f4e57a1b148ac69cee43c1a0f1ef9df55b9057ff
 last-full-review-note-commit: cc365676b30ed9f3d77958177ab9107a32e2f046
 last-full-review-at: 2026-03-24T20:55:09+01:00
-last-accepted-note-sha: f4e57a1b148ac69cee43c1a0f1ef9df55b9057ff
-last-accepted-note-commit: cc365676b30ed9f3d77958177ab9107a32e2f046
-last-accepted-at: 2026-03-24T20:55:09+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: cbe14ca72e67f652b7565ad2095c7b0ab79d6360
+last-accepted-note-commit: 54940c69ea2daa628e8e28ba00f26e0f3b203f2a
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: generate-instructions-at-build-time.md ===
 
 Checks applied: 4

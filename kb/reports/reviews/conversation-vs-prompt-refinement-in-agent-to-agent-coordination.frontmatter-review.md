@@ -3,13 +3,12 @@ note-path: kb/notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordina
 last-full-review-note-sha: 8fa1f0fd16dfb1b43afa7c6832a5152fecf44f1e
 last-full-review-note-commit: 77b36d90b09b102404f4e2800ecad318640838d0
 last-full-review-at: 2026-03-24T20:54:20+01:00
-last-accepted-note-sha: 8fa1f0fd16dfb1b43afa7c6832a5152fecf44f1e
-last-accepted-note-commit: 77b36d90b09b102404f4e2800ecad318640838d0
-last-accepted-at: 2026-03-24T20:54:20+01:00
-last-acceptance-kind: full-review
+last-accepted-note-sha: e91fcfabd40a444c2c8f67cb1063f5d17fcca01c
+last-accepted-note-commit: c642badbee16866b1a628c9f9f1673f77d49d666
+last-accepted-at: 2026-03-25T09:26:20+01:00
+last-acceptance-kind: trivial-change-ack
 review-type: frontmatter-review
 -->
-
 === FRONTMATTER REVIEW: conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md ===
 
 Checks applied: 4
