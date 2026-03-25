@@ -23,4 +23,4 @@ Relevant Notes:
 
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — extends this by applying always-loaded vs on-demand loading to maintenance operations
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operationalizes this by collecting periodic checks and their distillation status
-- [instructions-are-skills-without-automatic-routing](./instructions-are-skills-without-automatic-routing.md) — defines the target artifact for procedures that mature beyond note-level catalogues
+- [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — defines the target artifact for procedures that mature beyond note-level catalogues
