@@ -23,6 +23,8 @@ def load_module(name: str, path: Path):
 
 
 review_metadata = load_module("review_metadata", SCRIPTS_DIR / "review_metadata.py")
+review_state = load_module("review_state", SCRIPTS_DIR / "review_state.py")
+selector_engine = load_module("selector_engine", SCRIPTS_DIR / "selector_engine.py")
 notes_selector = load_module("notes_selector", SCRIPTS_DIR / "notes_selector.py")
 ack_review = load_module("ack_review", SCRIPTS_DIR / "ack_review.py")
 
@@ -93,7 +95,7 @@ def test_list_reviewable_notes_only_returns_top_level_frontmatter_non_indexes(
     write(notes_root / "raw.md", "# Raw capture\n")
     note(notes_root / "nested" / "ignored.md", "Nested")
 
-    discovered = notes_selector.list_reviewable_notes(notes_root)
+    discovered = review_state.list_reviewable_notes(notes_root)
 
     assert discovered == [kept]
 
@@ -101,7 +103,7 @@ def test_list_reviewable_notes_only_returns_top_level_frontmatter_non_indexes(
 def test_missing_review_returns_changed_record(tmp_path: Path) -> None:
     note_path = note(tmp_path / "kb" / "notes" / "fresh.md", "Fresh")
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "prose-review",
         tmp_path / "reviews",
@@ -141,7 +143,7 @@ Overall: 1 warnings, 0 info
     )
     write(tmp_path / "reviews" / "stable.prose-review.md", review_text)
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "prose-review",
         tmp_path / "reviews",
@@ -191,7 +193,7 @@ Overall: CLEAN
         "\nUpdated body line.\nAnother addition.\n",
     )
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "prose-review",
         tmp_path / "reviews",
@@ -229,10 +231,10 @@ new 3
 new 4
 """
 
-    ratio = notes_selector.body_change_ratio(reviewed_text, current_text)
+    ratio = selector_engine.body_change_ratio(reviewed_text, current_text)
 
     assert ratio == pytest.approx(1.0)
-    assert notes_selector.body_changed_substantially(reviewed_text, current_text)
+    assert selector_engine.body_changed_substantially(reviewed_text, current_text)
 
 
 def test_body_changed_substantially_requires_more_than_half_the_body() -> None:
@@ -259,10 +261,10 @@ new 3
 new 4
 """
 
-    ratio = notes_selector.body_change_ratio(reviewed_text, current_text)
+    ratio = selector_engine.body_change_ratio(reviewed_text, current_text)
 
     assert ratio == pytest.approx(0.5)
-    assert not notes_selector.body_changed_substantially(reviewed_text, current_text)
+    assert not selector_engine.body_changed_substantially(reviewed_text, current_text)
 
 
 def test_frontmatter_review_marks_major_body_rewrite_as_changed(
@@ -306,12 +308,11 @@ Overall: CLEAN
         "\nNew 1.\nNew 2.\nNew 3.\nNew 4.\n",
     )
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "frontmatter-review",
         tmp_path / "reviews",
         tmp_path,
-        frontmatter_only=True,
     )
 
     assert record.status == "changed"
@@ -360,12 +361,11 @@ Overall: CLEAN
         "\nLine 1.\nLine 2.\nNew 3.\nNew 4.\n",
     )
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "frontmatter-review",
         tmp_path / "reviews",
         tmp_path,
-        frontmatter_only=True,
     )
 
     assert record.status == "unchanged"
@@ -403,7 +403,7 @@ def test_commit_path_metadata_is_resolved_without_crashing(tmp_path: Path) -> No
         "\nSecond version.\n",
     )
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "semantic-review",
         tmp_path / "reviews",
@@ -454,7 +454,7 @@ Overall: CLEAN
     )
     write(tmp_path / "reviews" / "broken.prose-review.md", review_text)
 
-    record = notes_selector.build_change_record(
+    record = selector_engine.build_change_record(
         note_path,
         "prose-review",
         tmp_path / "reviews",
@@ -467,7 +467,7 @@ Overall: CLEAN
 
 
 def test_render_change_record_emits_compact_truncated_json() -> None:
-    change = notes_selector.ReviewChange(
+    change = selector_engine.ReviewChange(
         note_path="kb/notes/example.md",
         review_path="reviews/example.prose-review.md",
         review_type="prose-review",
@@ -480,7 +480,7 @@ def test_render_change_record_emits_compact_truncated_json() -> None:
         diff="x" * 250,
     )
 
-    rendered = notes_selector.render_change_record(change)
+    rendered = selector_engine.render_change_record(change)
 
     assert rendered == {
         "note_path": "kb/notes/example.md",
@@ -491,7 +491,7 @@ def test_render_change_record_emits_compact_truncated_json() -> None:
 
 
 def test_render_change_record_can_include_status_for_unchanged_entries() -> None:
-    change = notes_selector.ReviewChange(
+    change = selector_engine.ReviewChange(
         note_path="kb/notes/example.md",
         review_path="reviews/example.prose-review.md",
         review_type="prose-review",
@@ -503,7 +503,7 @@ def test_render_change_record_can_include_status_for_unchanged_entries() -> None
         accepted_at=None,
     )
 
-    rendered = notes_selector.render_change_record(change, include_status=True)
+    rendered = selector_engine.render_change_record(change, include_status=True)
 
     assert rendered == {
         "note_path": "kb/notes/example.md",

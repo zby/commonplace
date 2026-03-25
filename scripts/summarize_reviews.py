@@ -29,6 +29,8 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
+from review_metadata import detect_review_type
+
 SUMMARY_PREFIX = "SUMMARY"
 TOP_ROWS = 5
 LEVEL_PRIORITY = {"WARN": 0, "INFO": 1, "CLEAN": 2}
@@ -71,16 +73,6 @@ class SummaryStats:
     total_warn: int
     total_info: int
     clean_notes: int
-
-
-def detect_review_type(path: Path) -> str | None:
-    """Extract the review type from a filename like foo.prose-review.md."""
-    stem = path.stem
-    parts = stem.rsplit(".", 1)
-    if len(parts) == 2:
-        return parts[1]
-    return None
-
 
 def parse_review(path: Path) -> NoteReview | None:
     """Parse a single review file into structured findings."""

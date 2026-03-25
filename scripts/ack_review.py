@@ -24,6 +24,7 @@ from review_metadata import (
     last_commit_for_path,
     parse_review_metadata,
 )
+from review_state import review_path_for
 
 
 class AckReviewError(Exception):
@@ -33,12 +34,6 @@ class AckReviewError(Exception):
 def iso_now() -> str:
     """Return the current local timestamp in ISO 8601 format."""
     return datetime.now().astimezone().isoformat(timespec="seconds")
-
-
-def review_path_for(repo_root: Path, note_path: Path, review_type: str) -> Path:
-    """Return the review file path for a note/review pair."""
-    return repo_root / "kb" / "reports" / "reviews" / f"{note_path.stem}.{review_type}.md"
-
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -72,7 +67,12 @@ def acknowledge_note(repo_root: Path, review_type: str, raw_note_path: str) -> s
             f"Note must be inside the repository: {note_path}"
         )
 
-    review_path = review_path_for(repo_root, note_path, review_type)
+    review_path = review_path_for(
+        note_path,
+        review_type,
+        repo_root / "kb" / "notes",
+        repo_root / "kb" / "reports" / "reviews",
+    )
     if not review_path.is_file():
         raise AckReviewError(
             f"Review file not found: {review_path.relative_to(repo_root)}",
