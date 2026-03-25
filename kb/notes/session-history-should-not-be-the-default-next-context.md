@@ -21,7 +21,7 @@ With raw SDK calls, there is no transcript problem. Application code assembles a
 
 - **Chat sessions** make message history the natural carrier of state
 - **Framework-owned tool loops** make intermediate progression happen inside a hidden runtime
-- **Continuing agent sessions** encourage "just keep talking to the same thing" instead of rebuilding the next bounded context deliberately
+- **Continuing agent sessions** encourage "just keep talking to the same thing" instead of rebuilding the next context deliberately
 
 The [tool loop index](./tool-loop-index.md) describes the framework-level packaging. The downstream consequence is that the packaging layer starts deciding what later calls inherit — and it defaults to "everything."
 
@@ -36,7 +36,7 @@ The same property that makes trace-preserving handoff safe early makes it expens
 - interfaces remain implicit — "the return value" is a transcript rather than a declared object
 - context pollution compounds as traces from many steps accumulate
 
-In a [properly scoped system](./llm-context-is-composed-without-scoping.md), each sub-agent gets a clean frame and the caller sees only the return value, not the internal conversation. Transcript inheritance defeats that discipline — and it also conflates several trace types (conversation transcripts, tool/action logs, reasoning chains) that are each worth storing but rarely worth loading. The next bounded call should see a representation chosen for its task, not the raw record of how the previous call got there.
+In a [properly scoped system](./llm-context-is-composed-without-scoping.md), each sub-agent gets a clean frame and the caller sees only the return value, not the internal conversation. Transcript inheritance defeats that discipline — and it also conflates several trace types (conversation transcripts, tool/action logs, reasoning chains) that are each worth storing but rarely worth loading. The next call should see a representation chosen for its task, not the raw record of how the previous call got there.
 
 ## Execution-boundary compression is a recurring design move
 
@@ -48,7 +48,7 @@ Across several systems, the shared move is [compression at the execution boundar
 - [Slate](../sources/slate-moving-beyond-react-and-rlm.ingest.md) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
-This is not just summarization — it is interface design. Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next bounded context.
+Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call.
 
 ## Tension: Slate's episodes sit between traces and artifacts
 
@@ -64,9 +64,9 @@ For most orchestration:
 - Use **trace-preserving storage** early, when you do not yet know the right interface or what later learning may need
 - Move toward **artifact-first loading** once the caller's real consumption pattern is understood
 - "Artifact-first" does not mean "minimal" — a compressed episode that also serves memory and learning is still an artifact, not a transcript
-- Keep the **raw trace as an auxiliary substrate** for UI, debugging, audit, or later learning unless a specific bounded call truly needs it
+- Keep the **raw trace as an auxiliary substrate** for UI, debugging, audit, or later learning unless a specific call truly needs it
 
-The default mistake is to let a chat interface or framework-owned tool loop decide what the next bounded call should inherit. Interactive sessions want continuity and visibility. Orchestration wants selective loading.
+The default mistake is to let a chat interface or framework-owned tool loop decide what the next call should inherit. Interactive sessions want continuity and visibility. Orchestration wants selective loading.
 
 ---
 
