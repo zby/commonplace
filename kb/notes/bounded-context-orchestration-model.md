@@ -19,7 +19,7 @@ The model has two components:
 - a **symbolic scheduler** over unbounded exact state, which assembles prompts and orchestrates the workflow
 - **bounded clean context windows** for each LLM call — the only expensive, stochastic operation
 
-The scheduler's state includes source artifacts, prior prompts, and lossy derived artifacts produced by earlier LLM calls: relevance labels, cluster summaries, extracted claims, sub-goals, partial syntheses. In practice this state may live in files, in-memory structures, databases, or a mix. The operational requirement is simple: accumulated state lives there, not in conversation history; LLM calls do judgment work and return results to code; the next prompt is assembled from stored state rather than from the model's memory of prior turns.
+The scheduler's state includes source artifacts, prior prompts, and outputs from earlier LLM calls: relevance labels, cluster summaries, extracted claims, sub-goals, partial syntheses. In practice this state may live in files, in-memory structures, databases, or a mix. The operational requirement is simple: accumulated state lives there, not in conversation history; LLM calls do judgment work and return results to code; the next prompt is assembled from stored state rather than from the model's memory of prior turns.
 
 The model also accommodates architectures where the LLM emits a symbolic control program rather than a direct natural-language answer. That still fits as long as execution and state progression remain external to the conversation. A system that keeps bookkeeping inside an LLM conversation is a [degraded variant](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) that spends bounded context on work the symbolic scheduler handles for free.
 
@@ -27,18 +27,18 @@ The model also accommodates architectures where the LLM emits a symbolic control
 
 Let:
 
-- `K` be the scheduler's full symbolic state
-- `t` be the call type or task family of the next agent step
-- `M` be the maximum effective context budget for one agent call, measured in normalized effective-cost units
-- `||P||_t` be the effective cost of prompt `P` for call type `t` — token count, compositional depth, or a task-shaped function of both
+- `K` be the scheduler's full symbolic state — source artifacts plus everything prior calls have produced
+- `t` be the task type of the next call
+- `M` be the maximum effective context budget for one call
+- `||P||_t` be the effective cost of prompt `P` for task type `t` — token count, compositional difficulty, or both
 
-`K` can be read in two equivalent ways. In the minimal reading, it contains only source state and prior call results, `select` recomputes any deterministic projections it needs, and `K + r` means simple concatenation of the new result onto the state sequence. In the materialized reading, `K` also stores goals, prior prompts, cached indexes, rankings, groupings, dependency maps, or other deterministic views for efficiency, and `K + r` stands for the corresponding state update. The theory treats these as equivalent; real orchestrators usually choose the second form. In practice many orchestrators persist the generated prompt `P` itself for audit, refinement, or later reuse; the notation leaves this implicit because `P` is a deterministic projection of `K` at that step, while `r` is the new stochastic output of the call.
+`K` accumulates over the loop. Whether the scheduler recomputes views on the fly or caches them (indexes, rankings, dependency maps) is an implementation choice — the theory treats both as equivalent. Real orchestrators usually cache.
 
-`||·||` is therefore not a universal size measure. Its definition depends on the kind of work the call is doing. [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops the empirical case for this: usable context varies with task type and prompt difficulty, so task dependence belongs naturally in the effective-cost measure. Writing `||P||_t ≤ M` pushes that task dependence into the cost measure and keeps `M` as a fixed threshold in normalized units. In a local analysis where the call type is fixed, we can suppress `t` and write `||P||` as shorthand.
+The cost measure `||·||` is not a universal size metric — it depends on what the call is doing. A synthesis call over six notes is harder than six independent relevance checks at the same token count. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops the empirical case. Writing `||P||_t ≤ M` captures this: the cost measure absorbs task difficulty, while `M` stays fixed. When the task type is held constant, we drop the subscript and write `||P||`.
 
 The scheduler alternates between two kinds of step. **Symbolic steps** happen outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication. **Agent calls** are bounded LLM invocations under focused prompts.
 
-The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `||P||_t ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from `K` to include and *how* to frame them, because the same material under different framing yields different [extractable structure](./information-value-is-observer-relative.md).
+The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `||P||_t ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from `K` to include and *how* to frame them, because the same material, framed differently, lets a bounded reader [extract different amounts of useful structure](./information-value-is-observer-relative.md).
 
 The result `r` is appended back into symbolic state. It need not be a direct answer — it may be a relevance label, claim list, cluster summary, contradiction table, partial synthesis, sub-goal set, or satisfaction signal.
 
@@ -61,7 +61,7 @@ The `select` function is where the optimisation lives. The first problem is that
 
 **Dual cost dimensions.** [Context cost](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) has two dimensions — volume (how many tokens) and complexity (how hard the tokens are to use). Selection must optimise both: include enough to be useful, but frame it so the sub-agent can actually use it.
 
-**Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same information, different [extractable structure](./information-value-is-observer-relative.md).
+**Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same tokens, different yield for a bounded reader. See [information value is observer-relative](./information-value-is-observer-relative.md).
 
 ## The canonical note-selection example
 
@@ -129,7 +129,7 @@ The full global optimisation problem is probably too rich for clean strategy the
 - How much selection judgment should the scheduler perform before constructing a bounded call, and how much should be delegated to the LLM inside that call?
 - What restrictions on the model (fixed decomposition templates, bounded branching, finite sub-goal depth) yield tractable optimisation while preserving enough expressiveness?
 - What heuristics make `select` good in practice?
-- When should the orchestrator compact vs externalise vs recurse?
+- When should the orchestrator compress state, offload it to external storage, or delegate to a sub-loop?
 - Can the loop be made self-improving — can later iterations learn from the quality of earlier selections? This would connect to [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md).
 
 ---
@@ -155,4 +155,5 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names the scheduler as one part of a larger runtime decomposition
+- [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues that the select/call loop's decomposition is the first prerequisite in a dependency chain (topology → isolation → verification)
 - [paper outline v2](../work/paper-bounded-context-orchestration/outline-v2.md) — develops: presents this model for an academic audience
