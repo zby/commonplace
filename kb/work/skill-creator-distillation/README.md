@@ -12,7 +12,7 @@ This workshop tests that framing against actual artifacts:
 
 - Codex's system `skill-creator`
 - Anthropic's `skills/skill-creator`
-- the local theory note on [distillation](../../notes/distillation.md)
+- the local theory note on [distillation](../../notes/definitions/distillation.md)
 
 The goal is not just to compare two meta-skills, but to sharpen a KB claim: skill creation is broader than `methodology -> skill`. It also absorbs user language, experiments, failures, benchmarks, and product/runtime constraints.
 

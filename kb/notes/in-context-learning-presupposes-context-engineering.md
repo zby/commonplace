@@ -10,7 +10,7 @@ status: seedling
 
 Amodei [argues](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md) that continual learning may be unnecessary because pre-training + RL + in-context learning suffice. The claim treats in-context learning as a given capability — million-token windows can hold enough deployment-specific information within a session, so persistent cross-session adaptation adds little.
 
-But in-context learning doesn't happen by itself. It only works when the right knowledge is already in the window. Something has to decide what "right" means, find the relevant knowledge, organize it, and load it — all before the model sees a single token. That something is [context engineering](./context-engineering.md): routing, loading, scoping, and maintenance.
+But in-context learning doesn't happen by itself. It only works when the right knowledge is already in the window. Something has to decide what "right" means, find the relevant knowledge, organize it, and load it — all before the model sees a single token. That something is [context engineering](./definitions/context-engineering.md): routing, loading, scoping, and maintenance.
 
 Context engineering is not static infrastructure. It improves over deployment time. Teams learn which knowledge to route into context, how to structure it for the model, when to prune accumulated debris, and how to scope what each agent sees. This improvement produces exactly the artifacts the [deploy-time learning framework](./deploy-time-learning-the-missing-middle.md) describes: versioned prompts, routing rules, retrieval strategies, schemas, evals. These artifacts are durable, inspectable, diffable, and testable — everything that in-context learning alone is not.
 
@@ -22,7 +22,7 @@ The three [timescales](./llm-learning-phases-fall-between-human-learning-modes.m
 
 Relevant Notes:
 
-- [context engineering](./context-engineering.md) — foundation: the machinery (routing, loading, scoping, maintenance) that in-context learning presupposes
+- [context engineering](./definitions/context-engineering.md) — foundation: the machinery (routing, loading, scoping, maintenance) that in-context learning presupposes
 - [deploy-time learning: the missing middle](./deploy-time-learning-the-missing-middle.md) — foundation: the framework that context engineering improvement belongs to; the artifacts it produces are the substrate of deploy-time learning
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: the three timescales remain necessary even if weight updates are eliminated; this note adds a dependency arrow between in-context and deploy-time

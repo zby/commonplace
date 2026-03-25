@@ -38,7 +38,7 @@ Relevant Notes:
 
 - [vibe-noting](./vibe-noting.md) — context: the inflation failure mode this note names and analyzes
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
-- [distillation](./distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
+- [distillation](./definitions/distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
 - [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: the formal measure of extractable structure for bounded observers
 - [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — contrasts: distillation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing

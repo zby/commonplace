@@ -12,7 +12,7 @@ A note graph distributes knowledge across composable fragments — each note mak
 
 When understanding is evolving and a consumer needs the whole picture — current beliefs, tried approaches, ongoing strategy — fragment reconciliation may not be feasible. Loading many notes, identifying which are current, and assembling a coherent view competes for [context budget](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) on two dimensions: volume (loading N fragments) and complexity (discriminating current from stale, resolving tensions). As fragment count grows, reconciliation can exceed [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — making the operation infeasible, not merely expensive.
 
-A pre-distilled narrative sidesteps this. The author — human or agent — performs reconciliation once and produces a single document sized for effective context. In [distillation](./distillation.md) terms: accumulated understanding is the source, the consumer needing the current picture is the target, and the narrative is the distillate. When understanding changes, you re-distill — holistic rewrite — rather than let fragments diverge until reconciliation breaks.
+A pre-distilled narrative sidesteps this. The author — human or agent — performs reconciliation once and produces a single document sized for effective context. In [distillation](./definitions/distillation.md) terms: accumulated understanding is the source, the consumer needing the current picture is the target, and the narrative is the distillate. When understanding changes, you re-distill — holistic rewrite — rather than let fragments diverge until reconciliation breaks.
 
 ## Why composition is expensive here
 
@@ -52,7 +52,7 @@ Theorist is illustrative rather than confirmatory: it demonstrates the pattern's
 
 Relevant Notes:
 
-- [distillation](./distillation.md) — foundation: this note concretizes distillation for the case of evolving understanding; holistic rewrite is re-distillation
+- [distillation](./definitions/distillation.md) — foundation: this note concretizes distillation for the case of evolving understanding; holistic rewrite is re-distillation
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: the bounded context that makes fragment reconciliation infeasible past a threshold
 - [effective context is task-relative](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — grounds: reconciliation complexity reduces effective context, so the feasibility boundary depends on the task, not just fragment count
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the narrative's lifecycle is workshop, not library; extraction into durable notes is a second distillation step

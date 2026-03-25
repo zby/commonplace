@@ -36,7 +36,7 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 **Exemplifies deploy-time learning** ([deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-the-missing-middle.md)): Tips are durable, inspectable artifacts that persist across sessions and improve behavior without weight updates — precisely the "missing middle" between prompt engineering and fine-tuning.
 
-**Exemplifies distillation** ([distillation](../notes/distillation.md)): Trajectory-to-tip extraction is distillation — compressing full execution traces into focused operational guidance. The subtask-level outperforming task-level is evidence that distillation granularity matters.
+**Exemplifies distillation** ([distillation](../notes/definitions/distillation.md)): Trajectory-to-tip extraction is distillation — compressing full execution traces into focused operational guidance. The subtask-level outperforming task-level is evidence that distillation granularity matters.
 
 **Also exemplifies**: [learning-is-not-only-about-generality](../notes/learning-is-not-only-about-generality.md) (tips are low-reach accumulation), [constraining-during-deployment-is-continuous-learning](../notes/constraining-during-deployment-is-continuous-learning.md) (tips constrain future behavior), and [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (tips map cleanly to procedural/operational space — none are semantic or episodic).
 

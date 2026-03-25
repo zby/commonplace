@@ -83,7 +83,7 @@ Borrowable patterns here are mostly integration-shell patterns (middleware, inte
 Relevant Notes:
 
 - [files-not-database](../files-not-database.md) — contrasts: Supermemory centers a hosted API substrate while this note argues for file-native knowledge as the primary medium
-- [distillation](../distillation.md) — extends: Supermemory wrappers perform runtime context compression/injection, but output quality still depends on backend processing we cannot inspect in this repo
+- [distillation](../definitions/distillation.md) — extends: Supermemory wrappers perform runtime context compression/injection, but output quality still depends on backend processing we cannot inspect in this repo
 - [a functioning kb needs a workshop layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: conversation-level ingestion patterns are a concrete reference for workshop-to-library promotion mechanisms
 - [context efficiency is the central design concern in agent systems](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: per-turn caching and profile/query modes are explicit context-budget controls
 - [pointer design tradeoffs in progressive disclosure](../pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: profile mode, query mode, and graph views expose different pointer tradeoffs across specificity, cost, and reliability

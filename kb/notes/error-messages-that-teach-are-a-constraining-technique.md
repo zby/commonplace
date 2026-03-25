@@ -16,7 +16,7 @@ Lopopolo's report on [OpenAI's Codex team](../sources/harness-engineering-levera
 
 In traditional systems, error messages are read by humans who bring external knowledge — a developer seeing `null pointer exception` knows how to debug it. The error message is a signal; the fix comes from the human's training and experience. In agent systems, the error message *is* the training for that interaction. The agent's only knowledge of what went wrong and how to fix it is what appears in its [context window](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). A terse error forces the agent to spend context on diagnosis; a teaching error frontloads the answer.
 
-This is why the error channel is an instruction channel: every verification output the agent sees — linter messages, test failures, hook warnings, CI output — functions as context that shapes its next action. The distinction between "enforcement" and "guidance" collapses. A blocking hook that exits non-zero with a helpful message is simultaneously at the deterministic end of the [constraining spectrum](./constraining.md) (it blocks the operation) and at the informative end (it teaches the fix).
+This is why the error channel is an instruction channel: every verification output the agent sees — linter messages, test failures, hook warnings, CI output — functions as context that shapes its next action. The distinction between "enforcement" and "guidance" collapses. A blocking hook that exits non-zero with a helpful message is simultaneously at the deterministic end of the [constraining spectrum](./definitions/constraining.md) (it blocks the operation) and at the informative end (it teaches the fix).
 
 ## The dual-function property
 
@@ -45,7 +45,7 @@ Lopopolo's phrase captures it: "every mistake is a harness bug." When an agent m
 Relevant Notes:
 
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the gradient captures enforcement reliability but not the context quality of enforcement output
-- [constraining](./constraining.md) — instance: teaching error messages are a constraining technique that constrains interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
+- [constraining](./definitions/constraining.md) — instance: teaching error messages are a constraining technique that constrains interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: teaching errors are frontloading applied to the error channel — pre-computing the fix instead of leaving it for the agent to derive
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivates: terse errors waste context on diagnosis; teaching errors respond to the complexity dimension by eliminating interpretation overhead
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: linter messages as remediation instructions in a 1M LOC agent-generated codebase

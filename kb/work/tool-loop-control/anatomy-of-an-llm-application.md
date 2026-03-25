@@ -89,7 +89,7 @@ Early in development, the model decides everything — what file to read, which 
 
 But after enough runs, patterns emerge. The model always runs tests after editing. When tests fail with a syntax error, the model always re-reads and fixes. After a successful test run, the model always formats the summary the same way. Each of these was once a judgment call — now it's a fixed pattern that the model re-discovers on every run, spending tokens on something deterministic.
 
-These crystallized patterns are candidates for [codification](../../notes/codification.md) — moving from LLM judgment to code. The natural question is: where should the codified logic go?
+These crystallized patterns are candidates for [codification](../../notes/definitions/codification.md) — moving from LLM judgment to code. The natural question is: where should the codified logic go?
 
 **Many patterns can go into tools.** "Always format test output as a table" can be the tool's job. "Log every file read" is a tool wrapper. These don't require loop control — they're codification at the tool boundary, and frameworks handle them fine.
 
@@ -137,4 +137,4 @@ Relevant Notes:
 - [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) — extends: the message-list-as-state default this note surfaces becomes a constraint when the framework owns progression
 - [agent runtimes decompose into scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — extends: the three-component decomposition that emerges when the inner loop is factored properly
 - [LLM-mediated schedulers are a degraded variant of the clean model](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: what happens when the inner loop's scheduler stays inside the conversation
-- [codification](../../notes/codification.md) — mechanism: crystallized scheduling patterns are codification candidates, but only scheduling-level patterns (not tool-level ones) require loop exposure
+- [codification](../../notes/definitions/codification.md) — mechanism: crystallized scheduling patterns are codification candidates, but only scheduling-level patterns (not tool-level ones) require loop exposure

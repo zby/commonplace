@@ -12,7 +12,7 @@ The [bitter lesson boundary](./bitter-lesson-boundary.md) separates arithmetic (
 
 ## The trade-off depends on which regime you're in
 
-[Codification](./codification.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each codification step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). But every such artifact also encodes a decomposition of some larger problem, and the arithmetic/vision-feature boundary determines whether that trade-off has a real cost:
+[Codification](./definitions/codification.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each codification step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). But every such artifact also encodes a decomposition of some larger problem, and the arithmetic/vision-feature boundary determines whether that trade-off has a real cost:
 
 - **Arithmetic-regime decompositions**: the spec fully captures the subproblem, so codification is pure gain — reliability+speed+cost improve and there's no generality loss, because the spec exhausts the problem space and the solution is algorithmically determined.
 - **Vision-feature decompositions**: the spec is a plausible theory, so codification involves the real trade-off — you gain the compound but lose generality. When scale makes the general approach good enough on reliability+speed+cost, the generality loss isn't worth it anymore.

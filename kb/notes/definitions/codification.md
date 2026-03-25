@@ -16,7 +16,7 @@ Codification is not a separate mechanism from constraining; it's what constraini
 
 Codify when a pattern has emerged across enough runs that you can confidently commit to one interpretation in code. Premature codification locks in brittle assumptions. The [constrain/relax cycle](./constraining.md) is the safety valve: if new requirements reveal the wrong commitment, relax back to an underspecified spec and let the LLM handle it until a better pattern emerges.
 
-[Oracle strength](./oracle-strength-spectrum.md) determines what can codify. Operations with hard oracles (the output is unambiguously right or wrong) are natural candidates. Operations with weak oracles (correctness requires judgment) resist codification.
+[Oracle strength](../oracle-strength-spectrum.md) determines what can codify. Operations with hard oracles (the output is unambiguously right or wrong) are natural candidates. Operations with weak oracles (correctness requires judgment) resist codification.
 
 ## Relationship to distillation
 
@@ -32,7 +32,7 @@ Relevant Notes:
 
 - [constraining](./constraining.md) — parent mechanism: codification is the far end of the constraining spectrum
 - [distillation](./distillation.md) — orthogonal mechanism: targeted extraction; codification sometimes follows distillation (extract a procedure, then codify it to code)
-- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which codification sits at the far end
-- [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
-- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale
+- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which codification sits at the far end
+- [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
+- [oracle-strength-spectrum](../oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
+- [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale

@@ -60,5 +60,5 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the scheduler already holds the coordination state that prompt refinement requires
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: conversation adds volume (misframing and correction transcript) to the scarce context resource
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — complicates: when the caller is also an LLM, the "push complexity to the scheduler" argument weakens
-- [distillation](./distillation.md) — foundation: prompt refinement is distillation — targeted extraction of the caller's knowledge into a focused artifact shaped by the sub-agent's task
+- [distillation](./definitions/distillation.md) — foundation: prompt refinement is distillation — targeted extraction of the caller's knowledge into a focused artifact shaped by the sub-agent's task
 - [evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — parallel: holistic rewrite of evolving narratives is the same operation (re-distillation) applied to a different target

@@ -41,7 +41,7 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 - LLM systems make the projection explicit — every prompt invocation picks an interpretation
 - The interpretation choice is visible (you can compare outputs across runs) but not controllable (you can't predict which interpretation will be chosen)
-- [Constraining](./constraining.md) is the direct mechanism for resolving disambiguation — committing to one interpretation and hardening it into a less ambiguous form
+- [Constraining](./definitions/constraining.md) is the direct mechanism for resolving disambiguation — committing to one interpretation and hardening it into a less ambiguous form
 
 The deploy-time learning cycle (deploy → observe → constrain → repeat) is precisely a disambiguation loop: each iteration catches interpretation errors and narrows the spec for next time.
 
@@ -57,7 +57,7 @@ Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the spec-to-program projection model that makes interpretation explicit
 - [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: agile's loop applied to human-AI systems, where disambiguation is amplified
-- [constraining](./constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
+- [constraining](./definitions/constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
 - [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — extends: distinguishes when disambiguation should be resolved upfront, maintained bidirectionally, or extracted from repeated behavior
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — sharpens: the downstream cascade starts with a runtime event whose degraded status should have been surfaced when the first ambiguity was locally repaired
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for preventing cascading interpretation errors in natural language specs

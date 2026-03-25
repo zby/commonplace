@@ -33,5 +33,5 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — extends: this note identifies a stronger subclass of degraded schedulers that externalise state and expose control flow without fully factoring into code
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: the main gains OpenProse gets early are scoping gains, not hard reliability gains
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — explains why a DSL and explicit state protocols help before codification
-- [codification](./codification.md) — contrasts: OpenProse constrains orchestration practice but does not codify the runtime semantics
+- [codification](./definitions/codification.md) — contrasts: OpenProse constrains orchestration practice but does not codify the runtime semantics
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: compile-time validation and `**...**` conditions remain soft-oracle operations

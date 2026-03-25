@@ -71,7 +71,7 @@ What we cannot tell from public evidence is the policy around episodes: how much
 
 ## Execution-boundary compression is a recurring design move
 
-Across these systems, the shared move is [compression at the execution boundary](./distillation.md):
+Across these systems, the shared move is [compression at the execution boundary](./definitions/distillation.md):
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
@@ -111,7 +111,7 @@ Relevant Notes:
 - [tool loop](./tool-loop-index.md) — foundation: the trace problem appears when bounded calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — special case: conversation preserves trace, prompt refinement compresses it into a cleaner handoff artifact
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the caller does judgment-heavy selection before dispatch, creating a clean handoff boundary
-- [distillation](./distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
+- [distillation](./definitions/distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
 - [Spacebot](./related-systems/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces

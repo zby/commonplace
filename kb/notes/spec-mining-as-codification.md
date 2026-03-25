@@ -8,7 +8,7 @@ status: current
 
 # Spec mining is codification's operational mechanism
 
-[Codification](./codification.md) says knowledge hardens into repo artifacts — tests, specs, conventions. But where do those artifacts come from? One answer: you mine them from observed behavior.
+[Codification](./definitions/codification.md) says knowledge hardens into repo artifacts — tests, specs, conventions. But where do those artifacts come from? One answer: you mine them from observed behavior.
 
 ## The pattern
 

@@ -40,7 +40,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (exemplifies) — Pipeline is an explicit context efficiency trade-off: invest multiple LLM calls at ingestion to produce structured knowledge cheaply queryable at retrieval time.
 
-- [distillation](../notes/distillation.md) (exemplifies) — The cognify phase is automated distillation from unstructured documents to structured graph triplets, with Pydantic schemas shaping the extraction target. Distillation without medium change (stays machine-readable throughout).
+- [distillation](../notes/definitions/distillation.md) (exemplifies) — The cognify phase is automated distillation from unstructured documents to structured graph triplets, with Pydantic schemas shaping the extraction target. Distillation without medium change (stays machine-readable throughout).
 
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (grounds) — Cognee partially maps to the three-space model (cognify produces semantic knowledge, temporal_cognify edges toward episodic) but has no structural separation between memory types.
 

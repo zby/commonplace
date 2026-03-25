@@ -22,7 +22,7 @@ An LLM can review a diff and catch a Clever Hans shortcut in generated code. It 
 
 ## The failure mode mapping
 
-Chollet's predicted ML problems map directly to [codification](codification.md) failure modes — but with mitigations that weight-based systems can't match:
+Chollet's predicted ML problems map directly to [codification](./definitions/codification.md) failure modes — but with mitigations that weight-based systems can't match:
 
 | ML failure mode | Codification equivalent | Mitigation available |
 |----------------|---------------------------|---------------------|
@@ -41,7 +41,7 @@ Chollet asks "what will be the Keras of agentic coding?" — the abstraction lay
 
 Relevant Notes:
 
-- [codification](codification.md) — foundation: codification as system-level learning through repo artifacts
+- [codification](./definitions/codification.md) — foundation: codification as system-level learning through repo artifacts
 - [deploy-time-learning](deploy-time-learning-the-missing-middle.md) — the verifiability gradient that determines when and how to codify
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque substrate; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable substrate at production scale with zero manual code

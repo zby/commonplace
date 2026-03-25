@@ -64,7 +64,7 @@ The /connect discovery found 7 connections to KB notes and 1 to another source. 
 
 - **Sample size of one architecture comparison.** The five-architecture comparison uses a single problem class. The progression feels definitive but is actually a demonstration on one axis of the design space. The KB note on [agent orchestration as a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) warns against treating architectures as points on a single ladder, which is exactly what this source's progression does.
 
-- **"Distilling" is a loose metaphor, not the KB's formal concept.** The source says the exploration stage "distills the complete prompt into smaller useful variables." This is runtime data transformation, not [distillation](../notes/distillation.md) in the KB's sense (compressing knowledge for a specific task under a context budget). The vocabulary overlap is misleading if taken as a genuine connection.
+- **"Distilling" is a loose metaphor, not the KB's formal concept.** The source says the exploration stage "distills the complete prompt into smaller useful variables." This is runtime data transformation, not [distillation](../notes/definitions/distillation.md) in the KB's sense (compressing knowledge for a specific task under a context budget). The vocabulary overlap is misleading if taken as a genuine connection.
 
 - **No discussion of what the model cannot do in the REPL.** The source presents the REPL as a capability amplifier but does not discuss limits: what happens when the model writes buggy code? How does error recovery work? What percentage of tasks can actually be expressed as REPL operations? The framing is uniformly positive.
 

@@ -8,7 +8,7 @@ status: current
 
 # Constraining
 
-One of two co-equal learning mechanisms in deployed agentic systems, alongside [distillation](./distillation.md). Constraining **narrows the interpretation space** — reducing the range of valid interpretations an [underspecified spec](./agentic-systems-interpret-underspecified-instructions.md) admits. At the light end, you add constraints: a naming convention rules out some interpretations while leaving many valid ones. At the heavy end, you commit to a single interpretation: storing a specific LLM output or extracting a deterministic function collapses the space to a point. Commitment is the extreme case of constraint — what they share is that the space gets smaller and the system becomes more predictable.
+One of two co-equal learning mechanisms in deployed agentic systems, alongside [distillation](./distillation.md). Constraining **narrows the interpretation space** — reducing the range of valid interpretations an [underspecified spec](../agentic-systems-interpret-underspecified-instructions.md) admits. At the light end, you add constraints: a naming convention rules out some interpretations while leaving many valid ones. At the heavy end, you commit to a single interpretation: storing a specific LLM output or extracting a deterministic function collapses the space to a point. Commitment is the extreme case of constraint — what they share is that the space gets smaller and the system becomes more predictable.
 
 ## Prior work
 
@@ -19,7 +19,7 @@ Narrowing the interpretation space is a well-established idea across several fie
 - **Carnap's explication** — replacing a vague everyday concept with a precise one. Constraining applied to concepts rather than systems.
 - **Ontology engineering** (SKOS, Dublin Core) — committing to specific categories and relationships that narrow what can be expressed in a knowledge system.
 
-What's specific to our use is applying constraining to the agent-operated KB setting, where the interpretation space is defined by [underspecified natural-language instructions](./agentic-systems-interpret-underspecified-instructions.md) and the constrain/relax cycle is a deploy-time learning mechanism.
+What's specific to our use is applying constraining to the agent-operated KB setting, where the interpretation space is defined by [underspecified natural-language instructions](../agentic-systems-interpret-underspecified-instructions.md) and the constrain/relax cycle is a deploy-time learning mechanism.
 
 **TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — specification theory and gradual typing literatures likely have results about when and how much to constrain.
 
@@ -41,9 +41,9 @@ Many constraints never need to codify. A well-written description field is const
 
 ## Relaxing
 
-Relaxing — replacing a constrained component with a general-purpose one — is the reverse operation. It increases generality at the cost of the compound. When scale makes a general approach good enough on reliability+speed+cost, the [bitter lesson boundary](bitter-lesson-boundary.md) tells you to relax.
+Relaxing — replacing a constrained component with a general-purpose one — is the reverse operation. It increases generality at the cost of the compound. When scale makes a general approach good enough on reliability+speed+cost, the [bitter lesson boundary](../bitter-lesson-boundary.md) tells you to relax.
 
-The constrain/relax cycle is a learning cycle. Each constraining step narrows the [interpretation space](./agentic-systems-interpret-underspecified-instructions.md) — ruling out some of what the spec previously admitted. Each relaxing reopens it — making the system more capable for the general case. The cycle isn't maintenance — it's how the system adapts.
+The constrain/relax cycle is a learning cycle. Each constraining step narrows the [interpretation space](../agentic-systems-interpret-underspecified-instructions.md) — ruling out some of what the spec previously admitted. Each relaxing reopens it — making the system more capable for the general case. The cycle isn't maintenance — it's how the system adapts.
 
 ## Relationship to distillation
 
@@ -64,11 +64,11 @@ Relevant Notes:
 
 - [codification](./codification.md) — the far end of the constraining spectrum: constraining that crosses a medium boundary
 - [distillation](./distillation.md) — co-equal mechanism: targeted extraction shaped by use case, context budget, and agent; orthogonal to constraining
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that constraining operates on
-- [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — the simplest instance: committing to one interpretation by keeping a specific output
-- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
-- [error messages that teach are a constraining technique](./error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
-- [deploy-time learning](./deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which constraining operates
-- [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when constraining is permanent vs when relaxing is needed
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale
+- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that constraining operates on
+- [storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) — the simplest instance: committing to one interpretation by keeping a specific output
+- [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
+- [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
+- [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — the verifiability gradient across which constraining operates
+- [bitter lesson boundary](../bitter-lesson-boundary.md) — determines when constraining is permanent vs when relaxing is needed
+- [ABC: Agent Behavioral Contracts](../../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
+- [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale

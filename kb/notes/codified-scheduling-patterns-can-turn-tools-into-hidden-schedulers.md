@@ -8,7 +8,7 @@ status: seedling
 
 # Codified scheduling patterns can turn tools into hidden schedulers
 
-As agent applications mature, some repeated decisions stop needing open-ended judgment and [codify](./codification.md) into deterministic procedure.
+As agent applications mature, some repeated decisions stop needing open-ended judgment and [codify](./definitions/codification.md) into deterministic procedure.
 
 Many codified patterns fit naturally inside ordinary tools — formatting, parsing, validation, data transformation. These patterns describe *how to perform a single capability*, and they improve when they move from prompt instructions into exact code.
 
@@ -29,7 +29,7 @@ This works, but it is not where codified scheduling wants to live. Once next-ste
 
 Relevant Notes:
 
-- [codification](./codification.md) — background: this note identifies a class of patterns that do not codify cleanly into ordinary tool implementations
+- [codification](./definitions/codification.md) — background: this note identifies a class of patterns that do not codify cleanly into ordinary tool implementations
 - [stateful tools recover control by becoming hidden schedulers](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) — related mechanism: codified scheduling hidden in a tool is another way a tool becomes a covert runtime
 - [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md) — consequence: codified next-step policy often needs to choose a fresh tool surface for the next child task
 - [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md) — parallel case: scheduling forced by structural overflow rather than codified experience; same architectural consequence, different cause

@@ -23,7 +23,7 @@ Once separated this way, several recurring confusions disappear. A filesystem is
 Each component also maps to existing KB theory:
 
 - The scheduler is formalized by the [bounded-context orchestration model](./bounded-context-orchestration-model.md): symbolic bookkeeping outside the model, bounded calls for judgment.
-- The context engine is formalized by [context engineering](./context-engineering.md): routing, loading, scoping, and maintenance of bounded context.
+- The context engine is formalized by [context engineering](./definitions/context-engineering.md): routing, loading, scoping, and maintenance of bounded context.
 - The execution substrate is grounded by [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) and [files beat a database for agent-operated knowledge bases](./files-not-database.md).
 
 ## Mapping the practitioner taxonomy
@@ -49,7 +49,7 @@ This framing also clarifies why [unified calling conventions enable bidirectiona
 
 ## Context engine
 
-[Context engineering](./context-engineering.md) already decomposes this component into routing, loading, scoping, and maintenance. [Agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) specializes one mechanism: reference-triggered loading.
+[Context engineering](./definitions/context-engineering.md) already decomposes this component into routing, loading, scoping, and maintenance. [Agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) specializes one mechanism: reference-triggered loading.
 
 The separation matters because many things attributed vaguely to "memory" are actually context-engine decisions. Retrieval, injection, frame construction, progressive disclosure, and compaction all concern bounded visibility, not durable storage. Durable storage is the substrate's job.
 
@@ -91,7 +91,7 @@ It is also not a claim that every implementation must enforce hard module bounda
 Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — formalizes: the scheduler component as symbolic control over bounded calls
-- [context engineering](./context-engineering.md) — formalizes: the context engine as routing, loading, scoping, and maintenance
+- [context engineering](./definitions/context-engineering.md) — formalizes: the context engine as routing, loading, scoping, and maintenance
 - [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — specializes: reference-triggered loading as one context-engine mechanism
 - [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: why repo artifacts and exact state belong to a separate substrate component
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — grounds: why the substrate is often filesystem-first early on

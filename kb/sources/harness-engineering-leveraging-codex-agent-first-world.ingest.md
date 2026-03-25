@@ -35,7 +35,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
 
-5. **[constraining](../notes/constraining.md)** — exemplifies: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
+5. **[constraining](../notes/definitions/constraining.md)** — exemplifies: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
 
 6. **[instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md)** — exemplifies: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
 
@@ -47,7 +47,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 9. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** — exemplifies: The entropy management practice (observe pattern drift, encode standards, automate cleanup) is spec mining applied to code quality. The progression from "20% Fridays cleaning AI slop" to automated background agents is the spec mining pattern completing: observe, extract, codify. The note links to the cybernetics companion source but not to this one.
 
-10. **[codification](../notes/codification.md)** — exemplifies: Encoding quality standards into linters and structural tests that replace manual judgment is codification at scale. "Human taste is captured once, enforced continuously" is codification's core proposition stated plainly.
+10. **[codification](../notes/definitions/codification.md)** — exemplifies: Encoding quality standards into linters and structural tests that replace manual judgment is codification at scale. "Human taste is captured once, enforced continuously" is codification's core proposition stated plainly.
 
 11. **[oracle-strength-spectrum](../notes/oracle-strength-spectrum.md)** — grounds: The implicit thesis — invest in verification infrastructure (linters, structural tests, CI) before generation capability — maps onto the oracle-strength claim that oracle quality, not generation quality, is the leverage point.
 

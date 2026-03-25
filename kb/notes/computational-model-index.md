@@ -89,5 +89,5 @@ Agent Notes:
 ## Other tagged notes <!-- generated -->
 
 - ["Agent" is a useful technical convention, not a definition](./agent-is-a-tool-loop.md) — A lightweight technical convention — an agent is a tool loop (prompt, capability surface, stop condition) — sidestepping the definitional debate in favor of a unit that organizes code
-- [Context engineering](./context-engineering.md) — Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, and maintenance for each bounded call
+- [Context engineering](./definitions/context-engineering.md) — Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, and maintenance for each bounded call
 - [Pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) — Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline

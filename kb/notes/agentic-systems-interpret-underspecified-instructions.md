@@ -113,7 +113,7 @@ Example: a file-renaming agent initially uses LLM judgment for everything. You n
 
 Either way, **version both spec and artifact**. Regeneration is a new projection from the same spec — potentially a different resolution of the same ambiguity, not a deterministic rebuild. Don't treat "re-generate later" as a build step.
 
-For the gradient of constraining techniques — from prompt restructuring through evals to deterministic modules — see [codification](./codification.md).
+For the gradient of constraining techniques — from prompt restructuring through evals to deterministic modules — see [codification](./definitions/codification.md).
 
 ### Relaxing as extension
 
@@ -146,8 +146,8 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 Relevant Notes:
 
 - [learning-theory](./learning-theory-index.md) — parent index: learning mechanisms, oracle theory, memory architecture
-- [constraining](./constraining.md) — defines the narrowing mechanism this note frames theoretically
-- [codification](./codification.md) — the constraining gradient from prompt tweaks to deterministic modules
+- [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
+- [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — applies: typing, testing, and version control transfer to prompting under this framework
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — applies: keeping an LLM output resolves underspecification to a fixed interpretation
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition

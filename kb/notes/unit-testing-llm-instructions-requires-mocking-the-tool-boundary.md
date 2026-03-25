@@ -42,7 +42,7 @@ The behavioral assertions are cheap and deterministic — ideal for regression t
 
 ## This is constraining tooling
 
-A test suite for instructions is a [constraining](./constraining.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what constraining is designed to detect and prevent.
+A test suite for instructions is a [constraining](./definitions/constraining.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what constraining is designed to detect and prevent.
 
 On the [methodology enforcement gradient](./methodology-enforcement-is-constraining.md), instruction tests sit between skills and hooks: they don't block operations in real-time (like hooks do), but they verify skill behavior more rigorously than manual invocation. They're the equivalent of a CI test suite for the instruction layer.
 
@@ -61,7 +61,7 @@ Relevant Notes:
 
 - [programming practices apply to prompting](./programming-practices-apply-to-prompting.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
 - [automated tests for text](./automated-tests-for-text.md) — complements: covers artifact testing (the other half of the doubled surface); this note covers instruction testing
-- [constraining](./constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
+- [constraining](./definitions/constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: instruction tests sit on the enforcement gradient between skills (manual invocation) and hooks (automated blocking)
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: behavioral assertions (tool call patterns) are hard-oracle; output assertions (connection quality) are soft-oracle, mirroring the test pyramid split
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed

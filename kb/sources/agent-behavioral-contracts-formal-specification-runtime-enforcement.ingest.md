@@ -31,7 +31,7 @@ The `/connect` discovery found 11 genuine connections, concentrated in two clust
 **Formalization cluster — ABC provides mathematical grounding for concepts the KB has developed informally:**
 
 - [methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md) — **formalizes**: ABC's hard/soft constraint vocabulary maps onto the enforcement gradient (blocking hooks = hard constraints, warning hooks = soft constraints with recovery windows); the Drift Bounds Theorem quantifies how much drift each enforcement level permits. ABC is what the maturation trajectory targets when methodology enforcement reaches full specification.
-- [constraining](../notes/constraining.md) — **grounds**: D*=alpha/gamma is a mathematical statement of the constraining trade-off; contracts constrain the interpretation space (trading generality for reliability) with explicit bounds on how much drift remains.
+- [constraining](../notes/definitions/constraining.md) — **grounds**: D*=alpha/gamma is a mathematical statement of the constraining trade-off; contracts constrain the interpretation space (trading generality for reliability) with explicit bounds on how much drift remains.
 - [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — **exemplifies**: ABC makes oracle strength explicit per constraint via (p,delta,k)-satisfaction. Hard constraints are hard oracles; soft constraints with probabilistic thresholds are soft oracles. The parameterization could extend the oracle framework with concrete numbers rather than qualitative levels.
 
 **Exemplification cluster — ABC demonstrates existing KB theses in a concrete system:**

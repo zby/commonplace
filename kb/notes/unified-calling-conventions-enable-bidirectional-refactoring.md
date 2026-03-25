@@ -25,7 +25,7 @@ The calling convention is uniform across the chain. Each link can be independent
 
 ## Why this matters for constraining
 
-[Constraining](./constraining.md) and [codification](./codification.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each codification step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
+[Constraining](./definitions/constraining.md) and [codification](./definitions/codification.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each codification step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
 
 With unified calling, the progression is smooth:
 
@@ -64,8 +64,8 @@ The imperative style means refactoring between neural and symbolic uses the same
 Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
-- [constraining](./constraining.md) — the mechanism that unified calling makes frictionless
-- [codification](./codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
+- [constraining](./definitions/constraining.md) — the mechanism that unified calling makes frictionless
+- [codification](./definitions/codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
 - [programming-practices-apply-to-prompting](./programming-practices-apply-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified

@@ -22,9 +22,9 @@ The most obvious axis. A pointer can know nothing about why the consumer is look
 
 **Crafted at link-authoring time.** Link phrases in our system. The same note gets a different characterization at every link site:
 
-- From a distillation note: `[constraining](./constraining.md) — orthogonal to distillation; narrows interpretation rather than compressing`
-- From a codification note: `[constraining](./constraining.md) — codification is the far end of constraining`
-- From an architecture note: `[constraining](./constraining.md) — narrows the set of valid interpretations an agent can make`
+- From a distillation note: `[constraining](./definitions/constraining.md) — orthogonal to distillation; narrows interpretation rather than compressing`
+- From a codification note: `[constraining](./definitions/constraining.md) — codification is the far end of constraining`
+- From an architecture note: `[constraining](./definitions/constraining.md) — narrows the set of valid interpretations an agent can make`
 
 Each phrase leverages the surrounding argument the agent already has loaded — not just "what is this item" but "why does it matter *here*." This is the densest pointer type, but it requires human judgment and only exists where someone authored a link.
 
@@ -78,6 +78,6 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation decision is what pointers optimize for; link phrases are the most context-specific pointer type for that decision
 - [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the reliability axis; fixed pointers are architectural routing that stateless agents depend on, and query-time computation introduces the degradation cliff
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
-- [distillation](./distillation.md) — exemplifies: each pointer type is a distillation at different cost/quality/reliability trade-offs
+- [distillation](./definitions/distillation.md) — exemplifies: each pointer type is a distillation at different cost/quality/reliability trade-offs
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically
 - [OpenViking](./related-systems/openviking.md) — contrasts: their L0/L1/L2 emphasizes fixed pointers, with weaker relation-level reason strings rather than crafted per-link argument pointers; the comparison crystallized this note

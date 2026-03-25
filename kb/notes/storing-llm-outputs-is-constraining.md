@@ -18,7 +18,7 @@ This applies broadly:
 - **Configuration** — an LLM suggests settings; you freeze the ones that behave well
 - **Accumulated logs** — append-only formats (JSONL) enforce constraining structurally: the agent can add but cannot overwrite. [Koylanai lost 3 months of engagement data](../sources/koylanai-personal-brain-os.ingest.md) when an agent rewrote a JSON file instead of appending — concrete evidence that without append-only constraints, agents will accidentally destroy constrained artifacts
 
-In each case, the stored artifact is more stable than the process that created it. The prompt retains both its semantic underspecification (it still admits multiple valid interpretations) and its execution indeterminism (it still produces different outputs across runs); the artifact has neither. This is how [constraining is learning](./constraining.md) — each stored artifact is a step in the system's adaptation, narrowing behavior through versioned artifacts rather than weight updates.
+In each case, the stored artifact is more stable than the process that created it. The prompt retains both its semantic underspecification (it still admits multiple valid interpretations) and its execution indeterminism (it still produces different outputs across runs); the artifact has neither. This is how [constraining is learning](./definitions/constraining.md) — each stored artifact is a step in the system's adaptation, narrowing behavior through versioned artifacts rather than weight updates.
 
 ## Testing implications
 
@@ -57,7 +57,7 @@ This is hard to catch because it requires comparing the output against the sourc
 Relevant Notes:
 
 - [deploy-time-learning](./deploy-time-learning-the-missing-middle.md) — extends the constraining gradient with a new application: output artifacts, not just code
-- [constraining](./constraining.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
+- [constraining](./definitions/constraining.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
 - [Evans: AI Components for a Deterministic System](../sources/eric-evans-ai-components-deterministic-system.ingest.md) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
 - [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the constraining decision this note describes
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate

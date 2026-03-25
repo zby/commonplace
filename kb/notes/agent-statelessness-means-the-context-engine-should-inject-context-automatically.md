@@ -8,7 +8,7 @@ status: speculative
 
 # Agent statelessness means the context engine should inject context automatically
 
-Since [agents are stateless](./agent-statelessness-makes-routing-architectural-not-learned.md), they can't carry definitions, decisions, or vocabulary between reads. An agent that reads a note linking to [codification](../notes/codification.md) doesn't know the definition unless it follows the link — at the cost of a tool call, context space, and a decision. The knowledge is in the KB but not in the context window.
+Since [agents are stateless](./agent-statelessness-makes-routing-architectural-not-learned.md), they can't carry definitions, decisions, or vocabulary between reads. An agent that reads a note linking to [codification](./definitions/codification.md) doesn't know the definition unless it follows the link — at the cost of a tool call, context space, and a decision. The knowledge is in the KB but not in the context window.
 
 The remedy is automatic context injection: when the context engine loads a document, it identifies references that the agent will need and injects appropriate content. This extends [document affordances](./document-types-should-be-verifiable.md) from "what operations can I perform on this document" to "what context gets loaded alongside this document."
 
@@ -29,7 +29,7 @@ This would make definitions behave like imported constants in a programming lang
 
 ### The `definition` type
 
-For the context engine to identify definitions, they need a machine-readable type. The current three definitional notes ([codification](../notes/codification.md), [constraining](../notes/constraining.md), [distillation](../notes/distillation.md)) are `type: note`. A `type: definition` would:
+For the context engine to identify definitions, they need a machine-readable type. The current three definitional notes ([codification](./definitions/codification.md), [constraining](./definitions/constraining.md), [distillation](./definitions/distillation.md)) are `type: note`. A `type: definition` would:
 
 - Signal the context engine to auto-inject on first reference
 - Assert checkable structural properties: has examples, has negative examples ("Not X:"), links to sibling definitions, bounded length

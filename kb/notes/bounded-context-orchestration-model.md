@@ -151,7 +151,7 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: tool and schema hardening recover part of the interface discipline without moving the scheduler fully into code
-- [distillation](./distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
+- [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names the scheduler as one part of a larger runtime decomposition

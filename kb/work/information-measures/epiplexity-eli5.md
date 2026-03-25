@@ -107,7 +107,7 @@ Take an introductory physics textbook. Randomly shuffle all paragraphs.
 
 Same data. Same entropy. Same complexity. Different extractable structure depending on arrangement and observer. The ordering is a *deterministic* transformation — it adds no information in the classical sense. But it dramatically changes what a bounded reader can learn.
 
-This is why [distillation](../../notes/distillation.md) creates value: rearranging and compressing knowledge can raise epiplexity for the target reader even while reducing token count.
+This is why [distillation](../../notes/definitions/distillation.md) creates value: rearranging and compressing knowledge can raise epiplexity for the target reader even while reducing token count.
 
 ## Example 3: CSPRNG vs compressed file
 
@@ -154,6 +154,6 @@ Relevant Notes:
 
 - [information value is observer-relative](../../notes/information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
 - [Epiplexity paper](../../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
-- [distillation](../../notes/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
+- [distillation](../../notes/definitions/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
 - [context efficiency is the central design concern](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement
 - [reverse-compression](../../notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) — extends: output that grows without raising extractable structure

@@ -30,7 +30,7 @@ The `/connect` discovery found 7 connections, all in the learning-theory cluster
 
 **Strong connections:**
 
-- **[constraining](../notes/constraining.md)** — exemplifies: Evans' "freeze the taxonomy" is constraining on the heavy end of the spectrum — committing to a single interpretation (the taxonomy) before operating deterministically within it.
+- **[constraining](../notes/definitions/constraining.md)** — exemplifies: Evans' "freeze the taxonomy" is constraining on the heavy end of the spectrum — committing to a single interpretation (the taxonomy) before operating deterministically within it.
 - **[storing LLM outputs is constraining](../notes/storing-llm-outputs-is-constraining.md)** — exemplifies: Evans' frozen taxonomy is the specific instance already cited under "Strategy 1: Constrain the generator." The source provides the concrete OpenEMR case study behind that reference.
 - **[agentic systems interpret underspecified instructions](../notes/agentic-systems-interpret-underspecified-instructions.md)** — exemplifies: "What domain does this code address?" is semantically underspecified (admits multiple valid category schemes) AND execution-indeterminate (inconsistent formats across runs). Evans' solution is interpretation narrowing — pre-resolve the modeling ambiguity so the classification step has a single valid scheme.
 - **[spec mining as codification](../notes/spec-mining-as-codification.md)** — exemplifies: Evans' iterative refinement phase (sampling, critic, judge) is spec mining — observing LLM behavior and extracting a frozen schema. NAICS is the extreme case where someone else already mined the spec.

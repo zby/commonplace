@@ -242,7 +242,7 @@ The paper reinforces llm-do's bidirectional refactoring principle with data-driv
 
 Relevant Notes:
 
-- [constraining](../constraining.md) — the constraining/relaxing signals catalogued here are the data-driven triggers for the constrain/relax cycle
+- [constraining](../definitions/constraining.md) — the constraining/relaxing signals catalogued here are the data-driven triggers for the constrain/relax cycle
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the constrain/relax cycle applied to tool boundaries
 - [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: the relaxing signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
 - [unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: bidirectional refactoring between neural and symbolic only works with unified interfaces; the paper's adaptation mechanisms assume this

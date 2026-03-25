@@ -36,7 +36,7 @@ The /connect discovery identified 7 KB notes and 1 sibling source with genuine c
 
 - [decomposition-heuristics-for-bounded-context-scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — If MECW for multi-needle retrieval is measured in hundreds of tokens, decomposition rules like "separate selection from joint reasoning" are necessities, not optimizations.
 
-- [distillation](../notes/distillation.md) — RAG improves accuracy only under MECW; above it, RAG actively degrades performance. Distillation becomes a gatekeeper for RAG effectiveness, not a nice-to-have.
+- [distillation](../notes/definitions/distillation.md) — RAG improves accuracy only under MECW; above it, RAG actively degrades performance. Distillation becomes a gatekeeper for RAG effectiveness, not a nice-to-have.
 
 - [two-context-boundaries-govern-collection-operations](../notes/two-context-boundaries-govern-collection-operations.md) — The full-text boundary should be calibrated to MECW, not MCW. The note's claim that "the full-text boundary may not [grow with context windows], because complexity costs limit how many note bodies an agent can usefully reason about" is directly supported.
 

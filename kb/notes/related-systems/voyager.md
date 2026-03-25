@@ -78,4 +78,4 @@ Relevant Notes:
 - [deploy-time learning](../deploy-time-learning-the-missing-middle.md) — sharpens: Voyager uses the same artifact-accumulation mechanism inside a benchmarked embodied loop, without retraining weights, even though the repo is research infrastructure rather than a production deployment system
 - [Autocontext](./autocontext.md) — compares: both run repeated improvement loops over trajectories, but Autocontext promotes mostly textual playbooks and optional weights while Voyager promotes executable skills
 - [ExpeL](./expel.md) — contrasts: both consolidate across repeated runs, but ExpeL promotes maintained natural-language rules while Voyager promotes callable code
-- [codification](../codification.md) — exemplifies: Voyager is one of the clearest cases where successful natural-language-guided behavior is hardened into executable code artifacts
+- [codification](../definitions/codification.md) — exemplifies: Voyager is one of the clearest cases where successful natural-language-guided behavior is hardened into executable code artifacts

@@ -36,7 +36,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 - [Deploy-time learning](../notes/deploy-time-learning-the-missing-middle.md) -- **contrasts**: weight-based training vs inspectable artifact accumulation; same behavioral changes, different substrates.
 - [Inspectable substrate defeats the blackbox problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) -- **contrasts**: split substrate (facts in store, policy in weights) vs unified substrate (both in files).
 - [Learning is not only about generality](../notes/learning-is-not-only-about-generality.md) -- **foundation**: LTM Add is accumulation at the low-reach end; facts without reach to theories.
-- [Distillation](../notes/distillation.md) -- **applies**: STM operations are distillation -- extracting focused content for working context.
+- [Distillation](../notes/definitions/distillation.md) -- **applies**: STM operations are distillation -- extracting focused content for working context.
 
 **Connections flagged for reverse linking (actionable):**
 

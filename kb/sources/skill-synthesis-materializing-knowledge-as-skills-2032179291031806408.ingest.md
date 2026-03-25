@@ -38,7 +38,7 @@ The `/connect` discovery found 6 strong connections, all in the **exemplifies** 
 
 5. **[constraining-during-deployment-is-continuous-learning](../notes/constraining-during-deployment-is-continuous-learning.md)** — exemplifies. Iterative refinement through false positive analysis is constraining during deployment per Simon's definition.
 
-6. **[distillation](../notes/distillation.md)** — exemplifies. Multiple distillations from the same material are possible (Cramer plans performance prediction next), the distillate cannot reconstruct the source, and the source persists.
+6. **[distillation](../notes/definitions/distillation.md)** — exemplifies. Multiple distillations from the same material are possible (Cramer plans performance prediction next), the distillate cannot reconstruct the source, and the source persists.
 
 One synthesis opportunity flagged: skills distilled from external domain knowledge have different staleness and maintenance properties than skills distilled from co-maintained internal methodology. When the source is OWASP guides or commit history, you need different mechanisms to detect when the skill has drifted from its source.
 
@@ -68,7 +68,7 @@ One synthesis opportunity flagged: skills distilled from external domain knowled
 
 - **The "years undetected" claim lacks context.** Eight vulnerabilities "undetected for years" despite pen testing is striking, but we don't know the severity distribution, whether they were in code paths pen testers examined, or whether the pen testing scope was comparable to the LLM scan scope (full codebase vs. targeted assessment). The [spec-mining note](../notes/spec-mining-as-codification.md) would frame this as: the LLM scan covered a broader surface than targeted pen testing, not that it was deeper on the same surface.
 
-- **Maintenance story is absent.** "Skills are just files in a repo" addresses versioning and collaboration but not staleness. When Sentry's codebase evolves, how does Warden's skill stay current? When OWASP updates its guidance, does the skill need re-synthesis? The [distillation note](../notes/distillation.md) flags this: "The residue is only valuable if maintained" — and Cramer's external sources are harder to maintain than internal methodology.
+- **Maintenance story is absent.** "Skills are just files in a repo" addresses versioning and collaboration but not staleness. When Sentry's codebase evolves, how does Warden's skill stay current? When OWASP updates its guidance, does the skill need re-synthesis? The [distillation note](../notes/definitions/distillation.md) flags this: "The residue is only valuable if maintained" — and Cramer's external sources are harder to maintain than internal methodology.
 
 ## Recommended Next Action
 

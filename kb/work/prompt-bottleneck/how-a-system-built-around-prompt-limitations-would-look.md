@@ -59,7 +59,7 @@ This is [instruction specificity matching loading frequency](../../notes/instruc
 
 ### Execution boundaries become compression points
 
-When a sub-task completes, its result crosses the boundary as a compressed artifact, not a full transcript. The parent doesn't need to know how the child reasoned — just what it concluded. This is where [distillation](../../notes/distillation.md) should be designed in: execution boundaries are the natural place to decide what survives and in what form. This doesn't happen automatically — it's an architectural choice that must be implemented at each boundary. Many systems skip it and pass full results, which is how transcript accumulation creeps back in.
+When a sub-task completes, its result crosses the boundary as a compressed artifact, not a full transcript. The parent doesn't need to know how the child reasoned — just what it concluded. This is where [distillation](../../notes/definitions/distillation.md) should be designed in: execution boundaries are the natural place to decide what survives and in what form. This doesn't happen automatically — it's an architectural choice that must be implemented at each boundary. Many systems skip it and pass full results, which is how transcript accumulation creeps back in.
 
 ## The architectural scope of this
 
@@ -114,7 +114,7 @@ Related KB notes (for context, not formal links):
 - [context efficiency is the central design concern](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md)
 - [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-- [distillation](../../notes/distillation.md)
+- [distillation](../../notes/definitions/distillation.md)
 - [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md)
 - [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md)
 - [agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md)

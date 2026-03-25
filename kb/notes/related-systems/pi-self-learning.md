@@ -87,7 +87,7 @@ Relevant Notes:
 
 - [ClawVault](./clawvault.md) — also has scored observations with promotion, but richer taxonomy (decision/lesson/preference/commitment) vs. pi-self-learning's binary (learning/antiPattern)
 - [Automating KB learning is an open problem](../automating-kb-learning-is-an-open-problem.md) — the pi-self-learning scoring mechanism is a concrete implementation of automated triage, though limited to mistake-pattern extraction
-- [Distillation](../distillation.md) — the daily→core pathway claims distillation but primarily performs ranking; the redistill command is the only genuine content transformation
+- [Distillation](../definitions/distillation.md) — the daily→core pathway claims distillation but primarily performs ranking; the redistill command is the only genuine content transformation
 - [A functioning KB needs a workshop layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — pi-self-learning's daily files are ephemeral workshop artifacts that get promoted to core; the temporal hierarchy IS a workshop-to-library bridge
 - [Inspectable substrate defeats the blackbox problem](../inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — pi-self-learning's shadow git repo maintains inspectability, though separation from the project repo reduces discoverability
-- [Context engineering](../context-engineering.md) — the context injection system (`before_agent_start` with budget, instruction modes, and selective file inclusion) is a lightweight context engineering implementation
+- [Context engineering](../definitions/context-engineering.md) — the context injection system (`before_agent_start` with budget, instruction modes, and selective file inclusion) is a lightweight context engineering implementation

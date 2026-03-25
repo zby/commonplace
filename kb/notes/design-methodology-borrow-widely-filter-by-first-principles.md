@@ -47,4 +47,4 @@ Relevant Notes:
 - [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
 - [Ars Contexta](../notes/related-systems/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from
 - [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — the general principle behind the programming fast pass
-- [constraining is learning](../notes/constraining.md) — example of empirical observation becoming theory
+- [constraining is learning](./definitions/constraining.md) — example of empirical observation becoming theory

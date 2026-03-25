@@ -8,7 +8,7 @@ status: current
 
 # Constraining during deployment is continuous learning
 
-AI labs frame "continuous learning" as a weight-update problem: how do you adapt a deployed model to new data, new tasks, and shifting distributions without a full retraining cycle? The standard approaches — fine-tuning on deployment logs, online learning, experience replay — all modify the model's parameters. But [constraining](constraining.md) — accumulating symbolic artifacts like prompts, schemas, evals, tools, and deterministic code — adapts deployed systems through a different mechanism entirely.
+AI labs frame "continuous learning" as a weight-update problem: how do you adapt a deployed model to new data, new tasks, and shifting distributions without a full retraining cycle? The standard approaches — fine-tuning on deployment logs, online learning, experience replay — all modify the model's parameters. But [constraining](./definitions/constraining.md) — accumulating symbolic artifacts like prompts, schemas, evals, tools, and deterministic code — adapts deployed systems through a different mechanism entirely.
 
 Each constraining step [trades generality for compound gains in reliability, speed, and cost](constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Extracting a deterministic `format_date()` function makes date formatting reliable, fast, and cheap. Versioning a system prompt with house style examples makes tone consistent across sessions. Adding a validation script catches errors that previously required human review. These gains persist, accumulate, and compose — and they produce the same narrowing of the behavior distribution that fine-tuning targets, just through inspectable, rollbackable artifacts instead of opaque weight updates.
 
@@ -26,7 +26,7 @@ Relevant Notes:
 
 - [Continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — foundation: this note is one concrete non-weight case, not the general claim
 - [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
-- [constraining](constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
+- [constraining](./definitions/constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [constraining and distillation both trade generality for compound](constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that constraining operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising constraining as continuous learning

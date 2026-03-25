@@ -38,9 +38,9 @@ Several KB conventions are optimizations for the agent observer:
 - **[Title as claim](../instructions/WRITING.md)** — a claim title lets the agent extract the main point without loading the note. This is a distillation targeting the lowest-cost reading: scanning titles in an index.
 - **Descriptions as retrieval filters** — the description field exists because the agent needs to decide relevance before reading the full note. A good description is a distillation for the "should I read this?" decision.
 - **[Short composable notes](./short-composable-notes-maximize-combinatorial-discovery.md)** — many short notes give more combinatorial coverage than few long ones for a reader with bounded context.
-- **[Progressive refinement](./constraining.md)** — each level (text → note → structured-claim) adds structure that makes the content more extractable. A structured claim with Evidence/Reasoning/Caveats is more accessible to an agent than the same argument in prose.
+- **[Progressive refinement](./definitions/constraining.md)** — each level (text → note → structured-claim) adds structure that makes the content more extractable. A structured claim with Evidence/Reasoning/Caveats is more accessible to an agent than the same argument in prose.
 
-More broadly, [distillation](./distillation.md) creates value by reshaping knowledge for a specific observer. In information-theoretic terms this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer.
+More broadly, [distillation](./definitions/distillation.md) creates value by reshaping knowledge for a specific observer. In information-theoretic terms this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer.
 
 ### What observer-relativity doesn't help with
 
@@ -58,7 +58,7 @@ More broadly, [distillation](./distillation.md) creates value by reshaping knowl
 
 Relevant Notes:
 
-- [distillation](./distillation.md) — instance: restructuring that makes structure accessible to bounded observers
+- [distillation](./definitions/distillation.md) — instance: restructuring that makes structure accessible to bounded observers
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth
 - [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md) — instance: expansion that adds tokens without making more structure accessible
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer

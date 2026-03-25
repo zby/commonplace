@@ -16,13 +16,13 @@ What is this derivation relationship? The project already has two terms for rela
 
 ### It is not codification
 
-[Codification](../notes/codification.md) in this project means the prompt→code phase transition: natural language instructions becoming executable logic. The medium changes. The consumer changes (LLM → interpreter/runtime). The verification regime changes. It is like a physical phase transition — the nature of the artifact changes dramatically.
+[Codification](./definitions/codification.md) in this project means the prompt→code phase transition: natural language instructions becoming executable logic. The medium changes. The consumer changes (LLM → interpreter/runtime). The verification regime changes. It is like a physical phase transition — the nature of the artifact changes dramatically.
 
 The methodology→skill relationship has none of these properties. The input is markdown consumed by an LLM. The output is markdown consumed by an LLM. There is no phase change. What changes is the *rhetorical mode* — discursive, multi-perspective, argumentative reasoning becomes procedural, step-sequenced instruction — but the substance remains natural language processed by the same kind of reader.
 
 ### It is not constraining
 
-[Constraining](../notes/constraining.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
+[Constraining](./definitions/constraining.md) narrows the output distribution through techniques — structured output schemas, few-shot examples, tighter prompts, hooks. A skill probably does produce more predictable agent behavior than dumping fifteen methodology notes into context and saying "figure it out." But narrowing the distribution is a *side effect*, not the defining operation. You don't write a skill in order to constrain the agent; you write it to give the agent the procedures it needs without the reasoning overhead.
 
 [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) already maps the enforcement gradient (instruction → skill → hook → script) as a constraining spectrum. That note is about *how reliably methodology is followed*. This note is about a different question: *what is the relationship between the methodology and the skill's content?*
 

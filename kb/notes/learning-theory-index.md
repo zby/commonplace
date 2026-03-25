@@ -8,7 +8,7 @@ status: current
 
 How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through durable substrates, including but not limited to inspectable artifacts.
 
-The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./constraining.md) and [distillation](./distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
+The collection is organized around [deploy-time learning](./deploy-time-learning-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md)) transform accumulated knowledge. A third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
 
 ## Foundations
 
@@ -35,7 +35,7 @@ The organizing framework: deployed systems adapt through symbolic artifacts — 
 
 Constraining the interpretation space — from partial narrowing (conventions) to full commitment (deterministic code). The primary mechanism for hardening deployed systems.
 
-- [constraining](./constraining.md) — definition and spectrum: storing an output, writing a convention, adding structured sections, extracting deterministic code; [codification](./codification.md) is the far end where the medium itself changes from natural language to executable code
+- [constraining](./definitions/constraining.md) — definition and spectrum: storing an output, writing a convention, adding structured sections, extracting deterministic code; [codification](./definitions/codification.md) is the far end where the medium itself changes from natural language to executable code
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — the simplest instance: keeping a specific LLM output resolves underspecification to one interpretation; develops the generator/verifier pattern and verbatim risk
 - [constraining-during-deployment-is-continuous-learning](./constraining-during-deployment-is-continuous-learning.md) — AI labs' continuous learning is achievable through constraining with versioned artifacts, which beats weight updates on inspectability and rollback
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — codification's operational mechanism: observe behavior, extract deterministic rules, grow the calculator surface monotonically
@@ -47,7 +47,7 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 
 Targeted extraction from a larger body of reasoning into a focused artifact shaped by use case, context budget, or agent. Orthogonal to constraining — you can distil without constraining (extract a skill, still underspecified) or constrain without distilling (store an output, no extraction from reasoning).
 
-- [distillation](./distillation.md) — definition: the rhetorical mode shifts to match the target (argumentative → procedural, exploratory → assertive); the dominant mechanism in knowledge work because it creates new artifacts from existing reasoning
+- [distillation](./definitions/distillation.md) — definition: the rhetorical mode shifts to match the target (argumentative → procedural, exploratory → assertive); the dominant mechanism in knowledge work because it creates new artifacts from existing reasoning
 
 ## Information & Bounded Observers
 

@@ -56,7 +56,7 @@ We have hooks in `.claude/hooks/` but they aren't wired up (`"hooks": {}` in set
 Relevant Notes:
 
 - [codification: the missing middle](../notes/deploy-time-learning-the-missing-middle.md) — grounds: the verifiability gradient for code (prompt tweaks -> schemas -> evals -> deterministic modules) is the general pattern this note instantiates for methodology
-- [constraining is learning](../notes/constraining.md) — foundation: the constraining gradient for code; this note applies the same gradient to methodology
+- [constraining is learning](./definitions/constraining.md) — foundation: the constraining gradient for code; this note applies the same gradient to methodology
 - [programming practices apply to prompting](../notes/programming-practices-apply-to-prompting.md) — synthesizes: the maturation trajectory is progressive compilation applied to methodology — flexible instructions frozen into rigid, efficient automation
 - [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — exemplifies: a skill-level operation that completed the maturation trajectory into a deterministic script
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — parallels: document type maturation (note -> traits -> promoted base type) follows the same gradual-typing pattern as methodology maturation (instruction -> skill -> hook -> script); both trade flexibility for reliability as verifiability increases

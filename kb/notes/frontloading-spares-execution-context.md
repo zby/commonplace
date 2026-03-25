@@ -30,7 +30,7 @@ Anything that depends on the user's current request, the conversation state, or 
 
 ## Frontloading vs codification
 
-[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [codification](./codification.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
+[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [codification](./definitions/codification.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
 
 ## The mechanism: partial evaluation or divide-and-conquer?
 
@@ -73,7 +73,7 @@ The [symbolic scheduling model](./bounded-context-orchestration-model.md) models
 
 Relevant Notes:
 
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](./codification.md) (replaces underspecified template with deterministic literal)
+- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](./definitions/codification.md) (replaces underspecified template with deterministic literal)
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and codification; the notes already link to constraining for the semantic-commitment aspect
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck

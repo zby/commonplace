@@ -38,7 +38,7 @@ This gives a cleaner prediction: **the ephemeral/malleable boundary sits where t
 
 - **Boundary zone:** tools that start local but pick up users, persistent state, integrations, or compliance obligations. The artifact may still be easy to regenerate, but the knowledge it must preserve is no longer local.
 
-- **High-reach zone (malleability required):** production services, shared internal tools, stateful systems, regulated workflows. The embedded knowledge persists across contexts. [Codification](./codification.md) is how it gets committed to durable, inspectable, testable artifacts. Re-derivation costs grow because more runs, people, and surrounding processes depend on the same resolutions.
+- **High-reach zone (malleability required):** production services, shared internal tools, stateful systems, regulated workflows. The embedded knowledge persists across contexts. [Codification](./definitions/codification.md) is how it gets committed to durable, inspectable, testable artifacts. Re-derivation costs grow because more runs, people, and surrounding processes depend on the same resolutions.
 
 Kirsch's [five-step malleable software model](../sources/the-flawed-ephemeral-software-hypothesis.md) describes this trajectory in practice: a prototype starts with mostly local knowledge, then deployment discovers memory that must be carried forward.
 
@@ -63,5 +63,5 @@ Relevant Notes:
 - [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — foundation: Deutsch's reach concept provides the vocabulary for why some operational knowledge transfers and some doesn't
 - [Vibe-noting](./vibe-noting.md) — extends: reach explains when inspectability becomes load-bearing for accumulation; low-reach coding tolerates discard more often than high-reach knowledge work does
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — grounds: codification is how high-reach operational knowledge gets committed to durable artifacts; the arithmetic/vision-feature distinction parallels the high-reach/low-reach boundary
-- [Codification](./codification.md) — extends: the note reframes Kirsch's "malleable software" as systems that codify high-reach operational knowledge rather than discarding it
+- [Codification](./definitions/codification.md) — extends: the note reframes Kirsch's "malleable software" as systems that codify high-reach operational knowledge rather than discarding it
 - [The Flawed Ephemeral Software Hypothesis (Kirsch)](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) — source: the four structural barriers reinterpreted as reach indicators

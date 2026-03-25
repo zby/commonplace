@@ -28,7 +28,7 @@ This gives skills type signatures:
 | `/validate` | `note → validation-report` |
 | `/convert` | `text → note` |
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./codification.md) from LLM to code as patterns [constrain](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
+The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns [constrain](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
 
 ## Open questions
 
@@ -43,5 +43,5 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
 - [document-classification](./document-classification.md) — the spec defining the types that would appear in skill signatures
 - [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
-- [codification](./codification.md) — the operations afforded by types can themselves codify from LLM to code
+- [codification](./definitions/codification.md) — the operations afforded by types can themselves codify from LLM to code
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation

@@ -62,7 +62,7 @@ What doesn't transfer is the evaluation model, as described above. That's where 
 - Is the action layer's learning loop decomposable into domain-specific sub-loops (one for classification, one for communication, etc.) or is it irreducibly holistic?
 - Does the [three-space memory model](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) help here? Knowledge space maps to retrieval, operational space maps to procedures, self space maps to preferences and voice — suggesting each space might have its own learning dynamics.
 - The [predicted failure modes](./three-space-memory-separation-predicts-measurable-failure-modes.md) of flat memory — operational debris polluting search, identity scatter, insights trapped in session state — are exactly what you'd expect when action-oriented knowledge types are forced into a retrieval-oriented structure. This is circumstantial evidence for the claim.
-- [Constraining](../notes/constraining.md) frames system-level adaptation as artifact accumulation. The action layer's learning loop would need the same framework but applied to different artifact types — preference codifications, procedure captures, precedent consolidations — rather than the note/link mutations the boiling cauldron describes.
+- [Constraining](./definitions/constraining.md) frames system-level adaptation as artifact accumulation. The action layer's learning loop would need the same framework but applied to different artifact types — preference codifications, procedure captures, precedent consolidations — rather than the note/link mutations the boiling cauldron describes.
 
 ---
 

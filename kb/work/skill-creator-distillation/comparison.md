@@ -7,7 +7,7 @@ Initial hypothesis:
 - OpenAI/Codex treats skills as functional references: matter-of-fact technical artifacts for another Codex instance.
 - Claude Code treats skills as approaches to classes of problems.
 
-Related claim to test against the KB: skill creation is a [distillation](../../notes/distillation.md) process, but the source material is broader than notes — it also includes user input, experiments, failures, and product/runtime constraints.
+Related claim to test against the KB: skill creation is a [distillation](../../notes/definitions/distillation.md) process, but the source material is broader than notes — it also includes user input, experiments, failures, and product/runtime constraints.
 
 ## Source packet
 
@@ -15,7 +15,7 @@ Downloaded/copied on 2026-03-23:
 
 - `sources/codex-skill-creator/` — copied from the local Codex system skill at `/home/zby/.codex/skills/.system/skill-creator`
 - `sources/claude-code-skill-creator/` — copied from `https://github.com/anthropics/skills`, path `skills/skill-creator/`
-- Theory note: [distillation](../../notes/distillation.md)
+- Theory note: [distillation](../../notes/definitions/distillation.md)
 
 Quick inventory:
 

@@ -17,7 +17,7 @@ For the full dataset, read `kb/reports/reviews/csv/`.
 
 | Note | WARN | INFO | Top checks | Sample warning |
 |------|------|------|------------|----------------|
-| [distillation](../notes/distillation.md) | 1 | 0 | Title composability | Title is a bare noun ("Distillation") — "since distillation..." does not read as a complete clause. The note is definitional/term-pinning... |
+| [distillation](../notes/definitions/distillation.md) | 1 | 0 | Title composability | Title is a bare noun ("Distillation") — "since distillation..." does not read as a complete clause. The note is definitional/term-pinning... |
 
 ## Priority Notes
 
@@ -35,7 +35,7 @@ For the full dataset, read `kb/reports/reviews/csv/`.
 |-------|------|------|-------------|----------------|
 | Description discrimination | 9 | 10 | [backlinks](../notes/backlinks.md) | The description "Analysis of where backlinks (inbound link visibility) would concretely help agents working in the KB — use cases, trade-... |
 | Title-body alignment | 8 | 13 | [a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) | The title promises "contextual competence through discoverable, composable, trustworthy knowledge" — the three-properties framing — but t... |
-| Title composability | 3 | 24 | [context-engineering](../notes/context-engineering.md) | Title "Context engineering" is a bare topic noun phrase. "since context engineering..." does not complete as a sentence fragment. However... |
+| Title composability | 3 | 24 | [context-engineering](../notes/definitions/context-engineering.md) | Title "Context engineering" is a bare topic noun phrase. "since context engineering..." does not complete as a sentence fragment. However... |
 | Claim strength | 1 | 7 | [programming-practices-apply-to-prompting](../notes/programming-practices-apply-to-prompting.md) | The title "Programming practices apply to prompting" is close to conventional wisdom — few practitioners in the LLM space would argue the... |
 | claim-strength | 1 | 3 | [traversal-improves-the-graph](../notes/traversal-improves-the-graph.md) | Title "Traversal improves the graph" is broad enough that most KB practitioners would nod along without pushback. The note's actual non-o... |
 

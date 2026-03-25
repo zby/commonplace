@@ -50,7 +50,7 @@ Relevant Notes:
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — quality criterion for document types
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — conceptual foundation: underspecified vs precise semantics, constrain/relax, spec-to-program projection
 - [codification: the missing middle](./deploy-time-learning-the-missing-middle.md) — progressive compilation in practice
-- [constraining is learning](./constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
+- [constraining is learning](./definitions/constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
 - [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — version control practice applied to LLM outputs
 - [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts
 - [automated tests for text](./automated-tests-for-text.md) — extends the testing discussion: concrete test pyramid for the doubled testing surface this note identifies

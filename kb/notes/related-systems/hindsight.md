@@ -58,7 +58,7 @@ Hindsight ([vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)) 
 
 ## What We Should Not Borrow
 
-**Fully automated consolidation.** Hindsight's consolidation engine creates observations without human review. In our system, the human is the oracle — automated consolidation would undermine the [curation point that makes distillation trustworthy](../distillation.md). The observations Hindsight creates are useful for retrieval but lack the grounding discipline our notes require.
+**Fully automated consolidation.** Hindsight's consolidation engine creates observations without human review. In our system, the human is the oracle — automated consolidation would undermine the [curation point that makes distillation trustworthy](../definitions/distillation.md). The observations Hindsight creates are useful for retrieval but lack the grounding discipline our notes require.
 
 **Database-first storage.** PostgreSQL with pgvector is the right choice for Hindsight's scale and access patterns, but adopting it would sacrifice our core property: every piece of knowledge is a readable, version-controlled file. The [inspectable substrate, not supervision, defeats the blackbox problem](../inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md).
 
@@ -87,7 +87,7 @@ Extends [three-space agent memory maps to Tulving taxonomy](../three-space-agent
 
 Extends [three-space memory separation predicts measurable failure modes](../three-space-memory-separation-predicts-measurable-failure-modes.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
 
-Grounds [distillation](../distillation.md) — Hindsight's consolidation engine (facts → observations → mental models) is a concrete implementation of automated distillation; trend tracking shows the temporal dynamics of distilled knowledge.
+Grounds [distillation](../definitions/distillation.md) — Hindsight's consolidation engine (facts → observations → mental models) is a concrete implementation of automated distillation; trend tracking shows the temporal dynamics of distilled knowledge.
 
 Contrasts [inspectable substrate not supervision defeats the blackbox problem](../inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — Hindsight's PostgreSQL storage is opaque to humans without API/UI mediation, making it a concrete example of the supervision-over-substrate approach.
 

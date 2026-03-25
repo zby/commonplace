@@ -8,7 +8,7 @@ tags: [learning-theory]
 
 # Constraining and distillation both trade generality for reliability, speed, and cost
 
-[Capacity decomposes into generality and a compound](./learning-is-not-only-about-generality.md) of reliability, speed, and cost. The two learning mechanisms — [constraining](./constraining.md) and [distillation](./distillation.md) — both operate on this trade-off, but through different operations.
+[Capacity decomposes into generality and a compound](./learning-is-not-only-about-generality.md) of reliability, speed, and cost. The two learning mechanisms — [constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md) — both operate on this trade-off, but through different operations.
 
 ## The trade-off in action
 
@@ -18,15 +18,15 @@ This is the trade-off made concrete. Moving from the LLM to the calculator sacri
 
 ## How constraining trades generality for compound
 
-[Constraining](./constraining.md) constrains the interpretation space. Each constraint narrows what the system can do (less generality) but makes what it does do more reliable, faster, and cheaper.
+[Constraining](./definitions/constraining.md) constrains the interpretation space. Each constraint narrows what the system can do (less generality) but makes what it does do more reliable, faster, and cheaper.
 
-[Codification](./codification.md) — the far end of the constraining spectrum — is the most dramatic compound gain. Replacing an LLM validation check with a Python script doesn't change *what* gets checked — it changes how reliably (never hallucinates), how fast (milliseconds vs seconds), and how cheaply (free vs API call) it gets checked. What you give up is generality: the script handles exactly what it handles, nothing more.
+[Codification](./definitions/codification.md) — the far end of the constraining spectrum — is the most dramatic compound gain. Replacing an LLM validation check with a Python script doesn't change *what* gets checked — it changes how reliably (never hallucinates), how fast (milliseconds vs seconds), and how cheaply (free vs API call) it gets checked. What you give up is generality: the script handles exactly what it handles, nothing more.
 
 But the compound isn't exclusive to codification. Constraining short of codification (storing outputs, writing conventions) also improves reliability and speed, just less dramatically. The full constraining spectrum trades generality at every point — codification is just where the compound gain is largest because the medium itself changes.
 
 ## How distillation trades generality for compound
 
-[Distillation](./distillation.md) extracts from a larger body of reasoning into a focused artifact shaped by a specific use case, context budget, or agent. The extracted artifact is narrower than the source (less generality) but operationally more efficient (compound gain).
+[Distillation](./definitions/distillation.md) extracts from a larger body of reasoning into a focused artifact shaped by a specific use case, context budget, or agent. The extracted artifact is narrower than the source (less generality) but operationally more efficient (compound gain).
 
 A skill distilled from fifteen methodology notes fits in a single context window (speed, cost) and delivers consistent procedure (reliability). The methodology notes remain for edge cases — the distilled skill can't handle everything they cover. This is the same trade-off: generality for compound, through extraction rather than constraint.
 
@@ -46,7 +46,7 @@ Both directions are [capacity change](./learning-is-not-only-about-generality.md
 Relevant Notes:
 
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: defines the capacity decomposition (generality vs compound) that this note's trade-off operates on
-- [constraining](./constraining.md) — one mechanism: constrains the interpretation space; codification is the far end
-- [distillation](./distillation.md) — the other mechanism: targeted extraction under context budget constraints
-- [codification](./codification.md) — where constraining yields the largest compound gain, because the substrate itself changes
+- [constraining](./definitions/constraining.md) — one mechanism: constrains the interpretation space; codification is the far end
+- [distillation](./definitions/distillation.md) — the other mechanism: targeted extraction under context budget constraints
+- [codification](./definitions/codification.md) — where constraining yields the largest compound gain, because the substrate itself changes
 - [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when the generality-vs-compound trade-off is permanent (calculators) vs when relaxing is needed (vision features)
