@@ -27,6 +27,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 - [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
+- [selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits](./selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits.md) — proposes turning accepted edit diffs into atomic review gates stored in a registry and loaded under a bounded review budget rather than bundling every lesson into monolithic review prompts
 
 ## Related Tags
 
