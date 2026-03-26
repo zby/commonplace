@@ -1,5 +1,5 @@
 ---
-description: Batch fix of review warnings across notes. Builds a priority queue from CSV data, delegates per-note fixes to sub-agents, collects fix reports with strategy classifications.
+description: Batch fix of review warnings across notes. Builds a priority queue from current-model gate review files, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
 ---
 
 # Fix Review Warnings Sweep
@@ -8,11 +8,24 @@ description: Batch fix of review warnings across notes. Builds a priority queue 
 
 ### 1. Build the work queue
 
-Read `kb/reports/reviews/csv/notes_by_warnings.csv` (or the `current.` variant if scoped to current notes). This is sorted by warning count descending.
+Ensure `COMMONPLACE_REVIEW_MODEL` is set. The sweep operates on gate reviews recorded for the current model only.
 
-If the user specified a check filter (e.g., "Source residue only"), also read `kb/reports/reviews/csv/findings.csv` and filter to notes that have WARNs for that check.
+Build the queue from:
 
-Print the queue: note name, WARN count, top check types.
+- `kb/reports/reviews/{encoded-note-path}/*.{encoded-model}.md`
+
+For each note directory:
+
+1. Read all gate review files for the current model.
+2. Extract all WARN bullets.
+3. Count WARNs per note.
+4. Collect the top check names from the WARN bullets.
+
+If the user specified a check filter such as "Source residue only", keep only notes whose WARN bullets include that check.
+
+Sort notes by WARN count descending.
+
+Print the queue: note path, WARN count, top check types.
 
 ### 2. Delegate
 

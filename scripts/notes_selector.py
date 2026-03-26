@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""List reviewable notes in kb/notes/."""
+"""Compatibility wrapper for listing reviewable notes or stale gate pairs."""
 
 from __future__ import annotations
 
@@ -8,24 +8,18 @@ import json
 import sys
 from pathlib import Path
 
+from gate_selector import render_stale_gate, select_stale_gates
 from review_state import list_reviewable_notes
-from selector_engine import (
-    collect_review_changes,
-    get_selector_policy,
-    render_change_record,
-)
 
 
 REPO_ROOT = Path.cwd()
 NOTES_DIR = REPO_ROOT / "kb" / "notes"
-REVIEWS_DIR = REPO_ROOT / "kb" / "reports" / "reviews"
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "List top-level kb notes, or only notes whose content differs from "
-            "the revision recorded in their review files."
+            "List top-level reviewable notes, or stale gate pairs for a review bundle."
         )
     )
     parser.add_argument(
@@ -41,12 +35,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--json",
         action="store_true",
-        help="Emit structured change records instead of plain note paths.",
+        help="Emit structured stale gate records instead of grouped plain text.",
     )
     parser.add_argument(
         "--include-unchanged",
         action="store_true",
-        help="Include unchanged notes in JSON output when a review type is provided.",
+        help="Legacy flag from the pre-gate selector. No longer supported.",
     )
     return parser
 
@@ -62,8 +56,8 @@ def main() -> None:
     if not args.all and not args.review_type:
         parser.error("provide a review type or pass --all")
 
-    if args.include_unchanged and not args.json:
-        parser.error("--include-unchanged requires --json")
+    if args.include_unchanged:
+        parser.error("--include-unchanged is not supported by the gate selector")
 
     notes = list_reviewable_notes(NOTES_DIR)
     if args.all:
@@ -83,37 +77,25 @@ def main() -> None:
 
     assert args.review_type is not None
     try:
-        get_selector_policy(args.review_type)
-    except ValueError as exc:
+        stale_records = select_stale_gates(
+            REPO_ROOT,
+            bundle_id=args.review_type,
+        )
+    except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
-    changes = collect_review_changes(
-        notes,
-        args.review_type,
-        REVIEWS_DIR,
-        REPO_ROOT,
-        include_unchanged=args.include_unchanged,
-        include_diff=args.json,
-        notes_root=NOTES_DIR,
-    )
-
     if args.json:
-        print(
-            json.dumps(
-                [
-                    render_change_record(
-                        change,
-                        include_status=args.include_unchanged,
-                    )
-                    for change in changes
-                ],
-                indent=2,
-            )
-        )
+        print(json.dumps([render_stale_gate(item) for item in stale_records], indent=2))
         return
 
-    for change in changes:
-        print(change.note_path)
+    grouped: dict[str, list[object]] = {}
+    for record in stale_records:
+        grouped.setdefault(record.note_path, []).append(record)
+
+    for note_path in sorted(grouped):
+        print(note_path)
+        for record in sorted(grouped[note_path], key=lambda item: item.gate_id):
+            print(f"  - {record.gate_id} ({record.reason})")
 
 
 if __name__ == "__main__":

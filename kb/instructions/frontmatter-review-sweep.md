@@ -4,55 +4,66 @@ description: Batch frontmatter review across all notes in kb/notes/. Delegates e
 
 # Frontmatter Review Sweep
 
-Run the [frontmatter review](./frontmatter-review.md) across all notes in `kb/notes/`. Each note is reviewed by a sub-agent. Individual reports are saved to `kb/reports/reviews/` and a summary aggregates findings across the KB.
+Run the frontmatter gate bundle across top-level notes in `kb/notes/`. Selection is gate-based: the selector emits stale `(note, gate)` pairs, then execution groups them by note and lens.
 
 ## Steps
 
 ### 1. Inventory
 
-Run `uv run scripts/notes_selector.py frontmatter-review --json` to get the changed-note queue. The script compares each top-level note's current blob hash against the `last-accepted-note-sha` stored in `kb/reports/reviews/{note-stem}.frontmatter-review.md`, filters out notes whose content did not change at all, and includes a compact diff for changed notes.
+Run `uv run scripts/gate_selector.py frontmatter-review --json` to get the stale gate queue.
 
-If you only need note paths, omit `--json`.
+The selector checks:
+
+- missing recorded gate reviews
+- gate-file hash changes
+- watched-region hash changes
+- body rewrites above the configured threshold for `frontmatter/title-body-alignment`
+
+If you only need grouped plain text, omit `--json`.
 
 ### 2. Delegate
 
-Launch sub-agents to review notes in parallel. The orchestrator should inspect each diff first; link-only or cosmetic edits may not need a full re-review. For notes whose diffs are trivial, acknowledge them with:
+Group stale pairs by `(note, lens)`. For each group, load:
+
+- the note
+- `kb/instructions/review-bundles/frontmatter-review.md`
+- the specific gate files under `kb/instructions/review-gates/frontmatter/`
+
+Have the reviewer ask the storage script for the canonical review path, write one recorded review body there per stale gate, then finalize it with:
 
 ```
-uv run scripts/ack_review.py frontmatter-review {note-path}
-uv run scripts/ack_review.py frontmatter-review {note-path-1} {note-path-2} ...
+uv run scripts/gate_reviews.py path {note-path} {gate-id}
 ```
 
-For notes that do need a full review, each sub-agent receives this prompt:
+Then run:
 
 ```
-Read kb/instructions/frontmatter-review.md for the review procedure.
-Apply it to: {note-path}
-
-Write the full report (in the output format specified by the instruction)
-to: kb/reports/reviews/{note-stem}.frontmatter-review.md
-
-Do not modify the note. Only write the review file.
+uv run scripts/gate_reviews.py finalize {note-path} {gate-id}
 ```
 
-Where `{note-stem}` is the filename without `.md` (e.g., `knowledge-storage-does-not-imply-contextual-activation`).
+This finalizes the recorded gate review file and regenerates `kb/reports/review-csv/gate_reviews.csv`.
 
-Batch sub-agents in groups of 5–8 to manage concurrency. Wait for each batch to complete before launching the next.
-
-### 3. Summarize
-
-After all reviews are complete, run:
+If the change is too small to justify a fresh review, acknowledge one or more stale gates for the note with:
 
 ```
-uv run scripts/summarize_reviews.py frontmatter-review
+uv run scripts/ack_gate_review.py {note-path} {gate-id}
+uv run scripts/ack_gate_review.py {note-path} {gate-id-1} {gate-id-2} ...
 ```
 
-This writes ranked CSV tables in `kb/reports/reviews/csv/` and a compact `kb/reports/SUMMARY.frontmatter-review.md` built from the top rows of those tables.
+### 3. Rebuild index
+
+```
+uv run scripts/gate_reviews.py rebuild-csv
+```
+
+This is idempotent and safe to run after batch review writes.
 
 ### 4. Report to user
 
-Print the "most common findings" section from the summary. Link to the full summary.
+Report which `(note, gate)` pairs were reviewed and point to the stored gate review files.
 
 ## Re-running
 
-Subsequent runs overwrite individual review files and the summary. To track changes over time, commit the reviews directory before re-running.
+Subsequent runs overwrite recorded gate review files for the same `(note, gate)` pair. Commit the reviews directory before re-running if you want history.
+
+If selector, finalize, or ack commands fail complaining that `COMMONPLACE_REVIEW_MODEL` is not set, stop and report that the runtime has not provided the current review model to the scripts.
