@@ -1,5 +1,5 @@
 ---
-description: Batch fix of review warnings across notes. Builds a priority queue from current-model gate review files, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
+description: Batch fix of review warnings across notes. Runs warn_selector to build a priority queue, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
 ---
 
 # Fix Review Warnings Sweep
@@ -8,79 +8,35 @@ description: Batch fix of review warnings across notes. Builds a priority queue 
 
 ### 1. Build the work queue
 
-Ensure `COMMONPLACE_REVIEW_MODEL` is set. The sweep operates on gate reviews recorded for the current model only.
+```bash
+uv run scripts/warn_selector.py --json | wc -l
+```
 
-Build the queue from:
+Check the line count first. If more than 100 lines, tell the user to filter to specific notes.
 
-- `kb/reports/reviews/{encoded-note-path}/*.{encoded-model}.md`
+```bash
+uv run scripts/warn_selector.py --json
+```
 
-For each note directory:
+This returns notes sorted by WARN count descending, with full WARN text and gate ids.
 
-1. Read all gate review files for the current model.
-2. Extract all WARN bullets.
-3. Count WARNs per note.
-4. Collect the top check names from the WARN bullets.
-
-If the user specified a check filter such as "Source residue only", keep only notes whose WARN bullets include that check.
-
-Sort notes by WARN count descending.
-
-Print the queue: note path, WARN count, top check types.
+If the queue is empty, stop — no WARNs to fix.
 
 ### 2. Delegate
 
-Launch sub-agents to fix notes in parallel. Each sub-agent receives:
+For each note in the queue, launch a sub-agent with a prompt to:
 
-```
-Read kb/instructions/fix-warnings/fix-review-warnings.md for the fix procedure.
-Apply it to: {note-path}
+> Run `kb/instructions/fix-warnings/fix-review-warnings.md` on `{note-path}`
 
-Write the fix report to kb/reports/fixes/{note-stem}.fix-report.md
-```
+Multiple sub-agents can run in parallel since each note's fixes are independent.
 
-Batch sub-agents in groups of 3–5. Wait for each batch to complete before launching the next.
+### 3. Report
 
-### 3. Collect results
-
-After each batch, collect the fix reports. Aggregate:
+After sub-agents complete, report:
 - **Fixed by strategy:** count of fixes per taxonomy strategy name
-- **Deferred:** list of items needing human review
-- **New patterns:** any `new-pattern` classifications reported
+- **Deferred:** items needing human review with reasons
+- **New patterns:** any `new-pattern` classifications
 
-### 4. Report
-
-Write a sweep summary to `kb/reports/SUMMARY.fix-report.md`:
-
-```
-# Fix Warnings Sweep — {date}
-
-Notes processed: N
-Fixes applied: N (by strategy: stale-paths: 3, hedge-own-framework: 7, ...)
-Deferred: N items across M notes
-New patterns: N
-
-## Deferred items
-[list each with note, check, and reason]
-
-## New patterns
-[list each with note, check, and pattern description]
-
-## Per-note reports
-- `kb/reports/fixes/{note-stem}.fix-report.md`
-- ...
-```
-
-### 5. Evolve taxonomy
+### 4. Evolve taxonomy
 
 If new patterns recur (3+ instances of the same pattern), propose adding them to `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Present the proposed entry to the user before adding.
-
-### 6. Commit
-
-If fixes were applied, offer to commit. Stage only modified note files. Use a commit message like:
-
-```
-Fix review warnings across N notes
-
-Strategies applied: [top 3 strategy names]
-Deferred: M items for human review
-```

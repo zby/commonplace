@@ -1,72 +1,53 @@
 # Reviews
 
-Automated quality reviews of `kb/notes/`. The current selector and storage model are gate-based: each recorded review is keyed by `(note, gate, model)` rather than one monolithic file per note and review type.
+Automated quality reviews of `kb/notes/`. Each review applies one gate (a focused quality check) to one note. Staleness is tracked by filesystem modification times.
 
-## Review types
+**System design:** [scripts/REVIEW-SYSTEM.md](../../../scripts/REVIEW-SYSTEM.md)
 
-- **frontmatter-review** — Bundle file: `kb/instructions/review-bundles/frontmatter-review.md`
-- **prose-review** — Bundle file: `kb/instructions/review-bundles/prose-review.md`
-- **semantic-review** — Bundle file: `kb/instructions/review-bundles/semantic-review.md`
-- **complexity-review** — Bundle file: `kb/instructions/review-bundles/complexity-review.md`
+## Bundles
+
+- **accessibility** — gates in `kb/instructions/review-gates/accessibility/`
+- **complexity** — gates in `kb/instructions/review-gates/complexity/`
+- **frontmatter** — gates in `kb/instructions/review-gates/frontmatter/`
+- **prose** — gates in `kb/instructions/review-gates/prose/`
+- **semantic** — gates in `kb/instructions/review-gates/semantic/`
+- **sentence** — gates in `kb/instructions/review-gates/sentence/`
+- **structural** — gates in `kb/instructions/review-gates/structural/`
 
 ## File naming
 
-- Gate reviews: `{encoded-note-path}/{encoded-gate-id}.{encoded-model}.md`
-- Gate review index: `../review-csv/gate_reviews.csv`
-- Legacy monolithic review files, summaries, and old review CSVs were moved under `kb/reports/archive/`.
+Reviews: `{encoded-note-path}/{encoded-gate-id}.{encoded-model}.md`
 
-## Active CSV
+- Note path: strip `.md`, replace `/` with `__`
+- Gate id: replace `/` with `__`
+- Model: non-alphanumeric → `-`, lowercase
 
-The active gate-based index is:
+Example: reviewing `kb/notes/backlinks.md` against `prose/source-residue` with model `opus 4.6` → `kb__notes__backlinks/prose__source-residue.opus-4-6.md`
 
-- `kb/reports/review-csv/gate_reviews.csv` — one row per recorded `(note, gate, model)` baseline
+## Instructions
+
+- **Review one note:** `kb/instructions/run-review-bundle-on-note.md` — explicit note + gates
+- **Batch sweep:** `kb/instructions/review-sweep.md` — run selector, triage by reason, review or ack
 
 ## Running
 
 ```bash
-# Set the active review model for all gate-based scripts
-export COMMONPLACE_REVIEW_MODEL=gpt-5.4
+# Resolve gates and show output paths
+uv run scripts/resolve_gates.py --note kb/notes/backlinks.md prose
 
-# Stale prose-review gate pairs
-uv run scripts/gate_selector.py prose-review
-
-# Same, via the compatibility wrapper
-uv run scripts/notes_selector.py prose-review --json
-
-# Stale semantic-review gate pairs
-uv run scripts/gate_selector.py semantic-review --json
-
-# Full gate inventory across all reviewable notes
+# List all stale (note, gate) pairs
 uv run scripts/gate_selector.py --all-gates
 
-# Finalize one recorded gate review already written at its canonical path
-uv run scripts/gate_reviews.py finalize kb/notes/backlinks.md frontmatter/title-composability
+# List stale pairs for one bundle
+uv run scripts/gate_selector.py prose
 
-# Mark one or more stale gates as trivial-change acknowledgements
-uv run scripts/ack_gate_review.py kb/notes/backlinks.md frontmatter/title-composability
-uv run scripts/ack_gate_review.py kb/notes/backlinks.md prose/source-residue prose/redundant-restatement
+# JSON output with diffs
+uv run scripts/gate_selector.py --all-gates --json
 
-# Rebuild the active gate CSV index from stored gate reviews
-uv run scripts/gate_reviews.py rebuild-csv
-
-# Full inventory, ignoring review timestamps
-uv run scripts/notes_selector.py --all
+# Ack a review (note change was insignificant for this gate)
+touch kb/reports/reviews/kb__notes__backlinks/prose__source-residue.opus-4-6.md
 ```
-
-The gate selector is revision-based and scope-aware. It compares the current note state against:
-
-- the current `COMMONPLACE_REVIEW_MODEL`
-- the stored `recorded_commit`
-- the stored `watched_hash`
-- the current gate file hash
-- the gate's configured staleness policy
-
-That means a note can stay fresh for one gate and go stale for another, and a recording from one model does not make the same gate fresh for a different model.
-
-`ack_review.py` and the old `{note-stem}.{review-type}.md` review system are legacy note-level infrastructure now archived under `kb/reports/archive/`. The gate-level trivial-change path is [scripts/ack_gate_review.py](/home/zby/llm/commonplace/scripts/ack_gate_review.py).
-
-Full sweep instructions: `kb/instructions/frontmatter-review-sweep.md`, `kb/instructions/prose-review-sweep.md`, `kb/instructions/semantic-review-sweep.md`
 
 ## Re-running
 
-Subsequent runs overwrite recorded gate review files for the same `(note, gate)` pair. Commit before re-running if you want historical snapshots.
+Writing a new review body overwrites the file and resets its mtime, marking it current. Commit before re-running if you want historical snapshots.

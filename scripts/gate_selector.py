@@ -1,218 +1,272 @@
 #!/usr/bin/env python3
-"""Select stale (note, gate) pairs for gate-based review."""
+"""Select stale (note, gate) pairs using mtime-based staleness.
+
+Staleness rules (like make):
+  - Review file missing           → stale (missing-review)
+  - Gate mtime > review mtime     → stale (gate-changed)
+  - Note mtime > review mtime     → stale (note-changed), diff included in JSON output
+
+See scripts/REVIEW-SYSTEM.md for the full design.
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
+import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 
-from gate_core import (
-    GateDefinition,
-    body_change_ratio,
-    compute_watched_hash,
-    load_all_gate_definitions,
-    load_bundle_gate_ids,
-    load_gate_definition,
-    load_note_regions,
-    non_body_watches,
-    path_changed_since_commit,
-    read_note_text_at_commit,
-    resolve_reviewable_note_paths,
-)
-from gate_reviews import gate_review_csv_path, load_gate_review_index, require_review_model
-from review_metadata import git_blob_sha
+GATES_ROOT = Path("kb/instructions/review-gates")
+REVIEWS_ROOT = Path("kb/reports/reviews")
+NOTES_ROOT = Path("kb/notes")
+MODEL_ENV_VAR = "COMMONPLACE_REVIEW_MODEL"
 
+
+# ---------------------------------------------------------------------------
+# Path encoding (matches resolve_gates.py)
+# ---------------------------------------------------------------------------
+
+def encode_note_path(note_path: str) -> str:
+    return str(Path(note_path).with_suffix("")).replace("/", "__")
+
+
+def encode_gate_id(gate_id: str) -> str:
+    return gate_id.replace("/", "__")
+
+
+def encode_model(model: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_-]+", "-", model).strip("-").lower()
+
+
+def require_review_model() -> str:
+    model = os.environ.get(MODEL_ENV_VAR, "").strip()
+    if not model:
+        raise ValueError(f"{MODEL_ENV_VAR} must be set")
+    return model
+
+
+def review_path_for(note_path: str, gate_id: str, model: str) -> Path:
+    return REVIEWS_ROOT / encode_note_path(note_path) / f"{encode_gate_id(gate_id)}.{encode_model(model)}.md"
+
+
+# ---------------------------------------------------------------------------
+# Gate discovery
+# ---------------------------------------------------------------------------
+
+def list_all_gate_ids(gates_dir: Path) -> list[str]:
+    return [
+        f.relative_to(gates_dir).with_suffix("").as_posix()
+        for f in sorted(gates_dir.rglob("*.md"))
+    ]
+
+
+def list_bundle_gate_ids(gates_dir: Path, bundle: str) -> list[str]:
+    bundle_dir = gates_dir / bundle
+    if not bundle_dir.is_dir():
+        raise FileNotFoundError(f"Bundle directory not found: {bundle}")
+    return [f"{bundle}/{f.stem}" for f in sorted(bundle_dir.glob("*.md"))]
+
+
+# ---------------------------------------------------------------------------
+# Note discovery
+# ---------------------------------------------------------------------------
+
+def _has_frontmatter(path: Path) -> bool:
+    try:
+        with path.open(encoding="utf-8") as f:
+            return f.read(4) == "---\n"
+    except (OSError, UnicodeDecodeError):
+        return False
+
+
+def _is_index(path: Path) -> bool:
+    return path.name == "index.md" or path.name.endswith("-index.md")
+
+
+def list_reviewable_notes(notes_dir: Path) -> list[Path]:
+    return sorted(
+        p for p in notes_dir.glob("*.md")
+        if not _is_index(p) and _has_frontmatter(p)
+    )
+
+
+# ---------------------------------------------------------------------------
+# Diff generation
+# ---------------------------------------------------------------------------
+
+def note_diff_since(repo_root: Path, note_path: str, since_mtime: float) -> str | None:
+    """Git diff of a note from the last commit before since_mtime to the working tree."""
+    since_iso = datetime.fromtimestamp(since_mtime, tz=timezone.utc).isoformat()
+
+    # Find the last commit at or before the review mtime
+    result = subprocess.run(
+        ["git", "log", f"--before={since_iso}", "-1", "--format=%H", "--", note_path],
+        capture_output=True, text=True, cwd=repo_root,
+    )
+    base_commit = result.stdout.strip()
+    if not base_commit:
+        return None
+
+    # Diff from that commit to the working tree
+    result = subprocess.run(
+        ["git", "diff", base_commit, "--", note_path],
+        capture_output=True, text=True, cwd=repo_root,
+    )
+    diff = result.stdout.strip()
+    return diff if diff else None
+
+
+# ---------------------------------------------------------------------------
+# Staleness evaluation
+# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class StaleGate:
     note_path: str
     gate_id: str
     reason: str
-    lens: str
+    diff: str | None = None
 
 
-def render_stale_gate(record: StaleGate) -> dict[str, str]:
-    return {
-        "note_path": record.note_path,
-        "gate_id": record.gate_id,
-        "reason": record.reason,
-    }
-
-
-def _load_target_gates(
+def evaluate_gate(
     repo_root: Path,
-    bundle_id: str | None,
-    include_all_gates: bool,
-) -> list[GateDefinition]:
-    gates_root = repo_root / "kb" / "instructions" / "review-gates"
-    bundles_root = repo_root / "kb" / "instructions" / "review-bundles"
-
-    if include_all_gates:
-        return load_all_gate_definitions(gates_root)
-    if bundle_id is None:
-        raise ValueError("provide a bundle id or pass --all-gates")
-
-    gate_ids = load_bundle_gate_ids(bundles_root, bundle_id)
-    return [load_gate_definition(gates_root, gate_id) for gate_id in gate_ids]
-
-
-def _evaluate_gate(
-    repo_root: Path,
-    note_path: Path,
-    gate: GateDefinition,
-    review_index: dict[tuple[str, str, str], object],
-    current_model: str,
+    note_path: str,
+    gate_id: str,
+    model: str,
+    note_abs: Path,
+    gate_abs: Path,
+    include_diff: bool = False,
 ) -> StaleGate | None:
-    note = load_note_regions(note_path, repo_root)
-    record = review_index.get((note.rel_path, gate.gate_id, current_model))
-    if record is None:
-        return StaleGate(note.rel_path, gate.gate_id, "missing-review", gate.lens)
+    review_abs = repo_root / review_path_for(note_path, gate_id, model)
 
-    current_gate_hash = git_blob_sha(gate.path)
-    if record.gate_hash != current_gate_hash:
-        return StaleGate(note.rel_path, gate.gate_id, "gate-changed", gate.lens)
+    if not review_abs.is_file():
+        return StaleGate(note_path, gate_id, "missing-review")
 
-    note_rel_path = Path(note.rel_path)
-    try:
-        note_changed = path_changed_since_commit(
-            repo_root,
-            note_rel_path,
-            record.recorded_commit,
-        )
-    except ValueError:
-        return StaleGate(
-            note.rel_path,
-            gate.gate_id,
-            "invalid-recorded-commit",
-            gate.lens,
-        )
+    review_mtime = os.path.getmtime(review_abs)
 
-    if not note_changed:
-        return None
+    if os.path.getmtime(gate_abs) > review_mtime:
+        return StaleGate(note_path, gate_id, "gate-changed")
 
-    if gate.staleness.mode == "changed":
-        current_watched_hash = compute_watched_hash(note, gate.watches)
-        if current_watched_hash != record.watched_hash:
-            return StaleGate(note.rel_path, gate.gate_id, "watched-changed", gate.lens)
-        return None
+    if os.path.getmtime(note_abs) > review_mtime:
+        diff = note_diff_since(repo_root, note_path, review_mtime) if include_diff else None
+        return StaleGate(note_path, gate_id, "note-changed", diff=diff)
 
-    exact_watches = non_body_watches(gate)
-    current_watched_hash = compute_watched_hash(note, exact_watches)
-    if current_watched_hash != record.watched_hash:
-        return StaleGate(note.rel_path, gate.gate_id, "watched-changed", gate.lens)
-
-    if "body" not in gate.watches:
-        return None
-
-    try:
-        accepted_text = read_note_text_at_commit(
-            repo_root,
-            note_rel_path,
-            record.recorded_commit,
-        )
-    except ValueError:
-        return StaleGate(
-            note.rel_path,
-            gate.gate_id,
-            "invalid-recorded-commit",
-            gate.lens,
-        )
-
-    ratio = body_change_ratio(accepted_text, note.text)
-    threshold = gate.staleness.threshold or 0.0
-    if ratio > threshold:
-        return StaleGate(note.rel_path, gate.gate_id, "body-rewrite", gate.lens)
+    # Caveat: if git checkout (or similar) rewrites the review file, its mtime
+    # jumps to "now", potentially hiding genuine note changes. This is rare
+    # (requires the review to differ across branches) but silent. Re-run the
+    # sweep after branch operations if you suspect false freshness.
     return None
 
 
 def select_stale_gates(
     repo_root: Path,
     *,
-    bundle_id: str | None = None,
-    include_all_gates: bool = False,
-    raw_note_paths: list[str] | None = None,
+    bundle: str | None = None,
+    include_all: bool = False,
+    note_filter: list[str] | None = None,
+    include_diff: bool = False,
 ) -> list[StaleGate]:
-    review_index = load_gate_review_index(
-        gate_review_csv_path(repo_root)
-    )
-    current_model = require_review_model()
-    notes = resolve_reviewable_note_paths(repo_root, raw_note_paths)
-    gates = _load_target_gates(repo_root, bundle_id, include_all_gates)
+    gates_dir = repo_root / GATES_ROOT
+    notes_dir = repo_root / NOTES_ROOT
 
-    stale_records: list[StaleGate] = []
-    for note_path in notes:
-        for gate in gates:
-            stale = _evaluate_gate(repo_root, note_path, gate, review_index, current_model)
-            if stale is not None:
-                stale_records.append(stale)
-    return sorted(stale_records, key=lambda item: (item.note_path, item.gate_id))
+    model = require_review_model()
 
+    if include_all:
+        gate_ids = list_all_gate_ids(gates_dir)
+    elif bundle:
+        gate_ids = list_bundle_gate_ids(gates_dir, bundle)
+    else:
+        raise ValueError("provide a bundle name or --all-gates")
 
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="List stale (note, gate) review pairs.",
-    )
-    parser.add_argument(
-        "bundle_id",
-        nargs="?",
-        help="Bundle id such as frontmatter-review or prose-review.",
-    )
-    parser.add_argument(
-        "note_paths",
-        nargs="*",
-        help="Optional note path filter, for example kb/notes/backlinks.md.",
-    )
-    parser.add_argument(
-        "--all-gates",
-        action="store_true",
-        help="Select against every gate definition instead of one bundle.",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        help="Emit JSON change records.",
-    )
-    return parser
+    if note_filter:
+        notes: list[Path] = []
+        for raw in note_filter:
+            p = Path(raw) if Path(raw).is_absolute() else repo_root / raw
+            p = p.resolve()
+            if not p.is_file():
+                raise ValueError(f"Note not found: {raw}")
+            notes.append(p)
+    else:
+        notes = list_reviewable_notes(notes_dir)
+
+    stale: list[StaleGate] = []
+    for note_abs in notes:
+        note_rel = note_abs.relative_to(repo_root).as_posix()
+        for gate_id in gate_ids:
+            gate_abs = gates_dir / f"{gate_id}.md"
+            result = evaluate_gate(repo_root, note_rel, gate_id, model, note_abs, gate_abs, include_diff)
+            if result is not None:
+                stale.append(result)
+
+    return sorted(stale, key=lambda s: (s.note_path, s.gate_id))
 
 
-def _print_grouped(stale_records: list[StaleGate]) -> None:
+# ---------------------------------------------------------------------------
+# Output
+# ---------------------------------------------------------------------------
+
+def render_json(records: list[StaleGate]) -> str:
+    items = []
+    for r in records:
+        entry: dict[str, str] = {
+            "note_path": r.note_path,
+            "gate_id": r.gate_id,
+            "reason": r.reason,
+        }
+        if r.diff is not None:
+            entry["diff"] = r.diff
+        items.append(entry)
+    return json.dumps(items, indent=2)
+
+
+def print_grouped(records: list[StaleGate]) -> None:
     grouped: dict[str, list[StaleGate]] = {}
-    for record in stale_records:
-        grouped.setdefault(record.note_path, []).append(record)
-
+    for r in records:
+        grouped.setdefault(r.note_path, []).append(r)
     for note_path in sorted(grouped):
         print(note_path)
-        for record in sorted(grouped[note_path], key=lambda item: item.gate_id):
-            print(f"  - {record.gate_id} ({record.reason})")
+        for r in sorted(grouped[note_path], key=lambda s: s.gate_id):
+            print(f"  - {r.gate_id} ({r.reason})")
 
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 def main() -> None:
-    parser = build_parser()
+    parser = argparse.ArgumentParser(description="List stale (note, gate) review pairs.")
+    parser.add_argument("bundle", nargs="?", help="Bundle name (e.g. prose, semantic).")
+    parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
+    parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
+    parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     args = parser.parse_args()
-    if args.bundle_id is None and not args.all_gates:
-        parser.error("provide a bundle id or pass --all-gates")
-    if args.bundle_id is not None and args.all_gates:
-        parser.error("bundle id and --all-gates are mutually exclusive")
+
+    if not args.bundle and not args.all_gates:
+        parser.error("provide a bundle name or --all-gates")
+    if args.bundle and args.all_gates:
+        parser.error("bundle and --all-gates are mutually exclusive")
 
     repo_root = Path.cwd()
     try:
-        stale_records = select_stale_gates(
+        records = select_stale_gates(
             repo_root,
-            bundle_id=args.bundle_id,
-            include_all_gates=args.all_gates,
-            raw_note_paths=args.note_paths,
+            bundle=args.bundle,
+            include_all=args.all_gates,
+            note_filter=args.note_paths or None,
+            include_diff=args.json,
         )
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
     if args.json:
-        print(json.dumps([render_stale_gate(item) for item in stale_records], indent=2))
-        return
-
-    _print_grouped(stale_records)
+        print(render_json(records))
+    else:
+        print_grouped(records)
 
 
 if __name__ == "__main__":

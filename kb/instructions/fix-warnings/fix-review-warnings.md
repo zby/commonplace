@@ -14,15 +14,10 @@ An editing pass that fixes WARN-level findings from prose and/or semantic review
 
 ## Prerequisites
 
-1. Ensure `COMMONPLACE_REVIEW_MODEL` is set. Fix warnings against the current model's recorded gate reviews only.
-2. Derive:
-   - `{encoded-note-path}` by dropping `.md` from the note path and replacing `/` with `__`
-   - `{encoded-model}` by lowercasing `COMMONPLACE_REVIEW_MODEL` and replacing non-alphanumeric separators with `-`
-3. Read whichever gate review files exist for the note and current model:
-   - `kb/reports/reviews/{encoded-note-path}/*.{encoded-model}.md`
-4. Extract all WARN-level findings from those gate reviews. If there are none, report "no WARNs" and stop.
-5. Read the target note in full.
-6. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
+1. Run `uv run scripts/warn_selector.py --json {note-path}` to get WARN-level findings for this note. If there are none, report "no WARNs" and stop.
+2. Read the target note in full.
+3. Read the gate review files listed in the warn_selector output (the `review_path` fields).
+4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
 
 ## Procedure
 
