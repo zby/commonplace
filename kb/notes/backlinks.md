@@ -10,7 +10,7 @@ status: speculative
 
 ## The gap
 
-The knowledge system tracks outbound links well: notes have inline links and "Relevant Notes" footers declaring what they depend on. But no note knows who links TO it. An agent reading `deploy-time-learning-the-missing-middle.md` — referenced by 40+ files — sees only the notes it cites, not the notes that cite it.
+The knowledge system tracks outbound links well: notes have inline links and "Relevant Notes" footers declaring what they depend on. But no note knows who links TO it. An agent reading `deploy-time-learning-is-the-missing-middle.md` — referenced by 48 other notes at time of writing — sees only the notes it cites, not the notes that cite it.
 
 Grep-based discovery exists (`rg 'note-title\.md' --glob '*.md'`), but agents have to think to run it. The question is whether inbound connections should be visible at reading time, and if so, how.
 
@@ -37,7 +37,7 @@ When a note acquires a "contradicts" link from another note, the tension is only
 ## Non-use-cases
 
 - **Creating new notes** — finding relevant existing notes to link to is a search/discovery problem, not a backlink problem.
-- **Orphan detection** — a batch maintenance task already handled by [grep-based checks](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Backlinks measure the same thing as hub identification (inbound link count), but orphan detection doesn't need read-time visibility.
+- **Orphan detection** — a batch maintenance task already handled by [grep-based checks](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Both orphan detection and hub identification use inbound link counts, but they differ in threshold (zero vs. high) and purpose (batch cleanup vs. read-time orientation). Orphan detection doesn't need read-time visibility — it's a periodic sweep, not a navigation aid.
 - **Index maintenance** — indexes are curated navigation, not mechanical link lists. Backlinks don't replace the judgment needed to decide what belongs in an index.
 
 ## Design options
@@ -64,7 +64,7 @@ A script generates a "Referenced by:" footer in each note, similar to how `sync_
 Agents add backlinks manually whenever they create an outbound link. The /connect skill already has a "Bidirectional Check" gate, but it's applied sporadically.
 
 - Pros: semantic relationship types preserved; curated, not mechanical
-- Cons: maintenance burden; inconsistent unless enforced; ~16% of notes still lack even outbound Relevant Notes sections
+- Cons: maintenance burden; inconsistent unless enforced; 30 of 224 notes (13%) lack even outbound Relevant Notes sections as of 2026-03-27
 
 ### D. Hybrid — generated index + manual enrichment
 
@@ -91,5 +91,5 @@ A script generates a bare list of inbound links (no semantics). Agents optionall
 
 Relevant Notes:
 
-- [linking-theory](./linking-theory.md) — foundation: backlinks are a special case of link visibility; what makes a link worth following applies to inbound links too
+- [linking-theory](./linking-theory.md) — extends: linking-theory develops link quality for outbound links; this note extrapolates the same decision-cost framing to inbound visibility
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — related pattern: deterministic generation from structured data, the approach that option B would follow
