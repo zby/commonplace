@@ -43,7 +43,7 @@ Three operations transform accumulated knowledge, each targeting different prope
 
 These three transform existing knowledge. A fourth operation works by subtraction:
 
-**Pruning** removes knowledge that is outdated, contradictory, or low-value. Pruning is not distillation (nothing is extracted) and not constraining (nothing is narrowed) — it is the inverse of accumulation. It primarily improves **trustworthiness**: removing a stale note eliminates a source of wrong premises. It secondarily improves discoverability — fewer notes means less noise in search results and indexes. A KB that never prunes degrades under its own weight as currency decays.
+**Pruning** removes or deprecates knowledge that is outdated, contradictory, or low-value. Pruning is not distillation (nothing is extracted) and not constraining (nothing is narrowed) — it is the inverse of accumulation. It primarily improves **trustworthiness**: removing a stale note eliminates a source of wrong premises. It secondarily improves discoverability — fewer notes means less noise in search results and indexes. A KB that never prunes degrades under its own weight as currency decays.
 
 | Operation | Capacity trade-off | Primary property improved | Commonplace example |
 |---|---|---|---|
@@ -56,8 +56,6 @@ These three transform existing knowledge. A fourth operation works by subtractio
 A KB that only accumulates grows but never improves what it has — a pile, not a system. One that only constrains gets rigid — trustworthy but unable to grow. One that only distils gets focused but shallow — discoverable but with nothing deep to discover. One that only discovers gets conceptually rich but unreliable and hard to navigate — composable in theory but not in practice. One that never prunes degrades as knowledge goes stale. All five must operate continuously.
 
 ## Reach: why some knowledge serves competence better than others
-
-The three properties tell you what knowledge must *be* — discoverable, composable, trustworthy. They don't tell you which knowledge is *worth* making discoverable, composable, and trustworthy. A KB could satisfy all three properties while being full of shallow facts that don't help the agent reason in new situations.
 
 David Deutsch [distinguishes](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) **adaptive** knowledge (patterns that work but don't explain why) from **explanatory** knowledge (accounts that capture causal structure). The distinguishing property is **reach**: explanatory knowledge applies in contexts it was never designed for, because the explanation captures structure that isn't context-dependent. A gene "knows" how to build an eye but can't help you design a telescope. Newton's optics does both.
 
@@ -94,7 +92,7 @@ This isn't a claim that extraction can never produce knowledge with reach — an
 
 A good agentic KB maximizes **contextual competence** under **bounded context** through knowledge that is **discoverable**, **composable**, and **trustworthy**.
 
-**Accumulation** is the most basic learning operation. **Reach** is its key property: facts (low reach) are adaptive; theories (high reach) are explanatory and transfer to new contexts. Four operations transform accumulated knowledge: **constraining** improves trustworthiness, **distillation** improves discoverability, **discovery** improves composability and produces the highest-reach items to accumulate, and **pruning** removes stale knowledge before it erodes trust.
+**Accumulation** is the most basic learning operation. **Reach** is its key property: facts (low reach) are adaptive; theories (high reach) are explanatory and transfer to new contexts. Three operations transform accumulated knowledge: **constraining** improves trustworthiness, **distillation** improves discoverability, **discovery** improves composability and produces the highest-reach items to accumulate. A fourth operates by subtraction: **pruning** removes stale knowledge before it erodes trust.
 
 The KB's first-principles filter selects for reach — not because procedures lack value, but because theories compress knowledge under bounded context and transfer when knowledge leaves the KB. Authoring — the act of judgment that explains *why* — is the primary source of knowledge with reach.
 
@@ -102,18 +100,18 @@ The KB's first-principles filter selects for reach — not because procedures la
 
 Relevant Notes:
 
-- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the bounded-context constraint that makes efficiency necessary
-- [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — grounds: contextual competence as the criterion, not retrieval accuracy
+- [Context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the bounded-context constraint that makes efficiency necessary
+- [Claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — grounds: contextual competence as the criterion, not retrieval accuracy
 - [constraining](./definitions/constraining.md) — mechanism: one of three learning operations; improves trustworthiness, preserves reach
 - [distillation](./definitions/distillation.md) — mechanism: one of three learning operations; improves discoverability, preserves or destroys reach
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: one of three learning operations; improves composability, creates reach
-- [first-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion as the quality measure for knowledge
-- [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — grounds: the capacity trade-off that two of three operations make
-- [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition and the generality-vs-compound decomposition
-- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: resolution-switching is a concrete test for discoverability + composability working together
-- [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — exemplifies: claim titles serve both discoverability (scan without loading) and composability (use as premise)
-- [files beat a database](./files-not-database.md) — exemplifies: architectural choice explained by reach (universal interface principle) not just adaptive fit (current tools)
-- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — exemplifies: first-principles filtering is selecting for reach
+- [Discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: one of three learning operations; improves composability, creates reach
+- [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion as the quality measure for knowledge
+- [Constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — grounds: the capacity trade-off that two of three operations make
+- [Learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition and the generality-vs-compound decomposition
+- [A knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: resolution-switching is a concrete test for discoverability + composability working together
+- [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — exemplifies: claim titles serve both discoverability (scan without loading) and composability (use as premise)
+- [Files beat a database](./files-not-database.md) — exemplifies: architectural choice explained by reach (universal interface principle) not just adaptive fit (current tools)
+- [Design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — exemplifies: first-principles filtering is selecting for reach
 - [sift-kg](./related-systems/sift-kg.md) — contrasts: extraction-based KG produces adaptive knowledge (facts) where reach comes from aggregation, not individual edges
 - [Siftly](./related-systems/siftly.md) — contrasts: enrichment-based system produces classified artifacts, not composable reasoning with reach
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (trustworthiness): credibility erosion from noisy embedding-generated links shows what happens when the trustworthiness property breaks down — the agent discounts all links, destroying composability
