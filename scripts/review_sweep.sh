@@ -4,6 +4,8 @@
 # Usage:
 #   scripts/review_sweep.sh prose                          # one bundle
 #   scripts/review_sweep.sh prose kb/notes/backlinks.md    # filtered to one note
+#   scripts/review_sweep.sh --all-gates                    # all bundles, one at a time
+#   scripts/review_sweep.sh --all-gates kb/notes/backlinks.md
 #
 # Requires: COMMONPLACE_REVIEW_MODEL set in environment.
 #
@@ -20,23 +22,42 @@ if [[ -z "${COMMONPLACE_REVIEW_MODEL:-}" ]]; then
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "usage: review_sweep.sh {bundle} [note-paths...]" >&2
+  echo "usage: review_sweep.sh {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 
-bundle="$1"
-if [[ "$bundle" == --* ]]; then
-  echo "error: pass a bundle name (e.g. prose), not a flag" >&2
-  exit 1
+# --- Determine bundles to sweep ---
+
+GATES_DIR="kb/instructions/review-gates"
+
+if [[ "$1" == "--all-gates" ]]; then
+  shift
+  bundles=()
+  for dir in "$GATES_DIR"/*/; do
+    bundles+=("$(basename "$dir")")
+  done
+else
+  bundles=("$1")
+  shift
 fi
 
-# --- 1. Run selector and group stale pairs by note ---
+note_args=("$@")
 
-selector_output=$(uv run scripts/gate_selector.py "$@" --json)
+# --- Sweep function for one bundle ---
 
-# Parse JSON into note->gates mapping using python
-# Output: one line per note, tab-separated: note_path\tgate1 gate2 gate3
-grouped=$(echo "$selector_output" | python3 -c "
+sweep_bundle() {
+  local bundle="$1"
+  shift
+  local notes=("$@")
+
+  local selector_args=("$bundle")
+  selector_args+=("${notes[@]}")
+
+  local selector_output
+  selector_output=$(uv run scripts/gate_selector.py "${selector_args[@]}" --json)
+
+  local grouped
+  grouped=$(echo "$selector_output" | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
 if not data:
@@ -51,37 +72,42 @@ for note in sorted(groups):
     print(f'{note}\t{gates}')
 ")
 
-if [[ -z "$grouped" ]]; then
-  echo "All reviews are fresh. Nothing to do."
-  exit 0
-fi
+  if [[ -z "$grouped" ]]; then
+    return 0
+  fi
 
-note_count=$(echo "$grouped" | wc -l)
-pair_count=$(echo "$selector_output" | python3 -c "import json,sys; print(len(json.load(sys.stdin)))")
-echo "Sweep: $pair_count stale pairs across $note_count notes"
-echo ""
+  local count
+  count=$(echo "$grouped" | wc -l)
+  echo "Bundle '$bundle': $count notes to review"
 
-# --- 2. Review each note in a separate claude -p call ---
+  while IFS=$'\t' read -r note_path gates; do
+    echo "--- Reviewing: $note_path ($gates)"
+
+    local prompt="Run kb/instructions/run-review-bundle-on-note.md on $note_path for gates: $gates"
+
+    if claude -p "$prompt"; then
+      reviewed=$((reviewed + 1))
+    else
+      echo "  FAILED: $note_path" >&2
+      failed=$((failed + 1))
+    fi
+
+    echo ""
+  done <<< "$grouped"
+}
+
+# --- Run each bundle ---
 
 failed=0
 reviewed=0
 
-while IFS=$'\t' read -r note_path gates; do
-  echo "--- Reviewing: $note_path ($gates)"
-
-  prompt="Run kb/instructions/run-review-bundle-on-note.md on $note_path for gates: $gates"
-
-  if claude -p "$prompt"; then
-    reviewed=$((reviewed + 1))
-  else
-    echo "  FAILED: $note_path" >&2
-    failed=$((failed + 1))
-  fi
-
+for bundle in "${bundles[@]}"; do
+  echo "=== Bundle: $bundle ==="
+  sweep_bundle "$bundle" "${note_args[@]}"
   echo ""
-done <<< "$grouped"
+done
 
-# --- 3. Report ---
+# --- Report ---
 
 echo "=== Sweep complete ==="
 echo "Reviewed: $reviewed notes"
