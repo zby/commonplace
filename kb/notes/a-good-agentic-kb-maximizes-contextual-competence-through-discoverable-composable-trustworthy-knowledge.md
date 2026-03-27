@@ -43,7 +43,7 @@ Three operations transform accumulated knowledge, each targeting different prope
 
 These three transform existing knowledge. A fourth operation works by subtraction:
 
-**Pruning** removes or deprecates knowledge that is outdated, contradictory, or low-value. Pruning is not distillation (nothing is extracted) and not constraining (nothing is narrowed) — it is the inverse of accumulation. It primarily improves **trustworthiness**: removing a stale note eliminates a source of wrong premises. It secondarily improves discoverability — fewer notes means less noise in search results and indexes. A KB that never prunes degrades under its own weight as currency decays.
+**Pruning** removes or deprecates knowledge that is outdated, contradictory, or low-value. At the artifact level, pruning is the inverse of accumulation — nothing new is extracted or narrowed. But at the collection level, pruning is a form of distillation: removing low-value notes concentrates the KB's signal-to-noise ratio, just as distilling 15 methodology notes into one skill concentrates their insight. The distinction is where the extraction boundary sits — distillation produces a new focused artifact, pruning produces a more focused collection. Pruning primarily improves **trustworthiness**: removing a stale note eliminates a source of wrong premises. It secondarily improves discoverability — fewer notes means less noise in search results and indexes. A KB that never prunes degrades under its own weight as currency decays.
 
 | Operation | Capacity trade-off | Primary property improved | Commonplace example |
 |---|---|---|---|
