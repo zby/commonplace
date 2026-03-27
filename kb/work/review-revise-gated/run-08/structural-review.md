@@ -1,0 +1,14 @@
+=== STRUCTURAL REVIEW: baseline.md ===
+Checks applied: 4
+WARN:
+- [broken-link-path] `./distillation.md` (lines 74, 114) does not resolve from `kb/notes/`; file moved to `kb/notes/definitions/distillation.md`. Recommendation: Change both links to `./definitions/distillation.md`.
+- [compound-bullet] Line 99 packs two separable claims joined by "but": (1) move toward artifact-first loading once consumption pattern is understood, (2) "artifact-first" does not mean "minimal." Recommendation: Split into two bullets, one for the transition guidance and one for the clarification that compressed episodes still count as artifacts.
+- [bullet-capitalization] Five bullet lists begin items with lowercase prose (lines 42-46, lines 97-100). Lines 42-46 ("the caller receives...", "local tactical debris...", "downstream stages...", "interfaces remain implicit...", "context pollution compounds...") and lines 97-100 ("it is often fine to...", "use **trace-preserving storage**...", "move toward...", "keep the **raw trace**...") all start with lowercase where sentence-fragment convention expects a capital letter. Recommendation: Capitalize the first word of each bullet item.
+- [general-before-specific] "Tension: compressed episodes are visible, but the rest of the policy is not" (line 67, Slate case study) appears before "Execution-boundary compression is a recurring design move" (line 73, general pattern). The specific tension case precedes the general rule it exemplifies. Recommendation: Move the "Execution-boundary compression" section before the "Tension" section so the reader encounters the general pattern first.
+INFO:
+- [compound-bullet] Lines 56-58 (trace-type bullets) each exceed 30 words and contain a description plus a loading-profile judgment separated by an em-dash. These are borderline but the two parts form a single analytical unit (what-it-is then how-it-loads), so they read as one idea with elaboration rather than two separable claims.
+CLEAN:
+- [broken-link-path] All other links (10 of 12 unique targets) resolve correctly from `kb/notes/`: bounded-context-orchestration-model.md, the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md, tool-loop-index.md, llm-context-is-composed-without-scoping.md, ad-hoc-prompts-extend-the-system-without-schema-changes.md, conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md, agent-orchestration-occupies-a-multi-dimensional-design-space.md, codification-and-relaxing-navigate-the-bitter-lesson-boundary.md, related-systems/spacebot.md, ../sources/slate-moving-beyond-react-and-rlm.ingest.md.
+- [bullet-capitalization] Bullets at lines 13-14 correctly use lowercase to complete a sentence stem ("creates two different questions:"). Bold-leading bullets (lines 24-26, 56-58, 87-89) and link-leading bullets (lines 76-79, 108-118, 122) are correctly capitalized or begin with intentional tokens.
+Overall: 4 warnings, 1 info
+===
