@@ -95,10 +95,19 @@ Terms used in this KB with specific meanings:
 - **Codification** — committing a procedure to a symbolic medium (natural language → code). The far end of constraining. See `kb/notes/codification.md`.
 - **Workshop** — a named workspace for temporal, work-in-flight documents. Lives in `kb/work/<workshop-name>/`. Value is consumed rather than accumulated — workshop artifacts have lifecycles and expiration; they produce library artifacts (notes, ADRs) when done. Contrast with the library layer (notes, indexes) where value accumulates over time. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
+## Development
+
+- **Use `uv run`** for executing Python scripts — the global environment does not have all dependencies.
+- **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
+- **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
+- **Tests**: `uv run pytest` — all tests must pass.
+
 ## Git
 
 - **Never `git add -A`** — review `git status` and stage specific files.
 - **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
+- **Check `git diff` before committing.**
+- **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
 
 ## Conventions
 
