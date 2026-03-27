@@ -48,7 +48,7 @@ Across several systems, the shared move is [compression at the execution boundar
 - [Slate](../sources/slate-moving-beyond-react-and-rlm.ingest.md) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
-Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call.
+Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call. But the compression itself should be goal-oriented rather than uniform. A fixed strategy — "summarize what happened" — produces a general-purpose artifact that serves no consumer particularly well. Distillation targeted at a specific next stage can produce a much tighter result: a structured failure signal for a retry decision, a claim list for a synthesis step, a status line for a progress report. The same execution trace might warrant different compressions for different consumers.
 
 ## Tension: Slate's episodes sit between traces and artifacts
 
@@ -65,6 +65,8 @@ For most orchestration:
 - Move toward **artifact-first loading** once the caller's real consumption pattern is understood
 - "Artifact-first" does not mean "minimal" — a compressed episode that also serves memory and learning is still an artifact, not a transcript
 - Keep the **raw trace as an auxiliary substrate** for UI, debugging, audit, or later learning unless a specific call truly needs it
+
+Failure handling makes the separation especially visible. A bounded execution may return a structured failure artifact while the raw trace is stored separately. The runtime interprets the failure artifact to choose retry, unwind, or escalation — the existence of a trace does not imply that the trace should be loaded into the recovery prompt.
 
 The default mistake is to let a chat interface or framework-owned tool loop decide what the next call should inherit. Interactive sessions want continuity and visibility. Orchestration wants selective loading.
 
