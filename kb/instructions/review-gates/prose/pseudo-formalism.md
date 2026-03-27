@@ -12,6 +12,9 @@ The note uses notation, equations, or formal-looking decomposition that does not
 
 ## Test
 
-Delete the formalism mentally and re-read the passage. If clarity and precision are unchanged, the formalism is decorative.
+For each piece of notation, equation, or formal-looking decomposition in the note:
 
-Separately ask whether someone could use the notation to make a quantitative prediction or derive a non-obvious consequence. If not, it is not doing formal work.
+1. Delete it mentally and re-read the passage. If clarity and precision are unchanged, the formalism is decorative.
+2. Ask whether someone could use it to make a quantitative prediction or derive a non-obvious consequence. If not, it is not doing formal work.
+
+Report all instances that fail either test, not just the first.

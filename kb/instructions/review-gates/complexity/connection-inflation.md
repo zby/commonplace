@@ -12,4 +12,4 @@ Relevant Notes entries restate relationships that are already obvious from the b
 
 ## Test
 
-For each Relevant Notes entry, ask whether an agent reading the note would learn anything new from seeing that footer link. If the body already explains the connection fully, the footer entry may be inflated.
+For each Relevant Notes entry, ask whether an agent reading the note would learn anything new from seeing that footer link. If the body already explains the connection fully, the footer entry may be inflated. Report all inflated entries, not just the most obvious one.

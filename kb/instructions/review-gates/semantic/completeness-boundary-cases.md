@@ -23,3 +23,5 @@ For each enumeration or framework:
 3. Test whether each case maps cleanly into the framework.
 
 WARN when a case clearly falls outside the claimed coverage. INFO when coverage is possible but strained.
+
+Before recommending expansion, check whether the taxonomy's weight is justified. If the taxonomy is already longer than its argumentative role warrants, the right fix may be compression or scope clarification rather than adding another category.

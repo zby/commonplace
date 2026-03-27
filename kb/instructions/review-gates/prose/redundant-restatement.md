@@ -8,13 +8,12 @@ staleness: changed
 
 ## Failure mode
 
-A paragraph re-explains what a nearby section already establishes, either by restating the previous section's conclusion or by previewing what the next section will enumerate.
+A section's opening paragraph re-explains what the previous section already established before reaching its own contribution.
 
 ## Test
 
-Check every section boundary for both patterns. Report all instances found, not just the first.
+Read the first paragraph of each section. If it can be deleted and the section still works from the second paragraph onward, it is restating rather than advancing. Report all instances.
 
-1. **Section-opening restatement.** Read the first paragraph of each section. If it can be deleted and the section still works from the second paragraph onward, it is restating rather than advancing.
-2. **Bridge-paragraph duplication.** Check the last paragraph before each section heading. Does it preview what the next section then enumerates? If the preview and the section's own content cover the same ground, the preview is redundant.
+**Severity:** WARN when the restatement fills the same argumentative role as the original (e.g., both are thesis statements, or both introduce the same framework). INFO when one is setup and the other is summary — intentional reinforcement at different structural positions is a weaker signal.
 
-A one-sentence transition is fine. A full paragraph that duplicates adjacent content is not.
+A one-sentence transition is fine. A full re-explanation is not.

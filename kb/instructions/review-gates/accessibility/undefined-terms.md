@@ -8,7 +8,12 @@ A technical term or concept is used as if the reader already knows it, with no i
 
 ## Test
 
-On first encounter of each technical term, ask: does the surrounding sentence define it, paraphrase it, or give enough context to infer its meaning? Standard technical vocabulary (LLM, context window, prompt, token, API) is fine.
+On first encounter of each technical term, ask: does the surrounding sentence define it, paraphrase it, or give enough context to infer its meaning?
+
+Exceptions — do not flag:
+- Standard technical vocabulary (LLM, context window, prompt, token, API).
+- Terms defined in `kb/notes/definitions/` (distillation, constraining, codification, context engineering) when the note links to the definition. The link serves as the definition point.
+- Terms whose opacity is already covered by the notation-opacity gate (e.g., "external symbolic state" when the real access barrier is the `K` notation it labels). Do not double-flag the English phrase alongside a notation-opacity finding for the same concept.
 
 ## Example (fail)
 

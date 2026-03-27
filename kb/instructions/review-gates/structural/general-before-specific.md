@@ -12,9 +12,11 @@ A section about a specific case, exception, or tension appears before the sectio
 
 ## Test
 
-For each pair of adjacent sections, ask whether section N is a specific case and section N+1 states the general rule. If so, they should be reordered so the reader learns the rule before the exception.
+For each pair of adjacent sections, ask whether section N is a specific case and section N+1 states the general rule. If so, they should be reordered so the reader learns the rule before the exception. Report all such pairs, not just the first.
 
 Signals that a section is more specific include case-study framing, proper nouns, or explicit tension wording.
+
+**Tiebreaker:** If the specific section *qualifies* or *tensions* the general rule (counterexample, exception), specific-before-general is defensible — flag as INFO. If the specific section *exemplifies* the general rule (one instance of a pattern), general should come first — flag as WARN.
 
 ## Example (fail)
 
