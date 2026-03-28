@@ -49,6 +49,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Zikkaron](./Zikkaron.md) — MCP memory server for Claude Code with 26 neuroscience-branded subsystems (Hopfield retrieval, predictive coding write gate, engram allocation, hippocampal replay) all implemented as heuristic Python without LLM calls; the neuroscience framing is vocabulary over mechanism, but the 9-signal retrieval fusion and compaction hooks are genuinely useful
 - [OpenSage](./OpenSage.md) — Google ADK-based agent framework with runtime subagent creation, AI-written tools, Neo4j graph memory, Docker sandbox isolation, agent ensemble coordination, and RL training integration; strongest reference for self-modifying agent topology, but knowledge structure is flat and the self-programming claims outrun the implementation
 - [Cludebot](./cludebot.md) — Generative Agents-inspired memory SDK with five-type taxonomy, type-specific decay, six-phase dream cycles (consolidation + compaction + contradiction resolution + action learning), entity knowledge graph, Hebbian co-retrieval reinforcement, and clinamen anomaly retrieval; richest reviewed trajectory-to-lesson learning loop, heavily oriented to a social-bot use case
+- [REM](./REM.md) — four-database episodic memory service (Postgres + Qdrant + Neo4j + Redis) with LLM-driven consolidation from episodes to scored semantic facts and temporal graph expansion at retrieval; heaviest infrastructure footprint among reviewed systems with the thinnest knowledge transformation layer
 
 ## Patterns Across Systems
 

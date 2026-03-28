@@ -1,5 +1,5 @@
 ---
-description: Fifteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths
+description: Sixteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths
 type: note
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
@@ -8,9 +8,9 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Fifteen code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
+Sixteen code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
-The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, Autocontext, OpenClaw-RL, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). The first seven mine live sessions or service-owned event streams; the latter eight learn from repeated task trajectories or search trees. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, REM, Autocontext, OpenClaw-RL, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). The first eight mine live sessions or service-owned event streams; the latter eight learn from repeated task trajectories or search trees. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -99,6 +99,20 @@ The only inspected system that makes cross-agent session mining a first-class fe
 **Reinjection.** `cm context "<task>"` retrieves relevant bullets by keyword matching, effective score, and optional embedding similarity, returning ranked rules, anti-patterns, related session history, and warnings about deprecated patterns. Cross-agent enrichment happens during diary generation: `enrichWithRelatedSessions()` queries the `cass` search engine for sessions from *other* agents that match the current diary's challenges and learnings, with access logged to `privacy-audit.jsonl`.
 
 **Scope.** Cross-agent, multi-session. Reflects over sessions from Claude Code, Cursor, Codex, Aider, and Pi within a configurable lookback window (default 7 days, up to N sessions). A single shared playbook accumulates rules from all agents, with optional per-repo overlays. `ProcessedLog` in `tracking.ts` tracks which sessions have been reflected on to enable incremental processing.
+
+## REM
+
+A service-owned episodic memory backend with the simplest consolidation pipeline in the survey and the widest gap between aspirational lifecycle management and actual implementation.
+
+**Trigger.** Consolidation queued on every episode write via Redis (fire-and-forget), plus a periodic Celery task. Requires 3+ unconsolidated episodes to proceed.
+
+**Source format.** Agent-submitted content strings via HTTP API (`POST /api/v1/episodes`), enriched at write time by GPT-4o-mini into intent, entities, domain (7 fixed categories), emotion signal, and importance score. Not a session log or conversation transcript — an opaque content field that the service parses. The Go API stores the episode in PostgreSQL, upserts the embedding in Qdrant, and creates a temporal node in Neo4j.
+
+**Extraction.** Two-step: keyword clustering (group by domain, then greedy intent-token overlap requiring 2+ shared tokens), then GPT-4o compression asking for 1-5 "durable, reusable facts" per cluster as JSON with confidence, fact_type, and domain. Episode content is truncated to 500 chars per episode in the prompt. The clustering is the coarsest in the survey — well below the semantic similarity the system's own embeddings could support.
+
+**Promotion.** Append-only semantic memories in PostgreSQL and Qdrant. Each fact is a short string (max 200-300 chars) with confidence score, fact type (preference/rule/pattern/skill/fact), domain, and source episode IDs. No deduplication, no revision, no lifecycle management. The `SemanticMemory` domain struct has `Active`, `ContradictedBy`, and `Superseded` fields, but no code populates them.
+
+**Scope.** Per-agent, multi-session. Each agent's episodes consolidate independently. No cross-agent mining, no shared knowledge store across agents.
 
 ## Autocontext
 
@@ -262,13 +276,13 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
 
-**Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
+**Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, REM, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
 
 **Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data.
 
@@ -296,6 +310,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | OpenViking | Own typed message schema with text/context/tool parts, JSONL |
 | ClawVault | Assistant turns + incremental OpenClaw session JSONL, noise-stripped |
 | cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
+| REM | Agent-submitted content strings via HTTP API, parsed by GPT-4o-mini into intent/entities/domain/emotion/importance |
 | Autocontext | Run trajectories from SQLite metrics, competitor outputs, playbooks, hints |
 | OpenClaw-RL | Live chat-completion traces + next-state feedback → training samples |
 | Reflexion | Failed task attempts + feedback (test results, rewards, success/failure) |
@@ -335,7 +350,7 @@ None of the reviewed systems closes the harder learning-loop mutations — the o
 - retiring a stale learning for principled reasons
 - judging whether a mined pattern has explanatory reach or is just a recurring local patch
 
-The eight additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). cass-memory's score-based deprecation and `invertToAntiPattern()` mechanism are the closest to principled retirement, but they are mechanical (threshold-driven) rather than explanatory — they retire artifacts that stop working without reasoning about why. None of the fifteen systems demonstrates retirement grounded in explanatory reach, cross-domain abstraction, or open-ended judgment.
+The eight additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). cass-memory's score-based deprecation and `invertToAntiPattern()` mechanism are the closest to principled retirement, but they are mechanical (threshold-driven) rather than explanatory — they retire artifacts that stop working without reasoning about why. None of the sixteen systems demonstrates retirement grounded in explanatory reach, cross-domain abstraction, or open-ended judgment.
 
 The concrete update to [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed symbolic artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
 
@@ -352,6 +367,7 @@ Relevant Notes:
 - [OpenViking](./related-systems/openviking.md) — source-inspected instance: typed session messages, commit-triggered extraction, and multi-tenant user/agent memory spaces
 - [ClawVault](./related-systems/clawvault.md) — source-inspected instance: assistant-turn capture, incremental OpenClaw session observation, scored observation ledgers, and recurrence-based weekly reflection
 - [cass-memory](./related-systems/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
+- [REM](./related-systems/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./related-systems/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
 - [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — source-grounded and code-inspected instance: next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
 - [Reflexion](./related-systems/reflexion.md) — source-inspected instance: early verbal reinforcement loop with rolling reflection buffer and bounded retry scope

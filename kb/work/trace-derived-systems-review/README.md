@@ -23,6 +23,10 @@ This workshop holds the **execution packets** for those candidates so the work c
 5. **Voyager** — reusable skill library learned from iterative trajectories; different domain, same trace-to-artifact shape
 6. **Agent-R** — failure/correction traces turned into iterative self-training; strongest weight-learning addition in this queue
 
+## In evaluation (review exists, needs trace-derived placement)
+
+7. **REM** — four-database episodic memory with LLM consolidation from episodes to scored semantic facts; review exists, needs trace-derived placement assessment
+
 ## Parked but likely worth a later pass
 
 - Re-ReST
@@ -48,3 +52,4 @@ This workshop holds the **execution packets** for those candidates so the work c
 - [instructions-expel-review.md](./instructions-expel-review.md)
 - [instructions-voyager-review.md](./instructions-voyager-review.md)
 - [instructions-agent-r-review.md](./instructions-agent-r-review.md)
+- [instructions-rem-review.md](./instructions-rem-review.md)
