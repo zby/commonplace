@@ -1,6 +1,6 @@
 ---
 name: review-related-system
-description: Write a related-system review from a GitHub repository. Accepts `owner/repo` or a full `https://github.com/owner/repo` URL, clones into `./related-systems/`, writes the review in `kb/notes/related-systems/`, then runs semantic review and `/validate`.
+description: Write a related-system review from a GitHub repository. Accepts `owner/repo` or a full `https://github.com/owner/repo` URL, clones into `./related-systems/`, writes the review in `kb/notes/related-systems/`, then runs the semantic gate bundle and `/validate`.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -58,7 +58,7 @@ Read these files before drafting:
 - `kb/instructions/WRITING.md`
 - `kb/notes/types/related-system.md`
 - `kb/notes/related-systems/README.md`
-- `kb/instructions/semantic-review.md`
+- `kb/instructions/run-review-bundle-on-note.md`
 
 Also read 1-2 existing reviews in `kb/notes/related-systems/` to match local style and comparison depth.
 
@@ -139,7 +139,9 @@ Keep the edit minimal and specific.
 
 ## Step 8: Run Semantic Review as a QA Pass
 
-Run the procedure from `kb/instructions/semantic-review.md` on the review note you just wrote.
+Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the review note you just wrote, using the `semantic` bundle:
+
+> Run `kb/instructions/run-review-bundle-on-note.md` on `{note_path}` for gates: `semantic`
 
 Treat it as a read-only QA loop:
 
@@ -166,7 +168,7 @@ Report:
 - repo cloned or reused
 - review path
 - whether the curated index changed
-- semantic-review outcome (warnings/info if any)
+- semantic gate bundle outcome (warnings/info if any)
 - final `/validate` result
 
 ## Critical Constraints
@@ -177,7 +179,7 @@ Report:
 - write the review into `kb/notes/related-systems/`
 - use the `related-system` template
 - ground claims in repo code/docs, not just project marketing
-- run semantic review before final validation
+- run semantic gate bundle before final validation
 - finish with `/validate`
 
 **Never:**
