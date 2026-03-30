@@ -53,7 +53,7 @@ while not satisfied(K):
 
 Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem (the scheduler must merge or arbitrate when parallel results interact), but not the core structure — `select` is still symbolic code assembling prompts from `K`.
 
-Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. This is not `select` invoking an LLM call internally; it is the loop doing two iterations (one to plan, one to act on the plan). Hierarchical decomposition is therefore not a separate mechanism but a pattern of use.
+Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. This is not `select` invoking an LLM call internally; it is the loop doing two iterations (one to plan, one to act on the plan). Hierarchical decomposition is therefore not a separate mechanism but a pattern of use. More generally, [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — standard composition patterns (sequential phases, map, filter, conditionals) all desugar trivially into this loop, preserving its invariants by construction.
 
 ## What makes selection hard
 
@@ -67,42 +67,29 @@ The `select` function is where the optimisation lives. The first problem is that
 
 ## The canonical note-selection example
 
-Suppose the task is: given many notes, find the relevant ones and write an analysis. The full set of notes does not fit in one context window.
+Suppose the task is: given many notes, find the ones relevant to a question and write an analysis. The full set of notes does not fit in one context window, but the relevant subset does.
 
 Traced through the select/call loop:
 
 ```
-K = {goal: "analyse notes", notes: [n₁ ... nₖ]}
+K = {goal: "what are the main failure modes of multi-agent systems?",
+     notes: [n₁ ... nₖ]}
 
-# step 1: notes exceed the synthesis budget — planning call to decompose
-P = select(K)  →  "decompose this goal"
-r = call(P)    →  "filter each note for relevance, then synthesise"
-K = K + r
+def select(K):
+    unlabeled = [nᵢ for nᵢ in K.notes if nᵢ not yet labeled]
+    if unlabeled:
+        return "[unlabeled[0]] --- Our goal is to answer the question: [goal]. Is the note above relevant to this goal?"
+    else:
+        relevant = [nᵢ for nᵢ in K.notes where nᵢ marked relevant]
+        return "[concat(relevant)] --- Answer the question: [goal]"
 
-# step 2: scheduler loops over filter sub-goals (symbolic)
-for i in 1..k:
-    P = select(K)  →  prompt with nᵢ: "relevant? extract claims"
-    r = call(P)    →  {nᵢ: relevant/not, claims: [...]}
+while not satisfied(K):
+    P = select(K)
+    r = call(P)
     K = K + r
-
-# step 3: scheduler collects relevant notes (symbolic)
-relevant = [nᵢ for nᵢ in K where nᵢ marked relevant]
-
-if ||relevant||_synthesis ≤ M:
-    # step 4a: synthesis call
-    P = select(K)  →  synthesis prompt over relevant notes
-    r = call(P)    →  final analysis
-else:
-    # step 4b: cluster, summarise per cluster, then synthesise
-    for each cluster:
-        P = select(K)  →  summarise prompt for cluster
-        r = call(P)    →  cluster summary
-        K = K + r
-    P = select(K)  →  synthesis prompt over cluster summaries
-    r = call(P)    →  final analysis
 ```
 
-The symbolic scheduler handles the loop, the collection, and the branching — all deterministic. LLM calls handle only the semantic judgments: relevance filtering, summarisation, synthesis. Several [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) generalise from this pattern.
+All the symbolic work — the loop over notes, the relevance filtering, the concatenation — lives inside `select`. The outer structure is exactly the abstract select/call loop. Several [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) generalise from this pattern.
 
 ## Realising the model with SDKs and tool calling
 
