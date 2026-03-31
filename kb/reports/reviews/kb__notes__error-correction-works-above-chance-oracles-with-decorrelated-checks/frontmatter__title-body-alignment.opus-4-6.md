@@ -1,0 +1,1 @@
+pass — The body directly establishes both conditions in the title: the "above-chance oracle" condition is formalized as TPR > FPR with a scaling law, and the "decorrelated checks" condition is developed with empirical grounding (Lampinen et al. content effects) and concrete strategies. The title is a precise summary of what the body argues.

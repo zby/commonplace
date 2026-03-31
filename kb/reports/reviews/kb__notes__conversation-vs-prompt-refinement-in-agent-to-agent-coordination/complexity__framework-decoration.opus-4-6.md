@@ -1,0 +1,1 @@
+**Pass.** The note contains no tables, taxonomies, or formal frameworks. The three-option list (conversational Q&A, prompt refinement, hybrid) at the top is a minimal enumeration of design choices that the rest of the note analyzes, not a decorative classification.

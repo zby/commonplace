@@ -1,0 +1,3 @@
+PASS
+
+The note's own frameworks are minimal — the runtime-vs-build-time distinction and the injection scope / graceful absence patterns. These are presented as design recommendations grounded in a stated cost model (indirection overhead), not as universal truths. "Build-time generation is the right choice" is assertive but backed by the preceding cost analysis. No quantitative claims without evidence.

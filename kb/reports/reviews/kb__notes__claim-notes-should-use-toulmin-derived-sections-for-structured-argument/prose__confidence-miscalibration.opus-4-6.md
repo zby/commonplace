@@ -1,0 +1,3 @@
+INFO
+
+The Toulmin framework is properly sourced (Purdue OWL reference). The note's own contribution — mapping KB conventions to Toulmin — is presented as observation ("three independent threads arrived at the same shape") rather than discovery of a universal truth. The claim "30 of 62 notes (48%) currently carry has-claim" is stated as fact; if the count was accurate at writing time, this is fine, though it will become stale. The Caveats section hedges appropriately ("the type is experimental"). The "5-10" estimate for promotable notes is explicitly qualified as an estimate.

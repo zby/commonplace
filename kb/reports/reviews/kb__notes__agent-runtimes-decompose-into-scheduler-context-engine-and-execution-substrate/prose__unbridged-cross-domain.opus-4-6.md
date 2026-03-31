@@ -1,0 +1,3 @@
+PASS
+
+The cybernetics framing ("sensors, actuators, and feedback loops") is a cross-domain analogy. The bridge is provided: "That language cuts across all three components but especially clarifies the scheduler/substrate interface: the scheduler reads state from the substrate and writes decisions back to it." The mechanism is identified (feedback loop between reading state and writing decisions), making the cross-domain mapping explicit rather than decorative.

@@ -1,0 +1,7 @@
+- "constraining" and "relaxing" are the central KB-framework terms used throughout the Constraining and Relaxing section. "Constraining" is defined in a linked definitions note ([constraining](./definitions/constraining.md)), and the note links to it. Per gate rules, terms defined in `kb/notes/definitions/` when the note links to the definition are excepted. The note also provides inline explanation: "Replace an LLM component with a deterministic one." This is handled correctly.
+
+- "semantic underspecification" / "execution indeterminism" are introduced early with full inline definitions in the Two Distinct Phenomena section. Both are defined before being used. These terms recur many times across the note but each reuse is consistent with the opening definitions, and the note is structured so that the definitions appear at the top of the relevant section before all subsequent uses. Pass.
+
+- "spec-to-program projection" is introduced with an explanatory header and a code-block illustration. The concept is defined inline before being reused. Pass.
+
+- "oracle-backed selector" appears in the Relevant Notes section for "agent orchestration needs coordination guarantees": "Without an adjudication primitive — voting, verification, or an oracle-backed selector." This phrase occurs in the Relevant Notes, not the main body, and in a quote from another note. Not a jargon-persistence issue for this note.

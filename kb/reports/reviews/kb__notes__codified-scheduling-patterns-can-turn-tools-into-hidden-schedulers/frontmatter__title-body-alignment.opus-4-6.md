@@ -1,0 +1,1 @@
+pass. The body supports the title: it distinguishes capability patterns (which fit in tools) from scheduling patterns (which describe what should happen next), explains why embedding scheduling in tools creates a hidden scheduler, and notes when this becomes a problem. The note is short and tight with no scope drift.

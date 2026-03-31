@@ -1,0 +1,1 @@
+**pass** The body delivers exactly what the title promises — a structured account of why notes have types, covering all six roles with links to the notes that develop each role further. The note correctly identifies itself as a context-and-links page and stays within that scope. No scope or claim drift detected.

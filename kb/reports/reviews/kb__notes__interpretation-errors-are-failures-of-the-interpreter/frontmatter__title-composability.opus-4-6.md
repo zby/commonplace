@@ -1,0 +1,1 @@
+pass. The title functions well as a prose fragment: "since interpretation errors are failures of the interpreter, narrowing the spec cannot fix them — only error detection and correction can." The subject-predicate structure is clean and slots naturally into causal or contrastive sentences without awkward grammar.

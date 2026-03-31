@@ -1,0 +1,1 @@
+**pass** The title works as a linkable fragment: "because the chat-history model trades context efficiency for implementation simplicity, systems that mature past the exploratory phase tend to replace transcript inheritance with task-shaped handoff artifacts." The tradeoff framing is clean and the subject is specific enough to carry argumentative weight in linking prose.

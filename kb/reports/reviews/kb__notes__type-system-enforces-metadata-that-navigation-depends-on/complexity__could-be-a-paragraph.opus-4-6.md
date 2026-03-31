@@ -1,0 +1,1 @@
+**Pass.** The note is already one paragraph. It carries exactly one non-obvious claim (enforcement is what makes descriptions exist, not mere convention) with a library-catalogue analogy to make it concrete. The note is at the right scale: compact, single-claim, no extraneous structure. There is nothing to flag here.

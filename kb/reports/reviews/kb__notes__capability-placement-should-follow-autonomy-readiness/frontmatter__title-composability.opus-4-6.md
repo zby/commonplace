@@ -1,0 +1,1 @@
+pass. The title works naturally as a prose fragment: "since capability placement should follow autonomy readiness, AGENTS.md should not carry capability inventories." The imperative-claim form slots cleanly into "because" and "since" constructions without grammatical strain.

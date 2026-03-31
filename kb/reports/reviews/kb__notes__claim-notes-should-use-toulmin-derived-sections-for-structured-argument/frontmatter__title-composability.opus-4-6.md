@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since claim notes should use Toulmin-derived sections for structured argument, a structured-claim type separate from the general note type is warranted." The prescriptive form slots naturally into "because" and "since" constructions without grammatical awkwardness.

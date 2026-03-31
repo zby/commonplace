@@ -1,0 +1,1 @@
+**Pass.** The note has no sections — it is three paragraphs with no headers. The single claim (structured output is easier to review because it decomposes holistic judgment into focused checks) is presented without section inflation.

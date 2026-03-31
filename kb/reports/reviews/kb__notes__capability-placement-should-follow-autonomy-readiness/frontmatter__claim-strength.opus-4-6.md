@@ -1,0 +1,1 @@
+pass. The title is contestable — someone could reasonably argue that capability placement should follow discoverability, frequency of use, or complexity rather than autonomy readiness. The note commits to autonomy readiness as the organizing variable, which is a design choice others could challenge with alternatives.

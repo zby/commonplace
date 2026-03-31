@@ -1,0 +1,5 @@
+"Rabanser et al." is introduced as "Rabanser et al. confirm this empirically" with a link to the source. The note never states inline what the study is (paper title, venue, year, or brief characterization). The Relevant Notes entry calls it "Rabanser et al. reliability study" but that description doesn't appear at the point of first use. The link title "towards-a-science-of-ai-agent-reliability" is the closest proxy, but it appears only in the link target path, not as inline text. Recommend adding a brief inline identification on first mention: e.g. "Rabanser et al.'s reliability study" — but using only information stated in the note or its linked source.
+
+"MAKER" is introduced as "The MAKER paper achieves zero errors over a million steps." A link is provided. No inline identification of what MAKER is (a system, a framework, a paper). Recommend adding a brief inline gloss on first mention. Do not fabricate — only use information from the linked source.
+
+"ABC: Agent Behavioral Contracts" appears only in the Relevant Notes section and is not used in the body. No inline identification issue in the body itself.

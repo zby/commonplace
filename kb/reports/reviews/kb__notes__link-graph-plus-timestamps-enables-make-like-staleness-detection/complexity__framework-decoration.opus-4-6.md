@@ -1,0 +1,1 @@
+Pass. The note contains no tables, taxonomies, or formal frameworks. The three-step mechanism is presented as a numbered algorithm, which is appropriate for a procedural description. No decorative structure is present.

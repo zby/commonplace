@@ -1,0 +1,5 @@
+"Satisficing" appears in the table row for attention economics ("Satisficing, filtering") with no inline definition or gloss. A reader unfamiliar with Simon's bounded rationality work would not know this means choosing an option that is good enough rather than optimal. Add a brief parenthetical: "Satisficing (choosing 'good enough' over optimal), filtering".
+
+"SECI cycle" in "the SECI cycle assumes tacit-to-explicit conversion between humans" is an unexpanded acronym. The reader has no way to know it stands for Socialization-Externalization-Combination-Internalization without prior knowledge of Nonaka and Takeuchi. Expand on first use or replace with a plain description like "Nonaka and Takeuchi's knowledge-conversion cycle (tacit-to-explicit and back)."
+
+"Facet independence, hospitality" in "whether Ranganathan's specific design principles (facet independence, hospitality) improve agent retrieval" are Ranganathan-specific terms used without gloss. A reader unfamiliar with faceted classification theory would not know what "hospitality" means in this context (the ability to add new terms without restructuring). Brief parentheticals would suffice.

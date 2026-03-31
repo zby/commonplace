@@ -1,0 +1,5 @@
+"Matuschak" is mentioned in the Prior work section — "Evergreen notes (Matuschak)" — without identifying who Matuschak is. Suggested fix: "Evergreen notes (Andy Matuschak, researcher and toolmaker)" or similar, if that information is available from linked sources.
+
+"Luhmann" is mentioned — "Luhmann used precise descriptive titles" — without identifying who Luhmann is or why his practice is relevant. Suggested fix: "Niklas Luhmann (sociologist who developed the Zettelkasten method)" or similar.
+
+"arscontexta" appears twice — "came to us via arscontexta" and in the source line — without saying what it is. The GitHub link suggests it is a project or methodology, but the note does not identify it. Suggested fix: on first mention, add a brief descriptor such as "arscontexta (an agentic note-taking methodology project)" if that matches what the linked source describes.

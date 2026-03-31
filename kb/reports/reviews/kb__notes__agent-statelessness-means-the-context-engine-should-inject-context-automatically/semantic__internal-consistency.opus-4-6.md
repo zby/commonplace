@@ -1,62 +1,21 @@
-# Internal Consistency
+Key claims by section:
 
-**Note:** `kb/notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md`
+- **Intro**: Agents can't carry definitions between reads; remedy is automatic context injection.
+- **Evidence/Definitions**: Definitions are the cleanest case (small, stable, referential, once-per-session). A `definition` type would enable this.
+- **Beyond definitions**: Four injection candidates with different triggers.
+- **Reasoning**: Loading hierarchy extended with "on reference" layer.
+- **Caveats**: Requires own runtime, context budget, staleness, granularity, discovery.
 
-## Checks performed
+---
 
-### 1. Open mechanism vs. specific proposal
+**Pairwise contradiction: none found**
 
-**Claim A (line 15):** "How the context engine identifies what to inject is an open design question."
+- "The claim here is about the need for injection, not the mechanism" (intro) vs. detailed mechanism discussion (table, hierarchy, definition type). INFO — the note's stated scope (need, not mechanism) is narrower than its actual content. This is common in speculative notes and isn't a contradiction, but the disclaimer understates the note's actual scope.
+- "Definitions should be loaded once per session" (evidence) vs. "the agent has the stale version" if updated mid-session (caveats). Consistent — the once-per-session property is both a benefit and a staleness risk, and the note acknowledges both.
+- "Definitions are stable enough that [staleness] is unlikely" (caveats) vs. extending injection to ADRs and specs (beyond definitions). Consistent — the note explicitly notes staleness is sharper for less-stable types.
 
-**Claim B (lines 32-37):** Proposes a `definition` type as the machine-readable signal for auto-injection.
+**Definition drift: none observed**
 
-**Assessment:** These are consistent. The note distinguishes the *need* for injection (the claim) from the *mechanism* (design exploration). Line 15 explicitly says "the claim here is about the need for injection, not the mechanism." The Evidence section explores a concrete mechanism without asserting it's the final answer. No contradiction.
+"Auto-injection," "context engine," "on reference," "definition type" — all consistent. "Type" is used in two senses (document type vs. injection trigger) but context disambiguates.
 
-### 2. Current state vs. proposed state
-
-**Claim C (line 11):** "An agent that reads a note linking to codification doesn't know the definition unless it follows the link."
-
-**Claim D (line 57):** "The agent doesn't need to know the definition exists; the injection mechanism ensures it arrives."
-
-**Assessment:** Consistent. C describes the current state (without injection), D describes the proposed state (with injection). The temporal framing is clear — the note argues from a problem (C) to a solution (D).
-
-### 3. Hierarchy extension consistency
-
-**Original hierarchy (line 54):** CLAUDE.md (always) → skill descriptions (always) → skill bodies (on invoke) → task-specific docs (on demand).
-
-**Extended hierarchy (lines 58-63):** Always → On reference → On invoke → On demand.
-
-**Assessment:** Consistent. The extension adds a tier between Always and On invoke without redefining the existing tiers. The mapping is preserved: CLAUDE.md and skill descriptions remain at "Always," skill bodies remain at "On invoke."
-
-### 4. Custom runtime requirement vs. existing-surface references
-
-**Claim E (line 66):** "Requires our own agent runtime... Auto-injection requires an agent runtime with a context engine that parses loaded documents."
-
-**Claim F (line 81, link annotation):** "the two always-loaded surfaces (CLAUDE.md vs skill descriptions) are both candidates for automatic injection."
-
-**Assessment:** The caveat (E) says auto-injection can't happen on Claude Code's runtime because there's no interception point. The link annotation (F) references surfaces that exist on Claude Code's runtime. This creates a mild tension: the note discusses always-loaded surfaces as "candidates for injection" while simultaneously acknowledging the runtime that hosts those surfaces can't support injection.
-
-The resolution is that the note envisions a custom runtime that would reimplement or extend these surfaces. But the annotation doesn't signal this — it reads as if the existing surfaces could participate in injection as-is. **INFO — the link annotation for the always-loaded-context note doesn't acknowledge the runtime caveat, creating a minor tension with the Caveats section.**
-
-### 5. Definition drift check
-
-- **"Context engine"** — used consistently throughout to mean the component that loads documents and manages context.
-- **"Auto-injection" / "automatic context injection"** — used interchangeably. No drift.
-- **"On reference"** — introduced at line 56, used consistently in the hierarchy.
-- **"Referential" vs "argumentative"** — used in two places (lines 25 and 15's surrounding context). Meaning is stable: referential = "as defined in" links; argumentative = links that support or counter claims.
-
-No definition drift detected.
-
-### 6. Summary/body alignment
-
-**Title claim:** "Agent statelessness means the context engine should inject context automatically."
-
-**Body development:** The Evidence section argues definitions are the cleanest case and proposes the `definition` type. The Reasoning section extends the loading hierarchy. The Caveats section identifies prerequisites (custom runtime, context budget).
-
-The title asserts a *should* — a normative claim. The body provides the argument for why (statelessness → can't carry context → engine must provide it). The Caveats section qualifies the *should* with implementation constraints but doesn't undermine it. Aligned.
-
-## Summary
-
-No WARNs. One INFO:
-
-1. **INFO:** The link annotation about always-loaded surfaces being "candidates for automatic injection" doesn't acknowledge the custom-runtime requirement stated in Caveats, creating a minor tension between two parts of the note.
+One INFO on scope disclaimer vs. actual content. No WARN, no contradiction, no drift.

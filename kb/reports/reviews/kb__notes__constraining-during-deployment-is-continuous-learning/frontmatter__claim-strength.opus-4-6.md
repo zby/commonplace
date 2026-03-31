@@ -1,0 +1,1 @@
+pass. An informed reader — especially one steeped in ML orthodoxy — could directly contest this: they could argue constraining is engineering discipline, not learning in the formal sense, or that the analogy to weight updates misrepresents what "continuous learning" means in the field. The title takes a position that invites opposition.

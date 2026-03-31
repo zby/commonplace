@@ -1,0 +1,1 @@
+**pass** The title composes cleanly: "since unit testing LLM instructions requires mocking the tool boundary, a test suite for skills needs a mock KB state and tool layer that intercepts Read, Write, and Grep calls." The "requires" verb makes the causal direction clear and the subject is specific enough to function as a non-trivial premise.

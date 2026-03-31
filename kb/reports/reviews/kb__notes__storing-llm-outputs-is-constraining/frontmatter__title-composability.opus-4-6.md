@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment: "since storing LLM outputs is constraining, every artifact selection is a learning step." The gerund form ("storing X is Y") is a clean composable shape and links naturally into notes about constraining, artifact management, or deploy-time learning. The title is unambiguous and grammatically fluent in linking contexts.

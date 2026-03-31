@@ -1,0 +1,1 @@
+pass. The body establishes exactly what the title claims: it defines a four-level loading hierarchy, maps specificity to each level, and gives the concrete design rule (CLAUDE.md should not contain task-specific instructions). The body is narrow and focused; no claim or scope drift is present.

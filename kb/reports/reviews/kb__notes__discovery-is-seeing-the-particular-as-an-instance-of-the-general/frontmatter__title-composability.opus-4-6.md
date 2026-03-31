@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since discovery is seeing the particular as an instance of the general, the highest-value KB act is naming the mechanism, not linking the instances." The construction is somewhat dense but grammatically clean and reads naturally as a dependent clause.

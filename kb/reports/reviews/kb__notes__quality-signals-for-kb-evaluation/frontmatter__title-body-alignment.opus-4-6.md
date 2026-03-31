@@ -1,0 +1,1 @@
+pass. The body delivers exactly what the title names — a catalogue of quality signals across multiple categories (static graph topology, content proxies, metamorphic relations, compound signals, LLM-hybrid, agent-centric navigability). The scope is consistently "signals for evaluation" throughout, with no drift into implementation or unrelated methodology.

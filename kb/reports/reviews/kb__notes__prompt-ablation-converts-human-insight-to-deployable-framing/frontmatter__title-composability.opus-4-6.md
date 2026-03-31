@@ -1,0 +1,1 @@
+pass. The title slots naturally into prose: "since prompt ablation converts human insight into deployable agent framing, the winning framing from the curiosity-prompts experiment can be encoded directly as a review step" is fluent. The verb-object structure makes it stable as an inline causal premise.

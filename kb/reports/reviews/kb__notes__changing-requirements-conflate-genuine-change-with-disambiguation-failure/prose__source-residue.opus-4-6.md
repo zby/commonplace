@@ -1,0 +1,3 @@
+## PASS
+
+The note's claimed generality is about software requirements and agile methodology. The body stays in that domain for its core argument (cascading interpretation problem, two kinds of changing requirements, short iterations as propagation bounds). The AI/LLM connections in "Implications for deploy-time learning" are explicitly marked as an extension ("Deploy-time learning extends agile's loop to human-AI systems") and framed as a domain where the problem is "amplified," not as the original source of the insight. No domain-specific vocabulary from the AI/LLM domain leaks into the core sections.

@@ -1,0 +1,3 @@
+PASS
+
+The entire note is an explicit cross-domain analogy (agile software development mapped to deploy-time learning), and the bridge is the note's primary contribution. The shared mechanism is stated clearly: "co-evolving prose and code" through iterative deployment. The divergence is also bridged explicitly: agile assumes code wins eventually; deploy-time learning treats the hybrid as permanent. No unbridged cross-domain references.

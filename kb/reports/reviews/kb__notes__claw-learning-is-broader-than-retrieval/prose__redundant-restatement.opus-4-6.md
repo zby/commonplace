@@ -1,0 +1,3 @@
+WARN
+
+The "retrieval frame isn't wrong, just partial" section restates what the preceding sections have already established — that retrieval is one layer of a broader system. The first paragraph ("This note doesn't invalidate that — it argues that retrieval learning is one layer of a larger system") is a summary of the note's own argument that could be deleted without loss. The note has already made this point through its structure; restating it as a concluding summary adds no new argument.

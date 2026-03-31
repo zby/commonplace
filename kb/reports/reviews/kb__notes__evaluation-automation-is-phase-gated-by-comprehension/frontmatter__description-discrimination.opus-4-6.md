@@ -1,0 +1,1 @@
+**pass** The description adds clear mechanism and implication beyond the title: it names the specific preconditions (manual error analysis, judge calibration) and states the consequence of skipping them (automation improves score rather than behavior). This is retrievably distinct from the title, which names the pattern without explaining the mechanism.

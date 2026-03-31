@@ -1,0 +1,1 @@
+pass. The description adds the mechanism (three independent threads converging), the scope implication (separating claim-titled notes from fully-argued claims), and the type distinction (any note vs. the structured-claim type). This goes beyond the title's prescription and distinguishes this note from adjacent notes about title-as-claim, argument structure, or document types.

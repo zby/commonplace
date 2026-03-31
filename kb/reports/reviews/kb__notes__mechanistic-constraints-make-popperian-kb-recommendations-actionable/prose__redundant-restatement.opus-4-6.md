@@ -1,0 +1,3 @@
+INFO
+
+The opening paragraph restates the title's claim and previews the note's structure ("asks whether... and derives three specific practices"). This is setup, not redundant restatement -- it clarifies scope and method. Each section's opening sentence advances the argument rather than restating what was already said. The claim/interpretation distinction in section 1 is new content, not restatement.

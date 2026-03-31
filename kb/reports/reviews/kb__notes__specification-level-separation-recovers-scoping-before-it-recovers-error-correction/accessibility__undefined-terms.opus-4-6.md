@@ -1,0 +1,1 @@
+"Frame boundaries" in "create cleaner frame boundaries" is used without definition. The term could mean several things (stack frames, attention frames, context frames). The reader has no way to determine the intended meaning from context alone. Replace with a more specific phrase or add a brief gloss.

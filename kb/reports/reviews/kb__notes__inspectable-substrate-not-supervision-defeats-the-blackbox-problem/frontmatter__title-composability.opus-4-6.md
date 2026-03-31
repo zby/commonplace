@@ -1,0 +1,1 @@
+pass. The title is long but grammatically composable: "since inspectable substrate, not supervision, defeats the blackbox problem, we can automate code review without human oversight" reads naturally. The noun-phrase subject with an embedded contrast ("not supervision") is slightly dense but not awkward enough to impede linking prose.

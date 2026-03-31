@@ -1,0 +1,1 @@
+pass. The description adds Simon's grounding definition, names the two capacity axes (reach via accumulation vs. the reliability/speed/cost compound), and distinguishes facts from theories by reach. These specifics are absent from the title and give a retrieval agent clear signals: this is about multi-dimensional capacity decomposition, not general learning philosophy.

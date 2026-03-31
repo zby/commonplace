@@ -1,0 +1,1 @@
+pass. The body delivers exactly what the title scopes: a set of decomposition heuristics for bounded-context scheduling, with an optimization problem statement, the working heuristics, and empirical grounding from ConvexBench and MAKER. No drift — the body does not expand to cover general agent orchestration or narrow to a single heuristic.

@@ -1,0 +1,3 @@
+PASS
+
+The five-dimension framework (scheduler placement, persistence horizon, coordination form, coordination guarantee, boundary-return artifact) is the note's own taxonomy. The note hedges appropriately: "This should stay an open map, not a closed classification. The current dimensions are salient, not final." The framework is presented as a decomposition proposal, not established fact. No quantitative claims appear.

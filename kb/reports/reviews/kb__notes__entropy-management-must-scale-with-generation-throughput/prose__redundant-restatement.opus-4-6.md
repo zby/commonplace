@@ -1,0 +1,3 @@
+INFO
+
+The opening paragraph and the paragraph beginning "This creates a scaling requirement" cover similar ground -- the second restates the core claim more precisely. However, the first paragraph establishes the mechanism (pattern amplification) while the second states the consequence (proportional throughput requirement). This is setup-then-claim, not redundant restatement. The second paragraph could not be deleted without losing the explicit proportionality claim.

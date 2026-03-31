@@ -1,0 +1,1 @@
+pass. "Bounded-context orchestration model" is a topical title naming a formal model, not a claim. This is valid — definitional and framework notes don't require contestable claim titles. The note is a multi-claim spec that formalizes the select/call loop, explains why selection is hard, and distinguishes the clean model from degraded variants.

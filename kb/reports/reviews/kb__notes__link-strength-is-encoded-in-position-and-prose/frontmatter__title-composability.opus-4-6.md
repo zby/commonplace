@@ -1,0 +1,1 @@
+pass. The title composes naturally in linking prose: "since link strength is encoded in position and prose, a parser can infer a weighted link graph without requiring authors to annotate strength explicitly." The subject-predicate construction is clean and works well in causal and consequential sentences.

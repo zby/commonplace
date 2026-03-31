@@ -1,0 +1,1 @@
+Pass. The note uses a numbered list rather than a table or taxonomy. No frameworks are present. The list is a concrete four-level hierarchy rather than a decorative classification scheme, and its content (what goes where and why) cannot be replaced by a single sentence without losing the actionable specifics.

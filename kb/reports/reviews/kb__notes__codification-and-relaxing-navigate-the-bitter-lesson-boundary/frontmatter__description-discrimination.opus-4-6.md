@@ -1,0 +1,1 @@
+pass. The description adds the epistemic mechanism (can't identify which side you're on until scale tests it), the practical consequence (systems must codify and relax), and the spec-mining note (avoiding the vision-feature failure mode). These specifics distinguish this note from the bitter-lesson-boundary note it builds on and from generic notes about codification.

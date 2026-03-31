@@ -1,9 +1,12 @@
 ## prose/anthropomorphic-framing
 
-**Result: PASS**
+**Result: WARN**
 
-The note uses "agent" throughout as a technical term for the software entity that reads and writes the KB -- this is intentional domain vocabulary, not anthropomorphic attribution. Phrases like "An agent lands on a note," "agents must know to run the script," and "Agents add backlinks manually" describe operational behavior of the system's actors.
+Most agent-related language ("an agent reading," "agents must know to run it," "agents add backlinks") is conventional metonymy for software system behavior — not anthropomorphism.
 
-One minor personification: "no note knows who links TO it." This is standard shorthand for "no note contains information about its inbound links" and reads naturally without implying cognition.
+Two instances cross into attributing mental states to artifacts:
 
-No changes needed.
+1. **"no note knows who links TO it"** (§ The gap) — "knows" implies cognition. More precise: "no note contains information about its inbound links."
+2. **"agents have to think to run it"** (§ The gap) — "think" attributes deliberation. More precise: "agents must be prompted to run it" or "agents must know to run it" (conventional metonymy for "be configured/instructed").
+
+The rest of the note's agent language is standard technical shorthand and reads cleanly.

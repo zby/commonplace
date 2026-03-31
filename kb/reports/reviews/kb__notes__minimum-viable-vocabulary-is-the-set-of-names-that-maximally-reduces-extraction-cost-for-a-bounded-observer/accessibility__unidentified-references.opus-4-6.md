@@ -1,0 +1,7 @@
+"Kim (2026)" is introduced in the second paragraph: "Kim (2026) calls a curated term list that closes enough of this gap a 'minimum viable ontology'." The note links to the source via the Sources section but does not say who Kim is inline (whether this is a researcher, practitioner, or other). The note should identify Kim briefly on first mention. The source link title ("Minimum Viable Ontology tweet thread (Kim, 2026)") in the Sources section suggests this is a tweet thread, but that information is only in the footer, not at the point of first use. Add a brief inline gloss at first mention, e.g., "Kim (2026), in a practitioner tweet thread, calls..."
+
+"Meyer & Land" appear in the Open Questions section: "Does the pedagogical literature on threshold concepts (Meyer & Land) provide selection criteria..." No identification of who Meyer and Land are or in what context they work. The note should identify them, e.g., "Meyer & Land, educational researchers who coined 'threshold concepts'."
+
+"domainmaps.co" is identified as "Kim's prototype" which is sufficient context. No additional identification needed beyond what is stated.
+
+"epiplexity framework" appears once: "the [epiplexity framework's](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) prequential coding." The link provides a source but no inline identification. The note should say what the epiplexity framework is on first mention, e.g., "the epiplexity framework (an information-theoretic model for computationally bounded observers)."

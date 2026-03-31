@@ -1,0 +1,1 @@
+pass — "Document classification" is a topical title, not a claim title. The note is a definitional spec — it enumerates base types, their structural tests, and a migration table. Topical titles are explicitly valid for multi-claim specs and definitional notes, so the absence of a contestable assertion is not a deficiency here.

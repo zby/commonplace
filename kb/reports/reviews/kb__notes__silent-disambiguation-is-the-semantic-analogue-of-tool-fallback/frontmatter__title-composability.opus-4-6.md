@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment. "Since silent disambiguation is the semantic analogue of tool fallback, task completion alone cannot distinguish sufficient spec from well-improvised gap" reads naturally. The copular structure ("is the semantic analogue of") enables direct insertion into comparative or consequential framing without rearrangement.

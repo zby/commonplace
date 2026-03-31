@@ -1,0 +1,1 @@
+"AgeMem's 23-49% improvement on task completion comes entirely from storing and retrieving the right facts" — AgeMem is introduced by name with no inline identification. A link is provided but a link does not substitute for inline identification. The note should say what AgeMem is on first mention (e.g., "AgeMem, an agent memory system").

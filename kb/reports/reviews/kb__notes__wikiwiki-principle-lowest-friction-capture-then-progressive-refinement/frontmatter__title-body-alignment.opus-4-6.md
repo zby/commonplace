@@ -1,0 +1,1 @@
+**pass** The body delivers what the title names. It establishes the wikiwiki principle's historical origin, maps it to the type ladder (text → note → structured-claim), explains why refinement-in-place matters for codification to work in practice, and includes appropriate caveats. No scope or claim drift.

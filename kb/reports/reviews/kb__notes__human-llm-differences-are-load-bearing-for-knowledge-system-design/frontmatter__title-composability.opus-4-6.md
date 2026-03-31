@@ -1,0 +1,1 @@
+**pass** The title works as a prose fragment: "since human-LLM differences are load-bearing for knowledge system design, each borrowed human convention must be evaluated individually rather than adopted wholesale." The phrasing is somewhat long but grammatically natural in causal and explanatory contexts.

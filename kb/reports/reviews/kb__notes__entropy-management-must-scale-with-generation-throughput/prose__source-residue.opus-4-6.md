@@ -1,0 +1,3 @@
+PASS
+
+The title claims generality about entropy management and generation throughput. The body draws from two specific domains (codebases and KBs) but both are framed as instances of the general claim, not leaked source vocabulary. "AI slop cleanup" is a direct quote from the source, properly attributed. "Garbage collection for code quality" is similarly quoted. No unframed domain-specific vocabulary.

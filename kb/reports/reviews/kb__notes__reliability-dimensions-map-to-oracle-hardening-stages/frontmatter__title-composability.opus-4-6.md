@@ -1,0 +1,1 @@
+pass. The title works naturally in prose: "since reliability dimensions map to oracle-hardening stages, each dimension can be hardened independently without solving all four at once" is fluent. The active-verb structure ("map to") makes it stable as a causal premise in linking contexts.

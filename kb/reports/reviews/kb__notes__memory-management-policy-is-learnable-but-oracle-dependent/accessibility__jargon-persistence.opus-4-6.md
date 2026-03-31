@@ -1,0 +1,11 @@
+"oracle" is the central KB-framework term in this note. It first appears in the section heading "Why it works: the oracle" with inline definition: "a **clear oracle**: task completion. Did the agent complete the ALFWorld task? Did it answer the HotpotQA question correctly?" It then recurs throughout: "the oracle" (x3), "The first has a training signal. The second doesn't — or at least, not enough of one yet" (paraphrase), "AgeMem confirms the diagnosis... the bottleneck is the oracle," "a task-completion oracle the KB lacks" (frontmatter description). Each later use is intelligible in context — "the oracle" consistently means the evaluation signal, and the reader retains the definition without scrolling back. No issue.
+
+"reach" is a KB-internal term used repeatedly: "without reach," "no reach," "low-reach end," "reach gradient from facts to theories." First definition at introduction: "useful for the immediate context but without [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — they don't transfer to other situations." The gloss "they don't transfer to other situations" is present on first use, and the link provides the full definition. Subsequent uses ("reach gradient from facts to theories," "up the reach gradient") are intelligible. No issue.
+
+"accumulation" is used six times. First appearance: "AgeMem's LTM Add is [accumulation](./learning-is-not-only-about-generality.md) — the most basic learning operation." Subsequent uses ("the same accumulation loop," "Policies participate in the same accumulation loop") remain interpretable as "the most basic learning operation" without re-reading. No issue.
+
+"distillation" appears four times with a link on first use in the body. Each subsequent use ("Policies participate in the same accumulation loop as everything else" doesn't use distillation; the term appears explicitly in STM operations) is clear. No issue.
+
+"split substrate" appears four times after being defined: "AgeMem accepts a substrate split: facts go into a memory store... but the policy for managing them goes into model weights." The phrase remains interpretable in all subsequent uses. No issue.
+
+No jargon-persistence issues found.

@@ -1,0 +1,3 @@
+INFO
+
+The core claim is that Claw learning is broader than retrieval. The "What a Claw actually does" section is well-developed. The "What changes for the learning loop" section — the most important for actionability — is the longest and covers evaluation, knowledge types, document types, and mutation types. The "retrieval frame isn't wrong" section is appropriately brief. The Open Questions section is proportionate. However, the note and its sibling (claw-learning-loops-must-improve-action-capacity-not-just-retrieval) overlap substantially — this one may be a draft superseded by the other.

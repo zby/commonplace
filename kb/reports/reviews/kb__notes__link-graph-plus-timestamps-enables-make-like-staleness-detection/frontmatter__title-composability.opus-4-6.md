@@ -1,0 +1,1 @@
+pass. The title composes naturally: "since link graph plus timestamps enables make-like staleness detection, a KB maintenance script can flag notes for review without requiring any new annotations." The subject-predicate structure is slightly dense but slots cleanly into causal sentences without awkward grammar.

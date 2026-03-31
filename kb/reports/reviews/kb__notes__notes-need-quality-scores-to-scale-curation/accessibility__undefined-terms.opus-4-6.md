@@ -1,0 +1,1 @@
+"qmd" is used on first encounter without any definition or gloss: "When qmd returns semantic search results, scores rerank them so the best notes surface first." The reader cannot tell what qmd is -- a tool, a library, an acronym. Add an inline identification on first use, e.g. "When qmd (the KB's semantic search tool) returns results..."

@@ -1,0 +1,1 @@
+pass. The body establishes what the title claims: it identifies the two navigation modes, explains what metadata each requires (surrounding context for links, titles/descriptions for search), and introduces indexes as a hybrid that needs both. The note is short and tightly scoped; no drift is present.

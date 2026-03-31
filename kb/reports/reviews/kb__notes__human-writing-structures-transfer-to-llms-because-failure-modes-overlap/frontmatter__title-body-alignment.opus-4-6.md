@@ -1,0 +1,1 @@
+**pass** The body directly supports the title's causal claim: it explains the failure-mode overlap argument, provides empirical evidence (Lampinen et al.), names a case where transfer fails (Wason task), and derives the per-convention evaluation methodology from the overlap. No claim or scope drift detected.

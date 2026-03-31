@@ -1,0 +1,1 @@
+pass. The description names the key mechanism (Simon's capacity-change definition), the specific contested assumption (that capacity change requires parameter change), and the implication (durable symbolic artifacts satisfy the definition). These additions give the note a distinct retrieval fingerprint beyond the title's position statement.

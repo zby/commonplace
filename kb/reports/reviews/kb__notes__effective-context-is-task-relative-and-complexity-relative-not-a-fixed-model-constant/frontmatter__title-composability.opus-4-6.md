@@ -1,0 +1,1 @@
+pass — The title is long but grammatically complete and embeds cleanly into prose: "since effective context is task-relative and complexity-relative not a fixed model constant, decomposition decisions must account for prompt shape, not just token count" works without awkwardness. The length is a minor readability burden but not a composability failure.

@@ -1,0 +1,1 @@
+**pass** The title composes naturally: "because the augmentation-automation boundary is discrimination not accuracy, improving aggregate model performance does not automatically enable safe deployment without human review." The subject-predicate form and the contrastive structure ("not accuracy") give linking sentences a clean causal anchor.

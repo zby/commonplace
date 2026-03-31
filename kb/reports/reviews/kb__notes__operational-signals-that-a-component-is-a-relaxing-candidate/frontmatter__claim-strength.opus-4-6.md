@@ -1,0 +1,1 @@
+pass. The title is topical rather than a single contestable claim, which is appropriate here: the note is a multi-signal catalogue (six distinct signals) rather than an argument for one non-obvious point. Topical titles are valid for multi-claim specs and frameworks, and this note functions as a diagnostic framework. The title accurately names the artifact type.

@@ -1,0 +1,3 @@
+- "tool surface" appears twice without definition: "which tool surface to expose" and "alter the next tool surface." This is a KB/agent-framework-specific term. A reader unfamiliar with the term cannot determine from context what "tool surface" means — whether it refers to the set of tools made available to an agent, a specific API surface, or something else. Recommend adding a brief inline gloss on first use: "tool surface (the set of tools made available to the agent for the next step)."
+
+- "orchestration runtime" is used once: "it is an orchestration runtime behind a tool-shaped facade." This is understandable from context — a runtime that orchestrates steps — without needing a formal definition. No flag.

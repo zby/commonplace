@@ -1,0 +1,7 @@
+The term "epiplexity" appears in "the article carries no more [epiplexity](./information-value-is-observer-relative.md) than the original sentence" without any inline definition or gloss. The link target's filename ("information-value-is-observer-relative") hints at the concept but the term itself is opaque. A reader who does not already know this KB-specific term cannot parse the sentence without following the link.
+
+Suggested fix: replace with a plain-language phrase or add an inline gloss, e.g. "the article carries no more information value (relative to the reader) than the original sentence" or "no more epiplexity — observer-relative information value — than the original sentence."
+
+Additionally, "workshop artifacts" and "library artifacts" appear in the Origin section ("vibe-noting produces library artifacts, not workshop artifacts — though at steady state it shifts to workshops") without definition. These are KB-specific vocabulary for temporal work-in-flight documents vs. accumulated durable knowledge. A reader unfamiliar with this KB's layering cannot distinguish the two from context alone.
+
+Suggested fix: add a brief gloss on first use, e.g. "library artifacts (durable accumulated notes)" and "workshop artifacts (temporal work-in-flight documents)."

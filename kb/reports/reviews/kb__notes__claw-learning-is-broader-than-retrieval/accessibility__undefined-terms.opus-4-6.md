@@ -1,0 +1,5 @@
+- "surfacing rate" is used in the Mutation types section: "The 'need more usage' conclusion still holds... The feedback signal is richer but also noisier." In the Open Questions section: "(no direct use)". Actually, "surfacing rate" does not appear in this note directly — the related note `claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md` uses it. No flag for this note.
+
+- "three-space memory model" is referenced in the Open Questions section: "Does the [three-space memory model](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) help here? Knowledge space maps to retrieval, operational space maps to procedures, self space maps to preferences and voice." The sentence immediately explains the three spaces, giving enough context for the reader to follow without needing the linked note. No flag.
+
+- "deploy-time learning" appears in the Relevant Notes: "[deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — grounds: the artifact-accumulation model of learning applies." Not used in the body, only in the notes section. No flag.

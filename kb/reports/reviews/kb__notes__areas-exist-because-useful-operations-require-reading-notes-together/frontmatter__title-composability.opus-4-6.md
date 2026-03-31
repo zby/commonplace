@@ -1,0 +1,1 @@
+pass — The title is composable as a prose fragment. "Since areas exist because useful operations require reading notes together, the size and precision of an area directly affects the cost of orientation" is grammatical and natural. The causal "because" structure integrates well into explanatory sentences in other notes.

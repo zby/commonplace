@@ -1,0 +1,1 @@
+pass. The title is topical, appropriate for a multi-axis tradeoff analysis covering three pointer types against three evaluation dimensions. This is a framework/comparison note, not an argument for a single contestable claim, so a topical title is valid. The tradeoff space (specificity vs. cost vs. reliability) is the subject rather than a single position.

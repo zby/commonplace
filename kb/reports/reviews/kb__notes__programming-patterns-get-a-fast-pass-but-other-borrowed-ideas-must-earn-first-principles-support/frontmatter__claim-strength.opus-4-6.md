@@ -1,0 +1,1 @@
+pass. The claim is contestable: a reasonable alternative position is that all borrowed ideas should face the same evidence bar, or conversely that intuitive resonance is sufficient justification for any idea that seems to fit. The asymmetric adoption gate (fast pass for programming, first-principles requirement for everything else) is a specific and debatable design choice.

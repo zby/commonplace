@@ -2,10 +2,10 @@
 
 **Result: WARN**
 
-Two unsourced specific claims:
+Two specific figures appear without methodology or source:
 
-1. **"referenced by 40+ files"** (paragraph 1, describing `deploy-time-learning-the-missing-middle.md`). No source or method given. If this came from a grep at writing time, it may no longer be accurate. Either drop the specific number ("referenced by many files"), run the count and cite the method ("referenced by 40+ files at time of writing, per `rg` count"), or remove the example file name and keep the scenario generic.
+1. **"referenced by 48 other notes at time of writing"** (§ The gap) — The number is plausible as a grep count and temporally qualified, but the reader cannot reproduce it without knowing what was counted (filename matches? inline links? both?). A parenthetical like "(per `rg 'deploy-time-learning' --glob '*.md'`)" would ground it.
 
-2. **"~16% of notes still lack even outbound Relevant Notes sections"** (option C, cons). No source or method. This is a concrete statistic used to argue that manual discipline fails. Without stating when or how it was measured, the reader cannot evaluate it. Either cite the audit that produced the number, or soften to "a non-trivial fraction of notes."
+2. **"30 of 224 notes (13%) lack even outbound Relevant Notes sections as of 2026-03-27"** (§ Design options, option C) — More complex claim: a count, a denominator, a percentage, and a date. No script or methodology cited. The precision (exact count + percentage + date) implies an authoritative audit, but the reader can't verify it.
 
-Both numbers are used rhetorically -- they support the argument but are not load-bearing enough to require full sourcing. Softening to approximate language would resolve the issue without losing the point.
+Both are internal KB statistics that are in principle verifiable, so the risk is low. But unsupported specificity is worse than omitting the number — if the numbers drift as the KB grows, there's no pointer back to how they were computed. Softening to approximate language or citing the method would resolve both.

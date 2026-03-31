@@ -1,0 +1,1 @@
+pass. "Commonplace architecture" is a concrete artifact name, not a natural-language claim fragment. Artifact names are explicitly exempted from the composability test. It functions well as a link target ("see the commonplace architecture note" or "the commonplace architecture covers...").

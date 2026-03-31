@@ -1,0 +1,1 @@
+pass. The description adds mechanism (durable symbolic artifacts), a distinguishing property bundle (inspectable adaptation across sessions), and the organizing structure (along a verifiability gradient). These three additions specifically distinguish this note from other deploy-time or continuous-learning notes in the KB.

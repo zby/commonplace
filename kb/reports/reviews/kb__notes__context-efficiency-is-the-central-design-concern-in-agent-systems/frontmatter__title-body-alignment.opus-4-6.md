@@ -1,0 +1,1 @@
+pass. The body fully supports the title's claim: it establishes why context is uniquely scarce (unitary channel, no tiers), grounds this in the soft-degradation premise, surveys prior work, and derives a catalog of architectural responses. The scope is exactly "agent systems," which matches. No drift detected.

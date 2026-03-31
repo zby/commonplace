@@ -1,0 +1,3 @@
+"Goodharting on evals" in the failure-mode table uses "Goodharting" without definition or gloss. A reader unfamiliar with Goodhart's law cannot decode it from context alone. The table cell parallel ("Overfitting to spec") helps but does not define the term.
+
+Suggested fix: replace "Goodharting on evals" with "gaming evals (Goodhart's law — optimizing for the metric rather than the goal)" or simply "gaming evals" if the formal name is not needed.

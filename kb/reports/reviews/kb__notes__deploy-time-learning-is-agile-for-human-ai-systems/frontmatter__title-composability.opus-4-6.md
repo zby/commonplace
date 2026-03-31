@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since deploy-time learning is agile for human-AI systems, teams practicing it should expect the same coordination and feedback dynamics that agile introduced." The metaphorical identity construction ("X is Y for Z") is grammatically clean and common in linking contexts.

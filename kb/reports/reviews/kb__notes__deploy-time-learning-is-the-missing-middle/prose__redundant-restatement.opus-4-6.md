@@ -1,0 +1,3 @@
+INFO
+
+The paragraph following the verifiability gradient table ("Moving down the table, verification gets cheaper and sharper...") restates what the table already shows. However, it adds the concrete comparison ("a memory note like 'remember to validate emails' is none of those things") which grounds the abstraction. The closing paragraph ("Deploy-time learning is a taxonomy... and a verifiability gradient...") is a summary restatement of the entire note. As a closing summary it serves a different argumentative role (wrap-up vs. development), so this is INFO rather than WARN.

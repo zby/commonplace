@@ -1,0 +1,1 @@
+pass — The body directly establishes the title's claim. It explains the mechanism (optionality preservation), gives the kitchen example, provides a four-step algorithm, and maps the principle to agent workflow specifics (hard constraints first, rhetorical choices last). There is no drift — the note establishes exactly what the title promises.

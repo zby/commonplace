@@ -1,0 +1,3 @@
+"commonplace" is used as a proper noun twice ("commonplace itself", "Universal (from commonplace)") without identifying what it is. A reader encountering this note without prior context would not know that "commonplace" is the name of this knowledge base framework/repository.
+
+Suggested fix: on first mention, identify it — e.g., "This gap doesn't surface in commonplace (this framework) itself" or "in commonplace, the framework you're reading now."

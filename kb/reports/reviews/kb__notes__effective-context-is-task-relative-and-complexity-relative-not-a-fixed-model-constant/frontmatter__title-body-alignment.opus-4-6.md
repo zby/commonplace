@@ -1,0 +1,1 @@
+pass — The body establishes exactly what the title claims: three independent empirical sources support that effective context varies by task type, compositional complexity, and irrelevant context load, and the synthesis rejects "fixed model constant" as an adequate abstraction. The caveats are honest about scope without retreating from the core claim.

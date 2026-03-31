@@ -1,0 +1,3 @@
+PASS
+
+No bridge paragraphs duplicate what follows. The paragraph before "The design implication" ends with the third failure-mode subsection (Amplification), which provides its own analysis rather than previewing the table. The paragraph before "The shared question" is a brief clarification that the fourth row is different in kind — it sets up the synthesis without enumerating what the next section says.

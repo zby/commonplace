@@ -1,0 +1,5 @@
+- "Finzi et al., 2026" is cited as "(Finzi et al., 2026)" with a link. The note does not say what the paper is about beyond the inline description already given. The description is adequate: "The epiplexity framework ([Finzi et al., 2026]...) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds)." The paper is identified by what it does; no further identification needed.
+
+- "Ebrahimi et al., 2026" is cited similarly and identified by what it shows: "The induction bias results ([Ebrahimi et al., 2026]...) provide evidence from the other direction: for calculator-class state tracking, architectural induction bias..." Adequate.
+
+- "FlashAttention" is mentioned without identification: "FlashAttention is hand-crafted algorithmic optimization embedded within learned architectures." The note does not say what FlashAttention is beyond this description. The description is sufficient for the point being made. No flag.

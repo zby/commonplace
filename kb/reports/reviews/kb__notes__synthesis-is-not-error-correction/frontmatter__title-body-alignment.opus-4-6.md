@@ -1,0 +1,1 @@
+**pass** The body directly establishes what the title claims. It defines both operations, shows why synthesis propagates rather than corrects errors, and uses the Kim et al. / MAKER contrast as empirical grounding. The note stays within the scope the title sets; there is no drift toward a broader claim about multi-agent coordination in general.

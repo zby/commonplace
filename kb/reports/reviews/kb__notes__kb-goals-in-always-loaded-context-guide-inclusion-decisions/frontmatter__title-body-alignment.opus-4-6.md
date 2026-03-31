@@ -1,0 +1,1 @@
+pass. The body establishes precisely what the title promises: it identifies the inclusion-decision gap left by WRITING.md and the routing table, argues that goals belong in always-loaded context, provides a per-installation/universal split table, and gives practical guidance for filling each goal subsection. No claim or scope drift is present.

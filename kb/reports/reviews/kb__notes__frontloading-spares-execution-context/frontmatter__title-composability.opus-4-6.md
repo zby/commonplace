@@ -1,0 +1,1 @@
+**pass** The title works naturally as a prose fragment: "since frontloading spares execution context, static file listings should be inserted at build time rather than produced by a search tool call at runtime." The phrase slots cleanly into causal sentences and carries enough specificity to motivate the link.

@@ -1,34 +1,38 @@
 Key claims extracted from each section:
 
 - **Section 1 (What is a good agentic KB)**: criterion = contextual competence; constraint = bounded context; "just put everything in context doesn't work."
-- **Section 2 (Three properties)**: discoverable → composable → trustworthy; dependency order: discoverability is foundation; composability depends on both discoverability and trustworthiness; trustworthiness depends on discoverability.
-- **Section 3 (Operations, body)**: "Three operations transform accumulated knowledge" (constraining, distillation, discovery). Then: "A fourth operation works by subtraction: **Pruning**." So the body distinguishes *transformation* (three operations) from *subtraction* (pruning).
-- **Section 3 (Operations, table)**: lists five rows — accumulation, constraining, distillation, discovery, pruning — treating all five symmetrically.
-- **Compressed summary**: "Four operations transform accumulated knowledge: constraining improves trustworthiness, distillation improves discoverability, discovery improves composability... and pruning removes stale knowledge."
-- **Section 4 (Reach)**: accumulation is where reach varies most; constraining preserves reach but doesn't create it; distillation can preserve or destroy reach; discovery creates reach.
-- **Section 5 (Tension)**: reach vs. action value; resolution: both coexist; operations serve different needs.
-- **Section 6 (Authored knowledge)**: authoring produces reach; extraction systems produce adaptive knowledge.
+- **Section 2 (Three properties)**: discoverable, composable, trustworthy; dependency structure: discoverability is foundation, composability depends on both others, trustworthiness depends on discoverability.
+- **Section 3 (Operations)**: body distinguishes *transformation* (constraining, distillation, discovery) from *subtraction* (pruning): "Three operations transform accumulated knowledge... A fourth operation works by subtraction: Pruning." Table lists all five symmetrically.
+- **Section 4 (Reach)**: accumulation is where reach varies most; constraining preserves reach; distillation can preserve or destroy reach; discovery creates reach.
+- **Section 5 (Tension)**: reach vs. action value; resolution: both coexist, operations serve different needs.
+- **Section 6 (Authored knowledge)**: authoring produces reach; extraction produces adaptive knowledge (with hedge).
+- **Compressed summary**: "Three operations transform accumulated knowledge: constraining improves trustworthiness, distillation improves discoverability, discovery improves composability and produces the highest-reach items to accumulate. A fourth operates by subtraction: pruning removes stale knowledge."
 
 ---
 
-**WARN — body/summary mismatch on operation classification**
+**Body/summary alignment on operation classification**
 
-The body explicitly distinguishes transformation (constraining, distillation, discovery) from subtraction (pruning): "Three operations transform accumulated knowledge... A fourth operation works by subtraction: Pruning." This is a deliberate conceptual distinction — transformation acts on existing knowledge to improve its properties; subtraction removes knowledge from the store.
+The body explicitly distinguishes transformation from subtraction: "Three operations transform accumulated knowledge... A fourth operation works by subtraction." The compressed summary preserves this distinction: "Three operations transform accumulated knowledge... A fourth operates by subtraction: pruning removes stale knowledge." ✓ — The summary correctly maintains the body's category structure.
 
-The compressed summary collapses this: "Four operations transform accumulated knowledge: constraining..., distillation..., discovery..., and pruning removes stale knowledge." Pruning is now listed as a transforming operation. This contradicts the body's category structure. The inconsistency isn't merely terminological — it affects the reader's understanding of what pruning does (remove vs. transform).
+**INFO — summary compresses the authored-vs-extracted nuance**
 
-**INFO — pruning definition vs. table example**
-
-The body defines pruning as "removes knowledge that is outdated, contradictory, or low-value." The table example includes "marking a superseded claim `outdated`" alongside "Deleting an outdated note." Marking is not removing. A marked-outdated note remains in the KB and can still be loaded, linked, and mislead. The definition covers only hard removal; the example introduces soft pruning without updating the definition. This is also flagged in the completeness-boundary-cases review; it recurs here as a local inconsistency within the operations section.
+The body's final section includes an important hedge: "This isn't a claim that extraction can never produce knowledge with reach — an LLM that extracted causal explanations from papers might." The summary says "Authoring — the act of judgment that explains *why* — is the primary source of knowledge with reach" without the hedge. The summary's claim is technically accurate (authoring is the *primary* source, not the *only* source), but the nuance is lost. A reader who only reads the summary could take a stronger position than the body supports.
 
 **Definition drift: none observed**
 
-"Contextual competence," "bounded context," "reach," "discoverable," "composable," "trustworthy," "accumulation," "constraining," "distillation," "discovery" — all used consistently across sections. No drift detected.
+"Contextual competence," "bounded context," "reach," "discoverable," "composable," "trustworthy," "accumulation," "constraining," "distillation," "discovery," "pruning" — all used consistently across sections. No term shifts meaning between its introduction and later use.
 
-**Pairwise contradiction checks: none found**
+**Pairwise contradiction checks**
 
-- "Discoverability is the foundation" (section 2) is consistent with composability depending on both discoverability and trustworthiness — discoverability is foundational because the other two can't function without it.
-- "Constraining preserves reach but doesn't create it" (section 4) is consistent with "constraining primarily improves trustworthiness" (section 3) — trustworthiness and reach are orthogonal dimensions.
-- "Reach matters most when knowledge leaves the KB" (section 5, tension) is consistent with "a compact theory replaces many facts under bounded context" — two different reasons reach is practical, not competing claims.
+- "Discoverability is the foundation" (section 2) vs. composability depending on both discoverability and trustworthiness — consistent; discoverability is foundational because the other two can't function without it, but trustworthiness is independently needed for composability.
+- "Constraining preserves reach but doesn't create it" (section 4) vs. "constraining primarily improves trustworthiness" (section 3) — consistent; trustworthiness and reach are orthogonal dimensions.
+- "Reach matters most when knowledge leaves the KB" (section 5) vs. "a compact theory replaces many facts under bounded context" (also section 5) — consistent; two complementary reasons reach is practical, not competing claims.
+- "Authoring produces reach" (section 6) vs. "extraction can't produce knowledge with reach" — the body explicitly does NOT make the latter claim; it hedges. Consistent.
 
-One WARN (body/summary mismatch on pruning classification), one INFO (pruning definition vs. example scope).
+**INFO — pruning definition vs. example scope**
+
+The body says pruning "removes or deprecates" knowledge. The analysis of pruning's effects says "removing a stale note eliminates a source of wrong premises" — this describes only hard removal, not deprecation. A deprecated-but-present note can still be loaded and used as a premise. The effects analysis and the definition are slightly misaligned in scope. (Also flagged in completeness-boundary-cases review.)
+
+---
+
+No WARN-level contradictions. Two INFOs: summary compresses the extraction hedge, and pruning effects analysis covers only hard removal despite the definition including deprecation.

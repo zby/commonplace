@@ -1,0 +1,3 @@
+INFO
+
+The five dimensions get roughly one paragraph each. "Coordination guarantee" is slightly more developed (it includes a three-bullet list) but this reflects its role as the newest and least obvious dimension. "Why this matters" is concise. The proportions are adequate, though the note is more catalogue than argument — each dimension is named and illustrated rather than deeply developed. This is consistent with the note's purpose as a map rather than a deep analysis.

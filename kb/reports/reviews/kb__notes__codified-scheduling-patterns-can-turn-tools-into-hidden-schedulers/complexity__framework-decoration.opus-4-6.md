@@ -1,0 +1,1 @@
+**Pass.** The note contains no tables, taxonomies, or formal frameworks. The four bullet examples of scheduling patterns serve as concrete illustrations of the distinction being drawn, not as a classificatory structure.

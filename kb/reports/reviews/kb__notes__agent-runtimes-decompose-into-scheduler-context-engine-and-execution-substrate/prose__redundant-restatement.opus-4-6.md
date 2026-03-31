@@ -1,0 +1,3 @@
+INFO
+
+The "Scheduler" section opens with "The bounded-context orchestration model is already the formal treatment" — which partially restates the mapping already made in the "Why the split matters" section. However, it then adds new content about unified calling conventions, so it is setup rather than pure restatement. Similarly, the "Context engine" section opens by pointing back to context engineering — partially redundant with the earlier mapping, but then adds the "many things attributed vaguely to 'memory'" distinction. Borderline but not WARN-worthy since each adds something new after the setup sentence.

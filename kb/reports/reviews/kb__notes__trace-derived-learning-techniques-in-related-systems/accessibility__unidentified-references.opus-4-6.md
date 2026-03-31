@@ -1,0 +1,3 @@
+"Xtuner" appears in the Agent-R section — "JSONL training datasets handed to Xtuner for fine-tuning" — without identifying what Xtuner is. Suggested fix: identify it briefly, e.g., "Xtuner (an LLM fine-tuning toolkit)" if that matches the linked sources.
+
+"Tinker" appears in the OpenClaw-RL section — "converts samples into Tinker datums" — without identifying what Tinker is. Suggested fix: add a brief inline identifier if the information is available from the inspected code, or replace with a generic description like "converts samples into the training framework's data format."

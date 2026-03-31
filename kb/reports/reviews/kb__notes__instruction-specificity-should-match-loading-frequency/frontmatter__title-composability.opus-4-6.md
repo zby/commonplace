@@ -1,0 +1,1 @@
+pass. The title works naturally in linking prose: "since instruction specificity should match loading frequency, detailed task guidance belongs in skill bodies rather than CLAUDE.md." The imperative modal ("should") combined with the match relationship produces a clean clause that slots into design-rationale sentences without grammar strain.

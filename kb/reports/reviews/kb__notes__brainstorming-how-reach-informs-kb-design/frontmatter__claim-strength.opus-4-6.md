@@ -1,0 +1,1 @@
+pass. The title is a topical label for an exploratory seedling — brainstorming notes are explicitly valid as topical titles. The note is an open-ended exploration with open questions, not a single contested claim. The topical framing is honest about the note's status.

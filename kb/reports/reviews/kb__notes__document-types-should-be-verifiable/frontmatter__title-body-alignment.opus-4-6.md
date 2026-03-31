@@ -1,0 +1,1 @@
+pass — The body establishes exactly what the title claims. It defines verifiability, argues that unverifiable types are useless (programming language analogy), explains what went wrong with flat types, and proposes a base-type + traits model as the verifiable alternative. The title's claim is the organizing spine of the entire note.

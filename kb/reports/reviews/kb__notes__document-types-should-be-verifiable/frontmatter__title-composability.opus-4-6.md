@@ -1,0 +1,1 @@
+pass — The title embeds cleanly in prose: "since document types should be verifiable, the `design` label fails because it asserts nothing checkable" or "because document types should be verifiable, subject-matter labels belong in the `areas` field, not `type`." Both read naturally without grammatical strain.

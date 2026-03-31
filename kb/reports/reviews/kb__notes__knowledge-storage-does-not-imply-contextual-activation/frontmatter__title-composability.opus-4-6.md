@@ -1,0 +1,1 @@
+pass. The title works well as a prose fragment: "since knowledge storage does not imply contextual activation, capability benchmarks that test only direct retrieval overestimate operational reliability." The negated-implication structure is slightly formal but not awkward, and it produces clear causal and contrastive sentences.

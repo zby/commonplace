@@ -1,0 +1,1 @@
+pass. The body establishes exactly what the title promises: it surveys prior-work traditions that ground observer-relative value, distinguishes the KB-specific application (agent under bounded context), and derives concrete conventions (title-as-claim, description-as-filter, composable notes) from the principle. No claim drift or scope drift is present.

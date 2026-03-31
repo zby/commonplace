@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment: "since stateful tools recover control by becoming hidden schedulers, the question is not whether expressivity can be recovered but where the scheduler lives." The "recover X by becoming Y" construction is composable and links naturally into notes about orchestration architecture, framework loop design, or scheduler-LLM separation.

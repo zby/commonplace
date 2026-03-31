@@ -1,0 +1,1 @@
+pass. The title is a concrete artifact name (a named model), which is explicitly a valid form. It works naturally as a reference: "the bounded-context orchestration model predicts that..." or "under the bounded-context orchestration model, selection is the hard part." No awkward grammar.

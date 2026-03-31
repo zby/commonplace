@@ -1,17 +1,15 @@
-WARN
+PASS
 
-**"Reach: why some knowledge serves competence better than others" — opening paragraph restates the previous section.**
+No section opening re-explains what the previous section already established:
 
-The section opens: "The three properties tell you what knowledge must *be* — discoverable, composable, trustworthy. They don't tell you which knowledge is *worth* making discoverable, composable, and trustworthy."
-
-The three properties were enumerated and explained across the entire previous section. This opening re-explains them before introducing reach. The second paragraph — "David Deutsch distinguishes **adaptive** knowledge..." — could open the section directly, as it contains the section's actual contribution. The first paragraph's argumentative role (restate the three properties as a setup) is filled by the previous section's entire existence.
-
-Severity: WARN — the restatement fills the same role as the previous section's thesis statement (naming the three properties as the KB's target), not just providing setup context.
+- "Three properties..." opens: "For knowledge to improve an agent's actions under bounded context, it needs three properties." — advances from the criterion (established above) to the properties themselves.
+- "Accumulation and four operations..." opens: "The KB doesn't stay good automatically. It improves through learning, starting with the most basic operation." — introduces a new topic (operations) without restating the three properties.
+- "Reach..." opens: "David Deutsch distinguishes **adaptive** knowledge... from **explanatory** knowledge..." — introduces the Deutsch distinction directly. No restatement of prior sections.
+- "Tension: reach vs action value" opens: "There is a tension between reach as the primary quality criterion and contextual competence as the goal." — identifies a new tension rather than restating reach.
+- "Why this favors authored knowledge" opens: "The reviews of sift-kg and Siftly sharpen this theory by contrast." — introduces new evidence.
 
 ---
 
 INFO
 
-**"The theory, compressed" — re-enumerates the full framework.**
-
-The closing section restates the title claim, the three properties, and the five operations. This is intentional compression/summary at a different structural position (end of note), so this is reinforcement rather than restatement. INFO rather than WARN.
+**"The theory, compressed" — re-enumerates the full framework.** This is intentional end-of-note compression at a different structural position. Reinforcement, not redundant restatement.

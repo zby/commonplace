@@ -1,0 +1,1 @@
+pass. The body delivers the operationalization the title promises: it explains codification as a bet with regime-dependent safety, introduces relaxing as the complement, shows how spec mining improves the bet, and provides working heuristics. The formal results from epiplexity and induction-bias research support the "when is the bet safe" question. No scope or claim drift.

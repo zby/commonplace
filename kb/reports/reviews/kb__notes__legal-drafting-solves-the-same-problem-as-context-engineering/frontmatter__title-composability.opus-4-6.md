@@ -1,0 +1,1 @@
+pass. The title works well in linking prose: "since legal drafting solves the same problem as context engineering, centuries of jurisprudence on managing natural-language ambiguity are a directly applicable source discipline." The subject-verb-object structure composes cleanly into causal and comparative sentences.

@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since codification and relaxing navigate the bitter lesson boundary, practical systems should expect to move in both directions rather than permanently committing to learned or codified components." The subject-verb structure fits naturally into "because" and "since" constructions without reformulation.

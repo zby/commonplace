@@ -1,0 +1,1 @@
+**pass** The body establishes exactly what the title claims. It explains why chat history won (implementation convenience, no upfront schema design), why that convenience comes at the cost of context efficiency (temporal rather than relevance ordering), and why mature orchestration drifts away from it. No claim or scope drift detected.

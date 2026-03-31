@@ -1,0 +1,1 @@
+**pass** The body supports the heading title "Files beat a database for agent-operated knowledge bases" — it covers versioning, browsing, agent access, infrastructure, premature schema commitment, scale gaps, and a principled counterexample (Graphiti). The scope is wider than the filename/topical title suggests, but the heading title fully covers it. No claim or scope drift.

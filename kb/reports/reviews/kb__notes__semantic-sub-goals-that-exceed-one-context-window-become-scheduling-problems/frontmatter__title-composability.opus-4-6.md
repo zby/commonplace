@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment. "Since semantic sub-goals that exceed one context window become scheduling problems, a framework-owned tool loop is the wrong substrate for mid-task set decomposition" is grammatically clean and semantically precise. The subject-predicate structure licenses causal framing without rearrangement.

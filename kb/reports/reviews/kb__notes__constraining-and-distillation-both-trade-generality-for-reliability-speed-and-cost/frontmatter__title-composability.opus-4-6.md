@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since constraining and distillation both trade generality for reliability, speed, and cost, the mechanisms are on the same axis." The sentence is long but grammatically natural and semantically coherent as a dependent clause.

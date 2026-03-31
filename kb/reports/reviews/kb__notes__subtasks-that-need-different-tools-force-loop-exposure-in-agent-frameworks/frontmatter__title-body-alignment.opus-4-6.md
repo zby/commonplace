@@ -1,0 +1,1 @@
+**pass** The body directly supports the title's claim. It establishes the forcing condition (different capability surfaces per child task), walks through why framework workarounds are inadequate, and concludes that loop exposure — treating sub-agent spawning as first-class — is the necessary response. No scope drift or claim drift detected.

@@ -1,0 +1,1 @@
+pass. The claim is contestable: a reasonable designer could argue that embedding hygiene triggers in routing is simpler (one place to look) and that the "occasional noise" cost is negligible compared to the risk of hygiene being forgotten when separated into a different mechanism. The note argues for a specific architectural separation that someone could reasonably reject.

@@ -1,0 +1,5 @@
+- "distillation" / "distilled" — central to the note's argument. Used ~8 times ("distilled for execution," "distillation status," "distillation relationship," "distillation-based placement," "procedural distillations"). The note links to the definition note in Relevant Notes but does not define it inline in the body. The note does characterize it inline on first use: "if an artifact has been distilled *into a procedure* — reasoning stripped, steps sequenced, optimized for an agent that needs to act." This provides enough context for the dominant meaning used here (reasoning → procedure). Later uses all invoke the same sense. Pass.
+
+- "constraining gradient" — appears once in Open Questions: "How does this interact with the [constraining gradient](./methodology-enforcement-is-constraining.md)? Distillation and constraining are different operations." The term "constraining" is a KB-defined term linked from the definition. In the Open Questions section, a single use with a link is adequate. Pass.
+
+pass

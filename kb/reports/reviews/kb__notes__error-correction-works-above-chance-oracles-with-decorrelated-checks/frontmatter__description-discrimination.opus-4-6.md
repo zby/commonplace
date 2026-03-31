@@ -1,0 +1,1 @@
+pass — The description adds two specific mechanisms the title only implies: the amplification cost formula (1/(TPR-FPR)²) and the independence-of-errors constraint. These details make the description highly discriminating — an agent would immediately know this is the analytical note about amplification cost scaling, not a generic note on LLM verification or oracle design.

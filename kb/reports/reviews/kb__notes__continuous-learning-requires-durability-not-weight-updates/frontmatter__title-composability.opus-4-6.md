@@ -1,0 +1,1 @@
+pass. The title works naturally as a prose fragment: "since continuous learning requires durability, not weight updates, any durable symbolic artifact that changes future behavior counts as learning." The "not X" construction is compact and fits cleanly into linking contexts.

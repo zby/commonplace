@@ -1,0 +1,1 @@
+**pass** The title works in linking prose: "since types give agents structural hints before opening documents, description quality becomes the primary determinant of whether an agent can narrow its candidate set without loading unnecessary files." The subject-verb-object form is natural and the "before opening" qualifier makes the causal mechanism precise.

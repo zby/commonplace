@@ -1,0 +1,3 @@
+PASS
+
+The four-row taxonomy (contamination, inconsistency, amplification, accountability vacuum) is the note's own framework. The note hedges appropriately: "The unification claim is limited but useful" and "these cases do not share one remedy, but they share one architectural question." No quantitative claims are made without evidence. Each failure mode is grounded in a specific linked source, not asserted in a vacuum.

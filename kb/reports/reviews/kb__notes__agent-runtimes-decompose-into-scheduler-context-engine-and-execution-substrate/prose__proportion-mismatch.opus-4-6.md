@@ -1,0 +1,3 @@
+INFO
+
+The core claim is the three-part decomposition. The "Execution substrate" section is the most developed (two sub-bullet lists, two linked grounding notes), while the "Scheduler" and "Context engine" sections are shorter because they point to existing KB formalisations. This is justified — the scheduler and context engine already have dedicated notes, while the execution substrate needed more exposition since it was the gap. The "Why independent sources converge here" section adds useful triangulation. Overall proportions are appropriate, though the note is on the longer side for its claim.

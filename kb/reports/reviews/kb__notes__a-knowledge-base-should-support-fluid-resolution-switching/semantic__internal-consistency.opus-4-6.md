@@ -1,11 +1,26 @@
-PASS
+Key claims by section:
 
-Key claims extracted by section:
+- **Intro**: Good thinking requires moving between abstraction levels. A KB must support this.
+- **Four mechanisms**: Titles vs bodies, indexes vs notes, link semantics as zoom direction, progressive disclosure as gradient.
+- **Evaluative criterion**: Resolution-switching fluidity. Four symptoms of poor switching.
+- **Connection to discovery**: Resolution-switching enables discovery.
+- **Open questions**: Measurability, dead-ends, granularity sweet spot.
 
-- Opening: Good thinking requires moving between abstraction levels; a KB should support this motion.
-- Four mechanisms: Titles/bodies, indexes/notes, link semantics, and progressive disclosure each serve resolution-switching.
-- Evaluative criterion: Resolution-switching fluidity is a quality criterion complementary to retrieval accuracy. Poor fluidity has identifiable symptoms.
-- Connection to discovery: Resolution-switching enables discovery by letting you move between particular and general.
-- Open questions: Can fluidity be measured? Are there dead-ends? Is there a granularity sweet spot?
+---
 
-No pairwise contradictions. No definition drift — "resolution-switching" is used consistently throughout. The open questions section is consistent with the evaluative criterion section (it asks how to measure what the criterion proposes). No summary/body mismatch.
+**Pairwise contradiction: none found**
+
+- "Start broad to see the landscape, narrow in when something is interesting, zoom back out" (intro) is consistent with the four mechanisms, each providing a broad/narrow pair.
+- "A bad KB traps you — either stuck in abstractions or stuck in details" (evaluative criterion) is consistent with the intro's claim about fluid motion.
+
+**Definition drift: none observed**
+
+"Resolution-switching" is used consistently throughout — always meaning movement between abstraction levels. "Zoom in" always means toward specifics; "zoom out" always means toward landscape/context.
+
+**INFO — link semantics as zoom direction is a stronger claim than the other three mechanisms**
+
+The first three mechanisms describe *existing* resolution pairs (title/body, index/note, broad/narrow loading). The fourth — link semantics encoding zoom direction — adds an interpretive layer: relationship words are reframed as directional indicators in abstraction space. "Contradicts [Z] shifts laterally to a competing view at the same level" is a particularly strong assumption — a high-level principle can contradict a specific mechanism claim, meaning the contradicting note need not be at the same abstraction level. The four mechanisms are presented symmetrically but this one makes a qualitatively different kind of claim.
+
+**No summary/body mismatch** — the note has no compressed summary section.
+
+One INFO: asymmetric claim strength across the four mechanisms. No WARN, no contradiction, no drift.

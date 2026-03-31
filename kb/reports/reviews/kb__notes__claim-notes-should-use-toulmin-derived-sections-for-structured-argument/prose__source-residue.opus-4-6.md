@@ -1,0 +1,3 @@
+PASS
+
+The title claims generality over "structured argument" and the body delivers exactly that — it maps Toulmin's argumentation model to KB note structure. The Toulmin vocabulary (claim, grounds, warrant, backing, qualifier, rebuttal) is domain-specific but explicitly introduced and defined as the borrowed framework being adapted. No unexplained domain-specific vocabulary leaks in from an unacknowledged source domain.

@@ -1,0 +1,1 @@
+pass. The body fully develops the named model: it introduces the two-component architecture, defines the select/call loop formally, explains what makes selection hard, gives a worked example, and covers SDK compatibility. The title correctly scopes the note as a model definition, and the body delivers that without scope drift.

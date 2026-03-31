@@ -1,0 +1,1 @@
+**Pass.** The note has no explicit section headings — it is a single-section document. The content is proportionate: it states one claim (deterministic checks should move from the LLM skill to a script) and provides the supporting evidence (the hard/soft oracle split) in the same block. No section inflation is possible here.

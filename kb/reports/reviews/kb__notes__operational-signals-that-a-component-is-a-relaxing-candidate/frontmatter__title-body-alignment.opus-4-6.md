@@ -1,0 +1,1 @@
+pass. The body delivers exactly what the title names: six operationalizable signals for detecting when a component is a relaxing candidate. The scope is consistent — the note does not drift into how to perform the relaxing itself (that is delegated to linked notes). No claim drift or scope drift detected.

@@ -1,0 +1,1 @@
+pass. An informed reader could reasonably contest this: one could argue the mechanisms are too different to be grouped under a single trade-off, or that distillation trades generality for usability rather than reliability/speed/cost specifically. The title makes a non-obvious unifying claim that rewards debate.

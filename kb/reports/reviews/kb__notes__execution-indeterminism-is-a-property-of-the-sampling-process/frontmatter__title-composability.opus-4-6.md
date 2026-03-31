@@ -1,0 +1,1 @@
+**pass** The title works as a prose fragment: "since execution indeterminism is a property of the sampling process, lowering temperature eliminates run-to-run variation without resolving underspecification." The phrasing is slightly long but fits naturally into causal sentences without forced rewriting.

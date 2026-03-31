@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment. "Since automating KB learning is an open problem, we cannot design the learning loop until we have enough usage to evaluate candidates" reads naturally. The subject-predicate structure is clear and the title slots into subordinate clauses without rephrasing.

@@ -1,0 +1,1 @@
+"Z, VDM" in the table row "Formal specification (Z, VDM)" are named without any identification. A reader who doesn't already know formal methods has no way to tell these are specification languages (Z developed at Oxford, VDM — Vienna Development Method). Replace with something like "Formal specification (Z notation, VDM)" or add a brief gloss in the tradition description.

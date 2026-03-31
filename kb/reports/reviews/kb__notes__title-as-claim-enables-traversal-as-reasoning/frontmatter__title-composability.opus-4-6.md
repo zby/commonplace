@@ -1,0 +1,1 @@
+**pass** The title is itself a demonstration of its own thesis — it composes naturally as a causal premise: "because title as claim enables traversal as reasoning, an agent can follow links through a graph without opening every file to discover what arguments are available." The subject-verb-object structure is clean and unambiguous.

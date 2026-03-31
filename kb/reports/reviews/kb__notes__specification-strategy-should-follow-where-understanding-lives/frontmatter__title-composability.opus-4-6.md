@@ -1,0 +1,1 @@
+pass — The title works naturally in prose: "since specification strategy should follow where understanding lives, spec-first is only appropriate when intent is already fully knowable before execution." The "should follow X" construction is a standard composable form for prescriptive notes and links cleanly into notes about methodology selection or deployment-time learning.

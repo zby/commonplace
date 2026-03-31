@@ -1,0 +1,1 @@
+**pass** The body establishes exactly what the title claims: that evaluation automation requires a prior comprehension phase, and that skipping it yields proxy-score improvement rather than real capability improvement. The three-phase structure, the "why this is a gate" section, and the scope limits all directly support the title's claim. No scope drift or claim drift detected.

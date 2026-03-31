@@ -1,0 +1,3 @@
+PASS
+
+The core claim is the structural analogy between agile and deploy-time learning. The three main sections develop this proportionally: "The same learning loop" establishes the parallel, "Where they diverge" names the key difference, "The waterfall backdrop" provides historical context. The divergence section is appropriately the most developed, as it carries the note's distinctive contribution. No secondary material outweighs the core argument.

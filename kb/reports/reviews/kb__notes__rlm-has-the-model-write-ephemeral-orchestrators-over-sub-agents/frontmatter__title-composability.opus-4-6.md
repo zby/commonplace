@@ -1,0 +1,1 @@
+pass. The title works as an inline prose fragment: "since RLM has the model write ephemeral orchestrators over sub-agents, accumulated decomposition strategies are lost between runs unless captured out-of-band" is fluent. The subject-verb structure makes it stable in causal frames, and the "RLM" abbreviation keeps it short enough for practical use in other notes.

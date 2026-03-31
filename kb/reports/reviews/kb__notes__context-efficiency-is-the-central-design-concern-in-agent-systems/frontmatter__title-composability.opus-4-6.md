@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "because context efficiency is the central design concern in agent systems, architectural choices about what loads when are hard to retrofit." The clause is grammatically clean and reads naturally in linking contexts.

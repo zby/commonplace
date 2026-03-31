@@ -1,0 +1,1 @@
+pass. "Conversation vs prompt refinement in agent-to-agent coordination" is a topical title for a multi-claim comparative note that explores a design space without resolving to a single contestable conclusion. The note itself calls its recommendation "a tentative design heuristic rather than a hard principle." A topical title is the correct form here.

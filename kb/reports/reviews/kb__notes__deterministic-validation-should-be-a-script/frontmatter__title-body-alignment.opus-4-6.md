@@ -1,0 +1,1 @@
+pass. The body supports the title directly: it enumerates hard-oracle checks that should move to a script and soft-oracle checks that should stay in the skill. The comparison to Thalo grounds the split. The body does not wander into validation philosophy or broader automation concerns; it stays tightly scoped to the specific migration decision.

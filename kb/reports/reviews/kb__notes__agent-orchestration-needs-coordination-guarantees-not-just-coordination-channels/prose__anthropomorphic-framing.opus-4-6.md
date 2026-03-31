@@ -1,0 +1,3 @@
+PASS
+
+No anthropomorphic language attributed to models. The note discusses architectural coordination guarantees in agent systems. Verbs describe system behaviors ("produces," "corrupts," "diverges") and architectural properties, not model cognition. "The system believes false things" appears in a quote-like contrast sentence distinguishing semantic failures from governance failures — it is explicitly negated ("the bad outcome is not 'the system believes false things'") rather than asserted.

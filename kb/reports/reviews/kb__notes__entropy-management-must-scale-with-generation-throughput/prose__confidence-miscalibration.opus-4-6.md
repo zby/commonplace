@@ -1,0 +1,3 @@
+WARN
+
+The claim "additions outnumber removals 6:1" is presented as fact with no source attribution in that sentence. It appears to reference the methodology-enforcement note, but the ratio is stated flatly here without hedging or citation. The "20% of their time on AI slop cleanup" claim is attributed to the Harness Engineering source, which is appropriate. The 6:1 ratio needs either inline attribution or softening language.

@@ -1,0 +1,1 @@
+pass. The body establishes exactly the title's claim, grounded in Simon's definition of learning and supported by examples (DSPy, ProTeGi, developer workflows, memory files). Notably, the body explicitly scopes itself as "a subset claim, not the umbrella claim," which aligns correctly with the title — "constraining" not "all symbolic adaptation."

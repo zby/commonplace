@@ -1,0 +1,1 @@
+pass. The title is topical, appropriate for a brainstorming catalogue that inventories multiple signal categories without arguing for a single position. This is explicitly flagged as exploratory ("Brainstorming" in the opening line) and the status is "speculative." Topical titles are valid for this kind of multi-claim exploratory seedling.

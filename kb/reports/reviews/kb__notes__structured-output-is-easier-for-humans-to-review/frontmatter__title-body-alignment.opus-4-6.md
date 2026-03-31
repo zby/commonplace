@@ -1,0 +1,1 @@
+pass — The body supports the title's claim directly and stays within its scope. It provides the mechanism (separated sections enable independent review), notes that the argument is LLM-independent, and draws the analogy to scientific papers. There is no drift — the note is a focused argument for exactly the claim the title makes, without expanding into unrelated territory.

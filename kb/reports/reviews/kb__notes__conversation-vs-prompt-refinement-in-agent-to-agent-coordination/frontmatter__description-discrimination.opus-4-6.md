@@ -1,0 +1,1 @@
+pass. The description adds mechanism (conversation preserves execution trace; refinement compresses it into a clean handoff) and the selection criterion (depends on architecture and how much intermediate work should survive). This is more actionable than the title's framing of a choice, and the "intermediate work" dependency adds a concrete dimension the title omits.

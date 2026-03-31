@@ -1,0 +1,3 @@
+PASS
+
+The note's cross-domain transfer (Popperian epistemology to KB design) is explicitly bridged. Section 1 identifies the shared mechanism: underspecification forces interpretation, which is implicit conjecture. Section 2 explains why Popper's requirement for externalized criticism maps to KB constraints (no scoping, bounded context). The bridge is not asserted by analogy -- it derives from identified mechanisms. No other cross-domain references lack bridging.

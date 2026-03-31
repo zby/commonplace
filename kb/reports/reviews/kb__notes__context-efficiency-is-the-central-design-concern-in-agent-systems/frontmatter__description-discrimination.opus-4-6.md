@@ -1,0 +1,1 @@
+pass. The description adds both scope (this note is the basis for deriving architectural responses) and mechanism (the soft-degradation cost model is the underlying frame). These details situate the note within the KB's argument structure in a way the title does not, making it easier to retrieve when looking for cost-model derivations rather than general claims about context.

@@ -1,0 +1,1 @@
+pass. The body covers exactly what the title scopes: the tradeoff between conversation and prompt refinement for agent-to-agent coordination, with the bounded-context orchestration model and the LLM-caller variant as the architectural context. The forking sub-pattern is properly scoped as a sub-case of conversation, not a separate topic. No scope drift.

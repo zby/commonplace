@@ -1,0 +1,1 @@
+**Pass.** The note contains no tables, taxonomies, or structured frameworks — it is written entirely in prose paragraphs. There is no structural element present that could be characterized as decorative. This is the right format for a note that argues a single architectural claim through concrete examples.

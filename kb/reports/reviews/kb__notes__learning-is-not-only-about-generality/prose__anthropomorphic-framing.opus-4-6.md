@@ -1,0 +1,3 @@
+PASS
+
+No verbs attributing cognition to models or systems beyond what is defended. The note discusses "learning" in the Herbert Simon sense (capacity change), which is explicitly defined and grounded. "A system that can now multiply without hallucinating has learned" uses Simon's definition and is defended in the preceding sentence. No instances of "understands," "believes," or "knows" applied to models without justification.

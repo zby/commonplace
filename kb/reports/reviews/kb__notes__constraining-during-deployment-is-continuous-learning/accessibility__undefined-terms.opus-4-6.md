@@ -1,0 +1,5 @@
+- "experience replay" is used in the first paragraph: "The standard approaches — fine-tuning on deployment logs, online learning, experience replay — all modify the model's parameters." A reader unfamiliar with ML training techniques may not know what "experience replay" is. However, it is listed alongside "fine-tuning on deployment logs" and "online learning" as examples of weight-update approaches, and the note does not rely on the reader knowing what experience replay specifically entails — the entire list is dismissed in the next sentence ("all modify the model's parameters"). In context, enough meaning is conveyed. Borderline, no flag.
+
+- "evals" is used without expansion: "accumulating symbolic artifacts like prompts, schemas, evals, tools, and deterministic code." "Evals" is standard LLM deployment vocabulary (evaluation suites / test sets). No flag.
+
+- "ProTeGi" appears in the body: "Systems like DSPy and ProTeGi already automate one slice of constraining — searching over prompt components to optimize against an objective." ProTeGi is not identified inline. See unidentified-references gate.

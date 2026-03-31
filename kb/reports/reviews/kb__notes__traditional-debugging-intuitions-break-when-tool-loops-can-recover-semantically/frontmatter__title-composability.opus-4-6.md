@@ -1,0 +1,1 @@
+**pass** The title works as a causal premise in linking prose: "since traditional debugging intuitions break when tool loops can recover semantically, infrastructure drift can accumulate behind apparently healthy runs without surfacing as user-visible failures." The conditional clause is specific enough to carry argumentative weight.

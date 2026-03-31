@@ -1,0 +1,1 @@
+pass. The description adds the specific gap being addressed (WRITING.md provides quality criteria but not domain scope), names the failure mode (agents cannot reject well-written but off-scope material), and points to the concrete mechanism (the always-loaded control-plane file). These details are absent from the title and meaningfully narrow the retrieval target.

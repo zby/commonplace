@@ -1,0 +1,1 @@
+**pass** The body precisely delivers the title's claim. It establishes the mechanism (base type requires description, validation checks compliance), explains the failure mode without enforcement (KB degrades to open-everything navigation), and distinguishes this enforcement role from the routing role described in a sibling note. No scope or claim drift detected.

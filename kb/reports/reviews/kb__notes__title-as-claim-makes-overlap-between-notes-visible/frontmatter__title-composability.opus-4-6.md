@@ -1,0 +1,1 @@
+**pass** The title works in linking prose: "since title as claim makes overlap between notes visible, a maintainer can detect duplication by scanning index titles rather than reading full file contents." The subject-verb-object structure is clean and the implication clause flows naturally.

@@ -1,0 +1,3 @@
+PASS
+
+The note's own taxonomy (classification, communication, planning, pattern recognition) is presented as an illustrative list ("at least these modes"), not a comprehensive framework. Claims about evaluation difficulty are hedged ("harder to measure," "irreducibly subjective in many cases"). The Koylanai reference is framed as an example ("already stores all four") rather than proof. The note's status is "speculative," which calibrates reader expectations correctly.

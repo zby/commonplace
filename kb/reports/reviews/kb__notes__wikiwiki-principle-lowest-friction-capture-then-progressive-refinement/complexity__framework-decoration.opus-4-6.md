@@ -1,0 +1,1 @@
+Pass. The note contains no tables, taxonomies, or formal frameworks. The three-rung type ladder (text/note/structured-claim) is described as a bulleted list within an evidence item, not as a standalone framework, and each rung is annotated with its functional property. No structure in the note is a candidate for one-sentence replacement without information loss.

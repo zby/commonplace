@@ -1,0 +1,3 @@
+PASS
+
+The title claims generality about agent runtimes. The body draws from three independent practitioner sources (Lopopolo, cybernetics thread, Vtrivedy10), each explicitly framed as evidence for the three-part decomposition. The "sensors, actuators, and feedback loops" vocabulary from the cybernetics source is contained within its paragraph and attributed. No single source's domain vocabulary leaks into the general framing.

@@ -1,0 +1,1 @@
+**pass** The body establishes exactly what the title promises: that claim titles expose commitments (making each title falsifiable on sight), which enables a Popperian review loop where maintenance cost scales with doubtful claims rather than total notes. The note stays tightly scoped to the maintenance benefit and correctly defers the traversal benefit to a different note.

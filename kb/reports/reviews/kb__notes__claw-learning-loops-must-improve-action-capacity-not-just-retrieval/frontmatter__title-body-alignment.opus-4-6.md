@@ -1,0 +1,1 @@
+pass. The body supports the title: it identifies action modes beyond retrieval, explains what changes in the learning loop (knowledge types, mutations, evaluation ordered by difficulty), and frames retrieval learning as one layer of a larger system. The body is more detailed than the sibling note on the same topic, particularly the knowledge-types and mutations subsections.

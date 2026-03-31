@@ -1,0 +1,3 @@
+INFO
+
+The second paragraph ("Deploy-time learning follows the same pattern...") restates the opening paragraph's setup in the deploy-time learning domain. This is not redundant restatement but rather the application half of an analogy that was set up in paragraph one. Both paragraphs are needed. The paragraph at the end of "The same learning loop" ("At any given moment during an agile project...") does restate the five-step cycle in different words, but it concretizes the abstraction with a snapshot metaphor, serving a different argumentative role (illustrative vs. definitional).

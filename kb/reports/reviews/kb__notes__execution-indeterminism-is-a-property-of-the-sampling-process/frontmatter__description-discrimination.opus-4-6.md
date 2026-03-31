@@ -1,0 +1,1 @@
+**pass** The description adds mechanism (token sampling), scope (theoretically eliminable but practically ubiquitous), and a key implication (often confused with underspecification). This goes well beyond the title's attribution claim and would help an agent distinguish this note from related notes about underspecification or interpretation errors.

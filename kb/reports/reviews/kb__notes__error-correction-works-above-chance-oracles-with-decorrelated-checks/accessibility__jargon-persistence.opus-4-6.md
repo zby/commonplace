@@ -1,0 +1,11 @@
+**"oracle"** — first appears in the opening: "MAKER uses hard oracles (deterministic verification)." Then "oracle has discriminative power" and "oracle that checks an LLM output." The note uses "oracle" extensively throughout all sections. The opening sentence glosses "hard oracles (deterministic verification)" but does not define "oracle" in general before using it. However, the gate exception applies: "oracle" is linked to the oracle-strength-spectrum note, and the usage context makes the meaning inferrable (a checker that accepts/rejects). The term is also defined operationally in the amplification condition section: "Consider an oracle that checks an LLM output and says 'accept' or 'reject.'" This appears early in the body. After this, the term persists throughout — but every use is consistent with the defined meaning and the section context maintains grounding.
+
+**"TPR" / "FPR"** — defined inline: "TPR (true positive rate) = P(oracle says 'accept' | output is correct)" and "FPR (false positive rate) = P(oracle says 'accept' | output is incorrect)." These are then used heavily throughout the table, the scaling law section, and the decorrelation section. Every use is consistent with the definition. The table restates the labels as column headers. The gap notation "(TPR - FPR)" appears repeatedly after definition. No persistence issue.
+
+**"decorrelation"** — introduced as the section header "Decorrelation: the binding constraint for LLM checks" and defined implicitly through the contrast with "correlated noise does not average out." The concept is used throughout the section and again in the implications. Each use is grounded in the preceding text. Acceptable.
+
+**"metamorphic transformations"** — introduced as a bullet item: "Metamorphic transformations — change the input structurally (reorder evidence, remove context, translate and back-translate)." Used again later as "metamorphic checks" and "metamorphic transformations" in subsequent paragraphs. Each use is grounded by the definition bullet. Acceptable.
+
+**"content bias"** — introduced in the "Content bias: an empirically measured correlation source" section header and defined through the Lampinen et al. description. Used throughout that subsection and once in the Implications section ("content-bias decorrelation mechanism"). Each use is grounded. Acceptable.
+
+pass

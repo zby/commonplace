@@ -1,0 +1,1 @@
+Pass. The note contains no tables, taxonomies, or formal frameworks. It uses bolded terms ("Naming amortizes discovery cost," "Distillation targets a bounded observer") to mark the two grounding mechanisms, but these are labels for substantive argumentative moves rather than cosmetic structure. No structure present is replaceable by a single sentence without content loss.

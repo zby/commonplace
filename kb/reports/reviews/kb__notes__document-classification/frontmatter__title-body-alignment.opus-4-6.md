@@ -1,0 +1,1 @@
+pass — The body delivers a classification spec: a base types table with structural tests and verifiability criteria, plus a migration table from old flat types. This matches what "document classification" scopes. No drift detected.

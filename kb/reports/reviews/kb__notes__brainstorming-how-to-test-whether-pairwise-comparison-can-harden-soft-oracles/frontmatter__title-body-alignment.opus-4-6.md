@@ -1,0 +1,1 @@
+pass. The body delivers exactly what the title promises: a structured test plan for the pairwise-hardening hypothesis. The three test tiers (judgment quality, ranking quality, optimization-loop value) directly operationalize the "whether" in the title. The description's framing (discrimination, stability, calibration) maps to the test measures defined in the body.

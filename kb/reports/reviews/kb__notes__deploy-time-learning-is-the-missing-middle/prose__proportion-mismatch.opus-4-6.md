@@ -1,0 +1,3 @@
+WARN
+
+The core claim is the three-timescale model and verifiability gradient. The "Concrete Examples" section (pitchdeck evaluation and data report) consumes roughly 40% of the note and describes implementation details of example code. While examples ground the abstract framework, the slug-generation discussion and four-stage pitchdeck progression are more detailed than needed to support the verifiability gradient claim. The "Related Work" section is well-proportioned. The examples could be trimmed to the minimum needed to illustrate each gradient grade, with pointers to the example directories for details.

@@ -1,0 +1,1 @@
+pass. As a topical title naming a spec artifact, composability as a prose fragment is not required. It works as a concrete artifact name and is recognizable in link contexts ("see the decomposition heuristics for bounded-context scheduling" or "the decomposition heuristics...").

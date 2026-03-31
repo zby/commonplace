@@ -1,0 +1,1 @@
+pass. The description adds the mechanism (/connect's dual discovery and articulation testing), the scope (reusing on search results, building a temporary research graph), and the destination (bridging to KB). These specifics are not in the title and would help an agent distinguish this from a naive "how to improve search" note.

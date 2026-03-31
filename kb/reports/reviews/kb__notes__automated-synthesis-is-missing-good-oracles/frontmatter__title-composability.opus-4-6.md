@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment. "Because automated synthesis is missing good oracles, synthesis must remain human-triggered at scale" is grammatically natural. The subject-predicate structure slots cleanly into causal and explanatory sentence frames without rephrasing.

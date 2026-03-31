@@ -1,3 +1,3 @@
 PASS
 
-No numbers, percentages, named studies, or concrete empirical claims appear without source or context. The Source section acknowledges the origin ("Adapted from a social media post on 'The Art of Good Thinking: Moving Between Levels'") — vague but honest about its provenance. All other claims are analytical rather than empirical.
+No orphan references detected. The note contains no specific figures, percentages, or named studies requiring sourcing. The Source section attributes the core insight to "a social media post on 'The Art of Good Thinking: Moving Between Levels'" — sufficient provenance for an adapted framing idea. All claims are analytical (applying resolution-switching to KB design), not empirical.

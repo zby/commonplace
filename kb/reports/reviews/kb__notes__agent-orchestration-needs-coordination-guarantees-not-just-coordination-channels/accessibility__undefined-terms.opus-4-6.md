@@ -1,0 +1,7 @@
+- "accountability vacuum" is introduced as a bolded term: "calls this the **accountability vacuum**: in a chain `X → A → B → C → … → Y`, intermediaries pass authority onward without necessarily retaining liability for what follows." The inline colon-expansion is sufficient — the term is defined in place.
+
+- "liability firebreak" is introduced as: "The proposed remedy is a **liability firebreak**: at certain points in a delegation chain, an intermediate node must either assume full, non-transitive liability for downstream actions or halt and request a fresh transfer of authority from the human principal." The inline colon-expansion is sufficient — the term is defined in place.
+
+- "scoping or isolation primitive" is used in the Contamination section: "Without a scoping or isolation primitive, local work contaminates later work." The word "primitive" in the programming-language sense (a basic, irreducible operation) is used without explanation. A reader unfamiliar with the computational usage could miss the intended meaning. Recommend adding a brief gloss, e.g., "a scoping or isolation primitive — a basic mechanism that enforces boundaries between frames."
+
+- "adjudication primitive" is used: "Without an adjudication primitive — voting, verification, or an oracle-backed selector — bad contributions are preserved." The dash-expansion partially explains the term by giving examples, which provides enough context for most readers. This is borderline; the examples (voting, verification) make the meaning inferable. Pass on this item.

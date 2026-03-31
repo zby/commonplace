@@ -1,0 +1,1 @@
+**pass** The body supports the title's claim: it establishes that in-context learning requires prior selection machinery, that this machinery improves over deployment time (producing the artifacts of deploy-time learning), and that eliminating weight updates doesn't eliminate learning — it relocates it to the context engineering layer. No claim or scope drift detected.

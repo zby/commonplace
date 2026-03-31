@@ -1,0 +1,3 @@
+"Kirsch" is introduced in "Kirsch's ephemeral-software critique" without identifying who Kirsch is. The linked source identifies him as Andreas Kirsch, an ML researcher/practitioner. The note should carry that identification inline.
+
+Suggested fix: "Andreas Kirsch's [ephemeral-software critique](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md)" or "Kirsch's [ephemeral-software critique](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) (an ML researcher arguing against the strong form of ephemeral software)".

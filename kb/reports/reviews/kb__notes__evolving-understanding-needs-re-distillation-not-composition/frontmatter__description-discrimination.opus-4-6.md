@@ -1,0 +1,1 @@
+**pass** The description adds both mechanism and scope: it names the specific cost (fragment reconciliation can exceed effective context) and the solution (pre-distilled narrative sized for effective context). This is materially richer than the title's prescription alone — it explains why composition fails rather than just asserting that re-distillation is needed.

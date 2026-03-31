@@ -1,0 +1,1 @@
+**pass** The title works well as a prose fragment: "since subtasks that need different tools force loop exposure in agent frameworks, the parent must treat sub-agent spawning as first-class" is fluent and natural. The causal framing embeds cleanly into linking sentences.

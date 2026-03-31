@@ -1,0 +1,3 @@
+WARN
+
+"1M LOC scale" -- attributed to OpenAI's Codex team via Harness Engineering source link, adequate. "20%" time on cleanup -- same source, adequate. "50% of AGENTS.md files were never changed" -- attributed to methodology-enforcement note, adequate. "6:1" add-to-remove ratio -- appears in the Implications section without inline source or link. The Relevant Notes section attributes it to the methodology-enforcement note, but the body text presents it as a bare number. Should have an inline link or parenthetical attribution where first used.

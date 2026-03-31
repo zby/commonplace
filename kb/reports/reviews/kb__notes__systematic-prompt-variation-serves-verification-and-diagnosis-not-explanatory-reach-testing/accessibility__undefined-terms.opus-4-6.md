@@ -1,0 +1,7 @@
+"metamorphic transformations" is used in the Verification section — "especially metamorphic checks, also use invariance as part of the signal ('if the answer changes under an equivalent transformation, something is wrong')" — with a brief inline description of what metamorphic checks do. The description is sufficient to understand the concept without prior knowledge.
+
+"decorrelation" is used as a section header concept: "prompt variation as decorrelation machinery." The surrounding explanation — "breaks some of that correlation and makes aggregation more meaningful" — provides enough context inline to understand what decorrelation means in this context. Pass.
+
+"i.i.d. error assumption" is not used in this note (it appears in the synthesis note). Pass.
+
+"explanatory reach" appears in the title and in the body — "Deutsch's explanatory-reach test does something different." The phrase "explanatory reach" is also the subject of a linked note ("first-principles reasoning selects for explanatory reach over adaptive fit"). In the body, the note explains what the reach test does: "it varies the explanation itself — change a premise and ask whether the conclusion changes predictably. That tests whether an idea captures causal structure." This is a sufficient inline description of what "reach" means here. Pass.

@@ -1,0 +1,1 @@
+**pass** The title composes naturally: "since the type system enforces metadata that navigation depends on, a KB that skips type enforcement will degrade to open-every-document navigation as agents write notes under time pressure." The subject-verb-object structure is clear and the causal implication follows cleanly.

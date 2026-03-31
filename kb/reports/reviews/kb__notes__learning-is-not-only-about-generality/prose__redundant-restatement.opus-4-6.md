@@ -1,0 +1,3 @@
+INFO
+
+The opening paragraph and the first sentence of "Generality" partially overlap: both establish that capacity varies in scope. However, the opening paragraph frames the broader claim (capacity is not a single axis, with Simon's grounding), while the Generality section develops the specific dimension. The overlap is setup-vs-development rather than same-argumentative-role restatement. Not deletable without loss because the opening paragraph also introduces the compound dimension and Simon's definition.

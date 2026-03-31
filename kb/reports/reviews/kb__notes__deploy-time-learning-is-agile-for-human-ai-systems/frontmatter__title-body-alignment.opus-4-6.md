@@ -1,0 +1,1 @@
+pass. The body establishes the agile analogy, maps the five-step cycle directly, and then articulates the key divergence (agile treats prose as temporary; deploy-time learning treats the hybrid as the end state). The title's claim is the organizing principle throughout; the body neither overshoots nor undershoots the scope.

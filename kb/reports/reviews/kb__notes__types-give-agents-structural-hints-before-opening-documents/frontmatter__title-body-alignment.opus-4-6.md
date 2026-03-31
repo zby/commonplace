@@ -1,0 +1,1 @@
+**pass** The body directly supports the title. It establishes why agents need structural hints (stateless, finite context), explains the two-layer routing mechanism (type + description), and grounds it in the verifiability criterion. The final paragraph correctly defers enforcement to a sibling note rather than expanding scope. No drift detected.

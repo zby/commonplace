@@ -1,0 +1,1 @@
+pass. The title works as a prose fragment: "since deploy-time learning is the missing middle between training and in-context adaptation, architectural decisions about durable artifacts are learning decisions." The idiom "missing middle" reads naturally in a dependent clause.

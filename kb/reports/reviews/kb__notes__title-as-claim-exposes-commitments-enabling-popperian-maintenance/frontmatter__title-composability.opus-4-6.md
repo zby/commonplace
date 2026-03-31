@@ -1,0 +1,1 @@
+**pass** The title composes well as a causal premise: "because title as claim exposes commitments enabling Popperian maintenance, review cycles can skip files whose titles still hold rather than re-opening every note." The gerund phrase "enabling Popperian maintenance" is slightly dense but grammatically functional in linking prose.

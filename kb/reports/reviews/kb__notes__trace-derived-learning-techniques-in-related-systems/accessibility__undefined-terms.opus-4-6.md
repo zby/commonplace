@@ -1,0 +1,7 @@
+"PRM" appears twice in the OpenClaw-RL section — "PRM judging runs asynchronously once next-state evidence arrives" and "PRM scoring over assistant output plus next-state evidence" — without expansion or definition. PRM (Process Reward Model) is not standard enough to assume familiarity. Suggested fix: expand on first use, e.g., "PRM (process reward model) judging runs asynchronously."
+
+"OPD" appears twice — "OPD-style token-level supervision" and "OPD, and combined training" — without expansion. Suggested fix: expand on first use, e.g., "OPD (Online Policy Distillation)-style token-level supervision" or replace with a plain-language description if the acronym is not essential.
+
+"MCTS" appears four times (in Agent-R section and closing analysis) — "MCTS over environment interaction", "MCTS search trees", "MCTS search-tree mining", "MCTS paths are paired" — without expansion. While common in reinforcement learning literature, a reader from the broader agent-systems audience may not know it. Suggested fix: expand on first use as "MCTS (Monte Carlo Tree Search)."
+
+"FINCH clustering" appears once in the G-Memory section — "Periodic FINCH clustering merges related rules" — without identifying what FINCH is. Suggested fix: briefly gloss as "FINCH (a parameter-free hierarchical clustering algorithm)" or describe the operation in plain language.

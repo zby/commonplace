@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment: "since error correction works with above-chance oracles and decorrelated checks, even LLM-as-judge reviewers can be amplified into reliable reviewers through redundancy" reads naturally. The title is long but grammatically integrates as a subject-predicate clause in standard causal frames.

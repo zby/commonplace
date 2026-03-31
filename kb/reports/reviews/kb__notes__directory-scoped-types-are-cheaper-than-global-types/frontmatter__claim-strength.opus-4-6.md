@@ -1,0 +1,1 @@
+pass. An informed reader could contest this: one could argue that global types provide discoverability and cross-directory search value that outweighs the context cost, or that the cost of loading a few type definitions is negligible given modern context window sizes. The title's "cheaper" claim involves a real trade-off that experienced practitioners might weigh differently.

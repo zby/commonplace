@@ -1,0 +1,1 @@
+pass. As a topical title naming a design-space artifact, composability as a prose fragment is not required. It functions well as a link target and the title is a recognizable artifact name (a comparison/tradeoff note) rather than an awkward free-standing phrase.

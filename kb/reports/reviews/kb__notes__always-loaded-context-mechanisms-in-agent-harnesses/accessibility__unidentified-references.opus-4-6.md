@@ -1,0 +1,3 @@
+"Pi Self-Learning" appears twice ("reflection files (Pi Self-Learning)", "External pipeline (Pi Self-Learning)") without saying what it is -- a product, a research project, or a framework. The functional description ("a separate process analyzes session traces and updates memory") explains what it does but not what it is. On first mention, add a brief identifier such as "Pi Self-Learning, an agent memory framework" or similar, depending on what it actually is.
+
+"Letta/MemGPT" is in the same position -- it appears as a platform name with a functional description but no category identification. This is less urgent since MemGPT is more widely known, but a one-phrase gloss ("Letta/MemGPT, an agent framework with self-editing memory") on first mention would help.

@@ -1,0 +1,1 @@
+pass — The title embeds naturally into prose: "since ephemerality is safe where embedded operational knowledge has low reach, one-off analysis scripts can be discarded while production billing systems cannot" is fluent and illustrative. The "where" conditional structure is unusual but grammatically clear and directly linkable.

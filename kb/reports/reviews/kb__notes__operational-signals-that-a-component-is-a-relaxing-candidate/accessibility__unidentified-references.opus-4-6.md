@@ -1,0 +1,1 @@
+"AgeMem" appears in the Relevant Notes section -- "AgeMem confirms memory composition policy exhibits Signal 3 and Signal 4 in a concrete system" -- without any identification of what it is (a system, a paper, a framework). The reader cannot tell from context. Suggested fix: identify it on use, e.g. "AgeMem (a memory management system described in the linked note) confirms..."

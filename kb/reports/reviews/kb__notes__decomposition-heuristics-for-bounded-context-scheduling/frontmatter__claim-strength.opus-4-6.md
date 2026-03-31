@@ -1,0 +1,1 @@
+pass. "Decomposition heuristics for bounded-context scheduling" is a topical title for a multi-claim spec note that catalogues several working heuristics with empirical grounding. It is correctly not framed as a single claim, because the note's content is a heuristic set, not a single contestable thesis. Topical titles are valid for specs and frameworks.

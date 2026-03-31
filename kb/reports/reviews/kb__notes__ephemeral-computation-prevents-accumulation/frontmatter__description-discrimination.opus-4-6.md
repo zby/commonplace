@@ -1,0 +1,1 @@
+pass — The description adds mechanism (discarding artifacts after use), frames the tradeoff (accumulation for simplicity), and positions the note in a broader landscape (inverse of codification). These additions distinguish this note from a generic "ephemerality vs. persistence" discussion and from the companion note on when ephemerality is safe.

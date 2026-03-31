@@ -1,0 +1,1 @@
+pass — The description adds meaningful context beyond the title: it specifies that this is a "taxonomy overview," flags the base types table and the migration from old flat types as the content, and explicitly routes to where global field definitions live (types/note.md). An agent searching for the type system entry point would be well-served by this description.

@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment: "since structured output is easier for humans to review, structured document types give a reliability guarantee independent of how the LLM generates the content." The predicate form ("X is easier for Y to Z") is composable and links naturally into notes about type-system design, review workflows, or human-in-the-loop oversight.

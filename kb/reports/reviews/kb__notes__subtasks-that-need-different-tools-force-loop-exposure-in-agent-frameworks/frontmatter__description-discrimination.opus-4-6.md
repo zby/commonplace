@@ -1,0 +1,1 @@
+**pass** The description adds mechanism beyond the title: it specifies that the parent must "construct fresh calls for each child" and names the exact consequence (framework-owned loop is no longer the right control surface). This tells a reader what the note explains mechanistically, not just what topic it covers.

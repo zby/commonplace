@@ -1,0 +1,1 @@
+pass. The title works naturally in prose frames: "since notes need quality scores to scale curation, /connect should filter candidates by composite score before agent evaluation" is fluent. The title is a full claim sentence, not a noun phrase, which makes it straightforwardly linkable.

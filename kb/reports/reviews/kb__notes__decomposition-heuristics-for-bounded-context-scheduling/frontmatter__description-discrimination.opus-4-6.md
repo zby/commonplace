@@ -1,0 +1,1 @@
+pass. The description names three specific heuristics (separate selection from joint reasoning, choose representations not just subsets, save reusable intermediates in scheduler state) and identifies that they follow from the symbolic scheduling model. This gives an agent enough signal to distinguish this note from other scheduling or decomposition notes without opening it.

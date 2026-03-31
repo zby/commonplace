@@ -1,0 +1,3 @@
+"Claude Code or Codex" — both are named as concrete systems in the "Practical consequences for commonplace" section ("If Claude Code or Codex can route around a broken helper..."). Claude Code is not identified inline (what kind of tool it is), and Codex is not identified inline either. A reader unfamiliar with these systems cannot tell from the note whether they are agent frameworks, IDEs, coding assistants, or something else.
+
+Note: the note itself does not supply identification for either name, so the recommendation is that the author add a brief inline gloss — e.g., "Claude Code (Anthropic's agentic coding assistant) or Codex" — rather than fabricating attribution here.

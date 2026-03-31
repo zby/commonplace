@@ -1,0 +1,1 @@
+pass. The description introduces the measure (epiplexity), the scope (network accumulation, not single-note token count), and the mechanism (inflation without extractable structure). These additions go significantly beyond the title's definitional framing and distinguish this from a generic "LLM verbosity" or "information density" note.

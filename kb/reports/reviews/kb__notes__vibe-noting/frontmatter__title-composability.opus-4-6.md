@@ -1,0 +1,1 @@
+**pass** As a term-naming note, composability is assessed as a reference target rather than a causal premise. "Vibe-noting" works as a linkable noun: "the vibe-noting model argues that inspectability, not just verifiability, determines augmentation quality" is natural reference prose. The coined term is compact and memorable, which is the right property for a definitional anchor.

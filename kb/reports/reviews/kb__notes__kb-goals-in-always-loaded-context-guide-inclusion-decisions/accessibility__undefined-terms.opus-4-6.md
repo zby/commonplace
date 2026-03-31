@@ -1,0 +1,3 @@
+"Zero-hop access" in "both need zero-hop access" is used without definition. A reader unfamiliar with the KB's hop metaphor (where a "hop" means loading an additional file) cannot decode this. The intended meaning is "available without loading another file."
+
+Suggested fix: replace "both need zero-hop access" with "both need to be available without loading another file" or "both need to be present in always-loaded context."

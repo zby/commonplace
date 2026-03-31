@@ -1,0 +1,3 @@
+PASS
+
+Kirsch's essay is from software engineering; the note applies the analysis to computation systems generally. The bridge is explicit: "Kirsch's essay supplies the concrete software-engineering version of this cost" -- framing the software domain as an instance of the general pattern rather than requiring cross-domain transfer. RLMs are used as an example within the computation domain, not as a cross-domain bridge. No unbridged transfers.

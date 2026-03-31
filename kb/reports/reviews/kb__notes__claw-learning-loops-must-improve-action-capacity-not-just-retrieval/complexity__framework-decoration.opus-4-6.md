@@ -1,0 +1,1 @@
+**Pass.** The note does not contain tables, taxonomies, or formal frameworks. The bulleted lists of action modes, knowledge types, and mutations serve as concrete illustrations of the main claim rather than presenting themselves as a rigorous classificatory structure.

@@ -1,0 +1,1 @@
+pass. The body delivers what the title promises: it identifies where the bitter lesson's predictive power ends, develops the arithmetic/vision-feature distinction, and shows the boundary running through hybrid systems like chess. There is no scope or claim drift — the boundary concept is introduced, analyzed, and made operational throughout.

@@ -1,7 +1,7 @@
 INFO
 
-The note's core claim (three properties — discoverable, composable, trustworthy — maximize contextual competence) is well-developed in its own section. However, the "Reach" material (the Deutsch distinction, the reach-operations asymmetry, the tension subsection, the authored-knowledge section) occupies roughly as much space as the three-properties section that is the nominal load-bearing claim.
+The title promises a theory about three properties (discoverable, composable, trustworthy) serving contextual competence. The three-properties section develops each property with failure modes and mechanisms across one substantial paragraph block plus a dependency paragraph — solid but compact.
 
-The title promises a theory about *three properties serving contextual competence*; reach is an extension that explains which knowledge is worth making those properties serve. Reach is genuinely germane — but the proportion has drifted. A reader finishing the note might reasonably conclude the central claim is "prefer high-reach knowledge" rather than the three-property framework.
+The reach material (Deutsch distinction, reach-operations asymmetry, tension subsection, authored-knowledge section) collectively occupies roughly as much space as the three-properties section. A reader finishing the note might conclude the central claim is "prefer high-reach knowledge" rather than the three-property framework.
 
-This is INFO rather than WARN because reach and the three properties are mutually reinforcing, not competing, and the "theory, compressed" section does restore the three-property framing at the end. Consider whether the Reach section warrants extraction as its own note, with this note linking to it rather than housing it.
+INFO rather than WARN because reach and the three properties are mutually reinforcing — reach explains *which* knowledge deserves to be made discoverable, composable, and trustworthy — and the closing "theory, compressed" section restores the three-property framing. Consider whether the reach material warrants its own note, with this note linking to it rather than housing it.

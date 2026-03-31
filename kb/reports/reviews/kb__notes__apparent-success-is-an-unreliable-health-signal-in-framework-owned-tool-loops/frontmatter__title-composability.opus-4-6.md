@@ -1,0 +1,1 @@
+pass — The title works as a prose fragment. "Because apparent success is an unreliable health signal in framework-owned tool loops, we cannot infer infrastructure health from task completion alone" reads naturally. The subject-predicate structure is grammatical and the title can anchor a subordinate clause without rephrasing.

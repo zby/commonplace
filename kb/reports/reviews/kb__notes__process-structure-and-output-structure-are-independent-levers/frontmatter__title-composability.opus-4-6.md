@@ -1,0 +1,1 @@
+pass. The title works naturally in linking prose: "since process structure and output structure are independent levers, a Toulmin template and a reasoning-step constraint address different failure modes and should be designed separately" is fluent. The parallel structure of the title makes it grammatically stable in causal frames.
