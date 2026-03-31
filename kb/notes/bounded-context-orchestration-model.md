@@ -10,7 +10,7 @@ status: seedling
 
 Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, there is reason to think that [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment. (The second argument is [conjectural](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md); the first is well-established.)
 
-Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls.
+Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls. This is not a restrictive design choice — [any symbolic program with bounded LLM calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md), so the model captures the full space of such architectures.
 
 ## The model
 
@@ -53,7 +53,7 @@ while not satisfied(K):
 
 Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem (the scheduler must merge or arbitrate when parallel results interact), but not the core structure — `select` is still symbolic code assembling prompts from `K`.
 
-Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. This is not `select` invoking an LLM call internally; it is the loop doing two iterations (one to plan, one to act on the plan). Hierarchical decomposition is therefore not a separate mechanism but a pattern of use. More generally, [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — standard composition patterns (sequential phases, map, filter, conditionals) all desugar trivially into this loop, preserving its invariants by construction.
+Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. Hierarchical decomposition is therefore not a separate mechanism but a pattern of use.
 
 ## What makes selection hard
 
@@ -64,51 +64,6 @@ The `select` function is where the optimisation lives. The first problem is that
 **Dual cost dimensions.** [Context cost](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) has two dimensions — volume (how many tokens) and complexity (how hard the tokens are to use). Selection must optimise both: include enough to be useful, but frame it so the sub-agent can actually use it.
 
 **Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same tokens, different yield for a bounded reader. See [information value is observer-relative](./information-value-is-observer-relative.md).
-
-## The canonical note-selection example
-
-Suppose the task is: given many notes, find the ones relevant to a question and write an analysis. The full set of notes does not fit in one context window, but the relevant subset does.
-
-Traced through the select/call loop:
-
-```
-K = {goal: "what are the main failure modes of multi-agent systems?",
-     notes: [n₁ ... nₖ]}
-
-def select(K):
-    unlabeled = [nᵢ for nᵢ in K.notes if nᵢ not yet labeled]
-    if unlabeled:
-        return "[unlabeled[0]] --- Our goal is to answer the question: [goal]. Is the note above relevant to this goal?"
-    else:
-        relevant = [nᵢ for nᵢ in K.notes where nᵢ marked relevant]
-        return "[concat(relevant)] --- Answer the question: [goal]"
-
-while not satisfied(K):
-    P = select(K)
-    r = call(P)
-    K = K + r
-```
-
-All the symbolic work — the loop over notes, the relevance filtering, the concatenation — lives inside `select`. The outer structure is exactly the abstract select/call loop. Several [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) generalise from this pattern.
-
-## Realising the model with SDKs and tool calling
-
-The model is trivially compatible with ordinary LLM SDKs. The application programmer keeps `K` in code, computes everything deterministic outside the model, and calls the LLM only when semantic judgment is needed. Nothing about the model requires a special agent runtime. [tool loop](./tool-loop-index.md) develops the framework-design consequence: trouble starts when higher layers hide that application-owned loop behind framework-managed tool sessions.
-
-Tool calling fits this picture naturally. It is just a particular return shape from a bounded call: instead of returning only prose or structured extraction, the model can return a request for application code to run a tool and feed the result back. That is a useful inversion of control, but it does not change the architecture. The scheduler can still live entirely in application code:
-
-- keep `K` in program state, files, or a database
-- assemble `P = select(K)` in code
-- call the LLM API
-- if the result is a tool request, execute it in code and append the result to `K`
-- if the result is a semantic judgment, append it to `K`
-- issue the next fresh bounded call when the application decides it is needed
-
-This is still the clean model, even if some `select` decisions come from planning calls, because those decisions return to `K` as explicit symbolic state before the next step.
-
-Many frameworks then turned tool calling into an internal **tool loop**: the library keeps re-calling the model, executing tools, and managing intermediate progression inside its own abstraction. The application programmer can still build an outer loop around such a framework, but then starts fighting the framework's hidden scheduler instead of simply using the SDK as a bounded semantic primitive.
-
-So tool calling is not the threshold. Plain SDK calls already suffice; tool calling is an accommodated extension; the real boundary is whether the orchestration loop remains exposed to application code or gets absorbed into a framework-managed conversation/tool loop.
 
 ## Scope and open questions
 
@@ -136,10 +91,10 @@ Relevant Notes:
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
+- [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — universality: the model's invariants hold by construction for all programs with symbolic orchestration and bounded LLM calls
 - [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: practical heuristics that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
-- [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — boundary case: tool and schema hardening recover part of the interface discipline without moving the scheduler fully into code
 - [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
