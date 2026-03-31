@@ -1,5 +1,5 @@
 ---
-description: Any symbolic program with bounded LLM calls can be mechanically converted into the select/call loop with the same calls — the model's invariants hold by construction for all such programs
+description: Any program whose symbolic execution between bounded LLM calls can be reified as explicit state can be mechanically converted into the select/call loop with the same call sequence
 type: note
 tags: [computational-model]
 status: seedling
@@ -9,7 +9,12 @@ status: seedling
 
 ## The decomposition lemma
 
-**Claim.** Any program whose operations are (a) symbolic computation over state `K` and (b) bounded LLM calls `r = call(P)` can be mechanically converted into the [base loop](./bounded-context-orchestration-model.md):
+**Claim.** Any program whose execution consists of:
+
+- symbolic computation over explicit machine state `K`
+- bounded LLM calls `r = call(P)`
+
+can be mechanically converted into the [base loop](./bounded-context-orchestration-model.md):
 
 ```
 while not satisfied(K):
@@ -20,9 +25,18 @@ while not satisfied(K):
 
 with `select` a symbolic function and the *same sequence of bounded calls*.
 
-**Why.** At each call site, everything available to decide the next prompt is the original inputs plus prior call results — exactly `K`. So `select(K)` can reproduce the prompt by encoding the original program's logic (conditionals, loop counters, phase tracking) as dispatch over `K`. This is the same sense in which any program can be refactored into a state-machine loop.
+Here `K` must contain the full symbolic machine state needed to resume execution: original inputs, prior call results, control location, loop counters, phase tags, pending work items, and any other symbolic locals the program consults between calls.
 
-**Consequence.** The base model's three invariants — bounded context per call, explicit state in `K`, symbolic orchestration — hold **by construction** for any program satisfying the preconditions. No per-program verification needed.
+**Why.** Define `select(K)` as: run the program's symbolic transition logic from the current machine state until either:
+
+- the next LLM call site is reached, in which case emit that prompt `P`
+- the program halts, in which case `satisfied(K)` becomes true
+
+Because all inter-call computation is symbolic, this transition is exact. The next prompt is therefore a function of the current symbolic state alone. Iterating this construction reproduces the original program's call order and prompt contents, so the transformed loop makes the same bounded calls in the same sequence.
+
+This is not a special property of LLM programs. It is the standard move behind operational semantics and abstract machines: execution is represented as transitions over explicit configurations, and control state that was implicit in source structure is reified into data.
+
+**Consequence.** Once a program is shown to satisfy the preconditions, the base model's three invariants — bounded context per call, explicit state in `K`, symbolic orchestration — hold **by construction**. No additional invariant proof is needed for each program beyond checking those preconditions.
 
 ## The ergonomic direction
 
@@ -30,9 +44,19 @@ The practical value runs opposite to the conversion: write in whatever style is 
 
 ## Scope
 
-**LLM-mediated scheduling.** The lemma requires inter-call computation to be symbolic. When the program uses an LLM call to decide what to do next (an [LLM-mediated scheduler](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)), precondition (a) is violated and the symbolic-orchestration invariant no longer holds by construction.
+**LLM-mediated scheduling.** The lemma requires inter-call computation to be symbolic. When the program uses an LLM call to decide what to do next (an [LLM-mediated scheduler](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)), that symbolic-computation precondition is violated and the symbolic-orchestration invariant no longer holds by construction.
 
-**Concurrent shared state.** Independent fan-out fits the model fine. But calls that need mid-flight visibility into each other's results require synchronisation that the sequential base loop doesn't express.
+**Concurrency.** Independent fan-out, barriers, and merges still fit the model: pending tasks and partial results can be represented in `K`, and the scheduler can serialize the coordination logic without changing which bounded calls occur. The real boundary is not concurrency itself but interaction that cannot be reduced to symbolic state transitions between calls — for example, mid-call visibility into another in-flight call, or dependence on external mutable state that is not represented in `K`.
+
+## Known lineage
+
+The basis for the construction is standard programming-languages machinery rather than a special theorem about LLM systems:
+
+- **Small-step / structural operational semantics** represents execution as transitions over machine configurations.
+- **Abstract-machine compilation** reifies control state explicitly so the next transition is a first-order function of the current state.
+- **CPS plus defunctionalization** is the classic route when control flow needs to be turned into explicit symbolic state.
+
+This note applies that generic compilation move to the specific case where the only non-symbolic steps are bounded LLM calls.
 
 ## Open questions
 
