@@ -324,7 +324,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | AgeMem | RL trajectories over memory operations + task/context rewards |
 | Trajectory-Informed | Completed execution trajectories → strategy/recovery/optimization tips |
 
-Trace richness constrains what can be learned. Tool calls, statuses, gates, scores, and context snapshots enable operational pattern mining that plain transcripts cannot support. Opaque traces force the miner to trust the upstream runtime. Oracle-aligned traces enable promotion all the way to weights.
+Trace richness constrains what can be learned. Tool calls, statuses, gates, scores, and context snapshots enable operational pattern mining that plain transcripts cannot support. Opaque traces force the miner to trust the upstream runtime. Oracle-aligned traces enable promotion all the way to weights. [Meta-Harness](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) (Lee et al., 2025) provides the first controlled evidence: on text classification, a proposer agent with access to raw execution traces (10 MTok/iteration) achieves median 50.0% accuracy, while the same proposer with scores-only (34.6%) or scores+summary (34.9%) trails by 15+ points. Summaries do not recover the compressed signal and may actively hurt — the scores+summary variant underperforms scores-only on best-found accuracy. This quantifies what the survey table above implies: diagnostic richness is a binding constraint on outer-loop learning quality, not just a convenience.
 
 ## What looks borrowable
 

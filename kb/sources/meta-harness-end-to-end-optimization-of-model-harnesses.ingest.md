@@ -1,5 +1,5 @@
 ---
-description: Controlled ablation showing raw execution traces (10 MTok/iter) outperform summaries and scores-only feedback by 10+ points in automated outer-loop harness search — strongest empirical case for diagnostic richness as a binding constraint on automated improvement
+description: Controlled ablation showing raw execution traces (10 MTok/iter) outperform summaries by 10+ points in automated harness search — first empirical evidence for diagnostic richness as binding constraint
 source_snapshot: meta-harness-end-to-end-optimization-of-model-harnesses.md
 ingested: 2026-03-30
 type: scientific-paper
