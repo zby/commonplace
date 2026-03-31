@@ -17,7 +17,14 @@
 set -euo pipefail
 
 if [[ -z "${COMMONPLACE_REVIEW_MODEL:-}" ]]; then
-  echo "error: COMMONPLACE_REVIEW_MODEL is not set" >&2
+  cat >&2 <<'EOF'
+error: COMMONPLACE_REVIEW_MODEL is not set.
+This variable determines the review filename suffix and freshness key.
+Set it to the model producing reviews in this run, for example:
+  COMMONPLACE_REVIEW_MODEL=gpt-5-4-high
+  COMMONPLACE_REVIEW_MODEL=opus-4-6
+Do not copy a suffix from existing review files.
+EOF
   exit 1
 fi
 
