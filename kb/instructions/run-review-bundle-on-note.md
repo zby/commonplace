@@ -29,12 +29,13 @@ Read `{note-path}`.
 
 For each gate:
 
-1. Apply the gate's failure mode and test to the note.
-2. Write a fresh review body for the current note state.
+1. Run `scripts/review_prereqs.sh {note-path} {gate-id}` and use the emitted metadata block at the top of the review file.
+2. Apply the gate's failure mode and test to the note.
+3. Write a fresh review body for the current note state.
 
 ### 3. Write each review
 
-Write each review body to the path printed by `resolve_gates.py` for that gate. The file's modification time marks it as current — no finalize step is needed.
+Write each review body to the path printed by `resolve_gates.py` for that gate. The metadata block marks the accepted note revision and gate fingerprint — no filesystem timestamp contract is used.
 
 ## Do not
 

@@ -39,8 +39,10 @@ When in doubt, don't ack — let the review handle it.
 Ack all insignificant pairs in one command:
 
 ```bash
-uv run scripts/gate_selector.py --ack {note-path}:{gate-id} [{note-path}:{gate-id} ...]
+uv run scripts/ack_gate_review.py {note-path} {gate-id} [{gate-id} ...]
 ```
+
+This rewrites the review metadata so `last-accepted-*` matches the current note revision. It does not rely on `touch` or filesystem timestamps.
 
 ### 4. Report
 

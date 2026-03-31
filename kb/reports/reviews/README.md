@@ -1,6 +1,6 @@
 # Reviews
 
-Automated quality reviews of `kb/notes/`. Each review applies one gate (a focused quality check) to one note. Staleness is tracked by filesystem modification times.
+Automated quality reviews of `kb/notes/`. Each review applies one gate (a focused quality check) to one note. Staleness is tracked by metadata stored inside the review file.
 
 **System design:** [scripts/REVIEW-SYSTEM.md](../../../scripts/REVIEW-SYSTEM.md)
 
@@ -45,9 +45,9 @@ uv run scripts/gate_selector.py prose
 uv run scripts/gate_selector.py --all-gates --json
 
 # Ack a review (note change was insignificant for this gate)
-touch kb/reports/reviews/kb__notes__backlinks/prose__source-residue.opus-4-6.md
+uv run scripts/ack_gate_review.py kb/notes/backlinks.md prose/source-residue
 ```
 
 ## Re-running
 
-Writing a new review body overwrites the file and resets its mtime, marking it current. Commit before re-running if you want historical snapshots.
+Writing a new review body overwrites the file and refreshes its acceptance metadata, marking it current. Commit before re-running if you want historical snapshots.

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Select stale (note, gate) pairs using mtime-based staleness.
+"""Select stale (note, gate) pairs using review metadata.
 
-Staleness rules (like make):
-  - Review file missing           → stale (missing-review)
-  - Gate mtime > review mtime     → stale (gate-changed)
-  - Note mtime > review mtime     → stale (note-changed), diff included in JSON output
+Staleness rules:
+  - Review file missing or metadata missing        → stale (missing-review)
+  - Gate fingerprint != review gate fingerprint    → stale (gate-changed)
+  - Note blob sha != accepted note sha in review   → stale (note-changed)
 
 See scripts/REVIEW-SYSTEM.md for the full design.
 """
@@ -12,15 +12,23 @@ See scripts/REVIEW-SYSTEM.md for the full design.
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
-import os
-import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 
 from review_model import encode_model, resolve_model
+from review_metadata import (
+    ReviewMetadata,
+    blob_text_at_sha,
+    file_text_at_commit,
+    git_blob_sha,
+    inject_review_metadata,
+    iso_now,
+    last_commit_for_path,
+    parse_review_metadata,
+)
 
 GATES_ROOT = Path("kb/instructions/review-gates")
 REVIEWS_ROOT = Path("kb/reports/reviews")
@@ -88,26 +96,31 @@ def list_reviewable_notes(notes_dir: Path) -> list[Path]:
 # Diff generation
 # ---------------------------------------------------------------------------
 
-def note_diff_since(repo_root: Path, note_path: str, since_mtime: float) -> str | None:
-    """Git diff of a note from the last commit before since_mtime to the working tree."""
-    since_iso = datetime.fromtimestamp(since_mtime, tz=timezone.utc).isoformat()
-
-    # Find the last commit at or before the review mtime
-    result = subprocess.run(
-        ["git", "log", f"--before={since_iso}", "-1", "--format=%H", "--", note_path],
-        capture_output=True, text=True, cwd=repo_root,
-    )
-    base_commit = result.stdout.strip()
-    if not base_commit:
+def note_diff_since(
+    repo_root: Path,
+    note_path: str,
+    note_abs: Path,
+    metadata: ReviewMetadata,
+) -> str | None:
+    """Unified diff from the accepted note revision to the current working tree."""
+    previous_text: str | None = None
+    if metadata.last_accepted_note_sha:
+        previous_text = blob_text_at_sha(repo_root, metadata.last_accepted_note_sha)
+    if previous_text is None and metadata.last_accepted_note_commit:
+        previous_text = file_text_at_commit(repo_root, metadata.last_accepted_note_commit, Path(note_path))
+    if previous_text is None:
         return None
 
-    # Diff from that commit to the working tree
-    result = subprocess.run(
-        ["git", "diff", base_commit, "--", note_path],
-        capture_output=True, text=True, cwd=repo_root,
-    )
-    diff = result.stdout.strip()
-    return diff if diff else None
+    current_text = note_abs.read_text(encoding="utf-8")
+    diff = "".join(
+        difflib.unified_diff(
+            previous_text.splitlines(keepends=True),
+            current_text.splitlines(keepends=True),
+            fromfile=f"a/{note_path}",
+            tofile=f"b/{note_path}",
+        )
+    ).strip()
+    return diff or None
 
 
 # ---------------------------------------------------------------------------
@@ -136,19 +149,25 @@ def evaluate_gate(
     if not review_abs.is_file():
         return StaleGate(note_path, gate_id, "missing-review")
 
-    review_mtime = os.path.getmtime(review_abs)
+    metadata = parse_review_metadata(review_abs.read_text(encoding="utf-8"))
+    if metadata is None:
+        return StaleGate(note_path, gate_id, "missing-review")
+    if metadata.note_path and metadata.note_path != note_path:
+        return StaleGate(note_path, gate_id, "missing-review")
+    if metadata.gate_id and metadata.gate_id != gate_id:
+        return StaleGate(note_path, gate_id, "missing-review")
+    if metadata.last_accepted_note_sha is None or metadata.gate_fingerprint is None:
+        return StaleGate(note_path, gate_id, "missing-review")
 
-    if os.path.getmtime(gate_abs) > review_mtime:
+    current_gate_fingerprint = git_blob_sha(gate_abs)
+    if current_gate_fingerprint != metadata.gate_fingerprint:
         return StaleGate(note_path, gate_id, "gate-changed")
 
-    if os.path.getmtime(note_abs) > review_mtime:
-        diff = note_diff_since(repo_root, note_path, review_mtime) if include_diff else None
+    current_note_sha = git_blob_sha(note_abs)
+    if current_note_sha != metadata.last_accepted_note_sha:
+        diff = note_diff_since(repo_root, note_path, note_abs, metadata) if include_diff else None
         return StaleGate(note_path, gate_id, "note-changed", diff=diff)
 
-    # Caveat: if git checkout (or similar) rewrites the review file, its mtime
-    # jumps to "now", potentially hiding genuine note changes. This is rare
-    # (requires the review to differ across branches) but silent. Re-run the
-    # sweep after branch operations if you suspect false freshness.
     return None
 
 
@@ -229,15 +248,51 @@ def print_grouped(records: list[StaleGate]) -> None:
 # ---------------------------------------------------------------------------
 
 def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
-    """Touch review files to mark (note, gate) pairs as acknowledged."""
+    """Rewrite review metadata to mark (note, gate) pairs as acknowledged."""
     for pair in pairs:
         if ":" not in pair:
             print(f"error: invalid pair (expected note:gate): {pair}", file=sys.stderr)
             sys.exit(1)
         note_path, gate_id = pair.split(":", 1)
+        note_abs = repo_root / note_path
+        gate_abs = repo_root / GATES_ROOT / f"{gate_id}.md"
+        if not note_abs.is_file():
+            print(f"error: note not found: {note_path}", file=sys.stderr)
+            sys.exit(1)
+        if not gate_abs.is_file():
+            print(f"error: gate not found: {gate_id}", file=sys.stderr)
+            sys.exit(1)
+
         review = repo_root / review_path_for(note_path, gate_id, model)
         review.parent.mkdir(parents=True, exist_ok=True)
-        review.touch()
+        existing_text = review.read_text(encoding="utf-8") if review.exists() else ""
+        existing_metadata = parse_review_metadata(existing_text)
+        now = iso_now()
+        note_sha = git_blob_sha(note_abs, write_object=True)
+        gate_fingerprint = git_blob_sha(gate_abs)
+        note_commit = last_commit_for_path(repo_root, Path(note_path))
+
+        updated_metadata = ReviewMetadata(
+            note_path=note_path,
+            gate_id=gate_id,
+            gate_fingerprint=gate_fingerprint,
+            last_full_review_note_sha=(
+                existing_metadata.last_full_review_note_sha if existing_metadata else None
+            ),
+            last_full_review_note_commit=(
+                existing_metadata.last_full_review_note_commit if existing_metadata else None
+            ),
+            last_full_review_at=existing_metadata.last_full_review_at if existing_metadata else None,
+            last_accepted_note_sha=note_sha,
+            last_accepted_note_commit=note_commit,
+            last_accepted_at=now,
+            last_acceptance_kind="trivial-change-ack",
+            review_type=existing_metadata.review_type if existing_metadata else "gate-review",
+        )
+        review.write_text(
+            inject_review_metadata(existing_text, updated_metadata),
+            encoding="utf-8",
+        )
         print(f"acked: {note_path} {gate_id}")
 
 
@@ -253,7 +308,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--ack", nargs="+", metavar="NOTE:GATE",
-        help="Ack (note, gate) pairs by touching review files. Format: note_path:gate_id",
+        help="Ack (note, gate) pairs by rewriting acceptance metadata. Format: note_path:gate_id",
     )
     args = parser.parse_args()
 

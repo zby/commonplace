@@ -15,7 +15,7 @@ Inputs:
 
 ### 1. Triage
 
-Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-all}` and `{note-paths}`. This acks insignificant `note-changed` pairs, reducing the review queue.
+Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-all}` and `{note-paths}`. This uses `scripts/ack_gate_review.py` to ack insignificant `note-changed` pairs, reducing the review queue.
 
 ### 2. Inventory
 
