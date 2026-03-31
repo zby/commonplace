@@ -27,12 +27,11 @@ with `select` a symbolic function and the *same sequence of bounded calls*.
 
 Here `K` must contain the full symbolic machine state needed to resume execution: original inputs, prior call results, control location, loop counters, phase tags, pending work items, and any other symbolic locals the program consults between calls.
 
-**Why.** Define `select(K)` as: run the program's symbolic transition logic from the current machine state until either:
+**Why.** First define `satisfied(K)` to mean: starting from machine state `K`, symbolic execution reaches program halt before encountering another LLM call site.
 
-- the next LLM call site is reached, in which case emit that prompt `P`
-- the program halts, in which case `satisfied(K)` becomes true
+Then, for any state with `not satisfied(K)`, define `select(K)` as: run the program's symbolic transition logic from the current machine state until the next LLM call site is reached, and emit that prompt `P`.
 
-Because all inter-call computation is symbolic, this transition is exact. The next prompt is therefore a function of the current symbolic state alone. Iterating this construction reproduces the original program's call order and prompt contents, so the transformed loop makes the same bounded calls in the same sequence.
+Because all inter-call computation is symbolic, both checks are exact. On non-halting states, the next prompt is therefore a function of the current symbolic state alone. Iterating this construction reproduces the original program's call order and prompt contents, so the transformed loop makes the same bounded calls in the same sequence.
 
 This is not a special property of LLM programs. It is the standard move behind operational semantics and abstract machines: execution is represented as transitions over explicit configurations, and control state that was implicit in source structure is reified into data.
 
