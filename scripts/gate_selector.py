@@ -14,17 +14,17 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from review_model import encode_model, resolve_model
+
 GATES_ROOT = Path("kb/instructions/review-gates")
 REVIEWS_ROOT = Path("kb/reports/reviews")
 NOTES_ROOT = Path("kb/notes")
-MODEL_ENV_VAR = "COMMONPLACE_REVIEW_MODEL"
 
 
 # ---------------------------------------------------------------------------
@@ -37,17 +37,6 @@ def encode_note_path(note_path: str) -> str:
 
 def encode_gate_id(gate_id: str) -> str:
     return gate_id.replace("/", "__")
-
-
-def encode_model(model: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_-]+", "-", model).strip("-").lower()
-
-
-def require_review_model() -> str:
-    model = os.environ.get(MODEL_ENV_VAR, "").strip()
-    if not model:
-        raise ValueError(f"{MODEL_ENV_VAR} must be set")
-    return model
 
 
 def review_path_for(note_path: str, gate_id: str, model: str) -> Path:
@@ -174,7 +163,7 @@ def select_stale_gates(
     gates_dir = repo_root / GATES_ROOT
     notes_dir = repo_root / NOTES_ROOT
 
-    model = require_review_model()
+    model = resolve_model()
 
     if include_all:
         gate_ids = list_all_gate_ids(gates_dir)
@@ -210,13 +199,14 @@ def select_stale_gates(
 # Output
 # ---------------------------------------------------------------------------
 
-def render_json(records: list[StaleGate]) -> str:
+def render_json(records: list[StaleGate], model: str) -> str:
     items = []
     for r in records:
         entry: dict[str, str] = {
             "note_path": r.note_path,
             "gate_id": r.gate_id,
             "reason": r.reason,
+            "review_path": str(review_path_for(r.note_path, r.gate_id, model)),
         }
         if r.diff is not None:
             entry["diff"] = r.diff
@@ -238,12 +228,33 @@ def print_grouped(records: list[StaleGate]) -> None:
 # CLI
 # ---------------------------------------------------------------------------
 
+def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
+    """Touch review files to mark (note, gate) pairs as acknowledged."""
+    for pair in pairs:
+        if ":" not in pair:
+            print(f"error: invalid pair (expected note:gate): {pair}", file=sys.stderr)
+            sys.exit(1)
+        note_path, gate_id = pair.split(":", 1)
+        review = repo_root / review_path_for(note_path, gate_id, model)
+        review.parent.mkdir(parents=True, exist_ok=True)
+        review.touch()
+        print(f"acked: {note_path} {gate_id}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="List stale (note, gate) review pairs.")
     parser.add_argument("bundle", nargs="?", help="Bundle name (e.g. prose, semantic).")
     parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
     parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
+    parser.add_argument(
+        "--reason", choices=["missing-review", "gate-changed", "note-changed"],
+        help="Filter output to a single staleness reason.",
+    )
+    parser.add_argument(
+        "--ack", nargs="+", metavar="NOTE:GATE",
+        help="Ack (note, gate) pairs by touching review files. Format: note_path:gate_id",
+    )
     args = parser.parse_args()
 
     if not args.bundle and not args.all_gates:
@@ -253,6 +264,10 @@ def main() -> None:
 
     repo_root = Path.cwd()
     try:
+        model = resolve_model()
+        if args.ack:
+            ack_pairs(repo_root, args.ack, model)
+            return
         records = select_stale_gates(
             repo_root,
             bundle=args.bundle,
@@ -263,8 +278,11 @@ def main() -> None:
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
+    if args.reason:
+        records = [r for r in records if r.reason == args.reason]
+
     if args.json:
-        print(render_json(records))
+        print(render_json(records, model))
     else:
         print_grouped(records)
 

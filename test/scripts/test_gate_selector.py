@@ -319,12 +319,87 @@ class TestModelInPath:
         assert "opus-4-6" in str(path)
 
 
+class TestJsonIncludesReviewPath:
+    def test_review_path_in_json_output(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        stale = gate_selector.select_stale_gates(
+            tmp_path,
+            bundle="prose",
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+        json_str = gate_selector.render_json(stale, TEST_MODEL)
+        import json
+        items = json.loads(json_str)
+        assert len(items) == 2
+        for item in items:
+            assert "review_path" in item
+            assert item["review_path"].startswith("kb/reports/reviews/")
+            assert TEST_MODEL in item["review_path"]
+
+
+class TestAckPairs:
+    def test_ack_creates_review_file(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+        # Unreviewed note should be stale
+        stale_before = gate_selector.select_stale_gates(
+            tmp_path,
+            bundle="prose",
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+        assert len(stale_before) == 2
+
+        # Ack both pairs
+        gate_selector.ack_pairs(
+            tmp_path,
+            ["kb/notes/unreviewed.md:prose/confidence-miscalibration",
+             "kb/notes/unreviewed.md:prose/source-residue"],
+            TEST_MODEL,
+        )
+
+        # Should be fresh now
+        stale_after = gate_selector.select_stale_gates(
+            tmp_path,
+            bundle="prose",
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+        assert stale_after == []
+
+    def test_ack_touches_existing_review(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        # Make reviews older than note (note at -5s, reviews at -15s)
+        set_mtime_in_past(fixture["stable"], 5)
+        set_mtime_in_past(fixture["review_sr"], 15)
+        set_mtime_in_past(fixture["review_cm"], 15)
+
+        stale_before = gate_selector.select_stale_gates(
+            tmp_path,
+            bundle="prose",
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert len(stale_before) == 2
+
+        # Ack — touch sets mtime to now, which is after both
+        gate_selector.ack_pairs(
+            tmp_path,
+            ["kb/notes/stable.md:prose/source-residue",
+             "kb/notes/stable.md:prose/confidence-miscalibration"],
+            TEST_MODEL,
+        )
+
+        stale_after = gate_selector.select_stale_gates(
+            tmp_path,
+            bundle="prose",
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert stale_after == []
+
+
 class TestModelRequired:
     def test_selector_requires_review_model_env(self, tmp_path: Path, monkeypatch) -> None:
         build_fixture(tmp_path)
         monkeypatch.delenv("COMMONPLACE_REVIEW_MODEL", raising=False)
 
-        with pytest.raises(ValueError, match="COMMONPLACE_REVIEW_MODEL must be set"):
+        with pytest.raises(ValueError, match="COMMONPLACE_REVIEW_MODEL is not set"):
             gate_selector.select_stale_gates(
                 tmp_path,
                 bundle="prose",

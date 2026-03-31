@@ -16,12 +16,10 @@ Inputs:
 ### 1. Get note-changed pairs
 
 ```bash
-uv run scripts/gate_selector.py {bundle-or-all} {note-paths} --json
+uv run scripts/gate_selector.py {bundle-or-all} {note-paths} --json --reason note-changed
 ```
 
-Filter the output to entries with `"reason": "note-changed"`. These are the only entries that need triage — `missing-review` and `gate-changed` always need a fresh review.
-
-If there are no `note-changed` entries, stop — nothing to triage.
+If the output is an empty array, stop — nothing to triage.
 
 ### 2. For each note-changed pair, judge the diff
 
@@ -38,16 +36,10 @@ When in doubt, don't ack — let the review handle it.
 
 ### 3. Ack insignificant pairs
 
-For each pair judged insignificant, get the review file path:
+Ack all insignificant pairs in one command:
 
 ```bash
-uv run scripts/resolve_gates.py --note {note-path} {gate-id}
-```
-
-Then ack:
-
-```bash
-touch {review-file-path}
+uv run scripts/gate_selector.py --ack {note-path}:{gate-id} [{note-path}:{gate-id} ...]
 ```
 
 ### 4. Report
