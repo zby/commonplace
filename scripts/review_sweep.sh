@@ -43,6 +43,37 @@ fi
 
 note_args=("$@")
 
+usage_exhausted_exit_code=99
+
+is_usage_exhausted_output() {
+  local output_file="$1"
+  grep -Fqi "out of extra usage" "$output_file"
+}
+
+run_claude_review() {
+  local prompt="$1"
+  local output_file
+  local status
+
+  output_file=$(mktemp)
+  if claude -p "$prompt" < /dev/null >"$output_file" 2>&1; then
+    status=0
+  else
+    status=$?
+  fi
+
+  cat "$output_file"
+
+  if is_usage_exhausted_output "$output_file"; then
+    rm -f "$output_file"
+    echo "error: claude reported extra usage exhaustion; aborting sweep immediately." >&2
+    return "$usage_exhausted_exit_code"
+  fi
+
+  rm -f "$output_file"
+  return "$status"
+}
+
 # --- Sweep function for one bundle ---
 
 sweep_bundle() {
@@ -85,9 +116,13 @@ for note in sorted(groups):
 
     local prompt="Run kb/instructions/run-review-bundle-on-note.md on $note_path for gates: $gates"
 
-    if claude -p "$prompt"; then
+    if run_claude_review "$prompt"; then
       reviewed=$((reviewed + 1))
     else
+      local status=$?
+      if [[ $status -eq $usage_exhausted_exit_code ]]; then
+        return "$usage_exhausted_exit_code"
+      fi
       echo "  FAILED: $note_path" >&2
       failed=$((failed + 1))
     fi
@@ -103,7 +138,15 @@ reviewed=0
 
 for bundle in "${bundles[@]}"; do
   echo "=== Bundle: $bundle ==="
-  sweep_bundle "$bundle" "${note_args[@]}"
+  if sweep_bundle "$bundle" "${note_args[@]}"; then
+    :
+  else
+    status=$?
+    if [[ $status -eq $usage_exhausted_exit_code ]]; then
+      exit 1
+    fi
+    exit "$status"
+  fi
   echo ""
 done
 
