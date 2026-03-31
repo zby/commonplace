@@ -1,3 +1,0 @@
-PASS
-
-Two cross-domain references: (1) AlphaGo's perfect verifier as analogy for KB quality -- the bridge is explicit: "KBs don't [have a perfect verifier]. But we don't need a perfect verifier to learn -- we need a signal that's better than random." (2) Ensemble methods in ML as analogy for combining weak signals -- the bridge is explicit: "individual weak learners combined into a strong one" followed by the independence question. Both cross-domain moves state the shared mechanism clearly.

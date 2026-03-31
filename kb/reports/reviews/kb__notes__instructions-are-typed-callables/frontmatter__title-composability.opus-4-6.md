@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment with mild effort: "since instructions are typed callables, skill invocations can be validated against expected input types before execution." The predicate nominative construction ("are typed callables") slots into causal sentences without grammar awkwardness.

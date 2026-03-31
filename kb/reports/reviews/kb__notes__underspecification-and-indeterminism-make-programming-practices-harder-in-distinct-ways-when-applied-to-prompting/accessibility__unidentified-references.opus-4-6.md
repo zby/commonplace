@@ -1,3 +1,0 @@
-"llm-do" is used in the opening sentence ("Much of what we do in llm-do and this knowledge base") without any identification of what it is. The reader encounters it as an unexplained proper noun. Later in the KB (in the unified-calling-conventions note), llm-do is identified as a GitHub project implementing a hybrid VM, but in this note it appears only as a bare name.
-
-Suggested fix: replace "llm-do" with a brief inline identification on first use, e.g. "Much of what we do in llm-do (a hybrid agent/tool runtime) and this knowledge base" or simply drop the reference since the note does not depend on it.

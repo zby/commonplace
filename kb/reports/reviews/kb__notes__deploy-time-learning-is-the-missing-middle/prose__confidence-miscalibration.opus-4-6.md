@@ -1,3 +1,0 @@
-INFO
-
-The three-timescale taxonomy and the verifiability gradient are the note's own frameworks, presented assertively. The taxonomy is a clean organizational tool (training/in-context/deploy-time) that follows naturally from well-known distinctions. The verifiability gradient is explicitly presented as a "unifying lens" for established practices, which is appropriately calibrated. The Karpathy quote is sourced and used as a springboard, not as proof. The closing paragraph correctly identifies the note as "a taxonomy and a verifiability gradient" -- a synthesis claim, not an empirical one. No miscalibration.

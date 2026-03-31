@@ -1,3 +1,0 @@
-INFO
-
-The core claim is that human-LLM differences are load-bearing for knowledge system design, with two reasons and a failure-mode section. Reason 2 (dual audiences) is labeled "the deeper reason" and gets the most development, which is appropriate. The "What goes wrong" section develops three failure modes at roughly equal length. The "methodological claim" section is a brief summary. Overall proportions match importance, though Reason 1 could be slightly thin given it establishes the motivation for the entire note — but it defers detail to linked notes, which is a reasonable composability choice.

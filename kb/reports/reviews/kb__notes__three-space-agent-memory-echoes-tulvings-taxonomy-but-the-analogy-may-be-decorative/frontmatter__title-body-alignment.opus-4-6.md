@@ -1,1 +1,0 @@
-**pass** The body aligns with the title's two-part claim: it presents the three-space taxonomy with the Tulving mapping, then explicitly raises the question of whether the analogy adds explanatory power beyond simpler lifecycle-based advice. The title's "may be decorative" hedging matches the speculative status and the open framing at the end of the note.

@@ -1,1 +1,0 @@
-pass. The description adds the three-level ladder structure (discrimination, stability, calibration), scopes the note as a staged test plan rather than an argument or implementation, and connects it to LLM evaluation loops. These specifics distinguish this note from a theoretical discussion of oracle hardening or a summary of pairwise comparison literature.

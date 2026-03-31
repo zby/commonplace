@@ -1,1 +1,0 @@
-pass. The description adds mechanism (hard-oracle checks) and quantifies the scope ("half of /validate's checks"), and specifies the implication (milliseconds instead of burning LLM tokens via the skill). These three elements go well beyond restating the title and give the note a distinct retrieval fingerprint.

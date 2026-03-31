@@ -1,1 +1,0 @@
-pass. The body delivers what the topical title promises: it surveys established claims about linking, synthesizes them into a candidate theory (links as decision-cost reducers), derives five testable predictions, and lists open questions. The scope is exactly "theory of linking in this KB" — no drift of any kind is present.

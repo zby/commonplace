@@ -1,1 +1,0 @@
-pass. The body fully supports the title: it names the two phenomena being conflated, explains the cascading projection mechanism, reframes agile iteration as a propagation bound, and connects the distinction to deploy-time learning. The description's central mechanism (propagation bound) is elaborated clearly in the "What short iterations actually do" section.

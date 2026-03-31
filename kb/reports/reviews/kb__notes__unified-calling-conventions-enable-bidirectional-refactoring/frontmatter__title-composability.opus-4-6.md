@@ -1,1 +1,0 @@
-**pass** The title works in linking prose: "because unified calling conventions enable bidirectional refactoring between neural and symbolic, each constrain or relax step can be made without updating call sites throughout the system." The subject-verb-object structure is clean and the "bidirectional" qualifier makes the direction of the claim precise in a linking sentence.

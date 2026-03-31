@@ -1,5 +1,0 @@
-"Toulmin" is used four times as a modifier ("Toulmin warrants connecting grounds to claims", "Toulmin-derived sections", "Toulmin claim", "Toulmin scaffold") without identifying Stephen Toulmin's argumentation model. The sentence "Toulmin warrants connecting grounds to claims" uses three framework-specific terms (warrants, grounds, claims) in one phrase. A reader unfamiliar with the Toulmin model cannot decode what a "warrant" is in this context, or how it differs from a "ground."
-
-The linked note ("Claim notes should use Toulmin-derived sections for structured argument") presumably explains the framework, but a link is not a definition per this gate's criteria.
-
-Suggested fix: on first use, add a brief gloss — e.g., "Toulmin's argumentation model, which decomposes arguments into claims, grounds (evidence), and warrants (the reasoning connecting evidence to claim)" — then subsequent uses of "Toulmin scaffold" and "Toulmin claim" will be self-evident.

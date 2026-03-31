@@ -1,3 +1,0 @@
-PASS
-
-Two cross-domain references: Simon (general systems theory to KB design) and Argyris (organizational learning to KB operations). Simon's definition is explicitly quoted and applied -- the bridge is the claim that "almost every KB improvement is learning" under this definition. Argyris's single-loop/double-loop is mapped with explicit bridge: "single-loop corrects within existing rules (narrow scope), double-loop changes the governing variables themselves (wide scope)." Both transfers state the shared mechanism.

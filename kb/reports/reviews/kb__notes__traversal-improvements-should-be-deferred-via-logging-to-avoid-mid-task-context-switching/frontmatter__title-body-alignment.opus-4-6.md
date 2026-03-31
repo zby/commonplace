@@ -1,1 +1,0 @@
-**pass** The body delivers what the title promises. It establishes why mid-task context-switching is expensive, describes the log-based deferral mechanism, enumerates what agents notice during traversal, and explains the co-evolution benefit. No scope drift: the note stays focused on the traversal-improvement workflow and does not widen into general KB maintenance theory.

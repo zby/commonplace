@@ -1,3 +1,0 @@
-PASS
-
-The title claims generality about knowledge system design. The body uses vocabulary from several domains — Zettelkasten, PKM, library science, Toulmin argumentation — but each is explicitly named and framed as an example of "design patterns borrowed from human knowledge management." No domain-specific vocabulary appears as though it were native to the note's own framework. The borrowed terminology is acknowledged throughout.

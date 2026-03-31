@@ -1,3 +1,0 @@
-PASS
-
-The three-part decomposition (scheduler, context engine, execution substrate) is the note's own framework. The note hedges well: "Not every system exposes these as neat modules; in many real systems the boundaries blur. The claim is that the functions are analytically distinct." The "Scope limits" section explicitly states this is not a claim of completeness. "Evaluation infrastructure, policy layers, and social workflows may deserve their own treatment." No quantitative claims appear without evidence.

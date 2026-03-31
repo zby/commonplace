@@ -1,1 +1,0 @@
-pass. The body establishes the title's definition (reverse-compression as expansion without information addition), refines the test using epiplexity, and extends to how linked KBs resist the failure mode. The scope is consistent — the note stays on diagnosing and measuring reverse-compression throughout, without drifting into unrelated concerns.

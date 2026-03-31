@@ -1,1 +1,0 @@
-pass. The title is the gate's own reference example of a composable claim title. "Since deterministic validation should be a script, the /validate skill can focus exclusively on judgment-based quality checks." It slots naturally into a dependent clause with no grammatical strain.

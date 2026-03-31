@@ -1,3 +1,0 @@
-"DeAngelis" in "This is the setting DeAngelis targets" is not identified. The linked source identifies Julian DeAngelis as a MercadoLibre engineering lead. First mention should include enough context for the reader, e.g., "DeAngelis (MercadoLibre engineering lead)" or similar.
-
-"Augment" in "Augment's pattern keeps the spec live" and "Augment's 'directional decisions' requirement" is not identified. The linked source describes Augment as a company that built a bidirectional-spec product (Intent). First mention should say what Augment is, e.g., "Augment (an AI coding tool company)" or similar brief identification.

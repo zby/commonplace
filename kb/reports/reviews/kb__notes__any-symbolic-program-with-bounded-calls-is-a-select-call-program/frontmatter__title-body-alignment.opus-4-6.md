@@ -1,1 +1,0 @@
-pass — The body directly supports the title's claim. The "Decomposition Lemma" section formally states and justifies the equivalence, the "Ergonomic Direction" section explains the practical implication, and the "Scope" section names the boundary conditions where the claim does not hold. There is no claim drift or scope drift; the body establishes exactly what the title promises.

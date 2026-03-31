@@ -1,1 +1,0 @@
-pass. The description goes well beyond the title: it names the three signal categories (graph-topology, content-proxy, LLM-hybrid), states the specific goal (weak composite oracle for a mutation-based learning loop), and notes the key constraint (no usage data required). These additions let an agent distinguish this note from a generic "KB metrics" or "evaluation criteria" note.

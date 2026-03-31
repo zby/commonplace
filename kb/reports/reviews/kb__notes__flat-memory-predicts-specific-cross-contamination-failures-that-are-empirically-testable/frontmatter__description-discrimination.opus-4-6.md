@@ -1,1 +1,0 @@
-**pass** The description names all three failure modes (search pollution, identity scatter, insight trapping) and adds context that they are testable via an observation protocol against real agent systems. This is materially richer than the title, which only asserts testability without specifying what the failures are or how testing is operationalized.

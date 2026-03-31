@@ -1,1 +1,0 @@
-Pass. The note already reads as a single paragraph with a short supporting list. It is one of the leanest notes in the KB — one claim, two supporting observations, one pointer to the consequence. There is no over-complex structure present; the could-be-a-paragraph failure mode does not apply here because the note already is essentially one paragraph.

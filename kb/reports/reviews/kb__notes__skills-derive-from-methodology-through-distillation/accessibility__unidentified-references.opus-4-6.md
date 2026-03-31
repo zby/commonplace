@@ -1,1 +1,0 @@
-"Cramer's skill synthesis" in the Caveats section refers to a person without identifying who they are. The linked source identifies David Cramer as Sentry's co-founder. First mention should read something like "David Cramer's skill synthesis report (Sentry co-founder)" or "Cramer (Sentry co-founder)" to give the reader enough context without following the link.

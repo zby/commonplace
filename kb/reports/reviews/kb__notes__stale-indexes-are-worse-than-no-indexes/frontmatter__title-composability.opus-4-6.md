@@ -1,1 +1,0 @@
-pass — The title works naturally in prose: "since stale indexes are worse than no indexes, index maintenance must be a first-class operation rather than a cleanup task." The comparative form ("X is worse than Y") is a standard composable shape for policy claims and links cleanly into notes about KB maintenance, navigation reliability, or index design.

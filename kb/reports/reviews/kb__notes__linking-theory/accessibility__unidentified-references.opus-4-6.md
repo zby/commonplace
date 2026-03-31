@@ -1,3 +1,0 @@
-"arscontexta" in "Our five types were borrowed from arscontexta and adapted" is not identified. The reader cannot tell whether arscontexta is a tool, a paper, a methodology, or a project. Since the note discusses where the vocabulary came from, identifying the source matters.
-
-Suggested fix: add a brief identification — e.g., "borrowed from arscontexta (a knowledge management tool)" or whatever arscontexta actually is. Only add identification that can be verified from the note or its linked sources.

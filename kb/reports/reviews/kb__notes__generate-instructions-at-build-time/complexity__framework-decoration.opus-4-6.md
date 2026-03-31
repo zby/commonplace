@@ -1,1 +1,0 @@
-**Pass.** The note contains no tables, taxonomies, or formal frameworks. The runtime-variables vs build-time-generation comparison is done in two short labeled paragraphs, which is the minimum structure needed to present the trade-off.

@@ -1,3 +1,0 @@
-PASS
-
-The cross-domain transfer (Toulmin's argumentation theory from philosophy/rhetoric to KB type design) is explicitly bridged. The Reasoning section states the shared mechanism: "Toulmin describes the structure of practical argument, and claim notes are practical arguments." The mapping table provides term-by-term correspondence. The Thalo comparison (a different KB system) bridges via direct structural mapping. No unbridged cross-domain leaps.

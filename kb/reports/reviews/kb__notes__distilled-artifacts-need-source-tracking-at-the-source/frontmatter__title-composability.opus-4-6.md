@@ -1,1 +1,0 @@
-pass — The title inserts cleanly into prose: "since distilled artifacts need source tracking at the source, forward pointers belong in methodology notes rather than instructions" works without grammatical strain. The phrase "at the source" adds specificity that prevents the title from being generic while still allowing natural embedding in causal sentences.

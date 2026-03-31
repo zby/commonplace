@@ -1,1 +1,0 @@
-pass. The description adds mechanism (constraining narrows interpretation; distillation extracts under a context budget) and frames the unifying claim as a "same capacity decomposition, different operations" contrast. This goes beyond the title, which names the trade-off without explaining how either mechanism implements it.

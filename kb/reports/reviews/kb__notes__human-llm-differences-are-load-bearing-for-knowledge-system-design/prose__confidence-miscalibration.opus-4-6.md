@@ -1,3 +1,0 @@
-PASS
-
-The note's own frameworks — the dual-audience observation, the human/LLM needs table, the three failure modes — are presented as the note's analysis, not as established results. The table is a qualitative comparison with hedged language ("may perform worse", "can fill gaps"). The methodological claim in the final section uses "should" language proposing a practice. No quantitative claims appear without evidence.

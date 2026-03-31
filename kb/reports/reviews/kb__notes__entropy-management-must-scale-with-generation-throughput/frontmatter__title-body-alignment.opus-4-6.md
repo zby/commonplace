@@ -1,1 +1,0 @@
-pass — The body directly supports the title. The opening paragraph establishes the amplification mechanism, the proportionality requirement follows immediately, the Evidence section provides an empirical case (Codex 1M LOC), and the Implications section translates the claim to KB maintenance. The body establishes exactly what the title promises.

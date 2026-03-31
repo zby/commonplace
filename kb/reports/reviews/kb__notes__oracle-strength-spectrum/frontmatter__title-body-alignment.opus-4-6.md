@@ -1,1 +1,0 @@
-pass. The body establishes exactly what the title names: a spectrum of oracle strengths (hard through no-oracle), and then builds out implications (engineering priorities, manufacture/amplify/monitor pipeline, generator/verifier dependency). No claim drift or scope drift — the note stays on the oracle-strength framing throughout.

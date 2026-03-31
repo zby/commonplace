@@ -1,3 +1,0 @@
-INFO
-
-The final "methodological claim" section restates the note's argument as an operational principle. This serves a summary role — compressing the two reasons and three failure modes into a single actionable statement. It is a deliberate distillation, not an accidental restatement. The boldface principle adds concision that the body's discursive treatment does not provide. Functionally distinct from setup.

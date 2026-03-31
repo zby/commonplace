@@ -1,1 +1,0 @@
-pass — The body delivers what the title promises: a sketch of automated testing applied to text artifacts. The test pyramid, contract-from-real-failures principle, and doubled testing surface (prompt vs. artifact) are all within the scope of "automated tests for text." No drift detected.

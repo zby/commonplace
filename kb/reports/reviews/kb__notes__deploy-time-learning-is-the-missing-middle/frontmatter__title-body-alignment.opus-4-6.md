@@ -1,1 +1,0 @@
-pass. The body establishes the three-timescale taxonomy that makes deploy-time learning a "missing middle," then develops the verifiability gradient as the structural account of how it works. Both the taxonomy and the gradient directly support the title. The concrete examples (data report, pitchdeck) are illustrative rather than scope-expanding.

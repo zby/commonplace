@@ -1,1 +1,0 @@
-fail. The title reads as a process label: "Brainstorming how to enrich web search" names an activity rather than a claim or artifact. Using it as a prose fragment produces awkward constructions: "since brainstorming how to enrich web search..." does not work. The brainstorming prefix marks status but prevents natural citation by title.

@@ -1,1 +1,0 @@
-**Pass.** The note already reads essentially as a sequence of tightly connected paragraphs without section headers, and its content requires the multi-step argument: concede recovery, reveal the relocation, reframe the question, identify the limits. Collapsing to a single paragraph would lose either the concession or the limit cases, both of which are non-obvious.

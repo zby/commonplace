@@ -1,3 +1,0 @@
-- "semantic underspecification" — appears in the final paragraph ("resolving the semantic underspecification of the natural-language spec into deterministic code"). The note does not define or gloss "semantic underspecification." The surrounding sentence gives partial context (natural-language specs don't have precise meanings) but the phrase itself is used as if already established vocabulary. Readers unfamiliar with this KB's framework may not parse "semantic underspecification" vs. ordinary ambiguity.
-
-Recommendation: Add a brief gloss: "the semantic underspecification of natural-language specs — the fact that natural language admits multiple valid interpretations without a deterministic arbiter."

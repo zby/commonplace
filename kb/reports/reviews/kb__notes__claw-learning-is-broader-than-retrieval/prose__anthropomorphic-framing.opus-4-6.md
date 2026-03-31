@@ -1,3 +1,0 @@
-INFO
-
-"makes the agent's actions more competent" — attributes competence to the agent. In context this is shorthand for "produces better-quality outputs," which is conventional. "the ability to act appropriately given accumulated knowledge" — "act appropriately" is a behavioral description, not an agency claim. "the agent discovers what it doesn't know" — implies self-awareness of knowledge gaps, which is slightly anthropomorphic but used in the conventional metonymy sense (the system encounters retrieval failures). No instances that assert undefended cognitive agency.

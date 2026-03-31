@@ -1,1 +1,0 @@
-pass — The title works naturally as a prose fragment: "since distillation status determines directory placement, procedures should live in `instructions/`" reads without awkwardness. It also works in the reverse frame: "we can audit instructions as a set because distillation status determines directory placement." The noun phrase flows into standard causal sentence structures.

@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment: "since Claw learning loops must improve action capacity not just retrieval, mutation types like codify-preference and capture-procedure are needed alongside note/link mutations." The prescriptive claim form slots into "because" and "since" constructions without grammatical strain.

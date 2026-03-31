@@ -1,3 +1,0 @@
-PASS
-
-The note carefully avoids attributing inner states to LLMs. It says "the agent has no basis for" (behavioral limitation), "the agent will figure it out" (quoted as a naive assumption being criticized), and discusses what agents "need" in the sense of functional requirements. The table contrasts human and LLM reader needs without implying LLM consciousness. The note actively critiques naive anthropomorphism in the "What goes wrong" section.

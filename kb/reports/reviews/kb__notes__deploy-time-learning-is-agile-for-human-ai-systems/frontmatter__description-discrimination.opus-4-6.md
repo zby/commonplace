@@ -1,1 +1,0 @@
-pass. The description adds mechanism (co-evolving prose and code) and a distinguishing implication (deploy-time learning extends agile by treating some prose as permanently load-bearing, not as temporary specs). The "permanently load-bearing" detail specifically names the divergence, which the title does not signal at all.

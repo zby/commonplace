@@ -1,1 +1,0 @@
-pass — The title is topical, not a claim, and the note is a multi-claim design sketch (test pyramid, contract-building principle, two-surface distinction). Topical titles are valid for this document class. The note does not argue a single contestable proposition; it catalogues an approach across several levels. A topical title is appropriate here.

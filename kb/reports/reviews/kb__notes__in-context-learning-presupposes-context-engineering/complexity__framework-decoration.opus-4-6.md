@@ -1,1 +1,0 @@
-Pass. The note contains no tables, taxonomies, or formal frameworks — it is written entirely in prose across four paragraphs. The three-timescale mention is a brief reference to a structure developed elsewhere, not a framework presented here. No decoration test applies.

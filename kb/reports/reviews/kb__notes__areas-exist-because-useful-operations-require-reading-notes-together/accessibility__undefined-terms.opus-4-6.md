@@ -1,5 +1,0 @@
-"context" is used throughout with two distinct meanings — the agent's token window ("context is finite," "working context") and the editorial sense ("context phrases"). These are not confused in the same sentence, but the note does not flag the dual usage and a reader may not track when the term shifts. This is borderline since "context window" is standard vocabulary; however, "working context" and "context budget" as used here are KB-specific framings that go beyond standard vocabulary.
-
-More clearly: "seedlings" — used in "Two seedlings are more likely to be redundant than two current notes" — is a KB-internal status term (status values include seedling/current/etc.) that is never defined inline in this note. A reader without knowledge of this KB's frontmatter status vocabulary cannot tell from context that "seedling" means a draft or early-stage note.
-
-Suggested fix: gloss "seedlings" on first use, e.g., "two seedlings (notes still in early draft stage)" or link to where the status vocabulary is defined.

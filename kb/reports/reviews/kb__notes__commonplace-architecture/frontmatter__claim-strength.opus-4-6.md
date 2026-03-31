@@ -1,1 +1,0 @@
-pass. The title "Commonplace architecture" is a topical title for a multi-claim definitional note describing the repo's own layout, what's missing, and a design decision (dropping `kb/types/`). It is not asserting a single contestable claim, so a topical title is the correct form. No sharpening is needed.

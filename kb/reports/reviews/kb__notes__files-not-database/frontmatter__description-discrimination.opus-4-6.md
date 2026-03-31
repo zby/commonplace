@@ -1,1 +1,0 @@
-**pass** The description adds mechanism (schema commits to access patterns before you know them) and implication (files enable incremental constraining while delivering immediate tooling benefits). It is not a paraphrase of the title — it explains why files win on one specific axis (premature schema commitment) that is not evident from "files not database" alone.

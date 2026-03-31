@@ -1,1 +1,0 @@
-**Pass.** The note contains no tables or taxonomies. The three-failure-mode structure is an enumeration derived from the source article, not an invented framework. The observation protocol is operational (what to log, how to classify), not decorative.

@@ -1,3 +1,0 @@
-PASS
-
-Each section opens with its own claim. "What ephemerality buys" opens with the constraint mechanism; "What ephemerality costs" opens with the rediscovery requirement; "Ephemerality as anti-codification" opens by relating to codification. No section opener restates a prior section's argument. The final "question each system answers" section compresses but does so in a new frame (questions vs. answers), not as a restatement.

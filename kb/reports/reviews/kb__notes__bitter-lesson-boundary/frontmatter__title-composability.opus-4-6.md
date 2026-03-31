@@ -1,1 +1,0 @@
-pass. The title works naturally as a prose fragment: "since the bitter lesson has a boundary, arithmetic-regime solutions should be codified rather than replaced by learned methods." The inverted form also reads clearly: "because the bitter lesson has a boundary, not every hand-crafted solution is a vision feature." No grammatical awkwardness.

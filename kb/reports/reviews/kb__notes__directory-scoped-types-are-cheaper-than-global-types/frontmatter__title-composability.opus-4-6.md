@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment: "since directory-scoped types are cheaper than global types, the CLAUDE.md type vocabulary should be reduced to the thin maturity ladder." The comparative construction reads naturally in a consequent clause.

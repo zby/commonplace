@@ -1,3 +1,0 @@
-PASS
-
-The core claim is that capacity decomposes into generality and a reliability/speed/cost compound. The "Generality" section gets the most development (detailed table, reach distinction, fact vs theory). The "compound" section is shorter but proportionate -- it makes a simpler point (these dimensions move together, codification is the clearest example). The "Other dimensions" section is brief but explicitly frames itself as noting incompleteness rather than developing a full argument. Proportions match the complexity of each part.

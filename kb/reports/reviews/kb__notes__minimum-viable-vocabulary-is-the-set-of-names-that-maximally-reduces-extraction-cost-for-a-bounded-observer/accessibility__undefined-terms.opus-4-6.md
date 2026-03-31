@@ -1,7 +1,0 @@
-"prequential coding" appears once: "the [epiplexity framework's](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) prequential coding is one candidate." No inline definition or gloss is given. A reader unfamiliar with information theory would not know what prequential coding is. The note should add a brief inline gloss, e.g., "the epiplexity framework's prequential coding (a method for measuring predictive compression) is one candidate."
-
-"epiplexity framework" is introduced with a link but no inline identification of what it is. The link provides navigational context but the reader should not have to follow it. However, the sentence "the [epiplexity framework's](...) prequential coding is one candidate — and a fixed observer" indicates it is a framework for measuring information accessibility. This partial contextual signal may be insufficient. See also unidentified-references.
-
-"threshold concepts (Meyer & Land)" — "Meyer & Land" are mentioned as authors in the Open Questions section without identification. Covered under unidentified-references.
-
-"domainmaps.co" appears once: "Kim's prototype (domainmaps.co) provides neither." No identification of what kind of product/tool this is beyond being a "prototype." A brief gloss ("Kim's prototype website, domainmaps.co") is sufficient and present implicitly, but calling it a "website" would help.

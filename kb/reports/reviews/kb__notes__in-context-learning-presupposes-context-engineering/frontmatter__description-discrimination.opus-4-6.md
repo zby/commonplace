@@ -1,1 +1,0 @@
-**pass** The description adds mechanism (selection machinery that ensures right knowledge reaches the window) and a non-obvious implication (this machinery is itself learned and refined over deployment). This goes beyond the title, which asserts the presupposition without naming what context engineering does or that it has its own learning dynamic.

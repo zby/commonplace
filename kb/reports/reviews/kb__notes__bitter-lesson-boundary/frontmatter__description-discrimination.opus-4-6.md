@@ -1,1 +1,0 @@
-pass. The description adds the key discriminating mechanism (spec IS the problem vs. spec approximates the problem) and gives concrete examples (arithmetic vs. vision features) that the title does not. This gives an agent enough context to distinguish this note from related notes about scaling laws or the bitter lesson itself.

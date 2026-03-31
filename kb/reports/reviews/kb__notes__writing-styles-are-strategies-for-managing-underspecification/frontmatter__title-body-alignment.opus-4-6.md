@@ -1,1 +1,0 @@
-**pass** The body delivers exactly what the title claims. It maps each of the five styles to a distinct underspecification-management strategy, derives the constraint-vs-generalisability spectrum, and shows how style choice interacts with loading tier. No scope or claim drift; the note stays focused on the styles-as-strategies reframing throughout.

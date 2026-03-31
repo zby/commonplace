@@ -1,1 +1,0 @@
-pass. The body delivers on the title's promise: it defines the three pointer types, analyzes them on three axes, compares implementations (OpenViking vs. Commonplace), and derives practical design implications. There is no scope drift — the note stays entirely within progressive disclosure pointer design.

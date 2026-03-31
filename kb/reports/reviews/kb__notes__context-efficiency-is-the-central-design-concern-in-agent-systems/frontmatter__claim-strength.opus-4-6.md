@@ -1,1 +1,0 @@
-pass. An informed reader could contest the word "central" — one could argue that reliability, safety, or task-success rate is the central concern, with context efficiency as one lever among many. The title takes a prioritization stance that is genuinely debatable.

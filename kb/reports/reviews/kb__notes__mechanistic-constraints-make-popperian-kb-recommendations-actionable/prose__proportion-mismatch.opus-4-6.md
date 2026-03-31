@@ -1,3 +1,0 @@
-PASS
-
-The core claim is that KB mechanics make Popperian practices actionable. The note spends roughly equal space on the "why" (sections 1-3: why conjecture is forced, why criticism must be structural, why oracle quality matters) and the "what" (proposed practices, falsifier block). The three proposed practices are concise bullet points, appropriate since the value is in the derivation, not the proposals themselves. The falsifier section at the end is brief but serves its purpose.

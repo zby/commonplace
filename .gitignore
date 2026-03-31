@@ -41,7 +41,9 @@ kb/sources/slate-moving-beyond-react-and-rlm.md
 # connect reports
 kb/work/connect/
 
-# generated review tables
-kb/reports/reviews/csv/*.csv
+# generated review artifacts
+kb/reports/reviews/**
+!kb/reports/reviews/
+!kb/reports/reviews/README.md
 
 tmp/

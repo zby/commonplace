@@ -1,1 +1,0 @@
-pass. The title is contestable — someone could argue that retrieval accuracy is the proximate measure of KB value, and that action capacity improvement follows automatically from better retrieval, making the distinction non-actionable. The note takes a position that these require different evaluation, mutation types, and knowledge types, which is a meaningful design claim.

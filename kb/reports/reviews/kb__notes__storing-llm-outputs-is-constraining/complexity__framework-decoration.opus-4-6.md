@@ -1,1 +1,0 @@
-**Pass.** The note contains no tables or taxonomies. The bullet list of application cases (generated code, documents, configuration, accumulated logs) is illustrative and compact, not a decorative framework — each bullet adds a concrete domain example with distinct implications (the Koylanai case provides evidence for append-only constraints).

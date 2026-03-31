@@ -1,1 +1,0 @@
-pass. The title works naturally as a prose fragment. "Since session history should not be the default next context, framework-owned tool loops that inherit transcripts automatically defeat clean frame boundaries" reads without friction. The normative "should not" structure licenses prescriptive framing and contrasts well with descriptions of the current default behavior.

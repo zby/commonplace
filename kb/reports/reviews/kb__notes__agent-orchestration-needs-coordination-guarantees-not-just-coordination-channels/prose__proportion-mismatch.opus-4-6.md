@@ -1,3 +1,0 @@
-PASS
-
-The core claim is that coordination guarantees, not coordination channels, are the discriminating architectural question. The three semantic failure modes get roughly equal treatment (one subsection each). The accountability-vacuum section gets additional space but is justified — it is the newest addition and requires distinguishing governance failures from semantic ones. "The shared question" section is appropriately brief as synthesis. Proportions match importance.

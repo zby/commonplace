@@ -1,9 +1,0 @@
-- "relaxing" is introduced in the body: "Codification therefore has a complement: **relaxing** — replacing a codified component with a learned or general-purpose one when scale makes that viable." It then appears throughout: "relaxing is needed," "relaxing signals," "relaxing candidate," "may re-codify," "The trajectory runs in both directions," and the Working heuristics section references it several times. All uses remain legible against the original definition — "replacing a codified component with a learned or general-purpose one." No flag.
-
-- "bitter lesson boundary" is defined via a link in the opening: "[bitter lesson boundary](./bitter-lesson-boundary.md) separates arithmetic (spec is the problem) from vision features (spec is a theory about the problem)." This inline parenthetical is sufficient context. The term is used four more times in the body ("bitter lesson boundary," "The bitter lesson describes a trajectory"). Each reuse is intelligible given the opening. No flag.
-
-- "arithmetic regime" and "vision-feature regime" are introduced together in the first body section and reused throughout. Both have inline glosses ("spec is the problem" and "spec is a theory") at first use. Later uses are clear given the definitions. No flag.
-
-- "epiplexity" and "epiplexity framework" appear in the body: "The epiplexity framework ([Finzi et al., 2026]...) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds)." Inline definition is provided. The term appears only once. No flag.
-
-- "sharing factor κ" appears in a technical summary of a paper: "Transformers show sharing factor κ ≈ 1 or κ < 1 across all supervision formats." This is notation from a cited paper, not a KB-internal term. See notation-opacity gate.

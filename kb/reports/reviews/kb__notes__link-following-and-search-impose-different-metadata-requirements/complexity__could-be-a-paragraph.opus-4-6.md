@@ -1,1 +1,0 @@
-Pass. The note already is essentially one paragraph. It states the claim, provides two contrasting navigation modes, introduces indexes as the bridging case, and draws the design implication. The note is appropriately compact for its content — there is no structural inflation to remove.

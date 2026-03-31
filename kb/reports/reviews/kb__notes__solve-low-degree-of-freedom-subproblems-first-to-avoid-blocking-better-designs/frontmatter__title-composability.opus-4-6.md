@@ -1,1 +1,0 @@
-pass — The title works as a prose fragment: "since we should solve low-degree-of-freedom subproblems first to avoid blocking better designs, constraint-setting should precede synthesis calls" reads naturally. The imperative form ("solve X first to avoid Y") is a strong composable shape for linking into notes about scheduling heuristics or decomposition strategy.

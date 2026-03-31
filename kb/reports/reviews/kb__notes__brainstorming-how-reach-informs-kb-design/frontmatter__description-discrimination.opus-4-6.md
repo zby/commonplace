@@ -1,1 +1,0 @@
-pass. The description specifies the non-obvious framing: reach as a maintenance risk signal rather than a retrieval signal, with the mechanism (high-reach revisions break downstream reasoning silently). This distinguishes the note from adjacent notes about reach as a quality criterion and prevents an agent from conflating it with retrieval-relevance ranking notes.

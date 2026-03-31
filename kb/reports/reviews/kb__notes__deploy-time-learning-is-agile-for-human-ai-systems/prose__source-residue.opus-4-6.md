@@ -1,3 +1,0 @@
-PASS
-
-The title claims generality about "human-AI systems" and the body uses software development vocabulary (agile, waterfall, sprints, specs, code). This is appropriate: the analogy is explicitly between software methodology (agile/waterfall) and deploy-time learning. The software terms are the subject matter, not residue from an unacknowledged source domain. The note does not claim to apply beyond software-adjacent AI systems.

@@ -1,1 +1,0 @@
-**Pass.** The note contains no tables, taxonomies, or frameworks. The two example titles given ("prompt refinement is cleaner for the callee" / "conversation pollutes callee context with misframing") are inline examples, not a structure. Nothing to evaluate here.

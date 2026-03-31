@@ -1,1 +1,0 @@
-pass — The title embeds naturally into prose: "since elicitation requires maintained question-generation systems, a one-time checklist is insufficient" or "because elicitation requires maintained question-generation systems, checklist decay is an architectural risk, not just a maintenance nuisance." Both constructions are grammatically fluent.

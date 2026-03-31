@@ -1,3 +1,0 @@
-"Codex" in "The Codex team's report on runtime engineering" is not identified. The linked source identifies it as an OpenAI product and Lopopolo as a member of OpenAI's technical staff. First mention should read something like "OpenAI's Codex team" to orient the reader.
-
-The "cybernetics thread" in "what the cybernetics thread calls 'externalizing system-specific judgment'" is a reference to a linked source but is not identified — the reader cannot tell who wrote it, what it is, or where it comes from without following the link. A brief inline identification (e.g., author name or platform) would help.

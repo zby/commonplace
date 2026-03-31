@@ -1,1 +1,0 @@
-pass. The description adds the three-tier structure (skills, instructions, methodology notes), the implication for AGENTS.md (keeps it free of inventories), and the direction of the promotion path. These specifics go beyond the title and give an agent enough to distinguish this from a general note about agent capability design or AGENTS.md organization.

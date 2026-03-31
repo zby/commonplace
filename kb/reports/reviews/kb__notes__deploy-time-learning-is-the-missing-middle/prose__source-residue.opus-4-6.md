@@ -1,3 +1,0 @@
-PASS
-
-The title claims generality ("the missing middle") across AI system adaptation timescales. The body uses vocabulary from software engineering (version control, diffs, CI), ML (weights, gradients, RL), and organizational learning (double-loop learning, SECI spiral). All domain-specific vocabulary is either (a) the subject matter (software artifacts are what deploy-time learning produces) or (b) explicitly framed as borrowed analogy (organizational learning section). No unacknowledged source-domain residue.

@@ -1,3 +1,0 @@
-PASS
-
-The title claims generality over agent orchestration. The body draws from three different domains (flat context, multi-agent memory, output aggregation, delegation chains) — each explicitly framed as an instance of the general "uncoordinated composition" pattern. Computer-architecture vocabulary from the multi-agent memory source ("visibility rules," "ownership rules") is contained within that subsection and framed as evidence, not smuggled as general terminology.

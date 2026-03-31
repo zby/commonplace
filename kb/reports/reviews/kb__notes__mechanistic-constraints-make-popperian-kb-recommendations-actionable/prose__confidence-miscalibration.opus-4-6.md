@@ -1,3 +1,0 @@
-PASS
-
-The note's own framework (three proposed practices derived from KB mechanics) is appropriately hedged. The opening says "This note tries to apply Popperian epistemology" and "asks whether... constraints give Popperian practices concrete value." Proposals are marked as proposals with explicit targets. The "What would defeat this claim?" section at the end actively identifies the condition under which the argument would weaken. No quantitative claims without evidence.

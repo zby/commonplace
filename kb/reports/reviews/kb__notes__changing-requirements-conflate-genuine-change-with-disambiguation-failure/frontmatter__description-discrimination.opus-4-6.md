@@ -1,1 +1,0 @@
-pass. The description adds the mechanism (short iterations limit interpretation-error propagation, not just change-response latency) and the scope implication (agile's value even in a world of stable requirements). This reframing of iteration length as a propagation bound is not in the title and is the note's most valuable insight for retrieval purposes.

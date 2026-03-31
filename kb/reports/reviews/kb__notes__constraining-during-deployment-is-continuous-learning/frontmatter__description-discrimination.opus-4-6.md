@@ -1,1 +1,0 @@
-pass. The description adds mechanism (symbolic artifacts as the learning substrate), scope (constraining is one concrete form, not the umbrella claim), and implication (continuous learning can happen outside weights). These three additions significantly sharpen what the title alone leaves implicit.

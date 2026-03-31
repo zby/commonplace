@@ -1,1 +1,0 @@
-pass. The body directly delivers on the title's promise. It establishes why quality scores are necessary (connect candidate explosion at scale), what dimensions constitute a score (status, type, inbound links, recency), and where scores get applied. No claim drift or scope drift detected — the body stays squarely on the question of scoring notes for curation purposes.

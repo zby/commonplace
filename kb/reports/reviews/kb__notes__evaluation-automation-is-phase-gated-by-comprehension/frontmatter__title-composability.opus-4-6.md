@@ -1,1 +1,0 @@
-**pass** The title works naturally as a prose fragment: "since evaluation automation is phase-gated by comprehension, adding more automated judges before manual failure analysis will not improve real behavior." The phrase slots into explanatory sentences without awkward rewriting.

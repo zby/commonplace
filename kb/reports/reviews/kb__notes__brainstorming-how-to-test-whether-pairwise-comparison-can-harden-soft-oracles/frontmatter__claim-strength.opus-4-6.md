@@ -1,1 +1,0 @@
-pass. The title is a topical label for an exploratory seedling with an explicit test design. Brainstorming notes are valid as topical titles, and this note is genuinely investigative — it does not assert that pairwise comparison does harden soft oracles, only that this is a hypothesis worth testing. The topical framing is appropriate.

@@ -1,3 +1,0 @@
-INFO
-
-The core claim is that many weak quality signals combined could manufacture a usable soft oracle for KB learning. The "static signals" and "metamorphic relations" sections are well-developed catalogues. The "compound signals" and "many weak signals hypothesis" sections -- which are closest to the core claim about combination -- are thinner than the catalogues they depend on. This is defensible since the catalogue IS the main contribution and the combination hypothesis is explicitly flagged as open. The "neighborhood evaluation" section is proportionally generous for what is essentially one technique, but it earns its space by making a distinct mechanism-level argument (graph determines what to load, LLM does judgment).

@@ -1,1 +1,0 @@
-pass — The title is topical, not a claim, and the note is a multi-surface survey (system prompt files, capability descriptions, memory, configuration injection). Topical titles are valid for this document class. A contestable claim would be inappropriate here since the note's purpose is cataloguing and comparative description, not arguing a single proposition.

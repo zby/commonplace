@@ -1,1 +1,0 @@
-pass. The title is a topical label for an exploratory seedling — brainstorming notes are valid as topical titles, and the note is genuinely exploratory (open questions, MVP framing, architectural tensions). No claim is being made that needs to be contestable; the note is a design exploration, not an argument.

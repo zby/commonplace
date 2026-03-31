@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment, though it is long: "since changing requirements conflate genuine change with disambiguation failure, short iterations serve as propagation bounds not just change-response mechanisms." The claim form slots into "because" and "since" constructions without requiring reformulation, even at its length.

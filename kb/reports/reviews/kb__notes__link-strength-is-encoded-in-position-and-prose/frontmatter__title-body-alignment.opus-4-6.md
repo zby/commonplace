@@ -1,1 +1,0 @@
-pass. The body establishes exactly what the title claims: it defines two strength signals (position in document and relationship words in prose), provides classification tables for each, introduces the load-bearing test as a practical heuristic, and derives downstream effects on traversal, scoring, and quality signals. No drift detected.

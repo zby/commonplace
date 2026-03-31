@@ -1,1 +1,0 @@
-pass — The title embeds cleanly into prose: "since enforcement without structured recovery is incomplete, warning hooks should specify corrective, fallback, and escalation strategies" works without grammatical strain. It also works as "because enforcement without structured recovery is incomplete, behavioral drift has no upper bound when hooks fire but agents ignore them."

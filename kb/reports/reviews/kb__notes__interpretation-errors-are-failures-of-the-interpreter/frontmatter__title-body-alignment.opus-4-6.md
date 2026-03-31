@@ -1,1 +1,0 @@
-pass. The body establishes exactly what the title claims: it distinguishes interpretation errors from underspecification and indeterminism, gives five concrete examples where a perfect interpreter would not err, and derives a distinct class of remedies (error detection and correction) that only follow if the fault is in the interpreter. No drift detected.

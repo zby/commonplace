@@ -1,1 +1,0 @@
-pass. The description adds the key mechanism detail absent from the title: that existing links already encode dependency information without new annotation, and that the approach is analogous to make's file-based rebuild logic. These specifics help a retrieval agent distinguish this from a generic "staleness detection" note and immediately signal the implementation approach.

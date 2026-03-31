@@ -1,1 +1,0 @@
-pass — The title works as a prose fragment. "Since any symbolic program with bounded calls is a select/call program, we can apply the base model's invariants without per-program verification" reads naturally. The subject-predicate structure is clear and the title slots into subordinate clauses without awkward grammar.

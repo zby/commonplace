@@ -1,3 +1,0 @@
-"llm-do" is mentioned twice ("llm-do system prompt layer", "llm-do's unified calling conventions") without identifying what it is. A reader encountering this note cannot tell whether llm-do is a tool, a framework, a library, or a project.
-
-Suggested fix: on first mention, add a brief identification — e.g., "llm-do, a tool-calling framework that..." or whatever llm-do actually is. Only add identification that can be verified from the note or its linked sources.

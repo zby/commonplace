@@ -1,1 +1,0 @@
-pass. The body covers exactly what the title scopes: the repo's own directory layout, what is currently missing (skills symlinks, CLAUDE.md, README), and the decision to drop `kb/types/`. No claim drift or scope drift is present — the body does not wander into the installed-project layout except to contrast with it.

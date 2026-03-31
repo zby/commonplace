@@ -1,1 +1,0 @@
-**Pass.** The note contains no tables, taxonomies, or formal-looking frameworks. It uses bold headings and a bullet list of concrete failure symptoms, each identifying an observable diagnostic signal. The bullet list is functional, not decorative.

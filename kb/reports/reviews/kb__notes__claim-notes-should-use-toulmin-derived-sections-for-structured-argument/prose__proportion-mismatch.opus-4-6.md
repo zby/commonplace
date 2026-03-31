@@ -1,3 +1,0 @@
-PASS
-
-The core claim is that Toulmin-derived sections should become a base type. The Evidence section is well-developed (four convergent threads). The Reasoning section is the longest and most developed, covering why a base type rather than a trait, why the name "structured-claim", the promotion path, and the Evidence/Reasoning distinction from Toulmin. The Caveats section is substantial. The template and mapping table serve as concrete specification. Proportions match the argumentative weight well — the "why" sections are the most developed.

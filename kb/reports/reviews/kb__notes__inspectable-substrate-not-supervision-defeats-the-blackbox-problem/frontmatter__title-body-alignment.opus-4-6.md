@@ -1,1 +1,0 @@
-pass. The body establishes precisely what the title claims: it accepts Chollet's blackbox framing, then argues that the blackbox problem does not apply to repo artifacts because the substrate is inspectable, making supervision optional rather than necessary. The mitigation table and the closing paragraph both reinforce the same point. No drift detected.

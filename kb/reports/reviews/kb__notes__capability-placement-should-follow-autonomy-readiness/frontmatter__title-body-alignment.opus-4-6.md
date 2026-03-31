@@ -1,1 +1,0 @@
-pass. The body supports the title throughout: it names autonomy readiness as the organizing variable, maps it to three placement tiers, derives the AGENTS.md consequence, and provides a concrete migration path. No scope or claim drift is present.

@@ -1,3 +1,0 @@
-INFO
-
-The five-step learning loop is the note's own framework presented with assertive language ("Both agile and deploy-time learning implement the same cycle"). This is a qualitative decomposition with clear hedging elsewhere ("This is a more mature position"), so it does not miscalibrate. The claim "Agile implicitly assumes everything can be codified if you iterate enough" is a strong interpretive claim about agile philosophy that some practitioners would dispute, but it is framed as the note's reading ("The implied end state"), not as established fact.

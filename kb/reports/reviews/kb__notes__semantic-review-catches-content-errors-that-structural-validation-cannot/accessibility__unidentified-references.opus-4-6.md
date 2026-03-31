@@ -1,1 +1,0 @@
-"Simon" appears at line 14 ("Simon's 'any capacity change is learning'") and line 23 ("Simon's definition of learning") without identification. The reader cannot tell which Simon is meant. Suggest adding a brief identification on first mention, e.g. "Herbert Simon's definition ('any capacity change is learning')."

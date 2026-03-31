@@ -1,3 +1,0 @@
-"qmd" appears in "Bash (qmd commands, grep fallback)" without any definition or gloss. The reader cannot infer what qmd is from the surrounding sentence. It appears to be an internal search/indexing CLI tool, but the note gives no indication of this.
-
-Suggested fix: add a brief inline identification, e.g. "Bash (qmd semantic-search commands, grep fallback)" or "Bash (qmd index/query commands, grep fallback)" to indicate what kind of tool it is.

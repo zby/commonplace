@@ -1,1 +1,0 @@
-fail. The title is a process label naming an activity: "Brainstorming: how to test whether pairwise comparison can harden soft oracles." Inserting it into a sentence as a prose fragment produces constructions like "since brainstorming how to test whether..." which names an activity rather than stating something linkable. The brainstorming prefix prevents natural citation.

@@ -1,1 +1,0 @@
-pass. The title works naturally as a prose fragment: "since information value is observer-relative, distillation must target a specific reader" or "because information value is observer-relative, the same note can be worth loading in one context and not another." The subject-verb-complement structure slots cleanly into causal connectives.

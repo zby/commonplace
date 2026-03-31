@@ -1,1 +1,0 @@
-**pass** The title embeds cleanly in linking prose: "since the boundary of automation is the boundary of verification, the engineering priority for expanding automation should be oracle construction rather than raw capability improvement." The symmetrical structure (boundary of X is boundary of Y) is a natural rhetorical form that composes well into causal arguments.

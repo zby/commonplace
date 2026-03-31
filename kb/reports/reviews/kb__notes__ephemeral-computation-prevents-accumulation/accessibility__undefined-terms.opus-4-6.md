@@ -1,7 +1,0 @@
-**"REPL"** — appears in "Recursive Language Models (RLMs) work this way — the LLM writes code, the REPL executes it, the result feeds back into the conversation." REPL (Read-Eval-Print Loop) is standard developer vocabulary but is used without any gloss. Readers unfamiliar with software development tooling could not infer what "REPL" means from the sentence alone. It is close enough to general technical vocabulary that different readers will draw different conclusions; REPL is not LLM-specific terminology but is also not as universal as "API" or "token."
-
-Finding: "the REPL executes it" — REPL is used without definition. A brief gloss "(an interactive code execution environment)" would make the example self-contained for readers outside software development.
-
-**"stochastic regime"** — appears in "It stays permanently in the stochastic regime, re-deriving solutions each time." In context (contrasted with "deterministic, testable artifacts" just above), the meaning is inferable. Acceptable.
-
-**"production memory"** — appears in the "What ephemerality costs" section via the Kirsch reference: "What has to be rediscovered is not just code shape but production memory: deployment-discovered edge cases, migrations and integration constraints, interface expectations, and audit-relevant interpretations." The term is immediately followed by a colon and a four-item enumeration that defines it. Acceptable.

@@ -1,1 +1,0 @@
-pass. An informed reader could contest both the analogy and the "human-AI systems" scope: one could argue agile's core innovation was team coordination and feedback culture, not co-evolution of prose and code, or that the analogy obscures more than it illuminates. The title takes a non-obvious structural identification that invites dispute.

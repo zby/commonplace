@@ -1,1 +1,0 @@
-pass. The description adds mechanism (symbolic scheduler driving bounded LLM calls through a select/call loop), implication (explains why selection is hard), and scope nuance (still supports local strategy comparisons). These details go well beyond the topical title, giving an agent enough to choose this note over related architecture notes.

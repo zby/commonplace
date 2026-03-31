@@ -1,1 +1,0 @@
-**pass** The description adds mechanism (partial evaluation applied to instructions) and scope (execution context as the primary bottleneck), going well beyond the title. It also introduces the theoretical framing (partial evaluation) that the body develops, giving a reader a preview of the note's analytical depth rather than just restating that frontloading saves context.

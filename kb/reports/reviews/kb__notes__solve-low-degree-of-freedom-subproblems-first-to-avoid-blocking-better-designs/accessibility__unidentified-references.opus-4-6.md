@@ -1,1 +1,0 @@
-"Christopher Alexander" is introduced without identification. The reader is told about "Christopher Alexander's kitchen example" but not who Alexander is. A brief gloss such as "Christopher Alexander (architect and design theorist)" would orient readers unfamiliar with his work.

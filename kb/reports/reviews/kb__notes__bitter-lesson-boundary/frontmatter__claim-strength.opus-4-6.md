@@ -1,1 +1,0 @@
-pass. The title "The bitter lesson has a boundary" is contestable — someone could argue the bitter lesson is universal (all hand-crafted knowledge eventually loses to scale and compute) with no meaningful boundary. The note takes a clear side: the boundary is whether the specification fully captures the problem, and this is a non-obvious claim that carries argumentative weight.

@@ -1,1 +1,0 @@
-**Pass.** The note is already close to a paragraph and loses nothing meaningful if kept at that length. The table (Tulving type / Agent space / Contains / Metabolic rate) is the one structural element that does additional work — it maps three taxonomies in one scan. The surrounding prose is appropriately brief. The note is well-sized for its single, bounded insight.

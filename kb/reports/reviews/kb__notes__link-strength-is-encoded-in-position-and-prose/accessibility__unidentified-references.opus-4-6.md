@@ -1,3 +1,0 @@
-"Ars Contexta" is referenced inline: "the credibility erosion problem (noisy weak links don't inflate scores the way unweighted link counts would)" — the parenthetical explains what the problem is but does not identify what Ars Contexta is. The note links to a related-systems review file, but a link is not a substitute for inline identification. The note should say what Ars Contexta is on first mention (e.g., "Ars Contexta, a knowledge management system").
-
-"arscontexta" also appears in the open questions section: "The arscontexta 'specificity test' ('genuine elaboration is specific enough to be wrong') is a link quality gate." Same issue — arscontexta is named without identification.

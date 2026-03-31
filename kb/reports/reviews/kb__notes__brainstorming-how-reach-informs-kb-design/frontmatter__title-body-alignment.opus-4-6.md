@@ -1,1 +1,0 @@
-pass. The body explores exactly what the title promises: how Deutsch's reach concept applies to KB design decisions, covering a reach spectrum, maintenance fragility, and heuristics for writing and reviewing. The description's maintenance-risk framing is well-supported by the body's analysis of asymmetric maintenance costs across reach levels.

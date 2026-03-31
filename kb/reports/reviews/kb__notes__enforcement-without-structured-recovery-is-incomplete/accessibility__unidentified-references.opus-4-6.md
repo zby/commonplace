@@ -1,3 +1,0 @@
-**"ABC framework"** — introduced as "The [ABC framework](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) provides vocabulary for this missing layer." The link title "agent-behavioral-contracts-formal-specification-runtime-enforcement" implies what it is, but the note itself does not say what ABC is — whether it is a paper, a deployed system, a methodology, or a standard. A reader encountering this without following the link would not know. Recommendation: add an inline identification such as "The ABC framework (a formal specification for agent behavioral contracts)" on first mention.
-
-No other named systems, tools, persons, or organizations are introduced without identification.

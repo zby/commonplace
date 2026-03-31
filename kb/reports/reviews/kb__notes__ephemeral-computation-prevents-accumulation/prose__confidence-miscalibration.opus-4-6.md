@@ -1,3 +1,0 @@
-PASS
-
-The ephemeral/accumulating distinction and the spectrum framing are the note's own taxonomy, but the language is appropriately descriptive rather than assertive. "This positions ephemerality and codification as endpoints on a spectrum" is presented as an analytical observation. The claims about costs and benefits are qualitative and well-hedged ("may be small," "for systems that need to improve over time, it's a ceiling"). Kirsch's essay is properly attributed as external evidence.

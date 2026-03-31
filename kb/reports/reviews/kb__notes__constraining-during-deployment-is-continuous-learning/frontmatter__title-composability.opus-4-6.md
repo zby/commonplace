@@ -1,1 +1,0 @@
-pass. The title works fluently as a prose fragment: "since constraining during deployment is continuous learning, the engineering toolchain for prompts and schemas is also a learning pipeline." The phrase slots naturally into a dependent clause with no grammatical awkwardness.

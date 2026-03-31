@@ -1,1 +1,0 @@
-**pass** The title works as a prose fragment: "since in-context learning presupposes context engineering, eliminating weight updates during deployment doesn't eliminate the learning requirement — it relocates it." The "presupposes" verb gives the title strong causal weight that makes it easy to anchor explanatory sentences.

@@ -1,1 +1,0 @@
-pass — The body directly establishes the title's claim. It identifies the enforcement gradient's missing recovery column, supplies the three recovery strategies from ABC, maps them to oracle strength levels, and cites a formal result (Drift Bounds Theorem) to quantify the cost of missing recovery. No scope or claim drift.

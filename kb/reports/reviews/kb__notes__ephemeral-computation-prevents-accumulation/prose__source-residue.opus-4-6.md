@@ -1,3 +1,0 @@
-PASS
-
-The title claims generality about ephemeral computation and accumulation. The body uses examples from software engineering (code, APIs, state management) and knowledge work (analyses, plans). Software-specific terms like "version control," "technical debt," and "API" are used as examples of the general pattern, not as unexplained domain vocabulary. Kirsch's software engineering concerns are explicitly framed as "the concrete software-engineering version of this cost."

@@ -1,1 +1,0 @@
-**pass** The title works as a prose fragment: "since evolving understanding needs re-distillation rather than composition, workshop documents should be holistically rewritten rather than extended with new notes." The comparative structure ("not composition") also makes the claim's target explicit when linked, which aids precise referencing.

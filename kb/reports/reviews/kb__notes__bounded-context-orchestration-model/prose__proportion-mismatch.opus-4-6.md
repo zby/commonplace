@@ -1,3 +1,0 @@
-**PASS**
-
-Proportions are reasonable. The core claim — agent orchestration modeled as symbolic scheduler + bounded calls through a select/call loop — receives the most development across "The model," "The select/call loop," and "What makes selection hard" (collectively ~50 lines of prose + pseudocode). The "Realising the model with SDKs and tool calling" section is substantial but serves a genuine dual purpose: compatibility with real systems AND identifying the architectural boundary (exposed vs. absorbed orchestration loop). The canonical example is proportionate — long enough to ground the abstract model, not so long that it overshadows the theory. No secondary section outweighs the core.

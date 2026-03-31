@@ -1,1 +1,0 @@
-pass. An ML researcher could argue the opposite: that "continuous learning" is a term of art in machine learning specifically referring to weight updates, and that the note is just redefining the term to include ordinary software maintenance. The title makes a boundary claim that is genuinely contested in the field.

@@ -1,1 +1,0 @@
-pass. The body supports the title's claim directly: it establishes where affordances actually live (directory-local), explains why LLM context economics differ from programming type systems, derives the thin global / thick directory split, and describes the current implementation. No scope drift — the body stays on type system economics throughout.

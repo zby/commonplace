@@ -1,1 +1,0 @@
-pass — The body establishes exactly what the title promises: that tracking should live at the source, not the distilled artifact. The two-audiences table and the maintenance scenario argument both directly support that claim. No scope or claim drift detected.

@@ -1,1 +1,0 @@
-Pass. The note has one named section ("Three recovery strategies") and an introductory paragraph establishing the problem — two logical sections for two distinct claims (LLM-as-scheduler degrades the clean model; three recovery strategies restore it to increasing degrees). The ratio is exactly right, and neither section merely re-frames the other.

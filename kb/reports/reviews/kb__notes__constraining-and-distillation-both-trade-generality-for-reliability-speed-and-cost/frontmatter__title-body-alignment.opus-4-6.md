@@ -1,1 +1,0 @@
-pass. The body directly establishes the title's claim through a worked analogy (LLM vs calculator), separate mechanism sections for constraining and distillation, and a comparison table. The scope matches: both mechanisms are covered symmetrically, and the conclusion restates that both are capacity changes on the same trade-off axis.

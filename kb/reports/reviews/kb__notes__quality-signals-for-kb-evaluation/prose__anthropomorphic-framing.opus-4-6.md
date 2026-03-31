@@ -1,3 +1,0 @@
-PASS
-
-No anthropomorphic framing detected. The note discusses agents, models, and systems without attributing beliefs, understanding, or knowledge to them. The one instance where "the agent learns to discount all links" (credibility erosion section) describes a behavioral pattern (reduced link-following rate), not a mental state. "LLMs tend to always find fault" is about output distribution, not belief.

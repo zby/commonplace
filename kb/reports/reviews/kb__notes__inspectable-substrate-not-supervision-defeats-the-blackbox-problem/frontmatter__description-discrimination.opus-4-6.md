@@ -1,1 +1,0 @@
-pass. The description adds substantial context the title omits: it names Chollet as the source of the ML-framing, specifies what "inspectable substrate" means concretely (repo artifacts), and names the mechanism (diff, test, verify) that replaces supervision. This gives a retrieval agent enough to distinguish this note from a generic note about observability or code review.

@@ -1,1 +1,0 @@
-pass — The claim is contestable. Someone informed could argue that distilled artifacts should carry back-references to their sources (for auditability and discoverability), or that bidirectional tracking is worth the focus cost. The non-obvious move — placing tracking at the source, not the target — is the actual claim, and it has a plausible counterposition.

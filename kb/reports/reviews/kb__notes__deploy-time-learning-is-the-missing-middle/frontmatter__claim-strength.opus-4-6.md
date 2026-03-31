@@ -1,1 +1,0 @@
-pass. An informed reader could contest the "missing middle" framing: one could argue there is no gap because in-context learning plus fine-tuning adequately covers the adaptation space, or that symbolic artifact management is not learning but configuration management. The title makes a non-obvious taxonomic claim about a gap in the standard framing.

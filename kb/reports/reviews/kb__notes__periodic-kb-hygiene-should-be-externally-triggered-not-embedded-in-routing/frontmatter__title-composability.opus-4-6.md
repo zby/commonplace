@@ -1,1 +1,0 @@
-pass. The title slots naturally into prose frames: "since periodic KB hygiene should be externally triggered, not embedded in routing, the maintenance playbook lives in a separate catalogue rather than in AGENTS.md" is fluent. The title is a full prescriptive sentence that works as an inline causal premise.

@@ -1,7 +1,0 @@
-"capability surface" is introduced in the opening paragraph — "a different capability surface — a different set of actions exposed to the model" — and this inline gloss is sufficient. Later uses ("Changing the capability surface changes the action alphabet") are adequately grounded by that initial definition.
-
-"action alphabet" is introduced as "the action alphabet of the next bounded call — what the model is allowed to do, not just what state surrounds it." The inline gloss is sufficient.
-
-"bounded call" appears without any inline definition or gloss. Its meaning must be inferred from context ("the next bounded call" implies a single LLM invocation) but the term is KB-internal (from the orchestration model note) and is never defined here. First use: "Changing the capability surface changes the **action alphabet** of the next bounded call." Recommend adding a brief gloss, e.g. "the next bounded call — a single isolated LLM invocation."
-
-"loop exposure" is the key term in the title and is eventually explained — "That is what 'loop exposure' means in practice — not that the programmer hand-writes every API call, but that the framework treats spawning a new loop as a first-class operation." This explanation comes late but is present.

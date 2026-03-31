@@ -1,1 +1,0 @@
-**Pass.** The five dimensions cannot be compressed into a paragraph without losing the specific content of each dimension and the concrete system examples that demonstrate independent variation. The note's core argument is precisely that these dimensions are separable -- collapsing them into a single statement would undercut the analytical contribution.

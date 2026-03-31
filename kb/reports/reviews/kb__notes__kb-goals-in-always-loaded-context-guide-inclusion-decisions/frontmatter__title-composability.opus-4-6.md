@@ -1,1 +1,0 @@
-pass. The title works in linking prose: "since KB goals in always-loaded context guide inclusion decisions, a KB without an explicit goals section will drift in scope over time." The subject is long but grammatically clean — it functions as a noun phrase that slots into causal and conditional sentences without forcing awkward constructions.

@@ -1,1 +1,0 @@
-pass. An informed reader could contest this: one could argue that keeping validation in a skill preserves flexibility for future checks that aren't yet deterministic, or that the overhead of maintaining a separate script outweighs the token savings for an infrequently run operation. The title is the gate's own example of a passing claim, and it earns that status.

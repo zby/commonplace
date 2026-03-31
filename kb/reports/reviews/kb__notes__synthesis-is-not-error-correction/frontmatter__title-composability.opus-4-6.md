@@ -1,1 +1,0 @@
-**pass** The title slots naturally into linking prose: "because synthesis is not error correction, applying it to redundant agent calls amplifies rather than filters errors." The subject-predicate structure is clean and the negation is specific enough to carry argumentative weight in a sentence.

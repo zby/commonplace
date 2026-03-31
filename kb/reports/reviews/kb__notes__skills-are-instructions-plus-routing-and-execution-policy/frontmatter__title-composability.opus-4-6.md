@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment. "Since skills are instructions plus routing and execution policy, the procedure body can be promoted or demoted between the two formats without rewriting" reads naturally. The definitional copula ("are X plus Y") licenses both consequential and contrastive framing in linked notes.

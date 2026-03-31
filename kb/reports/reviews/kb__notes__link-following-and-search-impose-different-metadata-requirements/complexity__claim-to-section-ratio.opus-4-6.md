@@ -1,1 +1,0 @@
-Pass. The note has no formal sections — it is a short, unsectioned paragraph. The single non-obvious claim (different navigation modes require different metadata; indexes bridge both) is stated concisely without section headers. The note's compact form is appropriate for its content.

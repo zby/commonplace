@@ -1,1 +1,0 @@
-pass. The description adds specific scope and mechanism beyond the title: it names the two layouts being distinguished (the repo's own vs the two-tree installed layout), and specifies the concrete design decision (global types inlined in CLAUDE.md rather than in kb/types/). Both details orient retrieval in ways the title alone does not.

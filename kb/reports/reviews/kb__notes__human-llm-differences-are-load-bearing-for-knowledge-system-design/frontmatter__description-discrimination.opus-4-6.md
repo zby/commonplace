@@ -1,1 +1,0 @@
-**pass** The description adds two concrete reasons why differences are load-bearing (inherited materials and dual-audience documents) and names the implication (differences are a first-class design concern, not a generic disclaimer). This is materially richer than the title — it explains the mechanism and scope of "load-bearing" rather than just restating the claim.

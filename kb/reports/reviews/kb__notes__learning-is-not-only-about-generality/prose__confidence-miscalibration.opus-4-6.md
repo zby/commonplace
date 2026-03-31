@@ -1,3 +1,0 @@
-PASS
-
-The generality-vs-compound decomposition is the note's own framework, and the note uses appropriately propositional language. The decomposition is presented as an analytical lens, not as an established taxonomy. Quantitative claims are sourced: "AgeMem's 23-49% improvement" is attributed to the AgeMem paper via link. Simon's definition is quoted and cited. Argyris's framework is attributed. The "compound" grouping (reliability, speed, cost) is presented as an observation ("tend to move together") rather than asserted as a law.

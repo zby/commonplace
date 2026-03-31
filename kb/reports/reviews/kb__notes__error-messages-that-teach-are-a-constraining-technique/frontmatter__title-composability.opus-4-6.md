@@ -1,1 +1,0 @@
-pass — The title embeds naturally into prose: "since error messages that teach are a constraining technique, improving hook messages is an enforcement-level investment, not cosmetic polish" works without grammatical strain. It also works as "because error messages that teach are a constraining technique, the inform axis can be upgraded independently of the trigger mechanism."

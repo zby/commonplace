@@ -1,3 +1,0 @@
-PASS
-
-No bridge paragraphs duplicate their following sections. The paragraph before "The same learning loop" sets up the analogy without enumerating the cycle steps. The paragraph before "Where they diverge" previews the divergence theme in one sentence ("The process shape is identical") without restating the section content. The paragraph before "The waterfall backdrop" likewise transitions cleanly.

@@ -1,1 +1,0 @@
-pass. The title works naturally as a prose fragment: "since Claw learning is broader than retrieval, the learning loop needs different knowledge types, mutations, and evaluation criteria." The comparative claim form slots into "because" and "since" constructions without awkwardness.

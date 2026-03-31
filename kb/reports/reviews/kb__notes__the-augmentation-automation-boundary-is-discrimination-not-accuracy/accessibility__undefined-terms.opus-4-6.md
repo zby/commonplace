@@ -1,7 +1,0 @@
-"discrimination" (in the statistical/oracle sense) is introduced in the first paragraph — "per-instance discrimination — the ability to know, per instance, whether this particular output is likely wrong" — with a clear inline definition. This is sufficient. Later uses are grounded by this opening definition.
-
-"calibration" is introduced in the Discrimination section — "Calibration is aggregate alignment — when a model says '80% confident,' it is right roughly 80% of the time." Inline definition is present and sufficient.
-
-"soft oracle" appears in the oracle-strength section: "A model with high discrimination has a soft oracle for its own correctness." The note relies on the linked oracle-strength-spectrum note for the full soft/hard oracle vocabulary. "Soft oracle" is not defined inline in this note. The surrounding sentence ("it can flag uncertain outputs for human review or automated re-checking") gives functional context but does not define the term. Since the oracle-strength-spectrum is linked in the Relevant Notes section, this falls under the exception for terms linked to their definition note. However, the link is not placed at the point of first use of "soft oracle." Borderline; the functional description is sufficient for a reader to follow the argument without the full definition.
-
-"route (a)" / "route (b)" labeling: the note introduces these mid-section without a prior enumeration — "the system must either (a) self-assess ... or (b) be verified by an external oracle." This is clear enough from the inline presentation.

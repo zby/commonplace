@@ -1,1 +1,0 @@
-pass. The title composes naturally: "since link-following and search impose different metadata requirements, indexes must satisfy both — needing surrounding link context and standalone titles." The parallel subject construction slots cleanly into causal sentences without grammar awkwardness.

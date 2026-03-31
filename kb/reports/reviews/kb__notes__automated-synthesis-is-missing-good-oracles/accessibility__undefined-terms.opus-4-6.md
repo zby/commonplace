@@ -1,5 +1,0 @@
-"oracle" — while defined in this note through context and examples, the term is used in a specialized sense (a function or mechanism that can evaluate whether a synthesis candidate is genuine vs. noise) that goes beyond standard usage. The note is largely self-contained on this point, building the definition through examples. No finding needed.
-
-"boiling cauldron" — used in the section "Relationship to the boiling cauldron" and referenced via a link to `automating-kb-learning-is-an-open-problem.md`. The note says "The automating KB learning note lists 'Synthesise' as one of seven boiling cauldron mutations." A reader who hasn't read that note cannot tell what "boiling cauldron" means — it is used as a known term, not introduced. A link is provided but inline identification is absent.
-
-Suggested fix: gloss inline, e.g., "The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) note describes a hypothetical background process — the 'boiling cauldron' — that continuously proposes mutations to the KB..."

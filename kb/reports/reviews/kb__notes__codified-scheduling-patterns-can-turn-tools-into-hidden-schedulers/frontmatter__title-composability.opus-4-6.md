@@ -1,1 +1,0 @@
-pass. The title works as a prose fragment: "since codified scheduling patterns can turn tools into hidden schedulers, frameworks that expose only tool surfaces force orchestration control logic into the wrong abstraction." The causal-claim form slots into "because" and "since" constructions without grammatical awkwardness.

@@ -1,1 +1,0 @@
-**pass** The title works naturally as a prose fragment: "since indirection is costly in LLM instructions, KB skills should hardcode known paths rather than reference configuration variables." The phrase slots cleanly into causal sentences and carries sufficient specificity to justify the link without additional context.

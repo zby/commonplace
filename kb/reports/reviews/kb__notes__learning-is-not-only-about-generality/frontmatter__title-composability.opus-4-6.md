@@ -1,1 +1,0 @@
-pass. The title composes naturally: "since learning is not only about generality, codification counts as learning even when it covers no new cases." The negated-scope construction ("not only about X") slots into causal sentences cleanly and enables the kind of contrastive linking that KB notes require.

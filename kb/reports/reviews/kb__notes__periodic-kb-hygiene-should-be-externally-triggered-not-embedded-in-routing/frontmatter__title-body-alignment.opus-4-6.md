@@ -1,1 +1,0 @@
-pass. The body directly supports the title's claim: it explains why routing instructions are the wrong home for periodic hygiene (load frequency mismatch, responsibility blurring) and points to where the separated playbook should live. No drift detected.

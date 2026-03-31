@@ -1,1 +1,0 @@
-pass. The body directly establishes the title's mapping: a table aligning each of the four reliability dimensions to a specific oracle question and hardening move, followed by reasoning about why the mapping matters, a connection to spec mining, and a focus section on the predictability dimension. No claim drift or scope drift.

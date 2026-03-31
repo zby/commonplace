@@ -1,1 +1,0 @@
-pass. The body establishes precisely the title's claim: it applies Simon's definition, identifies the ephemeral/durable boundary as the real criterion, and situates weight updates and symbolic artifacts as two equally valid substrates. The scope is the general continuous-learning criterion, which is what the title asserts, with no drift to narrower examples.

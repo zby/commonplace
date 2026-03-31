@@ -1,1 +1,0 @@
-Pass. The note has no Relevant Notes footer section. There are two inline links to "agents navigate by deciding what to read next" — one in the body and a "See also" at the end. Both are inline, not footer entries. No connection inflation is possible.

@@ -1,1 +1,0 @@
-**pass** The causal "because" in the title itself makes it particularly composable: linking sentences can exploit the built-in explanation — "human writing structures transfer to LLMs because failure modes overlap, so Toulmin structure is justified not by analogy but by demonstrated shared failure." The title functions as a complete explanatory clause.

@@ -1,3 +1,0 @@
-- "DeAngelis's Spec Driven Development" is mentioned in the Open Questions section: "DeAngelis's [Spec Driven Development](../sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development-2033303156340240481.ingest.md) reduces ambiguity when the intent is knowable upfront." The note does not say who or what DeAngelis is (person? organization?). The link leads to a source but inline identification is absent. The author should add a brief gloss, e.g., "DeAngelis (author of the linked article), in Spec Driven Development."
-
-- "Augment's bidirectional spec pattern" is mentioned: "Augment's [bidirectional spec pattern](...)". The note does not say what Augment is. The author should add inline identification (e.g., "Augment, an AI coding assistant").

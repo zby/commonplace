@@ -1,3 +1,0 @@
-INFO
-
-Named references are generally well-sourced: Karpathy's "Verifiability" blog post is linked, Argyris & Schon (1978) and Nonaka & Takeuchi (1995) are cited with year and work title, DSPy/ProTeGi/Voyager/FunSearch are linked or cited with arXiv IDs. The TODO at the end honestly flags that "The organizational learning and knowledge creation citations are from the agent's training data, not systematic." This self-awareness is good practice, but the citations themselves (Argyris & Schon 1978, Nonaka & Takeuchi 1995) are standard enough to stand on their own. OpenClaw-RL, EDDOps, and other sources are linked to ingest files or arXiv. No truly orphan references.

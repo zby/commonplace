@@ -1,1 +1,0 @@
-pass. The description adds mechanism (global types tax every session's context), scope condition (most structural affordances are directory-local), and a design implication (the type system should match that economy). These three additions are more specific than the title's bare cost comparison.

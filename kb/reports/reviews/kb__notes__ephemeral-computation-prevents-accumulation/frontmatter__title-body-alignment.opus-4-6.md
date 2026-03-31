@@ -1,1 +1,0 @@
-pass — The body establishes what the title claims: ephemeral computation prevents accumulation, and the note carefully traces what that means — what accumulation buys (learning, testing, review, reuse), what ephemerality buys (simplicity, no approval overhead), and how ephemerality relates to codification as its inverse. No drift detected.

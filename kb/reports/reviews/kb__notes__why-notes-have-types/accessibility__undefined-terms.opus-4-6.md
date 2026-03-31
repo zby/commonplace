@@ -1,3 +1,0 @@
-The term "traits" appears in "accumulate traits" in the Maturation section without any definition or gloss. The sentence reads: "The maturation path is: raw capture -> add frontmatter (note) -> accumulate traits -> promote to a specific type when structural criteria are met." A reader unfamiliar with the KB's type system cannot infer what traits are or what accumulating them means from context.
-
-Suggested fix: add a brief parenthetical, e.g. "accumulate traits (metadata flags like has-external-sources that record document characteristics)" or link to the type definition where traits are documented.

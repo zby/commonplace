@@ -1,1 +1,0 @@
-**pass** The body directly supports the title's claim: it establishes two reasons why differences are load-bearing (inherited materials, dual-audience documents), names the failure modes when designers ignore them, and states the methodological implication (evaluate each convention individually). No claim or scope drift detected.

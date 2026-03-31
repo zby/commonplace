@@ -1,1 +1,0 @@
-Pass. The note uses no tables, taxonomies, or formal frameworks. The examples are a plain bulleted list of failure cases rather than a classification scheme. The note is primarily expository prose with an inline list of examples — no structural decoration is present to evaluate.

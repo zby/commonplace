@@ -1,1 +1,0 @@
-**pass** The title embeds cleanly in linking prose: "since writing styles are strategies for managing underspecification, choosing prescriptive over explanatory style in always-loaded instructions trades generalisability for token efficiency and reliability." The subject-predicate form with "strategies for" provides a natural causal hook for notes on instruction design.

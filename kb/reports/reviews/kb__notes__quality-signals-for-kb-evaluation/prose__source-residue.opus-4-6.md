@@ -1,3 +1,0 @@
-PASS
-
-The title and description claim generality over KB evaluation. The body uses KB-specific terminology (orphan rate, index coverage, link reciprocity, dangling links) that is native to the domain, not borrowed from an unacknowledged source domain. Graph-theory terms (PageRank, betweenness centrality, cluster coefficient) are standard and appropriately domain-general. The ML ensemble analogy is explicitly flagged as an analogy. No source-domain vocabulary leaks through unframed.

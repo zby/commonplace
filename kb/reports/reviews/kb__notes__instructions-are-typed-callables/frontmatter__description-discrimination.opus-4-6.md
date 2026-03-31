@@ -1,1 +1,0 @@
-pass. The description adds the mechanism (input/output type declarations) and the implication (skills should declare signatures like functions) that the title's analogy alone does not supply. It also scopes the claim to skills and tasks specifically, distinguishing this from a generic claim about all instructions. The retrieval value is clear.

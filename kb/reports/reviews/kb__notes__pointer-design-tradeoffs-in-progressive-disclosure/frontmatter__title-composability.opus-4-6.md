@@ -1,1 +1,0 @@
-pass. "Pointer design tradeoffs in progressive disclosure" works as a concrete artifact name (a named analysis domain). It also slots into prose: "the pointer design tradeoffs in progressive disclosure determine whether to use fixed descriptions or crafted link phrases" is natural. The specificity of the phrase prevents it from reading as a generic topic heading.
