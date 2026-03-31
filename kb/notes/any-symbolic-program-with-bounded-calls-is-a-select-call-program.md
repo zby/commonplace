@@ -25,6 +25,8 @@ while not satisfied(K):
 
 with `select` a symbolic function and the *same sequence of bounded calls*.
 
+A **bounded LLM call** here means a call whose prompt fits within a fixed per-call effective context budget. The bound is on each individual call, not on the total number of calls or on the size of the accumulated symbolic state `K`.
+
 Here `K` must contain the full symbolic machine state needed to resume execution: original inputs, prior call results, control location, loop counters, phase tags, pending work items, and any other symbolic locals the program consults between calls.
 
 **Why.** First define `satisfied(K)` to mean: starting from machine state `K`, symbolic execution reaches program halt before encountering another LLM call site.
