@@ -17,15 +17,15 @@ The path line is only included when --note is provided.
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import sys
 from pathlib import Path
 
+from review_model import encode_model, resolve_model
+
 GATES_ROOT = Path("kb/instructions/review-gates")
 REVIEWS_ROOT = Path("kb/reports/reviews")
 FRONTMATTER_RE = re.compile(r"^---\n.*?\n---\n*", re.DOTALL)
-MODEL_ENV_VAR = "COMMONPLACE_REVIEW_MODEL"
 
 
 def encode_note_path(note_path: str) -> str:
@@ -34,18 +34,6 @@ def encode_note_path(note_path: str) -> str:
 
 def encode_gate_id(gate_id: str) -> str:
     return gate_id.replace("/", "__")
-
-
-def encode_model(model: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_-]+", "-", model).strip("-").lower()
-
-
-def require_review_model() -> str:
-    model = os.environ.get(MODEL_ENV_VAR, "").strip()
-    if not model:
-        print(f"error: {MODEL_ENV_VAR} is not set", file=sys.stderr)
-        sys.exit(1)
-    return model
 
 
 def review_path_for(note_path: str, gate_id: str, model: str) -> str:
@@ -97,7 +85,14 @@ def main() -> None:
         print("error: no gates resolved", file=sys.stderr)
         sys.exit(1)
 
-    model = require_review_model() if args.note_path else None
+    if args.note_path:
+        try:
+            model = resolve_model()
+        except ValueError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        model = None
 
     for gate_id in gate_ids:
         gate_file = gates_dir / f"{gate_id}.md"

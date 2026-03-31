@@ -15,14 +15,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from review_model import encode_model, resolve_model
+
 REVIEWS_ROOT = Path("kb/reports/reviews")
-MODEL_ENV_VAR = "COMMONPLACE_REVIEW_MODEL"
 
 # Two types of WARN signal:
 # 1. Verdict line: **Result: WARN** — the whole review body is the finding
@@ -33,10 +32,6 @@ INLINE_WARN_PATTERN = re.compile(r"(?:^|(?<=\.\s))(?:\*\*)?WARN(?:\*\*)?[:\s—]
 
 def encode_note_path(note_path: str) -> str:
     return str(Path(note_path).with_suffix("")).replace("/", "__")
-
-
-def encode_model(model: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_-]+", "-", model).strip("-").lower()
 
 
 def decode_note_dir(dir_name: str) -> str:
@@ -167,9 +162,10 @@ def main() -> None:
     parser.add_argument("--json", action="store_true", help="JSON output with full WARN text.")
     args = parser.parse_args()
 
-    model = os.environ.get(MODEL_ENV_VAR, "").strip()
-    if not model:
-        parser.error(f"{MODEL_ENV_VAR} must be set")
+    try:
+        model = resolve_model()
+    except ValueError as exc:
+        parser.error(str(exc))
 
     repo_root = Path.cwd()
     note_filter = set(args.note_paths) if args.note_paths else None
