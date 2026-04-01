@@ -2,10 +2,11 @@
 # Batch review sweep using the direct-write review runner.
 #
 # Usage:
-#   scripts/review_sweep.sh prose                          # one bundle
-#   scripts/review_sweep.sh prose kb/notes/backlinks.md    # filtered to one note
-#   scripts/review_sweep.sh --current prose                # current notes only
-#   scripts/review_sweep.sh --all-gates                    # all bundles, one at a time
+#   scripts/review_sweep.sh prose                              # one bundle
+#   scripts/review_sweep.sh prose kb/notes/backlinks.md        # filtered to one note
+#   scripts/review_sweep.sh --current prose                    # current notes only
+#   scripts/review_sweep.sh --runner codex --current prose     # current notes only in Codex
+#   scripts/review_sweep.sh --all-gates                        # all bundles, one at a time
 #   scripts/review_sweep.sh --current --all-gates
 #
 # Requires: COMMONPLACE_REVIEW_MODEL set in environment.
@@ -28,7 +29,7 @@ EOF
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "usage: review_sweep.sh [--current] {bundle|--all-gates} [note-paths...]" >&2
+  echo "usage: review_sweep.sh [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 
@@ -49,6 +50,22 @@ while [[ $# -gt 0 ]]; do
       current_only=1
       shift
       ;;
+    --runner)
+      if [[ $# -lt 2 ]]; then
+        echo "error: --runner requires a value" >&2
+        exit 1
+      fi
+      case "$2" in
+        claude-code|codex)
+          RUNNER="$2"
+          ;;
+        *)
+          echo "error: --runner must be one of: claude-code, codex" >&2
+          exit 1
+          ;;
+      esac
+      shift 2
+      ;;
     --all-gates)
       select_all_gates=1
       shift
@@ -65,7 +82,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ $# -lt 1 && "${select_all_gates:-0}" -ne 1 ]]; then
-  echo "usage: review_sweep.sh [--current] {bundle|--all-gates} [note-paths...]" >&2
+  echo "usage: review_sweep.sh [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 

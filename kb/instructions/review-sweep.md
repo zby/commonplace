@@ -11,6 +11,7 @@ Inputs:
 - `{bundle-or-all}` — a bundle name (e.g. `prose`, `semantic`, `frontmatter`) or `--all-gates`
 - `{note-paths}` (optional) — one or more note paths to limit the sweep to specific notes
 - `--current` (optional) — limit the sweep to notes whose frontmatter says `status: current`
+- `--runner {claude-code|codex}` (optional) — choose which review runner executes each note-local bundle run
 
 ## Steps
 
@@ -63,6 +64,12 @@ scripts/review_sweep.sh --current {bundle-or-all}
 ```
 
 `review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
+
+Example for current notes in Codex:
+
+```bash
+scripts/review_sweep.sh --runner codex --current semantic
+```
 
 If you are executing manually or from an agent, run one direct-write bundle execution per note:
 

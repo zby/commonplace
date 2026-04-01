@@ -112,6 +112,7 @@ Prompt-facing CLI remains stable:
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths
 - `--current` to filter to notes with `status: current`
+- `scripts/review_sweep.sh --runner {claude-code|codex}` selects the execution runner for note-local bundle runs
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 - `COMMONPLACE_REVIEW_MODEL` selects the active model partition

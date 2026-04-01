@@ -182,3 +182,52 @@ exit 2
     assert result.returncode == 0
     assert "Reviewed: 5 notes" in result.stdout
     assert int(max_file.read_text(encoding="utf-8")) >= 4
+
+
+def test_review_sweep_passes_runner_to_run_review_bundle(tmp_path: Path) -> None:
+    repo = make_fake_repo(tmp_path)
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+
+    selector_output = [
+        {"note_path": "kb/notes/first.md", "gate_id": "prose/source-residue"},
+    ]
+    selector_path = tmp_path / "selector.json"
+    selector_path.write_text(json.dumps(selector_output), encoding="utf-8")
+
+    bundle_log = tmp_path / "bundle.log"
+
+    write_executable(
+        bin_dir / "uv",
+        f"""#!/usr/bin/env bash
+if [[ "$1" == "run" && "$2" == "scripts/review_target_selector.py" ]]; then
+  cat "{selector_path}"
+  exit 0
+fi
+if [[ "$1" == "run" && "$2" == "scripts/run_review_bundle.py" ]]; then
+  printf "%s\\n" "$*" > "{bundle_log}"
+  printf "completed 1 1\\n"
+  exit 0
+fi
+echo "unexpected uv args: $*" >&2
+exit 2
+""",
+    )
+
+    env = os.environ.copy()
+    env["PATH"] = f"{bin_dir}:{env['PATH']}"
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["REVIEW_SWEEP_JOBS"] = "1"
+
+    result = subprocess.run(
+        ["bash", str(SCRIPT_PATH), "--runner", "codex", "--current", "prose"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        env=env,
+        check=False,
+    )
+
+    assert result.returncode == 0
+    logged = bundle_log.read_text(encoding="utf-8")
+    assert "scripts/run_review_bundle.py --runner codex kb/notes/first.md prose/source-residue" in logged
