@@ -9,6 +9,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import frontmatter
 from resolve_gates import resolve_to_gate_ids
 from review_db import (
     GATES_ROOT,
@@ -36,11 +37,28 @@ def _is_index(path: Path) -> bool:
     return path.name == "index.md" or path.name.endswith("-index.md")
 
 
+def _frontmatter_status(path: Path) -> str | None:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+    result = frontmatter.parse(text)
+    return result.data.get("status") if result.ok else None
+
+
 def list_reviewable_notes(notes_dir: Path) -> list[Path]:
     return sorted(
         p for p in notes_dir.glob("*.md")
         if not _is_index(p) and _has_frontmatter(p)
     )
+
+
+def list_current_notes(notes_dir: Path) -> list[Path]:
+    return [
+        path
+        for path in list_reviewable_notes(notes_dir)
+        if _frontmatter_status(path) == "current"
+    ]
 
 
 @dataclass(frozen=True)
@@ -83,12 +101,16 @@ def select_stale_gates(
     *,
     gate_ids: list[str],
     note_filter: list[str] | None = None,
+    current_only: bool = False,
     include_diff: bool = False,
 ) -> list[StaleGate]:
     gates_dir = repo_root / GATES_ROOT
     notes_dir = repo_root / NOTES_ROOT
     model = resolve_model()
     db_path = resolve_db_path(repo_root)
+
+    if note_filter and current_only:
+        raise ValueError("--note and --current are mutually exclusive")
 
     if note_filter:
         notes: list[Path] = []
@@ -98,6 +120,8 @@ def select_stale_gates(
             if not p.is_file():
                 raise ValueError(f"Note not found: {raw}")
             notes.append(p)
+    elif current_only:
+        notes = list_current_notes(notes_dir)
     else:
         notes = list_reviewable_notes(notes_dir)
 
@@ -209,6 +233,7 @@ def main() -> None:
     )
     parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths.")
+    parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     parser.add_argument(
         "--reason",
@@ -247,6 +272,7 @@ def main() -> None:
             repo_root,
             gate_ids=gate_ids,
             note_filter=args.note_paths,
+            current_only=args.current,
             include_diff=args.json,
         )
     except (FileNotFoundError, ValueError) as exc:

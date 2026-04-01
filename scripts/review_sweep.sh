@@ -4,10 +4,13 @@
 # Usage:
 #   scripts/review_sweep.sh prose                          # one bundle
 #   scripts/review_sweep.sh prose kb/notes/backlinks.md    # filtered to one note
+#   scripts/review_sweep.sh --current prose                # current notes only
 #   scripts/review_sweep.sh --all-gates                    # all bundles, one at a time
-#   scripts/review_sweep.sh --all-gates kb/notes/backlinks.md
+#   scripts/review_sweep.sh --current --all-gates
 #
 # Requires: COMMONPLACE_REVIEW_MODEL set in environment.
+# Default concurrency: 4 note-local review runs at a time.
+# Override with REVIEW_SWEEP_JOBS=<n>.
 #
 # See scripts/REVIEW-SYSTEM.md for the full design.
 
@@ -25,16 +28,48 @@ EOF
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "usage: review_sweep.sh {bundle|--all-gates} [note-paths...]" >&2
+  echo "usage: review_sweep.sh [--current] {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 
 GATES_DIR="kb/instructions/review-gates"
 RUNNER="claude-code"
 usage_exhausted_exit_code=99
+current_only=0
+parallelism="${REVIEW_SWEEP_JOBS:-4}"
 
-if [[ "$1" == "--all-gates" ]]; then
-  shift
+if ! [[ "$parallelism" =~ ^[1-9][0-9]*$ ]]; then
+  echo "error: REVIEW_SWEEP_JOBS must be a positive integer" >&2
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --current)
+      current_only=1
+      shift
+      ;;
+    --all-gates)
+      select_all_gates=1
+      shift
+      break
+      ;;
+    -*)
+      echo "error: unknown option: $1" >&2
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [[ $# -lt 1 && "${select_all_gates:-0}" -ne 1 ]]; then
+  echo "usage: review_sweep.sh [--current] {bundle|--all-gates} [note-paths...]" >&2
+  exit 1
+fi
+
+if [[ "${select_all_gates:-0}" -eq 1 ]]; then
   bundles=()
   for dir in "$GATES_DIR"/*/; do
     bundles+=("$(basename "$dir")")
@@ -45,6 +80,11 @@ else
 fi
 
 note_args=("$@")
+
+if [[ $current_only -eq 1 && ${#note_args[@]} -gt 0 ]]; then
+  echo "error: --current and explicit note paths are mutually exclusive" >&2
+  exit 1
+fi
 
 is_usage_exhausted_output() {
   local output_file="$1"
@@ -96,15 +136,70 @@ run_bundle_review() {
   return "$status"
 }
 
+remove_active_pid() {
+  local target_pid="$1"
+  local next=()
+  local pid
+  for pid in "${active_pids[@]}"; do
+    if [[ "$pid" != "$target_pid" ]]; then
+      next+=("$pid")
+    fi
+  done
+  active_pids=("${next[@]}")
+}
+
+collect_one_job() {
+  local finished_pid
+  local status
+  local note_path
+
+  if wait -n -p finished_pid; then
+    status=0
+  else
+    status=$?
+  fi
+
+  note_path="${job_note[$finished_pid]}"
+  unset "job_note[$finished_pid]"
+  remove_active_pid "$finished_pid"
+
+  if [[ $status -eq 0 ]]; then
+    reviewed=$((reviewed + 1))
+    return 0
+  fi
+
+  if [[ $status -eq $usage_exhausted_exit_code ]]; then
+    return "$usage_exhausted_exit_code"
+  fi
+
+  echo "  FAILED: $note_path" >&2
+  failed=$((failed + 1))
+  return 0
+}
+
+abort_active_jobs() {
+  local pid
+  for pid in "${active_pids[@]}"; do
+    kill "$pid" 2>/dev/null || true
+  done
+  for pid in "${active_pids[@]}"; do
+    wait "$pid" 2>/dev/null || true
+  done
+  active_pids=()
+  job_note=()
+}
+
 sweep_bundle() {
   local bundle="$1"
   shift
   local notes=("$@")
 
   local selector_args=("$bundle" --json)
-  for note in "${notes[@]}"; do
-    selector_args+=(--note "$note")
-  done
+  if [[ $current_only -eq 1 ]]; then
+    selector_args+=(--current)
+  elif [[ ${#notes[@]} -gt 0 ]]; then
+    selector_args+=(--note "${notes[@]}")
+  fi
 
   local selector_output
   selector_output=$(uv run scripts/review_target_selector.py "${selector_args[@]}")
@@ -120,25 +215,48 @@ sweep_bundle() {
   count=$(printf '%s\n' "$grouped" | wc -l)
   echo "Bundle '$bundle': $count notes to review"
 
+  local -a active_pids=()
+  declare -A job_note=()
+
   while IFS=$'\t' read -r note_path gates; do
     [[ -n "$note_path" ]] || continue
     echo "--- Reviewing: $note_path ($gates)"
 
     # shellcheck disable=SC2206
     local gate_args=($gates)
-    if run_bundle_review "$note_path" "${gate_args[@]}"; then
-      reviewed=$((reviewed + 1))
-    else
-      local status=$?
-      if [[ $status -eq $usage_exhausted_exit_code ]]; then
-        return "$usage_exhausted_exit_code"
+    run_bundle_review "$note_path" "${gate_args[@]}" &
+    local pid=$!
+    active_pids+=("$pid")
+    job_note["$pid"]="$note_path"
+
+    if [[ ${#active_pids[@]} -ge $parallelism ]]; then
+      if collect_one_job; then
+        :
+      else
+        local status=$?
+        if [[ $status -eq $usage_exhausted_exit_code ]]; then
+          abort_active_jobs
+          return "$usage_exhausted_exit_code"
+        fi
+        return "$status"
       fi
-      echo "  FAILED: $note_path" >&2
-      failed=$((failed + 1))
     fi
 
     echo ""
   done <<< "$grouped"
+
+  while [[ ${#active_pids[@]} -gt 0 ]]; do
+    if collect_one_job; then
+      :
+    else
+      local status=$?
+      if [[ $status -eq $usage_exhausted_exit_code ]]; then
+        abort_active_jobs
+        return "$usage_exhausted_exit_code"
+      fi
+      return "$status"
+    fi
+  done
 }
 
 failed=0

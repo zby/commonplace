@@ -111,6 +111,7 @@ Prompt-facing CLI remains stable:
 - positional gate IDs and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths
+- `--current` to filter to notes with `status: current`
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 - `COMMONPLACE_REVIEW_MODEL` selects the active model partition
@@ -144,7 +145,8 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `uv run scripts/review_target_selector.py {bundle-or-all} --json` — get stale pairs with diffs
+1. `uv run scripts/review_target_selector.py {bundle-or-all} [--current] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
-4. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to append acceptance events
+4. `scripts/review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
+5. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to append acceptance events

@@ -47,14 +47,14 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path, title: str, body: str) -> Path:
+def make_note(path: Path, title: str, body: str, *, status: str = "current") -> Path:
     return write(
         path,
         f"""---
 description: Test note
 type: note
 traits: []
-status: current
+status: {status}
 ---
 
 # {title}
@@ -219,6 +219,25 @@ class TestMissingReview:
         gate_ids = [s.gate_id for s in stale]
         assert "prose/source-residue" in gate_ids
         assert "semantic/grounding-alignment" in gate_ids
+
+    def test_current_filter_limits_selection_to_current_notes(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "current-top.md", "Current top", "\nBody.\n", status="current")
+        make_note(notes_dir / "archived.md", "Archived", "\nBody.\n", status="archived")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            gate_ids=["prose/source-residue"],
+            current_only=True,
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/current-top.md",
+        ]
 
 
 class TestFreshReview:
