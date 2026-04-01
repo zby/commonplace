@@ -13,6 +13,7 @@ note_sha=$(git hash-object -w "$note_path")
 note_commit=$(git log -1 --format=%H -- "$note_path" 2>/dev/null || echo "")
 now=$(date -Iseconds)
 
+echo "<!-- REVIEW-METADATA"
 echo "note-path: $note_path"
 if [ $# -eq 2 ]; then
   gate_id="$2"
@@ -33,3 +34,4 @@ echo "last-accepted-note-sha: $note_sha"
 echo "last-accepted-note-commit: $note_commit"
 echo "last-accepted-at: $now"
 echo "last-acceptance-kind: full-review"
+echo "-->"

@@ -32,8 +32,8 @@ Example: reviewing `kb/notes/backlinks.md` against `prose/source-residue` with m
 ## Running
 
 ```bash
-# Resolve gates and show output paths
-uv run scripts/resolve_gates.py --note kb/notes/backlinks.md prose
+# Resolve gates
+uv run scripts/resolve_gates.py prose
 
 # List all stale (note, gate) pairs
 uv run scripts/gate_selector.py --all-gates

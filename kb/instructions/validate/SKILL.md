@@ -23,4 +23,4 @@ uv run <path-to-this-skill-directory>/validate_notes.py "$ARGUMENTS"
 
 Report the script output directly. Do not interpret, supplement, or override its findings.
 
-For judgment-based checks (description discrimination, title composability), see `kb/instructions/frontmatter-review.md`.
+For judgment-based frontmatter checks, run `kb/instructions/run-review-bundle-on-note.md` with the `frontmatter` bundle.

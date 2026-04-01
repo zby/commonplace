@@ -8,14 +8,47 @@
 -- instructions later become freshness-relevant, this field should widen from
 -- a leaf gate-file SHA to an effective review-contract SHA.
 --
--- The current write path produces only per-gate reviews. There is no parent
--- review document or bundle-run table yet. If bundle generation is added
--- later, it should be introduced as an additive extension.
+-- Review execution is bundle-shaped even though freshness remains gate-local.
+-- `review_runs` records one review invocation; `review_run_gates` records the
+-- requested gate set captured at run start; `gate_reviews` records actual
+-- per-gate outcomes.
 
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS review_runs (
+    id INTEGER PRIMARY KEY,
+    note_path TEXT NOT NULL,
+    model_id TEXT NOT NULL,
+    runner TEXT NOT NULL,
+    reviewed_note_sha TEXT NOT NULL,
+    reviewed_note_commit TEXT,
+    started_at TEXT NOT NULL,
+    completed_at TEXT,
+    status TEXT NOT NULL CHECK (
+        status IN ('running', 'completed', 'failed')
+    ),
+    failure_reason TEXT,
+    raw_bundle_markdown TEXT,
+    debug_log TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_review_runs_note_model_started
+ON review_runs(note_path, model_id, started_at DESC);
+
+CREATE TABLE IF NOT EXISTS review_run_gates (
+    review_run_id INTEGER NOT NULL REFERENCES review_runs(id) ON DELETE CASCADE,
+    gate_id TEXT NOT NULL,
+    gate_sha TEXT NOT NULL,
+    ordinal INTEGER NOT NULL,
+    PRIMARY KEY (review_run_id, gate_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_review_run_gates_run_ordinal
+ON review_run_gates(review_run_id, ordinal);
+
 CREATE TABLE IF NOT EXISTS gate_reviews (
     id INTEGER PRIMARY KEY,
+    review_run_id INTEGER REFERENCES review_runs(id) ON DELETE CASCADE,
     note_path TEXT NOT NULL,
     gate_id TEXT NOT NULL,
     model_id TEXT NOT NULL,
@@ -111,7 +144,5 @@ FROM current_gate_acceptances AS a;
 --      accepted_note_sha != ?  -> note-changed
 --      else fresh
 --
--- If bundle review generation is added later, the likely extension is:
---   - add review_runs(id, note_path, model_id, raw_markdown, ...)
---   - add nullable gate_reviews.review_run_id REFERENCES review_runs(id)
--- without changing the selector-facing acceptance view.
+-- `review_runs` and `review_run_gates` model execution history. Selector state
+-- remains acceptance-driven and gate-local.

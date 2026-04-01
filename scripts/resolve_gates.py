@@ -1,17 +1,14 @@
-"""Resolve gate IDs and bundle names to concatenated gate text with output paths.
+"""Resolve gate IDs and bundle names to concatenated gate text.
 
 Usage:
     uv run scripts/resolve_gates.py prose/source-residue semantic/grounding-alignment
     uv run scripts/resolve_gates.py prose                # all prose gates
     uv run scripts/resolve_gates.py prose semantic        # all prose + all semantic gates
-    uv run scripts/resolve_gates.py --note kb/notes/backlinks.md prose
 
 For each resolved gate, prints:
 
-    === gate: {gate-id} | path: {review-output-path} ===
+    === gate: {gate-id} ===
     <gate file contents without frontmatter>
-
-The path line is only included when --note is provided.
 """
 
 from __future__ import annotations
@@ -21,23 +18,8 @@ import re
 import sys
 from pathlib import Path
 
-from review_model import encode_model, resolve_model
-
 GATES_ROOT = Path("kb/instructions/review-gates")
-REVIEWS_ROOT = Path("kb/reports/reviews")
 FRONTMATTER_RE = re.compile(r"^---\n.*?\n---\n*", re.DOTALL)
-
-
-def encode_note_path(note_path: str) -> str:
-    return str(Path(note_path).with_suffix("")).replace("/", "__")
-
-
-def encode_gate_id(gate_id: str) -> str:
-    return gate_id.replace("/", "__")
-
-
-def review_path_for(note_path: str, gate_id: str, model: str) -> str:
-    return (REVIEWS_ROOT / encode_note_path(note_path) / f"{encode_gate_id(gate_id)}.{encode_model(model)}.md").as_posix()
 
 
 def strip_frontmatter(text: str) -> str:
@@ -69,12 +51,6 @@ def main() -> None:
         nargs="+",
         help="Gate IDs (e.g. prose/source-residue) or bundle names (e.g. prose).",
     )
-    parser.add_argument(
-        "--note",
-        dest="note_path",
-        default=None,
-        help="Note path — includes the canonical review output path for each gate.",
-    )
     args = parser.parse_args()
 
     repo_root = Path.cwd()
@@ -85,24 +61,10 @@ def main() -> None:
         print("error: no gates resolved", file=sys.stderr)
         sys.exit(1)
 
-    if args.note_path:
-        try:
-            model = resolve_model()
-        except ValueError as exc:
-            print(f"error: {exc}", file=sys.stderr)
-            sys.exit(1)
-    else:
-        model = None
-
     for gate_id in gate_ids:
         gate_file = gates_dir / f"{gate_id}.md"
         gate_text = strip_frontmatter(gate_file.read_text(encoding="utf-8"))
-
-        header_parts = [f"gate: {gate_id}"]
-        if args.note_path and model:
-            header_parts.append(f"path: {review_path_for(args.note_path, gate_id, model)}")
-
-        print(f"=== {' | '.join(header_parts)} ===")
+        print(f"=== gate: {gate_id} ===")
         print(gate_text)
 
 

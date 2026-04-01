@@ -79,8 +79,6 @@ def resolve_db_path(repo_root: Path) -> Path:
 
 
 def ensure_db(repo_root: Path, db_path: Path) -> None:
-    if db_path.exists():
-        return
     schema_path = repo_root / SCHEMA_PATH
     if not schema_path.is_file():
         schema_path = SCRIPT_REPO_ROOT / SCHEMA_PATH

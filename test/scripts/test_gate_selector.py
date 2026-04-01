@@ -514,13 +514,20 @@ class TestResolveGates:
         ids = resolve_gates.resolve_to_gate_ids(["semantic/b-gate", "prose"], gates_dir)
         assert ids == ["semantic/b-gate", "prose/a-gate"]
 
-    def test_review_path_includes_model(self, tmp_path: Path) -> None:
-        path = resolve_gates.review_path_for(
-            "kb/notes/backlinks.md",
-            "prose/source-residue",
-            "test-model",
+    def test_cli_output_includes_gate_header_without_path(self, tmp_path: Path) -> None:
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS_DIR / "resolve_gates.py"), "prose/source-residue"],
+            cwd=tmp_path,
+            check=True,
+            capture_output=True,
+            text=True,
         )
-        assert path == "kb/reports/reviews/kb__notes__backlinks/prose__source-residue.test-model.md"
+
+        assert "=== gate: prose/source-residue ===" in result.stdout
+        assert "path:" not in result.stdout
 
     def test_missing_gate_exits(self, tmp_path: Path) -> None:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"

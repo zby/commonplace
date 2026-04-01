@@ -35,7 +35,7 @@ def test_review_sweep_aborts_immediately_on_usage_exhaustion(tmp_path: Path) -> 
     selector_path = tmp_path / "selector.json"
     selector_path.write_text(json.dumps(selector_output), encoding="utf-8")
 
-    claude_log = tmp_path / "claude.log"
+    bundle_log = tmp_path / "run_review_bundle.log"
 
     write_executable(
         bin_dir / "uv",
@@ -44,16 +44,13 @@ if [[ "$1" == "run" && "$2" == "scripts/gate_selector.py" ]]; then
   cat "{selector_path}"
   exit 0
 fi
+if [[ "$1" == "run" && "$2" == "scripts/run_review_bundle.py" ]]; then
+  printf "invoked\\n" >> "{bundle_log}"
+  printf "%s\\n" "You're out of extra usage · resets at 7pm"
+  exit 1
+fi
 echo "unexpected uv args: $*" >&2
 exit 2
-""",
-    )
-    write_executable(
-        bin_dir / "claude",
-        f"""#!/usr/bin/env bash
-printf "invoked\\n" >> "{claude_log}"
-printf "%s\\n" "You're out of extra usage · resets at 7pm"
-exit 0
 """,
     )
 
@@ -73,4 +70,4 @@ exit 0
     assert result.returncode == 1
     assert "You're out of extra usage" in result.stdout
     assert "aborting sweep immediately" in result.stderr
-    assert claude_log.read_text(encoding="utf-8").splitlines() == ["invoked"]
+    assert bundle_log.read_text(encoding="utf-8").splitlines() == ["invoked"]

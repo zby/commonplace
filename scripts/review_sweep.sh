@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Batch review sweep using claude -p for each note.
+# Batch review sweep using the direct-write review runner.
 #
 # Usage:
 #   scripts/review_sweep.sh prose                          # one bundle
@@ -9,9 +9,6 @@
 #
 # Requires: COMMONPLACE_REVIEW_MODEL set in environment.
 #
-# Optional: run review-triage.md first to ack insignificant note-changed pairs:
-#   claude -p "Run kb/instructions/review-triage.md with: prose"
-#
 # See scripts/REVIEW-SYSTEM.md for the full design.
 
 set -euo pipefail
@@ -19,11 +16,10 @@ set -euo pipefail
 if [[ -z "${COMMONPLACE_REVIEW_MODEL:-}" ]]; then
   cat >&2 <<'EOF'
 error: COMMONPLACE_REVIEW_MODEL is not set.
-This variable determines the review filename suffix and freshness key.
+This variable determines the review model partition and freshness key.
 Set it to the model producing reviews in this run, for example:
   COMMONPLACE_REVIEW_MODEL=gpt-5-4-high
   COMMONPLACE_REVIEW_MODEL=opus-4-6
-Do not copy a suffix from existing review files.
 EOF
   exit 1
 fi
@@ -33,9 +29,9 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-# --- Determine bundles to sweep ---
-
 GATES_DIR="kb/instructions/review-gates"
+RUNNER="claude-code"
+usage_exhausted_exit_code=99
 
 if [[ "$1" == "--all-gates" ]]; then
   shift
@@ -50,20 +46,39 @@ fi
 
 note_args=("$@")
 
-usage_exhausted_exit_code=99
-
 is_usage_exhausted_output() {
   local output_file="$1"
   grep -Fqi "out of extra usage" "$output_file"
 }
 
-run_claude_review() {
-  local prompt="$1"
+group_selector_output() {
+  python3 -c '
+import json
+import sys
+
+data = json.load(sys.stdin)
+if not data:
+    raise SystemExit(0)
+groups = {}
+for entry in data:
+    note = entry["note_path"]
+    gate = entry["gate_id"]
+    groups.setdefault(note, []).append(gate)
+for note in sorted(groups):
+    gates = " ".join(sorted(groups[note]))
+    print(f"{note}\t{gates}")
+'
+}
+
+run_bundle_review() {
+  local note_path="$1"
+  shift
+  local gates=("$@")
   local output_file
   local status
 
   output_file=$(mktemp)
-  if claude -p "$prompt" < /dev/null >"$output_file" 2>&1; then
+  if uv run scripts/run_review_bundle.py --runner "$RUNNER" "$note_path" "${gates[@]}" >"$output_file" 2>&1; then
     status=0
   else
     status=$?
@@ -81,8 +96,6 @@ run_claude_review() {
   return "$status"
 }
 
-# --- Sweep function for one bundle ---
-
 sweep_bundle() {
   local bundle="$1"
   shift
@@ -95,35 +108,23 @@ sweep_bundle() {
   selector_output=$(uv run scripts/gate_selector.py "${selector_args[@]}" --json)
 
   local grouped
-  grouped=$(echo "$selector_output" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-if not data:
-    sys.exit(0)
-groups = {}
-for entry in data:
-    note = entry['note_path']
-    gate = entry['gate_id']
-    groups.setdefault(note, []).append(gate)
-for note in sorted(groups):
-    gates = ' '.join(sorted(groups[note]))
-    print(f'{note}\t{gates}')
-")
+  grouped=$(printf '%s' "$selector_output" | group_selector_output)
 
   if [[ -z "$grouped" ]]; then
     return 0
   fi
 
   local count
-  count=$(echo "$grouped" | wc -l)
+  count=$(printf '%s\n' "$grouped" | wc -l)
   echo "Bundle '$bundle': $count notes to review"
 
   while IFS=$'\t' read -r note_path gates; do
+    [[ -n "$note_path" ]] || continue
     echo "--- Reviewing: $note_path ($gates)"
 
-    local prompt="Run kb/instructions/run-review-bundle-on-note.md on $note_path for gates: $gates"
-
-    if run_claude_review "$prompt"; then
+    # shellcheck disable=SC2206
+    local gate_args=($gates)
+    if run_bundle_review "$note_path" "${gate_args[@]}"; then
       reviewed=$((reviewed + 1))
     else
       local status=$?
@@ -137,8 +138,6 @@ for note in sorted(groups):
     echo ""
   done <<< "$grouped"
 }
-
-# --- Run each bundle ---
 
 failed=0
 reviewed=0
@@ -156,8 +155,6 @@ for bundle in "${bundles[@]}"; do
   fi
   echo ""
 done
-
-# --- Report ---
 
 echo "=== Sweep complete ==="
 echo "Reviewed: $reviewed notes"

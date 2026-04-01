@@ -64,7 +64,13 @@ For now, gate freshness is keyed by the raw git blob SHA of the gate file itself
 
 ### Full review
 
-Fresh review prose is still written to the canonical review artifact path under `kb/reports/reviews/`, and the selector lazily imports metadata-bearing review files into the DB so existing prompt workflows remain valid during the swap.
+The canonical live path is:
+
+1. create a review run
+2. write one DB row per gate review
+3. finalize the run to append acceptance events
+
+`scripts/run_review_bundle.py` is the preferred entrypoint. It delegates to a runner, records gate reviews through `scripts/write_gate_review.py`, and finalizes acceptance through `scripts/finalize_review_run.py`.
 
 A full review write contributes:
 
@@ -122,17 +128,20 @@ The storage backend changed from metadata rewrites to append-only DB events.
 
 Human-readable inspection remains required, but it is now a derived view from DB rows rather than canonical state.
 
+### Compatibility import
+
+The selector can still import metadata-bearing review files from `kb/reports/reviews/` for legacy data migration and ack compatibility. That directory is not the canonical write target for new live reviews.
+
 ## Agent workflow
 
 ### Running a review bundle on a note
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `uv run scripts/resolve_gates.py --note {note} {gates-or-bundles}` — one call, gets all gate text and output paths
-2. Read the note
-3. For each gate, run `scripts/review_prereqs.sh {note} {gate-id}` and paste the emitted metadata block into the review header
-4. Apply each gate, write the review body to the printed path
-5. The selector imports metadata-bearing review files into the DB on demand
+1. `uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note} {gate-or-bundle}...`
+2. The runner reads the target note and requested gate definitions
+3. It writes one review body per gate into the review DB
+4. The run is finalized to append acceptance events
 
 ### Sweep
 
@@ -140,5 +149,5 @@ Instruction: `kb/instructions/review-sweep.md`
 
 1. `uv run scripts/gate_selector.py {bundle-or-all} --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
-3. For significant changes: load gates via `resolve_gates.py`, write fresh reviews
+3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
 4. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to append acceptance events

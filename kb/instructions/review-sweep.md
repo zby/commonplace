@@ -1,5 +1,5 @@
 ---
-description: Batch review sweep — run the selector, triage note-changed pairs, review the rest in sub-agents
+description: Batch review sweep — run the selector, triage note-changed pairs, and execute direct-write review runs for the rest
 ---
 
 # Review sweep
@@ -33,13 +33,23 @@ Check the line count first (~5 lines per stale pair in JSON output).
 uv run scripts/gate_selector.py {bundle-or-all} {note-paths} --json
 ```
 
-### 3. Review in sub-agents
+### 3. Review remaining pairs
 
-Group the remaining pairs by note. For each note, launch a sub-agent with a prompt to:
+Group the remaining pairs by note.
 
-> Run `kb/instructions/run-review-bundle-on-note.md` on `{note-path}` for gates: `{gate-id-1} {gate-id-2} ...`
+If there are many notes, use:
 
-Multiple sub-agents can run in parallel since each note's reviews are independent.
+```bash
+scripts/review_sweep.sh {bundle-or-all} {note-paths}
+```
+
+If you are executing manually or from an agent, run one direct-write bundle execution per note:
+
+```bash
+uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-id-1} {gate-id-2} ...
+```
+
+Multiple note-local runs can execute in parallel since each note's reviews are independent.
 
 ### 4. Report
 
