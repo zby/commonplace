@@ -15,3 +15,5 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [tool-loop-control/](./tool-loop-control/) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
 - [skills-vs-instructions/](./skills-vs-instructions/) — when should a procedure be a skill vs an instruction file with CLAUDE.md routing? Testing five hypotheses against platform docs, practitioner experience, and KB theory
 - [db-layer/](./db-layer/) — brainstorming whether and how to add a database layer over the filesystem as review/revision scripts accumulate query complexity
+- [type-system-rationalization/](./type-system-rationalization/) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
+- [review-db-migration/](./review-db-migration/) — moving gate reviews out of gitignored markdown files into a local SQLite review store with explicit acceptance state and import/export tooling
