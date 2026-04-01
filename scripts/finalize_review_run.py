@@ -6,15 +6,16 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from gate_selector import ensure_db, resolve_db_path
 from review_db import (
     append_acceptance_event,
     complete_review_run,
     connect,
+    ensure_db,
     fail_review_run,
     load_gate_reviews_for_run,
     load_review_run,
     load_review_run_gates,
+    resolve_db_path,
 )
 from review_metadata import iso_now
 

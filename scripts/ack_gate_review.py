@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from gate_selector import ack_pairs
+from review_target_selector import ack_pairs
 from review_model import resolve_model
 
 

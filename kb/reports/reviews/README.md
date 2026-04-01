@@ -1,6 +1,6 @@
 # Reviews
 
-Automated quality reviews of `kb/notes/`. Each review applies one gate (a focused quality check) to one note. Staleness is tracked by metadata stored inside the review file.
+Legacy rendered review artifacts and archived review outputs. The live review system stores canonical state in SQLite and does not use this directory as a runtime source of truth.
 
 **System design:** [scripts/REVIEW-SYSTEM.md](../../../scripts/REVIEW-SYSTEM.md)
 
@@ -14,16 +14,6 @@ Automated quality reviews of `kb/notes/`. Each review applies one gate (a focuse
 - **sentence** — gates in `kb/instructions/review-gates/sentence/`
 - **structural** — gates in `kb/instructions/review-gates/structural/`
 
-## File naming
-
-Reviews: `{encoded-note-path}/{encoded-gate-id}.{encoded-model}.md`
-
-- Note path: strip `.md`, replace `/` with `__`
-- Gate id: replace `/` with `__`
-- Model: non-alphanumeric → `-`, lowercase
-
-Example: reviewing `kb/notes/backlinks.md` against `prose/source-residue` with model `opus 4.6` → `kb__notes__backlinks/prose__source-residue.opus-4-6.md`
-
 ## Instructions
 
 - **Review one note:** `kb/instructions/run-review-bundle-on-note.md` — explicit note + gates
@@ -36,18 +26,18 @@ Example: reviewing `kb/notes/backlinks.md` against `prose/source-residue` with m
 uv run scripts/resolve_gates.py prose
 
 # List all stale (note, gate) pairs
-uv run scripts/gate_selector.py --all-gates
+uv run scripts/review_target_selector.py --all-gates
 
 # List stale pairs for one bundle
-uv run scripts/gate_selector.py prose
+uv run scripts/review_target_selector.py prose
 
 # JSON output with diffs
-uv run scripts/gate_selector.py --all-gates --json
+uv run scripts/review_target_selector.py --all-gates --json
 
 # Ack a review (note change was insignificant for this gate)
 uv run scripts/ack_gate_review.py kb/notes/backlinks.md prose/source-residue
 ```
 
-## Re-running
+## Status
 
-Writing a new review body overwrites the file and refreshes its acceptance metadata, marking it current. Commit before re-running if you want historical snapshots.
+New live reviews are recorded in `kb/reports/review-store.sqlite` via the direct-write review-run flow. Files under this directory are optional rendered exports, backups, or historical artifacts.

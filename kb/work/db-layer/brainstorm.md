@@ -4,7 +4,7 @@
 
 The review system (and upcoming revision system) are accumulating scripts that abstract over the filesystem. The current data layer is split across:
 
-- **Filesystem mtime** — the new staleness model for gate reviews (`gate_selector.py`)
+- **Filesystem mtime** — the new staleness model for gate reviews (`review_target_selector.py`)
 - **Git blob SHAs + HTML comment metadata** — the legacy review system (`selector_engine.py`, `review_state.py`, `review_metadata.py`)
 - **CSV index** — `kb/reports/review-csv/gate_reviews.csv`, rebuilt after each gate review
 - **Gate YAML frontmatter** — watched regions, staleness policies parsed at query time (`gate_core.py`)
@@ -88,7 +88,7 @@ A refinement of Option A. The DB is:
 - If either is newer, rebuild
 
 **What changes for scripts:**
-- `gate_selector.py` queries the DB instead of walking `kb/reports/reviews/`
+- `review_target_selector.py` queries the DB instead of walking `kb/reports/reviews/`
 - `resolve_gates.py` queries the DB for gate metadata instead of parsing YAML each time
 - `promotion_candidates.py` queries link counts from the DB instead of regex-parsing all files
 - New queries (e.g. "all seedling notes with <2 inbound links") become trivial

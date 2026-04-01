@@ -40,7 +40,7 @@ def test_review_sweep_aborts_immediately_on_usage_exhaustion(tmp_path: Path) -> 
     write_executable(
         bin_dir / "uv",
         f"""#!/usr/bin/env bash
-if [[ "$1" == "run" && "$2" == "scripts/gate_selector.py" ]]; then
+if [[ "$1" == "run" && "$2" == "scripts/review_target_selector.py" ]]; then
   cat "{selector_path}"
   exit 0
 fi

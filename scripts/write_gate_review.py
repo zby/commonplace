@@ -7,13 +7,14 @@ import argparse
 import sqlite3
 from pathlib import Path
 
-from gate_selector import ensure_db, resolve_db_path
 from review_db import (
     connect,
+    ensure_db,
     insert_gate_review,
     load_review_run,
     load_review_run_gates,
     parse_review_decision,
+    resolve_db_path,
 )
 from review_metadata import _METADATA_BLOCK_RE, iso_now
 

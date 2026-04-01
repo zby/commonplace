@@ -10,33 +10,20 @@ import sys
 import tempfile
 from pathlib import Path
 
-from gate_selector import GATES_ROOT, ensure_db, resolve_db_path
 from review_db import (
+    GATES_ROOT,
     connect,
+    ensure_db,
     fail_review_run,
-    init_db,
     insert_review_run,
     insert_review_run_gates,
     load_gate_reviews_for_run,
+    resolve_db_path,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 from review_model import resolve_model
 from review_runners import run_prompt
 from resolve_gates import resolve_to_gate_ids, strip_frontmatter
-
-SCHEMA_PATH = Path("scripts/review-schema.sql")
-SCRIPT_REPO_ROOT = Path(__file__).resolve().parents[1]
-
-
-def ensure_review_db(repo_root: Path, db_path: Path) -> None:
-    if db_path.exists():
-        ensure_db(repo_root, db_path)
-        return
-    schema_path = repo_root / SCHEMA_PATH
-    if not schema_path.is_file():
-        schema_path = SCRIPT_REPO_ROOT / SCHEMA_PATH
-    init_db(db_path, schema_path)
-
 
 def encode_stage_filename(gate_id: str) -> str:
     return gate_id.replace("/", "__") + ".md"
@@ -124,7 +111,7 @@ def main() -> None:
     gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
     review_model = args.model or resolve_model()
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_review_db(repo_root, db_path)
+    ensure_db(repo_root, db_path)
 
     note_sha = git_blob_sha(note_abs, write_object=True)
     note_commit = last_commit_for_path(repo_root, Path(args.note_path))

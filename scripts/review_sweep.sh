@@ -105,7 +105,7 @@ sweep_bundle() {
   selector_args+=("${notes[@]}")
 
   local selector_output
-  selector_output=$(uv run scripts/gate_selector.py "${selector_args[@]}" --json)
+  selector_output=$(uv run scripts/review_target_selector.py "${selector_args[@]}" --json)
 
   local grouped
   grouped=$(printf '%s' "$selector_output" | group_selector_output)

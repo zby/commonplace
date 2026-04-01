@@ -62,7 +62,7 @@ Write bundle files in `kb/instructions/review-bundles/` that list their gates. O
 
 ## Step 3: Build the gate selector
 
-New script: `scripts/gate_selector.py`. This replaces `notes_selector.py` + `selector_engine.py` for gate-based review.
+New script: `scripts/review_target_selector.py`. This replaces `notes_selector.py` + `selector_engine.py` for gate-based review.
 
 **Reviewable note scope:** top-level `*.md` files in `kb/notes/` that have YAML frontmatter and are not indexes (same rule as `review_state.list_reviewable_notes`). Subdirectory notes (e.g. `kb/notes/related-systems/`, `kb/notes/definitions/`) are excluded for now. If the scope needs to expand later, change it in one place.
 
@@ -108,7 +108,7 @@ Tests:
   - rewrite threshold exceeded -> stale
   - unchanged note outside git diff set -> fresh
 
-**Done when:** `uv run scripts/gate_selector.py frontmatter-review` emits stale (note, gate) pairs. Initially everything will be stale (no recorded reviews yet).
+**Done when:** `uv run scripts/review_target_selector.py frontmatter-review` emits stale (note, gate) pairs. Initially everything will be stale (no recorded reviews yet).
 
 ## Step 4: Write recorded gate reviews
 
@@ -142,7 +142,7 @@ The applicator stage (step 4 in the design) can be manual for now — the review
 Once gate-based reviews work:
 - Delete old review files in `kb/reports/reviews/*.{type}-review.md` (or archive them)
 - Remove `selector_engine.py`'s `SELECTOR_POLICIES` dict and `_frontmatter_decision` / `_full_text_decision`
-- Remove or redirect `notes_selector.py` to use `gate_selector.py`
+- Remove or redirect `notes_selector.py` to use `review_target_selector.py`
 - Delete the monolithic review instruction files (the check prose is now in gate files)
 
 **Done when:** only gate-based review infrastructure remains.

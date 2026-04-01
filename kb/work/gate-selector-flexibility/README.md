@@ -6,7 +6,7 @@ Goal: redesign the selector around flexible query axes while keeping the simplif
 
 The storage model is now deliberately simple: gate definitions live in files, recorded reviews are keyed by `(note, gate, model)`, and freshness is just mtime comparison. That simplification removed a lot of architectural weight, but it also means the selector is now the main place where future flexibility has to land.
 
-Today's [gate selector](../../../scripts/gate_selector.py) is intentionally minimal:
+Today's [review target selector](../../../scripts/review_target_selector.py) is intentionally minimal:
 
 - top-level `kb/notes/*.md` inventory only
 - bundle directory or `--all-gates` scope only

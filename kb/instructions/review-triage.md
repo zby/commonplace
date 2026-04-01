@@ -16,7 +16,7 @@ Inputs:
 ### 1. Get note-changed pairs
 
 ```bash
-uv run scripts/gate_selector.py {bundle-or-all} {note-paths} --json --reason note-changed
+uv run scripts/review_target_selector.py {bundle-or-all} {note-paths} --json --reason note-changed
 ```
 
 If the output is an empty array, stop — nothing to triage.

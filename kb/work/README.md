@@ -7,7 +7,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 - [gate-refactor/](./gate-refactor/) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
-- [gate-selector-flexibility/](./gate-selector-flexibility/) — redesigning `gate_selector.py` so selection can vary by inventory, gate scope, ranking, and output shape without reopening the simplified mtime-based review architecture
+- [gate-selector-flexibility/](./gate-selector-flexibility/) — redesigning `review_target_selector.py` so selection can vary by inventory, gate scope, ranking, and output shape without reopening the simplified mtime-based review architecture
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/) — rethinking how sources get analysed and how analysis instructions flow from the caller
 - [connect-refactoring/](./connect-refactoring/) — splitting /connect into discovery-only + directed reading for file mutations
 - [validation/](./validation/) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)

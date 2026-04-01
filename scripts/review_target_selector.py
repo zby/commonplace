@@ -1,38 +1,26 @@
 #!/usr/bin/env python3
-"""Select stale (note, gate) pairs from the canonical review DB."""
+"""Select stale review targets from the canonical review DB."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from review_db import append_acceptance_event, connect, import_review_text, init_db, load_current_acceptances
-from review_metadata import blob_text_at_sha, file_text_at_commit, git_blob_sha, iso_now, last_commit_for_path, parse_review_metadata
-from review_model import encode_model, resolve_model
+from review_db import (
+    GATES_ROOT,
+    append_acceptance_event,
+    connect,
+    ensure_db,
+    load_current_acceptances,
+    resolve_db_path,
+)
+from review_metadata import blob_text_at_sha, file_text_at_commit, git_blob_sha, iso_now, last_commit_for_path
+from review_model import resolve_model
 
-GATES_ROOT = Path("kb/instructions/review-gates")
-REVIEWS_ROOT = Path("kb/reports/reviews")
 NOTES_ROOT = Path("kb/notes")
-DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
-SCHEMA_PATH = Path("scripts/review-schema.sql")
-DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
-SCRIPT_REPO_ROOT = Path(__file__).resolve().parents[1]
-
-
-def encode_note_path(note_path: str) -> str:
-    return str(Path(note_path).with_suffix("")).replace("/", "__")
-
-
-def encode_gate_id(gate_id: str) -> str:
-    return gate_id.replace("/", "__")
-
-
-def review_path_for(note_path: str, gate_id: str, model: str) -> Path:
-    return REVIEWS_ROOT / encode_note_path(note_path) / f"{encode_gate_id(gate_id)}.{encode_model(model)}.md"
 
 
 def list_all_gate_ids(gates_dir: Path) -> list[str]:
@@ -66,25 +54,6 @@ def list_reviewable_notes(notes_dir: Path) -> list[Path]:
         p for p in notes_dir.glob("*.md")
         if not _is_index(p) and _has_frontmatter(p)
     )
-
-
-def resolve_db_path(repo_root: Path) -> Path:
-    raw = os.environ.get(DB_ENV_VAR, "").strip()
-    if raw:
-        db_path = Path(raw)
-        if not db_path.is_absolute():
-            db_path = repo_root / db_path
-        return db_path
-    return repo_root / DEFAULT_DB_PATH
-
-
-def ensure_db(repo_root: Path, db_path: Path) -> None:
-    schema_path = repo_root / SCHEMA_PATH
-    if not schema_path.is_file():
-        schema_path = SCRIPT_REPO_ROOT / SCHEMA_PATH
-    if not schema_path.is_file():
-        raise FileNotFoundError(f"Review DB schema not found: {SCHEMA_PATH}")
-    init_db(db_path, schema_path)
 
 
 @dataclass(frozen=True)
@@ -122,43 +91,6 @@ def note_diff_since(
     return diff or None
 
 
-def sync_review_rows(
-    repo_root: Path,
-    *,
-    db_path: Path,
-    note_paths: list[str],
-    gate_ids: list[str],
-    model: str,
-) -> None:
-    ensure_db(repo_root, db_path)
-    reviews_root = repo_root / REVIEWS_ROOT
-
-    with connect(db_path) as conn:
-        dirty = False
-        for note_path in note_paths:
-            for gate_id in gate_ids:
-                review_abs = repo_root / review_path_for(note_path, gate_id, model)
-                if not review_abs.is_file():
-                    continue
-                review_text = review_abs.read_text(encoding="utf-8")
-                if parse_review_metadata(review_text) is None:
-                    # Selector compatibility: a body-only file is still missing-review.
-                    continue
-                try:
-                    import_review_text(
-                        conn,
-                        repo_root=repo_root,
-                        review_text=review_text,
-                        review_path=review_abs,
-                        reviews_root=reviews_root,
-                    )
-                except ValueError:
-                    continue
-                dirty = True
-        if dirty:
-            conn.commit()
-
-
 def select_stale_gates(
     repo_root: Path,
     *,
@@ -191,7 +123,7 @@ def select_stale_gates(
         notes = list_reviewable_notes(notes_dir)
 
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
-    sync_review_rows(repo_root, db_path=db_path, note_paths=note_paths, gate_ids=gate_ids, model=model)
+    ensure_db(repo_root, db_path)
     with connect(db_path) as conn:
         acceptances = load_current_acceptances(conn)
 
@@ -227,14 +159,13 @@ def select_stale_gates(
     return sorted(stale, key=lambda s: (s.note_path, s.gate_id))
 
 
-def render_json(records: list[StaleGate], model: str) -> str:
+def render_json(records: list[StaleGate]) -> str:
     items = []
     for record in records:
         entry: dict[str, str] = {
             "note_path": record.note_path,
             "gate_id": record.gate_id,
             "reason": record.reason,
-            "review_path": str(review_path_for(record.note_path, record.gate_id, model)),
         }
         if record.diff is not None:
             entry["diff"] = record.diff
@@ -255,7 +186,6 @@ def print_grouped(records: list[StaleGate]) -> None:
 def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
     db_path = resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)
-    reviews_root = repo_root / REVIEWS_ROOT
 
     with connect(db_path) as conn:
         for pair in pairs:
@@ -271,21 +201,6 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
             if not gate_abs.is_file():
                 print(f"error: gate not found: {gate_id}", file=sys.stderr)
                 sys.exit(1)
-
-            review_abs = repo_root / review_path_for(note_path, gate_id, model)
-            if review_abs.is_file():
-                review_text = review_abs.read_text(encoding="utf-8")
-                if parse_review_metadata(review_text) is not None:
-                    try:
-                        import_review_text(
-                            conn,
-                            repo_root=repo_root,
-                            review_text=review_text,
-                            review_path=review_abs,
-                            reviews_root=reviews_root,
-                        )
-                    except ValueError:
-                        pass
 
             note_sha = git_blob_sha(note_abs, write_object=True)
             current_gate_sha = git_blob_sha(gate_abs)
@@ -338,8 +253,8 @@ def main() -> None:
 
     repo_root = Path.cwd()
     try:
-        model = resolve_model()
         if args.ack:
+            model = resolve_model()
             ack_pairs(repo_root, args.ack, model)
             return
         records = select_stale_gates(
@@ -356,7 +271,7 @@ def main() -> None:
         records = [record for record in records if record.reason == args.reason]
 
     if args.json:
-        print(render_json(records, model))
+        print(render_json(records))
     else:
         print_grouped(records)
 

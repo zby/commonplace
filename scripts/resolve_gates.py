@@ -18,7 +18,8 @@ import re
 import sys
 from pathlib import Path
 
-GATES_ROOT = Path("kb/instructions/review-gates")
+from review_db import GATES_ROOT
+
 FRONTMATTER_RE = re.compile(r"^---\n.*?\n---\n*", re.DOTALL)
 
 

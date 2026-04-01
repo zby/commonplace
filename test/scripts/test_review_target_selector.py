@@ -28,8 +28,12 @@ def load_module(name: str, path: Path):
     return module
 
 
-gate_selector = load_module("gate_selector", SCRIPTS_DIR / "gate_selector.py")
+review_target_selector = load_module(
+    "review_target_selector",
+    SCRIPTS_DIR / "review_target_selector.py",
+)
 resolve_gates = load_module("resolve_gates", SCRIPTS_DIR / "resolve_gates.py")
+review_db = load_module("review_db_review_target_selector_test", SCRIPTS_DIR / "review_db.py")
 review_metadata = load_module("review_metadata", SCRIPTS_DIR / "review_metadata.py")
 
 
@@ -81,40 +85,6 @@ Fixture test.
     )
 
 
-def make_review(
-    path: Path,
-    *,
-    note_path: str,
-    gate_id: str,
-    note_sha: str,
-    note_commit: str | None,
-    gate_fingerprint: str,
-    with_metadata: bool = True,
-    last_full_review_note_sha: str | None = None,
-    last_full_review_note_commit: str | None = None,
-    last_full_review_at: str | None = None,
-    last_acceptance_kind: str = "full-review",
-) -> Path:
-    body = "## Review\n\nCLEAN\n"
-    if not with_metadata:
-        return write(path, body)
-
-    metadata = review_metadata.ReviewMetadata(
-        note_path=note_path,
-        gate_id=gate_id,
-        gate_fingerprint=gate_fingerprint,
-        last_full_review_note_sha=last_full_review_note_sha or note_sha,
-        last_full_review_note_commit=last_full_review_note_commit or note_commit,
-        last_full_review_at=last_full_review_at or "2026-03-31T00:00:00+00:00",
-        last_accepted_note_sha=note_sha,
-        last_accepted_note_commit=note_commit,
-        last_accepted_at="2026-03-31T00:00:00+00:00",
-        last_acceptance_kind=last_acceptance_kind,
-        review_type="gate-review",
-    )
-    return write(path, review_metadata.inject_review_metadata(body, metadata))
-
-
 def init_repo(path: Path) -> None:
     subprocess.run(["git", "init"], cwd=path, check=True, capture_output=True)
     subprocess.run(
@@ -158,7 +128,6 @@ def build_fixture(tmp_path: Path) -> dict[str, Path | str]:
     init_repo(tmp_path)
     notes_dir = tmp_path / "kb" / "notes"
     gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-    reviews_dir = tmp_path / "kb" / "reports" / "reviews"
 
     stable = make_note(notes_dir / "stable.md", "Stable title", "\nLine 1.\nLine 2.\n")
     unreviewed = make_note(notes_dir / "unreviewed.md", "Unreviewed title", "\nBody.\n")
@@ -181,30 +150,41 @@ def build_fixture(tmp_path: Path) -> dict[str, Path | str]:
     g2_sha = review_metadata.git_blob_sha(g2, write_object=True)
     g3_sha = review_metadata.git_blob_sha(g3, write_object=True)
 
-    r1 = make_review(
-        reviews_dir / "kb__notes__stable" / "prose__source-residue.test-model.md",
-        note_path="kb/notes/stable.md",
-        gate_id="prose/source-residue",
-        note_sha=stable_sha,
-        note_commit=commit,
-        gate_fingerprint=g1_sha,
-    )
-    r2 = make_review(
-        reviews_dir / "kb__notes__stable" / "prose__confidence-miscalibration.test-model.md",
-        note_path="kb/notes/stable.md",
-        gate_id="prose/confidence-miscalibration",
-        note_sha=stable_sha,
-        note_commit=commit,
-        gate_fingerprint=g2_sha,
-    )
-    r3 = make_review(
-        reviews_dir / "kb__notes__stable" / "semantic__grounding-alignment.test-model.md",
-        note_path="kb/notes/stable.md",
-        gate_id="semantic/grounding-alignment",
-        note_sha=stable_sha,
-        note_commit=commit,
-        gate_fingerprint=g3_sha,
-    )
+    review_db.ensure_db(tmp_path, db_path_for(tmp_path))
+    reviewed_at = "2026-03-31T00:00:00+00:00"
+    with review_db.connect(db_path_for(tmp_path)) as conn:
+        for gate_id, gate_sha in [
+            ("prose/source-residue", g1_sha),
+            ("prose/confidence-miscalibration", g2_sha),
+            ("semantic/grounding-alignment", g3_sha),
+        ]:
+            review_id = review_db.insert_gate_review(
+                conn,
+                note_path="kb/notes/stable.md",
+                gate_id=gate_id,
+                model_id=TEST_MODEL,
+                decision="pass",
+                rationale_markdown="## Result: PASS\n\nLooks good.\n",
+                evidence_json=None,
+                gate_sha=gate_sha,
+                reviewed_note_sha=stable_sha,
+                reviewed_note_commit=commit,
+                reviewed_at=reviewed_at,
+                review_kind="full-review",
+            )
+            review_db.append_acceptance_event(
+                conn,
+                note_path="kb/notes/stable.md",
+                gate_id=gate_id,
+                model_id=TEST_MODEL,
+                accepted_review_id=review_id,
+                accepted_note_sha=stable_sha,
+                accepted_note_commit=commit,
+                accepted_gate_sha=gate_sha,
+                accepted_at=reviewed_at,
+                acceptance_kind="full-review",
+            )
+        conn.commit()
 
     return {
         "stable": stable,
@@ -212,9 +192,6 @@ def build_fixture(tmp_path: Path) -> dict[str, Path | str]:
         "gate_prose_sr": g1,
         "gate_prose_cm": g2,
         "gate_semantic_ga": g3,
-        "review_sr": r1,
-        "review_cm": r2,
-        "review_ga": r3,
         "commit": commit,
     }
 
@@ -222,7 +199,7 @@ def build_fixture(tmp_path: Path) -> dict[str, Path | str]:
 class TestMissingReview:
     def test_missing_review_marks_stale(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/unreviewed.md"],
@@ -232,24 +209,9 @@ class TestMissingReview:
             ("prose/source-residue", "missing-review"),
         ]
 
-    def test_review_without_metadata_counts_as_missing(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        write(
-            fixture["review_sr"],
-            "## Review\n\nLegacy review body only.\n",
-        )
-        stale = gate_selector.select_stale_gates(
-            tmp_path,
-            bundle="prose",
-            note_filter=["kb/notes/stable.md"],
-        )
-        assert [(s.gate_id, s.reason) for s in stale] == [
-            ("prose/source-residue", "missing-review"),
-        ]
-
     def test_all_gates_finds_missing_across_bundles(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             include_all=True,
             note_filter=["kb/notes/unreviewed.md"],
@@ -262,7 +224,7 @@ class TestMissingReview:
 class TestFreshReview:
     def test_review_with_matching_metadata_is_fresh(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/stable.md"],
@@ -283,7 +245,7 @@ class TestGateChanged:
             encoding="utf-8",
         )
 
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/stable.md"],
@@ -298,7 +260,7 @@ class TestNoteChanged:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/stable.md"],
@@ -310,19 +272,21 @@ class TestNoteChanged:
 
 
 class TestAckMetadata:
-    def test_ack_appends_acceptance_event_without_rewriting_review_file(self, tmp_path: Path) -> None:
+    def test_ack_appends_acceptance_event_without_creating_new_gate_reviews(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        original_text = fixture["review_sr"].read_text(encoding="utf-8")
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
-        stale_before = gate_selector.select_stale_gates(
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            gate_review_count_before = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
+
+        stale_before = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/stable.md"],
         )
         assert len(stale_before) == 2
 
-        gate_selector.ack_pairs(
+        review_target_selector.ack_pairs(
             tmp_path,
             [
                 "kb/notes/stable.md:prose/source-residue",
@@ -331,17 +295,16 @@ class TestAckMetadata:
             TEST_MODEL,
         )
 
-        stale_after = gate_selector.select_stale_gates(
+        stale_after = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/stable.md"],
         )
         assert stale_after == []
 
-        assert fixture["review_sr"].read_text(encoding="utf-8") == original_text
-
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
+            gate_review_count_after = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
             row = conn.execute(
                 """
                 SELECT accepted_review_id, accepted_note_sha, acceptance_kind
@@ -351,20 +314,21 @@ class TestAckMetadata:
                 ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
             ).fetchone()
         assert row is not None
+        assert gate_review_count_after == gate_review_count_before
         assert row["accepted_review_id"] is None
         assert row["acceptance_kind"] == "trivial-change-ack"
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
 
     def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        stale_before = gate_selector.select_stale_gates(
+        stale_before = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert len(stale_before) == 2
 
-        gate_selector.ack_pairs(
+        review_target_selector.ack_pairs(
             tmp_path,
             [
                 "kb/notes/unreviewed.md:prose/confidence-miscalibration",
@@ -373,22 +337,12 @@ class TestAckMetadata:
             TEST_MODEL,
         )
 
-        stale_after = gate_selector.select_stale_gates(
+        stale_after = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert stale_after == []
-
-        expected_review_path = (
-            tmp_path
-            / "kb"
-            / "reports"
-            / "reviews"
-            / "kb__notes__unreviewed"
-            / "prose__source-residue.test-model.md"
-        )
-        assert not expected_review_path.exists()
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
@@ -410,25 +364,46 @@ class TestDiffGeneration:
         init_repo(tmp_path)
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        reviews_dir = tmp_path / "kb" / "reports" / "reviews"
 
         note_path = make_note(notes_dir / "target.md", "Target", "\nOriginal line.\n")
         gate_path = make_gate(gates_dir / "prose" / "test-gate.md", "prose/test-gate", "prose")
         commit = commit_all(tmp_path, "Initial", date="2020-01-01T00:00:00+00:00")
 
-        review_path = make_review(
-            reviews_dir / "kb__notes__target" / "prose__test-gate.test-model.md",
-            note_path="kb/notes/target.md",
-            gate_id="prose/test-gate",
-            note_sha=review_metadata.git_blob_sha(note_path, write_object=True),
-            note_commit=commit,
-            gate_fingerprint=review_metadata.git_blob_sha(gate_path, write_object=True),
-        )
-        assert review_path.exists()
+        review_db.ensure_db(tmp_path, db_path_for(tmp_path))
+        note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
+        gate_sha = review_metadata.git_blob_sha(gate_path, write_object=True)
+        with review_db.connect(db_path_for(tmp_path)) as conn:
+            review_id = review_db.insert_gate_review(
+                conn,
+                note_path="kb/notes/target.md",
+                gate_id="prose/test-gate",
+                model_id=TEST_MODEL,
+                decision="pass",
+                rationale_markdown="## Result: PASS\n\nLooks good.\n",
+                evidence_json=None,
+                gate_sha=gate_sha,
+                reviewed_note_sha=note_sha,
+                reviewed_note_commit=commit,
+                reviewed_at="2026-03-31T00:00:00+00:00",
+                review_kind="full-review",
+            )
+            review_db.append_acceptance_event(
+                conn,
+                note_path="kb/notes/target.md",
+                gate_id="prose/test-gate",
+                model_id=TEST_MODEL,
+                accepted_review_id=review_id,
+                accepted_note_sha=note_sha,
+                accepted_note_commit=commit,
+                accepted_gate_sha=gate_sha,
+                accepted_at="2026-03-31T00:00:00+00:00",
+                acceptance_kind="full-review",
+            )
+            conn.commit()
 
         make_note(note_path, "Target", "\nUpdated line.\n")
 
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/target.md"],
@@ -440,41 +415,19 @@ class TestDiffGeneration:
         assert "Updated line" in stale[0].diff
 
 
-class TestModelInPath:
-    def test_review_path_includes_model(self, tmp_path: Path) -> None:
-        path = gate_selector.review_path_for(
-            "kb/notes/backlinks.md",
-            "semantic/internal-consistency",
-            "test-model",
-        )
-        assert path == Path(
-            "kb/reports/reviews/kb__notes__backlinks/semantic__internal-consistency.test-model.md"
-        )
-
-    def test_model_encoding_normalizes_special_chars(self, tmp_path: Path) -> None:
-        path = gate_selector.review_path_for(
-            "kb/notes/backlinks.md",
-            "prose/source-residue",
-            "opus 4.6",
-        )
-        assert "opus-4-6" in str(path)
-
-
-class TestJsonIncludesReviewPath:
-    def test_review_path_in_json_output(self, tmp_path: Path) -> None:
+class TestJsonOutput:
+    def test_json_output_omits_review_path(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        stale = gate_selector.select_stale_gates(
+        stale = review_target_selector.select_stale_gates(
             tmp_path,
             bundle="prose",
             note_filter=["kb/notes/unreviewed.md"],
         )
-        json_str = gate_selector.render_json(stale, TEST_MODEL)
+        json_str = review_target_selector.render_json(stale)
         items = json.loads(json_str)
         assert len(items) == 2
         for item in items:
-            assert "review_path" in item
-            assert item["review_path"].startswith("kb/reports/reviews/")
-            assert TEST_MODEL in item["review_path"]
+            assert "review_path" not in item
 
 
 class TestModelRequired:
@@ -483,7 +436,7 @@ class TestModelRequired:
         monkeypatch.delenv("COMMONPLACE_REVIEW_MODEL", raising=False)
 
         with pytest.raises(ValueError, match="COMMONPLACE_REVIEW_MODEL is not set"):
-            gate_selector.select_stale_gates(
+            review_target_selector.select_stale_gates(
                 tmp_path,
                 bundle="prose",
                 note_filter=["kb/notes/stable.md"],

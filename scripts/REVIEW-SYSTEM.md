@@ -107,7 +107,7 @@ It then compares those values against `current_gate_acceptances`.
 
 Prompt-facing CLI remains stable:
 
-- `scripts/gate_selector.py`
+- `scripts/review_target_selector.py`
 - positional bundle argument or `--all-gates`
 - optional positional note filter
 - `--json`
@@ -128,10 +128,6 @@ The storage backend changed from metadata rewrites to append-only DB events.
 
 Human-readable inspection remains required, but it is now a derived view from DB rows rather than canonical state.
 
-### Compatibility import
-
-The selector can still import metadata-bearing review files from `kb/reports/reviews/` for legacy data migration and ack compatibility. That directory is not the canonical write target for new live reviews.
-
 ## Agent workflow
 
 ### Running a review bundle on a note
@@ -147,7 +143,7 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `uv run scripts/gate_selector.py {bundle-or-all} --json` — get stale pairs with diffs
+1. `uv run scripts/review_target_selector.py {bundle-or-all} --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
 4. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to append acceptance events

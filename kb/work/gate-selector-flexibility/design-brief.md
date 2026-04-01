@@ -6,7 +6,7 @@ The redesign target is not "make the selector abstract." The target is: make new
 
 ## What the current selector does well
 
-[gate_selector.py](../../../scripts/gate_selector.py) is easy to understand because it has one direct pipeline:
+[review_target_selector.py](../../../scripts/review_target_selector.py) is easy to understand because it has one direct pipeline:
 
 1. discover gates from a bundle directory or from all gate files
 2. discover reviewable notes from top-level `kb/notes/`
@@ -143,7 +143,7 @@ This is enough structure to make the selector flexible without turning it into a
 - no persisted derived indexes
 - no gate-local DSL for freshness rules
 - no plugin system
-- no attempt to unify `gate_selector.py` and `warn_selector.py` unless the shared abstraction falls out naturally
+- no attempt to unify `review_target_selector.py` and `warn_selector.py` unless the shared abstraction falls out naturally
 
 The selector only needs to become modular enough that adding a new queue shape or input scope is a local change.
 

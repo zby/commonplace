@@ -6,25 +6,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from gate_selector import GATES_ROOT, ensure_db, resolve_db_path
+from review_db import GATES_ROOT, connect, ensure_db, insert_review_run, insert_review_run_gates, resolve_db_path
 from resolve_gates import resolve_to_gate_ids
-from review_db import connect, init_db, insert_review_run, insert_review_run_gates
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 from review_model import resolve_model
-
-SCHEMA_PATH = Path("scripts/review-schema.sql")
-SCRIPT_REPO_ROOT = Path(__file__).resolve().parents[1]
-
-
-def ensure_review_db(repo_root: Path, db_path: Path) -> None:
-    if db_path.exists():
-        ensure_db(repo_root, db_path)
-        return
-    schema_path = repo_root / SCHEMA_PATH
-    if not schema_path.is_file():
-        schema_path = SCRIPT_REPO_ROOT / SCHEMA_PATH
-    init_db(db_path, schema_path)
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create a review run for one note and gate set.")
@@ -45,7 +30,7 @@ def main() -> None:
     model_id = args.model or resolve_model()
 
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_review_db(repo_root, db_path)
+    ensure_db(repo_root, db_path)
 
     note_sha = git_blob_sha(note_abs, write_object=True)
     note_commit = last_commit_for_path(repo_root, Path(args.note_path))
