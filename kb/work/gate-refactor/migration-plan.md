@@ -1,6 +1,6 @@
 # Migration plan: bundle reviews to gate-native reviews
 
-This is the working plan for moving from today's monolithic review bundles to the data structure in [gate-data-structure-design](../selector-refactor/gate-data-structure-design.md).
+This is the working plan for moving from today's monolithic review bundles to a gate-native data structure.
 
 ## Phase 1: establish canonical storage
 

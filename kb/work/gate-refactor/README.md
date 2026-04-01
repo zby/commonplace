@@ -4,8 +4,7 @@ Goal: move reviews from monolithic bundle documents to individual gate files wit
 
 ## Prior work
 
-- [gate-level staleness analysis](../selector-refactor/gate-level-staleness-analysis.md) — why freshness has to become gate-local
-- [gate data structure design](../selector-refactor/gate-data-structure-design.md) — original (overengineered) storage model
+- Earlier selector-refactor analysis established the need for gate-local freshness and explored a more elaborate storage model that was later simplified away.
 - [automatic gate extraction from manual edits](../review-revise/gate-extraction-brainstorm.md) — how review-revise discoveries become reusable gates
 
 ## Files in this workshop
