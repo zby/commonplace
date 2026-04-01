@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import sqlite3
 import subprocess
 import sys
 from pathlib import Path
@@ -30,6 +31,10 @@ def load_module(name: str, path: Path):
 gate_selector = load_module("gate_selector", SCRIPTS_DIR / "gate_selector.py")
 resolve_gates = load_module("resolve_gates", SCRIPTS_DIR / "resolve_gates.py")
 review_metadata = load_module("review_metadata", SCRIPTS_DIR / "review_metadata.py")
+
+
+def db_path_for(repo_root: Path) -> Path:
+    return repo_root / "kb" / "reports" / "review-store.sqlite"
 
 
 def write(path: Path, content: str) -> Path:
@@ -305,11 +310,9 @@ class TestNoteChanged:
 
 
 class TestAckMetadata:
-    def test_ack_updates_existing_review_metadata(self, tmp_path: Path) -> None:
+    def test_ack_appends_acceptance_event_without_rewriting_review_file(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         original_text = fixture["review_sr"].read_text(encoding="utf-8")
-        original_metadata = review_metadata.parse_review_metadata(original_text)
-        assert original_metadata is not None
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         stale_before = gate_selector.select_stale_gates(
@@ -335,15 +338,24 @@ class TestAckMetadata:
         )
         assert stale_after == []
 
-        updated_text = fixture["review_sr"].read_text(encoding="utf-8")
-        updated_metadata = review_metadata.parse_review_metadata(updated_text)
-        assert updated_metadata is not None
-        assert updated_metadata.last_full_review_note_sha == original_metadata.last_full_review_note_sha
-        assert updated_metadata.last_acceptance_kind == "trivial-change-ack"
-        assert updated_metadata.last_accepted_note_sha == review_metadata.git_blob_sha(fixture["stable"])
-        assert "## Review" in updated_text
+        assert fixture["review_sr"].read_text(encoding="utf-8") == original_text
 
-    def test_ack_creates_metadata_only_review_when_missing(self, tmp_path: Path) -> None:
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT accepted_review_id, accepted_note_sha, acceptance_kind
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                """,
+                ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row["accepted_review_id"] is None
+        assert row["acceptance_kind"] == "trivial-change-ack"
+        assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
+
+    def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         stale_before = gate_selector.select_stale_gates(
             tmp_path,
@@ -368,7 +380,7 @@ class TestAckMetadata:
         )
         assert stale_after == []
 
-        created = (
+        expected_review_path = (
             tmp_path
             / "kb"
             / "reports"
@@ -376,10 +388,21 @@ class TestAckMetadata:
             / "kb__notes__unreviewed"
             / "prose__source-residue.test-model.md"
         )
-        metadata = review_metadata.parse_review_metadata(created.read_text(encoding="utf-8"))
-        assert metadata is not None
-        assert metadata.last_full_review_note_sha is None
-        assert metadata.last_acceptance_kind == "trivial-change-ack"
+        assert not expected_review_path.exists()
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT accepted_review_id, acceptance_kind
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                """,
+                ("kb/notes/unreviewed.md", "prose/source-residue", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row["accepted_review_id"] is None
+        assert row["acceptance_kind"] == "trivial-change-ack"
 
 
 class TestDiffGeneration:

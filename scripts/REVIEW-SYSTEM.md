@@ -1,119 +1,126 @@
 # Review system
 
-The review system checks KB notes against **gates** — small, focused quality checks. Each gate tests one failure mode (e.g. "anthropomorphic framing," "grounding alignment," "broken link path").
+The review system stores per-gate review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
 
 ## Concepts
 
-**Gate.** A markdown file in `kb/instructions/review-gates/{lens}/{name}.md` that defines a failure mode and a test. The `{lens}/{name}` path is the gate id (e.g. `prose/source-residue`).
+**Gate.** A markdown file in `kb/instructions/review-gates/{lens}/{name}.md`. The `{lens}/{name}` path is the gate id (for example `prose/source-residue`).
 
-**Bundle.** A directory of gates sharing a lens. `prose` is the bundle of all gates in `kb/instructions/review-gates/prose/`. Bundles are not configuration — they're just directories.
+**Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review.** A markdown file recording the result of applying one gate to one note under a specific model. Lives at `kb/reports/reviews/{encoded-note}/{encoded-gate}.{encoded-model}.md`.
+**Gate review.** One stored result of applying one gate to one note under one model.
 
-**Staleness.** A review is stale when the current note content or gate definition no longer matches the acceptance metadata stored inside the review file.
+**Acceptance event.** An append-only event recording the accepted note sha and gate sha for one `(note_path, gate_id, model_id)` key.
 
-**Ack.** Rewriting the review metadata so `last-accepted-*` points at the current note revision, signaling that a change was inspected and found insignificant for that gate.
+**Current acceptance.** The latest acceptance event for one key. The selector queries this derived state rather than mutable review-file metadata.
 
-## File layout
+**Rendered review.** Optional human-readable markdown reconstructed from DB rows. Rendered markdown is inspectable output, not canonical state.
 
-```
-kb/instructions/review-gates/
-  prose/
-    source-residue.md
-    confidence-miscalibration.md
-    ...
-  semantic/
-    grounding-alignment.md
-    ...
-  frontmatter/
-  structural/
-  complexity/
+**Model partition.** Reviews are partitioned by `model_id`. A review or acceptance for one model does not satisfy freshness for another.
 
-kb/reports/reviews/
-  kb__notes__backlinks/
-    prose__source-residue.opus-4-6.md
-    semantic__grounding-alignment.opus-4-6.md
-    ...
-```
+## Storage model
 
-### Path encoding
+Canonical state lives in a local SQLite database at `kb/reports/review-store.sqlite` by default. Set `COMMONPLACE_REVIEW_DB` to override that location.
 
-- Note path: strip `.md`, replace `/` with `__`. `kb/notes/backlinks.md` → `kb__notes__backlinks`
-- Gate id: replace `/` with `__`. `prose/source-residue` → `prose__source-residue`
-- Model: replace non-alphanumeric characters with `-`, lowercase. `opus 4.6` → `opus-4-6`
-- Full review filename: `{encoded-gate}.{encoded-model}.md`
+Schema: `scripts/review-schema.sql`
 
-The model comes from the `COMMONPLACE_REVIEW_MODEL` environment variable. A review from one model does not satisfy staleness checks for a different model.
+Primary tables:
 
-## Staleness model
+- `gate_reviews`
+  - append-only review history
+  - one row per reviewed `(note, gate, model)` instance
+  - stores decision, rationale markdown, explicit `model_id`, reviewed note sha, and gate sha
+- `acceptance_events`
+  - append-only acceptance history
+  - records the accepted baseline for selector and ack
+  - latest event wins for the current-state query
 
-Staleness uses review metadata stored inside the review file. Three artifacts participate:
+Derived view:
 
-1. **Note** — the file being reviewed
-2. **Gate** — the gate definition file
-3. **Review metadata** — the accepted note revision and gate fingerprint recorded in the review file
+- `current_gate_acceptances`
+  - current accepted state per `(note_path, gate_id, model_id)`
+  - defined as the highest `acceptance_events.id` for that key
+
+## Freshness and staleness
+
+Selector behavior stays the same at the prompt surface, but acceptance state now comes from `current_gate_acceptances`.
+
+Three artifacts participate:
+
+1. the current note file
+2. the current gate file
+3. the latest acceptance event for that `(note, gate, model)` key
 
 Rules:
 
-- **Review missing** → stale (reason: `missing-review`)
-- **Metadata missing** → stale (reason: `missing-review`). A body-only review file does not satisfy freshness.
-- **Gate fingerprint changed** → stale (reason: `gate-changed`). The gate definition changed; the review may no longer apply the right test.
-- **Accepted note sha differs from current note sha** → stale (reason: `note-changed`). The selector generates a diff from the last accepted note revision to the working tree so a sweep agent can judge significance.
+- no acceptance row -> `missing-review`
+- accepted gate sha differs from the current gate sha -> `gate-changed`
+- accepted note sha differs from the current note sha -> `note-changed`
+- otherwise the pair is fresh
 
-When no rule triggers, the review is **fresh**.
+For now, gate freshness is keyed by the raw git blob SHA of the gate file itself. That intentionally excludes shared bundle instructions. If shared bundle instructions later become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file SHA.
 
-### Ack workflow
+## Write paths
 
-A sweep agent sees a stale review, inspects the diff, and decides whether the change matters for that gate. If the change is insignificant (e.g. a typo fix doesn't affect `semantic/grounding-alignment`), the agent runs `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...`. This rewrites `last-accepted-*` to the current note revision and keeps the prior `last-full-review-*` fields intact.
+### Full review
 
-If the change is significant, the agent writes a fresh review body with a fresh metadata block.
+Fresh review prose is still written to the canonical review artifact path under `kb/reports/reviews/`, and the selector lazily imports metadata-bearing review files into the DB so existing prompt workflows remain valid during the swap.
 
-### Why metadata
+A full review write contributes:
 
-Review files may be copied, packaged, or checked out independently of their original filesystem timestamps. Metadata stored inside the artifact survives that distribution path.
+1. one `gate_reviews` row
+2. one `acceptance_events` row with `acceptance_kind = 'full-review'`
 
-Tradeoffs:
+The important invariant is that the stored `reviewed_note_sha` and `gate_sha` are the exact values used during review generation.
 
-- Review writers must emit the metadata block.
-- Ack is a metadata rewrite, not a bare `touch`.
-- Diffs depend on the accepted blob still being available in git object storage; `scripts/review_prereqs.sh` writes the blob to support this.
+### Trivial-change acknowledgement
 
-## Scripts
+`ack` no longer rewrites a markdown file. It appends a new `acceptance_events` row with:
 
-| Script | Purpose |
-|---|---|
-| `resolve_gates.py` | Resolve gate ids and bundle names to concatenated gate text with output paths |
-| `gate_selector.py` | List stale (note, gate) pairs using review metadata |
-| `warn_selector.py` | List notes with WARN-level findings in their gate reviews |
+- the current note sha
+- the current gate sha
+- `acceptance_kind = 'trivial-change-ack'`
 
-### resolve_gates.py
+This advances the accepted baseline without overwriting review prose or mutating a review artifact.
 
-```bash
-# Individual gates
-uv run scripts/resolve_gates.py prose/source-residue semantic/grounding-alignment
+## Read paths
 
-# Expand a bundle
-uv run scripts/resolve_gates.py prose
+### Selector
 
-# With output paths for a target note
-uv run scripts/resolve_gates.py --note kb/notes/backlinks.md prose
-```
+The selector still answers:
 
-### gate_selector.py
+> which `(note, gate)` pairs are stale for the active model, and why?
 
-```bash
-# All stale pairs across all gates
-uv run scripts/gate_selector.py --all-gates
+It computes:
 
-# Stale pairs for one bundle
-uv run scripts/gate_selector.py prose
+- current note sha from git
+- current gate sha from gate files
+- active model from `COMMONPLACE_REVIEW_MODEL`
 
-# Filter to one note
-uv run scripts/gate_selector.py --all-gates kb/notes/backlinks.md
+It then compares those values against `current_gate_acceptances`.
 
-# JSON output (includes diff for note-changed pairs)
-uv run scripts/gate_selector.py --all-gates --json
-```
+Prompt-facing CLI remains stable:
+
+- `scripts/gate_selector.py`
+- positional bundle argument or `--all-gates`
+- optional positional note filter
+- `--json`
+- `--reason {missing-review,gate-changed,note-changed}`
+- `COMMONPLACE_REVIEW_MODEL` selects the active model partition
+
+### Ack
+
+`scripts/ack_gate_review.py` keeps the same CLI:
+
+- positional `note_path`
+- one or more positional `gate_ids`
+- output lines of the form `acked: <note_path> <gate_id>`
+
+The storage backend changed from metadata rewrites to append-only DB events.
+
+### Render/export
+
+Human-readable inspection remains required, but it is now a derived view from DB rows rather than canonical state.
 
 ## Agent workflow
 
@@ -125,13 +132,13 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 2. Read the note
 3. For each gate, run `scripts/review_prereqs.sh {note} {gate-id}` and paste the emitted metadata block into the review header
 4. Apply each gate, write the review body to the printed path
-5. Done — the metadata marks it current
+5. The selector imports metadata-bearing review files into the DB on demand
 
-### Sweep (batch staleness check)
+### Sweep
 
 Instruction: `kb/instructions/review-sweep.md`
 
 1. `uv run scripts/gate_selector.py {bundle-or-all} --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: load gates via `resolve_gates.py`, write fresh reviews
-4. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to rewrite acceptance metadata
+4. For insignificant changes: run `uv run scripts/ack_gate_review.py {note-path} {gate-id} ...` to append acceptance events

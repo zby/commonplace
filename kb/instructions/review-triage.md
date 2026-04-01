@@ -42,7 +42,7 @@ Ack all insignificant pairs in one command:
 uv run scripts/ack_gate_review.py {note-path} {gate-id} [{gate-id} ...]
 ```
 
-This rewrites the review metadata so `last-accepted-*` matches the current note revision. It does not rely on `touch` or filesystem timestamps.
+This appends a new acceptance event to the review DB so the accepted baseline matches the current note revision. It does not rely on `touch` or filesystem timestamps.
 
 ### 4. Report
 

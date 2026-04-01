@@ -28,6 +28,7 @@ def test_gate_review_replacements_exist() -> None:
         SCRIPTS_DIR / "warn_selector.py",
         SCRIPTS_DIR / "review_model.py",
         SCRIPTS_DIR / "review_metadata.py",
+        SCRIPTS_DIR / "review_db.py",
         SCRIPTS_DIR / "migrations" / "migrate_review_metadata.py",
     ]
 
