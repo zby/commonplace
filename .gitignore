@@ -40,10 +40,13 @@ kb/sources/slate-moving-beyond-react-and-rlm.md
 
 # connect reports
 kb/work/connect/
+kb/work/review-db-migration/
+kb/work/review-runs-direct-write/
 
 # generated review artifacts
 kb/reports/reviews/**
 !kb/reports/reviews/
 !kb/reports/reviews/README.md
+kb/reports/review-store.sqlite
 
 tmp/

@@ -36,11 +36,14 @@ Store review state in local SQLite once reviews are out of git and have accumula
 
 Concretely:
 
+- `review_runs` stores one execution record per review invocation on one note
+- `review_run_gates` stores the captured requested gate set and gate SHAs for that run
 - `gate_reviews` stores append-only review history
 - `acceptance_events` stores append-only acceptance history
 - current acceptance is derived by latest event per `(note_path, gate_id, model_id)`
 - selector reads current note and gate SHAs from files, but reads accepted state from SQLite
 - `ack` appends an acceptance event instead of rewriting review artifacts
+- review execution creates a run first, writes gate reviews under that run, then finalizes acceptance only after verifying full gate coverage
 - markdown review files become optional imports or rendered inspection views, not the canonical store
 
 This is a scoped exception to the repo's files-first architecture, not a reversal of it. Notes, gates, instructions, and source material remain file-backed. The database is justified here because the review subsystem stopped being authored library content and became local operational state.
@@ -52,13 +55,15 @@ This is a scoped exception to the repo's files-first architecture, not a reversa
 - **Current-state lookup becomes direct.** Selector logic reduces to "load latest acceptance for this key and compare SHAs" instead of scanning files and interpreting embedded metadata blocks.
 - **Ack stops mutating prose artifacts.** Trivial-change acknowledgement becomes a first-class state transition rather than a metadata rewrite inside a review document.
 - **History becomes explicit.** Append-only review and acceptance tables preserve both review bodies and acceptance evolution without overloading one markdown file with both historical and current meaning.
+- **Execution history becomes explicit.** One multi-gate review invocation is queryable as a run rather than inferred later from a pile of per-gate artifacts.
 - **Model partitions are cleaner.** `(note, gate, model)` is a real indexed key instead of an implicit convention reconstructed from directory layout and filename suffixes.
 - **Inspection stays possible.** Human-readable markdown can still be rendered from DB rows when needed, but inspectability is now a derived view rather than the storage contract.
 
 ### Harder
 
 - **Review state now has a schema.** We need schema management, import paths for old artifacts, and tests that preserve selector parity.
-- **The write path becomes split during transition.** Fresh review prose may still be written as markdown for a while, which then needs import or rendering conventions until the DB-first path settles completely.
+- **Execution and acceptance must be separated.** A failed or partial run should remain visible in history without advancing freshness state, which means run finalization needs explicit correctness checks.
+- **The write path becomes split during transition.** Legacy markdown review files may still exist as imports or rendered views for a while, even though the canonical live path is DB-first.
 - **The repo now has a justified exception to files-first.** We need to explain clearly why review state crossed the threshold while notes and other KB artifacts did not.
 
 The boundary is: files remain the right default for authored knowledge under git, but once an artifact is removed from git and the system mostly wants indexed state transitions over it, SQLite is the simpler representation.

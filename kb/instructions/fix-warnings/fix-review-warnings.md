@@ -16,7 +16,7 @@ An editing pass that fixes WARN-level findings from prose and/or semantic review
 
 1. Run `uv run scripts/warn_selector.py --json {note-path}` to get WARN-level findings for this note. If there are none, report "no WARNs" and stop.
 2. Read the target note in full.
-3. Read the gate review files listed in the warn_selector output (the `review_path` fields).
+3. Read the corresponding gate review text from the warn_selector output. If `review_path` is present, you may also open the rendered file for inspection, but the DB-backed review text in the output is authoritative for new runs.
 4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
 
 ## Procedure
@@ -42,7 +42,7 @@ After all fixes:
 - **Description edits need their own procedure.** If you encounter description issues (from `/validate` or as a side effect), use `kb/instructions/fix-warnings/fix-descriptions.md` rather than improvising a rewrite.
 - **Don't change arguments.** Fixes change framing, accuracy, and attribution — not the note's claims or structure.
 - **Don't remove examples.** Frame them ("In [domain], for instance...") instead of replacing with abstractions.
-- **Don't update review files.** Gate reviews are regenerated or re-recorded separately.
+- **Don't update stored reviews.** Gate reviews are regenerated or re-recorded separately.
 - **Verify before assuming staleness.** If a warning claims a path/field/mechanism is stale, check whether it actually exists before removing or updating it.
 
 ## Fix report format

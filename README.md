@@ -27,7 +27,7 @@ kb/                          Knowledge base
     snapshot-web/SKILL.md    Capture URLs to markdown
     validate/SKILL.md        Schema and quality validation
     re-ingest.md             Instruction (not yet promoted to skill)
-    semantic-review.md       Instruction
+    review-bundles/          Gate bundle manifests (e.g. semantic review bundle)
     ...
 
 test/
