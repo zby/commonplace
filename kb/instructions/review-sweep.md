@@ -20,7 +20,7 @@ Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-al
 ### 2. Inventory
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} {note-paths} --json | wc -l
+uv run scripts/review_target_selector.py {bundle-or-all} --note {note-paths} --json | wc -l
 ```
 
 Check the line count first (~5 lines per stale pair in JSON output).
@@ -30,7 +30,7 @@ Check the line count first (~5 lines per stale pair in JSON output).
 - **Otherwise**: read the JSON output and continue.
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} {note-paths} --json
+uv run scripts/review_target_selector.py {bundle-or-all} --note {note-paths} --json
 ```
 
 ### 3. Review remaining pairs
@@ -40,7 +40,7 @@ Group the remaining pairs by note.
 If there are many notes, use:
 
 ```bash
-scripts/review_sweep.sh {bundle-or-all} {note-paths}
+scripts/review_sweep.sh {bundle-or-all} {note-paths...}
 ```
 
 If you are executing manually or from an agent, run one direct-write bundle execution per note:

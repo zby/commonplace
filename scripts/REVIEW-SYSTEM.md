@@ -108,8 +108,9 @@ It then compares those values against `current_gate_acceptances`.
 Prompt-facing CLI remains stable:
 
 - `scripts/review_target_selector.py`
-- positional bundle argument or `--all-gates`
-- optional positional note filter
+- positional gate IDs and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
+- `--all-gates` to check all gates
+- `--note` to filter to specific note paths
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 - `COMMONPLACE_REVIEW_MODEL` selects the active model partition

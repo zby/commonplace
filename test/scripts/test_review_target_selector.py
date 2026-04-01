@@ -201,7 +201,7 @@ class TestMissingReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert [(s.gate_id, s.reason) for s in stale] == [
@@ -213,7 +213,7 @@ class TestMissingReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            include_all=True,
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue", "semantic/grounding-alignment"],
             note_filter=["kb/notes/unreviewed.md"],
         )
         gate_ids = [s.gate_id for s in stale]
@@ -226,7 +226,7 @@ class TestFreshReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
         assert stale == []
@@ -247,7 +247,7 @@ class TestGateChanged:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
         assert [(s.gate_id, s.reason) for s in stale] == [
@@ -262,7 +262,7 @@ class TestNoteChanged:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
         assert [(s.gate_id, s.reason) for s in stale] == [
@@ -281,7 +281,7 @@ class TestAckMetadata:
 
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
         assert len(stale_before) == 2
@@ -297,7 +297,7 @@ class TestAckMetadata:
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
         assert stale_after == []
@@ -323,7 +323,7 @@ class TestAckMetadata:
         build_fixture(tmp_path)
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert len(stale_before) == 2
@@ -339,7 +339,7 @@ class TestAckMetadata:
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert stale_after == []
@@ -405,7 +405,7 @@ class TestDiffGeneration:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/test-gate"],
             note_filter=["kb/notes/target.md"],
             include_diff=True,
         )
@@ -420,7 +420,7 @@ class TestJsonOutput:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
-            bundle="prose",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
         json_str = review_target_selector.render_json(stale)
@@ -438,7 +438,7 @@ class TestModelRequired:
         with pytest.raises(ValueError, match="COMMONPLACE_REVIEW_MODEL is not set"):
             review_target_selector.select_stale_gates(
                 tmp_path,
-                bundle="prose",
+                gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
                 note_filter=["kb/notes/stable.md"],
             )
 

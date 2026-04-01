@@ -101,11 +101,13 @@ sweep_bundle() {
   shift
   local notes=("$@")
 
-  local selector_args=("$bundle")
-  selector_args+=("${notes[@]}")
+  local selector_args=("$bundle" --json)
+  for note in "${notes[@]}"; do
+    selector_args+=(--note "$note")
+  done
 
   local selector_output
-  selector_output=$(uv run scripts/review_target_selector.py "${selector_args[@]}" --json)
+  selector_output=$(uv run scripts/review_target_selector.py "${selector_args[@]}")
 
   local grouped
   grouped=$(printf '%s' "$selector_output" | group_selector_output)

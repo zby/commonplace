@@ -9,6 +9,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from resolve_gates import resolve_to_gate_ids
 from review_db import (
     GATES_ROOT,
     append_acceptance_event,
@@ -21,20 +22,6 @@ from review_metadata import blob_text_at_sha, file_text_at_commit, git_blob_sha,
 from review_model import resolve_model
 
 NOTES_ROOT = Path("kb/notes")
-
-
-def list_all_gate_ids(gates_dir: Path) -> list[str]:
-    return [
-        f.relative_to(gates_dir).with_suffix("").as_posix()
-        for f in sorted(gates_dir.rglob("*.md"))
-    ]
-
-
-def list_bundle_gate_ids(gates_dir: Path, bundle: str) -> list[str]:
-    bundle_dir = gates_dir / bundle
-    if not bundle_dir.is_dir():
-        raise FileNotFoundError(f"Bundle directory not found: {bundle}")
-    return [f"{bundle}/{f.stem}" for f in sorted(bundle_dir.glob("*.md"))]
 
 
 def _has_frontmatter(path: Path) -> bool:
@@ -94,8 +81,7 @@ def note_diff_since(
 def select_stale_gates(
     repo_root: Path,
     *,
-    bundle: str | None = None,
-    include_all: bool = False,
+    gate_ids: list[str],
     note_filter: list[str] | None = None,
     include_diff: bool = False,
 ) -> list[StaleGate]:
@@ -103,13 +89,6 @@ def select_stale_gates(
     notes_dir = repo_root / NOTES_ROOT
     model = resolve_model()
     db_path = resolve_db_path(repo_root)
-
-    if include_all:
-        gate_ids = list_all_gate_ids(gates_dir)
-    elif bundle:
-        gate_ids = list_bundle_gate_ids(gates_dir, bundle)
-    else:
-        raise ValueError("provide a bundle name or --all-gates")
 
     if note_filter:
         notes: list[Path] = []
@@ -223,9 +202,13 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="List stale (note, gate) review pairs.")
-    parser.add_argument("bundle", nargs="?", help="Bundle name (e.g. prose, semantic).")
-    parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
+    parser.add_argument(
+        "gate_or_bundle",
+        nargs="*",
+        help="Gate IDs (e.g. prose/source-residue) and/or bundle names (e.g. prose).",
+    )
     parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
+    parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     parser.add_argument(
         "--reason",
@@ -240,28 +223,30 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    # TODO: Reshape the argparse positionals so `--all-gates <note-path>` does
-    # not need this post-parse compatibility fix.
-    if args.all_gates and args.bundle and not args.note_paths:
-        args.note_paths = [args.bundle]
-        args.bundle = None
-
-    if not args.bundle and not args.all_gates:
-        parser.error("provide a bundle name or --all-gates")
-    if args.bundle and args.all_gates:
-        parser.error("bundle and --all-gates are mutually exclusive")
-
     repo_root = Path.cwd()
+
+    if args.ack:
+        model = resolve_model()
+        ack_pairs(repo_root, args.ack, model)
+        return
+
+    gates_dir = repo_root / GATES_ROOT
+
+    if args.all_gates:
+        if args.gate_or_bundle:
+            parser.error("gate/bundle names and --all-gates are mutually exclusive")
+        bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
+        gate_ids = resolve_to_gate_ids(bundles, gates_dir)
+    elif args.gate_or_bundle:
+        gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+    else:
+        parser.error("provide gate/bundle names or --all-gates")
+
     try:
-        if args.ack:
-            model = resolve_model()
-            ack_pairs(repo_root, args.ack, model)
-            return
         records = select_stale_gates(
             repo_root,
-            bundle=args.bundle,
-            include_all=args.all_gates,
-            note_filter=args.note_paths or None,
+            gate_ids=gate_ids,
+            note_filter=args.note_paths,
             include_diff=args.json,
         )
     except (FileNotFoundError, ValueError) as exc:
