@@ -58,6 +58,7 @@ There is currently no `.obsidian/` directory, no `.canvas` files, and no `.base`
 - [candidate-affordances.md](./candidate-affordances.md) — initial inventory of possible Obsidian-facing affordances
 - [integration-constraints.md](./integration-constraints.md) — constraints that preserve commonplace's current design commitments
 - [web-clipper-as-capture-layer.md](./web-clipper-as-capture-layer.md) — proposal to use Obsidian Web Clipper for source capture while keeping `/ingest` as graph-aware analysis
+- [web-clipper-adaptation-plan.md](./web-clipper-adaptation-plan.md) — phased rollout plan for adapting Web Clipper into the `kb/sources/` workflow without replacing graph-aware ingestion
 
 ## Open questions
 
