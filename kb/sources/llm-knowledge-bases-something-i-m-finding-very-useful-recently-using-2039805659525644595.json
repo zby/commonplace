@@ -1,0 +1,2878 @@
+{
+  "source": "https://x.com/karpathy/status/2039805659525644595",
+  "captured": "2026-04-03T15:30:57.200477+00:00",
+  "type": "x-post",
+  "status_id": "2039805659525644595",
+  "conversation_id": "2039805659525644595",
+  "target_post": {
+    "edit_history_tweet_ids": [
+      "2039805659525644595"
+    ],
+    "id": "2039805659525644595",
+    "conversation_id": "2039805659525644595",
+    "author_id": "33836629",
+    "note_tweet": {
+      "text": "LLM Knowledge Bases\n\nSomething I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating knowledge (stored as markdown and images). The latest LLMs are quite good at it. So:\n\nData ingest:\nI index source documents (articles, papers, repos, datasets, images, etc.) into a raw/ directory, then I use an LLM to incrementally \"compile\" a wiki, which is just a collection of .md files in a directory structure. The wiki includes summaries of all the data in raw/, backlinks, and then it categorizes data into concepts, writes articles for them, and links them all. To convert web articles into .md files I like to use the Obsidian Web Clipper extension, and then I also use a hotkey to download all the related images to local so that my LLM can easily reference them.\n\nIDE:\nI use Obsidian as the IDE \"frontend\" where I can view the raw data, the the compiled wiki, and the derived visualizations. Important to note that the LLM writes and maintains all of the data of the wiki, I rarely touch it directly. I've played with a few Obsidian plugins to render and view data in other ways (e.g. Marp for slides).\n\nQ&A:\nWhere things get interesting is that once your wiki is big enough (e.g. mine on some recent research is ~100 articles and ~400K words), you can ask your LLM agent all kinds of complex questions against the wiki, and it will go off, research the answers, etc. I thought I had to reach for fancy RAG, but the LLM has been pretty good about auto-maintaining index files and brief summaries of all the documents and it reads all the important related data fairly easily at this ~small scale.\n\nOutput:\nInstead of getting answers in text/terminal, I like to have it render markdown files for me, or slide shows (Marp format), or matplotlib images, all of which I then view again in Obsidian. You can imagine many other visual output formats depending on the query. Often, I end up \"filing\" the outputs back into the wiki to enhance it for further queries. So my own explorations and queries always \"add up\" in the knowledge base.\n\nLinting:\nI've run some LLM \"health checks\" over the wiki to e.g. find inconsistent data, impute missing data (with web searchers), find interesting connections for new article candidates, etc., to incrementally clean up the wiki and enhance its overall data integrity. The LLMs are quite good at suggesting further questions to ask and look into.\n\nExtra tools:\nI find myself developing additional tools to process the data, e.g. I vibe coded a small and naive search engine over the wiki, which I both use directly (in a web ui), but more often I want to hand it off to an LLM via CLI as a tool for larger queries. \n\nFurther explorations:\nAs the repo grows, the natural desire is to also think about synthetic data generation + finetuning to have your LLM \"know\" the data in its weights instead of just context windows.\n\nTLDR: raw data from a given number of sources is collected, then compiled by an LLM into a .md wiki, then operated on by various CLIs by the LLM to do Q&A and to incrementally enhance the wiki, and all of it viewable in Obsidian. You rarely ever write or edit the wiki manually, it's the domain of the LLM. I think there is room here for an incredible new product instead of a hacky collection of scripts."
+    },
+    "created_at": "2026-04-02T20:42:21.000Z",
+    "text": "LLM Knowledge Bases\n\nSomething I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating"
+  },
+  "posts": [
+    {
+      "edit_history_tweet_ids": [
+        "2039805659525644595"
+      ],
+      "id": "2039805659525644595",
+      "conversation_id": "2039805659525644595",
+      "author_id": "33836629",
+      "note_tweet": {
+        "text": "LLM Knowledge Bases\n\nSomething I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating knowledge (stored as markdown and images). The latest LLMs are quite good at it. So:\n\nData ingest:\nI index source documents (articles, papers, repos, datasets, images, etc.) into a raw/ directory, then I use an LLM to incrementally \"compile\" a wiki, which is just a collection of .md files in a directory structure. The wiki includes summaries of all the data in raw/, backlinks, and then it categorizes data into concepts, writes articles for them, and links them all. To convert web articles into .md files I like to use the Obsidian Web Clipper extension, and then I also use a hotkey to download all the related images to local so that my LLM can easily reference them.\n\nIDE:\nI use Obsidian as the IDE \"frontend\" where I can view the raw data, the the compiled wiki, and the derived visualizations. Important to note that the LLM writes and maintains all of the data of the wiki, I rarely touch it directly. I've played with a few Obsidian plugins to render and view data in other ways (e.g. Marp for slides).\n\nQ&A:\nWhere things get interesting is that once your wiki is big enough (e.g. mine on some recent research is ~100 articles and ~400K words), you can ask your LLM agent all kinds of complex questions against the wiki, and it will go off, research the answers, etc. I thought I had to reach for fancy RAG, but the LLM has been pretty good about auto-maintaining index files and brief summaries of all the documents and it reads all the important related data fairly easily at this ~small scale.\n\nOutput:\nInstead of getting answers in text/terminal, I like to have it render markdown files for me, or slide shows (Marp format), or matplotlib images, all of which I then view again in Obsidian. You can imagine many other visual output formats depending on the query. Often, I end up \"filing\" the outputs back into the wiki to enhance it for further queries. So my own explorations and queries always \"add up\" in the knowledge base.\n\nLinting:\nI've run some LLM \"health checks\" over the wiki to e.g. find inconsistent data, impute missing data (with web searchers), find interesting connections for new article candidates, etc., to incrementally clean up the wiki and enhance its overall data integrity. The LLMs are quite good at suggesting further questions to ask and look into.\n\nExtra tools:\nI find myself developing additional tools to process the data, e.g. I vibe coded a small and naive search engine over the wiki, which I both use directly (in a web ui), but more often I want to hand it off to an LLM via CLI as a tool for larger queries. \n\nFurther explorations:\nAs the repo grows, the natural desire is to also think about synthetic data generation + finetuning to have your LLM \"know\" the data in its weights instead of just context windows.\n\nTLDR: raw data from a given number of sources is collected, then compiled by an LLM into a .md wiki, then operated on by various CLIs by the LLM to do Q&A and to incrementally enhance the wiki, and all of it viewable in Obsidian. You rarely ever write or edit the wiki manually, it's the domain of the LLM. I think there is room here for an incredible new product instead of a hacky collection of scripts."
+      },
+      "created_at": "2026-04-02T20:42:21.000Z",
+      "text": "LLM Knowledge Bases\n\nSomething I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating"
+    }
+  ],
+  "users": {
+    "33836629": {
+      "id": "33836629",
+      "name": "Andrej Karpathy",
+      "username": "karpathy"
+    },
+    "19059275": {
+      "id": "19059275",
+      "name": "Ilya Belikin",
+      "username": "ilyabelikin"
+    },
+    "1350098696571133954": {
+      "id": "1350098696571133954",
+      "name": "Rodney Jehu-Appiah",
+      "username": "rjehuappiah"
+    },
+    "1871959136453513216": {
+      "id": "1871959136453513216",
+      "name": "Crypt0x",
+      "username": "Crypt0x420"
+    },
+    "385291797": {
+      "id": "385291797",
+      "name": "R\u0131dvan g\u00fcndo\u011fan",
+      "username": "butikmuzikC"
+    },
+    "1869683226178146304": {
+      "id": "1869683226178146304",
+      "name": "Sac",
+      "username": "Saccc_c"
+    },
+    "1695470369568968704": {
+      "id": "1695470369568968704",
+      "name": "SOMA",
+      "username": "SOMA198424"
+    },
+    "1945823698520547328": {
+      "id": "1945823698520547328",
+      "name": "Yetkin Belasan",
+      "username": "YetkinBelasan"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1574051691669905411": {
+      "id": "1574051691669905411",
+      "name": "Hugo",
+      "username": "hugo_wbng"
+    },
+    "81931446": {
+      "id": "81931446",
+      "name": "Grant Genzman",
+      "username": "ggenz"
+    },
+    "2032992293423321088": {
+      "id": "2032992293423321088",
+      "name": "Agent Daily AI",
+      "username": "Agentdailyai"
+    },
+    "36857407": {
+      "id": "36857407",
+      "name": "Karl Weinmeister",
+      "username": "kweinmeister"
+    },
+    "39160293": {
+      "id": "39160293",
+      "name": "Landon Hamilton",
+      "username": "LandonH"
+    },
+    "76102152": {
+      "id": "76102152",
+      "name": "Guttilla - AI Architect",
+      "username": "ArthurGuttilla"
+    },
+    "2035390968460144640": {
+      "id": "2035390968460144640",
+      "name": "Eva_Orients",
+      "username": "eva_orients"
+    },
+    "26810995": {
+      "id": "26810995",
+      "name": "george roukas",
+      "username": "groukas"
+    },
+    "2028786158373863424": {
+      "id": "2028786158373863424",
+      "name": "Duncan",
+      "username": "aure_duncan"
+    },
+    "16106460": {
+      "id": "16106460",
+      "name": "Leo",
+      "username": "__d_1ggin"
+    },
+    "1294621": {
+      "id": "1294621",
+      "name": "Kingsley Uyi Idehen",
+      "username": "kidehen"
+    },
+    "1465477885435777026": {
+      "id": "1465477885435777026",
+      "name": "Tal Badani",
+      "username": "talbadani1"
+    },
+    "1202561": {
+      "id": "1202561",
+      "name": "sull",
+      "username": "sull"
+    },
+    "1815182071742214144": {
+      "id": "1815182071742214144",
+      "name": "Sebastian Trick",
+      "username": "setrick42"
+    },
+    "263196101": {
+      "id": "263196101",
+      "name": "Manash",
+      "username": "shiba14857"
+    },
+    "2846331": {
+      "id": "2846331",
+      "name": "LEERON",
+      "username": "leeron"
+    },
+    "427089628": {
+      "id": "427089628",
+      "name": "Lex Fridman",
+      "username": "lexfridman"
+    },
+    "1342569933209743361": {
+      "id": "1342569933209743361",
+      "name": "Eugen",
+      "username": "EugenAlpeza"
+    },
+    "803082660075573248": {
+      "id": "803082660075573248",
+      "name": "Parth Radia",
+      "username": "parthnradia"
+    },
+    "1942341571547926528": {
+      "id": "1942341571547926528",
+      "name": "Virgil",
+      "username": "ReasoningErr"
+    },
+    "1420056768541904896": {
+      "id": "1420056768541904896",
+      "name": "Bear Network",
+      "username": "BearNetworkHQ"
+    },
+    "1920742671351771140": {
+      "id": "1920742671351771140",
+      "name": "ARDEEP CHAKROBORTY",
+      "username": "Ardeep_C"
+    },
+    "1053364924200607744": {
+      "id": "1053364924200607744",
+      "name": "Smells Like ML",
+      "username": "smellslikeml"
+    },
+    "804646805560496128": {
+      "id": "804646805560496128",
+      "name": "NewsFeeder",
+      "username": "tweets_feeder"
+    },
+    "181903962": {
+      "id": "181903962",
+      "name": "DV \u26a1\ufe0f",
+      "username": "CrSyntax"
+    },
+    "2040080075412910080": {
+      "id": "2040080075412910080",
+      "name": "yunqiao",
+      "username": "NanchengL44981"
+    },
+    "1630238393098543106": {
+      "id": "1630238393098543106",
+      "name": "Tanisha Pritha",
+      "username": "tpritha03"
+    },
+    "185791890": {
+      "id": "185791890",
+      "name": "Ola Amigo",
+      "username": "olayinka_ai"
+    },
+    "821785774081376257": {
+      "id": "821785774081376257",
+      "name": "Master Roy",
+      "username": "the_master_roy"
+    },
+    "4587621": {
+      "id": "4587621",
+      "name": "coconutsfine",
+      "username": "coconutsfine"
+    },
+    "1124944990390636546": {
+      "id": "1124944990390636546",
+      "name": "Artemii Novoselov, PhD",
+      "username": "EarthML1"
+    },
+    "1518730154192818178": {
+      "id": "1518730154192818178",
+      "name": "Steve Darlow",
+      "username": "StevenDarlow"
+    },
+    "13348": {
+      "id": "13348",
+      "name": "Robert Scoble",
+      "username": "Scobleizer"
+    },
+    "198894643": {
+      "id": "198894643",
+      "name": "Florian Wolf",
+      "username": "florianzeev"
+    },
+    "46241076": {
+      "id": "46241076",
+      "name": "Area Under The Curve \ud83c\udf97\ufe0f",
+      "username": "AreaUnderCurve"
+    },
+    "1663390258099101696": {
+      "id": "1663390258099101696",
+      "name": "Shashank C",
+      "username": "SC_Redemption"
+    },
+    "14360846": {
+      "id": "14360846",
+      "name": "micmann.eth",
+      "username": "micmannsa"
+    },
+    "1200795175515123713": {
+      "id": "1200795175515123713",
+      "name": "\u0c30\u0c3e\u0c2e\u0c2f\u0c4d\u0c2f \u2022 /r\u00e4\u02d0maj\u02d0\u0250/",
+      "username": "generalusername"
+    },
+    "1268246599416737792": {
+      "id": "1268246599416737792",
+      "name": "luc comeau",
+      "username": "luc_comeau"
+    },
+    "1543121": {
+      "id": "1543121",
+      "name": "\u1d05\u1d00\u0274\u026a\u1d07\u029f \u1d0d\u026a\u1d07ss\u029f\u1d07\u0280 \ud83d\udee1\ufe0f",
+      "username": "DanielMiessler"
+    },
+    "26813360": {
+      "id": "26813360",
+      "name": "BK",
+      "username": "BarretK"
+    },
+    "751096395415838720": {
+      "id": "751096395415838720",
+      "name": "Goss Gowtham \uea00\ud835\udd4f \ud83d\udc09",
+      "username": "Goss_Gowtham"
+    },
+    "2022423053108748288": {
+      "id": "2022423053108748288",
+      "name": "0xpolkatodd",
+      "username": "0xpolkatodd"
+    },
+    "2039100213655130112": {
+      "id": "2039100213655130112",
+      "name": "Daniel Wan",
+      "username": "daniel09169"
+    },
+    "1828284438591217665": {
+      "id": "1828284438591217665",
+      "name": "Sup*",
+      "username": "aibenchmarking"
+    },
+    "1421175698224463881": {
+      "id": "1421175698224463881",
+      "name": "Soul | Tech | Sage",
+      "username": "SoulTechSage"
+    },
+    "2732143690": {
+      "id": "2732143690",
+      "name": "Mustapha Derzi",
+      "username": "MCT4U"
+    },
+    "1511025694352064523": {
+      "id": "1511025694352064523",
+      "name": "Sagi Polaczek \ud83e\udd9c",
+      "username": "PolaczekSagi"
+    },
+    "438319384": {
+      "id": "438319384",
+      "name": "Kindi",
+      "username": "KindiBALDE"
+    },
+    "336455442": {
+      "id": "336455442",
+      "name": "Michal Takac",
+      "username": "michaltakac"
+    },
+    "246953469": {
+      "id": "246953469",
+      "name": "Enthusiastically Confused",
+      "username": "Will_Ramsdell"
+    },
+    "871844545859813378": {
+      "id": "871844545859813378",
+      "name": "Jackson",
+      "username": "atx_barnes"
+    },
+    "796584325": {
+      "id": "796584325",
+      "name": "Alfredo Canziani",
+      "username": "alfcnz"
+    },
+    "1483265343858618368": {
+      "id": "1483265343858618368",
+      "name": "Shango",
+      "username": "shangobashi"
+    },
+    "1696478885003587584": {
+      "id": "1696478885003587584",
+      "name": "Klemz",
+      "username": "klemens_gc"
+    },
+    "117276030": {
+      "id": "117276030",
+      "name": "Andy",
+      "username": "hogbert69"
+    },
+    "980458721007595521": {
+      "id": "980458721007595521",
+      "name": "Matan Zutta",
+      "username": "matanzutta"
+    },
+    "53519727": {
+      "id": "53519727",
+      "name": "Gigi B",
+      "username": "GBallarani"
+    },
+    "43856683": {
+      "id": "43856683",
+      "name": "Krishna Tammireddy",
+      "username": "tammireddy"
+    },
+    "1259029596860809216": {
+      "id": "1259029596860809216",
+      "name": "Devashish Upadhyay",
+      "username": "devashishup"
+    },
+    "30141738": {
+      "id": "30141738",
+      "name": "(That/Guy)",
+      "username": "justsomeguy741"
+    },
+    "1554606186602942471": {
+      "id": "1554606186602942471",
+      "name": "Tobias",
+      "username": "thetobiaskrug"
+    },
+    "2018354497718714370": {
+      "id": "2018354497718714370",
+      "name": "Penfield",
+      "username": "PenfieldLabs"
+    },
+    "2213300090": {
+      "id": "2213300090",
+      "name": "Adolfo \ud83e\udd80\ud83d\udd3a | Open Crabs Father | truelens.tech\u00ae\ufe0f",
+      "username": "AdolfoUsier"
+    },
+    "846844552598044673": {
+      "id": "846844552598044673",
+      "name": "glyphbook",
+      "username": "Glyphbook"
+    },
+    "1392191713133973508": {
+      "id": "1392191713133973508",
+      "name": "AliceInBlockchains",
+      "username": "in_blockchains"
+    },
+    "1915254524140544004": {
+      "id": "1915254524140544004",
+      "name": "pagepop.ai",
+      "username": "pagepopai"
+    },
+    "2023406122762182656": {
+      "id": "2023406122762182656",
+      "name": "Yazan Maarouf",
+      "username": "ym22131aa"
+    },
+    "2609575310": {
+      "id": "2609575310",
+      "name": "dt6",
+      "username": "doruktarhan6"
+    },
+    "1221555410626326534": {
+      "id": "1221555410626326534",
+      "name": "hfloyd",
+      "username": "H_Floyd_"
+    },
+    "34414801": {
+      "id": "34414801",
+      "name": "Eric Rovner",
+      "username": "ericrovner"
+    },
+    "846912188": {
+      "id": "846912188",
+      "name": "haidong",
+      "username": "jianghaidong"
+    },
+    "367086476": {
+      "id": "367086476",
+      "name": "Timmy Ghiurau",
+      "username": "itzik009"
+    },
+    "1016286451": {
+      "id": "1016286451",
+      "name": "Victor Moura",
+      "username": "vmourac"
+    },
+    "2000882863861063683": {
+      "id": "2000882863861063683",
+      "name": "Apex",
+      "username": "IntoApex"
+    },
+    "1586704236674535427": {
+      "id": "1586704236674535427",
+      "name": "Luca",
+      "username": "lucathatsit"
+    },
+    "14436818": {
+      "id": "14436818",
+      "name": "Leonardo Dias",
+      "username": "leonardodias"
+    },
+    "2027549929669857280": {
+      "id": "2027549929669857280",
+      "name": "Datis",
+      "username": "DatisAgent"
+    },
+    "1250073801183854593": {
+      "id": "1250073801183854593",
+      "name": "Abarajithan",
+      "username": "itsabara"
+    },
+    "1402317240": {
+      "id": "1402317240",
+      "name": "John Januszczak",
+      "username": "johnjanuszczak"
+    },
+    "14723025": {
+      "id": "14723025",
+      "name": "swiderek",
+      "username": "swiderek"
+    },
+    "1972339911857758208": {
+      "id": "1972339911857758208",
+      "name": "Gordian Knot Dev (e/acc)",
+      "username": "GordianKnotDev"
+    },
+    "1027191684260614144": {
+      "id": "1027191684260614144",
+      "name": "Philipp Humm | Beyond The Human",
+      "username": "philipphummart"
+    },
+    "446517039": {
+      "id": "446517039",
+      "name": "MIDI Designer",
+      "username": "MIDIDesigner"
+    },
+    "1246421": {
+      "id": "1246421",
+      "name": "Dan Brickley",
+      "username": "danbri"
+    },
+    "1341331548566654977": {
+      "id": "1341331548566654977",
+      "name": "0xSero",
+      "username": "0xSero"
+    },
+    "1496422335863263232": {
+      "id": "1496422335863263232",
+      "name": "bstn",
+      "username": "letrplB"
+    },
+    "208364506": {
+      "id": "208364506",
+      "name": "Boyan",
+      "username": "edwinboyan"
+    },
+    "1878668884900720640": {
+      "id": "1878668884900720640",
+      "name": "Akash Dubey",
+      "username": "acachemoney"
+    },
+    "2531023135": {
+      "id": "2531023135",
+      "name": "Zaniar",
+      "username": "_ZaniarAhmadi"
+    },
+    "1989152310241751040": {
+      "id": "1989152310241751040",
+      "name": "Sam B",
+      "username": "SamB126809"
+    },
+    "2737518039": {
+      "id": "2737518039",
+      "name": "Martin",
+      "username": "martinflo_"
+    },
+    "38048892": {
+      "id": "38048892",
+      "name": "Gorka Cesium",
+      "username": "GorkaCesium"
+    },
+    "1992172072811016192": {
+      "id": "1992172072811016192",
+      "name": "Yash",
+      "username": "yash_yk45"
+    },
+    "8312422": {
+      "id": "8312422",
+      "name": "gootecks",
+      "username": "gootecks"
+    },
+    "3703801933": {
+      "id": "3703801933",
+      "name": "Aayush Desai",
+      "username": "Aayush0994"
+    },
+    "1868301264846786560": {
+      "id": "1868301264846786560",
+      "name": "EmDee",
+      "username": "finnifinnn"
+    },
+    "61531682": {
+      "id": "61531682",
+      "name": "Rahul Kumar",
+      "username": "hellorahulk"
+    },
+    "2020646803826483200": {
+      "id": "2020646803826483200",
+      "name": "Leo Tavares",
+      "username": "LeoTava8"
+    },
+    "1222988642592993289": {
+      "id": "1222988642592993289",
+      "name": "J Hofman",
+      "username": "Joell_Hofman"
+    },
+    "1723306388": {
+      "id": "1723306388",
+      "name": "PhysisRizz",
+      "username": "Crypt0_keep3r"
+    },
+    "3801885256": {
+      "id": "3801885256",
+      "name": "Michael Cryne",
+      "username": "michael_cryne"
+    },
+    "14532595": {
+      "id": "14532595",
+      "name": "Aaron",
+      "username": "__aaron"
+    },
+    "1316177695": {
+      "id": "1316177695",
+      "name": "kron",
+      "username": "0xkron"
+    },
+    "2014298339513384960": {
+      "id": "2014298339513384960",
+      "name": "Ergosphere Solutions Pvt Ltd",
+      "username": "ErgosphereSols"
+    },
+    "125040730": {
+      "id": "125040730",
+      "name": "hkr",
+      "username": "__hkr__"
+    },
+    "984022773898018817": {
+      "id": "984022773898018817",
+      "name": "Carmelo",
+      "username": "memel20miles"
+    },
+    "2833890885": {
+      "id": "2833890885",
+      "name": "Andrew Fribush",
+      "username": "andrewfribush"
+    },
+    "1715136632230219776": {
+      "id": "1715136632230219776",
+      "name": ".",
+      "username": "offalfalafel"
+    },
+    "836904555728289793": {
+      "id": "836904555728289793",
+      "name": "Jean de Dieu Nyandwi",
+      "username": "Jeande_d"
+    },
+    "1675551657277440003": {
+      "id": "1675551657277440003",
+      "name": "Phillip Forrence",
+      "username": "PhilForrence"
+    },
+    "2027690568281952262": {
+      "id": "2027690568281952262",
+      "name": "Vinicius RTG",
+      "username": "Vinicius_RTG"
+    },
+    "1981250258660196352": {
+      "id": "1981250258660196352",
+      "name": "Troy",
+      "username": "musicrowtroy"
+    },
+    "2392862702": {
+      "id": "2392862702",
+      "name": "stpbdn",
+      "username": "Stephane_Baudin"
+    },
+    "50702909": {
+      "id": "50702909",
+      "name": "Lee Parayno",
+      "username": "leeparayno"
+    },
+    "72183014": {
+      "id": "72183014",
+      "name": "Edu \u2192 \ud83d\ude38 useyuri.com",
+      "username": "itseduvieira"
+    },
+    "1301965212128600064": {
+      "id": "1301965212128600064",
+      "name": "Tyler",
+      "username": "taiote"
+    },
+    "1786152295853342720": {
+      "id": "1786152295853342720",
+      "name": "taylor",
+      "username": "bluestemso"
+    },
+    "5778712": {
+      "id": "5778712",
+      "name": "kepano",
+      "username": "kepano"
+    },
+    "759915733": {
+      "id": "759915733",
+      "name": "Akhil V",
+      "username": "Akhilvabbili"
+    },
+    "3317199453": {
+      "id": "3317199453",
+      "name": "Vijay C. Jacob",
+      "username": "vc_jacob"
+    },
+    "285221510": {
+      "id": "285221510",
+      "name": "PsudoMike \ud83c\udde8\ud83c\udde6",
+      "username": "PsudoMike"
+    },
+    "3292057565": {
+      "id": "3292057565",
+      "name": "Ira Ko",
+      "username": "irajfko"
+    },
+    "139581095": {
+      "id": "139581095",
+      "name": "Tony Aub\u00e9",
+      "username": "aubetony"
+    },
+    "1171653796763721729": {
+      "id": "1171653796763721729",
+      "name": "znaszmnie",
+      "username": "znaszmnie6"
+    },
+    "19780800": {
+      "id": "19780800",
+      "name": "noisyclock",
+      "username": "qingant"
+    },
+    "224933471": {
+      "id": "224933471",
+      "name": "Daxson",
+      "username": "robottwin"
+    },
+    "87194694": {
+      "id": "87194694",
+      "name": "Doug",
+      "username": "docbtc"
+    },
+    "1629934761497047041": {
+      "id": "1629934761497047041",
+      "name": "Numman Ali",
+      "username": "nummanali"
+    },
+    "1571438419368374273": {
+      "id": "1571438419368374273",
+      "name": "Bongquisitive",
+      "username": "bongquisitive"
+    },
+    "900866751927377920": {
+      "id": "900866751927377920",
+      "name": "TheRealist",
+      "username": "Refer2NetRFC"
+    },
+    "2999623482": {
+      "id": "2999623482",
+      "name": "Burhanuddin Rashid \ud83c\uddee\ud83c\uddf3 \ud83d\udc99",
+      "username": "burhanrashid52"
+    },
+    "1972055565296680960": {
+      "id": "1972055565296680960",
+      "name": "ProfessorCraigA",
+      "username": "ProfCraigA"
+    },
+    "1953498343566458881": {
+      "id": "1953498343566458881",
+      "name": "Sam Smith",
+      "username": "SamSmith1426377"
+    },
+    "1989762102320644096": {
+      "id": "1989762102320644096",
+      "name": "Markus O'Reallyus",
+      "username": "BolaNaBC"
+    },
+    "1684079959613267968": {
+      "id": "1684079959613267968",
+      "name": "Samrith Shankar",
+      "username": "samrithshankar"
+    },
+    "871580461": {
+      "id": "871580461",
+      "name": "SS_OT",
+      "username": "ot_gbzp"
+    },
+    "1902829410018824192": {
+      "id": "1902829410018824192",
+      "name": "Abhay Chopra",
+      "username": "Abhaydesigner"
+    },
+    "392114097": {
+      "id": "392114097",
+      "name": "Mark Smith",
+      "username": "cariocamark"
+    },
+    "1487614618021228545": {
+      "id": "1487614618021228545",
+      "name": "uwu",
+      "username": "mefengl"
+    },
+    "1053980313171435520": {
+      "id": "1053980313171435520",
+      "name": "Daniel.md\ud83d\udec0",
+      "username": "dbdanieljnr"
+    },
+    "1917850947306557440": {
+      "id": "1917850947306557440",
+      "name": "JoeyMonki",
+      "username": "JoeyMonki"
+    },
+    "3747331": {
+      "id": "3747331",
+      "name": "Phi",
+      "username": "sublimotion"
+    },
+    "29838494": {
+      "id": "29838494",
+      "name": "james, the giant peach",
+      "username": "JimmyRis"
+    },
+    "1236132096315289600": {
+      "id": "1236132096315289600",
+      "name": "npc",
+      "username": "npclfg"
+    },
+    "1675077333269487619": {
+      "id": "1675077333269487619",
+      "name": "narmour",
+      "username": "narmourism"
+    },
+    "18059990": {
+      "id": "18059990",
+      "name": "Kevin Lance Murray",
+      "username": "K_L_M"
+    },
+    "1883683873533669376": {
+      "id": "1883683873533669376",
+      "name": "Tennis Grok",
+      "username": "tennisgrok"
+    },
+    "319297192": {
+      "id": "319297192",
+      "name": "Alvaro Llamojha \ud83d\udc81\ud83c\udffd\u200d\u2642\ufe0f",
+      "username": "amllamojha"
+    },
+    "1333624007912873984": {
+      "id": "1333624007912873984",
+      "name": "Aryan Parishwad",
+      "username": "AryanParishwad"
+    },
+    "2025130750660804608": {
+      "id": "2025130750660804608",
+      "name": "STARGA Inc.",
+      "username": "stargainc"
+    },
+    "1852710924181811200": {
+      "id": "1852710924181811200",
+      "name": "Sam Ward",
+      "username": "Samward"
+    },
+    "1955197199144587264": {
+      "id": "1955197199144587264",
+      "name": "Atlasis",
+      "username": "AtlasisZephyr"
+    },
+    "127539338": {
+      "id": "127539338",
+      "name": "web3nomad.eth | atypica.ai",
+      "username": "web3nomad"
+    },
+    "159272948": {
+      "id": "159272948",
+      "name": "Fede Cardoso",
+      "username": "cardosofede"
+    },
+    "16154539": {
+      "id": "16154539",
+      "name": "Alex Chamessian",
+      "username": "achamess"
+    },
+    "86774004": {
+      "id": "86774004",
+      "name": "Martin",
+      "username": "moonmansjourney"
+    },
+    "6059512": {
+      "id": "6059512",
+      "name": "Zbigniew Lukasiak",
+      "username": "zby"
+    },
+    "3011091": {
+      "id": "3011091",
+      "name": "Adrian Chan",
+      "username": "gravity7"
+    },
+    "1885843691606257664": {
+      "id": "1885843691606257664",
+      "name": "VincentTao",
+      "username": "TaoVicentShow"
+    },
+    "1675673934": {
+      "id": "1675673934",
+      "name": "Shubhdeep Singh",
+      "username": "ShubhdeepSing12"
+    },
+    "17217056": {
+      "id": "17217056",
+      "name": "romeoraven",
+      "username": "romeoraven"
+    },
+    "1763433348511510528": {
+      "id": "1763433348511510528",
+      "name": "Jack AM Austin",
+      "username": "JackAMAustin"
+    },
+    "1925065041016950784": {
+      "id": "1925065041016950784",
+      "name": "Sebastian Hanke",
+      "username": "ObsiloAI"
+    },
+    "865405352": {
+      "id": "865405352",
+      "name": "SlimTradey",
+      "username": "SlimTradeyBaby"
+    },
+    "20670772": {
+      "id": "20670772",
+      "name": "\u0441\u0432\u043e\u0435\u0432\u043e\u043b\u0438\u0435 \u0438 \u0430\u0431\u0441\u0443\u0440\u0434",
+      "username": "Shoonoise"
+    },
+    "1317420593835364352": {
+      "id": "1317420593835364352",
+      "name": "No Body",
+      "username": "SOntheotherside"
+    },
+    "961265690463363073": {
+      "id": "961265690463363073",
+      "name": "woisau",
+      "username": "woisau1"
+    },
+    "14209307": {
+      "id": "14209307",
+      "name": "Scotch McClure",
+      "username": "scotchmcclure"
+    },
+    "1834596907898863617": {
+      "id": "1834596907898863617",
+      "name": "Tomas",
+      "username": "tg_ai_llm_fsd"
+    },
+    "1779110627421675520": {
+      "id": "1779110627421675520",
+      "name": "Ruben",
+      "username": "rdominguezibar"
+    },
+    "249552023": {
+      "id": "249552023",
+      "name": "Anton Abyzov",
+      "username": "aabyzov"
+    },
+    "1214898012675301376": {
+      "id": "1214898012675301376",
+      "name": "Sam Song",
+      "username": "SamSongAI"
+    },
+    "1281363043734167554": {
+      "id": "1281363043734167554",
+      "name": "Pawns",
+      "username": "HungryPawnsX"
+    },
+    "1662123349148073984": {
+      "id": "1662123349148073984",
+      "name": "Guri Singh",
+      "username": "heygurisingh"
+    },
+    "2036015907324174336": {
+      "id": "2036015907324174336",
+      "name": "BuildEdge",
+      "username": "BuildEdgeHQ"
+    },
+    "1424052065349758982": {
+      "id": "1424052065349758982",
+      "name": "Devin Stein",
+      "username": "devstein64"
+    },
+    "45162862": {
+      "id": "45162862",
+      "name": "maxim legg",
+      "username": "maximlegg"
+    },
+    "1923441425439744000": {
+      "id": "1923441425439744000",
+      "name": "JunEr",
+      "username": "LqzhsyCfNq89679"
+    },
+    "1474816149338542081": {
+      "id": "1474816149338542081",
+      "name": "Aaryan Kakad",
+      "username": "aaryan_kakad"
+    },
+    "2014377449954406400": {
+      "id": "2014377449954406400",
+      "name": "gigi",
+      "username": "gigisayhay"
+    },
+    "14170668": {
+      "id": "14170668",
+      "name": "Huy Nguyen",
+      "username": "iamhuy"
+    },
+    "1504255660321554443": {
+      "id": "1504255660321554443",
+      "name": "Richard obiri",
+      "username": "aframsonv1"
+    },
+    "1367386307652161536": {
+      "id": "1367386307652161536",
+      "name": "Arpit Gaur",
+      "username": "ArpitGa29210424"
+    },
+    "129101748": {
+      "id": "129101748",
+      "name": "iury souza",
+      "username": "IurySza"
+    },
+    "14851672": {
+      "id": "14851672",
+      "name": "Pyre",
+      "username": "Mad_dev"
+    },
+    "1405250834775093251": {
+      "id": "1405250834775093251",
+      "name": "s\u25celast\u25cerm",
+      "username": "__solastorm__"
+    },
+    "161147114": {
+      "id": "161147114",
+      "name": "Andrea",
+      "username": "acolombiadev"
+    },
+    "2800563709": {
+      "id": "2800563709",
+      "name": "specimba",
+      "username": "specimba"
+    },
+    "1222365222934962177": {
+      "id": "1222365222934962177",
+      "name": "zTgx",
+      "username": "pendingcode"
+    },
+    "276372500": {
+      "id": "276372500",
+      "name": "Bill The Investor",
+      "username": "billtheinvestor"
+    },
+    "1005658853109846016": {
+      "id": "1005658853109846016",
+      "name": "Iain Wong",
+      "username": "iainwo"
+    },
+    "1962127091702665218": {
+      "id": "1962127091702665218",
+      "name": "Deepak K",
+      "username": "deepakThamizhK"
+    },
+    "1423666501404528643": {
+      "id": "1423666501404528643",
+      "name": "Manu Gracio",
+      "username": "dmgracio_90"
+    },
+    "1974674563343773697": {
+      "id": "1974674563343773697",
+      "name": "york1to",
+      "username": "york1to"
+    },
+    "1483026241729007620": {
+      "id": "1483026241729007620",
+      "name": "Hila Shmuel",
+      "username": "HilaShmuel"
+    },
+    "2020575803226918912": {
+      "id": "2020575803226918912",
+      "name": "GrumpyMolty",
+      "username": "grumpyMolty"
+    },
+    "1222002199640838145": {
+      "id": "1222002199640838145",
+      "name": "Stidi",
+      "username": "stidi_dev"
+    },
+    "730077456": {
+      "id": "730077456",
+      "name": "Bastiaan Quast",
+      "username": "baquast"
+    },
+    "1964300009525936128": {
+      "id": "1964300009525936128",
+      "name": "Keith Lawson",
+      "username": "j_klawson"
+    },
+    "1094145275504009217": {
+      "id": "1094145275504009217",
+      "name": "Stanislav Kozlovski",
+      "username": "kozlovski"
+    },
+    "1937254069040717824": {
+      "id": "1937254069040717824",
+      "name": "josh",
+      "username": "qtzx06"
+    },
+    "2002544688726003712": {
+      "id": "2002544688726003712",
+      "name": "WildPinesAI",
+      "username": "wildpinesai"
+    },
+    "1082994839740923904": {
+      "id": "1082994839740923904",
+      "name": "Louis-Fran\u00e7ois Bouchard \ud83c\udfa5\ud83e\udd16",
+      "username": "Whats_AI"
+    },
+    "15399324": {
+      "id": "15399324",
+      "name": "Chris Whitehead",
+      "username": "cwwhitehead"
+    },
+    "42380349": {
+      "id": "42380349",
+      "name": "Chris Baker",
+      "username": "SplinteredEsq"
+    },
+    "993319388": {
+      "id": "993319388",
+      "name": "Lupascu Cristian, PhD",
+      "username": "alphacristi"
+    },
+    "1884460171": {
+      "id": "1884460171",
+      "name": "\u2600\ufe0f",
+      "username": "ferdousbhai"
+    },
+    "744112938": {
+      "id": "744112938",
+      "name": "Anes Hujevi\u0107",
+      "username": "aneshujevic"
+    },
+    "362471511": {
+      "id": "362471511",
+      "name": "Christoph Auer-Welsbach",
+      "username": "Welsbach_"
+    },
+    "1119292932509532162": {
+      "id": "1119292932509532162",
+      "name": "Tino",
+      "username": "tino_maj"
+    },
+    "2904827623": {
+      "id": "2904827623",
+      "name": "Derek Andriesian",
+      "username": "derekgravity"
+    },
+    "1573882272691810306": {
+      "id": "1573882272691810306",
+      "name": "Yogesh Sharma",
+      "username": "yogssh_sh"
+    },
+    "895814938995957760": {
+      "id": "895814938995957760",
+      "name": "Thread Reader App",
+      "username": "threadreaderapp"
+    },
+    "4794932611": {
+      "id": "4794932611",
+      "name": "George Dorn",
+      "username": "gdoLDD"
+    },
+    "21960436": {
+      "id": "21960436",
+      "name": "Mike Maher",
+      "username": "mikeMaher"
+    },
+    "42284692": {
+      "id": "42284692",
+      "name": "fargou",
+      "username": "fargou"
+    },
+    "1040135902025211904": {
+      "id": "1040135902025211904",
+      "name": "Guy In A Sphere",
+      "username": "GuySphere"
+    },
+    "19681476": {
+      "id": "19681476",
+      "name": "Roby\u2122",
+      "username": "robysmiller"
+    },
+    "201210380": {
+      "id": "201210380",
+      "name": "Marijan Zivic",
+      "username": "marijanzivic"
+    },
+    "1998076206185611266": {
+      "id": "1998076206185611266",
+      "name": "Cosmo",
+      "username": "_cosmo_2"
+    },
+    "3749236760": {
+      "id": "3749236760",
+      "name": "harshit kumar",
+      "username": "KumarHk77"
+    },
+    "1333861309297926151": {
+      "id": "1333861309297926151",
+      "name": "Crypto J",
+      "username": "jelle_g54"
+    },
+    "1964729912": {
+      "id": "1964729912",
+      "name": "\u017diga Drev",
+      "username": "DrevZiga"
+    },
+    "2032480531280236544": {
+      "id": "2032480531280236544",
+      "name": "Rex AI",
+      "username": "RexBuildsAI"
+    },
+    "3448284313": {
+      "id": "3448284313",
+      "name": "elvis",
+      "username": "omarsar0"
+    },
+    "2022732694379986944": {
+      "id": "2022732694379986944",
+      "name": "PMtheBuilder",
+      "username": "PMThebuilder"
+    },
+    "12816832": {
+      "id": "12816832",
+      "name": "dbredesen",
+      "username": "dbredesen"
+    },
+    "14788250": {
+      "id": "14788250",
+      "name": "sam",
+      "username": "SamuelBeek"
+    },
+    "28352103": {
+      "id": "28352103",
+      "name": "Joris Rood",
+      "username": "JorisRood"
+    },
+    "1722180325281857536": {
+      "id": "1722180325281857536",
+      "name": "mutairu onaido",
+      "username": "mutairu51582"
+    },
+    "2015698045216636929": {
+      "id": "2015698045216636929",
+      "name": "Artem Rusin",
+      "username": "Artem77148"
+    },
+    "2010821430800498690": {
+      "id": "2010821430800498690",
+      "name": "Fawad H Syed",
+      "username": "fawadhsdev"
+    },
+    "17373238": {
+      "id": "17373238",
+      "name": "jjnissen",
+      "username": "jjnissen"
+    },
+    "1821975153602891777": {
+      "id": "1821975153602891777",
+      "name": "Mihaithebest",
+      "username": "realmihai_matei"
+    },
+    "2991756747": {
+      "id": "2991756747",
+      "name": "Flo",
+      "username": "Flo_BW"
+    },
+    "1161378616338452480": {
+      "id": "1161378616338452480",
+      "name": "Jack",
+      "username": "jackintech"
+    },
+    "960092469143642112": {
+      "id": "960092469143642112",
+      "name": "vitamind",
+      "username": "btcDiamondHands"
+    },
+    "1348627903521632257": {
+      "id": "1348627903521632257",
+      "name": "Abdulmuiz Adeyemo",
+      "username": "AbdMuizAdeyemo"
+    },
+    "12196292": {
+      "id": "12196292",
+      "name": "Martin Brook https://bsky.app/profile/vgrade.de",
+      "username": "vgrade"
+    },
+    "74718365": {
+      "id": "74718365",
+      "name": "1PageDaily_kr",
+      "username": "ikhpark"
+    },
+    "1383207518369771521": {
+      "id": "1383207518369771521",
+      "name": "Jamie Robinson",
+      "username": "JamieRobinsonNZ"
+    },
+    "931299750137053185": {
+      "id": "931299750137053185",
+      "name": "Luis Frentzen",
+      "username": "gpupoor_rabbit"
+    },
+    "16618299": {
+      "id": "16618299",
+      "name": "Bill Wheelock",
+      "username": "MrBildo"
+    },
+    "2432659867": {
+      "id": "2432659867",
+      "name": "Dominik Posmyk",
+      "username": "dominikposmyk"
+    },
+    "81316654": {
+      "id": "81316654",
+      "name": "Dirk Kok",
+      "username": "dirkkok"
+    },
+    "1868026046282416129": {
+      "id": "1868026046282416129",
+      "name": "Chaitanya Dhawan",
+      "username": "chaitanyad0208"
+    },
+    "747751905594474496": {
+      "id": "747751905594474496",
+      "name": "Deeps\ud83c\udf1f",
+      "username": "deeps77799"
+    },
+    "1295900997827670016": {
+      "id": "1295900997827670016",
+      "name": "Daniel Roesler",
+      "username": "DanielRoesler4"
+    },
+    "12683122": {
+      "id": "12683122",
+      "name": "unbug",
+      "username": "unbug"
+    },
+    "1646894600437796866": {
+      "id": "1646894600437796866",
+      "name": "Yury Yakubchyk",
+      "username": "yury_yakubchyk"
+    },
+    "10410172": {
+      "id": "10410172",
+      "name": "Dan Zavy",
+      "username": "dan_zavy"
+    },
+    "1616189711063650304": {
+      "id": "1616189711063650304",
+      "name": "Cretella Giuseppe",
+      "username": "g_cretella"
+    },
+    "56145506": {
+      "id": "56145506",
+      "name": "claudius gerstner",
+      "username": "claudius"
+    },
+    "2609283960": {
+      "id": "2609283960",
+      "name": "Pouxini",
+      "username": "patxi_hastoy"
+    },
+    "57391336": {
+      "id": "57391336",
+      "name": "Bhanu",
+      "username": "bhanu_in_tech"
+    },
+    "436898397": {
+      "id": "436898397",
+      "name": "Jesse Merrigan",
+      "username": "JesseMerrigan"
+    },
+    "1997009556812320768": {
+      "id": "1997009556812320768",
+      "name": "LLMTraderio",
+      "username": "llmtraderio"
+    },
+    "1590252890228137985": {
+      "id": "1590252890228137985",
+      "name": "\ud83c\udf4b Fran Cort\u00e9s Delgado",
+      "username": "francordel"
+    },
+    "1637031555964235776": {
+      "id": "1637031555964235776",
+      "name": "I'm Lonky",
+      "username": "ImLonky"
+    },
+    "1232670756766486528": {
+      "id": "1232670756766486528",
+      "name": "Axomiya_Gunner\ud83d\udd34\u26aa",
+      "username": "GoonerSwarny"
+    },
+    "1349763929157689344": {
+      "id": "1349763929157689344",
+      "name": "Dhruv Jain",
+      "username": "DhruvJain08"
+    },
+    "171435321": {
+      "id": "171435321",
+      "name": "afonie",
+      "username": "aafonie"
+    },
+    "2308284858": {
+      "id": "2308284858",
+      "name": "Yannick",
+      "username": "Yannick_Pr"
+    },
+    "1854071951951601677": {
+      "id": "1854071951951601677",
+      "name": "Jimmy Fellum",
+      "username": "JimmyFellum"
+    },
+    "16891094": {
+      "id": "16891094",
+      "name": "Hesam \ud83d\ude80",
+      "username": "HesamAslan"
+    },
+    "1939609701664030720": {
+      "id": "1939609701664030720",
+      "name": "Yehor",
+      "username": "korotenky"
+    },
+    "125307765": {
+      "id": "125307765",
+      "name": "Tom Wilson",
+      "username": "twilson63"
+    },
+    "903665693081645057": {
+      "id": "903665693081645057",
+      "name": "Nyk \ud83c\udf31",
+      "username": "nyk_builderz"
+    },
+    "1499792837046673413": {
+      "id": "1499792837046673413",
+      "name": "James",
+      "username": "BTC_JMS"
+    },
+    "935338248": {
+      "id": "935338248",
+      "name": "LI\u0e3fERTY PHOENIX",
+      "username": "MarcusSpallek"
+    },
+    "1620135789173547013": {
+      "id": "1620135789173547013",
+      "name": "Liam Walsh",
+      "username": "LiamWalshTech"
+    },
+    "218128271": {
+      "id": "218128271",
+      "name": "Mattei",
+      "username": "Mattei420"
+    },
+    "1220326458364776448": {
+      "id": "1220326458364776448",
+      "name": "Mimi",
+      "username": "candlighter"
+    },
+    "1794831430305873920": {
+      "id": "1794831430305873920",
+      "name": "NewKnowCoin",
+      "username": "newknowcoin"
+    },
+    "1266643939378868225": {
+      "id": "1266643939378868225",
+      "name": "Jimmy Ashcot \u26a1\ufe0f",
+      "username": "ashcotXBT"
+    },
+    "76018380": {
+      "id": "76018380",
+      "name": "Harshil Mathur",
+      "username": "harshilmathur"
+    },
+    "297177934": {
+      "id": "297177934",
+      "name": "Nikunj Shukla",
+      "username": "NikunjShukla"
+    },
+    "24510559": {
+      "id": "24510559",
+      "name": "Emmanuel LD",
+      "username": "its_hebilicious"
+    },
+    "2028761226587811840": {
+      "id": "2028761226587811840",
+      "name": "V vivi",
+      "username": "vivibotttt"
+    },
+    "3725210712": {
+      "id": "3725210712",
+      "name": "andy nguyen",
+      "username": "kevinnguyendn"
+    },
+    "958751085816090625": {
+      "id": "958751085816090625",
+      "name": "Abhishek Wasnikar",
+      "username": "awasnikar01"
+    },
+    "1450615770195521545": {
+      "id": "1450615770195521545",
+      "name": "Charlie Deist",
+      "username": "chdeist"
+    },
+    "1557396140827770882": {
+      "id": "1557396140827770882",
+      "name": "Sungho Park Gigio",
+      "username": "sungho_park_"
+    },
+    "11871272": {
+      "id": "11871272",
+      "name": "John Brophy",
+      "username": "JohnBr0"
+    },
+    "2029437582208356353": {
+      "id": "2029437582208356353",
+      "name": "BeePop",
+      "username": "BeePopLabs"
+    },
+    "1613189555133325312": {
+      "id": "1613189555133325312",
+      "name": "GPT FRANCE",
+      "username": "france_gpt"
+    },
+    "1845859558607990784": {
+      "id": "1845859558607990784",
+      "name": "Alexander Conti",
+      "username": "iLeco444"
+    },
+    "1250354940133793793": {
+      "id": "1250354940133793793",
+      "name": "marou",
+      "username": "MarouMares"
+    },
+    "1032399146056003585": {
+      "id": "1032399146056003585",
+      "name": "Nopales",
+      "username": "nopales17"
+    },
+    "740389638": {
+      "id": "740389638",
+      "name": "SarcasticJungle \ud83c\uddee\ud83c\uddf3",
+      "username": "SarcasticF0rest"
+    },
+    "555606575": {
+      "id": "555606575",
+      "name": "Nick Locascio",
+      "username": "Nick_Locascio"
+    },
+    "1706644354159304704": {
+      "id": "1706644354159304704",
+      "name": "Patrick Danqman",
+      "username": "PatrickDanqman"
+    },
+    "1520573651212324865": {
+      "id": "1520573651212324865",
+      "name": "Tom Alder",
+      "username": "tomaldertweets"
+    },
+    "2034873888153509888": {
+      "id": "2034873888153509888",
+      "name": "AI Trend Desk",
+      "username": "AiTrendDesk"
+    },
+    "1755718145468203008": {
+      "id": "1755718145468203008",
+      "name": "Ilia Stepin",
+      "username": "martbln_dev"
+    },
+    "1007323441752657920": {
+      "id": "1007323441752657920",
+      "name": "The A - Z of",
+      "username": "TheAZofblockch1"
+    },
+    "1034879478634356736": {
+      "id": "1034879478634356736",
+      "name": "Christine Yip",
+      "username": "christinetyip"
+    },
+    "134176341": {
+      "id": "134176341",
+      "name": "Jose G Cintron",
+      "username": "gabinchi100"
+    },
+    "431363336": {
+      "id": "431363336",
+      "name": "Vamsi Vinta",
+      "username": "c0ncepT314"
+    },
+    "1731841": {
+      "id": "1731841",
+      "name": "Lode Nachtergaele",
+      "username": "cast42"
+    },
+    "862415152364257280": {
+      "id": "862415152364257280",
+      "name": "Orioleando",
+      "username": "orioleando"
+    },
+    "1683639929673220097": {
+      "id": "1683639929673220097",
+      "name": "Elvis",
+      "username": "elvissun"
+    },
+    "1096628785061998592": {
+      "id": "1096628785061998592",
+      "name": "Shannon Russell",
+      "username": "ShannonRussell5"
+    },
+    "894786870520930304": {
+      "id": "894786870520930304",
+      "name": "Algorithmic",
+      "username": "algortroy"
+    },
+    "1601214782710988803": {
+      "id": "1601214782710988803",
+      "name": "BrianEMcGrath",
+      "username": "BrianEMcGrath"
+    },
+    "171391646": {
+      "id": "171391646",
+      "name": "Manu Arya",
+      "username": "mr_ishu"
+    },
+    "1625044907952943104": {
+      "id": "1625044907952943104",
+      "name": "EarlyAccessEpidemics",
+      "username": "promptcomplet"
+    },
+    "1917043518121684992": {
+      "id": "1917043518121684992",
+      "name": "Jason Bourne",
+      "username": "JasonBourn5637"
+    },
+    "247006917": {
+      "id": "247006917",
+      "name": "Zak Kysar",
+      "username": "ZacharyKysar"
+    },
+    "777265281647386628": {
+      "id": "777265281647386628",
+      "name": "Dar Hakani",
+      "username": "drumsandruns"
+    },
+    "768653838": {
+      "id": "768653838",
+      "name": "JeanChri",
+      "username": "jeanchri_"
+    },
+    "2027289531763109888": {
+      "id": "2027289531763109888",
+      "name": "Kenny Lamoot",
+      "username": "kennylamoot"
+    },
+    "806789613075369984": {
+      "id": "806789613075369984",
+      "name": "Nicol\u00f2 Boschi",
+      "username": "nicoloboschi"
+    },
+    "216121468": {
+      "id": "216121468",
+      "name": "calman",
+      "username": "calmanxx"
+    },
+    "1381231177915363332": {
+      "id": "1381231177915363332",
+      "name": "Nebula",
+      "username": "gllxi99"
+    },
+    "389959371": {
+      "id": "389959371",
+      "name": "\u5c0f\u5b66\u751f\u5cb3\u4e91\u9e4f",
+      "username": "donghongfei"
+    },
+    "1917378048": {
+      "id": "1917378048",
+      "name": "Ajinkya",
+      "username": "ajthakre"
+    },
+    "1949596293149478912": {
+      "id": "1949596293149478912",
+      "name": "Burhan",
+      "username": "agenzlabs"
+    },
+    "809248805321318400": {
+      "id": "809248805321318400",
+      "name": "\ud83c\udf0d\ud83c\uddfa\ud83c\uddf8",
+      "username": "kkothari86"
+    },
+    "1812945180221448194": {
+      "id": "1812945180221448194",
+      "name": "choppaaa",
+      "username": "bigchoppaaah"
+    },
+    "14724354": {
+      "id": "14724354",
+      "name": "\u0394\u03b7\u03bc\u03ae\u03c4\u03c1\u03b7\u03c2",
+      "username": "nephel_"
+    },
+    "23305733": {
+      "id": "23305733",
+      "name": "Julio A. Torres",
+      "username": "torresjulioa"
+    },
+    "253477146": {
+      "id": "253477146",
+      "name": "Jiri Manas",
+      "username": "maziak2520"
+    },
+    "43281526": {
+      "id": "43281526",
+      "name": "John Montgomery",
+      "username": "YourDesigncoza"
+    },
+    "2033499131163840512": {
+      "id": "2033499131163840512",
+      "name": "Nikita Ovsiannikov",
+      "username": "NikitaOvsIT"
+    },
+    "906936617499336704": {
+      "id": "906936617499336704",
+      "name": "Villi Vadelma",
+      "username": "Villi_vadelma"
+    },
+    "1725824221777936384": {
+      "id": "1725824221777936384",
+      "name": "l-tzhar-bijaz",
+      "username": "lllspllc"
+    },
+    "1470883429109669896": {
+      "id": "1470883429109669896",
+      "name": "Stevie Nips",
+      "username": "stevienipz"
+    },
+    "1446809978770116619": {
+      "id": "1446809978770116619",
+      "name": "aralin\ud83d\udfe0eth",
+      "username": "aralin_eth"
+    },
+    "134227482": {
+      "id": "134227482",
+      "name": "Ping-Lin Chang",
+      "username": "pinglin02"
+    },
+    "497805922": {
+      "id": "497805922",
+      "name": "Anant",
+      "username": "Anantprakash21"
+    },
+    "964103755": {
+      "id": "964103755",
+      "name": "Darius",
+      "username": "DariusLu1"
+    },
+    "2545598336": {
+      "id": "2545598336",
+      "name": "Lance Li",
+      "username": "Heuristack"
+    },
+    "2021467299757383680": {
+      "id": "2021467299757383680",
+      "name": "TicNote Cloud ai",
+      "username": "ticnotecloudTNC"
+    },
+    "1454693748722393093": {
+      "id": "1454693748722393093",
+      "name": "Kneeanderthul",
+      "username": "kneeanderthul"
+    },
+    "63436164": {
+      "id": "63436164",
+      "name": "Seppo Sutinen",
+      "username": "sutinse"
+    },
+    "2027363533588209664": {
+      "id": "2027363533588209664",
+      "name": "David GF",
+      "username": "_DavidGF"
+    },
+    "1190688289": {
+      "id": "1190688289",
+      "name": "Ygor Henrique",
+      "username": "ygorhsr"
+    },
+    "1196402842816397312": {
+      "id": "1196402842816397312",
+      "name": "Victor.A",
+      "username": "victor_arial"
+    },
+    "1979691600843624448": {
+      "id": "1979691600843624448",
+      "name": "Mental Models For Kids",
+      "username": "DadMade_"
+    },
+    "1961865756158963712": {
+      "id": "1961865756158963712",
+      "name": "Andres Castaneda",
+      "username": "ancastaneda"
+    },
+    "738168375159885824": {
+      "id": "738168375159885824",
+      "name": "Cyril Liu",
+      "username": "cyrilliu1974"
+    },
+    "1354400233": {
+      "id": "1354400233",
+      "name": "Iv\u00e1n Zar Blanco",
+      "username": "IvanZarBlanco"
+    },
+    "19284317": {
+      "id": "19284317",
+      "name": "\u092d\u093e\u0930\u0924",
+      "username": "deepakmca05"
+    },
+    "1723122161034907648": {
+      "id": "1723122161034907648",
+      "name": "AutoJunjie",
+      "username": "AutoJunjie2023"
+    },
+    "122153140": {
+      "id": "122153140",
+      "name": "Nutzipper",
+      "username": "nutzipper"
+    },
+    "1767824620466401280": {
+      "id": "1767824620466401280",
+      "name": "FoundationModels",
+      "username": "ramanfr"
+    },
+    "1765215130621550592": {
+      "id": "1765215130621550592",
+      "name": "gabedraws",
+      "username": "gabedrawsX"
+    },
+    "1014210562064973824": {
+      "id": "1014210562064973824",
+      "name": "Ming",
+      "username": "Ming64170075"
+    },
+    "245785694": {
+      "id": "245785694",
+      "name": "50 65 74 65 72 20 70 75 73 73 79 20 65 61 74 65 72",
+      "username": "0010_0_10_0011"
+    },
+    "2010960999470501888": {
+      "id": "2010960999470501888",
+      "name": "theonethealgoforgot",
+      "username": "d1dalgoforgot"
+    },
+    "2724007724": {
+      "id": "2724007724",
+      "name": "Yan \ud83d\udc3c",
+      "username": "xzensh"
+    },
+    "1528086306982703108": {
+      "id": "1528086306982703108",
+      "name": "Tseren Tserenov",
+      "username": "tseren1972"
+    },
+    "1275090819779878913": {
+      "id": "1275090819779878913",
+      "name": "Aiz",
+      "username": "Aizcalibur"
+    },
+    "1492911703511732231": {
+      "id": "1492911703511732231",
+      "name": "Aiszone",
+      "username": "Aiszone_"
+    },
+    "605675454": {
+      "id": "605675454",
+      "name": "Jurij Skornik",
+      "username": "JureSkornik"
+    },
+    "44119019": {
+      "id": "44119019",
+      "name": "paul",
+      "username": "paulpitchford"
+    },
+    "2902752025": {
+      "id": "2902752025",
+      "name": "Rohit Ghumare",
+      "username": "ghumare64"
+    },
+    "2021568698297765888": {
+      "id": "2021568698297765888",
+      "name": "Oleksandr Kurbala",
+      "username": "OKurbala3USK"
+    },
+    "1820279233610137600": {
+      "id": "1820279233610137600",
+      "name": "Theresa Yau",
+      "username": "tess_qianyu"
+    },
+    "285599650": {
+      "id": "285599650",
+      "name": "Kenneth Bodin \ud83e\udd8b",
+      "username": "KennethBodin"
+    },
+    "3121321756": {
+      "id": "3121321756",
+      "name": "Michele Bertasi",
+      "username": "mbrt_dev"
+    },
+    "2528845731": {
+      "id": "2528845731",
+      "name": "Bikki kumar",
+      "username": "bikkikumarsha"
+    },
+    "1983859400008941568": {
+      "id": "1983859400008941568",
+      "name": "syntra",
+      "username": "syntraeniac"
+    },
+    "1083751882143625217": {
+      "id": "1083751882143625217",
+      "name": "nicole",
+      "username": "nicolekcha"
+    },
+    "2030882346069880832": {
+      "id": "2030882346069880832",
+      "name": "Keane",
+      "username": "keane42443"
+    },
+    "20427663": {
+      "id": "20427663",
+      "name": "Manuel",
+      "username": "ManuelSH"
+    },
+    "1299523632868110338": {
+      "id": "1299523632868110338",
+      "name": "Teng Yan",
+      "username": "tengyanAI"
+    },
+    "145228166": {
+      "id": "145228166",
+      "name": "Aswin Manohar",
+      "username": "Aswin_polymath"
+    },
+    "1904915689145524224": {
+      "id": "1904915689145524224",
+      "name": "Connor Heyward-Fox",
+      "username": "heyward_fox"
+    },
+    "1669845175823220737": {
+      "id": "1669845175823220737",
+      "name": "DeepRead.com",
+      "username": "Deepread_com"
+    },
+    "2904666735": {
+      "id": "2904666735",
+      "name": "Serge Nadon",
+      "username": "NadonSerge"
+    },
+    "26405010": {
+      "id": "26405010",
+      "name": "Renato Todorov",
+      "username": "RTodorov"
+    },
+    "1929430254671544320": {
+      "id": "1929430254671544320",
+      "name": "Andu",
+      "username": "andupoto"
+    },
+    "2009795613261737986": {
+      "id": "2009795613261737986",
+      "name": "BlackjackGod",
+      "username": "blackjack_god"
+    },
+    "2776949423": {
+      "id": "2776949423",
+      "name": "Mike Shevchenko",
+      "username": "mikeshev4enko"
+    },
+    "804929537444220928": {
+      "id": "804929537444220928",
+      "name": "Felix Su",
+      "username": "Sleaf37"
+    },
+    "15170079": {
+      "id": "15170079",
+      "name": "Ayussh Jhunjhunwala",
+      "username": "ayushjjw"
+    },
+    "1988547268555972609": {
+      "id": "1988547268555972609",
+      "name": "Remix",
+      "username": "RemixDotOne"
+    },
+    "2003576673921581056": {
+      "id": "2003576673921581056",
+      "name": "CoachPeligrossoEduardo",
+      "username": "Peligrossoea"
+    },
+    "1886542223723925504": {
+      "id": "1886542223723925504",
+      "name": "Yev Mura",
+      "username": "YevMur"
+    },
+    "3284555954": {
+      "id": "3284555954",
+      "name": "InternationalOptions",
+      "username": "IntlOptions"
+    },
+    "2006477596872327168": {
+      "id": "2006477596872327168",
+      "name": "Jason Gabriel Davis",
+      "username": "AletheiaProtocl"
+    },
+    "1157488459872919555": {
+      "id": "1157488459872919555",
+      "name": "Alexander Morgan",
+      "username": "lexandermorgan"
+    },
+    "1459767830623178755": {
+      "id": "1459767830623178755",
+      "name": "Pawe\u0142 Huryn",
+      "username": "PawelHuryn"
+    },
+    "1612308892972896257": {
+      "id": "1612308892972896257",
+      "name": "yu xia",
+      "username": "yuxia69156866"
+    },
+    "1334176188005294081": {
+      "id": "1334176188005294081",
+      "name": "Alexander Artemis",
+      "username": "void0corp"
+    },
+    "2004879323178958849": {
+      "id": "2004879323178958849",
+      "name": "Andrey Markov",
+      "username": "serebralcortex"
+    },
+    "456629270": {
+      "id": "456629270",
+      "name": "Robert Matyszewski",
+      "username": "iamrobert555"
+    },
+    "2439857728": {
+      "id": "2439857728",
+      "name": "Marco Gomiero",
+      "username": "marcoGomier"
+    },
+    "10712162": {
+      "id": "10712162",
+      "name": "Ivan Morgillo",
+      "username": "hamen"
+    },
+    "764506392": {
+      "id": "764506392",
+      "name": "Antonio Poggi",
+      "username": "toniopoggi"
+    },
+    "1879797884834508800": {
+      "id": "1879797884834508800",
+      "name": "Still Moving \ud83c\udf19",
+      "username": "stillmovingx"
+    },
+    "860044752267468801": {
+      "id": "860044752267468801",
+      "name": "Trevor I. Lasn",
+      "username": "trevorlasn"
+    },
+    "25056881": {
+      "id": "25056881",
+      "name": "Guido Schoonheim",
+      "username": "gschoonheim"
+    },
+    "1915489112787718144": {
+      "id": "1915489112787718144",
+      "name": "Heinrich",
+      "username": "arscontexta"
+    },
+    "1658196834601381888": {
+      "id": "1658196834601381888",
+      "name": "Imagine",
+      "username": "Imagine48581351"
+    },
+    "1812335158751870977": {
+      "id": "1812335158751870977",
+      "name": "Aria",
+      "username": "Aria100003"
+    },
+    "1360456128543346690": {
+      "id": "1360456128543346690",
+      "name": "Neal.ai",
+      "username": "neal47539583"
+    },
+    "1564655780120240129": {
+      "id": "1564655780120240129",
+      "name": "Zeyu",
+      "username": "ZeyuChen_"
+    },
+    "62499454": {
+      "id": "62499454",
+      "name": "Derek Colley",
+      "username": "DerekColley_"
+    },
+    "1426986315782971398": {
+      "id": "1426986315782971398",
+      "name": "Tomer Daniel",
+      "username": "Tomer_dan"
+    },
+    "42605041": {
+      "id": "42605041",
+      "name": "Ankit Chiplunkar",
+      "username": "ankitchiplunkar"
+    },
+    "11987892": {
+      "id": "11987892",
+      "name": "Mark Cheverton",
+      "username": "ennui2342"
+    },
+    "1833852082593406976": {
+      "id": "1833852082593406976",
+      "name": "VALAI",
+      "username": "ValeriusLabs"
+    },
+    "1267403168209666048": {
+      "id": "1267403168209666048",
+      "name": "Rams",
+      "username": "mintelligenceai"
+    },
+    "1999623138448146434": {
+      "id": "1999623138448146434",
+      "name": "SMFcostseg",
+      "username": "SMFcostseg"
+    },
+    "1853155362330865664": {
+      "id": "1853155362330865664",
+      "name": "Benjamin Mowinckel",
+      "username": "benmowinckel"
+    },
+    "1888125025364094976": {
+      "id": "1888125025364094976",
+      "name": "TK \u2223 Treehouse Coder in Japan",
+      "username": "tklinwashinmura"
+    },
+    "1872241916370210816": {
+      "id": "1872241916370210816",
+      "name": "Luis",
+      "username": "iLoung18"
+    },
+    "1262060022332301312": {
+      "id": "1262060022332301312",
+      "name": "Mihura",
+      "username": "XMihura"
+    },
+    "21915836": {
+      "id": "21915836",
+      "name": "Jim Morrison",
+      "username": "drooog"
+    },
+    "1466030314019504137": {
+      "id": "1466030314019504137",
+      "name": "Alex Yarosh \u00b7 AI expert \u00b7 CEO of AI Studio",
+      "username": "AleksejAros"
+    },
+    "14183671": {
+      "id": "14183671",
+      "name": "adolgushin",
+      "username": "adolgushin"
+    },
+    "1900889479": {
+      "id": "1900889479",
+      "name": "Jacob Sobolev",
+      "username": "JacobSobolev"
+    },
+    "2004249708592877568": {
+      "id": "2004249708592877568",
+      "name": "Ismail",
+      "username": "sophylabshq"
+    },
+    "207325675": {
+      "id": "207325675",
+      "name": "Anthony",
+      "username": "gammamukja"
+    },
+    "140744298": {
+      "id": "140744298",
+      "name": "Julio Mart\u00edn",
+      "username": "julio_martin"
+    },
+    "4177759769": {
+      "id": "4177759769",
+      "name": "Vic",
+      "username": "vicgrss"
+    },
+    "944679709698412548": {
+      "id": "944679709698412548",
+      "name": "Michael",
+      "username": "Mikevandyke81"
+    },
+    "8421942": {
+      "id": "8421942",
+      "name": "Christian Sass",
+      "username": "sastian"
+    },
+    "804686974732947456": {
+      "id": "804686974732947456",
+      "name": "Jason Paul Michaels",
+      "username": "SpaceWelder314"
+    },
+    "728900229785919488": {
+      "id": "728900229785919488",
+      "name": "Javier Pe\u00f1ate Arrieta",
+      "username": "javi95lol"
+    },
+    "1973484781641089024": {
+      "id": "1973484781641089024",
+      "name": "Ray Zhu\ud83d\udc28",
+      "username": "rayzhudev"
+    },
+    "873097325404487680": {
+      "id": "873097325404487680",
+      "name": "Edgar Ishankulov",
+      "username": "edgarishankulov"
+    },
+    "1498581033616302080": {
+      "id": "1498581033616302080",
+      "name": "Just another one",
+      "username": "AstarothNeph"
+    },
+    "2019591686062489600": {
+      "id": "2019591686062489600",
+      "name": "Eric Su",
+      "username": "EricSuNet"
+    },
+    "1565089861245313027": {
+      "id": "1565089861245313027",
+      "name": "\ud83c\udf53\ud83c\udf53\ud83c\udf53",
+      "username": "iruletheworldmo"
+    },
+    "1158480008626737159": {
+      "id": "1158480008626737159",
+      "name": "TomGiant",
+      "username": "TomGiant1"
+    },
+    "1302609302": {
+      "id": "1302609302",
+      "name": "Prathap",
+      "username": "PrathapChowdry"
+    },
+    "1431478837246791681": {
+      "id": "1431478837246791681",
+      "name": "Swarm Data Protection",
+      "username": "baolvpao"
+    },
+    "18110458": {
+      "id": "18110458",
+      "name": "Gregor",
+      "username": "jssr"
+    },
+    "1860685917549449216": {
+      "id": "1860685917549449216",
+      "name": "StevenDai",
+      "username": "StevenDai888"
+    },
+    "1816608787005849600": {
+      "id": "1816608787005849600",
+      "name": "Selan Veydris",
+      "username": "SelanVeydris"
+    },
+    "3426105711": {
+      "id": "3426105711",
+      "name": "Ol\u0457ver Tag\u0457sade \ud83c\uddfa\ud83c\udde6\ud83c\uddee\ud83c\uddf1\ud83c\uddee\ud83c\uddf7",
+      "username": "Tagisade"
+    },
+    "1980070035151634432": {
+      "id": "1980070035151634432",
+      "name": "United Records",
+      "username": "RecordsUni63959"
+    },
+    "1976051727985238016": {
+      "id": "1976051727985238016",
+      "name": "Dreamcast Emulator",
+      "username": "highhtide3"
+    },
+    "1405159531454341123": {
+      "id": "1405159531454341123",
+      "name": "dreamcast emulator",
+      "username": "highhtide2"
+    },
+    "1266100909496348672": {
+      "id": "1266100909496348672",
+      "name": "\u651e\u9322 lo2cin4",
+      "username": "lo2cin4"
+    },
+    "1485221120051716101": {
+      "id": "1485221120051716101",
+      "name": "Frank B\u00f6hm",
+      "username": "frankboehmCPT"
+    },
+    "1432551742827233280": {
+      "id": "1432551742827233280",
+      "name": "DannyGladiolas",
+      "username": "dannygladiolas"
+    },
+    "1893893999519485952": {
+      "id": "1893893999519485952",
+      "name": "\u5b8b\u9646\u6bc5",
+      "username": "xiaosong123413"
+    },
+    "1588042490392682497": {
+      "id": "1588042490392682497",
+      "name": "sk k",
+      "username": "itismeskk"
+    },
+    "6431582": {
+      "id": "6431582",
+      "name": "Nikhil Pahwa",
+      "username": "nixxin"
+    },
+    "400636259": {
+      "id": "400636259",
+      "name": "Dmitry Petrov",
+      "username": "FullStackML"
+    },
+    "314139361": {
+      "id": "314139361",
+      "name": "Dionysis",
+      "username": "dathin_"
+    },
+    "1013797175950577664": {
+      "id": "1013797175950577664",
+      "name": "KisekiLogos",
+      "username": "KisekiLogos"
+    },
+    "1421567615667871745": {
+      "id": "1421567615667871745",
+      "name": "Akash Nikam",
+      "username": "_akashnikam"
+    },
+    "969181169408385025": {
+      "id": "969181169408385025",
+      "name": "Minh Nhat Nguyen",
+      "username": "menhguin"
+    },
+    "29024989": {
+      "id": "29024989",
+      "name": "Jigar Doshi",
+      "username": "jigarkdoshi"
+    },
+    "18099616": {
+      "id": "18099616",
+      "name": "Bob Sheth",
+      "username": "bobsheth"
+    },
+    "248218907": {
+      "id": "248218907",
+      "name": "Vaiv",
+      "username": "bouncebackvaiv"
+    },
+    "1693232361050353664": {
+      "id": "1693232361050353664",
+      "name": "Shan-Ning Zhuang",
+      "username": "ShanningZhuang"
+    },
+    "2023389275921010688": {
+      "id": "2023389275921010688",
+      "name": "chase draggins",
+      "username": "0xthedub"
+    },
+    "15082638": {
+      "id": "15082638",
+      "name": "francescofaenzi",
+      "username": "francescofaenzi"
+    },
+    "27521539": {
+      "id": "27521539",
+      "name": "Jonathan Mariande",
+      "username": "JPMar111"
+    },
+    "1518929452838883331": {
+      "id": "1518929452838883331",
+      "name": "Tom Zschach",
+      "username": "TomZschach"
+    },
+    "151514147": {
+      "id": "151514147",
+      "name": "Luna Yuan",
+      "username": "Luna_YueYuan"
+    },
+    "804429996462927872": {
+      "id": "804429996462927872",
+      "name": "Idan \ud83d\ude80",
+      "username": "IdanP70"
+    },
+    "766183810404851712": {
+      "id": "766183810404851712",
+      "name": "harshil",
+      "username": "harshil3004"
+    },
+    "2021429053241065472": {
+      "id": "2021429053241065472",
+      "name": "Balagei | VibeModel.ai",
+      "username": "vibemodelai"
+    },
+    "3075014624": {
+      "id": "3075014624",
+      "name": "Somangshu Goswami",
+      "username": "SomangshuG"
+    },
+    "1329168348173709320": {
+      "id": "1329168348173709320",
+      "name": "Avshalom Dayan",
+      "username": "AvshalomDayan"
+    },
+    "2196078478": {
+      "id": "2196078478",
+      "name": "Keith So",
+      "username": "keithso27"
+    },
+    "150787544": {
+      "id": "150787544",
+      "name": "George Antonopoulos",
+      "username": "GeeOBCR"
+    },
+    "1248295211362471936": {
+      "id": "1248295211362471936",
+      "name": "Parshva Daftari",
+      "username": "parshva_daftari"
+    },
+    "1683479546878623745": {
+      "id": "1683479546878623745",
+      "name": "Boris Djordjevic",
+      "username": "longevityboris"
+    },
+    "462761728": {
+      "id": "462761728",
+      "name": "Vinson sun",
+      "username": "Vinson1101"
+    },
+    "1744438366811164673": {
+      "id": "1744438366811164673",
+      "name": "JK",
+      "username": "_junaidkhalid1"
+    },
+    "1430628981250969612": {
+      "id": "1430628981250969612",
+      "name": "Peter Panter",
+      "username": "PeterPa00865077"
+    },
+    "1495806862834511873": {
+      "id": "1495806862834511873",
+      "name": "Alex Rogov",
+      "username": "Alex_Rogov_js"
+    },
+    "301649975": {
+      "id": "301649975",
+      "name": "Felipe Poncet",
+      "username": "fponcet"
+    },
+    "1073648149640740870": {
+      "id": "1073648149640740870",
+      "name": "Alma Laine",
+      "username": "laine_alma"
+    },
+    "1448182017003188226": {
+      "id": "1448182017003188226",
+      "name": "Dylan Bishop",
+      "username": "DylanBishopX"
+    },
+    "1754345365875351552": {
+      "id": "1754345365875351552",
+      "name": "DP",
+      "username": "modfxn"
+    },
+    "1979196532776931330": {
+      "id": "1979196532776931330",
+      "name": "Navam.io",
+      "username": "Navam_io"
+    },
+    "2010312533937364993": {
+      "id": "2010312533937364993",
+      "name": "Matt",
+      "username": "MattBuildss"
+    },
+    "920321515077414912": {
+      "id": "920321515077414912",
+      "name": "Readwise",
+      "username": "readwise"
+    },
+    "123625695": {
+      "id": "123625695",
+      "name": "__\u957f\u5b89\u8857\u6389\u5934__",
+      "username": "southwestpokebo"
+    },
+    "404678403": {
+      "id": "404678403",
+      "name": "Lior Schejter",
+      "username": "LiorSchejter"
+    },
+    "1170625235910975488": {
+      "id": "1170625235910975488",
+      "name": "Devika",
+      "username": "Devika00048256"
+    },
+    "23998118": {
+      "id": "23998118",
+      "name": "CogitoLux",
+      "username": "Cogitolux"
+    },
+    "779043981044973569": {
+      "id": "779043981044973569",
+      "name": "Catalin",
+      "username": "dcatalin98"
+    },
+    "3729630497": {
+      "id": "3729630497",
+      "name": "Cristiano4x4",
+      "username": "10801AVB"
+    },
+    "1690415053093122048": {
+      "id": "1690415053093122048",
+      "name": "Andy Xie",
+      "username": "handi_xie"
+    },
+    "1521315289061015553": {
+      "id": "1521315289061015553",
+      "name": "QuietLake",
+      "username": "0xQuietLake"
+    },
+    "4170721": {
+      "id": "4170721",
+      "name": "nikhilv",
+      "username": "nikhilv"
+    },
+    "1914970713410437120": {
+      "id": "1914970713410437120",
+      "name": "Ancher",
+      "username": "AncherAI"
+    },
+    "878188318365757440": {
+      "id": "878188318365757440",
+      "name": "monoclith",
+      "username": "monoclith"
+    },
+    "1779011314280787968": {
+      "id": "1779011314280787968",
+      "name": "Tejas Kumar",
+      "username": "TejasKumarrr"
+    },
+    "1970150615881048064": {
+      "id": "1970150615881048064",
+      "name": "Kazz",
+      "username": "kazzorr_"
+    },
+    "9237162": {
+      "id": "9237162",
+      "name": "Mian Shafiq",
+      "username": "shafiq"
+    },
+    "1740770891850522624": {
+      "id": "1740770891850522624",
+      "name": "Melina",
+      "username": "Gissoka"
+    },
+    "1126648226": {
+      "id": "1126648226",
+      "name": "JMich",
+      "username": "crypto_huntaah"
+    },
+    "135527083": {
+      "id": "135527083",
+      "name": "Chris Lim",
+      "username": "chrislim"
+    },
+    "2011486221953056768": {
+      "id": "2011486221953056768",
+      "name": "Greta Ji",
+      "username": "GretaJi777"
+    },
+    "16603946": {
+      "id": "16603946",
+      "name": "Oliver Kri\u0161ka",
+      "username": "quatermain32"
+    },
+    "18759503": {
+      "id": "18759503",
+      "name": "Chris B. Ward (e/bored) \ud83c\uddec\ud83c\udde7\ud83e\udd10",
+      "username": "chrisbward"
+    },
+    "141655692": {
+      "id": "141655692",
+      "name": "Sughu",
+      "username": "sughanthans1"
+    },
+    "1986807086530113536": {
+      "id": "1986807086530113536",
+      "name": "Context Studios - AI Development Studio Berlin",
+      "username": "_contextstudios"
+    },
+    "2003433907388317703": {
+      "id": "2003433907388317703",
+      "name": "Consilience",
+      "username": "Maggie178794587"
+    },
+    "1288475127156539393": {
+      "id": "1288475127156539393",
+      "name": "Soham",
+      "username": "ham__os"
+    },
+    "9630422": {
+      "id": "9630422",
+      "name": "Durga Sahoo",
+      "username": "dpsahoo"
+    },
+    "5922652": {
+      "id": "5922652",
+      "name": "Tim\u2728",
+      "username": "timyangnet"
+    },
+    "88477338": {
+      "id": "88477338",
+      "name": "jaack \ud83d\udee1\ufe0f \ud83d\udd3a\ufe0f",
+      "username": "ijaack94"
+    },
+    "1681542470088425472": {
+      "id": "1681542470088425472",
+      "name": "Jack",
+      "username": "LivewJack"
+    },
+    "517591643": {
+      "id": "517591643",
+      "name": "murat",
+      "username": "mcankurtulus"
+    },
+    "1546015994": {
+      "id": "1546015994",
+      "name": "Magnus",
+      "username": "sungamma"
+    },
+    "3422867175": {
+      "id": "3422867175",
+      "name": "Alex Nistor",
+      "username": "AlexN1s"
+    },
+    "348634385": {
+      "id": "348634385",
+      "name": "Gilles Bogaert",
+      "username": "gilles_bogaert"
+    },
+    "985402663733899265": {
+      "id": "985402663733899265",
+      "name": "\u795e\u5948\u5ddd\u5c0f\u661f\u661f",
+      "username": "vchenlin"
+    },
+    "1011651403884978176": {
+      "id": "1011651403884978176",
+      "name": "Jacob Maynard",
+      "username": "Jacob_A_Maynard"
+    },
+    "352282567": {
+      "id": "352282567",
+      "name": "Rudolf Glasnak",
+      "username": "Uplineup"
+    },
+    "1223980893104168960": {
+      "id": "1223980893104168960",
+      "name": "Arici \ud83c\udfd7 \ud83d\udee4\ud83d\udc8a",
+      "username": "AriciLink"
+    },
+    "20680563": {
+      "id": "20680563",
+      "name": "Alexey Rubtsov",
+      "username": "rushills"
+    },
+    "1447822720054353924": {
+      "id": "1447822720054353924",
+      "name": "Klay Nguyen",
+      "username": "klaynguyenhq"
+    },
+    "1444639972661858310": {
+      "id": "1444639972661858310",
+      "name": "Syed Shamir",
+      "username": "SyedShamirRaza1"
+    },
+    "2037089198394454016": {
+      "id": "2037089198394454016",
+      "name": "AKU Token",
+      "username": "TokenAku"
+    },
+    "18308297": {
+      "id": "18308297",
+      "name": "Tom Stagg",
+      "username": "TomStagg"
+    },
+    "1743424864659316736": {
+      "id": "1743424864659316736",
+      "name": "Shubham Attri",
+      "username": "a3fckx"
+    },
+    "117814631": {
+      "id": "117814631",
+      "name": "Aman Agarwal",
+      "username": "amanthegreatone"
+    },
+    "61857716": {
+      "id": "61857716",
+      "name": "Sanjay",
+      "username": "kashalkar"
+    },
+    "6023362": {
+      "id": "6023362",
+      "name": "Mario Valle Reyes \ud83d\udea9\ud83d\udea9\ud83d\udea9",
+      "username": "bilbeny"
+    },
+    "1953313465810206722": {
+      "id": "1953313465810206722",
+      "name": "Adib Mohsin",
+      "username": "adib_builds"
+    },
+    "1485088290005037056": {
+      "id": "1485088290005037056",
+      "name": "George Gee",
+      "username": "SegResearch"
+    },
+    "2030717432084697089": {
+      "id": "2030717432084697089",
+      "name": "Imtiaz Nabi",
+      "username": "imtiaznabi_"
+    },
+    "1375700003922960384": {
+      "id": "1375700003922960384",
+      "name": "Yash Khivasara",
+      "username": "k2_yash"
+    },
+    "1931407212221513728": {
+      "id": "1931407212221513728",
+      "name": "tigintern (\ud835\udd26, \ud835\udd26)",
+      "username": "tigintern"
+    },
+    "569062086": {
+      "id": "569062086",
+      "name": "Leyang",
+      "username": "quanruzhuoxiu"
+    },
+    "1007353525360300032": {
+      "id": "1007353525360300032",
+      "name": "Alexander Tepliuk",
+      "username": "AlexTepliuk"
+    },
+    "1496942848150851587": {
+      "id": "1496942848150851587",
+      "name": "Mattia",
+      "username": "MattiaFiumara"
+    },
+    "884007980911345664": {
+      "id": "884007980911345664",
+      "name": "ShraddhaGupta",
+      "username": "FriedChronicles"
+    },
+    "2020801245322297344": {
+      "id": "2020801245322297344",
+      "name": "Richard",
+      "username": "Richard_Lxc"
+    },
+    "14488050": {
+      "id": "14488050",
+      "name": "StErMi",
+      "username": "StErMi"
+    },
+    "1800811360135053312": {
+      "id": "1800811360135053312",
+      "name": "luis.poe",
+      "username": "_luispoe"
+    },
+    "710398091032207360": {
+      "id": "710398091032207360",
+      "name": "Jack Aspinall",
+      "username": "jackaspi"
+    },
+    "19680613": {
+      "id": "19680613",
+      "name": "Ninjanordbo | Designer | Polymath",
+      "username": "ninjanordbo"
+    },
+    "2027164659799736320": {
+      "id": "2027164659799736320",
+      "name": "GeoPilots",
+      "username": "GeoPilotsMedia"
+    },
+    "254162086": {
+      "id": "254162086",
+      "name": "SaharC",
+      "username": "augu144"
+    },
+    "503070369": {
+      "id": "503070369",
+      "name": "IDK",
+      "username": "iKazma"
+    },
+    "1412696969596784643": {
+      "id": "1412696969596784643",
+      "name": "LFG",
+      "username": "001001A0"
+    },
+    "1997967467780734976": {
+      "id": "1997967467780734976",
+      "name": "Mr.42",
+      "username": "An0nym0us119697"
+    },
+    "1533916065574662145": {
+      "id": "1533916065574662145",
+      "name": "Ingmar",
+      "username": "ingmariusX"
+    },
+    "2039949208266985472": {
+      "id": "2039949208266985472",
+      "name": "Swati Sharma",
+      "username": "SwatiShrma10"
+    },
+    "3423133450": {
+      "id": "3423133450",
+      "name": "Sebastian Sigl",
+      "username": "sesigl"
+    },
+    "1897591618561028096": {
+      "id": "1897591618561028096",
+      "name": "Arsenije Karpic",
+      "username": "RealArsenije"
+    },
+    "1972321188798930944": {
+      "id": "1972321188798930944",
+      "name": "Seido AI",
+      "username": "SeidoAI"
+    },
+    "1920233886933819392": {
+      "id": "1920233886933819392",
+      "name": "flippy",
+      "username": "FlippyMeister"
+    },
+    "1922699394627010561": {
+      "id": "1922699394627010561",
+      "name": "Briana Castillo",
+      "username": "briana_cas11886"
+    },
+    "1411538185646186496": {
+      "id": "1411538185646186496",
+      "name": "Pete Reborn",
+      "username": "PeterKnobloch"
+    },
+    "145312232": {
+      "id": "145312232",
+      "name": "Rakesh Swain",
+      "username": "rakesh1486"
+    },
+    "1712192508": {
+      "id": "1712192508",
+      "name": "Milosz Piechocki",
+      "username": "miloszpp"
+    },
+    "1998475533877972992": {
+      "id": "1998475533877972992",
+      "name": "KarenCross",
+      "username": "roye7q6kv"
+    },
+    "2608741482": {
+      "id": "2608741482",
+      "name": "Mike McGovern",
+      "username": "mmcgovern574"
+    },
+    "2011842811017269248": {
+      "id": "2011842811017269248",
+      "name": "Piranav Kumar",
+      "username": "piranav_kumar"
+    },
+    "240782352": {
+      "id": "240782352",
+      "name": "Tim Brunsmo",
+      "username": "TimBrunsmo"
+    },
+    "1832649277790654464": {
+      "id": "1832649277790654464",
+      "name": "Techificial.ai",
+      "username": "techificial"
+    },
+    "487201735": {
+      "id": "487201735",
+      "name": "Sagar Shah",
+      "username": "sgzsh269"
+    }
+  },
+  "thread_fetch_error": "402 Client Error: Payment Required for url: https://api.x.com/2/tweets/search/recent?query=conversation_id%3A2039805659525644595&max_results=100&sort_order=recency&tweet.fields=id%2Ctext%2Cauthor_id%2Ccreated_at%2Cconversation_id%2Cin_reply_to_user_id%2Creferenced_tweets%2Cnote_tweet%2Centities%2Carticle&expansions=author_id%2Cin_reply_to_user_id%2Creferenced_tweets.id&user.fields=id%2Cusername%2Cname&pagination_token=b26v89c19zqg8o3juehkkz1kjeijwcqdcalh554grep31"
+}
