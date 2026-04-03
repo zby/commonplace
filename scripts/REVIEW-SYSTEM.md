@@ -2,6 +2,10 @@
 
 The review system stores per-gate review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
 
+This system is experimental and opt-in. It is not part of the default note-writing flow, and reviews should not be treated as always-on checks.
+
+It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [kb/notes/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md](../kb/notes/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md): review state stopped behaving like authored library content and started behaving like local operational state.
+
 ## Concepts
 
 **Gate.** A markdown file in `kb/instructions/review-gates/{lens}/{name}.md`. The `{lens}/{name}` path is the gate id (for example `prose/source-residue`).
@@ -21,6 +25,8 @@ The review system stores per-gate review state in a local SQLite database while 
 ## Storage model
 
 Canonical state lives in a local SQLite database at `kb/reports/review-store.sqlite` by default. Set `COMMONPLACE_REVIEW_DB` to override that location.
+
+This DB-backed state is intentional, but still experimental. Notes, gates, instructions, and source material remain file-backed; only review state crosses that boundary today.
 
 Schema: `scripts/review-schema.sql`
 

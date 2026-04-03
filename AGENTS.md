@@ -25,6 +25,7 @@ Use specialized types only when the routing table explicitly points to one.
 | Structured argument | `kb/notes/` | Read `kb/notes/types/structured-claim.md` — needs Evidence/Reasoning/Caveats |
 | Architecture decision | `kb/notes/adr/` | Read `kb/notes/types/adr.md` — needs Context/Decision/Consequences |
 | Related system review | `kb/notes/related-systems/` | Read `kb/notes/types/related-system.md` |
+| Review a note or run a review sweep | `scripts/REVIEW-SYSTEM.md` | Experimental opt-in operational path — use only when the task is explicitly about review, triage, ack, or sweep work |
 | Improvement opportunity noticed during traversal | `kb/log.md` | Append one line — don't fix it now, don't context-switch |
 | External source snapshot | `kb/sources/` | Use `/snapshot-web` skill |
 | Source analysis | `kb/sources/` | Use `/ingest` skill — produces `.ingest.md` |
@@ -65,6 +66,7 @@ Stop and load deeper guidance when any of these are true:
 - You cannot map the artifact cleanly through the routing table -> read `kb/instructions/WRITING.md` before creating or moving files.
 - You are editing notes in a directory with a local `types/` template -> read that template first.
 - You touch `kb/sources/` content and there is no corresponding `.ingest.md` -> run `/ingest` (or ask the user which ingest workflow to use) instead of improvising classification.
+- The task is explicit review work (single-note review, triage, ack, or sweep) -> read `scripts/REVIEW-SYSTEM.md` and follow the referenced instruction instead of folding review into the default write path.
 - The task is an externally triggered operation class (maintenance sweep, audit, bulk refactor) -> use the operations catalogue/instructions path, not the default AGENTS flow.
 
 This file is a control-plane router. It does not inventory capabilities; harness-injected skills provide capability discovery.

@@ -1,5 +1,5 @@
 ---
-description: Four specific semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading — structural validation catches form errors but misses content errors like incomplete enumerations that contradict their own grounding definitions
+description: Structural validation catches form errors; semantic review catches content errors like incomplete enumerations, grounding drift, boundary-case gaps, and internal contradictions
 type: note
 tags: [kb-maintenance, observability]
 status: seedling
@@ -31,15 +31,17 @@ These are Level B checks — they require LLM judgment but can be structured wit
 
 The [error correction framework](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) applies: each semantic check is a weak oracle with TPR > FPR — it catches real problems more often than it false-alarms. The four checks are decorrelated (they probe different failure modes), so combining them amplifies signal. A note that passes all four has been tested on four independent axes.
 
-## The review skill as the implementation target
+## The review system as the implementation target
 
-Structural validation belongs in `/validate` — it's schema checking. Semantic review belongs in a separate `/review` skill — it's adversarial reading. The separation matters because:
+Structural validation belongs in `/validate` — it's schema checking. Semantic review belongs in a separate review system — it's adversarial reading. The separation matters because:
 
 - **Different cost model** — structural checks are cheap and should run on every save; semantic review is expensive and should run before commit or on demand
 - **Different failure semantics** — structural failures are always real (a broken link is broken); semantic findings are probabilistic (an LLM might flag a valid enumeration as incomplete)
 - **Different scope** — validation checks form; review checks content
 
-The review skill would load the note, identify its key claims, run the four semantic checks, and report findings with the same PASS/WARN/FAIL format as validate. But findings are WARN by default (probabilistic), not FAIL (deterministic).
+The current implementation target is the experimental review system documented in [`scripts/REVIEW-SYSTEM.md`](../../scripts/REVIEW-SYSTEM.md). It routes explicit review work through review bundles and sweeps, stores acceptance state in SQLite, and treats rendered markdown as inspection output rather than canonical state. That storage choice is a scoped exception to the repo's file-first design, explained in [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md).
+
+The review system should load the note, identify its key claims, run the relevant semantic checks, and report findings with advisory semantics rather than blocking note creation. For now it is experimental and opt-in, not an always-on part of the default write path.
 
 ---
 
