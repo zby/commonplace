@@ -15,6 +15,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 - [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — borrow from any source, filter through first principles; programming patterns get a fast pass
 - [short-composable-notes-maximize-combinatorial-discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — the library exists for co-loading; short atomic notes maximize the surface area for cross-cutting discovery
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — KB quality measured by how fluidly it supports moving between abstraction levels
+- [charting-the-knowledge-access-problem-beyond-rag](./charting-the-knowledge-access-problem-beyond-rag.md) — exploratory decomposition: separates substrate, pointers, navigation modes, synthesis, and maintenance so RAG-vs-filesystem debates stop collapsing unlike tasks
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges conjecture-and-refutation with bounded-context mechanics
 - [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as codification
 

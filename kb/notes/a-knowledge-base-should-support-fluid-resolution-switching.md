@@ -45,6 +45,7 @@ The [discovery note](./discovery-is-seeing-the-particular-as-an-instance-of-the-
 Relevant Notes:
 
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
+- [charting the knowledge-access problem beyond RAG](./charting-the-knowledge-access-problem-beyond-rag.md) — extends: resolution-switching is one part of the broader access problem alongside substrate choice, synthesis, and maintenance
 
 Source:
 - Adapted from a social media post on "The Art of Good Thinking: Moving Between Levels" — the core insight about resolution-switching applied to KB design
