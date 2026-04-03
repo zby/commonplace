@@ -71,11 +71,13 @@ Example for current notes in Codex:
 scripts/review_sweep.sh --runner codex --current semantic
 ```
 
-If you are executing manually or from an agent, run one direct-write bundle execution per note:
+If you are executing manually from the shell, run one bundle wrapper per note:
 
 ```bash
 uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-id-1} {gate-id-2} ...
 ```
+
+If you are executing from an agent harness, run `kb/instructions/run-review-bundle-on-note.md` once per note instead of nesting `run_review_bundle.py` inside another agent.
 
 Multiple note-local runs can execute in parallel since each note's reviews are independent.
 

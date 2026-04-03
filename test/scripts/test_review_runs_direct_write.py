@@ -205,6 +205,46 @@ Grounding is aligned.
         assert all(row["acceptance_kind"] == "full-review" for row in acceptance_rows)
 
 
+def test_create_review_run_json_output(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        "--json",
+        env=env,
+    )
+    payload = json.loads(created.stdout)
+    assert payload["note_path"] == "kb/notes/sample.md"
+    assert payload["model_id"] == "test-model"
+    assert payload["runner"] == "codex"
+    assert payload["gate_ids"] == [
+        "prose/source-residue",
+        "semantic/grounding-alignment",
+    ]
+    assert payload["gates"] == [
+        {
+            "gate_id": "prose/source-residue",
+            "path": "kb/instructions/review-gates/prose/source-residue.md",
+            "text": "## Failure mode\n\nFixture gate.\n\n## Test\n\nFixture test.\n",
+        },
+        {
+            "gate_id": "semantic/grounding-alignment",
+            "path": "kb/instructions/review-gates/semantic/grounding-alignment.md",
+            "text": "## Failure mode\n\nFixture gate.\n\n## Test\n\nFixture test.\n",
+        },
+    ]
+    assert isinstance(payload["review_run_id"], int)
+
+
 def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()

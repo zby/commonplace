@@ -76,7 +76,13 @@ The canonical live path is:
 2. write one DB row per gate review
 3. finalize the run to append acceptance events
 
-`scripts/run_review_bundle.py` is the preferred entrypoint. It delegates to a runner, records gate reviews through `scripts/write_gate_review.py`, and finalizes acceptance through `scripts/finalize_review_run.py`.
+For live agent work, the preferred path is the direct-write helper chain:
+
+1. `scripts/create_review_run.py`
+2. `scripts/write_gate_review.py`
+3. `scripts/finalize_review_run.py`
+
+`scripts/run_review_bundle.py` remains the shell-automation wrapper. It delegates to a nested runner, records gate reviews through `scripts/write_gate_review.py`, and finalizes acceptance through `scripts/finalize_review_run.py`.
 
 A full review write contributes:
 
@@ -143,10 +149,16 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
+1. `uv run scripts/create_review_run.py --runner {codex|claude-code} --json {note} {gate-or-bundle}...`
+2. Read the resolved `gates` payload from the JSON output
+3. Review the note gate-by-gate in the current agent
+4. `python3 scripts/write_gate_review.py --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
+5. `python3 scripts/finalize_review_run.py --review-run-id {id}`
+
+For unattended shell automation, use:
+
 1. `uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note} {gate-or-bundle}...`
-2. The runner reads the target note and requested gate definitions
-3. It writes one review body per gate into the review DB
-4. The run is finalized to append acceptance events
+2. The wrapper creates the review run, launches a nested runner, records one review body per gate, and finalizes acceptance
 
 ### Sweep
 

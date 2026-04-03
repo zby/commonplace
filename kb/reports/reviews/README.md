@@ -22,9 +22,6 @@ Legacy rendered review artifacts and archived review outputs. The live review sy
 ## Running
 
 ```bash
-# Resolve gates
-uv run scripts/resolve_gates.py prose
-
 # List all stale (note, gate) pairs
 uv run scripts/review_target_selector.py --all-gates
 

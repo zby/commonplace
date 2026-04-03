@@ -9,7 +9,7 @@ This file is a compatibility wrapper. The canonical complexity-review definition
 - `kb/instructions/review-bundles/complexity-review.md`
 - `kb/instructions/review-gates/complexity/*.md`
 
-Preferred execution path:
+Preferred execution path for shell automation:
 
 ```bash
 uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} complexity

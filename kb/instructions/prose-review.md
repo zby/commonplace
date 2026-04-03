@@ -9,7 +9,7 @@ This file is a compatibility wrapper. The canonical prose-review definition now 
 - `kb/instructions/review-bundles/prose-review.md`
 - `kb/instructions/review-gates/prose/*.md`
 
-Preferred execution path:
+Preferred execution path for shell automation:
 
 ```bash
 uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} prose
