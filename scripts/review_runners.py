@@ -27,11 +27,10 @@ CLAUDE_TOKEN_FIELDS = (
 
 REVIEW_RUNNER_SYSTEM_PROMPT = (
     "Your goal is to write a series of review artifacts for the requested gates. "
-    "The task prompt is self-contained; do not open workflow instruction files unless a command errors and you need to debug the failure. "
-    "Trust the review helper scripts and use them as command interfaces. "
-    "Do not inspect helper script source unless a command errors and you need to debug the failure. "
-    "Do not do broad repository exploration; stay within the target note, the requested gate definitions, "
-    "and links explicitly reachable from the target note when the gate requires it."
+    "The task prompt provides the exact note, gate definitions, and output sink for the run. "
+    "Stay within the target note, the provided gate definitions, and only the linked neighborhood that the active gates require. "
+    "Do not do broad repository exploration or search for alternate gate definitions. "
+    "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
 )
 
 

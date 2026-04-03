@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -29,8 +30,64 @@ from review_runners import run_prompt
 from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 
 
+MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
+
+
 def encode_stage_filename(gate_id: str) -> str:
     return gate_id.replace("/", "__") + ".md"
+
+
+def remove_code_regions(text: str) -> str:
+    text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+    text = re.sub(r"`[^`\n]+`", "", text)
+    return text
+
+
+def find_markdown_links(text: str) -> list[tuple[str, str]]:
+    cleaned = remove_code_regions(text)
+    return [(match.group(1), match.group(2).strip()) for match in MARKDOWN_LINK_RE.finditer(cleaned)]
+
+
+def resolve_note_markdown_links(
+    *,
+    repo_root: Path,
+    note_abs: Path,
+    note_body: str,
+) -> tuple[list[tuple[str, str, str]], list[tuple[str, str]]]:
+    resolved: list[tuple[str, str, str]] = []
+    unresolved: list[tuple[str, str]] = []
+    seen_resolved: set[tuple[str, str, str]] = set()
+    seen_unresolved: set[tuple[str, str]] = set()
+
+    repo_root_resolved = repo_root.resolve()
+    for link_text, raw_target in find_markdown_links(note_body):
+        if URL_SCHEME_RE.match(raw_target) or raw_target.startswith("#"):
+            continue
+
+        bare_target = raw_target.split("#", 1)[0]
+        if not bare_target or not bare_target.endswith(".md"):
+            continue
+
+        candidate = (note_abs.parent / bare_target).resolve()
+        try:
+            repo_rel = candidate.relative_to(repo_root_resolved).as_posix()
+        except ValueError:
+            repo_rel = None
+
+        if candidate.exists() and repo_rel is not None:
+            entry = (link_text, raw_target, repo_rel)
+            if entry not in seen_resolved:
+                seen_resolved.add(entry)
+                resolved.append(entry)
+            continue
+
+        missing = (link_text, raw_target)
+        if missing not in seen_unresolved:
+            seen_unresolved.add(missing)
+            unresolved.append(missing)
+
+    return resolved, unresolved
 
 
 def combine_logs(stdout: str, stderr: str) -> str | None:
@@ -81,6 +138,8 @@ def build_prompt(
     note_path: str,
     gate_ids: list[str],
     gate_texts: dict[str, str],
+    resolved_links: list[tuple[str, str, str]],
+    unresolved_links: list[tuple[str, str]],
     review_run_id: int,
     staging_dir: Path,
 ) -> str:
@@ -88,17 +147,11 @@ def build_prompt(
     lines = [
         f"Write gate reviews for {note_path} for gates: {gates}",
         "",
-        "This task prompt is self-contained. Do not open workflow instruction files unless a command errors and you need to debug the failure.",
-        "",
         "Reading scope for this run:",
         "- Read the target note in full.",
-        "- Read the requested gate definitions included below. Do not search for alternate copies.",
+        "- Read the requested gate definitions included below.",
         "- For semantic grounding or consistency checks, follow only links that appear in the target note.",
-        "- Do not do broad repo search or exploratory `rg` sweeps unless you need to resolve a specific linked path that is already referenced by the target note.",
-        "- Do not widen the context beyond the target note's linked neighborhood unless the gate text explicitly requires it.",
-        "- Treat the helper scripts in scripts/ as command interfaces, not reading material.",
-        "- Only inspect script source if a command errors and you need to debug the failure.",
-        "- Do not search for gate definitions by name.",
+        "- When following a markdown link from the target note, use the pre-resolved path table below instead of searching for targets by name.",
         "- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.",
         "",
         "Override only the output sink for this run:",
@@ -115,6 +168,21 @@ def build_prompt(
     for gate_id in gate_ids:
         gate_path = GATES_ROOT / f"{gate_id}.md"
         lines.append(f"- {gate_id} -> {gate_path}")
+
+    lines.append("")
+    lines.append("Pre-resolved markdown links from the target note:")
+    if resolved_links:
+        for link_text, raw_target, repo_rel in resolved_links:
+            lines.append(f"- [{link_text}]({raw_target}) -> {repo_rel}")
+    else:
+        lines.append("- none")
+
+    if unresolved_links:
+        lines.append("")
+        lines.append("Unresolved markdown links in the target note:")
+        lines.append("- Treat these as broken links if they become relevant; do not search for alternate targets.")
+        for link_text, raw_target in unresolved_links:
+            lines.append(f"- [{link_text}]({raw_target})")
 
     lines.extend(
         [
@@ -153,6 +221,13 @@ def main() -> None:
     note_abs = repo_root / args.note_path
     if not note_abs.is_file():
         parser.error(f"note not found: {args.note_path}")
+    note_text = note_abs.read_text(encoding="utf-8")
+    note_body = strip_frontmatter(note_text)
+    resolved_links, unresolved_links = resolve_note_markdown_links(
+        repo_root=repo_root,
+        note_abs=note_abs,
+        note_body=note_body,
+    )
 
     gates_dir = repo_root / GATES_ROOT
     gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
@@ -191,6 +266,8 @@ def main() -> None:
         note_path=args.note_path,
         gate_ids=gate_ids,
         gate_texts=gate_texts,
+        resolved_links=resolved_links,
+        unresolved_links=unresolved_links,
         review_run_id=review_run_id,
         staging_dir=staging_dir,
     )
