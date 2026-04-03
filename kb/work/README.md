@@ -16,3 +16,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [skills-vs-instructions/](./skills-vs-instructions/) — when should a procedure be a skill vs an instruction file with CLAUDE.md routing? Testing five hypotheses against platform docs, practitioner experience, and KB theory
 - [db-layer/](./db-layer/) — brainstorming whether and how to add a database layer over the filesystem as review/revision scripts accumulate query complexity
 - [type-system-rationalization/](./type-system-rationalization/) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
+- [obsidian-affordances/](./obsidian-affordances/) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
