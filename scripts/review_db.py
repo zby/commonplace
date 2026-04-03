@@ -62,6 +62,7 @@ class ReviewRunRow:
     failure_reason: str | None
     raw_bundle_markdown: str | None
     debug_log: str | None
+    telemetry_json: str | None
 
 
 @dataclass(frozen=True)
@@ -128,6 +129,29 @@ def _column_names(conn: sqlite3.Connection, table_name: str) -> set[str]:
 
 
 def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
+    review_run_columns = _column_names(conn, "review_runs")
+    if "raw_bundle_markdown" not in review_run_columns:
+        conn.execute(
+            """
+            ALTER TABLE review_runs
+            ADD COLUMN raw_bundle_markdown TEXT
+            """
+        )
+    if "debug_log" not in review_run_columns:
+        conn.execute(
+            """
+            ALTER TABLE review_runs
+            ADD COLUMN debug_log TEXT
+            """
+        )
+    if "telemetry_json" not in review_run_columns:
+        conn.execute(
+            """
+            ALTER TABLE review_runs
+            ADD COLUMN telemetry_json TEXT
+            """
+        )
+
     gate_review_columns = _column_names(conn, "gate_reviews")
     if "review_run_id" not in gate_review_columns:
         conn.execute(
@@ -280,6 +304,7 @@ def insert_review_run(
     failure_reason: str | None = None,
     raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
+    telemetry_json: str | None = None,
 ) -> int:
     cursor = conn.execute(
         """
@@ -294,8 +319,9 @@ def insert_review_run(
             status,
             failure_reason,
             raw_bundle_markdown,
-            debug_log
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            debug_log,
+            telemetry_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             note_path,
@@ -309,6 +335,7 @@ def insert_review_run(
             failure_reason,
             raw_bundle_markdown,
             debug_log,
+            telemetry_json,
         ),
     )
     return int(cursor.lastrowid)
@@ -348,7 +375,8 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
             status,
             failure_reason,
             raw_bundle_markdown,
-            debug_log
+            debug_log,
+            telemetry_json
         FROM review_runs
         WHERE id = ?
         """,
@@ -369,6 +397,7 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
         failure_reason=row["failure_reason"],
         raw_bundle_markdown=row["raw_bundle_markdown"],
         debug_log=row["debug_log"],
+        telemetry_json=row["telemetry_json"],
     )
 
 
@@ -404,6 +433,7 @@ def complete_review_run(
     completed_at: str,
     raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
+    telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
@@ -412,10 +442,11 @@ def complete_review_run(
             completed_at = ?,
             raw_bundle_markdown = COALESCE(?, raw_bundle_markdown),
             debug_log = COALESCE(?, debug_log),
+            telemetry_json = COALESCE(?, telemetry_json),
             failure_reason = NULL
         WHERE id = ?
         """,
-        (completed_at, raw_bundle_markdown, debug_log, review_run_id),
+        (completed_at, raw_bundle_markdown, debug_log, telemetry_json, review_run_id),
     )
 
 
@@ -427,6 +458,7 @@ def fail_review_run(
     completed_at: str,
     raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
+    telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
@@ -435,10 +467,18 @@ def fail_review_run(
             completed_at = ?,
             failure_reason = ?,
             raw_bundle_markdown = COALESCE(?, raw_bundle_markdown),
-            debug_log = COALESCE(?, debug_log)
+            debug_log = COALESCE(?, debug_log),
+            telemetry_json = COALESCE(?, telemetry_json)
         WHERE id = ?
         """,
-        (completed_at, failure_reason, raw_bundle_markdown, debug_log, review_run_id),
+        (
+            completed_at,
+            failure_reason,
+            raw_bundle_markdown,
+            debug_log,
+            telemetry_json,
+            review_run_id,
+        ),
     )
 
 

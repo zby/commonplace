@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS review_runs (
     ),
     failure_reason TEXT,
     raw_bundle_markdown TEXT,
-    debug_log TEXT
+    debug_log TEXT,
+    telemetry_json TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_review_runs_note_model_started

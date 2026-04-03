@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
@@ -12,12 +13,14 @@ from pathlib import Path
 
 from review_db import (
     GATES_ROOT,
+    complete_review_run,
     connect,
     ensure_db,
     fail_review_run,
     insert_review_run,
     insert_review_run_gates,
     load_gate_reviews_for_run,
+    load_review_run,
     resolve_db_path,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
@@ -25,8 +28,52 @@ from review_model import resolve_model
 from review_runners import run_prompt
 from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 
+
 def encode_stage_filename(gate_id: str) -> str:
     return gate_id.replace("/", "__") + ".md"
+
+
+def combine_logs(stdout: str, stderr: str) -> str | None:
+    return (stdout + ("\n" if stdout and stderr else "") + stderr).strip() or None
+
+
+def serialize_telemetry(telemetry: dict[str, object] | None) -> str | None:
+    if telemetry is None:
+        return None
+    return json.dumps(telemetry, ensure_ascii=True, sort_keys=True)
+
+
+def persist_review_run_telemetry(
+    conn,
+    *,
+    review_run_id: int,
+    telemetry_json: str | None,
+    debug_log: str | None = None,
+    fallback_failure_reason: str | None = None,
+) -> None:
+    review_run = load_review_run(conn, review_run_id=review_run_id)
+    if review_run is None:
+        return
+
+    if review_run.status == "completed":
+        complete_review_run(
+            conn,
+            review_run_id=review_run_id,
+            completed_at=review_run.completed_at or iso_now(),
+            debug_log=debug_log,
+            telemetry_json=telemetry_json,
+        )
+        return
+
+    if review_run.status == "failed" or fallback_failure_reason is not None:
+        fail_review_run(
+            conn,
+            review_run_id=review_run_id,
+            failure_reason=review_run.failure_reason or fallback_failure_reason or "review run failed",
+            completed_at=review_run.completed_at or iso_now(),
+            debug_log=debug_log,
+            telemetry_json=telemetry_json,
+        )
 
 
 def build_prompt(
@@ -153,6 +200,8 @@ def main() -> None:
         return
 
     result = run_prompt(runner=args.runner, prompt=prompt, repo_root=repo_root, model=args.model)
+    telemetry_json = serialize_telemetry(result.telemetry)
+    runner_debug_log = combine_logs(result.stdout, result.stderr)
     if result.returncode != 0:
         with connect(db_path) as conn:
             fail_review_run(
@@ -160,14 +209,15 @@ def main() -> None:
                 review_run_id=review_run_id,
                 failure_reason=f"{args.runner} exited {result.returncode}",
                 completed_at=iso_now(),
-                debug_log=(result.stdout + ("\n" if result.stdout and result.stderr else "") + result.stderr).strip() or None,
+                debug_log=runner_debug_log,
+                telemetry_json=telemetry_json,
             )
             conn.commit()
         if not args.keep_staging:
             shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(result.returncode)
 
-    # Finalize in-process to keep the transaction and error handling local.
+    # Confirm the runner wrote one review per requested gate before finalizing acceptance.
     with connect(db_path) as conn:
         written = load_gate_reviews_for_run(conn, review_run_id=review_run_id)
         if len(written) != len(gate_ids):
@@ -176,7 +226,8 @@ def main() -> None:
                 review_run_id=review_run_id,
                 failure_reason=f"incomplete gate coverage: expected {len(gate_ids)}, found {len(written)}",
                 completed_at=iso_now(),
-                debug_log=(result.stdout + ("\n" if result.stdout and result.stderr else "") + result.stderr).strip() or None,
+                debug_log=runner_debug_log,
+                telemetry_json=telemetry_json,
             )
             conn.commit()
             if not args.keep_staging:
@@ -197,10 +248,29 @@ def main() -> None:
         capture_output=True,
         text=True,
     )
+    finalize_debug_log = combine_logs(finalize.stdout, finalize.stderr)
     if finalize.returncode != 0:
+        with connect(db_path) as conn:
+            persist_review_run_telemetry(
+                conn,
+                review_run_id=review_run_id,
+                telemetry_json=telemetry_json,
+                debug_log=finalize_debug_log,
+                fallback_failure_reason=f"finalize_review_run.py exited {finalize.returncode}",
+            )
+            conn.commit()
         if not args.keep_staging:
             shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(finalize.returncode)
+
+    if telemetry_json is not None:
+        with connect(db_path) as conn:
+            persist_review_run_telemetry(
+                conn,
+                review_run_id=review_run_id,
+                telemetry_json=telemetry_json,
+            )
+            conn.commit()
 
     if args.keep_staging:
         print(f"staging: {staging_dir}")

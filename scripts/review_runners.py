@@ -14,6 +14,15 @@ class RunnerResult:
     stdout: str
     stderr: str
     returncode: int
+    telemetry: dict[str, object] | None = None
+
+
+CLAUDE_TOKEN_FIELDS = (
+    "input_tokens",
+    "cache_creation_input_tokens",
+    "cache_read_input_tokens",
+    "output_tokens",
+)
 
 
 REVIEW_RUNNER_SYSTEM_PROMPT = (
@@ -34,6 +43,55 @@ def _stream_pipe(pipe, sink, chunks: list[str]) -> None:
             sink.flush()
     finally:
         pipe.close()
+
+
+def _coerce_usage_int(value: object) -> int:
+    return value if isinstance(value, int) and not isinstance(value, bool) else 0
+
+
+def _usage_totals_from_requests(requests: list[dict[str, object]]) -> dict[str, int]:
+    totals = {
+        field: sum(
+            _coerce_usage_int((request.get("usage") or {}).get(field))
+            for request in requests
+            if isinstance(request.get("usage"), dict)
+        )
+        for field in CLAUDE_TOKEN_FIELDS
+    }
+    totals["total_tokens"] = sum(totals[field] for field in CLAUDE_TOKEN_FIELDS)
+    return totals
+
+
+def _first_request_summary(request: dict[str, object]) -> dict[str, object]:
+    summary: dict[str, object] = {
+        "request_id": request.get("request_id"),
+        "timestamp": request.get("timestamp"),
+        "model": request.get("model"),
+    }
+    summary.update(_usage_totals_from_requests([request]))
+    return summary
+
+
+def _build_claude_telemetry(
+    request_usage_by_id: dict[str, dict[str, object]],
+) -> dict[str, object] | None:
+    if not request_usage_by_id:
+        return None
+
+    requests = list(request_usage_by_id.values())
+    totals = _usage_totals_from_requests(requests)
+    totals["request_count"] = len(requests)
+    first_request = _first_request_summary(requests[0])
+    followup_requests = requests[1:]
+    followup_totals = _usage_totals_from_requests(followup_requests)
+    followup_totals["request_count"] = len(followup_requests)
+    return {
+        "provider": "claude-code",
+        "requests": requests,
+        "totals": totals,
+        "first_request": first_request,
+        "followup_totals": followup_totals,
+    }
 
 
 def _extract_claude_text_content(payload: object) -> str:
@@ -75,7 +133,12 @@ def _summarize_claude_block(block: object) -> str:
     return ""
 
 
-def _stream_claude_json_pipe(pipe, sink, chunks: list[str]) -> None:
+def _stream_claude_json_pipe(
+    pipe,
+    sink,
+    chunks: list[str],
+    request_usage_by_id: dict[str, dict[str, object]],
+) -> None:
     current_message_id: str | None = None
     current_message_text = ""
     current_nontext_blocks: set[tuple[int, str]] = set()
@@ -95,9 +158,22 @@ def _stream_claude_json_pipe(pipe, sink, chunks: list[str]) -> None:
                 continue
 
             event_type = event.get("type")
+            message = event.get("message")
+            request_id = event.get("requestId")
+            if (
+                isinstance(request_id, str)
+                and isinstance(message, dict)
+                and isinstance(message.get("usage"), dict)
+            ):
+                request_usage_by_id[request_id] = {
+                    "request_id": request_id,
+                    "timestamp": event.get("timestamp"),
+                    "model": message.get("model"),
+                    "usage": message.get("usage"),
+                }
+
             emitted = ""
             if event_type in {"assistant", "user"}:
-                message = event.get("message")
                 if isinstance(message, dict):
                     message_id = message.get("id")
                     if isinstance(message_id, str) and message_id != current_message_id:
@@ -148,6 +224,7 @@ def run_prompt(
     model: str | None = None,
 ) -> RunnerResult:
     env = os.environ.copy()
+    claude_request_usage: dict[str, dict[str, object]] = {}
 
     if runner == "claude-code":
         cmd = [
@@ -193,7 +270,11 @@ def run_prompt(
     stderr_chunks: list[str] = []
     stdout_thread = threading.Thread(
         target=_stream_claude_json_pipe if runner == "claude-code" else _stream_pipe,
-        args=(process.stdout, sys.stdout, stdout_chunks),
+        args=(
+            (process.stdout, sys.stdout, stdout_chunks, claude_request_usage)
+            if runner == "claude-code"
+            else (process.stdout, sys.stdout, stdout_chunks)
+        ),
         daemon=True,
     )
     stderr_thread = threading.Thread(
@@ -211,4 +292,5 @@ def run_prompt(
         stdout="".join(stdout_chunks),
         stderr="".join(stderr_chunks),
         returncode=returncode,
+        telemetry=_build_claude_telemetry(claude_request_usage) if runner == "claude-code" else None,
     )
