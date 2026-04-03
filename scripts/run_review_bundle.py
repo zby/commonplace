@@ -18,10 +18,13 @@ from review_db import (
     connect,
     ensure_db,
     fail_review_run,
+    insert_gate_review,
     insert_review_run,
     insert_review_run_gates,
+    load_review_run_gates,
     load_gate_reviews_for_run,
     load_review_run,
+    parse_review_decision,
     resolve_db_path,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
@@ -32,6 +35,8 @@ from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 
 MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
+BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
+BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -94,6 +99,108 @@ def combine_logs(stdout: str, stderr: str) -> str | None:
     return (stdout + ("\n" if stdout and stderr else "") + stderr).strip() or None
 
 
+def extract_bundle_reviews(
+    bundle_markdown: str,
+    *,
+    expected_gate_ids: list[str],
+) -> dict[str, str]:
+    expected = set(expected_gate_ids)
+    reviews: dict[str, str] = {}
+    current_gate_id: str | None = None
+    current_lines: list[str] = []
+
+    for raw_line in bundle_markdown.splitlines():
+        start_match = BUNDLE_START_RE.match(raw_line.strip())
+        if start_match is not None:
+            if current_gate_id is not None:
+                raise ValueError(f"nested gate review start before closing {current_gate_id}")
+            gate_id = start_match.group("gate_id")
+            if gate_id not in expected:
+                raise ValueError(f"unexpected gate in bundle output: {gate_id}")
+            if gate_id in reviews:
+                raise ValueError(f"duplicate gate in bundle output: {gate_id}")
+            current_gate_id = gate_id
+            current_lines = []
+            continue
+
+        end_match = BUNDLE_END_RE.match(raw_line.strip())
+        if end_match is not None:
+            gate_id = end_match.group("gate_id")
+            if current_gate_id is None:
+                raise ValueError(f"gate review end without start: {gate_id}")
+            if gate_id != current_gate_id:
+                raise ValueError(f"gate review end mismatch: expected {current_gate_id}, found {gate_id}")
+            review_text = "\n".join(current_lines).strip()
+            if not review_text:
+                raise ValueError(f"empty review body for gate: {gate_id}")
+            reviews[gate_id] = review_text + "\n"
+            current_gate_id = None
+            current_lines = []
+            continue
+
+        if current_gate_id is not None:
+            current_lines.append(raw_line)
+
+    if current_gate_id is not None:
+        raise ValueError(f"unterminated gate review block: {current_gate_id}")
+
+    missing = [gate_id for gate_id in expected_gate_ids if gate_id not in reviews]
+    if missing:
+        raise ValueError(f"missing gate reviews in bundle output: {', '.join(missing)}")
+
+    return reviews
+
+
+def write_bundle_artifacts(
+    *,
+    artifact_dir: Path,
+    raw_bundle_markdown: str,
+    parsed_reviews: dict[str, str] | None = None,
+) -> None:
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    (artifact_dir / "bundle-output.md").write_text(raw_bundle_markdown, encoding="utf-8")
+    if parsed_reviews is None:
+        return
+    for gate_id, review_text in parsed_reviews.items():
+        (artifact_dir / encode_stage_filename(gate_id)).write_text(review_text, encoding="utf-8")
+
+
+def record_bundle_reviews(
+    conn,
+    *,
+    review_run_id: int,
+    gate_ids: list[str],
+    parsed_reviews: dict[str, str],
+) -> None:
+    review_run = load_review_run(conn, review_run_id=review_run_id)
+    if review_run is None:
+        raise ValueError(f"review run not found: {review_run_id}")
+    if review_run.status != "running":
+        raise ValueError(f"review run is not writable: {review_run.status}")
+
+    run_gates = {row.gate_id: row for row in load_review_run_gates(conn, review_run_id=review_run_id)}
+    for gate_id in gate_ids:
+        run_gate = run_gates.get(gate_id)
+        if run_gate is None:
+            raise ValueError(f"gate {gate_id} is not part of review run {review_run_id}")
+        review_text = parsed_reviews[gate_id]
+        insert_gate_review(
+            conn,
+            review_run_id=review_run_id,
+            note_path=review_run.note_path,
+            gate_id=gate_id,
+            model_id=review_run.model_id,
+            decision=parse_review_decision(review_text),
+            rationale_markdown=review_text,
+            evidence_json=None,
+            gate_sha=run_gate.gate_sha,
+            reviewed_note_sha=review_run.reviewed_note_sha,
+            reviewed_note_commit=review_run.reviewed_note_commit,
+            reviewed_at=iso_now(),
+            review_kind="full-review",
+        )
+
+
 def serialize_telemetry(telemetry: dict[str, object] | None) -> str | None:
     if telemetry is None:
         return None
@@ -105,6 +212,7 @@ def persist_review_run_telemetry(
     *,
     review_run_id: int,
     telemetry_json: str | None,
+    raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
     fallback_failure_reason: str | None = None,
 ) -> None:
@@ -117,6 +225,7 @@ def persist_review_run_telemetry(
             conn,
             review_run_id=review_run_id,
             completed_at=review_run.completed_at or iso_now(),
+            raw_bundle_markdown=raw_bundle_markdown,
             debug_log=debug_log,
             telemetry_json=telemetry_json,
         )
@@ -128,6 +237,7 @@ def persist_review_run_telemetry(
             review_run_id=review_run_id,
             failure_reason=review_run.failure_reason or fallback_failure_reason or "review run failed",
             completed_at=review_run.completed_at or iso_now(),
+            raw_bundle_markdown=raw_bundle_markdown,
             debug_log=debug_log,
             telemetry_json=telemetry_json,
         )
@@ -141,7 +251,6 @@ def build_prompt(
     resolved_links: list[tuple[str, str, str]],
     unresolved_links: list[tuple[str, str]],
     review_run_id: int,
-    staging_dir: Path,
 ) -> str:
     gates = " ".join(gate_ids)
     lines = [
@@ -154,15 +263,17 @@ def build_prompt(
         "- When following a markdown link from the target note, use the pre-resolved path table below instead of searching for targets by name.",
         "- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.",
         "",
-        "Override only the output sink for this run:",
-        "- Do not write to canonical review paths under kb/reports/reviews.",
-        "- For each gate, write the full review markdown to the staging file listed below.",
-        f"- Then run `python3 scripts/write_gate_review.py --review-run-id {review_run_id} --gate-id <gate-id> --input-file <staged-file>`.",
-        "- Use exactly one staged file per gate.",
-        "- After all gates have been recorded successfully, stop. Do not finalize the review run yourself.",
+        "Output contract for this run:",
+        "- Do not write files or invoke review helper scripts.",
+        "- Return exactly one markdown document in this process's stdout.",
+        "- Use exactly one block per requested gate.",
+        "- Use these exact sentinels for every block:",
+        "  === GATE REVIEW START: <gate-id> ===",
+        "  === GATE REVIEW END: <gate-id> ===",
+        "- Inside each block, include a decision line in a parseable form such as `## Result: PASS` or `## Result: CONCERN`.",
+        "- End output after the final gate block.",
         "",
         f"Review run id: {review_run_id}",
-        f"Staging directory: {staging_dir}",
         "Requested gate definition files:",
     ]
     for gate_id in gate_ids:
@@ -186,6 +297,36 @@ def build_prompt(
 
     lines.extend(
         [
+            "",
+            "Bundle template:",
+            "# Review Bundle",
+            "",
+            f"Review run id: {review_run_id}",
+            f"Target: {note_path}",
+            "",
+        ]
+    )
+    for gate_id in gate_ids:
+        lines.extend(
+            [
+                f"=== GATE REVIEW START: {gate_id} ===",
+                "## Result: PASS|CONCERN|FAIL|ERROR",
+                "",
+                "### Summary",
+                "<short paragraph>",
+                "",
+                "### Findings",
+                "- <severity>: <finding>",
+                "",
+                "### Suggested Revision",
+                "<optional; omit if not needed>",
+                f"=== GATE REVIEW END: {gate_id} ===",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
         "",
         "Requested gate definitions (authoritative for this run):",
         ]
@@ -195,14 +336,6 @@ def build_prompt(
         lines.append(gate_texts[gate_id].rstrip())
         lines.append("")
 
-    lines.extend(
-        [
-        "Gate staging files:",
-        ]
-    )
-    for gate_id in gate_ids:
-        stage_file = staging_dir / encode_stage_filename(gate_id)
-        lines.append(f"- {gate_id} -> {stage_file}")
     return "\n".join(lines)
 
 
@@ -269,7 +402,6 @@ def main() -> None:
         resolved_links=resolved_links,
         unresolved_links=unresolved_links,
         review_run_id=review_run_id,
-        staging_dir=staging_dir,
     )
 
     if args.dry_run:
@@ -277,6 +409,8 @@ def main() -> None:
         return
 
     result = run_prompt(runner=args.runner, prompt=prompt, repo_root=repo_root, model=args.model)
+    raw_bundle_markdown = result.stdout
+    write_bundle_artifacts(artifact_dir=staging_dir, raw_bundle_markdown=raw_bundle_markdown)
     telemetry_json = serialize_telemetry(result.telemetry)
     runner_debug_log = combine_logs(result.stdout, result.stderr)
     if result.returncode != 0:
@@ -286,6 +420,7 @@ def main() -> None:
                 review_run_id=review_run_id,
                 failure_reason=f"{args.runner} exited {result.returncode}",
                 completed_at=iso_now(),
+                raw_bundle_markdown=raw_bundle_markdown,
                 debug_log=runner_debug_log,
                 telemetry_json=telemetry_json,
             )
@@ -294,8 +429,37 @@ def main() -> None:
             shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(result.returncode)
 
-    # Confirm the runner wrote one review per requested gate before finalizing acceptance.
     with connect(db_path) as conn:
+        try:
+            parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=gate_ids)
+            write_bundle_artifacts(
+                artifact_dir=staging_dir,
+                raw_bundle_markdown=raw_bundle_markdown,
+                parsed_reviews=parsed_reviews,
+            )
+            record_bundle_reviews(
+                conn,
+                review_run_id=review_run_id,
+                gate_ids=gate_ids,
+                parsed_reviews=parsed_reviews,
+            )
+        except ValueError as exc:
+            fail_review_run(
+                conn,
+                review_run_id=review_run_id,
+                failure_reason=str(exc),
+                completed_at=iso_now(),
+                raw_bundle_markdown=raw_bundle_markdown,
+                debug_log=runner_debug_log,
+                telemetry_json=telemetry_json,
+            )
+            conn.commit()
+            if not args.keep_staging:
+                shutil.rmtree(staging_dir, ignore_errors=True)
+            raise SystemExit(1)
+
+        conn.commit()
+
         written = load_gate_reviews_for_run(conn, review_run_id=review_run_id)
         if len(written) != len(gate_ids):
             fail_review_run(
@@ -303,6 +467,7 @@ def main() -> None:
                 review_run_id=review_run_id,
                 failure_reason=f"incomplete gate coverage: expected {len(gate_ids)}, found {len(written)}",
                 completed_at=iso_now(),
+                raw_bundle_markdown=raw_bundle_markdown,
                 debug_log=runner_debug_log,
                 telemetry_json=telemetry_json,
             )
@@ -332,6 +497,7 @@ def main() -> None:
                 conn,
                 review_run_id=review_run_id,
                 telemetry_json=telemetry_json,
+                raw_bundle_markdown=raw_bundle_markdown,
                 debug_log=finalize_debug_log,
                 fallback_failure_reason=f"finalize_review_run.py exited {finalize.returncode}",
             )
@@ -340,12 +506,13 @@ def main() -> None:
             shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(finalize.returncode)
 
-    if telemetry_json is not None:
+    if telemetry_json is not None or raw_bundle_markdown:
         with connect(db_path) as conn:
             persist_review_run_telemetry(
                 conn,
                 review_run_id=review_run_id,
                 telemetry_json=telemetry_json,
+                raw_bundle_markdown=raw_bundle_markdown,
             )
             conn.commit()
 

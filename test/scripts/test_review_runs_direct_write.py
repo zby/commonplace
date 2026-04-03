@@ -26,6 +26,7 @@ def load_module(name: str, path: Path):
 
 review_db = load_module("review_db_review_runs_test", SCRIPTS_DIR / "review_db.py")
 review_metadata = load_module("review_metadata_review_runs_test", SCRIPTS_DIR / "review_metadata.py")
+run_review_bundle = load_module("run_review_bundle_review_runs_test", SCRIPTS_DIR / "run_review_bundle.py")
 warn_selector = load_module("warn_selector_review_runs_test", SCRIPTS_DIR / "warn_selector.py")
 
 
@@ -385,48 +386,36 @@ def test_run_review_bundle_with_fake_claude(tmp_path: Path) -> None:
     fake_claude = fake_bin / "claude"
     fake_claude.write_text(
         f"""#!/usr/bin/env python3
-import os
-import re
-import subprocess
+import json
 import sys
-from pathlib import Path
 
-prompt = sys.argv[-1]
-run_id = re.search(r"Review run id: (\\d+)", prompt).group(1)
-capture = False
-lines = []
-for line in prompt.splitlines():
-    if line.strip() == "Gate staging files:":
-        capture = True
-        continue
-    if capture and line.startswith("- ") and " -> " in line:
-        lines.append(line[2:])
-for entry in lines:
-    gate_id, path = entry.split(" -> ", 1)
-    stage_path = Path(path)
-    stage_path.parent.mkdir(parents=True, exist_ok=True)
-    if gate_id.endswith("source-residue"):
-        body = "## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n"
-    else:
-        body = "## Result: PASS\\n\\nLooks good.\\n"
-    stage_path.write_text(body, encoding="utf-8")
-    subprocess.run(
-        [
-            sys.executable,
-            "{(SCRIPTS_DIR / 'write_gate_review.py').as_posix()}",
-            "--review-run-id",
-            run_id,
-            "--gate-id",
-            gate_id,
-            "--input-file",
-            str(stage_path),
-            "--db",
-            os.environ["COMMONPLACE_REVIEW_DB"],
-        ],
-        check=True,
-        cwd="{repo.as_posix()}",
-    )
-print("fake claude completed")
+for event in [
+    {{"type": "system", "subtype": "init"}},
+    {{
+        "type": "assistant",
+        "message": {{
+            "id": "msg-1",
+            "content": [
+                {{"type": "text", "text": "Working through the requested links.\\n"}},
+                {{"type": "tool_use", "name": "Read", "input": {{"file_path": "kb/notes/sample.md"}}}},
+            ],
+        }},
+    }},
+    {{
+        "type": "assistant",
+        "message": {{
+            "id": "msg-2",
+            "content": [
+                {{
+                    "type": "text",
+                    "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===\\n",
+                }},
+            ],
+        }},
+    }},
+    {{"type": "result", "subtype": "success", "is_error": False, "result": "done"}},
+]:
+    print(json.dumps(event), flush=True)
 """,
         encoding="utf-8",
     )
@@ -455,7 +444,6 @@ print("fake claude completed")
         capture_output=True,
         text=True,
     )
-    assert "fake claude completed" in result.stdout
     assert "completed" in result.stdout
 
     with sqlite3.connect(db_path) as conn:
@@ -463,6 +451,104 @@ print("fake claude completed")
         run_count = conn.execute("SELECT count(*) FROM review_runs").fetchone()[0]
         gate_count = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
         acceptance_count = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+        raw_bundle = conn.execute("SELECT raw_bundle_markdown FROM review_runs").fetchone()[0]
         assert run_count == 1
         assert gate_count == 2
         assert acceptance_count == 2
+        assert "=== GATE REVIEW START: prose/source-residue ===" in raw_bundle
+
+
+def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
+    bundle = """Working notes before the bundle.
+
+# Review Bundle
+
+=== GATE REVIEW START: prose/source-residue ===
+## Findings
+
+**WARN — Residue remains.**
+=== GATE REVIEW END: prose/source-residue ===
+
+Extra trailing note.
+
+=== GATE REVIEW START: semantic/grounding-alignment ===
+## Result: PASS
+
+Looks good.
+=== GATE REVIEW END: semantic/grounding-alignment ===
+"""
+
+    parsed = run_review_bundle.extract_bundle_reviews(
+        bundle,
+        expected_gate_ids=["prose/source-residue", "semantic/grounding-alignment"],
+    )
+
+    assert parsed["prose/source-residue"].startswith("## Findings")
+    assert parsed["semantic/grounding-alignment"].startswith("## Result: PASS")
+
+
+def test_run_review_bundle_parse_failure_persists_raw_bundle(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_claude = fake_bin / "claude"
+    fake_claude.write_text(
+        """#!/usr/bin/env python3
+import json
+
+for event in [
+    {"type": "system", "subtype": "init"},
+    {
+        "type": "assistant",
+        "message": {
+            "id": "msg-1",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "# Review Bundle\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.**\\n=== GATE REVIEW END: prose/source-residue ===\\n",
+                },
+            ],
+        },
+    },
+    {"type": "result", "subtype": "success", "is_error": False, "result": "done"},
+]:
+    print(json.dumps(event), flush=True)
+""",
+        encoding="utf-8",
+    )
+    fake_claude.chmod(0o755)
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPTS_DIR / "run_review_bundle.py"),
+            "kb/notes/sample.md",
+            "prose",
+            "semantic/grounding-alignment",
+            "--runner",
+            "claude-code",
+            "--db",
+            str(db_path),
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 1
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run_row = conn.execute(
+            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs"
+        ).fetchone()
+        assert run_row["status"] == "failed"
+        assert "missing gate reviews in bundle output" in run_row["failure_reason"]
+        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
