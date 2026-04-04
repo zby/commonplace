@@ -60,6 +60,23 @@ But the comparison cuts both ways. **AgeMem has a closed learning loop; we don't
 
 4. **Base models underuse memory operations.** Post-training, AgeMem agents increase Add operations from 0.92 to 1.64 per episode. Base models with access to memory tools don't use them enough. Even without RL, better prompting or skill design could improve the KB's human+agent loop.
 
+## The inspectability-learnability spectrum
+
+AgeMem is not the only approach to memory management policy. [Fofadiya & Tiwari's adaptive budgeted forgetting](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md) specifies the policy as an explicit formula — relevance = f(recency, frequency, semantic alignment) — with constrained optimization to enforce a hard memory budget. The policy is fully inspectable: you can see exactly why a memory was pruned. But it cannot adapt: the formula is fixed at design time, tuned on benchmarks, and applies uniformly regardless of task.
+
+This establishes a spectrum across systems reviewed in this KB:
+
+| System | Policy mechanism | Inspectability | Adaptability | Oracle needed? |
+|---|---|---|---|---|
+| Fofadiya & Tiwari | explicit formula + constrained optimization | full — formula is readable | none — weights are fixed | no |
+| [Cludebot](./related-systems/cludebot.md) | Generative Agents scoring formula + type-specific decay | high — formula is readable, decay rates are configured | limited — dream cycles reorganize but don't retrain | no |
+| [cass-memory](./related-systems/cass_memory_system.md) | confidence-decayed playbook bullets + Jaccard conflict detection | high — confidence scores and conflict rules are inspectable | moderate — confidence updates from feedback | no |
+| AgeMem | RL-trained policy in weights | none — policy is opaque | full — learns from task-completion reward | yes — task completion |
+
+The pattern: inspectable policies avoid oracle dependency because their designers embed the judgment upfront. Learned policies need oracles because the judgment emerges from training signal. The more you can specify in advance, the less you need to learn — but the less you can adapt to tasks the designer didn't anticipate.
+
+Fofadiya & Tiwari's key empirical finding — that controlled forgetting *improves* performance rather than merely maintaining it under budget — suggests that even a fixed formula can outperform unbounded accumulation. But a missing random-pruning baseline leaves open whether the specific formula or simply budget enforcement drives the improvement (see [ingest limitations](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md#limitations-our-opinion)).
+
 ---
 
 Relevant Notes:
@@ -75,3 +92,4 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through symbolic artifacts during deployment; same behavioral changes, different substrates
 - [inspectable substrate defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: AgeMem's split substrate (facts in store, policy in weights) vs commonplace's unified substrate (both in files)
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time constraining achieves; they differ on inspectability but AgeMem has closed the loop
+- [adaptive budgeted forgetting (Fofadiya & Tiwari)](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md) — extends: the inspectable-side counterpart to AgeMem's opaque policy; explicit relevance formula vs RL-trained weights, establishing the inspectability-learnability spectrum for memory management policy
