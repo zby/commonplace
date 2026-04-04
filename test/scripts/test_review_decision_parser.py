@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -50,3 +51,113 @@ def test_parse_review_decision_uses_highest_finding_severity_without_explicit_ou
 """
 
     assert review_db.parse_review_decision(review_text) == "fail"
+
+
+def test_parse_review_decision_supports_legacy_heading() -> None:
+    review_text = """<!-- REVIEW-METADATA -->
+## PASS
+
+Looks good.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "pass"
+
+
+def test_parse_review_decision_supports_revised_result_override() -> None:
+    review_text = """## Result: CONCERN
+
+### Findings
+- WARN: Something looked wrong at first.
+
+Revised result: PASS
+"""
+
+    assert review_db.parse_review_decision(review_text) == "pass"
+
+
+def test_parse_review_decision_supports_flagging_phrase_override() -> None:
+    review_text = """## Result: CONCERN
+
+### Findings
+- INFO: Borderline issue.
+
+Flagging as INFO rather than WARN because the case is defensible.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "pass"
+
+
+def test_parse_review_decision_supports_minor_severity() -> None:
+    review_text = """## Result: CONCERN
+
+### Findings
+- **minor**: The title is mildly awkward as inline prose.
+- **info**: No rewrite required.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "concern"
+
+
+def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> None:
+    review_text = """## Result: PASS
+
+### Findings
+- Minor: The summary could be tighter.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "pass"
+
+
+def test_parse_review_decision_treats_no_violations_with_pass_findings_as_pass() -> None:
+    review_text = """## Result: CONCERN
+
+### Summary
+No violations found.
+
+### Findings
+- PASS: All bullet items begin with a capitalized lead-in.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "pass"
+
+
+def test_parse_review_decision_returns_unknown_on_conflicting_signals() -> None:
+    review_text = """## Result: CONCERN
+
+### Findings
+- PASS: The title is clear and aligned.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "unknown"
+
+
+def test_parse_review_decision_returns_unknown_when_no_signal_exists() -> None:
+    review_text = """### Summary
+No explicit outcome and no severity labels.
+"""
+
+    assert review_db.parse_review_decision(review_text) == "unknown"
+
+
+def test_ensure_db_migrates_gate_review_schema_to_support_unknown(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    old_schema = (REPO_ROOT / "scripts" / "review-schema.sql").read_text(encoding="utf-8").replace(
+        "decision IN ('pass', 'fail', 'concern', 'error', 'unknown')",
+        "decision IN ('pass', 'fail', 'concern', 'error')",
+    )
+    with sqlite3.connect(db_path) as conn:
+        conn.executescript(old_schema)
+        conn.commit()
+
+    review_db.ensure_db(REPO_ROOT, db_path)
+
+    with sqlite3.connect(db_path) as conn:
+        row = conn.execute(
+            """
+            SELECT sql
+            FROM sqlite_master
+            WHERE type = 'table' AND name = 'gate_reviews'
+            """
+        ).fetchone()
+        assert row is not None
+        assert "'unknown'" in row[0].lower()

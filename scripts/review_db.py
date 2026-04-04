@@ -76,14 +76,106 @@ class ReviewRunGateRow:
 _BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|concern|error)\*\*", re.IGNORECASE)
 _RESULT_RE = re.compile(
     r"^(?:##\s*(?:Result|Verdict):|Verdict:|(?:[-*]\s*)?Outcome:)\s*"
-    r"(pass|fail|concern|error|warn|info)\s*$",
+    r"(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+_SPLIT_RESULT_RE = re.compile(
+    r"^##\s*(?:Result|Verdict|Outcome)\s*$\s*^(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+_REVISED_RESULT_RE = re.compile(
+    r"^(?:\*\*)?Revised\s+(?:result|verdict|outcome)(?:\*\*)?\s*:\s*"
+    r"(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+_FLAGGING_DECISION_RE = re.compile(
+    r"\bflagging\s+as\s+(pass|fail|concern|error|warn|info|ok|unknown)\b",
+    re.IGNORECASE,
+)
+_LEGACY_RESULT_HEADING_RE = re.compile(
+    r"^##\s+(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 _FINDING_SEVERITY_RE = re.compile(
-    r"^(?:[-*]\s+)?(?:\*\*Severity:\*\*\s*)?(error|fail|warn|info)\s*(?:[:\u2014-]|$)|"
-    r"^(?:[-*]\s+)?\*\*(error|fail|warn|info)\b",
+    r"^(?:[-*]\s+)?(?:\*\*Severity:\*\*\s*)?(pass|ok|info|concern|warn|fail|error)\s*(?:[:\u2014-]|$)|"
+    r"^(?:[-*]\s+)?\*\*(pass|ok|info|concern|warn|fail|error)\b",
     re.IGNORECASE | re.MULTILINE,
 )
+_LEGACY_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|concern|error|warn|info|ok|unknown)\b", re.IGNORECASE)
+_NO_VIOLATIONS_RE = re.compile(r"\bno violations found\b", re.IGNORECASE)
+_QUALITATIVE_FINDING_RE = re.compile(r"^(?:[-*]\s+)?\*\*(minor|moderate|major)\b", re.IGNORECASE | re.MULTILINE)
+
+DECISION_VALUES = ("pass", "fail", "concern", "error", "unknown")
+
+
+def normalize_review_decision(raw: str) -> str | None:
+    decision = raw.strip().lower()
+    if decision in {"pass", "ok", "info"}:
+        return "pass"
+    if decision in {"concern", "warn"}:
+        return "concern"
+    if decision in {"fail", "error", "unknown"}:
+        return decision
+    return None
+
+
+def _decision_rank(decision: str) -> int:
+    return {
+        "pass": 0,
+        "concern": 1,
+        "fail": 2,
+        "error": 3,
+        "unknown": 4,
+    }[decision]
+
+
+def _collect_explicit_review_decisions(review_text: str) -> list[tuple[str, str]]:
+    explicit: list[tuple[str, str]] = []
+    for pattern, source in (
+        (_RESULT_RE, "result"),
+        (_SPLIT_RESULT_RE, "split-result"),
+        (_LEGACY_RESULT_HEADING_RE, "legacy-heading"),
+        (_REVISED_RESULT_RE, "revised-result"),
+    ):
+        for match in pattern.finditer(review_text):
+            decision = normalize_review_decision(match.group(1))
+            if decision is not None:
+                explicit.append((source, decision))
+
+    stripped = review_text.lstrip()
+    match = _LEGACY_BOLD_DECISION_RE.match(stripped)
+    if match is not None:
+        decision = normalize_review_decision(match.group(1))
+        if decision is not None:
+            explicit.append(("bold-heading", decision))
+    return explicit
+
+
+def _derive_review_decision_from_findings(review_text: str) -> str | None:
+    severities = {
+        normalized
+        for match in _FINDING_SEVERITY_RE.finditer(review_text)
+        for group in match.groups()
+        if group
+        for normalized in [normalize_review_decision(group)]
+        if normalized is not None
+    }
+    if not severities:
+        return None
+    return max(severities, key=_decision_rank)
+
+
+def _collect_flagged_review_decisions(review_text: str) -> list[str]:
+    decisions: list[str] = []
+    for match in _FLAGGING_DECISION_RE.finditer(review_text):
+        decision = normalize_review_decision(match.group(1))
+        if decision is not None:
+            decisions.append(decision)
+    return decisions
+
+
+def _collect_qualitative_findings(review_text: str) -> set[str]:
+    return {match.group(1).lower() for match in _QUALITATIVE_FINDING_RE.finditer(review_text)}
 
 
 def connect(db_path: Path) -> sqlite3.Connection:
@@ -160,6 +252,9 @@ def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
             ADD COLUMN review_run_id INTEGER REFERENCES review_runs(id) ON DELETE CASCADE
             """
         )
+        gate_review_columns = _column_names(conn, "gate_reviews")
+
+    _ensure_gate_review_decision_schema(conn, gate_review_columns)
     conn.execute(
         """
         CREATE UNIQUE INDEX IF NOT EXISTS idx_gate_reviews_review_run_gate
@@ -173,6 +268,97 @@ def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
         ON gate_reviews(review_run_id)
         """
     )
+
+
+def _gate_reviews_support_unknown_decision(conn: sqlite3.Connection) -> bool:
+    row = conn.execute(
+        """
+        SELECT sql
+        FROM sqlite_master
+        WHERE type = 'table' AND name = 'gate_reviews'
+        """
+    ).fetchone()
+    if row is None or row["sql"] is None:
+        return False
+    return "'unknown'" in str(row["sql"]).lower()
+
+
+def _ensure_gate_review_decision_schema(conn: sqlite3.Connection, gate_review_columns: set[str]) -> None:
+    if _gate_reviews_support_unknown_decision(conn):
+        return
+
+    has_review_run_id = "review_run_id" in gate_review_columns
+    fk_enabled = bool(conn.execute("PRAGMA foreign_keys").fetchone()[0])
+
+    if fk_enabled:
+        conn.commit()
+        conn.execute("PRAGMA foreign_keys = OFF")
+
+    try:
+        conn.execute(
+            """
+            CREATE TABLE gate_reviews_new (
+                id INTEGER PRIMARY KEY,
+                review_run_id INTEGER REFERENCES review_runs(id) ON DELETE CASCADE,
+                note_path TEXT NOT NULL,
+                gate_id TEXT NOT NULL,
+                model_id TEXT NOT NULL,
+                decision TEXT NOT NULL CHECK (
+                    decision IN ('pass', 'fail', 'concern', 'error', 'unknown')
+                ),
+                rationale_markdown TEXT NOT NULL,
+                evidence_json TEXT,
+                gate_sha TEXT NOT NULL,
+                reviewed_note_sha TEXT NOT NULL,
+                reviewed_note_commit TEXT,
+                reviewed_at TEXT NOT NULL,
+                review_kind TEXT NOT NULL CHECK (
+                    review_kind IN ('full-review', 'manual-import')
+                )
+            )
+            """
+        )
+        review_run_id_select = "review_run_id" if has_review_run_id else "NULL AS review_run_id"
+        conn.execute(
+            f"""
+            INSERT INTO gate_reviews_new (
+                id,
+                review_run_id,
+                note_path,
+                gate_id,
+                model_id,
+                decision,
+                rationale_markdown,
+                evidence_json,
+                gate_sha,
+                reviewed_note_sha,
+                reviewed_note_commit,
+                reviewed_at,
+                review_kind
+            )
+            SELECT
+                id,
+                {review_run_id_select},
+                note_path,
+                gate_id,
+                model_id,
+                decision,
+                rationale_markdown,
+                evidence_json,
+                gate_sha,
+                reviewed_note_sha,
+                reviewed_note_commit,
+                reviewed_at,
+                review_kind
+            FROM gate_reviews
+            """
+        )
+        conn.execute("DROP TABLE gate_reviews")
+        conn.execute("ALTER TABLE gate_reviews_new RENAME TO gate_reviews")
+    finally:
+        if fk_enabled:
+            conn.commit()
+            conn.execute("PRAGMA foreign_keys = ON")
 
 
 def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, str], AcceptanceState]:
@@ -525,33 +711,48 @@ def append_acceptance_event(
 
 
 def parse_review_decision(review_text: str) -> str:
-    result_match = _RESULT_RE.search(review_text)
-    if result_match is not None:
-        decision = result_match.group(1).lower()
-        if decision == "warn":
-            return "concern"
-        if decision == "info":
-            return "pass"
-        return decision
+    explicit = _collect_explicit_review_decisions(review_text)
+    findings_decision = _derive_review_decision_from_findings(review_text)
+    flagged = _collect_flagged_review_decisions(review_text)
+    qualitative_findings = _collect_qualitative_findings(review_text)
 
-    severities = {
-        next(group.lower() for group in match.groups() if group)
-        for match in _FINDING_SEVERITY_RE.finditer(review_text)
-    }
-    if "error" in severities:
-        return "error"
-    if "fail" in severities:
-        return "fail"
-    if "warn" in severities:
-        return "concern"
-    if severities:
-        return "pass"
+    if flagged:
+        if len(set(flagged)) > 1:
+            return "unknown"
+        return flagged[-1]
+
+    revised = [decision for source, decision in explicit if source == "revised-result"]
+    if revised:
+        if len(set(revised)) > 1:
+            return "unknown"
+        return revised[-1]
+
+    explicit_decisions = [decision for _, decision in explicit]
+    if explicit_decisions:
+        unique_explicit = set(explicit_decisions)
+        if len(unique_explicit) > 1:
+            return "unknown"
+        candidate = explicit_decisions[-1]
+        if candidate == "concern" and findings_decision == "pass" and _NO_VIOLATIONS_RE.search(review_text):
+            return "pass"
+        if candidate == "concern" and qualitative_findings & {"minor", "moderate"}:
+            return "concern"
+        if candidate == "fail" and "major" in qualitative_findings:
+            return "fail"
+        if findings_decision is not None and candidate != findings_decision:
+            return "unknown"
+        return candidate
+
+    if findings_decision is not None:
+        return findings_decision
 
     stripped = review_text.lstrip()
     match = _BOLD_DECISION_RE.match(stripped)
     if match is not None:
-        return match.group(1).lower()
-    return "concern"
+        decision = normalize_review_decision(match.group(1))
+        if decision is not None:
+            return decision
+    return "unknown"
 
 
 def load_gate_reviews_for_note(
