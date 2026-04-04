@@ -4,7 +4,13 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = []
 
+[dependency-groups]
+dev = ["pytest"]
+
 [project.optional-dependencies]
 docs = ["mkdocs", "mkdocs-redirects"]
 snapshot = ["xdk"]
 all = ["mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
+
+[tool.pytest.ini_options]
+testpaths = ["scripts", "test/scripts"]
