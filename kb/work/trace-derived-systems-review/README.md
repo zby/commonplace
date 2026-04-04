@@ -26,6 +26,8 @@ This workshop holds the **execution packets** for those candidates so the work c
 ## In evaluation (review exists, needs trace-derived placement)
 
 7. **REM** — four-database episodic memory with LLM consolidation from episodes to scored semantic facts; review exists, needs trace-derived placement assessment
+8. **auto-harness** — minimal benchmark-gated outer loop with suite promotion and freeform learnings; review exists, needs trace-derived placement assessment
+9. **Pal** — Agno-based personal agent with framework-owned agentic memory, past-session search, and operational learnings; review exists, needs trace-derived placement assessment
 
 ## Parked but likely worth a later pass
 
@@ -53,3 +55,4 @@ This workshop holds the **execution packets** for those candidates so the work c
 - [instructions-voyager-review.md](./instructions-voyager-review.md)
 - [instructions-agent-r-review.md](./instructions-agent-r-review.md)
 - [instructions-rem-review.md](./instructions-rem-review.md)
+- [instructions-auto-harness-review.md](./instructions-auto-harness-review.md)
