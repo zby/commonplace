@@ -108,6 +108,123 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     return repo, db_path
 
 
+def install_fake_codex_bundle_runner(fake_codex: Path, *, reasoning_effort: str = "xhigh") -> None:
+    session_id = "019d6000-17a2-73b0-b341-3f36434aa48b"
+    fake_codex.write_text(
+        f"""#!/usr/bin/env python3
+import json
+import os
+from pathlib import Path
+
+session_id = "{session_id}"
+home = Path(os.environ["HOME"])
+session_dir = home / ".codex" / "sessions" / "2026" / "04" / "04"
+session_dir.mkdir(parents=True, exist_ok=True)
+session_log = session_dir / f"rollout-2026-04-04T09-00-00-{{session_id}}.jsonl"
+prompt = os.sys.argv[-1]
+events = [
+    {{
+        "type": "session_meta",
+        "payload": {{
+            "id": session_id,
+            "timestamp": "2026-04-04T07:00:00.000Z",
+            "cwd": os.getcwd(),
+            "originator": "codex_exec",
+            "cli_version": "0.0.0",
+            "model_provider": "openai",
+        }},
+    }},
+    {{
+        "type": "turn_context",
+        "payload": {{
+            "cwd": os.getcwd(),
+            "approval_policy": "never",
+            "sandbox_policy": {{
+                "type": "workspace-write",
+                "writable_roots": [os.getcwd()],
+                "network_access": True,
+            }},
+            "model": "gpt-5.4",
+            "collaboration_mode": {{
+                "mode": "default",
+                "settings": {{
+                    "model": "gpt-5.4",
+                    "reasoning_effort": "{reasoning_effort}",
+                }},
+            }},
+            "effort": "{reasoning_effort}",
+        }},
+    }},
+    {{
+        "type": "response_item",
+        "payload": {{
+            "type": "message",
+            "role": "user",
+            "content": [{{"type": "input_text", "text": prompt}}],
+        }},
+    }},
+    {{
+        "type": "event_msg",
+        "payload": {{
+            "type": "task_started",
+            "turn_id": "turn-1",
+        }},
+    }},
+    {{
+        "type": "event_msg",
+        "payload": {{
+            "type": "token_count",
+            "info": {{
+                "model_context_window": 272000,
+                "last_token_usage": {{
+                    "input_tokens": 100,
+                    "cached_input_tokens": 50,
+                    "output_tokens": 25,
+                    "reasoning_output_tokens": 10,
+                    "total_tokens": 175,
+                }},
+                "total_token_usage": {{
+                    "input_tokens": 100,
+                    "cached_input_tokens": 50,
+                    "output_tokens": 25,
+                    "reasoning_output_tokens": 10,
+                    "total_tokens": 175,
+                }},
+            }},
+            "rate_limits": {{"primary": {{"used_percent": 7}}}},
+        }},
+    }},
+    {{
+        "type": "event_msg",
+        "payload": {{
+            "type": "task_complete",
+            "turn_id": "turn-1",
+            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\n## Result: CONCERN\\n\\nNeeds revision.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
+        }},
+    }},
+]
+with session_log.open("w", encoding="utf-8") as handle:
+    for event in events:
+        handle.write(json.dumps(event) + "\\n")
+
+print(f"session id: {{session_id}}", flush=True)
+print("=== GATE REVIEW START: prose/source-residue ===", flush=True)
+print("## Result: CONCERN", flush=True)
+print("", flush=True)
+print("Needs revision.", flush=True)
+print("=== GATE REVIEW END: prose/source-residue ===", flush=True)
+print("", flush=True)
+print("=== GATE REVIEW START: semantic/grounding-alignment ===", flush=True)
+print("## Result: PASS", flush=True)
+print("", flush=True)
+print("Looks good.", flush=True)
+print("=== GATE REVIEW END: semantic/grounding-alignment ===", flush=True)
+""",
+        encoding="utf-8",
+    )
+    fake_codex.chmod(0o755)
+
+
 def run_script(repo: Path, script_name: str, *args: str, env: dict[str, str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [sys.executable, str(SCRIPTS_DIR / script_name), *args],
@@ -136,6 +253,7 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         env=env,
     )
     review_run_id = int(created.stdout.strip())
+    assert run_review_bundle.bundle_artifact_dir(repo, review_run_id).is_dir()
 
     prose_review = write(
         repo / "tmp" / "prose.md",
@@ -224,6 +342,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         env=env,
     )
     payload = json.loads(created.stdout)
+    assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
     assert payload["note_path"] == "kb/notes/sample.md"
     assert payload["model_id"] == "test-model"
     assert payload["runner"] == "codex"
@@ -464,6 +583,145 @@ for event in [
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
 
 
+def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    fake_home = tmp_path / "home"
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_codex = fake_bin / "codex"
+    install_fake_codex_bundle_runner(fake_codex, reasoning_effort="xhigh")
+
+    env = os.environ.copy()
+    env["HOME"] = str(fake_home)
+    env["COMMONPLACE_REVIEW_MODEL"] = "gpt-5-4-high"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPTS_DIR / "run_review_bundle.py"),
+            "kb/notes/sample.md",
+            "prose",
+            "semantic/grounding-alignment",
+            "--runner",
+            "codex",
+            "--db",
+            str(db_path),
+        ],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "completed" in result.stdout
+    assert "requested model partition gpt-5-4-high" in result.stderr
+    assert "gpt-5-4-xhigh" in result.stderr
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run_row = conn.execute(
+            "SELECT model_id, telemetry_json FROM review_runs"
+        ).fetchone()
+        assert run_row is not None
+        assert run_row["model_id"] == "gpt-5-4-xhigh"
+        telemetry = json.loads(run_row["telemetry_json"])
+        assert telemetry["model"] == "gpt-5.4"
+        assert telemetry["reasoning_effort"] == "xhigh"
+
+        gate_rows = conn.execute(
+            "SELECT gate_id, model_id FROM gate_reviews ORDER BY gate_id"
+        ).fetchall()
+        assert [(row["gate_id"], row["model_id"]) for row in gate_rows] == [
+            ("prose/source-residue", "gpt-5-4-xhigh"),
+            ("semantic/grounding-alignment", "gpt-5-4-xhigh"),
+        ]
+
+        acceptance_rows = conn.execute(
+            "SELECT gate_id, model_id FROM acceptance_events ORDER BY gate_id"
+        ).fetchall()
+        assert [(row["gate_id"], row["model_id"]) for row in acceptance_rows] == [
+            ("prose/source-residue", "gpt-5-4-xhigh"),
+            ("semantic/grounding-alignment", "gpt-5-4-xhigh"),
+        ]
+
+
+def test_record_bundle_review_script_reads_artifact_and_finalizes(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        env=env,
+    )
+    review_run_id = int(created.stdout.strip())
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    write(
+        artifact_dir / "bundle-output.md",
+        """# Review Bundle
+
+Review run id: 1
+Target: kb/notes/sample.md
+
+=== GATE REVIEW START: prose/source-residue ===
+## Findings
+
+**WARN — Residue remains.** Temporary review.
+=== GATE REVIEW END: prose/source-residue ===
+
+=== GATE REVIEW START: semantic/grounding-alignment ===
+## Result: PASS
+
+Looks good.
+=== GATE REVIEW END: semantic/grounding-alignment ===
+""",
+    )
+
+    result = run_script(
+        repo,
+        "record_bundle_review.py",
+        "--review-run-id",
+        str(review_run_id),
+        env=env,
+    )
+    assert result.stdout.strip() == f"completed {review_run_id} 2"
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run_row = conn.execute("SELECT status, raw_bundle_markdown FROM review_runs WHERE id = ?", (review_run_id,)).fetchone()
+        assert run_row is not None
+        assert run_row["status"] == "completed"
+        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        gate_rows = conn.execute(
+            "SELECT gate_id, decision FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
+            (review_run_id,),
+        ).fetchall()
+        assert [(row["gate_id"], row["decision"]) for row in gate_rows] == [
+            ("prose/source-residue", "concern"),
+            ("semantic/grounding-alignment", "pass"),
+        ]
+        acceptance_rows = conn.execute(
+            "SELECT gate_id, accepted_review_id FROM acceptance_events WHERE note_path = ? ORDER BY gate_id",
+            ("kb/notes/sample.md",),
+        ).fetchall()
+        assert len(acceptance_rows) == 2
+        assert all(row["accepted_review_id"] is not None for row in acceptance_rows)
+
+    assert (artifact_dir / "prose__source-residue.md").is_file()
+    assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
+
+
 def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
     bundle = """Working notes before the bundle.
 
@@ -560,5 +818,67 @@ for event in [
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
 
     artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    assert (artifact_dir / "bundle-output.md").is_file()
+    assert not (artifact_dir / "prose__source-residue.md").exists()
+
+
+def test_record_bundle_review_script_parse_failure_marks_run_failed(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        env=env,
+    )
+    review_run_id = int(created.stdout.strip())
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    write(
+        artifact_dir / "bundle-output.md",
+        """# Review Bundle
+
+=== GATE REVIEW START: prose/source-residue ===
+## Findings
+
+**WARN — Residue remains.**
+=== GATE REVIEW END: prose/source-residue ===
+""",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPTS_DIR / "record_bundle_review.py"),
+            "--review-run-id",
+            str(review_run_id),
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 1
+    assert "missing gate reviews in bundle output" in result.stderr
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run_row = conn.execute(
+            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs WHERE id = ?",
+            (review_run_id,),
+        ).fetchone()
+        assert run_row is not None
+        assert run_row["status"] == "failed"
+        assert "missing gate reviews in bundle output" in run_row["failure_reason"]
+        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+
     assert (artifact_dir / "bundle-output.md").is_file()
     assert not (artifact_dir / "prose__source-residue.md").exists()

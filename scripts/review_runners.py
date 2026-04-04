@@ -406,7 +406,27 @@ def _normalize_codex_usage(usage: object) -> dict[str, int] | None:
     }
 
 
-def _load_codex_session_log_telemetry(session_log: Path) -> dict[str, object] | None:
+def _codex_reasoning_effort(turn_context: dict[str, object] | None) -> str | None:
+    if not isinstance(turn_context, dict):
+        return None
+
+    effort = turn_context.get("effort")
+    if isinstance(effort, str) and effort.strip():
+        return effort.strip().lower()
+
+    collaboration_mode = turn_context.get("collaboration_mode")
+    if not isinstance(collaboration_mode, dict):
+        return None
+    settings = collaboration_mode.get("settings")
+    if not isinstance(settings, dict):
+        return None
+    effort = settings.get("reasoning_effort")
+    if isinstance(effort, str) and effort.strip():
+        return effort.strip().lower()
+    return None
+
+
+def load_codex_session_log_telemetry(session_log: Path) -> dict[str, object] | None:
     session_meta: dict[str, object] | None = None
     turn_context: dict[str, object] | None = None
     task_started: dict[str, object] | None = None
@@ -473,6 +493,7 @@ def _load_codex_session_log_telemetry(session_log: Path) -> dict[str, object] | 
         "cli_version": session_meta.get("cli_version") if isinstance(session_meta, dict) else None,
         "model_provider": session_meta.get("model_provider") if isinstance(session_meta, dict) else None,
         "model": turn_context.get("model") if isinstance(turn_context, dict) else None,
+        "reasoning_effort": _codex_reasoning_effort(turn_context),
         "turn_id": (
             task_complete.get("turn_id")
             if isinstance(task_complete, dict) and isinstance(task_complete.get("turn_id"), str)
@@ -704,7 +725,7 @@ def run_prompt(
             session_id=_extract_codex_session_id("".join(stdout_chunks)),
         )
         if session_log is not None:
-            codex_telemetry = _load_codex_session_log_telemetry(session_log)
+            codex_telemetry = load_codex_session_log_telemetry(session_log)
 
     return RunnerResult(
         stdout="".join(stdout_chunks),

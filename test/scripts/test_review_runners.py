@@ -25,7 +25,7 @@ def load_module(name: str, path: Path):
 review_runners = load_module("review_runners_test", SCRIPTS_DIR / "review_runners.py")
 
 
-def install_fake_codex(fake_codex: Path, *, emit_session_id: bool) -> None:
+def install_fake_codex(fake_codex: Path, *, emit_session_id: bool, reasoning_effort: str = "xhigh") -> None:
     session_id = "019d54ab-17a2-73b0-b341-3f36434aa48b"
     emit_session_id_line = 'print(f"session id: {session_id}", flush=True)' if emit_session_id else ""
     fake_codex.write_text(
@@ -69,6 +69,14 @@ events = [
                 "writable_roots": [os.getcwd()],
             }},
             "model": "gpt-5.4",
+            "collaboration_mode": {{
+                "mode": "default",
+                "settings": {{
+                    "model": "gpt-5.4",
+                    "reasoning_effort": "{reasoning_effort}",
+                }},
+            }},
+            "effort": "{reasoning_effort}",
         }},
     }},
     {{
@@ -427,6 +435,7 @@ def test_run_prompt_collects_codex_telemetry_from_session_id(monkeypatch, tmp_pa
     assert result.telemetry["source"] == "session-log"
     assert result.telemetry["session_id"] == "019d54ab-17a2-73b0-b341-3f36434aa48b"
     assert result.telemetry["model"] == "gpt-5.4"
+    assert result.telemetry["reasoning_effort"] == "xhigh"
     assert result.telemetry["token_count_events"] == 2
     assert result.telemetry["totals"] == {
         "input_tokens": 387914,
@@ -465,4 +474,5 @@ def test_run_prompt_falls_back_to_codex_prompt_match(monkeypatch, tmp_path: Path
     assert result.telemetry is not None
     assert result.telemetry["session_id"] == "019d54ab-17a2-73b0-b341-3f36434aa48b"
     assert result.telemetry["task_complete_message"] == "Finished review bundle"
+    assert result.telemetry["reasoning_effort"] == "xhigh"
     assert result.telemetry["rate_limits"] == {"primary": {"used_percent": 12}}
