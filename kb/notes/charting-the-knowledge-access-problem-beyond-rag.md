@@ -36,6 +36,19 @@ Search, hierarchy browsing, link-following, grep, and indexes support different 
 
 These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md). The same token count can be easy for one task shape and unusable for another.
 
+**Transformation burden** — queries also differ in how much work remains after the relevant inputs have been found. This seems independent from navigation mode. Some questions are mostly lookup: "Who is the HR head?" Some are derivation or aggregation: "What were last year's expenses?" if the answer requires selecting records and summing them. Some are synthesis: "Why did expenses increase?" Some are conjectural or creative: "How should we reorganize HR next year?"
+
+This suggests a second axis alongside access difficulty:
+
+- access burden: how hard is it to find the right inputs?
+- transformation burden: how hard is it to turn those inputs into the requested output?
+
+That distinction matters because "creating new information" covers several different operations. A derived answer may be new in the sense that it was not stored verbatim, but it is mechanically implied by existing data. That is different from open-ended synthesis or conjecture.
+
+**Symbolic vs semantic post-processing** — one important split inside transformation burden is whether the work after retrieval can be done symbolically or requires semantic judgment. Summing last year's expenses is a symbolic operation over selected records. Explaining why expenses increased requires semantic processing over the records and their context. A common architecture is therefore symbolic search or filtering first, then semantic processing over the retrieved material. Plain RAG is one version of this. Agentic RAG is a stronger version where the LLM also helps decide which symbolic searches to run next.
+
+This symbolic/semantic split is not incidental. It is close to the KB's central architectural move: keep bookkeeping, filtering, aggregation, and orchestration symbolic where possible, and reserve LLM calls for semantic judgment. [Bounded-context orchestration model](./bounded-context-orchestration-model.md) states this explicitly as symbolic steps outside context and bounded agent calls for semantic work. On that framing, some queries should stay mostly symbolic end-to-end, while others need a symbolic retrieval stage that prepares inputs for a semantic call.
+
 **Synthesis** — some questions are not "which page contains the answer?" but "which set of pages must be reconciled to produce the answer?" This is different from landing on the right document. Once a question requires comparison, contradiction resolution, or a whole-picture narrative, the problem becomes one of prompt assembly or pre-[distillation](./definitions/distillation.md), not just retrieval. [Evolving understanding needs re-distillation, not composition](./evolving-understanding-needs-re-distillation-not-composition.md) is one case of this broader pattern.
 
 **Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. This is why [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md). The more a system depends on pointers and distillates, the more it needs maintenance loops that keep them trustworthy.
@@ -47,6 +60,8 @@ These modes also consume context differently. A representation that works well f
 The framing becomes misleading when it hides these differences:
 
 - selecting one landing point vs assembling a reading plan
+- finding the right inputs vs transforming them into the requested output
+- symbolic derivation over retrieved inputs vs semantic synthesis over them
 - retrieving chunks vs exposing structure the agent can traverse
 - finding candidate pages vs preparing a synthesizable packet
 - storing knowledge vs activating it in the right context
@@ -87,6 +102,9 @@ What seems new in agent systems is not the existence of these layers but the har
 ## Open questions
 
 - How many distinct navigation modes are there beyond link-following and search?
+- What is the right taxonomy for transformation burden: lookup, derivation, aggregation, synthesis, conjecture, or something else?
+- Can access burden and transformation burden be estimated separately for a query?
+- Which query classes should stay symbolic end-to-end, and which should hand off to semantic processing?
 - When does a question cross from retrieval into synthesis, and can that boundary be detected automatically?
 - What is the right division of labor between discovery-optimized library structures and synthesis-optimized workshop artifacts?
 - What kinds of distillates are worth maintaining by hand, and which should be generated?
@@ -105,7 +123,10 @@ Relevant Notes:
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends the navigation question from retrieval accuracy to movement between abstraction levels
 - [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens why access strategies should be compared per task shape rather than globally
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds the claim that access architecture must manage degradation rather than only fit under a hard limit
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds the symbolic/semantic split as symbolic scheduling and bounded semantic calls rather than treating all post-retrieval work as one kind
+- [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — adds the case where answers are mechanically derived on demand rather than retrieved verbatim or persisted as durable knowledge
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — adds the discovery-optimized side of the library vs synthesis tension
 - [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — extends the library analogy into a broader family of bounded-processor traditions
 - [evolving understanding needs re-distillation, not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — grounds the claim that some questions are synthesis problems, not page-selection problems
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — narrows one layer of the design space to substrate choice rather than treating it as the whole architecture
+- [access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query-dimensions.md) — extracted: develops the two-axis decomposition and the symbolic/semantic corollary into a standalone claim

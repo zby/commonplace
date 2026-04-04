@@ -1,5 +1,5 @@
 ---
-description: Run review gates directly on one note — create a review run, load exact gates, write one review per gate, finalize acceptance
+description: Run review gates on one note — create a review run, produce a single bundled review document, then parse and record gate reviews via script
 ---
 
 # Run a review bundle on one note
@@ -8,7 +8,7 @@ Review a specific note against an explicit list of gates.
 
 Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-or-bundle}...` instead.
 
-The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent. Do not write directly into canonical review artifact paths under `kb/reports/reviews/`.
+The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent.
 
 Inputs:
 
@@ -22,8 +22,9 @@ Reading scope for review:
 - Read the target note in full.
 - Read the requested gate definitions.
 - For semantic grounding or consistency checks, follow only links that appear in the target note.
+- When following a markdown link from the target note, use the pre-resolved path table from the review run JSON instead of searching for targets by name.
+- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.
 - Do not do broad repo search or exploratory `rg` sweeps unless you need to resolve a specific linked path already referenced by the target note.
-- Do not widen the context beyond the target note's linked neighborhood unless a gate explicitly requires it.
 
 ## Live agent path
 
@@ -37,52 +38,60 @@ Capture from the JSON output:
 
 - `review_run_id`
 - `gate_ids`
-- `gates`
+- `gates` — each entry includes `gate_id`, `path`, `text`
 - `model_id`
+- `resolved_links` — pre-resolved markdown link targets from the note
+- `unresolved_links` — broken links to treat as broken if relevant
 
-Do not invent or reorder `gate_ids`; use exactly what the helper resolves. `gates` is the authoritative gate payload for this run. Each entry includes:
-
-- `gate_id`
-- `path`
-- `text`
+Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
 
 ### 2. Read the target note
 
-Read `{note-path}`.
+Read `{note-path}` in full. For semantic grounding or consistency checks, follow links from the target note using the pre-resolved paths from step 1.
 
-### 3. Review the note against each gate
+### 3. Produce a single bundled review document
 
-For each entry in `gates`:
+Write one markdown document containing one block per requested gate. Use these exact sentinels to delimit each block:
 
-1. Apply the gate's failure mode and test to the note.
-2. Write a fresh review body for the current note state.
+```
+=== GATE REVIEW START: {gate-id} ===
+## Result: PASS|CONCERN|FAIL|ERROR
 
-The review body must be decision-parseable by `scripts/write_gate_review.py`. Use one of these formats:
+### Summary
+<short paragraph>
 
-- `## Result: PASS`
-- `## Result: CONCERN`
-- `## Result: FAIL`
-- `## Result: ERROR`
+### Findings
+- <severity>: <finding>
 
-If you use a findings-style body instead, include explicit `WARN`, `FAIL`, `ERROR`, or `INFO` severities in the findings so the parser can derive the decision.
-
-### 4. Record each review
-
-Use a temporary file per gate and record it with:
-
-```bash
-python3 scripts/write_gate_review.py --review-run-id {review-run-id} --gate-id {gate-id} --input-file {tmp-review-file}
+### Suggested Revision
+<optional; omit if not needed>
+=== GATE REVIEW END: {gate-id} ===
 ```
 
-Use exactly one review body per requested gate. Do not write duplicate reviews for the same `(review_run_id, gate_id)`.
+Rules:
 
-### 5. Finalize the run
+- Apply each gate's failure mode and test to the note.
+- Use exactly one block per requested gate, in the order from `gate_ids`.
+- The `## Result:` line must use one of: `PASS`, `CONCERN`, `FAIL`, `ERROR`.
+- End the document after the final gate block.
 
-Finalize only after every requested gate has been recorded:
+Write the bundled review document to:
+
+```
+kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md
+```
+
+This directory is gitignored.
+
+### 4. Parse, record, and finalize
+
+Run the parse-and-record script to extract individual gate reviews from the bundle, write them to the DB, and finalize acceptance:
 
 ```bash
-python3 scripts/finalize_review_run.py --review-run-id {review-run-id}
+uv run scripts/record_bundle_review.py --review-run-id {review-run-id}
 ```
+
+This script reads the bundle output from `kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md`, parses the sentinel-delimited blocks, records one `gate_reviews` row per gate, and finalizes the review run with acceptance events.
 
 ## Shell automation
 
@@ -92,11 +101,11 @@ For unattended shell automation or batch wrappers, use:
 uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-or-bundle}...
 ```
 
-That wrapper is for automation convenience. It is not the preferred path for live agents already running inside Codex or Claude Code.
+This wrapper creates the review run, spawns a nested runner for semantic judgment, parses the bundle output, records gate reviews, and finalizes — all in one command.
 
 ## Do not
 
 - Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
-- Do not load the old monolithic review instructions as the source of truth for checks.
-- Do not write directly into `kb/reports/reviews/` in the live path.
-- Do not skip writing a fresh review body for any provided gate.
+- Do not invoke `write_gate_review.py` or `finalize_review_run.py` individually — the record script handles both.
+- Do not skip writing a review block for any provided gate.
+- Do not write files or invoke scripts other than what this instruction specifies.
