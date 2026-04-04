@@ -69,7 +69,7 @@ Each system has a tier the other emphasizes. OpenViking invests in L1 — a 2000
 | Scales to global ops | Yes | Yes (at cost) | No |
 | Failure mode | Stale if source changes | Bad retrieval/rerank/inference → cliff | Absent or weak |
 
-The practical path: invest in crafted link phrases for local navigation (the common agent case), use `/validate` to pressure notes toward reliable fixed descriptions for global operations, and watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
+The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward reliable fixed descriptions for global operations. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
 
 ---
 

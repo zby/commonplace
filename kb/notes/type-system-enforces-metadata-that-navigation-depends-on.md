@@ -9,7 +9,7 @@ status: seedling
 
 The [navigation argument](./types-give-agents-structural-hints-before-opening-documents.md) assumes documents *have* descriptions. But descriptions don't appear spontaneously — the type system is what makes them exist.
 
-The [note base type](../../types/note.md) defines `description` as the only required field. Any document that crosses from [text](../../types/text.md) to `note` must acquire a description, and validation can check that it's present, non-empty, and discriminating. This is the enforcement mechanism: the type creates the obligation, and `/validate` checks compliance.
+The [note base type](../../types/note.md) defines `description` as the only required field. Any document typed as a `note` — whether promoted from [text](../../types/text.md) or created directly — must have a description, and validation can check that it's present and non-empty (whether it's *discriminating* is a judgment-level check, not a deterministic one). This is the enforcement mechanism: the type creates the obligation, and `/validate` checks compliance.
 
 Without this enforcement, a knowledge base degrades quickly. Agents writing notes under time pressure skip metadata. Human authors forget. The result is a collection of documents that can only be navigated by opening each one — which defeats the point of having a structured KB.
 

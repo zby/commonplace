@@ -27,7 +27,7 @@ Different knowledge domains need different document structures. [Directory-scope
 
 ## Output quality
 
-Types don't just organise — they shape what gets written. When a `structured-claim` template requires Evidence, Reasoning, and Caveats sections, the writer must actually produce those things. With LLMs specifically, three independent arguments support this:
+Beyond organisation, types shape what gets written. When a `structured-claim` template requires Evidence, Reasoning, and Caveats sections, the writer must actually produce those things. With LLMs specifically, three independent arguments support this:
 
 - [Human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — LLMs exhibit human-like failures (conflating evidence with opinion, skipping qualifications), so structures that prevent those failures in humans prevent them in LLMs too.
 - [Structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — structured templates steer autoregressive generation toward scientific papers and formal arguments rather than unstructured web text.

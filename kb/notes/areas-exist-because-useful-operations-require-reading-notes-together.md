@@ -37,7 +37,7 @@ Both operations impose the same two constraints on the note set:
 
 **Yield depends on relatedness.** For orientation, unrelated notes add noise — they consume context without contributing to the mental model being reconstructed. For comparative reading, unrelated notes produce null results — two notes with disjoint subjects have nothing to be redundant about, nothing to contradict, nothing to tension against. In both cases, loading unrelated notes wastes context.
 
-Relatedness is a continuum, not a binary. Surprising cross-domain connections exist — a scheduling insight might illuminate a type system design. But the expected yield drops off steeply with decreasing relatedness. Running either operation on the full KB is not just infeasible (context limits) but inefficient (most notes don't contribute). Cross-domain connections are rare enough to justify a different operation ([/connect](./deep-search-is-connection-methodology-applied-to-temporarily-expanded-corpus.md) with corpus expansion) rather than routine loading within a single area.
+Relatedness is a continuum, not a binary. Surprising cross-domain connections exist — a scheduling insight might illuminate a type system design. But the expected yield drops off steeply with decreasing relatedness. Running either operation on the full KB is infeasible — context limits prevent it — and inefficient, since most notes don't contribute. Cross-domain connections are rare enough to justify a different operation ([/connect](./brainstorming-how-to-enrich-web-search.md) with corpus expansion) rather than routine loading within a single area.
 
 **Yield also depends on maturity.** Two seedlings are more likely to be redundant than two current notes that have already been through comparative passes. This means comparative reading isn't one-shot — it should be re-run as notes evolve — but the area boundary remains the right unit for scoping each pass.
 
@@ -47,7 +47,7 @@ An area defines a set of notes where reading together is expected to be producti
 
 This grounds several conventions:
 
-**Size limits follow from context limits.** The [split threshold of ~40 notes](../instructions/WRITING.md) isn't arbitrary — it's the approximate point where an area stops fitting in working context alongside the instructions and reasoning space the agent needs. An area that can't be read together can't serve either operation.
+**Size limits follow from context limits.** The [split threshold of ~40 notes](./adr/004-replace-areas-with-tags.md) isn't arbitrary — it's the approximate point where an area stops fitting in working context. The context budget must also hold instructions and reasoning space, so the area itself can't consume the full window. An area that can't be read together can't serve either operation.
 
 **Precision follows from yield.** A precise area isn't just intellectually satisfying — it's operationally necessary. An area of 48 notes where only 15 are related to each other wastes 33 notes' worth of context — noise during orientation, null results during comparative reading. Splitting into more precise areas concentrates the context budget where it's productive.
 
@@ -73,7 +73,7 @@ The area system is a form of probabilistic triage: allocate the expensive read-t
 
 **Multiple areas are fine for independent dimensions.** `areas: [kb-design, computational-model]` is fine — independent dimensions, not parent-child. The test: would comparative reading of each area surface useful tensions with this note?
 
-**Split when an area becomes imprecise.** The [~40 note threshold](../instructions/WRITING.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
+**Split when an area becomes imprecise.** The [~40 note threshold](./adr/004-replace-areas-with-tags.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
 
 **areas.md stays flat.** All areas listed as peers. Sub-area relationships expressed in each area's "Related Areas" section, not in the hub.
 
