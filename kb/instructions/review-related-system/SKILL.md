@@ -25,7 +25,7 @@ Parse immediately:
 
 ## Goal
 
-Produce a code-grounded related-system review for an open-source repo, stored in the KB's review collection, then run a semantic QA pass and final structural validation.
+Produce a code-grounded related-system review for an open-source repo, stored in the KB's review collection, then run a semantic QA pass and final structural validation. If the system mines agent logs or closely related run traces into durable artifacts or weights, also add it to the trace-derived systems workshop queue.
 
 ## Step 1: Normalize the Repository Target
 
@@ -137,7 +137,30 @@ If this is a new review, update `kb/notes/related-systems/related-systems-index.
 
 Keep the edit minimal and specific.
 
-## Step 8: Run Semantic Review as a QA Pass
+## Step 8: Queue Trace-Derived Systems When Relevant
+
+Check whether the reviewed system learns from agent logs or closely related traces. Qualifying source traces include:
+
+- agent or assistant session logs
+- conversation transcripts
+- tool/action traces
+- event streams
+- repeated task trajectories or rollouts
+
+Qualifying promotion targets include:
+
+- durable notes, rules, playbooks, lessons, memories, or similar symbolic artifacts
+- model weights or other compiled runtime state derived from those traces
+
+If the system qualifies, update `kb/work/trace-derived-systems-review/README.md`:
+
+- add it under `## In evaluation (review exists, needs trace-derived placement)` if it is not already listed
+- write one short line stating what trace it mines and why it likely belongs in the survey queue
+- do not duplicate an existing entry; update the wording if the system is already present
+
+This step is about queueing the system for the trace-derived survey, not fully editing `kb/notes/trace-derived-learning-techniques-in-related-systems.md` during every related-system review.
+
+## Step 9: Run Semantic Review as a QA Pass
 
 Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the review note you just wrote, using the `semantic` bundle:
 
@@ -151,7 +174,7 @@ Treat it as a read-only QA loop:
 
 Do not skip this step.
 
-## Step 9: Run Final Validation
+## Step 10: Run Final Validation
 
 Run:
 
@@ -168,6 +191,7 @@ Report:
 - repo cloned or reused
 - review path
 - whether the curated index changed
+- whether `kb/work/trace-derived-systems-review/README.md` changed
 - semantic gate bundle outcome (warnings/info if any)
 - final `/validate` result
 
@@ -179,6 +203,7 @@ Report:
 - write the review into `kb/notes/related-systems/`
 - use the `related-system` template
 - ground claims in repo code/docs, not just project marketing
+- add the system to `kb/work/trace-derived-systems-review/README.md` when it mines agent logs or comparable run traces into durable learned state
 - run semantic gate bundle before final validation
 - finish with `/validate`
 
