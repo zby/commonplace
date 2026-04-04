@@ -12,6 +12,14 @@ from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 from review_model import resolve_model
 
+
+BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
+
+
+def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
+    return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create a review run for one note and gate set.")
     parser.add_argument("note_path", help="Repository-relative note path.")
@@ -66,6 +74,8 @@ def main() -> None:
         )
         insert_review_run_gates(conn, review_run_id=review_run_id, gates=run_gates)
         conn.commit()
+
+    bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
 
     if args.json:
         print(
