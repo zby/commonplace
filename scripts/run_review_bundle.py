@@ -6,10 +6,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 from review_db import (
@@ -37,6 +35,7 @@ MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
 BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
+BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -163,6 +162,10 @@ def write_bundle_artifacts(
         return
     for gate_id, review_text in parsed_reviews.items():
         (artifact_dir / encode_stage_filename(gate_id)).write_text(review_text, encoding="utf-8")
+
+
+def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
+    return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
 
 
 def record_bundle_reviews(
@@ -346,7 +349,11 @@ def main() -> None:
     parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--model", help="Override runner model and review model.")
-    parser.add_argument("--keep-staging", action="store_true", help="Keep temp staging directory after completion.")
+    parser.add_argument(
+        "--keep-staging",
+        action="store_true",
+        help="Compatibility flag. Bundle artifacts are always kept; this prints the artifact directory.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print the prompt and staging plan without invoking the runner.")
     args = parser.parse_args()
 
@@ -394,7 +401,7 @@ def main() -> None:
         insert_review_run_gates(conn, review_run_id=review_run_id, gates=run_gates)
         conn.commit()
 
-    staging_dir = Path(tempfile.mkdtemp(prefix=f"review-run-{review_run_id}-"))
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
     prompt = build_prompt(
         note_path=args.note_path,
         gate_ids=gate_ids,
@@ -410,7 +417,7 @@ def main() -> None:
 
     result = run_prompt(runner=args.runner, prompt=prompt, repo_root=repo_root, model=args.model)
     raw_bundle_markdown = result.stdout
-    write_bundle_artifacts(artifact_dir=staging_dir, raw_bundle_markdown=raw_bundle_markdown)
+    write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=raw_bundle_markdown)
     telemetry_json = serialize_telemetry(result.telemetry)
     runner_debug_log = combine_logs(result.stdout, result.stderr)
     if result.returncode != 0:
@@ -425,15 +432,13 @@ def main() -> None:
                 telemetry_json=telemetry_json,
             )
             conn.commit()
-        if not args.keep_staging:
-            shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(result.returncode)
 
     with connect(db_path) as conn:
         try:
             parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=gate_ids)
             write_bundle_artifacts(
-                artifact_dir=staging_dir,
+                artifact_dir=artifact_dir,
                 raw_bundle_markdown=raw_bundle_markdown,
                 parsed_reviews=parsed_reviews,
             )
@@ -454,8 +459,6 @@ def main() -> None:
                 telemetry_json=telemetry_json,
             )
             conn.commit()
-            if not args.keep_staging:
-                shutil.rmtree(staging_dir, ignore_errors=True)
             raise SystemExit(1)
 
         conn.commit()
@@ -472,8 +475,6 @@ def main() -> None:
                 telemetry_json=telemetry_json,
             )
             conn.commit()
-            if not args.keep_staging:
-                shutil.rmtree(staging_dir, ignore_errors=True)
             raise SystemExit(1)
 
     # Reuse the standalone finalizer for the correctness checks and acceptance writes.
@@ -502,8 +503,6 @@ def main() -> None:
                 fallback_failure_reason=f"finalize_review_run.py exited {finalize.returncode}",
             )
             conn.commit()
-        if not args.keep_staging:
-            shutil.rmtree(staging_dir, ignore_errors=True)
         raise SystemExit(finalize.returncode)
 
     if telemetry_json is not None or raw_bundle_markdown:
@@ -517,9 +516,7 @@ def main() -> None:
             conn.commit()
 
     if args.keep_staging:
-        print(f"staging: {staging_dir}")
-    else:
-        shutil.rmtree(staging_dir, ignore_errors=True)
+        print(f"artifacts: {artifact_dir}")
     print(finalize.stdout.rstrip())
 
 

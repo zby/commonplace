@@ -47,6 +47,7 @@ kb/work/review-runs-direct-write/
 kb/reports/reviews/**
 !kb/reports/reviews/
 !kb/reports/reviews/README.md
+kb/reports/bundle-reviews/
 kb/reports/review-store.sqlite
 
 tmp/

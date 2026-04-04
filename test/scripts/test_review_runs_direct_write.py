@@ -451,11 +451,17 @@ for event in [
         run_count = conn.execute("SELECT count(*) FROM review_runs").fetchone()[0]
         gate_count = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
         acceptance_count = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
-        raw_bundle = conn.execute("SELECT raw_bundle_markdown FROM review_runs").fetchone()[0]
+        run_row = conn.execute("SELECT id, raw_bundle_markdown FROM review_runs").fetchone()
         assert run_count == 1
         assert gate_count == 2
         assert acceptance_count == 2
-        assert "=== GATE REVIEW START: prose/source-residue ===" in raw_bundle
+        assert run_row is not None
+        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    assert (artifact_dir / "bundle-output.md").is_file()
+    assert (artifact_dir / "prose__source-residue.md").is_file()
+    assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
 
 
 def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
@@ -547,8 +553,12 @@ for event in [
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_row = conn.execute(
-            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs"
+            "SELECT id, status, failure_reason, raw_bundle_markdown FROM review_runs"
         ).fetchone()
         assert run_row["status"] == "failed"
         assert "missing gate reviews in bundle output" in run_row["failure_reason"]
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    assert (artifact_dir / "bundle-output.md").is_file()
+    assert not (artifact_dir / "prose__source-residue.md").exists()
