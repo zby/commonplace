@@ -42,6 +42,7 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — five testable signals (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failures, distribution sensitivity) for detecting when to reverse codification
 - [error-messages-that-teach-are-a-constraining-technique](./error-messages-that-teach-are-a-constraining-technique.md) — the dual-function property: effective enforcement artifacts simultaneously constrain and inform, because in agent systems the error channel is an instruction channel
 - [enforcement-without-structured-recovery-is-incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — the enforcement gradient covers detection and blocking but not recovery; maps ABC's corrective → fallback → escalation onto each enforcement layer, with oracle strength determining viable recovery strategies
+- [codify-versus-LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) — synthesis: four lenses on the codify-vs-LLM decision (spec completeness, oracle strength, interpretation space, pattern stability) with evidence they come apart at the edges
 
 ## Distillation
 
