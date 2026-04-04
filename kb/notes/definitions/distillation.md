@@ -47,7 +47,7 @@ Warning: a distillate can look adequate while losing behavioral influence — co
 
 ## Relationship to constraining
 
-Constraining and distillation are orthogonal — they operate on different dimensions of the same artifacts:
+[Constraining](./constraining.md) and distillation are orthogonal — they operate on different dimensions of the same artifacts:
 
 | | Not distilled | Distilled |
 |---|---|---|
