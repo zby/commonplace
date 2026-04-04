@@ -1,5 +1,5 @@
 ---
-description: General instruction for fixing review warnings. Reads current-model gate reviews for a note, applies fixes using judgment, classifies each fix by strategy from the taxonomy, and reports results
+description: General instruction for fixing actionable findings from current accepted concern reviews. Reads current accepted gate reviews for a note, applies fixes using judgment, classifies each fix by strategy from the taxonomy, and reports results
 ---
 
 # Fix Review Warnings
@@ -10,18 +10,18 @@ If target is empty, ask which note to fix. If target is a name without path, sea
 
 ## What this is
 
-An editing pass that fixes WARN-level findings from prose and/or semantic reviews. The reviews already contain specific recommendations — this instruction provides constraints on how to apply them and a reporting format that makes the fixes auditable.
+An editing pass that fixes actionable findings from prose and/or semantic reviews whose current accepted decision is `concern`. The reviews already contain specific recommendations — this instruction provides constraints on how to apply them and a reporting format that makes the fixes auditable.
 
 ## Prerequisites
 
-1. Run `uv run scripts/warn_selector.py --json {note-path}` to get WARN-level findings for this note. If there are none, report "no WARNs" and stop.
+1. Run `uv run scripts/warn_selector.py --json {note-path}` to get actionable findings for this note from current accepted run-backed `concern` reviews across all models. This selector ignores legacy rows that are not attached to a review run and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no concern findings" and stop.
 2. Read the target note in full.
 3. Read the corresponding gate review text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
 4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
 
 ## Procedure
 
-For each WARN from the current-model gate reviews:
+For each actionable finding from the current accepted `concern` gate reviews:
 
 1. **Read the recommendation** in the review finding. It tells you what to fix and usually how.
 2. **Read enough context** around the flagged passage to understand the argument, the evidence relationship, and the flow.

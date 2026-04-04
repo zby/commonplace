@@ -416,7 +416,7 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
     assert "UNIQUE constraint failed" in duplicate.stderr
 
 
-def test_warn_selector_uses_latest_review_when_acceptance_has_no_review_id(tmp_path: Path) -> None:
+def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_id(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
@@ -434,9 +434,13 @@ def test_warn_selector_uses_latest_review_when_acceptance_has_no_review_id(tmp_p
     review_run_id = int(created.stdout.strip())
     review_file = write(
         repo / "tmp" / "review.md",
-        """## Findings
+        """## Result: CONCERN
 
-**WARN — Fix me.** This warning should remain visible after an ack.
+### Summary
+The note still needs one small fix.
+
+### Findings
+- WARN: Fix me. This warning should remain visible after an ack.
 """,
     )
     gate_review_id = int(
@@ -496,6 +500,225 @@ def test_warn_selector_uses_latest_review_when_acceptance_has_no_review_id(tmp_p
     assert warn["review_id"] == gate_review_id
     assert "Fix me" in warn["text"]
     assert "Fix me" in warn["review_text"]
+
+
+def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    note_path = repo / "kb" / "notes" / "sample.md"
+    gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
+    note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
+    gate_sha = review_metadata.git_blob_sha(gate_path, write_object=True)
+    note_commit = review_metadata.last_commit_for_path(repo, Path("kb/notes/sample.md"))
+    reviewed_at = review_metadata.iso_now()
+
+    review_db.ensure_db(repo, db_path)
+    with review_db.connect(db_path) as conn:
+        review_id = review_db.insert_gate_review(
+            conn,
+            review_run_id=None,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/source-residue",
+            model_id="test-model",
+            decision="concern",
+            rationale_markdown="## Result: CONCERN\n\n### Findings\n- WARN: Legacy concern.\n",
+            evidence_json=None,
+            gate_sha=gate_sha,
+            reviewed_note_sha=note_sha,
+            reviewed_note_commit=note_commit,
+            reviewed_at=reviewed_at,
+            review_kind="manual-import",
+        )
+        review_db.append_acceptance_event(
+            conn,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/source-residue",
+            model_id="test-model",
+            accepted_review_id=review_id,
+            accepted_note_sha=note_sha,
+            accepted_note_commit=note_commit,
+            accepted_gate_sha=gate_sha,
+            accepted_at=reviewed_at,
+            acceptance_kind="manual-override",
+        )
+        conn.commit()
+
+    result = subprocess.run(
+        [sys.executable, str(SCRIPTS_DIR / "warn_selector.py"), "--json", "kb/notes/sample.md"],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert json.loads(result.stdout) == []
+
+
+def test_warn_selector_falls_back_to_summary_for_current_concern_without_warn_bullets(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose/source-residue",
+        "--runner",
+        "codex",
+        env=env,
+    )
+    review_run_id = int(created.stdout.strip())
+    review_file = write(
+        repo / "tmp" / "review.md",
+        """## Result: CONCERN
+
+### Summary
+The note overstates one claim and needs a framing adjustment.
+""",
+    )
+    run_script(
+        repo,
+        "write_gate_review.py",
+        "--review-run-id",
+        str(review_run_id),
+        "--gate-id",
+        "prose/source-residue",
+        "--input-file",
+        str(review_file),
+        env=env,
+    )
+    run_script(
+        repo,
+        "finalize_review_run.py",
+        "--review-run-id",
+        str(review_run_id),
+        env=env,
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCRIPTS_DIR / "warn_selector.py"), "--json", "kb/notes/sample.md"],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    payload = json.loads(result.stdout)
+    assert payload[0]["note_path"] == "kb/notes/sample.md"
+    assert payload[0]["warns"][0]["text"] == "The note overstates one claim and needs a framing adjustment."
+
+
+def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+
+    concern_env = os.environ.copy()
+    concern_env["COMMONPLACE_REVIEW_MODEL"] = "model-a"
+    concern_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose/source-residue",
+        "--runner",
+        "codex",
+        env=concern_env,
+    )
+    concern_run_id = int(created.stdout.strip())
+    concern_review = write(
+        repo / "tmp" / "concern-review.md",
+        """## Result: CONCERN
+
+### Summary
+The note still needs one small fix.
+
+### Findings
+- WARN: Cross-model concern that should remain visible.
+""",
+    )
+    concern_review_id = int(
+        run_script(
+            repo,
+            "write_gate_review.py",
+            "--review-run-id",
+            str(concern_run_id),
+            "--gate-id",
+            "prose/source-residue",
+            "--input-file",
+            str(concern_review),
+            env=concern_env,
+        ).stdout.strip()
+    )
+    run_script(
+        repo,
+        "finalize_review_run.py",
+        "--review-run-id",
+        str(concern_run_id),
+        env=concern_env,
+    )
+
+    pass_env = os.environ.copy()
+    pass_env["COMMONPLACE_REVIEW_MODEL"] = "model-b"
+    pass_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose/source-residue",
+        "--runner",
+        "codex",
+        env=pass_env,
+    )
+    pass_run_id = int(created.stdout.strip())
+    pass_review = write(
+        repo / "tmp" / "pass-review.md",
+        """## Result: PASS
+
+Looks good.
+""",
+    )
+    run_script(
+        repo,
+        "write_gate_review.py",
+        "--review-run-id",
+        str(pass_run_id),
+        "--gate-id",
+        "prose/source-residue",
+        "--input-file",
+        str(pass_review),
+        env=pass_env,
+    )
+    run_script(
+        repo,
+        "finalize_review_run.py",
+        "--review-run-id",
+        str(pass_run_id),
+        env=pass_env,
+    )
+
+    selector_env = os.environ.copy()
+    selector_env["COMMONPLACE_REVIEW_MODEL"] = "model-b"
+    selector_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    result = subprocess.run(
+        [sys.executable, str(SCRIPTS_DIR / "warn_selector.py"), "--json", "kb/notes/sample.md"],
+        cwd=repo,
+        env=selector_env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    payload = json.loads(result.stdout)
+    assert payload[0]["note_path"] == "kb/notes/sample.md"
+    assert len(payload[0]["warns"]) == 1
+    warn = payload[0]["warns"][0]
+    assert warn["gate_id"] == "prose/source-residue"
+    assert warn["review_id"] == concern_review_id
+    assert "Cross-model concern" in warn["text"]
 
 
 def test_run_review_bundle_with_fake_claude(tmp_path: Path) -> None:

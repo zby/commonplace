@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select notes with WARN-level findings from effective gate reviews in the DB."""
+"""Select actionable findings from effective concern reviews in the DB."""
 
 from __future__ import annotations
 
@@ -9,12 +9,22 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from review_db import connect, ensure_db, load_effective_gate_review_map, resolve_db_path
-from review_model import resolve_model
+from review_db import GateReviewRow, connect, ensure_db, load_effective_gate_review_map, resolve_db_path
 
 
-RESULT_WARN_RE = re.compile(r"^##\s*Result:\s*WARN\b.*$", re.IGNORECASE | re.MULTILINE)
-INLINE_WARN_RE = re.compile(r"^(?:\*\*)?WARN(?:\*\*)?[:\s—]", re.IGNORECASE | re.MULTILINE)
+SUMMARY_SECTION_RE = re.compile(
+    r"^###\s*Summary\s*$\s*(?P<body>.*?)(?=^###\s|\Z)",
+    re.IGNORECASE | re.MULTILINE | re.DOTALL,
+)
+FINDINGS_SECTION_RE = re.compile(
+    r"^###\s*Findings\s*$\s*(?P<body>.*?)(?=^###\s|\Z)",
+    re.IGNORECASE | re.MULTILINE | re.DOTALL,
+)
+ACTIONABLE_FINDING_RE = re.compile(
+    r"^\s*-\s*(warn|concern)\s*:\s*(?P<body>.+?)(?=^\s*-\s*(?:pass|info|warn|concern|fail|error)\s*:|^###\s|\Z)",
+    re.IGNORECASE | re.MULTILINE | re.DOTALL,
+)
+RESULT_LINE_RE = re.compile(r"^##\s*Result:\s*(?P<decision>[a-z]+)\s*$", re.IGNORECASE | re.MULTILINE)
 
 
 @dataclass
@@ -37,48 +47,69 @@ class NoteWarns:
         return len(self.warns)
 
 
-def _extract_paragraph_from(text: str, pos: int) -> str:
-    rest = text[pos:]
-    para_end = re.search(r"\n\s*\n", rest)
-    if para_end:
-        return rest[: para_end.start()].strip()
-    return rest.strip()
+def _extract_section(text: str, pattern: re.Pattern[str]) -> str | None:
+    match = pattern.search(text)
+    if match is None:
+        return None
+    body = match.group("body").strip()
+    return body or None
 
 
-def extract_warns(review_text: str) -> list[str]:
-    warns: list[str] = []
-    result_match = RESULT_WARN_RE.search(review_text)
-    if result_match is not None:
-        body_after = review_text[result_match.end() :].strip()
-        if body_after:
-            warns.append(body_after)
-        return warns
+def extract_warns(review_text: str, *, decision: str) -> list[str]:
+    findings = _extract_section(review_text, FINDINGS_SECTION_RE)
+    if findings:
+        actionable = [match.group("body").strip() for match in ACTIONABLE_FINDING_RE.finditer(findings)]
+        if actionable:
+            return actionable
 
-    for match in INLINE_WARN_RE.finditer(review_text):
-        warns.append(_extract_paragraph_from(review_text, match.start()))
-    return warns
+    if decision != "concern":
+        return []
+
+    summary = _extract_section(review_text, SUMMARY_SECTION_RE)
+    if summary:
+        return [summary]
+
+    if findings:
+        return [findings]
+
+    body_after_result = RESULT_LINE_RE.sub("", review_text, count=1).strip()
+    if body_after_result:
+        return [body_after_result]
+    return []
 
 
 def scan_reviews(
     repo_root: Path,
-    model: str,
     note_filter: set[str] | None = None,
 ) -> list[NoteWarns]:
     db_path = resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)
 
     by_note: dict[str, NoteWarns] = {}
+    selected_by_gate: dict[tuple[str, str], GateReviewRow] = {}
     with connect(db_path) as conn:
         effective_reviews = load_effective_gate_review_map(
             conn,
             note_path=next(iter(note_filter)) if note_filter and len(note_filter) == 1 else None,
-            model_id=model,
+            model_id=None,
         )
 
     for (note_path, gate_id, _model_id), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
             continue
-        warns = extract_warns(review.rationale_markdown)
+        if review.review_run_id is None:
+            continue
+        warns = extract_warns(review.rationale_markdown, decision=review.decision)
+        if not warns:
+            continue
+
+        gate_key = (note_path, gate_id)
+        selected = selected_by_gate.get(gate_key)
+        if selected is None or (review.reviewed_at, review.id) > (selected.reviewed_at, selected.id):
+            selected_by_gate[gate_key] = review
+
+    for (note_path, gate_id), review in sorted(selected_by_gate.items()):
+        warns = extract_warns(review.rationale_markdown, decision=review.decision)
         for warn_text in warns:
             if note_path not in by_note:
                 by_note[note_path] = NoteWarns(note_path=note_path)
@@ -120,25 +151,24 @@ def render_json(notes: list[NoteWarns]) -> str:
 
 def print_grouped(notes: list[NoteWarns]) -> None:
     for nw in notes:
-        print(f"{nw.note_path} ({nw.count} WARNs)")
+        print(f"{nw.note_path} ({nw.count} concern findings)")
         for w in nw.warns:
             first_line = w.warn_text.split("\n")[0][:100]
             print(f"  - {w.gate_id}: {first_line}")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Select notes with WARN-level review findings.")
+    parser = argparse.ArgumentParser(description="Select notes with actionable findings from effective concern reviews.")
     parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
     parser.add_argument("--json", action="store_true", help="JSON output with full WARN text.")
     args = parser.parse_args()
 
-    model = resolve_model()
     repo_root = Path.cwd()
     note_filter = set(args.note_paths) if args.note_paths else None
 
-    notes = scan_reviews(repo_root, model, note_filter)
+    notes = scan_reviews(repo_root, note_filter)
     if not notes:
-        print("[]" if args.json else "No WARNs found.")
+        print("[]" if args.json else "No concern findings found.")
         return
 
     if args.json:

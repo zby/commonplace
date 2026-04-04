@@ -857,10 +857,19 @@ def load_effective_gate_review_map(
     conn: sqlite3.Connection,
     *,
     note_path: str | None = None,
-    model_id: str,
+    model_id: str | None,
 ) -> dict[tuple[str, str, str], GateReviewRow]:
-    where_note = "WHERE a.model_id = ?" if note_path is None else "WHERE a.model_id = ? AND a.note_path = ?"
-    params: tuple[str, ...] = (model_id,) if note_path is None else (model_id, note_path)
+    where_clauses: list[str] = []
+    params: list[str] = []
+    if model_id is not None:
+        where_clauses.append("a.model_id = ?")
+        params.append(model_id)
+    if note_path is not None:
+        where_clauses.append("a.note_path = ?")
+        params.append(note_path)
+    where_sql = ""
+    if where_clauses:
+        where_sql = "WHERE " + " AND ".join(where_clauses)
     rows = conn.execute(
         f"""
         WITH latest_gate_reviews AS (
@@ -894,9 +903,9 @@ def load_effective_gate_review_map(
          AND latest.gate_id = a.gate_id
          AND latest.model_id = a.model_id
          AND latest.rn = 1
-        {where_note}
+        {where_sql}
         """,
-        params,
+        tuple(params),
     ).fetchall()
     result: dict[tuple[str, str, str], GateReviewRow] = {}
     for row in rows:

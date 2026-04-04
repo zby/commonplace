@@ -47,6 +47,15 @@ Derived view:
   - current accepted state per `(note_path, gate_id, model_id)`
   - defined as the highest `acceptance_events.id` for that key
 
+### Canonical status vs review prose
+
+The Python layer assigns the canonical DB statuses.
+
+- `gate_reviews.decision` is normalized into lowercase enum values: `pass`, `concern`, `fail`, `error`, `unknown`
+- `review_runs.status` is normalized into lowercase enum values: `running`, `completed`, `failed`
+
+The human-readable `rationale_markdown` is not canonical state. It may use different casing or wording inside the review body, for example `## Result: PASS` or `- WARN: ...`. That is acceptable. Treat the DB columns as the source of truth; review-body result lines are parse inputs and readability affordances, not the canonical status layer.
+
 ## Freshness and staleness
 
 Selector behavior stays the same at the prompt surface, but acceptance state now comes from `current_gate_acceptances`.
@@ -142,6 +151,17 @@ The storage backend changed from metadata rewrites to append-only DB events.
 ### Render/export
 
 Human-readable inspection remains required, but it is now a derived view from DB rows rather than canonical state.
+
+### Warn/fix queue
+
+`scripts/warn_selector.py` exists to build a fixing queue from the current review state.
+
+- It reads current accepted reviews across all models from the DB
+- It only considers reviews attached to a `review_run_id`
+- It selects actionable findings from reviews whose canonical decision is `concern`
+- It collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted concern review for that gate
+
+This intentionally excludes legacy imported rows that are not attached to a review run.
 
 ## Agent workflow
 
