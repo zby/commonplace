@@ -4,10 +4,9 @@ description: Prose review wrapper — keep the old entrypoint, but route executi
 
 # Prose Review
 
-This file is a compatibility wrapper. The canonical prose-review definition now lives in:
+This file is a compatibility wrapper. The canonical prose bundle now resolves directly from:
 
-- `kb/instructions/review-bundles/prose-review.md`
-- `kb/instructions/review-gates/prose/*.md`
+- `kb/instructions/review-gates/prose/`
 
 Preferred execution path for shell automation:
 

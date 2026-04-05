@@ -4,9 +4,9 @@
 -- review outputs plus the currently accepted state used by selector and ack.
 --
 -- For now, gate freshness is keyed by the raw git blob SHA of the gate file.
--- That intentionally excludes any shared bundle instructions. If bundle-level
--- instructions later become freshness-relevant, this field should widen from
--- a leaf gate-file SHA to an effective review-contract SHA.
+-- There is no separate bundle manifest hash in the current tree. If
+-- bundle-level manifests later become freshness-relevant, this field should
+-- widen from a leaf gate-file SHA to an effective review-contract SHA.
 --
 -- Review execution is bundle-shaped even though freshness remains gate-local.
 -- `review_runs` records one review invocation; `review_run_gates` records the

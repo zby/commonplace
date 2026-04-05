@@ -54,11 +54,11 @@ Body: failure mode, test, examples — extracted from the corresponding check se
 
 **Done when:** `kb/instructions/review-gates/` has 23 gate files covering all checks from all 4 bundles plus the 4 existing gates.
 
-## Step 2: Create bundle files
+## Step 2: Keep bundle names as lens aliases
 
-Write bundle files in `kb/instructions/review-bundles/` that list their gates. One per current review type. Each bundle has: purpose, gate list, output format. No shared check prose — that's in the gate files now.
+Keep the current bundle names as stable invocation targets by resolving each one to all gate files under `kb/instructions/review-gates/{bundle}/`.
 
-**Done when:** 4 bundle files exist, each listing its gate IDs under a `## Gates` section.
+**Done when:** bundle expansion comes directly from the gate directories and there is no separate bundle-manifest tree to maintain.
 
 ## Step 3: Build the gate selector
 
@@ -69,7 +69,7 @@ New script: `scripts/review_target_selector.py`. This replaces `notes_selector.p
 Inputs: a bundle name (or `--all-gates`), optional note path filter.
 
 Logic:
-1. Parse the bundle file to get gate IDs.
+1. Expand the bundle name to all gate files in its `kb/instructions/review-gates/{bundle}/` directory.
 2. Load gate frontmatter (watches, staleness) for each gate.
 3. Load `gate_reviews.csv` (or create empty if missing).
 4. For each (note, gate) pair:
@@ -97,7 +97,7 @@ Tests:
 - fixture should contain:
   - a small `kb/notes/` tree with reviewable notes
   - a small `kb/instructions/review-gates/` tree
-  - a small `kb/instructions/review-bundles/` tree
+  - a small `kb/instructions/review-gates/` tree with multiple lens directories
   - recorded gate review files plus generated `gate_reviews.csv`
   - at least two commits so tests can exercise `recorded_commit` vs `HEAD`
 - use this fixture repo for selector tests covering:

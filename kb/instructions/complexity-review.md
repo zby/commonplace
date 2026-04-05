@@ -4,10 +4,9 @@ description: Complexity review wrapper — keep the old entrypoint, but route ex
 
 # Complexity Review
 
-This file is a compatibility wrapper. The canonical complexity-review definition now lives in:
+This file is a compatibility wrapper. The canonical complexity bundle now resolves directly from:
 
-- `kb/instructions/review-bundles/complexity-review.md`
-- `kb/instructions/review-gates/complexity/*.md`
+- `kb/instructions/review-gates/complexity/`
 
 Preferred execution path for shell automation:
 

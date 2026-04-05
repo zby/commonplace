@@ -138,7 +138,7 @@ def select_stale_gates(
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_id}")
 
-            # Shared bundle instructions remain intentionally excluded here.
+            # Bundles resolve directly from gate directories, so the gate file hash is the whole contract today.
             current_gate_sha = git_blob_sha(gate_abs)
             acceptance = acceptances.get((note_path, gate_id, model))
             if acceptance is None:

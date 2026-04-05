@@ -62,37 +62,21 @@ Two staleness modes, not seven comparator primitives. The `rewrite` mode is a re
 
 ## Bundles
 
-A bundle is a markdown file that lists its gates. Lives alongside the gate directories:
+A bundle is a lens name resolved directly from the gate tree. There is no separate manifest directory:
 
 ```
-kb/instructions/review-bundles/
-  frontmatter-review.md
-  prose-review.md
-  accessibility-review.md
+kb/instructions/review-gates/
+  frontmatter/
+    ...
+  prose/
+    ...
+  accessibility/
+    ...
 ```
 
-Bundle content:
+Running `frontmatter` means "use every gate file under `kb/instructions/review-gates/frontmatter/`."
 
-```md
-# Frontmatter review
-
-## Purpose
-
-Checks that metadata supports retrieval and composability.
-
-## Gates
-
-- frontmatter/description-discrimination
-- frontmatter/title-composability
-- frontmatter/claim-strength
-- frontmatter/title-body-alignment
-
-## Output format
-
-Report findings as WARN or INFO, never FAIL.
-```
-
-No membership CSV. The gate list is in the bundle file. If you need to parse it programmatically, parse the `## Gates` section.
+No membership CSV or bundle manifest file. If you need to resolve a bundle programmatically, enumerate `*.md` under the corresponding lens directory.
 
 ## Recorded reviews
 
