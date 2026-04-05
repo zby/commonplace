@@ -9,7 +9,7 @@ import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-from review_metadata import iso_now
+from review_metadata import _METADATA_BLOCK_RE, iso_now
 
 GATES_ROOT = Path("kb/instructions/review-gates")
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -96,13 +96,47 @@ _LEGACY_RESULT_HEADING_RE = re.compile(
     r"^##\s+(pass|fail|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
+_RELAXED_RESULT_LINE_RE = re.compile(
+    r"^(?:\*\*)?(?:##\s*)?(?:Result|Verdict|Outcome)\s*:\s*"
+    r"(pass|fail|error|warn|info|ok|unknown)"
+    r"(?:\s*\([^)]*\))?(?:\*\*)?\s*$",
+    re.IGNORECASE,
+)
 _FINDING_SEVERITY_RE = re.compile(
     r"^(?:[-*]\s+)?(?:\*\*Severity:\*\*\s*)?(pass|ok|info|warn|fail|error)\s*(?:[:\u2014-]|$)|"
     r"^(?:[-*]\s+)?\*\*(pass|ok|info|warn|fail|error)\b",
     re.IGNORECASE | re.MULTILINE,
 )
 _LEGACY_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|error|warn|info|ok|unknown)\b", re.IGNORECASE)
+_LEGACY_BOLD_INLINE_DECISION_RE = re.compile(
+    r"^\*\*(pass|fail|error|warn|info|ok|unknown)(?:[.!:]?)\*\*(?:\s+.*)?$",
+    re.IGNORECASE,
+)
+_LEGACY_INLINE_DECISION_RE = re.compile(
+    r"^(pass|fail|error|warn|info|ok|unknown)\b(?:[.!:]|\s+[\u2014-])?(?:\s+.*)?$",
+    re.IGNORECASE,
+)
+_LEGACY_HEADING_SUFFIX_DECISION_RE = re.compile(
+    r"^#+\s+.*?[\u2014-]\s*(pass|fail|error|warn|info|ok|unknown)\s*$",
+    re.IGNORECASE,
+)
+_LEGACY_STATUS_LINE_RE = re.compile(
+    r"^\*\*status:\s*(pass|fail|error|warn|info|ok|unknown)(?:\s*\([^)]*\))?\*\*$",
+    re.IGNORECASE,
+)
 _NO_VIOLATIONS_RE = re.compile(r"\bno violations found\b", re.IGNORECASE)
+_MANUAL_IMPORT_PASS_PHRASE_RE = re.compile(
+    r"\b(?:"
+    r"no actionable instances|"
+    r"no findings|"
+    r"no [a-z0-9-]+ failure detected|"
+    r"no [a-z0-9-]+ found|"
+    r"no link text sets an expectation|"
+    r"pairwise contradiction:\s*none found|"
+    r"definition drift:\s*none observed"
+    r")\b",
+    re.IGNORECASE,
+)
 _QUALITATIVE_FINDING_RE = re.compile(r"^(?:[-*]\s+)?\*\*(minor|moderate|major)\b", re.IGNORECASE | re.MULTILINE)
 _SINGLE_LINE_RESULT_RE = re.compile(
     r"^(?:##\s*(?:Result|Verdict):|Verdict:|(?:[-*]\s*)?Outcome:)\s*"
@@ -209,7 +243,24 @@ def _extract_declared_review_decision(review_text: str) -> str | None:
     return None
 
 
-def strip_explicit_review_result_lines(review_text: str) -> str:
+def strip_review_metadata_block(review_text: str) -> str:
+    match = _METADATA_BLOCK_RE.match(review_text)
+    if match is None:
+        return review_text
+    return review_text[match.end() :].lstrip("\n")
+
+
+def strip_legacy_frontmatter_block(review_text: str) -> str:
+    lines = review_text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return review_text
+    for index in range(1, min(len(lines), 12)):
+        if lines[index].strip() == "---":
+            return "\n".join(lines[index + 1 :]).lstrip("\n")
+    return review_text
+
+
+def strip_relaxed_review_result_lines(review_text: str) -> str:
     lines = review_text.splitlines()
     kept: list[str] = []
     index = 0
@@ -222,7 +273,11 @@ def strip_explicit_review_result_lines(review_text: str) -> str:
             if _DECISION_LINE_RE.match(next_stripped):
                 index += 2
                 continue
-        if _SINGLE_LINE_RESULT_RE.match(stripped) or _LEGACY_RESULT_LINE_RE.match(stripped):
+        if (
+            _SINGLE_LINE_RESULT_RE.match(stripped)
+            or _LEGACY_RESULT_LINE_RE.match(stripped)
+            or _RELAXED_RESULT_LINE_RE.match(stripped)
+        ):
             index += 1
             continue
         kept.append(line)
@@ -232,12 +287,58 @@ def strip_explicit_review_result_lines(review_text: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", stripped_text)
 
 
+def _extract_manual_import_leading_decision(review_text: str) -> str | None:
+    lines = [line.strip() for line in review_text.splitlines() if line.strip()]
+    for line in lines[:8]:
+        for pattern in (
+            _RELAXED_RESULT_LINE_RE,
+            _LEGACY_STATUS_LINE_RE,
+            _LEGACY_HEADING_SUFFIX_DECISION_RE,
+            _LEGACY_BOLD_INLINE_DECISION_RE,
+            _LEGACY_INLINE_DECISION_RE,
+            _LEGACY_RESULT_HEADING_RE,
+        ):
+            match = pattern.match(line)
+            if match is None:
+                continue
+            decision = normalize_review_decision(match.group(1))
+            if decision is not None:
+                return decision
+        if line.startswith("#") or line == "---" or line.lower().startswith(("gate:", "note:")):
+            continue
+        break
+    return None
+
+
+def infer_manual_import_review_decision(review_text: str) -> str:
+    stripped = strip_review_metadata_block(review_text)
+    stripped = strip_legacy_frontmatter_block(stripped)
+
+    leading_decision = _extract_manual_import_leading_decision(stripped)
+    if leading_decision is not None:
+        return leading_decision
+
+    stripped_without_results = strip_relaxed_review_result_lines(stripped)
+    parsed_decision = parse_review_decision(stripped_without_results)
+    if parsed_decision != "unknown":
+        return parsed_decision
+
+    if _MANUAL_IMPORT_PASS_PHRASE_RE.search(stripped_without_results):
+        return "pass"
+
+    return "unknown"
+
+
+def strip_explicit_review_result_lines(review_text: str) -> str:
+    return strip_relaxed_review_result_lines(review_text)
+
+
 def rewrite_review_result_footer(review_text: str, *, decision: str | None = None) -> str:
     normalized_decision = normalize_review_decision(decision) if decision else None
     declared_decision = _extract_declared_review_decision(review_text)
     parsed_decision = parse_review_decision(review_text)
 
-    footer_decision = normalized_decision if normalized_decision in {"pass", "warn", "fail", "error"} else None
+    footer_decision = normalized_decision if normalized_decision in {"pass", "warn", "fail", "error", "unknown"} else None
     if footer_decision is None and declared_decision is not None:
         footer_decision = declared_decision
     if footer_decision is None and parsed_decision in {"pass", "warn", "fail", "error"}:

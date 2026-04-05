@@ -160,6 +160,64 @@ def test_rewrite_review_result_footer_preserves_declared_result_when_parse_is_un
     )
 
 
+def test_rewrite_review_result_footer_allows_unknown_when_explicitly_requested() -> None:
+    review_text = """Pass
+
+No findings.
+"""
+
+    assert review_db.rewrite_review_result_footer(review_text, decision="unknown") == (
+        "Pass\n\nNo findings.\n\n## Result: UNKNOWN\n"
+    )
+
+
+def test_infer_manual_import_review_decision_prefers_legacy_body_over_stale_warn_footer() -> None:
+    review_text = """<!-- REVIEW-METADATA
+note-path: kb/notes/sample.md
+-->
+pass
+
+No findings.
+
+## Result: WARN
+"""
+
+    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+
+
+def test_infer_manual_import_review_decision_handles_yaml_style_legacy_header() -> None:
+    review_text = """---
+gate: prose/bridge-paragraph-duplication
+---
+
+No instances found.
+
+## Result: WARN
+"""
+
+    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+
+
+def test_infer_manual_import_review_decision_supports_relaxed_result_line() -> None:
+    review_text = """## Result: PASS (1 INFO)
+
+The alignment is plausible but not exact.
+"""
+
+    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+
+
+def test_infer_manual_import_review_decision_supports_bold_result_line() -> None:
+    review_text = """## prose/anthropomorphic-framing
+
+**Result: WARN**
+
+One instance to fix.
+"""
+
+    assert review_db.infer_manual_import_review_decision(review_text) == "warn"
+
+
 def test_ensure_db_migrates_gate_review_schema_to_support_unknown_and_warn(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     old_schema = (REPO_ROOT / "scripts" / "review-schema.sql").read_text(encoding="utf-8").replace(
