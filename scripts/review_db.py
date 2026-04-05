@@ -255,6 +255,7 @@ def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
         gate_review_columns = _column_names(conn, "gate_reviews")
 
     _ensure_gate_review_decision_schema(conn, gate_review_columns)
+    _ensure_acceptance_event_schema(conn)
     conn.execute(
         """
         CREATE UNIQUE INDEX IF NOT EXISTS idx_gate_reviews_review_run_gate
@@ -355,6 +356,142 @@ def _ensure_gate_review_decision_schema(conn: sqlite3.Connection, gate_review_co
         )
         conn.execute("DROP TABLE gate_reviews")
         conn.execute("ALTER TABLE gate_reviews_new RENAME TO gate_reviews")
+    finally:
+        if fk_enabled:
+            conn.commit()
+            conn.execute("PRAGMA foreign_keys = ON")
+
+
+def _acceptance_events_support_gate_migration(conn: sqlite3.Connection) -> bool:
+    row = conn.execute(
+        """
+        SELECT sql
+        FROM sqlite_master
+        WHERE type = 'table' AND name = 'acceptance_events'
+        """
+    ).fetchone()
+    if row is None or row["sql"] is None:
+        return False
+    return "'gate-migration'" in str(row["sql"]).lower()
+
+
+def _ensure_acceptance_event_schema(conn: sqlite3.Connection) -> None:
+    if _acceptance_events_support_gate_migration(conn):
+        return
+
+    fk_enabled = bool(conn.execute("PRAGMA foreign_keys").fetchone()[0])
+
+    if fk_enabled:
+        conn.commit()
+        conn.execute("PRAGMA foreign_keys = OFF")
+
+    try:
+        conn.execute("DROP VIEW IF EXISTS stale_gate_pairs")
+        conn.execute("DROP VIEW IF EXISTS current_gate_acceptances")
+        conn.execute(
+            """
+            CREATE TABLE acceptance_events_new (
+                id INTEGER PRIMARY KEY,
+                note_path TEXT NOT NULL,
+                gate_id TEXT NOT NULL,
+                model_id TEXT NOT NULL,
+                accepted_review_id INTEGER REFERENCES gate_reviews(id) ON DELETE SET NULL,
+                accepted_note_sha TEXT NOT NULL,
+                accepted_note_commit TEXT,
+                accepted_gate_sha TEXT NOT NULL,
+                accepted_at TEXT NOT NULL,
+                acceptance_kind TEXT NOT NULL CHECK (
+                    acceptance_kind IN (
+                        'full-review',
+                        'gate-migration',
+                        'trivial-change-ack',
+                        'migration-import',
+                        'manual-override'
+                    )
+                )
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO acceptance_events_new (
+                id,
+                note_path,
+                gate_id,
+                model_id,
+                accepted_review_id,
+                accepted_note_sha,
+                accepted_note_commit,
+                accepted_gate_sha,
+                accepted_at,
+                acceptance_kind
+            )
+            SELECT
+                id,
+                note_path,
+                gate_id,
+                model_id,
+                accepted_review_id,
+                accepted_note_sha,
+                accepted_note_commit,
+                accepted_gate_sha,
+                accepted_at,
+                acceptance_kind
+            FROM acceptance_events
+            """
+        )
+        conn.execute("DROP TABLE acceptance_events")
+        conn.execute("ALTER TABLE acceptance_events_new RENAME TO acceptance_events")
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model
+            ON acceptance_events(note_path, gate_id, model_id, accepted_at DESC)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_acceptance_events_latest_by_key
+            ON acceptance_events(note_path, gate_id, model_id, id DESC)
+            """
+        )
+        conn.execute(
+            """
+            CREATE VIEW IF NOT EXISTS current_gate_acceptances AS
+            SELECT
+                e.note_path,
+                e.gate_id,
+                e.model_id,
+                e.accepted_review_id,
+                e.accepted_note_sha,
+                e.accepted_note_commit,
+                e.accepted_gate_sha,
+                e.accepted_at,
+                e.acceptance_kind
+            FROM acceptance_events AS e
+            JOIN (
+                SELECT
+                    note_path,
+                    gate_id,
+                    model_id,
+                    MAX(id) AS max_id
+                FROM acceptance_events
+                GROUP BY note_path, gate_id, model_id
+            ) AS latest
+              ON e.id = latest.max_id
+            """
+        )
+        conn.execute(
+            """
+            CREATE VIEW IF NOT EXISTS stale_gate_pairs AS
+            SELECT
+                a.note_path,
+                a.gate_id,
+                a.model_id,
+                a.accepted_note_sha,
+                a.accepted_gate_sha
+            FROM current_gate_acceptances AS a
+            """
+        )
     finally:
         if fk_enabled:
             conn.commit()

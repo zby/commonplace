@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS acceptance_events (
     acceptance_kind TEXT NOT NULL CHECK (
         acceptance_kind IN (
             'full-review',
+            'gate-migration',
             'trivial-change-ack',
             'migration-import',
             'manual-override'
