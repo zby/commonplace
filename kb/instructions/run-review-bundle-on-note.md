@@ -55,7 +55,7 @@ Write one markdown document containing one block per requested gate. Use these e
 
 ```
 === GATE REVIEW START: {gate-id} ===
-## Result: PASS|CONCERN|FAIL|ERROR
+## Result: PASS|WARN|FAIL|ERROR
 
 ### Summary
 <short paragraph>
@@ -72,7 +72,7 @@ Rules:
 
 - Apply each gate's failure mode and test to the note.
 - Use exactly one block per requested gate, in the order from `gate_ids`.
-- The `## Result:` line must use one of: `PASS`, `CONCERN`, `FAIL`, `ERROR`.
+- The `## Result:` line must use one of: `PASS`, `WARN`, `FAIL`, `ERROR`.
 - End the document after the final gate block.
 
 Write the bundled review document to:

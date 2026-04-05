@@ -1,5 +1,5 @@
 ---
-description: Batch fix of actionable findings from concern reviews across notes. Runs warn_selector to build a priority queue, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
+description: Batch fix of actionable findings from warn reviews across notes. Runs warn_selector to build a priority queue, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
 ---
 
 # Fix Review Warnings Sweep
@@ -20,7 +20,7 @@ uv run scripts/warn_selector.py --json
 
 This returns notes sorted by actionable finding count descending, with full finding text and gate ids. Legacy reviews without a `review_run_id` are intentionally excluded, and model partitions are collapsed so each `(note, gate)` contributes at most one current finding.
 
-If the queue is empty, stop — no concern findings to fix.
+If the queue is empty, stop — no warn findings to fix.
 
 ### 2. Delegate
 

@@ -32,8 +32,8 @@ def read_fixture(name: str) -> str:
 def test_parse_review_decision_concrete_fixtures() -> None:
     cases = [
         ("result-pass.md", "pass"),
-        ("semantic-completeness-run6-warn.md", "concern"),
-        ("semantic-grounding-run9-warn.md", "concern"),
+        ("semantic-completeness-run6-warn.md", "warn"),
+        ("semantic-grounding-run9-warn.md", "warn"),
         ("semantic-internal-consistency-run9-info.md", "pass"),
     ]
 
@@ -64,7 +64,7 @@ Looks good.
 
 
 def test_parse_review_decision_supports_revised_result_override() -> None:
-    review_text = """## Result: CONCERN
+    review_text = """## Result: WARN
 
 ### Findings
 - WARN: Something looked wrong at first.
@@ -76,7 +76,7 @@ Revised result: PASS
 
 
 def test_parse_review_decision_supports_flagging_phrase_override() -> None:
-    review_text = """## Result: CONCERN
+    review_text = """## Result: WARN
 
 ### Findings
 - INFO: Borderline issue.
@@ -88,14 +88,14 @@ Flagging as INFO rather than WARN because the case is defensible.
 
 
 def test_parse_review_decision_supports_minor_severity() -> None:
-    review_text = """## Result: CONCERN
+    review_text = """## Result: WARN
 
 ### Findings
 - **minor**: The title is mildly awkward as inline prose.
 - **info**: No rewrite required.
 """
 
-    assert review_db.parse_review_decision(review_text) == "concern"
+    assert review_db.parse_review_decision(review_text) == "warn"
 
 
 def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> None:
@@ -109,7 +109,7 @@ def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> N
 
 
 def test_parse_review_decision_treats_no_violations_with_pass_findings_as_pass() -> None:
-    review_text = """## Result: CONCERN
+    review_text = """## Result: WARN
 
 ### Summary
 No violations found.
@@ -122,7 +122,7 @@ No violations found.
 
 
 def test_parse_review_decision_returns_unknown_on_conflicting_signals() -> None:
-    review_text = """## Result: CONCERN
+    review_text = """## Result: WARN
 
 ### Findings
 - PASS: The title is clear and aligned.
@@ -139,11 +139,11 @@ No explicit outcome and no severity labels.
     assert review_db.parse_review_decision(review_text) == "unknown"
 
 
-def test_ensure_db_migrates_gate_review_schema_to_support_unknown(tmp_path: Path) -> None:
+def test_ensure_db_migrates_gate_review_schema_to_support_unknown_and_warn(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     old_schema = (REPO_ROOT / "scripts" / "review-schema.sql").read_text(encoding="utf-8").replace(
-        "decision IN ('pass', 'fail', 'concern', 'error', 'unknown')",
-        "decision IN ('pass', 'fail', 'concern', 'error')",
+        "decision IN ('pass', 'warn', 'fail', 'error', 'unknown')",
+        "decision IN ('pass', 'warn', 'fail', 'error')",
     )
     with sqlite3.connect(db_path) as conn:
         conn.executescript(old_schema)
@@ -161,3 +161,4 @@ def test_ensure_db_migrates_gate_review_schema_to_support_unknown(tmp_path: Path
         ).fetchone()
         assert row is not None
         assert "'unknown'" in row[0].lower()
+        assert "'warn'" in row[0].lower()

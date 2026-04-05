@@ -37,8 +37,8 @@ def test_reparse_gate_review_decisions_updates_stored_decision(tmp_path: Path) -
             note_path="kb/notes/sample.md",
             gate_id="structural/bullet-capitalization",
             model_id="test-model",
-            decision="concern",
-            rationale_markdown="""## Result: CONCERN
+            decision="warn",
+            rationale_markdown="""## Result: WARN
 
 ### Findings
 - PASS: The title is clear and aligned.
@@ -93,18 +93,18 @@ def test_reparse_gate_review_decisions_combined_only_skips_legacy_rows(tmp_path:
             conn,
             review_run_id=review_run_id,
             note_path="kb/notes/combined.md",
-                gate_id="structural/bullet-capitalization",
-                model_id="test-model",
-                decision="concern",
-                rationale_markdown="""## Result: CONCERN
+            gate_id="structural/bullet-capitalization",
+            model_id="test-model",
+            decision="warn",
+            rationale_markdown="""## Result: WARN
 
 ### Findings
 - PASS: The title is clear and aligned.
 """,
-                evidence_json=None,
-                gate_sha="combined-gate-sha",
-                reviewed_note_sha="combined-note-sha",
-                reviewed_note_commit=None,
+            evidence_json=None,
+            gate_sha="combined-gate-sha",
+            reviewed_note_sha="combined-note-sha",
+            reviewed_note_commit=None,
             reviewed_at="2026-04-04T03:00:05+02:00",
             review_kind="full-review",
         )
@@ -112,18 +112,18 @@ def test_reparse_gate_review_decisions_combined_only_skips_legacy_rows(tmp_path:
             conn,
             review_run_id=None,
             note_path="kb/notes/legacy.md",
-                gate_id="structural/bullet-capitalization",
-                model_id="test-model",
-                decision="concern",
-                rationale_markdown="""## Result: CONCERN
+            gate_id="structural/bullet-capitalization",
+            model_id="test-model",
+            decision="warn",
+            rationale_markdown="""## Result: WARN
 
 ### Findings
 - PASS: The title is clear and aligned.
 """,
-                evidence_json=None,
-                gate_sha="legacy-gate-sha",
-                reviewed_note_sha="legacy-note-sha",
-                reviewed_note_commit=None,
+            evidence_json=None,
+            gate_sha="legacy-gate-sha",
+            reviewed_note_sha="legacy-note-sha",
+            reviewed_note_commit=None,
             reviewed_at="2026-04-03T03:00:05+02:00",
             review_kind="manual-import",
         )
@@ -146,4 +146,4 @@ def test_reparse_gate_review_decisions_combined_only_skips_legacy_rows(tmp_path:
     with sqlite3.connect(db_path) as conn:
         rows = conn.execute("SELECT review_run_id, decision FROM gate_reviews ORDER BY id").fetchall()
         assert rows[0] == (review_run_id, "unknown")
-        assert rows[1] == (None, "concern")
+        assert rows[1] == (None, "warn")

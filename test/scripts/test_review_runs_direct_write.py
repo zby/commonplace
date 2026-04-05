@@ -199,7 +199,7 @@ events = [
         "payload": {{
             "type": "task_complete",
             "turn_id": "turn-1",
-            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\n## Result: CONCERN\\n\\nNeeds revision.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
+            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\n## Result: WARN\\n\\nNeeds revision.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
         }},
     }},
 ]
@@ -209,7 +209,7 @@ with session_log.open("w", encoding="utf-8") as handle:
 
 print(f"session id: {{session_id}}", flush=True)
 print("=== GATE REVIEW START: prose/source-residue ===", flush=True)
-print("## Result: CONCERN", flush=True)
+print("## Result: WARN", flush=True)
 print("", flush=True)
 print("Needs revision.", flush=True)
 print("=== GATE REVIEW END: prose/source-residue ===", flush=True)
@@ -313,7 +313,7 @@ Grounding is aligned.
             (review_run_id,),
         ).fetchall()
         assert [(row["gate_id"], row["decision"]) for row in gate_rows] == [
-            ("prose/source-residue", "concern"),
+            ("prose/source-residue", "warn"),
             ("semantic/grounding-alignment", "pass"),
         ]
         acceptance_rows = conn.execute(
@@ -434,7 +434,7 @@ def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_
     review_run_id = int(created.stdout.strip())
     review_file = write(
         repo / "tmp" / "review.md",
-        """## Result: CONCERN
+        """## Result: WARN
 
 ### Summary
 The note still needs one small fix.
@@ -523,8 +523,8 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
             note_path="kb/notes/sample.md",
             gate_id="prose/source-residue",
             model_id="test-model",
-            decision="concern",
-            rationale_markdown="## Result: CONCERN\n\n### Findings\n- WARN: Legacy concern.\n",
+            decision="warn",
+            rationale_markdown="## Result: WARN\n\n### Findings\n- WARN: Legacy warn.\n",
             evidence_json=None,
             gate_sha=gate_sha,
             reviewed_note_sha=note_sha,
@@ -557,7 +557,7 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
     assert json.loads(result.stdout) == []
 
 
-def test_warn_selector_falls_back_to_summary_for_current_concern_without_warn_bullets(tmp_path: Path) -> None:
+def test_warn_selector_falls_back_to_summary_for_current_warn_without_warn_bullets(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
@@ -575,7 +575,7 @@ def test_warn_selector_falls_back_to_summary_for_current_concern_without_warn_bu
     review_run_id = int(created.stdout.strip())
     review_file = write(
         repo / "tmp" / "review.md",
-        """## Result: CONCERN
+        """## Result: WARN
 
 ### Summary
 The note overstates one claim and needs a framing adjustment.
@@ -616,9 +616,9 @@ The note overstates one claim and needs a framing adjustment.
 def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
-    concern_env = os.environ.copy()
-    concern_env["COMMONPLACE_REVIEW_MODEL"] = "model-a"
-    concern_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    warn_env = os.environ.copy()
+    warn_env["COMMONPLACE_REVIEW_MODEL"] = "model-a"
+    warn_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
         repo,
@@ -627,39 +627,39 @@ def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Pat
         "prose/source-residue",
         "--runner",
         "codex",
-        env=concern_env,
+        env=warn_env,
     )
-    concern_run_id = int(created.stdout.strip())
-    concern_review = write(
-        repo / "tmp" / "concern-review.md",
-        """## Result: CONCERN
+    warn_run_id = int(created.stdout.strip())
+    warn_review = write(
+        repo / "tmp" / "warn-review.md",
+        """## Result: WARN
 
 ### Summary
 The note still needs one small fix.
 
 ### Findings
-- WARN: Cross-model concern that should remain visible.
+- WARN: Cross-model warn that should remain visible.
 """,
     )
-    concern_review_id = int(
+    warn_review_id = int(
         run_script(
             repo,
             "write_gate_review.py",
             "--review-run-id",
-            str(concern_run_id),
+            str(warn_run_id),
             "--gate-id",
             "prose/source-residue",
             "--input-file",
-            str(concern_review),
-            env=concern_env,
+            str(warn_review),
+            env=warn_env,
         ).stdout.strip()
     )
     run_script(
         repo,
         "finalize_review_run.py",
         "--review-run-id",
-        str(concern_run_id),
-        env=concern_env,
+        str(warn_run_id),
+        env=warn_env,
     )
 
     pass_env = os.environ.copy()
@@ -717,8 +717,8 @@ Looks good.
     assert len(payload[0]["warns"]) == 1
     warn = payload[0]["warns"][0]
     assert warn["gate_id"] == "prose/source-residue"
-    assert warn["review_id"] == concern_review_id
-    assert "Cross-model concern" in warn["text"]
+    assert warn["review_id"] == warn_review_id
+    assert "Cross-model warn" in warn["text"]
 
 
 def test_run_review_bundle_with_fake_claude(tmp_path: Path) -> None:
@@ -931,7 +931,7 @@ Looks good.
             (review_run_id,),
         ).fetchall()
         assert [(row["gate_id"], row["decision"]) for row in gate_rows] == [
-            ("prose/source-residue", "concern"),
+            ("prose/source-residue", "warn"),
             ("semantic/grounding-alignment", "pass"),
         ]
         acceptance_rows = conn.execute(

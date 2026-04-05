@@ -73,47 +73,47 @@ class ReviewRunGateRow:
     ordinal: int
 
 
-_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|concern|error)\*\*", re.IGNORECASE)
+_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|warn|error)\*\*", re.IGNORECASE)
 _RESULT_RE = re.compile(
     r"^(?:##\s*(?:Result|Verdict):|Verdict:|(?:[-*]\s*)?Outcome:)\s*"
-    r"(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    r"(pass|fail|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 _SPLIT_RESULT_RE = re.compile(
-    r"^##\s*(?:Result|Verdict|Outcome)\s*$\s*^(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    r"^##\s*(?:Result|Verdict|Outcome)\s*$\s*^(pass|fail|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 _REVISED_RESULT_RE = re.compile(
     r"^(?:\*\*)?Revised\s+(?:result|verdict|outcome)(?:\*\*)?\s*:\s*"
-    r"(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    r"(pass|fail|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 _FLAGGING_DECISION_RE = re.compile(
-    r"\bflagging\s+as\s+(pass|fail|concern|error|warn|info|ok|unknown)\b",
+    r"\bflagging\s+as\s+(pass|fail|error|warn|info|ok|unknown)\b",
     re.IGNORECASE,
 )
 _LEGACY_RESULT_HEADING_RE = re.compile(
-    r"^##\s+(pass|fail|concern|error|warn|info|ok|unknown)\s*$",
+    r"^##\s+(pass|fail|error|warn|info|ok|unknown)\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 _FINDING_SEVERITY_RE = re.compile(
-    r"^(?:[-*]\s+)?(?:\*\*Severity:\*\*\s*)?(pass|ok|info|concern|warn|fail|error)\s*(?:[:\u2014-]|$)|"
-    r"^(?:[-*]\s+)?\*\*(pass|ok|info|concern|warn|fail|error)\b",
+    r"^(?:[-*]\s+)?(?:\*\*Severity:\*\*\s*)?(pass|ok|info|warn|fail|error)\s*(?:[:\u2014-]|$)|"
+    r"^(?:[-*]\s+)?\*\*(pass|ok|info|warn|fail|error)\b",
     re.IGNORECASE | re.MULTILINE,
 )
-_LEGACY_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|concern|error|warn|info|ok|unknown)\b", re.IGNORECASE)
+_LEGACY_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|error|warn|info|ok|unknown)\b", re.IGNORECASE)
 _NO_VIOLATIONS_RE = re.compile(r"\bno violations found\b", re.IGNORECASE)
 _QUALITATIVE_FINDING_RE = re.compile(r"^(?:[-*]\s+)?\*\*(minor|moderate|major)\b", re.IGNORECASE | re.MULTILINE)
 
-DECISION_VALUES = ("pass", "fail", "concern", "error", "unknown")
+DECISION_VALUES = ("pass", "warn", "fail", "error", "unknown")
 
 
 def normalize_review_decision(raw: str) -> str | None:
     decision = raw.strip().lower()
     if decision in {"pass", "ok", "info"}:
         return "pass"
-    if decision in {"concern", "warn"}:
-        return "concern"
+    if decision == "warn":
+        return "warn"
     if decision in {"fail", "error", "unknown"}:
         return decision
     return None
@@ -122,7 +122,7 @@ def normalize_review_decision(raw: str) -> str | None:
 def _decision_rank(decision: str) -> int:
     return {
         "pass": 0,
-        "concern": 1,
+        "warn": 1,
         "fail": 2,
         "error": 3,
         "unknown": 4,
@@ -271,7 +271,7 @@ def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
     )
 
 
-def _gate_reviews_support_unknown_decision(conn: sqlite3.Connection) -> bool:
+def _gate_reviews_schema_sql(conn: sqlite3.Connection) -> str:
     row = conn.execute(
         """
         SELECT sql
@@ -280,12 +280,20 @@ def _gate_reviews_support_unknown_decision(conn: sqlite3.Connection) -> bool:
         """
     ).fetchone()
     if row is None or row["sql"] is None:
-        return False
-    return "'unknown'" in str(row["sql"]).lower()
+        return ""
+    return str(row["sql"]).lower()
+
+
+def _gate_reviews_support_unknown_decision(conn: sqlite3.Connection) -> bool:
+    return "'unknown'" in _gate_reviews_schema_sql(conn)
+
+
+def _gate_reviews_support_warn_decision(conn: sqlite3.Connection) -> bool:
+    return "'warn'" in _gate_reviews_schema_sql(conn)
 
 
 def _ensure_gate_review_decision_schema(conn: sqlite3.Connection, gate_review_columns: set[str]) -> None:
-    if _gate_reviews_support_unknown_decision(conn):
+    if _gate_reviews_support_unknown_decision(conn) and _gate_reviews_support_warn_decision(conn):
         return
 
     has_review_run_id = "review_run_id" in gate_review_columns
@@ -305,7 +313,7 @@ def _ensure_gate_review_decision_schema(conn: sqlite3.Connection, gate_review_co
                 gate_id TEXT NOT NULL,
                 model_id TEXT NOT NULL,
                 decision TEXT NOT NULL CHECK (
-                    decision IN ('pass', 'fail', 'concern', 'error', 'unknown')
+                    decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
                 ),
                 rationale_markdown TEXT NOT NULL,
                 evidence_json TEXT,
@@ -546,6 +554,10 @@ def insert_gate_review(
     reviewed_at: str,
     review_kind: str = "full-review",
 ) -> int:
+    normalized_decision = normalize_review_decision(decision)
+    if normalized_decision is None:
+        raise ValueError(f"invalid review decision: {decision}")
+
     if "review_run_id" in _column_names(conn, "gate_reviews"):
         cursor = conn.execute(
             """
@@ -569,7 +581,7 @@ def insert_gate_review(
                 note_path,
                 gate_id,
                 model_id,
-                decision,
+                normalized_decision,
                 rationale_markdown,
                 evidence_json,
                 gate_sha,
@@ -600,7 +612,7 @@ def insert_gate_review(
                 note_path,
                 gate_id,
                 model_id,
-                decision,
+                normalized_decision,
                 rationale_markdown,
                 evidence_json,
                 gate_sha,
@@ -870,10 +882,10 @@ def parse_review_decision(review_text: str) -> str:
         if len(unique_explicit) > 1:
             return "unknown"
         candidate = explicit_decisions[-1]
-        if candidate == "concern" and findings_decision == "pass" and _NO_VIOLATIONS_RE.search(review_text):
+        if candidate == "warn" and findings_decision == "pass" and _NO_VIOLATIONS_RE.search(review_text):
             return "pass"
-        if candidate == "concern" and qualitative_findings & {"minor", "moderate"}:
-            return "concern"
+        if candidate == "warn" and qualitative_findings & {"minor", "moderate"}:
+            return "warn"
         if candidate == "fail" and "major" in qualitative_findings:
             return "fail"
         if findings_decision is not None and candidate != findings_decision:

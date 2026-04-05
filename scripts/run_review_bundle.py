@@ -439,7 +439,7 @@ def build_prompt(
         "- Use these exact sentinels for every block:",
         "  === GATE REVIEW START: <gate-id> ===",
         "  === GATE REVIEW END: <gate-id> ===",
-        "- Inside each block, include a decision line in a parseable form such as `## Result: PASS` or `## Result: CONCERN`.",
+        "- Inside each block, include a decision line in a parseable form such as `## Result: PASS` or `## Result: WARN`.",
         "- End output after the final gate block.",
         "",
         f"Review run id: {review_run_id}",
@@ -479,7 +479,7 @@ def build_prompt(
         lines.extend(
             [
                 f"=== GATE REVIEW START: {gate_id} ===",
-                "## Result: PASS|CONCERN|FAIL|ERROR",
+                "## Result: PASS|WARN|FAIL|ERROR",
                 "",
                 "### Summary",
                 "<short paragraph>",

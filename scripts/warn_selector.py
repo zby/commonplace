@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select actionable findings from effective concern reviews in the DB."""
+"""Select actionable findings from effective warn reviews in the DB."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ FINDINGS_SECTION_RE = re.compile(
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
 ACTIONABLE_FINDING_RE = re.compile(
-    r"^\s*-\s*(warn|concern)\s*:\s*(?P<body>.+?)(?=^\s*-\s*(?:pass|info|warn|concern|fail|error)\s*:|^###\s|\Z)",
+    r"^\s*-\s*warn\s*:\s*(?P<body>.+?)(?=^\s*-\s*(?:pass|info|warn|fail|error)\s*:|^###\s|\Z)",
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
 RESULT_LINE_RE = re.compile(r"^##\s*Result:\s*(?P<decision>[a-z]+)\s*$", re.IGNORECASE | re.MULTILINE)
@@ -62,7 +62,7 @@ def extract_warns(review_text: str, *, decision: str) -> list[str]:
         if actionable:
             return actionable
 
-    if decision != "concern":
+    if decision != "warn":
         return []
 
     summary = _extract_section(review_text, SUMMARY_SECTION_RE)
@@ -151,14 +151,14 @@ def render_json(notes: list[NoteWarns]) -> str:
 
 def print_grouped(notes: list[NoteWarns]) -> None:
     for nw in notes:
-        print(f"{nw.note_path} ({nw.count} concern findings)")
+        print(f"{nw.note_path} ({nw.count} warn findings)")
         for w in nw.warns:
             first_line = w.warn_text.split("\n")[0][:100]
             print(f"  - {w.gate_id}: {first_line}")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Select notes with actionable findings from effective concern reviews.")
+    parser = argparse.ArgumentParser(description="Select notes with actionable findings from effective warn reviews.")
     parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
     parser.add_argument("--json", action="store_true", help="JSON output with full WARN text.")
     args = parser.parse_args()
@@ -168,7 +168,7 @@ def main() -> None:
 
     notes = scan_reviews(repo_root, note_filter)
     if not notes:
-        print("[]" if args.json else "No concern findings found.")
+        print("[]" if args.json else "No warn findings found.")
         return
 
     if args.json:

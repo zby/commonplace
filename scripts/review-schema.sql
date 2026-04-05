@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS gate_reviews (
     gate_id TEXT NOT NULL,
     model_id TEXT NOT NULL,
     decision TEXT NOT NULL CHECK (
-        decision IN ('pass', 'fail', 'concern', 'error', 'unknown')
+        decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
     ),
     rationale_markdown TEXT NOT NULL,
     evidence_json TEXT,
