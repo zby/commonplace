@@ -2,9 +2,9 @@
 """Sync Topics footer links from frontmatter areas: field.
 
 Usage:
-    uv run scripts/sync_topic_links.py kb/notes/my-note.md
-    uv run scripts/sync_topic_links.py kb/notes/ kb/claw-design/
-    uv run scripts/sync_topic_links.py --dry-run kb/notes/my-note.md
+    python3 scripts/sync_topic_links.py kb/notes/my-note.md
+    python3 scripts/sync_topic_links.py kb/notes/ kb/claw-design/
+    python3 scripts/sync_topic_links.py --dry-run kb/notes/my-note.md
 
 Accepts files and directories. Directories are expanded to *.md files
 (non-recursive). At least one path is required.

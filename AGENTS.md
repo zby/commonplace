@@ -11,7 +11,7 @@ If you need to act quickly and are unsure which specialized path applies, do thi
 1. Write a `note` in `kb/notes/` (default type).
 2. Follow the checklist/template in `kb/instructions/WRITING.md`.
 3. Connect the note to related notes and at least one index (`/connect` or manual links with explicit relationship semantics).
-4. Run `uv run kb/instructions/validate/validate_notes.py <note-path>` to check structure, frontmatter, and links.
+4. Run `python3 kb/instructions/validate/validate_notes.py <note-path>` to check structure, frontmatter, and links.
 
 Use specialized types only when the routing table explicitly points to one.
 
@@ -57,7 +57,7 @@ rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
 rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 ```
 
-Use `uv run kb/instructions/validate/validate_notes.py all` for batch validation audits.
+Use `python3 kb/instructions/validate/validate_notes.py all` for batch validation audits.
 
 ### Escalation Boundaries
 
@@ -99,7 +99,7 @@ Terms used in this KB with specific meanings:
 
 ## Development
 
-- **Use `uv run`** for executing Python scripts — the global environment does not have all dependencies.
+- **Use `python3`** for stdlib-only core scripts. Use `uv run` for tests and scripts that need optional dependencies (`pytest`, `xdk`, MkDocs, etc.).
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `uv run pytest` — all tests must pass.

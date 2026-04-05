@@ -1,9 +1,9 @@
 """Resolve gate IDs and bundle names to concatenated gate text.
 
 Usage:
-    uv run scripts/resolve_gates.py prose/source-residue semantic/grounding-alignment
-    uv run scripts/resolve_gates.py prose                # all prose gates
-    uv run scripts/resolve_gates.py prose semantic        # all prose + all semantic gates
+    python3 scripts/resolve_gates.py prose/source-residue semantic/grounding-alignment
+    python3 scripts/resolve_gates.py prose                # all prose gates
+    python3 scripts/resolve_gates.py prose semantic       # all prose + all semantic gates
 
 For each resolved gate, prints:
 

@@ -7,7 +7,7 @@ Surfaces two kinds of candidates:
 
 Writes the report to kb/reports/promotion-candidates.md.
 
-Usage: uv run scripts/promotion_candidates.py
+Usage: python3 scripts/promotion_candidates.py
 """
 
 from __future__ import annotations

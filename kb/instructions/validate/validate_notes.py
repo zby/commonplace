@@ -2,9 +2,9 @@
 """Deterministic validator for KB notes.
 
 Usage:
-  uv run kb/instructions/validate/validate_notes.py <note-path-or-name>
-  uv run kb/instructions/validate/validate_notes.py all
-  uv run kb/instructions/validate/validate_notes.py recent
+  python3 kb/instructions/validate/validate_notes.py <note-path-or-name>
+  python3 kb/instructions/validate/validate_notes.py all
+  python3 kb/instructions/validate/validate_notes.py recent
 """
 
 from __future__ import annotations

@@ -4,9 +4,10 @@
 Scans all .md files recursively, extracts title, description, and type
 from frontmatter, and writes a sorted directory listing to index.md.
 
-Usage: uv run scripts/generate_notes_index.py <directory>
+Usage: python3 scripts/generate_notes_index.py <directory>
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -72,11 +73,13 @@ def generate(notes_dir: Path) -> str:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} <directory>", file=sys.stderr)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Generate index.md from frontmatter of markdown files in a directory.",
+    )
+    parser.add_argument("directory", help="Directory to scan recursively for notes.")
+    args = parser.parse_args()
 
-    notes_dir = Path(sys.argv[1]).resolve()
+    notes_dir = Path(args.directory).resolve()
     if not notes_dir.is_dir():
         print(f"Not a directory: {notes_dir}", file=sys.stderr)
         sys.exit(1)

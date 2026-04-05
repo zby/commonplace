@@ -7,11 +7,12 @@ everything from the <!-- generated --> marker to EOF.  Notes already
 linked in the curated section above the marker are excluded.
 
 Usage:
-    uv run scripts/sync_generated_index.py                    # all indexes
-    uv run scripts/sync_generated_index.py kb/notes/kb-design-index.md
-    uv run scripts/sync_generated_index.py --dry-run
+    python3 scripts/sync_generated_index.py                    # all indexes
+    python3 scripts/sync_generated_index.py kb/notes/kb-design-index.md
+    python3 scripts/sync_generated_index.py --dry-run
 """
 
+import argparse
 import os
 import re
 import sys
@@ -163,23 +164,27 @@ def find_index_files(args: list[str]) -> list[Path]:
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    dry_run = "--dry-run" in sys.argv
+    parser = argparse.ArgumentParser(
+        description="Rebuild generated sections of tag index pages.",
+    )
+    parser.add_argument("index_paths", nargs="*", help="Optional index files to process.")
+    parser.add_argument("--dry-run", action="store_true", help="Print changes without writing files.")
+    args = parser.parse_args()
 
-    if dry_run:
+    if args.dry_run:
         print("DRY RUN — no files will be modified\n")
 
     notes_by_tag = collect_notes_by_tag()
     print(f"Found {sum(len(v) for v in notes_by_tag.values())} tag assignments across {len(notes_by_tag)} tags\n")
 
-    indexes = find_index_files(args)
+    indexes = find_index_files(args.index_paths)
     if not indexes:
         print("No index files found.", file=sys.stderr)
         sys.exit(1)
 
     changes = []
     for index_path in indexes:
-        result = sync_index(index_path, notes_by_tag, dry_run)
+        result = sync_index(index_path, notes_by_tag, args.dry_run)
         if result:
             changes.append(result)
 

@@ -172,7 +172,7 @@ This intentionally excludes legacy imported rows that are not attached to a revi
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `uv run scripts/create_review_run.py --runner {codex|claude-code} --model {model-id} --json {note} {gate-or-bundle}...`
+1. `python3 scripts/create_review_run.py --runner {codex|claude-code} --model {model-id} --json {note} {gate-or-bundle}...`
 2. Read the resolved `gates` payload from the JSON output
 3. Review the note gate-by-gate in the current agent
 4. `python3 scripts/write_gate_review.py --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
@@ -180,15 +180,15 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 For unattended shell automation, use:
 
-1. `uv run scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note} {gate-or-bundle}...`
+1. `python3 scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note} {gate-or-bundle}...`
 2. The wrapper creates the review run, launches a nested runner, records one review body per gate, and finalizes acceptance
 
 ### Sweep
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
+1. `python3 scripts/review_target_selector.py --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
 4. `scripts/review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
-5. For insignificant changes: run `uv run scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} ...` to append acceptance events
+5. For insignificant changes: run `python3 scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} ...` to append acceptance events

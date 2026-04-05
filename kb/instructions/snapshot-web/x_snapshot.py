@@ -2,7 +2,7 @@
 """Snapshot X/Twitter posts, threads, and article posts to kb/sources/.
 
 Usage:
-    uv run kb/scripts/x_snapshot.py "https://x.com/<user>/status/<id>"
+    uv run scripts/x_snapshot.py "https://x.com/<user>/status/<id>"
 """
 
 from __future__ import annotations

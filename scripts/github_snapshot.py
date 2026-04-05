@@ -2,8 +2,8 @@
 """Snapshot GitHub issue/PR content into kb/sources/.
 
 Usage:
-    uv run kb/scripts/github_snapshot.py "https://github.com/owner/repo/issues/123"
-    uv run kb/scripts/github_snapshot.py "https://api.github.com/repos/owner/repo/issues/123"
+    python3 scripts/github_snapshot.py "https://github.com/owner/repo/issues/123"
+    python3 scripts/github_snapshot.py "https://api.github.com/repos/owner/repo/issues/123"
 """
 
 from __future__ import annotations

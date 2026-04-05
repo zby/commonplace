@@ -2,9 +2,9 @@
 """Relocate a KB note by renaming it, moving it, or both.
 
 Usage:
-    uv run scripts/relocate_note.py kb/notes/my-note.md "New note title"
-    uv run scripts/relocate_note.py kb/notes/my-note.md --dir kb/notes/definitions
-    uv run scripts/relocate_note.py kb/notes/my-note.md --to kb/notes/definitions/new-note.md --apply
+    python3 scripts/relocate_note.py kb/notes/my-note.md "New note title"
+    python3 scripts/relocate_note.py kb/notes/my-note.md --dir kb/notes/definitions
+    python3 scripts/relocate_note.py kb/notes/my-note.md --to kb/notes/definitions/new-note.md --apply
 """
 
 from __future__ import annotations

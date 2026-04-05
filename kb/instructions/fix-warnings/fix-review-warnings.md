@@ -14,7 +14,7 @@ An editing pass that fixes actionable findings from prose and/or semantic review
 
 ## Prerequisites
 
-1. Run `uv run scripts/warn_selector.py --json {note-path}` to get actionable findings for this note from current accepted run-backed `warn` reviews across all models. This selector ignores legacy rows that are not attached to a review run and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no warn findings" and stop.
+1. Run `python3 scripts/warn_selector.py --json {note-path}` to get actionable findings for this note from current accepted run-backed `warn` reviews across all models. This selector ignores legacy rows that are not attached to a review run and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no warn findings" and stop.
 2. Read the target note in full.
 3. Read the corresponding gate review text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
 4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.

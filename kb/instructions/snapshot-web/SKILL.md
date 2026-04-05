@@ -40,7 +40,7 @@ Detect the URL type and branch:
 Resolve the sibling script path relative to this `SKILL.md` (do not assume the shell is running from the skill directory), then run:
 
 ```bash
-uv run "{resolved-path-to-github_snapshot.py}" "{url}"
+python3 "{resolved-path-to-github_snapshot.py}" "{url}"
 ```
 
 Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.

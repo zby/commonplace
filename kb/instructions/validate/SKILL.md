@@ -11,7 +11,7 @@ context: fork
 Run the deterministic validation script. Resolve the path to `validate_notes.py` in the **same directory as this `SKILL.md`**, then run it:
 
 ```bash
-uv run <path-to-this-skill-directory>/validate_notes.py "$ARGUMENTS"
+python3 <path-to-this-skill-directory>/validate_notes.py "$ARGUMENTS"
 ```
 
 **Target: $ARGUMENTS**
