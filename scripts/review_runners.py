@@ -83,20 +83,40 @@ def _first_request_summary(request: dict[str, object]) -> dict[str, object]:
     return summary
 
 
+def _is_usable_claude_model(value: object) -> bool:
+    return isinstance(value, str) and bool(value) and not value.startswith("<")
+
+
 def _build_claude_telemetry(
     requests: list[dict[str, object]],
+    *,
+    init_model: str | None = None,
 ) -> dict[str, object] | None:
-    if not requests:
+    usable_init_model = init_model if _is_usable_claude_model(init_model) else None
+    if not requests and usable_init_model is None:
         return None
 
     totals = _usage_totals_from_requests(requests)
     totals["request_count"] = len(requests)
-    first_request = _first_request_summary(requests[0])
+    first_request = _first_request_summary(requests[0]) if requests else None
     followup_requests = requests[1:]
     followup_totals = _usage_totals_from_requests(followup_requests)
     followup_totals["request_count"] = len(followup_requests)
+    models = [
+        model
+        for model in dict.fromkeys(
+            request.get("model")
+            for request in requests
+            if _is_usable_claude_model(request.get("model"))
+        )
+    ]
+    if not models and usable_init_model is not None:
+        models = [usable_init_model]
     return {
         "provider": "claude-code",
+        "model": models[0] if len(models) == 1 else None,
+        "models": models,
+        "init_model": usable_init_model,
         "requests": requests,
         "totals": totals,
         "first_request": first_request,
@@ -555,6 +575,7 @@ def _stream_claude_json_pipe(
     chunks: list[str],
     request_usage_entries: list[dict[str, object]],
     request_usage_index: dict[str, int],
+    init_state: dict[str, str],
 ) -> None:
     current_message_id: str | None = None
     current_message_text = ""
@@ -584,6 +605,10 @@ def _stream_claude_json_pipe(
             )
 
             emitted = ""
+            if event_type == "system" and event.get("subtype") == "init":
+                model = event.get("model")
+                if _is_usable_claude_model(model):
+                    init_state["model"] = model
             if event_type in {"assistant", "user"}:
                 if isinstance(message, dict):
                     message_id = message.get("id")
@@ -638,6 +663,7 @@ def run_prompt(
     runner_prompt = prompt
     claude_request_usage_entries: list[dict[str, object]] = []
     claude_request_usage_index: dict[str, int] = {}
+    claude_init_state: dict[str, str] = {}
     claude_session_log_snapshot = _snapshot_claude_session_logs(repo_root) if runner == "claude-code" else {}
     codex_session_log_snapshot = _snapshot_codex_session_logs() if runner == "codex" else {}
 
@@ -687,7 +713,14 @@ def run_prompt(
     stdout_thread = threading.Thread(
         target=_stream_claude_json_pipe if runner == "claude-code" else _stream_pipe,
         args=(
-            (process.stdout, sys.stdout, stdout_chunks, claude_request_usage_entries, claude_request_usage_index)
+            (
+                process.stdout,
+                sys.stdout,
+                stdout_chunks,
+                claude_request_usage_entries,
+                claude_request_usage_index,
+                claude_init_state,
+            )
             if runner == "claude-code"
             else (process.stdout, sys.stdout, stdout_chunks)
         ),
@@ -732,7 +765,10 @@ def run_prompt(
         stderr="".join(stderr_chunks),
         returncode=returncode,
         telemetry=(
-            _build_claude_telemetry(claude_request_usage_entries)
+            _build_claude_telemetry(
+                claude_request_usage_entries,
+                init_model=claude_init_state.get("model"),
+            )
             if runner == "claude-code"
             else codex_telemetry
         ),

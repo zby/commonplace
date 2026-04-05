@@ -29,6 +29,8 @@ review_metadata = load_module("review_metadata_review_runs_test", SCRIPTS_DIR / 
 run_review_bundle = load_module("run_review_bundle_review_runs_test", SCRIPTS_DIR / "run_review_bundle.py")
 warn_selector = load_module("warn_selector_review_runs_test", SCRIPTS_DIR / "warn_selector.py")
 
+TEST_MODEL = "test-model"
+
 
 def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -239,7 +241,6 @@ def run_script(repo: Path, script_name: str, *args: str, env: dict[str, str]) ->
 def test_create_write_finalize_review_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -250,6 +251,8 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         "semantic/grounding-alignment",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())
@@ -337,7 +340,6 @@ Grounding is aligned.
 def test_create_review_run_json_output(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -348,13 +350,15 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         "semantic/grounding-alignment",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         "--json",
         env=env,
     )
     payload = json.loads(created.stdout)
     assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
     assert payload["note_path"] == "kb/notes/sample.md"
-    assert payload["model_id"] == "test-model"
+    assert payload["model_id"] == TEST_MODEL
     assert payload["runner"] == "codex"
     assert payload["gate_ids"] == [
         "prose/source-residue",
@@ -378,7 +382,6 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
 def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -388,6 +391,8 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
         "prose/source-residue",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())
@@ -429,7 +434,6 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
 def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_id(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -439,6 +443,8 @@ def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_
         "prose/source-residue",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())
@@ -515,7 +521,6 @@ The note still needs one small fix.
 def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     note_path = repo / "kb" / "notes" / "sample.md"
@@ -570,7 +575,6 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
 def test_warn_selector_falls_back_to_summary_for_current_warn_without_warn_bullets(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -580,6 +584,8 @@ def test_warn_selector_falls_back_to_summary_for_current_warn_without_warn_bulle
         "prose/source-residue",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())
@@ -627,7 +633,6 @@ def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Pat
     repo, db_path = build_repo_fixture(tmp_path)
 
     warn_env = os.environ.copy()
-    warn_env["COMMONPLACE_REVIEW_MODEL"] = "model-a"
     warn_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -637,6 +642,8 @@ def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Pat
         "prose/source-residue",
         "--runner",
         "codex",
+        "--model",
+        "model-a",
         env=warn_env,
     )
     warn_run_id = int(created.stdout.strip())
@@ -673,7 +680,6 @@ The note still needs one small fix.
     )
 
     pass_env = os.environ.copy()
-    pass_env["COMMONPLACE_REVIEW_MODEL"] = "model-b"
     pass_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     created = run_script(
         repo,
@@ -682,6 +688,8 @@ The note still needs one small fix.
         "prose/source-residue",
         "--runner",
         "codex",
+        "--model",
+        "model-b",
         env=pass_env,
     )
     pass_run_id = int(created.stdout.strip())
@@ -712,7 +720,6 @@ Looks good.
     )
 
     selector_env = os.environ.copy()
-    selector_env["COMMONPLACE_REVIEW_MODEL"] = "model-b"
     selector_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
         [sys.executable, str(SCRIPTS_DIR / "warn_selector.py"), "--json", "kb/notes/sample.md"],
@@ -745,8 +752,14 @@ for event in [
     {{"type": "system", "subtype": "init"}},
     {{
         "type": "assistant",
+        "requestId": "req-1",
+        "uuid": "uuid-1",
+        "sessionId": "session-1",
+        "timestamp": "2026-04-05T12:00:00Z",
         "message": {{
             "id": "msg-1",
+            "model": "claude-sonnet-4-6",
+            "usage": {{"input_tokens": 100, "output_tokens": 20}},
             "content": [
                 {{"type": "text", "text": "Working through the requested links.\\n"}},
                 {{"type": "tool_use", "name": "Read", "input": {{"file_path": "kb/notes/sample.md"}}}},
@@ -755,8 +768,14 @@ for event in [
     }},
     {{
         "type": "assistant",
+        "requestId": "req-2",
+        "uuid": "uuid-2",
+        "sessionId": "session-1",
+        "timestamp": "2026-04-05T12:00:02Z",
         "message": {{
             "id": "msg-2",
+            "model": "claude-sonnet-4-6",
+            "usage": {{"input_tokens": 120, "output_tokens": 40}},
             "content": [
                 {{
                     "type": "text",
@@ -774,7 +793,6 @@ for event in [
     fake_claude.chmod(0o755)
 
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     env["PATH"] = f"{fake_bin}:{env['PATH']}"
 
@@ -787,6 +805,8 @@ for event in [
             "semantic/grounding-alignment",
             "--runner",
             "claude-code",
+            "--model",
+            "claude-requested",
             "--db",
             str(db_path),
         ],
@@ -797,18 +817,34 @@ for event in [
         text=True,
     )
     assert "completed" in result.stdout
+    assert "requested model partition claude-requested" in result.stderr
+    assert "claude-sonnet-4-6" in result.stderr
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_count = conn.execute("SELECT count(*) FROM review_runs").fetchone()[0]
         gate_count = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
         acceptance_count = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
-        run_row = conn.execute("SELECT id, raw_bundle_markdown FROM review_runs").fetchone()
+        run_row = conn.execute("SELECT id, model_id, telemetry_json, raw_bundle_markdown FROM review_runs").fetchone()
         assert run_count == 1
         assert gate_count == 2
         assert acceptance_count == 2
         assert run_row is not None
+        assert run_row["model_id"] == "claude-sonnet-4-6"
+        telemetry = json.loads(run_row["telemetry_json"])
+        assert telemetry["model"] == "claude-sonnet-4-6"
+        assert telemetry["models"] == ["claude-sonnet-4-6"]
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        gate_rows = conn.execute("SELECT gate_id, model_id FROM gate_reviews ORDER BY gate_id").fetchall()
+        assert [(row["gate_id"], row["model_id"]) for row in gate_rows] == [
+            ("prose/source-residue", "claude-sonnet-4-6"),
+            ("semantic/grounding-alignment", "claude-sonnet-4-6"),
+        ]
+        acceptance_rows = conn.execute("SELECT gate_id, model_id FROM acceptance_events ORDER BY gate_id").fetchall()
+        assert [(row["gate_id"], row["model_id"]) for row in acceptance_rows] == [
+            ("prose/source-residue", "claude-sonnet-4-6"),
+            ("semantic/grounding-alignment", "claude-sonnet-4-6"),
+        ]
 
     artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
@@ -826,7 +862,6 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
 
     env = os.environ.copy()
     env["HOME"] = str(fake_home)
-    env["COMMONPLACE_REVIEW_MODEL"] = "gpt-5-4-high"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     env["PATH"] = f"{fake_bin}:{env['PATH']}"
 
@@ -839,6 +874,8 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
             "semantic/grounding-alignment",
             "--runner",
             "codex",
+            "--model",
+            "gpt-5-4-high",
             "--db",
             str(db_path),
         ],
@@ -884,7 +921,6 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
 def test_record_bundle_review_script_reads_artifact_and_finalizes(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -895,6 +931,8 @@ def test_record_bundle_review_script_reads_artifact_and_finalizes(tmp_path: Path
         "semantic/grounding-alignment",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())
@@ -1154,7 +1192,6 @@ for event in [
     fake_claude.chmod(0o755)
 
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     env["PATH"] = f"{fake_bin}:{env['PATH']}"
 
@@ -1167,6 +1204,8 @@ for event in [
             "semantic/grounding-alignment",
             "--runner",
             "claude-code",
+            "--model",
+            "claude-requested",
             "--db",
             str(db_path),
         ],
@@ -1196,7 +1235,6 @@ for event in [
 def test_record_bundle_review_script_parse_failure_marks_run_failed(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
@@ -1207,6 +1245,8 @@ def test_record_bundle_review_script_parse_failure_marks_run_failed(tmp_path: Pa
         "semantic/grounding-alignment",
         "--runner",
         "codex",
+        "--model",
+        TEST_MODEL,
         env=env,
     )
     review_run_id = int(created.stdout.strip())

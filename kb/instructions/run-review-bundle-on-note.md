@@ -6,7 +6,7 @@ description: Run review gates on one note — create a review run, produce a sin
 
 Review a specific note against an explicit list of gates.
 
-Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-or-bundle}...` instead.
+Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `uv run scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...` instead.
 
 The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent.
 
@@ -31,7 +31,7 @@ Reading scope for review:
 ### 1. Create the review run and capture the resolved gates
 
 ```bash
-uv run scripts/create_review_run.py --runner {codex|claude-code} --json {note-path} {gate-or-bundle}...
+uv run scripts/create_review_run.py --runner {codex|claude-code} --model {model-id} --json {note-path} {gate-or-bundle}...
 ```
 
 Capture from the JSON output:
@@ -39,7 +39,7 @@ Capture from the JSON output:
 - `review_run_id`
 - `gate_ids`
 - `gates` — each entry includes `gate_id`, `path`, `text`
-- `model_id`
+- `model_id` — initial requested model partition for this run
 - `resolved_links` — pre-resolved markdown link targets from the note
 - `unresolved_links` — broken links to treat as broken if relevant
 
@@ -99,7 +99,7 @@ This script reads the bundle output from `kb/reports/bundle-reviews/review-run-{
 For unattended shell automation or batch wrappers, use:
 
 ```bash
-uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-or-bundle}...
+uv run scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...
 ```
 
 This wrapper creates the review run, spawns a nested runner for semantic judgment, parses the bundle output, records gate reviews, and finalizes — all in one command.

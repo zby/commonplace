@@ -11,7 +11,7 @@ This file is a compatibility wrapper. The canonical prose bundle now resolves di
 Preferred execution path for shell automation:
 
 ```bash
-uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} prose
+uv run scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} prose
 ```
 
 If you are invoking this instruction from an agent, treat it as shorthand for:

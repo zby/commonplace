@@ -20,7 +20,6 @@ from review_db import (
     resolve_db_path,
 )
 from review_metadata import blob_text_at_sha, file_text_at_commit, git_blob_sha, iso_now, last_commit_for_path
-from review_model import resolve_model
 
 NOTES_ROOT = Path("kb/notes")
 
@@ -99,6 +98,7 @@ def note_diff_since(
 def select_stale_gates(
     repo_root: Path,
     *,
+    model: str,
     gate_ids: list[str],
     note_filter: list[str] | None = None,
     current_only: bool = False,
@@ -106,7 +106,9 @@ def select_stale_gates(
 ) -> list[StaleGate]:
     gates_dir = repo_root / GATES_ROOT
     notes_dir = repo_root / NOTES_ROOT
-    model = resolve_model()
+    model = model.strip()
+    if not model:
+        raise ValueError("model is required")
     db_path = resolve_db_path(repo_root)
 
     if note_filter and current_only:
@@ -235,6 +237,7 @@ def main() -> None:
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
+    parser.add_argument("--model", required=True, help="Review model partition to query or acknowledge.")
     parser.add_argument(
         "--reason",
         choices=["missing-review", "gate-changed", "note-changed"],
@@ -249,9 +252,11 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
+    model = args.model.strip()
+    if not model:
+        parser.error("--model must not be empty")
 
     if args.ack:
-        model = resolve_model()
         ack_pairs(repo_root, args.ack, model)
         return
 
@@ -270,6 +275,7 @@ def main() -> None:
     try:
         records = select_stale_gates(
             repo_root,
+            model=model,
             gate_ids=gate_ids,
             note_filter=args.note_paths,
             current_only=args.current,

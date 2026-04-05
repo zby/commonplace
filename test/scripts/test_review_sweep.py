@@ -56,11 +56,10 @@ exit 2
 
     env = os.environ.copy()
     env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["REVIEW_SWEEP_JOBS"] = "1"
 
     result = subprocess.run(
-        ["bash", str(SCRIPT_PATH), "prose"],
+        ["bash", str(SCRIPT_PATH), "--model", "test-model", "prose"],
         cwd=repo,
         capture_output=True,
         text=True,
@@ -96,10 +95,9 @@ exit 2
 
     env = os.environ.copy()
     env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
 
     result = subprocess.run(
-        ["bash", str(SCRIPT_PATH), "--current", "prose"],
+        ["bash", str(SCRIPT_PATH), "--model", "test-model", "--current", "prose"],
         cwd=repo,
         capture_output=True,
         text=True,
@@ -109,7 +107,7 @@ exit 2
 
     assert result.returncode == 0
     logged = selector_log.read_text(encoding="utf-8")
-    assert "scripts/review_target_selector.py prose --json --current" in logged
+    assert "scripts/review_target_selector.py --model test-model prose --json --current" in logged
 
 
 def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(tmp_path: Path) -> None:
@@ -168,10 +166,9 @@ exit 2
 
     env = os.environ.copy()
     env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
 
     result = subprocess.run(
-        ["bash", str(SCRIPT_PATH), "prose"],
+        ["bash", str(SCRIPT_PATH), "--model", "test-model", "prose"],
         cwd=repo,
         capture_output=True,
         text=True,
@@ -216,11 +213,10 @@ exit 2
 
     env = os.environ.copy()
     env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["COMMONPLACE_REVIEW_MODEL"] = "test-model"
     env["REVIEW_SWEEP_JOBS"] = "1"
 
     result = subprocess.run(
-        ["bash", str(SCRIPT_PATH), "--runner", "codex", "--current", "prose"],
+        ["bash", str(SCRIPT_PATH), "--model", "test-model", "--runner", "codex", "--current", "prose"],
         cwd=repo,
         capture_output=True,
         text=True,
@@ -230,4 +226,4 @@ exit 2
 
     assert result.returncode == 0
     logged = bundle_log.read_text(encoding="utf-8")
-    assert "scripts/run_review_bundle.py --runner codex kb/notes/first.md prose/source-residue" in logged
+    assert "scripts/run_review_bundle.py --runner codex --model test-model kb/notes/first.md prose/source-residue" in logged

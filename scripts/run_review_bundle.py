@@ -28,7 +28,7 @@ from review_db import (
     resolve_db_path,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
-from review_model import build_model_id, resolve_model
+from review_model import build_model_id
 from review_runners import run_prompt
 from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 
@@ -561,8 +561,8 @@ def main() -> None:
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
     parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
+    parser.add_argument("--model", required=True, help="Requested runner model and initial review model partition.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
-    parser.add_argument("--model", help="Override runner model and review model.")
     parser.add_argument(
         "--keep-staging",
         action="store_true",
@@ -585,7 +585,9 @@ def main() -> None:
 
     gates_dir = repo_root / GATES_ROOT
     gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
-    review_model = args.model or resolve_model()
+    review_model = args.model.strip()
+    if not review_model:
+        parser.error("--model must not be empty")
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)
 

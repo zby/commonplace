@@ -301,6 +301,8 @@ for event in [
 
     assert result.returncode == 0
     assert result.telemetry is not None
+    assert result.telemetry["model"] == "claude-test"
+    assert result.telemetry["models"] == ["claude-test"]
     assert result.telemetry["totals"] == {
         "input_tokens": 10,
         "cache_creation_input_tokens": 2,
@@ -311,6 +313,53 @@ for event in [
     }
     assert result.telemetry["first_request"]["request_id"] is None
     assert result.telemetry["first_request"]["message_id"] == "msg-1"
+
+
+def test_run_prompt_uses_claude_init_model_when_usage_model_is_synthetic(monkeypatch, tmp_path: Path) -> None:
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_claude = fake_bin / "claude"
+    fake_claude.write_text(
+        """#!/usr/bin/env python3
+import json
+
+for event in [
+    {"type": "system", "subtype": "init", "model": "claude-opus-4-6"},
+    {
+        "type": "assistant",
+        "message": {
+            "id": "msg-1",
+            "model": "<synthetic>",
+            "usage": {
+                "input_tokens": 0,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "output_tokens": 0,
+            },
+            "content": [{"type": "text", "text": "You're out of extra usage"}],
+        },
+    },
+    {"type": "result", "subtype": "success", "is_error": True, "result": "You're out of extra usage"},
+]:
+    print(json.dumps(event), flush=True)
+""",
+        encoding="utf-8",
+    )
+    fake_claude.chmod(0o755)
+
+    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
+
+    result = review_runners.run_prompt(
+        runner="claude-code",
+        prompt="test prompt",
+        repo_root=tmp_path,
+    )
+
+    assert result.telemetry is not None
+    assert result.telemetry["model"] == "claude-opus-4-6"
+    assert result.telemetry["models"] == ["claude-opus-4-6"]
+    assert result.telemetry["init_model"] == "claude-opus-4-6"
+    assert result.telemetry["requests"][0]["model"] == "<synthetic>"
 
 
 def test_run_prompt_falls_back_to_claude_session_log_usage(monkeypatch, tmp_path: Path) -> None:
@@ -403,6 +452,8 @@ for event in [
 
     assert result.returncode == 0
     assert result.telemetry is not None
+    assert result.telemetry["model"] == "claude-test"
+    assert result.telemetry["models"] == ["claude-test"]
     assert result.telemetry["totals"] == {
         "input_tokens": 11,
         "cache_creation_input_tokens": 7,

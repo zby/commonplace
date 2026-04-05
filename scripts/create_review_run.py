@@ -10,7 +10,6 @@ from pathlib import Path
 from review_db import GATES_ROOT, connect, ensure_db, insert_review_run, insert_review_run_gates, resolve_db_path
 from resolve_gates import resolve_to_gate_ids, strip_frontmatter
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
-from review_model import resolve_model
 
 
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
@@ -25,8 +24,8 @@ def main() -> None:
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
     parser.add_argument("--runner", required=True, help="Runner name, e.g. claude-code or codex.")
+    parser.add_argument("--model", required=True, help="Review model partition for this run.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
-    parser.add_argument("--model", help="Override COMMONPLACE_REVIEW_MODEL.")
     parser.add_argument("--json", action="store_true", help="Print review run metadata as JSON.")
     args = parser.parse_args()
 
@@ -37,7 +36,9 @@ def main() -> None:
 
     gates_dir = repo_root / GATES_ROOT
     gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
-    model_id = args.model or resolve_model()
+    model_id = args.model.strip()
+    if not model_id:
+        parser.error("--model must not be empty")
 
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)

@@ -16,7 +16,7 @@ Inputs:
 ### 1. Get note-changed pairs
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} --note {note-paths} --json --reason note-changed
+uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} --note {note-paths} --json --reason note-changed
 ```
 
 If the output is an empty array, stop — nothing to triage.
@@ -39,7 +39,7 @@ When in doubt, don't ack — let the review handle it.
 Ack all insignificant pairs in one command:
 
 ```bash
-uv run scripts/ack_gate_review.py {note-path} {gate-id} [{gate-id} ...]
+uv run scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} [{gate-id} ...]
 ```
 
 This appends a new acceptance event to the review DB so the accepted baseline matches the current note revision. It does not rely on `touch` or filesystem timestamps.

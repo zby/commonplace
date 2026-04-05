@@ -7,7 +7,6 @@ import argparse
 from pathlib import Path
 
 from review_target_selector import ack_pairs
-from review_model import resolve_model
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,6 +21,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Repository-relative note path, for example kb/notes/backlinks.md.",
     )
     parser.add_argument(
+        "--model",
+        required=True,
+        help="Review model partition to acknowledge against.",
+    )
+    parser.add_argument(
         "gate_ids",
         nargs="+",
         help="One or more gate ids, for example prose/source-residue.",
@@ -32,7 +36,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
-    model = resolve_model()
+    model = args.model.strip()
+    if not model:
+        parser.error("--model must not be empty")
     pairs = [f"{args.note_path}:{gate_id}" for gate_id in args.gate_ids]
     ack_pairs(Path.cwd(), pairs, model)
 

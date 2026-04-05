@@ -16,7 +16,6 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 TEST_MODEL = "test-model"
-os.environ["COMMONPLACE_REVIEW_MODEL"] = TEST_MODEL
 
 
 def load_module(name: str, path: Path):
@@ -201,6 +200,7 @@ class TestMissingReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
@@ -213,6 +213,7 @@ class TestMissingReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue", "semantic/grounding-alignment"],
             note_filter=["kb/notes/unreviewed.md"],
         )
@@ -231,6 +232,7 @@ class TestMissingReview:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/source-residue"],
             current_only=True,
         )
@@ -245,6 +247,7 @@ class TestFreshReview:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
@@ -266,6 +269,7 @@ class TestGateChanged:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
@@ -281,6 +285,7 @@ class TestNoteChanged:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
@@ -300,6 +305,7 @@ class TestAckMetadata:
 
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
@@ -316,6 +322,7 @@ class TestAckMetadata:
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
@@ -342,6 +349,7 @@ class TestAckMetadata:
         build_fixture(tmp_path)
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
@@ -358,6 +366,7 @@ class TestAckMetadata:
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
@@ -424,6 +433,7 @@ class TestDiffGeneration:
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/test-gate"],
             note_filter=["kb/notes/target.md"],
             include_diff=True,
@@ -439,6 +449,7 @@ class TestJsonOutput:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
+            model=TEST_MODEL,
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
@@ -450,13 +461,13 @@ class TestJsonOutput:
 
 
 class TestModelRequired:
-    def test_selector_requires_review_model_env(self, tmp_path: Path, monkeypatch) -> None:
+    def test_selector_requires_explicit_model(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        monkeypatch.delenv("COMMONPLACE_REVIEW_MODEL", raising=False)
 
-        with pytest.raises(ValueError, match="COMMONPLACE_REVIEW_MODEL is not set"):
+        with pytest.raises(ValueError, match="model is required"):
             review_target_selector.select_stale_gates(
                 tmp_path,
+                model="",
                 gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
                 note_filter=["kb/notes/stable.md"],
             )

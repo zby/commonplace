@@ -2,14 +2,13 @@
 # Batch review sweep using the direct-write review runner.
 #
 # Usage:
-#   scripts/review_sweep.sh prose                              # one bundle
-#   scripts/review_sweep.sh prose kb/notes/backlinks.md        # filtered to one note
-#   scripts/review_sweep.sh --current prose                    # current notes only
-#   scripts/review_sweep.sh --runner codex --current prose     # current notes only in Codex
-#   scripts/review_sweep.sh --all-gates                        # all bundles, one at a time
-#   scripts/review_sweep.sh --current --all-gates
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh prose                              # one bundle
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh prose kb/notes/backlinks.md        # filtered to one note
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh --current prose                    # current notes only
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh --runner codex --current prose     # current notes only in Codex
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh --all-gates                        # all bundles, one at a time
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh --current --all-gates
 #
-# Requires: COMMONPLACE_REVIEW_MODEL set in environment.
 # Default concurrency: 4 note-local review runs at a time.
 # Override with REVIEW_SWEEP_JOBS=<n>.
 #
@@ -17,25 +16,14 @@
 
 set -euo pipefail
 
-if [[ -z "${COMMONPLACE_REVIEW_MODEL:-}" ]]; then
-  cat >&2 <<'EOF'
-error: COMMONPLACE_REVIEW_MODEL is not set.
-This variable determines the review model partition and freshness key.
-Set it to the model producing reviews in this run, for example:
-  COMMONPLACE_REVIEW_MODEL=gpt-5-4-xhigh
-  COMMONPLACE_REVIEW_MODEL=gpt-5-codex-high
-  COMMONPLACE_REVIEW_MODEL=opus-4-6
-EOF
-  exit 1
-fi
-
 if [[ $# -lt 1 ]]; then
-  echo "usage: review_sweep.sh [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
+  echo "usage: review_sweep.sh --model <model-id> [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 
 GATES_DIR="kb/instructions/review-gates"
 RUNNER="claude-code"
+MODEL=""
 usage_exhausted_exit_code=99
 current_only=0
 parallelism="${REVIEW_SWEEP_JOBS:-4}"
@@ -67,6 +55,14 @@ while [[ $# -gt 0 ]]; do
       esac
       shift 2
       ;;
+    --model)
+      if [[ $# -lt 2 ]]; then
+        echo "error: --model requires a value" >&2
+        exit 1
+      fi
+      MODEL="$2"
+      shift 2
+      ;;
     --all-gates)
       select_all_gates=1
       shift
@@ -82,8 +78,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ -z "$MODEL" ]]; then
+  echo "error: --model is required" >&2
+  exit 1
+fi
+
 if [[ $# -lt 1 && "${select_all_gates:-0}" -ne 1 ]]; then
-  echo "usage: review_sweep.sh [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
+  echo "usage: review_sweep.sh --model <model-id> [--runner {claude-code|codex}] [--current] {bundle|--all-gates} [note-paths...]" >&2
   exit 1
 fi
 
@@ -136,7 +137,7 @@ run_bundle_review() {
   local status
 
   output_file=$(mktemp)
-  if uv run scripts/run_review_bundle.py --runner "$RUNNER" "$note_path" "${gates[@]}" >"$output_file" 2>&1; then
+  if uv run scripts/run_review_bundle.py --runner "$RUNNER" --model "$MODEL" "$note_path" "${gates[@]}" >"$output_file" 2>&1; then
     status=0
   else
     status=$?
@@ -220,7 +221,7 @@ sweep_bundle() {
   fi
 
   local selector_output
-  selector_output=$(uv run scripts/review_target_selector.py "${selector_args[@]}")
+  selector_output=$(uv run scripts/review_target_selector.py --model "$MODEL" "${selector_args[@]}")
 
   local grouped
   grouped=$(printf '%s' "$selector_output" | group_selector_output)

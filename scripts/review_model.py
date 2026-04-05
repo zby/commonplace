@@ -1,10 +1,6 @@
 from __future__ import annotations
 
-import os
 import re
-
-
-MODEL_ENV_VAR = "COMMONPLACE_REVIEW_MODEL"
 REASONING_EFFORT_VALUES = ("low", "medium", "high", "xhigh")
 
 
@@ -29,19 +25,3 @@ def build_model_id(model: str, reasoning_effort: str | None = None) -> str:
     if effort is None:
         return encoded_model
     return f"{encoded_model}-{effort}"
-
-
-def resolve_model() -> str:
-    model = os.environ.get(MODEL_ENV_VAR, "").strip()
-    if model:
-        return model
-
-    raise ValueError(
-        f"{MODEL_ENV_VAR} is not set.\n"
-        "This variable determines the review filename suffix and freshness key.\n"
-        "Set it to the model producing reviews in this run, for example:\n"
-        "  COMMONPLACE_REVIEW_MODEL=gpt-5-4-xhigh\n"
-        "  COMMONPLACE_REVIEW_MODEL=gpt-5-codex-high\n"
-        "  COMMONPLACE_REVIEW_MODEL=opus-4-6\n"
-        "Do not copy a suffix from existing review files."
-    )

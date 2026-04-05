@@ -22,13 +22,13 @@ Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-al
 ### 2. Inventory
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} --note {note-paths} --json | wc -l
+uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} --note {note-paths} --json | wc -l
 ```
 
 Or for current notes only:
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} --current --json | wc -l
+uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} --current --json | wc -l
 ```
 
 Check the line count first (~5 lines per stale pair in JSON output).
@@ -38,13 +38,13 @@ Check the line count first (~5 lines per stale pair in JSON output).
 - **Otherwise**: read the JSON output and continue.
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} --note {note-paths} --json
+uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} --note {note-paths} --json
 ```
 
 Or:
 
 ```bash
-uv run scripts/review_target_selector.py {bundle-or-all} --current --json
+uv run scripts/review_target_selector.py --model {model-id} {bundle-or-all} --current --json
 ```
 
 ### 3. Review remaining pairs
@@ -54,13 +54,13 @@ Group the remaining pairs by note.
 If there are many notes, use:
 
 ```bash
-scripts/review_sweep.sh {bundle-or-all} {note-paths...}
+scripts/review_sweep.sh --model {model-id} {bundle-or-all} {note-paths...}
 ```
 
 Or:
 
 ```bash
-scripts/review_sweep.sh --current {bundle-or-all}
+scripts/review_sweep.sh --model {model-id} --current {bundle-or-all}
 ```
 
 `review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
@@ -68,13 +68,13 @@ scripts/review_sweep.sh --current {bundle-or-all}
 Example for current notes in Codex:
 
 ```bash
-scripts/review_sweep.sh --runner codex --current semantic
+scripts/review_sweep.sh --model gpt-5-4-xhigh --runner codex --current semantic
 ```
 
 If you are executing manually from the shell, run one bundle wrapper per note:
 
 ```bash
-uv run scripts/run_review_bundle.py --runner {codex|claude-code} {note-path} {gate-id-1} {gate-id-2} ...
+uv run scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} {gate-id-1} {gate-id-2} ...
 ```
 
 If you are executing from an agent harness, run `kb/instructions/run-review-bundle-on-note.md` once per note instead of nesting `run_review_bundle.py` inside another agent.
