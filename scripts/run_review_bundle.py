@@ -24,6 +24,7 @@ from review_db import (
     load_gate_reviews_for_run,
     load_review_run,
     parse_review_decision,
+    rewrite_review_result_footer,
     resolve_db_path,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
@@ -157,6 +158,39 @@ def extract_bundle_reviews(
     return reviews
 
 
+def rewrite_bundle_result_footers(
+    bundle_markdown: str,
+    *,
+    parsed_reviews: dict[str, str],
+) -> str:
+    rewritten_lines: list[str] = []
+    current_gate_id: str | None = None
+
+    for raw_line in bundle_markdown.splitlines():
+        start_match = BUNDLE_START_RE.match(raw_line.strip())
+        if start_match is not None:
+            current_gate_id = start_match.group("gate_id")
+            rewritten_lines.append(raw_line)
+            continue
+
+        end_match = BUNDLE_END_RE.match(raw_line.strip())
+        if end_match is not None:
+            gate_id = end_match.group("gate_id")
+            if current_gate_id == gate_id and gate_id in parsed_reviews:
+                rewritten_lines.extend(parsed_reviews[gate_id].rstrip("\n").splitlines())
+            rewritten_lines.append(raw_line)
+            current_gate_id = None
+            continue
+
+        if current_gate_id is None:
+            rewritten_lines.append(raw_line)
+
+    rewritten = "\n".join(rewritten_lines)
+    if bundle_markdown.endswith("\n"):
+        return rewritten + "\n"
+    return rewritten
+
+
 def write_bundle_artifacts(
     *,
     artifact_dir: Path,
@@ -194,14 +228,16 @@ def record_bundle_reviews(
         if run_gate is None:
             raise ValueError(f"gate {gate_id} is not part of review run {review_run_id}")
         review_text = parsed_reviews[gate_id]
+        decision = parse_review_decision(review_text)
+        canonical_review_text = rewrite_review_result_footer(review_text, decision=decision)
         insert_gate_review(
             conn,
             review_run_id=review_run_id,
             note_path=review_run.note_path,
             gate_id=gate_id,
             model_id=review_run.model_id,
-            decision=parse_review_decision(review_text),
-            rationale_markdown=review_text,
+            decision=decision,
+            rationale_markdown=canonical_review_text,
             evidence_json=None,
             gate_sha=run_gate.gate_sha,
             reviewed_note_sha=review_run.reviewed_note_sha,
@@ -338,16 +374,27 @@ def record_bundle_review_run(
 
         try:
             parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=gate_ids)
+            canonical_reviews = {
+                gate_id: rewrite_review_result_footer(
+                    review_text,
+                    decision=parse_review_decision(review_text),
+                )
+                for gate_id, review_text in parsed_reviews.items()
+            }
+            canonical_bundle_markdown = rewrite_bundle_result_footers(
+                raw_bundle_markdown,
+                parsed_reviews=canonical_reviews,
+            )
             write_bundle_artifacts(
                 artifact_dir=artifact_dir,
-                raw_bundle_markdown=raw_bundle_markdown,
-                parsed_reviews=parsed_reviews,
+                raw_bundle_markdown=canonical_bundle_markdown,
+                parsed_reviews=canonical_reviews,
             )
             record_bundle_reviews(
                 conn,
                 review_run_id=review_run_id,
                 gate_ids=gate_ids,
-                parsed_reviews=parsed_reviews,
+                parsed_reviews=canonical_reviews,
             )
         except (ValueError, sqlite3.IntegrityError) as exc:
             fail_review_run(
@@ -391,7 +438,7 @@ def record_bundle_review_run(
                 conn,
                 review_run_id=review_run_id,
                 telemetry_json=telemetry_json,
-                raw_bundle_markdown=raw_bundle_markdown,
+                raw_bundle_markdown=canonical_bundle_markdown,
                 debug_log=finalize_debug_log,
                 fallback_failure_reason=f"finalize_review_run.py exited {finalize.returncode}",
             )
@@ -405,7 +452,7 @@ def record_bundle_review_run(
                 conn,
                 review_run_id=review_run_id,
                 telemetry_json=telemetry_json,
-                raw_bundle_markdown=raw_bundle_markdown,
+                raw_bundle_markdown=canonical_bundle_markdown,
             )
             conn.commit()
 
@@ -440,6 +487,7 @@ def build_prompt(
         "  === GATE REVIEW START: <gate-id> ===",
         "  === GATE REVIEW END: <gate-id> ===",
         "- Inside each block, include a decision line in a parseable form such as `## Result: PASS` or `## Result: WARN`.",
+        "- Make the decision line the last non-empty line inside each gate block.",
         "- End output after the final gate block.",
         "",
         f"Review run id: {review_run_id}",
@@ -479,8 +527,6 @@ def build_prompt(
         lines.extend(
             [
                 f"=== GATE REVIEW START: {gate_id} ===",
-                "## Result: PASS|WARN|FAIL|ERROR",
-                "",
                 "### Summary",
                 "<short paragraph>",
                 "",
@@ -489,6 +535,8 @@ def build_prompt(
                 "",
                 "### Suggested Revision",
                 "<optional; omit if not needed>",
+                "",
+                "## Result: PASS|WARN|FAIL|ERROR",
                 f"=== GATE REVIEW END: {gate_id} ===",
                 "",
             ]

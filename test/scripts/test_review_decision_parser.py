@@ -139,6 +139,27 @@ No explicit outcome and no severity labels.
     assert review_db.parse_review_decision(review_text) == "unknown"
 
 
+def test_rewrite_review_result_footer_moves_result_to_end() -> None:
+    review_text = """## Result: PASS
+
+Grounding is aligned.
+"""
+
+    assert review_db.rewrite_review_result_footer(review_text) == "Grounding is aligned.\n\n## Result: PASS\n"
+
+
+def test_rewrite_review_result_footer_preserves_declared_result_when_parse_is_unknown() -> None:
+    review_text = """## Result: FAIL
+
+### Findings
+- PASS: The title is clear and aligned.
+"""
+
+    assert review_db.rewrite_review_result_footer(review_text) == (
+        "### Findings\n- PASS: The title is clear and aligned.\n\n## Result: FAIL\n"
+    )
+
+
 def test_ensure_db_migrates_gate_review_schema_to_support_unknown_and_warn(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     old_schema = (REPO_ROOT / "scripts" / "review-schema.sql").read_text(encoding="utf-8").replace(

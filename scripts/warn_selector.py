@@ -9,24 +9,37 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from review_db import GateReviewRow, connect, ensure_db, load_effective_gate_review_map, resolve_db_path
+from review_db import (
+    GateReviewRow,
+    connect,
+    ensure_db,
+    load_effective_gate_review_map,
+    resolve_db_path,
+    strip_explicit_review_result_lines,
+)
 
+
+SECTION_END_LOOKAHEAD = (
+    r"(?=^###\s|"
+    r"^##\s*(?:Result|Verdict|Outcome)\b|"
+    r"^##\s+(?:pass|warn|fail|error|unknown|info|ok)\s*$|"
+    r"^Verdict:|"
+    r"^(?:[-*]\s*)?Outcome:|"
+    r"\Z)"
+)
 
 SUMMARY_SECTION_RE = re.compile(
-    r"^###\s*Summary\s*$\s*(?P<body>.*?)(?=^###\s|\Z)",
+    rf"^###\s*Summary\s*$\s*(?P<body>.*?){SECTION_END_LOOKAHEAD}",
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
 FINDINGS_SECTION_RE = re.compile(
-    r"^###\s*Findings\s*$\s*(?P<body>.*?)(?=^###\s|\Z)",
+    rf"^###\s*Findings\s*$\s*(?P<body>.*?){SECTION_END_LOOKAHEAD}",
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
 ACTIONABLE_FINDING_RE = re.compile(
     r"^\s*-\s*warn\s*:\s*(?P<body>.+?)(?=^\s*-\s*(?:pass|info|warn|fail|error)\s*:|^###\s|\Z)",
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
-RESULT_LINE_RE = re.compile(r"^##\s*Result:\s*(?P<decision>[a-z]+)\s*$", re.IGNORECASE | re.MULTILINE)
-
-
 @dataclass
 class WarnEntry:
     note_path: str
@@ -72,7 +85,7 @@ def extract_warns(review_text: str, *, decision: str) -> list[str]:
     if findings:
         return [findings]
 
-    body_after_result = RESULT_LINE_RE.sub("", review_text, count=1).strip()
+    body_after_result = strip_explicit_review_result_lines(review_text).strip()
     if body_after_result:
         return [body_after_result]
     return []

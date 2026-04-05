@@ -143,7 +143,7 @@ def test_repair_codex_model_partitions_rekeys_review_artifacts(tmp_path: Path) -
             gate_id="semantic/grounding-alignment",
             model_id="gpt-5-4-high",
             decision="pass",
-            rationale_markdown="## Result: PASS\n",
+            rationale_markdown="Looks good.\n\n## Result: PASS\n",
             evidence_json=None,
             gate_sha="gate-sha",
             reviewed_note_sha="note-sha",

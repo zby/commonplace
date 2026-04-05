@@ -104,6 +104,14 @@ _FINDING_SEVERITY_RE = re.compile(
 _LEGACY_BOLD_DECISION_RE = re.compile(r"^\*\*(pass|fail|error|warn|info|ok|unknown)\b", re.IGNORECASE)
 _NO_VIOLATIONS_RE = re.compile(r"\bno violations found\b", re.IGNORECASE)
 _QUALITATIVE_FINDING_RE = re.compile(r"^(?:[-*]\s+)?\*\*(minor|moderate|major)\b", re.IGNORECASE | re.MULTILINE)
+_SINGLE_LINE_RESULT_RE = re.compile(
+    r"^(?:##\s*(?:Result|Verdict):|Verdict:|(?:[-*]\s*)?Outcome:)\s*"
+    r"(pass|fail|error|warn|info|ok|unknown)\s*$",
+    re.IGNORECASE,
+)
+_SPLIT_RESULT_HEADING_RE = re.compile(r"^##\s*(?:Result|Verdict|Outcome)\s*$", re.IGNORECASE)
+_DECISION_LINE_RE = re.compile(r"^(pass|fail|error|warn|info|ok|unknown)\s*$", re.IGNORECASE)
+_LEGACY_RESULT_LINE_RE = re.compile(r"^##\s+(pass|fail|error|warn|info|ok|unknown)\s*$", re.IGNORECASE)
 
 DECISION_VALUES = ("pass", "warn", "fail", "error", "unknown")
 
@@ -176,6 +184,74 @@ def _collect_flagged_review_decisions(review_text: str) -> list[str]:
 
 def _collect_qualitative_findings(review_text: str) -> set[str]:
     return {match.group(1).lower() for match in _QUALITATIVE_FINDING_RE.finditer(review_text)}
+
+
+def _extract_declared_review_decision(review_text: str) -> str | None:
+    flagged = _collect_flagged_review_decisions(review_text)
+    if flagged and len(set(flagged)) == 1:
+        return flagged[-1]
+
+    explicit = _collect_explicit_review_decisions(review_text)
+    revised = [decision for source, decision in explicit if source == "revised-result"]
+    if revised and len(set(revised)) == 1:
+        return revised[-1]
+
+    unrevised = [decision for source, decision in explicit if source != "revised-result"]
+    if unrevised and len(set(unrevised)) == 1:
+        return unrevised[-1]
+
+    stripped = review_text.lstrip()
+    match = _LEGACY_BOLD_DECISION_RE.match(stripped)
+    if match is not None:
+        decision = normalize_review_decision(match.group(1))
+        if decision is not None:
+            return decision
+    return None
+
+
+def strip_explicit_review_result_lines(review_text: str) -> str:
+    lines = review_text.splitlines()
+    kept: list[str] = []
+    index = 0
+
+    while index < len(lines):
+        line = lines[index]
+        stripped = line.strip()
+        if _SPLIT_RESULT_HEADING_RE.match(stripped) and index + 1 < len(lines):
+            next_stripped = lines[index + 1].strip()
+            if _DECISION_LINE_RE.match(next_stripped):
+                index += 2
+                continue
+        if _SINGLE_LINE_RESULT_RE.match(stripped) or _LEGACY_RESULT_LINE_RE.match(stripped):
+            index += 1
+            continue
+        kept.append(line)
+        index += 1
+
+    stripped_text = "\n".join(kept).strip()
+    return re.sub(r"\n{3,}", "\n\n", stripped_text)
+
+
+def rewrite_review_result_footer(review_text: str, *, decision: str | None = None) -> str:
+    normalized_decision = normalize_review_decision(decision) if decision else None
+    declared_decision = _extract_declared_review_decision(review_text)
+    parsed_decision = parse_review_decision(review_text)
+
+    footer_decision = normalized_decision if normalized_decision in {"pass", "warn", "fail", "error"} else None
+    if footer_decision is None and declared_decision is not None:
+        footer_decision = declared_decision
+    if footer_decision is None and parsed_decision in {"pass", "warn", "fail", "error"}:
+        footer_decision = parsed_decision
+
+    if footer_decision is None:
+        normalized_text = review_text.strip()
+        return f"{normalized_text}\n" if normalized_text else ""
+
+    body = strip_explicit_review_result_lines(review_text)
+    footer = f"## Result: {footer_decision.upper()}"
+    if body:
+        return f"{body}\n\n{footer}\n"
+    return f"{footer}\n"
 
 
 def connect(db_path: Path) -> sqlite3.Connection:

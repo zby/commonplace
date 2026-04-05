@@ -1,3 +1,3 @@
-## Result: PASS
-
 Grounding is aligned.
+
+## Result: PASS

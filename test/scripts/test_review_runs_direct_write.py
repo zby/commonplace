@@ -199,7 +199,7 @@ events = [
         "payload": {{
             "type": "task_complete",
             "turn_id": "turn-1",
-            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\n## Result: WARN\\n\\nNeeds revision.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
+            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\nNeeds revision.\\n\\n## Result: WARN\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
         }},
     }},
 ]
@@ -209,15 +209,15 @@ with session_log.open("w", encoding="utf-8") as handle:
 
 print(f"session id: {{session_id}}", flush=True)
 print("=== GATE REVIEW START: prose/source-residue ===", flush=True)
-print("## Result: WARN", flush=True)
-print("", flush=True)
 print("Needs revision.", flush=True)
+print("", flush=True)
+print("## Result: WARN", flush=True)
 print("=== GATE REVIEW END: prose/source-residue ===", flush=True)
 print("", flush=True)
 print("=== GATE REVIEW START: semantic/grounding-alignment ===", flush=True)
-print("## Result: PASS", flush=True)
-print("", flush=True)
 print("Looks good.", flush=True)
+print("", flush=True)
+print("## Result: PASS", flush=True)
 print("=== GATE REVIEW END: semantic/grounding-alignment ===", flush=True)
 """,
         encoding="utf-8",
@@ -316,6 +316,16 @@ Grounding is aligned.
             ("prose/source-residue", "warn"),
             ("semantic/grounding-alignment", "pass"),
         ]
+        semantic_row = conn.execute(
+            """
+            SELECT rationale_markdown
+            FROM gate_reviews
+            WHERE review_run_id = ? AND gate_id = ?
+            """,
+            (review_run_id, "semantic/grounding-alignment"),
+        ).fetchone()
+        assert semantic_row is not None
+        assert semantic_row["rationale_markdown"] == "Grounding is aligned.\n\n## Result: PASS\n"
         acceptance_rows = conn.execute(
             "SELECT gate_id, accepted_review_id, acceptance_kind FROM acceptance_events ORDER BY gate_id"
         ).fetchall()
@@ -524,7 +534,7 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
             gate_id="prose/source-residue",
             model_id="test-model",
             decision="warn",
-            rationale_markdown="## Result: WARN\n\n### Findings\n- WARN: Legacy warn.\n",
+            rationale_markdown="### Findings\n- WARN: Legacy warn.\n\n## Result: WARN\n",
             evidence_json=None,
             gate_sha=gate_sha,
             reviewed_note_sha=note_sha,
@@ -750,7 +760,7 @@ for event in [
             "content": [
                 {{
                     "type": "text",
-                    "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\n## Result: PASS\\n\\nLooks good.\\n=== GATE REVIEW END: semantic/grounding-alignment ===\\n",
+                    "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: semantic/grounding-alignment ===\\n",
                 }},
             ],
         }},
@@ -926,6 +936,7 @@ Looks good.
         assert run_row is not None
         assert run_row["status"] == "completed"
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        assert "Looks good.\n\n## Result: PASS\n=== GATE REVIEW END: semantic/grounding-alignment ===" in run_row["raw_bundle_markdown"]
         gate_rows = conn.execute(
             "SELECT gate_id, decision FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
             (review_run_id,),
@@ -945,6 +956,143 @@ Looks good.
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
 
 
+def test_migrate_review_result_footer_rewrites_db_and_artifacts(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    note_path = repo / "kb" / "notes" / "sample.md"
+    prose_gate = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
+    semantic_gate = repo / "kb" / "instructions" / "review-gates" / "semantic" / "grounding-alignment.md"
+    note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
+    prose_gate_sha = review_metadata.git_blob_sha(prose_gate, write_object=True)
+    semantic_gate_sha = review_metadata.git_blob_sha(semantic_gate, write_object=True)
+    note_commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+
+    raw_bundle_markdown = """# Review Bundle
+
+Review run id: 1
+Target: kb/notes/sample.md
+
+=== GATE REVIEW START: prose/source-residue ===
+## Result: WARN
+
+### Summary
+Needs revision.
+=== GATE REVIEW END: prose/source-residue ===
+
+=== GATE REVIEW START: semantic/grounding-alignment ===
+## Result: PASS
+
+Looks good.
+=== GATE REVIEW END: semantic/grounding-alignment ===
+"""
+
+    review_db.ensure_db(repo, db_path)
+    with review_db.connect(db_path) as conn:
+        review_run_id = review_db.insert_review_run(
+            conn,
+            note_path="kb/notes/sample.md",
+            model_id="test-model",
+            runner="codex",
+            reviewed_note_sha=note_sha,
+            reviewed_note_commit=note_commit,
+            started_at="2026-04-05T10:00:00+02:00",
+            completed_at="2026-04-05T10:00:10+02:00",
+            status="completed",
+            raw_bundle_markdown=raw_bundle_markdown,
+        )
+        review_db.insert_review_run_gates(
+            conn,
+            review_run_id=review_run_id,
+            gates=[
+                ("prose/source-residue", prose_gate_sha, 0),
+                ("semantic/grounding-alignment", semantic_gate_sha, 1),
+            ],
+        )
+        review_db.insert_gate_review(
+            conn,
+            review_run_id=review_run_id,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/source-residue",
+            model_id="test-model",
+            decision="warn",
+            rationale_markdown="## Result: WARN\n\n### Summary\nNeeds revision.\n",
+            evidence_json=None,
+            gate_sha=prose_gate_sha,
+            reviewed_note_sha=note_sha,
+            reviewed_note_commit=note_commit,
+            reviewed_at="2026-04-05T10:00:10+02:00",
+            review_kind="full-review",
+        )
+        review_db.insert_gate_review(
+            conn,
+            review_run_id=review_run_id,
+            note_path="kb/notes/sample.md",
+            gate_id="semantic/grounding-alignment",
+            model_id="test-model",
+            decision="pass",
+            rationale_markdown="## Result: PASS\n\nLooks good.\n",
+            evidence_json=None,
+            gate_sha=semantic_gate_sha,
+            reviewed_note_sha=note_sha,
+            reviewed_note_commit=note_commit,
+            reviewed_at="2026-04-05T10:00:10+02:00",
+            review_kind="full-review",
+        )
+        conn.commit()
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    write(artifact_dir / "bundle-output.md", raw_bundle_markdown)
+    write(artifact_dir / "prose__source-residue.md", "## Result: WARN\n\n### Summary\nNeeds revision.\n")
+    write(artifact_dir / "semantic__grounding-alignment.md", "## Result: PASS\n\nLooks good.\n")
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    result = subprocess.run(
+        [sys.executable, str(SCRIPTS_DIR / "migrate_review_result_footer.py")],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "gate_reviews_updated: 2" in result.stdout
+    assert "review_runs_updated: 1" in result.stdout
+    assert "bundle_artifacts_updated: 1" in result.stdout
+    assert "stage_artifacts_updated: 2" in result.stdout
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT gate_id, rationale_markdown FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
+            (review_run_id,),
+        ).fetchall()
+        assert [(row["gate_id"], row["rationale_markdown"]) for row in rows] == [
+            ("prose/source-residue", "### Summary\nNeeds revision.\n\n## Result: WARN\n"),
+            ("semantic/grounding-alignment", "Looks good.\n\n## Result: PASS\n"),
+        ]
+        run_row = conn.execute(
+            "SELECT raw_bundle_markdown FROM review_runs WHERE id = ?",
+            (review_run_id,),
+        ).fetchone()
+        assert run_row is not None
+        assert "### Summary\nNeeds revision.\n\n## Result: WARN\n=== GATE REVIEW END: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        assert "Looks good.\n\n## Result: PASS\n=== GATE REVIEW END: semantic/grounding-alignment ===" in run_row["raw_bundle_markdown"]
+
+    assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8") == run_row["raw_bundle_markdown"]
+    assert (artifact_dir / "prose__source-residue.md").read_text(encoding="utf-8") == (
+        "### Summary\nNeeds revision.\n\n## Result: WARN\n"
+    )
+    assert (artifact_dir / "semantic__grounding-alignment.md").read_text(encoding="utf-8") == (
+        "Looks good.\n\n## Result: PASS\n"
+    )
+
+
 def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
     bundle = """Working notes before the bundle.
 
@@ -959,9 +1107,9 @@ def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
 Extra trailing note.
 
 === GATE REVIEW START: semantic/grounding-alignment ===
-## Result: PASS
-
 Looks good.
+
+## Result: PASS
 === GATE REVIEW END: semantic/grounding-alignment ===
 """
 
@@ -971,7 +1119,7 @@ Looks good.
     )
 
     assert parsed["prose/source-residue"].startswith("## Findings")
-    assert parsed["semantic/grounding-alignment"].startswith("## Result: PASS")
+    assert parsed["semantic/grounding-alignment"] == "Looks good.\n\n## Result: PASS\n"
 
 
 def test_run_review_bundle_parse_failure_persists_raw_bundle(tmp_path: Path) -> None:

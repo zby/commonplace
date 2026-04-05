@@ -14,6 +14,7 @@ from review_db import (
     load_review_run,
     load_review_run_gates,
     parse_review_decision,
+    rewrite_review_result_footer,
     resolve_db_path,
 )
 from review_metadata import _METADATA_BLOCK_RE, iso_now
@@ -38,6 +39,8 @@ def main() -> None:
     metadata_match = _METADATA_BLOCK_RE.match(review_text)
     if metadata_match is not None:
         review_text = review_text[metadata_match.end() :].lstrip("\n")
+    decision = parse_review_decision(review_text)
+    review_text = rewrite_review_result_footer(review_text, decision=decision)
 
     with connect(db_path) as conn:
         review_run = load_review_run(conn, review_run_id=args.review_run_id)
@@ -58,7 +61,7 @@ def main() -> None:
                 note_path=review_run.note_path,
                 gate_id=args.gate_id,
                 model_id=review_run.model_id,
-                decision=parse_review_decision(review_text),
+                decision=decision,
                 rationale_markdown=review_text,
                 evidence_json=None,
                 gate_sha=run_gate.gate_sha,

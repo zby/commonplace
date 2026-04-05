@@ -157,6 +157,8 @@ with session_log.open("w", encoding="utf-8") as handle:
 
 {emit_session_id_line}
 print("=== GATE REVIEW START: frontmatter ===", flush=True)
+print("Looks good.", flush=True)
+print("", flush=True)
 print("## Result: pass", flush=True)
 print("=== GATE REVIEW END: frontmatter ===", flush=True)
 """,

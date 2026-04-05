@@ -56,6 +56,8 @@ The Python layer assigns the canonical DB statuses.
 
 The human-readable `rationale_markdown` is not canonical state. It may use different casing or wording inside the review body, for example `## Result: PASS` or `- WARN: ...`. That is acceptable. Treat the DB columns as the source of truth; review-body result lines are parse inputs and readability affordances, not the canonical status layer.
 
+For stored gate review prose, the canonical layout places the parseable `## Result:` line at the end of the review block. The parser still accepts legacy result-first layouts on ingest.
+
 ## Freshness and staleness
 
 Selector behavior stays the same at the prompt surface, but acceptance state now comes from `current_gate_acceptances`.
@@ -73,7 +75,7 @@ Rules:
 - accepted note sha differs from the current note sha -> `note-changed`
 - otherwise the pair is fresh
 
-For now, gate freshness is keyed by the raw git blob SHA of the gate file itself. That intentionally excludes shared bundle instructions. If shared bundle instructions later become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file SHA.
+For now, gate freshness is keyed by the raw git blob SHA of the gate file itself. There is no separate bundle manifest hash in the current tree. If bundle-level manifests ever return and become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file SHA.
 
 ## Write paths
 
