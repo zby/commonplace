@@ -12,7 +12,7 @@ On first encounter of each technical term, ask: does the surrounding sentence de
 
 Exceptions — do not flag:
 - Standard technical vocabulary (LLM, context window, prompt, token, API).
-- Terms defined in `kb/notes/definitions/` (distillation, constraining, codification, context engineering) when the note links to the definition. The link serves as the definition point.
+- Terms defined in `kb/notes/definitions/` — currently: distillation, constraining, codification, context engineering. These are established KB vocabulary and should not be flagged regardless of whether the note links to the definition note.
 - Terms whose opacity is already covered by the notation-opacity gate (e.g., "external symbolic state" when the real access barrier is the `K` notation it labels). Do not double-flag the English phrase alongside a notation-opacity finding for the same concept.
 
 ## Example (fail)
