@@ -29,6 +29,8 @@ This workshop holds the **execution packets** for those candidates so the work c
 8. **auto-harness** — minimal benchmark-gated outer loop with suite promotion and freeform learnings; review exists, needs trace-derived placement assessment
 9. **Pal** — Agno-based personal agent with framework-owned agentic memory, past-session search, and operational learnings; review exists, needs trace-derived placement assessment
 10. **browzy.ai** — local compiled wiki with session digests and multi-source crystallized drafts; review exists, needs trace-derived placement assessment as a weak live-session artifact-learning case
+11. **DocMason** — sync promotes Codex/Claude host interactions into published interaction-memory directories with manifests and conservative semantic outputs; review exists, needs trace-derived placement assessment
+12. **Playground** — imports chat logs and exec traces into archive/memory branches and synthetic memory turns; review exists, needs trace-derived placement assessment
 
 ## Parked but likely worth a later pass
 
