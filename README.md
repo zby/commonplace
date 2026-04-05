@@ -91,6 +91,8 @@ git clone https://github.com/anthropics/commonplace.git
 cd commonplace
 ```
 
+This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to a repo-local cache under `tmp/uv-cache`. If you use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the local cache automatically instead of the default global cache path.
+
 The `.claude/skills/` directory contains symlinks to promoted skill subdirectories under `kb/instructions/`, so Claude Code picks up those slash commands automatically. Codex can discover the same promoted skills from project-local `.agents/skills/`; installing them into `$CODEX_HOME/skills` is optional if you want them across repositories. Plain instruction files remain AGENTS-routed procedures. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:

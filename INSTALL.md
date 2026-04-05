@@ -56,6 +56,10 @@ done
 
 Codex discovers promoted skills from the repository's `.agents/skills/`, but you should still add project routing in `AGENTS.md` so it knows when to read `kb/instructions/WRITING.md`, the relevant `kb/*/types/` file, when to invoke a plain instruction under `commonplace/kb/instructions/`, and when to escalate into `commonplace/kb/` for methodology.
 
+### Optional: repo-local uv cache with `.envrc`
+
+This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to `$PWD/tmp/uv-cache`. If you already use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the repo-local cache automatically instead of the default global cache path. If you do not use `direnv`, you can ignore this and set `UV_CACHE_DIR` some other way.
+
 ### Optional: install Codex skills globally
 
 If you want the same promoted skills available across projects, you can also symlink them into `$CODEX_HOME/skills` (default `~/.codex/skills`). This is optional; project-local `.agents/skills/` is enough for one repository.
