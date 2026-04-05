@@ -57,7 +57,7 @@ The further the failure mode lives from the artifact under review, the less like
 ## Open questions
 
 - Does the initiative gradient (artifact → operational → systemic) hold consistently across non-technical domains?
-- What is the relationship between context window size and activation probability — does more context help or hurt by diluting cues?
+- ~~What is the relationship between context window size and activation probability — does more context help or hurt by diluting cues?~~ Partly answered by [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md): more context can hurt by diluting cues, especially when irrelevant material competes for attention. What remains open is how activation-specific effects relate to the broader soft-degradation surface.
 - Can the three-stage decomposition (cue match, priority arbitration, commitment) be empirically separated, or is it only useful as a reasoning tool?
 
 ---
@@ -69,6 +69,7 @@ Relevant Notes:
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — parallels: both require stage separation instead of aggregate score reading
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — enables: retrieval scaffolds are oracle-hardening moves for activation-limited settings
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: prompt context determines which interpretations are activated
+- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — complements: soft degradation explains why adding more context can suppress activation through cue dilution and irrelevant-context interference
 - [silent-disambiguation-is-the-semantic-analogue-of-tool-fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — example: low activation of critical branches can be masked by superficially successful outputs
 - [the-bug-that-shipped-2035319413474206122](../sources/the-bug-that-shipped-2035319413474206122.md) — evidence: deployment-failure insights retrievable on probe but often absent in undirected review
 - [towards-a-science-of-ai-agent-reliability](../sources/towards-a-science-of-ai-agent-reliability.md) — context: reliability dimensions motivate separating stored capability from operationally activated behavior

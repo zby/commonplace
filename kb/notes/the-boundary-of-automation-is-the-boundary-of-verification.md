@@ -3,7 +3,7 @@ description: Synthesis — three lines of evidence (oracle theory, labor economi
 type: note
 traits: [has-external-sources]
 tags: [llm-interpretation-errors]
-status: seedling
+status: current
 ---
 
 # The boundary of automation is the boundary of verification
