@@ -41,6 +41,21 @@ The [Anatomy of an Agent Harness ingest](../sources/the-anatomy-of-an-agent-harn
 
 The source's "everything not the model" definition is descriptively useful but architecturally unstable — it names a perimeter, not a decomposition. The three-part split turns the perimeter into components with distinct responsibilities.
 
+### Raschka's six components
+
+[Raschka (2026)](../sources/components-of-a-coding-agent-raschka.ingest.md) independently decomposes coding agent harnesses into six named components. These map onto the same three-part split:
+
+| Raschka component | Runtime component | Why |
+|---|---|---|
+| Live Repo Context | Context engine | Frontloaded workspace state injected before the first turn |
+| Prompt Shape and Cache Reuse | Context engine | Stable prefix / variable suffix architecture for context loading |
+| Context Bloat Minimization | Context engine | Compaction and transcript reduction as context maintenance |
+| Structured Session Memory | Context engine + execution substrate | Working memory selection is context engineering; the stored transcript lives on the substrate |
+| Tool Access | Execution substrate | Deterministic actions and state queries outside the model |
+| Bounded Subagents | Scheduler + context engine | Delegation is scheduling; read-only scoped inheritance is context scoping |
+
+Raschka reaches these components by asking what makes agent-mode tools outperform the same model in plain chat. His answer — "a lot of apparent 'model quality' is really context quality" — is independent convergent evidence for the same decomposition from a pedagogical rather than architectural starting point.
+
 ## Scheduler
 
 The [bounded-context orchestration model](./bounded-context-orchestration-model.md) is already the formal treatment: symbolic bookkeeping outside the model, bounded calls for judgment. What this decomposition adds is positioning that model as one component of a larger runtime architecture, alongside the context engine and substrate it depends on.
@@ -72,11 +87,12 @@ Practitioner component lists place filesystems, bash, sandboxes, and versioned m
 
 ## Why independent sources converge here
 
-The three sources analyzed in the practitioner trilogy ingests each emphasize different parts of the runtime, but the convergence is clearer under this decomposition:
+Four independent practitioner sources each emphasize different parts of the runtime, but the convergence is clearer under this decomposition:
 
 - **[Lopopolo's report](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)** emphasizes how constraints harden across the runtime — instructions, structural tests, cleanup agents. That improvement path runs through all three components but is most visible in the scheduler and substrate becoming more reliable over time.
 - **[The cybernetics thread](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md)** frames the space as sensors, actuators, and feedback loops. That language cuts across all three components but especially clarifies the scheduler/substrate interface: the scheduler reads state from the substrate and writes decisions back to it.
 - **Vtrivedy10's component taxonomy** provides the anatomy — the concrete pieces a runtime needs once you work backward from model limitations.
+- **[Raschka's six components](../sources/components-of-a-coding-agent-raschka.ingest.md)** reach the same decomposition from a pedagogical angle — asking what makes agent-mode tools outperform plain chat, and finding that the answer is context quality, not model quality.
 
 The KB already had the theory for the scheduler and context engine. What was missing was the runtime-level note connecting those theories as components of one architecture, and showing that remaining practitioner components cluster under execution substrate rather than floating as unrelated infrastructure.
 
@@ -100,3 +116,4 @@ Relevant Notes:
 - [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — evidence: practitioner report on runtime hardening through instructions, tests, and cleanup agents
 - [Harness Engineering as Cybernetics (@odysseus0z, 2026)](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — evidence: control-theoretic framing for the scheduler/substrate feedback loop
 - [The Anatomy of an Agent Harness](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) — evidence: the practitioner component taxonomy this note reorganizes
+- [Components of A Coding Agent (Raschka, 2026)](../sources/components-of-a-coding-agent-raschka.ingest.md) — evidence: independent six-component taxonomy converging on the same three-part decomposition from a pedagogical starting point
