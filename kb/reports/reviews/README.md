@@ -2,7 +2,7 @@
 
 Legacy rendered review artifacts and archived review outputs. The live review system stores canonical state in SQLite and does not use this directory as a runtime source of truth.
 
-**System design:** [scripts/REVIEW-SYSTEM.md](../../../scripts/REVIEW-SYSTEM.md)
+**System design:** [kb/instructions/REVIEW-SYSTEM.md](../../instructions/REVIEW-SYSTEM.md)
 
 ## Bundles
 

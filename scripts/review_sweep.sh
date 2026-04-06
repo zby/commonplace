@@ -12,7 +12,7 @@
 # Default concurrency: 4 note-local review runs at a time.
 # Override with REVIEW_SWEEP_JOBS=<n>.
 #
-# See scripts/REVIEW-SYSTEM.md for the full design.
+# See kb/instructions/REVIEW-SYSTEM.md for the full design.
 
 set -euo pipefail
 

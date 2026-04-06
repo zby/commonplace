@@ -192,3 +192,9 @@ Instruction: `kb/instructions/review-sweep.md`
 3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
 4. `scripts/review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
 5. For insignificant changes: run `python3 scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} ...` to append acceptance events
+
+### Gate sweep
+
+Use `python3 scripts/run_gate_sweep.py --runner {claude-code|codex} --model {model-id} [--current|--note ...] [--batch-size N] {gate-id}` when the execution set is one gate across many notes.
+
+This path keeps freshness gate-local and still creates one review run per note, but batches multiple notes into one runner prompt. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.
