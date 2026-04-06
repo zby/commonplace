@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from review_db import (
+    GATES_ROOT,
     GateReviewRow,
     connect,
     ensure_db,
@@ -17,6 +18,7 @@ from review_db import (
     resolve_db_path,
     strip_explicit_review_result_lines,
 )
+from review_metadata import git_blob_sha
 
 
 SECTION_END_LOOKAHEAD = (
@@ -91,6 +93,16 @@ def extract_warns(review_text: str, *, decision: str) -> list[str]:
     return []
 
 
+def _current_gate_shas(repo_root: Path) -> dict[str, str]:
+    """Compute current git blob SHA for each gate file on disk."""
+    gates_dir = repo_root / GATES_ROOT
+    shas: dict[str, str] = {}
+    for gate_file in gates_dir.rglob("*.md"):
+        gate_id = str(gate_file.relative_to(gates_dir).with_suffix("")).replace("\\", "/")
+        shas[gate_id] = git_blob_sha(gate_file)
+    return shas
+
+
 def scan_reviews(
     repo_root: Path,
     note_filter: set[str] | None = None,
@@ -100,6 +112,8 @@ def scan_reviews(
 
     by_note: dict[str, NoteWarns] = {}
     selected_by_gate: dict[tuple[str, str], GateReviewRow] = {}
+    gate_shas = _current_gate_shas(repo_root)
+    stale_gates: set[str] = set()
     with connect(db_path) as conn:
         effective_reviews = load_effective_gate_review_map(
             conn,
@@ -111,6 +125,15 @@ def scan_reviews(
         if note_filter and note_path not in note_filter:
             continue
         if review.review_run_id is None:
+            continue
+        # Skip reviews made against a stale gate definition.
+        # TODO: The cleaner approach is to add a gate_shas parameter to
+        # load_effective_gate_review_map so freshness filtering happens in the
+        # shared query layer — the target selector does the same check in its
+        # own loop. Deferred to avoid changing the shared function's contract.
+        current_sha = gate_shas.get(gate_id)
+        if current_sha is not None and review.gate_sha != current_sha:
+            stale_gates.add(gate_id)
             continue
         warns = extract_warns(review.rationale_markdown, decision=review.decision)
         if not warns:
@@ -137,10 +160,11 @@ def scan_reviews(
                 )
             )
 
-    return sorted(by_note.values(), key=lambda nw: (-nw.count, nw.note_path))
+    notes = sorted(by_note.values(), key=lambda nw: (-nw.count, nw.note_path))
+    return notes, sorted(stale_gates)
 
 
-def render_json(notes: list[NoteWarns]) -> str:
+def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
     items = []
     for nw in notes:
         items.append(
@@ -159,10 +183,17 @@ def render_json(notes: list[NoteWarns]) -> str:
                 ],
             }
         )
+    if stale_gates:
+        items.append({"stale_gates": stale_gates})
     return json.dumps(items, indent=2)
 
 
-def print_grouped(notes: list[NoteWarns]) -> None:
+def print_grouped(notes: list[NoteWarns], stale_gates: list[str]) -> None:
+    if stale_gates:
+        print(f"WARNING: {len(stale_gates)} gate(s) changed since last review — findings skipped:")
+        for g in stale_gates:
+            print(f"  - {g}")
+        print()
     for nw in notes:
         print(f"{nw.note_path} ({nw.count} warn findings)")
         for w in nw.warns:
@@ -179,15 +210,15 @@ def main() -> None:
     repo_root = Path.cwd()
     note_filter = set(args.note_paths) if args.note_paths else None
 
-    notes = scan_reviews(repo_root, note_filter)
-    if not notes:
+    notes, stale_gates = scan_reviews(repo_root, note_filter)
+    if not notes and not stale_gates:
         print("[]" if args.json else "No warn findings found.")
         return
 
     if args.json:
-        print(render_json(notes))
+        print(render_json(notes, stale_gates))
     else:
-        print_grouped(notes)
+        print_grouped(notes, stale_gates)
 
 
 if __name__ == "__main__":
