@@ -12,13 +12,13 @@ The runtimes-decompose note answers what a runtime is made of (structure). The g
 
 ## What the empty cells show
 
-The scheduler row is mostly empty. Commonplace has minimal scheduler governance — no validation of skill orchestration, no correction of control flow decisions, no drift detection for how sub-agents are composed. This is consistent with the KB's design: the harness (Claude Code / Codex) owns scheduling, so commonplace governs what it controls (content and substrate) rather than what the harness controls (execution flow).
+The scheduler row is mostly empty because commonplace doesn't have a scheduler — it plugs into the harness's scheduler. Claude Code and Codex each provide their own scheduling (sub-agent dispatch, tool loops, retry logic), and commonplace is designed to be compatible with both. The skills, instructions, and CLAUDE.md/AGENTS.md routing are interfaces *consumed by* the harness scheduler, not scheduling machinery themselves.
 
-The validate column for the scheduler is empty because there's no structural check on "did the agent decompose the task correctly." That's an inherently harder problem — validating scheduling decisions requires understanding intent, not just checking form.
+This is a design boundary, not a gap. Commonplace authors content and substrate artifacts; the harness owns execution flow. The governance operations (validate, correct, detect drift) apply to what commonplace controls.
 
 ## Observations
 
-- **Governance density tracks authorship control.** The context engine and substrate rows are dense because commonplace authors the artifacts those components operate on (notes, instructions, frontmatter, file layout). The scheduler row is sparse because the harness owns scheduling.
+- **Governance density tracks authorship control.** The context engine and substrate rows are dense because commonplace authors the artifacts those components operate on (notes, instructions, frontmatter, file layout). The scheduler row is sparse because commonplace delegates scheduling to the harness (Claude Code / Codex) rather than implementing its own.
 - **Inform is the most uniformly populated operation.** Every structural component has informing mechanisms. This makes sense — informing is the cheapest governance operation (just make knowledge available) and the prerequisite for the others.
 - **Validate and correct are layered.** `/validate` is deterministic (Level A in the text testing pyramid); review gates are LLM-judged (Level B); the fix system applies corrections from review findings. The layers correspond to cost and confidence: cheap certain checks first, expensive probabilistic checks second, corrections third.
 - **Drift detection is SHA-based throughout.** Both the context engine (note content SHAs) and the substrate (git blob SHAs) use content-addressed comparison rather than timestamps or manual tracking. This is a design choice that fell out of using git as the versioning layer.
