@@ -199,9 +199,10 @@ def main() -> None:
         os.environ[DB_ENV_VAR] = str(db_path)
     ensure_db(repo_root, db_path)
 
-    gate_abs = repo_root / GATES_ROOT / f"{args.gate_id}.md"
+    gate_id = args.gate_id.removesuffix(".md")
+    gate_abs = repo_root / GATES_ROOT / f"{gate_id}.md"
     if not gate_abs.is_file():
-        parser.error(f"gate not found: {args.gate_id}")
+        parser.error(f"gate not found: {gate_id}")
     gate_text = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
     gate_sha = git_blob_sha(gate_abs)
 
@@ -209,7 +210,7 @@ def main() -> None:
         stale_records = select_stale_gates(
             repo_root,
             model=args.model,
-            gate_ids=[args.gate_id],
+            gate_ids=[gate_id],
             note_filter=args.note_paths,
             current_only=args.current,
             include_diff=False,
@@ -232,16 +233,16 @@ def main() -> None:
             repo_root=repo_root,
             db_path=db_path,
             note_paths=batch_note_paths,
-            gate_id=args.gate_id,
+            gate_id=gate_id,
             gate_sha=gate_sha,
             runner=args.runner,
             model_id=args.model,
             persist_runs=not args.dry_run,
         )
         prompt = build_gate_sweep_prompt(
-            gate_id=args.gate_id,
+            gate_id=gate_id,
             gate_text=gate_text,
-            gate_path=str((GATES_ROOT / f"{args.gate_id}.md").as_posix()),
+            gate_path=str((GATES_ROOT / f"{gate_id}.md").as_posix()),
             notes=[
                 GateSweepNoteTarget(
                     note_path=item.note_path,
@@ -314,7 +315,7 @@ def main() -> None:
         try:
             parsed_reviews = extract_gate_sweep_reviews(
                 result.stdout,
-                gate_id=args.gate_id,
+                gate_id=gate_id,
                 expected_note_paths=batch_note_paths,
             )
         except ValueError as exc:
@@ -331,7 +332,7 @@ def main() -> None:
         for index, item in enumerate(prepared):
             note_bundle = build_note_local_bundle(
                 note_path=item.note_path,
-                gate_id=args.gate_id,
+                gate_id=gate_id,
                 review_run_id=item.review_run_id,
                 review_text=parsed_reviews[item.note_path],
             )
