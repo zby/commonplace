@@ -189,7 +189,7 @@ def main():
             changes.append(result)
 
     if changes:
-        print(f"\n{'Would change' if dry_run else 'Changed'} {len(changes)} index(es):")
+        print(f"\n{'Would change' if args.dry_run else 'Changed'} {len(changes)} index(es):")
         for c in changes:
             print(c)
     else:
