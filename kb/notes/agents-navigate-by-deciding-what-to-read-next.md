@@ -16,30 +16,18 @@ Every pointer asks the same question: **should I follow this?** The agent can ne
 
 What makes it tractable is *context* — information surrounding the pointer that hints at what the target contains. A bare filename forces the agent to load the target just to judge relevance. A pointer embedded in explanatory prose lets her judge without paying that cost. The more context a pointer carries, the cheaper the navigation decision.
 
-## How much context different pointers carry
+## Context varies by navigation mode
 
-The pattern is the same everywhere — what varies is how much context the agent gets at the moment of decision.
-
-**Inline links** carry the most. The surrounding prose does double duty — it advances the argument *and* tells the agent what the target contains: "Since [thin adapters reduce coupling](./thin-adapters.md), we chose..." The agent knows both what's there and why it matters before deciding.
-
-**Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context too: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
-
-**Skill descriptions** carry only what fits in a single line. The runtime loads all descriptions at session start: "Use when the user wants to find connections between notes." That line is the entire hint; the full definition is the target. The agent decides which skill to invoke without reading its implementation.
-
-**Search tools** split the decision in two. First the agent decides *whether to search*, guided by earlier hints: an instruction mentioning a directory path, a tool description saying "searches the knowledge base", prior experience with the project. Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter here — at that second decision point, they're often all the agent has.
+Different pointer types carry different amounts of context. Inline links carry the most — the surrounding prose explains both what the target contains and why it matters. Search results carry the least — the agent has only titles and descriptions. Since [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md), the knowledge system must invest in different metadata for each mode: surrounding prose for link-following, titles and descriptions for search, and both for indexes that bridge the two.
 
 ## Design implication
 
-If navigation is deciding what to read, the knowledge system should make that decision as cheap as possible. Each pointer type has its own lever:
+If navigation is deciding what to read, the knowledge system should make that decision as cheap as possible. [Title as claim](./title-as-claim-enables-traversal-as-reasoning.md) is the shortcut that works across all pointer types. When the title carries the argument, the pointer itself becomes the hint — every link text, every search result, every index entry does navigation work for free.
 
-- **Inline links** need surrounding prose that explains the relationship — the prose *is* the context
-- **Index entries** need context phrases and clear thematic structure — both the phrase and the position carry information
-- **Skill descriptions** need to say *when and why*, not just *what* — scope is more useful than summary
-- **Notes** need titles that are claims and descriptions that add information beyond them — because search surfaces these first
-
-[Title as claim](./title-as-claim-enables-traversal-as-reasoning.md) is the shortcut that works across all of these. When the title carries the argument, the pointer itself becomes the hint — every link text, every search result, every index entry does navigation work for free.
+---
 
 Relevant Notes:
 
+- [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — extends: decomposes the context-varies-by-pointer observation into two navigation modes with distinct metadata needs
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles carry the argument in the pointer itself, reducing the cost of the navigation decision
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following
