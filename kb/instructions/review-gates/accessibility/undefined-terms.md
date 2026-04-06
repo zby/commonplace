@@ -12,13 +12,22 @@ On first encounter of each technical term, ask: does the surrounding sentence de
 
 Exceptions — do not flag:
 - Standard technical vocabulary (LLM, context window, prompt, token, API).
-- Terms defined in `kb/notes/definitions/` — currently: distillation, constraining, codification, context engineering. These are established KB vocabulary and should not be flagged regardless of whether the note links to the definition note.
 - Terms whose opacity is already covered by the notation-opacity gate (e.g., "external symbolic state" when the real access barrier is the `K` notation it labels). Do not double-flag the English phrase alongside a notation-opacity finding for the same concept.
+
+KB vocabulary terms (`kb/notes/definitions/` — currently: distillation, constraining, codification, context engineering) are NOT exempt. Authors know these terms from CLAUDE.md, but external readers do not. On first mention, provide both an inline gloss and a link to the definition note. The gloss lets the reader keep reading; the link lets them go deep.
 
 ## Example (fail)
 
 "An execution boundary usually creates two different questions"
 
+## Example (fail — KB vocabulary without gloss)
+
+"The skill is produced by distillation from the methodology notes."
+
 ## Example (pass)
 
 "An execution boundary — any point where one LLM call ends and another begins — creates two distinct decisions"
+
+## Example (pass — KB vocabulary with gloss and link)
+
+"The skill is produced by [distillation](./definitions/distillation.md) (directed context compression) from the methodology notes."
