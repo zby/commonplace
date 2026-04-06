@@ -122,19 +122,21 @@ qmd adds semantic search — it finds notes by meaning, not just keywords. Witho
 
 1. [Install qmd](https://github.com/qmdnotes/qmd) and ensure it's on your PATH.
 
-2. Copy the collection config:
+2. Copy the sample collection config:
 
 ```bash
 cp scripts/qmd-collections.yml ~/.config/qmd/commonplace.yml
 ```
 
-3. Build the index:
+3. Edit `~/.config/qmd/commonplace.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your local checkout.
+
+4. Build the index:
 
 ```bash
 qmd --index commonplace update && qmd --index commonplace embed
 ```
 
-4. Search:
+5. Search:
 
 ```bash
 qmd --index commonplace query "your search terms"
@@ -142,7 +144,11 @@ qmd --index commonplace query "your search terms"
 
 After adding or editing notes, re-run `qmd --index commonplace update && qmd --index commonplace embed` to keep the index current. Both commands are idempotent and fast.
 
-For installed projects, create a project-specific config (e.g. `~/.config/qmd/my-project.yml`) pointing to your project's `kb/` directories.
+For installed projects, copy the same sample config to a project-specific file (e.g. `~/.config/qmd/my-project.yml`) and replace `/PATH/TO/COMMONPLACE/` with the project root, not the `commonplace/` subdirectory.
+
+```bash
+cp commonplace/scripts/qmd-collections.yml ~/.config/qmd/my-project.yml
+```
 
 ## Scripts
 

@@ -60,6 +60,22 @@ Codex discovers promoted skills from the repository's `.agents/skills/`, but you
 
 This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to `$PWD/tmp/uv-cache`. If you already use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the repo-local cache automatically instead of the default global cache path. If you do not use `direnv`, you can ignore this and set `UV_CACHE_DIR` some other way.
 
+### Optional: set up qmd semantic search
+
+If you use qmd, copy the sample config and then edit the paths manually:
+
+```bash
+cp commonplace/scripts/qmd-collections.yml ~/.config/qmd/my-project.yml
+```
+
+Open `~/.config/qmd/my-project.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your project root, not the `commonplace/` subdirectory. The collections should point at your project's `kb/notes`, `kb/sources`, `kb/tasks`, and `kb/instructions`.
+
+Then build the index:
+
+```bash
+qmd --index my-project update && qmd --index my-project embed
+```
+
 ### Optional: install Codex skills globally
 
 If you want the same promoted skills available across projects, you can also symlink them into `$CODEX_HOME/skills` (default `~/.codex/skills`). This is optional; project-local `.agents/skills/` is enough for one repository.
