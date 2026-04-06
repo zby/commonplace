@@ -48,6 +48,7 @@ kb/reports/reviews/**
 !kb/reports/reviews/
 !kb/reports/reviews/README.md
 kb/reports/bundle-reviews/
+kb/reports/fixes/*.fix-report.md
 kb/reports/review-store.sqlite
 
 tmp/
