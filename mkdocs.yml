@@ -27,6 +27,7 @@ nav:
       - Notes Directory: notes/index.md
       - Related Systems: notes/related-systems/related-systems-index.md
       - Sources Directory: sources/index.md
+      - Workshops: work/README.md
   - How To:
       - Writing Guide: instructions/WRITING.md
       - KB Maintenance: notes/kb-maintenance-index.md
