@@ -51,6 +51,14 @@ python3 scripts/review_target_selector.py --model {model-id} {bundle-or-all} --c
 
 Group the remaining pairs by note.
 
+If the remaining execution set is one gate across many notes, prefer:
+
+```bash
+python3 scripts/run_gate_sweep.py --runner {codex|claude-code} --model {model-id} [--current] [--note {note-paths} ...] {gate-id}
+```
+
+This batches notes into one prompt while still recording one review run per note.
+
 If there are many notes, use:
 
 ```bash
