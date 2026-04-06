@@ -44,7 +44,12 @@ The [discovery note](./discovery-is-seeing-the-particular-as-an-instance-of-the-
 
 Relevant Notes:
 
+- [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles are the zoomed-out resolution layer; they carry the argument without requiring descent into the note body
+- [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
+- [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations
+- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: resolution-switching is the navigation skill that makes discovery possible; three abstraction depths define how deep the zoom goes
 - [charting the knowledge-access problem beyond RAG](./charting-the-knowledge-access-problem-beyond-rag.md) — extends: resolution-switching is one part of the broader access problem alongside substrate choice, synthesis, and maintenance
 
 Source:
