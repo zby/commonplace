@@ -27,23 +27,21 @@ That leaves the current system in an in-between state:
 
 This workshop exists to rationalize that design before more special cases accumulate.
 
-The current workshop direction is to move toward **qualified canonical type ids**:
+The current workshop direction is:
 
-- `core.note`
-- `core.claim`
-- `notes.structured-claim`
-- `notes.adr`
-- `notes.index`
-- `notes.related-system`
-- `sources.source-review`
+1. **Types are structural** — bare type names (`note`, `adr`, `related-system`, etc.) define required sections, fields, and templates. Checked by deterministic validation.
+2. **Traits are semantic** — route semantic review gates (`title-as-claim`, `has-comparison`, `definition`, etc.). Checked by the review system.
+3. **Initial migration uses explicit traits** — the review system reads `traits:` from frontmatter. Potential type-implied traits are deferred until after the corpus and tooling are migrated.
 
 This separates:
 
-- artifact identity
-- type-definition lookup
-- storage location
+- artifact identity (frontmatter type value)
+- structural validation (types)
+- semantic review routing (traits)
+- type-definition lookup (scoped lookup → definition file)
+- storage location (checked separately)
 
-so a file can move without silently changing what type it is.
+`core.claim` was dropped — its semantic expectations belong to the `title-as-claim` trait, not a type. The global base stays thin: just `text` and `note`.
 
 ## Current grounding
 
@@ -59,22 +57,23 @@ so a file can move without silently changing what type it is.
 ## Tensions to resolve
 
 1. **Are directory-local `types/` files documentary or executable?**
-If executable, the validator and review tooling need a real resolver. If documentary, the repo should stop implying that new type values become real by adding templates.
+If executable, the validator needs a real resolver. If documentary, the repo should stop implying that new type values become real by adding templates.
+→ *Workshop position:* executable. The resolver maps frontmatter type names to definition files through scoped lookup.
 
 2. **What is the identity of a type?**
-If types are unqualified bare strings like `related-system`, their meaning still depends on where the file lives. If types are qualified ids like `notes.related-system`, identity can stay stable under file moves and directory changes.
+→ *Resolved for now:* bare names are acceptable because current names are unambiguous. If collisions appear later, qualification can be introduced for the conflicting names.
 
-3. **When should a distinction be a type versus a directory?**
-`structured-claim`, `adr`, and `index` look like genuine artifact types. Definitions, articles, and related-systems reviews are less settled. We need a rule that prevents "use whatever signal is convenient this week."
+3. **When should a distinction be a type versus a trait?**
+→ *Resolved:* see [decision-criteria.md](./decision-criteria.md). Types = structural requirements. Traits = semantic review routing.
 
 4. **What is the inheritance model?**
-The repo says every structured document extends `note`, but the implementation only partially reflects this. We need to decide whether specialized types inherit generic checks and selectively override them, or whether each type defines a full independent contract.
+Every structured type extends `note` and inherits its structural checks. Trait routing is separate and uses explicit frontmatter traits in the initial migration.
 
 5. **How do semantic review gates learn the applicable conventions?**
-The frontmatter and semantic review layers currently rely on broad heuristics. If type distinctions are real, review routing should derive from the same resolved type signal instead of ad hoc path exceptions.
+→ *Resolved:* traits route gates. The review system reads explicit frontmatter traits to determine which gates fire in the initial migration.
 
 6. **What is the migration path from the current mixed state?**
-There are already notes and templates that assume one model while scripts implement another. Any design has to explain how to get from here to there without leaving more ambiguity behind.
+→ *Resolved enough to execute:* see [migration-plan.md](./migration-plan.md).
 
 ## Candidate design directions
 
@@ -110,24 +109,34 @@ This currently feels like the most plausible target, but it needs a crisp test f
 ## Deliverables for this workshop
 
 - a precise statement of the type model
-- a qualified naming scheme for canonical type ids
+- a decision on the naming scheme for type ids
 - a decision on `related-system`: true type, note-shaped convention, or directory-routed artifact class
 - a resolution algorithm for validation/review rule lookup
 - a migration plan for templates, docs, and validator behavior
 - one promoted library artifact when the design stabilizes (likely an ADR or a note sharpening the type-system theory)
 
-## Starter artifacts
+## Artifacts
 
 - `current-state.md` — inventory of how types are described versus enforced today
-- `design.md` — current workshop position on what a coherent type system should mean
-- `resolution-algorithm.md` — concrete lookup algorithm for type rules
-- `decision-criteria.md` — test for type vs directory vs trait
-- `migration-plan.md` — ordered implementation plan once the design is chosen
+- `design.md` — current workshop position: types for structure, traits for semantic review, bare names now, explicit traits first
+- `resolution-algorithm.md` — concrete lookup algorithm for type rules and explicit-trait review routing
+- `decision-criteria.md` — test for type vs trait (structural requirement → type; semantic review routing → trait)
+- `review-integration.md` — how the review system consumes traits: gate applicability, shared note-aware filtering, recursive sweep scope, new `title-as-claim` gate
+- `type-resolver.md` — scoped lookup algorithm, YAML schema, base type definitions, validator integration
+- `012-types-for-structure-traits-for-review.md` — draft ADR (moves to `kb/notes/adr/` when accepted)
+- `migration-plan.md` — ordered implementation plan
 
 ## Open questions
 
-- Should type definitions stay as prose templates, or gain a machine-readable companion file for tooling?
-- Is `related-system` actually a missing first-class type, or evidence that review routing sometimes belongs to collection structure instead?
+- ~~Should type definitions stay as prose templates, or gain a machine-readable companion file?~~ Resolved: companion `.yaml` files alongside prose `.md` templates. Validator reads YAML; agents read prose.
 - Should the validator and review system share one resolver, or can they diverge safely?
-- Does the current `index` handling have the same problem as `related-system`, just less visible?
-- How much of the namespace should mirror filesystem structure? `notes.related-system` seems right; `kb.notes.related-systems.related-system` does not.
+- Should implied traits ever be added after the explicit-traits migration lands?
+
+## Resolved questions
+
+- `related-system` is a real first-class type — it has required sections and fields.
+- `core.claim` is dropped — its semantic expectations belong to the `title-as-claim` trait.
+- Type vs trait boundary: structural requirement → type; semantic review routing → trait. See [decision-criteria.md](./decision-criteria.md).
+- Validation is purely structural (deterministic). All semantic checks live in the review system, routed by traits.
+- Qualified canonical type ids deferred — bare names are unambiguous today, qualification adds readability cost for a problem that doesn't exist yet.
+- Implied traits from types deferred — authors declare traits explicitly in frontmatter for now, including bulk migration of existing `structured-claim` and claim-shaped notes.

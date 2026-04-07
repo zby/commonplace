@@ -1,39 +1,45 @@
 # Type system design
 
-This is the current workshop position after reviewing the existing type notes, the implemented validator, and the move-stability problem with bare type names.
+This is the current workshop position after reviewing the existing type notes, the implemented validator, the move-stability problem with bare type names, and the type-vs-trait boundary.
 
 ## Decision
 
-We should treat `type` as an **artifact-class signal**, not as "whatever the deterministic validator can prove."
+Two orthogonal systems serve two independent concerns:
 
-More specifically, we should move to **qualified canonical type ids** so type identity survives file moves.
+- **Types** define required structure — sections, fields, templates. Checked by deterministic validation.
+- **Traits** route semantic review — which gates fire, what expectations apply. Checked by the review system.
 
-Examples:
+Validation is purely structural. All semantic checks live in the review system, routed by traits.
 
-- `core.note`
-- `core.claim`
-- `notes.structured-claim`
-- `notes.adr`
-- `notes.index`
-- `notes.related-system`
-- `sources.source-review`
+### Type names stay bare
 
-A coherent type can carry three kinds of meaning:
+Types use unqualified bare names: `note`, `structured-claim`, `adr`, `related-system`, `source-review`. Each name is currently unambiguous — no two collections define a type with the same name. Qualified canonical ids (e.g. `notes.related-system`) were considered but deferred: the readability cost is real, and the problem they solve (type identity instability under file moves) doesn't exist in practice yet. If ambiguity arises, qualification can be added to just the conflicting names.
 
-1. **Structural meaning** — enforced by symbolic validation
-2. **Review meaning** — enforced by semantic review gates
-3. **Authoring meaning** — used by templates, routing, and writing guidance
+### Type examples
 
-Under this design, a type is real if it changes at least one system behavior. It does **not** need to introduce additional symbolic structure to count as a real type.
+- `text`
+- `note`
+- `structured-claim`
+- `adr`
+- `index`
+- `related-system`
+- `source-review`
 
-That means a type like `core.claim` is valid even if it is structurally identical to `core.note`, as long as:
+### Trait examples
 
-- it changes review expectations
-- it changes how writers are instructed to shape the document
+- `title-as-claim` — triggers claim-strength, title-body-alignment gates
+- `has-comparison` — triggers comparison-quality gate
+- `has-external-sources` — triggers grounding-alignment gate
+- `has-implementation` — (existing, not yet gate-routed)
+- `definition` — triggers term-precision, boundary-coverage gates
+
+### Why `core.claim` was dropped
+
+An earlier workshop draft proposed `core.claim` as a type structurally identical to `core.note` but semantically distinct. The type/trait split eliminates this: the semantic expectations that `core.claim` was meant to carry belong to the `title-as-claim` trait. A `core.note` with `title-as-claim` gets the same review scrutiny without thickening the global type layer. See [decision-criteria.md](./decision-criteria.md) for the full test.
 
 ## Core model
 
-### 1. Qualified `type` is authoritative for library artifact kind
+### 1. Frontmatter `type` is authoritative for library artifact kind
 
 For frontmatter-bearing library documents, frontmatter `type` should be the main signal for what kind of artifact a document is.
 
@@ -41,14 +47,14 @@ Directories do not replace the type system. They scope lookup and storage policy
 
 So the intended model is:
 
-- frontmatter says `type: notes.related-system`
-- tooling resolves that canonical id to a local type-definition module
+- frontmatter says `type: related-system`
+- tooling resolves that bare type name through scoped lookup
 - that definition tells validation and review what rules apply
 - storage location is checked separately
 
 This separates three things that are currently entangled:
 
-1. **artifact identity** — the canonical type id
+1. **artifact identity** — the frontmatter type value
 2. **definition lookup** — where the type contract lives
 3. **storage placement** — where this artifact should normally reside
 
@@ -69,117 +75,102 @@ In other words:
 - `type` answers: "what kind of artifact is this?"
 - directory/module answers: "where should I look up the definition of this type?"
 
-This is the direct analogue of programming-language modules:
+This is still analogous to programming-language modules in one limited sense: the definition lives in a known scope, and values can move around without changing what type they are. The difference is that, for now, the type name itself stays bare rather than namespace-qualified.
 
-- type names are qualified by module/namespace
-- the definition lives in that module
-- values can move around without changing what type they are
+### 3. Type definitions are two files
 
-### 3. Symbolic validation stays symbolic
+Each type has two files in its `types/` directory:
 
-The deterministic validator should remain hard-oracle only.
+- **`{type}.md`** — prose template, read by agents when writing. Unchanged from current templates.
+- **`{type}.yaml`** — machine-readable definition, read by the validator. Contains structural requirements.
 
-It should check things like:
+Example `kb/notes/types/adr.yaml`:
+
+```yaml
+base: note
+required_headings:
+  - "## Context"
+  - "## Decision"
+  - "## Consequences"
+allowed_status: [proposed, accepted, superseded, deprecated]
+```
+
+Example `types/note.yaml`:
+
+```yaml
+required_fields:
+  - description
+allowed_status: [seedling, current, speculative, outdated]
+```
+
+The separation avoids agents misinterpreting machine-readable fields as authoring instructions. The validator reads YAML files; agents read prose templates. Neither needs to parse the other.
+
+The root `types/` directory holds `note.yaml` and `text.yaml` (base types). Collection-local `types/` directories hold their own YAML files alongside existing templates.
+
+### 4. Validation is purely structural
+
+The validator is a deterministic script. It checks:
 
 - frontmatter shape
 - required fields
-- required headings
+- required headings (per type)
 - link existence
+- type-specific field vocabularies (e.g. ADR status values)
 - simple collection-specific required markers
 
-It should **not** try to decide soft questions like:
+It does **not** make semantic judgments. Questions like "is this description discriminative?" or "does this comparison honestly represent alternatives?" belong to the review system.
 
-- whether a title is a good claim
-- whether a description is truly discriminative
-- whether a comparison is honest
-- whether an index provides enough context in prose
+### 4. Semantic review is routed by traits
 
-Those belong to review gates.
+Traits are independently checkable properties that route semantic review gates. A document's full review profile is the union of:
 
-### 4. Review gates must also be type-aware
+- generic gates that apply to all notes
+- trait-specific gates derived from the document's traits
 
-Semantic review should depend on resolved types too.
+Longer-term, some types may imply traits — `notes.related-system` could imply `has-comparison` and `has-external-sources`, `notes.structured-claim` could imply `title-as-claim`. But that is deferred from the initial migration. The first implementation keeps review routing simple: traits are read explicitly from frontmatter, and the migration bulk-adds the needed traits to the existing corpus.
 
 Examples:
 
-- `core.claim` should trigger stricter title-as-claim and title/body alignment review
-- `notes.related-system` should disable generic claim-title expectations and instead enable review-specific grounding/comparison expectations
-- `notes.index` should review navigational context quality, not claim strength
-- `notes.adr` should review decision clarity and consequence honesty, not generic note composability
+- `title-as-claim` triggers claim-strength and title-body-alignment gates
+- `has-comparison` triggers comparison-quality gate
+- `has-external-sources` triggers grounding-alignment gate
+- `definition` triggers term-precision and boundary-coverage gates
+- `notes.index` (as a type) can still disable generic claim-title expectations — type-level review overrides remain possible for structural types that need them
 
-So the architecture should be:
+### 5. Types are structural; traits are semantic
 
-- one shared type resolver
-- symbolic validator consumes it for hard checks
-- semantic review selector consumes it for gate selection / overrides
+This is a clean separation:
 
-### 5. Some types are structurally rich; some are semantically rich
+- **Types** answer: "what sections and fields must this document have?" → validator
+- **Traits** answer: "what semantic expectations should review apply?" → review system
 
-The system should allow both.
-
-#### Structurally rich types
-
-Examples:
-
-- `notes.structured-claim`
-- `notes.adr`
-- `notes.index`
-- `notes.related-system`
-
-These have distinctive symbolic expectations.
-
-#### Semantically rich types
-
-Example:
-
-- `core.claim`
-
-This type can be structurally the same as `core.note` while still being a real type, because it changes review and authoring behavior.
-
-This is the key departure from the strongest current formulation in [document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md): a type does not have to be *purely* structural to be legitimate. It has to be actionable somewhere in the system.
+The earlier workshop draft proposed "semantically rich types" (types structurally identical to their parent but semantically distinct). The type/trait split eliminates this category entirely. Every type must introduce structural requirements beyond its parent. Semantic-only distinctions are traits.
 
 ## Proposed namespace and ladder
 
-### Core namespace
+### Current naming
 
-The global root should stay thin:
+The current migration keeps the global vocabulary thin and bare:
 
-- `core.text`
-- `core.note`
-- `core.claim`
+- `text`
+- `note`
+- `structured-claim`
+- `adr`
+- `index`
+- `related-system`
+- `source-review`
 
-These are the cross-collection library primitives.
-
-### Collection namespaces
-
-Collection-specific library types then live in collection namespaces:
-
-- `notes.structured-claim`
-- `notes.adr`
-- `notes.index`
-- `notes.related-system`
-- `sources.source-review`
-
-Tasks are different enough that they likely belong to a separate subsystem design rather than this library-note hierarchy, but if we eventually normalize them into the same namespace family, the natural forms would be things like:
-
-- `tasks.active`
-- `tasks.backlog`
-- `tasks.recurring`
-
-The important point is that these are canonical ids, not inferences from directory placement.
+These names are treated as stable type identities for now because they are currently unambiguous. If collisions appear later, qualification can be introduced for the conflicting names.
 
 ### Ordinary note ladder
 
-For ordinary library notes, the clean ladder is:
+For ordinary library notes:
 
-- `core.note` — generic structured note
-- `core.claim` — a note whose title and framing are expected to function as a claim; mainly semantic/review distinction
-- `notes.structured-claim` — a claim with explicit argument scaffold (`Evidence`, `Reasoning`, optional `Caveats`)
+- `note` — generic structured note
+- `note` + `title-as-claim` trait — a note whose title and framing are expected to function as a claim; gets semantic review scrutiny on claim strength and title-body alignment
+- `structured-claim` — a claim with explicit argument scaffold (`Evidence`, `Reasoning`, optional `Caveats`); during the initial migration these notes also carry explicit `traits: [title-as-claim]`
 
-This is cleaner than forcing all claim-shaped notes into either:
-
-- `core.note` with an informal convention
-- or `notes.structured-claim` before the argument is ready
+A claim-shaped note that doesn't need the Toulmin scaffold uses `note` with the `title-as-claim` trait. This replaces the earlier `core.claim` proposal.
 
 ## Proposed interpretation of current ambiguous cases
 
@@ -196,13 +187,13 @@ Why:
 
 So the current `kb/notes/types/related-system.md` template saying `type: note` should be treated as drift, not as the target design.
 
-The canonical type id should be:
+The frontmatter type should be:
 
-- `notes.related-system`
+- `related-system`
 
 ### `adr`
 
-`notes.adr` is already a real first-class type.
+`adr` is already a real first-class type.
 
 But the current template reveals another design issue: ADRs have their own decision-status vocabulary (`proposed`, `accepted`, `superseded`, `deprecated`) which is not the same thing as generic note `status`.
 
@@ -210,7 +201,7 @@ So the fix here is not to collapse ADR back into `core.note`. It is to acknowled
 
 ### `index`
 
-`notes.index` should stay a real type. It has:
+`index` should stay a real type. It has:
 
 - navigational affordance
 - structural expectations
@@ -218,23 +209,15 @@ So the fix here is not to collapse ADR back into `core.note`. It is to acknowled
 
 ### `source-review`
 
-`sources.source-review` also fits the first-class type model better than a pure collection convention. It is not just "a note stored in `kb/sources/`."
+`source-review` also fits the first-class type model better than a pure collection convention. It is not just "a note stored in `kb/sources/`."
 
 ## What this contradicts
 
 This design contradicts or revises parts of several existing notes.
 
-### 1. It weakens the strongest version of "types must be verifiable"
+### 1. It strengthens "types must be verifiable" by making types purely structural
 
-[document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md) argues that a type is only useful if it asserts a verifiable structural property.
-
-The revised position is:
-
-- types must be **actionable**
-- structural verifiability is one strong form of actionability
-- review-routing and authoring consequences are also legitimate forms of actionability
-
-So "verifiable" is too narrow if it means "deterministically structurally checkable."
+[document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md) argues that a type is only useful if it asserts a verifiable structural property. The earlier workshop draft weakened this by proposing "semantically rich types." The type/trait split restores the original principle in a stronger form: types ARE structural, full stop. Semantic distinctions that don't change required structure are traits, not types.
 
 ### 2. It rejects the strongest version of "directories replace types"
 
@@ -280,7 +263,7 @@ One thing the current notes blur is that not every subsystem is a library-note c
 
 ### Library artifacts
 
-Frontmatter-bearing knowledge artifacts should use the canonical `type` resolver model:
+Frontmatter-bearing knowledge artifacts should use the frontmatter-`type` resolver model:
 
 - `kb/notes/`
 - `kb/sources/`
@@ -298,39 +281,36 @@ So the design should not force every collection into one frontmatter-type mechan
 
 The correct boundary is:
 
-- **library artifact typing** — frontmatter type + canonical resolution
+- **library artifact typing** — frontmatter type + scoped resolution
 - **temporal subsystem schemas** — local subsystem rules, possibly with separate validators
 
 That keeps us from overfitting a note-type model onto tasks.
 
 ## Resolver consequence
 
-The earlier workshop direction assumed directory-hierarchy walking from the file path. Qualified canonical ids change that.
+The earlier workshop direction assumed either directory-hierarchy walking from the file path or a move to qualified canonical ids. The current migration keeps bare type names and uses scoped lookup instead.
 
 The resolver should now primarily do:
 
-1. parse canonical type id
-2. map namespace prefix to definition module/root
-3. resolve definition path for that canonical id
-4. return validation and review profiles for that type
-5. separately check whether the file's storage location is compatible with the type
+1. parse the frontmatter type value
+2. derive lookup scopes from the file path
+3. resolve the definition file for that type through scoped fallback
+4. return the structural validation profile for that type
+5. separately check whether the file's storage location is compatible with the type if we ever add that check
 
-That is cleaner than "start from the file's directory and guess what `related-system` means here."
+That is cleaner than hard-coding a small set of type names, while still avoiding the machinery of namespace-qualified ids.
 
-## What you might be missing
-
-These are the main edge cases or follow-up decisions this design still needs to handle.
+## Open edges
 
 ### 1. Resolver output needs to be richer than just "type name"
 
-The shared resolver likely needs to return something like:
+The resolver likely needs to return something like:
 
 - declared type
-- canonical type id
 - resolved definition path
 - parent/base type
-- symbolic validation profile
-- semantic review profile
+- structural validation profile
+- optionally, later: implied traits
 - storage-compatibility expectations
 
 If it only returns a string, we will immediately re-fragment the logic.
@@ -347,44 +327,33 @@ If specialized types are real, some of them will need:
 
 The system should support that explicitly instead of pretending generic note metadata is always enough.
 
-### 3. Traits need a boundary too
+### 3. Implied-trait inheritance needs design
 
-The current notes treat traits as additive, independently checkable properties.
+If a future version of the system adds type-implied traits, and `notes.structured-claim` implies `title-as-claim`, then a future type extending `notes.structured-claim` would probably inherit that implied trait. But this propagation question is postponed until after the explicit-traits migration works.
 
-This workshop has not yet decided whether review-only distinctions should ever be traits instead of types. For now, `core.claim` seems more like a type than a trait because it changes authoring expectations for the whole document.
-
-But we should state the decision rule later.
-
-### 4. Review-gate inheritance needs design
-
-If `notes.structured-claim` is a subtype of `core.claim`, should it inherit all `core.claim` review expectations plus extra ones?
-
-Probably yes, but the mechanism needs to be explicit rather than improvised gate-by-gate.
-
-### 5. Migration needs to be staged
+### 4. Migration needs to be staged
 
 The design is coherent, but the current repo is not there yet.
 
 The likely order is:
 
-1. define canonical qualified ids
-2. build canonical-id resolution
-3. make validator consume it
-4. make review selection consume it
-5. migrate one pilot type (`notes.related-system`)
-6. add `core.claim`
+1. define YAML type definitions
+2. build scoped bare-name resolution
+3. make validator consume it (structural profiles per type)
+4. migrate explicit traits into frontmatter
+5. make review system consume traits for gate selection
+6. migrate one pilot type (`related-system`)
 7. clean up conflicting notes/docs after the implementation proves out
 
 ## Current recommendation
 
 The working design direction for this workshop is:
 
-- `type` should become a qualified canonical artifact id for library artifacts
-- directories/modules should scope lookup of local type definitions
-- symbolic validation remains deterministic and structural
-- semantic review gates also depend on resolved type
-- some types can be structurally identical to `core.note` but semantically distinct
-- `core.claim` is the clearest example of such a type
-- storage location should be checked separately from type identity
+- **Types** are structural — bare names, required sections/fields, checked by deterministic validation
+- **Traits** are semantic — route review gates, checked by the review system
+- Types can imply traits (e.g. `structured-claim` implies `title-as-claim`) — deferred, not needed for initial migration; first pass uses explicit frontmatter traits
+- The global base stays thin: just `text` and `note`
+- Directories scope type-definition lookup, not identity
+- Qualified type ids deferred — bare names are unambiguous today
 
-This is the design we should assume in the next workshop artifact unless a better objection appears.
+See [decision-criteria.md](./decision-criteria.md) for the test that determines whether a distinction is a type or a trait.

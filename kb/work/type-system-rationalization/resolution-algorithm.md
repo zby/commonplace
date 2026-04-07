@@ -1,199 +1,102 @@
 # Resolution algorithm
 
-This note specifies the current intended resolver for the workshop design with qualified canonical type ids.
+How tooling resolves a document's type and traits to determine which validation rules and review gates apply.
 
-## Goal
+## Current design
 
-Resolve a document's declared type into:
-
-- its canonical identity
-- the definition file that describes it
-- the symbolic validation profile
-- the semantic review profile
-- storage-location expectations
-
-without making type meaning depend on the file's current directory.
+With qualified canonical ids deferred, resolution is simpler: bare type names are unambiguous, and each type name maps to exactly one definition file in a known location.
 
 ## Inputs
 
 For a given file:
 
-- absolute or repo-relative path
-- parsed frontmatter `type` value, if any
-
-## Output shape
-
-The resolver should return a record roughly like:
-
-```json
-{
-  "declared_type": "notes.related-system",
-  "canonical_type": "notes.related-system",
-  "base_type": "core.note",
-  "definition_path": "kb/notes/types/related-system.md",
-  "symbolic_profile": "notes.related-system",
-  "review_profile": "notes.related-system",
-  "allowed_roots": ["kb/notes/related-systems", "kb/notes"],
-  "storage_ok": true
-}
-```
-
-The exact fields can differ, but the resolver needs to expose all of these concepts somehow.
-
-## Namespace scheme
-
-Current intended canonical namespaces:
-
-- `core.*` — types defined under repo-root `types/`
-- `notes.*` — stable library note types defined under `kb/notes/types/`
-- `sources.*` — source-layer types defined under `kb/sources/types/`
-- `tasks.*` — task/workflow subsystem schemas, if and when we decide to normalize them into the same namespace family
-
-Examples:
-
-- `core.text`
-- `core.note`
-- `core.claim`
-- `notes.structured-claim`
-- `notes.adr`
-- `notes.index`
-- `notes.related-system`
-- `sources.source-review`
+- repo-relative path
+- parsed frontmatter (if any)
 
 ## Resolution steps
 
-### 1. Parse declared type
+### 1. Determine type
 
 If the file has no frontmatter:
 
-- implicit type is `core.text`
+- type is `text`
 
 If the file has frontmatter but no explicit `type` field:
 
-- implicit type is `core.note`
+- type is `note`
 
 If it has a `type` field:
 
-- parse as canonical type id if qualified
-- during migration, optionally support legacy bare names and map them forward
+- use the bare value directly: `note`, `structured-claim`, `adr`, `index`, `related-system`, `source-review`, etc.
 
-Examples of migration mappings:
+### 2. Locate type definition
 
-- `note` -> `core.note`
-- `claim` -> `core.claim`
-- `structured-claim` -> `notes.structured-claim`
-- `adr` -> `notes.adr`
-- `index` -> `notes.index`
-- `related-system` -> `notes.related-system`
-- `source-review` -> `sources.source-review`
+Each bare type name maps to two files — a prose template (`.md`) for agents and a machine-readable definition (`.yaml`) for the validator:
 
-### 2. Resolve canonical definition path
+| Type | Template | Definition |
+|---|---|---|
+| `text` | `types/text.md` | `types/text.yaml` |
+| `note` | `types/note.md` | `types/note.yaml` |
+| `structured-claim` | `kb/notes/types/structured-claim.md` | `kb/notes/types/structured-claim.yaml` |
+| `adr` | `kb/notes/types/adr.md` | `kb/notes/types/adr.yaml` |
+| `index` | `kb/notes/types/index.md` | `kb/notes/types/index.yaml` |
+| `related-system` | `kb/notes/types/related-system.md` | `kb/notes/types/related-system.yaml` |
+| `source-review` | `kb/sources/types/source-review.md` | `kb/sources/types/source-review.yaml` |
 
-Map namespace to definition root:
+Since bare names are currently unambiguous, this is a simple lookup table. If ambiguity ever arises (two collections defining a type with the same name), qualified names can be introduced for just the conflicting types.
 
-- `core.*` -> `types/`
-- `notes.*` -> `kb/notes/types/`
-- `sources.*` -> `kb/sources/types/`
-- `tasks.*` -> `kb/tasks/types/`
+### 3. Determine structural validation profile
 
-Then map the suffix to a filename.
+The validator uses the type to decide which structural checks apply:
 
-Examples:
+| Type | Structural checks beyond `note` base |
+|---|---|
+| `note` | Generic: frontmatter shape, description exists, links resolve |
+| `structured-claim` | Require `## Evidence`, `## Reasoning` |
+| `adr` | Require `## Context`, `## Decision`, `## Consequences`; allow ADR-specific status values |
+| `index` | Navigation markers, link density |
+| `related-system` | Require `## Core Ideas`, `## Comparison`, `## Borrowable Ideas`, `## Curiosity Pass`, `## What to Watch`; require `last-checked` field |
+| `source-review` | Source-specific required sections |
 
-- `notes.related-system` -> `kb/notes/types/related-system.md`
-- `notes.adr` -> `kb/notes/types/adr.md`
-- `sources.source-review` -> `kb/sources/types/source-review.md`
-- `core.note` -> `types/note.md`
+All types inherit the `note` base checks. The validator reads structural requirements from `.yaml` type definition files, replacing the current hard-coded `TYPE_HEADINGS` map.
 
-The key property is that this lookup depends on the canonical type id, not on where the file currently lives.
+### 4. Determine traits
 
-### 3. Resolve base type / inheritance
+Read `traits:` from frontmatter. That's the full trait set for now.
 
-The current intended base chain is:
+Future: type definitions could declare implied traits (e.g. `structured-claim` always carries `title-as-claim`). This is a convenience optimization, not needed for the mechanism to work.
 
-- `core.text` has no parent
-- `core.note` is the base structured type
-- `core.claim` extends `core.note`
-- `notes.structured-claim` extends `core.claim`
-- `notes.adr` extends `core.note`
-- `notes.index` extends `core.note`
-- `notes.related-system` extends `core.note`
-- `sources.source-review` extends `core.note`
+### 5. Determine applicable review gates
 
-The resolver should expose this explicitly so validation/review can inherit rules rather than duplicating them.
+For each gate:
 
-### 4. Resolve symbolic validation profile
+- If the gate has no `requires_trait` field: it applies (universal gate)
+- If the gate has `requires_trait: X`: it applies only if `X` is in the note's trait set
 
-The symbolic validator should consume a profile derived from the canonical type.
+This applicability check should live in a shared note-aware helper used by both direct note-local bundle runs and sweep selection. Bundle expansion alone is not enough because applicability depends on the note being reviewed.
 
-Examples:
+## Inheritance
 
-- `core.note` -> generic frontmatter, description, links
-- `core.claim` -> same symbolic structure as `core.note`
-- `notes.structured-claim` -> require `Evidence` and `Reasoning`
-- `notes.adr` -> require ADR headings
-- `notes.index` -> require index-like navigation markers / density checks
-- `notes.related-system` -> require `last-checked`, `Repository:`, and the review sections
-- `sources.source-review` -> whatever symbolic checks we define for source reviews
+All structured types extend `note`:
 
-### 5. Resolve semantic review profile
+- `text` has no parent
+- `note` is the base structured type
+- `structured-claim`, `adr`, `index`, `related-system`, `source-review` all extend `note`
 
-Review routing should also consume a type-derived profile.
+Extending `note` means inheriting its structural checks. Specialized types add checks on top.
 
-Examples:
+## What's deferred
 
-- `core.note` -> generic note gates
-- `core.claim` -> stronger title-as-claim/title-body alignment expectations
-- `notes.structured-claim` -> inherit claim gates plus argument-structure gates
-- `notes.related-system` -> disable generic claim-title expectations, enable review-specific comparison/grounding expectations
-- `notes.index` -> index-specific navigational/contextual review expectations
+- **Qualified canonical ids** — bare names work while they're unambiguous. Add qualification if/when name collisions arise.
+- **Type resolver as a library** — currently the validator has hard-coded type profiles. A proper resolver that reads type definitions dynamically can come later.
+- **Implied traits from types** — authors declare traits explicitly in frontmatter for now. Existing `structured-claim` notes and claim-shaped plain notes are migrated by bulk frontmatter edits rather than inferred dynamically.
+- **Machine-readable type definitions** — resolved. Each type gets a companion `.yaml` file alongside the prose `.md` template. Validator reads YAML; agents read prose.
+- **Storage compatibility checks** — checking whether a file's location matches its type's expected directory. Useful but not blocking.
 
-### 6. Check storage compatibility separately
+---
 
-Type identity should not depend on location, but location still matters.
+Workshop context:
 
-So after resolving the type, do a separate storage check:
-
-- is a `notes.related-system` file stored somewhere sensible?
-- is a `notes.adr` file under `kb/notes/adr/`?
-- is a `sources.source-review` file under `kb/sources/`?
-
-This should produce:
-
-- `ok`
-- `warn`
-- or `error`, depending on how strict we want to be
-
-The important point is that this is **not** part of type resolution itself.
-
-## Why this is better than directory-first resolution
-
-Directory-first resolution makes the meaning of a bare type name depend on where the file currently sits.
-
-Qualified canonical ids avoid that:
-
-- moving a file does not change what type it is
-- type lookup is deterministic from the declared id
-- storage policy becomes an explicit second check rather than an implicit hidden one
-
-This matches the programming-language analogy the workshop is now leaning on: modules qualify names; values can move without changing their declared type.
-
-## Migration mode
-
-We do not need to flip the whole repo at once.
-
-A practical migration mode would be:
-
-1. parse legacy bare type names
-2. map them to canonical ids internally
-3. use canonical ids in validator/review internals
-4. gradually rewrite templates and files to the qualified form
-
-That lets us introduce the resolver without forcing a one-shot repo-wide rewrite.
-
-## Open questions
-
-- Should `core.claim` live in `types/claim.md` or be modeled only in code at first?
-- Do we want a machine-readable companion file for each type definition, or should the resolver use code-side profiles while templates stay prose?
-- Should storage compatibility be a warning or an error during migration?
-- Do nested note namespaces ever matter, e.g. `notes.definitions.term`, or is one collection-level namespace enough for now?
+- [design.md](./design.md) — types for structure, traits for semantic review routing
+- [decision-criteria.md](./decision-criteria.md) — type vs trait boundary test
+- [review-integration.md](./review-integration.md) — how the review system consumes traits for gate filtering
