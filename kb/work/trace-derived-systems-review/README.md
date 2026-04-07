@@ -31,6 +31,8 @@ This workshop holds the **execution packets** for those candidates so the work c
 10. **browzy.ai** — local compiled wiki with session digests and multi-source crystallized drafts; review exists, needs trace-derived placement assessment as a weak live-session artifact-learning case
 11. **DocMason** — sync promotes Codex/Claude host interactions into published interaction-memory directories with manifests and conservative semantic outputs; review exists, needs trace-derived placement assessment
 12. **Playground** — imports chat logs and exec traces into archive/memory branches and synthetic memory turns; review exists, needs trace-derived placement assessment
+13. **CORAL** — eval-gated multi-agent coding harness that turns attempt histories and inter-agent reflection into durable shared notes and reusable skills; likely belongs as a prompt-mediated trace-to-artifact system
+13. **MemPalace** — mines conversation traces into durable verbatim drawers, heuristic memory-type rooms, and agent diaries; review exists, needs placement as a storage-first live-session artifact case
 
 ## Parked but likely worth a later pass
 
