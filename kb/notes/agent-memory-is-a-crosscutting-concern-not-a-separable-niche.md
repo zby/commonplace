@@ -35,7 +35,7 @@ No system solves all three well — which is the [agency trilemma](./related-sys
 
 ## The runtime decomposition predicts this
 
-The [scheduler / context engine / execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) decomposition of agent runtimes already assigns memory's subproblems to different components:
+The [scheduler / context engine / execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) decomposition of agent runtimes predicts where memory's subproblems land:
 
 - Storage belongs to the **execution substrate** (persistent world outside the model)
 - Retrieval/activation belongs to the **context engine** (what enters each bounded call)
