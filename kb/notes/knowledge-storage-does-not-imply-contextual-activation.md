@@ -18,6 +18,8 @@ An experienced practitioner examining a system brings decades of hard-won patter
 
 The operative distinction is not *knows* vs. *does not know* but *stored* vs. *activated in this context*. A piece of knowledge is retrievable when the model produces it in response to a direct query. It is contextually activated when the model brings it to bear during task execution without being explicitly asked. Activation failure is the regime where retrievability is high, contextual activation is low, and the value of surfacing the knowledge is high.
 
+PlugLab AI's article [The Second Brain Trap](https://x.com/pluglab_ai/status/2041486539067154753) is a compact practitioner articulation of the same failure mode: the author reports having abundant stored notes and summaries while still "starting from zero" when it mattered, because the knowledge was not available in context.
+
 ## Why activation fails
 
 Activation requires more than stored capability. A plausible decomposition involves at least three stages:
@@ -72,4 +74,5 @@ Relevant Notes:
 - [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — complements: soft degradation explains why adding more context can suppress activation through cue dilution and irrelevant-context interference
 - [silent-disambiguation-is-the-semantic-analogue-of-tool-fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — example: low activation of critical branches can be masked by superficially successful outputs
 - [the-bug-that-shipped-2035319413474206122](../sources/the-bug-that-shipped-2035319413474206122.md) — evidence: deployment-failure insights retrievable on probe but often absent in undirected review
+- [The Second Brain Trap ingest](../sources/the-second-brain-trap-2041486539067154753.ingest.md) — practitioner evidence: a first-person note-taking failure report that frames the problem as stored knowledge failing to activate in working context
 - [towards-a-science-of-ai-agent-reliability](../sources/towards-a-science-of-ai-agent-reliability.md) — context: reliability dimensions motivate separating stored capability from operationally activated behavior
