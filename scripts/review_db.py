@@ -60,9 +60,9 @@ class ReviewRunRow:
     completed_at: str | None
     status: str
     failure_reason: str | None
+    telemetry_json: str | None
     raw_bundle_markdown: str | None
     debug_log: str | None
-    telemetry_json: str | None
 
 
 @dataclass(frozen=True)
@@ -814,9 +814,9 @@ def insert_review_run(
     completed_at: str | None = None,
     status: str = "running",
     failure_reason: str | None = None,
+    telemetry_json: str | None = None,
     raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
-    telemetry_json: str | None = None,
 ) -> int:
     cursor = conn.execute(
         """
@@ -830,9 +830,9 @@ def insert_review_run(
             completed_at,
             status,
             failure_reason,
+            telemetry_json,
             raw_bundle_markdown,
-            debug_log,
-            telemetry_json
+            debug_log
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
@@ -845,9 +845,9 @@ def insert_review_run(
             completed_at,
             status,
             failure_reason,
+            telemetry_json,
             raw_bundle_markdown,
             debug_log,
-            telemetry_json,
         ),
     )
     return int(cursor.lastrowid)
@@ -886,9 +886,9 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
             completed_at,
             status,
             failure_reason,
+            telemetry_json,
             raw_bundle_markdown,
-            debug_log,
-            telemetry_json
+            debug_log
         FROM review_runs
         WHERE id = ?
         """,
@@ -907,9 +907,9 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
         completed_at=row["completed_at"],
         status=row["status"],
         failure_reason=row["failure_reason"],
+        telemetry_json=row["telemetry_json"],
         raw_bundle_markdown=row["raw_bundle_markdown"],
         debug_log=row["debug_log"],
-        telemetry_json=row["telemetry_json"],
     )
 
 
@@ -959,6 +959,22 @@ def complete_review_run(
         WHERE id = ?
         """,
         (completed_at, raw_bundle_markdown, debug_log, telemetry_json, review_run_id),
+    )
+
+
+def update_review_run_telemetry(
+    conn: sqlite3.Connection,
+    *,
+    review_run_id: int,
+    telemetry_json: str | None,
+) -> None:
+    conn.execute(
+        """
+        UPDATE review_runs
+        SET telemetry_json = ?
+        WHERE id = ?
+        """,
+        (telemetry_json, review_run_id),
     )
 
 

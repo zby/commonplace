@@ -44,7 +44,6 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
     "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
 )
 
-
 def _stream_pipe(pipe, sink, chunks: list[str]) -> None:
     try:
         for line in iter(pipe.readline, ""):

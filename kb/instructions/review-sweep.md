@@ -71,7 +71,7 @@ Or:
 scripts/review_sweep.sh --model {model-id} --current {bundle-or-all}
 ```
 
-`review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
+`review_sweep.sh` runs note-local bundle reviews in parallel, up to 2 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
 
 Example for current notes in Codex:
 

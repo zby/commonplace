@@ -8,6 +8,7 @@
 #   scripts/review_sweep.sh --model gpt-5-4-xhigh --runner codex --current prose     # current notes only in Codex
 #   scripts/review_sweep.sh --model gpt-5-4-xhigh --all-gates                        # all bundles, one at a time
 #   scripts/review_sweep.sh --model gpt-5-4-xhigh --current --all-gates
+#   scripts/review_sweep.sh --model gpt-5-4-xhigh --all-gates --dry-run              # print planned review commands only
 #
 # Default concurrency: 4 note-local review runs at a time.
 # Override with REVIEW_SWEEP_JOBS=<n>.
@@ -26,6 +27,7 @@ RUNNER="claude-code"
 MODEL=""
 usage_exhausted_exit_code=99
 current_only=0
+dry_run=0
 parallelism="${REVIEW_SWEEP_JOBS:-4}"
 
 if ! [[ "$parallelism" =~ ^[1-9][0-9]*$ ]]; then
@@ -66,7 +68,10 @@ while [[ $# -gt 0 ]]; do
     --all-gates)
       select_all_gates=1
       shift
-      break
+      ;;
+    --dry-run)
+      dry_run=1
+      shift
       ;;
     -*)
       echo "error: unknown option: $1" >&2
@@ -153,6 +158,19 @@ run_bundle_review() {
 
   rm -f "$output_file"
   return "$status"
+}
+
+render_bundle_review_command() {
+  local note_path="$1"
+  shift
+  local gates=("$@")
+
+  printf 'uv run scripts/run_review_bundle.py --runner %q %q' "$RUNNER" "$note_path"
+  local gate
+  for gate in "${gates[@]}"; do
+    printf ' %q' "$gate"
+  done
+  printf '\n'
 }
 
 remove_active_pid() {
@@ -243,6 +261,13 @@ sweep_bundle() {
 
     # shellcheck disable=SC2206
     local gate_args=($gates)
+    if [[ $dry_run -eq 1 ]]; then
+      render_bundle_review_command "$note_path" "${gate_args[@]}"
+      reviewed=$((reviewed + 1))
+      echo ""
+      continue
+    fi
+
     run_bundle_review "$note_path" "${gate_args[@]}" &
     local pid=$!
     active_pids+=("$pid")

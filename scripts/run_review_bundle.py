@@ -26,6 +26,7 @@ from review_db import (
     parse_review_decision,
     rewrite_review_result_footer,
     resolve_db_path,
+    update_review_run_telemetry,
 )
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 from review_model import build_model_id
