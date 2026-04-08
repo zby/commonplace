@@ -87,13 +87,11 @@ For users not using plugins, the fallback is symlinking into `.agents/skills/` �
 | **Skill reference** | Agent needs to know which skills are available for KB work. | New — replace routing table with a compact skill list using namespaced names |
 | **Key Indexes** | Entry points for navigation when searching the KB. | Slim down — just the paths |
 
-### Single source of truth for Goals
+### Goals are always-loaded
 
-KB Goals live in **`kb/GOALS.md`** — one file, one location. The always-loaded template carries only a pointer: "KB goals and scope are in `kb/GOALS.md`." Skills read `kb/GOALS.md` on demand when they need scoping context (e.g., `/write` checks fit before creating a note).
+KB Goals live in the control-plane file (CLAUDE.md / AGENTS.md), inlined in the template section the practitioner fills in at install. The agent sees them every turn. Skills don't need to read a separate file — Goals are already in context.
 
-The install step creates `kb/GOALS.md` from a template with commented-out examples. The practitioner fills it in. The always-loaded template does NOT duplicate the goals — it just tells the agent the file exists and where to find it.
-
-This resolves the competing-homes problem: `kb/GOALS.md` is the source of truth; the template is a pointer.
+No `kb/GOALS.md` as a separate file. One location, no sync problem, no competing homes.
 
 ### MOVES to `/commonplace:write` skill
 
@@ -104,7 +102,7 @@ This resolves the competing-homes problem: `kb/GOALS.md` is the source of truth;
 | **Type routing** (text vs note vs specialized) | Template | Part of `write`'s routing logic |
 | **Escalation boundary**: "cannot map artifact through routing table" | Template | Becomes `write`'s fallback: read WRITING.md |
 | **Escalation boundary**: "editing in directory with local types/" | Template | `write` reads type templates as part of its routing |
-| **Escalation boundary**: "artifact doesn't fit KB Goals" | Template | `write` reads GOALS.md and checks fit |
+| **Escalation boundary**: "artifact doesn't fit KB Goals" | Template | `write` checks fit against Goals (already in context) |
 
 ### MOVES to relevant existing skills
 
@@ -131,15 +129,9 @@ This resolves the competing-homes problem: `kb/GOALS.md` is the source of truth;
 
 ## Resulting template
 
-Two templates for two usage modes:
+One template. Goals are inlined in the always-loaded context because the agent needs scope every turn — without it, scoping decisions [degrade silently](../../kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). This costs some context budget in embedded-KB projects, but correct scoping is worth the cost. ~50 lines; Goals + skill reference + key indexes.
 
-**Standalone mode** (`AGENTS.md.template.standalone`) — the repo IS the KB. Goals are inlined in the always-loaded context because the agent needs scope every turn to make good scoping decisions. Without always-loaded Goals, the agent silently makes worse decisions about what belongs in the KB — this is [soft degradation](../../kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), not a visible error. ~50 lines; Goals + skill reference + key indexes.
-
-**Embedded mode** (`AGENTS.md.template.embedded`) — the KB lives inside a code project. Goals are in `kb/GOALS.md`, read by skills on demand. The always-loaded context carries only a pointer ("this project has a KB in `kb/`") so it doesn't compete with the project's own CLAUDE.md content. ~15 lines.
-
-`kb/GOALS.md` exists in both modes — it's the source of truth. In standalone mode, the template also inlines Goals into CLAUDE.md for always-loaded access. The install asks which mode, or defaults to standalone for new repos and embedded when a CLAUDE.md already exists.
-
-See [AGENTS.md.template.draft](./AGENTS.md.template.draft) for the current draft (predates the two-template decision).
+See [AGENTS.md.template.draft](./AGENTS.md.template.draft) for the current draft.
 
 ## New artifacts to create
 
@@ -156,7 +148,7 @@ The main new skill. Absorbs routing table + content workflow + type routing.
 
 **Procedure:**
 1. Parse arguments: optional type and optional topic
-2. Read `kb/GOALS.md` if it exists — check fit
+2. Check fit against KB Goals (already in context — always-loaded)
 3. Search first — find related notes before writing
 4. Route to directory and resolve type template. Core types are hardcoded:
    - `note` (default) → `kb/notes/`, base template from WRITING.md
@@ -220,7 +212,6 @@ claude plugin install ./commonplace
 # 3. Create kb/ structure, copy core types, and initialize
 mkdir -p kb/notes/types kb/sources/types kb/tasks/{backlog,active} kb/work kb/instructions types
 cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
-cp commonplace/templates/GOALS.md kb/GOALS.md        # practitioner fills this in
 touch kb/log.md                                       # improvement log
 cp commonplace/types/* types/                        # base types (note.md, note.yaml, text.yaml)
 # Copy only core types — note, text, index, source-review
@@ -293,14 +284,13 @@ Step 2 is the big simplification — one command replaces the symlink loop.
     - `/commonplace:ingest` snapshots a URL and writes a source-review
     - `/commonplace:write adr` fails gracefully with "type not found" and lists available types
     - After copying `adr` type template from `commonplace/`, `/commonplace:write adr` works
-    - `kb/GOALS.md` is present and skills read it
 
 13. **Dogfood: restructure this repo to match the installed layout.** This repo is both the framework source and its own KB. Restructure so it uses the same mechanisms a practitioner would:
     - Move framework skills from `kb/instructions/` to `skills/`
     - Create plugin manifests
-    - Move KB Goals from CLAUDE.md to `kb/GOALS.md`
+    - Keep KB Goals inlined in CLAUDE.md (already the plan)
     - Fold conventions into WRITING.md
-    - Slim CLAUDE.md to Development + Git sections only (everything KB-related handled by skills and `kb/GOALS.md`)
+    - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation handled by skills)
     - Update all symlinks to point to `skills/`
     - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
     - Live with the restructured layout for at least a week of real work before declaring the migration complete
