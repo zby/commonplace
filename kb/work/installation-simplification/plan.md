@@ -51,7 +51,7 @@ commonplace/
 ```
 
 Key changes:
-- **Skills split into framework and local.** Framework skills (in `skills/`) depend only on core types (`note`, `text`, `index`) and are discovered by the plugin system. Local skills (in `kb/instructions/`) depend on our local types and are only available in this repo (or to practitioners who explicitly adopt those types and symlink the skills).
+- **Skills split into framework and local.** Framework skills (in `skills/`) depend only on core types (`note`, `text`, `index`, `source-review`) and are discovered by the plugin system. Local skills (in `kb/instructions/`) depend on our local types and are only available in this repo (or to practitioners who explicitly adopt those types and symlink the skills).
 - **Framework skills:** `write` (routes to `note` by default), `connect` (searches notes by description), `validate` (checks any type's frontmatter), `snapshot-web` (writes to `kb/sources/`, no type dependency), `ingest` (snapshots external sources and writes `.ingest.md` using `source-review` type — ingestion is a basic KB operation, not domain-specific), `convert` (text→note, core types only), `revise-iterative` (works on any note).
 - **Local skills:** `review-related-system` (writes `related-system` type notes — specific to our practice of comparing knowledge systems). Only makes sense if the practitioner has the corresponding local type installed.
 
@@ -59,7 +59,7 @@ Key changes:
 
 | | Claude Code | Codex |
 |---|---|---|
-| Plugin manifest | `.claude-plugin/plugin.json` | marketplace / `.agents/` |
+| Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json` |
 | Skill invocation | `/commonplace:write` | `$commonplace-write` (or similar) |
 | Control plane | `CLAUDE.md` | `AGENTS.md` |
 | Skill format | Same `SKILL.md` | Same `SKILL.md` |
@@ -82,7 +82,7 @@ For users not using plugins, the fallback is symlinking into `.agents/skills/` �
 
 | Section | Why it must stay | Change needed |
 |---|---|---|
-| **KB Goals** (Purpose, Domain, Include/Exclude, Quality bar) | Cross-cutting scoping. Agent needs this to decide "does this belong in the KB?" before any skill fires. | **Move to `kb/GOALS.md`** — skills read it on demand. The template includes a one-line pointer: "KB goals and scope are in `kb/GOALS.md`." See "Single source of truth for Goals" below. |
+| **KB Goals** (Purpose, Domain, Include/Exclude, Quality bar) | Cross-cutting scoping. Agent needs this to decide "does this belong in the KB?" before any skill fires. Scoping decisions [degrade silently](../../kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) without always-loaded Goals. | Keep inlined — the practitioner fills this in at install. |
 | **KB exists pointer** | Agent must know `kb/` exists and is searchable. Skill trigger matching is unreliable for natural language — without this, "what did we decide about X?" never reaches the KB. | New — currently implicit, needs a short explicit section |
 | **Skill reference** | Agent needs to know which skills are available for KB work. | New — replace routing table with a compact skill list using namespaced names |
 | **Key Indexes** | Entry points for navigation when searching the KB. | Slim down — just the paths |
@@ -156,15 +156,15 @@ The main new skill. Absorbs routing table + content workflow + type routing.
    - `index` → `kb/notes/`, read `kb/notes/types/index.md`
    - `source-review` → `kb/sources/`, read `kb/sources/types/source-review.md`
    - Any other type → scan `kb/*/types/` for `{type}.md`. If the template exists, read it for the target directory and writing guidance. If not found, error with the list of available types (core + discovered).
-6. Read WRITING.md for checklist (title-as-claim test, description quality, composability)
-7. Set appropriate traits in frontmatter based on content:
+5. Read WRITING.md for checklist (title-as-claim test, description quality, composability)
+6. Set appropriate traits in frontmatter based on content:
    - Claim-shaped title → add `title-as-claim` to `traits:`
    - Contains comparison → add `has-comparison`
    - References external sources → add `has-external-sources`
    - Defines a term → add `definition`
-8. Write the note
-9. Run `/commonplace:validate`
-10. Prompt: "Run /commonplace:connect to link this note?"
+7. Write the note
+8. Run `/commonplace:validate`
+9. Prompt: "Run /commonplace:connect to link this note?"
 
 **Trigger:** `/commonplace:write`, `/commonplace:write [type]`, `/commonplace:write [type] [topic]`
 
@@ -285,14 +285,10 @@ Step 2 is the big simplification — one command replaces the symlink loop.
     - `/commonplace:write adr` fails gracefully with "type not found" and lists available types
     - After copying `adr` type template from `commonplace/`, `/commonplace:write adr` works
 
-13. **Dogfood: restructure this repo to match the installed layout.** This repo is both the framework source and its own KB. Restructure so it uses the same mechanisms a practitioner would:
-    - Move framework skills from `kb/instructions/` to `skills/`
-    - Create plugin manifests
-    - Keep KB Goals inlined in CLAUDE.md (already the plan)
-    - Fold conventions into WRITING.md
-    - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation handled by skills)
-    - Update all symlinks to point to `skills/`
+13. **Dogfood: use the restructured repo for real work.** Steps 1-11 already restructure this repo (skills moved, manifests created, template slimmed, INSTALL.md updated). This step is about verifying it works in daily use:
+    - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation now handled by skills)
     - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
+    - Verify local skills (`review-related-system`) still work from `kb/instructions/`
     - Live with the restructured layout for at least a week of real work before declaring the migration complete
 
 ## Open questions
