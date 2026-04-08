@@ -33,28 +33,29 @@ The framework validates *structure* (field present, correct YAML type). It does 
 
 These ship with the framework and are copied into `kb/*/types/` at install. They work for any KB:
 
-**Notes collection (`kb/notes/types/`):**
+**Framework types** (copied to practitioner's `kb/notes/types/` at install):
 
-| Type | What it's for | Framework or local? |
-|------|--------------|-------------------|
-| `note` | Default structured writing type. Has frontmatter, claim title, description. | Framework — every KB needs this |
-| `text` | No frontmatter. Raw capture, pre-formalization. | Framework — every KB needs a low-friction entry point |
-| `structured-claim` | Evidence/Reasoning/Caveats sections. For claims that need explicit argumentation. | Framework — transferable pattern for any KB that makes arguments |
-| `index` | Curated navigation hub. Entries must have context phrases. | Framework — every KB needs navigation |
-| `adr` | Architecture Decision Record. Context/Decision/Consequences. | Local to us — only useful if your project makes architectural decisions. A cooking KB wouldn't need this. |
-| `related-system` | External system review with structured comparison. | Local to us — specific to our practice of reviewing comparable systems. A payments KB would define `vendor-evaluation` instead. |
-| `spec` | Specification document. | Framework — transferable, though many KBs won't need it |
-| `review` | Dated review with findings. | Local to us — tied to our review gate system |
+| Type | What it's for |
+|------|--------------|
+| `note` | Default structured writing type. Has frontmatter, claim title, description. Every KB needs this. |
+| `text` | No frontmatter. Raw capture, pre-formalization. Every KB needs a low-friction entry point. |
 
-**Sources collection (`kb/sources/types/`):**
-| Type | Framework or local? |
-|------|-------------------|
-| `source-review` | Framework — any KB that ingests external sources needs a review type |
+That's it. The installed skills work with `note` and `text`. Everything else is a local type.
 
-**Tasks collection (`kb/tasks/types/`):**
-| Type | Framework or local? |
-|------|-------------------|
-| `task-backlog`, `task-active`, `task-recurring` | Framework — basic task lifecycle, applicable to any KB |
+**Our local types** (stay in `commonplace/kb/notes/types/`, not installed):
+
+| Type | Why it's local |
+|------|---------------|
+| `structured-claim` | Our convention for notes that need explicit Evidence/Reasoning/Caveats. A practitioner might adopt it or define their own argumentation type. |
+| `index` | Our convention for curated navigation hubs. A practitioner might use flat tags instead, or define a different index format. |
+| `adr` | Architecture Decision Records. Specific to projects that make architectural decisions. |
+| `related-system` | External system reviews. Specific to our practice of comparing knowledge systems. |
+| `spec` | Specification documents. |
+| `review` | Dated reviews with findings. Tied to our review gate system. |
+| `source-review` | Source analysis reports. Tied to our `/ingest` workflow. |
+| `task-backlog`, `task-active`, `task-recurring` | Task lifecycle types. |
+
+Practitioners can copy any of these into their own `kb/*/types/` if they find them useful — they're examples, not framework requirements. Or they define their own from scratch.
 
 ### The local types pattern
 
@@ -135,8 +136,8 @@ An open question from the [workshop framing](./framing.md): should these referen
 | Aspect | Framework | Practitioner |
 |--------|-----------|-------------|
 | Frontmatter fields | Defines and validates | Uses, chooses values |
-| Base types | Ships `note`, `text`, `structured-claim`, `index`, `spec`, task types | Adds domain-specific types |
-| Local types | Ships `adr`, `related-system`, `review` (examples, not required) | Defines their own |
+| Framework types | Ships `note` and `text` | Uses as base |
+| Local types | Ships examples in `commonplace/` (not installed) | Defines their own, optionally copies ours |
 | Tags | Validates format | Chooses vocabulary |
 | Directory structure | Provides top-level collections | Organizes freely within them |
 | Indexes | Ships examples in `commonplace/kb/notes/` | Creates their own |
