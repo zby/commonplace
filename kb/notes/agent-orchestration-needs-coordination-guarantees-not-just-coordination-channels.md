@@ -1,6 +1,7 @@
 ---
 description: Coordination channels say how bounded contexts interact, but the missing discriminator is which guarantee prevents contamination, inconsistency, amplification, or liability diffusion across the composed system
 type: note
+traits: [title-as-claim]
 tags: [computational-model]
 status: seedling
 ---

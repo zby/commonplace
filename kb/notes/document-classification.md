@@ -11,7 +11,7 @@ See [document-types-should-be-verifiable](./document-types-should-be-verifiable.
 
 ## Base types
 
-A document has exactly one type. [text](../../types/text.md) has no frontmatter and no requirements. Every other type extends [note](../../types/note.md) — it defines the shared fields (description, status, traits, areas) that all structured documents carry.
+A document has exactly one type. [text](../../types/text.md) has no frontmatter and no requirements. Every other type extends [note](../../types/note.md) — it defines the shared fields (description, status, traits, tags) that all structured documents carry.
 
 The `type` field is a free-form string. The table below lists the common values; directory-scoped `types/` folders document the structural expectations for each.
 
@@ -23,9 +23,13 @@ The `type` field is a free-form string. The table below lists the common values;
 | `review` | Examines specific existing code; has Findings; dated | Check for code refs, date |
 | `index` | Primarily navigational links | Check link density |
 | `adr` | Architecture decision record; has Context/Decision/Consequences | Check for ADR sections |
-| `structured-claim` | Title is an assertion; has Evidence and Reasoning sections | Check for `## Evidence` and `## Reasoning` headings |
+| `structured-claim` | Developed argument; has Evidence and Reasoning sections | Check for `## Evidence` and `## Reasoning` headings |
+| `related-system` | External-system review; has fixed comparison sections and `last-checked` | Check required sections and field |
+| `source-review` | Processed source artifact under `kb/sources/` | Check source-specific structure in the source collection |
 
 `structured-claim` extends `note` with required argument sections: `## Evidence`, `## Reasoning`, and optionally `## Caveats`. It represents a fully developed argument — the [Toulmin scaffold](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) applied to a claim-titled note. The promotion path is `note` → `structured-claim`: when a note's argument matures enough to fill Evidence/Reasoning sections, it earns the type.
+
+Traits are a separate axis from type. They do not define structure; they declare semantic review expectations. Examples: `title-as-claim` routes claim-quality gates, `definition` marks term-pinning notes, and `has-comparison` / `has-external-sources` describe reusable review-relevant properties that can appear across multiple types.
 
 ## Migration from old flat types
 

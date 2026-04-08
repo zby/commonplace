@@ -27,6 +27,8 @@ python3 kb/instructions/validate/validate_notes.py <note-path>
 
 This checks structural correctness — frontmatter validity, enum values, link health, required sections. Don't skip it even if the note "looks fine."
 
+For judgment-based frontmatter questions (is the title really a claim? is the description discriminating enough? does the note have explanatory reach?), use the review system rather than `/validate`.
+
 ## Where It Goes
 
 Where a note goes depends on what triggered it:
@@ -80,7 +82,7 @@ Developed arguments with Evidence/Reasoning/Caveats sections. Use when a note ha
 ---
 description: ""
 type: structured-claim
-traits: []
+traits: [title-as-claim]
 tags: []
 status: seedling
 ---
@@ -121,11 +123,11 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 
 | Field | Required | Constraints |
 |-------|----------|------------|
-| `description` | Yes | Max 200 chars, must discriminate this note from similar ones |
-| `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`. See [document-classification](../notes/document-classification.md) |
-| `traits` | No | Independently checkable properties: `has-comparison`, `has-external-sources`, `has-implementation` |
+| `description` | Yes | Must discriminate this note from similar ones |
+| `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`, `related-system`, `source-review`. See [document-classification](../notes/document-classification.md) |
+| `traits` | No | Review-routing properties: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation` |
 | `tags` | No | Tags for navigation — used to generate index listings and HTML tag links. Use as many as genuinely useful. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md). |
-| `status` | No | current, outdated, speculative |
+| `status` | No | `seedling`, `current`, `speculative`, `outdated`; some specialized types override this vocabulary |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
 

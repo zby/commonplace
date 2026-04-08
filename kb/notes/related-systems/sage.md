@@ -1,6 +1,6 @@
 ---
 description: BFT-branded agent memory with CometBFT consensus, Ed25519 signing, application-level validators, confidence decay, and encryption — consensus is ceremony in single-node mode; real value is the validation gate pattern and domain-scoped RBAC
-type: note
+type: related-system
 tags: [related-systems]
 traits: [has-comparison, has-external-sources]
 status: current

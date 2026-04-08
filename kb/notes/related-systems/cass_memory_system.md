@@ -1,6 +1,7 @@
 ---
 description: Three-layer cognitive architecture (episodic/working/procedural) with confidence-decayed playbook bullets, Jaccard conflict detection, and cross-agent session mining across AI coding agents
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-21

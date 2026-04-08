@@ -23,6 +23,53 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
+def configure_temp_repo(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
+    notes_root = tmp_path / "kb" / "notes"
+    write(
+        tmp_path / "types" / "note.yaml",
+        """required_fields:
+  - description
+allowed_status:
+  - seedling
+  - current
+  - speculative
+  - outdated
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.yaml",
+        """base: note
+required_headings:
+  - "## Evidence"
+  - "## Reasoning"
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "spec.yaml",
+        """base: note
+any_headings:
+  - "## Design"
+  - "## Implementation"
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "related-system.yaml",
+        """base: note
+required_headings:
+  - "## Core Ideas"
+  - "## Comparison with Our System"
+  - "## Borrowable Ideas"
+  - "## Curiosity Pass"
+  - "## What to Watch"
+required_fields:
+  - last-checked
+""",
+    )
+    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
+    return notes_root
+
+
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     note = write(tmp_path / "raw-capture.md", "# Raw capture\n\nJust text.\n")
 
@@ -85,9 +132,10 @@ External link: [site](https://example.com/foo.md)
     assert all("example.com" not in item for item in results.warns)
 
 
-def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> None:
+def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    notes_root = configure_temp_repo(monkeypatch, tmp_path)
     note = write(
-        tmp_path / "claim.md",
+        notes_root / "claim.md",
         """---
 description: Structured claim missing one required section so the validator should warn deterministically
 type: structured-claim
@@ -106,6 +154,69 @@ Some evidence.
     results = validate_notes.validate_note(note)
 
     assert any("missing headings ## Reasoning" in item for item in results.warns)
+
+
+def test_spec_accepts_design_or_implementation_heading(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+    note = write(
+        notes_root / "spec.md",
+        """---
+description: Spec note with one structural section so the resolver-backed validator should preserve legacy any-of behavior
+type: spec
+status: current
+---
+
+# Spec note
+
+## Design
+
+Design details.
+""",
+    )
+
+    results = validate_notes.validate_note(note)
+
+    assert any("spec has required heading" in item for item in results.passes)
+    assert all("should contain ## Design or ## Implementation" not in item for item in results.warns)
+
+
+def test_related_system_warns_when_last_checked_missing(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+    note = write(
+        notes_root / "system.md",
+        """---
+description: Related system note missing the review freshness field so the structural validator should flag it
+type: related-system
+status: current
+---
+
+# System
+
+## Core Ideas
+
+Idea.
+
+## Comparison with Our System
+
+Comparison.
+
+## Borrowable Ideas
+
+Borrow.
+
+## Curiosity Pass
+
+Curiosity.
+
+## What to Watch
+
+Watch.
+""",
+    )
+
+    results = validate_notes.validate_note(note)
+
+    assert "frontmatter: missing required fields last-checked" in results.warns
 
 
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

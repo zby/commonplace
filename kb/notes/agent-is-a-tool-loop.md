@@ -1,7 +1,7 @@
 ---
 description: A lightweight technical convention — an agent is a tool loop (prompt, capability surface, stop condition) — sidestepping the definitional debate in favor of a unit that organizes code
 type: note
-traits: []
+traits: [title-as-claim]
 tags: [computational-model, tool-loop]
 status: seedling
 ---

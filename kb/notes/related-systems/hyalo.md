@@ -1,6 +1,7 @@
 ---
 description: Rust CLI for Obsidian-compatible markdown vaults with single-pass scanning, ephemeral MessagePack indexes, mutation-safe link operations, and one-command Claude bootstrap
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

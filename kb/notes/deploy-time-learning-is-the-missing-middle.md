@@ -1,7 +1,7 @@
 ---
 description: Deploy-time learning fills the gap between training and in-context — durable symbolic artifacts provide inspectable adaptation across sessions along a verifiability gradient
 type: note
-traits: [has-comparison]
+traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
 ---
 

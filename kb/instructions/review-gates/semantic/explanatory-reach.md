@@ -4,6 +4,7 @@ name: Explanatory reach
 lens: semantic
 watches: [body]
 staleness: changed
+requires_trait: title-as-claim
 ---
 
 ## Failure mode

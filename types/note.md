@@ -1,5 +1,5 @@
 ---
-description: Base type for all structured documents — defines the global fields (description, status, traits, tags), status ladder, traits system, and design principles that all typed documents inherit
+description: Base type for all structured documents — defines the global fields (description, status, traits, tags), status ladder, trait vocabulary, and design principles that all typed documents inherit
 type: spec
 tags: [document-system]
 status: current
@@ -36,7 +36,7 @@ The most important field. It's a retrieval filter, not a summary — it helps ag
 
 ### type
 
-A free-form string. Convention establishes common values (`note`, `structured-claim`, `spec`, `review`, `index`, `adr`), but the field is not validated against an enum. Directory-scoped `types/` folders document the structural expectations for each value. New type values can be introduced by adding a template to the relevant `types/` directory.
+A free-form string. Convention establishes common values (`note`, `structured-claim`, `spec`, `review`, `index`, `adr`, `related-system`, `source-review`), but the field is not validated against an enum. Directory-scoped `types/` folders document the structural expectations for each value. New type values can be introduced by adding a template and companion YAML definition in the relevant `types/` directory.
 
 ## Status
 
@@ -60,19 +60,21 @@ rg '^status: seedling' kb/notes/
 
 ## Traits
 
-Traits are independently checkable properties. A document can have zero or more traits regardless of its type. Stored in the `traits` frontmatter field as a list.
+Traits are independently checkable properties. A document can have zero or more traits regardless of its type. Stored in the `traits` frontmatter field as a list. Traits do not change structural validation; they route semantic review expectations.
 
 | Trait | What it asserts | Verifiability |
 |-------|----------------|---------------|
+| `title-as-claim` | The title is a proposition that can be true or false | Review gate checks whether the title is actually claim-shaped |
+| `definition` | The note is pinning a term's meaning rather than making a broader argument | Check location/scope and review definition-specific expectations |
 | `has-comparison` | Structured evaluation of alternatives (tables, option lists) | Grep for comparison tables |
 | `has-external-sources` | References material outside the project | Grep for URLs/citations |
 | `has-implementation` | Contains code sketches or concrete API proposals | Grep for code blocks with API surface |
 
-> **Retired:** `has-claim` was replaced by the `structured-claim` type. Claim-style titles remain a convention for any note (see [title-as-claim](../kb/notes/title-as-claim-enables-traversal-as-reasoning.md)); developed arguments use `type: structured-claim` instead of a trait.
+`title-as-claim` is the replacement for the old idea of a dedicated "claim" trait. Claim-style titles remain available to any note; `structured-claim` is the stronger structural type for notes that also commit to Evidence/Reasoning sections.
 
 ## Design principles
 
-**Types are fuzzy.** They are assigned by agents and humans, not compilers. The system must tolerate misclassification — nothing breaks if a type or trait is wrong. Types are search aids, not enforcement boundaries.
+**Types are structural.** A distinction earns type status only when it changes required fields or sections. Subject matter belongs in tags; semantic expectations belong in traits and review gates.
 
 **Types are verifiable.** Each type and trait asserts a structural property you can check. The question is "what structural property am I asserting?" not "what is this about?" Subject matter belongs in `tags`.
 

@@ -1,7 +1,7 @@
 ---
 description: Local-first typed knowledge graph with markdown/YAML projections, schema-as-data, and immutable transactions; clearest reviewed example of database-first structure surfaced as editable files
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

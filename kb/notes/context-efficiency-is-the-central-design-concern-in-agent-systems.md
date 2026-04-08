@@ -1,7 +1,7 @@
 ---
 description: Context is the single scarce resource in agent systems — this note is the basis for deriving architectural responses from the soft-degradation cost model
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [computational-model, foundations]
 status: current
 ---

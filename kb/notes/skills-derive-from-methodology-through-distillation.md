@@ -1,7 +1,7 @@
 ---
 description: The methodology→skill relationship is distillation (extracting operational procedures from discursive reasoning in the same medium) — distinct from codification (prompt→code phase transition) and constraining (narrowing output distribution)
 type: structured-claim
-traits: [has-comparison]
+traits: [has-comparison, title-as-claim]
 tags: []
 status: seedling
 ---

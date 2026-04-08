@@ -1,6 +1,7 @@
 ---
 description: Four-database episodic memory service (Postgres+Qdrant+Neo4j+Redis) with LLM consolidation from episodes to scored semantic facts and temporal graph expansion; heaviest infra, thinnest transformation
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-28

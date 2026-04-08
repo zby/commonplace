@@ -1,7 +1,7 @@
 ---
 description: Go coding-agent harness with role-scoped tools, sandboxed execution, and file-backed bug/changelog coordination; execution controls are real, but planning and sub-agent workflows are still stubbed
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

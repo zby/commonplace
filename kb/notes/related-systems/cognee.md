@@ -1,6 +1,7 @@
 ---
 description: Pipeline-first knowledge engine (add/cognify/memify/search) with Pydantic-schema graph extraction, poly-store backends, and multi-tenancy — the strongest database-side counterexample to files-first architecture, but treats knowledge as a data engineering problem rather than a curation problem
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-13

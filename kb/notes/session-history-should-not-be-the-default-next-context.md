@@ -1,7 +1,7 @@
 ---
 description: Storing execution history and loading it into the next agent call are separate decisions; chat and framework-owned tool loops conflate them by making session history the default next context
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [computational-model, tool-loop]
 status: seedling
 ---

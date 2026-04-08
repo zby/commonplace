@@ -1,6 +1,7 @@
 ---
 description: Unified vector-memory system for agent crews with LLM-driven scope inference, composite scoring, and consolidation — sophisticated retrieval engineering but no learning theory, treating memory as infrastructure rather than a knowledge medium
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 status: current
 tags: [related-systems]
 last-checked: 2026-03-05

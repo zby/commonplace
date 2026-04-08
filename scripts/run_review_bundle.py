@@ -31,7 +31,7 @@ from review_db import (
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 from review_model import build_model_id
 from review_runners import run_prompt
-from resolve_gates import resolve_to_gate_ids, strip_frontmatter
+from resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
 
 
 MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -585,7 +585,10 @@ def main() -> None:
     )
 
     gates_dir = repo_root / GATES_ROOT
-    gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+    requested_gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+    gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
+    if not gate_ids:
+        parser.error(f"no applicable gates resolved for note: {args.note_path}")
     review_model = args.model.strip()
     if not review_model:
         parser.error("--model must not be empty")

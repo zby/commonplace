@@ -1,6 +1,7 @@
 ---
 description: Closed-loop control plane for iterative agent improvement via multi-role orchestration (competitor/analyst/coach/architect), tournament evaluation, and accumulated playbook context — strongest reference for automated iterative learning loops, but the "context compilation" is concatenation with budget-aware trimming, not transformation
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-17

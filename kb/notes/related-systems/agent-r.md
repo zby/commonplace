@@ -1,6 +1,7 @@
 ---
 description: Iterative self-training agent that mines MCTS search trees into revision conversations and weight-update datasets, using strong environment rewards rather than persistent artifact memory
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-20

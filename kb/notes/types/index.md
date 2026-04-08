@@ -11,16 +11,14 @@ type: index
 
 ## Notes
 
-### {Grouping}
-- [note-title](./note-title.md) — why it matters here
+- [links index](../links-index.md) — example curated note entry; replace with notes that matter for this tag
 
 ## Decisions
 
-- [NNN-decision-title](../adr/NNN-decision-title.md) — brief context
+- [004-replace-areas-with-tags](../adr/004-replace-areas-with-tags.md) — example decision entry; replace with decisions relevant to this tag
 
 ## Related Tags
 
-- [other-index](./other-index.md) — how they connect
+- [document-system-index](../document-system-index.md) — example related tag index; replace with neighboring tags
 
 ## Other tagged notes <!-- generated -->
-

@@ -1,7 +1,7 @@
 ---
 description: Four elicitation strategies ordered by user expertise required, composable into review architectures with maintenance loops that prevent ossification
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
 status: seedling
 ---

@@ -1,6 +1,7 @@
 ---
 description: S3-backed CLI coordination layer for multi-agent systems — cleanest exemplar of coordination-by-convention, where coordination semantics live in naming conventions and client compliance rather than enforcement
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

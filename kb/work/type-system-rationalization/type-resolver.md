@@ -31,10 +31,14 @@ A workshop that develops its own types is a proto-collection. If it stabilizes, 
 base: note                    # parent type — inherit its checks
 
 # optional — each adds checks on top of base
-required_headings:
+required_headings:            # all must be present
   - "## Context"
   - "## Decision"
   - "## Consequences"
+
+any_headings:                 # at least one must be present
+  - "## Design"
+  - "## Implementation"
 
 required_fields:              # frontmatter fields beyond base
   - last-checked
@@ -44,9 +48,18 @@ allowed_status:               # overrides base status vocabulary
   - accepted
   - superseded
   - deprecated
+
+requires_date: true           # frontmatter date/last-checked field or date pattern in body
+
+min_links: 3                  # minimum markdown link count
 ```
 
 Fields not specified are inherited from the base type. `text` has no base and no requirements.
+
+The schema covers the three special cases currently hard-coded in the validator:
+- `spec`: uses `any_headings` (needs Design OR Implementation)
+- `review`: uses `requires_date`
+- `index`: uses `min_links`
 
 ## Base type definitions
 
@@ -93,6 +106,23 @@ allowed_status:
 `kb/notes/types/index.yaml`:
 ```yaml
 base: note
+min_links: 3
+```
+
+`kb/notes/types/spec.yaml`:
+```yaml
+base: note
+any_headings:
+  - "## Design"
+  - "## Implementation"
+```
+
+`kb/notes/types/review.yaml`:
+```yaml
+base: note
+required_headings:
+  - "## Findings"
+requires_date: true
 ```
 
 `kb/notes/types/related-system.yaml`:

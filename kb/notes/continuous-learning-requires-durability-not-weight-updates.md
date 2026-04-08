@@ -1,7 +1,7 @@
 ---
 description: The real disagreement is whether durable changes to tips, prompts, rules, schemas, tests, and memory artifacts count as learning; Simon's capacity-change definition says they do
 type: note
-traits: []
+traits: [title-as-claim]
 tags: [learning-theory]
 status: current
 ---

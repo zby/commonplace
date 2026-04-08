@@ -38,13 +38,13 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path, title: str, body: str) -> Path:
+def make_note(path: Path, title: str, body: str, *, traits: str = "[]") -> Path:
     return write(
         path,
         f"""---
 description: Test note
 type: note
-traits: []
+traits: {traits}
 status: current
 ---
 
@@ -54,7 +54,8 @@ status: current
     )
 
 
-def make_gate(path: Path, gate_id: str, lens: str) -> Path:
+def make_gate(path: Path, gate_id: str, lens: str, *, requires_trait: str | None = None) -> Path:
+    requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
     return write(
         path,
         f"""---
@@ -63,7 +64,7 @@ name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
 staleness: changed
----
+{requires_trait_line}---
 
 ## Failure mode
 
@@ -104,6 +105,28 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
         repo / "kb" / "instructions" / "review-gates" / "semantic" / "grounding-alignment.md",
         "semantic/grounding-alignment",
         "semantic",
+    )
+    commit_all(repo, "fixture")
+    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    return repo, db_path
+
+
+def build_repo_fixture_with_trait_gate(tmp_path: Path) -> tuple[Path, Path]:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    init_repo(repo)
+
+    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n")
+    make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
+        "prose/source-residue",
+        "prose",
+    )
+    make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "claim-strength.md",
+        "frontmatter/claim-strength",
+        "frontmatter",
+        requires_trait="title-as-claim",
     )
     commit_all(repo, "fixture")
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
@@ -377,6 +400,29 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         },
     ]
     assert isinstance(payload["review_run_id"], int)
+
+
+def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture_with_trait_gate(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose/source-residue",
+        "frontmatter/claim-strength",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
+        "--json",
+        env=env,
+    )
+
+    payload = json.loads(created.stdout)
+    assert payload["gate_ids"] == ["prose/source-residue"]
 
 
 def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:

@@ -1,7 +1,7 @@
 ---
 description: Minimal agent-optimization harness for improving one file against tau-bench with regression-suite and held-out-score gates, keeping learnings as workshop state rather than structured evaluators
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

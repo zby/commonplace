@@ -1,7 +1,7 @@
 ---
 description: LLM context is flat concatenation — no scoping, everything global, producing dynamic scoping's pathologies (spooky action at a distance, name collision, inability to reason locally) but without even a stack; sub-agents are the one mechanism that provides isolation through lexically scoped frames
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
 status: seedling
 ---

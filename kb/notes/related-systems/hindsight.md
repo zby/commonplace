@@ -1,6 +1,6 @@
 ---
 description: Database-backed biomimetic agent memory with LLM-driven fact extraction, four-way parallel retrieval (semantic + BM25 + graph + temporal), auto-consolidation into observations, and agentic reflection — strongest production evidence that three-space memory separation yields measurable retrieval gains
-type: note
+type: related-system
 tags: [related-systems]
 traits: [has-comparison, has-external-sources]
 status: current

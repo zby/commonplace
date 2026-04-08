@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import frontmatter
-from resolve_gates import resolve_to_gate_ids
+from resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids
 from review_db import (
     GATES_ROOT,
     append_acceptance_event,
@@ -47,7 +47,7 @@ def _frontmatter_status(path: Path) -> str | None:
 
 def list_reviewable_notes(notes_dir: Path) -> list[Path]:
     return sorted(
-        p for p in notes_dir.glob("*.md")
+        p for p in notes_dir.rglob("*.md")
         if not _is_index(p) and _has_frontmatter(p)
     )
 
@@ -135,7 +135,8 @@ def select_stale_gates(
     stale: list[StaleGate] = []
     for note_abs, note_path in zip(notes, note_paths):
         current_note_sha = git_blob_sha(note_abs)
-        for gate_id in gate_ids:
+        applicable_gate_ids = applicable_gate_ids_for_note(note_abs, gate_ids, gates_dir)
+        for gate_id in applicable_gate_ids:
             gate_abs = gates_dir / f"{gate_id}.md"
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_id}")

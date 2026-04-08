@@ -1,7 +1,7 @@
 ---
 description: Polyglot HTML/bash living-document system where each file carries its own update contract, agent dispatch, rendering, and source cache — the file is the app, with no server, database, or build step
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

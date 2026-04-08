@@ -40,6 +40,8 @@ Each bare type name maps to two files — a prose template (`.md`) for agents an
 | `structured-claim` | `kb/notes/types/structured-claim.md` | `kb/notes/types/structured-claim.yaml` |
 | `adr` | `kb/notes/types/adr.md` | `kb/notes/types/adr.yaml` |
 | `index` | `kb/notes/types/index.md` | `kb/notes/types/index.yaml` |
+| `spec` | none (legacy compatibility type) | `kb/notes/types/spec.yaml` |
+| `review` | none (legacy compatibility type) | `kb/notes/types/review.yaml` |
 | `related-system` | `kb/notes/types/related-system.md` | `kb/notes/types/related-system.yaml` |
 | `source-review` | `kb/sources/types/source-review.md` | `kb/sources/types/source-review.yaml` |
 
@@ -53,6 +55,8 @@ The validator uses the type to decide which structural checks apply:
 |---|---|
 | `note` | Generic: frontmatter shape, description exists, links resolve |
 | `structured-claim` | Require `## Evidence`, `## Reasoning` |
+| `spec` | Require `## Design` or `## Implementation` |
+| `review` | Require `## Findings`; require date metadata |
 | `adr` | Require `## Context`, `## Decision`, `## Consequences`; allow ADR-specific status values |
 | `index` | Navigation markers, link density |
 | `related-system` | Require `## Core Ideas`, `## Comparison`, `## Borrowable Ideas`, `## Curiosity Pass`, `## What to Watch`; require `last-checked` field |
@@ -81,14 +85,14 @@ All structured types extend `note`:
 
 - `text` has no parent
 - `note` is the base structured type
-- `structured-claim`, `adr`, `index`, `related-system`, `source-review` all extend `note`
+- `structured-claim`, `spec`, `review`, `adr`, `index`, `related-system`, `source-review` all extend `note`
 
 Extending `note` means inheriting its structural checks. Specialized types add checks on top.
 
 ## What's deferred
 
 - **Qualified canonical ids** — bare names work while they're unambiguous. Add qualification if/when name collisions arise.
-- **Type resolver as a library** — currently the validator has hard-coded type profiles. A proper resolver that reads type definitions dynamically can come later.
+- **Type resolver as a library** — resolved. Validation now uses a shared resolver that reads scoped YAML definitions.
 - **Implied traits from types** — authors declare traits explicitly in frontmatter for now. Existing `structured-claim` notes and claim-shaped plain notes are migrated by bulk frontmatter edits rather than inferred dynamically.
 - **Machine-readable type definitions** — resolved. Each type gets a companion `.yaml` file alongside the prose `.md` template. Validator reads YAML; agents read prose.
 - **Storage compatibility checks** — checking whether a file's location matches its type's expected directory. Useful but not blocking.

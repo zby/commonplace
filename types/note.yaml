@@ -1,0 +1,7 @@
+required_fields:
+  - description
+allowed_status:
+  - seedling
+  - current
+  - speculative
+  - outdated

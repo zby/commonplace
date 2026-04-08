@@ -1,6 +1,7 @@
 ---
 description: Next.js + SQLite bookmark ingestion system whose deterministic-first, resumable enrichment pipeline offers concrete patterns for scaling KB source loading with explicit progress state
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 status: current
 tags: [related-systems]
 last-checked: 2026-03-07

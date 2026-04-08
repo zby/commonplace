@@ -1,7 +1,7 @@
 ---
 description: Agno-based personal knowledge agent with a dual memory split between routing metadata and session-derived operational learnings, plus a raw-to-wiki compilation pipeline and scheduled maintenance
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

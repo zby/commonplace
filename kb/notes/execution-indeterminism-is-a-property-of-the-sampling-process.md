@@ -1,6 +1,7 @@
 ---
 description: The same prompt can produce different outputs across runs due to token sampling — this is a property of the execution engine, theoretically eliminable but practically ubiquitous, and often confused with the deeper issue of underspecification
 type: note
+traits: [title-as-claim]
 tags: [llm-interpretation-errors]
 status: seedling
 ---

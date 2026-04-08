@@ -1,6 +1,7 @@
 ---
 description: Trajectory-to-memory pipeline extracting structured items from successes and failures, with embedding retrieval and parallel-trajectory test-time scaling; append-only, sits between Reflexion and ExpeL
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-22

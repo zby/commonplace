@@ -1,6 +1,7 @@
 ---
 description: Cross-task experiential learning pipeline that gathers trajectories, maintains natural-language rules, and retrieves past traces at inference; reviewed source promotes artifacts, not weights
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-20

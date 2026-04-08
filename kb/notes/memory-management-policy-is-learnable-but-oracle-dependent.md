@@ -1,7 +1,7 @@
 ---
 description: AgeMem stores facts in memory but learns the governing policy in weights; it is a clean subsymbolic case of durable learning, but one that depends on task-completion oracles the KB lacks
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [learning-theory]
 status: current
 ---

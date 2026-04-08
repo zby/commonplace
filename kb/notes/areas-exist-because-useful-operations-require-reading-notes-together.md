@@ -1,6 +1,7 @@
 ---
 description: Areas are defined by operations that require reading notes together — orientation and comparative reading — which need sets that are both small enough for context and related enough to yield results
 type: note
+traits: [title-as-claim]
 tags: []
 status: seedling
 ---

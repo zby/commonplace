@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 from review_db import GATES_ROOT, connect, ensure_db, insert_review_run, insert_review_run_gates, resolve_db_path
-from resolve_gates import resolve_to_gate_ids, strip_frontmatter
+from resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
 from review_metadata import git_blob_sha, iso_now, last_commit_for_path
 
 
@@ -35,7 +35,10 @@ def main() -> None:
         parser.error(f"note not found: {args.note_path}")
 
     gates_dir = repo_root / GATES_ROOT
-    gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+    requested_gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+    gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
+    if not gate_ids:
+        parser.error(f"no applicable gates resolved for note: {args.note_path}")
     model_id = args.model.strip()
     if not model_id:
         parser.error("--model must not be empty")

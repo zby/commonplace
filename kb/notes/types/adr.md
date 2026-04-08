@@ -1,5 +1,5 @@
 ---
-description: ""
+description: Template for architecture decision records — accepted/proposed decisions with Context, Decision, and Consequences sections
 type: adr
 tags: []
 status: accepted
@@ -26,4 +26,4 @@ status: accepted
 
 Relevant Notes:
 
-- [related-note](./related-note.md) — background exploration or research
+- [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — foundation: why structural types deserve deterministic validation

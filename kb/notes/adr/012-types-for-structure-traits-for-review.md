@@ -2,13 +2,13 @@
 description: Types define structural requirements checked by validation; traits route semantic review gates; type definitions split into prose template and machine-readable YAML
 type: adr
 tags: [document-system]
-status: proposed
+status: accepted
 ---
 
 # 012-types-for-structure-traits-for-review
 
-**Status:** proposed
-**Date:** 2026-04-07
+**Status:** accepted
+**Date:** 2026-04-08
 
 ## Context
 

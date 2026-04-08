@@ -1,7 +1,7 @@
 ---
 description: Repo-native document-analysis workspace with staged/published KB boundaries, multimodal evidence channels, provenance tracing, and sync-time promotion of interaction logs into published memories
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

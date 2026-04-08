@@ -1,7 +1,7 @@
 ---
 description: Document-to-simulation stack with Neo4j graph extraction, cross-platform agent rounds, sliding-window compaction, and ReACT reporting; strongest nearby reference for graph-backed simulation loops
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-31

@@ -1,6 +1,7 @@
 ---
 description: Rust concurrent agent framework whose process-type architecture (channels, branches, workers, cortex) is the cleanest production implementation of code-level scheduling over bounded LLM calls among reviewed systems
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-09

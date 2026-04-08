@@ -1,7 +1,7 @@
 ---
 description: Synthesizes Paulsen MECW, ConvexBench, and GSM-DC — usable context varies with task type, compositional complexity, and irrelevant context load, so nominal window size is a misleading abstraction
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [computational-model, foundations]
 status: seedling
 ---

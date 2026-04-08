@@ -1,7 +1,7 @@
 ---
 description: Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, and maintenance for each bounded call
 type: note
-traits: []
+traits: [definition]
 tags: [computational-model]
 status: seedling
 ---

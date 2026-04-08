@@ -1,6 +1,7 @@
 ---
 description: Arch Linux config repo with Stow-managed multi-root deployment, Incus dev VMs, and agent-executable work-item docs; strong operational packaging, no real knowledge-learning loop
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

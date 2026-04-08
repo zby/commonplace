@@ -1,7 +1,7 @@
 ---
 description: Agents never develop navigation intuition — every session is day one — so all knowledge routing infrastructure (skills, type templates, routing tables, naming conventions, activation triggers) is permanent architecture, not scaffolding that learners outgrow
 type: note
-traits: [has-comparison]
+traits: [has-comparison, title-as-claim]
 tags: []
 status: current
 ---

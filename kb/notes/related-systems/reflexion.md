@@ -1,6 +1,7 @@
 ---
 description: Verbal reinforcement loop that converts failed attempts into short natural-language reflections reused on later tries — early trajectory-based artifact learning without weight updates
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-18

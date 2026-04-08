@@ -1,6 +1,7 @@
 ---
 description: Embodied lifelong-learning agent that turns successful Minecraft trajectories into reusable JavaScript skills with vector retrieval, automatic curriculum, and critic-gated refinement
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-20

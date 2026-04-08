@@ -4,6 +4,7 @@ name: Claim strength
 lens: frontmatter
 watches: [title]
 staleness: changed
+requires_trait: title-as-claim
 ---
 
 ## Failure mode

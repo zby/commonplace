@@ -123,7 +123,7 @@ This currently feels like the most plausible target, but it needs a crisp test f
 - `decision-criteria.md` — test for type vs trait (structural requirement → type; semantic review routing → trait)
 - `review-integration.md` — how the review system consumes traits: gate applicability, shared note-aware filtering, recursive sweep scope, new `title-as-claim` gate
 - `type-resolver.md` — scoped lookup algorithm, YAML schema, base type definitions, validator integration
-- `012-types-for-structure-traits-for-review.md` — draft ADR (moves to `kb/notes/adr/` when accepted)
+- [`../../notes/adr/012-types-for-structure-traits-for-review.md`](../../notes/adr/012-types-for-structure-traits-for-review.md) — accepted ADR produced by this workshop
 - `migration-plan.md` — ordered implementation plan
 
 ## Open questions

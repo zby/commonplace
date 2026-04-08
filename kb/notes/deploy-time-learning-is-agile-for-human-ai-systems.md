@@ -1,7 +1,7 @@
 ---
 description: "Argues deploy-time learning and agile share the same core innovation — co-evolving prose and code — but deploy-time learning extends it by treating some prose as permanently load-bearing"
 type: note
-traits: []
+traits: [title-as-claim]
 tags: [learning-theory]
 status: seedling
 ---

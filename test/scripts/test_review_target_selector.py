@@ -46,13 +46,13 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path, title: str, body: str, *, status: str = "current") -> Path:
+def make_note(path: Path, title: str, body: str, *, status: str = "current", traits: str = "[]") -> Path:
     return write(
         path,
         f"""---
 description: Test note
 type: note
-traits: []
+traits: {traits}
 status: {status}
 ---
 
@@ -62,7 +62,8 @@ status: {status}
     )
 
 
-def make_gate(path: Path, gate_id: str, lens: str) -> Path:
+def make_gate(path: Path, gate_id: str, lens: str, *, requires_trait: str | None = None) -> Path:
+    requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
     return write(
         path,
         f"""---
@@ -71,7 +72,7 @@ name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
 staleness: changed
----
+{requires_trait_line}---
 
 ## Failure mode
 
@@ -239,6 +240,71 @@ class TestMissingReview:
 
         assert [record.note_path for record in stale] == [
             "kb/notes/current-top.md",
+        ]
+
+    def test_recursive_discovery_includes_nested_notes(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "definitions" / "term.md", "Current term", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            current_only=True,
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/definitions/term.md",
+        ]
+
+    def test_trait_gated_gates_are_skipped_for_notes_without_trait(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "plain.md", "Plain note", "\nBody.\n")
+        make_gate(
+            gates_dir / "frontmatter" / "claim-strength.md",
+            "frontmatter/claim-strength",
+            "frontmatter",
+            requires_trait="title-as-claim",
+        )
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["frontmatter/claim-strength"],
+            note_filter=["kb/notes/plain.md"],
+        )
+
+        assert stale == []
+
+    def test_trait_gated_gates_apply_when_note_has_trait(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "claim.md", "Claim note", "\nBody.\n", traits="[title-as-claim]")
+        make_gate(
+            gates_dir / "frontmatter" / "claim-strength.md",
+            "frontmatter/claim-strength",
+            "frontmatter",
+            requires_trait="title-as-claim",
+        )
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["frontmatter/claim-strength"],
+            note_filter=["kb/notes/claim.md"],
+        )
+
+        assert [(record.note_path, record.gate_id) for record in stale] == [
+            ("kb/notes/claim.md", "frontmatter/claim-strength"),
         ]
 
 
@@ -518,3 +584,23 @@ class TestResolveGates:
 
         with pytest.raises(SystemExit):
             resolve_gates.resolve_to_gate_ids(["prose/nonexistent"], gates_dir)
+
+    def test_applicable_gate_ids_for_note_filters_by_requires_trait(self, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        note = make_note(notes_dir / "plain.md", "Plain", "\nBody.\n")
+        make_gate(
+            gates_dir / "frontmatter" / "claim-strength.md",
+            "frontmatter/claim-strength",
+            "frontmatter",
+            requires_trait="title-as-claim",
+        )
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        ids = resolve_gates.applicable_gate_ids_for_note(
+            note,
+            ["frontmatter/claim-strength", "prose/source-residue"],
+            gates_dir,
+        )
+
+        assert ids == ["prose/source-residue"]

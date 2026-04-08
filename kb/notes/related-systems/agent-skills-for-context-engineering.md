@@ -1,6 +1,7 @@
 ---
 description: Skill-based context engineering framework — 14 instructional modules covering attention mechanics, multi-agent patterns, memory, evaluation. Strong on operational patterns, weaker on learning theory.
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 status: current
 tags: [related-systems]
 last-checked: 2026-02-25

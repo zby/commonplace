@@ -85,6 +85,8 @@ This file is a control-plane router. It does not inventory capabilities; harness
 
 - `text` = no frontmatter (raw capture).
 - `note` = has frontmatter (default structured writing type).
+- Specialized structural types currently in active use include `structured-claim`, `spec`, `review`, `index`, `adr`, `related-system`, and `source-review`.
+- Traits are orthogonal to type. They do not change structure; they route review expectations (`title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation`).
 - For specialized structures, load the directory-local type templates only when the routing table points there:
   `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/`.
 - `kb/instructions/WRITING.md` is the authority for note-writing checklist and the default templates.

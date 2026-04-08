@@ -10,11 +10,20 @@ Create `types/text.yaml` and `types/note.yaml` with the schema from [type-resolv
 
 ### 1.2 Write collection type YAML files
 
-Create `.yaml` companions for each existing template in `kb/notes/types/`:
+Create `.yaml` companions for each current collection-scoped note type:
 - `structured-claim.yaml`
 - `adr.yaml`
 - `index.yaml`
+- `spec.yaml`
+- `review.yaml`
 - `related-system.yaml`
+- `source-review.yaml`
+
+Scope notes:
+
+- `structured-claim`, `adr`, `index`, and `related-system` live in `kb/notes/types/`
+- `source-review` lives in `kb/sources/types/`
+- `spec` and `review` are currently validator-supported legacy `kb/notes/` types without prose templates; add YAML definitions for them so the resolver preserves existing validator behavior instead of silently degrading to base `note`
 
 ### 1.3 Fix `related-system` template
 
@@ -36,17 +45,45 @@ Cover: bare names, scoped fallback, base inheritance, missing YAML graceful degr
 
 ### 2.3 Integrate resolver into validator
 
-Replace the hard-coded `TYPE_HEADINGS` map and special-case logic (`review` date check, `index` link density) with resolver-driven profiles. Validator scope stays `kb/notes/`.
+Replace the hard-coded `TYPE_HEADINGS` map and the three special-case checks with resolver-driven profiles:
+
+- `TYPE_HEADINGS` → `required_headings` from YAML
+- `spec` any-of logic → `any_headings` from YAML
+- `review` date check → `requires_date` from YAML
+- `index` link density → `min_links` from YAML
+
+The validator reads the resolved profile and runs the appropriate check for each field present. Validator scope stays `kb/notes/`.
 
 ### 2.4 Verify validator output
 
-Run validator on all notes before and after. For unchanged types (`note`, `structured-claim`, `adr`, `index`), output should be equivalent — any differences are bugs in the resolver or YAML definitions. For newly retyped notes (`related-system`), new warnings are expected and desirable — these are migration findings (e.g. missing required sections), not regressions. Review them and fix or acknowledge.
+Run validator on all `kb/notes/` files before and after. Verify by type:
+
+- unchanged types: `note`, `structured-claim`, `adr`, `index`, `spec`, `review`
+  For these types, output should be equivalent before and after. Any differences are bugs in the resolver or YAML definitions.
+- newly retyped notes: `related-system`
+  New warnings are expected and desirable here. These are migration findings (for example missing required sections), not regressions. Review them and fix or acknowledge.
+- out of validator scope: `source-review`
+  `source-review` does not participate in `kb/notes/` validator parity because the validator still scopes to `kb/notes/`. Cover it in resolver unit tests instead: scoped lookup, YAML loading, and graceful fallback.
+
+Verification procedure:
+
+1. Run the validator on all `kb/notes/` before any type retyping and save the output.
+2. Implement resolver + validator integration.
+3. Run the validator again before Phase 1.4 retyping and compare outputs for unchanged types.
+4. Apply Phase 1.4 (`related-system` retyping).
+5. Run the validator a third time and review only the `related-system` diffs as migration findings.
 
 ## Phase 3: Traits
 
 ### 3.1 Add `title-as-claim` trait to `structured-claim` notes
 
-Bulk-edit all existing `type: structured-claim` notes to include `traits: [title-as-claim]` in frontmatter.
+Bulk-edit all existing `type: structured-claim` notes to include `title-as-claim` in frontmatter `traits:`.
+
+Migration rule:
+
+- merge into the existing `traits:` list rather than replacing it
+- de-duplicate traits if the note already carries `title-as-claim`
+- preserve unrelated existing traits (`has-comparison`, `has-external-sources`, etc.)
 
 Do **not** rely on implied traits in tooling yet. The current migration keeps trait computation simple: the review system reads explicit `traits:` from frontmatter.
 
@@ -54,15 +91,36 @@ Do **not** rely on implied traits in tooling yet. The current migration keeps tr
 
 Scan `kb/notes/` for plain `note` files whose titles are already claim-shaped. Add `title-as-claim` to their existing `traits:` list (or create the list if absent).
 
+Migration rule:
+
+- only consider files with `type: note`
+- exclude directories and note kinds that are not supposed to make this promise: `kb/notes/definitions/**`, `kb/notes/related-systems/**`, `kb/notes/adr/**`, `index.md`, `*-index.md`
+- generate the candidate list using the current validator's claim-title heuristic (`CLAIMISH_MARKERS`) so the migration uses the same approximation already present in tooling
+- manually review the candidate list before editing; only keep notes whose titles are truth-apt propositions, not topic labels or artifact names
+- when editing, merge into existing `traits:` lists and de-duplicate rather than replacing the list
+
 This is a corpus migration, not a semantic inference in tooling. The goal is to make the existing title-as-claim convention explicit in frontmatter before review gating depends on it.
 
 ### 3.3 Add `definition` trait to definition notes
 
-Add `traits: [definition]` to notes in `kb/notes/definitions/`.
+Add `definition` to `traits:` for every note in `kb/notes/definitions/`.
+
+Migration rule:
+
+- merge into the existing `traits:` list rather than replacing it
+- de-duplicate if `definition` is already present
 
 ### 3.4 Add `has-comparison`, `has-external-sources` traits
 
-Add to notes that currently carry these traits (check existing `traits:` fields) and to `related-system` notes that are missing them.
+Make this a deterministic corpus migration:
+
+- preserve all existing occurrences of `has-comparison` and `has-external-sources`
+- for every `kb/notes/related-systems/*.md` note, add `has-comparison`
+- for every `kb/notes/related-systems/*.md` note, add `has-external-sources`
+- do not remove `has-implementation`; preserve it where already present
+- merge into existing `traits:` lists and de-duplicate rather than replacing the list
+
+Rationale: related-system reviews are structurally comparative and are grounded in external repositories, docs, papers, or products by definition. The migration should encode that invariant directly instead of relying on per-note judgment calls.
 
 ## Phase 4: Review integration
 

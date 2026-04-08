@@ -1,6 +1,7 @@
 ---
 description: Playbook-learning loop with generator, reflector, and curator roles — learns from execution feedback by scoring bullets and appending new playbook entries, without weight promotion
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-18

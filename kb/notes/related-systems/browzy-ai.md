@@ -1,7 +1,7 @@
 ---
 description: Terminal personal knowledge base that compiles raw sources into a markdown wiki, uses SQLite FTS as a derived retrieval layer, and writes lightweight session-derived digests and insight drafts
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

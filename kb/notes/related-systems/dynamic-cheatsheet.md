@@ -1,6 +1,7 @@
 ---
 description: Test-time adaptive memory that carries forward a prompt-shaped cheatsheet across queries — artifact-learning via full cheatsheet rewrites and optional retrieval/synthesis, without weight updates
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-18

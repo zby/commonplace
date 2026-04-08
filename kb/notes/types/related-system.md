@@ -1,9 +1,9 @@
 ---
-description: ""
-type: note
+description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
+type: related-system
 tags: [related-systems]
 status: current
-last-checked: {YYYY-MM-DD}
+last-checked: "YYYY-MM-DD"
 ---
 
 # {System name}
@@ -52,4 +52,4 @@ Investigate mechanistically. Update Core Ideas and Comparison with what you find
 
 Relevant Notes:
 
-- [related-note](./related-note.md) — how it relates
+- [related-systems-index](../related-systems/related-systems-index.md) — navigation hub for the collection this template supports

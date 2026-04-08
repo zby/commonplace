@@ -1,7 +1,7 @@
 ---
-description: ""
+description: Template for developed arguments — claim-titled notes with explicit Evidence, Reasoning, and optional Caveats sections
 type: structured-claim
-traits: []
+traits: [title-as-claim]
 tags: []
 status: seedling
 ---
@@ -37,4 +37,4 @@ The Toulmin structure works for contested empirical claims where evidence needs 
 
 Relevant Notes:
 
-- [related-note](./related-note.md) — how it relates
+- [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — rationale for the scaffold this template encodes

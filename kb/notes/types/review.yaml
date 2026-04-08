@@ -1,0 +1,4 @@
+base: note
+required_headings:
+  - "## Findings"
+requires_date: true

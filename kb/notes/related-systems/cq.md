@@ -1,7 +1,7 @@
 ---
 description: Local-first agent knowledge commons with SQLite local/team stores, approval-gated team sharing, and a plugin-packaged query/propose/confirm loop; strongest reviewed shared-learning reference so far
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-24

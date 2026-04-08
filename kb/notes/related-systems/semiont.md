@@ -1,6 +1,7 @@
 ---
 description: Document-grounded annotation kernel with W3C annotations, git-backed events, working-tree URIs, and shared human/agent flows; strongest example here of annotation-first KB infrastructure
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

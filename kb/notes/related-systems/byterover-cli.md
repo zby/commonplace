@@ -1,7 +1,7 @@
 ---
 description: Agent-native coding CLI with local `.brv/context-tree` markdown memory, tiered query execution, derived summary/manifest artifacts, and connector-based distribution into other coding agents
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-03

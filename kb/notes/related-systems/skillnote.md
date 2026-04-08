@@ -1,7 +1,7 @@
 ---
 description: Self-hosted skill registry with partial local-first editing resilience, dual version tracks, live MCP tool exposure, and agent-submitted per-version ratings
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

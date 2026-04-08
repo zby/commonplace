@@ -1,7 +1,7 @@
 ---
 description: Claude Code plugin and portable AGENTS protocol for topic-isolated compiled markdown wikis, packaging ingest/research/query workflows as prompt artifacts rather than executable software
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-06

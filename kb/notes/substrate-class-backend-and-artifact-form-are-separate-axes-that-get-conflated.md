@@ -1,7 +1,7 @@
 ---
 description: Tips, notes, rules, prompts, schemas, and playbooks belong to one symbolic artifact substrate even when stored in repos, databases, or memory services; backend and artifact form are separate axes
 type: note
-traits: [has-comparison]
+traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
 status: current
 ---

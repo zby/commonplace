@@ -1,7 +1,7 @@
 ---
 description: Instructions, skills, hooks, and scripts form a constraining gradient for methodology — from underspecified and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
 type: note
-traits: []
+traits: [title-as-claim]
 tags: [learning-theory]
 status: seedling
 ---

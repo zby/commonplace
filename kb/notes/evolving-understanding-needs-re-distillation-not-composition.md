@@ -1,7 +1,7 @@
 ---
 description: When understanding evolves, reconciling fragments into a coherent picture can exceed effective context; a pre-distilled narrative keeps the whole picture within feasible bounds
 type: note
-traits: [has-external-sources]
+traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, context-engineering]
 status: seedling
 ---

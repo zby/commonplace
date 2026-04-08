@@ -1,7 +1,7 @@
 ---
 description: Hash-chained semantic memory ledger with binary append-only storage, additive ranked retrieval, and a diff-based signed skill registry exposed over MCP and REST
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-07

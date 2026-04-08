@@ -1,7 +1,7 @@
 ---
 description: A Claw's learning loop must improve action capacity (classification, planning, communication), not just retrieval — question-answering is one mode among many
 type: note
-traits: []
+traits: [title-as-claim]
 tags: []
 status: speculative
 ---

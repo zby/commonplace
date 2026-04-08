@@ -1,6 +1,7 @@
 ---
 description: Python CLI that mines Claude Code transcripts into weighted user/guard profiles, benchmarks guards with per-model ablations, and compiles the result into assistant memory files
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-07

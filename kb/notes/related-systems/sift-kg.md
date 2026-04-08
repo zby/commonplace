@@ -1,6 +1,7 @@
 ---
 description: LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-in-the-loop entity resolution, and interactive visualization
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-03-07

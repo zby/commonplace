@@ -1,6 +1,7 @@
 ---
 description: Rust-backed incremental indexing framework that compiles Python-declared dataflows into continuously maintained vector, graph, and relational targets via Postgres tracking tables
-type: note
+type: related-system
+traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-04

@@ -1,7 +1,7 @@
 ---
 description: Definition — distillation compresses knowledge so a consumer can act on it within bounded context, making operations feasible that raw source material would exceed; co-equal learning mechanism alongside constraining
 type: note
-traits: []
+traits: [definition]
 tags: [learning-theory]
 status: current
 ---

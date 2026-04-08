@@ -1,7 +1,7 @@
 ---
 description: Document types should assert verifiable structural properties, not subject matter — with a base type + traits model inspired by gradual and structural typing
 type: note
-traits: []
+traits: [title-as-claim]
 tags: [type-system]
 status: current
 ---

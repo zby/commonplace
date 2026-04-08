@@ -21,39 +21,16 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 import frontmatter as fm_mod  # noqa: E402
+from type_resolver import TypeProfile, resolve_type  # noqa: E402
 
 NOTES_ROOT = REPO_ROOT / "kb" / "notes"
-VALID_TRAITS = {"has-comparison", "has-external-sources", "has-implementation"}
-VALID_STATUS = {"seedling", "current", "speculative", "outdated"}
-TYPE_HEADINGS = {
-    "structured-claim": ("## Evidence", "## Reasoning"),
-    "spec": ("## Design", "## Implementation"),
-    "review": ("## Findings",),
-    "adr": ("## Context", "## Decision", "## Consequences"),
+VALID_TRAITS = {
+    "definition",
+    "has-comparison",
+    "has-external-sources",
+    "has-implementation",
+    "title-as-claim",
 }
-CLAIMISH_MARKERS = (
-    " is ",
-    " are ",
-    " should ",
-    " makes ",
-    " make ",
-    " requires ",
-    " require ",
-    " enables ",
-    " enable ",
-    " means ",
-    " predicts ",
-    " separates ",
-    " prevent",
-    " maps ",
-    " shows ",
-    " closes ",
-    " keeps ",
-    " turns ",
-    " needs ",
-    " occupies ",
-    " maximizes ",
-)
 
 
 
@@ -72,6 +49,7 @@ class ParsedNote:
     path: Path
     content: str
     note_type: str
+    profile: TypeProfile
     frontmatter: dict[str, Any] | None
     body: str
     title: str
@@ -168,13 +146,18 @@ def parse_note(path: Path) -> tuple[ParsedNote | None, str | None]:
     if fm_error:
         return None, fm_error
     note_type = "text" if fm is None else str(fm.get("type", "note") or "note")
+    profile = resolve_type(path, fm, repo_root=REPO_ROOT)
     title = extract_title(content)
     body = strip_frontmatter(content)
-    return ParsedNote(path=path, content=content, note_type=note_type, frontmatter=fm, body=body, title=title), None
-
-
-def sentence_count(description: str) -> int:
-    return len(re.findall(r"[.!?](?:\s|$)", description))
+    return ParsedNote(
+        path=path,
+        content=content,
+        note_type=note_type,
+        profile=profile,
+        frontmatter=fm,
+        body=body,
+        title=title,
+    ), None
 
 
 def validate_description(results: CheckResults, description: Any, title: str) -> None:
@@ -193,26 +176,12 @@ def validate_description(results: CheckResults, description: Any, title: str) ->
 
     results.passes.append(f"description: present, {len(desc)} chars")
 
-    if len(desc) < 50:
-        results.warns.append(f"description: {len(desc)} chars — below recommended minimum of 50")
-    elif len(desc) > 200:
-        results.warns.append(f"description: {len(desc)} chars — above recommended maximum of 200")
-
-    if desc.endswith((".", "!", "?")):
-        results.warns.append("description: should not end with terminal punctuation")
-
-    if sentence_count(desc) > 1:
-        results.warns.append("description: appears to contain multiple sentences")
-
-    title_tokens = tokenize(title)
-    desc_tokens = tokenize(desc)
-    if title_tokens and desc_tokens:
-        overlap = len(title_tokens & desc_tokens) / max(1, len(title_tokens | desc_tokens))
-        if overlap > 0.7:
-            results.warns.append("description: may restate the title rather than discriminate this note")
-
-
-def validate_type_traits_status(results: CheckResults, frontmatter: dict[str, Any], note_type: str) -> None:
+def validate_type_traits_status(
+    results: CheckResults,
+    frontmatter: dict[str, Any],
+    note_type: str,
+    profile: TypeProfile,
+) -> None:
     if "type" in frontmatter:
         if not isinstance(frontmatter["type"], str) or not frontmatter["type"].strip():
             results.fails.append("type: must be a non-empty string")
@@ -233,27 +202,13 @@ def validate_type_traits_status(results: CheckResults, frontmatter: dict[str, An
 
     status = frontmatter.get("status")
     if status is not None:
-        if status not in VALID_STATUS:
-            results.warns.append(f'status: "{status}" is not one of {sorted(VALID_STATUS)}')
+        if status not in profile.allowed_status:
+            results.warns.append(f'status: "{status}" is not one of {sorted(profile.allowed_status)}')
         else:
             results.passes.append(f'status: "{status}" — valid')
 
     if note_type == "note" and frontmatter.get("traits") == []:
         results.infos.append("bare note type: type=note with empty traits")
-
-
-def validate_composability(results: CheckResults, title: str) -> None:
-    lowered = title.casefold()
-    if any(marker in lowered for marker in CLAIMISH_MARKERS):
-        results.passes.append("composability: title reads like a claim")
-        return
-
-    word_count = len(re.findall(r"\b\w+\b", title))
-    if word_count <= 3:
-        results.warns.append("composability: title may be a topic label rather than a claim or specific artifact")
-    else:
-        results.infos.append("composability: title is topical/descriptive rather than explicitly claim-shaped")
-
 
 def validate_links(results: CheckResults, path: Path, body: str) -> None:
     missing: list[str] = []
@@ -273,31 +228,40 @@ def validate_links(results: CheckResults, path: Path, body: str) -> None:
         results.passes.append("link health: all relative markdown links resolve")
 
 
-def validate_structure(results: CheckResults, note_type: str, body: str, frontmatter: dict[str, Any]) -> None:
-    if note_type in TYPE_HEADINGS:
-        missing = [heading for heading in TYPE_HEADINGS[note_type] if heading not in body]
-        if note_type == "spec":
-            if all(heading not in body for heading in TYPE_HEADINGS[note_type]):
-                results.warns.append("structure: spec should contain ## Design or ## Implementation")
-            else:
-                results.passes.append("structure: spec has required heading")
-            return
+def validate_structure(results: CheckResults, note_type: str, body: str, frontmatter: dict[str, Any], profile: TypeProfile) -> None:
+    if profile.required_headings:
+        missing = [heading for heading in profile.required_headings if heading not in body]
         if missing:
             results.warns.append(f"structure: missing headings {', '.join(missing)}")
         else:
             results.passes.append(f"structure: required {note_type} headings present")
 
-    if note_type == "review":
+    if profile.any_headings:
+        if all(heading not in body for heading in profile.any_headings):
+            results.warns.append(f"structure: {note_type} should contain {' or '.join(profile.any_headings)}")
+        else:
+            results.passes.append(f"structure: {note_type} has required heading")
+
+    extra_required_fields = [field for field in profile.required_fields if field != "description"]
+    missing_fields = [field for field in extra_required_fields if frontmatter.get(field) in (None, "", [])]
+    if missing_fields:
+        results.warns.append(f"frontmatter: missing required fields {', '.join(missing_fields)}")
+    elif extra_required_fields:
+        results.passes.append(f"frontmatter: required {note_type} fields present")
+
+    if profile.requires_date:
         has_date = any(key in frontmatter for key in ("date", "last-checked")) or bool(
             re.search(r"\b\d{4}-\d{2}-\d{2}\b", body)
         )
         if not has_date:
             results.warns.append("structure: review should include a date in frontmatter or body")
+        else:
+            results.passes.append("structure: review has date")
 
-    if note_type == "index":
+    if profile.min_links is not None:
         links = find_markdown_links(body)
-        if len(links) < 3:
-            results.warns.append("structure: index should be primarily navigational (few links found)")
+        if len(links) < profile.min_links:
+            results.warns.append(f"structure: index should be primarily navigational (found {len(links)} links)")
         else:
             results.passes.append("structure: index has navigational link density")
 
@@ -315,10 +279,9 @@ def validate_note(path: Path) -> CheckResults:
     results = CheckResults(note_type=parsed.note_type)
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
     validate_description(results, parsed.frontmatter.get("description"), parsed.title)
-    validate_type_traits_status(results, parsed.frontmatter, parsed.note_type)
-    validate_composability(results, parsed.title)
+    validate_type_traits_status(results, parsed.frontmatter, parsed.note_type, parsed.profile)
     validate_links(results, parsed.path, parsed.body)
-    validate_structure(results, parsed.note_type, parsed.body, parsed.frontmatter)
+    validate_structure(results, parsed.note_type, parsed.body, parsed.frontmatter, parsed.profile)
     return results
 
 
@@ -388,34 +351,44 @@ def main() -> int:
 
     had_failures = False
     text_count = 0
-    seedling_paths: list[Path] = []
+    warning_count = 0
+    failure_count = 0
+    warning_items: list[tuple[Path, str]] = []
+    failure_items: list[tuple[Path, str]] = []
 
     for path in paths:
         results = validate_note(path)
         if results.note_type == "text":
             text_count += 1
-        else:
-            parsed, error = parse_note(path)
-            if parsed and not error and parsed.frontmatter and parsed.frontmatter.get("status") == "seedling":
-                seedling_paths.append(path)
         if args.target in {"all", "notes"} and path in inbound and not inbound[path] and results.note_type != "text":
             results.infos.append("orphan check: no inbound links found in kb/notes")
         print(format_block(path, results))
+        if results.warns:
+            warning_count += 1
+            warning_items.extend((path, warning) for warning in results.warns)
         if results.fails:
             had_failures = True
+            failure_count += 1
+            failure_items.extend((path, failure) for failure in results.fails)
 
     if args.target in {"all", "notes"}:
         print("\n=== BATCH INFO ===\n")
+        print(f"Files analysed: {len(paths)}")
         print(f"Text files: {text_count}")
-        if text_count:
-            for path in paths:
-                parsed, error = parse_note(path)
-                if parsed and not error and parsed.note_type == "text":
-                    print(f"- {path.relative_to(REPO_ROOT)}")
-        print(f"Seedling notes: {len(seedling_paths)}")
-        if seedling_paths:
-            for path in seedling_paths:
-                print(f"- {path.relative_to(REPO_ROOT)}")
+        print(f"Notes with warnings: {warning_count}")
+        print(f"Failing notes: {failure_count}")
+        print("\nWarnings:")
+        if warning_items:
+            for path, warning in warning_items:
+                print(f"- {path.relative_to(REPO_ROOT)}: {warning}")
+        else:
+            print("- (none)")
+        print("\nFailures:")
+        if failure_items:
+            for path, failure in failure_items:
+                print(f"- {path.relative_to(REPO_ROOT)}: {failure}")
+        else:
+            print("- (none)")
         print("\n===")
 
     return 1 if had_failures else 0

@@ -1,7 +1,7 @@
 ---
 description: Shell-first TribleSpace agent runtime with branch-separated cognition/archive/memory, chat-log importers, and budget-adaptive temporal memory built from an append-only event graph
-type: note
-traits: [has-comparison, has-implementation]
+type: related-system
+traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
 last-checked: 2026-04-05

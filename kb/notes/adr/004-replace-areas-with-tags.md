@@ -73,7 +73,7 @@ The `Topics:` footer section at the bottom of each note is removed. It was a mar
 - **Frontmatter** `tags:` field — the source of truth, visible to anyone reading the raw markdown.
 - **MkDocs hook** — renders clickable tag links in the HTML output.
 
-Removing Topics eliminates `sync_topic_links.py`, the areas-topics consistency check in the validate skill, and a source of staleness. The `001-generate-topic-links-from-frontmatter` ADR is superseded by this decision.
+Removing Topics eliminates `sync_topic_links.py`, the areas-topics consistency check in the validate skill, and a source of staleness. This supersedes the earlier generated Topics-footer approach entirely rather than adapting it to `tags:`.
 
 ### 5. Index pages use `-index` filename suffix
 
@@ -106,4 +106,3 @@ Relevant Notes:
 
 - [areas exist because useful operations require reading notes together](../areas-exist-because-useful-operations-require-reading-notes-together.md) — the rationale this ADR partially supersedes; orientation and comparative reading operations that justified area constraints
 - [stale indexes are worse than no indexes](../stale-indexes-are-worse-than-no-indexes.md) — the generated section eliminates this failure mode for listings
-- [001-generate-topic-links-from-frontmatter](../001-generate-topic-links-from-frontmatter.md) — superseded: Topics footers removed entirely rather than migrated to `tags:`
