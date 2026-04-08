@@ -230,16 +230,23 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 **Dependency:** The type-system rationalization workshop (`kb/work/type-system-rationalization/`) should land its YAML type definitions (phases 1-2) before this migration, so the install copy step has `.yaml` files to copy and the `write` skill can reference the updated type list. The trait migration (phase 3) and review integration (phase 4) can happen independently.
 
-1. **Separate core types from local types.** Core types (`note`, `text`, `index`) are what the install copies into the practitioner's `kb/*/types/`. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, `source-review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. Update the install copy commands to only copy core types. Ensure skills depend only on core types — the `/write` skill routes to `note` by default; specialized types are loaded on demand if the practitioner has them. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
-2. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
+1. **Promote `index` to a core type.** Currently `index` is defined in `kb/notes/types/` alongside local types like `adr` and `related-system`, with no distinction. To make it core, we need to:
+   - Verify that the `index` type template (`index.md`, `index.yaml`) has no dependencies on local conventions (our specific tags, our specific indexes). It should work for any KB's indexes.
+   - Move `index.md` and `index.yaml` into `types/` at the repo root alongside `note` and `text` base definitions, if that's where core types live. Or mark them in `kb/notes/types/` with a convention that distinguishes core from local — depends on where the type-system-rationalization workshop lands.
+   - Ensure validation and the `/write` skill treat `index` as a core type that's always available, not an optional local type.
+   - Update WRITING.md if it references indexes — confirm it documents the `index` type as part of the base set.
+
+2. **Narrow the install to core types only.** Once `index` is established as core alongside `note` and `text`, change the install copy commands to only copy these three. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, `source-review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. Ensure skills depend only on core types — the `/write` skill routes to `note` by default; specialized types are loaded on demand if the practitioner has them. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
+
+3. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
 3. **Create `skills/` directory and move skill subdirectories** from `kb/instructions/`
-4. **Update internal references** in moved skills (paths, cross-skill invocations)
-5. **Create `skills/write/SKILL.md`** — the new routing skill (uses updated type list + trait guidance)
-6. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
-7. **Update `.claude/skills/` symlinks** in this repo to point to new `skills/` location
-8. **Create slim AGENTS.md.template**
-9. **Update INSTALL.md** with plugin-based procedure
-10. **Test** — install into a fresh test repo, verify skills work with namespace prefix
+5. **Update internal references** in moved skills (paths, cross-skill invocations)
+6. **Create `skills/write/SKILL.md`** — the new routing skill (uses updated type list + trait guidance)
+7. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
+8. **Update `.claude/skills/` symlinks** in this repo to point to new `skills/` location
+9. **Create slim AGENTS.md.template**
+10. **Update INSTALL.md** with plugin-based procedure
+11. **Test** — install into a fresh test repo, verify skills work with namespace prefix
 
 ## Open questions
 
