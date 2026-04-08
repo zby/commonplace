@@ -39,15 +39,15 @@ These ship with the framework and are copied into `kb/*/types/` at install. They
 |------|--------------|
 | `note` | Default structured writing type. Has frontmatter, claim title, description. Every KB needs this. |
 | `text` | No frontmatter. Raw capture, pre-formalization. Every KB needs a low-friction entry point. |
+| `index` | Curated navigation hub. Entries have context phrases explaining why each linked note is listed. Tags need indexes to become navigable — without them, tags are just strings in frontmatter. |
 
-That's it. The installed skills work with `note` and `text`. Everything else is a local type.
+The installed skills work with these three types. Everything else is a local type.
 
 **Our local types** (stay in `commonplace/kb/notes/types/`, not installed):
 
 | Type | Why it's local |
 |------|---------------|
 | `structured-claim` | Our convention for notes that need explicit Evidence/Reasoning/Caveats. A practitioner might adopt it or define their own argumentation type. |
-| `index` | Our convention for curated navigation hubs. A practitioner might use flat tags instead, or define a different index format. |
 | `adr` | Architecture Decision Records. Specific to projects that make architectural decisions. |
 | `related-system` | External system reviews. Specific to our practice of comparing knowledge systems. |
 | `spec` | Specification documents. |
@@ -136,7 +136,7 @@ An open question from the [workshop framing](./framing.md): should these referen
 | Aspect | Framework | Practitioner |
 |--------|-----------|-------------|
 | Frontmatter fields | Defines and validates | Uses, chooses values |
-| Framework types | Ships `note` and `text` | Uses as base |
+| Framework types | Ships `note`, `text`, `index` | Uses as base |
 | Local types | Ships examples in `commonplace/` (not installed) | Defines their own, optionally copies ours |
 | Tags | Validates format | Chooses vocabulary |
 | Directory structure | Provides top-level collections | Organizes freely within them |
