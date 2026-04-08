@@ -131,12 +131,12 @@ The main new skill. Absorbs routing table + content workflow + type routing.
 1. Parse arguments: optional type and optional topic
 2. Read `kb/GOALS.md` if it exists — check fit
 3. Search first — find related notes before writing
-4. **Discover available types dynamically.** Scan `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/` for `.md` templates. The available types are whatever templates exist — core types are always present, local types appear if the practitioner added them. Do not hardcode a type list.
-5. Route to directory and resolve type template:
+4. Route to directory and resolve type template. Core types are hardcoded:
    - `note` (default) → `kb/notes/`, base template from WRITING.md
+   - `text` → `kb/notes/`, no template (raw capture)
    - `index` → `kb/notes/`, read `kb/notes/types/index.md`
    - `source-review` → `kb/sources/`, read `kb/sources/types/source-review.md`
-   - Any other type → look up `kb/notes/types/{type}.md`. If the template exists, read it and use its directory convention. If it doesn't exist, error: "type '{type}' not found — available types: {list from discovery step}."
+   - Any other type → scan `kb/*/types/` for `{type}.md`. If the template exists, read it for the target directory and writing guidance. If not found, error with the list of available types (core + discovered).
 6. Read WRITING.md for checklist (title-as-claim test, description quality, composability)
 7. Set appropriate traits in frontmatter based on content:
    - Claim-shaped title → add `title-as-claim` to `traits:`
@@ -236,7 +236,7 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 **Dependency:** The type-system rationalization workshop (`kb/work/type-system-rationalization/`) should land its YAML type definitions (phases 1-2) before this migration, so the install copy step has `.yaml` files to copy and the `write` skill can reference the updated type list. The trait migration (phase 3) and review integration (phase 4) can happen independently.
 
-1. **Make type discovery dynamic.** Currently the routing table in CLAUDE.md hardcodes which types exist and where they route. The `/write` skill must discover types by scanning `kb/*/types/` directories at invocation time, not from a hardcoded list. This is a prerequisite for everything else — without dynamic discovery, `/write` can't be a framework skill (it would need to know about local types it shouldn't depend on). Design: the skill scans for `*.md` templates in type directories, extracts the type name from the filename, and presents available types to the agent. Core types (`note`, `text`, `index`, `source-review`) are always present after install; local types appear if the practitioner has added them. The type template itself should declare which collection directory it targets (e.g., `adr.md` declares it writes to `kb/notes/adr/`) — this replaces the hardcoded routing table.
+1. **Make type routing extensible via dynamic discovery.** Currently the routing table in CLAUDE.md hardcodes which types exist and where they route. The `/write` skill must support practitioner-defined types without hardcoding them. Design: core types (`note`, `text`, `index`, `source-review`) are hardcoded in the skill — they're guaranteed to exist after install and this avoids a filesystem scan for the common case. For any type not in the hardcoded set, the skill scans `kb/*/types/` for a matching `.md` template. If found, the template itself declares which collection directory it targets (e.g., `adr.md` declares it writes to `kb/notes/adr/`) — this replaces the hardcoded routing table for local types. If not found, the skill errors with available types listed. This is a prerequisite for everything else — without extensible routing, `/write` can't be a framework skill.
 
 2. **Promote `index` and `source-review` to core types.** Currently these are defined in `kb/*/types/` alongside local types like `adr` and `related-system`, with no distinction. To make them core, we need to:
    - Verify that the `index` type template (`index.md`, `index.yaml`) has no dependencies on local conventions (our specific tags, our specific indexes). It should work for any KB's indexes.
