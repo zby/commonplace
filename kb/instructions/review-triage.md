@@ -4,7 +4,7 @@ description: Inspect diffs for note-changed review pairs and ack insignificant c
 
 # Review triage
 
-Inspect `note-changed` stale pairs and ack those where the diff is insignificant for the gate. This reduces the review queue before launching review sub-agents or a bash sweep script.
+Inspect `note-changed` stale pairs and ack those where the diff is insignificant for the gate. This reduces the review queue before launching review sub-agents or a review sweep command.
 
 Inputs:
 
@@ -16,7 +16,7 @@ Inputs:
 ### 1. Get note-changed pairs
 
 ```bash
-python3 scripts/review_target_selector.py --model {model-id} {bundle-or-all} --note {note-paths} --json --reason note-changed
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-paths} --json --reason note-changed
 ```
 
 If the output is an empty array, stop — nothing to triage.
@@ -39,11 +39,11 @@ When in doubt, don't ack — let the review handle it.
 Ack all insignificant pairs in one command:
 
 ```bash
-python3 scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} [{gate-id} ...]
+commonplace-ack-gate-review --model {model-id} {note-path} {gate-id} [{gate-id} ...]
 ```
 
 This appends a new acceptance event to the review DB so the accepted baseline matches the current note revision. It does not rely on `touch` or filesystem timestamps.
 
 ### 4. Report
 
-Report which pairs were acked and which were left for review. The remaining stale pairs will be picked up by the next review sweep or bash sweep script.
+Report which pairs were acked and which were left for review. The remaining stale pairs will be picked up by the next review sweep.

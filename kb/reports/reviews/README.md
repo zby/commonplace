@@ -23,16 +23,16 @@ Legacy rendered review artifacts and archived review outputs. The live review sy
 
 ```bash
 # List all stale (note, gate) pairs
-uv run scripts/review_target_selector.py --model gpt-5-4-xhigh --all-gates
+commonplace-review-target-selector --model gpt-5-4-xhigh --all-gates
 
 # List stale pairs for one bundle
-uv run scripts/review_target_selector.py --model gpt-5-4-xhigh prose
+commonplace-review-target-selector --model gpt-5-4-xhigh prose
 
 # JSON output with diffs
-uv run scripts/review_target_selector.py --model gpt-5-4-xhigh --all-gates --json
+commonplace-review-target-selector --model gpt-5-4-xhigh --all-gates --json
 
 # Ack a review (note change was insignificant for this gate)
-uv run scripts/ack_gate_review.py --model gpt-5-4-xhigh kb/notes/backlinks.md prose/source-residue
+commonplace-ack-gate-review --model gpt-5-4-xhigh kb/notes/backlinks.md prose/source-residue
 ```
 
 ## Status

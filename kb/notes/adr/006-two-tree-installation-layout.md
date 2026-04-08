@@ -2,12 +2,12 @@
 description: Decision to split installed projects into two directory trees — user content in kb/, framework in commonplace/ — with operational artifacts copied to kb/ for fast agent access and methodology kept in commonplace/ as fallback
 type: adr
 tags: [architecture]
-status: accepted
+status: superseded
 ---
 
 # 006-two-tree-installation-layout
 
-**Status:** accepted
+**Status:** superseded by [ADR-014](./014-scripts-as-python-package-one-tree-model.md)
 **Date:** 2026-03-23
 
 ## Context

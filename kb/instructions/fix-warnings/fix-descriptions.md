@@ -59,7 +59,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 To fix descriptions across many notes:
 
 ```bash
-python3 skills/validate/validate_notes.py all 2>/dev/null | grep "description:"
+commonplace-validate-notes all 2>/dev/null | grep "description:"
 ```
 
 This produces a list of all notes with description warnings. Process each note using the procedure above.

@@ -66,7 +66,7 @@ rg "^tags:.*my-tag" kb/notes/ --glob "*.md"
 
 Key entry points:
 
-- `kb/notes/index.md` — auto-generated directory listing (rebuild with `scripts/generate_notes_index.py`)
+- `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
 
 <!-- Add curated tag indexes here as they emerge. Create a tag index when 5+ related notes accumulate without navigation structure. -->
 
@@ -84,4 +84,4 @@ Key entry points:
 
 These skills are provided by the `commonplace` plugin. Invoke them using your runtime's skill or plugin surface.
 
-For the full writing checklist and conventions, see `commonplace/kb/instructions/WRITING.md`.
+For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.

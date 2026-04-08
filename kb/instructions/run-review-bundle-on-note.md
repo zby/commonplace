@@ -1,12 +1,12 @@
 ---
-description: Run review gates on one note — create a review run, produce a single bundled review document, then parse and record gate reviews via script
+description: Run review gates on one note — create a review run, produce a single bundled review document, then parse and record gate reviews via command
 ---
 
 # Run a review bundle on one note
 
 Review a specific note against an explicit list of gates.
 
-Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `python3 scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...` instead.
+Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...` instead.
 
 The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent.
 
@@ -31,7 +31,7 @@ Reading scope for review:
 ### 1. Create the review run and capture the resolved gates
 
 ```bash
-python3 scripts/create_review_run.py --runner {codex|claude-code} --model {model-id} --json {note-path} {gate-or-bundle}...
+commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --json {note-path} {gate-or-bundle}...
 ```
 
 Capture from the JSON output:
@@ -86,20 +86,20 @@ This directory is gitignored.
 
 ### 4. Parse, record, and finalize
 
-Run the parse-and-record script to extract individual gate reviews from the bundle, write them to the DB, and finalize acceptance:
+Run the parse-and-record command to extract individual gate reviews from the bundle, write them to the DB, and finalize acceptance:
 
 ```bash
-python3 scripts/record_bundle_review.py --review-run-id {review-run-id}
+commonplace-record-bundle-review --review-run-id {review-run-id}
 ```
 
-This script reads the bundle output from `kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md`, parses the sentinel-delimited blocks, records one `gate_reviews` row per gate, and finalizes the review run with acceptance events.
+This command reads the bundle output from `kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md`, parses the sentinel-delimited blocks, records one `gate_reviews` row per gate, and finalizes the review run with acceptance events.
 
 ## Shell automation
 
 For unattended shell automation or batch wrappers, use:
 
 ```bash
-python3 scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...
+commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...
 ```
 
 This wrapper creates the review run, spawns a nested runner for semantic judgment, parses the bundle output, records gate reviews, and finalizes — all in one command.
@@ -107,6 +107,6 @@ This wrapper creates the review run, spawns a nested runner for semantic judgmen
 ## Do not
 
 - Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
-- Do not invoke `write_gate_review.py` or `finalize_review_run.py` individually — the record script handles both.
+- Do not invoke `commonplace-write-gate-review` or `commonplace-finalize-review-run` individually — the record command handles both.
 - Do not skip writing a review block for any provided gate.
-- Do not write files or invoke scripts other than what this instruction specifies.
+- Do not write files or invoke commands other than what this instruction specifies.

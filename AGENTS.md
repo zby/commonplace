@@ -1,6 +1,6 @@
 # Commonplace
 
-A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and scripts that get installed into projects.
+A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.
 
 The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
@@ -53,7 +53,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 - `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
-- `kb/notes/index.md` — auto-generated directory listing (rebuild with `scripts/generate_notes_index.py`)
+- `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
 - `kb/sources/index.md` — auto-generated source listing
 
 ### Skills
@@ -87,7 +87,7 @@ Terms used in this KB with specific meanings:
 
 ## Development
 
-- **Use `python3`** for stdlib-only core scripts. Use `uv run` for tests and scripts that need optional dependencies (`pytest`, `xdk`, MkDocs, etc.).
+- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands. Use `uv run` for tests and optional-dependency workflows (`pytest`, `xdk`, MkDocs, etc.).
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `uv run pytest` — all tests must pass.

@@ -182,7 +182,7 @@ The distilled artifact itself should NOT link back to its sources — it's optim
 
 There are two kinds of indexes:
 
-- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `python3 scripts/generate_notes_index.py <directory>`.
+- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `commonplace-generate-notes-index <directory>`.
 - **Tag indexes** (e.g. `learning-theory-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md).
 
 ### Tag Index Structure
@@ -191,7 +191,7 @@ Each tag index has two sections:
 
 **Curated section** (optional, hand-written): Editorial groupings with context phrases, tensions, related indexes. A selective "essential reading" list — not every tagged note, just the ones that tell the story. Should stay small.
 
-**Generated section** (automatic): Complete listing of all notes carrying that tag. Rebuilt by `python3 scripts/sync_generated_index.py`. Everything below the `<!-- generated -->` marker is replaced on each run.
+**Generated section** (automatic): Complete listing of all notes carrying that tag. Rebuilt by `commonplace-sync-generated-index`. Everything below the `<!-- generated -->` marker is replaced on each run.
 
 ```markdown
 # tag-name

@@ -35,8 +35,8 @@ All scripts — including `validate_notes.py` — now use this shared module. Py
 
 ## Consequences
 
-- **Easier installation**: `python3 scripts/foo.py` works without a venv. No `uv sync` needed for core operations.
-- **No cwd problem**: Skills can invoke scripts from any working directory by using an absolute path to the script.
+- **Easier installation**: `python3 scripts/foo.py` works without a venv. No `uv sync` needed for core operations. (Note: [ADR-014](./014-scripts-as-python-package-one-tree-model.md) later moved scripts into an installed package with `commonplace-*` entry points. The stdlib-only constraint remains — it means the package has no runtime dependencies.)
+- **No cwd problem**: Skills can invoke scripts from any working directory by using an absolute path to the script. (Now moot — commands are on `$PATH` after `pip install`.)
 - **Grammar is the contract**: The frontmatter grammar is defined in one place (`scripts/frontmatter.py` docstring). Validation enforces it. If the grammar needs to grow, the parser and the grammar spec evolve together.
 - **Duplicate key detection preserved**: The shared parser detects and reports duplicate keys, maintaining the validation guarantee that PyYAML's custom loader previously provided.
 - **Optional capabilities still need setup**: MkDocs site building needs `pip install commonplace[docs]`, X snapshots need `pip install commonplace[snapshot]`.

@@ -1,8 +1,10 @@
-# Plan: plugin packaging + slim template
+# Plan: plugin skills + slim template
 
 ## Scope
 
-This plan is about the **AGENTS.md.template** — the control-plane file shipped to users who install commonplace into their projects. It is not about this repo's own AGENTS.md, which has additional repo-specific content (development conventions, git rules, vocabulary, etc.) that other projects would define for themselves.
+This plan is about the **AGENTS.md.template** and skill surface shipped to users. It is not about this repo's own AGENTS.md, which has additional repo-specific content (development conventions, git rules, vocabulary, etc.) that other projects would define for themselves.
+
+Assumption update: consumer projects no longer vendor a permanent `commonplace/` subtree. Skills are installed as a plugin, scripts are installed as a Python package, and `INSTALL.md` should describe initializing the local project tree directly.
 
 ## Principle
 
@@ -13,11 +15,11 @@ Always-loaded content should be limited to what the agent needs to **discover** 
 ### Why plugins, not symlinks
 
 - **Namespacing** — plugins get automatic `commonplace:write` namespacing, preventing collisions with project-specific skills. Symlinks require manual prefix hacks.
-- **One-step install** — install the plugin, done. No symlink loops, no directory creation scripts.
+- **One-step skill install** — install the plugin, done. No symlink loops.
 - **Symlink reliability** — the `/skills` command may not follow symlinks reliably.
 - **Cross-platform** — both Claude Code and Codex have plugin systems. The SKILL.md format is the same; only the packaging wrapper differs.
 
-### Plugin structure
+### Plugin structure in the Commonplace source repo
 
 ```
 commonplace/
@@ -34,26 +36,17 @@ commonplace/
     convert/SKILL.md
     revise-iterative/SKILL.md
     review-related-system/SKILL.md
-  kb/
-    notes/                      # Methodology notes (this repo's own KB)
-    sources/
-    work/
-    instructions/               # Non-skill instructions and repo-local workflows
-      WRITING.md                # Non-skill instruction (actual file)
-      REVIEW-SYSTEM.md          # Non-skill instruction (actual file)
-      FIX-SYSTEM.md             # Non-skill instruction (actual file)
-      review-gates/             # Non-skill (actual directory)
-      fix-warnings/             # Non-skill (actual directory)
-  types/                        # Base type definitions
-  scripts/
+  kb/                           # Source material for seeded local project files
+  types/
+  src/commonplace/             # Python package for scripts/init
   AGENTS.md.template
   INSTALL.md
 ```
 
-Key design: **skills live in `skills/`** (clean for practitioners, default plugin discovery path). `kb/instructions/` stays for non-skill instructions and repo-local workflows. Framework vs local distinction is by type dependency, not by directory.
+Key design: **skills live in `skills/`**. Non-skill content is not loaded from a vendored framework tree at runtime; it is seeded into the local project by initialization.
 
 - **Practitioners see** a clean `skills/` directory at the plugin root. The plugin discovers skills there. No ambiguity about where skills live vs where instructions live.
-- **Repo-local procedures** such as WRITING, review system docs, and fix instructions stay in `kb/instructions/`.
+- **Project-local procedures** such as WRITING, review system docs, and fix instructions are created in the user's own `kb/instructions/` by init.
 - **Framework vs local distinction is by type dependency, not by directory.** All skills ship via the plugin. Framework skills work out of the box (core types installed). Local skills are discoverable but error gracefully until their type templates are installed.
 - **Framework skills:** `write`, `connect`, `validate`, `snapshot-web`, `ingest`, `convert`, `revise-iterative` — depend only on core types (`note`, `text`, `index`, `source-review`).
 - **Local skills:** `review-related-system` — depends on `related-system` type. Discoverable via plugin but errors with "type not found" until the practitioner copies the type template.
@@ -78,39 +71,9 @@ Codex has a local plugin system that expects `.codex-plugin/plugin.json` at the 
 
 Both point to the same `skills/` directory. The SKILL.md format is identical; only the manifest wrapper differs.
 
-Codex also has an optional marketplace/catalog layer for UI ordering and install metadata. That data does **not** live in the plugin itself; it lives in the **host repo** at `.agents/plugins/marketplace.json`. That means:
-- The commonplace repo can ship `.codex-plugin/plugin.json`.
-- This repo can also ship a repo-local `.agents/plugins/marketplace.json` for dogfooding in Codex, pointing `source.path` to `./` because the repo root is the plugin directory.
-- A consuming project installs commonplace through its own `.agents/plugins/marketplace.json`, pointing `source.path` to `./commonplace` after adding the repo as a submodule or clone.
-- The current Codex flow is interactive: restart Codex, open `/plugins`, choose the marketplace, and install the plugin there. There is no documented `codex plugin install ./commonplace` shell command.
-- If we later want first-class Codex marketplace visibility in installed projects, that belongs in an init/install helper that edits the host repo, not in the plugin payload itself.
+Codex also has an optional marketplace/catalog layer for UI ordering and install metadata. For now, local marketplace wiring is primarily a dogfooding concern for this repo. Consumer plugin distribution should be treated as a separate packaging/distribution problem from project initialization.
 
-Minimal marketplace entry shape for a consuming repo:
-
-```json
-{
-  "name": "local-commonplace",
-  "interface": {
-    "displayName": "Local Commonplace Plugins"
-  },
-  "plugins": [
-    {
-      "name": "commonplace",
-      "source": {
-        "source": "local",
-        "path": "./commonplace"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    }
-  ]
-}
-```
-
-Minimal repo-local marketplace entry for dogfooding inside the commonplace repo itself:
+Minimal marketplace entry shape for dogfooding from a local checkout:
 
 ```json
 {
@@ -135,24 +98,7 @@ Minimal repo-local marketplace entry for dogfooding inside the commonplace repo 
 }
 ```
 
-The `./plugins/<name>` layout shown in the Codex docs is a common pattern, not a hard requirement. The key requirement is that `source.path` points at the plugin directory and starts with `./`.
-
-```json
-{
-  "name": "commonplace",
-  "source": {
-    "source": "local",
-    "path": "./commonplace"
-  },
-  "policy": {
-    "installation": "AVAILABLE",
-    "authentication": "ON_INSTALL"
-  },
-  "category": "Productivity"
-}
-```
-
-For users not using plugins, the fallback is symlinking into `.agents/skills/` — same as today but with the new `skills/` source directory. Codex discovers skills by walking `.agents/skills/` from cwd up to repo root, so the layout works.
+Consumer install should not depend on a local `./commonplace` path.
 
 ## Current AGENTS.md.template — section-by-section disposition
 
@@ -195,7 +141,7 @@ No `kb/GOALS.md` as a separate file. One location, no sync problem, no competing
 | Section | Current location | Notes |
 |---|---|---|
 | **Conventions** (links, filenames, frontmatter) | Template | WRITING.md already covers links and frontmatter. Add filename convention. |
-| **Methodology reference** | Template | Add line: "For deeper reasoning, search `commonplace/kb/notes/`" |
+| **Methodology reference** | Template | If we seed methodology notes locally, point to local `kb/notes/` or `kb/instructions/` entry points instead of `commonplace/kb/...`. |
 
 ### STAYS but slimmed
 
@@ -226,8 +172,8 @@ Both declare the plugin name, description, and let their respective plugin syste
 
 Codex marketplace metadata is a separate concern:
 - It is **not** part of the plugin payload.
-- A consuming project still needs its own `.agents/plugins/marketplace.json` entry pointing to `./commonplace`.
-- This repo can also ship a repo-local `.agents/plugins/marketplace.json` for dogfooding, pointing to `./`.
+- This repo can ship a repo-local `.agents/plugins/marketplace.json` for dogfooding, pointing to `./`.
+- Consumer plugin distribution should not assume a local `./commonplace` checkout; that packaging path still needs a concrete distribution story.
 
 ### 2. `skills/write/SKILL.md`
 The main new skill. Absorbs routing table + content workflow + type routing.
@@ -287,106 +233,61 @@ The new AGENTS.md.template shown above.
 
 ### 7. Updated INSTALL.md
 
-New installation procedure:
+`INSTALL.md` should be rewritten around project initialization, not vendoring and copying by hand.
 
-**Claude Code:**
+Target user flow:
+
+**Claude Code / Codex alike:**
+
 ```bash
-# 1. Add commonplace
-git submodule add <url> commonplace
+# 1. Install the Commonplace Python package
+<package install command>
 
-# 2. Install the plugin
-claude plugin install ./commonplace
+# 2. Install the Commonplace plugin
+<plugin install step>
 
-# 3. Create kb/ structure, copy core types, and initialize
-# NOTE: source paths below are provisional — migration step 2 may move
-# index and source-review into types/ at repo root. Update these paths
-# once the type-system-rationalization workshop resolves the final location.
-mkdir -p kb/notes/types kb/sources/types kb/tasks/{backlog,active} kb/work kb/instructions types
-cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
-touch kb/log.md                                       # improvement log
-cp commonplace/types/* types/                        # base types (note.md, note.yaml, text.yaml)
-# Copy only core types — note, text, index, source-review
-for t in note text index; do
-  cp commonplace/kb/notes/types/$t.md kb/notes/types/ 2>/dev/null
-  cp commonplace/kb/notes/types/$t.yaml kb/notes/types/ 2>/dev/null
-done
-for t in source-review; do
-  cp commonplace/kb/sources/types/$t.md kb/sources/types/ 2>/dev/null
-  cp commonplace/kb/sources/types/$t.yaml kb/sources/types/ 2>/dev/null
-done
-# Other types (adr, structured-claim, related-system, etc.) stay in
-# commonplace/ as examples — copy manually if you want them.
-
-# 4. Add KB section to your control-plane file
-# Copy the template and fill in KB Goals
-cat commonplace/AGENTS.md.template >> CLAUDE.md
+# 3. Initialize the local project tree
+commonplace-init
 ```
 
-**Codex:**
-```bash
-# 1. Add commonplace
-git submodule add <url> commonplace
+`commonplace-init` is responsible for creating the local KB structure and seeding starter files. `INSTALL.md` should explain:
 
-# 2. Register commonplace in the host repo's local Codex marketplace
-# Create .agents/plugins/marketplace.json in the HOST repo with source.path = ./commonplace
-
-# 3. Restart Codex, run /plugins, open the marketplace, and install commonplace
-
-# OR: manual symlink fallback
-mkdir -p .agents/skills
-for skill in commonplace/skills/*/; do
-  ln -sfn "$PWD/commonplace/skills/$(basename "$skill")" ".agents/skills/$(basename "$skill")"
-done
-
-# 4. Create kb/ structure and copy type definitions (same as above)
-
-# 5. Add KB section to AGENTS.md
-cat commonplace/AGENTS.md.template >> AGENTS.md
-```
-
-Step 2 is still the big simplification for Codex, but it is now marketplace registration plus install in `/plugins`, not a shell subcommand.
+- prerequisites
+- package installation
+- plugin installation
+- `commonplace-init`
+- how to rerun init safely
+- how to customize generated files after initialization
 
 ## Migration steps (ordered)
 
-**Dependency:** The type-system rationalization workshop (`kb/work/type-system-rationalization/`) should land its YAML type definitions (phases 1-2) before this migration, so the install copy step has `.yaml` files to copy and the `write` skill can reference the updated type list. The trait migration (phase 3) and review integration (phase 4) can happen independently.
-
-1. **Make type routing extensible via dynamic discovery.** Currently the routing table in CLAUDE.md hardcodes which types exist and where they route. The `/write` skill must support practitioner-defined types without hardcoding them. Design: core types (`note`, `text`, `index`, `source-review`) are hardcoded in the skill — they're guaranteed to exist after install and this avoids a filesystem scan for the common case. For any type not in the hardcoded set, the skill scans `kb/*/types/` for a matching `.md` template. If found, the template itself declares which collection directory it targets (e.g., `adr.md` declares it writes to `kb/notes/adr/`) — this replaces the hardcoded routing table for local types. If not found, the skill errors with available types listed. This is a prerequisite for everything else — without extensible routing, `/write` can't be a framework skill.
-
-2. **Promote `index` and `source-review` to core types.** Currently these are defined in `kb/*/types/` alongside local types like `adr` and `related-system`, with no distinction. To make them core, we need to:
-   - Verify that the `index` type template (`index.md`, `index.yaml`) has no dependencies on local conventions (our specific tags, our specific indexes). It should work for any KB's indexes.
-   - Verify that the `source-review` type template works for any external source, not just our ingestion conventions.
-   - Move these into `types/` at the repo root alongside `note` and `text` base definitions, if that's where core types live. Or mark them in `kb/*/types/` with a convention that distinguishes core from local — depends on where the type-system-rationalization workshop lands.
-   - Ensure validation and the `/write` skill treat these as core types that are always available.
-   - Update WRITING.md if it references indexes — confirm it documents the `index` type as part of the base set.
-
-3. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
-
-4. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Default `skills/` discovery path.
-5. **Create `skills/` directory and move all skill subdirectories** from `kb/instructions/` to `skills/`. All skills move — both framework and local. The framework/local distinction is by type dependency, not directory.
-6. **Update internal references** in moved skills (paths to WRITING.md, type templates, cross-skill invocations with `commonplace:` prefix). Paths change from `kb/instructions/` depth to `skills/` depth.
-7. **Create `skills/write/SKILL.md`** — the new routing skill, using dynamic type discovery from step 1
-8. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
-9. **Update runtime symlinks** in this repo — `.claude/skills/`, `.agents/skills/`, and `~/.codex/skills/` (if used) — to point to new `skills/` location instead of `kb/instructions/`
-10. **Create slim AGENTS.md.template**
-11. **Update INSTALL.md** with plugin-based procedure
-12. **Test install into a fresh repo.** Create a blank repo, add commonplace as submodule, run the install procedure from step 11. Verify:
-    - Plugin installs and skills are discoverable with namespace prefix
-    - Codex discovers the plugin through a host-repo `.agents/plugins/marketplace.json` entry pointing to `./commonplace`
-    - After restarting Codex, `/plugins` shows the local marketplace and installs the same plugin correctly
-    - Manual `.agents/skills/` symlink fallback still works if plugin install is skipped
-    - `/commonplace:write` creates a note with correct frontmatter in `kb/notes/`
+1. **Make type routing extensible via dynamic discovery.** `/write` should support practitioner-defined types without hardcoding them. Core seeded types can be treated as always present after `commonplace-init`; additional types should be discovered from local `kb/*/types/`.
+2. **Promote `index` and `source-review` to seeded core types.** These should be part of the default local project scaffold rather than optional copy steps.
+3. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`.
+4. **Create `skills/` directory and move skill subdirectories** from `kb/instructions/` to `skills/`.
+5. **Update internal references** in moved skills so they call packaged commands and local project paths, not vendored framework paths.
+6. **Create `skills/write/SKILL.md`** — the new routing skill using dynamic local type discovery.
+7. **Add filename convention to WRITING.md** and align WRITING with the skill-driven workflow.
+8. **Package operational scripts** under `src/commonplace/` with CLI entry points.
+9. **Add scaffold assets** to the Python package and implement `commonplace-init`.
+10. **Create slim AGENTS.md.template** for local project initialization.
+11. **Rewrite INSTALL.md** around plugin install + Python package + `commonplace-init`.
+12. **Test install into a fresh repo.** Start with a blank repo, install the package and plugin, run `commonplace-init`, and verify:
+    - the local KB tree is created correctly
+    - plugin skills are discoverable
+    - packaged commands are on PATH
+    - `/commonplace:write` creates a note with correct frontmatter in local `kb/notes/`
     - `/commonplace:write index` creates an index
     - `/commonplace:validate` passes on the created notes
     - `/commonplace:connect` finds and links related notes
     - `/commonplace:ingest` snapshots a URL and writes a source-review
-    - `/commonplace:write adr` fails gracefully with "type not found" and lists available types
-    - After copying `adr` type template from `commonplace/`, `/commonplace:write adr` works
+    - rerunning `commonplace-init` is safe
 
-13. **Dogfood: use the restructured repo for real work.** Steps 1-11 already restructure this repo. This step verifies it works in daily use:
-    - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation now handled by skills)
-    - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
-    - Verify day-to-day KB work still works without any compatibility mirror under `kb/instructions/`
-    - Live with the restructured layout for at least a week of real work before declaring the migration complete
+13. **Dogfood the one-tree setup** in real work:
+    - slim CLAUDE.md / AGENTS.md to Development + Git + KB Goals only
+    - verify note writing, ingestion, connection, validation, review sweeps
+    - verify day-to-day KB work works without a vendored `commonplace/` subtree
+    - live with the restructured layout before declaring migration complete
 
 ## Open questions
 
@@ -396,6 +297,6 @@ Step 2 is still the big simplification for Codex, but it is now marketplace regi
 - **Tasks** — no skill for task creation yet. Tasks don't have frontmatter and live in `kb/tasks/`. Different enough to defer.
 - **Review/Fix promotion** — promote REVIEW-SYSTEM.md and FIX-SYSTEM.md to skills? They're complex enough, but adds to the skill count. Defer until after initial migration.
 - **Log entries** — "append to kb/log.md" is too simple for a skill. Mention in WRITING.md and in `write` skill's "for quick observations" section.
-- **validate_notes.py** — moves with its skill to `skills/validate/`. The `REPO_ROOT` computation (`Path(__file__).resolve().parents[3]`) needs adjusting since the path depth changes from `kb/instructions/validate/` (depth 3) to `skills/validate/` (depth 2).
-- **Codex marketplace registration** — should we ship a copyable marketplace template for consuming projects, or teach a future `/commonplace:init` helper to add/update the host repo entry automatically?
-- **Step 3/4 copy commands** — should there be a `/commonplace:init` skill that handles directory creation and artifact copying interactively? Would further reduce installation friction.
+- **Codex consumer plugin distribution** — local marketplace dogfooding is understood, but the consumer distribution path for the plugin still needs a concrete answer.
+- **`commonplace-init` overwrite policy** — prompt, never overwrite, or support `--force` / `--dry-run`?
+- **Methodology seeding** — should init seed only operational instructions and core types, or also a curated starter set of methodology notes?

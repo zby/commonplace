@@ -6,7 +6,7 @@ This procedure tests commonplace after installation into Codex through a local m
 
 ## Prerequisites
 
-- The repo-local marketplace file exists at `.agents/plugins/marketplace.json`
+- The repo-local marketplace file exists at `.agents/plugins/marketplace.json` in the repo opened in Codex
 - Codex has been restarted after the latest plugin or skill changes
 - The `commonplace` plugin is installed from `/plugins`
 - `AGENTS.md` is the active control-plane file
@@ -35,6 +35,8 @@ Open `/plugins` and verify:
 - `commonplace` shows as installed
 
 If the plugin is missing, restart Codex and check `.agents/plugins/marketplace.json` plus `.codex-plugin/plugin.json`.
+
+Also confirm the marketplace file belongs to the repo opened in Codex. When testing inside `commonplace/`, `source.path` should be `./`. When testing from a consuming repo that vendors this repo at `./commonplace`, the consuming repo's marketplace file should point to `./commonplace`.
 
 ## 2. Skill visibility
 

@@ -8,10 +8,10 @@ context: fork
 
 ## EXECUTE NOW
 
-Run the deterministic validation script. Resolve the path to `validate_notes.py` in the **same directory as this `SKILL.md`**, then run it:
+Run the packaged validation command:
 
 ```bash
-python3 <path-to-this-skill-directory>/validate_notes.py "$ARGUMENTS"
+commonplace-validate-notes "$ARGUMENTS"
 ```
 
 **Target: $ARGUMENTS**

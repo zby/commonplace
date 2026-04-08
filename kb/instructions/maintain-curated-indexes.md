@@ -4,7 +4,7 @@ description: Audit and maintain curated sections of tag index pages — evaluate
 
 # Maintain curated indexes
 
-Audit curated index sections for editorial quality, completeness, and coherence. The generated section (rebuilt by `python3 scripts/sync_generated_index.py`) is always complete — this instruction focuses on the hand-written curated section above the `<!-- generated -->` marker.
+Audit curated index sections for editorial quality, completeness, and coherence. The generated section (rebuilt by `commonplace-sync-generated-index`) is always complete — this instruction focuses on the hand-written curated section above the `<!-- generated -->` marker.
 
 ## When to use
 
@@ -17,7 +17,7 @@ Audit curated index sections for editorial quality, completeness, and coherence.
 ### 1. Inventory tags and sizes
 
 ```bash
-python3 scripts/sync_generated_index.py --dry-run
+commonplace-sync-generated-index --dry-run
 ```
 
 This shows how many notes each tag has. Tags with many notes but no curated section are candidates for curation. Tags with curated sections that haven't been updated after significant growth may need revision.
@@ -47,7 +47,7 @@ When a tag's generated section grows large and internal clusters emerge:
 1. Look at the curated section's groupings — these often reveal natural sub-tags.
 2. Create a new tag index page (`{tag}-index.md`).
 3. Add the new tag to relevant notes' `tags:` field.
-4. Run `python3 scripts/sync_generated_index.py` to populate the generated section.
+4. Run `commonplace-sync-generated-index` to populate the generated section.
 5. Optionally write a curated section for the new index.
 
 **Split criteria:**

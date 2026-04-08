@@ -6,7 +6,7 @@ This system is experimental and opt-in, like the review system it depends on.
 
 ## Concepts
 
-**Warn finding.** An actionable finding extracted from a gate review whose canonical decision is `warn`. The `warn_selector.py` script parses these from the `### Findings` or `### Summary` sections of stored review prose.
+**Warn finding.** An actionable finding extracted from a gate review whose canonical decision is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
@@ -26,7 +26,7 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 
 ### Warn selector
 
-`scripts/warn_selector.py` builds the fix queue from the review DB.
+`commonplace-warn-selector` builds the fix queue from the review DB.
 
 - Reads current accepted reviews across all models
 - Only considers reviews attached to a `review_run_id` (excludes legacy imports)
@@ -39,13 +39,13 @@ CLI:
 
 ```bash
 # Grouped summary
-python3 scripts/warn_selector.py
+commonplace-warn-selector
 
 # Full JSON with review text
-python3 scripts/warn_selector.py --json
+commonplace-warn-selector --json
 
 # Filter to specific notes
-python3 scripts/warn_selector.py --json kb/notes/backlinks.md
+commonplace-warn-selector --json kb/notes/backlinks.md
 ```
 
 ### Fix strategy taxonomy
@@ -65,7 +65,7 @@ New strategies are added when `new-pattern` reports from fix sweeps show recurri
 
 Instruction: `kb/instructions/fix-warnings/fix-review-warnings.md`
 
-1. `python3 scripts/warn_selector.py --json {note-path}` — get actionable findings
+1. `commonplace-warn-selector --json {note-path}` — get actionable findings
 2. Read the target note in full
 3. For each finding: read the recommendation, read context, decide if fixable without changing the argument
 4. Apply minimal edits, classify each fix by strategy name
@@ -81,7 +81,7 @@ A specialized sub-procedure for description-field warnings from `/validate`. Cal
 
 Instruction: `kb/instructions/fix-warnings/fix-review-warnings-sweep.md`
 
-1. `python3 scripts/warn_selector.py --json` — build priority queue (sorted by finding count descending)
+1. `commonplace-warn-selector --json` — build priority queue (sorted by finding count descending)
 2. Delegate per-note fixes to sub-agents (can run in parallel)
 3. Report: fixed by strategy, deferred items, new patterns
 4. If new patterns recur (3+ instances), propose adding to the taxonomy

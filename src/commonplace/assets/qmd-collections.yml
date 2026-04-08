@@ -1,0 +1,26 @@
+# qmd collection config for commonplace
+# Setup:
+#   cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/commonplace.yml
+#   edit ~/.config/qmd/commonplace.yml and replace /PATH/TO/COMMONPLACE/
+#   with the absolute path to your local checkout
+# Usage:
+#   qmd --index commonplace query "..."
+collections:
+  notes:
+    path: /PATH/TO/COMMONPLACE/kb/notes
+    pattern: "**/*.md"
+  sources:
+    path: /PATH/TO/COMMONPLACE/kb/sources
+    pattern: "**/*.md"
+  tasks-active:
+    path: /PATH/TO/COMMONPLACE/kb/tasks/active
+    pattern: "**/*.md"
+  tasks-backlog:
+    path: /PATH/TO/COMMONPLACE/kb/tasks/backlog
+    pattern: "**/*.md"
+  tasks-recurring:
+    path: /PATH/TO/COMMONPLACE/kb/tasks/recurring
+    pattern: "**/*.md"
+  instructions:
+    path: /PATH/TO/COMMONPLACE/kb/instructions
+    pattern: "**/*.md"

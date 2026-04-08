@@ -28,7 +28,7 @@ Canonical state lives in a local SQLite database at `kb/reports/review-store.sql
 
 This DB-backed state is intentional, but still experimental. Notes, gates, instructions, and source material remain file-backed; only review state crosses that boundary today.
 
-Schema: `scripts/review-schema.sql`
+Schema: packaged with `commonplace.review`
 
 Primary tables:
 
@@ -89,11 +89,11 @@ The canonical live path is:
 
 For live agent work, the preferred path is the direct-write helper chain:
 
-1. `scripts/create_review_run.py`
-2. `scripts/write_gate_review.py`
-3. `scripts/finalize_review_run.py`
+1. `commonplace-create-review-run`
+2. `commonplace-write-gate-review`
+3. `commonplace-finalize-review-run`
 
-`scripts/run_review_bundle.py` remains the shell-automation wrapper. It delegates to a nested runner, records gate reviews through `scripts/write_gate_review.py`, and finalizes acceptance through `scripts/finalize_review_run.py`.
+`commonplace-run-review-bundle` remains the shell-automation wrapper. It delegates to a nested runner, records gate reviews through `commonplace-write-gate-review`, and finalizes acceptance through `commonplace-finalize-review-run`.
 
 A full review write contributes:
 
@@ -130,19 +130,19 @@ It then compares those values against `current_gate_acceptances`.
 
 Prompt-facing CLI remains stable:
 
-- `scripts/review_target_selector.py`
+- `commonplace-review-target-selector`
 - positional gate IDs and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths
 - `--current` to filter to notes with `status: current`
-- `scripts/review_sweep.sh --runner {claude-code|codex}` selects the execution runner for note-local bundle runs
+- `commonplace-review-sweep --runner {claude-code|codex}` selects the execution runner for note-local bundle runs
 - `--model {model-id}` selects the review model partition to inspect or write
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 
 ### Ack
 
-`scripts/ack_gate_review.py` requires:
+`commonplace-ack-gate-review` requires:
 
 - `--model {model-id}`
 - positional `note_path`
@@ -157,7 +157,7 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 ### Warn/fix queue
 
-`scripts/warn_selector.py` exists to build a fixing queue from the current review state.
+`commonplace-warn-selector` exists to build a fixing queue from the current review state.
 
 - It reads current accepted reviews across all models from the DB
 - It only considers reviews attached to a `review_run_id`
@@ -172,29 +172,29 @@ This intentionally excludes legacy imported rows that are not attached to a revi
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `python3 scripts/create_review_run.py --runner {codex|claude-code} --model {model-id} --json {note} {gate-or-bundle}...`
+1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --json {note} {gate-or-bundle}...`
 2. Read the resolved `gates` payload from the JSON output
 3. Review the note gate-by-gate in the current agent
-4. `python3 scripts/write_gate_review.py --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
-5. `python3 scripts/finalize_review_run.py --review-run-id {id}`
+4. `commonplace-write-gate-review --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
+5. `commonplace-finalize-review-run --review-run-id {id}`
 
 For unattended shell automation, use:
 
-1. `python3 scripts/run_review_bundle.py --runner {codex|claude-code} --model {model-id} {note} {gate-or-bundle}...`
+1. `commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note} {gate-or-bundle}...`
 2. The wrapper creates the review run, launches a nested runner, records one review body per gate, and finalizes acceptance
 
 ### Sweep
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `python3 scripts/review_target_selector.py --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
+1. `commonplace-review-target-selector --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
-3. For significant changes: run `scripts/review_sweep.sh` or invoke `scripts/run_review_bundle.py` per note/group
-4. `scripts/review_sweep.sh` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
-5. For insignificant changes: run `python3 scripts/ack_gate_review.py --model {model-id} {note-path} {gate-id} ...` to append acceptance events
+3. For significant changes: run `commonplace-review-sweep` or invoke `commonplace-run-review-bundle` per note/group
+4. `commonplace-review-sweep` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
+5. For insignificant changes: run `commonplace-ack-gate-review --model {model-id} {note-path} {gate-id} ...` to append acceptance events
 
 ### Gate sweep
 
-Use `python3 scripts/run_gate_sweep.py --runner {claude-code|codex} --model {model-id} [--current|--note ...] [--batch-size N] {gate-id}` when the execution set is one gate across many notes.
+Use `commonplace-run-gate-sweep --runner {claude-code|codex} --model {model-id} [--current|--note ...] [--batch-size N] {gate-id}` when the execution set is one gate across many notes.
 
 This path keeps freshness gate-local and still creates one review run per note, but batches multiple notes into one runner prompt. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

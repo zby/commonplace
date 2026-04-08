@@ -96,7 +96,9 @@ This ADR now reflects the implemented repository layout:
 
 The open follow-up is review-system packaging: once the review system becomes a framework surface, `review-related-system` can move from "repo-local workflow" to "plugin-shipped skill whose only extra dependency is the copied `related-system` type."
 
-**Supersedes:** This decision refines [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) by specifying what crosses the boundary between the two trees and in what form. ADR-006 remains valid for the overall layout; this ADR specifies the delivery mechanism within that layout.
+**Supersedes:** This decision refines [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) by specifying what crosses the boundary between the two trees and in what form. ADR-006 is now superseded by [ADR-014](./014-scripts-as-python-package-one-tree-model.md) which replaces the two-tree model with a one-tree-plus-package model. The skills-first delivery mechanism described here remains valid; the backend packaging has changed.
+
+**Refined by:** [ADR-014 (scripts as Python package)](./014-scripts-as-python-package-one-tree-model.md) — operational scripts are now an installed Python package; skills invoke `commonplace-*` commands rather than script paths.
 
 ---
 

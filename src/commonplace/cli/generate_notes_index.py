@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""Generate index.md from frontmatter of all markdown files in a directory.
+
+Scans all .md files recursively, extracts title, description, and type
+from frontmatter, and writes a sorted directory listing to index.md.
+
+Usage: commonplace-generate-notes-index <directory>
+"""
+
+import argparse
+import re
+import sys
+from pathlib import Path
+
+from commonplace.lib import frontmatter
+
+
+def get_title(content: str) -> str:
+    """Extract first H1 heading from markdown."""
+    body = frontmatter.strip(content)
+    match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
+    return match.group(1) if match else "Untitled"
+
+
+def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
+    """Sort by visible link text first, then by path for deterministic ties."""
+    rel_path, title, _desc, _note_type = entry
+    return (title.casefold(), rel_path.casefold())
+
+
+def generate(notes_dir: Path) -> str:
+    output = notes_dir / "index.md"
+    entries: list[tuple[str, str, str, str]] = []  # (rel_path, title, description, type)
+
+    for path in sorted(notes_dir.rglob("*.md")):
+        if path == output or path.name == "README.md":
+            continue
+        # Skip type templates — they're schemas, not notes
+        if "types" in path.relative_to(notes_dir).parts:
+            continue
+
+        content = path.read_text()
+        fm = frontmatter.parse(content).data
+        title = get_title(content)
+        desc = fm.get("description", "")
+        note_type = fm.get("type", "")
+        rel = path.relative_to(notes_dir)
+
+        entries.append((str(rel), title, desc, note_type))
+
+    entries.sort(key=entry_sort_key)
+
+    lines = [
+        "---",
+        f"description: Auto-generated directory — run commonplace-generate-notes-index {notes_dir} to rebuild",
+        "type: index",
+        "---",
+        "",
+        f"# {notes_dir.name.replace('-', ' ').title()} Directory",
+        "",
+    ]
+
+    for rel, title, desc, note_type in entries:
+        parts = [f"- [{title}](./{rel})"]
+        if note_type:
+            parts.append(f"*({note_type})*")
+        if desc:
+            parts.append(f"— {desc}")
+        lines.append(" ".join(parts))
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Generate index.md from frontmatter of markdown files in a directory.",
+    )
+    parser.add_argument("directory", help="Directory to scan recursively for notes.")
+    args = parser.parse_args()
+
+    notes_dir = Path(args.directory).resolve()
+    if not notes_dir.is_dir():
+        print(f"Not a directory: {notes_dir}", file=sys.stderr)
+        return 1
+
+    output = notes_dir / "index.md"
+    content = generate(notes_dir)
+    output.write_text(content)
+    count = content.count("\n- ")
+    print(f"Generated {output} with {count} entries")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

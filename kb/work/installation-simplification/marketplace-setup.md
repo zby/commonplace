@@ -10,6 +10,8 @@ No marketplace needed. Skills load directly from the repo's `skills/` directory.
 
 For Codex, the supported local install flow is repo-local marketplace registration plus interactive install in `/plugins`. This repo now ships `.agents/plugins/marketplace.json` for dogfooding; it points `source.path` to `./` because the repo root is the plugin directory.
 
+That dogfooding file is only visible when Codex is opened on the `commonplace/` repo itself. In a consuming repo that vendors commonplace at `./commonplace`, the consuming repo needs its own `.agents/plugins/marketplace.json` pointing to `./commonplace`.
+
 ```json
 {
   "name": "local-commonplace",
@@ -34,6 +36,12 @@ For Codex, the supported local install flow is repo-local marketplace registrati
 ```
 
 After changing `.codex-plugin/plugin.json`, `skills/`, or `.agents/plugins/marketplace.json`, restart Codex, run `/plugins`, open `Local Commonplace Plugins`, and install `commonplace`.
+
+If `/plugins` does not show `commonplace`, the usual causes are:
+
+- Codex was not restarted after the marketplace or plugin files changed
+- The workspace root does not contain the marketplace file Codex is reading
+- `source.path` is correct for a different repo layout (`./` vs `./commonplace`)
 
 ## Distribution (later)
 

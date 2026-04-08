@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.11"
 
 [options]
-exclude-newer = "2026-03-31T12:06:30.842780714Z"
+exclude-newer = "2026-04-01T20:39:41.00510848Z"
 exclude-newer-span = "P7D"
 
 [[package]]
@@ -135,48 +135,6 @@ wheels = [
 ]
 
 [[package]]
-name = "commonplace"
-version = "0.1.0"
-source = { virtual = "." }
-
-[package.optional-dependencies]
-all = [
-    { name = "mkdocs" },
-    { name = "mkdocs-redirects" },
-    { name = "python-dotenv" },
-    { name = "pyyaml" },
-    { name = "xdk" },
-]
-docs = [
-    { name = "mkdocs" },
-    { name = "mkdocs-redirects" },
-]
-snapshot = [
-    { name = "xdk" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "mkdocs", marker = "extra == 'all'" },
-    { name = "mkdocs", marker = "extra == 'docs'" },
-    { name = "mkdocs-redirects", marker = "extra == 'all'" },
-    { name = "mkdocs-redirects", marker = "extra == 'docs'" },
-    { name = "python-dotenv", marker = "extra == 'all'" },
-    { name = "pyyaml", marker = "extra == 'all'" },
-    { name = "xdk", marker = "extra == 'all'" },
-    { name = "xdk", marker = "extra == 'snapshot'" },
-]
-provides-extras = ["docs", "snapshot", "all"]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest" }]
-
-[[package]]
 name = "ghp-import"
 version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -217,6 +175,48 @@ sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
 ]
+
+[[package]]
+name = "llm-commonplace"
+version = "0.1.0"
+source = { editable = "." }
+
+[package.optional-dependencies]
+all = [
+    { name = "mkdocs" },
+    { name = "mkdocs-redirects" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "xdk" },
+]
+docs = [
+    { name = "mkdocs" },
+    { name = "mkdocs-redirects" },
+]
+snapshot = [
+    { name = "xdk" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mkdocs", marker = "extra == 'all'" },
+    { name = "mkdocs", marker = "extra == 'docs'" },
+    { name = "mkdocs-redirects", marker = "extra == 'all'" },
+    { name = "mkdocs-redirects", marker = "extra == 'docs'" },
+    { name = "python-dotenv", marker = "extra == 'all'" },
+    { name = "pyyaml", marker = "extra == 'all'" },
+    { name = "xdk", marker = "extra == 'all'" },
+    { name = "xdk", marker = "extra == 'snapshot'" },
+]
+provides-extras = ["docs", "snapshot", "all"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest" }]
 
 [[package]]
 name = "markdown"

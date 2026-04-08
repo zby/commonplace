@@ -9,13 +9,13 @@ description: Batch fix of actionable findings from warn reviews across notes. Ru
 ### 1. Build the work queue
 
 ```bash
-python3 scripts/warn_selector.py --json | wc -l
+commonplace-warn-selector --json | wc -l
 ```
 
 Check the line count first. If more than 100 lines, tell the user to filter to specific notes.
 
 ```bash
-python3 scripts/warn_selector.py --json
+commonplace-warn-selector --json
 ```
 
 This returns notes sorted by actionable finding count descending, with full finding text and gate ids. Legacy reviews without a `review_run_id` are intentionally excluded, and model partitions are collapsed so each `(note, gate)` contributes at most one current finding.

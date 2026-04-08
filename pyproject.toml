@@ -1,8 +1,38 @@
 [project]
-name = "commonplace"
+name = "llm-commonplace"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.scripts]
+commonplace-ack-gate-review = "commonplace.review.ack_gate_review:main"
+commonplace-ack-trivial-note-changes = "commonplace.review.ack_trivial_note_changes:main"
+commonplace-create-review-run = "commonplace.review.create_review_run:main"
+commonplace-finalize-review-run = "commonplace.review.finalize_review_run:main"
+commonplace-fix-outbound-links = "commonplace.migrations.fix_outbound_links:main"
+commonplace-generate-notes-index = "commonplace.cli.generate_notes_index:main"
+commonplace-github-snapshot = "commonplace.cli.github_snapshot:main"
+commonplace-init = "commonplace.cli.init_project:main"
+commonplace-migrate-review-result-footer = "commonplace.review.migrate_review_result_footer:main"
+commonplace-move-notes = "commonplace.migrations.move_notes:main"
+commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"
+commonplace-prune-superseded-unknown-manual-import-reviews = "commonplace.review.prune_superseded_unknown_manual_import_reviews:main"
+commonplace-record-bundle-review = "commonplace.review.record_bundle_review:main"
+commonplace-relocate-note = "commonplace.cli.relocate_note:main"
+commonplace-repair-codex-model-partitions = "commonplace.review.repair_codex_model_partitions:main"
+commonplace-repair-manual-import-review-results = "commonplace.review.repair_manual_import_review_results:main"
+commonplace-reparse-gate-review-decisions = "commonplace.review.reparse_gate_review_decisions:main"
+commonplace-resolve-gates = "commonplace.review.resolve_gates:main"
+commonplace-review-sweep = "commonplace.review.review_sweep:main"
+commonplace-review-target-selector = "commonplace.review.review_target_selector:main"
+commonplace-run-gate-sweep = "commonplace.review.run_gate_sweep:main"
+commonplace-run-review-bundle = "commonplace.review.run_review_bundle:main"
+commonplace-sync-generated-index = "commonplace.cli.sync_generated_index:main"
+commonplace-sync-topic-links = "commonplace.cli.sync_topic_links:main"
+commonplace-validate-notes = "commonplace.cli.validate_notes:main"
+commonplace-warn-selector = "commonplace.review.warn_selector:main"
+commonplace-write-gate-review = "commonplace.review.write_gate_review:main"
+commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 
 [dependency-groups]
 dev = ["pytest"]
@@ -12,5 +42,12 @@ docs = ["mkdocs", "mkdocs-redirects"]
 snapshot = ["xdk"]
 all = ["mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/commonplace"]
+
 [tool.pytest.ini_options]
-testpaths = ["scripts", "test/scripts"]
+testpaths = ["test/commonplace"]

@@ -1,6 +1,6 @@
 # Commonplace
 
-A knowledge base about building agentic systems — how AI agents learn, operate, and improve through inspectable artifacts. An agent-operated knowledge base is the primary testbed: the repo uses its own methodology to document the theory, and ships the framework (type system, writing conventions, skills, scripts) for building more.
+A knowledge base about building agentic systems — how AI agents learn, operate, and improve through inspectable artifacts. An agent-operated knowledge base is the primary testbed: the repo uses its own methodology to document the theory, and ships the framework (type system, writing conventions, skills, and Python commands) for building more.
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
@@ -37,12 +37,11 @@ kb/                          Knowledge base
 test/
   scenarios/                 Scenario fixtures for cost decomposition and evaluation
 
-scripts/                     Standalone automation
-  generate_notes_index.py    Regenerate directory indexes
-  relocate_note.py           Rename or move a note, rewrite links, add MkDocs redirect
-  sync_topic_links.py        Sync areas ↔ topics frontmatter
-  github_snapshot.py         Snapshot GitHub issues/PRs
-  x_snapshot.py              Snapshot X/Twitter posts
+src/commonplace/             Packaged operational engine
+  cli/                       User-facing commands
+  review/                    Review system commands + support modules
+  lib/                       Shared runtime helpers
+  docs/                      MkDocs hooks and documentation assets
 ```
 
 ## Key ideas
@@ -113,18 +112,18 @@ This is the right mode when:
 
 ### Installing into a project
 
-Commonplace can be installed into an existing project as a submodule or cloned subdirectory. See **[INSTALL.md](INSTALL.md)** for step-by-step setup instructions for both Claude Code and Codex, and the resulting layout. See `kb/notes/adr/006-two-tree-installation-layout.md` for the full design rationale.
+Commonplace can be installed into an existing project as a local plugin plus Python package. See **[INSTALL.md](INSTALL.md)** for the current setup flow.
 
 ## Prerequisites
 
 | Tool | Required | Purpose |
 |---|---|---|
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use the runtime's plugin or skill surface plus `AGENTS.md` |
-| [uv](https://docs.astral.sh/uv/) | yes | Python script runner — `uv run` handles dependencies automatically |
+| [uv](https://docs.astral.sh/uv/) | yes | Install and run the Commonplace Python package |
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |
 | [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
-| [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `snapshot-web` and `github_snapshot.py` |
+| [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `snapshot-web` and `commonplace-github-snapshot` |
 | [qmd](https://github.com/qmdnotes/qmd) | no | Semantic search — hybrid BM25 + vector + reranking. Skills degrade gracefully to grep-only when unavailable |
 
 ### Setting up qmd
@@ -136,7 +135,7 @@ qmd adds semantic search — it finds notes by meaning, not just keywords. Witho
 2. Copy the sample collection config:
 
 ```bash
-cp scripts/qmd-collections.yml ~/.config/qmd/commonplace.yml
+cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/commonplace.yml
 ```
 
 3. Edit `~/.config/qmd/commonplace.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your local checkout.
@@ -155,23 +154,23 @@ qmd --index commonplace query "your search terms"
 
 After adding or editing notes, re-run `qmd --index commonplace update && qmd --index commonplace embed` to keep the index current. Both commands are idempotent and fast.
 
-For installed projects, copy the same sample config to a project-specific file (e.g. `~/.config/qmd/my-project.yml`) and replace `/PATH/TO/COMMONPLACE/` with the project root, not the `commonplace/` subdirectory.
+For initialized projects, copy the same sample config to a project-specific file (e.g. `~/.config/qmd/my-project.yml`) and replace `/PATH/TO/COMMONPLACE/` with the project root.
 
 ```bash
-cp commonplace/scripts/qmd-collections.yml ~/.config/qmd/my-project.yml
+cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/my-project.yml
 ```
 
-## Scripts
+## Commands
 
-Scripts require uv. Dependencies are declared in `pyproject.toml` — `uv run` installs them automatically on first use.
+Install the package first, then use the commands directly:
 
 ```bash
-uv run scripts/generate_notes_index.py kb/notes   # Rebuild directory index
-uv run scripts/relocate_note.py old-note "New note title" --apply
-uv run scripts/relocate_note.py old-note --dir kb/notes/definitions --apply
-uv run scripts/sync_topic_links.py kb/notes/       # Sync areas ↔ topics
-uv run scripts/github_snapshot.py <url>             # Snapshot a GitHub issue/PR
-uv run scripts/x_snapshot.py <url>                  # Snapshot an X/Twitter post
+commonplace-generate-notes-index kb/notes
+commonplace-relocate-note old-note "New note title" --apply
+commonplace-relocate-note old-note --dir kb/notes/definitions --apply
+commonplace-sync-topic-links kb/notes/
+commonplace-github-snapshot <url>
+commonplace-x-snapshot <url>
 ```
 
 ## License

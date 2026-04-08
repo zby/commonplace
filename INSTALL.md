@@ -1,110 +1,95 @@
 # Installing Commonplace into a project
 
-Commonplace can be installed into an existing project as a submodule or cloned subdirectory. This creates a two-tree layout: your content lives in `kb/` at the project root, while the framework lives in `commonplace/`. Operational artifacts (`types/`, `WRITING.md`) are copied into your `kb/` for fast access; methodology notes and promoted skills stay in `commonplace/` and are consulted on demand.
-
-## 1. Add commonplace to your project
+## 1. Install the Python package
 
 ```bash
-# Option A: git submodule (versioned, reproducible)
-git submodule add https://github.com/anthropics/commonplace.git commonplace
-
-# Option B: clone + gitignore (simpler)
-git clone https://github.com/anthropics/commonplace.git commonplace
-echo "commonplace/" >> .gitignore
+uv pip install llm-commonplace
+# or
+pip install llm-commonplace
 ```
 
-## 2. Create the kb/ directory structure and copy operational artifacts
+Or from a local checkout:
 
 ```bash
-# Create directories
-mkdir -p types kb/notes/types kb/sources/types kb/tasks/backlog kb/tasks/active kb/work kb/instructions
-
-# Create the improvement log
-touch kb/log.md
-
-# Copy operational artifacts
-cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
-cp commonplace/types/* types/
-cp commonplace/kb/notes/types/index.md kb/notes/types/
-cp commonplace/kb/notes/types/index.yaml kb/notes/types/
-cp commonplace/kb/sources/types/source-review.md kb/sources/types/
-cp commonplace/kb/sources/types/source-review.yaml kb/sources/types/
+uv pip install -e /PATH/TO/commonplace
 ```
 
-## 3. Configure your agent runtime
+## 2. Initialize the local KB layout
 
-### Claude Code: install the plugin
+From the project root:
 
 ```bash
-claude plugin install ./commonplace
+commonplace-init
 ```
 
-### Codex: register the plugin in a repo-local marketplace, then install it in `/plugins`
+That creates the standard local tree and seeds it with instructions, review gates, type definitions, and a starter `AGENTS.md.template`:
 
-Create `.agents/plugins/marketplace.json` in the host project root:
+- `kb/notes/`
+- `kb/sources/`
+- `kb/tasks/`
+- `kb/work/`
+- `kb/reports/`
+- `kb/instructions/` (seeded with writing conventions, review system, gates, fix instructions)
+- `types/` (seeded with note and text type definitions)
+- `kb/log.md`
+- `AGENTS.md.template`
 
-```json
-{
-  "name": "local-commonplace",
-  "interface": {
-    "displayName": "Local Commonplace Plugins"
-  },
-  "plugins": [
-    {
-      "name": "commonplace",
-      "source": {
-        "source": "local",
-        "path": "./commonplace"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    }
-  ]
-}
-```
+Rerunning `commonplace-init` is safe — it never overwrites existing files.
 
-Then restart Codex, open it, run `/plugins`, choose `Local Commonplace Plugins`, and install `commonplace`.
+## 3. Create your control-plane file
 
-This repo also ships its own repo-local Codex marketplace file at `.agents/plugins/marketplace.json` for dogfooding inside the `commonplace/` repo itself. That entry points to `./` because the repo root is the plugin directory.
-
-If you change `.codex-plugin/plugin.json`, `skills/`, or the marketplace file, restart Codex again before reinstalling or retesting.
-
-### Codex fallback: symlink framework skills manually
+Copy the seeded template and rename it for your runtime:
 
 ```bash
-mkdir -p .agents/skills
-for skill in commonplace/skills/*/; do
-  name=$(basename "$skill")
-  ln -sfn "$PWD/commonplace/skills/$name" ".agents/skills/$name"
-done
+cp AGENTS.md.template CLAUDE.md
+# or
+cp AGENTS.md.template AGENTS.md
 ```
 
-### Claude Code fallback: symlink framework skills manually
+Then fill in the `KB Goals` section for your project.
+
+## 4. Install the plugin (optional)
+
+The Commonplace plugin provides skills (write, validate, snapshot, review, etc.) to your agent runtime.
+
+### Claude Code
 
 ```bash
-mkdir -p .claude/skills
-for skill in commonplace/skills/*/; do
-  name=$(basename "$skill")
-  ln -sfn "../../commonplace/skills/$name" ".claude/skills/$name"
-done
+claude plugin install /PATH/TO/commonplace
 ```
 
-### Optional: repo-local uv cache with `.envrc`
+### Codex
 
-This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to `$PWD/tmp/uv-cache`. If you already use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the repo-local cache automatically instead of the default global cache path. If you do not use `direnv`, you can ignore this and set `UV_CACHE_DIR` some other way.
+Create a host-project marketplace entry in `.agents/plugins/marketplace.json` that points at the plugin source, then restart Codex and install `commonplace` from `/plugins`.
 
-### Optional: set up qmd semantic search
+> **Note:** Plugin distribution without a local checkout is not yet supported. For now, plugin installation still requires a path to a Commonplace checkout or a locally available plugin directory.
 
-If you use qmd, copy the sample config and then edit the paths manually:
+## Resulting layout
+
+```text
+my-project/
+  kb/
+    notes/
+    sources/
+    tasks/
+    work/
+    reports/
+    instructions/
+    log.md
+  types/
+  CLAUDE.md
+```
+
+## Optional: qmd semantic search
+
+Copy the sample config:
 
 ```bash
-cp commonplace/scripts/qmd-collections.yml ~/.config/qmd/my-project.yml
+commonplace-init-qmd  # not yet implemented — copy manually for now
+cp /PATH/TO/commonplace/src/commonplace/assets/qmd-collections.yml ~/.config/qmd/my-project.yml
 ```
 
-Open `~/.config/qmd/my-project.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your project root, not the `commonplace/` subdirectory. The collections should point at your project's `kb/notes`, `kb/sources`, `kb/tasks`, and `kb/instructions`.
+Edit `~/.config/qmd/my-project.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your project root.
 
 Then build the index:
 
@@ -112,76 +97,18 @@ Then build the index:
 qmd --index my-project update && qmd --index my-project embed
 ```
 
-### Optional: install Codex skills globally
-
-If you want the same promoted skills available across projects, you can also symlink them into `$CODEX_HOME/skills` (default `~/.codex/skills`). This is optional; project-local `.agents/skills/` is enough for one repository.
-
-```bash
-CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
-mkdir -p "$CODEX_HOME/skills"
-for skill in commonplace/skills/*/; do
-  name=$(basename "$skill")
-  ln -sfn "$PWD/commonplace/skills/$name" "$CODEX_HOME/skills/$name"
-done
-```
-
-## 4. Create your project's control-plane file
-
-Copy the template and rename it for your agent runtime:
-
-```bash
-# Claude Code
-cp commonplace/AGENTS.md.template CLAUDE.md
-
-# Codex
-cp commonplace/AGENTS.md.template AGENTS.md
-```
-
-The template includes KB discovery, structural search patterns, and the framework skill list. The one section you must fill in is **KB Goals**.
-
-### Fill in the KB Goals section
-
-Open the control-plane file and fill in the five subsections. The HTML comments in the template have examples — remove them when done.
-
-**Purpose** — Name the decisions or actions the KB supports and who uses it. Start from the users, not the domain. "Supports the API team in making design decisions about the payment service" is actionable; "stores knowledge about payments" is not.
-
-**Domain** — Draw a scope boundary specific enough that an agent can decide "does this belong?" without asking. Name adjacent domains and clarify whether they're in or out: "adjacent systems (auth, billing) are in scope only where they interact with payments."
-
-**Include** — What types of knowledge belong: design decisions, failure analysis, integration patterns, operational procedures, etc.
-
-**Exclude** — The most valuable section. Scope creep is the default failure mode — every piece of knowledge looks relevant in isolation. Name specific things that don't belong: "business rules live in the product wiki, not here." The Exclude list is what makes the Include list meaningful.
-
-**Quality bar** — When is a piece of knowledge worth a note vs. a log entry vs. nothing? `WRITING.md` covers universal quality criteria (claim titles, descriptions, composability). This section adds domain-specific standards: "a design decision is worth a note when it affects more than one endpoint; single-endpoint details belong in code comments."
-
-The Goals section is always-loaded — the agent sees it every session and uses it to decide whether knowledge belongs in this KB before deciding where it goes.
-
-## Resulting layout
-
-```
-my-project/
-  kb/                        Your content
-    instructions/
-      WRITING.md             Copied from commonplace
-    log.md                   Improvement log (append-only)
-    notes/
-      types/                 Copied from commonplace
-    sources/
-    tasks/
-    work/                    Workshop space — connect reports, ingest staging
-  commonplace/               Framework (submodule or clone)
-    skills/                  Framework skills
-    kb/notes/                Methodology notes
-  .claude/skills/            Optional fallback, Claude Code only; symlinked → commonplace/skills/
-  .agents/plugins/
-    marketplace.json         Codex local marketplace entry pointing to commonplace/
-  .agents/skills/            Optional fallback, Codex only; symlinked → commonplace/skills/
-  ~/.codex/skills/           Optional, Codex global skills; symlinked → commonplace/skills/
-  CLAUDE.md                  Claude Code control-plane file
-  AGENTS.md                  Codex control-plane file
-```
-
 ## Updating
 
-Pull new changes (`git submodule update --remote` or `cd commonplace && git pull`), then re-copy operational artifacts. Commonplace-provided type files are replaced; any custom types you've added are left untouched.
+Update the package:
 
-See `kb/notes/adr/006-two-tree-installation-layout.md` for the full design rationale.
+```bash
+uv pip install --upgrade llm-commonplace
+# or
+pip install --upgrade llm-commonplace
+```
+
+Rerun init to pick up any new scaffold files (existing files are preserved):
+
+```bash
+commonplace-init
+```
