@@ -47,10 +47,10 @@ These ship with the framework and are copied into `kb/*/types/` at install. They
 | `related-system` | Local (ours) | External system reviews. Specific to our practice. |
 | `spec` | Local (ours) | Specification documents. |
 | `review` | Local (ours) | Dated reviews with findings. Tied to our review gate system. |
-| `source-review` | Local (ours) | Source analysis reports. Tied to our `/ingest` workflow. |
+| `source-review` | Core | Source analysis reports. Ingestion is a basic KB operation — any KB ingests external sources. |
 | `task-backlog`, `task-active`, `task-recurring` | Local (ours) | Task lifecycle types. |
 
-**Planned change:** narrow the install to copy only core types (`note`, `text`, `index`). Local types would stay in `commonplace/kb/*/types/` as examples the practitioner can copy if they want them. Skills would depend only on core types. This separation hasn't landed yet — today everything gets copied.
+**Planned change:** narrow the install to copy only core types (`note`, `text`, `index`, `source-review`). Local types would stay in `commonplace/kb/*/types/` as examples the practitioner can copy if they want them. Framework skills would depend only on core types. This separation hasn't landed yet — today everything gets copied.
 
 ### The local types pattern
 
@@ -139,7 +139,7 @@ An open question from the [workshop framing](./framing.md): should these referen
 | Aspect | Framework | Practitioner |
 |--------|-----------|-------------|
 | Frontmatter fields | Defines and validates | Uses, chooses values |
-| Framework types | Ships `note`, `text`, `index` | Uses as base |
+| Framework types | Ships `note`, `text`, `index`, `source-review` | Uses as base |
 | Local types | Ships examples in `commonplace/` (not installed) | Defines their own, optionally copies ours |
 | Tags | Validates format | Chooses vocabulary |
 | Directory structure | Provides top-level collections | Organizes freely within them |

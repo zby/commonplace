@@ -28,6 +28,7 @@ commonplace/
     connect/SKILL.md
     validate/SKILL.md
     snapshot-web/SKILL.md
+    ingest/SKILL.md
     convert/SKILL.md
     revise-iterative/SKILL.md
   kb/                           # Methodology content + operational artifacts
@@ -40,7 +41,6 @@ commonplace/
       FIX-SYSTEM.md
       review-gates/
       fix-warnings/
-      ingest/SKILL.md           # Local skill — depends on source-review type
       review-related-system/SKILL.md  # Local skill — depends on related-system type
   types/                        # Base type definitions: .md (prose) + .yaml (machine-readable)
   scripts/                      # Utility scripts
@@ -50,8 +50,8 @@ commonplace/
 
 Key changes:
 - **Skills split into framework and local.** Framework skills (in `skills/`) depend only on core types (`note`, `text`, `index`) and are discovered by the plugin system. Local skills (in `kb/instructions/`) depend on our local types and are only available in this repo (or to practitioners who explicitly adopt those types and symlink the skills).
-- **Framework skills:** `write` (routes to `note` by default), `connect` (searches notes by description), `validate` (checks any type's frontmatter), `snapshot-web` (writes to `kb/sources/`, no type dependency), `convert` (text→note, core types only), `revise-iterative` (works on any note).
-- **Local skills:** `ingest` (writes `.ingest.md` using `source-review` type), `review-related-system` (writes `related-system` type notes). These only make sense if the practitioner has the corresponding local types installed.
+- **Framework skills:** `write` (routes to `note` by default), `connect` (searches notes by description), `validate` (checks any type's frontmatter), `snapshot-web` (writes to `kb/sources/`, no type dependency), `ingest` (snapshots external sources and writes `.ingest.md` using `source-review` type — ingestion is a basic KB operation, not domain-specific), `convert` (text→note, core types only), `revise-iterative` (works on any note).
+- **Local skills:** `review-related-system` (writes `related-system` type notes — specific to our practice of comparing knowledge systems). Only makes sense if the practitioner has the corresponding local type installed.
 
 ### Platform support
 
@@ -195,10 +195,14 @@ claude plugin install ./commonplace
 mkdir -p kb/notes/types kb/sources/types kb/tasks/{backlog,active} kb/work kb/instructions types
 cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
 cp commonplace/types/* types/                        # base types (note.md, note.yaml, text.yaml)
-# Copy only core types — note, text, index
+# Copy only core types — note, text, index, source-review
 for t in note text index; do
   cp commonplace/kb/notes/types/$t.md kb/notes/types/ 2>/dev/null
   cp commonplace/kb/notes/types/$t.yaml kb/notes/types/ 2>/dev/null
+done
+for t in source-review; do
+  cp commonplace/kb/sources/types/$t.md kb/sources/types/ 2>/dev/null
+  cp commonplace/kb/sources/types/$t.yaml kb/sources/types/ 2>/dev/null
 done
 # Other types (adr, structured-claim, related-system, etc.) stay in
 # commonplace/ as examples — copy manually if you want them.
@@ -233,13 +237,14 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 **Dependency:** The type-system rationalization workshop (`kb/work/type-system-rationalization/`) should land its YAML type definitions (phases 1-2) before this migration, so the install copy step has `.yaml` files to copy and the `write` skill can reference the updated type list. The trait migration (phase 3) and review integration (phase 4) can happen independently.
 
-1. **Promote `index` to a core type.** Currently `index` is defined in `kb/notes/types/` alongside local types like `adr` and `related-system`, with no distinction. To make it core, we need to:
+1. **Promote `index` and `source-review` to core types.** Currently these are defined in `kb/*/types/` alongside local types like `adr` and `related-system`, with no distinction. To make them core, we need to:
    - Verify that the `index` type template (`index.md`, `index.yaml`) has no dependencies on local conventions (our specific tags, our specific indexes). It should work for any KB's indexes.
-   - Move `index.md` and `index.yaml` into `types/` at the repo root alongside `note` and `text` base definitions, if that's where core types live. Or mark them in `kb/notes/types/` with a convention that distinguishes core from local — depends on where the type-system-rationalization workshop lands.
-   - Ensure validation and the `/write` skill treat `index` as a core type that's always available, not an optional local type.
+   - Verify that the `source-review` type template works for any external source, not just our ingestion conventions.
+   - Move these into `types/` at the repo root alongside `note` and `text` base definitions, if that's where core types live. Or mark them in `kb/*/types/` with a convention that distinguishes core from local — depends on where the type-system-rationalization workshop lands.
+   - Ensure validation and the `/write` skill treat these as core types that are always available.
    - Update WRITING.md if it references indexes — confirm it documents the `index` type as part of the base set.
 
-2. **Narrow the install to core types only.** Once `index` is established as core alongside `note` and `text`, change the install copy commands to only copy these three. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, `source-review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. Ensure skills depend only on core types — the `/write` skill routes to `note` by default; specialized types are loaded on demand if the practitioner has them. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
+2. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. Ensure skills depend only on core types — the `/write` skill routes to `note` by default; specialized types are loaded on demand if the practitioner has them. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
 
 3. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
 3. **Create `skills/` directory and move skill subdirectories** from `kb/instructions/`
