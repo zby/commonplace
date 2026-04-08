@@ -23,6 +23,8 @@ Always-loaded content should be limited to what the agent needs to **discover** 
 commonplace/
   .claude-plugin/
     plugin.json                 # Claude Code plugin manifest
+  .codex-plugin/
+    plugin.json                 # Codex local plugin manifest
   skills/                       # Framework skills (depend only on core types)
     write/SKILL.md
     connect/SKILL.md
@@ -66,7 +68,13 @@ One set of SKILL.md files works on both. Only the packaging wrapper differs.
 
 ### Codex compatibility
 
-Codex also has a plugin system (v0.110.0+) with marketplace distribution. For users not using plugins, the fallback is symlinking into `.agents/skills/` — same as today but with the new `skills/` source directory. Codex discovers skills by walking `.agents/skills/` from cwd up to repo root, so the layout works.
+Codex has a local plugin system that expects `.codex-plugin/plugin.json` at the plugin root. The plan must create **both** manifests:
+- `.claude-plugin/plugin.json` for Claude Code
+- `.codex-plugin/plugin.json` for Codex
+
+Both point to the same `skills/` directory. The SKILL.md format is identical; only the manifest wrapper differs.
+
+For users not using plugins, the fallback is symlinking into `.agents/skills/` — same as today but with the new `skills/` source directory. Codex discovers skills by walking `.agents/skills/` from cwd up to repo root, so the layout works.
 
 ## Current AGENTS.md.template — section-by-section disposition
 
@@ -74,10 +82,18 @@ Codex also has a plugin system (v0.110.0+) with marketplace distribution. For us
 
 | Section | Why it must stay | Change needed |
 |---|---|---|
-| **KB Goals** (Purpose, Domain, Include/Exclude, Quality bar) | Cross-cutting scoping. Agent needs this to decide "does this belong in the KB?" before any skill fires. | None — keep as-is |
+| **KB Goals** (Purpose, Domain, Include/Exclude, Quality bar) | Cross-cutting scoping. Agent needs this to decide "does this belong in the KB?" before any skill fires. | **Move to `kb/GOALS.md`** — skills read it on demand. The template includes a one-line pointer: "KB goals and scope are in `kb/GOALS.md`." See "Single source of truth for Goals" below. |
 | **KB exists pointer** | Agent must know `kb/` exists and is searchable. Skill trigger matching is unreliable for natural language — without this, "what did we decide about X?" never reaches the KB. | New — currently implicit, needs a short explicit section |
 | **Skill reference** | Agent needs to know which skills are available for KB work. | New — replace routing table with a compact skill list using namespaced names |
 | **Key Indexes** | Entry points for navigation when searching the KB. | Slim down — just the paths |
+
+### Single source of truth for Goals
+
+KB Goals live in **`kb/GOALS.md`** — one file, one location. The always-loaded template carries only a pointer: "KB goals and scope are in `kb/GOALS.md`." Skills read `kb/GOALS.md` on demand when they need scoping context (e.g., `/write` checks fit before creating a note).
+
+The install step creates `kb/GOALS.md` from a template with commented-out examples. The practitioner fills it in. The always-loaded template does NOT duplicate the goals — it just tells the agent the file exists and where to find it.
+
+This resolves the competing-homes problem: `kb/GOALS.md` is the source of truth; the template is a pointer.
 
 ### MOVES to `/commonplace:write` skill
 
@@ -119,8 +135,11 @@ See [AGENTS.md.template.draft](./AGENTS.md.template.draft) — ~35 lines filled 
 
 ## New artifacts to create
 
-### 1. `.claude-plugin/plugin.json`
-Declares the plugin name, description, and lets the plugin system discover `skills/`.
+### 1. Plugin manifests
+- `.claude-plugin/plugin.json` — Claude Code plugin manifest
+- `.codex-plugin/plugin.json` — Codex local plugin manifest
+
+Both declare the plugin name, description, and let their respective plugin systems discover `skills/`.
 
 ### 2. `skills/write/SKILL.md`
 The main new skill. Absorbs routing table + content workflow + type routing.
@@ -150,16 +169,16 @@ The main new skill. Absorbs routing table + content workflow + type routing.
 **Trigger:** `/commonplace:write`, `/commonplace:write [type]`, `/commonplace:write [type] [topic]`
 
 ### 3. Move existing skills to `skills/`
-Move skill directories from `kb/instructions/` to `skills/`:
+Move **framework** skill directories from `kb/instructions/` to `skills/`:
 - `kb/instructions/validate/` → `skills/validate/`
 - `kb/instructions/connect/` → `skills/connect/`
 - `kb/instructions/ingest/` → `skills/ingest/`
 - `kb/instructions/snapshot-web/` → `skills/snapshot-web/`
-- `kb/instructions/review-related-system/` → `skills/review-related-system/`
 - `kb/instructions/convert/` → `skills/convert/`
 - `kb/instructions/revise-iterative/` → `skills/revise-iterative/`
 
-Skills that stay repo-local (not in plugin):
+Skills that stay in `kb/instructions/` (local, not in plugin):
+- `kb/instructions/review-related-system/` — depends on `related-system` local type
 - `kb/instructions/evaluate-scenarios/` — internal to this repo's methodology
 
 Non-skill instructions stay in `kb/instructions/`:
@@ -190,9 +209,11 @@ git submodule add <url> commonplace
 # 2. Install the plugin
 claude plugin install ./commonplace
 
-# 3. Create kb/ structure and copy core type definitions
+# 3. Create kb/ structure, copy core types, and initialize
 mkdir -p kb/notes/types kb/sources/types kb/tasks/{backlog,active} kb/work kb/instructions types
 cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
+cp commonplace/templates/GOALS.md kb/GOALS.md        # practitioner fills this in
+touch kb/log.md                                       # improvement log
 cp commonplace/types/* types/                        # base types (note.md, note.yaml, text.yaml)
 # Copy only core types — note, text, index, source-review
 for t in note text index; do
@@ -247,12 +268,12 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 3. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
 
-4. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
+4. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
 5. **Create `skills/` directory and move framework skill subdirectories** from `kb/instructions/`. Local skills (`review-related-system`) stay in `kb/instructions/`.
 6. **Update internal references** in moved skills (paths, cross-skill invocations)
 7. **Create `skills/write/SKILL.md`** — the new routing skill, using dynamic type discovery from step 1
 8. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
-9. **Update `.claude/skills/` symlinks** in this repo to point to new `skills/` location
+9. **Update skill symlinks** in this repo — `.claude/skills/`, `.agents/skills/`, and `~/.codex/skills/` (if used) — to point to new `skills/` location instead of `kb/instructions/`
 10. **Create slim AGENTS.md.template**
 11. **Update INSTALL.md** with plugin-based procedure
 12. **Test** — install into a fresh test repo, verify: skills work with namespace prefix, `/write` discovers only core types, `/write adr` fails gracefully until practitioner copies the adr type template
@@ -261,7 +282,7 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 - **`.claude-plugin/plugin.json` format** — confirmed: only `name` is required. Optional: `version`, `description`, `author`, `homepage`, `repository`, `license`, `keywords`. Component paths (`skills`, `commands`, `hooks`, `mcpServers`) default to conventional directories at plugin root.
 - **`/commonplace:write` vs `/commonplace:write-note`** — one skill with arguments or several? Leaning one with arguments for simpler installation.
-- **Related system reviews** — keep as separate `commonplace:review-related-system` skill (complex workflow) or fold into `write`? Keep separate.
+- **Related system reviews** — stays as a local skill in `kb/instructions/`, not in the plugin. Depends on `related-system` type. Practitioners who want it copy the type and symlink the skill manually.
 - **Tasks** — no skill for task creation yet. Tasks don't have frontmatter and live in `kb/tasks/`. Different enough to defer.
 - **Review/Fix promotion** — promote REVIEW-SYSTEM.md and FIX-SYSTEM.md to skills? They're complex enough, but adds to the skill count. Defer until after initial migration.
 - **Log entries** — "append to kb/log.md" is too simple for a skill. Mention in WRITING.md and in `write` skill's "for quick observations" section.
