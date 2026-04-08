@@ -75,6 +75,60 @@ The overview links to the subsystem guides. Progressive disclosure applied to do
 
 **Lean:** III — an overview plus subsystem guides. Start with skills (practitioners will need it first) and the type system (most complex).
 
+## The practitioner contract for `kb/`
+
+ADR-006 establishes the two-tree split: `kb/` is the practitioner's content, `commonplace/` is framework. But the contract for what's *inside* `kb/` is implicit. The install step creates:
+
+```
+kb/
+  instructions/WRITING.md     # Copied from framework
+  notes/types/                # Copied from framework
+  sources/types/              # Copied from framework
+  tasks/types/                # Copied from framework
+  tasks/backlog/
+  tasks/active/
+  work/
+  log.md
+```
+
+The practitioner then builds their own KB inside `kb/notes/`. **They should be able to organize it however they want.** Our `kb/notes/` has subdirectories (`adr/`, `related-systems/`, `definitions/`), indexes (`tags-index.md`, `learning-theory-index.md`), and 150+ notes — but those are *our content*, not framework structure.
+
+### What's framework vs what's our content
+
+| What | Framework or content? | Practitioner should... |
+|------|----------------------|----------------------|
+| `kb/notes/types/` | Framework (copied at install) | Keep, extend with their own types |
+| `kb/instructions/WRITING.md` | Framework (copied at install) | Keep, customize the quality bar section |
+| Skills (symlinked from `commonplace/`) | Framework | Use as-is, write their own additional skills |
+| `kb/notes/adr/` directory | Convention (recommended, not required) | Use if they make architectural decisions |
+| `kb/notes/related-systems/` | Our content | Ignore unless they're also comparing systems |
+| `kb/notes/tags-index.md` | Our content | Create their own indexes for their own tags |
+| `kb/notes/learning-theory-index.md` | Our content (general theory) | Read for theory, but it's not about their KB |
+| `kb/log.md` | Convention (recommended) | Use for improvement logging |
+| Subdirectory structure in `kb/notes/` | Their choice | Organize by topic, project, whatever fits |
+
+### What needs to be documented
+
+The contract needs to answer:
+
+1. **What directories does the framework expect?** Just `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/` (for type templates), and the instructions directory. Everything else is optional.
+
+2. **What conventions do skills assume?** Skills like `/ingest` assume sources go in `kb/sources/`. Skills like `/connect` assume notes are in `kb/notes/`. If a practitioner reorganizes, do skills break?
+
+3. **What can they change vs what breaks the framework?** Frontmatter fields (`type`, `status`, `tags`, `description`) are framework-expected — validation and review gates depend on them. But specific tag values, directory structure within `kb/notes/`, and which indexes exist are all theirs to decide.
+
+4. **What happens to our notes in their install?** Currently `commonplace/kb/notes/` contains our theory and methodology notes. The practitioner's agent can search into `commonplace/kb/` for methodology (per ADR-006). But are these notes *documentation for the framework* or *content that ships with the framework*? If theory notes like "context efficiency is the central design concern" are meant to be useful to practitioners, they should be discoverable and distinguished from methodology notes like "how the review gate system works."
+
+### The deeper question
+
+If the practitioner's `kb/notes/` is entirely theirs, then our theory notes in `commonplace/kb/notes/` are not documentation — they're a reference library that ships with the framework. The practitioner reads them for understanding but doesn't modify them. This is actually a clean separation:
+
+- `kb/` — their content, their organization, their notes
+- `commonplace/kb/notes/` — our theory and methodology, read-only reference
+- `commonplace/kb/instructions/` — operational procedures and skills, executable
+
+The scope signal question then applies only to `commonplace/kb/notes/`: which of those reference notes are general theory (useful background for any KB builder) vs methodology for the commonplace framework specifically (explains how this framework works)?
+
 ## Open questions
 
 1. **Is it two scopes or three?** "General theory" and "local implementation" are clear poles. Is "transferable pattern" a real middle, or just general theory that happens to be validated here?
@@ -85,7 +139,9 @@ The overview links to the subsystem guides. Progressive disclosure applied to do
 
 4. **How does this relate to the MkDocs site?** ADR-011 committed to external accessibility. Scope signals and system docs should be reflected in site navigation.
 
-5. **What's the minimum viable step?** Probably: tag 10-15 obviously-general theory notes and 10-15 obviously-local notes to test whether the classification is tractable, then write one subsystem guide (skills) to test whether that form works.
+5. **What skills assume about directory structure.** If `/ingest` assumes `kb/sources/` and `/connect` assumes `kb/notes/`, these are implicit contracts. They should be documented and ideally configurable.
+
+6. **What's the minimum viable step?** Probably: document the practitioner contract (what's framework, what's theirs, what conventions skills assume), then tag 10-15 notes in `commonplace/kb/notes/` to test the scope classification.
 
 ## Related notes
 
