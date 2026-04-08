@@ -60,6 +60,7 @@ Key changes:
 | | Claude Code | Codex |
 |---|---|---|
 | Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json` |
+| Optional catalog entry | N/A | Host repo `.agents/plugins/marketplace.json` |
 | Skill invocation | `/commonplace:write` | `$commonplace-write` (or similar) |
 | Control plane | `CLAUDE.md` | `AGENTS.md` |
 | Skill format | Same `SKILL.md` | Same `SKILL.md` |
@@ -73,6 +74,29 @@ Codex has a local plugin system that expects `.codex-plugin/plugin.json` at the 
 - `.codex-plugin/plugin.json` for Codex
 
 Both point to the same `skills/` directory. The SKILL.md format is identical; only the manifest wrapper differs.
+
+Codex also has an optional marketplace/catalog layer for UI ordering and install metadata. That data does **not** live in the plugin itself; it lives in the **host repo** at `.agents/plugins/marketplace.json`. That means:
+- The commonplace repo can ship `.codex-plugin/plugin.json`.
+- A consuming project can optionally register the plugin in its own `.agents/plugins/marketplace.json`.
+- The initial migration does **not** depend on marketplace registration; `codex plugin install ./commonplace` should work without it.
+- If we later want first-class Codex marketplace visibility in installed projects, that belongs in an init/install helper that edits the host repo, not in the plugin payload itself.
+
+Minimal marketplace entry shape for a consuming repo:
+
+```json
+{
+  "name": "commonplace",
+  "source": {
+    "source": "local",
+    "path": "./commonplace"
+  },
+  "policy": {
+    "installation": "AVAILABLE",
+    "authentication": "ON_INSTALL"
+  },
+  "category": "Productivity"
+}
+```
 
 For users not using plugins, the fallback is symlinking into `.agents/skills/` — same as today but with the new `skills/` source directory. Codex discovers skills by walking `.agents/skills/` from cwd up to repo root, so the layout works.
 
@@ -119,12 +143,17 @@ No `kb/GOALS.md` as a separate file. One location, no sync problem, no competing
 | **Conventions** (links, filenames, frontmatter) | Template | WRITING.md already covers links and frontmatter. Add filename convention. |
 | **Methodology reference** | Template | Add line: "For deeper reasoning, search `commonplace/kb/notes/`" |
 
+### STAYS but slimmed
+
+| Section | Change |
+|---|---|
+| **Search patterns** (3 of 4 stay) | Keep the three structural patterns (search by description, by type, by tag) — they teach the agent that frontmatter fields are searchable axes. Drop the plain keyword search. `rg` (ripgrep) is a system dependency — document in INSTALL.md prerequisites alongside git and python3. |
+
 ### DROPS entirely
 
 | Section | Why |
 |---|---|
 | **"No wiki-links"** convention | Already enforced by WRITING.md's link format |
-| **Search patterns** (3 of 4 stay) | Keep the three structural patterns (search by description, by type, by tag) — they teach the agent that frontmatter fields are searchable axes, not just how to run `rg`. Drop the plain keyword search (agent already knows how to grep). `rg` (ripgrep) is a system dependency — document in INSTALL.md prerequisites alongside git and python3. |
 | **Git conventions** | Not the template's concern — each project has its own git rules |
 
 ## Resulting template
@@ -140,6 +169,11 @@ See [AGENTS.md.template.draft](./AGENTS.md.template.draft) for the current draft
 - `.codex-plugin/plugin.json` — Codex local plugin manifest
 
 Both declare the plugin name, description, and let their respective plugin systems discover `skills/`.
+
+Codex marketplace metadata is a separate concern:
+- It is **not** part of the plugin payload.
+- If we document it, treat `.agents/plugins/marketplace.json` as an optional host-repo artifact, not something commonplace ships inside itself.
+- The initial migration can defer marketplace registration and still support `codex plugin install ./commonplace`.
 
 ### 2. `skills/write/SKILL.md`
 The main new skill. Absorbs routing table + content workflow + type routing.
@@ -210,6 +244,9 @@ git submodule add <url> commonplace
 claude plugin install ./commonplace
 
 # 3. Create kb/ structure, copy core types, and initialize
+# NOTE: source paths below are provisional — migration step 2 may move
+# index and source-review into types/ at repo root. Update these paths
+# once the type-system-rationalization workshop resolves the final location.
 mkdir -p kb/notes/types kb/sources/types kb/tasks/{backlog,active} kb/work kb/instructions types
 cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
 touch kb/log.md                                       # improvement log
@@ -244,6 +281,10 @@ for skill in commonplace/skills/*/; do
   ln -sfn "$PWD/commonplace/skills/$(basename "$skill")" ".agents/skills/$(basename "$skill")"
 done
 
+# Optional: register the plugin in Codex's repo-local marketplace/catalog
+# This is for UI ordering / install metadata, not required for local install.
+# Write .agents/plugins/marketplace.json in the HOST repo, pointing source.path to ./commonplace.
+
 # 3. Create kb/ structure and copy type definitions (same as above)
 
 # 4. Add KB section to AGENTS.md
@@ -277,6 +318,9 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 11. **Update INSTALL.md** with plugin-based procedure
 12. **Test install into a fresh repo.** Create a blank repo, add commonplace as submodule, run the install procedure from step 11. Verify:
     - Plugin installs and skills are discoverable with namespace prefix
+    - `codex plugin install ./commonplace` works without any `.agents/plugins/marketplace.json`
+    - Optional: after adding a host-repo `.agents/plugins/marketplace.json` entry pointing to `./commonplace`, Codex still resolves the same plugin correctly
+    - Manual `.agents/skills/` symlink fallback still works if plugin install is skipped
     - `/commonplace:write` creates a note with correct frontmatter in `kb/notes/`
     - `/commonplace:write index` creates an index
     - `/commonplace:validate` passes on the created notes
@@ -300,4 +344,5 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 - **Review/Fix promotion** — promote REVIEW-SYSTEM.md and FIX-SYSTEM.md to skills? They're complex enough, but adds to the skill count. Defer until after initial migration.
 - **Log entries** — "append to kb/log.md" is too simple for a skill. Mention in WRITING.md and in `write` skill's "for quick observations" section.
 - **validate_notes.py** — moves with its skill to `skills/validate/`. The `REPO_ROOT` computation (`Path(__file__).resolve().parents[3]`) needs adjusting since the path depth changes from `kb/instructions/validate/` (depth 3) to `skills/validate/` (depth 2).
+- **Codex marketplace registration** — should we leave `.agents/plugins/marketplace.json` as an optional manual step, or teach a future `/commonplace:init` helper to add/update the host repo entry automatically?
 - **Step 3/4 copy commands** — should there be a `/commonplace:init` skill that handles directory creation and artifact copying interactively? Would further reduce installation friction.
