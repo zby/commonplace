@@ -23,32 +23,35 @@ Always-loaded content should be limited to what the agent needs to **discover** 
 commonplace/
   .claude-plugin/
     plugin.json                 # Claude Code plugin manifest
-  skills/                       # Plugin skills (discovered automatically)
+  skills/                       # Framework skills (depend only on core types)
     write/SKILL.md
     connect/SKILL.md
     validate/SKILL.md
-    ingest/SKILL.md
     snapshot-web/SKILL.md
-    review-related-system/SKILL.md
     convert/SKILL.md
     revise-iterative/SKILL.md
   kb/                           # Methodology content + operational artifacts
     notes/                      # Methodology notes (this repo's own KB)
     sources/
     work/
-    instructions/               # Non-skill instructions (WRITING.md, REVIEW-SYSTEM.md, etc.)
+    instructions/               # Non-skill instructions + local skills
       WRITING.md
       REVIEW-SYSTEM.md
       FIX-SYSTEM.md
       review-gates/
       fix-warnings/
+      ingest/SKILL.md           # Local skill — depends on source-review type
+      review-related-system/SKILL.md  # Local skill — depends on related-system type
   types/                        # Base type definitions: .md (prose) + .yaml (machine-readable)
   scripts/                      # Utility scripts
   AGENTS.md.template            # Slim control-plane template
   INSTALL.md                    # Installation guide
 ```
 
-Key change: **skills move from `kb/instructions/*/` to `skills/`** at the repo root. This is the plugin convention — the plugin system discovers skills from the `skills/` directory. Non-skill instructions (WRITING.md, review gates, fix strategies) stay in `kb/instructions/`.
+Key changes:
+- **Skills split into framework and local.** Framework skills (in `skills/`) depend only on core types (`note`, `text`, `index`) and are discovered by the plugin system. Local skills (in `kb/instructions/`) depend on our local types and are only available in this repo (or to practitioners who explicitly adopt those types and symlink the skills).
+- **Framework skills:** `write` (routes to `note` by default), `connect` (searches notes by description), `validate` (checks any type's frontmatter), `snapshot-web` (writes to `kb/sources/`, no type dependency), `convert` (text→note, core types only), `revise-iterative` (works on any note).
+- **Local skills:** `ingest` (writes `.ingest.md` using `source-review` type), `review-related-system` (writes `related-system` type notes). These only make sense if the practitioner has the corresponding local types installed.
 
 ### Platform support
 
