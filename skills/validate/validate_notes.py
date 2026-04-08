@@ -2,9 +2,9 @@
 """Deterministic validator for KB notes.
 
 Usage:
-  python3 kb/instructions/validate/validate_notes.py <note-path-or-name>
-  python3 kb/instructions/validate/validate_notes.py all
-  python3 kb/instructions/validate/validate_notes.py recent
+  python3 skills/validate/validate_notes.py <note-path-or-name>
+  python3 skills/validate/validate_notes.py all
+  python3 skills/validate/validate_notes.py recent
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 # Add scripts/ to import path for the shared frontmatter module
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 import frontmatter as fm_mod  # noqa: E402
 from type_resolver import TypeProfile, resolve_type  # noqa: E402

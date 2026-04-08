@@ -1,6 +1,6 @@
 # Writing Guide for kb/
 
-Read this before creating or editing notes, ADRs, indexes, or source reviews. For searching and routing, see the Knowledge System section in the root `CLAUDE.md`.
+Read this before creating or editing notes, ADRs, indexes, or source reviews. For routing and note creation, use `/write` or the Knowledge System section in the control-plane file.
 
 ## Before You Write
 
@@ -22,7 +22,7 @@ If any answer is "no," fix it before saving.
 When all changes are complete (note written, links added, indexes updated), run the validation script on new or modified notes:
 
 ```bash
-python3 kb/instructions/validate/validate_notes.py <note-path>
+python3 skills/validate/validate_notes.py <note-path>
 ```
 
 This checks structural correctness — frontmatter validity, enum values, link health, required sections. Don't skip it even if the note "looks fine."
@@ -143,6 +143,10 @@ Internal workspace documents connect via standard markdown links. Each link is a
 - `[note title](../note-title.md)` or `[note title](./subdir/note-title.md)` for cross-directory links
 - Links work as prose: "Since [title as claim enables traversal as reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md), we chose..."
 - Link text doesn't have to match the target's title — use whatever text best informs the reader's decision
+
+## Filenames
+
+Use lowercase, hyphens for spaces, and the `.md` extension. Derive the filename from the `# Title` heading unless there is a strong reason to preserve an established filename.
 
 ### Inline vs Footer Links
 

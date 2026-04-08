@@ -8,6 +8,14 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 
 ```
 types/                       Global types (text, note)
+skills/                      Promoted framework skills
+  write/SKILL.md             Route and draft notes by type
+  connect/SKILL.md           Find connections, weave knowledge graph
+  convert/SKILL.md           Convert notes between types
+  ingest/SKILL.md            Ingest external sources
+  snapshot-web/SKILL.md      Capture URLs to markdown
+  validate/SKILL.md          Schema and quality validation
+  revise-iterative/SKILL.md  Multi-pass prose revision
 
 kb/                          Knowledge base
   instructions/WRITING.md     Writing conventions and quality checklist
@@ -19,13 +27,9 @@ kb/                          Knowledge base
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
   work/                      Workshop space — connect reports, ingest staging, explorations
-  instructions/              Instructions and skills (promoted skills have subdirectories)
-    connect/SKILL.md         Find connections, weave knowledge graph
-    convert/SKILL.md         Convert notes between types
+  instructions/              Instructions and local procedures
     evaluate-scenarios/SKILL.md  Measure scenario costs
-    ingest/SKILL.md          Ingest external sources
-    snapshot-web/SKILL.md    Capture URLs to markdown
-    validate/SKILL.md        Schema and quality validation
+    review-related-system/SKILL.md  Related-system review workflow
     re-ingest.md             Instruction (not yet promoted to skill)
     review-gates/            Review gates grouped by bundle/lens name (e.g. semantic/)
     ...
@@ -55,15 +59,17 @@ scripts/                     Standalone automation
 
 ## Skills and instructions
 
-Promoted skills can be exposed in both runtimes: Claude Code discovers skill subdirectories from `.claude/skills/`, and Codex can discover them from project-local `.agents/skills/`. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles routing, search patterns, and escalation boundaries.
+Promoted framework skills live in `skills/`. Claude Code can load them via plugin install or `.claude/skills/`, and Codex can load them via plugin install or project-local `.agents/skills/`. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 | Skill | Purpose |
 |---|---|
+| `/write` | Route and draft a note, index, or discovered specialized type |
 | `/validate` | Check frontmatter, descriptions, types, links, structure |
 | `/connect` | Find connections between notes, update indexes |
 | `/convert` | Convert notes between types (text → note → structured-claim) |
 | `/ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `/snapshot-web` | Capture a URL to `kb/sources/` |
+| `/revise-iterative` | Iteratively revise a note without changing its claims |
 | `/evaluate-scenarios` | Measure scenario costs in hops and instruction bytes |
 
 ## Content workflow
@@ -93,7 +99,7 @@ cd commonplace
 
 This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to a repo-local cache under `tmp/uv-cache`. If you use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the local cache automatically instead of the default global cache path.
 
-The `.claude/skills/` directory contains symlinks to promoted skill subdirectories under `kb/instructions/`, so Claude Code picks up those slash commands automatically. Codex can discover the same promoted skills from project-local `.agents/skills/`; installing them into `$CODEX_HOME/skills` is optional if you want them across repositories. Plain instruction files remain AGENTS-routed procedures. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+The `.claude/skills/` and `.agents/skills/` directories can point at promoted framework skills under `skills/`, so both runtimes can expose the same commands during direct repo use. Plain instruction files remain AGENTS-routed procedures. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself

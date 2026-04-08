@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 
-VALIDATE_SCRIPT = Path(__file__).resolve().parents[2] / "kb" / "instructions" / "validate" / "validate_notes.py"
+VALIDATE_SCRIPT = Path(__file__).resolve().parents[2] / "skills" / "validate" / "validate_notes.py"
 SPEC = importlib.util.spec_from_file_location("validate_notes", VALIDATE_SCRIPT)
 assert SPEC and SPEC.loader
 validate_notes = importlib.util.module_from_spec(SPEC)

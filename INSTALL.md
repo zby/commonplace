@@ -1,6 +1,6 @@
 # Installing Commonplace into a project
 
-Commonplace can be installed into an existing project as a submodule or cloned subdirectory. This creates a two-tree layout: your content lives in `kb/` at the project root, while the framework lives in `commonplace/`. Operational artifacts (`types/`, `WRITING.md`) are copied into your `kb/` for fast access; methodology notes stay in `commonplace/` and are consulted on demand. Only promoted skills, represented as subdirectories under `commonplace/kb/instructions/`, are auto-discovered by agent runtimes. Plain instruction files remain on-demand procedures.
+Commonplace can be installed into an existing project as a submodule or cloned subdirectory. This creates a two-tree layout: your content lives in `kb/` at the project root, while the framework lives in `commonplace/`. Operational artifacts (`types/`, `WRITING.md`) are copied into your `kb/` for fast access; methodology notes and promoted skills stay in `commonplace/` and are consulted on demand.
 
 ## 1. Add commonplace to your project
 
@@ -17,7 +17,7 @@ echo "commonplace/" >> .gitignore
 
 ```bash
 # Create directories
-mkdir -p types kb/notes/types kb/sources/types kb/tasks/types kb/tasks/backlog kb/tasks/active kb/work reviews/csv
+mkdir -p types kb/notes/types kb/sources/types kb/tasks/backlog kb/tasks/active kb/work kb/instructions
 
 # Create the improvement log
 touch kb/log.md
@@ -25,36 +25,43 @@ touch kb/log.md
 # Copy operational artifacts
 cp commonplace/kb/instructions/WRITING.md kb/instructions/WRITING.md
 cp commonplace/types/* types/
-cp commonplace/kb/notes/types/* kb/notes/types/
-cp commonplace/kb/sources/types/* kb/sources/types/
-cp commonplace/kb/tasks/types/* kb/tasks/types/
+cp commonplace/kb/notes/types/index.md kb/notes/types/
+cp commonplace/kb/notes/types/index.yaml kb/notes/types/
+cp commonplace/kb/sources/types/source-review.md kb/sources/types/
+cp commonplace/kb/sources/types/source-review.yaml kb/sources/types/
 ```
 
 ## 3. Configure your agent runtime
 
-### Claude Code: symlink skills into `.claude/skills/`
+### Claude Code: install the plugin
 
 ```bash
-# Only promoted skills live in subdirectories; plain .md instructions are not symlinked.
+claude plugin install ./commonplace
+```
+
+### Codex: install the plugin
+
+```bash
+codex plugin install ./commonplace
+```
+
+If plugin install is not available, you can still symlink framework skills manually:
+
+```bash
+# Claude Code fallback
 mkdir -p .claude/skills
-for skill in commonplace/kb/instructions/*/; do
+for skill in commonplace/skills/*/; do
   name=$(basename "$skill")
-  ln -sfn "../../commonplace/kb/instructions/$name" ".claude/skills/$name"
+  ln -sfn "../../commonplace/skills/$name" ".claude/skills/$name"
 done
-```
 
-### Codex: symlink skills into `.agents/skills`
-
-```bash
-# Only promoted skills live in subdirectories; plain .md instructions are not symlinked.
+# Codex fallback
 mkdir -p .agents/skills
-for skill in commonplace/kb/instructions/*/; do
+for skill in commonplace/skills/*/; do
   name=$(basename "$skill")
-  ln -sfn "$PWD/commonplace/kb/instructions/$name" ".agents/skills/$name"
+  ln -sfn "$PWD/commonplace/skills/$name" ".agents/skills/$name"
 done
 ```
-
-Codex discovers promoted skills from the repository's `.agents/skills/`, but you should still add project routing in `AGENTS.md` so it knows when to read `kb/instructions/WRITING.md`, the relevant `kb/*/types/` file, when to invoke a plain instruction under `commonplace/kb/instructions/`, and when to escalate into `commonplace/kb/` for methodology.
 
 ### Optional: repo-local uv cache with `.envrc`
 
@@ -83,9 +90,9 @@ If you want the same promoted skills available across projects, you can also sym
 ```bash
 CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 mkdir -p "$CODEX_HOME/skills"
-for skill in commonplace/kb/instructions/*/; do
+for skill in commonplace/skills/*/; do
   name=$(basename "$skill")
-  ln -sfn "$PWD/commonplace/kb/instructions/$name" "$CODEX_HOME/skills/$name"
+  ln -sfn "$PWD/commonplace/skills/$name" "$CODEX_HOME/skills/$name"
 done
 ```
 
@@ -101,7 +108,7 @@ cp commonplace/AGENTS.md.template CLAUDE.md
 cp commonplace/AGENTS.md.template AGENTS.md
 ```
 
-The template includes routing, search patterns, escalation boundaries, and conventions — all ready to use. The one section you must fill in is **KB Goals**.
+The template includes KB discovery, structural search patterns, and the framework skill list. The one section you must fill in is **KB Goals**.
 
 ### Fill in the KB Goals section
 
@@ -124,21 +131,22 @@ The Goals section is always-loaded — the agent sees it every session and uses 
 ```
 my-project/
   kb/                        Your content
-    WRITING.md               Copied from commonplace
+    instructions/
+      WRITING.md             Copied from commonplace
     log.md                   Improvement log (append-only)
     notes/
       types/                 Copied from commonplace
     sources/
     tasks/
     work/                    Workshop space — connect reports, ingest staging
-  reviews/                   Review outputs and CSV stats
-    csv/
   commonplace/               Framework (submodule or clone)
-  .claude/skills/            Optional, Claude Code only; symlinked → commonplace/kb/instructions/
-  .agents/skills/            Optional, Codex only; symlinked → commonplace/kb/instructions/
-  ~/.codex/skills/           Optional, Codex global skills; symlinked → commonplace/kb/instructions/
-  CLAUDE.md                  Optional, Claude Code control-plane file
-  AGENTS.md                  Optional, Codex control-plane file
+    skills/                  Framework skills
+    kb/notes/                Methodology notes
+  .claude/skills/            Optional fallback, Claude Code only; symlinked → commonplace/skills/
+  .agents/skills/            Optional fallback, Codex only; symlinked → commonplace/skills/
+  ~/.codex/skills/           Optional, Codex global skills; symlinked → commonplace/skills/
+  CLAUDE.md                  Claude Code control-plane file
+  AGENTS.md                  Codex control-plane file
 ```
 
 ## Updating
