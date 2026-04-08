@@ -22,10 +22,10 @@ Always-loaded content should be limited to what the agent needs to **discover** 
 ```
 commonplace/
   .claude-plugin/
-    plugin.json                 # Claude Code plugin manifest
+    plugin.json                 # default skills/ path
   .codex-plugin/
-    plugin.json                 # Codex local plugin manifest
-  skills/                       # Framework skills (depend only on core types)
+    plugin.json                 # same, Codex format
+  skills/                       # Actual skill files — clean for practitioners and plugins
     write/SKILL.md
     connect/SKILL.md
     validate/SKILL.md
@@ -33,27 +33,38 @@ commonplace/
     ingest/SKILL.md
     convert/SKILL.md
     revise-iterative/SKILL.md
-  kb/                           # Methodology content + operational artifacts
+    review-related-system/SKILL.md
+  kb/
     notes/                      # Methodology notes (this repo's own KB)
     sources/
     work/
-    instructions/               # Non-skill instructions + local skills
-      WRITING.md
-      REVIEW-SYSTEM.md
-      FIX-SYSTEM.md
-      review-gates/
-      fix-warnings/
-      review-related-system/SKILL.md  # Local skill — depends on related-system type
-  types/                        # Base type definitions: .md (prose) + .yaml (machine-readable)
-  scripts/                      # Utility scripts
-  AGENTS.md.template            # Slim control-plane template
-  INSTALL.md                    # Installation guide
+    instructions/               # Non-skill instructions + symlinks to skills
+      write -> ../../skills/write                   # symlink for searchability
+      connect -> ../../skills/connect               # symlink for searchability
+      validate -> ../../skills/validate             # etc.
+      snapshot-web -> ../../skills/snapshot-web
+      ingest -> ../../skills/ingest
+      convert -> ../../skills/convert
+      revise-iterative -> ../../skills/revise-iterative
+      review-related-system -> ../../skills/review-related-system
+      WRITING.md                # Non-skill instruction (actual file)
+      REVIEW-SYSTEM.md          # Non-skill instruction (actual file)
+      FIX-SYSTEM.md             # Non-skill instruction (actual file)
+      review-gates/             # Non-skill (actual directory)
+      fix-warnings/             # Non-skill (actual directory)
+  types/                        # Base type definitions
+  scripts/
+  AGENTS.md.template
+  INSTALL.md
 ```
 
-Key changes:
-- **Skills split into framework and local.** Framework skills (in `skills/`) depend only on core types (`note`, `text`, `index`, `source-review`) and are discovered by the plugin system. Local skills (in `kb/instructions/`) depend on our local types and are only available in this repo (or to practitioners who explicitly adopt those types and symlink the skills).
-- **Framework skills:** `write` (routes to `note` by default), `connect` (searches notes by description), `validate` (checks any type's frontmatter), `snapshot-web` (writes to `kb/sources/`, no type dependency), `ingest` (snapshots external sources and writes `.ingest.md` using `source-review` type — ingestion is a basic KB operation, not domain-specific), `convert` (text→note, core types only), `revise-iterative` (works on any note).
-- **Local skills:** `review-related-system` (writes `related-system` type notes — specific to our practice of comparing knowledge systems). Only makes sense if the practitioner has the corresponding local type installed.
+Key design: **skills live in `skills/`** (clean for practitioners, default plugin discovery path). In our repo, **symlinks in `kb/instructions/` point back to `skills/`** so that `rg "keyword" kb/ --glob "*.md"` still finds skill content. This is a development convenience for us — practitioners don't need these symlinks and won't have them.
+
+- **Practitioners see** a clean `skills/` directory at the plugin root. The plugin discovers skills there. No ambiguity about where skills live vs where instructions live.
+- **We see** skills in both `skills/` (canonical) and `kb/instructions/` (symlinked) so they're searchable alongside WRITING.md and other operational docs.
+- **Framework vs local distinction is by type dependency, not by directory.** All skills ship via the plugin. Framework skills work out of the box (core types installed). Local skills are discoverable but error gracefully until their type templates are installed.
+- **Framework skills:** `write`, `connect`, `validate`, `snapshot-web`, `ingest`, `convert`, `revise-iterative` — depend only on core types (`note`, `text`, `index`, `source-review`).
+- **Local skills:** `review-related-system` — depends on `related-system` type. Discoverable via plugin but errors with "type not found" until the practitioner copies the type template.
 
 ### Platform support
 
@@ -308,12 +319,12 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 3. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
 
-4. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
-5. **Create `skills/` directory and move framework skill subdirectories** from `kb/instructions/`. Local skills (`review-related-system`) stay in `kb/instructions/`.
-6. **Update internal references** in moved skills (paths, cross-skill invocations)
+4. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Default `skills/` discovery path.
+5. **Create `skills/` directory and move all skill subdirectories** from `kb/instructions/` to `skills/`. All skills move — both framework and local. The framework/local distinction is by type dependency, not directory. Then create **symlinks in `kb/instructions/`** pointing back to `skills/` so skills remain searchable via `rg "keyword" kb/`. These symlinks are a development convenience for this repo — practitioners won't have them.
+6. **Update internal references** in moved skills (paths to WRITING.md, type templates, cross-skill invocations with `commonplace:` prefix). Paths change from `kb/instructions/` depth to `skills/` depth.
 7. **Create `skills/write/SKILL.md`** — the new routing skill, using dynamic type discovery from step 1
 8. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
-9. **Update skill symlinks** in this repo — `.claude/skills/`, `.agents/skills/`, and `~/.codex/skills/` (if used) — to point to new `skills/` location instead of `kb/instructions/`
+9. **Update runtime symlinks** in this repo — `.claude/skills/`, `.agents/skills/`, and `~/.codex/skills/` (if used) — to point to new `skills/` location instead of `kb/instructions/`
 10. **Create slim AGENTS.md.template**
 11. **Update INSTALL.md** with plugin-based procedure
 12. **Test install into a fresh repo.** Create a blank repo, add commonplace as submodule, run the install procedure from step 11. Verify:
@@ -329,17 +340,17 @@ Step 2 is the big simplification — one command replaces the symlink loop.
     - `/commonplace:write adr` fails gracefully with "type not found" and lists available types
     - After copying `adr` type template from `commonplace/`, `/commonplace:write adr` works
 
-13. **Dogfood: use the restructured repo for real work.** Steps 1-11 already restructure this repo (skills moved, manifests created, template slimmed, INSTALL.md updated). This step is about verifying it works in daily use:
+13. **Dogfood: use the restructured repo for real work.** Steps 1-11 already restructure this repo. This step verifies it works in daily use:
     - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation now handled by skills)
     - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
-    - Verify local skills (`review-related-system`) still work from `kb/instructions/`
+    - Verify `rg "keyword" kb/` finds skill content via the symlinks in `kb/instructions/`
     - Live with the restructured layout for at least a week of real work before declaring the migration complete
 
 ## Open questions
 
 - **`.claude-plugin/plugin.json` format** — confirmed: only `name` is required. Optional: `version`, `description`, `author`, `homepage`, `repository`, `license`, `keywords`. Component paths (`skills`, `commands`, `hooks`, `mcpServers`) default to conventional directories at plugin root.
 - **`/commonplace:write` vs `/commonplace:write-note`** — one skill with arguments or several? Leaning one with arguments for simpler installation.
-- **Related system reviews** — stays as a local skill in `kb/instructions/`, not in the plugin. Depends on `related-system` type. Practitioners who want it copy the type and symlink the skill manually.
+- **Related system reviews** — ships via the plugin (all skills in `skills/`). Depends on `related-system` type, which is local. Discoverable but errors gracefully until the practitioner copies the type template.
 - **Tasks** — no skill for task creation yet. Tasks don't have frontmatter and live in `kb/tasks/`. Different enough to defer.
 - **Review/Fix promotion** — promote REVIEW-SYSTEM.md and FIX-SYSTEM.md to skills? They're complex enough, but adds to the skill count. Defer until after initial migration.
 - **Log entries** — "append to kb/log.md" is too simple for a skill. Mention in WRITING.md and in `write` skill's "for quick observations" section.
