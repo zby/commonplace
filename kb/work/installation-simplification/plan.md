@@ -124,7 +124,7 @@ No `kb/GOALS.md` as a separate file. One location, no sync problem, no competing
 | Section | Why |
 |---|---|
 | **"No wiki-links"** convention | Already enforced by WRITING.md's link format |
-| **Search patterns** (4 grep examples) | Agents know how to grep. WRITING.md has graph utilities. |
+| **Search patterns** (4 grep examples) | Reduce to 1 compact example in the template. A search hint helps the agent discover KB content — without it, search quality [degrades silently](../../kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). One `rg` example is enough; the agent generalizes from it. |
 | **Git conventions** | Not the template's concern — each project has its own git rules |
 
 ## Resulting template
