@@ -131,22 +131,21 @@ The main new skill. Absorbs routing table + content workflow + type routing.
 1. Parse arguments: optional type and optional topic
 2. Read `kb/GOALS.md` if it exists — check fit
 3. Search first — find related notes before writing
-4. Route to directory and resolve type template:
+4. **Discover available types dynamically.** Scan `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/` for `.md` templates. The available types are whatever templates exist — core types are always present, local types appear if the practitioner added them. Do not hardcode a type list.
+5. Route to directory and resolve type template:
    - `note` (default) → `kb/notes/`, base template from WRITING.md
-   - `structured-claim` → `kb/notes/`, read `kb/notes/types/structured-claim.md`
-   - `adr` → `kb/notes/adr/`, read `kb/notes/types/adr.md`
    - `index` → `kb/notes/`, read `kb/notes/types/index.md`
-   - `related-system` → `kb/notes/related-systems/`, read `kb/notes/types/related-system.md`
    - `source-review` → `kb/sources/`, read `kb/sources/types/source-review.md`
-5. Read WRITING.md for checklist (title-as-claim test, description quality, composability)
-6. Set appropriate traits in frontmatter based on content:
+   - Any other type → look up `kb/notes/types/{type}.md`. If the template exists, read it and use its directory convention. If it doesn't exist, error: "type '{type}' not found — available types: {list from discovery step}."
+6. Read WRITING.md for checklist (title-as-claim test, description quality, composability)
+7. Set appropriate traits in frontmatter based on content:
    - Claim-shaped title → add `title-as-claim` to `traits:`
    - Contains comparison → add `has-comparison`
    - References external sources → add `has-external-sources`
    - Defines a term → add `definition`
-7. Write the note
-8. Run `/commonplace:validate`
-9. Prompt: "Run /commonplace:connect to link this note?"
+8. Write the note
+9. Run `/commonplace:validate`
+10. Prompt: "Run /commonplace:connect to link this note?"
 
 **Trigger:** `/commonplace:write`, `/commonplace:write [type]`, `/commonplace:write [type] [topic]`
 
@@ -237,24 +236,26 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 
 **Dependency:** The type-system rationalization workshop (`kb/work/type-system-rationalization/`) should land its YAML type definitions (phases 1-2) before this migration, so the install copy step has `.yaml` files to copy and the `write` skill can reference the updated type list. The trait migration (phase 3) and review integration (phase 4) can happen independently.
 
-1. **Promote `index` and `source-review` to core types.** Currently these are defined in `kb/*/types/` alongside local types like `adr` and `related-system`, with no distinction. To make them core, we need to:
+1. **Make type discovery dynamic.** Currently the routing table in CLAUDE.md hardcodes which types exist and where they route. The `/write` skill must discover types by scanning `kb/*/types/` directories at invocation time, not from a hardcoded list. This is a prerequisite for everything else — without dynamic discovery, `/write` can't be a framework skill (it would need to know about local types it shouldn't depend on). Design: the skill scans for `*.md` templates in type directories, extracts the type name from the filename, and presents available types to the agent. Core types (`note`, `text`, `index`, `source-review`) are always present after install; local types appear if the practitioner has added them. The type template itself should declare which collection directory it targets (e.g., `adr.md` declares it writes to `kb/notes/adr/`) — this replaces the hardcoded routing table.
+
+2. **Promote `index` and `source-review` to core types.** Currently these are defined in `kb/*/types/` alongside local types like `adr` and `related-system`, with no distinction. To make them core, we need to:
    - Verify that the `index` type template (`index.md`, `index.yaml`) has no dependencies on local conventions (our specific tags, our specific indexes). It should work for any KB's indexes.
    - Verify that the `source-review` type template works for any external source, not just our ingestion conventions.
    - Move these into `types/` at the repo root alongside `note` and `text` base definitions, if that's where core types live. Or mark them in `kb/*/types/` with a convention that distinguishes core from local — depends on where the type-system-rationalization workshop lands.
    - Ensure validation and the `/write` skill treat these as core types that are always available.
    - Update WRITING.md if it references indexes — confirm it documents the `index` type as part of the base set.
 
-2. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. Ensure skills depend only on core types — the `/write` skill routes to `note` by default; specialized types are loaded on demand if the practitioner has them. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
+3. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
 
-3. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
-3. **Create `skills/` directory and move skill subdirectories** from `kb/instructions/`
-5. **Update internal references** in moved skills (paths, cross-skill invocations)
-6. **Create `skills/write/SKILL.md`** — the new routing skill (uses updated type list + trait guidance)
-7. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
-8. **Update `.claude/skills/` symlinks** in this repo to point to new `skills/` location
-9. **Create slim AGENTS.md.template**
-10. **Update INSTALL.md** with plugin-based procedure
-11. **Test** — install into a fresh test repo, verify skills work with namespace prefix
+4. **Create `.claude-plugin/plugin.json`** — minimal plugin manifest
+5. **Create `skills/` directory and move framework skill subdirectories** from `kb/instructions/`. Local skills (`review-related-system`) stay in `kb/instructions/`.
+6. **Update internal references** in moved skills (paths, cross-skill invocations)
+7. **Create `skills/write/SKILL.md`** — the new routing skill, using dynamic type discovery from step 1
+8. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
+9. **Update `.claude/skills/` symlinks** in this repo to point to new `skills/` location
+10. **Create slim AGENTS.md.template**
+11. **Update INSTALL.md** with plugin-based procedure
+12. **Test** — install into a fresh test repo, verify: skills work with namespace prefix, `/write` discovers only core types, `/write adr` fails gracefully until practitioner copies the adr type template
 
 ## Open questions
 
