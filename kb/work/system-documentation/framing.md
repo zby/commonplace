@@ -22,7 +22,9 @@ A practitioner building an agentic KB needs to answer, roughly in this order:
 
 3. **How did someone else do it?** — A reference implementation. Commonplace as a worked example. Not to copy, but to see what the patterns look like when instantiated — and what tradeoffs were made.
 
-4. **What should I do differently?** — The ADRs and system-specific notes, read critically. Where our choices reflect the theory, and where they reflect our particular constraints (single user, methodology-is-content, no external consumers until recently).
+4. **How do I build skills?** — The skill system. How skills are structured, how they're loaded, how they interact with the agent harness, what makes a good skill. Our skills (`/ingest`, `/connect`, `/snapshot-web`, `/review-related-system`, etc.) are working examples — but a practitioner building their own KB needs to understand the skill architecture, not just read our skill implementations. This includes: how skills are discovered and activated, how they compose with always-loaded context, how methodology distills into skills, and how to write new ones.
+
+5. **What should I do differently?** — The ADRs and system-specific notes, read critically. Where our choices reflect the theory, and where they reflect our particular constraints (single user, methodology-is-content, no external consumers until recently).
 
 ### What's blocking this
 
@@ -34,6 +36,8 @@ A practitioner building an agentic KB needs to answer, roughly in this order:
 
 - **The methodology-is-content property cuts both ways.** It means the system documents itself by using itself, which is powerful for internal consistency. But it also means an external reader can't distinguish "this note is about how to build KBs in general" from "this note is about how this particular KB works."
 
+- **Skills have theory and implementations but no architecture guide.** The theory notes explain *why* skills work (methodology distillation, typed callables, progressive disclosure). The skill files show *what* specific skills do. Missing: a document explaining the skill architecture — how the harness discovers and loads skills, how activation triggers work, how skills compose with always-loaded context, and how to write a new skill from scratch. A practitioner building their own system needs this more than they need to read our `/ingest` skill.
+
 ## What we already have
 
 - **CLAUDE.md** — routing table, vocabulary, conventions. Deliberately minimal.
@@ -42,6 +46,8 @@ A practitioner building an agentic KB needs to answer, roughly in this order:
 - **Type templates** (`kb/notes/types/`, `kb/sources/types/`) — structural specs for document types.
 - **Theory indexes** — learning-theory-index, computational-model-index, foundations-index. Well-curated entry points into general theory.
 - **Related-systems index** — 70+ external systems as comparative evidence.
+- **Skills** (`kb/instructions/` and harness-injected) — executable operations like `/ingest`, `/connect`, `/snapshot-web`, `/review-related-system`. Each skill is a working example of methodology-to-procedure distillation, but there's no guide explaining the skill architecture itself — how skills are discovered, loaded, activated, and how to write new ones.
+- **Skill theory notes** — [skills derive from methodology through distillation](../notes/skills-derive-from-methodology-through-distillation.md), [instructions are typed callables](../notes/instructions-are-typed-callables.md), [generate instructions at build time](../notes/generate-instructions-at-build-time.md). These explain the theory behind skills but don't document how to build one.
 - **System-specific notes** scattered in `kb/notes/` — arguments for specific design choices, not indexed as a collection.
 
 ## Options to explore
