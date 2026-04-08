@@ -1,13 +1,13 @@
 ---
-description: Decision to deliver commonplace as a plugin with skills as the primary interface, splitting types into core (note, text, index, source-review) and local, with Goals inlined and dynamic type discovery for practitioner-defined types
+description: Decision to deliver commonplace through plugin-discovered top-level skills, keep KB Goals always-loaded, split types into core and local, and use dynamic type discovery for practitioner-defined types
 type: adr
 tags: [architecture]
-status: proposed
+status: accepted
 ---
 
 # 013-skills-first-delivery-with-core-local-type-split
 
-**Status:** proposed
+**Status:** current
 **Date:** 2026-04-08
 
 ## Context
@@ -17,17 +17,7 @@ The current installation requires copying a ~160-line AGENTS.md template that ca
 1. **Embedded KBs** (KB inside a code project) pay a high context cost. The routing table competes with the project's own CLAUDE.md content.
 2. **The template hardcodes our types.** The routing table references `adr`, `related-system`, `structured-claim` — types specific to our KB, not every KB. A practitioner building a payments KB doesn't need these and would need to edit the template to remove them and add their own.
 
-Meanwhile, skills have matured enough that most of the routing table can be absorbed into an on-demand `/write` skill. The question is what the installed system should look like.
-
-### What the plan explored
-
-The [installation-simplification workshop](../../work/installation-simplification/plan.md) explored:
-- Moving routing from always-loaded template into skills (the `/write` skill absorbs the routing table, content workflow, and type routing)
-- Plugin packaging for one-step installation with automatic namespacing
-- Which types are framework (every KB needs them) and which are our local content types
-- Whether Goals should be in a separate file or always-loaded (resolved: always-loaded, because scoping decisions [degrade silently](../agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) without them)
-- How the `/write` skill handles practitioner-defined types it doesn't know about (dynamic discovery)
-- A [practitioner contract](../../work/system-documentation/practitioner-contract.md) defining what the framework provides vs what the practitioner owns
+Meanwhile, skills have matured enough that most of the routing table can be absorbed into an on-demand `/write` skill. The question is what the installed system should look like, and where framework skills should live.
 
 ## Decision
 
@@ -37,7 +27,7 @@ The always-loaded template shrinks to ~50 lines: KB Goals (practitioner fills in
 
 ### 2. Plugin packaging
 
-Skills are distributed as a plugin (`.claude-plugin/plugin.json` + `.codex-plugin/plugin.json`) for automatic namespacing (`/commonplace:write`) and one-step installation. Symlink fallback remains for environments without plugin support.
+Framework skills live at the repo root in `skills/` and are distributed as a plugin (`.claude-plugin/plugin.json` + `.codex-plugin/plugin.json`) for automatic namespacing (`/commonplace:write`) and one-step installation. Symlink fallback remains for environments without plugin support.
 
 ### 3. Core types vs local types
 
@@ -63,8 +53,12 @@ Seven **framework skills** move to `skills/` and ship via the plugin:
 - `convert` — converts between core types (text→note)
 - `revise-iterative` — iteratively revises notes
 
-**Local skills** stay in `kb/instructions/` and are not part of the plugin:
+`kb/instructions/` remains for non-skill instructions and repo-local workflows such as `WRITING.md`, `REVIEW-SYSTEM.md`, `FIX-SYSTEM.md`, and their helper procedures. We do **not** keep a compatibility mirror of framework skills under `kb/instructions/`; `skills/` is the canonical location.
+
+**Repo-local skills** stay in `kb/instructions/` and are not part of the framework contract today:
 - `review-related-system` — depends on `related-system` local type
+
+This is a temporary boundary, not a claim that related-system review should stay local forever. The current reason is dependency packaging: `review-related-system` depends not only on the `related-system` type but also on review-system procedures that are not yet shipped as framework infrastructure. We will revisit this once the review system itself has a framework-installable surface.
 
 ### 5. Goals are always-loaded
 
@@ -82,14 +76,25 @@ This lets practitioners add their own types by dropping templates into `kb/*/typ
 - Installation is simpler — plugin install + copy core types + fill in Goals. No 160-line template to understand and customize.
 - Embedded KBs pay less context cost — ~50 lines instead of ~160.
 - Practitioners can add domain-specific types without editing framework files.
-- Framework and local concerns are clearly separated — the practitioner's `kb/` is entirely theirs.
+- Framework and local concerns are clearly separated — framework skills live in `skills/`, KB procedures live in `kb/instructions/`, and the practitioner's `kb/` is entirely theirs.
 
 **Harder:**
 - Skills must be well-written because they replace always-loaded instructions. A broken `/write` skill means the agent can't create notes properly, while a broken routing table row in the old template was just one row.
 - Two plugin manifests to maintain (Claude Code + Codex).
 - Dynamic type discovery adds complexity to the `/write` skill — it must handle missing types gracefully, discover templates across multiple `types/` directories, and parse target-directory declarations from templates.
-- The framework/local skill split means `review-related-system` isn't available by default — practitioners who want it must copy the type and symlink the skill manually.
+- The framework/local skill split means `review-related-system` is not part of the installed framework contract yet. Packaging it cleanly requires shipping the review system as framework infrastructure, not just copying the `related-system` type.
 - Core type templates must remain generic — any convention specific to our KB that leaks into a core type template breaks the contract.
+
+## Implementation Notes
+
+This ADR now reflects the implemented repository layout:
+
+- framework skills live in `skills/`
+- plugin manifests live at `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
+- runtime symlinks may still point into `skills/` for direct repo use
+- `kb/instructions/` contains writing/review/fix procedures and repo-local workflows, not a framework-skill mirror
+
+The open follow-up is review-system packaging: once the review system becomes a framework surface, `review-related-system` can move from "repo-local workflow" to "plugin-shipped skill whose only extra dependency is the copied `related-system` type."
 
 **Supersedes:** This decision refines [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) by specifying what crosses the boundary between the two trees and in what form. ADR-006 remains valid for the overall layout; this ADR specifies the delivery mechanism within that layout.
 
@@ -101,5 +106,4 @@ Relevant Notes:
 - [agent context is constrained by soft degradation](../agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: why Goals must be always-loaded (scoping degrades silently)
 - [agent statelessness makes routing architectural](../agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: every session is day one; skills are permanent prosthetics
 - [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — grounds: the `/write` skill is a distillation of the routing table and content workflow
-- [installation-simplification plan](../../work/installation-simplification/plan.md) — extends: the detailed migration steps this ADR summarizes
 - [practitioner contract](../../work/system-documentation/practitioner-contract.md) — extends: the full framework-vs-practitioner boundary this ADR establishes

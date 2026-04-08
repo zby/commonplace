@@ -119,7 +119,7 @@ So moving a file between directories risks changing the *practical* meaning of i
 
 ## 3. What the validator actually enforces
 
-The deterministic validator is [`kb/instructions/validate/validate_notes.py`](../../instructions/validate/validate_notes.py).
+The deterministic validator is [`skills/validate/validate_notes.py`](../../../skills/validate/validate_notes.py).
 
 Its actual behavior is much narrower than the stated model.
 

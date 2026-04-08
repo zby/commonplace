@@ -61,6 +61,8 @@ scripts/                     Standalone automation
 
 Promoted framework skills live in `skills/`. Claude Code can load them via plugin install or `.claude/skills/`, and Codex can load them via plugin install or project-local `.agents/skills/`. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
+Framework skills:
+
 | Skill | Purpose |
 |---|---|
 | `/write` | Route and draft a note, index, or discovered specialized type |
@@ -70,7 +72,10 @@ Promoted framework skills live in `skills/`. Claude Code can load them via plugi
 | `/ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `/snapshot-web` | Capture a URL to `kb/sources/` |
 | `/revise-iterative` | Iteratively revise a note without changing its claims |
-| `/evaluate-scenarios` | Measure scenario costs in hops and instruction bytes |
+
+Repo-local skills and procedures remain under `kb/instructions/`. Examples:
+- `/evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
+- `/review-related-system` — related-system review workflow, still tied to local review infrastructure
 
 ## Content workflow
 

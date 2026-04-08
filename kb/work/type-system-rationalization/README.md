@@ -52,7 +52,7 @@ This separates:
 - [directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — economic argument for local type definitions
 - [directories can replace type fields for structural exemptions](../note-types/directories-as-types.md) — competing proposal: some review-routing distinctions should be carried by path, not frontmatter
 - [writing guide](../../instructions/WRITING.md) — operational write-path guidance for common vs directory-local types
-- [validator](../../instructions/validate/validate_notes.py) — current implementation surface that reveals which type distinctions are real versus documentary
+- [validator](../../../skills/validate/validate_notes.py) — current implementation surface that reveals which type distinctions are real versus documentary
 
 ## Tensions to resolve
 

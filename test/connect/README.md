@@ -1,6 +1,6 @@
 # Connect Skill Tests
 
-Integration tests for the `/connect` and `/connect-new` skills. Each test runs a skill on a fixture note and checks the output.
+Integration tests for the `/connect` skill. Each test runs the skill on a fixture note and checks the output.
 
 **Workshop: `test/connect/`** — all reports are saved here.
 
@@ -19,7 +19,7 @@ Set the workshop, then invoke the skill on a fixture:
 ```
 Workshop is test/connect/
 
-/connect-new test/connect/fixtures/frontloading-stripped.md
+/connect test/connect/fixtures/frontloading-stripped.md
 ```
 
 ## Test cases
@@ -27,7 +27,7 @@ Workshop is test/connect/
 ### 1. Stripped note — can it recover connections?
 
 **Input:** `fixtures/frontloading-stripped.md` or `fixtures/constraining-stripped.md`
-**Skill:** `/connect-new`
+**Skill:** `/connect`
 **Workshop:** `test/connect/`
 
 **Check:**
@@ -57,7 +57,7 @@ Workshop is test/connect/
 ### 2. Intact note — does it handle existing links?
 
 **Input:** `fixtures/codification-intact.md`
-**Skill:** `/connect-new`
+**Skill:** `/connect`
 **Workshop:** `test/connect/`
 
 **Check:**
@@ -69,24 +69,10 @@ Workshop is test/connect/
 
 ### 3. No workshop set — does it fail?
 
-**Skill:** `/connect-new`
+**Skill:** `/connect`
 **Workshop:** (not set)
 
 **Check:**
 - [ ] Skill stops with a message about no active workshop
 
-## Comparing old vs new
-
-To compare both skills on the same fixture:
-
-```
-Workshop is test/connect/
-
-/connect test/connect/fixtures/frontloading-stripped.md
-/connect-new test/connect/fixtures/frontloading-stripped.md
-```
-
-Then diff the outputs:
-- Old connect: check if the fixture file was edited
-- New connect: check the saved report
-- Compare connection lists for coverage
+Run the skill against a fixture, then inspect the saved report for coverage and link quality.

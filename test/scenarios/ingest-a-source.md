@@ -79,6 +79,6 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 **Commonplace repo:** Escalation is seamless — methodology notes are in the same `kb/notes/` the agent already searches. The /ingest skill is the template version (in `skills/`), not a rendered version.
 
-**Installed project:** The /ingest skill is rendered into `.claude/skills/` with project-specific paths. Escalation adds 2-3 hops but is rare — most sources fit the standard extraction template.
+**Installed project:** The /ingest skill is loaded from the installed `commonplace/skills/` surface via plugin install or runtime symlink. Escalation adds 2-3 hops but is rare — most sources fit the standard extraction template.
 
 **Source type variation:** Academic papers, blog posts, GitHub issues, and X/Twitter posts each have different capture methods (handled by /snapshot-web) but the analysis pipeline is the same. The variable cost is in step 3 (capture method) not in steps 4-7.

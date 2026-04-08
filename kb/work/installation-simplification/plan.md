@@ -38,15 +38,7 @@ commonplace/
     notes/                      # Methodology notes (this repo's own KB)
     sources/
     work/
-    instructions/               # Non-skill instructions + symlinks to skills
-      write -> ../../skills/write                   # symlink for searchability
-      connect -> ../../skills/connect               # symlink for searchability
-      validate -> ../../skills/validate             # etc.
-      snapshot-web -> ../../skills/snapshot-web
-      ingest -> ../../skills/ingest
-      convert -> ../../skills/convert
-      revise-iterative -> ../../skills/revise-iterative
-      review-related-system -> ../../skills/review-related-system
+    instructions/               # Non-skill instructions and repo-local workflows
       WRITING.md                # Non-skill instruction (actual file)
       REVIEW-SYSTEM.md          # Non-skill instruction (actual file)
       FIX-SYSTEM.md             # Non-skill instruction (actual file)
@@ -58,10 +50,10 @@ commonplace/
   INSTALL.md
 ```
 
-Key design: **skills live in `skills/`** (clean for practitioners, default plugin discovery path). In our repo, **symlinks in `kb/instructions/` point back to `skills/`** so that `rg "keyword" kb/ --glob "*.md"` still finds skill content. This is a development convenience for us — practitioners don't need these symlinks and won't have them.
+Key design: **skills live in `skills/`** (clean for practitioners, default plugin discovery path). `kb/instructions/` stays for non-skill instructions and repo-local workflows. Framework vs local distinction is by type dependency, not by directory.
 
 - **Practitioners see** a clean `skills/` directory at the plugin root. The plugin discovers skills there. No ambiguity about where skills live vs where instructions live.
-- **We see** skills in both `skills/` (canonical) and `kb/instructions/` (symlinked) so they're searchable alongside WRITING.md and other operational docs.
+- **Repo-local procedures** such as WRITING, review system docs, and fix instructions stay in `kb/instructions/`.
 - **Framework vs local distinction is by type dependency, not by directory.** All skills ship via the plugin. Framework skills work out of the box (core types installed). Local skills are discoverable but error gracefully until their type templates are installed.
 - **Framework skills:** `write`, `connect`, `validate`, `snapshot-web`, `ingest`, `convert`, `revise-iterative` — depend only on core types (`note`, `text`, `index`, `source-review`).
 - **Local skills:** `review-related-system` — depends on `related-system` type. Discoverable via plugin but errors with "type not found" until the practitioner copies the type template.
@@ -320,7 +312,7 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 3. **Narrow the install to core types only.** Once `index` and `source-review` are established as core alongside `note` and `text`, change the install copy commands to only copy these four. All other types (`structured-claim`, `adr`, `related-system`, `spec`, `review`, task types) stay in `commonplace/` as examples the practitioner can optionally copy. See [practitioner contract](../system-documentation/practitioner-contract.md) for the full classification.
 
 4. **Create plugin manifests** — `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Default `skills/` discovery path.
-5. **Create `skills/` directory and move all skill subdirectories** from `kb/instructions/` to `skills/`. All skills move — both framework and local. The framework/local distinction is by type dependency, not directory. Then create **symlinks in `kb/instructions/`** pointing back to `skills/` so skills remain searchable via `rg "keyword" kb/`. These symlinks are a development convenience for this repo — practitioners won't have them.
+5. **Create `skills/` directory and move all skill subdirectories** from `kb/instructions/` to `skills/`. All skills move — both framework and local. The framework/local distinction is by type dependency, not directory.
 6. **Update internal references** in moved skills (paths to WRITING.md, type templates, cross-skill invocations with `commonplace:` prefix). Paths change from `kb/instructions/` depth to `skills/` depth.
 7. **Create `skills/write/SKILL.md`** — the new routing skill, using dynamic type discovery from step 1
 8. **Add filename convention to WRITING.md** + update WRITING.md's reference to CLAUDE.md routing
@@ -343,7 +335,7 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 13. **Dogfood: use the restructured repo for real work.** Steps 1-11 already restructure this repo. This step verifies it works in daily use:
     - Slim CLAUDE.md to Development + Git + KB Goals only (routing, search patterns, escalation now handled by skills)
     - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
-    - Verify `rg "keyword" kb/` finds skill content via the symlinks in `kb/instructions/`
+    - Verify day-to-day KB work still works without any compatibility mirror under `kb/instructions/`
     - Live with the restructured layout for at least a week of real work before declaring the migration complete
 
 ## Open questions

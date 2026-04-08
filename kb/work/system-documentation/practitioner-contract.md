@@ -68,7 +68,7 @@ The framework's validation, review gates, and skills treat custom types identica
 
 ### Skills
 
-Skills are executable operations symlinked from `commonplace/kb/instructions/` into the agent runtime's discovery directory. The practitioner uses them as-is and can write their own.
+Framework skills live in `commonplace/skills/` and are discovered by plugin install or runtime symlinks into the agent's discovery directory. The practitioner uses them as-is and can write their own.
 
 Skills assume top-level paths:
 - `/ingest` → reads from and writes to `kb/sources/`
