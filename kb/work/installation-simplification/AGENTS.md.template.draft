@@ -26,7 +26,14 @@
 The knowledge base lives in `kb/`. Search it when the user asks about decisions, reasoning, design rationale, or project knowledge.
 
 ```bash
-rg "keyword" kb/notes/ --glob "*.md"
+# Find notes by description (scan without opening)
+rg "^description:" kb/notes/ --glob "*.md"
+
+# Find notes by type
+rg "^type: note" kb/notes/ --glob "*.md"
+
+# Find notes by tag
+rg "^tags:.*my-tag" kb/notes/ --glob "*.md"
 ```
 
 Key entry points:

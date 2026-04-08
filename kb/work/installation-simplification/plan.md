@@ -124,7 +124,7 @@ No `kb/GOALS.md` as a separate file. One location, no sync problem, no competing
 | Section | Why |
 |---|---|
 | **"No wiki-links"** convention | Already enforced by WRITING.md's link format |
-| **Search patterns** (4 grep examples) | Reduce to 1 compact example in the template. A search hint helps the agent discover KB content — without it, search quality [degrades silently](../../kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). One `rg` example is enough; the agent generalizes from it. `rg` (ripgrep) is a system dependency — document in INSTALL.md prerequisites alongside git and python3. Agent harnesses (Claude Code, Codex) bundle `rg` internally, but practitioners need it for manual search. |
+| **Search patterns** (3 of 4 stay) | Keep the three structural patterns (search by description, by type, by tag) — they teach the agent that frontmatter fields are searchable axes, not just how to run `rg`. Drop the plain keyword search (agent already knows how to grep). `rg` (ripgrep) is a system dependency — document in INSTALL.md prerequisites alongside git and python3. |
 | **Git conventions** | Not the template's concern — each project has its own git rules |
 
 ## Resulting template
