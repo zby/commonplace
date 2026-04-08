@@ -33,29 +33,24 @@ The framework validates *structure* (field present, correct YAML type). It does 
 
 These ship with the framework and are copied into `kb/*/types/` at install. They work for any KB:
 
-**Framework types** (copied to practitioner's `kb/notes/types/` at install):
+**Current state:** the install step copies *all* type templates into the practitioner's `kb/*/types/` — every type we define, including our local ones. There is no framework/local distinction in what gets installed today.
 
-| Type | What it's for |
-|------|--------------|
-| `note` | Default structured writing type. Has frontmatter, claim title, description. Every KB needs this. |
-| `text` | No frontmatter. Raw capture, pre-formalization. Every KB needs a low-friction entry point. |
-| `index` | Curated navigation hub. Entries have context phrases explaining why each linked note is listed. Tags need indexes to become navigable — without them, tags are just strings in frontmatter. |
+**All types that ship today:**
 
-The installed skills work with these three types. Everything else is a local type.
+| Type | Core or local? | Notes |
+|------|---------------|-------|
+| `note` | Core | Default structured writing type. Every KB needs this. |
+| `text` | Core | No frontmatter. Raw capture. Every KB needs a low-friction entry point. |
+| `index` | Core | Curated navigation hub. Tags need indexes to become navigable — without them, tags are just strings in frontmatter. |
+| `structured-claim` | Local (ours) | Evidence/Reasoning/Caveats sections. Useful but not required. |
+| `adr` | Local (ours) | Architecture Decision Records. Only useful if the project makes architectural decisions. |
+| `related-system` | Local (ours) | External system reviews. Specific to our practice. |
+| `spec` | Local (ours) | Specification documents. |
+| `review` | Local (ours) | Dated reviews with findings. Tied to our review gate system. |
+| `source-review` | Local (ours) | Source analysis reports. Tied to our `/ingest` workflow. |
+| `task-backlog`, `task-active`, `task-recurring` | Local (ours) | Task lifecycle types. |
 
-**Our local types** (stay in `commonplace/kb/notes/types/`, not installed):
-
-| Type | Why it's local |
-|------|---------------|
-| `structured-claim` | Our convention for notes that need explicit Evidence/Reasoning/Caveats. A practitioner might adopt it or define their own argumentation type. |
-| `adr` | Architecture Decision Records. Specific to projects that make architectural decisions. |
-| `related-system` | External system reviews. Specific to our practice of comparing knowledge systems. |
-| `spec` | Specification documents. |
-| `review` | Dated reviews with findings. Tied to our review gate system. |
-| `source-review` | Source analysis reports. Tied to our `/ingest` workflow. |
-| `task-backlog`, `task-active`, `task-recurring` | Task lifecycle types. |
-
-Practitioners can copy any of these into their own `kb/*/types/` if they find them useful — they're examples, not framework requirements. Or they define their own from scratch.
+**Planned change:** narrow the install to copy only core types (`note`, `text`, `index`). Local types would stay in `commonplace/kb/*/types/` as examples the practitioner can copy if they want them. Skills would depend only on core types. This separation hasn't landed yet — today everything gets copied.
 
 ### The local types pattern
 
