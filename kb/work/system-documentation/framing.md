@@ -107,27 +107,36 @@ The practitioner then builds their own KB inside `kb/notes/`. **They should be a
 | `kb/log.md` | Convention (recommended) | Use for improvement logging |
 | Subdirectory structure in `kb/notes/` | Their choice | Organize by topic, project, whatever fits |
 
-### What needs to be documented
+### The contract, stated clearly
 
-The contract needs to answer:
+The framework provides **mechanism**. The practitioner provides **vocabulary and organization**.
 
-1. **What directories does the framework expect?** Just `kb/notes/types/`, `kb/sources/types/`, `kb/tasks/types/` (for type templates), and the instructions directory. Everything else is optional.
+**Framework provides (don't change these):**
+- Frontmatter schema: `type`, `status`, `description`, `tags`, `traits` fields
+- Type templates in `*/types/` directories (extensible — add your own types)
+- Validation rules that check frontmatter, links, structure
+- Skills that operate on `kb/notes/`, `kb/sources/`, `kb/tasks/`
+- Review gates that assess notes against quality criteria
+- `WRITING.md` conventions (customizable quality bar section)
+- `log.md` as improvement log convention
 
-2. **What conventions do skills assume?** Skills like `/ingest` assume sources go in `kb/sources/`. Skills like `/connect` assume notes are in `kb/notes/`. If a practitioner reorganizes, do skills break?
+**Practitioner provides (entirely theirs):**
+- Which tags exist and what they mean
+- Directory structure under `kb/notes/` — flat, nested by topic, by project, whatever
+- Which indexes exist and how they're organized
+- What their notes are about
+- Custom types beyond the base set
+- Their own skills
 
-3. **What can they change vs what breaks the framework?** Frontmatter fields (`type`, `status`, `tags`, `description`) are framework-expected — validation and review gates depend on them. But specific tag values, directory structure within `kb/notes/`, and which indexes exist are all theirs to decide.
+**The constraint:** skills assume top-level paths (`kb/notes/`, `kb/sources/`, `kb/tasks/`). Within those, any structure works — skills search recursively. A practitioner who puts notes in `kb/notes/payments/fraud/` doesn't break `/connect` or `/validate`. But renaming `kb/notes/` itself would.
 
-4. **What happens to our notes in their install?** Currently `commonplace/kb/notes/` contains our theory and methodology notes. The practitioner's agent can search into `commonplace/kb/` for methodology (per ADR-006). But are these notes *documentation for the framework* or *content that ships with the framework*? If theory notes like "context efficiency is the central design concern" are meant to be useful to practitioners, they should be discoverable and distinguished from methodology notes like "how the review gate system works."
+### Implication for our notes
 
-### The deeper question
+If `kb/` is entirely theirs, then the 150+ notes in `commonplace/kb/notes/` are a **read-only reference library** that ships with the framework — not part of the practitioner's KB. The practitioner's agent can search into `commonplace/kb/` for methodology (per ADR-006), but these notes aren't the practitioner's content.
 
-If the practitioner's `kb/notes/` is entirely theirs, then our theory notes in `commonplace/kb/notes/` are not documentation — they're a reference library that ships with the framework. The practitioner reads them for understanding but doesn't modify them. This is actually a clean separation:
+This means the scope signal question applies specifically to `commonplace/kb/notes/`: which reference notes are general theory (useful background for any KB builder) vs framework methodology (explains how commonplace works)? A practitioner might want to read the theory but doesn't need to understand our review gate implementation details unless they're modifying the framework.
 
-- `kb/` — their content, their organization, their notes
-- `commonplace/kb/notes/` — our theory and methodology, read-only reference
-- `commonplace/kb/instructions/` — operational procedures and skills, executable
-
-The scope signal question then applies only to `commonplace/kb/notes/`: which of those reference notes are general theory (useful background for any KB builder) vs methodology for the commonplace framework specifically (explains how this framework works)?
+Our indexes (`tags-index.md`, `learning-theory-index.md`, etc.) are also our content — they navigate our notes. The practitioner creates their own indexes for their own tags and topics. The framework could ship an example index as a template, but not as structure they're expected to keep.
 
 ## Open questions
 
