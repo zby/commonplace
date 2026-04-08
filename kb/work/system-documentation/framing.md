@@ -27,6 +27,12 @@ Two things, which may or may not be the same mechanism:
 
 2. **System documentation** that explains how the installed system works — organized by subsystem (skills, types, validation, review, linking, workshop), current-state not decision-history, aimed at someone who has the system and needs to understand and extend it.
 
+3. **A clear practitioner contract** — what's framework (mechanism the practitioner uses as-is) vs what's local (our content choices they'll replace with their own). See [practitioner-contract.md](./practitioner-contract.md). Key distinctions already identified:
+   - Framework types: `note`, `text`, `index`. Everything else is our local types.
+   - Validation: framework (deterministic, domain-agnostic). Review gates: mixed (some universal, some domain-specific).
+   - WRITING.md: functional requirements (description-as-filter, claim titles) are framework because skills depend on them. Quality bar is practitioner-customizable.
+   - Tags, directories, indexes: entirely the practitioner's vocabulary.
+
 ## Options for the per-note signal
 
 ### A. Scope trait in frontmatter

@@ -85,15 +85,23 @@ Within those top-level directories, skills search recursively. Any internal dire
 
 ### Validation and review gates
 
-Validation checks structural contracts (frontmatter present, links resolve, type-specific requirements met). Review gates check semantic quality (grounding alignment, confidence calibration, internal consistency, etc.).
+**Validation** is framework — deterministic, code-only, no LLM calls. It checks structural contracts: frontmatter present, correct YAML types, links resolve, type-specific required fields. It works on any KB that uses the frontmatter schema, regardless of content domain. Custom types get the same validation as built-in types, as long as their `.yaml` definition specifies the requirements.
 
-Both operate on whatever types exist in `*/types/`. Custom types get the same validation and review treatment as built-in types, as long as their `.yaml` definition specifies the requirements.
+**Review gates** are mixed — framework vs local. Some gates check universal prose quality that applies to any KB (redundant restatement, compound bullets, bridge paragraph duplication, internal consistency). Others check domain-specific concerns (e.g., `prose/anthropomorphic-framing` is only relevant for AI systems writing). The gate classification — which are framework-portable and which are our local gates — is an open question.
 
 ### WRITING.md
 
-Copied from framework at install. Contains the writing checklist (claim titles, description quality, composability, index membership) and templates for `note` and `structured-claim`.
+Copied from framework at install. Contains two distinct layers:
 
-The practitioner should customize the **Quality bar** section for their domain — what's worth a note vs a log entry depends on the project.
+**Functional requirements** (framework — skills depend on these):
+- **Description as retrieval filter, not summary.** `/connect` and other discovery skills use descriptions to decide relevance without loading full notes. If descriptions are summaries, the agent must load every note to judge relevance — defeating progressive disclosure under bounded context. This is a functional requirement, not a style preference.
+- **Claim titles.** Titles that carry the argument enable traversal-as-reasoning — the agent can scan an index and build understanding from titles alone. Skills that search and connect rely on titles being informative.
+- **Composability check.** "Can this note be linked without dragging irrelevant context?" ensures notes work as building blocks. Connection skills assume this.
+- **Index membership.** An unconnected note is invisible to future search and traversal.
+
+**Quality bar** (practitioner-customizable):
+- What's worth a note vs a log entry depends on the domain. The template includes a section the practitioner fills in for their project — "a design decision is worth a note when it affects more than one endpoint" vs "any recipe variation worth remembering gets a note."
+- Templates for specific note types. The framework ships templates for `note`; the practitioner adds templates for their custom types.
 
 ## What the practitioner provides
 
@@ -142,6 +150,7 @@ An open question from the [workshop framing](./framing.md): should these referen
 | Directory structure | Provides top-level collections | Organizes freely within them |
 | Indexes | Ships examples in `commonplace/kb/notes/` | Creates their own |
 | Skills | Ships core set | Extends with their own |
-| Validation & review | Provides machinery | Gets automatic coverage for custom types |
-| WRITING.md | Ships template | Customizes quality bar |
+| Validation | Framework — deterministic, domain-agnostic | Gets automatic coverage for custom types |
+| Review gates | Mixed — some universal, some domain-specific | May define domain-specific gates |
+| WRITING.md | Ships functional requirements (description-as-filter, claim titles, composability) | Customizes quality bar for their domain |
 | Theory notes | Ships as reference library | Reads, doesn't modify |
