@@ -276,7 +276,26 @@ Step 2 is the big simplification — one command replaces the symlink loop.
 9. **Update skill symlinks** in this repo — `.claude/skills/`, `.agents/skills/`, and `~/.codex/skills/` (if used) — to point to new `skills/` location instead of `kb/instructions/`
 10. **Create slim AGENTS.md.template**
 11. **Update INSTALL.md** with plugin-based procedure
-12. **Test** — install into a fresh test repo, verify: skills work with namespace prefix, `/write` discovers only core types, `/write adr` fails gracefully until practitioner copies the adr type template
+12. **Test install into a fresh repo.** Create a blank repo, add commonplace as submodule, run the install procedure from step 11. Verify:
+    - Plugin installs and skills are discoverable with namespace prefix
+    - `/commonplace:write` creates a note with correct frontmatter in `kb/notes/`
+    - `/commonplace:write index` creates an index
+    - `/commonplace:validate` passes on the created notes
+    - `/commonplace:connect` finds and links related notes
+    - `/commonplace:ingest` snapshots a URL and writes a source-review
+    - `/commonplace:write adr` fails gracefully with "type not found" and lists available types
+    - After copying `adr` type template from `commonplace/`, `/commonplace:write adr` works
+    - `kb/GOALS.md` is present and skills read it
+
+13. **Dogfood: restructure this repo to match the installed layout.** This repo is both the framework source and its own KB. Restructure so it uses the same mechanisms a practitioner would:
+    - Move framework skills from `kb/instructions/` to `skills/`
+    - Create plugin manifests
+    - Move KB Goals from CLAUDE.md to `kb/GOALS.md`
+    - Fold conventions into WRITING.md
+    - Slim CLAUDE.md to Development + Git sections only (everything KB-related handled by skills and `kb/GOALS.md`)
+    - Update all symlinks to point to `skills/`
+    - Verify all existing workflows still work: note writing, ingestion, connection, validation, review sweeps
+    - Live with the restructured layout for at least a week of real work before declaring the migration complete
 
 ## Open questions
 
