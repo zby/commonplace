@@ -38,7 +38,7 @@ mkdir -p kb/work/connect/
 **Execute these steps:**
 
 1. Read the target note fully — understand its claim and context
-2. **Check note type.** If the target has no frontmatter (a `text` file), run `/convert` on it first to add frontmatter with `status: seedling`.
+2. **Check note type.** If the target has no frontmatter (a `text` file), run `/commonplace:convert` on it first to add frontmatter with `status: seedling`.
 3. **Throughout discovery:** Capture actual query strings, scores, and which candidates you evaluated or rejected. This becomes the Discovery Trace.
 4. Run Phase 0 (sync search index)
 5. Run discovery: index scan → topic indexes → semantic search → keyword search → link following
@@ -178,7 +178,7 @@ If you cannot fill in [specific reason] with something substantive, the connecti
 
 ## Text File Check
 
-If a candidate has no frontmatter (a `text` file), do **not** propose it as a regular connection. Instead, route it to the `### Raw text (needs /convert)` subsection in the report. Still apply the articulation test — explain why the text file is relevant — but do not add it to "Connections Found." Text files are unstructured, unvalidated material; linking to them from notes would give them unearned authority. The raw text subsection serves as a promotion signal: accumulating mentions indicate the text is worth converting to a note.
+If a candidate has no frontmatter (a `text` file), do **not** propose it as a regular connection. Instead, route it to the `### Raw text (needs /commonplace:convert)` subsection in the report. Still apply the articulation test — explain why the text file is relevant — but do not add it to "Connections Found." Text files are unstructured, unvalidated material; linking to them from notes would give them unearned authority. The raw text subsection serves as a promotion signal: accumulating mentions indicate the text is worth converting to a note.
 
 ## Target Maturity Check
 
@@ -271,7 +271,7 @@ After saving, tell the user: `Report saved: <full path>`
 **Bidirectional candidates** (reverse link also worth adding):
 - [target](kb/notes/target.md) ↔ source — **contradicts**: [reason the return path is also useful]
 
-### Raw text (needs /convert)
+### Raw text (needs /commonplace:convert)
 
 - [text-file](kb/notes/text-file.md) — potential **extends**: [reason this text is relevant]
 
@@ -316,7 +316,7 @@ Before saving the report, verify:
 
 **Conflicting notes:** Flag the tension, note which index Tensions section it belongs in. Do not resolve — flag for judgment.
 
-**Orphan discovery:** If you encounter unconnected notes during search, flag them. Do not attempt to connect them — that's a separate `/connect` run.
+**Orphan discovery:** If you encounter unconnected notes during search, flag them. Do not attempt to connect them — that's a separate `/commonplace:connect` run.
 
 ---
 

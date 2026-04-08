@@ -65,7 +65,7 @@ This keeps the common-case write path entirely within `kb/` (route from always-l
 
 The naming choice `kb/` over `memory/` avoids collision with Claude Code's per-user auto-memory directory at `~/.claude/projects/<project>/memory/`. The two serve different purposes (shared project knowledge vs personal preferences), and using the same name would create ambiguity.
 
-The full installation procedure is in [INSTALL.md](../../INSTALL.md).
+The full installation procedure is in [INSTALL.md](../../../INSTALL.md).
 
 ---
 

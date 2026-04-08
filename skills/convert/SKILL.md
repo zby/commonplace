@@ -52,15 +52,15 @@ status: seedling
 **Rules:**
 - `status` is always `seedling` — conversion structures the note but does not endorse it. Human review flips to `current`.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
-- `traits` is always `[]` — trait assignment is semantic work, done later by `/validate` or human review.
-- `tags` is always `[]` — tag assignment is semantic work, done later by `/connect` or human review.
+- `traits` is always `[]` — trait assignment is semantic work, done later by `/commonplace:validate` or human review.
+- `tags` is always `[]` — tag assignment is semantic work, done later by `/commonplace:connect` or human review.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.
 
 #### Step 3a: Rename the file
 
 After adding frontmatter, check whether the filename matches the `# Title` heading.
 
-The filename should match the title — whether the title itself is good is a semantic question for `/validate`.
+The filename should match the title — whether the title itself is good is a semantic question for `/commonplace:validate`.
 
 **Decide whether to rename:**
 - If the current filename is already a good slug of the `# Title` — keep it
@@ -96,8 +96,8 @@ description: [the description you wrote]
 areas: [list or empty]
 
 Next steps:
-- /connect new-filename.md — find connections
-- /validate new-filename.md — check quality
+- /commonplace:connect new-filename.md — find connections
+- /commonplace:validate new-filename.md — check quality
 - Review and set status: current when endorsed
 ===
 ```
@@ -133,7 +133,7 @@ Sections added: Evidence, Reasoning, Caveats
 description: [unchanged]
 
 Next steps:
-- /validate filename.md — check quality
+- /commonplace:validate filename.md — check quality
 - Review and set status: current when endorsed
 ===
 ```
