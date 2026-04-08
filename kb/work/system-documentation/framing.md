@@ -2,117 +2,90 @@
 
 ## The real problem
 
-This KB is meant to be used by people building their own agentic KBs. It contains:
+Practitioners get commonplace as a working system — the skills, the type system, the validation, the review gates, the indexes. They also get ~150 notes containing general theory about agent systems, design patterns for agentic KBs, and this system's specific implementation choices — all mixed together.
 
-1. **General theory** (~35%) — claims about any agent system ("context efficiency is the central design concern," "knowledge storage does not imply contextual activation"). A practitioner needs this to understand *why* certain designs work.
+**The core question: when reading any note, can you tell whether it's general theory or depends on local choices?**
 
-2. **Transferable design patterns** (~35%) — claims about building agent-operated KBs, validated here but applicable elsewhere ("title-as-claim enables traversal-as-reasoning," "progressive disclosure matches instruction specificity to loading frequency"). A practitioner needs this to know *what* to implement.
+Today you can't. A note like "instruction specificity should match loading frequency" reads as a general principle but is grounded entirely in this system's loading hierarchy. A note like "context efficiency is the central design concern" is genuinely general. A note like "directory-scoped types are cheaper than global types" is clearly system-specific. But there's no per-note signal distinguishing them.
 
-3. **Commonplace-specific implementation** (~30%) — how *this* system instantiates the patterns ("directory-scoped types," "the `/connect` skill," "review gates with SQLite storage"). A practitioner needs this as *one example* of how to make the patterns concrete — but they'll make different choices.
+This matters because practitioners need to know:
+- Which notes describe principles they should follow regardless of their own design choices
+- Which notes describe this system's choices that they might override
+- Which notes do both (validate a general principle using this system as evidence)
 
-Right now a practitioner building their own KB would have to read everything and figure out which notes transfer and which are our specific choices. There's no signal saying "this is a general principle you should adopt" vs "this is how we happened to implement it."
+### The documentation side
 
-### What practitioners actually need
+The system also needs documentation — not theory, just "how does this work." Skills, the type system, validation, review gates, the workshop layer, the linking conventions. ADRs document *decisions* but not *current state*. CLAUDE.md is a *router* for the agent, not documentation for the practitioner. Instruction files are *procedures*, not explanations.
 
-A practitioner building an agentic KB needs to answer, roughly in this order:
+A practitioner who installs commonplace and wants to understand how the skill system works, or how review gates compose, or what the type/trait distinction means, currently has to piece it together from scattered notes, ADRs, instruction files, and CLAUDE.md entries.
 
-1. **Why does this matter?** — The theory. Why context efficiency forces certain architectural choices. Why storage is solved but activation isn't. Why learning requires durable artifacts.
+## What's needed
 
-2. **What should I build?** — The design patterns. Progressive disclosure. Claim titles. Typed links with semantic relationships. The library/workshop split. File-first with progressive formalization.
+Two things, which may or may not be the same mechanism:
 
-3. **How did someone else do it?** — A reference implementation. Commonplace as a worked example. Not to copy, but to see what the patterns look like when instantiated — and what tradeoffs were made.
+1. **A per-note signal** indicating whether a note is general theory, transferable pattern, or system-specific implementation. So a practitioner reading any note knows what they're looking at.
 
-4. **How do I build skills?** — The skill system. How skills are structured, how they're loaded, how they interact with the agent harness, what makes a good skill. Our skills (`/ingest`, `/connect`, `/snapshot-web`, `/review-related-system`, etc.) are working examples — but a practitioner building their own KB needs to understand the skill architecture, not just read our skill implementations. This includes: how skills are discovered and activated, how they compose with always-loaded context, how methodology distills into skills, and how to write new ones.
+2. **System documentation** that explains how the installed system works — organized by subsystem (skills, types, validation, review, linking, workshop), current-state not decision-history, aimed at someone who has the system and needs to understand and extend it.
 
-5. **What should I do differently?** — The ADRs and system-specific notes, read critically. Where our choices reflect the theory, and where they reflect our particular constraints (single user, methodology-is-content, no external consumers until recently).
+## Options for the per-note signal
 
-### What's blocking this
+### A. Scope trait in frontmatter
 
-- **No layered navigation.** The theory notes, design patterns, and implementation details are mixed in the same indexes. A practitioner can't "zoom in" from principle to pattern to implementation.
+Add a `scope` value to the `traits` list: `scope-general`, `scope-pattern`, `scope-local`. Uses existing trait infrastructure (ADR-012 already separates types from traits). Filterable, validatable, visible in frontmatter.
 
-- **ADRs document decisions, not current state.** Walking through 12 ADRs tells you why certain choices were made, not how the system works today. And ADRs are deliberately high-level — they don't show the implementation.
+**Cost:** Touch ~100 notes. Judgment calls on straddling notes.
+**Benefit:** Any reader (human or agent) can immediately see what kind of note they're reading. Indexes can be generated from the trait.
 
-- **CLAUDE.md is a router, not documentation.** It tells the agent where to go, not the practitioner how things work or why.
+### B. Scope field in frontmatter
 
-- **The methodology-is-content property cuts both ways.** It means the system documents itself by using itself, which is powerful for internal consistency. But it also means an external reader can't distinguish "this note is about how to build KBs in general" from "this note is about how this particular KB works."
+Add `scope: general | pattern | local` as a dedicated field alongside `type`, `status`, `tags`.
 
-- **Skills have theory and implementations but no architecture guide.** The theory notes explain *why* skills work (methodology distillation, typed callables, progressive disclosure). The skill files show *what* specific skills do. Missing: a document explaining the skill architecture — how the harness discovers and loads skills, how activation triggers work, how skills compose with always-loaded context, and how to write a new skill from scratch. A practitioner building their own system needs this more than they need to read our `/ingest` skill.
+**Cost:** New field to validate, new schema to maintain. Same classification effort as option A.
+**Benefit:** Cleaner than overloading traits. First-class in the schema.
 
-## What we already have
+### C. Convention in description
 
-- **CLAUDE.md** — routing table, vocabulary, conventions. Deliberately minimal.
-- **ADRs** (12) — high-level decisions with context, alternatives, consequences. Good for "why did we choose X?" Not for "how does X work now?"
-- **Instruction files** (`kb/instructions/`) — imperative procedures for specific operations.
-- **Type templates** (`kb/notes/types/`, `kb/sources/types/`) — structural specs for document types.
-- **Theory indexes** — learning-theory-index, computational-model-index, foundations-index. Well-curated entry points into general theory.
-- **Related-systems index** — 70+ external systems as comparative evidence.
-- **Skills** (`kb/instructions/` and harness-injected) — executable operations like `/ingest`, `/connect`, `/snapshot-web`, `/review-related-system`. Each skill is a working example of methodology-to-procedure distillation, but there's no guide explaining the skill architecture itself — how skills are discovered, loaded, activated, and how to write new ones.
-- **Skill theory notes** — [skills derive from methodology through distillation](../notes/skills-derive-from-methodology-through-distillation.md), [instructions are typed callables](../notes/instructions-are-typed-callables.md), [generate instructions at build time](../notes/generate-instructions-at-build-time.md). These explain the theory behind skills but don't document how to build one.
-- **System-specific notes** scattered in `kb/notes/` — arguments for specific design choices, not indexed as a collection.
+Start descriptions with a scope marker: "[general]", "[pattern]", "[local]". No schema change.
 
-## Options to explore
+**Cost:** Ugly, easy to forget, not machine-filterable without regex.
+**Benefit:** Zero infrastructure change.
 
-### Option 1: Layered indexes (lightest touch)
+### D. Let the indexes carry the signal
 
-Create three curated indexes that slice the same notes differently:
+Don't mark individual notes. Instead, curate scope-specific indexes that classify notes by reference. A note's scope is determined by which indexes include it and what context phrase they give it.
 
-- **Theory index** (already exists, mostly) — general claims about agent systems
-- **Pattern catalog** (new) — transferable design patterns for building agentic KBs, with links to theory notes that ground them and implementation notes that exemplify them
-- **Implementation guide** (new) — how commonplace works, organized by subsystem, with links to ADRs that explain why and patterns that it instantiates
+**Cost:** Maintain multiple indexes. Classification is distributed, not per-note.
+**Benefit:** No notes touched. Straddling notes appear in multiple indexes naturally.
 
-Straddling notes appear in multiple indexes with different context phrases. No notes move. No new frontmatter fields.
+**Lean:** Start with D (indexes) to discover the right categorization. If it stabilizes, codify as A or B (per-note markers). This follows the progressive formalization principle.
 
-**Pros:** Cheap, reversible, composable with existing structure.
-**Cons:** Three indexes don't compose into a narrative. A practitioner still has to construct the story themselves.
+## Options for system documentation
 
-### Option 2: A practitioner's guide (narrative document)
+### I. Subsystem guide pages
 
-Write a guide aimed at "someone building their own agentic KB." Structure:
+One document per subsystem: skills, types/traits, validation, review gates, linking, workshop layer. Each explains current state (how it works now), links to ADRs (why), links to theory notes (the principle it instantiates).
 
-1. Start with the theory (why context efficiency matters, what the activation gap means)
-2. Derive the design patterns (what follows from the theory)
-3. Show the implementation (how commonplace instantiates each pattern)
-4. Note the alternatives (what we chose and what you might choose differently)
+### II. Annotated architecture overview
 
-Each section links deeply into the existing notes. The guide is a reading path through the KB, not a replacement for it.
+One document mapping all subsystems and their relationships, with links into the subsystem details. The "how does it hang together?" document.
 
-**Pros:** Gives practitioners what they actually need — a narrative with progressive depth. The synthesis might reveal gaps in the theory.
-**Cons:** Maintenance burden. A narrative document drifts from the underlying notes. Someone has to keep it current.
+### III. Both
 
-### Option 3: Scope markers on notes (per-note annotation)
+The overview links to the subsystem guides. Progressive disclosure applied to documentation itself.
 
-Add a frontmatter field or trait indicating transferability:
-
-- `scope: theory` — general claim about agent systems
-- `scope: pattern` — transferable design pattern for agentic KBs
-- `scope: implementation` — commonplace-specific instantiation
-
-Enables filtering: "show me only the transferable patterns." Makes the layered indexes generatable rather than manually curated.
-
-**Pros:** Per-note, precise, enables automated index generation and filtering.
-**Cons:** Requires touching ~100 notes. The straddling notes need judgment calls. Creates a new maintenance obligation (new notes need scope tagging).
-
-### Option 4: Combination
-
-The options aren't mutually exclusive. A practical path:
-
-1. Start with **Option 1** (layered indexes) to discover the right categorization through manual curation
-2. If the categorization stabilizes, codify it as **Option 3** (scope markers) so it's maintainable
-3. Use the indexes as the skeleton for **Option 2** (practitioner's guide) when the theory is mature enough
-
-This follows the KB's own progressive formalization principle: start with loose structure, tighten as understanding develops.
+**Lean:** III — an overview plus subsystem guides. Start with skills (practitioners will need it first) and the type system (most complex).
 
 ## Open questions
 
-1. **Is three layers right, or is it really two?** The "transferable design patterns" layer might not be distinct from theory — a pattern IS a theory applied to a domain. Maybe it's just "general theory" (transfers to any agent system) and "this system" (how commonplace works).
+1. **Is it two scopes or three?** "General theory" and "local implementation" are clear poles. Is "transferable pattern" a real middle, or just general theory that happens to be validated here?
 
-2. **What about the synthesis article from the memory workshop?** The `synthesis-ideal-memory-system.md` is already structured as a practitioner-facing article. Is that the model for how theory should be packaged? If so, each major theory cluster might need its own synthesis document.
+2. **What about straddling notes?** A note like "files beat a database" argues a general principle but grounds it in this system's experience. Is it `general` (the principle transfers), `local` (the grounding is system-specific), or `pattern` (the principle transfers, the evidence is local)?
 
-3. **Does the methodology-is-content property survive external readers?** The system's distinctive claim is that methodology and content aren't separate. But an external reader specifically needs them separated — they want the methodology (how to build KBs) without the content (what this KB contains about learning theory, context engineering, etc.). Or do they want both?
+3. **Should system documentation live in `kb/notes/` or `kb/instructions/`?** Instructions are imperative ("how to do X"). System docs are descriptive ("how X works"). Neither fits cleanly. Maybe a new location like `kb/docs/` or `kb/guides/`.
 
-4. **How does this relate to the MkDocs site?** ADR-011 committed the KB to external accessibility via GitHub Pages. The site is a rendering of the notes. If we add layered navigation, it should be reflected in the site structure.
+4. **How does this relate to the MkDocs site?** ADR-011 committed to external accessibility. Scope signals and system docs should be reflected in site navigation.
 
-5. **What's the minimum viable version?** Probably: one index page titled "Building an Agentic KB" that curates the 15-20 most important notes in reading order, with context phrases that tell the practitioner what each note gives them and whether it's theory, pattern, or implementation example.
+5. **What's the minimum viable step?** Probably: tag 10-15 obviously-general theory notes and 10-15 obviously-local notes to test whether the classification is tractable, then write one subsystem guide (skills) to test whether that form works.
 
 ## Related notes
 
