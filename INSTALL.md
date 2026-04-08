@@ -39,27 +39,56 @@ cp commonplace/kb/sources/types/source-review.yaml kb/sources/types/
 claude plugin install ./commonplace
 ```
 
-### Codex: install the plugin
+### Codex: register the plugin in a repo-local marketplace, then install it in `/plugins`
 
-```bash
-codex plugin install ./commonplace
+Create `.agents/plugins/marketplace.json` in the host project root:
+
+```json
+{
+  "name": "local-commonplace",
+  "interface": {
+    "displayName": "Local Commonplace Plugins"
+  },
+  "plugins": [
+    {
+      "name": "commonplace",
+      "source": {
+        "source": "local",
+        "path": "./commonplace"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
 ```
 
-If plugin install is not available, you can still symlink framework skills manually:
+Then restart Codex, open it, run `/plugins`, choose `Local Commonplace Plugins`, and install `commonplace`.
+
+This repo also ships its own repo-local Codex marketplace file at `.agents/plugins/marketplace.json` for dogfooding inside the `commonplace/` repo itself. That entry points to `./` because the repo root is the plugin directory.
+
+If you change `.codex-plugin/plugin.json`, `skills/`, or the marketplace file, restart Codex again before reinstalling or retesting.
+
+### Codex fallback: symlink framework skills manually
 
 ```bash
-# Claude Code fallback
-mkdir -p .claude/skills
-for skill in commonplace/skills/*/; do
-  name=$(basename "$skill")
-  ln -sfn "../../commonplace/skills/$name" ".claude/skills/$name"
-done
-
-# Codex fallback
 mkdir -p .agents/skills
 for skill in commonplace/skills/*/; do
   name=$(basename "$skill")
   ln -sfn "$PWD/commonplace/skills/$name" ".agents/skills/$name"
+done
+```
+
+### Claude Code fallback: symlink framework skills manually
+
+```bash
+mkdir -p .claude/skills
+for skill in commonplace/skills/*/; do
+  name=$(basename "$skill")
+  ln -sfn "../../commonplace/skills/$name" ".claude/skills/$name"
 done
 ```
 
@@ -143,6 +172,8 @@ my-project/
     skills/                  Framework skills
     kb/notes/                Methodology notes
   .claude/skills/            Optional fallback, Claude Code only; symlinked → commonplace/skills/
+  .agents/plugins/
+    marketplace.json         Codex local marketplace entry pointing to commonplace/
   .agents/skills/            Optional fallback, Codex only; symlinked → commonplace/skills/
   ~/.codex/skills/           Optional, Codex global skills; symlinked → commonplace/skills/
   CLAUDE.md                  Claude Code control-plane file

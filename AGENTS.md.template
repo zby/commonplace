@@ -72,14 +72,16 @@ Key entry points:
 
 ### Skills
 
-| Task | Skill |
+| Task | Commonplace skill |
 |---|---|
-| Write a note or index | `/commonplace:write` |
-| Connect a note to related notes | `/commonplace:connect` |
-| Validate note structure | `/commonplace:validate` |
-| Snapshot an external URL | `/commonplace:snapshot-web` |
-| Ingest and analyze a source | `/commonplace:ingest` |
-| Convert between note types | `/commonplace:convert` |
-| Iteratively revise a note | `/commonplace:revise-iterative` |
+| Write a note or index | `write` |
+| Connect a note to related notes | `connect` |
+| Validate note structure | `validate` |
+| Snapshot an external URL | `snapshot-web` |
+| Ingest and analyze a source | `ingest` |
+| Convert between note types | `convert` |
+| Iteratively revise a note | `revise-iterative` |
+
+These skills are provided by the `commonplace` plugin. Invoke them using your runtime's skill or plugin surface.
 
 For the full writing checklist and conventions, see `commonplace/kb/instructions/WRITING.md`.

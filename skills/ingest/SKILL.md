@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: Ingest a source into the knowledge base. Accepts a URL (GitHub, X/Twitter, or web page) or a path to an existing snapshot. URLs are snapshotted first, then the snapshot is classified, connected, and analysed. Saves report as .ingest.md. Triggers on "/ingest", "/ingest [url-or-file]".
+description: Ingest a source into the knowledge base. Accepts a URL (GitHub, X/Twitter, or web page) or a path to an existing snapshot. URLs are snapshotted first, then the snapshot is classified, connected, and analysed. Saves the report as .ingest.md.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -16,7 +16,7 @@ Parse the target to determine what to do:
 
 1. **No target** — list `kb/sources/` recent `.md` files (excluding .json, .ingest.md), then ask which to ingest.
 
-2. **URL** (starts with `http://` or `https://`) — invoke `/commonplace:snapshot-web <url>` to capture it. `/commonplace:snapshot-web` handles all URL types (web pages, PDFs, GitHub, X/Twitter).
+2. **URL** (starts with `http://` or `https://`) — invoke the `snapshot-web` skill to capture it. The `snapshot-web` skill handles all URL types (web pages, PDFs, GitHub, X/Twitter).
 
    Parse the "Snapshot saved:" line from the output to get the file path. That becomes the input for Step 1.
 
@@ -26,13 +26,9 @@ Parse the target to determine what to do:
 
 ---
 
-## Step 1: Run /commonplace:connect on the Snapshot
+## Step 1: Run the `connect` skill on the snapshot
 
-Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding:
-
-```
-/commonplace:connect {path to snapshot file}
-```
+Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding with the `connect` skill on that path.
 
 This creates a workshop at `kb/work/connect/<name>/` and saves the connection report there.
 
@@ -43,7 +39,7 @@ The report contains:
 - Index membership recommendations
 - Synthesis opportunities and flags
 
-Wait for `/commonplace:connect` to complete before proceeding.
+Wait for the `connect` skill to complete before proceeding.
 
 ## Step 2: Read Connection Report
 
@@ -81,7 +77,7 @@ contribution? Write for someone deciding whether to read the full source.
 
 ### 3.3 Connections Found
 
-Summarise what `/commonplace:connect` discovered. Which existing notes does this source
+Summarise what the `connect` skill discovered. Which existing notes does this source
 connect to, and how? Include the relationship types and the key insight about
 how this source fits (or doesn't) into our existing knowledge graph.
 
@@ -204,7 +200,7 @@ Author: {credibility signal}
 {one paragraph}
 
 ## Connections Found
-{summary of /commonplace:connect discovery — which notes, what relationships}
+{summary of connect discovery — which notes, what relationships}
 
 ## Extractable Value
 {numbered list of 3-7 items with effort tags}
@@ -225,10 +221,10 @@ Tell the user where the report was saved and what the recommended action is.
 - Write any files other than `.ingest.md`
 - Modify any files in kb/notes/ — that happens in later steps if the human decides to proceed
 - Hallucinate connections — if the source isn't relevant, say so
-- Skip running /commonplace:connect — the connections are the foundation of the analysis
+- Skip running the `connect` skill — the connections are the foundation of the analysis
 
 **always:**
-- Run /commonplace:connect before doing classification or value extraction
+- Run the `connect` skill before doing classification or value extraction
 - Base extractable value on what's NEW relative to connections found
 - Be specific in the recommended action
 - Include effort tags on extractable value items

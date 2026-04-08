@@ -8,6 +8,33 @@ claude --plugin-dir .
 
 No marketplace needed. Skills load directly from the repo's `skills/` directory.
 
+For Codex, the supported local install flow is repo-local marketplace registration plus interactive install in `/plugins`. This repo now ships `.agents/plugins/marketplace.json` for dogfooding; it points `source.path` to `./` because the repo root is the plugin directory.
+
+```json
+{
+  "name": "local-commonplace",
+  "interface": {
+    "displayName": "Local Commonplace Plugins"
+  },
+  "plugins": [
+    {
+      "name": "commonplace",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+After changing `.codex-plugin/plugin.json`, `skills/`, or `.agents/plugins/marketplace.json`, restart Codex, run `/plugins`, open `Local Commonplace Plugins`, and install `commonplace`.
+
 ## Distribution (later)
 
 ### Option A: Self-hosted marketplace (simplest)
@@ -82,6 +109,31 @@ Use `ref` in the source to point to tags for stable releases:
 }
 ```
 
-### Codex
+### Codex consuming-project setup
 
-Codex uses `.codex-plugin/plugin.json` (already created). Codex marketplace setup may differ — check Codex plugin docs when ready.
+For a project that vendors this repo as `./commonplace`, the host repo needs its own `.agents/plugins/marketplace.json` entry pointing to `./commonplace`:
+
+```json
+{
+  "name": "local-commonplace",
+  "interface": {
+    "displayName": "Local Commonplace Plugins"
+  },
+  "plugins": [
+    {
+      "name": "commonplace",
+      "source": {
+        "source": "local",
+        "path": "./commonplace"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+The plugin payload itself still lives in `commonplace/.codex-plugin/plugin.json` plus `commonplace/skills/`. The marketplace file belongs to the host repo, not inside the vendored copy.

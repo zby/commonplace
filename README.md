@@ -65,17 +65,17 @@ Framework skills:
 
 | Skill | Purpose |
 |---|---|
-| `/write` | Route and draft a note, index, or discovered specialized type |
-| `/validate` | Check frontmatter, descriptions, types, links, structure |
-| `/connect` | Find connections between notes, update indexes |
-| `/convert` | Convert notes between types (text → note → structured-claim) |
-| `/ingest` | Ingest external source: snapshot → connect → classify → analyse |
-| `/snapshot-web` | Capture a URL to `kb/sources/` |
-| `/revise-iterative` | Iteratively revise a note without changing its claims |
+| `write` | Route and draft a note, index, or discovered specialized type |
+| `validate` | Check frontmatter, descriptions, types, links, structure |
+| `connect` | Find connections between notes, update indexes |
+| `convert` | Convert notes between types (text → note → structured-claim) |
+| `ingest` | Ingest external source: snapshot → connect → classify → analyse |
+| `snapshot-web` | Capture a URL to `kb/sources/` |
+| `revise-iterative` | Iteratively revise a note without changing its claims |
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
-- `/evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
-- `/review-related-system` — related-system review workflow, still tied to local review infrastructure
+- `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
+- `review-related-system` — related-system review workflow, still tied to local review infrastructure
 
 ## Content workflow
 
@@ -86,10 +86,10 @@ Search the KB, read matching notes, follow links to deepen understanding. Link s
 ### Writing
 
 1. **Search first** — find related notes before writing
-2. **Read `kb/instructions/WRITING.md`** — it's the authority on how to write, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
+2. **Read `kb/instructions/WRITING.md`** — it's the authority on writing conventions and default templates, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
 3. **Read the directory type** — only if you're writing a specialized type (adr, index, related-system, or scenario in `test/scenarios/`). Skip this step for plain notes.
 4. **Write** the note
-5. **Connect** — link the new note from related notes and indexes. Use `/connect` or do it manually. Don't skip this — an unconnected note is invisible to future search.
+5. **Connect** — link the new note from related notes and indexes. Use the `connect` skill or do it manually. Don't skip this — an unconnected note is invisible to future search.
 
 ## Usage
 
@@ -119,12 +119,12 @@ Commonplace can be installed into an existing project as a submodule or cloned s
 
 | Tool | Required | Purpose |
 |---|---|---|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use Claude Code slash commands or Codex `AGENTS.md` routing |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use the runtime's plugin or skill surface plus `AGENTS.md` |
 | [uv](https://docs.astral.sh/uv/) | yes | Python script runner — `uv run` handles dependencies automatically |
-| [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `/convert` |
+| [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |
-| [curl](https://curl.se/) | yes | PDF downloads in `/snapshot-web` |
-| [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `/snapshot-web` and `github_snapshot.py` |
+| [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
+| [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `snapshot-web` and `github_snapshot.py` |
 | [qmd](https://github.com/qmdnotes/qmd) | no | Semantic search — hybrid BM25 + vector + reranking. Skills degrade gracefully to grep-only when unavailable |
 
 ### Setting up qmd

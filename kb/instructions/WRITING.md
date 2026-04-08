@@ -1,6 +1,6 @@
 # Writing Guide for kb/
 
-Read this before creating or editing notes, ADRs, indexes, or source reviews. For routing and note creation, use `/write` or the Knowledge System section in the control-plane file.
+Read this before creating or editing notes, ADRs, indexes, or source reviews. This file defines writing conventions, quality checks, and default templates. Routing, validation flow, and follow-up orchestration belong to the `write` skill from the `commonplace` plugin.
 
 ## Before You Write
 
@@ -16,27 +16,6 @@ For **notes and above** (any type with frontmatter), every note must be findable
 6. **[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** — Does the note explain *why*, not just record *what works*? Quick test: if you changed one premise, could you predict what changes in the conclusion? If yes, the note captures mechanism. If no, it may be recording a pattern without explaining it. Notes that only record "X works" are adaptive — useful but brittle. Notes that explain why X works have reach. Seedlings are exempt — reach is a maturation goal, not a gate.
 
 If any answer is "no," fix it before saving.
-
-## After Writing
-
-When all changes are complete (note written, links added, indexes updated), run the validation script on new or modified notes:
-
-```bash
-python3 skills/validate/validate_notes.py <note-path>
-```
-
-This checks structural correctness — frontmatter validity, enum values, link health, required sections. Don't skip it even if the note "looks fine."
-
-For judgment-based frontmatter questions (is the title really a claim? is the description discriminating enough? does the note have explanatory reach?), use the review system rather than `/validate`.
-
-## Where It Goes
-
-Where a note goes depends on what triggered it:
-
-- **Human request or established pipeline** → main KB (`notes/`, `adr/`, tasks, etc. — see routing table in `CLAUDE.md`)
-- **Improvement opportunity noticed during traversal** → append one line to `kb/log.md` (don't context-switch to fix it)
-
-The log is periodically reviewed and entries are either acted on (description sharpened, link added, note promoted) or discarded.
 
 ## Templates
 

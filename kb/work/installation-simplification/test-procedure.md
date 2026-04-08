@@ -1,17 +1,28 @@
-# Test procedure: plugin-based skill delivery
+# Test procedure: slimmed AGENTS.md + plugin-based skill delivery
 
-After installing commonplace as a local plugin (`claude plugin install .`), run through these checks to verify skills work with the `commonplace:` namespace prefix.
+This procedure tests the step 13 dogfood: the slimmed AGENTS.md that delegates routing to skills, with skills delivered from `skills/` at repo root.
+
+**Important:** Run this in a fresh session so the old AGENTS.md content is NOT in context. The whole point is testing that the agent can operate with the slimmed control-plane file.
+
+## What changed
+
+- AGENTS.md slimmed: routing table, content workflow, type routing, escalation boundaries, and conventions removed. These are now in `/commonplace:write` skill and `kb/instructions/WRITING.md`.
+- KB Goals section added to AGENTS.md.
+- Vocabulary paths fixed (`kb/notes/definitions/` not `kb/notes/`).
+- WRITING.md references updated to point to `/commonplace:write` instead of "routing table in CLAUDE.md".
 
 ## Prerequisites
 
-- Plugin installed successfully (`claude plugin install .` or equivalent)
-- Old `.claude/skills/` symlinks removed
-- Skills live in `skills/` at repo root
+- Skills live in `skills/` at repo root (7 directories)
 - Plugin manifest at `.claude-plugin/plugin.json`
+- Codex repo-local marketplace at `.agents/plugins/marketplace.json` points to `./`
+- Old `.claude/skills/` symlinks removed (directory exists but empty)
+- AGENTS.md is the real file; CLAUDE.md is a symlink to it
+- If testing in Codex, restart it after plugin changes and install `commonplace` from `/plugins`
 
 ## 1. Skill discovery
 
-Verify all framework skills are discoverable:
+Verify all seven framework skills are discoverable with the `commonplace:` prefix:
 
 ```
 /commonplace:write
@@ -23,11 +34,11 @@ Verify all framework skills are discoverable:
 /commonplace:revise-iterative
 ```
 
-**Test:** Type `/commonplace:` and check autocomplete shows all seven skills.
+**Also check:** `review-related-system` and `evaluate-scenarios` should NOT be discoverable (they live in `kb/instructions/`, not `skills/`).
 
-**Also check:** Is `review-related-system` discoverable? It's in `kb/instructions/` (not `skills/`), so it should NOT appear as a plugin skill. It should only work if symlinked separately.
+## 2. Write skill — routing without always-loaded routing table
 
-## 2. Write skill — core types
+This is the critical test. The old AGENTS.md had a 12-row routing table always in context. Now `/commonplace:write` must handle routing on its own.
 
 ### 2a. Write a note (default type)
 
@@ -36,7 +47,7 @@ Verify all framework skills are discoverable:
 ```
 
 Verify:
-- Skill fires and reads WRITING.md
+- Skill reads `kb/instructions/WRITING.md`
 - Routes to `kb/notes/`
 - Creates a note with correct frontmatter (`type: note`, `status: seedling`, `description:`)
 - Title is claim-shaped
@@ -61,11 +72,8 @@ Verify:
 
 Verify:
 - Creates a file in `kb/notes/` with NO frontmatter
-- This is raw capture — minimal ceremony
 
-## 3. Write skill — dynamic type discovery
-
-### 3a. Write a local type that exists
+### 2d. Write an ADR (dynamic type discovery)
 
 ```
 /commonplace:write adr
@@ -75,18 +83,36 @@ Verify:
 - Skill scans `kb/notes/types/` and finds `adr.md`
 - Reads the ADR template
 - Routes to `kb/notes/adr/`
-- Creates an ADR with correct structure (Context/Decision/Consequences)
+- Creates an ADR with correct structure
 
-### 3b. Write a type that doesn't exist
+### 2e. Write a type that doesn't exist
 
 ```
 /commonplace:write incident-report
 ```
 
 Verify:
-- Skill errors gracefully
-- Error message lists available types (core + any local types found in `kb/*/types/`)
+- Errors gracefully
+- Lists available types (core + discovered)
 - Does NOT create a file
+
+## 3. Validate skill
+
+### 3a. Single note
+
+```
+/commonplace:validate kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md
+```
+
+Verify: reports PASS/WARN/FAIL.
+
+### 3b. All notes
+
+```
+/commonplace:validate all
+```
+
+Verify: runs across all notes, shows summary counts.
 
 ## 4. Connect skill
 
@@ -95,134 +121,49 @@ Verify:
 ```
 
 Verify:
-- Searches `kb/notes/` for related notes
-- Uses descriptions to judge relevance (not just keyword match)
-- Proposes connections with relationship semantics (extends, grounds, contradicts, etc.)
-- Writes links into the target note and the connected notes
+- Searches for related notes
+- Uses descriptions for relevance (not just keyword match)
+- Proposes connections with relationship semantics
 
-## 5. Validate skill
+## 5. KB Goals scoping test
 
-### 5a. Validate a single note
+Ask the agent a scoping question to see if KB Goals work:
 
-```
-/commonplace:validate kb/notes/[some-existing-note].md
-```
+> "Should I write a note about Python packaging best practices?"
 
-Verify:
-- Checks frontmatter (type, status, description present)
-- Checks link health (relative links resolve)
-- Reports PASS/WARN/FAIL
+The agent should recognize this is outside the KB domain (general software engineering, not KB methodology) and either decline or ask how it relates to KB design. This tests that the KB Goals section in the slimmed AGENTS.md is doing its job.
 
-### 5b. Validate all notes
+## 6. Escalation to WRITING.md
 
-```
-/commonplace:validate all
-```
+Ask the agent to write a note without using the skill:
 
-Verify:
-- Runs across all notes in `kb/notes/`
-- Summary shows pass/warn/fail counts
+> "Create a note about [topic] in kb/notes/"
 
-## 6. Ingest skill
+The agent should either invoke `/commonplace:write` (because the skills table tells it to) or read `kb/instructions/WRITING.md` before writing. It should NOT try to look up a routing table that no longer exists.
 
-```
-/commonplace:ingest [some-url]
-```
+## 7. Review/fix escalation
 
-Verify:
-- Snapshots the URL into `kb/sources/`
-- Writes `.ingest.md` with source-review type frontmatter
-- Classifies and analyzes the source
+Ask:
 
-## 7. Snapshot-web skill
+> "Review kb/notes/[some-note].md for quality"
 
-```
-/commonplace:snapshot-web [some-url]
-```
+The agent should find its way to `kb/instructions/REVIEW-SYSTEM.md` via the pointer in the skills section of AGENTS.md. It should NOT look for an escalation boundaries section.
 
-Verify:
-- Snapshots the URL into `kb/sources/`
-- Creates a markdown file with the page content
-- Does NOT run ingestion analysis (that's `/commonplace:ingest`)
-
-## 8. Convert skill
-
-Create a test text file (no frontmatter) in `kb/notes/`, then:
-
-```
-/commonplace:convert kb/notes/[test-text-file].md
-```
-
-Verify:
-- Adds frontmatter (type: note, status: seedling, description)
-- Renames file to match the title
-- Fixes any backlinks if the filename changed
-
-## 9. Revise-iterative skill
-
-```
-/commonplace:revise-iterative kb/notes/[some-note].md
-```
-
-Verify:
-- Produces numbered revision copies
-- Reviews for semantic fidelity between passes
-- Does not introduce new content — only improves flow and readability
-
-## 10. Cross-skill workflows
-
-### 10a. Full write-connect-validate cycle
-
-1. `/commonplace:write note` — create a note about a test topic
-2. `/commonplace:connect [the-new-note]` — find and link related notes
-3. `/commonplace:validate [the-new-note]` — verify structure is clean
-
-All three should work in sequence. The connect step should find the note written in step 1.
-
-### 10b. Ingest-then-write cycle
-
-1. `/commonplace:ingest [some-url]` — ingest an external source
-2. `/commonplace:write note` — write a note that references the ingested source
-3. `/commonplace:connect [the-new-note]` — should discover connection to the ingest report
-
-## 11. Skills that should NOT work via plugin
-
-### 11a. Review-related-system
-
-```
-/commonplace:review-related-system
-```
-
-This should either:
-- Not be discoverable (if it's not in `skills/`)
-- Or be discoverable but work correctly if it IS in `skills/`
-
-Check which case applies and whether it matches the plan.
-
-### 11b. Evaluate-scenarios
-
-```
-/commonplace:evaluate-scenarios
-```
-
-This was a repo-local skill in `kb/instructions/evaluate-scenarios/`. It should NOT be discoverable via the plugin.
-
-## 12. Internal reference integrity
+## 8. Internal reference integrity
 
 After running the tests above, verify:
-- Skills reference correct paths to WRITING.md, type templates, etc. (these changed when skills moved from `kb/instructions/` to `skills/`)
-- Skills that invoke other skills use the `commonplace:` prefix
-- No skill references the old `kb/instructions/[skill-name]/` path
+- Skills reference correct paths to WRITING.md, type templates
+- No skill or instruction references the old "routing table in CLAUDE.md" or "Knowledge System section"
+- Skills that invoke other skills use the `commonplace:` prefix (known issue: ~19 occurrences still missing — check if this causes problems in practice)
 
-## 13. Cleanup
+## 9. Cleanup
 
-After testing, decide:
-- Keep the test notes? (Delete if they clutter the KB)
-- Any skills that need path fixes?
-- Any issues to log in the workshop?
+After testing:
+- Delete any test notes created during the procedure
+- Log any issues found in the workshop
 
-## Known limitations
+## Known issues from prior testing
 
-- `/connect` won't find connections to skill files — skills are in `skills/`, outside `kb/`. This is a known issue (see plan open questions). For now, link manually when a theory note affects a skill.
-- `rg "keyword" kb/` won't search skill content. Use `rg "keyword" skills/ kb/` to search both.
-- qmd index doesn't include `skills/` by default. Add a `skills` collection to `~/.config/qmd/commonplace.yml` if needed.
+- **Cross-skill prefix:** ~19 skill invocations use bare names (`/connect`, `/validate`) instead of `/commonplace:connect`. May or may not cause problems — these are in skill prose that the agent reads, not machine-parsed invocations.
+- **Broken note links:** Some notes still link to `kb/instructions/connect/SKILL.md` and `kb/instructions/ingest/SKILL.md` (old paths before skills moved). These show up in `/commonplace:validate all` batch warnings.
+- **Plugin status:** `arscontexta@agenticnotetaking` shows as disabled in `claude plugin list`, but skills load anyway (likely via direct `skills/` directory discovery, not the plugin system).
