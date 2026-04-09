@@ -23,7 +23,7 @@ from commonplace.review.review_db import (
     insert_review_run_gates,
     resolve_db_path,
 )
-from commonplace.review.review_metadata import committed_file_provenance, committed_note_provenance, iso_now
+from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.review_target_selector import select_stale_gates
 from commonplace.review.resolve_gates import strip_frontmatter
@@ -123,7 +123,7 @@ def prepare_gate_sweep_targets(
                 note_abs=note_abs,
                 note_body=note_body,
             )
-            note_sha, note_commit = committed_note_provenance(repo_root, Path(note_path))
+            note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
             review_run_id = insert_review_run(
                 conn,
                 note_path=note_path,

@@ -66,7 +66,7 @@ Encode and normalize model identifiers with reasoning effort levels.
 Git-backed provenance tracking and metadata block management.
 
 **Provenance functions:**
-- `committed_note_provenance(repo_root, path) -> (blob_sha, commit)` — get git provenance for a note
+- `review_note_provenance(repo_root, path) -> (blob_sha, commit | None)` — get the review baseline for a note; `commit=None` means the baseline came from the current worktree
 - `committed_file_provenance(repo_root, path, *, kind) -> (blob_sha, commit)` — generic file provenance
 - `blob_sha_at_commit(repo_root, commit, path) -> str | None` — file SHA at a specific commit
 - `file_text_at_commit(repo_root, commit, path) -> str | None` — file content at a commit
@@ -224,8 +224,6 @@ These are operational commands for database maintenance. All support `--dry-run`
 |---|---|
 | `repair-codex-model-partitions` | Backfill model_id and telemetry from saved Codex session logs |
 | `repair-manual-import-review-results` | Re-infer decisions for legacy manual-import reviews |
-| `repair-review-note-commits` | Fill missing reviewed_note_commit by matching SHAs to git history |
 | `reparse-gate-review-decisions` | Re-parse decisions from stored markdown (after parser updates) |
 | `migrate-review-result-footer` | Normalize result lines to canonical footer position |
-| `prune-superseded-legacy-precommit-reviews` | Delete superseded acceptance events from legacy pre-commit reviews |
 | `prune-superseded-unknown-manual-import-reviews` | Delete manual-import reviews with decision=unknown that have replacements |

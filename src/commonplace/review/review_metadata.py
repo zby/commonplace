@@ -144,6 +144,31 @@ def git_blob_sha(path: Path) -> str:
     return result.stdout.strip()
 
 
+def review_note_provenance(repo_root: Path, path: Path) -> tuple[str, str | None]:
+    if path.is_absolute():
+        file_abs = path.resolve()
+    else:
+        file_abs = (repo_root / path).resolve()
+    file_path = file_abs.relative_to(repo_root.resolve())
+
+    status = _run_git(repo_root, ["status", "--porcelain", "--", file_path.as_posix()])
+    if status.returncode != 0:
+        message = status.stderr.strip() or f"failed to inspect git status for {file_path.as_posix()}"
+        raise ValueError(message)
+
+    if status.stdout.strip():
+        return git_blob_sha(file_abs), None
+
+    file_commit = last_commit_for_path(repo_root, file_path)
+    if file_commit is None:
+        return git_blob_sha(file_abs), None
+
+    file_sha = blob_sha_at_commit(repo_root, file_commit, file_path)
+    if file_sha is None:
+        return git_blob_sha(file_abs), None
+    return file_sha, file_commit
+
+
 def committed_file_provenance(repo_root: Path, path: Path, *, kind: str) -> tuple[str, str]:
     if path.is_absolute():
         file_abs = path.resolve()

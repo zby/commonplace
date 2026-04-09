@@ -28,7 +28,7 @@ from commonplace.review.review_db import (
     resolve_db_path,
     update_review_run_telemetry,
 )
-from commonplace.review.review_metadata import committed_file_provenance, committed_note_provenance, iso_now
+from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
 from commonplace.review.review_model import build_model_id
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
@@ -597,7 +597,7 @@ def main() -> None:
     ensure_db(repo_root, db_path)
 
     try:
-        note_sha, note_commit = committed_note_provenance(repo_root, Path(args.note_path))
+        note_sha, note_commit = review_note_provenance(repo_root, Path(args.note_path))
     except ValueError as exc:
         parser.error(str(exc))
     started_at = iso_now()

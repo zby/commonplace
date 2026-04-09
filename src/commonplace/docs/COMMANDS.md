@@ -241,22 +241,6 @@ Re-infer decisions for legacy manual-import reviews with stale footers.
 commonplace-repair-manual-import-review-results --dry-run
 ```
 
-### commonplace-repair-review-note-commits
-
-Fill missing `reviewed_note_commit` fields by matching note SHAs to nearby git commits.
-
-```bash
-commonplace-repair-review-note-commits --dry-run
-```
-
-### commonplace-prune-superseded-legacy-precommit-reviews
-
-Delete superseded acceptance events from legacy pre-commit reviews that lack commit provenance.
-
-```bash
-commonplace-prune-superseded-legacy-precommit-reviews --dry-run
-```
-
 ### commonplace-prune-superseded-unknown-manual-import-reviews
 
 Delete manual-import reviews with `decision=unknown` that have been replaced by definitive reviews.

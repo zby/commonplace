@@ -391,16 +391,28 @@ class TestAckMetadata:
         assert row["acceptance_kind"] == "trivial-change-ack"
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
 
-    def test_ack_rejects_dirty_note(self, tmp_path: Path) -> None:
+    def test_ack_allows_dirty_note_and_records_worktree_provenance(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
-
-        with pytest.raises(SystemExit):
-            review_target_selector.ack_pairs(
-                tmp_path,
-                ["kb/notes/stable.md:prose/source-residue"],
-                TEST_MODEL,
-            )
+        review_target_selector.ack_pairs(
+            tmp_path,
+            ["kb/notes/stable.md:prose/source-residue"],
+            TEST_MODEL,
+        )
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT accepted_note_sha, accepted_note_commit, acceptance_kind
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                """,
+                ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
+        assert row["accepted_note_commit"] is None
+        assert row["acceptance_kind"] == "trivial-change-ack"
 
     def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)

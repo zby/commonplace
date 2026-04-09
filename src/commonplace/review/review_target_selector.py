@@ -20,10 +20,10 @@ from commonplace.review.review_db import (
     resolve_db_path,
 )
 from commonplace.review.review_metadata import (
-    committed_note_provenance,
     file_text_at_provenance,
     git_blob_sha,
     iso_now,
+    review_note_provenance,
 )
 
 NOTES_ROOT = Path("kb/notes")
@@ -217,7 +217,7 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
                 sys.exit(1)
 
             try:
-                note_sha, note_commit = committed_note_provenance(repo_root, Path(note_path))
+                note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
             except ValueError as exc:
                 print(f"error: {exc}", file=sys.stderr)
                 sys.exit(1)

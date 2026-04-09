@@ -386,7 +386,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
     assert isinstance(payload["review_run_id"], int)
 
 
-def test_create_review_run_rejects_dirty_note(tmp_path: Path) -> None:
+def test_create_review_run_allows_dirty_note_and_records_worktree_provenance(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     note_path = repo / "kb" / "notes" / "sample.md"
     note_path.write_text(note_path.read_text(encoding="utf-8") + "\nDirty change.\n", encoding="utf-8")
@@ -413,8 +413,57 @@ def test_create_review_run_rejects_dirty_note(tmp_path: Path) -> None:
         text=True,
     )
 
-    assert result.returncode != 0
-    assert "note has uncommitted changes: kb/notes/sample.md" in result.stderr
+    assert result.returncode == 0
+    review_run_id = int(result.stdout.strip())
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT reviewed_note_sha, reviewed_note_commit FROM review_runs WHERE id = ?",
+            (review_run_id,),
+        ).fetchone()
+    assert row is not None
+    assert row["reviewed_note_sha"] == review_metadata.git_blob_sha(note_path)
+    assert row["reviewed_note_commit"] is None
+
+
+def test_create_review_run_allows_untracked_note_and_records_worktree_provenance(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    note_path = make_note(repo / "kb" / "notes" / "draft.md", "Draft", "\nDraft body.\n")
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "commonplace.review.create_review_run",
+            "kb/notes/draft.md",
+            "prose",
+            "--runner",
+            "codex",
+            "--model",
+            TEST_MODEL,
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    review_run_id = int(result.stdout.strip())
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT note_path, reviewed_note_sha, reviewed_note_commit FROM review_runs WHERE id = ?",
+            (review_run_id,),
+        ).fetchone()
+    assert row is not None
+    assert row["note_path"] == "kb/notes/draft.md"
+    assert row["reviewed_note_sha"] == review_metadata.git_blob_sha(note_path)
+    assert row["reviewed_note_commit"] is None
 
 
 def test_create_review_run_rejects_dirty_gate(tmp_path: Path) -> None:
@@ -944,6 +993,81 @@ for event in [
     assert (artifact_dir / "bundle-output.md").is_file()
     assert (artifact_dir / "prose__source-residue.md").is_file()
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
+
+
+def test_run_review_bundle_allows_dirty_note_and_records_worktree_provenance(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    note_path = repo / "kb" / "notes" / "sample.md"
+    note_path.write_text(note_path.read_text(encoding="utf-8") + "\nDirty change.\n", encoding="utf-8")
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_claude = fake_bin / "claude"
+    fake_claude.write_text(
+        """#!/usr/bin/env python3
+import json
+
+for event in [
+    {"type": "system", "subtype": "init"},
+    {
+        "type": "assistant",
+        "requestId": "req-1",
+        "uuid": "uuid-1",
+        "sessionId": "session-1",
+        "timestamp": "2026-04-05T12:00:00Z",
+        "message": {
+            "id": "msg-1",
+            "model": "claude-sonnet-4-6",
+            "usage": {"input_tokens": 100, "output_tokens": 20},
+            "content": [
+                {
+                    "type": "text",
+                    "text": "=== GATE REVIEW START: prose/source-residue ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: prose/source-residue ===\\n"
+                },
+            ],
+        },
+    },
+    {"type": "result", "subtype": "success", "is_error": False, "result": "done"},
+]:
+    print(json.dumps(event), flush=True)
+""",
+        encoding="utf-8",
+    )
+    fake_claude.chmod(0o755)
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "commonplace.review.run_review_bundle",
+            "kb/notes/sample.md",
+            "prose",
+            "--runner",
+            "claude-code",
+            "--model",
+            "claude-requested",
+            "--db",
+            str(db_path),
+        ],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "completed" in result.stdout
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT reviewed_note_sha, reviewed_note_commit FROM review_runs"
+        ).fetchone()
+    assert row is not None
+    assert row["reviewed_note_sha"] == review_metadata.git_blob_sha(note_path)
+    assert row["reviewed_note_commit"] is None
 
 
 def test_run_review_bundle_rejects_dirty_gate(tmp_path: Path) -> None:
