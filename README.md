@@ -58,19 +58,19 @@ src/commonplace/             Packaged operational engine
 
 ## Skills and instructions
 
-Promoted framework skills live in `skills/`. Claude Code can load them via plugin install or `.claude/skills/`, and Codex can load them via plugin install or project-local `.agents/skills/`. Global Codex installation via `$CODEX_HOME/skills` (default `~/.codex/skills`) is optional. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
+Framework skills live in `skills/` and are installed into consuming projects by `commonplace-init` under `.claude/skills/` with a `commonplace-` prefix. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 Framework skills:
 
 | Skill | Purpose |
 |---|---|
-| `write` | Route and draft a note, index, or discovered specialized type |
-| `validate` | Check frontmatter, descriptions, types, links, structure |
-| `connect` | Find connections between notes, update indexes |
-| `convert` | Convert notes between types (text → note → structured-claim) |
-| `ingest` | Ingest external source: snapshot → connect → classify → analyse |
-| `snapshot-web` | Capture a URL to `kb/sources/` |
-| `revise-iterative` | Iteratively revise a note without changing its claims |
+| `commonplace-write` | Route and draft a note, index, or discovered specialized type |
+| `commonplace-validate` | Check frontmatter, descriptions, types, links, structure |
+| `commonplace-connect` | Find connections between notes, update indexes |
+| `commonplace-convert` | Convert notes between types (text → note → structured-claim) |
+| `commonplace-ingest` | Ingest external source: snapshot → connect → classify → analyse |
+| `commonplace-snapshot-web` | Capture a URL to `kb/sources/` |
+| `commonplace-revise-iterative` | Iteratively revise a note without changing its claims |
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
 - `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
@@ -101,9 +101,9 @@ git clone https://github.com/anthropics/commonplace.git
 cd commonplace
 ```
 
-This repo includes a checked-in `.envrc` that sets `UV_CACHE_DIR` to a repo-local cache under `tmp/uv-cache`. If you use `direnv`, run `direnv allow` once after entering the repo so `uv run ...` uses the local cache automatically instead of the default global cache path.
+If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH`, `UV_CACHE_DIR`, and `COMMONPLACE_QMD_INDEX` for the project.
 
-The `.claude/skills/` and `.agents/skills/` directories can point at promoted framework skills under `skills/`, so both runtimes can expose the same commands during direct repo use. Plain instruction files remain AGENTS-routed procedures. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+Skills are installed into `.claude/skills/commonplace-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself
@@ -112,7 +112,7 @@ This is the right mode when:
 
 ### Installing into a project
 
-Commonplace can be installed into an existing project as a local plugin plus Python package. See **[INSTALL.md](INSTALL.md)** for the current setup flow.
+Commonplace can be installed into any project as a Python package. See **[INSTALL.md](INSTALL.md)** for the setup flow.
 
 ## Prerequisites
 
@@ -132,33 +132,25 @@ qmd adds semantic search — it finds notes by meaning, not just keywords. Witho
 
 1. [Install qmd](https://github.com/qmdnotes/qmd) and ensure it's on your PATH.
 
-2. Copy the sample collection config:
+2. `commonplace-init` generates a `qmd-collections.yml` with paths filled in. Copy it to the qmd config directory:
 
 ```bash
-cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/commonplace.yml
+cp qmd-collections.yml ~/.config/qmd/$COMMONPLACE_QMD_INDEX.yml
 ```
 
-3. Edit `~/.config/qmd/commonplace.yml` and replace `/PATH/TO/COMMONPLACE/` with the absolute path to your local checkout.
-
-4. Build the index:
+3. Build the index:
 
 ```bash
 qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
-5. Search:
+4. Search:
 
 ```bash
 qmd --index "$COMMONPLACE_QMD_INDEX" query "your search terms"
 ```
 
-After adding or editing notes, re-run `qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed` to keep the index current. Both commands are idempotent and fast.
-
-For initialized projects, copy the same sample config to a project-specific file (e.g. `~/.config/qmd/my-project.yml`) and replace `/PATH/TO/COMMONPLACE/` with the project root.
-
-```bash
-cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/my-project.yml
-```
+After adding or editing notes, re-run the update+embed commands to keep the index current. Both are idempotent and fast.
 
 ## Commands
 

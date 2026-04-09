@@ -39,7 +39,13 @@ Each command gets a `main()` entry point and a `[project.scripts]` entry, produc
 
 ### 2. One-tree model replaces two-tree
 
-Consuming projects no longer need a `commonplace/` framework subtree. After `pip install llm-commonplace`, the user runs `commonplace-init` to create the local project structure. The init command copies seed files (instructions, review gates, type definitions, AGENTS.md.template) from the installed package into the project root.
+Consuming projects no longer need a `commonplace/` framework subtree. After `pip install llm-commonplace`, the user runs `commonplace-init --name <project>` to create the local project structure. The init command:
+
+- copies seed files (instructions, review gates, type definitions) from the installed package
+- installs skills directly into `.claude/skills/` with a `commonplace-` prefix (e.g., `commonplace-write`, `commonplace-validate`)
+- resolves templates with the project name: `.envrc`, `AGENTS.md.template`, `qmd-collections.yml`
+
+No separate plugin installation is needed. Skills are project-local files, not plugin-delivered.
 
 The user's repo contains only their own content. Framework code lives in the installed package, accessed through CLI commands and `importlib.resources`.
 
@@ -49,7 +55,9 @@ The `src/commonplace/scaffold/` directory contains symlinks to the repo's canoni
 
 - `kb/instructions` -> `../../../../kb/instructions`
 - `types` -> `../../../types`
+- `skills` -> `../../../skills`
 - `AGENTS.md.template` -> `../../../AGENTS.md.template`
+- `.envrc.template` -> `../../../.envrc.template`
 
 During development, `importlib.resources` follows the symlinks — edits to instruction files are immediately available without a sync step. During wheel builds, hatchling dereferences the symlinks and embeds the actual file contents. The wheel is self-contained.
 
@@ -60,15 +68,27 @@ After: `commonplace-validate-notes "$ARGUMENTS"`
 
 Skills depend on command names, not filesystem layout. Missing commands are setup errors, not path-resolution failures.
 
-### 5. Init is idempotent and non-destructive
+### 5. Init resolves templates
 
-`commonplace-init` creates directories and copies scaffold files. It never overwrites existing files. Rerunning after a package upgrade picks up new scaffold files without disturbing user modifications.
+`commonplace-init --name <project>` fills in project-specific placeholders:
+
+- `.envrc` — PATH, UV_CACHE_DIR, COMMONPLACE_QMD_INDEX
+- `AGENTS.md.template` — project name in heading
+- `qmd-collections.yml` — project name and absolute paths to KB directories
+
+The `--name` flag defaults to the directory name if omitted.
+
+### 6. Init is idempotent and non-destructive
+
+`commonplace-init` creates directories, copies scaffold files, resolves templates, and installs skills. It never overwrites existing files. Rerunning after a package upgrade picks up new scaffold files without disturbing user modifications.
 
 ## Consequences
 
 **Easier:**
 - Installation is `pip install` + `commonplace-init`. No cloning, no submodules, no gitignored checkouts.
 - Skills are decoupled from filesystem layout. They invoke stable command names.
+- Skills install directly into `.claude/skills/` — no plugin manifests, no runtime-specific install commands.
+- Template resolution means no manual placeholder editing — `.envrc`, qmd config, and AGENTS template are ready to use.
 - The review system works reliably across project boundaries — proper imports, package data for schema loading, no `sys.path` manipulation.
 - Updating is `pip install --upgrade` + rerun `commonplace-init`.
 - Scaffold symlinks eliminate file duplication in the repo. One canonical copy of each instruction file.
@@ -76,7 +96,7 @@ Skills depend on command names, not filesystem layout. Missing commands are setu
 **Harder:**
 - Two names to know: `llm-commonplace` (PyPI distribution) vs `commonplace` (Python import). This is a PyPI naming constraint — `commonplace` is taken.
 - Scaffold files are snapshots at init time. After seeding, the user's copies diverge from the package. There is no automatic sync mechanism — rerunning init only adds new files, it does not update existing ones.
-- Plugin distribution still requires a local path. The Python package handles operational code, but the skill plugin (`.claude-plugin/`, `.codex-plugin/`) has no pip-installable delivery mechanism yet.
+- Skills are copied at init time, not symlinked. Editing a skill in the framework repo requires rerunning init in consuming projects to pick up changes.
 - Contributors must remember that scaffold symlinks point to live repo files. Adding a new instruction file requires no scaffold update, but removing or renaming one does.
 
 **Supersedes:** [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md). The two-tree model is replaced by one-tree-plus-package. ADR-006's `commonplace/` subtree no longer exists in consuming projects.
