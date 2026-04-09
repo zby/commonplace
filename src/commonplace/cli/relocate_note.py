@@ -30,12 +30,6 @@ TOKEN_PATTERN = re.compile(
 EXTERNAL_TARGET = re.compile(r"^[a-z][a-z0-9+.-]*:")
 REDIRECT_MAP_HEADER = re.compile(r"^(\s*)redirect_maps:\s*$")
 REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$")
-
-
-def slugify(text: str) -> str:
-    return slugify_note_filename(text)
-
-
 def is_nested_git_repo_content(path: Path) -> bool:
     current = path.parent
     while current != REPO_ROOT and REPO_ROOT in current.parents:
@@ -94,7 +88,7 @@ def resolve_destination_path(source: Path, new_name: str | None, dest_dir: str |
         ensure_note_slug_length(resolved.stem)
         return resolved
 
-    filename = source.name if new_name is None else f"{slugify(new_name)}.md"
+    filename = source.name if new_name is None else f"{slugify_note_filename(new_name)}.md"
     directory = source.parent if dest_dir is None else resolve_destination_dir(dest_dir)
     return directory / filename
 

@@ -17,13 +17,16 @@ Dependencies: `note_parser` → `frontmatter`. `type_resolver` is independent of
 
 ## naming
 
-Shared constraints for KB note titles and filename slugs.
+Shared naming rules and slug helpers.
 
 ### Public API
 
 **Constants**
 - `MAX_NOTE_TITLE_LENGTH = 100`
 - `MAX_NOTE_SLUG_LENGTH = 100`
+
+**`slugify_text(text: str, *, max_len: int | None = None, default: str | None = None) -> str`**
+Convert free text into a lowercase hyphenated slug, optionally truncate it, and optionally fall back to a default when the input contains no slug-worthy characters.
 
 **`ensure_note_slug_length(slug: str) -> None`**
 Raise `ValueError` when a note filename slug exceeds the hard length limit.

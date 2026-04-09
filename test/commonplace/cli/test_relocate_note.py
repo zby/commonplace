@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.cli import relocate_note
+from commonplace.lib.naming import slugify_note_filename
 
 
 def write(path: Path, content: str) -> Path:
@@ -92,7 +93,7 @@ nav:
 
 def test_slugify_rejects_overlong_note_slug() -> None:
     with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
-        relocate_note.slugify("a" * 101)
+        slugify_note_filename("a" * 101)
 
 
 def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path, monkeypatch) -> None:

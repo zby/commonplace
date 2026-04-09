@@ -19,6 +19,8 @@ from urllib.parse import urlparse
 
 import xdk
 
+from commonplace.lib.naming import slugify_text
+
 DEFAULT_SNAPSHOT_DIR = "kb/sources"
 DEFAULT_MAX_POSTS = 200
 
@@ -36,13 +38,6 @@ POST_FIELDS = [
 ]
 USER_FIELDS = ["id", "username", "name"]
 EXPANSIONS = ["author_id", "in_reply_to_user_id", "referenced_tweets.id"]
-
-
-def _slugify(text: str, max_len: int = 70) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return slug[:max_len].rstrip("-") or "x-snapshot"
-
-
 def _canonical_source_url(url: str) -> str:
     parsed = urlparse(url)
     host = parsed.netloc.lower().replace("www.", "")
@@ -373,7 +368,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
         or _post_text(target_post)[:70]
         or f"x-status-{status_id}"
     )
-    slug = f"{_slugify(base_title)}-{status_id}"
+    slug = f"{slugify_text(base_title, max_len=70, default='x-snapshot')}-{status_id}"
 
     json_path = dest / f"{slug}.json"
     md_path = dest / f"{slug}.md"

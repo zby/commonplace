@@ -18,12 +18,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
+from commonplace.lib.naming import slugify_text
+
 DEFAULT_SNAPSHOT_DIR = "kb/sources"
-
-
-def _slugify(text: str, max_len: int = 70) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return slug[:max_len].rstrip("-") or "github-snapshot"
 
 
 def _is_github_issue_api_path(path: str) -> bool:
@@ -133,7 +130,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     number = str(data.get("number") or "")
     repo = str(data.get("repository_url") or "").rstrip("/").split("/")[-2:]
     repo_slug = "-".join(repo) if len(repo) == 2 else ""
-    slug_bits = [repo_slug, number, _slugify(title, max_len=45)]
+    slug_bits = [repo_slug, number, slugify_text(title, max_len=45, default="github-snapshot")]
     slug = "-".join(bit for bit in slug_bits if bit).strip("-") or "github-snapshot"
 
     source_path = dest / f"{slug}.json"
