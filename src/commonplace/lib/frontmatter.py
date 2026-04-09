@@ -29,12 +29,8 @@ class FrontmatterResult:
 _FM_RE = re.compile(r"^---\n(.*?)\n---(?:\n|$)", re.DOTALL)
 
 
-def _match_frontmatter(content: str) -> re.Match[str] | None:
-    return _FM_RE.match(content)
-
-
 def parse(content: str) -> FrontmatterResult:
-    match = _match_frontmatter(content)
+    match = _FM_RE.match(content)
     if match is None:
         if content.startswith("---\n"):
             return FrontmatterResult(errors=["frontmatter: missing closing delimiter"])
@@ -60,7 +56,7 @@ def parse(content: str) -> FrontmatterResult:
 
 
 def strip(content: str) -> str:
-    match = _match_frontmatter(content)
+    match = _FM_RE.match(content)
     if match is None:
         return content
     return content[match.end() :]

@@ -73,9 +73,6 @@ Parse markdown notes into a structured `ParsedDocument` for validation and index
 **`parse_document(content: str) -> tuple[ParsedDocument | None, str | None]`**
 Main entry point. Returns `(doc, error)` — if frontmatter parsing fails, `doc` is `None` and `error` describes the problem.
 
-**`parse_frontmatter(content: str) -> tuple[dict | None, str | None]`**
-Parse frontmatter only. Returns `(data, error)`.
-
 **`extract_title(body: str) -> str`**
 First H1 heading text, or `"Untitled"`.
 

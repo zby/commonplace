@@ -39,16 +39,6 @@ def strip_frontmatter(content: str) -> str:
     return fm_mod.strip(content)
 
 
-def parse_frontmatter(content: str) -> tuple[dict[str, Any] | None, str | None]:
-    if not content.startswith("---\n"):
-        return None, None
-
-    result = fm_mod.parse(content)
-    if result.errors:
-        return None, "; ".join(result.errors)
-    return result.data, None
-
-
 def remove_fenced_code_blocks(text: str) -> str:
     return _FENCED_CODE_RE.sub("", text)
 
@@ -83,9 +73,12 @@ def extract_body_dates(body: str) -> tuple[str, ...]:
 
 
 def parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:
-    frontmatter, fm_error = parse_frontmatter(content)
-    if fm_error:
-        return None, fm_error
+    frontmatter: dict[str, Any] | None = None
+    if content.startswith("---\n"):
+        result = fm_mod.parse(content)
+        if result.errors:
+            return None, "; ".join(result.errors)
+        frontmatter = result.data
 
     body = strip_frontmatter(content)
     return (

@@ -55,6 +55,20 @@ Date: 2026-04-09
     assert document.body_dates == ("2026-04-09",)
 
 
+def test_parse_document_keeps_plain_text_as_no_frontmatter() -> None:
+    document, error = parse_document(
+        """# Title
+
+Body.
+"""
+    )
+
+    assert error is None
+    assert document is not None
+    assert document.frontmatter is None
+    assert document.body == "# Title\n\nBody.\n"
+
+
 def test_parse_document_reports_unclosed_frontmatter() -> None:
     document, error = parse_document(
         """---
