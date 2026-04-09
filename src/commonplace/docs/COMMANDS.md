@@ -100,15 +100,15 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read `kb/instructions/REVIEW-SYSTEM.md`.
+The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read `kb/instructions/REVIEW-SYSTEM.md`. For the code architecture, see `src/commonplace/docs/REVIEW.md`.
 
 ### commonplace-review-sweep
 
 Run a full review sweep — selects notes needing review and runs gate bundles on them.
 
 ```bash
-commonplace-review-sweep --model claude-sonnet-4-20250514 --runner claude-code
-commonplace-review-sweep --model claude-sonnet-4-20250514 --current           # only current-status notes
+commonplace-review-sweep --model claude-opus-4-6 --runner claude-code
+commonplace-review-sweep --model claude-opus-4-6 --current           # only current-status notes
 commonplace-review-sweep --dry-run                              # preview what would run
 ```
 
@@ -117,55 +117,181 @@ commonplace-review-sweep --dry-run                              # preview what w
 Run a review bundle (set of gates) on a single note.
 
 ```bash
-commonplace-run-review-bundle kb/notes/my-note.md semantic --runner claude-code --model claude-sonnet-4-20250514
+commonplace-run-review-bundle kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
 ```
 
 ### commonplace-run-gate-sweep
 
-Run gate checks across multiple notes in batch.
+Run a single gate across multiple notes in batched prompts.
 
 ```bash
-commonplace-run-gate-sweep --runner claude-code --model claude-sonnet-4-20250514
-commonplace-run-gate-sweep --current --batch-size 5
-commonplace-run-gate-sweep --note kb/notes/specific.md
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6
+commonplace-run-gate-sweep semantic/grounding-alignment --current --batch-size 5
+commonplace-run-gate-sweep semantic/grounding-alignment --note kb/notes/specific.md
+commonplace-run-gate-sweep semantic/grounding-alignment --dry-run
 ```
 
 ### commonplace-create-review-run
 
-Create a review run record in the review database.
+Create a review run record in the review database. Outputs JSON with the review_run_id and gate definitions.
 
 ```bash
-commonplace-create-review-run kb/notes/my-note.md semantic --runner claude-code --model claude-sonnet-4-20250514
+commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
+commonplace-create-review-run kb/notes/my-note.md prose --json   # JSON output for scripting
 ```
 
 ### commonplace-write-gate-review
 
-Write a gate review result to the review database.
+Record a single gate review from a file into an existing review run.
 
 ```bash
-commonplace-write-gate-review
+commonplace-write-gate-review --review-run-id 42 --gate-id prose/clarity --input-file review-output.md
 ```
 
 ### commonplace-finalize-review-run
 
-Finalize a review run, marking it complete.
+Mark a review run as completed. Validates that all expected gate reviews are present, then appends acceptance events.
 
 ```bash
-commonplace-finalize-review-run
+commonplace-finalize-review-run --review-run-id 42
+```
+
+### commonplace-record-bundle-review
+
+Parse a saved bundle artifact from disk and finalize the review run.
+
+```bash
+commonplace-record-bundle-review --review-run-id 42
 ```
 
 ### commonplace-ack-gate-review
 
-Acknowledge a gate review warning — marks it as reviewed and accepted.
+Advance acceptance baseline for specific gates without re-running the review.
 
 ```bash
-commonplace-ack-gate-review
+commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/clarity semantic/grounding-alignment
+```
+
+### commonplace-ack-trivial-note-changes
+
+Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically.
+
+```bash
+commonplace-ack-trivial-note-changes prose                         # all prose gates
+commonplace-ack-trivial-note-changes prose --current               # current-status notes only
+commonplace-ack-trivial-note-changes prose --dry-run               # preview what would ack
 ```
 
 ### commonplace-resolve-gates
 
-Resolve gate status for notes based on review history.
+Expand gate bundle names to individual gate IDs and output their definitions.
 
 ```bash
-commonplace-resolve-gates
+commonplace-resolve-gates prose                                    # all gates in prose bundle
+commonplace-resolve-gates prose/clarity semantic/grounding-alignment  # specific gates
+```
+
+### commonplace-review-target-selector
+
+List stale (note, gate) pairs that need review. Compares current note/gate SHAs against accepted SHAs.
+
+```bash
+commonplace-review-target-selector prose --model claude-opus-4-6
+commonplace-review-target-selector prose --current --json          # JSON output
+commonplace-review-target-selector prose --reason note-changed     # filter by staleness reason
+commonplace-review-target-selector prose --ack kb/notes/foo.md:prose/clarity   # ack a pair
+```
+
+### commonplace-warn-selector
+
+Extract warn-level findings from effective reviews.
+
+```bash
+commonplace-warn-selector                                          # all notes
+commonplace-warn-selector kb/notes/my-note.md                     # specific note
+commonplace-warn-selector --json                                   # JSON output
+```
+
+## Review maintenance
+
+Operational commands for database repair and migration. All support `--dry-run`.
+
+### commonplace-reparse-gate-review-decisions
+
+Re-parse decision values from stored review markdown. Useful after decision parsing logic changes.
+
+```bash
+commonplace-reparse-gate-review-decisions --dry-run
+commonplace-reparse-gate-review-decisions --review-run-id 42
+```
+
+### commonplace-migrate-review-result-footer
+
+Rewrite all stored gate reviews so the result line appears at the canonical footer position.
+
+```bash
+commonplace-migrate-review-result-footer --dry-run
+```
+
+### commonplace-repair-codex-model-partitions
+
+Backfill model_id and telemetry from saved Codex session logs.
+
+```bash
+commonplace-repair-codex-model-partitions --dry-run
+commonplace-repair-codex-model-partitions --review-run-id 42
+```
+
+### commonplace-repair-manual-import-review-results
+
+Re-infer decisions for legacy manual-import reviews with stale footers.
+
+```bash
+commonplace-repair-manual-import-review-results --dry-run
+```
+
+### commonplace-repair-review-note-commits
+
+Fill missing `reviewed_note_commit` fields by matching note SHAs to nearby git commits.
+
+```bash
+commonplace-repair-review-note-commits --dry-run
+```
+
+### commonplace-prune-superseded-legacy-precommit-reviews
+
+Delete superseded acceptance events from legacy pre-commit reviews that lack commit provenance.
+
+```bash
+commonplace-prune-superseded-legacy-precommit-reviews --dry-run
+```
+
+### commonplace-prune-superseded-unknown-manual-import-reviews
+
+Delete manual-import reviews with `decision=unknown` that have been replaced by definitive reviews.
+
+```bash
+commonplace-prune-superseded-unknown-manual-import-reviews --dry-run
+```
+
+## Migrations
+
+One-off migration scripts for bulk file operations. Dry-run by default; pass `--apply` to execute.
+
+### commonplace-move-notes
+
+Move notes to a new directory and update all markdown links across `kb/`.
+
+```bash
+commonplace-move-notes kb/notes/definitions kb/notes/constraining.md kb/notes/distillation.md
+commonplace-move-notes --apply kb/notes/definitions kb/notes/my-note.md
+```
+
+### commonplace-fix-outbound-links
+
+Fix outbound links in moved files that still use old relative paths. Run after `commonplace-move-notes` to resolve broken links from moved files to non-moved files.
+
+```bash
+commonplace-fix-outbound-links kb/notes/definitions/constraining.md
+commonplace-fix-outbound-links --apply kb/notes/definitions/*.md
 ```
