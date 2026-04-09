@@ -76,6 +76,13 @@ ON gate_reviews(reviewed_note_sha);
 CREATE INDEX IF NOT EXISTS idx_gate_reviews_reviewed_at
 ON gate_reviews(reviewed_at);
 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_gate_reviews_review_run_gate
+ON gate_reviews(review_run_id, gate_id)
+WHERE review_run_id IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_gate_reviews_review_run_id
+ON gate_reviews(review_run_id);
+
 CREATE TABLE IF NOT EXISTS acceptance_events (
     id INTEGER PRIMARY KEY,
     note_path TEXT NOT NULL,

@@ -205,7 +205,7 @@ One instance to fix.
     assert review_db.infer_manual_import_review_decision(review_text) == "warn"
 
 
-def test_ensure_db_migrates_gate_review_schema_to_support_unknown_and_warn(tmp_path: Path) -> None:
+def test_ensure_db_does_not_mutate_existing_gate_review_schema(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     old_schema = (resources.files("commonplace.review") / "review-schema.sql").read_text(encoding="utf-8").replace(
         "decision IN ('pass', 'warn', 'fail', 'error', 'unknown')",
@@ -226,5 +226,5 @@ def test_ensure_db_migrates_gate_review_schema_to_support_unknown_and_warn(tmp_p
             """
         ).fetchone()
         assert row is not None
-        assert "'unknown'" in row[0].lower()
+        assert "'unknown'" not in row[0].lower()
         assert "'warn'" in row[0].lower()

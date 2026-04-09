@@ -378,305 +378,15 @@ def ensure_db(repo_root: Path, db_path: Path) -> None:
 
 def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
     conn.executescript(schema_path.read_text(encoding="utf-8"))
-    _ensure_review_run_schema(conn)
 
 
 def init_db(db_path: Path, schema_path: Path) -> None:
+    if db_path.exists():
+        return
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with connect(db_path) as conn:
         apply_schema(conn, schema_path)
         conn.commit()
-
-
-def _column_names(conn: sqlite3.Connection, table_name: str) -> set[str]:
-    rows = conn.execute(f"PRAGMA table_info({table_name})").fetchall()
-    return {str(row["name"]) for row in rows}
-
-
-def _ensure_review_run_schema(conn: sqlite3.Connection) -> None:
-    review_run_columns = _column_names(conn, "review_runs")
-    if "raw_bundle_markdown" not in review_run_columns:
-        conn.execute(
-            """
-            ALTER TABLE review_runs
-            ADD COLUMN raw_bundle_markdown TEXT
-            """
-        )
-    if "debug_log" not in review_run_columns:
-        conn.execute(
-            """
-            ALTER TABLE review_runs
-            ADD COLUMN debug_log TEXT
-            """
-        )
-    if "telemetry_json" not in review_run_columns:
-        conn.execute(
-            """
-            ALTER TABLE review_runs
-            ADD COLUMN telemetry_json TEXT
-            """
-        )
-
-    gate_review_columns = _column_names(conn, "gate_reviews")
-    if "review_run_id" not in gate_review_columns:
-        conn.execute(
-            """
-            ALTER TABLE gate_reviews
-            ADD COLUMN review_run_id INTEGER REFERENCES review_runs(id) ON DELETE CASCADE
-            """
-        )
-        gate_review_columns = _column_names(conn, "gate_reviews")
-
-    _ensure_gate_review_decision_schema(conn, gate_review_columns)
-    _ensure_acceptance_event_schema(conn)
-    conn.execute(
-        """
-        CREATE UNIQUE INDEX IF NOT EXISTS idx_gate_reviews_review_run_gate
-        ON gate_reviews(review_run_id, gate_id)
-        WHERE review_run_id IS NOT NULL
-        """
-    )
-    conn.execute(
-        """
-        CREATE INDEX IF NOT EXISTS idx_gate_reviews_review_run_id
-        ON gate_reviews(review_run_id)
-        """
-    )
-
-
-def _gate_reviews_schema_sql(conn: sqlite3.Connection) -> str:
-    row = conn.execute(
-        """
-        SELECT sql
-        FROM sqlite_master
-        WHERE type = 'table' AND name = 'gate_reviews'
-        """
-    ).fetchone()
-    if row is None or row["sql"] is None:
-        return ""
-    return str(row["sql"]).lower()
-
-
-def _gate_reviews_support_unknown_decision(conn: sqlite3.Connection) -> bool:
-    return "'unknown'" in _gate_reviews_schema_sql(conn)
-
-
-def _gate_reviews_support_warn_decision(conn: sqlite3.Connection) -> bool:
-    return "'warn'" in _gate_reviews_schema_sql(conn)
-
-
-def _ensure_gate_review_decision_schema(conn: sqlite3.Connection, gate_review_columns: set[str]) -> None:
-    if _gate_reviews_support_unknown_decision(conn) and _gate_reviews_support_warn_decision(conn):
-        return
-
-    has_review_run_id = "review_run_id" in gate_review_columns
-    fk_enabled = bool(conn.execute("PRAGMA foreign_keys").fetchone()[0])
-
-    if fk_enabled:
-        conn.commit()
-        conn.execute("PRAGMA foreign_keys = OFF")
-
-    try:
-        conn.execute(
-            """
-            CREATE TABLE gate_reviews_new (
-                id INTEGER PRIMARY KEY,
-                review_run_id INTEGER REFERENCES review_runs(id) ON DELETE CASCADE,
-                note_path TEXT NOT NULL,
-                gate_id TEXT NOT NULL,
-                model_id TEXT NOT NULL,
-                decision TEXT NOT NULL CHECK (
-                    decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
-                ),
-                rationale_markdown TEXT NOT NULL,
-                evidence_json TEXT,
-                gate_sha TEXT NOT NULL,
-                reviewed_note_sha TEXT NOT NULL,
-                reviewed_note_commit TEXT,
-                reviewed_at TEXT NOT NULL,
-                review_kind TEXT NOT NULL CHECK (
-                    review_kind IN ('full-review', 'manual-import')
-                )
-            )
-            """
-        )
-        review_run_id_select = "review_run_id" if has_review_run_id else "NULL AS review_run_id"
-        conn.execute(
-            f"""
-            INSERT INTO gate_reviews_new (
-                id,
-                review_run_id,
-                note_path,
-                gate_id,
-                model_id,
-                decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind
-            )
-            SELECT
-                id,
-                {review_run_id_select},
-                note_path,
-                gate_id,
-                model_id,
-                decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind
-            FROM gate_reviews
-            """
-        )
-        conn.execute("DROP TABLE gate_reviews")
-        conn.execute("ALTER TABLE gate_reviews_new RENAME TO gate_reviews")
-    finally:
-        if fk_enabled:
-            conn.commit()
-            conn.execute("PRAGMA foreign_keys = ON")
-
-
-def _acceptance_events_support_gate_migration(conn: sqlite3.Connection) -> bool:
-    row = conn.execute(
-        """
-        SELECT sql
-        FROM sqlite_master
-        WHERE type = 'table' AND name = 'acceptance_events'
-        """
-    ).fetchone()
-    if row is None or row["sql"] is None:
-        return False
-    return "'gate-migration'" in str(row["sql"]).lower()
-
-
-def _ensure_acceptance_event_schema(conn: sqlite3.Connection) -> None:
-    if _acceptance_events_support_gate_migration(conn):
-        return
-
-    fk_enabled = bool(conn.execute("PRAGMA foreign_keys").fetchone()[0])
-
-    if fk_enabled:
-        conn.commit()
-        conn.execute("PRAGMA foreign_keys = OFF")
-
-    try:
-        conn.execute("DROP VIEW IF EXISTS stale_gate_pairs")
-        conn.execute("DROP VIEW IF EXISTS current_gate_acceptances")
-        conn.execute(
-            """
-            CREATE TABLE acceptance_events_new (
-                id INTEGER PRIMARY KEY,
-                note_path TEXT NOT NULL,
-                gate_id TEXT NOT NULL,
-                model_id TEXT NOT NULL,
-                accepted_review_id INTEGER REFERENCES gate_reviews(id) ON DELETE SET NULL,
-                accepted_note_sha TEXT NOT NULL,
-                accepted_note_commit TEXT,
-                accepted_gate_sha TEXT NOT NULL,
-                accepted_at TEXT NOT NULL,
-                acceptance_kind TEXT NOT NULL CHECK (
-                    acceptance_kind IN (
-                        'full-review',
-                        'gate-migration',
-                        'trivial-change-ack',
-                        'migration-import',
-                        'manual-override'
-                    )
-                )
-            )
-            """
-        )
-        conn.execute(
-            """
-            INSERT INTO acceptance_events_new (
-                id,
-                note_path,
-                gate_id,
-                model_id,
-                accepted_review_id,
-                accepted_note_sha,
-                accepted_note_commit,
-                accepted_gate_sha,
-                accepted_at,
-                acceptance_kind
-            )
-            SELECT
-                id,
-                note_path,
-                gate_id,
-                model_id,
-                accepted_review_id,
-                accepted_note_sha,
-                accepted_note_commit,
-                accepted_gate_sha,
-                accepted_at,
-                acceptance_kind
-            FROM acceptance_events
-            """
-        )
-        conn.execute("DROP TABLE acceptance_events")
-        conn.execute("ALTER TABLE acceptance_events_new RENAME TO acceptance_events")
-        conn.execute(
-            """
-            CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model
-            ON acceptance_events(note_path, gate_id, model_id, accepted_at DESC)
-            """
-        )
-        conn.execute(
-            """
-            CREATE INDEX IF NOT EXISTS idx_acceptance_events_latest_by_key
-            ON acceptance_events(note_path, gate_id, model_id, id DESC)
-            """
-        )
-        conn.execute(
-            """
-            CREATE VIEW IF NOT EXISTS current_gate_acceptances AS
-            SELECT
-                e.note_path,
-                e.gate_id,
-                e.model_id,
-                e.accepted_review_id,
-                e.accepted_note_sha,
-                e.accepted_note_commit,
-                e.accepted_gate_sha,
-                e.accepted_at,
-                e.acceptance_kind
-            FROM acceptance_events AS e
-            JOIN (
-                SELECT
-                    note_path,
-                    gate_id,
-                    model_id,
-                    MAX(id) AS max_id
-                FROM acceptance_events
-                GROUP BY note_path, gate_id, model_id
-            ) AS latest
-              ON e.id = latest.max_id
-            """
-        )
-        conn.execute(
-            """
-            CREATE VIEW IF NOT EXISTS stale_gate_pairs AS
-            SELECT
-                a.note_path,
-                a.gate_id,
-                a.model_id,
-                a.accepted_note_sha,
-                a.accepted_gate_sha
-            FROM current_gate_acceptances AS a
-            """
-        )
-    finally:
-        if fk_enabled:
-            conn.commit()
-            conn.execute("PRAGMA foreign_keys = ON")
 
 
 def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, str], AcceptanceState]:
@@ -730,71 +440,38 @@ def insert_gate_review(
     normalized_decision = normalize_review_decision(decision)
     if normalized_decision is None:
         raise ValueError(f"invalid review decision: {decision}")
-
-    if "review_run_id" in _column_names(conn, "gate_reviews"):
-        cursor = conn.execute(
-            """
-            INSERT INTO gate_reviews (
-                review_run_id,
-                note_path,
-                gate_id,
-                model_id,
-                decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                review_run_id,
-                note_path,
-                gate_id,
-                model_id,
-                normalized_decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind,
-            ),
-        )
-    else:
-        cursor = conn.execute(
-            """
-            INSERT INTO gate_reviews (
-                note_path,
-                gate_id,
-                model_id,
-                decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                note_path,
-                gate_id,
-                model_id,
-                normalized_decision,
-                rationale_markdown,
-                evidence_json,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
-                reviewed_at,
-                review_kind,
-            ),
-        )
+    cursor = conn.execute(
+        """
+        INSERT INTO gate_reviews (
+            review_run_id,
+            note_path,
+            gate_id,
+            model_id,
+            decision,
+            rationale_markdown,
+            evidence_json,
+            gate_sha,
+            reviewed_note_sha,
+            reviewed_note_commit,
+            reviewed_at,
+            review_kind
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            review_run_id,
+            note_path,
+            gate_id,
+            model_id,
+            normalized_decision,
+            rationale_markdown,
+            evidence_json,
+            gate_sha,
+            reviewed_note_sha,
+            reviewed_note_commit,
+            reviewed_at,
+            review_kind,
+        ),
+    )
     return int(cursor.lastrowid)
 
 
@@ -1099,12 +776,11 @@ def load_gate_reviews_for_note(
     note_path: str,
     model_id: str,
 ) -> list[GateReviewRow]:
-    has_review_run_id = "review_run_id" in _column_names(conn, "gate_reviews")
     rows = conn.execute(
-        f"""
+        """
         SELECT
             id,
-            {"review_run_id," if has_review_run_id else "NULL AS review_run_id,"}
+            review_run_id,
             note_path,
             gate_id,
             model_id,
@@ -1147,8 +823,6 @@ def load_gate_reviews_for_run(
     *,
     review_run_id: int,
 ) -> list[GateReviewRow]:
-    if "review_run_id" not in _column_names(conn, "gate_reviews"):
-        return []
     rows = conn.execute(
         """
         SELECT
