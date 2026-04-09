@@ -147,14 +147,6 @@ Mark a review run as completed. Validates that all expected gate reviews are pre
 commonplace-finalize-review-run --review-run-id 42
 ```
 
-### commonplace-record-bundle-review
-
-Parse a saved bundle artifact from disk and finalize the review run.
-
-```bash
-commonplace-record-bundle-review --review-run-id 42
-```
-
 ### commonplace-ack-gate-review
 
 Advance acceptance baseline for specific gates without re-running the review.

@@ -13,10 +13,9 @@ from commonplace.review.review_db import (
     insert_gate_review,
     load_review_run,
     load_review_run_gates,
-    parse_review_decision,
-    rewrite_review_result_footer,
     resolve_db_path,
 )
+from commonplace.review.review_decisions import parse_review_decision, rewrite_review_result_footer
 from commonplace.review.review_metadata import _METADATA_BLOCK_RE, iso_now
 
 

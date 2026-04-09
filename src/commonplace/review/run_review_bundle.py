@@ -17,11 +17,10 @@ from commonplace.review.review_db import (
     create_run,
     ensure_db,
     fail_review_run,
-    parse_review_decision,
     record_and_finalize_run,
-    rewrite_review_result_footer,
     resolve_db_path,
 )
+from commonplace.review.review_decisions import parse_review_decision, rewrite_review_result_footer
 from commonplace.review.review_metadata import iso_now, resolve_review_target
 from commonplace.review.review_model import build_model_id
 from commonplace.review.review_runners import run_prompt
@@ -348,11 +347,6 @@ def main() -> None:
     parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
     parser.add_argument("--model", required=True, help="Requested runner model and initial review model partition.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
-    parser.add_argument(
-        "--keep-staging",
-        action="store_true",
-        help="Compatibility flag. Bundle artifacts are always kept; this prints the artifact directory.",
-    )
     parser.add_argument("--dry-run", action="store_true", help="Print the prompt and staging plan without invoking the runner.")
     args = parser.parse_args()
 
@@ -500,8 +494,6 @@ def main() -> None:
             parser.exit(1, f"{exc}\n")
         conn.commit()
 
-    if args.keep_staging:
-        print(f"artifacts: {artifact_dir}")
     print(f"completed {review_run_id} {gate_count}")
 
 

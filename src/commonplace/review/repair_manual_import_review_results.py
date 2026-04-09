@@ -7,13 +7,8 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
-from commonplace.review.review_db import (
-    connect,
-    ensure_db,
-    infer_manual_import_review_decision,
-    resolve_db_path,
-    rewrite_review_result_footer,
-)
+from commonplace.review.review_db import connect, ensure_db, resolve_db_path
+from commonplace.review.review_decisions import infer_manual_import_review_decision, rewrite_review_result_footer
 
 
 def main() -> None:

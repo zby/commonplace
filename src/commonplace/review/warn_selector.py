@@ -16,8 +16,8 @@ from commonplace.review.review_db import (
     ensure_db,
     load_effective_gate_review_map,
     resolve_db_path,
-    strip_explicit_review_result_lines,
 )
+from commonplace.review.review_decisions import strip_explicit_review_result_lines
 from commonplace.review.review_metadata import git_blob_sha
 
 

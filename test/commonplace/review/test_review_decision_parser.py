@@ -6,7 +6,7 @@ from pathlib import Path
 
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures" / "review-decision"
 
-from commonplace.review import review_db
+from commonplace.review import review_db, review_decisions
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -25,7 +25,7 @@ def test_parse_review_decision_concrete_fixtures() -> None:
     ]
 
     for fixture_name, expected in cases:
-        actual = review_db.parse_review_decision(read_fixture(fixture_name))
+        actual = review_decisions.parse_review_decision(read_fixture(fixture_name))
         assert actual == expected, fixture_name
 
 
@@ -37,7 +37,7 @@ def test_parse_review_decision_uses_highest_finding_severity_without_explicit_ou
 - FAIL: Blocking problem.
 """
 
-    assert review_db.parse_review_decision(review_text) == "fail"
+    assert review_decisions.parse_review_decision(review_text) == "fail"
 
 
 def test_parse_review_decision_supports_legacy_heading() -> None:
@@ -47,7 +47,7 @@ def test_parse_review_decision_supports_legacy_heading() -> None:
 Looks good.
 """
 
-    assert review_db.parse_review_decision(review_text) == "pass"
+    assert review_decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_parse_review_decision_supports_revised_result_override() -> None:
@@ -59,7 +59,7 @@ def test_parse_review_decision_supports_revised_result_override() -> None:
 Revised result: PASS
 """
 
-    assert review_db.parse_review_decision(review_text) == "pass"
+    assert review_decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_parse_review_decision_supports_flagging_phrase_override() -> None:
@@ -71,7 +71,7 @@ def test_parse_review_decision_supports_flagging_phrase_override() -> None:
 Flagging as INFO rather than WARN because the case is defensible.
 """
 
-    assert review_db.parse_review_decision(review_text) == "pass"
+    assert review_decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_parse_review_decision_supports_minor_severity() -> None:
@@ -82,7 +82,7 @@ def test_parse_review_decision_supports_minor_severity() -> None:
 - **info**: No rewrite required.
 """
 
-    assert review_db.parse_review_decision(review_text) == "warn"
+    assert review_decisions.parse_review_decision(review_text) == "warn"
 
 
 def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> None:
@@ -92,7 +92,7 @@ def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> N
 - Minor: The summary could be tighter.
 """
 
-    assert review_db.parse_review_decision(review_text) == "pass"
+    assert review_decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_parse_review_decision_treats_no_violations_with_pass_findings_as_pass() -> None:
@@ -105,7 +105,7 @@ No violations found.
 - PASS: All bullet items begin with a capitalized lead-in.
 """
 
-    assert review_db.parse_review_decision(review_text) == "pass"
+    assert review_decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_parse_review_decision_returns_unknown_on_conflicting_signals() -> None:
@@ -115,7 +115,7 @@ def test_parse_review_decision_returns_unknown_on_conflicting_signals() -> None:
 - PASS: The title is clear and aligned.
 """
 
-    assert review_db.parse_review_decision(review_text) == "unknown"
+    assert review_decisions.parse_review_decision(review_text) == "unknown"
 
 
 def test_parse_review_decision_returns_unknown_when_no_signal_exists() -> None:
@@ -123,7 +123,7 @@ def test_parse_review_decision_returns_unknown_when_no_signal_exists() -> None:
 No explicit outcome and no severity labels.
 """
 
-    assert review_db.parse_review_decision(review_text) == "unknown"
+    assert review_decisions.parse_review_decision(review_text) == "unknown"
 
 
 def test_rewrite_review_result_footer_moves_result_to_end() -> None:
@@ -132,7 +132,7 @@ def test_rewrite_review_result_footer_moves_result_to_end() -> None:
 Grounding is aligned.
 """
 
-    assert review_db.rewrite_review_result_footer(review_text) == "Grounding is aligned.\n\n## Result: PASS\n"
+    assert review_decisions.rewrite_review_result_footer(review_text) == "Grounding is aligned.\n\n## Result: PASS\n"
 
 
 def test_rewrite_review_result_footer_preserves_declared_result_when_parse_is_unknown() -> None:
@@ -142,7 +142,7 @@ def test_rewrite_review_result_footer_preserves_declared_result_when_parse_is_un
 - PASS: The title is clear and aligned.
 """
 
-    assert review_db.rewrite_review_result_footer(review_text) == (
+    assert review_decisions.rewrite_review_result_footer(review_text) == (
         "### Findings\n- PASS: The title is clear and aligned.\n\n## Result: FAIL\n"
     )
 
@@ -153,7 +153,7 @@ def test_rewrite_review_result_footer_allows_unknown_when_explicitly_requested()
 No findings.
 """
 
-    assert review_db.rewrite_review_result_footer(review_text, decision="unknown") == (
+    assert review_decisions.rewrite_review_result_footer(review_text, decision="unknown") == (
         "Pass\n\nNo findings.\n\n## Result: UNKNOWN\n"
     )
 
@@ -169,7 +169,7 @@ No findings.
 ## Result: WARN
 """
 
-    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+    assert review_decisions.infer_manual_import_review_decision(review_text) == "pass"
 
 
 def test_infer_manual_import_review_decision_handles_yaml_style_legacy_header() -> None:
@@ -182,7 +182,7 @@ No instances found.
 ## Result: WARN
 """
 
-    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+    assert review_decisions.infer_manual_import_review_decision(review_text) == "pass"
 
 
 def test_infer_manual_import_review_decision_supports_relaxed_result_line() -> None:
@@ -191,7 +191,7 @@ def test_infer_manual_import_review_decision_supports_relaxed_result_line() -> N
 The alignment is plausible but not exact.
 """
 
-    assert review_db.infer_manual_import_review_decision(review_text) == "pass"
+    assert review_decisions.infer_manual_import_review_decision(review_text) == "pass"
 
 
 def test_infer_manual_import_review_decision_supports_bold_result_line() -> None:
@@ -202,7 +202,7 @@ def test_infer_manual_import_review_decision_supports_bold_result_line() -> None
 One instance to fix.
 """
 
-    assert review_db.infer_manual_import_review_decision(review_text) == "warn"
+    assert review_decisions.infer_manual_import_review_decision(review_text) == "warn"
 
 
 def test_ensure_db_does_not_mutate_existing_gate_review_schema(tmp_path: Path) -> None:

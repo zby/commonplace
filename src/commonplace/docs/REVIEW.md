@@ -223,7 +223,6 @@ These are operational commands for database maintenance. All support `--dry-run`
 
 | Command | Purpose |
 |---|---|
-| `repair-codex-model-partitions` | Backfill model_id and telemetry from saved Codex session logs |
 | `repair-manual-import-review-results` | Re-infer decisions for legacy manual-import reviews |
 | `reparse-gate-review-decisions` | Re-parse decisions from stored markdown (after parser updates) |
 | `prune-superseded-unknown-manual-import-reviews` | Delete manual-import reviews with decision=unknown that have replacements |
