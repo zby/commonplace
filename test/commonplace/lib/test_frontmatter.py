@@ -14,18 +14,6 @@ if str(SRC_ROOT) not in sys.path:
 from commonplace.lib import frontmatter
 
 
-class TestExtractRaw(unittest.TestCase):
-    def test_returns_raw_block(self):
-        content = "---\ntype: note\ntags: [a]\n---\n# Title\n"
-        self.assertEqual(frontmatter.extract_raw(content), "type: note\ntags: [a]")
-
-    def test_returns_none_without_delimiters(self):
-        self.assertIsNone(frontmatter.extract_raw("# Just a heading\n"))
-
-    def test_returns_none_for_unclosed(self):
-        self.assertIsNone(frontmatter.extract_raw("---\ntype: note\n# Title\n"))
-
-
 class TestParseScalars(unittest.TestCase):
     def test_unquoted_scalar(self):
         r = frontmatter.parse("---\ntype: note\n---\nbody")
@@ -45,7 +33,7 @@ class TestParseScalars(unittest.TestCase):
     def test_empty_value(self):
         r = frontmatter.parse("---\ndescription:\n---\n")
         self.assertTrue(r.ok)
-        self.assertEqual(r.data["description"], "")
+        self.assertIsNone(r.data["description"])
 
     def test_empty_quoted_value(self):
         r = frontmatter.parse('---\ndescription: ""\n---\n')
@@ -118,40 +106,47 @@ class TestParseMultipleFields(unittest.TestCase):
 
 
 class TestDuplicateKeys(unittest.TestCase):
-    def test_duplicate_key_is_error(self):
+    def test_duplicate_key_keeps_last(self):
         r = frontmatter.parse("---\ntype: note\ntype: adr\n---\n")
-        self.assertFalse(r.ok)
-        self.assertTrue(any("duplicate" in e for e in r.errors))
-
-    def test_duplicate_key_keeps_first(self):
-        r = frontmatter.parse("---\ntype: note\ntype: adr\n---\n")
-        self.assertEqual(r.data.get("type"), "note")
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data.get("type"), "adr")
 
 
 class TestMalformedLines(unittest.TestCase):
     def test_bad_line_reports_error(self):
         r = frontmatter.parse("---\nnot a valid line\ntype: note\n---\n")
         self.assertFalse(r.ok)
-        self.assertEqual(r.data.get("type"), "note")
+        self.assertEqual(r.data, {})
 
-    def test_key_must_start_lowercase(self):
+    def test_uppercase_key_is_accepted(self):
         r = frontmatter.parse("---\nType: note\n---\n")
-        self.assertFalse(r.ok)
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["Type"], "note")
 
-    def test_mapping_like_scalar_is_error(self):
+    def test_mapping_like_scalar_is_accepted(self):
         r = frontmatter.parse("---\nmeta: {a: b}\n---\n")
-        self.assertFalse(r.ok)
-        self.assertTrue(any("unsupported" in e for e in r.errors))
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["meta"], {"a": "b"})
 
-    def test_yaml_tag_is_error(self):
+    def test_yaml_tag_is_accepted(self):
         r = frontmatter.parse("---\nvalue: !!str hello\n---\n")
-        self.assertFalse(r.ok)
-        self.assertTrue(any("unsupported" in e for e in r.errors))
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["value"], "hello")
 
-    def test_anchor_is_error(self):
+    def test_anchor_is_accepted(self):
         r = frontmatter.parse("---\nvalue: &x hello\n---\n")
-        self.assertFalse(r.ok)
-        self.assertTrue(any("unsupported" in e for e in r.errors))
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["value"], "hello")
+
+    def test_block_list_is_accepted(self):
+        r = frontmatter.parse("---\ntags:\n  - a\n  - b\n---\n")
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["tags"], ["a", "b"])
+
+    def test_nested_mapping_is_accepted(self):
+        r = frontmatter.parse("---\nmeta:\n  a: b\n---\n")
+        self.assertTrue(r.ok)
+        self.assertEqual(r.data["meta"], {"a": "b"})
 
 
 class TestNoFrontmatter(unittest.TestCase):
@@ -170,6 +165,11 @@ class TestNoFrontmatter(unittest.TestCase):
         self.assertTrue(r.ok)
         self.assertEqual(r.data["description"], "test")
 
+    def test_unclosed_frontmatter_is_error(self):
+        r = frontmatter.parse("---\ndescription: test\n# Title\n")
+        self.assertFalse(r.ok)
+        self.assertEqual(r.errors, ["frontmatter: missing closing delimiter"])
+
 
 class TestStrip(unittest.TestCase):
     def test_removes_frontmatter(self):
@@ -183,4 +183,3 @@ class TestStrip(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

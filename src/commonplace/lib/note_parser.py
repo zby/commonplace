@@ -44,8 +44,6 @@ def parse_frontmatter(content: str) -> tuple[dict[str, Any] | None, str | None]:
         return None, None
 
     result = fm_mod.parse(content)
-    if not result.raw and not result.data:
-        return None, "frontmatter: missing closing delimiter"
     if result.errors:
         return None, "; ".join(result.errors)
     return result.data, None

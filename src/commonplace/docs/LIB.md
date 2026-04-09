@@ -1,6 +1,6 @@
 # Commonplace Library (`commonplace.lib`)
 
-Shared library modules used by CLI commands and the review system. All modules are stdlib-only except `type_resolver`, which requires `jsonschema` (which transitively brings in `referencing`) and `pyyaml`.
+Shared library modules used by CLI commands and the review system. `frontmatter` and `type_resolver` require `PyYAML`; `type_resolver` also requires `jsonschema` (which transitively brings in `referencing`).
 
 ## Module overview
 
@@ -38,30 +38,17 @@ Convert a title or filename-like string into a lowercase hyphenated note slug an
 
 ## frontmatter
 
-Parse and validate markdown frontmatter using a strict, stdlib-only YAML subset. No dependency on PyYAML.
-
-### Grammar rules
-
-- Keys: `[a-z][a-z0-9_-]*` (lowercase only, no nesting)
-- Values: inline lists `[item, item]`, quoted strings, or unquoted scalars
-- Boolean coercion: `true`/`false` → `bool`
-- Digit-only strings → `int`
-- Empty values → `""`
-- Unsupported: block lists, multi-line scalars, anchors, YAML tags, nested structures
+Parse markdown frontmatter by extracting the block between `---` delimiters and handing it to `yaml.safe_load`.
 
 ### Public API
 
 **`FrontmatterResult`** — dataclass holding parse results:
 - `data: dict[str, Any]` — parsed key-value pairs
-- `raw: str` — raw frontmatter text between delimiters
 - `errors: list[str]` — parse/validation error messages
 - `ok: bool` — property, `True` if no errors
 
-**`extract_raw(content: str) -> str | None`**
-Extract the raw frontmatter text between `---` delimiters. Returns `None` if no frontmatter block found.
-
 **`parse(content: str) -> FrontmatterResult`**
-Full parse: extracts frontmatter, validates each line against the grammar, detects duplicate keys and unsupported syntax. Collects all errors (not just the first).
+Full parse: extracts the raw frontmatter block, parses it with `yaml.safe_load`, and returns a mapping or parse errors.
 
 **`strip(content: str) -> str`**
 Remove the frontmatter block from content, returning the body.

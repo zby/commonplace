@@ -173,7 +173,7 @@ def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     assert any("no frontmatter" in item for item in results.passes)
 
 
-def test_duplicate_frontmatter_keys_fail_validation(tmp_path: Path) -> None:
+def test_duplicate_frontmatter_keys_follow_yaml_last_value_wins(tmp_path: Path) -> None:
     note = write(
         tmp_path / "broken.md",
         """---
@@ -188,8 +188,9 @@ type: note
 
     results = validate_notes.validate_note(note)
 
-    assert results.note_type == "unknown"
-    assert any("duplicate key" in item for item in results.fails)
+    assert results.note_type == "note"
+    assert results.fails == []
+    assert any("description: present" in item for item in results.passes)
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:

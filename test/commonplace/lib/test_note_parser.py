@@ -53,3 +53,15 @@ Date: 2026-04-09
     assert document is not None
     assert document.links == ("./one.md",)
     assert document.body_dates == ("2026-04-09",)
+
+
+def test_parse_document_reports_unclosed_frontmatter() -> None:
+    document, error = parse_document(
+        """---
+description: Example
+# Title
+"""
+    )
+
+    assert document is None
+    assert error == "frontmatter: missing closing delimiter"

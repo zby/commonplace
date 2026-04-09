@@ -1,34 +1,8 @@
-"""Parse and validate KB frontmatter.
+"""Parse markdown frontmatter with a thin YAML wrapper.
 
 Frontmatter sits between ``---`` delimiters at the start of a markdown
-file.  This module defines the *only* grammar the KB recognises — a
-strict subset of YAML chosen so that a stdlib-only parser is correct by
-construction.
-
-Grammar
--------
-
-::
-
-    frontmatter  := "---\\n" line* "---\\n"
-    line         := key ":" SP value NL
-    key          := [a-z][a-z0-9_-]*
-    value        := inline_list | quoted_string | unquoted_scalar
-    inline_list  := "[" ( item ( "," item )* )? "]"
-    item         := quoted_string | unquoted_item
-    unquoted_item:= [^,\\]"']+          (trimmed)
-    quoted_string:= '"' [^"]* '"'  |  "'" [^']* "'"
-    unquoted_scalar := .+               (trimmed; must not start with [ or {)
-
-Rules:
-
-* All keys are top-level — no nesting, no indentation.
-* No block-style lists (``- item``), multi-line scalars (``|``, ``>``),
-  anchors (``&``/``*``), or explicit YAML tags (``!!``).
-* Duplicate keys are errors.
-* An empty value (key with nothing after the colon) yields ``""``.
-* Unquoted scalars that look like common types are coerced:
-  ``true``/``false`` → bool, digit-only strings → int.
+file. Delimiter handling stays local; the contents are parsed with
+``yaml.safe_load``.
 """
 
 from __future__ import annotations
@@ -37,13 +11,14 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
+import yaml
+
 
 @dataclass
 class FrontmatterResult:
     """Parsed frontmatter with optional diagnostics."""
 
     data: dict[str, Any] = field(default_factory=dict)
-    raw: str = ""
     errors: list[str] = field(default_factory=list)
 
     @property
@@ -52,116 +27,40 @@ class FrontmatterResult:
 
 
 _FM_RE = re.compile(r"^---\n(.*?)\n---(?:\n|$)", re.DOTALL)
-_LINE_RE = re.compile(r"^([a-z][a-z0-9_-]*)\s*:\s*(.*)$")
-_BOOL_MAP = {"true": True, "false": False}
-_UNSUPPORTED_SCALAR_PREFIXES = ("{", "&", "*", "!!", "|", ">")
 
 
-def _parse_inline_list(raw: str) -> list[str]:
-    inner = raw[1:-1]
-    if not inner.strip():
-        return []
-
-    items: list[str] = []
-    part_chars: list[str] = []
-    quote_char: str | None = None
-
-    for char in inner:
-        if quote_char:
-            if char == quote_char:
-                quote_char = None
-            part_chars.append(char)
-            continue
-
-        if char in ('"', "'"):
-            quote_char = char
-            part_chars.append(char)
-            continue
-
-        if char == ",":
-            part = "".join(part_chars).strip()
-            if len(part) >= 2 and part[0] == part[-1] and part[0] in ('"', "'"):
-                part = part[1:-1]
-            items.append(part)
-            part_chars = []
-            continue
-
-        part_chars.append(char)
-
-    if quote_char:
-        raise ValueError("unterminated quoted string in inline list")
-
-    part = "".join(part_chars).strip()
-    if len(part) >= 2 and part[0] == part[-1] and part[0] in ('"', "'"):
-        part = part[1:-1]
-    if part or inner.endswith(","):
-        items.append(part.strip())
-
-    return items
-
-
-def _coerce_scalar(raw: str) -> Any:
-    if not raw:
-        return ""
-    low = raw.lower()
-    if low in _BOOL_MAP:
-        return _BOOL_MAP[low]
-    if raw.isdigit():
-        return int(raw)
-    return raw
-
-
-def _parse_value(raw: str) -> Any:
-    raw = raw.strip()
-    if not raw:
-        return ""
-    if len(raw) >= 2 and raw[0] == raw[-1] and raw[0] in ('"', "'"):
-        return raw[1:-1]
-    if raw.startswith("[") and raw.endswith("]"):
-        return _parse_inline_list(raw)
-    if raw.startswith(_UNSUPPORTED_SCALAR_PREFIXES):
-        raise ValueError(f"unsupported YAML syntax: {raw}")
-    return _coerce_scalar(raw)
-
-
-def extract_raw(content: str) -> str | None:
-    m = _FM_RE.match(content)
-    return m.group(1) if m else None
+def _match_frontmatter(content: str) -> re.Match[str] | None:
+    return _FM_RE.match(content)
 
 
 def parse(content: str) -> FrontmatterResult:
-    raw = extract_raw(content)
-    if raw is None:
+    match = _match_frontmatter(content)
+    if match is None:
+        if content.startswith("---\n"):
+            return FrontmatterResult(errors=["frontmatter: missing closing delimiter"])
         return FrontmatterResult()
 
-    result = FrontmatterResult(raw=raw)
-    seen_keys: set[str] = set()
+    raw = match.group(1)
+    result = FrontmatterResult()
+    try:
+        loaded = yaml.safe_load(raw)
+    except yaml.YAMLError as exc:
+        result.errors.append(str(exc))
+        return result
 
-    for lineno, line in enumerate(raw.splitlines(), start=1):
-        if not line.strip():
-            continue
+    if loaded is None:
+        return result
+    if not isinstance(loaded, dict):
+        result.errors.append("frontmatter must parse to a mapping")
+        return result
 
-        m = _LINE_RE.match(line)
-        if not m:
-            result.errors.append(
-                f"line {lineno}: does not match 'key: value' pattern: {line!r}"
-            )
-            continue
-
-        key, val_raw = m.group(1), m.group(2)
-        if key in seen_keys:
-            result.errors.append(f"line {lineno}: duplicate key '{key}'")
-            continue
-        seen_keys.add(key)
-
-        try:
-            result.data[key] = _parse_value(val_raw)
-        except ValueError as exc:
-            result.errors.append(f"line {lineno}: {exc}")
+    result.data = loaded
 
     return result
 
 
 def strip(content: str) -> str:
-    return re.sub(r"^---\n.*?\n---(?:\n|$)", "", content, count=1, flags=re.DOTALL)
-
+    match = _match_frontmatter(content)
+    if match is None:
+        return content
+    return content[match.end() :]
