@@ -1,6 +1,6 @@
-# Promotion Candidates — 2026-03-24
+# Promotion Candidates — 2026-04-09
 
-Text files: 3 | Seedlings: 102
+Text files: 3 | Seedlings: 108
 
 ## Text → Note
 
@@ -13,32 +13,53 @@ Text files: 3 | Seedlings: 102
 
 ## Seedling → Current (top 20 by incoming links)
 
-- [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) — **60 links in**
-  Sources: [Automated synthesis is missing good oracles](../notes/automated-synthesis-is-missing-good-oracles.md), [The bitter lesson has a boundary](../notes/bitter-lesson-boundary.md), [Brainstorming how to enrich web search](../notes/brainstorming-how-to-enrich-web-search.md) +57 more
+- [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) — **65 links in**
+  Sources: [Automated synthesis is missing good oracles](../notes/automated-synthesis-is-missing-good-oracles.md), [The bitter lesson has a boundary](../notes/bitter-lesson-boundary.md), [Brainstorming how to enrich web search](../notes/brainstorming-how-to-enrich-web-search.md) +62 more
 
-- [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md) — **46 links in**
-  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [005-quality-check-placement](../notes/adr/005-quality-check-placement.md) +43 more
+- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **53 links in**
+  Sources: [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), ["Agent" is a useful technical convention, not a definition](../notes/agent-is-a-tool-loop.md) +50 more
 
-- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **42 links in**
-  Sources: ["Agent" is a useful technical convention, not a definition](../notes/agent-is-a-tool-loop.md), [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md), [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) +39 more
+- [A functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — **49 links in**
+  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [003-connect-skill-discovery-strategy](../notes/adr/003-connect-skill-discovery-strategy.md), [007-reports-directory-for-generated-snapshots](../notes/adr/007-reports-directory-for-generated-snapshots.md) +46 more
 
-- [A functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — **37 links in**
-  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [003-connect-skill-discovery-strategy](../notes/adr/003-connect-skill-discovery-strategy.md), [007-reports-directory-for-generated-snapshots](../notes/adr/007-reports-directory-for-generated-snapshots.md) +34 more
+- [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md) — **49 links in**
+  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [005-quality-check-placement](../notes/adr/005-quality-check-placement.md) +46 more
 
-- [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **30 links in**
-  Sources: [Brainstorming: how to test whether pairwise comparison can harden soft oracles](../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md), [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md), [Evaluation automation is phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md) +27 more
+- [Trace-derived learning techniques in related systems](../notes/trace-derived-learning-techniques-in-related-systems.md) — **35 links in**
+  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md), [Learning theory](../notes/learning-theory-index.md) +32 more
 
-- [LLM context is composed without scoping](../notes/llm-context-is-composed-without-scoping.md) — **27 links in**
-  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md) +24 more
+- [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **34 links in**
+  Sources: [Brainstorming: how to test whether pairwise comparison can harden soft oracles](../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md), [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md), [Evaluation automation is phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md) +31 more
 
-- [Discovery is seeing the particular as an instance of the general](../notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — **26 links in**
-  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) +23 more
+- [LLM context is composed without scoping](../notes/llm-context-is-composed-without-scoping.md) — **30 links in**
+  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md) +27 more
+
+- [Discovery is seeing the particular as an instance of the general](../notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — **27 links in**
+  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) +24 more
 
 - [First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — **21 links in**
   Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) +18 more
 
-- [Trace-derived learning techniques in related systems](../notes/trace-derived-learning-techniques-in-related-systems.md) — **21 links in**
-  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md), [Learning substrates, backends, and artifact forms](../notes/learning-substrates-backends-and-artifact-forms.md) +18 more
+- [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — **18 links in**
+  Sources: [Agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md), [Agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md), [Brainstorming: how reach informs KB design](../notes/brainstorming-how-reach-informs-kb-design.md) +15 more
+
+- [Deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — **18 links in**
+  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [008-Stdlib-only core scripts](../notes/adr/008-stdlib-only-core-scripts.md), [012-types-for-structure-traits-for-review](../notes/adr/012-types-for-structure-traits-for-review.md) +15 more
+
+- [LLM-mediated schedulers are a degraded variant of the clean model](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — **16 links in**
+  Sources: [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md), [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md), [Any symbolic program with bounded calls is a select/call program](../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) +13 more
+
+- [Operational signals that a component is a relaxing candidate](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) — **16 links in**
+  Sources: [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), [Codify-versus-LLM decision heuristics](../notes/codify-versus-llm-decision-heuristics.md) +13 more
+
+- [Scheduler-LLM separation exploits an error-correction asymmetry](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — **16 links in**
+  Sources: [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) +13 more
+
+- [Skills derive from methodology through distillation](../notes/skills-derive-from-methodology-through-distillation.md) — **16 links in**
+  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [006-two-tree-installation-layout](../notes/adr/006-two-tree-installation-layout.md) +13 more
+
+- [Effective context is task-relative and complexity-relative not a fixed model constant](../notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — **15 links in**
+  Sources: [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) +12 more
 
 - [Indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — **15 links in**
   Sources: [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Agent statelessness makes routing architectural, not learned](../notes/agent-statelessness-makes-routing-architectural-not-learned.md) +12 more
@@ -46,35 +67,14 @@ Text files: 3 | Seedlings: 102
 - [Information value is observer-relative](../notes/information-value-is-observer-relative.md) — **15 links in**
   Sources: [Agent context is constrained by soft degradation, not hard token limits](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) +12 more
 
-- [Operational signals that a component is a relaxing candidate](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) — **14 links in**
-  Sources: [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) +11 more
+- [Context engineering](../notes/definitions/context-engineering.md) — **14 links in**
+  Sources: [Agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md), [Agent runtimes decompose into scheduler context engine and execution substrate](../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md), [Agent runtimes decompose into scheduler context engine and execution substrate](../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) +11 more
 
-- [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — **14 links in**
-  Sources: [Agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md), [Agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md), [Automated synthesis is missing good oracles](../notes/automated-synthesis-is-missing-good-oracles.md) +11 more
-
-- [Frontloading spares execution context](../notes/frontloading-spares-execution-context.md) — **13 links in**
-  Sources: [Agent statelessness makes routing architectural, not learned](../notes/agent-statelessness-makes-routing-architectural-not-learned.md), [Always-loaded context mechanisms in agent harnesses](../notes/always-loaded-context-mechanisms-in-agent-harnesses.md), [Always-loaded context mechanisms in agent harnesses](../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) +10 more
-
-- [LLM-mediated schedulers are a degraded variant of the clean model](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — **13 links in**
-  Sources: [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md), [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md), [Apparent success is an unreliable health signal in framework-owned tool loops](../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) +10 more
-
-- [Notes need quality scores to scale curation](../notes/notes-need-quality-scores-to-scale-curation.md) — **13 links in**
-  Sources: [003-connect-skill-discovery-strategy](../notes/adr/003-connect-skill-discovery-strategy.md), [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Brainstorming how to enrich web search](../notes/brainstorming-how-to-enrich-web-search.md) +10 more
-
-- [Skills derive from methodology through distillation](../notes/skills-derive-from-methodology-through-distillation.md) — **13 links in**
-  Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [006-two-tree-installation-layout](../notes/adr/006-two-tree-installation-layout.md) +10 more
-
-- [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — **12 links in**
-  Sources: [Brainstorming: how reach informs KB design](../notes/brainstorming-how-reach-informs-kb-design.md), [First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md), [Foundations](../notes/foundations-index.md) +9 more
-
-- [Design methodology — borrow widely, filter by first principles](../notes/design-methodology-borrow-widely-filter-by-first-principles.md) — **12 links in**
-  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) +9 more
-
-- [Deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — **12 links in**
-  Sources: [A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md), [008-Stdlib-only core scripts](../notes/adr/008-stdlib-only-core-scripts.md), [Claim notes should use Toulmin-derived sections for structured argument](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) +9 more
+- [Decomposition heuristics for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — **13 links in**
+  Sources: [Any symbolic program with bounded calls is a select/call program](../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md), [Any symbolic program with bounded calls is a select/call program](../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) +10 more
 
 
 ## Orphan Seedlings (2 with zero incoming links)
 
-- [MCP bundles stateless tools with a stateful runtime](../notes/mcp-bundles-stateless-tools-with-stateful-runtime.md)
+- [Psychology-to-agent transfer needs per-principle failure-mode testing](../notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md)
 - [Two context boundaries govern collection operations](../notes/two-context-boundaries-govern-collection-operations.md)
