@@ -216,14 +216,6 @@ commonplace-reparse-gate-review-decisions --dry-run
 commonplace-reparse-gate-review-decisions --review-run-id 42
 ```
 
-### commonplace-migrate-review-result-footer
-
-Rewrite all stored gate reviews so the result line appears at the canonical footer position.
-
-```bash
-commonplace-migrate-review-result-footer --dry-run
-```
-
 ### commonplace-repair-codex-model-partitions
 
 Backfill model_id and telemetry from saved Codex session logs.
@@ -247,26 +239,4 @@ Delete manual-import reviews with `decision=unknown` that have been replaced by 
 
 ```bash
 commonplace-prune-superseded-unknown-manual-import-reviews --dry-run
-```
-
-## Migrations
-
-One-off migration scripts for bulk file operations. Dry-run by default; pass `--apply` to execute.
-
-### commonplace-move-notes
-
-Move notes to a new directory and update all markdown links across `kb/`.
-
-```bash
-commonplace-move-notes kb/notes/definitions kb/notes/constraining.md kb/notes/distillation.md
-commonplace-move-notes --apply kb/notes/definitions kb/notes/my-note.md
-```
-
-### commonplace-fix-outbound-links
-
-Fix outbound links in moved files that still use old relative paths. Run after `commonplace-move-notes` to resolve broken links from moved files to non-moved files.
-
-```bash
-commonplace-fix-outbound-links kb/notes/definitions/constraining.md
-commonplace-fix-outbound-links --apply kb/notes/definitions/*.md
 ```
