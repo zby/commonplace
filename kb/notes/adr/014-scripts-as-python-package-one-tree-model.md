@@ -23,6 +23,12 @@ This created several problems:
 
 The review system — with its DB helpers, schema loading, metadata models, and multi-script pipelines — was the forcing function. It could not be reliably invoked from a sibling-import script layout across project boundaries.
 
+Beyond the two-tree problems, the plugin-based skill delivery model ([ADR-013](./013-skills-first-delivery-with-core-local-type-split.md)) had its own friction:
+
+5. **Plugin installation differs per runtime.** Claude Code uses `claude plugin install <path>`, Codex uses a marketplace JSON file. Two manifests to maintain (`.claude-plugin/`, `.codex-plugin/`), two install procedures to document.
+6. **Plugins still require a local path.** There is no pip-installable plugin delivery. The Python package eliminates the checkout dependency for operational code, but plugins reintroduce it for skills.
+7. **Global installs create environment coupling.** Installing the package globally or into a shared venv means all projects share the same version. Project-local venvs are cleaner but require the venv to be activated or its `bin/` to be on PATH.
+
 ## Decision
 
 ### 1. Scripts become a Python package
@@ -45,13 +51,17 @@ Consuming projects no longer need a `commonplace/` framework subtree. After `pip
 - installs skills directly into `.claude/skills/` with a `commonplace-` prefix (e.g., `commonplace-write`, `commonplace-validate`)
 - resolves templates with the project name: `.envrc`, `AGENTS.md.template`, `qmd-collections.yml`
 
-No separate plugin installation is needed. Skills are project-local files, not plugin-delivered.
+No separate plugin installation is needed. Skills are project-local files, not plugin-delivered. This eliminates the per-runtime plugin installation divergence — the same init command works regardless of whether the consumer uses Claude Code, Codex, or another runtime that reads skills from a directory.
+
+The `commonplace-` prefix on skill names avoids collisions with a project's own skills. A project can have its own `/write` skill without conflicting with `/commonplace-write`.
 
 The user's repo contains only their own content. Framework code lives in the installed package, accessed through CLI commands and `importlib.resources`.
 
 ### 3. Scaffold via symlinks
 
-The `src/commonplace/scaffold/` directory contains symlinks to the repo's canonical files rather than copies:
+An earlier design proposed a `scaffold/` directory containing copies of instruction files and type definitions. This was rejected because it creates a maintenance burden — every change to an instruction file must be mirrored in scaffold. Symlinks eliminate the duplication: the scaffold directory is just a view over the repo's live files.
+
+The `src/commonplace/scaffold/` directory contains symlinks to the repo's canonical files:
 
 - `kb/instructions` -> `../../../../kb/instructions`
 - `types` -> `../../../types`
@@ -70,9 +80,11 @@ Skills depend on command names, not filesystem layout. Missing commands are setu
 
 ### 5. Init resolves templates
 
+Templates with manual placeholders are a common source of setup errors — users forget to edit them, or edit them inconsistently across files. The init command resolves all placeholders from a single `--name` argument.
+
 `commonplace-init --name <project>` fills in project-specific placeholders:
 
-- `.envrc` — PATH, UV_CACHE_DIR, COMMONPLACE_QMD_INDEX
+- `.envrc` — PATH (adds `.venv/bin` so commands work without venv activation), UV_CACHE_DIR (avoids permission issues in sandboxed runtimes like Codex), COMMONPLACE_QMD_INDEX (lets skills find the project's qmd index without hardcoding)
 - `AGENTS.md.template` — project name in heading
 - `qmd-collections.yml` — project name and absolute paths to KB directories
 
@@ -94,7 +106,7 @@ The `--name` flag defaults to the directory name if omitted.
 - Scaffold symlinks eliminate file duplication in the repo. One canonical copy of each instruction file.
 
 **Harder:**
-- Two names to know: `llm-commonplace` (PyPI distribution) vs `commonplace` (Python import). This is a PyPI naming constraint — `commonplace` is taken.
+- Two names to know: `llm-commonplace` (PyPI distribution) vs `commonplace` (Python import). The name `commonplace` was already claimed on PyPI by an unrelated project. `llm-commonplace` was chosen to be clearly distinct and avoid PyPI's similar-name rejection rules.
 - Scaffold files are snapshots at init time. After seeding, the user's copies diverge from the package. There is no automatic sync mechanism — rerunning init only adds new files, it does not update existing ones.
 - Skills are copied at init time, not symlinked. Editing a skill in the framework repo requires rerunning init in consuming projects to pick up changes.
 - Contributors must remember that scaffold symlinks point to live repo files. Adding a new instruction file requires no scaffold update, but removing or renaming one does.
