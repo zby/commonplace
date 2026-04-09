@@ -178,7 +178,7 @@ Codex marketplace metadata is a separate concern:
 ### 2. `skills/write/SKILL.md`
 The main new skill. Absorbs routing table + content workflow + type routing.
 
-**Type system context:** Types define required structure (sections, fields); traits route semantic review expectations. Type definitions are two files: `.md` (prose template, read by agents) and `.yaml` (machine-readable, read by validator). The `write` skill reads prose templates; the validator reads YAML. See `kb/work/type-system-rationalization/design.md`.
+**Type system context:** Types define required structure; traits route semantic review expectations. Type definitions are two files: `.md` (prose template, read by agents) and machine-readable schema (read by validation tooling). The `write` skill reads prose templates; the validator reads schemas. See `kb/notes/adr/012-types-for-structure-traits-for-review.md` and `kb/notes/adr/015-standardize-authored-type-definitions-on-json-schema.md`.
 
 **Procedure:**
 1. Parse arguments: optional type and optional topic
