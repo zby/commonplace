@@ -1,4 +1,0 @@
-note_path,gate_id,gate_hash,recorded_commit,watched_hash,recorded_at
-kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md,semantic/completeness-boundary-cases,053b48e685ea43922bddff685682f7d56447b657,b34b33c12f7199564136b76b6124efb69f6be91b,83bf8f1a6ba444b8fc31203360327290a8b66d5e,2026-03-26T20:40:46+01:00
-kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md,semantic/grounding-alignment,bcdd500e6c1fe6d609dd9c680963a3db4f141452,b34b33c12f7199564136b76b6124efb69f6be91b,2100cd5bf86331deb1f7e312bb934465d6564461,2026-03-26T20:55:16+01:00
-kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md,semantic/internal-consistency,9076e845827408a541d23168e69701e8a66d2969,b34b33c12f7199564136b76b6124efb69f6be91b,83bf8f1a6ba444b8fc31203360327290a8b66d5e,2026-03-26T20:40:47+01:00

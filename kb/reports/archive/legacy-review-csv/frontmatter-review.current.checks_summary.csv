@@ -1,9 +1,0 @@
-check,warn_count,info_count,clean_count,sample_note,sample_finding
-Title composability,1,2,24,distillation.md,"Title is a bare noun (""Distillation"") — ""since distillation..."" does not read as a complete clause. The note is definitional/term-pinning, which exempts it from the claim-strength check, but bare-noun titles still compose poorly as link targets. Other notes currently link to it with inline context (e.g., ""[constraining](./constraining.md) — co-equal mechanism""), which works but means every linker must supply its own gloss."
-Title-body alignment,0,3,24,,
-claim-strength,0,2,6,,
-Description discrimination,0,1,26,,
-title-body-alignment,0,1,7,,
-title-composability,0,1,7,,
-Claim strength,0,0,27,,
-description-discrimination,0,0,8,,
