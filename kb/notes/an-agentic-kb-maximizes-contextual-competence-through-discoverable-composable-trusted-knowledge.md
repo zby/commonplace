@@ -6,7 +6,7 @@ tags: [learning-theory, foundations]
 status: seedling
 ---
 
-# A good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge
+# An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge
 
 ## What is a good agentic knowledge base?
 

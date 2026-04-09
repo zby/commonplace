@@ -312,6 +312,50 @@ Watch.
     assert "frontmatter: missing required fields last-checked" in results.warns
 
 
+def test_title_length_over_limit_fails_validation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+    title = "A" * 101
+    note = write(
+        notes_root / "short-slug.md",
+        f"""---
+description: Note with an overly long title so the validator should fail deterministically on title length
+type: note
+traits: []
+status: current
+---
+
+# {title}
+""",
+    )
+
+    results = validate_notes.validate_note(note)
+
+    assert "title: 101 chars exceeds limit of 100" in results.fails
+
+
+def test_filename_slug_length_over_limit_fails_validation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+    overlong_slug = "a" * 101
+    note = write(
+        notes_root / f"{overlong_slug}.md",
+        """---
+description: Note with an overly long slug so the validator should fail deterministically on filename length
+type: note
+traits: []
+status: current
+---
+
+# Short title
+""",
+    )
+
+    results = validate_notes.validate_note(note)
+
+    assert "filename slug: 101 chars exceeds limit of 100" in results.fails
+
+
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(

@@ -128,7 +128,7 @@ Core theory:
 - [activation gap](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)
 - [session-history](../../notes/session-history-should-not-be-the-default-next-context.md)
 - [action-capacity](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)
-- [contextual competence theory](../../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md)
+- [contextual competence theory](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md)
 
 Memory architecture:
 - [comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)

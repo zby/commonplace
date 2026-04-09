@@ -6,7 +6,7 @@ tags: [learning-theory]
 status: seedling
 ---
 
-# Minimum viable vocabulary is the set of names that maximally reduces extraction cost for a bounded observer
+# Minimum viable vocabulary is the naming set that most reduces extraction cost for a bounded observer
 
 When entering an unfamiliar domain, a bounded observer — a human without domain experience, an agent without domain vocabulary in context — faces a gap between the information present in domain artifacts and the information they can extract. The full structure is there in the textbooks, codebases, and papers. The observer cannot reach it because extraction requires computation they lack: the right categories, the right distinctions, the right names.
 

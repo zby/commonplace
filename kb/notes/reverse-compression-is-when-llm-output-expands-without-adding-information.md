@@ -6,7 +6,7 @@ tags: [learning-theory]
 status: seedling
 ---
 
-# Reverse-compression (inflation) is the failure mode where LLM output expands without adding information
+# Reverse compression is when LLM output expands without adding information
 
 Compression removes redundancy to preserve information. Reverse-compression is the inverse: expanding a compact signal into verbose prose without adding extractable structure. This is the common failure mode of [vibe-noting](./vibe-noting.md) — a human offers a one-sentence insight, the agent builds a whole article grounded in its training knowledge, and the result reads like depth but teaches the reader nothing beyond the seed.
 

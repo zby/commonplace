@@ -72,7 +72,7 @@ Relevant Notes:
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — enables: the installation step that generates the control-plane fragment
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: goals must be always-loaded because the inclusion question arises every session
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the structural sections of the fragment are generated; only goals require human input
-- [a good agentic KB maximizes contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — grounds: the reach criterion and quality theory that goals complement but don't replace
+- [a good agentic KB maximizes contextual competence](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — grounds: the reach criterion and quality theory that goals complement but don't replace
 - [control-plane template](../../AGENTS.md.template) — implements: the template that operationalizes this note
 
 Distilled into:

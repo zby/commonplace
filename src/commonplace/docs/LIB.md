@@ -6,11 +6,30 @@ Shared library modules used by CLI commands and the review system. All modules a
 
 ```
 frontmatter.py     Parse/validate markdown frontmatter (strict YAML subset)
+ naming.py         Shared note title and filename-slug constraints
 note_parser.py     Parse markdown notes into a schema-friendly document model
 type_resolver.py   Resolve note types from scoped JSON Schema definitions
 ```
 
 Dependencies: `note_parser` → `frontmatter`. `type_resolver` is independent of the other lib modules (but requires external packages).
+
+---
+
+## naming
+
+Shared constraints for KB note titles and filename slugs.
+
+### Public API
+
+**Constants**
+- `MAX_NOTE_TITLE_LENGTH = 100`
+- `MAX_NOTE_SLUG_LENGTH = 100`
+
+**`ensure_note_slug_length(slug: str) -> None`**
+Raise `ValueError` when a note filename slug exceeds the hard length limit.
+
+**`slugify_note_filename(text: str) -> str`**
+Convert a title or filename-like string into a lowercase hyphenated note slug and enforce the hard slug limit.
 
 ---
 

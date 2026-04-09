@@ -48,7 +48,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
 
-- [a-good-agentic-kb-maximizes-contextual-competence](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
+- [a-good-agentic-kb-maximizes-contextual-competence](../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
 
 **Sibling sources (4 connections, all contradicts — different architectural bets):**
 

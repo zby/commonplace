@@ -32,6 +32,6 @@ Relevant Notes:
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — tension: OpenProse-like systems recover some benefits of separation without crossing the medium boundary, so the note needs an explicit middle regime
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — extends: this note identifies a stronger subclass of degraded schedulers that externalise state and expose control flow without fully factoring into code
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: the main gains OpenProse gets early are scoping gains, not hard reliability gains
-- [programming practices apply to prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — explains why a DSL and explicit state protocols help before codification
+- [programming practices apply to prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — explains why a DSL and explicit state protocols help before codification
 - [codification](./definitions/codification.md) — contrasts: OpenProse constrains orchestration practice but does not codify the runtime semantics
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: compile-time validation and `**...**` conditions remain soft-oracle operations

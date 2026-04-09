@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.cli import relocate_note
 
 
@@ -86,6 +88,31 @@ nav:
     assert "- Example: notes/archive/new-name.md" in updated
     assert any("mkdocs redirect: notes/old-name.md -> notes/archive/new-name.md" == item for item in changes)
     assert any("mkdocs redirect target: notes/older-name.md -> notes/archive/new-name.md" == item for item in changes)
+
+
+def test_slugify_rejects_overlong_note_slug() -> None:
+    with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
+        relocate_note.slugify("a" * 101)
+
+
+def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path, monkeypatch) -> None:
+    repo_root = tmp_path
+    kb_root = repo_root / "kb"
+    notes_root = kb_root / "notes"
+    source = write(notes_root / "old-note.md", "# Old note\n")
+
+    monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
+    monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
+    monkeypatch.setattr(relocate_note, "NOTES_ROOT", notes_root)
+
+    overlong_slug = "a" * 101
+    with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
+        relocate_note.resolve_destination_path(
+            source,
+            None,
+            None,
+            f"kb/notes/{overlong_slug}.md",
+        )
 
 
 def test_relocate_note_apply_moves_file_and_updates_links(tmp_path: Path, monkeypatch) -> None:

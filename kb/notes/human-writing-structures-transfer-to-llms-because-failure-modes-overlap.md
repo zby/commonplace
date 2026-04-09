@@ -25,7 +25,7 @@ The methodology applies beyond Toulmin: any human writing convention proposed fo
 Relevant Notes:
 
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — complementary: a second independent argument for structured types with LLMs (distribution selection rather than failure-mode transfer)
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific at all)
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types

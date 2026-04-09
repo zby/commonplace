@@ -6,7 +6,7 @@ tags: [learning-theory, computational-model]
 status: speculative
 ---
 
-# Underspecification and indeterminism make programming practices harder in distinct ways when applied to prompting
+# Underspecification and indeterminism complicate programming for prompts in distinct ways
 
 Much of what we do in llm-do and this knowledge base is applying established programming practices to prompts, documents, and LLM workflows. The transfers are practical and actionable. Two properties of LLM-based systems — [semantic underspecification and execution indeterminism](./agentic-systems-interpret-underspecified-instructions.md) — make some practices harder than their traditional-programming originals, but in distinct ways.
 

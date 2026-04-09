@@ -8,7 +8,7 @@ Read this before creating or editing notes, ADRs, indexes, or source reviews. Th
 
 For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
 
-1. **[Title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? A claim title should be contestable — someone could reasonably disagree. "Continuous learning is substrate-independent" passes the prose test but fails the contestability test: nobody would push back on it — the classification isn't revealing enough to contest. "Continuous learning can happen outside of weights" names the thing people actually doubt. Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases.
+1. **[Title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? A claim title should be contestable — someone could reasonably disagree. "Continuous learning is substrate-independent" passes the prose test but fails the contestability test: nobody would push back on it — the classification isn't revealing enough to contest. "Continuous learning can happen outside of weights" names the thing people actually doubt. Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases. Keep note titles at or below 100 characters.
 2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
 3. **Tags** — Is it tagged with relevant keywords that help future readers find it? Use as many as genuinely useful.
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
@@ -126,6 +126,8 @@ Internal workspace documents connect via standard markdown links. Each link is a
 ## Filenames
 
 Use lowercase, hyphens for spaces, and the `.md` extension. Derive the filename from the `# Title` heading unless there is a strong reason to preserve an established filename.
+
+Filename slugs are capped at 100 characters. If a title would produce a longer slug, shorten the title rather than relying on truncation.
 
 ### Inline vs Footer Links
 

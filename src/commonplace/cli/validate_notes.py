@@ -12,6 +12,7 @@ from typing import Any
 
 from jsonschema.exceptions import ValidationError
 
+from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
@@ -125,6 +126,30 @@ def validate_description(results: CheckResults, description: Any) -> None:
         return
 
     results.passes.append(f"description: present, {len(desc)} chars")
+
+
+def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedDocument) -> None:
+    title = document.title.strip()
+    title_length = len(title)
+    slug_length = len(path.stem)
+
+    if title_length > MAX_NOTE_TITLE_LENGTH:
+        results.fails.append(
+            f"title: {title_length} chars exceeds limit of {MAX_NOTE_TITLE_LENGTH}"
+        )
+    else:
+        results.passes.append(
+            f"title: {title_length} chars (within {MAX_NOTE_TITLE_LENGTH}-char limit)"
+        )
+
+    if slug_length > MAX_NOTE_SLUG_LENGTH:
+        results.fails.append(
+            f"filename slug: {slug_length} chars exceeds limit of {MAX_NOTE_SLUG_LENGTH}"
+        )
+    else:
+        results.passes.append(
+            f"filename slug: {slug_length} chars (within {MAX_NOTE_SLUG_LENGTH}-char limit)"
+        )
 
 
 def validate_type_traits_status(
@@ -296,6 +321,7 @@ def validate_note(path: Path) -> CheckResults:
     results = CheckResults(note_type=parsed.note_type)
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
     validate_description(results, parsed.document.frontmatter.get("description"))
+    validate_title_and_slug(results, parsed.path, parsed.document)
     validate_type_traits_status(results, parsed.document.frontmatter, parsed.note_type, parsed.profile)
     validate_links_from_document(results, parsed.path, parsed.document.links)
     validate_structure(results, parsed.note_type, parsed.document, parsed.profile)

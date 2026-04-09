@@ -68,5 +68,5 @@ Relevant Notes:
 - [codification](./definitions/codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: relaxing signals answer "when should you relax?" — unified calling makes the relaxing refactoring cheap once the signal fires

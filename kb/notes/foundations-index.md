@@ -10,7 +10,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 
 ## Notes
 
-- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — unifying theory: three properties serve contextual competence under bounded context; five operations improve them; Deutsch's reach criterion measures knowledge quality
+- [a good agentic KB maximizes contextual competence through discoverable, composable, trustworthy knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — unifying theory: three properties serve contextual competence under bounded context; five operations improve them; Deutsch's reach criterion measures knowledge quality
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — context is the scarce resource; nearly every architectural pattern is a response to volume or complexity pressure
 - [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — borrow from any source, filter through first principles; programming patterns get a fast pass
 - [short-composable-notes-maximize-combinatorial-discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — the library exists for co-loading; short atomic notes maximize the surface area for cross-cutting discovery

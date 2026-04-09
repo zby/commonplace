@@ -16,6 +16,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
+
 
 REPO_ROOT = Path.cwd().resolve()
 KB_ROOT = REPO_ROOT / "kb"
@@ -31,11 +33,7 @@ REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$
 
 
 def slugify(text: str) -> str:
-    stem = Path(text.strip()).stem
-    slug = re.sub(r"[^a-z0-9]+", "-", stem.lower()).strip("-")
-    if not slug:
-        raise ValueError(f"Could not derive a filename slug from: {text!r}")
-    return slug
+    return slugify_note_filename(text)
 
 
 def is_nested_git_repo_content(path: Path) -> bool:
@@ -93,6 +91,7 @@ def resolve_destination_path(source: Path, new_name: str | None, dest_dir: str |
             raise ValueError(f"Destination path must end with .md: {resolved}")
         if NOTES_ROOT not in resolved.parents:
             raise ValueError(f"Destination path must live under {NOTES_ROOT}: {resolved}")
+        ensure_note_slug_length(resolved.stem)
         return resolved
 
     filename = source.name if new_name is None else f"{slugify(new_name)}.md"

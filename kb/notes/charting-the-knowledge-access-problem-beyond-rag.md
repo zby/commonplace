@@ -14,7 +14,7 @@ This is a brainstorming note, not a settled position. The goal is to chart the s
 
 ## What success should be measured against
 
-The goal is not retrieval accuracy in isolation. A knowledge system for an agent should improve [contextual competence](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md): not just answering a question, but helping the agent classify, plan, explain, and act appropriately under bounded context.
+The goal is not retrieval accuracy in isolation. A knowledge system for an agent should improve [contextual competence](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md): not just answering a question, but helping the agent classify, plan, explain, and act appropriately under bounded context.
 
 That widens the evaluation target. An access strategy might be good at exact lookup but poor at orientation. Good at landing on a page but poor at surfacing contradictions. Good at retrieving chunks but poor at helping the agent compose them into an argument. Once the target is contextual competence rather than search accuracy, "best retrieval system" stops being a single-axis question.
 
@@ -115,7 +115,7 @@ What seems new in agent systems is not the existence of these layers but the har
 
 Relevant Notes:
 
-- [a good agentic KB maximizes contextual competence through discoverable composable trustworthy knowledge](./a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — broadens the success criterion from answer-finding to contextual competence
+- [a good agentic KB maximizes contextual competence through discoverable composable trustworthy knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — broadens the success criterion from answer-finding to contextual competence
 - [context engineering](./definitions/context-engineering.md) — frames the umbrella problem as routing, loading, scoping, and maintenance under bounded context
 - [distillation](./definitions/distillation.md) — treats TOCs, abstracts, and synthesized overviews as task-targeted compressions rather than generic summaries
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pointer-design part of the problem
