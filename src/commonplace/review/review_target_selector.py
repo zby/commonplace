@@ -19,7 +19,13 @@ from commonplace.review.review_db import (
     load_current_acceptances,
     resolve_db_path,
 )
-from commonplace.review.review_metadata import blob_text_at_sha, file_text_at_commit, git_blob_sha, iso_now, last_commit_for_path
+from commonplace.review.review_metadata import (
+    blob_text_at_sha,
+    committed_note_provenance,
+    file_text_at_commit,
+    git_blob_sha,
+    iso_now,
+)
 
 NOTES_ROOT = Path("kb/notes")
 
@@ -208,9 +214,12 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
                 print(f"error: gate not found: {gate_id}", file=sys.stderr)
                 sys.exit(1)
 
-            note_sha = git_blob_sha(note_abs, write_object=True)
+            try:
+                note_sha, note_commit = committed_note_provenance(repo_root, Path(note_path))
+            except ValueError as exc:
+                print(f"error: {exc}", file=sys.stderr)
+                sys.exit(1)
             current_gate_sha = git_blob_sha(gate_abs)
-            note_commit = last_commit_for_path(repo_root, Path(note_path))
             append_acceptance_event(
                 conn,
                 note_path=note_path,

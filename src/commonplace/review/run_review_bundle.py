@@ -28,7 +28,7 @@ from commonplace.review.review_db import (
     resolve_db_path,
     update_review_run_telemetry,
 )
-from commonplace.review.review_metadata import git_blob_sha, iso_now, last_commit_for_path
+from commonplace.review.review_metadata import committed_file_provenance, committed_note_provenance, iso_now
 from commonplace.review.review_model import build_model_id
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
@@ -596,8 +596,10 @@ def main() -> None:
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)
 
-    note_sha = git_blob_sha(note_abs, write_object=True)
-    note_commit = last_commit_for_path(repo_root, Path(args.note_path))
+    try:
+        note_sha, note_commit = committed_note_provenance(repo_root, Path(args.note_path))
+    except ValueError as exc:
+        parser.error(str(exc))
     started_at = iso_now()
     run_gates: list[tuple[str, str, int]] = []
     gate_texts: dict[str, str] = {}
@@ -605,7 +607,11 @@ def main() -> None:
         gate_abs = gates_dir / f"{gate_id}.md"
         if not gate_abs.is_file():
             parser.error(f"gate not found: {gate_id}")
-        run_gates.append((gate_id, git_blob_sha(gate_abs), ordinal))
+        try:
+            gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
+        except ValueError as exc:
+            parser.error(str(exc))
+        run_gates.append((gate_id, gate_sha, ordinal))
         gate_texts[gate_id] = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
 
     with connect(db_path) as conn:

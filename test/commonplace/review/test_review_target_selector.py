@@ -125,10 +125,10 @@ def build_fixture(tmp_path: Path) -> dict[str, Path | str]:
     )
     commit = commit_all(tmp_path, "Initial fixture", date="2020-01-01T00:00:00+00:00")
 
-    stable_sha = review_metadata.git_blob_sha(stable, write_object=True)
-    g1_sha = review_metadata.git_blob_sha(g1, write_object=True)
-    g2_sha = review_metadata.git_blob_sha(g2, write_object=True)
-    g3_sha = review_metadata.git_blob_sha(g3, write_object=True)
+    stable_sha = review_metadata.git_blob_sha(stable)
+    g1_sha = review_metadata.git_blob_sha(g1)
+    g2_sha = review_metadata.git_blob_sha(g2)
+    g3_sha = review_metadata.git_blob_sha(g3)
 
     review_db.ensure_db(tmp_path, db_path_for(tmp_path))
     reviewed_at = "2026-03-31T00:00:00+00:00"
@@ -326,6 +326,7 @@ class TestNoteChanged:
     def test_note_sha_change_marks_stale(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        commit_all(tmp_path, "Update stable note", date="2020-01-02T00:00:00+00:00")
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,
@@ -343,6 +344,7 @@ class TestAckMetadata:
     def test_ack_appends_acceptance_event_without_creating_new_gate_reviews(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        commit_all(tmp_path, "Update stable note", date="2020-01-02T00:00:00+00:00")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             gate_review_count_before = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
@@ -388,6 +390,17 @@ class TestAckMetadata:
         assert row["accepted_review_id"] is None
         assert row["acceptance_kind"] == "trivial-change-ack"
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
+
+    def test_ack_rejects_dirty_note(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
+
+        with pytest.raises(SystemExit):
+            review_target_selector.ack_pairs(
+                tmp_path,
+                ["kb/notes/stable.md:prose/source-residue"],
+                TEST_MODEL,
+            )
 
     def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -442,8 +455,8 @@ class TestDiffGeneration:
         commit = commit_all(tmp_path, "Initial", date="2020-01-01T00:00:00+00:00")
 
         review_db.ensure_db(tmp_path, db_path_for(tmp_path))
-        note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
-        gate_sha = review_metadata.git_blob_sha(gate_path, write_object=True)
+        note_sha = review_metadata.git_blob_sha(note_path)
+        gate_sha = review_metadata.git_blob_sha(gate_path)
         with review_db.connect(db_path_for(tmp_path)) as conn:
             review_id = review_db.insert_gate_review(
                 conn,

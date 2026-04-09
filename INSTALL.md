@@ -10,13 +10,33 @@ export PATH=".venv/bin:$PATH"
 
 Restart your shell or `source` the file. This is a one-time setup — it works for any project with a local `.venv/`.
 
-## Codex: uv cache configuration
+## Project-local uv cache
 
-Codex often runs inside a sandbox where the default uv cache location is not writable. Set `UV_CACHE_DIR` to a writable directory inside the project so `uv run`, `uv pip`, and related commands work without escalation.
+Codex often runs inside a sandbox where the default uv cache location is not writable. The cleanest fix is to set `UV_CACHE_DIR` per project so both your normal shell and the shell Codex runs use the same writable cache.
 
-Preferred: set it in Codex config so it is injected into the shell Codex runs.
+Preferred: use `direnv`.
 
-Add this to `~/.codex/config.toml`:
+Create a project-local `.envrc`:
+
+```bash
+export UV_CACHE_DIR="$PWD/tmp/uv-cache"
+```
+
+Then allow it once:
+
+```bash
+direnv allow
+```
+
+This keeps the setting project-scoped instead of changing every shell on your machine.
+
+If you use a project-local cache, add it to your gitignore if it is not already ignored:
+
+```bash
+echo "tmp/uv-cache/" >> .gitignore
+```
+
+Fallback for Codex-only behavior: set it in `~/.codex/config.toml` so Codex injects it into the shell it launches:
 
 ```toml
 [shell_environment_policy]
@@ -26,26 +46,10 @@ inherit = "all"
 UV_CACHE_DIR = ".uv-cache"
 ```
 
-If you already configure Codex globally in `~/.codex/config.toml` for things like `model`, this is the most direct place to add the cache override as well.
-
-Fallback: add it to the shell startup file used by the shell Codex launches (`~/.bashrc` for `bash`, `~/.zshrc` for `zsh`):
+Last-resort fallback: export it from your shell startup file (`~/.bashrc` or `~/.zshrc`), but that is global rather than project-specific:
 
 ```bash
 export UV_CACHE_DIR="${UV_CACHE_DIR:-.uv-cache}"
-```
-
-Then restart Codex or start a new shell so the variable is present in the shell Codex runs.
-
-For the current shell only, you can also set it manually:
-
-```bash
-export UV_CACHE_DIR=.uv-cache
-```
-
-If you use a repo-local cache, add it to your gitignore:
-
-```bash
-echo ".uv-cache/" >> .gitignore
 ```
 
 ## 1. Create a project venv and install the package

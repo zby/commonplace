@@ -132,11 +132,8 @@ def _run_git(repo_root: Path, args: list[str]) -> subprocess.CompletedProcess[st
     )
 
 
-def git_blob_sha(path: Path, *, write_object: bool = False) -> str:
-    cmd = ["git", "hash-object"]
-    if write_object:
-        cmd.append("-w")
-    cmd.append(str(path))
+def git_blob_sha(path: Path) -> str:
+    cmd = ["git", "hash-object", str(path)]
     result = subprocess.run(
         cmd,
         cwd=path.parent,
@@ -145,6 +142,40 @@ def git_blob_sha(path: Path, *, write_object: bool = False) -> str:
         check=True,
     )
     return result.stdout.strip()
+
+
+def committed_file_provenance(repo_root: Path, path: Path, *, kind: str) -> tuple[str, str]:
+    if path.is_absolute():
+        file_abs = path.resolve()
+    else:
+        file_abs = (repo_root / path).resolve()
+    file_path = file_abs.relative_to(repo_root.resolve())
+
+    status = _run_git(repo_root, ["status", "--porcelain", "--", file_path.as_posix()])
+    if status.returncode != 0:
+        message = status.stderr.strip() or f"failed to inspect git status for {file_path.as_posix()}"
+        raise ValueError(message)
+    if status.stdout.strip():
+        raise ValueError(
+            f"{kind} has uncommitted changes: {file_path.as_posix()} "
+            f"(review baselines must come from committed {kind} content)"
+        )
+
+    file_commit = last_commit_for_path(repo_root, file_path)
+    if file_commit is None:
+        raise ValueError(
+            f"{kind} is not committed: {file_path.as_posix()} "
+            f"(review baselines must come from committed {kind} content)"
+        )
+
+    file_sha = blob_sha_at_commit(repo_root, file_commit, file_path)
+    if file_sha is None:
+        raise ValueError(f"failed to resolve committed blob for {file_path.as_posix()} at {file_commit}")
+    return file_sha, file_commit
+
+
+def committed_note_provenance(repo_root: Path, path: Path) -> tuple[str, str]:
+    return committed_file_provenance(repo_root, path, kind="note")
 
 
 def last_commit_for_path(repo_root: Path, path: Path) -> str | None:

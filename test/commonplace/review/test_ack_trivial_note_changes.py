@@ -116,8 +116,8 @@ def build_fixture(
     )
     commit = commit_all(repo, "initial fixture")
 
-    note_sha = review_metadata.git_blob_sha(note, write_object=True)
-    gate_sha = review_metadata.git_blob_sha(gate, write_object=True)
+    note_sha = review_metadata.git_blob_sha(note)
+    gate_sha = review_metadata.git_blob_sha(gate)
 
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo, db_path)
@@ -350,12 +350,12 @@ traits: [title-as-claim]
 tags: [computational-model]
 status: current
 ---
-
 # Test note
 Body.
 """,
         encoding="utf-8",
     )
+    commit_all(repo, "frontmatter-only note change")
 
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
@@ -406,12 +406,12 @@ traits: []
 tags: []
 status: current
 ---
-
 # Test note
 Body changed.
 """,
         encoding="utf-8",
     )
+    commit_all(repo, "body-only note change")
 
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
@@ -489,12 +489,12 @@ traits: [title-as-claim]
 tags: [computational-model]
 status: current
 ---
-
 # Test note
 Body.
 """,
         encoding="utf-8",
     )
+    commit_all(repo, "recover previous text fixture")
 
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
@@ -540,7 +540,7 @@ def test_command_recovers_previous_text_from_first_commit_after_acceptance_time(
     gate = make_gate(repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md", "prose/source-residue")
     commit_all(repo, "initial fixture", date="2026-04-04T09:21:19+02:00")
 
-    gate_sha = review_metadata.git_blob_sha(gate, write_object=True)
+    gate_sha = review_metadata.git_blob_sha(gate)
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo, db_path)
     with review_db.connect(db_path) as conn:
@@ -580,12 +580,12 @@ traits: [title-as-claim]
 tags: []
 status: current
 ---
-
 # Test note
 Body.
 """,
         encoding="utf-8",
     )
+    commit_all(repo, "recover previous text fixture")
 
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)

@@ -386,6 +386,68 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
     assert isinstance(payload["review_run_id"], int)
 
 
+def test_create_review_run_rejects_dirty_note(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    note_path = repo / "kb" / "notes" / "sample.md"
+    note_path.write_text(note_path.read_text(encoding="utf-8") + "\nDirty change.\n", encoding="utf-8")
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "commonplace.review.create_review_run",
+            "kb/notes/sample.md",
+            "prose",
+            "--runner",
+            "codex",
+            "--model",
+            TEST_MODEL,
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "note has uncommitted changes: kb/notes/sample.md" in result.stderr
+
+
+def test_create_review_run_rejects_dirty_gate(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
+    gate_path.write_text(gate_path.read_text(encoding="utf-8") + "\nExtra gate note.\n", encoding="utf-8")
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "commonplace.review.create_review_run",
+            "kb/notes/sample.md",
+            "prose",
+            "--runner",
+            "codex",
+            "--model",
+            TEST_MODEL,
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "gate has uncommitted changes: kb/instructions/review-gates/prose/source-residue.md" in result.stderr
+
+
 def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture_with_trait_gate(tmp_path)
     env = os.environ.copy()
@@ -525,7 +587,7 @@ The note still needs one small fix.
             gate_id=gate_row.gate_id,
             model_id=review_run.model_id,
             accepted_review_id=None,
-            accepted_note_sha=review_metadata.git_blob_sha(note_path, write_object=True),
+            accepted_note_sha=review_metadata.git_blob_sha(note_path),
             accepted_note_commit=review_metadata.last_commit_for_path(repo, Path("kb/notes/sample.md")),
             accepted_gate_sha=gate_row.gate_sha,
             accepted_at=review_metadata.iso_now(),
@@ -556,8 +618,8 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
 
     note_path = repo / "kb" / "notes" / "sample.md"
     gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
-    note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
-    gate_sha = review_metadata.git_blob_sha(gate_path, write_object=True)
+    note_sha = review_metadata.git_blob_sha(note_path)
+    gate_sha = review_metadata.git_blob_sha(gate_path)
     note_commit = review_metadata.last_commit_for_path(repo, Path("kb/notes/sample.md"))
     reviewed_at = review_metadata.iso_now()
 
@@ -884,6 +946,39 @@ for event in [
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
 
 
+def test_run_review_bundle_rejects_dirty_gate(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
+    gate_path.write_text(gate_path.read_text(encoding="utf-8") + "\nExtra gate note.\n", encoding="utf-8")
+
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "commonplace.review.run_review_bundle",
+            "kb/notes/sample.md",
+            "prose",
+            "--runner",
+            "codex",
+            "--model",
+            TEST_MODEL,
+            "--db",
+            str(db_path),
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "gate has uncommitted changes: kb/instructions/review-gates/prose/source-residue.md" in result.stderr
+
+
 def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     fake_home = tmp_path / "home"
@@ -1032,9 +1127,9 @@ def test_migrate_review_result_footer_rewrites_db_and_artifacts(tmp_path: Path) 
     note_path = repo / "kb" / "notes" / "sample.md"
     prose_gate = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
     semantic_gate = repo / "kb" / "instructions" / "review-gates" / "semantic" / "grounding-alignment.md"
-    note_sha = review_metadata.git_blob_sha(note_path, write_object=True)
-    prose_gate_sha = review_metadata.git_blob_sha(prose_gate, write_object=True)
-    semantic_gate_sha = review_metadata.git_blob_sha(semantic_gate, write_object=True)
+    note_sha = review_metadata.git_blob_sha(note_path)
+    prose_gate_sha = review_metadata.git_blob_sha(prose_gate)
+    semantic_gate_sha = review_metadata.git_blob_sha(semantic_gate)
     note_commit = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         cwd=repo,

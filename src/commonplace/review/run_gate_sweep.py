@@ -23,7 +23,7 @@ from commonplace.review.review_db import (
     insert_review_run_gates,
     resolve_db_path,
 )
-from commonplace.review.review_metadata import git_blob_sha, iso_now, last_commit_for_path
+from commonplace.review.review_metadata import committed_file_provenance, committed_note_provenance, iso_now
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.review_target_selector import select_stale_gates
 from commonplace.review.resolve_gates import strip_frontmatter
@@ -123,8 +123,7 @@ def prepare_gate_sweep_targets(
                 note_abs=note_abs,
                 note_body=note_body,
             )
-            note_sha = git_blob_sha(note_abs, write_object=True)
-            note_commit = last_commit_for_path(repo_root, Path(note_path))
+            note_sha, note_commit = committed_note_provenance(repo_root, Path(note_path))
             review_run_id = insert_review_run(
                 conn,
                 note_path=note_path,
@@ -216,7 +215,10 @@ def main() -> None:
     if not gate_abs.is_file():
         parser.error(f"gate not found: {gate_id}")
     gate_text = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
-    gate_sha = git_blob_sha(gate_abs)
+    try:
+        gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
+    except ValueError as exc:
+        parser.error(str(exc))
 
     try:
         stale_records = select_stale_gates(
@@ -241,16 +243,19 @@ def main() -> None:
     print(f"Selected: {len(note_paths)} notes across {len(batches)} batches", file=sys.stderr)
 
     for batch_index, batch_note_paths in enumerate(batches, start=1):
-        prepared = prepare_gate_sweep_targets(
-            repo_root=repo_root,
-            db_path=db_path,
-            note_paths=batch_note_paths,
-            gate_id=gate_id,
-            gate_sha=gate_sha,
-            runner=args.runner,
-            model_id=args.model,
-            persist_runs=not args.dry_run,
-        )
+        try:
+            prepared = prepare_gate_sweep_targets(
+                repo_root=repo_root,
+                db_path=db_path,
+                note_paths=batch_note_paths,
+                gate_id=gate_id,
+                gate_sha=gate_sha,
+                runner=args.runner,
+                model_id=args.model,
+                persist_runs=not args.dry_run,
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
         prompt = build_gate_sweep_prompt(
             gate_id=gate_id,
             gate_text=gate_text,
