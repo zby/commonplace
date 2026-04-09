@@ -29,10 +29,6 @@ SCAFFOLD_TREES = [
     ("types", "types"),
 ]
 
-SCAFFOLD_FILES = [
-    ("AGENTS.md.template", "AGENTS.md.template"),
-]
-
 # Skills directories for supported runtimes.
 SKILLS_DIRS = [
     Path(".claude/skills"),
@@ -61,8 +57,31 @@ def _copy_scaffold_tree(
     return copied
 
 
-def init_project(root: Path) -> list[Path]:
+def _write_template(
+    src: Path, target: Path, replacements: dict[str, str]
+) -> bool:
+    """Read a template, apply replacements, write to target. Skip if target exists."""
+    if target.exists():
+        return False
+    text = src.read_text(encoding="utf-8")
+    for placeholder, value in replacements.items():
+        text = text.replace(placeholder, value)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8")
+    return True
+
+
+def init_project(root: Path, name: str | None = None) -> list[Path]:
     created: list[Path] = []
+
+    if name is None:
+        name = root.name
+
+    replacements = {
+        "<your-project>": name,
+        "{{project_name}}": name,
+        "/PATH/TO/COMMONPLACE/": str(root) + "/",
+    }
 
     # Create directory structure.
     for rel_path in DEFAULT_DIRS:
@@ -84,14 +103,24 @@ def init_project(root: Path) -> list[Path]:
             copied = _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel)
             created.extend(copied)
 
-        for src_rel, target_rel in SCAFFOLD_FILES:
-            target = root / target_rel
-            if target.exists():
-                continue
+        # Resolve templates with project-specific values.
+        templates = [
+            ("AGENTS.md.template", "AGENTS.md.template"),
+            (".envrc.template", ".envrc"),
+        ]
+        for src_rel, target_rel in templates:
             src = scaffold_root / src_rel
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src, target)
-            created.append(Path(target_rel))
+            target = root / target_rel
+            if _write_template(src, target, replacements):
+                created.append(Path(target_rel))
+
+        # Generate qmd config from the assets template.
+        assets_pkg = files("commonplace.assets")
+        with as_file(assets_pkg) as assets_root:
+            qmd_src = assets_root / "qmd-collections.yml"
+            qmd_target = root / "qmd-collections.yml"
+            if _write_template(qmd_src, qmd_target, replacements):
+                created.append(Path("qmd-collections.yml"))
 
         # Copy skills into runtime skills directories with prefix.
         skills_src = scaffold_root / "skills"
@@ -114,10 +143,15 @@ def init_project(root: Path) -> list[Path]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="project root to initialize")
+    parser.add_argument(
+        "--name",
+        default=None,
+        help="project name (default: directory name)",
+    )
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    created = init_project(root)
+    created = init_project(root, name=args.name)
 
     print(f"Initialized Commonplace project at {root}")
     if created:

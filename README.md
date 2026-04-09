@@ -143,16 +143,16 @@ cp src/commonplace/assets/qmd-collections.yml ~/.config/qmd/commonplace.yml
 4. Build the index:
 
 ```bash
-qmd --index commonplace update && qmd --index commonplace embed
+qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
 5. Search:
 
 ```bash
-qmd --index commonplace query "your search terms"
+qmd --index "$COMMONPLACE_QMD_INDEX" query "your search terms"
 ```
 
-After adding or editing notes, re-run `qmd --index commonplace update && qmd --index commonplace embed` to keep the index current. Both commands are idempotent and fast.
+After adding or editing notes, re-run `qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed` to keep the index current. Both commands are idempotent and fast.
 
 For initialized projects, copy the same sample config to a project-specific file (e.g. `~/.config/qmd/my-project.yml`) and replace `/PATH/TO/COMMONPLACE/` with the project root.
 

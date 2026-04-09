@@ -4,7 +4,7 @@
 #   edit ~/.config/qmd/commonplace.yml and replace /PATH/TO/COMMONPLACE/
 #   with the absolute path to your local checkout
 # Usage:
-#   qmd --index commonplace query "..."
+#   qmd --index "$COMMONPLACE_QMD_INDEX" query "..."
 collections:
   notes:
     path: /PATH/TO/COMMONPLACE/kb/notes

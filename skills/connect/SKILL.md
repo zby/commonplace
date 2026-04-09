@@ -79,7 +79,7 @@ If qmd is not found, log "qmd unavailable — skipping index sync, using grep-on
 
 If qmd is available:
 ```bash
-qmd --index commonplace update && qmd --index commonplace embed
+qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
 ---
@@ -122,9 +122,9 @@ The index scan sees descriptions only. Semantic search reaches inside note bodie
 
 **Tier 1 — qmd (primary):** Only if qmd was available in Phase 0.
 ```bash
-qmd --index commonplace query "[note's core concepts]" --collection notes -n 15
-qmd --index commonplace query "[note's core concepts]" --collection sources -n 10
-qmd --index commonplace query "[note's core concepts]" --collection instructions -n 5
+qmd --index "$COMMONPLACE_QMD_INDEX" query "[note's core concepts]" --collection notes -n 15
+qmd --index "$COMMONPLACE_QMD_INDEX" query "[note's core concepts]" --collection sources -n 10
+qmd --index "$COMMONPLACE_QMD_INDEX" query "[note's core concepts]" --collection instructions -n 5
 ```
 
 Record the actual query string and top results with scores in the discovery trace.

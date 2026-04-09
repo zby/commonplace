@@ -50,6 +50,38 @@ def test_init_project_installs_skills_with_prefix(tmp_path: Path) -> None:
     assert not (skills_dir / "write").exists()
 
 
+def test_init_project_resolves_templates(tmp_path: Path) -> None:
+    init_project(tmp_path, name="myproject")
+
+    # .envrc is produced directly (not as .envrc.template)
+    envrc = tmp_path / ".envrc"
+    assert envrc.is_file()
+    text = envrc.read_text(encoding="utf-8")
+    assert "myproject" in text
+    assert "<your-project>" not in text
+
+    # AGENTS.md.template has project name filled in
+    agents = tmp_path / "AGENTS.md.template"
+    text = agents.read_text(encoding="utf-8")
+    assert "myproject" in text
+    assert "{{project_name}}" not in text
+
+    # qmd config has paths filled in
+    qmd = tmp_path / "qmd-collections.yml"
+    assert qmd.is_file()
+    text = qmd.read_text(encoding="utf-8")
+    assert str(tmp_path) in text
+    assert "/PATH/TO/COMMONPLACE/" not in text
+
+
+def test_init_project_defaults_name_to_directory(tmp_path: Path) -> None:
+    init_project(tmp_path)
+
+    envrc = tmp_path / ".envrc"
+    text = envrc.read_text(encoding="utf-8")
+    assert tmp_path.name in text
+
+
 def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
