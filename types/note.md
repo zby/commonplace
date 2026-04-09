@@ -51,7 +51,7 @@ Status tracks **commitment** — whether a document has been reviewed and endors
 
 The initial status is `seedling`, not "draft" — a draft implies commitment to develop it, while a seedling may simply be pruned.
 
-[text](./text.md) files have implicit `status: seedling`. When a text file gains frontmatter (promotion to `note`), status should be set explicitly. `/connect` promotes structure (`text` → `note`) but preserves provisionality by setting `status: seedling`, not `status: current`. Human review flips the status to `current`.
+[text](./text.md) files have implicit `status: seedling`. When a text file gains frontmatter (promotion to `note`), status should be set explicitly. `/commonplace-connect` promotes structure (`text` → `note`) but preserves provisionality by setting `status: seedling`, not `status: current`. Human review flips the status to `current`.
 
 **Finding seedlings that need review:**
 ```bash

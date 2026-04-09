@@ -1,5 +1,5 @@
 ---
-name: validate
+name: commonplace-validate
 description: Run the deterministic validation script on KB notes. Checks frontmatter validity, enum values, link health, required sections, and batch signals (orphans, seedling count).
 user-invocable: true
 allowed-tools: Bash

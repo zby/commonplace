@@ -1,5 +1,5 @@
 ---
-name: write
+name: commonplace-write
 description: Write a KB artifact using the default note workflow or a discovered type template. Routes by type, reads WRITING.md, searches first, and validates after writing. Use with an optional type and optional topic.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -73,10 +73,10 @@ Read `kb/instructions/WRITING.md` before drafting any frontmatter-based artifact
 Create the file in the routed destination directory. If a topic was provided but no final title is obvious, choose the narrowest title that reflects the actual claim or subject of the draft.
 
 6. Validate immediately.
-Run the `validate` skill on the new file after writing. If validation finds structural issues, fix them before stopping.
+Run the `commonplace-validate` skill on the new file after writing. If validation finds structural issues, fix them before stopping.
 
 7. Finish by prompting for connection work.
-Tell the user where the file was written and suggest running the `connect` skill on the new file as the next step.
+Tell the user where the file was written and suggest running the `commonplace-connect` skill on the new file as the next step.
 
 ## Critical Constraints
 

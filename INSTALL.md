@@ -1,22 +1,77 @@
 # Installing Commonplace into a project
 
-## 1. Install the Python package
+## Prerequisites
+
+Add `.venv/bin` to your PATH so that project-local Python commands are available without activating the venv. Add this to your `~/.bashrc` or `~/.zshrc`:
 
 ```bash
+export PATH=".venv/bin:$PATH"
+```
+
+Restart your shell or `source` the file. This is a one-time setup — it works for any project with a local `.venv/`.
+
+## Codex: uv cache configuration
+
+Codex often runs inside a sandbox where the default uv cache location is not writable. Set `UV_CACHE_DIR` to a writable directory inside the project so `uv run`, `uv pip`, and related commands work without escalation.
+
+Preferred: set it in Codex config so it is injected into the shell Codex runs.
+
+Add this to `~/.codex/config.toml`:
+
+```toml
+[shell_environment_policy]
+inherit = "all"
+
+[shell_environment_policy.set]
+UV_CACHE_DIR = ".uv-cache"
+```
+
+If you already configure Codex globally in `~/.codex/config.toml` for things like `model`, this is the most direct place to add the cache override as well.
+
+Fallback: add it to the shell startup file used by the shell Codex launches (`~/.bashrc` for `bash`, `~/.zshrc` for `zsh`):
+
+```bash
+export UV_CACHE_DIR="${UV_CACHE_DIR:-.uv-cache}"
+```
+
+Then restart Codex or start a new shell so the variable is present in the shell Codex runs.
+
+For the current shell only, you can also set it manually:
+
+```bash
+export UV_CACHE_DIR=.uv-cache
+```
+
+If you use a repo-local cache, add it to your gitignore:
+
+```bash
+echo ".uv-cache/" >> .gitignore
+```
+
+## 1. Create a project venv and install the package
+
+From your project root:
+
+```bash
+uv venv
 uv pip install llm-commonplace
-# or
+```
+
+Or without uv:
+
+```bash
+python3 -m venv .venv
 pip install llm-commonplace
 ```
 
 Or from a local checkout:
 
 ```bash
+uv venv
 uv pip install -e /PATH/TO/commonplace
 ```
 
 ## 2. Initialize the local KB layout
-
-From the project root:
 
 ```bash
 commonplace-init
@@ -48,26 +103,20 @@ cp AGENTS.md.template AGENTS.md
 
 Then fill in the `KB Goals` section for your project.
 
-## 4. Install the plugin (optional)
-
-The Commonplace plugin provides skills (write, validate, snapshot, review, etc.) to your agent runtime.
-
-### Claude Code
-
-```bash
-claude plugin install /PATH/TO/commonplace
-```
-
-### Codex
-
-Create a host-project marketplace entry in `.agents/plugins/marketplace.json` that points at the plugin source, then restart Codex and install `commonplace` from `/plugins`.
-
-> **Note:** Plugin distribution without a local checkout is not yet supported. For now, plugin installation still requires a path to a Commonplace checkout or a locally available plugin directory.
+Skills (write, validate, snapshot, connect, etc.) are installed automatically by `commonplace-init` into `.claude/skills/` with a `commonplace-` prefix. No separate plugin install is needed.
 
 ## Resulting layout
 
 ```text
 my-project/
+  .venv/
+  .claude/
+    skills/
+      commonplace-write/
+      commonplace-validate/
+      commonplace-connect/
+      commonplace-snapshot-web/
+      ...
   kb/
     notes/
     sources/
@@ -99,12 +148,10 @@ qmd --index my-project update && qmd --index my-project embed
 
 ## Updating
 
-Update the package:
+Update the package in your project venv:
 
 ```bash
 uv pip install --upgrade llm-commonplace
-# or
-pip install --upgrade llm-commonplace
 ```
 
 Rerun init to pick up any new scaffold files (existing files are preserved):

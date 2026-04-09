@@ -33,6 +33,13 @@ SCAFFOLD_FILES = [
     ("AGENTS.md.template", "AGENTS.md.template"),
 ]
 
+# Skills directories for supported runtimes.
+SKILLS_DIRS = [
+    Path(".claude/skills"),
+]
+
+SKILL_PREFIX = "commonplace-"
+
 
 def _copy_scaffold_tree(
     scaffold_root: Path, src_rel: str, dest_root: Path, target_rel: str
@@ -85,6 +92,21 @@ def init_project(root: Path) -> list[Path]:
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, target)
             created.append(Path(target_rel))
+
+        # Copy skills into runtime skills directories with prefix.
+        skills_src = scaffold_root / "skills"
+        if skills_src.is_dir():
+            for skill_dir in sorted(skills_src.iterdir()):
+                if not skill_dir.is_dir():
+                    continue
+                prefixed_name = SKILL_PREFIX + skill_dir.name
+                for skills_dest in SKILLS_DIRS:
+                    target_rel = str(skills_dest / prefixed_name)
+                    copied = _copy_scaffold_tree(
+                        scaffold_root, f"skills/{skill_dir.name}",
+                        root, target_rel,
+                    )
+                    created.extend(copied)
 
     return created
 

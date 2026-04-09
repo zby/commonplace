@@ -60,15 +60,15 @@ rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 
 | Task | Commonplace skill |
 |---|---|
-| Write a note or index | `write` |
-| Connect a note to related notes | `connect` |
-| Validate note structure | `validate` |
-| Snapshot an external URL | `snapshot-web` |
-| Ingest and analyze a source | `ingest` |
-| Convert between note types | `convert` |
-| Iteratively revise a note | `revise-iterative` |
+| Write a note or index | `commonplace-write` |
+| Connect a note to related notes | `commonplace-connect` |
+| Validate note structure | `commonplace-validate` |
+| Snapshot an external URL | `commonplace-snapshot-web` |
+| Ingest and analyze a source | `commonplace-ingest` |
+| Convert between note types | `commonplace-convert` |
+| Iteratively revise a note | `commonplace-revise-iterative` |
 
-These skills are provided by the `commonplace` plugin. Invoke them using your runtime's skill or plugin surface.
+These skills are installed into `.claude/skills/` by `commonplace-init`.
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.

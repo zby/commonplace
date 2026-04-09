@@ -1,6 +1,6 @@
 ---
 name: review-related-system
-description: Write a related-system review from a GitHub repository. Accepts `owner/repo` or a full `https://github.com/owner/repo` URL, clones into `./related-systems/`, writes the review in `kb/notes/related-systems/`, then runs the semantic gate bundle and `/validate`.
+description: Write a related-system review from a GitHub repository. Accepts `owner/repo` or a full `https://github.com/owner/repo` URL, clones into `./related-systems/`, writes the review in `kb/notes/related-systems/`, then runs the semantic gate bundle and `/commonplace-validate`.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -179,7 +179,7 @@ Do not skip this step.
 Run:
 
 ```text
-/validate {note_path}
+/commonplace-validate {note_path}
 ```
 
 If validation reports structural or description-quality issues, fix them and validate once more.
@@ -193,7 +193,7 @@ Report:
 - whether the curated index changed
 - whether `kb/work/trace-derived-systems-review/README.md` changed
 - semantic gate bundle outcome (warnings/info if any)
-- final `/validate` result
+- final `/commonplace-validate` result
 
 ## Critical Constraints
 
@@ -205,7 +205,7 @@ Report:
 - ground claims in repo code/docs, not just project marketing
 - add the system to `kb/work/trace-derived-systems-review/README.md` when it mines agent logs or comparable run traces into durable learned state
 - run semantic gate bundle before final validation
-- finish with `/validate`
+- finish with `/commonplace-validate`
 
 **Never:**
 

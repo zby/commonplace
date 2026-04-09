@@ -1,6 +1,6 @@
 ---
-name: revise-iterative
-description: Iteratively revise a note for flow, readability, and cohesion using non-interactive Claude calls. Each pass produces a numbered copy; the outer agent reviews for semantic fidelity and significance before continuing. Triggers on "/revise-iterative [note]".
+name: commonplace-revise-iterative
+description: Iteratively revise a note for flow, readability, and cohesion using non-interactive Claude calls. Each pass produces a numbered copy; the outer agent reviews for semantic fidelity and significance before continuing. Triggers on "/commonplace-revise-iterative [note]".
 user-invocable: true
 allowed-tools: Read, Edit, Bash, Glob, Grep
 argument-hint: <note-filename>

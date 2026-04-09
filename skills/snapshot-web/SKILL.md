@@ -1,6 +1,6 @@
 ---
-name: snapshot-web
-description: Snapshot any URL into kb/sources/. Routes by URL type — GitHub issues/PRs via gh API, X/Twitter via xdk, PDFs via download+Read, web pages via WebFetch. One skill, URL in, markdown snapshot out. Triggers on "/snapshot-web", "/snapshot-web [url]".
+name: commonplace-snapshot-web
+description: Snapshot any URL into kb/sources/. Routes by URL type — GitHub issues/PRs via gh API, X/Twitter via xdk, PDFs via download+Read, web pages via WebFetch. One skill, URL in, markdown snapshot out. Triggers on "/commonplace-snapshot-web", "/commonplace-snapshot-web [url]".
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, WebFetch, Bash
 context: fork
