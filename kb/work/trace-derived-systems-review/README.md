@@ -34,6 +34,7 @@ This workshop holds the **execution packets** for those candidates so the work c
 13. **CORAL** — eval-gated multi-agent coding harness that turns attempt histories and inter-agent reflection into durable shared notes and reusable skills; likely belongs as a prompt-mediated trace-to-artifact system
 13. **MemPalace** — mines conversation traces into durable verbatim drawers, heuristic memory-type rooms, and agent diaries; review exists, needs placement as a storage-first live-session artifact case
 14. **Synapptic** — mines Claude Code JSONL sessions into weighted profiles and benchmark-filtered guards, then compiles them into assistant memory files; review exists, likely belongs as a prompt-policy trace-mining system
+15. **virtual-context** — compacts live conversation and tool traces into durable summaries, facts, tag memories, and shared session state; likely belongs as a service-owned trace-to-symbolic-memory system
 
 ## Parked but likely worth a later pass
 
