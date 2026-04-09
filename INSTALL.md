@@ -58,7 +58,7 @@ Rerunning `commonplace-init` is safe — it never overwrites existing files, so 
 
 ## 3. Activate the environment
 
-CLI commands live in `.venv/bin/`. Rather than activating the venv every session, the generated `.envrc` adds `.venv/bin` to PATH so commands work like any other CLI tool. It also sets `UV_CACHE_DIR` (avoids permission issues in sandboxed runtimes like Codex) and `COMMONPLACE_QMD_INDEX` (so skills know which qmd index to query).
+CLI commands live in `.venv/bin/`. The generated `.envrc` activates the venv automatically via direnv whenever you enter the project directory — no manual `source .venv/bin/activate` needed. It also sets `UV_CACHE_DIR` (avoids permission issues in sandboxed runtimes like Codex) and `COMMONPLACE_QMD_INDEX` (so skills know which qmd index to query).
 
 ### With direnv (recommended)
 

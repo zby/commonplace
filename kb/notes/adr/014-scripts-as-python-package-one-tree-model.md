@@ -78,19 +78,28 @@ After: `commonplace-validate-notes "$ARGUMENTS"`
 
 Skills depend on command names, not filesystem layout. Missing commands are setup errors, not path-resolution failures.
 
-### 5. Init resolves templates
+### 5. direnv for project-scoped environment
+
+Agent runtimes (Claude Code, Codex) spawn shell processes that don't inherit a manually activated venv. The commands need to be on PATH without the user running `source .venv/bin/activate` first. Two approaches were considered:
+
+- **`uv run` prefix** — forces every skill and instruction to invoke commands as `uv run commonplace-validate-notes` instead of `commonplace-validate-notes`. Couples the skill layer to a specific Python packaging tool.
+- **direnv + `.envrc`** — automatically sets PATH, environment variables, and venv activation when entering the project directory. Agent runtimes inherit the environment. Skills invoke commands by name. Project-scoped — deactivates when you leave the directory.
+
+direnv is the recommended approach. Init generates a ready-to-use `.envrc` so the user only needs `direnv allow`.
+
+### 6. Init resolves templates
 
 Templates with manual placeholders are a common source of setup errors — users forget to edit them, or edit them inconsistently across files. The init command resolves all placeholders from a single `--name` argument.
 
 `commonplace-init --name <project>` fills in project-specific placeholders:
 
-- `.envrc` — PATH (adds `.venv/bin` so commands work without venv activation), UV_CACHE_DIR (avoids permission issues in sandboxed runtimes like Codex), COMMONPLACE_QMD_INDEX (lets skills find the project's qmd index without hardcoding)
+- `.envrc` — PATH (adds `.venv/bin` for venv-free command access), UV_CACHE_DIR (avoids permission issues in sandboxed runtimes like Codex), COMMONPLACE_QMD_INDEX (lets skills find the project's qmd index without hardcoding)
 - `AGENTS.md.template` — project name in heading
 - `qmd-collections.yml` — project name and absolute paths to KB directories
 
 The `--name` flag defaults to the directory name if omitted.
 
-### 6. Init is idempotent and non-destructive
+### 7. Init is idempotent and non-destructive
 
 `commonplace-init` creates directories, copies scaffold files, resolves templates, and installs skills. It never overwrites existing files. Rerunning after a package upgrade picks up new scaffold files without disturbing user modifications.
 
