@@ -13,7 +13,7 @@ commonplace-init --name <project-name>
 commonplace-init --root /path/to/project
 ```
 
-`--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files, and reports whether preserved files already match the scaffold or differ due to local changes.
+`--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files, and reports whether preserved files already match the scaffold or differ from what the current run would generate.
 
 ## Validation and indexing
 
@@ -107,9 +107,10 @@ The review system runs LLM-based quality reviews against notes using defined rev
 Run a full review sweep — selects notes needing review and runs gate bundles on them.
 
 ```bash
-commonplace-review-sweep --model claude-opus-4-6 --runner claude-code
-commonplace-review-sweep --model claude-opus-4-6 --current           # only current-status notes
-commonplace-review-sweep --dry-run                              # preview what would run
+commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code
+commonplace-review-sweep prose --model claude-opus-4-6 --current      # only current-status notes
+commonplace-review-sweep --all-gates --model claude-opus-4-6          # all gate bundles
+commonplace-review-sweep prose --dry-run                              # preview what would run
 ```
 
 ### commonplace-run-review-bundle
