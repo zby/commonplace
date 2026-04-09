@@ -2,12 +2,30 @@
 
 ## Prerequisites
 
-- **Python 3.11+**
-- **uv** (recommended) or pip
-- **git**
+- **Python 3.11+** (required)
+- **uv** (required, recommended) or pip
+- **git** (required)
 - **direnv** (optional, recommended) — for project-scoped environment variables
 - **ripgrep** (optional, recommended) — used by agent runtimes for fast KB search
 - **qmd** (optional, recommended) — for semantic search over KB notes
+
+### Check prerequisites
+
+Run these checks before proceeding. If any required tool is missing, ask the user to install it before continuing.
+
+```bash
+python3 --version   # must be 3.11+
+uv --version        # or: pip --version
+git --version
+```
+
+Optional tools — note which are missing but proceed with installation:
+
+```bash
+direnv version
+rg --version
+qmd --version
+```
 
 ## 1. Create a project venv and install the package
 
