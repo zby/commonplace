@@ -74,7 +74,7 @@ This creates:
 - **`qmd-collections.yml`** — qmd config with paths filled in, ready to copy to `~/.config/qmd/`
 - **`AGENTS.md.template`** — control-plane template with project name filled in
 
-Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files.
+Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files. The command now reports which preserved files already match the current scaffold and which ones were left untouched because they contain local changes.
 
 ## 3. Activate the environment
 

@@ -3,18 +3,20 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli.init_project import init_project
+from commonplace.cli.init_project import init_project, main
 
 
 def test_init_project_creates_core_directories(tmp_path: Path) -> None:
-    created = init_project(tmp_path)
+    report = init_project(tmp_path)
 
-    assert created
+    assert report.created
     assert (tmp_path / "kb" / "notes").is_dir()
     assert (tmp_path / "kb" / "sources").is_dir()
     assert (tmp_path / "kb" / "instructions").is_dir()
@@ -23,7 +25,9 @@ def test_init_project_creates_core_directories(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "log.md").is_file()
 
     rerun = init_project(tmp_path)
-    assert rerun == []
+    assert rerun.created == []
+    assert rerun.preserved_identical
+    assert rerun.preserved_different == []
 
 
 def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
@@ -96,5 +100,34 @@ def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     writing.write_text("custom content", encoding="utf-8")
 
     rerun = init_project(tmp_path)
-    assert rerun == []
+    assert rerun.created == []
+    assert Path("kb/instructions/WRITING.md") in rerun.preserved_different
     assert writing.read_text(encoding="utf-8") == "custom content"
+
+
+def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
+    init_project(tmp_path)
+
+    rerun = init_project(tmp_path)
+
+    assert Path("kb/instructions/WRITING.md") in rerun.preserved_identical
+    assert Path(".envrc") in rerun.preserved_identical
+    assert rerun.preserved_different == []
+
+
+def test_main_reports_preserved_file_statuses(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    init_project(tmp_path)
+    (tmp_path / "kb" / "instructions" / "WRITING.md").write_text(
+        "custom content",
+        encoding="utf-8",
+    )
+
+    exit_code = main(["--root", str(tmp_path), "--name", "myproject"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "Preserved existing files already matching scaffold:" in captured.out
+    assert "Preserved existing files with local changes:" in captured.out
+    assert "- kb/instructions/WRITING.md" in captured.out

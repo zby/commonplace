@@ -13,7 +13,7 @@ commonplace-init --name <project-name>
 commonplace-init --root /path/to/project
 ```
 
-`--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files.
+`--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files, and reports whether preserved files already match the scaffold or differ due to local changes.
 
 ## Validation and indexing
 

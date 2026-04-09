@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import shutil
+from dataclasses import dataclass, field
 from importlib.resources import as_file, files
 from pathlib import Path
 
@@ -48,42 +49,69 @@ PROMOTED_SKILLS = [
 SKILL_PREFIX = "commonplace-"
 
 
+@dataclass
+class InitReport:
+    created: list[Path] = field(default_factory=list)
+    preserved_identical: list[Path] = field(default_factory=list)
+    preserved_different: list[Path] = field(default_factory=list)
+
+
+def _record_existing(
+    report: InitReport, rel_path: Path, target: Path, expected_bytes: bytes
+) -> None:
+    if target.is_file() and target.read_bytes() == expected_bytes:
+        report.preserved_identical.append(rel_path)
+        return
+    report.preserved_different.append(rel_path)
+
+
 def _copy_scaffold_tree(
-    scaffold_root: Path, src_rel: str, dest_root: Path, target_rel: str
-) -> list[Path]:
-    """Recursively copy a scaffold subtree, skipping existing files."""
-    copied: list[Path] = []
+    scaffold_root: Path,
+    src_rel: str,
+    dest_root: Path,
+    target_rel: str,
+    report: InitReport,
+) -> None:
+    """Recursively copy a scaffold subtree, classifying existing files."""
     src_dir = scaffold_root / src_rel
     dest_dir = dest_root / target_rel
     for src_file in sorted(src_dir.rglob("*")):
         if not src_file.is_file():
             continue
         rel = src_file.relative_to(src_dir)
-        target = dest_dir / rel
+        rel_path = Path(target_rel) / rel
+        target = dest_root / rel_path
+        expected_bytes = src_file.read_bytes()
         if target.exists():
+            _record_existing(report, rel_path, target, expected_bytes)
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_file, target)
-        copied.append(Path(target_rel) / rel)
-    return copied
+        report.created.append(rel_path)
 
 
 def _write_template(
-    src: Path, target: Path, replacements: dict[str, str]
-) -> bool:
-    """Read a template, apply replacements, write to target. Skip if target exists."""
-    if target.exists():
-        return False
+    src: Path,
+    target: Path,
+    rel_path: Path,
+    replacements: dict[str, str],
+    report: InitReport,
+) -> None:
+    """Read a template, apply replacements, write to target or classify existing."""
     text = src.read_text(encoding="utf-8")
     for placeholder, value in replacements.items():
         text = text.replace(placeholder, value)
+    expected_bytes = text.encode("utf-8")
+    if target.exists():
+        _record_existing(report, rel_path, target, expected_bytes)
+        return
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(text, encoding="utf-8")
-    return True
+    report.created.append(rel_path)
 
 
-def init_project(root: Path, name: str | None = None) -> list[Path]:
-    created: list[Path] = []
+def init_project(root: Path, name: str | None = None) -> InitReport:
+    report = InitReport()
 
     if name is None:
         name = root.name
@@ -99,20 +127,21 @@ def init_project(root: Path, name: str | None = None) -> list[Path]:
         target = root / rel_path
         if not target.exists():
             target.mkdir(parents=True, exist_ok=True)
-            created.append(rel_path)
+            report.created.append(rel_path)
 
     # Create starter log file.
     log_path = root / "kb" / "log.md"
     if not log_path.exists():
         log_path.write_text("", encoding="utf-8")
-        created.append(Path("kb/log.md"))
+        report.created.append(Path("kb/log.md"))
+    else:
+        _record_existing(report, Path("kb/log.md"), log_path, b"")
 
     # Copy scaffold files from the installed package.
     scaffold_pkg = files("commonplace.scaffold")
     with as_file(scaffold_pkg) as scaffold_root:
         for src_rel, target_rel in SCAFFOLD_TREES:
-            copied = _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel)
-            created.extend(copied)
+            _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel, report)
 
         # Resolve templates with project-specific values.
         templates = [
@@ -122,16 +151,20 @@ def init_project(root: Path, name: str | None = None) -> list[Path]:
         for src_rel, target_rel in templates:
             src = scaffold_root / src_rel
             target = root / target_rel
-            if _write_template(src, target, replacements):
-                created.append(Path(target_rel))
+            _write_template(src, target, Path(target_rel), replacements, report)
 
         # Generate qmd config from the assets template.
         assets_pkg = files("commonplace.assets")
         with as_file(assets_pkg) as assets_root:
             qmd_src = assets_root / "qmd-collections.yml"
             qmd_target = root / "qmd-collections.yml"
-            if _write_template(qmd_src, qmd_target, replacements):
-                created.append(Path("qmd-collections.yml"))
+            _write_template(
+                qmd_src,
+                qmd_target,
+                Path("qmd-collections.yml"),
+                replacements,
+                report,
+            )
 
         # Promote selected instruction directories into runtime skills directories.
         for skill_name in PROMOTED_SKILLS:
@@ -143,15 +176,15 @@ def init_project(root: Path, name: str | None = None) -> list[Path]:
             prefixed_name = SKILL_PREFIX + skill_name
             for skills_dest in SKILLS_DIRS:
                 target_rel = str(skills_dest / prefixed_name)
-                copied = _copy_scaffold_tree(
+                _copy_scaffold_tree(
                     scaffold_root,
                     skill_src_rel,
                     root,
                     target_rel,
+                    report,
                 )
-                created.extend(copied)
 
-    return created
+    return report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -165,14 +198,26 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    created = init_project(root, name=args.name)
+    report = init_project(root, name=args.name)
 
     print(f"Initialized Commonplace project at {root}")
-    if created:
+    if report.created:
         print("Created:")
-        for path in created:
+        for path in report.created:
             print(f"- {path.as_posix()}")
-    else:
+    if report.preserved_identical:
+        print("Preserved existing files already matching scaffold:")
+        for path in report.preserved_identical:
+            print(f"- {path.as_posix()}")
+    if report.preserved_different:
+        print("Preserved existing files with local changes:")
+        for path in report.preserved_different:
+            print(f"- {path.as_posix()}")
+    if (
+        not report.created
+        and not report.preserved_identical
+        and not report.preserved_different
+    ):
         print("No changes needed.")
     return 0
 
