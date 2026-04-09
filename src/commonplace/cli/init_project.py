@@ -57,11 +57,17 @@ class InitReport:
 
 
 def _record_existing(
-    report: InitReport, rel_path: Path, target: Path, expected_bytes: bytes
+    report: InitReport,
+    rel_path: Path,
+    target: Path,
+    expected_bytes: bytes,
+    acceptable_existing_bytes: tuple[bytes, ...] = (),
 ) -> None:
-    if target.is_file() and target.read_bytes() == expected_bytes:
-        report.preserved_identical.append(rel_path)
-        return
+    if target.is_file():
+        current_bytes = target.read_bytes()
+        if current_bytes == expected_bytes or current_bytes in acceptable_existing_bytes:
+            report.preserved_identical.append(rel_path)
+            return
     report.preserved_different.append(rel_path)
 
 
@@ -103,7 +109,13 @@ def _write_template(
         text = text.replace(placeholder, value)
     expected_bytes = text.encode("utf-8")
     if target.exists():
-        _record_existing(report, rel_path, target, expected_bytes)
+        _record_existing(
+            report,
+            rel_path,
+            target,
+            expected_bytes,
+            acceptable_existing_bytes=(src.read_bytes(),),
+        )
         return
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(text, encoding="utf-8")
@@ -210,7 +222,7 @@ def main(argv: list[str] | None = None) -> int:
         for path in report.preserved_identical:
             print(f"- {path.as_posix()}")
     if report.preserved_different:
-        print("Preserved existing files with local changes:")
+        print("Preserved existing files differing from current scaffold output:")
         for path in report.preserved_different:
             print(f"- {path.as_posix()}")
     if (

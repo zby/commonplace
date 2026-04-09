@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from importlib.resources import as_file, files
 from pathlib import Path
 
 import pytest
@@ -115,6 +116,18 @@ def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
     assert rerun.preserved_different == []
 
 
+def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> None:
+    scaffold_pkg = files("commonplace.scaffold")
+    with as_file(scaffold_pkg) as scaffold_root:
+        raw_template = (scaffold_root / "AGENTS.md.template").read_text(encoding="utf-8")
+    (tmp_path / "AGENTS.md.template").write_text(raw_template, encoding="utf-8")
+
+    report = init_project(tmp_path)
+
+    assert Path("AGENTS.md.template") in report.preserved_identical
+    assert Path("AGENTS.md.template") not in report.preserved_different
+
+
 def test_main_reports_preserved_file_statuses(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -129,5 +142,19 @@ def test_main_reports_preserved_file_statuses(
     captured = capsys.readouterr()
     assert exit_code == 0
     assert "Preserved existing files already matching scaffold:" in captured.out
-    assert "Preserved existing files with local changes:" in captured.out
+    assert "Preserved existing files differing from current scaffold output:" in captured.out
     assert "- kb/instructions/WRITING.md" in captured.out
+
+
+def test_main_does_not_imply_manual_edits_for_template_name_drift(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    init_project(tmp_path, name="custom-name")
+
+    exit_code = main(["--root", str(tmp_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "Preserved existing files differing from current scaffold output:" in captured.out
+    assert "- AGENTS.md.template" in captured.out
+    assert "local changes" not in captured.out
