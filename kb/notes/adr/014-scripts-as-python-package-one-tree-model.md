@@ -48,7 +48,7 @@ Each command gets a `main()` entry point and a `[project.scripts]` entry, produc
 Consuming projects no longer need a `commonplace/` framework subtree. After `pip install llm-commonplace`, the user runs `commonplace-init --name <project>` to create the local project structure. The init command:
 
 - copies seed files (instructions, review gates, type definitions) from the installed package
-- installs skills directly into `.claude/skills/` with a `commonplace-` prefix (e.g., `commonplace-write`, `commonplace-validate`)
+- installs skills directly into `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix (e.g., `commonplace-write`, `commonplace-validate`)
 - resolves templates with the project name: `.envrc`, `AGENTS.md.template`, `qmd-collections.yml`
 
 No separate plugin installation is needed. Skills are project-local files, not plugin-delivered. This eliminates the per-runtime plugin installation divergence — the same init command works regardless of whether the consumer uses Claude Code, Codex, or another runtime that reads skills from a directory.
@@ -108,7 +108,7 @@ The `--name` flag defaults to the directory name if omitted.
 **Easier:**
 - Installation is `pip install` + `commonplace-init`. No cloning, no submodules, no gitignored checkouts.
 - Skills are decoupled from filesystem layout. They invoke stable command names.
-- Skills install directly into `.claude/skills/` — no plugin manifests, no runtime-specific install commands.
+- Skills install directly into `.claude/skills/` and `.agents/skills/` — no plugin manifests, no runtime-specific install commands.
 - Template resolution means no manual placeholder editing — `.envrc`, qmd config, and AGENTS template are ready to use.
 - The review system works reliably across project boundaries — proper imports, package data for schema loading, no `sys.path` manipulation.
 - Updating is `pip install --upgrade` + rerun `commonplace-init`.

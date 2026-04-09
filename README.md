@@ -61,7 +61,7 @@ src/commonplace/             Packaged operational engine
 
 ## Skills and instructions
 
-Framework skills are mirrored into `kb/instructions/` for repo-local searchability, and `commonplace-init` promotes an explicit subset of those instruction directories into both `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
+Framework skills live in `skills/`. `commonplace-init` installs the shipped skill set into both `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix. Plain KB procedures remain under `kb/instructions/` and load on demand. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 Framework skills:
 
@@ -121,7 +121,7 @@ Commonplace can be installed into any project as a Python package. See **[INSTAL
 
 | Tool | Required | Purpose |
 |---|---|---|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use the runtime's plugin or skill surface plus `AGENTS.md` |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use the runtime's skill surface plus `AGENTS.md` |
 | [uv](https://docs.astral.sh/uv/) | yes | Install and run the Commonplace Python package |
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |

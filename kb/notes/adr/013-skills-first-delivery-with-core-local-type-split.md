@@ -1,14 +1,16 @@
 ---
-description: Decision to deliver commonplace through plugin-discovered top-level skills, keep KB Goals always-loaded, split types into core and local, and use dynamic type discovery for practitioner-defined types
+description: Historical decision to move skills to top-level sources, keep KB Goals always-loaded, split types into core and local, and use dynamic type discovery for practitioner-defined types
 type: adr
 tags: [architecture]
-status: accepted
+status: superseded
 ---
 
 # 013-skills-first-delivery-with-core-local-type-split
 
-**Status:** current
+**Status:** superseded by [ADR-014](./014-scripts-as-python-package-one-tree-model.md)
 **Date:** 2026-04-08
+
+This ADR records the intermediate skills-first packaging direction. The later direct-install model in [ADR-014](./014-scripts-as-python-package-one-tree-model.md) removed plugin delivery and is the current implementation.
 
 ## Context
 
@@ -87,14 +89,14 @@ This lets practitioners add their own types by dropping templates into `kb/*/typ
 
 ## Implementation Notes
 
-This ADR now reflects the implemented repository layout:
+This ADR no longer reflects the implemented packaging. The current repository layout follows [ADR-014](./014-scripts-as-python-package-one-tree-model.md):
 
 - framework skills live in `skills/`
-- plugin manifests live at `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
-- runtime symlinks may still point into `skills/` for direct repo use
+- `commonplace-init` installs them directly into `.claude/skills/` and `.agents/skills/`
+- plugin manifests are gone
 - `kb/instructions/` contains writing/review/fix procedures and repo-local workflows, not a framework-skill mirror
 
-The open follow-up is review-system packaging: once the review system becomes a framework surface, `review-related-system` can move from "repo-local workflow" to "plugin-shipped skill whose only extra dependency is the copied `related-system` type."
+The open follow-up remains review-system packaging: once the review system becomes a framework surface, `review-related-system` can move from "repo-local workflow" to a shipped framework skill whose only extra dependency is the copied `related-system` type.
 
 **Supersedes:** This decision refines [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) by specifying what crosses the boundary between the two trees and in what form. ADR-006 is now superseded by [ADR-014](./014-scripts-as-python-package-one-tree-model.md) which replaces the two-tree model with a one-tree-plus-package model. The skills-first delivery mechanism described here remains valid; the backend packaging has changed.
 
