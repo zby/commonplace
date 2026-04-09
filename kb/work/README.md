@@ -16,3 +16,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split
 - [agent-memory-design/](./agent-memory-design/) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
 - [system-documentation/](./system-documentation/) — how to document the current commonplace system: separating general theory from system-specific design, finding an entry point beyond CLAUDE.md and scattered ADRs
+- [review-run-lifecycle/](./review-run-lifecycle/) — reconciling split and nested review execution paths so all of them write the same correct review-run data
