@@ -6,7 +6,7 @@ All commands are installed by `pip install llm-commonplace` and available as `co
 
 ### commonplace-init
 
-Initialize or update a Commonplace project. Creates KB directories, seeds instructions and type definitions, installs skills into `.claude/skills/`, and resolves templates.
+Initialize or update a Commonplace project. Creates KB directories, seeds instructions and type definitions, installs skills into both `.claude/skills/` and `.agents/skills/`, and resolves templates.
 
 ```bash
 commonplace-init --name <project-name>

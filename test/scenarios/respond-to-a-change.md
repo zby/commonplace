@@ -61,7 +61,7 @@ User notices an upstream change (PR, RFC, API update) or has a design idea, and 
 
 ### 8. Connect the response (if KB note)
 - **Context needed:** /connect skill body, area indexes
-- **Source:** `skills/connect/SKILL.md` + variable (area indexes)
+- **Source:** `kb/instructions/connect/SKILL.md` + variable (area indexes)
 - **Hops:** 1 (skill) + 1-3 (indexes and search)
 - **Fixed/Variable:** mixed — skill is fixed, index reads are variable
 - **Notes:** Only applies when the response is a KB note (analysis document, ADR). Skipped for external outputs (PR comments, messages).

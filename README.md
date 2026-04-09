@@ -8,7 +8,7 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 
 ```
 types/                       Global types (text, note)
-skills/                      Promoted framework skills
+skills/                      Framework skill source files
   write/SKILL.md             Route and draft notes by type
   connect/SKILL.md           Find connections, weave knowledge graph
   convert/SKILL.md           Convert notes between types
@@ -27,7 +27,10 @@ kb/                          Knowledge base
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
   work/                      Workshop space — connect reports, ingest staging, explorations
-  instructions/              Instructions and local procedures
+  instructions/              Instructions, local procedures, and searchable skill copies
+    write/SKILL.md           Promoted framework skill, mirrored here for searchability
+    connect/SKILL.md         Promoted framework skill, mirrored here for searchability
+    ingest/SKILL.md          Promoted framework skill, mirrored here for searchability
     evaluate-scenarios/SKILL.md  Measure scenario costs
     review-related-system/SKILL.md  Related-system review workflow
     re-ingest.md             Instruction (not yet promoted to skill)
@@ -58,7 +61,7 @@ src/commonplace/             Packaged operational engine
 
 ## Skills and instructions
 
-Framework skills live in `skills/` and are installed into consuming projects by `commonplace-init` under `.claude/skills/` with a `commonplace-` prefix. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
+Framework skills are mirrored into `kb/instructions/` for repo-local searchability, and `commonplace-init` promotes an explicit subset of those instruction directories into both `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix. Plain instruction files remain on-demand procedures. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 Framework skills:
 
@@ -103,7 +106,7 @@ cd commonplace
 
 If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH`, `UV_CACHE_DIR`, and `COMMONPLACE_QMD_INDEX` for the project.
 
-Skills are installed into `.claude/skills/commonplace-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+Skills are installed into `.claude/skills/commonplace-*/` and `.agents/skills/commonplace-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself

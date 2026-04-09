@@ -29,9 +29,13 @@ def test_init_project_creates_core_directories(tmp_path: Path) -> None:
 def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
+    assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "WRITING.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "REVIEW-SYSTEM.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "FIX-SYSTEM.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "write" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "connect" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "ingest" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "review-gates").is_dir()
     assert (tmp_path / "types" / "note.yaml").is_file()
     assert (tmp_path / "AGENTS.md.template").is_file()
@@ -40,14 +44,17 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
 def test_init_project_installs_skills_with_prefix(tmp_path: Path) -> None:
     init_project(tmp_path)
 
-    skills_dir = tmp_path / ".claude" / "skills"
-    assert skills_dir.is_dir()
-    assert (skills_dir / "commonplace-write" / "SKILL.md").is_file()
-    assert (skills_dir / "commonplace-validate" / "SKILL.md").is_file()
-    assert (skills_dir / "commonplace-snapshot-web" / "SKILL.md").is_file()
-    assert (skills_dir / "commonplace-connect" / "SKILL.md").is_file()
-    # No unprefixed directories
-    assert not (skills_dir / "write").exists()
+    for skills_dir in (
+        tmp_path / ".claude" / "skills",
+        tmp_path / ".agents" / "skills",
+    ):
+        assert skills_dir.is_dir()
+        assert (skills_dir / "commonplace-write" / "SKILL.md").is_file()
+        assert (skills_dir / "commonplace-validate" / "SKILL.md").is_file()
+        assert (skills_dir / "commonplace-snapshot-web" / "SKILL.md").is_file()
+        assert (skills_dir / "commonplace-connect" / "SKILL.md").is_file()
+        # No unprefixed directories
+        assert not (skills_dir / "write").exists()
 
 
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
@@ -91,4 +98,3 @@ def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     rerun = init_project(tmp_path)
     assert rerun == []
     assert writing.read_text(encoding="utf-8") == "custom content"
-

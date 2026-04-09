@@ -54,7 +54,7 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 ### 7. Connect to existing knowledge
 - **Context needed:** /connect skill body, area indexes
-- **Source:** `skills/connect/SKILL.md` + variable (area indexes)
+- **Source:** `kb/instructions/connect/SKILL.md` + variable (area indexes)
 - **Hops:** 1 (skill) + 1-3 (indexes and search)
 - **Fixed/Variable:** mixed — skill is fixed, index reads are variable
 - **Notes:** The connect step is a separate skill invocation. The skill body is substantial (~15KB). Index reads depend on how many areas the note touches.

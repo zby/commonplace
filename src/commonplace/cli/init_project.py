@@ -32,6 +32,17 @@ SCAFFOLD_TREES = [
 # Skills directories for supported runtimes.
 SKILLS_DIRS = [
     Path(".claude/skills"),
+    Path(".agents/skills"),
+]
+
+PROMOTED_SKILLS = [
+    "write",
+    "validate",
+    "connect",
+    "convert",
+    "ingest",
+    "snapshot-web",
+    "revise-iterative",
 ]
 
 SKILL_PREFIX = "commonplace-"
@@ -122,20 +133,23 @@ def init_project(root: Path, name: str | None = None) -> list[Path]:
             if _write_template(qmd_src, qmd_target, replacements):
                 created.append(Path("qmd-collections.yml"))
 
-        # Copy skills into runtime skills directories with prefix.
-        skills_src = scaffold_root / "skills"
-        if skills_src.is_dir():
-            for skill_dir in sorted(skills_src.iterdir()):
-                if not skill_dir.is_dir():
-                    continue
-                prefixed_name = SKILL_PREFIX + skill_dir.name
-                for skills_dest in SKILLS_DIRS:
-                    target_rel = str(skills_dest / prefixed_name)
-                    copied = _copy_scaffold_tree(
-                        scaffold_root, f"skills/{skill_dir.name}",
-                        root, target_rel,
-                    )
-                    created.extend(copied)
+        # Promote selected instruction directories into runtime skills directories.
+        for skill_name in PROMOTED_SKILLS:
+            skill_src_rel = f"kb/instructions/{skill_name}"
+            if not (scaffold_root / skill_src_rel).is_dir():
+                raise FileNotFoundError(
+                    f"Promoted skill source is missing from scaffold: {skill_src_rel}"
+                )
+            prefixed_name = SKILL_PREFIX + skill_name
+            for skills_dest in SKILLS_DIRS:
+                target_rel = str(skills_dest / prefixed_name)
+                copied = _copy_scaffold_tree(
+                    scaffold_root,
+                    skill_src_rel,
+                    root,
+                    target_rel,
+                )
+                created.extend(copied)
 
     return created
 

@@ -90,7 +90,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
 | Convert between note types | `commonplace-convert` |
 | Iteratively revise a note | `commonplace-revise-iterative` |
 
-These skills are installed into `.claude/skills/` by `commonplace-init`.
+These skills are installed into both `.claude/skills/` and `.agents/skills/` by `commonplace-init`.
 
 ### Commands
 

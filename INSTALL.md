@@ -69,7 +69,7 @@ This creates:
 - **KB directories** — `kb/notes/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
 - **Instructions** — `kb/instructions/` seeded with writing conventions, review system, review gates, and fix instructions
 - **Type definitions** — `types/` with note and text types
-- **Skills** — `.claude/skills/commonplace-write/`, `commonplace-validate/`, `commonplace-connect/`, etc. The `commonplace-` prefix avoids collisions with your project's own skills.
+- **Skills** — `.claude/skills/commonplace-write/` and `.agents/skills/commonplace-write/`, plus the matching `commonplace-validate/`, `commonplace-connect/`, etc. The `commonplace-` prefix avoids collisions with your project's own skills.
 - **`.envrc`** — project-scoped environment (PATH, UV_CACHE_DIR, COMMONPLACE_QMD_INDEX), ready to use
 - **`qmd-collections.yml`** — qmd config with paths filled in, ready to copy to `~/.config/qmd/`
 - **`AGENTS.md.template`** — control-plane template with project name filled in

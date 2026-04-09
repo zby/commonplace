@@ -49,4 +49,4 @@ You should have performed the task manually at least twice in different contexts
 
 ## Promotion to skill
 
-If the instruction proves useful enough to warrant automatic routing: create a subdirectory `kb/instructions/<name>/`, move the instruction there as `SKILL.md`, add the skill frontmatter fields (`name`, `allowed-tools`, `context`, `model`), symlink the directory into `.claude/skills/` (`ln -s ../../kb/instructions/<name> .claude/skills/<name>`), and add a routing table entry in CLAUDE.md.
+If the instruction proves useful enough to warrant automatic routing: create a subdirectory `kb/instructions/<name>/`, move the instruction there as `SKILL.md`, add the skill frontmatter fields (`name`, `allowed-tools`, `context`, `model`), add `<name>` to the promoted skill list in `src/commonplace/cli/init_project.py`, and update the control-plane routing table in `CLAUDE.md` or `AGENTS.md`. `commonplace-init` will then copy that instruction directory into the runtime skill surfaces (`.claude/skills/` and `.agents/skills/`) with the `commonplace-` prefix.

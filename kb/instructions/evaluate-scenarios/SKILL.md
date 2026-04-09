@@ -37,9 +37,9 @@ wc -c < {source-path}
 Common fixed sources you'll encounter:
 - `CLAUDE.md` — always-loaded context (count once, not per-step)
 - `kb/instructions/WRITING.md` — writing conventions and type templates
-- `skills/connect/SKILL.md` — connection skill body
-- `skills/ingest/SKILL.md` — ingestion skill body
-- `skills/snapshot-web/SKILL.md` — snapshot skill body
+- `kb/instructions/connect/SKILL.md` — connection skill body
+- `kb/instructions/ingest/SKILL.md` — ingestion skill body
+- `kb/instructions/snapshot-web/SKILL.md` — snapshot skill body
 - `kb/sources/types/source-review.md` — source review type template
 - `test/scenarios/types/scenario.md` — scenario type template
 

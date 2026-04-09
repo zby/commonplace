@@ -19,14 +19,14 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 ### 2. Load /ingest skill
 - **Context needed:** Full skill procedure for orchestrating ingestion
-- **Source:** `skills/ingest/SKILL.md`
+- **Source:** `kb/instructions/ingest/SKILL.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
 - **Notes:** The skill body contains the complete orchestration procedure: snapshot → connect → classify → analyse.
 
 ### 3. Snapshot the source
 - **Context needed:** /snapshot-web skill procedure + URL
-- **Source:** `skills/snapshot-web/SKILL.md` + external URL
+- **Source:** `kb/instructions/snapshot-web/SKILL.md` + external URL
 - **Hops:** 1 (skill) + 1 (URL fetch)
 - **Fixed/Variable:** mixed — skill is fixed, URL is variable
 - **Notes:** /ingest delegates to /snapshot-web for capture. The URL fetch is external (not a file read), but it's a hop in terms of agent tool calls.
@@ -54,7 +54,7 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 ### 7. Connect to existing knowledge
 - **Context needed:** /connect skill body, area indexes
-- **Source:** `skills/connect/SKILL.md` + variable (area indexes)
+- **Source:** `kb/instructions/connect/SKILL.md` + variable (area indexes)
 - **Hops:** 1 (skill) + 1-3 (indexes and search)
 - **Fixed/Variable:** mixed — skill is fixed, index reads are variable
 - **Notes:** Same as write-a-note step 7. The ingest skill invokes /connect to weave the new source review into the knowledge graph.
@@ -77,8 +77,8 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 ## Variants
 
-**Commonplace repo:** Escalation is seamless — methodology notes are in the same `kb/notes/` the agent already searches. The /ingest skill is the template version (in `skills/`), not a rendered version.
+**Commonplace repo:** Escalation is seamless — methodology notes are in the same `kb/notes/` the agent already searches, and the skill body is also searchable under `kb/instructions/ingest/SKILL.md`.
 
-**Installed project:** The /ingest skill is loaded from the installed `commonplace/skills/` surface via plugin install or runtime symlink. Escalation adds 2-3 hops but is rare — most sources fit the standard extraction template.
+**Installed project:** The /ingest skill is loaded from the runtime skill surface (`.claude/skills/` or `.agents/skills/`) after `commonplace-init` copies the promoted instruction directory. Escalation adds 2-3 hops but is rare — most sources fit the standard extraction template.
 
 **Source type variation:** Academic papers, blog posts, GitHub issues, and X/Twitter posts each have different capture methods (handled by /snapshot-web) but the analysis pipeline is the same. The variable cost is in step 3 (capture method) not in steps 4-7.
