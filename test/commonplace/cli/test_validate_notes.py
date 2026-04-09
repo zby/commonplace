@@ -24,43 +24,138 @@ def write(path: Path, content: str) -> Path:
 def configure_temp_repo(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     notes_root = tmp_path / "kb" / "notes"
     write(
-        tmp_path / "types" / "note.yaml",
-        """required_fields:
-  - description
-allowed_status:
-  - seedling
-  - current
-  - speculative
-  - outdated
+        tmp_path / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        enum:
+          - seedling
+          - current
+          - speculative
+          - outdated
+      traits:
+        type: array
+        items:
+          type: string
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
 """,
     )
     write(
-        tmp_path / "kb" / "notes" / "types" / "structured-claim.yaml",
-        """base: note
-required_headings:
-  - "## Evidence"
-  - "## Reasoning"
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: structured-claim
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Evidence"
+          - contains:
+              const: "## Reasoning"
 """,
     )
     write(
-        tmp_path / "kb" / "notes" / "types" / "spec.yaml",
-        """base: note
-any_headings:
-  - "## Design"
-  - "## Implementation"
+        tmp_path / "kb" / "notes" / "types" / "spec.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: spec
+        additionalProperties: true
+      headings:
+        type: array
+        anyOf:
+          - contains:
+              const: "## Design"
+          - contains:
+              const: "## Implementation"
 """,
     )
     write(
-        tmp_path / "kb" / "notes" / "types" / "related-system.yaml",
-        """base: note
-required_headings:
-  - "## Core Ideas"
-  - "## Comparison with Our System"
-  - "## Borrowable Ideas"
-  - "## Curiosity Pass"
-  - "## What to Watch"
-required_fields:
-  - last-checked
+        tmp_path / "kb" / "notes" / "types" / "related-system.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - last-checked
+        properties:
+          type:
+            const: related-system
+          last-checked:
+            type: string
+            format: date
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Core Ideas"
+          - contains:
+              const: "## Comparison with Our System"
+          - contains:
+              const: "## Borrowable Ideas"
+          - contains:
+              const: "## Curiosity Pass"
+          - contains:
+              const: "## What to Watch"
 """,
     )
     monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
@@ -294,4 +389,3 @@ status: current
 
     assert today_note.resolve() in recent
     assert old_note.resolve() not in recent
-

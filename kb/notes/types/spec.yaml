@@ -1,4 +1,0 @@
-base: note
-any_headings:
-  - "## Design"
-  - "## Implementation"

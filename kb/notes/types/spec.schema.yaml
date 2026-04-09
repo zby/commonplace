@@ -1,0 +1,21 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: spec
+        additionalProperties: true
+      headings:
+        type: array
+        anyOf:
+          - contains:
+              const: "## Design"
+          - contains:
+              const: "## Implementation"

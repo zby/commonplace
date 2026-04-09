@@ -1,5 +1,6 @@
 ---
 description: "The value of separating knowledge, self, and operational memory is that each has a different lifecycle — accumulation, slow evolution, and high churn; whether the Tulving mapping adds explanatory power beyond different retention policies is open"
+type: note
 tags: [learning-theory]
 status: speculative
 ---

@@ -2,7 +2,7 @@
 name = "llm-commonplace"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0"]
 
 [project.scripts]
 commonplace-ack-gate-review = "commonplace.review.ack_gate_review:main"

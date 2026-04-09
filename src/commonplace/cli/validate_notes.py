@@ -10,8 +10,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from commonplace.lib import frontmatter as fm_mod
-from commonplace.lib.type_resolver import TypeProfile, resolve_type
+from jsonschema.exceptions import ValidationError
+
+from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
 REPO_ROOT = Path.cwd().resolve()
@@ -40,42 +42,7 @@ class ParsedNote:
     content: str
     note_type: str
     profile: TypeProfile
-    frontmatter: dict[str, Any] | None
-    body: str
-    title: str
-
-
-def strip_frontmatter(content: str) -> str:
-    return fm_mod.strip(content)
-
-
-def parse_frontmatter(content: str) -> tuple[dict[str, Any] | None, str | None]:
-    if not content.startswith("---\n"):
-        return None, None
-
-    result = fm_mod.parse(content)
-    if not result.raw and not result.data:
-        return None, "frontmatter: missing closing delimiter"
-    if result.errors:
-        return None, "; ".join(result.errors)
-    return result.data, None
-
-
-def extract_title(content: str) -> str:
-    body = strip_frontmatter(content)
-    match = re.search(r"^#\s+(.+)$", body, flags=re.MULTILINE)
-    return match.group(1).strip() if match else "Untitled"
-
-
-def remove_code_regions(text: str) -> str:
-    text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
-    text = re.sub(r"`[^`\n]+`", "", text)
-    return text
-
-
-def find_markdown_links(text: str) -> list[str]:
-    cleaned = remove_code_regions(text)
-    return re.findall(r"\[[^\]]+\]\(([^)]+)\)", cleaned)
+    document: ParsedDocument
 
 
 def is_nested_git_repo_content(path: Path) -> bool:
@@ -127,25 +94,23 @@ def resolve_targets(arg: str) -> list[Path]:
 
 def parse_note(path: Path) -> tuple[ParsedNote | None, str | None]:
     content = path.read_text(encoding="utf-8")
-    fm, fm_error = parse_frontmatter(content)
-    if fm_error:
-        return None, fm_error
-    note_type = "text" if fm is None else str(fm.get("type", "note") or "note")
-    profile = resolve_type(path, fm, repo_root=REPO_ROOT)
-    title = extract_title(content)
-    body = strip_frontmatter(content)
+    document, parse_error = parse_document(content)
+    if parse_error:
+        return None, parse_error
+    assert document is not None
+
+    note_type = "text" if document.frontmatter is None else str(document.frontmatter.get("type", "note") or "note")
+    profile = resolve_type(path, document.frontmatter, repo_root=REPO_ROOT)
     return ParsedNote(
         path=path,
         content=content,
         note_type=note_type,
         profile=profile,
-        frontmatter=fm,
-        body=body,
-        title=title,
+        document=document,
     ), None
 
 
-def validate_description(results: CheckResults, description: Any, title: str) -> None:
+def validate_description(results: CheckResults, description: Any) -> None:
     if description in (None, "", "~"):
         results.fails.append("description: missing or empty")
         return
@@ -197,9 +162,9 @@ def validate_type_traits_status(
         results.infos.append("bare note type: type=note with empty traits")
 
 
-def validate_links(results: CheckResults, path: Path, body: str) -> None:
+def validate_links_from_document(results: CheckResults, path: Path, links: tuple[str, ...]) -> None:
     missing: list[str] = []
-    for link in find_markdown_links(body):
+    for link in links:
         if re.match(r"^[a-z]+://", link):
             continue
         if not link.endswith(".md"):
@@ -216,22 +181,23 @@ def validate_links(results: CheckResults, path: Path, body: str) -> None:
 
 
 def validate_structure(
-    results: CheckResults, note_type: str, body: str, frontmatter: dict[str, Any], profile: TypeProfile
+    results: CheckResults, note_type: str, document: ParsedDocument, profile: TypeProfile
 ) -> None:
     if profile.required_headings:
-        missing = [heading for heading in profile.required_headings if heading not in body]
+        missing = [heading for heading in profile.required_headings if heading not in document.headings]
         if missing:
             results.warns.append(f"structure: missing headings {', '.join(missing)}")
         else:
             results.passes.append(f"structure: required {note_type} headings present")
 
     if profile.any_headings:
-        if all(heading not in body for heading in profile.any_headings):
+        if all(heading not in document.headings for heading in profile.any_headings):
             results.warns.append(f"structure: {note_type} should contain {' or '.join(profile.any_headings)}")
         else:
             results.passes.append(f"structure: {note_type} has required heading")
 
     extra_required_fields = [field for field in profile.required_fields if field != "description"]
+    frontmatter = document.frontmatter or {}
     missing_fields = [field for field in extra_required_fields if frontmatter.get(field) in (None, "", [])]
     if missing_fields:
         results.warns.append(f"frontmatter: missing required fields {', '.join(missing_fields)}")
@@ -239,20 +205,82 @@ def validate_structure(
         results.passes.append(f"frontmatter: required {note_type} fields present")
 
     if profile.requires_date:
-        has_date = any(key in frontmatter for key in ("date", "last-checked")) or bool(
-            re.search(r"\b\d{4}-\d{2}-\d{2}\b", body)
-        )
+        has_date = any(key in frontmatter for key in ("date", "last-checked")) or bool(document.body_dates)
         if not has_date:
             results.warns.append("structure: review should include a date in frontmatter or body")
         else:
             results.passes.append("structure: review has date")
 
     if profile.min_links is not None:
-        links = find_markdown_links(body)
-        if len(links) < profile.min_links:
-            results.warns.append(f"structure: index should be primarily navigational (found {len(links)} links)")
+        if len(document.links) < profile.min_links:
+            results.warns.append(f"structure: index should be primarily navigational (found {len(document.links)} links)")
         else:
             results.passes.append("structure: index has navigational link density")
+
+
+def _missing_required_property(error: ValidationError) -> str | None:
+    match = re.search(r"'([^']+)' is a required property", error.message)
+    return match.group(1) if match else None
+
+
+def _schema_error_message(error: ValidationError, profile: TypeProfile, document: ParsedDocument) -> tuple[str, str] | None:
+    path = tuple(str(part) for part in error.absolute_path)
+
+    if error.validator == "required" and path == ("frontmatter",):
+        missing = _missing_required_property(error)
+        if missing == "description":
+            return "fail", "description: missing or empty"
+        if missing == "type":
+            return "fail", "type: must be a non-empty string"
+        if missing is not None:
+            return "warn", f"frontmatter: missing required fields {missing}"
+
+    if path == ("frontmatter", "description"):
+        if error.validator == "type":
+            return "fail", "description: must be a string"
+        if error.validator == "minLength":
+            return "fail", "description: missing or empty"
+
+    if path == ("frontmatter", "type"):
+        if error.validator in {"type", "const"}:
+            return "fail", "type: must be a non-empty string"
+
+    if path == ("frontmatter", "status") and error.validator == "enum":
+        status = None if document.frontmatter is None else document.frontmatter.get("status")
+        return "warn", f'status: "{status}" is not one of {sorted(profile.allowed_status)}'
+
+    if error.validator == "format" and len(path) == 2 and path[0] == "frontmatter":
+        return "warn", f"frontmatter: {path[1]} must be a valid {error.validator_value}"
+
+    if error.validator in {"contains", "anyOf", "minItems", "enum", "required"}:
+        return None
+
+    location = ".".join(path) if path else "document"
+    return "warn", f"{location}: {error.message}"
+
+
+def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
+    messages = {
+        ("pass", item) for item in results.passes
+    } | {
+        ("warn", item) for item in results.warns
+    } | {
+        ("fail", item) for item in results.fails
+    }
+
+    for error in validate_instance(parsed.profile, parsed.document.to_validation_object()):
+        translated = _schema_error_message(error, parsed.profile, parsed.document)
+        if translated is None:
+            continue
+        severity, message = translated
+        key = (severity, message)
+        if key in messages:
+            continue
+        if severity == "fail":
+            results.fails.append(message)
+        else:
+            results.warns.append(message)
+        messages.add(key)
 
 
 def validate_note(path: Path) -> CheckResults:
@@ -262,15 +290,16 @@ def validate_note(path: Path) -> CheckResults:
 
     assert parsed is not None
 
-    if parsed.frontmatter is None:
+    if parsed.document.frontmatter is None:
         return CheckResults(note_type="text", passes=["text file: no frontmatter, no structural requirements"])
 
     results = CheckResults(note_type=parsed.note_type)
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
-    validate_description(results, parsed.frontmatter.get("description"), parsed.title)
-    validate_type_traits_status(results, parsed.frontmatter, parsed.note_type, parsed.profile)
-    validate_links(results, parsed.path, parsed.body)
-    validate_structure(results, parsed.note_type, parsed.body, parsed.frontmatter, parsed.profile)
+    validate_description(results, parsed.document.frontmatter.get("description"))
+    validate_type_traits_status(results, parsed.document.frontmatter, parsed.note_type, parsed.profile)
+    validate_links_from_document(results, parsed.path, parsed.document.links)
+    validate_structure(results, parsed.note_type, parsed.document, parsed.profile)
+    apply_schema_validation(results, parsed)
     return results
 
 
@@ -384,4 +413,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

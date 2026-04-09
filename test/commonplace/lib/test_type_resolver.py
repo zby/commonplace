@@ -19,12 +19,28 @@ def write(path: Path, content: str) -> Path:
 
 def test_root_note_profile_is_loaded_from_yaml(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.yaml",
-        """required_fields:
-  - description
-allowed_status:
-  - seedling
-  - current
+        tmp_path / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        enum:
+          - seedling
+          - current
+    additionalProperties: true
 """,
     )
     note = write(
@@ -47,20 +63,58 @@ type: note
 
 def test_collection_definition_extends_note_profile(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.yaml",
-        """required_fields:
-  - description
-allowed_status:
-  - seedling
-  - current
+        tmp_path / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - headings
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        enum:
+          - seedling
+          - current
+    additionalProperties: true
+  headings:
+    type: array
+    items:
+      type: string
 """,
     )
     write(
-        tmp_path / "kb" / "notes" / "types" / "structured-claim.yaml",
-        """base: note
-required_headings:
-  - "## Evidence"
-  - "## Reasoning"
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: structured-claim
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Evidence"
+          - contains:
+              const: "## Reasoning"
 """,
     )
     note = write(
@@ -83,11 +137,27 @@ type: structured-claim
 
 def test_missing_type_definition_falls_back_to_note(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.yaml",
-        """required_fields:
-  - description
-allowed_status:
-  - seedling
+        tmp_path / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        enum:
+          - seedling
+    additionalProperties: true
 """,
     )
     note = write(
@@ -110,25 +180,65 @@ type: unknown-type
 
 def test_workshop_scope_overrides_collection_and_root(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.yaml",
-        """required_fields:
-  - description
-allowed_status:
-  - current
+        tmp_path / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        enum:
+          - current
+    additionalProperties: true
 """,
     )
     write(
-        tmp_path / "kb" / "work" / "types" / "memo.yaml",
-        """base: note
-required_fields:
-  - collection-field
+        tmp_path / "kb" / "work" / "types" / "memo.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - collection-field
+        properties:
+          type:
+            const: memo
+        additionalProperties: true
 """,
     )
     write(
-        tmp_path / "kb" / "work" / "demo" / "types" / "memo.yaml",
-        """base: note
-required_fields:
-  - workshop-field
+        tmp_path / "kb" / "work" / "demo" / "types" / "memo.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - workshop-field
+        properties:
+          type:
+            const: memo
+        additionalProperties: true
 """,
     )
     note = write(
@@ -155,4 +265,3 @@ def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> No
 
     assert profile.resolved_type == "text"
     assert profile.required_fields == ()
-

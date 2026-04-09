@@ -1,9 +1,0 @@
-base: note
-required_headings:
-  - "## Core Ideas"
-  - "## Comparison with Our System"
-  - "## Borrowable Ideas"
-  - "## Curiosity Pass"
-  - "## What to Watch"
-required_fields:
-  - last-checked
