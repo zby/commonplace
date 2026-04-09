@@ -135,7 +135,7 @@ The split would be:
 | Description exists + non-empty | Hard | Script |
 | Type/traits/status enum | Hard | Script |
 | Link targets resolve | Hard | Script |
-| Areas-Topics sync | Hard | Script (already have `sync_topic_links.py`) |
+| Areas-Topics sync | Hard | Historical script (`sync_topic_links.py`, removed with Topics) |
 | Unknown frontmatter fields | Hard | Script |
 | Required sections per type | Hard | Script |
 | Description quality | Soft | Skill |

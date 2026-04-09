@@ -2,39 +2,50 @@
 
 ## Conclusion
 
-Yes, Commonplace could use external libraries now, and one of them looks clearly justified:
+This survey is now partly historical.
 
-- **Recommended to consider:** `PyYAML`
-- **Reasonable but secondary:** `python-frontmatter`
+One recommendation already landed:
+
+- `PyYAML` is now a base runtime dependency
+- `jsonschema` is also a base runtime dependency
+- authored type definitions now use JSON Schema in YAML syntax
+
+That means the main unresolved question is no longer "should we add a YAML library at all?" The unresolved question is "should markdown frontmatter also move to broader YAML, or should the repo keep the current strict parser?"
+
+Current recommendation:
+
+- **Already adopted:** `PyYAML`
+- **Reasonable but still secondary:** `python-frontmatter`
 - **Possible later, not yet justified:** `markdown-it-py`
 - **Not recommended for current needs:** `mistune`, `ruamel.yaml`
 
-The key test is whether a dependency deletes complexity in more than one place. `PyYAML` passes that test because it can simplify both markdown frontmatter parsing and `types/*.yaml` parsing.
-
 ## 1. PyYAML
 
-### What it would replace
+### What it already replaced
+
+- the type-definition parsing path in [`src/commonplace/lib/type_resolver.py`](../../../src/commonplace/lib/type_resolver.py)
+- the need for Commonplace to own a custom parser for authored schema files
+
+### What it could still replace
 
 - the custom frontmatter scalar/list parsing in [`src/commonplace/lib/frontmatter.py`](../../../src/commonplace/lib/frontmatter.py)
-- the custom YAML parsing in [`src/commonplace/lib/type_resolver.py`](../../../src/commonplace/lib/type_resolver.py)
-- the special-case block-list handling in [`src/commonplace/cli/sync_topic_links.py`](../../../src/commonplace/cli/sync_topic_links.py)
 
 ### Why it is a good fit
 
 - it is current and maintained: PyPI shows version `6.0.3`, released on September 25, 2025
 - the official docs explicitly recommend `yaml.safe_load` for untrusted input
-- it solves two real parser surfaces in this repo, not just one
+- it already paid for itself on the authored-schema side
 
 ### Costs
 
-- Commonplace would need to define which YAML subset it still wants to accept
-- if the repo keeps its current narrow frontmatter contract, some validation logic still stays local
+- Commonplace would still need to define which YAML subset it wants to accept for markdown notes
+- if the repo keeps its current narrow markdown-frontmatter contract, some validation logic still stays local
 
 ### Recommendation
 
-This is the strongest candidate for a new base runtime dependency.
+Adopted for schemas already.
 
-If adopted, Commonplace should still keep a local wrapper module so the KB contract stays under repo control even if parsing moves to `yaml.safe_load`.
+Do not treat that as an automatic reason to broaden markdown frontmatter. Only move markdown frontmatter to `PyYAML` if it deletes meaningful code beyond the already-solved schema path.
 
 ## 2. python-frontmatter
 
@@ -51,7 +62,7 @@ If adopted, Commonplace should still keep a local wrapper module so the KB contr
 
 ### Limits
 
-- it does **not** help with `types/*.yaml`
+- it does **not** help with authored schema files
 - it likely still sits on top of a YAML parser rather than replacing that need
 - if Commonplace wants a strict subset, it still needs wrapper validation
 
@@ -59,14 +70,15 @@ If adopted, Commonplace should still keep a local wrapper module so the KB contr
 
 Useful only if the main goal is to stop owning frontmatter delimiter logic.
 
-If we add just one dependency, `PyYAML` has broader payoff than `python-frontmatter`.
+It is still weaker than just keeping one local wrapper unless delimiter handling becomes the real pain point.
 
 ## 3. markdown-it-py
 
 ### What it would replace
 
-- regex-based markdown link extraction in [`src/commonplace/cli/validate_notes.py`](../../../src/commonplace/cli/validate_notes.py) and [`src/commonplace/cli/promotion_candidates.py`](../../../src/commonplace/cli/promotion_candidates.py)
-- potentially frontmatter/token parsing for markdown workflows if used with plugins
+- regex-based markdown link extraction in [`src/commonplace/cli/promotion_candidates.py`](../../../src/commonplace/cli/promotion_candidates.py)
+- regex-based link extraction in [`src/commonplace/review/run_review_bundle.py`](../../../src/commonplace/review/run_review_bundle.py)
+- potentially other markdown-structure helpers if Commonplace starts doing richer AST-level work
 
 ### Why it is credible
 
@@ -76,15 +88,15 @@ If we add just one dependency, `PyYAML` has broader payoff than `python-frontmat
 
 ### Why it is not the first dependency to add
 
-- current link extraction needs are modest
-- it would add a full markdown parser to solve a narrower problem than the YAML duplication
+- current link extraction needs are still modest
+- it would add a full markdown parser to solve a narrower problem than the remaining duplication
 - the repo is not yet doing AST-level markdown transformations where this would clearly pay off
 
 ### Recommendation
 
 Keep this as a later option if link handling or markdown structure work grows more complex.
 
-Right now it is a plausible cleanup tool, not the highest-value one.
+Right now it is plausible cleanup, not the highest-value next move.
 
 ## 4. mistune
 
@@ -111,8 +123,8 @@ It is a well-known YAML library often used when comment-preserving or round-trip
 ### Why it is overkill here
 
 - Commonplace mostly reads YAML rather than preserving author formatting during writes
-- the custom code today is about parsing and validation, not round-trip YAML editing
-- `PyYAML` is simpler and already enough for the current simplification targets
+- the remaining custom code is about parsing and validation, not round-trip YAML editing
+- `PyYAML` is already enough for the current simplification targets
 
 ### Recommendation
 
@@ -120,12 +132,12 @@ Do not add this unless Commonplace starts editing YAML files while preserving fo
 
 ## Practical recommendation
 
-If the goal is to simplify the current code with minimal dependency creep:
+If the goal is to simplify the current code from today's state:
 
-1. Add `PyYAML`
-2. Keep `commonplace.lib.frontmatter` as the public wrapper
-3. Use `yaml.safe_load` underneath for frontmatter payloads and `types/*.yaml`
-4. Refactor `sync_topic_links.py` to stop using bespoke regex YAML parsing
-5. Re-evaluate `markdown-it-py` only after the YAML duplication is gone
+1. Treat the `PyYAML` decision as already made for authored schemas
+2. Do not expand markdown frontmatter syntax unless a real maintained command needs it
+3. Prefer deletion of obsolete `areas` / `Topics` tooling over adding parser flexibility for historical commands
+4. Consolidate remaining note parsing onto `note_parser` and `frontmatter.strip()`
+5. Re-evaluate `markdown-it-py` only if link handling grows beyond the current regex-plus-code-strip needs
 
-That path deletes the most bespoke parsing with the smallest conceptual expansion.
+That path deletes the most real complexity with the smallest conceptual expansion.

@@ -14,7 +14,6 @@ For each resolved gate, prints:
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -22,11 +21,9 @@ from typing import Any
 from commonplace.lib import frontmatter
 from commonplace.review.review_db import GATES_ROOT
 
-FRONTMATTER_RE = re.compile(r"^---\n.*?\n---\n*", re.DOTALL)
-
 
 def strip_frontmatter(text: str) -> str:
-    return FRONTMATTER_RE.sub("", text, count=1).lstrip("\n")
+    return frontmatter.strip(text).lstrip("\n")
 
 
 def resolve_to_gate_ids(args: list[str], gates_dir: Path) -> list[str]:

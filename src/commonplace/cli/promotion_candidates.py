@@ -12,36 +12,16 @@ Usage: commonplace-promotion-candidates
 
 from __future__ import annotations
 
-import re
 import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
 from commonplace.lib import frontmatter as fm_mod
+from commonplace.lib.note_parser import extract_title, find_markdown_links, strip_frontmatter
 
 NOTES_DIR = Path("kb/notes")
 REPORTS_DIR = Path("kb/reports")
-
-
-def parse_frontmatter(content: str) -> dict | None:
-    """Parse frontmatter, returning None for genuine text files (no delimiters)."""
-    if not content.startswith("---\n"):
-        return None
-    result = fm_mod.parse(content)
-    return result.data
-
-
-def get_title(content: str) -> str:
-    """Extract first H1 heading from markdown."""
-    body = fm_mod.strip(content)
-    match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
-    return match.group(1) if match else "Untitled"
-
-
-def extract_links(content: str) -> list[str]:
-    """Extract markdown link targets from content."""
-    return re.findall(r"\[[^\]]*\]\(([^)]+)\)", content)
 
 
 def resolve_link(source: Path, target: str) -> Path | None:
@@ -64,7 +44,7 @@ def main() -> None:
     # Classify all notes
     text_files: dict[Path, str] = {}  # path -> title
     seedlings: dict[Path, str] = {}  # path -> title
-    all_notes: dict[Path, dict] = {}  # path -> {fm, title, content}
+    all_notes: dict[Path, dict] = {}  # path -> {fm, title, links, rel}
 
     for path in sorted(NOTES_DIR.rglob("*.md")):
         if path.name in ("index.md", "README.md"):
@@ -74,9 +54,11 @@ def main() -> None:
 
         abs_path = path.resolve()
         content = path.read_text(encoding="utf-8")
-        fm = parse_frontmatter(content)
-        title = get_title(content)
-        all_notes[abs_path] = {"fm": fm, "title": title, "content": content, "rel": path}
+        fm = fm_mod.parse(content).data if content.startswith("---\n") else None
+        body = strip_frontmatter(content)
+        title = extract_title(body)
+        links = find_markdown_links(body)
+        all_notes[abs_path] = {"fm": fm, "title": title, "links": links, "rel": path}
 
         if fm is None:
             text_files[abs_path] = title
@@ -86,9 +68,8 @@ def main() -> None:
     # Build incoming link counts
     incoming_links: dict[Path, list[Path]] = defaultdict(list)
     for source_path, info in all_notes.items():
-        links = extract_links(info["content"])
-        for link in links:
-            resolved = resolve_link(info["rel"], link)
+        for link in info["links"]:
+            resolved = resolve_link(source_path, link)
             if resolved and resolved in all_notes:
                 incoming_links[resolved].append(source_path)
 

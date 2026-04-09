@@ -45,16 +45,6 @@ commonplace-sync-generated-index kb/notes/tags-index.md    # specific index
 commonplace-sync-generated-index --dry-run                 # preview changes
 ```
 
-### commonplace-sync-topic-links
-
-Sync topic link sections across notes. Ensures bidirectional linking consistency.
-
-```bash
-commonplace-sync-topic-links kb/notes/
-commonplace-sync-topic-links kb/notes/my-note.md
-commonplace-sync-topic-links --dry-run kb/notes/
-```
-
 ## Note operations
 
 ### commonplace-relocate-note

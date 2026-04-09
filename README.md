@@ -163,7 +163,6 @@ Install the package first, then use the commands directly:
 commonplace-generate-notes-index kb/notes
 commonplace-relocate-note old-note "New note title" --apply
 commonplace-relocate-note old-note --dir kb/notes/definitions --apply
-commonplace-sync-topic-links kb/notes/
 commonplace-github-snapshot <url>
 commonplace-x-snapshot <url>
 ```

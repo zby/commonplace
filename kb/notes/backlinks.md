@@ -54,7 +54,7 @@ A script scans all `.md` files, extracts links, inverts them, and produces a rep
 
 ### B. Generated footer sections (sync script)
 
-A script generates a "Referenced by:" footer in each note, similar to how `sync_topic_links.py` generates Topics footers from frontmatter. Run periodically or on commit.
+A script generates a "Referenced by:" footer in each note, similar to how the former `sync_topic_links.py` command generated Topics footers before the `areas` / `Topics` system was removed. Run periodically or on commit.
 
 - Pros: visible at read time, deterministic, no agent judgment needed
 - Cons: generated sections add noise; relationship semantics can't be inferred mechanically (is this link "extends" or "exemplifies"?); merge conflicts if agents edit notes while footers are regenerating

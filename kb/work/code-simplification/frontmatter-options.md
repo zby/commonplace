@@ -2,7 +2,15 @@
 
 ## Decision to make
 
-What should Commonplace use as its canonical frontmatter implementation now that the package can declare prerequisites?
+What should Commonplace use as its canonical **markdown frontmatter** implementation now that the package can declare prerequisites?
+
+## Status update
+
+Part of the earlier dependency question is already resolved:
+
+- `PyYAML` is now a base runtime dependency
+- authored type definitions already use JSON Schema in YAML syntax
+- the remaining question is only about markdown note frontmatter, not type-definition parsing in general
 
 ## Option A: Keep the current strict local parser
 
@@ -65,17 +73,18 @@ The benefits of standard tooling and less bespoke code outweigh the value of the
 
 ## Current lean
 
-Option B looks like the most plausible direction to investigate first.
+Short-term, Option A looks like the right default.
 
 Reason:
 
-- it keeps the existing KB contract available
-- it allows code deletion if the wrapper stays thin
-- it does not force a premature decision that all YAML syntax should become acceptable
+- the type-system simplification already got most of the value that justified `PyYAML`
+- no live workshop, note, or source content currently appears to require richer frontmatter forms
+- the biggest remaining simplification wins are dead-code deletion and helper consolidation, not frontmatter syntax expansion
+
+Option B remains the first fallback if a real maintained use case needs broader YAML without giving up the narrower KB contract.
 
 ## Questions to answer before deciding
 
 - Does a third-party parser actually reduce net code once Commonplace-specific validation is included?
 - Which currently valid files rely on YAML forms the local parser rejects?
-- Is `areas:` block-list support in `sync_topic_links.py` an isolated exception or evidence that the strict parser is already too narrow for real repo usage?
-- If we add a dependency, should it be base runtime, or an extra used only by some commands?
+- If broader YAML becomes necessary, should Commonplace preserve the current narrow contract at the wrapper layer or switch fully to standard YAML frontmatter?

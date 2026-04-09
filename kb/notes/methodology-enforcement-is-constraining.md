@@ -17,7 +17,7 @@ The ways we enforce methodology in the KB — instructions, skills, hooks, scrip
 | Skill | deterministic (user invokes) | underspecified + indeterministic (LLM executes) | medium | `/validate` checks note quality |
 | Hook (warn) | deterministic (event fires) | underspecified + indeterministic (LLM acts on output) | medium-high | validate-note.sh outputs WARN on missing description |
 | Hook (block) | deterministic (event fires) | deterministic (rejected) | high | exit 1 prevents the operation |
-| Script | deterministic (user/hook runs) | deterministic (code runs) | highest | sync_topic_links.py rewrites Topics footer |
+| Script | deterministic (user/hook runs) | deterministic (code runs) | highest | `generate_notes_index.py` rebuilds note listings |
 
 [Ad hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are looser than persistent instructions — they're one-shot, not loaded into every session, and exist only for a single use. They sit below instructions on the gradient because they add a third source of unreliability: the prompt itself is ephemeral, so it can't even accumulate the weak consistency that comes from an instruction being present every time.
 
@@ -43,13 +43,13 @@ The maturation trajectory parallels [document type maturation](./document-types-
 
 ## Current state
 
-We have hooks in `.claude/hooks/` but they aren't wired up (`"hooks": {}` in settings.json) and reference old paths. We have scripts that work (sync_topic_links.py, generate_notes_index.py). We have skills that work (validate, connect, ingest). We have instructions that work (CLAUDE.md, WRITING.md). The gradient exists — we just haven't needed to push anything further toward the deterministic end yet.
+We have hooks in `.claude/hooks/` but they aren't wired up (`"hooks": {}` in settings.json) and reference old paths. We have scripts that work (`generate_notes_index.py`). We have skills that work (validate, connect, ingest). We have instructions that work (CLAUDE.md, WRITING.md). The gradient exists — we just haven't needed to push anything further toward the deterministic end yet.
 
 ## Open questions
 
 - When should a WRITING.md instruction become a validate check? [Oracle strength](../notes/oracle-strength-spectrum.md) may provide the answer: a practice is ready to move down the gradient when you can cheaply verify whether it was followed correctly. If verification requires semantic judgment, the practice stays at skill level; if it can be reduced to structural checks, it is a candidate for scripting.
 - Should hook warnings be treated differently from skill output? The LLM sees both as text, but the trigger mechanism differs.
-- Are there practices currently at skill level that should be scripts? (sync_topic_links.py was probably this — a skill-level operation that turned out to be fully deterministic.)
+- Are there practices currently at skill level that should be scripts? (`sync_topic_links.py` was probably this historically — a skill-level operation that turned out to be fully deterministic before the underlying Topics system was removed.)
 
 ---
 

@@ -30,7 +30,6 @@ commonplace-review-target-selector = "commonplace.review.review_target_selector:
 commonplace-run-gate-sweep = "commonplace.review.run_gate_sweep:main"
 commonplace-run-review-bundle = "commonplace.review.run_review_bundle:main"
 commonplace-sync-generated-index = "commonplace.cli.sync_generated_index:main"
-commonplace-sync-topic-links = "commonplace.cli.sync_topic_links:main"
 commonplace-validate-notes = "commonplace.cli.validate_notes:main"
 commonplace-warn-selector = "commonplace.review.warn_selector:main"
 commonplace-write-gate-review = "commonplace.review.write_gate_review:main"

@@ -1,67 +1,67 @@
 # Candidate Inventory
 
-## 1. Consolidate frontmatter handling
+## 1. Delete obsolete areas / Topics tooling
 
 ### Current state
 
-- [`validate_notes.py`](../../../src/commonplace/cli/validate_notes.py) has local `strip_frontmatter()` and `parse_frontmatter()` wrappers
-- [`promotion_candidates.py`](../../../src/commonplace/cli/promotion_candidates.py) has another `parse_frontmatter()` wrapper
-- [`resolve_gates.py`](../../../src/commonplace/review/resolve_gates.py) has its own regex-based `strip_frontmatter()`
-- [`sync_topic_links.py`](../../../src/commonplace/cli/sync_topic_links.py) parses `areas:` with bespoke regexes instead of using the shared parser
+- [ADR-004: replace areas with tags](../../notes/adr/004-replace-areas-with-tags.md) says removing Topics should eliminate `sync_topic_links.py`
+- there are no live `areas:` fields or `Topics:` footers in active `kb/notes/`, `kb/sources/`, or `kb/work/` content
+- this deletion has now been executed: the package entry point, implementation file, and package docs were removed
 
 ### Simplification
 
-Pick one frontmatter path and make everything use it:
-
-- `commonplace.lib.frontmatter` stays the canonical parser, with a few ergonomic helpers added
-- or a third-party parser becomes the canonical parser, wrapped by `commonplace.lib.frontmatter`
-
-Either way, commands should stop carrying their own regex parsers and wrappers unless they are doing something genuinely schema-specific.
+- keep historical migration support as one-off tooling if needed, not as a maintained end-user command
+- clean up remaining active notes that still describe the deleted command as present
 
 ### Why it matters
 
-Frontmatter is cross-cutting. Duplicated handling means schema changes or bug fixes spread across many commands.
+This is deletion rather than refactoring:
+
+- removes dead code outright
+- removes stale docs that advertise a superseded convention
+- reduces pressure to broaden the frontmatter parser for a command that may no longer belong in the product
 
 ### Likely first step
 
-Refactor `sync_topic_links.py` and `resolve_gates.py` to consume shared helpers. This deletes the clearest duplication without committing yet to any external dependency.
+Follow through on the stale-knowledge cleanup so active notes stop describing the deleted command as a current part of the system.
 
-## 2. Introduce a schema-aware metadata accessor
+## 2. Finish consolidating note parsing around shared helpers
 
 ### Current state
 
-Commands repeatedly answer small questions from raw frontmatter data:
-
-- does this file have frontmatter?
-- what is the note type?
-- what is the status?
-- what are the traits?
-- what are the areas?
-
-Each command currently re-derives those answers from dicts or regexes.
+- [`validate_notes.py`](../../../src/commonplace/cli/validate_notes.py) already uses [`note_parser.py`](../../../src/commonplace/lib/note_parser.py) plus [`type_resolver.py`](../../../src/commonplace/lib/type_resolver.py)
+- [`promotion_candidates.py`](../../../src/commonplace/cli/promotion_candidates.py) still has its own `parse_frontmatter()`, title extraction, and markdown-link extraction
+- [`resolve_gates.py`](../../../src/commonplace/review/resolve_gates.py) still has its own regex-based `strip_frontmatter()`
+- review-side commands import that local strip helper, so one duplicate implementation leaks into multiple review commands
 
 ### Simplification
 
-Add a small package-level helper layer, for example a `commonplace.lib.notes` module that exposes:
-
-- parse note metadata
-- return stripped body
-- return title
-- normalize common fields like `traits`, `areas`, and `status`
+- make `note_parser` and `frontmatter.strip()` the default path for note-like markdown handling
+- remove command-local wrappers where the shared API is already sufficient
+- keep local helpers only where a command genuinely needs richer output than the current shared module exposes
 
 ### Why it matters
 
-The simplification is not abstraction for its own sake. It centralizes document-shape assumptions that already exist in multiple commands.
+The shared parsed-note model now exists. Not using it is pure duplication.
 
-## 3. Centralize markdown link extraction
+### Likely first step
+
+Refactor `promotion_candidates.py` onto `note_parser`, and switch `resolve_gates.py` to `frontmatter.strip()`. This is low-risk because the target helpers already exist and are exercised by validation tests.
+
+## 3. Centralize markdown link extraction where semantics actually match
 
 ### Current state
 
-`validate_notes.py` and `promotion_candidates.py` both parse markdown links locally. Their rules are close, but not obviously identical.
+- [`note_parser.find_markdown_links()`](../../../src/commonplace/lib/note_parser.py) returns link targets only
+- [`promotion_candidates.py`](../../../src/commonplace/cli/promotion_candidates.py) currently reimplements target extraction locally
+- [`run_review_bundle.py`](../../../src/commonplace/review/run_review_bundle.py) reimplements link parsing because it needs both link text and target after stripping code regions
 
 ### Simplification
 
-Move link extraction and target resolution helpers into a shared module.
+- either:
+  - route simple target-only cases through `note_parser.find_markdown_links()`
+- or:
+  - add one richer shared helper that returns `(text, target)` pairs and make both note-parser and review code build on it
 
 ### Why it matters
 
@@ -88,41 +88,26 @@ Commands become thin `argparse` entry points over library functions in `commonpl
 
 This makes tests cheaper and reduces the pressure to duplicate helpers between commands.
 
-## 5. Revisit the "no runtime dependencies" assumption
+## 5. Revisit markdown-frontmatter strategy separately from the type system
 
 ### Current state
 
-Base `project.dependencies` is empty even though the repo is now packaged. Optional groups already exist, including `pyyaml` inside `all`.
+- base runtime dependencies are no longer empty: [`pyproject.toml`](../../../pyproject.toml) now includes `jsonschema` and `PyYAML`
+- `PyYAML` is already justified by authored JSON Schema loading in [`type_resolver.py`](../../../src/commonplace/lib/type_resolver.py)
+- markdown frontmatter still uses the strict local parser in [`frontmatter.py`](../../../src/commonplace/lib/frontmatter.py)
 
 ### Simplification
 
-Treat "no dependency" as a tradeoff to justify, not a default law. A small dependency is acceptable when it:
-
-- deletes bespoke parser code
-- improves correctness materially
-- is stable and low-risk
-
-### Why it matters
-
-The package boundary changed the installation story. The constraint should be "dependency weight must pay for itself", not "stdlib only everywhere forever".
-
-## 6. Decide whether `sync_topic_links.py` should remain special-case logic
-
-### Current state
-
-`sync_topic_links.py` has its own parser for `areas:` because it only needs one field and currently supports both inline and block-list YAML forms.
-
-### Simplification options
-
-1. Keep it bespoke and document why.
-2. Make it consume the shared parser and only support the KB's strict frontmatter subset.
-3. Adopt a YAML/frontmatter dependency so both forms are handled by shared infrastructure.
+- treat markdown frontmatter as its own decision:
+  - keep the strict parser
+  - wrap `PyYAML` but preserve the narrower contract
+  - or switch to standard YAML frontmatter entirely
 
 ### Why it matters
 
-This file is the clearest test case for the broader question. If the shared parser cannot serve a real command without awkward workarounds, that is evidence the frontmatter strategy needs to change.
+The dependency question for type definitions is already settled. The remaining question is whether broader YAML buys enough simplification on the markdown side to justify changing the note contract.
 
-## 7. Audit path and root discovery helpers
+## 6. Audit path and root discovery helpers
 
 ### Current state
 

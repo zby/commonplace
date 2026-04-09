@@ -17,7 +17,7 @@ The split follows the [oracle strength spectrum](./oracle-strength-spectrum.md):
 - Description exists and non-empty
 - Type/traits/status match allowed enums
 - Link targets resolve to existing files
-- Areas-Topics footer sync (already have `sync_topic_links.py`)
+- Areas-Topics footer sync (historical: this existed as `sync_topic_links.py` before ADR-004 removed Topics)
 - Unknown frontmatter fields (flag typos like `descrption:`)
 - Required sections per type (spec → Design/Implementation, adr → Context/Decision/Consequences)
 
