@@ -1,5 +1,7 @@
 # Commonplace
 
+`CLAUDE.md` is a symlink to this file (`AGENTS.md`). Edit `AGENTS.md` directly.
+
 A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.
 
 The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
@@ -94,7 +96,11 @@ These skills are installed into both `.claude/skills/` and `.agents/skills/` by 
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. For the full reference, read `src/commonplace/docs/COMMANDS.md`.
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. Documentation lives in `src/commonplace/docs/`:
+
+- `COMMANDS.md` — CLI command reference
+- `LIB.md` — library modules (frontmatter, note_parser, type_resolver)
+- `REVIEW.md` — review system architecture and data model
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
