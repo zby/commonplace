@@ -11,6 +11,8 @@
 
 ## 1. Create a project venv and install the package
 
+Commonplace installs into a project-local venv rather than globally, so each project can pin its own version independently.
+
 From your project root:
 
 ```bash
@@ -47,7 +49,7 @@ This creates:
 - **KB directories** — `kb/notes/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
 - **Instructions** — `kb/instructions/` seeded with writing conventions, review system, review gates, and fix instructions
 - **Type definitions** — `types/` with note and text types
-- **Skills** — `.claude/skills/commonplace-write/`, `commonplace-validate/`, `commonplace-connect/`, etc.
+- **Skills** — `.claude/skills/commonplace-write/`, `commonplace-validate/`, `commonplace-connect/`, etc. The `commonplace-` prefix avoids collisions with your project's own skills.
 - **`.envrc`** — project-scoped environment (PATH, UV_CACHE_DIR, COMMONPLACE_QMD_INDEX), ready to use
 - **`qmd-collections.yml`** — qmd config with paths filled in, ready to copy to `~/.config/qmd/`
 - **`AGENTS.md.template`** — control-plane template with project name filled in
@@ -55,6 +57,8 @@ This creates:
 Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files.
 
 ## 3. Activate the environment
+
+CLI commands live in `.venv/bin/`. Rather than activating the venv every session, the generated `.envrc` adds `.venv/bin` to PATH so commands work like any other CLI tool. It also sets `UV_CACHE_DIR` (avoids permission issues in sandboxed runtimes like Codex) and `COMMONPLACE_QMD_INDEX` (so skills know which qmd index to query).
 
 ### With direnv (recommended)
 
@@ -96,6 +100,8 @@ UV_CACHE_DIR = ".uv-cache"
 
 ## 4. Set up the control-plane file
 
+The control-plane file (`CLAUDE.md` or `AGENTS.md`) is always loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available.
+
 **New project** — rename the template:
 
 ```bash
@@ -113,6 +119,8 @@ cat AGENTS.md.template >> CLAUDE.md
 Then review the merged file and fill in the `KB Goals` section for your project.
 
 ## 5. Set up qmd (optional)
+
+qmd adds semantic search — it finds notes by meaning, not just keywords. Without it, skills fall back to ripgrep, which works but misses vocabulary mismatches (e.g., searching for "modularity" won't find a note about "composability").
 
 `commonplace-init` generates a `qmd-collections.yml` with paths already filled in. Copy it to the qmd config directory:
 
