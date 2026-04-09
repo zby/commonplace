@@ -27,11 +27,13 @@ python3 -m venv .venv
 pip install llm-commonplace
 ```
 
-Or from a local checkout:
+Or from a local checkout (also works if you're inside the commonplace repo itself):
 
 ```bash
 uv venv
 uv pip install -e /PATH/TO/commonplace
+# or, if you're already in the commonplace directory:
+uv pip install -e .
 ```
 
 ## 2. Initialize the project
