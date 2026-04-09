@@ -62,3 +62,37 @@ Terms used in this KB with specific meanings:
 - **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
 - **Check `git diff` before committing.**
 - **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
+
+## Using the KB
+
+The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
+
+```bash
+# Find notes by description
+rg "^description:" kb/notes/ kb/instructions/ --glob "*.md"
+
+# Find notes by type
+rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
+
+# Find notes by tag
+rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
+```
+
+### Skills
+
+| Task | Commonplace skill |
+|---|---|
+| Write a note or index | `commonplace-write` |
+| Connect a note to related notes | `commonplace-connect` |
+| Validate note structure | `commonplace-validate` |
+| Snapshot an external URL | `commonplace-snapshot-web` |
+| Ingest and analyze a source | `commonplace-ingest` |
+| Convert between note types | `commonplace-convert` |
+| Iteratively revise a note | `commonplace-revise-iterative` |
+
+These skills are installed into `.claude/skills/` by `commonplace-init`.
+
+For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
+For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
+
+For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.
