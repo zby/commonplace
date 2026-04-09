@@ -20,9 +20,8 @@ from commonplace.review.review_db import (
     resolve_db_path,
 )
 from commonplace.review.review_metadata import (
-    blob_text_at_sha,
     committed_note_provenance,
-    file_text_at_commit,
+    file_text_at_provenance,
     git_blob_sha,
     iso_now,
 )
@@ -83,9 +82,12 @@ def note_diff_since(
 ) -> str | None:
     import difflib
 
-    previous_text = blob_text_at_sha(repo_root, accepted_note_sha)
-    if previous_text is None and accepted_note_commit:
-        previous_text = file_text_at_commit(repo_root, accepted_note_commit, Path(note_path))
+    previous_text = file_text_at_provenance(
+        repo_root,
+        path=Path(note_path),
+        commit=accepted_note_commit,
+        blob_sha=accepted_note_sha,
+    )
     if previous_text is None:
         return None
 

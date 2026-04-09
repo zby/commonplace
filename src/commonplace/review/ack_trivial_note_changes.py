@@ -12,7 +12,7 @@ from typing import Any
 from commonplace.lib import frontmatter
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_db import GATES_ROOT, connect, ensure_db, load_current_acceptances, resolve_db_path
-from commonplace.review.review_metadata import blob_text_at_sha, file_text_at_commit
+from commonplace.review.review_metadata import file_text_at_commit, file_text_at_provenance
 from commonplace.review.review_target_selector import StaleGate, ack_pairs, select_stale_gates
 
 _TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
@@ -123,9 +123,12 @@ def _load_previous_note_text(
     accepted_note_commit: str | None,
     accepted_at: str | None,
 ) -> str | None:
-    previous_text = blob_text_at_sha(repo_root, accepted_note_sha)
-    if previous_text is None and accepted_note_commit:
-        previous_text = file_text_at_commit(repo_root, accepted_note_commit, Path(note_path))
+    previous_text = file_text_at_provenance(
+        repo_root,
+        path=Path(note_path),
+        commit=accepted_note_commit,
+        blob_sha=accepted_note_sha,
+    )
     if previous_text is None and accepted_at:
         result = subprocess.run(
             ["git", "log", "-1", f"--before={accepted_at}", "--format=%H", "--", note_path],

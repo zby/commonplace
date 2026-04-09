@@ -208,3 +208,19 @@ def file_text_at_commit(repo_root: Path, commit: str, path: Path) -> str | None:
     if result.returncode != 0:
         return None
     return result.stdout
+
+
+def file_text_at_provenance(
+    repo_root: Path,
+    *,
+    path: Path,
+    commit: str | None = None,
+    blob_sha: str | None = None,
+) -> str | None:
+    if commit:
+        text = file_text_at_commit(repo_root, commit, path)
+        if text is not None:
+            return text
+    if blob_sha:
+        return blob_text_at_sha(repo_root, blob_sha)
+    return None
