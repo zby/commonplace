@@ -98,9 +98,9 @@ Run a full review sweep — selects notes needing review and runs gate bundles o
 
 ```bash
 commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code
-commonplace-review-sweep prose --model claude-opus-4-6 --current      # only current-status notes
-commonplace-review-sweep --all-gates --model claude-opus-4-6          # all gate bundles
-commonplace-review-sweep prose --dry-run                              # preview what would run
+commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code --current   # only current-status notes
+commonplace-review-sweep --all-gates --model claude-opus-4-6 --runner claude-code       # all gate bundles
+commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code --dry-run   # preview what would run
 ```
 
 ### commonplace-run-review-bundle
@@ -117,9 +117,9 @@ Run a single gate across multiple notes in batched prompts.
 
 ```bash
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6
-commonplace-run-gate-sweep semantic/grounding-alignment --current --batch-size 5
-commonplace-run-gate-sweep semantic/grounding-alignment --note kb/notes/specific.md
-commonplace-run-gate-sweep semantic/grounding-alignment --dry-run
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --current --batch-size 5
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes/specific.md
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --dry-run
 ```
 
 ### commonplace-create-review-run
@@ -128,7 +128,7 @@ Create a review run record in the review database. Outputs JSON with the review_
 
 ```bash
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
-commonplace-create-review-run kb/notes/my-note.md prose --json   # JSON output for scripting
+commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --json
 ```
 
 ### commonplace-write-gate-review
@@ -136,7 +136,7 @@ commonplace-create-review-run kb/notes/my-note.md prose --json   # JSON output f
 Record a single gate review from a file into an existing review run.
 
 ```bash
-commonplace-write-gate-review --review-run-id 42 --gate-id prose/clarity --input-file review-output.md
+commonplace-write-gate-review --review-run-id 42 --gate-id prose/source-residue --input-file review-output.md
 ```
 
 ### commonplace-finalize-review-run
@@ -152,7 +152,7 @@ commonplace-finalize-review-run --review-run-id 42
 Advance acceptance baseline for specific gates without re-running the review.
 
 ```bash
-commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/clarity semantic/grounding-alignment
+commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/source-residue semantic/grounding-alignment
 ```
 
 ### commonplace-ack-trivial-note-changes
@@ -160,9 +160,9 @@ commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/cl
 Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically.
 
 ```bash
-commonplace-ack-trivial-note-changes prose                         # all prose gates
-commonplace-ack-trivial-note-changes prose --current               # current-status notes only
-commonplace-ack-trivial-note-changes prose --dry-run               # preview what would ack
+commonplace-ack-trivial-note-changes prose --model claude-opus-4-6                        # all prose gates
+commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --current              # current-status notes only
+commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --dry-run              # preview what would ack
 ```
 
 ### commonplace-resolve-gates
@@ -171,7 +171,7 @@ Expand gate bundle names to individual gate IDs and output their definitions.
 
 ```bash
 commonplace-resolve-gates prose                                    # all gates in prose bundle
-commonplace-resolve-gates prose/clarity semantic/grounding-alignment  # specific gates
+commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # specific gates
 ```
 
 ### commonplace-review-target-selector
@@ -180,9 +180,9 @@ List stale (note, gate) pairs that need review. Compares current note/gate SHAs 
 
 ```bash
 commonplace-review-target-selector prose --model claude-opus-4-6
-commonplace-review-target-selector prose --current --json          # JSON output
-commonplace-review-target-selector prose --reason note-changed     # filter by staleness reason
-commonplace-review-target-selector prose --ack kb/notes/foo.md:prose/clarity   # ack a pair
+commonplace-review-target-selector prose --model claude-opus-4-6 --current --json          # JSON output
+commonplace-review-target-selector prose --model claude-opus-4-6 --reason note-changed     # filter by staleness reason
+commonplace-review-target-selector prose --model claude-opus-4-6 --ack kb/notes/foo.md:prose/source-residue   # ack a pair
 ```
 
 ### commonplace-warn-selector

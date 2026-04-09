@@ -28,7 +28,7 @@ For each entry, read the `diff` field and the `gate_id`. Ask: does this diff aff
 Guidelines:
 
 - A typo fix, whitespace change, or link-text tweak is insignificant for almost every gate.
-- A rewording of a claim is significant for `semantic/grounding-alignment` and `semantic/internal-consistency` but probably not for `structural/broken-link-path`.
+- A rewording of a claim is significant for `semantic/grounding-alignment` and `semantic/internal-consistency` but probably not for `structural/general-before-specific`.
 - Adding or removing a section is significant for `prose/proportion-mismatch` and `semantic/completeness-boundary-cases`.
 - Adding or removing a source citation is significant for `prose/orphan-references` and `semantic/grounding-alignment`.
 

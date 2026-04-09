@@ -31,7 +31,7 @@ For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM
 
 ### Database schema (`review-schema.sql`)
 
-SQLite database, default location `kb/reviews/reviews.db` (override with `COMMONPLACE_REVIEW_DB` env var).
+SQLite database, default location `kb/reports/review-store.sqlite` (override with `COMMONPLACE_REVIEW_DB` env var).
 
 **Core tables:**
 
@@ -177,7 +177,7 @@ Also provides:
 
 ### warn_selector.py
 
-Query effective reviews with `decision="warn"`, extract actionable findings from the `### Findings` section.
+Query effective reviews with `decision="warn"`, skip stale gate revisions and legacy rows without a `review_run_id`, and extract actionable findings from the `### Findings` section.
 
 ### ack_trivial_note_changes.py
 

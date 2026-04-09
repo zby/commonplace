@@ -93,7 +93,7 @@ For live agent work, the preferred path is the direct-write helper chain:
 2. `commonplace-write-gate-review`
 3. `commonplace-finalize-review-run`
 
-`commonplace-run-review-bundle` remains the shell-automation wrapper. It delegates to a nested runner, records gate reviews through `commonplace-write-gate-review`, and finalizes acceptance through `commonplace-finalize-review-run`.
+`commonplace-run-review-bundle` remains the shell-automation wrapper. It delegates to a nested runner and performs the equivalent review-run write and finalize steps internally.
 
 A full review write contributes:
 
@@ -135,7 +135,6 @@ Prompt-facing CLI remains stable:
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths
 - `--current` to filter to notes with `status: current`
-- `commonplace-review-sweep --runner {claude-code|codex}` selects the execution runner for note-local bundle runs
 - `--model {model-id}` selects the review model partition to inspect or write
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
@@ -160,6 +159,7 @@ Human-readable inspection remains required, but it is now a derived view from DB
 `commonplace-warn-selector` exists to build a fixing queue from the current review state.
 
 - It reads current accepted reviews across all models from the DB
+- For acceptance rows without an attached review body, it falls back to the latest review row for that accepted `(note_path, gate_id, model_id)` key
 - It only considers reviews attached to a `review_run_id`
 - It selects actionable findings from reviews whose canonical decision is `warn`
 - It collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted warn review for that gate

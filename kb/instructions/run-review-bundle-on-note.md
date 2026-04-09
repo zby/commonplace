@@ -1,5 +1,5 @@
 ---
-description: Run review gates on one note — create a review run, produce a single bundled review document, then parse and record gate reviews via command
+description: Run review gates on one note — create a review run, write one gate review per gate, then finalize acceptance
 ---
 
 # Run a review bundle on one note
@@ -22,7 +22,7 @@ Reading scope for review:
 - Read the target note in full.
 - Read the requested gate definitions.
 - For semantic grounding or consistency checks, follow only links that appear in the target note.
-- When following a markdown link from the target note, use the pre-resolved path table from the review run JSON instead of searching for targets by name.
+- When following a markdown link from the target note, resolve it directly from the note's path instead of searching by name.
 - Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.
 - Do not do broad repo search or exploratory `rg` sweeps unless you need to resolve a specific linked path already referenced by the target note.
 
@@ -40,21 +40,18 @@ Capture from the JSON output:
 - `gate_ids`
 - `gates` — each entry includes `gate_id`, `path`, `text`
 - `model_id` — initial requested model partition for this run
-- `resolved_links` — pre-resolved markdown link targets from the note
-- `unresolved_links` — broken links to treat as broken if relevant
 
 Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
 
 ### 2. Read the target note
 
-Read `{note-path}` in full. For semantic grounding or consistency checks, follow links from the target note using the pre-resolved paths from step 1.
+Read `{note-path}` in full. For semantic grounding or consistency checks, follow only links from the target note and resolve them directly from the note's location.
 
-### 3. Produce a single bundled review document
+### 3. Produce one review file per gate
 
-Write one markdown document containing one block per requested gate. Use these exact sentinels to delimit each block:
+For each requested gate, write one markdown review body with this layout:
 
 ```
-=== GATE REVIEW START: {gate-id} ===
 ### Summary
 <short paragraph>
 
@@ -65,34 +62,34 @@ Write one markdown document containing one block per requested gate. Use these e
 <optional; omit if not needed>
 
 ## Result: PASS|WARN|FAIL|ERROR
-=== GATE REVIEW END: {gate-id} ===
 ```
 
 Rules:
 
 - Apply each gate's failure mode and test to the note.
-- Use exactly one block per requested gate, in the order from `gate_ids`.
+- Write exactly one review file per requested gate, in the order from `gate_ids`.
 - The `## Result:` line must use one of: `PASS`, `WARN`, `FAIL`, `ERROR`.
-- Make the `## Result:` line the last non-empty line inside each gate block.
-- End the document after the final gate block.
+- Make the `## Result:` line the last non-empty line in each review file.
 
-Write the bundled review document to:
+### 4. Record each gate review
 
-```
-kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md
-```
-
-This directory is gitignored.
-
-### 4. Parse, record, and finalize
-
-Run the parse-and-record command to extract individual gate reviews from the bundle, write them to the DB, and finalize acceptance:
+For each requested gate:
 
 ```bash
-commonplace-record-bundle-review --review-run-id {review-run-id}
+commonplace-write-gate-review --review-run-id {review-run-id} --gate-id {gate-id} --input-file {review-file}
 ```
 
-This command reads the bundle output from `kb/reports/bundle-reviews/review-run-{review-run-id}/bundle-output.md`, parses the sentinel-delimited blocks, records one `gate_reviews` row per gate, and finalizes the review run with acceptance events.
+This records one `gate_reviews` row for that gate under the existing review run.
+
+### 5. Finalize the run
+
+After all requested gates are written:
+
+```bash
+commonplace-finalize-review-run --review-run-id {review-run-id}
+```
+
+This validates coverage and appends the acceptance events for the run.
 
 ## Shell automation
 
@@ -107,6 +104,6 @@ This wrapper creates the review run, spawns a nested runner for semantic judgmen
 ## Do not
 
 - Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
-- Do not invoke `commonplace-write-gate-review` or `commonplace-finalize-review-run` individually — the record command handles both.
-- Do not skip writing a review block for any provided gate.
+- Do not invoke `commonplace-record-bundle-review`; that command is no longer part of the shipped CLI.
+- Do not skip writing a review file for any provided gate.
 - Do not write files or invoke commands other than what this instruction specifies.
