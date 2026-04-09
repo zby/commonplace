@@ -31,49 +31,13 @@ Agent-operated knowledge base methodology: how to structure, write, connect, val
 
 A design insight is worth a note when it changes how someone would build or operate a KB. Observations about what works are worth a log entry on first occurrence and a note when the mechanism is understood. Pure pattern-recording without explanation belongs in a log entry, not a note.
 
-## Using the KB
-
-The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
-
-### Search Patterns
-
-```bash
-# Find notes by description
-rg "^description:" kb/notes/ kb/instructions/ --glob "*.md"
-
-# Find notes by type
-rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
-
-# Find notes by tag
-rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
-```
-
-### Key Indexes
+## Key Indexes
 
 - `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
 - `kb/sources/index.md` — auto-generated source listing
-
-### Skills
-
-| Task | Commonplace skill |
-|---|---|
-| Write a note or index | `commonplace-write` |
-| Connect a note to related notes | `commonplace-connect` |
-| Validate note structure | `commonplace-validate` |
-| Snapshot an external URL | `commonplace-snapshot-web` |
-| Ingest and analyze a source | `commonplace-ingest` |
-| Convert between note types | `commonplace-convert` |
-| Iteratively revise a note | `commonplace-revise-iterative` |
-
-These skills are installed into `.claude/skills/` by `commonplace-init`.
-
-For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
-For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
-
-For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.
 
 ## Vocabulary
 
