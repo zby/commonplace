@@ -16,11 +16,12 @@ from commonplace.review.gate_sweep_format import (
 )
 from commonplace.review.review_db import (
     GATES_ROOT,
+    attach_execution_data,
     connect,
+    create_run,
     ensure_db,
     fail_review_run,
-    insert_review_run,
-    insert_review_run_gates,
+    record_and_finalize_run,
     resolve_db_path,
 )
 from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
@@ -28,14 +29,13 @@ from commonplace.review.review_runners import run_prompt
 from commonplace.review.review_target_selector import select_stale_gates
 from commonplace.review.resolve_gates import strip_frontmatter
 from commonplace.review.run_review_bundle import (
-    BundleReviewRecordError,
     bundle_artifact_dir,
     combine_logs,
     model_id_from_telemetry,
-    record_bundle_review_run,
+    parse_bundle_gate_reviews,
     resolve_note_markdown_links,
     serialize_telemetry,
-    update_review_run_model_id,
+    write_bundle_artifacts,
 )
 
 
@@ -124,7 +124,7 @@ def prepare_gate_sweep_targets(
                 note_body=note_body,
             )
             note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
-            review_run_id = insert_review_run(
+            review_run_id = create_run(
                 conn,
                 note_path=note_path,
                 model_id=model_id,
@@ -132,11 +132,6 @@ def prepare_gate_sweep_targets(
                 reviewed_note_sha=note_sha,
                 reviewed_note_commit=note_commit,
                 started_at=started_at,
-                status="running",
-            )
-            insert_review_run_gates(
-                conn,
-                review_run_id=review_run_id,
                 gates=[(gate_id, gate_sha, 0)],
             )
             bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
@@ -176,13 +171,17 @@ def fail_running_review_runs(
         for row in rows:
             if row["status"] != "running":
                 continue
+            attach_execution_data(
+                conn,
+                review_run_id=int(row["id"]),
+                telemetry_json=telemetry_json,
+                debug_log=debug_log,
+            )
             fail_review_run(
                 conn,
                 review_run_id=int(row["id"]),
                 failure_reason=failure_reason,
                 completed_at=completed_at,
-                debug_log=debug_log,
-                telemetry_json=telemetry_json,
             )
         conn.commit()
 
@@ -302,14 +301,6 @@ def main() -> None:
         actual_review_model = model_id_from_telemetry(result.telemetry)
 
         if actual_review_model is not None and actual_review_model != args.model:
-            with connect(db_path) as conn:
-                for review_run_id in review_run_ids:
-                    update_review_run_model_id(
-                        conn,
-                        review_run_id=review_run_id,
-                        model_id=actual_review_model,
-                    )
-                conn.commit()
             print(
                 (
                     f"warning: requested model partition {args.model} "
@@ -353,16 +344,29 @@ def main() -> None:
                 review_run_id=item.review_run_id,
                 review_text=parsed_reviews[item.note_path],
             )
+            artifact_dir = bundle_artifact_dir(repo_root, item.review_run_id)
+            write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=note_bundle)
             try:
-                record_bundle_review_run(
-                    repo_root=repo_root,
-                    db_path=db_path,
-                    review_run_id=item.review_run_id,
-                    raw_bundle_markdown=note_bundle,
-                    telemetry_json=telemetry_json,
-                    debug_log=runner_debug_log,
+                canonical_bundle_markdown, gate_reviews, canonical_reviews = parse_bundle_gate_reviews(
+                    note_bundle,
+                    expected_gate_ids=[gate_id],
                 )
-            except BundleReviewRecordError as exc:
+            except ValueError as exc:
+                with connect(db_path) as conn:
+                    attach_execution_data(
+                        conn,
+                        review_run_id=item.review_run_id,
+                        telemetry_json=telemetry_json,
+                        raw_bundle_markdown=note_bundle,
+                        debug_log=runner_debug_log,
+                    )
+                    fail_review_run(
+                        conn,
+                        review_run_id=item.review_run_id,
+                        failure_reason=str(exc),
+                        completed_at=iso_now(),
+                    )
+                    conn.commit()
                 remaining_ids = [remaining.review_run_id for remaining in prepared[index + 1 :]]
                 fail_running_review_runs(
                     db_path=db_path,
@@ -371,7 +375,39 @@ def main() -> None:
                     debug_log=runner_debug_log,
                     telemetry_json=telemetry_json,
                 )
-                parser.exit(exc.returncode, f"{exc}\n")
+                parser.exit(1, f"{exc}\n")
+            write_bundle_artifacts(
+                artifact_dir=artifact_dir,
+                raw_bundle_markdown=canonical_bundle_markdown,
+                parsed_reviews=canonical_reviews,
+            )
+            with connect(db_path) as conn:
+                attach_execution_data(
+                    conn,
+                    review_run_id=item.review_run_id,
+                    telemetry_json=telemetry_json,
+                    raw_bundle_markdown=canonical_bundle_markdown,
+                    debug_log=runner_debug_log,
+                )
+                try:
+                    record_and_finalize_run(
+                        conn,
+                        review_run_id=item.review_run_id,
+                        gate_reviews=gate_reviews,
+                        actual_model_id=actual_review_model,
+                    )
+                except ValueError as exc:
+                    conn.commit()
+                    remaining_ids = [remaining.review_run_id for remaining in prepared[index + 1 :]]
+                    fail_running_review_runs(
+                        db_path=db_path,
+                        review_run_ids=remaining_ids,
+                        failure_reason=f"gate sweep aborted after {item.note_path}: {exc}",
+                        debug_log=runner_debug_log,
+                        telemetry_json=telemetry_json,
+                    )
+                    parser.exit(1, f"{exc}\n")
+                conn.commit()
             completed_in_batch += 1
 
         reviewed += completed_in_batch

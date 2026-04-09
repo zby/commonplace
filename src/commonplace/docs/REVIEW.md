@@ -22,10 +22,6 @@ For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM
 │  Data model                                     │
 │  review_db          review_model                │
 │  review_metadata    review-schema.sql           │
-├─────────────────────────────────────────────────┤
-│  Repair & migration                             │
-│  repair_*           prune_*                      │
-│  migrate_*          reparse_*                    │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -94,6 +90,11 @@ Database operations, decision parsing, and record management. The largest module
 - `load_effective_gate_review_map(conn, ...) -> dict` — accepted-or-latest reviews per gate
 - `load_current_acceptances(conn) -> dict` — current acceptance state map
 
+**Lifecycle helpers:**
+- `create_run(conn, ...) -> int` — create the run row plus its captured gate set
+- `attach_execution_data(conn, ...)` — persist telemetry, raw bundle markdown, and debug log
+- `record_and_finalize_run(conn, ...) -> int` — optionally insert gate reviews, rekey to the actual model, validate coverage, complete the run, and append acceptance events
+
 **Decision parsing (`parse_review_decision`):**
 
 Multi-strategy fallback chain for extracting decisions from review markdown:
@@ -114,11 +115,11 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 
 ```
 1. resolve_gates     → expand bundle names to gate IDs, filter by note traits
-2. create_review_run → insert review_run + review_run_gates (status=running)
+2. create_run        → insert review_run + review_run_gates (status=running)
 3. review_runners    → invoke claude-code or codex CLI with review prompt
-4. extract results   → parse gate blocks from runner output
-5. insert results    → write gate_reviews to DB
-6. finalize          → mark run completed, append acceptance_events
+4. attach_execution_data → persist runner artifacts and telemetry
+5. extract results   → parse gate blocks from runner output
+6. record_and_finalize_run → write gate_reviews, validate coverage, mark run completed, append acceptance_events
 ```
 
 ### run_review_bundle.py — Multi-gate single-note review

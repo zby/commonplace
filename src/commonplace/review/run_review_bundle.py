@@ -6,32 +6,26 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sqlite3
-import subprocess
 import sys
 from pathlib import Path
 
 from commonplace.review.review_db import (
     GATES_ROOT,
-    complete_review_run,
+    PendingGateReview,
+    attach_execution_data,
     connect,
+    create_run,
     ensure_db,
     fail_review_run,
-    insert_gate_review,
-    insert_review_run,
-    insert_review_run_gates,
-    load_review_run_gates,
-    load_gate_reviews_for_run,
-    load_review_run,
     parse_review_decision,
+    record_and_finalize_run,
     rewrite_review_result_footer,
     resolve_db_path,
-    update_review_run_telemetry,
 )
-from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
+from commonplace.review.review_metadata import iso_now, resolve_review_target
 from commonplace.review.review_model import build_model_id
 from commonplace.review.review_runners import run_prompt
-from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
+from commonplace.review.resolve_gates import strip_frontmatter
 
 
 MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -39,12 +33,6 @@ URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
 BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
-
-
-class BundleReviewRecordError(RuntimeError):
-    def __init__(self, message: str, *, returncode: int = 1) -> None:
-        super().__init__(message)
-        self.returncode = returncode
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -210,44 +198,6 @@ def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
     return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
 
 
-def record_bundle_reviews(
-    conn,
-    *,
-    review_run_id: int,
-    gate_ids: list[str],
-    parsed_reviews: dict[str, str],
-) -> None:
-    review_run = load_review_run(conn, review_run_id=review_run_id)
-    if review_run is None:
-        raise ValueError(f"review run not found: {review_run_id}")
-    if review_run.status != "running":
-        raise ValueError(f"review run is not writable: {review_run.status}")
-
-    run_gates = {row.gate_id: row for row in load_review_run_gates(conn, review_run_id=review_run_id)}
-    for gate_id in gate_ids:
-        run_gate = run_gates.get(gate_id)
-        if run_gate is None:
-            raise ValueError(f"gate {gate_id} is not part of review run {review_run_id}")
-        review_text = parsed_reviews[gate_id]
-        decision = parse_review_decision(review_text)
-        canonical_review_text = rewrite_review_result_footer(review_text, decision=decision)
-        insert_gate_review(
-            conn,
-            review_run_id=review_run_id,
-            note_path=review_run.note_path,
-            gate_id=gate_id,
-            model_id=review_run.model_id,
-            decision=decision,
-            rationale_markdown=canonical_review_text,
-            evidence_json=None,
-            gate_sha=run_gate.gate_sha,
-            reviewed_note_sha=review_run.reviewed_note_sha,
-            reviewed_note_commit=review_run.reviewed_note_commit,
-            reviewed_at=iso_now(),
-            review_kind="full-review",
-        )
-
-
 def serialize_telemetry(telemetry: dict[str, object] | None) -> str | None:
     if telemetry is None:
         return None
@@ -266,199 +216,32 @@ def model_id_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
     return build_model_id(model, reasoning_effort)
 
 
-def update_review_run_model_id(
-    conn,
-    *,
-    review_run_id: int,
-    model_id: str,
-) -> None:
-    conn.execute(
-        """
-        UPDATE review_runs
-        SET model_id = ?
-        WHERE id = ?
-        """,
-        (model_id, review_run_id),
-    )
-
-
-def persist_review_run_telemetry(
-    conn,
-    *,
-    review_run_id: int,
-    telemetry_json: str | None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
-    fallback_failure_reason: str | None = None,
-) -> None:
-    review_run = load_review_run(conn, review_run_id=review_run_id)
-    if review_run is None:
-        return
-
-    if review_run.status == "completed":
-        complete_review_run(
-            conn,
-            review_run_id=review_run_id,
-            completed_at=review_run.completed_at or iso_now(),
-            raw_bundle_markdown=raw_bundle_markdown,
-            debug_log=debug_log,
-            telemetry_json=telemetry_json,
-        )
-        return
-
-    if review_run.status == "failed" or fallback_failure_reason is not None:
-        fail_review_run(
-            conn,
-            review_run_id=review_run_id,
-            failure_reason=review_run.failure_reason or fallback_failure_reason or "review run failed",
-            completed_at=review_run.completed_at or iso_now(),
-            raw_bundle_markdown=raw_bundle_markdown,
-            debug_log=debug_log,
-            telemetry_json=telemetry_json,
-        )
-
-
-def finalize_review_run_subprocess(
-    *,
-    repo_root: Path,
-    db_path: Path,
-    review_run_id: int,
-) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.review.finalize_review_run",
-            "--review-run-id",
-            str(review_run_id),
-            "--db",
-            str(db_path),
-        ],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-    )
-
-
-def record_bundle_review_run(
-    *,
-    repo_root: Path,
-    db_path: Path,
-    review_run_id: int,
+def parse_bundle_gate_reviews(
     raw_bundle_markdown: str,
-    telemetry_json: str | None = None,
-    debug_log: str | None = None,
-) -> str:
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-    write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=raw_bundle_markdown)
-
-    with connect(db_path) as conn:
-        review_run = load_review_run(conn, review_run_id=review_run_id)
-        if review_run is None:
-            raise BundleReviewRecordError(f"review run not found: {review_run_id}")
-        if review_run.status != "running":
-            raise BundleReviewRecordError(f"review run is not writable: {review_run.status}")
-
-        gate_ids = [row.gate_id for row in load_review_run_gates(conn, review_run_id=review_run_id)]
-        if not gate_ids:
-            reason = f"review run has no gates: {review_run_id}"
-            fail_review_run(
-                conn,
-                review_run_id=review_run_id,
-                failure_reason=reason,
-                completed_at=iso_now(),
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=debug_log,
-                telemetry_json=telemetry_json,
+    *,
+    expected_gate_ids: list[str],
+) -> tuple[str, list[PendingGateReview], dict[str, str]]:
+    parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=expected_gate_ids)
+    canonical_reviews: dict[str, str] = {}
+    gate_reviews: list[PendingGateReview] = []
+    for gate_id in expected_gate_ids:
+        review_text = parsed_reviews[gate_id]
+        decision = parse_review_decision(review_text)
+        canonical_review_text = rewrite_review_result_footer(review_text, decision=decision)
+        canonical_reviews[gate_id] = canonical_review_text
+        gate_reviews.append(
+            PendingGateReview(
+                gate_id=gate_id,
+                decision=decision,
+                rationale_markdown=canonical_review_text,
             )
-            conn.commit()
-            raise BundleReviewRecordError(reason)
+        )
 
-        try:
-            parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=gate_ids)
-            canonical_reviews = {
-                gate_id: rewrite_review_result_footer(
-                    review_text,
-                    decision=parse_review_decision(review_text),
-                )
-                for gate_id, review_text in parsed_reviews.items()
-            }
-            canonical_bundle_markdown = rewrite_bundle_result_footers(
-                raw_bundle_markdown,
-                parsed_reviews=canonical_reviews,
-            )
-            write_bundle_artifacts(
-                artifact_dir=artifact_dir,
-                raw_bundle_markdown=canonical_bundle_markdown,
-                parsed_reviews=canonical_reviews,
-            )
-            record_bundle_reviews(
-                conn,
-                review_run_id=review_run_id,
-                gate_ids=gate_ids,
-                parsed_reviews=canonical_reviews,
-            )
-        except (ValueError, sqlite3.IntegrityError) as exc:
-            fail_review_run(
-                conn,
-                review_run_id=review_run_id,
-                failure_reason=str(exc),
-                completed_at=iso_now(),
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=debug_log,
-                telemetry_json=telemetry_json,
-            )
-            conn.commit()
-            raise BundleReviewRecordError(str(exc)) from exc
-
-        conn.commit()
-
-        written = load_gate_reviews_for_run(conn, review_run_id=review_run_id)
-        if len(written) != len(gate_ids):
-            reason = f"incomplete gate coverage: expected {len(gate_ids)}, found {len(written)}"
-            fail_review_run(
-                conn,
-                review_run_id=review_run_id,
-                failure_reason=reason,
-                completed_at=iso_now(),
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=debug_log,
-                telemetry_json=telemetry_json,
-            )
-            conn.commit()
-            raise BundleReviewRecordError(reason)
-
-    finalize = finalize_review_run_subprocess(
-        repo_root=repo_root,
-        db_path=db_path,
-        review_run_id=review_run_id,
+    canonical_bundle_markdown = rewrite_bundle_result_footers(
+        raw_bundle_markdown,
+        parsed_reviews=canonical_reviews,
     )
-    finalize_debug_log = combine_logs(finalize.stdout, finalize.stderr)
-    if finalize.returncode != 0:
-        with connect(db_path) as conn:
-            persist_review_run_telemetry(
-                conn,
-                review_run_id=review_run_id,
-                telemetry_json=telemetry_json,
-                raw_bundle_markdown=canonical_bundle_markdown,
-                debug_log=finalize_debug_log,
-                fallback_failure_reason=f"commonplace-finalize-review-run exited {finalize.returncode}",
-            )
-            conn.commit()
-        message = finalize_debug_log or f"commonplace-finalize-review-run exited {finalize.returncode}"
-        raise BundleReviewRecordError(message, returncode=finalize.returncode)
-
-    if telemetry_json is not None or raw_bundle_markdown:
-        with connect(db_path) as conn:
-            persist_review_run_telemetry(
-                conn,
-                review_run_id=review_run_id,
-                telemetry_json=telemetry_json,
-                raw_bundle_markdown=canonical_bundle_markdown,
-            )
-            conn.commit()
-
-    return finalize.stdout.rstrip()
+    return canonical_bundle_markdown, gate_reviews, canonical_reviews
 
 
 def build_prompt(
@@ -585,37 +368,35 @@ def main() -> None:
         note_body=note_body,
     )
 
-    gates_dir = repo_root / GATES_ROOT
-    requested_gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
-    gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
-    if not gate_ids:
-        parser.error(f"no applicable gates resolved for note: {args.note_path}")
     review_model = args.model.strip()
     if not review_model:
         parser.error("--model must not be empty")
     db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
 
     try:
-        note_sha, note_commit = review_note_provenance(repo_root, Path(args.note_path))
+        note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
+            repo_root, args.note_path, args.gate_or_bundle,
+        )
     except ValueError as exc:
         parser.error(str(exc))
-    started_at = iso_now()
-    run_gates: list[tuple[str, str, int]] = []
-    gate_texts: dict[str, str] = {}
-    for ordinal, gate_id in enumerate(gate_ids):
-        gate_abs = gates_dir / f"{gate_id}.md"
-        if not gate_abs.is_file():
-            parser.error(f"gate not found: {gate_id}")
-        try:
-            gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
-        except ValueError as exc:
-            parser.error(str(exc))
-        run_gates.append((gate_id, gate_sha, ordinal))
-        gate_texts[gate_id] = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
+    gate_ids = [g[0] for g in run_gates]
+
+    dry_run_prompt = build_prompt(
+        note_path=args.note_path,
+        gate_ids=gate_ids,
+        gate_texts=gate_texts,
+        resolved_links=resolved_links,
+        unresolved_links=unresolved_links,
+        review_run_id=0,
+    )
+    if args.dry_run:
+        print(dry_run_prompt)
+        return
+
+    ensure_db(repo_root, db_path)
 
     with connect(db_path) as conn:
-        review_run_id = insert_review_run(
+        review_run_id = create_run(
             conn,
             note_path=args.note_path,
             model_id=review_model,
@@ -623,12 +404,10 @@ def main() -> None:
             reviewed_note_sha=note_sha,
             reviewed_note_commit=note_commit,
             started_at=started_at,
-            status="running",
+            gates=run_gates,
         )
-        insert_review_run_gates(conn, review_run_id=review_run_id, gates=run_gates)
         conn.commit()
 
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
     prompt = build_prompt(
         note_path=args.note_path,
         gate_ids=gate_ids,
@@ -637,23 +416,15 @@ def main() -> None:
         unresolved_links=unresolved_links,
         review_run_id=review_run_id,
     )
-
-    if args.dry_run:
-        print(prompt)
-        return
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
 
     result = run_prompt(runner=args.runner, prompt=prompt, repo_root=repo_root, model=args.model)
     raw_bundle_markdown = result.stdout
     write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=raw_bundle_markdown)
+    telemetry_json = serialize_telemetry(result.telemetry)
+    runner_debug_log = combine_logs(result.stdout, result.stderr)
     actual_review_model = model_id_from_telemetry(result.telemetry)
     if actual_review_model is not None and actual_review_model != review_model:
-        with connect(db_path) as conn:
-            update_review_run_model_id(
-                conn,
-                review_run_id=review_run_id,
-                model_id=actual_review_model,
-            )
-            conn.commit()
         print(
             (
                 f"warning: requested model partition {review_model} "
@@ -662,38 +433,76 @@ def main() -> None:
             ),
             file=sys.stderr,
         )
-        review_model = actual_review_model
-    telemetry_json = serialize_telemetry(result.telemetry)
-    runner_debug_log = combine_logs(result.stdout, result.stderr)
+
     if result.returncode != 0:
         with connect(db_path) as conn:
+            attach_execution_data(
+                conn,
+                review_run_id=review_run_id,
+                telemetry_json=telemetry_json,
+                raw_bundle_markdown=raw_bundle_markdown,
+                debug_log=runner_debug_log,
+            )
             fail_review_run(
                 conn,
                 review_run_id=review_run_id,
                 failure_reason=f"{args.runner} exited {result.returncode}",
                 completed_at=iso_now(),
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=runner_debug_log,
-                telemetry_json=telemetry_json,
             )
             conn.commit()
         raise SystemExit(result.returncode)
 
     try:
-        finalize_output = record_bundle_review_run(
-            repo_root=repo_root,
-            db_path=db_path,
+        canonical_bundle_markdown, gate_reviews, canonical_reviews = parse_bundle_gate_reviews(
+            raw_bundle_markdown,
+            expected_gate_ids=gate_ids,
+        )
+    except ValueError as exc:
+        with connect(db_path) as conn:
+            attach_execution_data(
+                conn,
+                review_run_id=review_run_id,
+                telemetry_json=telemetry_json,
+                raw_bundle_markdown=raw_bundle_markdown,
+                debug_log=runner_debug_log,
+            )
+            fail_review_run(
+                conn,
+                review_run_id=review_run_id,
+                failure_reason=str(exc),
+                completed_at=iso_now(),
+            )
+            conn.commit()
+        parser.exit(1, f"{exc}\n")
+
+    write_bundle_artifacts(
+        artifact_dir=artifact_dir,
+        raw_bundle_markdown=canonical_bundle_markdown,
+        parsed_reviews=canonical_reviews,
+    )
+    with connect(db_path) as conn:
+        attach_execution_data(
+            conn,
             review_run_id=review_run_id,
-            raw_bundle_markdown=raw_bundle_markdown,
             telemetry_json=telemetry_json,
+            raw_bundle_markdown=canonical_bundle_markdown,
             debug_log=runner_debug_log,
         )
-    except BundleReviewRecordError as exc:
-        parser.exit(exc.returncode, f"{exc}\n")
+        try:
+            gate_count = record_and_finalize_run(
+                conn,
+                review_run_id=review_run_id,
+                gate_reviews=gate_reviews,
+                actual_model_id=actual_review_model,
+            )
+        except ValueError as exc:
+            conn.commit()
+            parser.exit(1, f"{exc}\n")
+        conn.commit()
 
     if args.keep_staging:
         print(f"artifacts: {artifact_dir}")
-    print(finalize_output)
+    print(f"completed {review_run_id} {gate_count}")
 
 
 if __name__ == "__main__":

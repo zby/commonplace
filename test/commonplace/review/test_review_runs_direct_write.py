@@ -1170,7 +1170,7 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
         ]
 
 
-def test_record_bundle_review_script_reads_artifact_and_finalizes(tmp_path: Path) -> None:
+def test_record_and_finalize_run_rekeys_existing_gate_reviews_to_actual_model_partition(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
@@ -1189,61 +1189,77 @@ def test_record_bundle_review_script_reads_artifact_and_finalizes(tmp_path: Path
     )
     review_run_id = int(created.stdout.strip())
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
-    write(
-        artifact_dir / "bundle-output.md",
-        """# Review Bundle
-
-Review run id: 1
-Target: kb/notes/sample.md
-
-=== GATE REVIEW START: prose/source-residue ===
-## Findings
+    prose_review = write(
+        repo / "tmp" / "prose.md",
+        """## Findings
 
 **WARN — Residue remains.** Temporary review.
-=== GATE REVIEW END: prose/source-residue ===
-
-=== GATE REVIEW START: semantic/grounding-alignment ===
-## Result: PASS
+""",
+    )
+    semantic_review = write(
+        repo / "tmp" / "semantic.md",
+        """## Result: PASS
 
 Looks good.
-=== GATE REVIEW END: semantic/grounding-alignment ===
 """,
     )
 
-    result = run_script(
+    run_script(
         repo,
-        "record_bundle_review.py",
+        "write_gate_review.py",
         "--review-run-id",
         str(review_run_id),
+        "--gate-id",
+        "prose/source-residue",
+        "--input-file",
+        str(prose_review),
         env=env,
     )
-    assert result.stdout.strip() == f"completed {review_run_id} 2"
+    run_script(
+        repo,
+        "write_gate_review.py",
+        "--review-run-id",
+        str(review_run_id),
+        "--gate-id",
+        "semantic/grounding-alignment",
+        "--input-file",
+        str(semantic_review),
+        env=env,
+    )
+
+    with review_db.connect(db_path) as conn:
+        gate_count = review_db.record_and_finalize_run(
+            conn,
+            review_run_id=review_run_id,
+            actual_model_id="actual-model",
+        )
+        conn.commit()
+    assert gate_count == 2
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_row = conn.execute("SELECT status, raw_bundle_markdown FROM review_runs WHERE id = ?", (review_run_id,)).fetchone()
+        run_row = conn.execute("SELECT status, model_id FROM review_runs WHERE id = ?", (review_run_id,)).fetchone()
         assert run_row is not None
         assert run_row["status"] == "completed"
-        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
-        assert "Looks good.\n\n## Result: PASS\n=== GATE REVIEW END: semantic/grounding-alignment ===" in run_row["raw_bundle_markdown"]
         gate_rows = conn.execute(
-            "SELECT gate_id, decision FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
+            "SELECT gate_id, decision, model_id FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
             (review_run_id,),
         ).fetchall()
-        assert [(row["gate_id"], row["decision"]) for row in gate_rows] == [
-            ("prose/source-residue", "warn"),
-            ("semantic/grounding-alignment", "pass"),
+        assert run_row["model_id"] == "actual-model"
+        assert [(row["gate_id"], row["decision"], row["model_id"]) for row in gate_rows] == [
+            ("prose/source-residue", "warn", "actual-model"),
+            ("semantic/grounding-alignment", "pass", "actual-model"),
         ]
         acceptance_rows = conn.execute(
-            "SELECT gate_id, accepted_review_id FROM acceptance_events WHERE note_path = ? ORDER BY gate_id",
+            "SELECT gate_id, accepted_review_id, model_id FROM acceptance_events WHERE note_path = ? ORDER BY gate_id",
             ("kb/notes/sample.md",),
         ).fetchall()
         assert len(acceptance_rows) == 2
         assert all(row["accepted_review_id"] is not None for row in acceptance_rows)
-
-    assert (artifact_dir / "prose__source-residue.md").is_file()
-    assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
+        assert [(row["gate_id"], row["model_id"]) for row in acceptance_rows] == [
+            ("prose/source-residue", "actual-model"),
+            ("semantic/grounding-alignment", "actual-model"),
+        ]
 
 
 def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
@@ -1348,65 +1364,32 @@ for event in [
     assert not (artifact_dir / "prose__source-residue.md").exists()
 
 
-def test_record_bundle_review_script_parse_failure_marks_run_failed(tmp_path: Path) -> None:
+def test_run_review_bundle_dry_run_does_not_persist_review_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
-    created = run_script(
-        repo,
-        "create_review_run.py",
-        "kb/notes/sample.md",
-        "prose",
-        "semantic/grounding-alignment",
-        "--runner",
-        "codex",
-        "--model",
-        TEST_MODEL,
-        env=env,
-    )
-    review_run_id = int(created.stdout.strip())
-
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
-    write(
-        artifact_dir / "bundle-output.md",
-        """# Review Bundle
-
-=== GATE REVIEW START: prose/source-residue ===
-## Findings
-
-**WARN — Residue remains.**
-=== GATE REVIEW END: prose/source-residue ===
-""",
-    )
 
     result = subprocess.run(
         [
             sys.executable,
             "-m",
-            "commonplace.review.record_bundle_review",
-            "--review-run-id",
-            str(review_run_id),
+            "commonplace.review.run_review_bundle",
+            "kb/notes/sample.md",
+            "prose",
+            "semantic/grounding-alignment",
+            "--runner",
+            "codex",
+            "--model",
+            TEST_MODEL,
+            "--dry-run",
+            "--db",
+            str(db_path),
         ],
         cwd=repo,
         env=env,
-        check=False,
+        check=True,
         capture_output=True,
         text=True,
     )
-    assert result.returncode == 1
-    assert "missing gate reviews in bundle output" in result.stderr
-
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        run_row = conn.execute(
-            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs WHERE id = ?",
-            (review_run_id,),
-        ).fetchone()
-        assert run_row is not None
-        assert run_row["status"] == "failed"
-        assert "missing gate reviews in bundle output" in run_row["failure_reason"]
-        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
-
-    assert (artifact_dir / "bundle-output.md").is_file()
-    assert not (artifact_dir / "prose__source-residue.md").exists()
+    assert "Write gate reviews for kb/notes/sample.md" in result.stdout
+    assert not db_path.exists()

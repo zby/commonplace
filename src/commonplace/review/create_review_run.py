@@ -10,13 +10,11 @@ from pathlib import Path
 from commonplace.review.review_db import (
     GATES_ROOT,
     connect,
+    create_run,
     ensure_db,
-    insert_review_run,
-    insert_review_run_gates,
     resolve_db_path,
 )
-from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
-from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
+from commonplace.review.review_metadata import resolve_review_target
 
 
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
@@ -40,12 +38,6 @@ def main() -> None:
     note_abs = repo_root / args.note_path
     if not note_abs.is_file():
         parser.error(f"note not found: {args.note_path}")
-
-    gates_dir = repo_root / GATES_ROOT
-    requested_gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
-    gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
-    if not gate_ids:
-        parser.error(f"no applicable gates resolved for note: {args.note_path}")
     model_id = args.model.strip()
     if not model_id:
         parser.error("--model must not be empty")
@@ -54,32 +46,15 @@ def main() -> None:
     ensure_db(repo_root, db_path)
 
     try:
-        note_sha, note_commit = review_note_provenance(repo_root, Path(args.note_path))
+        note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
+            repo_root, args.note_path, args.gate_or_bundle,
+        )
     except ValueError as exc:
         parser.error(str(exc))
-    started_at = iso_now()
-
-    run_gates: list[tuple[str, str, int]] = []
-    gate_definitions: list[dict[str, str]] = []
-    for ordinal, gate_id in enumerate(gate_ids):
-        gate_abs = gates_dir / f"{gate_id}.md"
-        if not gate_abs.is_file():
-            parser.error(f"gate not found: {gate_id}")
-        try:
-            gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
-        except ValueError as exc:
-            parser.error(str(exc))
-        run_gates.append((gate_id, gate_sha, ordinal))
-        gate_definitions.append(
-            {
-                "gate_id": gate_id,
-                "path": str(gate_abs.relative_to(repo_root)),
-                "text": strip_frontmatter(gate_abs.read_text(encoding="utf-8")),
-            }
-        )
+    gate_ids = [g[0] for g in run_gates]
 
     with connect(db_path) as conn:
-        review_run_id = insert_review_run(
+        review_run_id = create_run(
             conn,
             note_path=args.note_path,
             model_id=model_id,
@@ -87,9 +62,8 @@ def main() -> None:
             reviewed_note_sha=note_sha,
             reviewed_note_commit=note_commit,
             started_at=started_at,
-            status="running",
+            gates=run_gates,
         )
-        insert_review_run_gates(conn, review_run_id=review_run_id, gates=run_gates)
         conn.commit()
 
     bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
@@ -101,7 +75,10 @@ def main() -> None:
                     "review_run_id": review_run_id,
                     "note_path": args.note_path,
                     "gate_ids": gate_ids,
-                    "gates": gate_definitions,
+                    "gates": [
+                        {"gate_id": gid, "path": str(GATES_ROOT / f"{gid}.md"), "text": gate_texts[gid]}
+                        for gid in gate_ids
+                    ],
                     "model_id": model_id,
                     "runner": args.runner,
                 },

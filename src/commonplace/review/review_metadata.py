@@ -235,6 +235,46 @@ def file_text_at_commit(repo_root: Path, commit: str, path: Path) -> str | None:
     return result.stdout
 
 
+def resolve_review_target(
+    repo_root: Path,
+    note_path: str,
+    gate_or_bundle: list[str],
+) -> tuple[str, str | None, str, list[tuple[str, str, int]], dict[str, str]]:
+    """Resolve gates and capture provenance for a review target.
+
+    Returns (note_sha, note_commit, started_at, run_gates, gate_texts) where:
+    - run_gates: list of (gate_id, gate_sha, ordinal) tuples for insert_review_run_gates
+    - gate_texts: dict of gate_id -> gate body text (frontmatter stripped)
+
+    Raises ValueError if note provenance or gate provenance cannot be resolved,
+    or if no applicable gates are found.
+    """
+    from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
+    from commonplace.review.review_db import GATES_ROOT
+
+    note_abs = repo_root / note_path
+    gates_dir = repo_root / GATES_ROOT
+    requested_gate_ids = resolve_to_gate_ids(gate_or_bundle, gates_dir)
+    gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
+    if not gate_ids:
+        raise ValueError(f"no applicable gates resolved for note: {note_path}")
+
+    note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
+    started_at = iso_now()
+
+    run_gates: list[tuple[str, str, int]] = []
+    gate_texts: dict[str, str] = {}
+    for ordinal, gate_id in enumerate(gate_ids):
+        gate_abs = gates_dir / f"{gate_id}.md"
+        if not gate_abs.is_file():
+            raise ValueError(f"gate not found: {gate_id}")
+        gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
+        run_gates.append((gate_id, gate_sha, ordinal))
+        gate_texts[gate_id] = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
+
+    return note_sha, note_commit, started_at, run_gates, gate_texts
+
+
 def file_text_at_provenance(
     repo_root: Path,
     *,

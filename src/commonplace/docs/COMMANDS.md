@@ -216,15 +216,6 @@ commonplace-reparse-gate-review-decisions --dry-run
 commonplace-reparse-gate-review-decisions --review-run-id 42
 ```
 
-### commonplace-repair-codex-model-partitions
-
-Backfill model_id and telemetry from saved Codex session logs.
-
-```bash
-commonplace-repair-codex-model-partitions --dry-run
-commonplace-repair-codex-model-partitions --review-run-id 42
-```
-
 ### commonplace-repair-manual-import-review-results
 
 Re-infer decisions for legacy manual-import reviews with stale footers.
