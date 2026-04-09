@@ -19,7 +19,7 @@ uv --version        # or: pip --version
 git --version
 ```
 
-Optional tools — note which are missing but proceed with installation:
+Optional but recommended — if any are missing, ask the user to install them before continuing:
 
 ```bash
 direnv version
