@@ -183,7 +183,7 @@ The current paths disagree on four things:
 - nested paths: also at creation time, but then immediately launch
 - gate sweep dry-run: never persists the run at all
 
-The model needs a state for "prepared but not launched".
+This is the pressure that motivates a `prepared` state, but the revised plan rejects adding one — see `design.md` for rationale.
 
 ## 2. Who owns telemetry?
 
@@ -213,7 +213,7 @@ The system does not currently have one module that owns the lifecycle of a revie
 
 ## Immediate design conclusions
 
-1. `review_runs` needs a true pre-execution state.
-2. Telemetry attachment has to become an explicit lifecycle step.
-3. Actual model partition assignment must be centralized.
-4. All scripts should stop open-coding run transitions.
+1. Telemetry attachment has to become an explicit lifecycle step.
+2. Actual model partition assignment (rekeying) must be centralized — one function, one boundary.
+3. All scripts should stop open-coding run transitions.
+4. A pre-execution state (`prepared`) was considered but rejected — the split-agent path has no observable "start" transition, and stale rows need cleanup either way. See `design.md` for rationale.

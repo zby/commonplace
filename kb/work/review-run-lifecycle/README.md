@@ -62,7 +62,7 @@ Centralize lifecycle transitions into ~3 functions without adding schema complex
 - scripts become thin CLI frontends over shared lifecycle functions
 - telemetry attachment and model rekeying happen in one place
 - no new statuses, no typed state machines, no schema splits
-- Path 2 (split bundled) and the repair script are removed as dead weight
+- Path 2 (split bundled) removed; repair script deletion deferred to follow-up
 - dry-run persistence is fixed as a standalone bug
 
 ## Files in this workshop

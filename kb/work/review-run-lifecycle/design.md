@@ -27,6 +27,8 @@ The original design proposed `prepared` → `running` to distinguish "created bu
 
 One `model_id` column, updated in place when the actual model is known. The lifecycle functions centralize *when* this update happens — that's sufficient.
 
+**Rekeying safety net:** `record_and_finalize_run` accepts an optional `actual_model_id`. If provided and different, it rekeys the run and any already-written `gate_reviews` before appending `acceptance_events`. In practice this rarely triggers — nested paths already know the actual model before gate reviews are inserted, and split-path agents typically self-report correctly. But having the rekey in one place means no path can produce inconsistent partitions, even if a future caller supplies a correction at finalization time.
+
 ### No mandatory telemetry
 
 Telemetry remains nullable. The lifecycle functions centralize *where* telemetry gets attached, but don't enforce *that* it's attached. No "unavailable reason" tracking.
@@ -48,24 +50,24 @@ Called by: `create_review_run.py`, `run_review_bundle.py`, `run_gate_sweep.py`.
 ### 2. `record_and_finalize_run(...)`
 
 One place that:
-- inserts gate reviews
+- optionally inserts gate reviews (nested paths pass them in; split path has already written them)
+- if `actual_model_id` is provided and differs from `review_runs.model_id`: rekeys the run and all its `gate_reviews` before proceeding
 - checks gate coverage
 - calls `complete_review_run`
-- appends `acceptance_events`
+- appends `acceptance_events` (using the final, possibly rekeyed `model_id`)
 - optionally attaches telemetry, raw bundle markdown, debug log
-- optionally rekeys `model_id` to actual model partition
 
 If coverage is incomplete or recording fails, calls `fail_review_run` instead.
 
 Called by: `finalize_review_run.py` (for split gate-by-gate path), `run_review_bundle.py`, `run_gate_sweep.py`.
 
-For the split gate-by-gate path, gate reviews are already inserted individually via `write_gate_review.py`, so this function just validates coverage and finalizes.
+For the split gate-by-gate path, gate reviews are already inserted individually via `write_gate_review.py`, so this function validates coverage, rekeys if needed, and finalizes.
 
 ### 3. `attach_execution_data(...)`
 
-One place that handles telemetry JSON, debug log, raw bundle markdown, and model rekeying. Can be called before finalization (nested paths) or as part of it.
+One place that stores execution artifacts: telemetry JSON, debug log, raw bundle markdown. Does **not** rekey `model_id` — that is exclusively `record_and_finalize_run`'s job, because rekeying must happen atomically with gate_reviews and before acceptance_events are appended.
 
-This replaces the scattered calls to `update_review_run_telemetry` and `update_review_run_model_id` that currently live in `run_review_bundle.py` and `run_gate_sweep.py`.
+This replaces the scattered calls to `update_review_run_telemetry` that currently live in `run_review_bundle.py` and `run_gate_sweep.py`.
 
 ## Path simplification
 
@@ -79,9 +81,9 @@ Path 2 is an awkward middle ground — the agent does the review work but output
 
 The bundle format remains for **nested runner output** (Paths 3 and 4), where it's the natural output format of an autonomous subprocess.
 
-### Delete the repair script
+### Repair script: defer deletion
 
-`repair_codex_model_partitions.py` (275 lines) compensates for historical data written before the nested wrapper added telemetry/model corrections. With lifecycle logic centralized, new runs won't need repair. The DB is currently empty — there's nothing to repair. Delete the script and its tests.
+`repair_codex_model_partitions.py` (275 lines) compensates for historical data written before the nested wrapper added telemetry/model corrections. With lifecycle logic centralized, new runs won't need repair. Deletion is deferred to a follow-up once the lifecycle functions are in place and no existing data depends on it.
 
 ## Surviving paths after simplification
 
@@ -99,7 +101,7 @@ Becomes a thin CLI over `create_run(...)`. No behavior change.
 
 ### `write_gate_review.py`
 
-Stays as-is — it validates and inserts one gate review. No lifecycle change needed.
+Stays as-is — it validates and inserts one gate review using `review_run.model_id`. If the actual model turns out to differ, finalization handles the rekey (see split-path rekeying rule above).
 
 ### `finalize_review_run.py`
 
@@ -110,8 +112,8 @@ Calls `record_and_finalize_run(...)` with no new gate reviews (they were already
 Orchestrates:
 1. `create_run(...)`
 2. nested runner invocation
-3. `attach_execution_data(...)` with telemetry/model rekeying
-4. `record_and_finalize_run(...)` with parsed gate reviews
+3. `attach_execution_data(...)` with telemetry, debug log, raw bundle
+4. `record_and_finalize_run(...)` with parsed gate reviews and `actual_model_id` from telemetry
 
 On failure: `fail_review_run(...)` with whatever execution data is available.
 
@@ -127,7 +129,7 @@ Deleted.
 
 ### `repair_codex_model_partitions.py`
 
-Deleted.
+No changes in this phase. Deletion deferred to follow-up.
 
 ## Dry-run fix
 
@@ -147,13 +149,14 @@ Add `create_run`, `record_and_finalize_run`, and `attach_execution_data` to `rev
 
 Remove Path 2. Update any instructions or docs that reference it.
 
-### 4. Delete `repair_codex_model_partitions.py` and its tests
+### 4. (Follow-up) Delete `repair_codex_model_partitions.py` and its tests
 
-One-off migration tool with no future use.
+Once lifecycle functions are in place and no existing data depends on the repair script, delete it.
 
 ## Minimum viable end state
 
 1. Every persisted run was intentionally created (no dry-run ghosts)
-2. All three surviving paths use the same lifecycle functions
-3. Telemetry and model rekeying happen in one place
-4. Two dead-end paths and ~500 lines of code are removed
+2. All surviving paths use the same lifecycle functions
+3. Model rekeying owned by `record_and_finalize_run` — one place, one rule
+4. Telemetry/artifact storage owned by `attach_execution_data` — no rekeying
+5. Path 2 (split bundled) removed
