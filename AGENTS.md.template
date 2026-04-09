@@ -84,4 +84,37 @@ Key entry points:
 
 These skills are installed into `.claude/skills/` by `commonplace-init`.
 
+### Commands
+
+CLI commands provided by the `llm-commonplace` package. Run with `--help` for full usage.
+
+**Core operations:**
+
+| Command | Purpose |
+|---|---|
+| `commonplace-validate-notes <target>` | Validate frontmatter, links, descriptions, types |
+| `commonplace-generate-notes-index <dir>` | Generate `index.md` from frontmatter in a directory |
+| `commonplace-sync-generated-index [index...]` | Rebuild generated sections of tag index pages |
+| `commonplace-sync-topic-links <file-or-dir>` | Sync topic link sections across notes |
+| `commonplace-relocate-note <note> [new_name]` | Rename/move a note, update all backlinks |
+| `commonplace-github-snapshot <url>` | Snapshot a GitHub issue/PR to `kb/sources/` |
+| `commonplace-x-snapshot <url>` | Snapshot an X/Twitter post to `kb/sources/` (requires `xdk`) |
+| `commonplace-promotion-candidates` | List text/seedling notes ready for promotion |
+| `commonplace-init [--name NAME]` | Initialize or update project structure |
+
+**Review system:**
+
+| Command | Purpose |
+|---|---|
+| `commonplace-review-sweep` | Run a full review sweep across notes |
+| `commonplace-run-review-bundle <note> <gates...>` | Run a review bundle on a single note |
+| `commonplace-run-gate-sweep` | Run gate checks across multiple notes |
+| `commonplace-create-review-run <note> <gates...>` | Create a review run record |
+| `commonplace-write-gate-review` | Write a gate review result |
+| `commonplace-finalize-review-run` | Finalize a review run |
+| `commonplace-ack-gate-review` | Acknowledge a gate review warning |
+
+For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
+For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
+
 For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.
