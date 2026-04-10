@@ -28,7 +28,7 @@ from commonplace.review.review_metadata import committed_file_provenance, iso_no
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.review_target_selector import select_stale_gates
 from commonplace.review.resolve_gates import strip_frontmatter
-from commonplace.review.run_review_bundle import (
+from commonplace.review.run_review_bundle_lib import (
     bundle_artifact_dir,
     combine_logs,
     model_id_from_telemetry,

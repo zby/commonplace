@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.review import review_db, review_metadata, run_review_bundle, warn_selector
+from commonplace.review import review_db, review_metadata, run_review_bundle_lib, warn_selector
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -263,7 +263,7 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         env=env,
     )
     review_run_id = int(created.stdout.strip())
-    assert run_review_bundle.bundle_artifact_dir(repo, review_run_id).is_dir()
+    assert run_review_bundle_lib.bundle_artifact_dir(repo, review_run_id).is_dir()
 
     prose_review = write(
         repo / "tmp" / "prose.md",
@@ -363,7 +363,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         env=env,
     )
     payload = json.loads(created.stdout)
-    assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
+    assert run_review_bundle_lib.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
     assert payload["note_path"] == "kb/notes/sample.md"
     assert payload["model_id"] == TEST_MODEL
     assert payload["runner"] == "codex"
@@ -989,7 +989,7 @@ for event in [
             ("semantic/grounding-alignment", "claude-sonnet-4-6"),
         ]
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = run_review_bundle_lib.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert (artifact_dir / "prose__source-residue.md").is_file()
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
@@ -1282,7 +1282,7 @@ Looks good.
 === GATE REVIEW END: semantic/grounding-alignment ===
 """
 
-    parsed = run_review_bundle.extract_bundle_reviews(
+    parsed = run_review_bundle_lib.extract_bundle_reviews(
         bundle,
         expected_gate_ids=["prose/source-residue", "semantic/grounding-alignment"],
     )
@@ -1359,7 +1359,7 @@ for event in [
         assert "missing gate reviews in bundle output" in run_row["failure_reason"]
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = run_review_bundle_lib.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert not (artifact_dir / "prose__source-residue.md").exists()
 

@@ -12,7 +12,7 @@ from commonplace.lib import frontmatter as fm_mod
 _BODY_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 _FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
 _INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
-_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 _DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
 
 
@@ -65,7 +65,15 @@ def extract_headings(body: str) -> tuple[str, ...]:
 
 def find_markdown_links(body: str) -> tuple[str, ...]:
     cleaned = remove_code_regions(body)
-    return tuple(_LINK_RE.findall(cleaned))
+    return tuple(match.group(2) for match in _LINK_RE.finditer(cleaned))
+
+
+def find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]:
+    cleaned = remove_code_regions(body)
+    return tuple(
+        (match.group(1), match.group(2).strip())
+        for match in _LINK_RE.finditer(cleaned)
+    )
 
 
 def extract_body_dates(body: str) -> tuple[str, ...]:

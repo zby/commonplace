@@ -7,7 +7,7 @@ import re
 from dataclasses import dataclass
 from typing import Sequence
 
-from commonplace.review.run_review_bundle import extract_bundle_reviews, rewrite_bundle_result_footers
+from commonplace.review.run_review_bundle_lib import extract_bundle_reviews, rewrite_bundle_result_footers
 
 
 NOTE_START_RE = re.compile(r"^=== NOTE START: (?P<note_path>.+?) ===$")
