@@ -1,8 +1,19 @@
-# Review System (`commonplace.review`)
+# Review System (`commonplace.review` + `commonplace.cli.review`)
 
 The review system runs LLM-based quality reviews against KB notes using defined review gates. It tracks provenance (note and gate versions), manages acceptance state, and detects staleness.
 
 For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM.md`. This document covers the code architecture.
+
+## Package layout
+
+The review subsystem is split between two packages, mirroring the project-wide `commonplace.cli` ↔ `commonplace.lib` split:
+
+- **`commonplace.review`** — library code only. Pure functions, dataclasses, the SQLite layer, the runner subprocess wrappers. No `main()` functions, no argparse, no `Path.cwd()` at import time. Importable from any caller without pulling in CLI machinery.
+- **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The 14 `commonplace-*` review entry points in `pyproject.toml` all live here.
+
+For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundle` is the library that owns the create_run → runner → record_and_finalize_run pipeline; `commonplace.cli.review.run_review_bundle` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
+
+This document refers to modules by their unqualified names (e.g. `run_review_bundle`, `review_target_selector`) when the distinction doesn't matter. When a particular function or class is called out, it lives in the library package unless explicitly noted as a CLI.
 
 ## Architecture overview
 
@@ -22,6 +33,7 @@ For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM
 │  Data model                                     │
 │  review_db          review_model                │
 │  review_metadata    review-schema.sql           │
+│  paths                                          │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -72,14 +84,23 @@ Git-backed provenance tracking and metadata block management.
 - `render_review_metadata(metadata) -> str` — generate metadata block
 - `inject_review_metadata(review_text, metadata) -> str` — insert/update metadata block
 
+### paths.py
+
+Filesystem path constants used across the review subsystem. Currently exposes `GATES_ROOT = Path("kb/instructions/review-gates")`. Lives in its own module so the data layer (`review_db.py`) doesn't have to own filesystem constants about gate locations.
+
 ### review_db.py
 
 Database operations, decision parsing, and record management. The largest module in the package.
 
 **Connection & setup:**
 - `connect(db_path) -> Connection` — open with Row factory
-- `resolve_db_path(repo_root) -> Path` — resolve DB location
+- `resolve_db_path(repo_root, db_override=None) -> Path` — resolve DB location, honoring an optional `--db` override
 - `ensure_db(repo_root, db_path)` — initialize from schema if needed
+- `prepare_review_db(repo_root, db_override=None) -> Path` — convenience helper that resolves and ensures in one call; collapses the four-step bootstrap that every CLI used to open-code
+
+**Note relocation helpers** (called by `commonplace.lib.relocation`):
+- `count_note_path_records(conn, *, note_path) -> NotePathUpdateCounts` — how many `review_runs`/`gate_reviews`/`acceptance_events` rows reference a note path
+- `rekey_note_path(conn, *, old_note_path, new_note_path) -> NotePathUpdateCounts` — update those rows in place when a note moves
 
 **CRUD operations:**
 - `insert_review_run(conn, ...) -> int` — create run, return ID
