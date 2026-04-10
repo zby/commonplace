@@ -8,9 +8,8 @@ from pathlib import Path
 
 from commonplace.review.review_db import (
     connect,
-    ensure_db,
+    prepare_review_db,
     record_and_finalize_run,
-    resolve_db_path,
 )
 
 
@@ -21,8 +20,7 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    db_path = prepare_review_db(repo_root, args.db)
 
     with connect(db_path) as conn:
         try:

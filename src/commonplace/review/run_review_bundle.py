@@ -29,7 +29,7 @@ def main() -> int:
     if not review_model:
         parser.error("--model must not be empty")
 
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
+    db_path = resolve_db_path(repo_root, args.db)
 
     try:
         return run_bundle(

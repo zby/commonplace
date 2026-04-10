@@ -7,7 +7,7 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
-from commonplace.review.review_db import connect, ensure_db, resolve_db_path
+from commonplace.review.review_db import connect, prepare_review_db
 
 
 def main() -> None:
@@ -22,8 +22,7 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    db_path = prepare_review_db(repo_root, args.db)
 
     with connect(db_path) as conn:
         conn.execute("PRAGMA foreign_keys = ON")

@@ -90,7 +90,9 @@ def connect(db_path: Path) -> sqlite3.Connection:
     return conn
 
 
-def resolve_db_path(repo_root: Path) -> Path:
+def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
+    if db_override:
+        return Path(db_override).resolve()
     raw = os.environ.get(DB_ENV_VAR, "").strip()
     if raw:
         db_path = Path(raw)
@@ -103,6 +105,13 @@ def resolve_db_path(repo_root: Path) -> Path:
 def ensure_db(repo_root: Path, db_path: Path) -> None:
     with resources.as_file(resources.files("commonplace.review") / SCHEMA_PATH) as schema_path:
         init_db(db_path, schema_path)
+
+
+def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
+    """Resolve the review DB path (honoring --db override) and ensure its schema."""
+    db_path = resolve_db_path(repo_root, db_override)
+    ensure_db(repo_root, db_path)
+    return db_path
 
 
 def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:

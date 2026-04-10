@@ -9,11 +9,10 @@ from pathlib import Path
 
 from commonplace.review.review_db import (
     connect,
-    ensure_db,
     insert_gate_review,
     load_review_run,
     load_review_run_gates,
-    resolve_db_path,
+    prepare_review_db,
 )
 from commonplace.review.review_decisions import parse_review_decision, rewrite_review_result_footer
 from commonplace.review.review_metadata import _METADATA_BLOCK_RE, iso_now
@@ -28,8 +27,7 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    db_path = prepare_review_db(repo_root, args.db)
 
     input_path = Path(args.input_file)
     if not input_path.is_file():

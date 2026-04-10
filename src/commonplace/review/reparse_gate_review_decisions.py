@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.review_db import connect, ensure_db, resolve_db_path
+from commonplace.review.review_db import connect, prepare_review_db
 from commonplace.review.review_decisions import parse_review_decision
 
 
@@ -29,8 +29,7 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    db_path = prepare_review_db(repo_root, args.db)
 
     where_clauses: list[str] = []
     params: list[object] = []

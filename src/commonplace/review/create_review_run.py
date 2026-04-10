@@ -11,8 +11,7 @@ from commonplace.review.review_db import (
     GATES_ROOT,
     connect,
     create_run,
-    ensure_db,
-    resolve_db_path,
+    prepare_review_db,
 )
 from commonplace.review.review_metadata import resolve_review_target
 
@@ -42,8 +41,7 @@ def main() -> None:
     if not model_id:
         parser.error("--model must not be empty")
 
-    db_path = Path(args.db).resolve() if args.db else resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    db_path = prepare_review_db(repo_root, args.db)
 
     try:
         note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
