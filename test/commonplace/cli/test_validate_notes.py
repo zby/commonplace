@@ -5,14 +5,13 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-import pytest
-
 
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import validate_notes
+from commonplace.lib import validation
 
 
 def write(path: Path, content: str) -> Path:
@@ -21,7 +20,7 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def configure_temp_repo(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
+def configure_temp_repo(tmp_path: Path) -> Path:
     notes_root = tmp_path / "kb" / "notes"
     write(
         tmp_path / "kb" / "types" / "note.schema.yaml",
@@ -158,15 +157,13 @@ allOf:
               const: "## What to Watch"
 """,
     )
-    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
     return notes_root
 
 
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     note = write(tmp_path / "raw-capture.md", "# Raw capture\n\nJust text.\n")
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert results.note_type == "text"
     assert results.fails == []
@@ -174,6 +171,7 @@ def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
 
 
 def test_duplicate_frontmatter_keys_follow_yaml_last_value_wins(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
     note = write(
         tmp_path / "broken.md",
         """---
@@ -186,7 +184,7 @@ type: note
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert results.note_type == "note"
     assert results.fails == []
@@ -194,6 +192,7 @@ type: note
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
     target = write(tmp_path / "target.md", "# Target\n")
     note = write(
         tmp_path / "note.md",
@@ -218,7 +217,7 @@ External link: [site](https://example.com/foo.md)
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert "link health: all relative markdown links resolve" not in results.passes
     assert "link health: missing target ./missing.md" in results.warns
@@ -226,8 +225,8 @@ External link: [site](https://example.com/foo.md)
     assert all("example.com" not in item for item in results.warns)
 
 
-def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
     note = write(
         notes_root / "claim.md",
         """---
@@ -245,13 +244,13 @@ Some evidence.
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert any("missing headings ## Reasoning" in item for item in results.warns)
 
 
-def test_spec_accepts_design_or_implementation_heading(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+def test_spec_accepts_design_or_implementation_heading(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
     note = write(
         notes_root / "spec.md",
         """---
@@ -268,14 +267,14 @@ Design details.
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert any("spec has required heading" in item for item in results.passes)
     assert all("should contain ## Design or ## Implementation" not in item for item in results.warns)
 
 
-def test_related_system_warns_when_last_checked_missing(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+def test_related_system_warns_when_last_checked_missing(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
     note = write(
         notes_root / "system.md",
         """---
@@ -308,14 +307,12 @@ Watch.
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert "frontmatter: missing required fields last-checked" in results.warns
 
 
-def test_adr_status_uses_type_specific_enum_from_note_base(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(
         tmp_path / "kb" / "types" / "note-base.schema.yaml",
@@ -435,17 +432,14 @@ Consequences.
 """,
     )
 
-    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
-
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert 'status: "accepted" — valid' in results.passes
     assert all("status:" not in warning for warning in results.warns)
 
 
-def test_title_length_over_limit_fails_validation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
     title = "A" * 101
     note = write(
         notes_root / "short-slug.md",
@@ -460,15 +454,13 @@ status: current
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert "title: 101 chars exceeds limit of 100" in results.fails
 
 
-def test_filename_slug_length_over_limit_fails_validation(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    notes_root = configure_temp_repo(monkeypatch, tmp_path)
+def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
     overlong_slug = "a" * 101
     note = write(
         notes_root / f"{overlong_slug}.md",
@@ -483,12 +475,12 @@ status: current
 """,
     )
 
-    results = validate_notes.validate_note(note)
+    results = validation.validate_note(note, repo_root=tmp_path)
 
     assert "filename slug: 101 chars exceeds limit of 100" in results.fails
 
 
-def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(
         notes_root / "kept.md",
@@ -518,16 +510,13 @@ status: current
 """,
     )
 
-    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
-
-    discovered = validate_notes.list_kb_note_paths()
+    discovered = validation.list_kb_note_paths(notes_root)
 
     assert notes_root / "kept.md" in discovered
     assert nested_repo / "ignored.md" not in discovered
 
 
-def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     today_note = write(
         notes_root / "today.md",
@@ -558,10 +547,7 @@ status: current
     today_note.touch()
     os.utime(old_note, (old_ts, old_ts))
 
-    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
-
-    recent = validate_notes.resolve_targets("recent")
+    recent = validate_notes.resolve_targets("recent", repo_root=tmp_path, notes_root=notes_root)
 
     assert today_note.resolve() in recent
     assert old_note.resolve() not in recent
