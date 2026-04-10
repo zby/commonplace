@@ -8,10 +8,30 @@ allOf:
         required:
           - description
           - type
+          - index_source
         properties:
           type:
             const: index
+          index_source:
+            enum:
+              - directory
+              - tag
+              - tag-indexes
+          index_key:
+            type: string
+            minLength: 1
         additionalProperties: true
       links:
         type: array
         minItems: 3
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            index_source:
+              const: tag
+    then:
+      properties:
+        frontmatter:
+          required:
+            - index_key

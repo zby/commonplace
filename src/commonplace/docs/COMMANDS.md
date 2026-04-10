@@ -35,9 +35,17 @@ commonplace-generate-notes-index kb/notes
 commonplace-generate-notes-index kb/sources
 ```
 
+### commonplace-refresh-indexes
+
+Refresh the checked-in generated indexes used locally and by GitHub Pages. Rebuilds the directory indexes for notes and sources, then refreshes generated sections of managed generated-tail indexes.
+
+```bash
+commonplace-refresh-indexes
+```
+
 ### commonplace-sync-generated-index
 
-Rebuild auto-generated sections of tag index pages. Scans notes for matching tags and updates the generated listings.
+Rebuild auto-generated sections of index pages with generated tails. Uses `index_source` metadata to decide whether a page lists tagged notes or tag indexes.
 
 ```bash
 commonplace-sync-generated-index                           # all indexes

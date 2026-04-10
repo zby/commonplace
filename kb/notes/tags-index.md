@@ -1,6 +1,7 @@
 ---
 description: Hub for all tag indexes — browse the KB by conceptual domain rather than by directory
 type: index
+index_source: tag-indexes
 status: current
 ---
 
@@ -34,5 +35,6 @@ Browse the KB by tag. Each tag page has a curated editorial section and an auto-
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
 - [brainstorming-how-to-enrich-web-search](./brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology
 
-## Other tagged notes <!-- generated -->
+## Other tag indexes <!-- generated -->
 
+- [Tool loop](./tool-loop-index.md) — Index for the tool-loop argument — the framework-owned tool loop is useful but should yield control when tasks need different tool surfaces, exceed one context window, or codify scheduling

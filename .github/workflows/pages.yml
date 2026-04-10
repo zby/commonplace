@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write
@@ -31,10 +34,7 @@ jobs:
         run: python -m pip install --upgrade ".[docs]"
 
       - name: Rebuild directory indexes and tag listings
-        run: |
-          commonplace-generate-notes-index kb/notes
-          commonplace-generate-notes-index kb/sources
-          commonplace-sync-generated-index
+        run: commonplace-refresh-indexes
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

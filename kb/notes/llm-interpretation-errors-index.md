@@ -1,6 +1,8 @@
 ---
 description: Three sources of deviation between intended and actual LLM output — prompt underspecification, execution indeterminism, and interpreter failure — plus oracle theory, error correction, and architectural responses for managing each
 type: index
+index_source: tag
+index_key: llm-interpretation-errors
 status: current
 ---
 
@@ -57,4 +59,5 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Other tagged notes <!-- generated -->
 
-- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) — Brainstorming note that turns the pairwise-comparison hypothesis into a staged test plan for open-ended LLM evaluation loops
+- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) — Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
+- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two

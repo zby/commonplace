@@ -143,16 +143,17 @@ The distilled artifact itself should NOT link back to its sources — it's optim
 
 There are two kinds of indexes:
 
-- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `commonplace-generate-notes-index <directory>`.
-- **Tag indexes** (e.g. `learning-theory-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing.
+- **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. These use `type: index` with `index_source: directory`.
+- **Generated-tail indexes** (e.g. `learning-theory-index.md`, `tags-index.md`) — navigation hubs with an optional curated section plus a generated listing. These use `type: index` with `index_source` describing what the generated section lists.
+- **Refresh all generated indexes** — rebuild the checked-in directory indexes plus generated sections of managed indexes with `commonplace-refresh-indexes`.
 
-### Tag Index Structure
+### Generated-Tail Index Structure
 
-Each tag index has two sections:
+Each generated-tail index has two sections:
 
-**Curated section** (optional, hand-written): Editorial groupings with context phrases, tensions, related indexes. A selective "essential reading" list — not every tagged note, just the ones that tell the story. Should stay small.
+**Curated section** (optional, hand-written): Editorial groupings with context phrases, tensions, related indexes. A selective “essential reading” list — not every generated entry, just the ones that tell the story. Should stay small.
 
-**Generated section** (automatic): Complete listing of all notes carrying that tag. Rebuilt by `commonplace-sync-generated-index`. Everything below the `<!-- generated -->` marker is replaced on each run.
+**Generated section** (automatic): Complete listing defined by the page's `index_source`. Rebuilt by `commonplace-sync-generated-index`. Everything below the `<!-- generated -->` marker is replaced on each run.
 
 ```markdown
 # tag-name
@@ -171,6 +172,13 @@ What is unexplored or unresolved.
 ```
 
 **Critical rule:** Curated entries MUST have context phrases. A bare link list without explanation is an address book, not a map.
+
+### Index Metadata
+
+- `index_source: directory` — the page is fully generated from the files in its own directory.
+- `index_source: tag` — the generated section lists all notes with `tags: [index_key]`.
+- `index_source: tag-indexes` — the generated section lists tag-index pages rather than tagged notes.
+- `index_key` is required when `index_source: tag`.
 
 ### Lifecycle
 

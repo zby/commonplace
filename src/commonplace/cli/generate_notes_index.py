@@ -52,8 +52,9 @@ def generate(notes_dir: Path) -> str:
 
     lines = [
         "---",
-        f"description: Auto-generated directory — run commonplace-generate-notes-index {notes_dir} to rebuild",
+        "description: Auto-generated directory — run commonplace-refresh-indexes to rebuild",
         "type: index",
+        "index_source: directory",
         "---",
         "",
         f"# {notes_dir.name.replace('-', ' ').title()} Directory",
@@ -72,6 +73,15 @@ def generate(notes_dir: Path) -> str:
     return "\n".join(lines)
 
 
+def write_index(notes_dir: Path) -> tuple[Path, int]:
+    """Generate and write index.md for a directory."""
+    output = notes_dir / "index.md"
+    content = generate(notes_dir)
+    output.write_text(content)
+    count = content.count("\n- ")
+    return output, count
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Generate index.md from frontmatter of markdown files in a directory.",
@@ -84,10 +94,7 @@ def main() -> int:
         print(f"Not a directory: {notes_dir}", file=sys.stderr)
         return 1
 
-    output = notes_dir / "index.md"
-    content = generate(notes_dir)
-    output.write_text(content)
-    count = content.count("\n- ")
+    output, count = write_index(notes_dir)
     print(f"Generated {output} with {count} entries")
     return 0
 

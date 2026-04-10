@@ -1,6 +1,8 @@
 ---
 description: Index of notes about keeping the KB healthy over time — detection of staleness and quality degradation, maintenance operations, and the dynamics that govern system entropy
 type: index
+index_source: tag
+index_key: kb-maintenance
 status: current
 ---
 
@@ -38,5 +40,6 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 ## Other tagged notes <!-- generated -->
 
 - [Brainstorming: how reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently
+- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md) — April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
 - [Title as claim makes overlap between notes visible](./title-as-claim-makes-overlap-between-notes-visible.md) — When note titles are claims, overlap between notes is visible at the index level — similar assertions are obvious without opening files; topical titles hide overlap behind different labels for the same territory
 - [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — Programmers trained on traditional software expect broken infrastructure to fail loudly; semantic recovery in agent tool loops violates that expectation, so successful outcomes can create false confidence during debugging and maintenance

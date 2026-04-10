@@ -1,6 +1,8 @@
 ---
-description: "Template for tag index pages — curated editorial section above a generated listing"
+description: "Template for generated-tail index pages — curated editorial section above a generated listing"
 type: index
+index_source: tag
+index_key: "{tag-name}"
 ---
 
 # {tag-name}

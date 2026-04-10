@@ -23,6 +23,8 @@ def test_sync_generated_index_main_dry_run_reports_changes(
         """---
 description: Index page for kb-design notes with a generated section maintained by the sync script
 type: index
+index_source: tag
+index_key: kb-design
 traits: []
 status: current
 ---
@@ -56,3 +58,123 @@ tags: [kb-design]
     assert "Would change 1 index(es):" in captured.out
     assert "Would update kb-design-index.md: 1 notes for tag 'kb-design'" in captured.out
     assert index_path.read_text(encoding="utf-8") == original
+
+
+def test_find_index_files_only_returns_tag_indexes(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(
+        notes_root / "index.md",
+        """---
+description: Directory index
+type: index
+index_source: directory
+---
+
+# Notes Directory
+""",
+    )
+    kb_design_index = write(
+        notes_root / "kb-design-index.md",
+        """---
+description: KB design tag index
+type: index
+index_source: tag
+index_key: kb-design
+---
+
+# KB design
+
+## Other tagged notes <!-- generated -->
+""",
+    )
+    tags_index = write(
+        notes_root / "tags-index.md",
+        """---
+description: Tags index
+type: index
+index_source: tag-indexes
+---
+
+# Tags
+
+## Other tag indexes <!-- generated -->
+""",
+    )
+    write(
+        notes_root / "types" / "index.template.md",
+        """---
+description: Template
+type: index
+index_source: tag
+index_key: template
+---
+
+# Template
+""",
+    )
+
+    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
+
+    indexes = sync_generated_index.find_index_files([])
+
+    assert indexes == [kb_design_index, tags_index]
+
+
+def test_sync_generated_index_supports_tag_index_directory(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    tags_index = write(
+        notes_root / "tags-index.md",
+        """---
+description: Tag directory
+type: index
+index_source: tag-indexes
+---
+
+# Tags
+
+## Tag Indexes
+- [KB design](./kb-design-index.md) — curated
+
+## Other tag indexes <!-- generated -->
+""",
+    )
+    write(
+        notes_root / "kb-design-index.md",
+        """---
+description: KB design
+type: index
+index_source: tag
+index_key: kb-design
+---
+
+# KB design
+""",
+    )
+    write(
+        notes_root / "tool-loop-index.md",
+        """---
+description: Tool loop
+type: index
+index_source: tag
+index_key: tool-loop
+---
+
+# Tool loop
+""",
+    )
+
+    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
+
+    result = sync_generated_index.sync_index(tags_index, {})
+    updated = tags_index.read_text(encoding="utf-8")
+
+    assert result == "  Updated tags-index.md: 2 tag indexes"
+    assert "- [KB design](./kb-design-index.md) — curated" in updated
+    assert "- [Tool loop](./tool-loop-index.md) — Tool loop" in updated
+    assert updated.count("./kb-design-index.md") == 1

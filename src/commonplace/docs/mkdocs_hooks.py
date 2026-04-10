@@ -4,29 +4,38 @@ import os
 import re
 from pathlib import Path
 
+from commonplace.lib import frontmatter
+
+
+def _matches_tag_index(candidate: Path, tag: str) -> bool:
+    """Return True when a page declares itself as the index for a tag."""
+    if not candidate.is_file() or candidate.suffix != ".md":
+        return False
+    content = candidate.read_text(encoding="utf-8")
+    fm = frontmatter.parse(content).data
+    return (
+        fm.get("type") == "index"
+        and fm.get("index_source") == "tag"
+        and fm.get("index_key") == tag
+    )
+
 
 def _find_tag_index(tag: str, note_dir: Path) -> str | None:
-    """Find relative path from note_dir to the tag's index file.
-
-    Searches up to 4 levels above note_dir for {tag}-index.md or {tag}.md,
-    both flat and one subdirectory deep.
-    """
-    filenames = [f"{tag}-index.md", f"{tag}.md"]
+    """Find relative path from note_dir to the declared index page for a tag."""
     search_dir = note_dir.resolve()
     note_dir_resolved = note_dir.resolve()
 
     for _ in range(4):
-        for filename in filenames:
-            candidate = search_dir / filename
-            if candidate.exists():
-                return os.path.relpath(candidate, note_dir_resolved)
-
-            if search_dir.is_dir():
-                for subdir in sorted(search_dir.iterdir()):
-                    if subdir.is_dir() and not subdir.name.startswith("."):
-                        candidate = subdir / filename
-                        if candidate.exists():
-                            return os.path.relpath(candidate, note_dir_resolved)
+        if search_dir.is_dir():
+            for candidate in sorted(search_dir.glob("*.md")):
+                if _matches_tag_index(candidate, tag):
+                    return os.path.relpath(candidate, note_dir_resolved)
+            for subdir in sorted(search_dir.iterdir()):
+                if not subdir.is_dir() or subdir.name.startswith("."):
+                    continue
+                for candidate in sorted(subdir.glob("*.md")):
+                    if _matches_tag_index(candidate, tag):
+                        return os.path.relpath(candidate, note_dir_resolved)
 
         search_dir = search_dir.parent
 

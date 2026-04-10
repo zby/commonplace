@@ -1,6 +1,8 @@
 ---
 description: Comparable knowledge/agent systems tracked for evolving ideas, convergence signals, and borrowable patterns
 type: index
+index_source: tag
+index_key: related-systems
 ---
 
 # Related Systems
@@ -108,3 +110,4 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
+

@@ -1,6 +1,8 @@
 ---
 description: How commonplace is structured and installed — repo layout, two-tree split, control-plane design, file-based storage
 type: index
+index_source: tag
+index_key: architecture
 status: current
 ---
 
@@ -22,4 +24,11 @@ How commonplace is structured and installed. Repo layout, the two-tree split bet
 
 ## Other tagged notes <!-- generated -->
 
+- [007-reports-directory-for-generated-snapshots](./adr/007-reports-directory-for-generated-snapshots.md) — Decision to create kb/reports/ for generated, regenerable analytical snapshots — distinct from workshop (temporal work-in-flight) and notes (durable claims)
+- [008-Stdlib-only core scripts](./adr/008-stdlib-only-core-scripts.md) — Core scripts use only Python stdlib by defining a strict frontmatter grammar that a regex parser handles completely
+- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — Historical decision to move skills to top-level sources, keep KB Goals always-loaded, split types into core and local, and use dynamic type discovery for practitioner-defined types
+- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — Decision to ship operational scripts as an installable Python package (llm-commonplace), replace the two-tree layout with a one-tree init model, and use scaffold symlinks for zero-duplication seeding
+- [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — Accepted decision to replace the custom type-profile DSL with authored JSON Schema over a parsed note document model
+- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — Accepted decision that specialized and practitioner-defined types use separate template and instructions files, while WRITING.md stays the generic always-loaded guide
 - [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation
+- [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are

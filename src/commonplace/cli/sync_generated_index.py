@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Rebuild the generated section of tag index pages.
+"""Rebuild the generated section of index pages with generated tails.
 
-For each index page, derives the tag from the filename (strip -index.md),
-finds all notes with that tag in their tags: field, and replaces
-everything from the <!-- generated --> marker to EOF.  Notes already
-linked in the curated section above the marker are excluded.
+For each managed index page, uses frontmatter to determine the source of
+the generated section and replaces everything from the <!-- generated -->
+marker to EOF. Links already present in the curated section above the
+marker are excluded from the generated listing.
 
 Usage:
     commonplace-sync-generated-index                    # all indexes
@@ -24,6 +24,10 @@ KB_ROOT = Path.cwd().resolve() / "kb"
 NOTES_DIR = KB_ROOT / "notes"
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
+GENERATED_HEADING_BY_SOURCE = {
+    "tag": "## Other tagged notes",
+    "tag-indexes": "## Other tag indexes",
+}
 
 
 def get_title(content: str) -> str:
@@ -63,16 +67,46 @@ def collect_notes_by_tag() -> dict[str, list[tuple[Path, str, str]]]:
     return by_tag
 
 
-def tag_from_filename(index_path: Path) -> str:
-    """Derive tag name from index filename.
+def index_frontmatter(path: Path, content: str | None = None) -> dict:
+    """Parse frontmatter for an index candidate."""
+    if content is None:
+        content = path.read_text()
+    return frontmatter.parse(content).data
 
-    kb-design-index.md -> kb-design
-    related-systems-index.md -> related-systems
-    """
-    stem = index_path.stem
-    if stem.endswith("-index"):
-        return stem[: -len("-index")]
-    return stem
+
+def index_source(path: Path, content: str | None = None) -> str | None:
+    """Return the declared generated-section source for a managed index."""
+    try:
+        rel_parts = path.relative_to(NOTES_DIR).parts
+    except ValueError:
+        rel_parts = path.parts
+
+    if "types" in rel_parts:
+        return None
+    if path.name.endswith(".template.md"):
+        return None
+
+    fm = index_frontmatter(path, content)
+    if fm.get("type") != "index":
+        return None
+    source = fm.get("index_source")
+    if source in GENERATED_HEADING_BY_SOURCE:
+        return source
+    return None
+
+
+def collect_tag_index_entries() -> list[tuple[Path, str, str]]:
+    """Return all tag indexes that should appear in the tags directory."""
+    entries: list[tuple[Path, str, str]] = []
+    for path in sorted(NOTES_DIR.rglob("*.md")):
+        content = path.read_text()
+        if index_source(path, content) != "tag":
+            continue
+        fm = index_frontmatter(path, content)
+        title = get_title(content)
+        desc = fm.get("description", "")
+        entries.append((path, title, desc))
+    return entries
 
 
 def extract_curated_links(curated_section: str) -> set[str]:
@@ -81,13 +115,15 @@ def extract_curated_links(curated_section: str) -> set[str]:
 
 
 def build_generated_section(
-    notes: list[tuple[Path, str, str]], index_dir: Path,
+    entries: list[tuple[Path, str, str]],
+    index_dir: Path,
+    heading: str,
     curated_links: set[str] | None = None,
 ) -> str:
     """Build the generated listing section, excluding already-curated notes."""
-    lines = [f"## Other tagged notes {MARKER}", ""]
+    lines = [f"{heading} {MARKER}", ""]
 
-    for path, title, desc in sorted(notes, key=lambda x: x[1].lower()):
+    for path, title, desc in sorted(entries, key=lambda x: x[1].lower()):
         relpath = os.path.relpath(path, index_dir)
         if not relpath.startswith(".."):
             relpath = f"./{relpath}"
@@ -105,9 +141,10 @@ def build_generated_section(
 def sync_index(index_path: Path, notes_by_tag: dict, dry_run: bool = False) -> str | None:
     """Sync generated section of a single index. Returns change description or None."""
     content = index_path.read_text()
-    tag = tag_from_filename(index_path)
-
-    notes = notes_by_tag.get(tag, [])
+    fm = index_frontmatter(index_path, content)
+    source = str(fm.get("index_source", ""))
+    if source not in GENERATED_HEADING_BY_SOURCE:
+        return None
 
     # Extract links from the curated section (above the marker)
     marker_pos_for_curated = content.find(MARKER)
@@ -117,12 +154,27 @@ def sync_index(index_path: Path, notes_by_tag: dict, dry_run: bool = False) -> s
         curated_section = content
     curated_links = extract_curated_links(curated_section)
 
-    generated = build_generated_section(notes, index_path.parent, curated_links)
+    if source == "tag":
+        key = str(fm.get("index_key", ""))
+        entries = notes_by_tag.get(key, [])
+        change_target = f"{len(entries)} notes for tag '{key}'"
+    else:
+        entries = collect_tag_index_entries()
+        change_target = f"{len(entries)} tag indexes"
+
+    generated = build_generated_section(
+        entries,
+        index_path.parent,
+        GENERATED_HEADING_BY_SOURCE[source],
+        curated_links,
+    )
 
     marker_pos = content.find(MARKER)
     if marker_pos == -1:
         # No marker yet — append
-        heading_pos = content.rfind("\n## Other tagged notes")
+        heading_pos = -1
+        for heading in GENERATED_HEADING_BY_SOURCE.values():
+            heading_pos = max(heading_pos, content.rfind(f"\n{heading}"))
         if heading_pos == -1:
             heading_pos = content.rfind("\n## All notes")
         if heading_pos != -1:
@@ -145,27 +197,34 @@ def sync_index(index_path: Path, notes_by_tag: dict, dry_run: bool = False) -> s
 
     if not dry_run:
         index_path.write_text(new_content)
-    return f"  {'Would update' if dry_run else 'Updated'} {index_path.name}: {len(notes)} notes for tag '{tag}'"
+    return f"  {'Would update' if dry_run else 'Updated'} {index_path.name}: {change_target}"
 
 
 def find_index_files(args: list[str]) -> list[Path]:
     """Find index files to process."""
     if args:
-        return [Path(a) for a in args if Path(a).is_file()]
+        indexes = []
+        for arg in args:
+            path = Path(arg)
+            if not path.is_file():
+                continue
+            content = path.read_text()
+            if index_source(path, content):
+                indexes.append(path)
+        return indexes
 
-    # Find all type: index files
+    # Find all indexes with generated tails.
     indexes = []
     for path in sorted(NOTES_DIR.rglob("*.md")):
         content = path.read_text()
-        fm = frontmatter.parse(content).data
-        if fm.get("type") == "index":
+        if index_source(path, content):
             indexes.append(path)
     return indexes
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Rebuild generated sections of tag index pages.",
+        description="Rebuild generated sections of index pages with generated tails.",
     )
     parser.add_argument("index_paths", nargs="*", help="Optional index files to process.")
     parser.add_argument("--dry-run", action="store_true", help="Print changes without writing files.")

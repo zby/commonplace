@@ -1,6 +1,8 @@
 ---
 description: Index of notes about linking — how links work as decision points, navigation modes, link contracts, and automated link management
 type: index
+index_source: tag
+index_key: links
 status: current
 ---
 
