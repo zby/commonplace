@@ -36,6 +36,7 @@ This workshop holds the **execution packets** for those candidates so the work c
 14. **Synapptic** — mines Claude Code JSONL sessions into weighted profiles and benchmark-filtered guards, then compiles them into assistant memory files; review exists, likely belongs as a prompt-policy trace-mining system
 15. **virtual-context** — compacts live conversation and tool traces into durable summaries, facts, tag memories, and shared session state; likely belongs as a service-owned trace-to-symbolic-memory system
 16. **EQUIPA** — multi-agent coding orchestrator that mines agent run traces into episodes, lessons, SIMBA rules, prompt variants, and partial training-data export; likely belongs as a mixed artifact+weight learning system
+17. **Claude Context Guard** — mines live agent sessions, user comments, plans, and git-state mismatches into durable safeguard files and archives; likely belongs as a weak prompt-mediated trace-to-artifact continuity system
 
 ## Parked but likely worth a later pass
 
