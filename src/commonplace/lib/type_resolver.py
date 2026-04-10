@@ -22,28 +22,6 @@ class TypeProfile:
     resolved_type: str
     definition_path: Path | None
     schema: dict[str, Any] | None = None
-    required_headings: tuple[str, ...] = ()
-    any_headings: tuple[str, ...] = ()
-    required_fields: tuple[str, ...] = ()
-    allowed_status: tuple[str, ...] = ()
-    requires_date: bool = False
-    min_links: int | None = None
-
-
-def _merge_sequences(parent: tuple[str, ...], child: tuple[str, ...]) -> tuple[str, ...]:
-    merged = list(parent)
-    for item in child:
-        if item not in merged:
-            merged.append(item)
-    return tuple(merged)
-
-
-def _merge_allowed_status(parent: tuple[str, ...], child: tuple[str, ...]) -> tuple[str, ...]:
-    if not child:
-        return parent
-    if not parent:
-        return child
-    return tuple(item for item in parent if item in child)
 
 
 def _schema_candidate_name(type_name: str) -> str:
@@ -124,147 +102,6 @@ def _build_registry_for_path(path: Path, registry: Registry | None = None, seen:
     return registry
 
 
-def _frontmatter_required_fields(schema: dict[str, Any]) -> tuple[str, ...]:
-    frontmatter = schema.get("properties", {}).get("frontmatter")
-    if not isinstance(frontmatter, dict):
-        return ()
-    required = frontmatter.get("required", [])
-    if not isinstance(required, list):
-        return ()
-    return tuple(str(item) for item in required if str(item) != "type")
-
-
-def _status_enum(schema: dict[str, Any]) -> tuple[str, ...]:
-    frontmatter = schema.get("properties", {}).get("frontmatter")
-    if not isinstance(frontmatter, dict):
-        return ()
-    status = frontmatter.get("properties", {}).get("status")
-    if not isinstance(status, dict):
-        return ()
-    enum = status.get("enum")
-    if not isinstance(enum, list):
-        return ()
-    return tuple(str(item) for item in enum)
-
-
-def _heading_constraints(schema: dict[str, Any], key: str) -> tuple[str, ...]:
-    headings = schema.get("properties", {}).get("headings")
-    if not isinstance(headings, dict):
-        return ()
-    subschemas = headings.get(key)
-    if not isinstance(subschemas, list):
-        return ()
-
-    values: list[str] = []
-    for item in subschemas:
-        if not isinstance(item, dict):
-            continue
-        contains = item.get("contains")
-        if not isinstance(contains, dict):
-            continue
-        value = contains.get("const")
-        if isinstance(value, str) and value not in values:
-            values.append(value)
-    return tuple(values)
-
-
-def _link_min_items(schema: dict[str, Any]) -> int | None:
-    links = schema.get("properties", {}).get("links")
-    if not isinstance(links, dict):
-        return None
-    min_items = links.get("minItems")
-    if isinstance(min_items, int):
-        return min_items
-    return None
-
-
-def _requires_date(schema: dict[str, Any]) -> bool:
-    branches = schema.get("anyOf")
-    if not isinstance(branches, list):
-        return False
-
-    for branch in branches:
-        if not isinstance(branch, dict):
-            continue
-        props = branch.get("properties", {})
-        if not isinstance(props, dict):
-            continue
-        body_dates = props.get("body_dates")
-        if isinstance(body_dates, dict) and isinstance(body_dates.get("minItems"), int) and body_dates["minItems"] >= 1:
-            return True
-        frontmatter = props.get("frontmatter")
-        if not isinstance(frontmatter, dict):
-            continue
-        required = frontmatter.get("required", [])
-        if not isinstance(required, list):
-            continue
-        if any(field in {"date", "last-checked"} for field in required):
-            return True
-    return False
-
-
-def _accumulate_schema_metadata(
-    schema: dict[str, Any],
-    current_path: Path,
-    *,
-    seen_paths: set[Path] | None = None,
-) -> dict[str, Any]:
-    if seen_paths is None:
-        seen_paths = set()
-
-    metadata = {
-        "required_headings": (),
-        "any_headings": (),
-        "required_fields": (),
-        "allowed_status": (),
-        "requires_date": False,
-        "min_links": None,
-    }
-
-    resolved_path = current_path.resolve()
-    if resolved_path not in seen_paths:
-        seen_paths.add(resolved_path)
-
-    ref = schema.get("$ref")
-    if isinstance(ref, str):
-        parsed = urlparse(ref)
-        if not parsed.scheme and not ref.startswith("#"):
-            ref_path = (current_path.parent / ref).resolve()
-            ref_schema = _load_schema(str(ref_path))
-            ref_meta = _accumulate_schema_metadata(ref_schema, ref_path, seen_paths=seen_paths)
-            metadata["required_headings"] = _merge_sequences(metadata["required_headings"], ref_meta["required_headings"])
-            metadata["any_headings"] = _merge_sequences(metadata["any_headings"], ref_meta["any_headings"])
-            metadata["required_fields"] = _merge_sequences(metadata["required_fields"], ref_meta["required_fields"])
-            metadata["allowed_status"] = _merge_allowed_status(metadata["allowed_status"], ref_meta["allowed_status"])
-            metadata["requires_date"] = metadata["requires_date"] or ref_meta["requires_date"]
-            if ref_meta["min_links"] is not None:
-                metadata["min_links"] = ref_meta["min_links"]
-
-    for subschema in schema.get("allOf", []):
-        if not isinstance(subschema, dict):
-            continue
-        sub_meta = _accumulate_schema_metadata(subschema, current_path, seen_paths=seen_paths)
-        metadata["required_headings"] = _merge_sequences(metadata["required_headings"], sub_meta["required_headings"])
-        metadata["any_headings"] = _merge_sequences(metadata["any_headings"], sub_meta["any_headings"])
-        metadata["required_fields"] = _merge_sequences(metadata["required_fields"], sub_meta["required_fields"])
-        metadata["allowed_status"] = _merge_allowed_status(metadata["allowed_status"], sub_meta["allowed_status"])
-        metadata["requires_date"] = metadata["requires_date"] or sub_meta["requires_date"]
-        if sub_meta["min_links"] is not None:
-            metadata["min_links"] = sub_meta["min_links"]
-
-    metadata["required_headings"] = _merge_sequences(metadata["required_headings"], _heading_constraints(schema, "allOf"))
-    metadata["any_headings"] = _merge_sequences(metadata["any_headings"], _heading_constraints(schema, "anyOf"))
-    metadata["required_fields"] = _merge_sequences(metadata["required_fields"], _frontmatter_required_fields(schema))
-    metadata["allowed_status"] = _merge_allowed_status(metadata["allowed_status"], _status_enum(schema))
-    metadata["requires_date"] = metadata["requires_date"] or _requires_date(schema)
-
-    min_links = _link_min_items(schema)
-    if min_links is not None:
-        metadata["min_links"] = min_links
-
-    return metadata
-
-
 @lru_cache(maxsize=None)
 def _validator_for_path(path_str: str) -> Draft202012Validator:
     path = Path(path_str).resolve()
@@ -283,17 +120,10 @@ def _resolve_known_type(type_name: str, file_path: Path, workspace_root: Path) -
         return _resolve_known_type("note", file_path, workspace_root)
 
     schema = _load_schema(str(definition_path.resolve()))
-    metadata = _accumulate_schema_metadata(schema, definition_path)
     return TypeProfile(
         resolved_type=type_name if type_name != "text" else "text",
         definition_path=definition_path,
         schema=schema,
-        required_headings=metadata["required_headings"],
-        any_headings=metadata["any_headings"],
-        required_fields=metadata["required_fields"],
-        allowed_status=metadata["allowed_status"],
-        requires_date=metadata["requires_date"],
-        min_links=metadata["min_links"],
     )
 
 

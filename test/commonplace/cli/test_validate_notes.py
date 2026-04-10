@@ -188,7 +188,7 @@ type: note
 
     assert results.note_type == "note"
     assert results.fails == []
-    assert any("description: present" in item for item in results.passes)
+    assert all("description" not in warning for warning in results.warns)
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
@@ -246,7 +246,7 @@ Some evidence.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert any("missing headings ## Reasoning" in item for item in results.warns)
+    assert any("missing '## Reasoning'" in item for item in results.warns)
 
 
 def test_spec_accepts_design_or_implementation_heading(tmp_path: Path) -> None:
@@ -269,8 +269,8 @@ Design details.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert any("spec has required heading" in item for item in results.passes)
-    assert all("should contain ## Design or ## Implementation" not in item for item in results.warns)
+    assert all("Design" not in item and "Implementation" not in item for item in results.warns)
+    assert all("headings" not in item for item in results.warns)
 
 
 def test_related_system_warns_when_last_checked_missing(tmp_path: Path) -> None:
@@ -309,7 +309,7 @@ Watch.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "frontmatter: missing required fields last-checked" in results.warns
+    assert "frontmatter: 'last-checked' is a required property" in results.warns
 
 
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
@@ -434,8 +434,8 @@ Consequences.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert 'status: "accepted" — valid' in results.passes
-    assert all("status:" not in warning for warning in results.warns)
+    assert results.fails == []
+    assert all("status" not in warning for warning in results.warns)
 
 
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:

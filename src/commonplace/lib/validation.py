@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
 
 from jsonschema.exceptions import ValidationError
 
@@ -14,13 +13,12 @@ from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
-VALID_TRAITS = {
-    "definition",
-    "has-comparison",
-    "has-external-sources",
-    "has-implementation",
-    "title-as-claim",
-}
+_FAIL_PATHS: frozenset[tuple[str, ...]] = frozenset({
+    ("frontmatter", "description"),
+    ("frontmatter", "type"),
+})
+
+_REQUIRED_PROPERTY_RE = re.compile(r"'([^']+)' is a required property")
 
 
 @dataclass
@@ -75,23 +73,6 @@ def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str |
     ), None
 
 
-def validate_description(results: CheckResults, description: Any) -> None:
-    if description in (None, ""):
-        results.fails.append("description: missing or empty")
-        return
-
-    if not isinstance(description, str):
-        results.fails.append("description: must be a string")
-        return
-
-    desc = description.strip()
-    if not desc:
-        results.fails.append("description: missing or empty")
-        return
-
-    results.passes.append(f"description: present, {len(desc)} chars")
-
-
 def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedDocument) -> None:
     title = document.title.strip()
     title_length = len(title)
@@ -116,41 +97,6 @@ def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedD
         )
 
 
-def validate_type_traits_status(
-    results: CheckResults,
-    frontmatter: dict[str, Any],
-    note_type: str,
-    profile: TypeProfile,
-) -> None:
-    if "type" in frontmatter:
-        if not isinstance(frontmatter["type"], str) or not frontmatter["type"].strip():
-            results.fails.append("type: must be a non-empty string")
-        else:
-            results.passes.append(f'type: "{frontmatter["type"]}" — valid')
-
-    traits = frontmatter.get("traits")
-    if traits is not None:
-        if not isinstance(traits, list):
-            results.fails.append("traits: must be a list")
-        else:
-            invalid = [trait for trait in traits if trait not in VALID_TRAITS]
-            if invalid:
-                for trait in invalid:
-                    results.warns.append(f'traits: invalid trait "{trait}"')
-            else:
-                results.passes.append("traits: valid")
-
-    status = frontmatter.get("status")
-    if status is not None and profile.allowed_status:
-        if status not in profile.allowed_status:
-            results.warns.append(f'status: "{status}" is not one of {sorted(profile.allowed_status)}')
-        else:
-            results.passes.append(f'status: "{status}" — valid')
-
-    if note_type == "note" and frontmatter.get("traits") == []:
-        results.infos.append("bare note type: type=note with empty traits")
-
-
 def validate_links_from_document(results: CheckResults, path: Path, links: tuple[str, ...]) -> None:
     missing: list[str] = []
     for link in links:
@@ -169,110 +115,45 @@ def validate_links_from_document(results: CheckResults, path: Path, links: tuple
         results.passes.append("link health: all relative markdown links resolve")
 
 
-def validate_structure(
-    results: CheckResults, note_type: str, document: ParsedDocument, profile: TypeProfile
-) -> None:
-    if profile.required_headings:
-        missing = [heading for heading in profile.required_headings if heading not in document.headings]
-        if missing:
-            results.warns.append(f"structure: missing headings {', '.join(missing)}")
-        else:
-            results.passes.append(f"structure: required {note_type} headings present")
-
-    if profile.any_headings:
-        if all(heading not in document.headings for heading in profile.any_headings):
-            results.warns.append(f"structure: {note_type} should contain {' or '.join(profile.any_headings)}")
-        else:
-            results.passes.append(f"structure: {note_type} has required heading")
-
-    extra_required_fields = [name for name in profile.required_fields if name != "description"]
-    frontmatter = document.frontmatter or {}
-    missing_fields = [name for name in extra_required_fields if frontmatter.get(name) in (None, "", [])]
-    if missing_fields:
-        results.warns.append(f"frontmatter: missing required fields {', '.join(missing_fields)}")
-    elif extra_required_fields:
-        results.passes.append(f"frontmatter: required {note_type} fields present")
-
-    if profile.requires_date:
-        has_date = any(key in frontmatter for key in ("date", "last-checked")) or bool(document.body_dates)
-        if not has_date:
-            results.warns.append("structure: review should include a date in frontmatter or body")
-        else:
-            results.passes.append("structure: review has date")
-
-    if profile.min_links is not None:
-        if len(document.links) < profile.min_links:
-            results.warns.append(f"structure: index should be primarily navigational (found {len(document.links)} links)")
-        else:
-            results.passes.append("structure: index has navigational link density")
-
-
-def _missing_required_property(error: ValidationError) -> str | None:
-    match = re.search(r"'([^']+)' is a required property", error.message)
-    return match.group(1) if match else None
-
-
-def _schema_error_message(error: ValidationError, profile: TypeProfile, document: ParsedDocument) -> tuple[str, str] | None:
+def _schema_error_message(error: ValidationError) -> tuple[str, str]:
     path = tuple(str(part) for part in error.absolute_path)
 
-    if error.validator == "required" and path == ("frontmatter",):
-        missing = _missing_required_property(error)
-        if missing == "description":
-            return "fail", "description: missing or empty"
-        if missing == "type":
-            return "fail", "type: must be a non-empty string"
-        if missing is not None:
-            return "warn", f"frontmatter: missing required fields {missing}"
+    # `required` violations report at the parent path; the missing field is in the message.
+    # For severity lookup, treat the missing field as if it were at path + (field_name,).
+    effective_path = path
+    if error.validator == "required":
+        match = _REQUIRED_PROPERTY_RE.search(error.message)
+        if match:
+            effective_path = path + (match.group(1),)
 
-    if path == ("frontmatter", "description"):
-        if error.validator == "type":
-            return "fail", "description: must be a string"
-        if error.validator == "minLength":
-            return "fail", "description: missing or empty"
-
-    if path == ("frontmatter", "type"):
-        if error.validator == "type":
-            return "fail", "type: must be a non-empty string"
-        if error.validator == "const":
-            actual = None if document.frontmatter is None else document.frontmatter.get("type")
-            return "fail", f'type: "{actual}" does not match required value "{error.validator_value}"'
-
-    if path == ("frontmatter", "status") and error.validator == "enum":
-        status = None if document.frontmatter is None else document.frontmatter.get("status")
-        return "warn", f'status: "{status}" is not one of {sorted(profile.allowed_status)}'
-
-    if error.validator == "format" and len(path) == 2 and path[0] == "frontmatter":
-        return "warn", f"frontmatter: {path[1]} must be a valid {error.validator_value}"
-
-    if error.validator in {"contains", "anyOf", "minItems", "enum", "required"}:
-        return None
-
+    severity = "fail" if effective_path in _FAIL_PATHS else "warn"
     location = ".".join(path) if path else "document"
-    return "warn", f"{location}: {error.message}"
+
+    # Prefer schema-authored description/title when present — lets schema authors
+    # make any specific error more readable without touching validator code.
+    schema = error.schema if isinstance(error.schema, dict) else None
+    if isinstance(schema, dict):
+        hint = schema.get("description") or schema.get("title")
+        if isinstance(hint, str):
+            return severity, f"{location}: {hint}"
+
+    # For `contains`, jsonschema's default message doesn't say which const is expected.
+    # Extract it from the schema so the error is actionable.
+    if error.validator == "contains" and isinstance(schema, dict):
+        contains = schema.get("contains")
+        if isinstance(contains, dict) and "const" in contains:
+            return severity, f"{location}: missing {contains['const']!r}"
+
+    return severity, f"{location}: {error.message}"
 
 
 def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
-    messages = {
-        ("pass", item) for item in results.passes
-    } | {
-        ("warn", item) for item in results.warns
-    } | {
-        ("fail", item) for item in results.fails
-    }
-
     for error in validate_instance(parsed.profile, parsed.document.to_validation_object()):
-        translated = _schema_error_message(error, parsed.profile, parsed.document)
-        if translated is None:
-            continue
-        severity, message = translated
-        key = (severity, message)
-        if key in messages:
-            continue
+        severity, message = _schema_error_message(error)
         if severity == "fail":
             results.fails.append(message)
         else:
             results.warns.append(message)
-        messages.add(key)
 
 
 def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
@@ -287,11 +168,8 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
 
     results = CheckResults(note_type=parsed.note_type)
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
-    validate_description(results, parsed.document.frontmatter.get("description"))
     validate_title_and_slug(results, parsed.path, parsed.document)
-    validate_type_traits_status(results, parsed.document.frontmatter, parsed.note_type, parsed.profile)
     validate_links_from_document(results, parsed.path, parsed.document.links)
-    validate_structure(results, parsed.note_type, parsed.document, parsed.profile)
     apply_schema_validation(results, parsed)
     return results
 

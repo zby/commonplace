@@ -57,8 +57,7 @@ type: note
     profile = type_resolver.resolve_type(note, {"description": "Sample", "type": "note"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "note"
-    assert profile.required_fields == ("description",)
-    assert profile.allowed_status == ("seedling", "current")
+    assert profile.definition_path == tmp_path / "kb" / "types" / "note.schema.yaml"
 
 
 def test_collection_definition_extends_note_profile(tmp_path: Path) -> None:
@@ -131,8 +130,7 @@ type: structured-claim
     profile = type_resolver.resolve_type(note, {"description": "Sample", "type": "structured-claim"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "structured-claim"
-    assert profile.required_fields == ("description",)
-    assert profile.required_headings == ("## Evidence", "## Reasoning")
+    assert profile.definition_path == tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml"
 
 
 def test_missing_type_definition_falls_back_to_note(tmp_path: Path) -> None:
@@ -174,8 +172,7 @@ type: unknown-type
     profile = type_resolver.resolve_type(note, {"description": "Sample", "type": "unknown-type"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "note"
-    assert profile.required_fields == ("description",)
-    assert profile.required_headings == ()
+    assert profile.definition_path == tmp_path / "kb" / "types" / "note.schema.yaml"
 
 
 def test_workshop_scope_overrides_collection_and_root(tmp_path: Path) -> None:
@@ -255,7 +252,7 @@ type: memo
     profile = type_resolver.resolve_type(note, {"description": "Workshop note", "type": "memo"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "memo"
-    assert profile.required_fields == ("description", "workshop-field")
+    assert profile.definition_path == tmp_path / "kb" / "work" / "demo" / "types" / "memo.schema.yaml"
 
 
 def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> None:
@@ -264,7 +261,7 @@ def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> No
     profile = type_resolver.resolve_type(note, None, repo_root=tmp_path)
 
     assert profile.resolved_type == "text"
-    assert profile.required_fields == ()
+    assert profile.definition_path is None
 
 
 def test_type_specific_status_enum_overrides_note_status_via_base_schema(tmp_path: Path) -> None:
@@ -347,4 +344,4 @@ status: accepted
     profile = type_resolver.resolve_type(note, {"description": "Decision", "type": "adr"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "adr"
-    assert profile.allowed_status == ("proposed", "accepted", "superseded", "deprecated")
+    assert profile.definition_path == tmp_path / "kb" / "notes" / "types" / "adr.schema.yaml"
