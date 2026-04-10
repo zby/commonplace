@@ -37,6 +37,7 @@ This workshop holds the **execution packets** for those candidates so the work c
 15. **virtual-context** — compacts live conversation and tool traces into durable summaries, facts, tag memories, and shared session state; likely belongs as a service-owned trace-to-symbolic-memory system
 16. **EQUIPA** — multi-agent coding orchestrator that mines agent run traces into episodes, lessons, SIMBA rules, prompt variants, and partial training-data export; likely belongs as a mixed artifact+weight learning system
 17. **Claude Context Guard** — mines live agent sessions, user comments, plans, and git-state mismatches into durable safeguard files and archives; likely belongs as a weak prompt-mediated trace-to-artifact continuity system
+18. **xMemory** — mines ordered conversation transcripts into durable episode summaries, semantic fact strings, theme summaries, and kNN/graph retrieval artifacts; likely belongs as a conversation-trace symbolic artifact-learning system
 
 ## Parked but likely worth a later pass
 
