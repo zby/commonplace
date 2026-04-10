@@ -39,6 +39,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
+- `kb/reference/README.md` — current-state documentation entry point: architecture, type system, and ADR navigation for the live commonplace system
 - `kb/reference/adr/` — architecture decision records for the current commonplace system
 - `kb/sources/index.md` — auto-generated source listing
 

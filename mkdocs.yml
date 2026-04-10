@@ -20,6 +20,7 @@ plugins:
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md'
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md'
+        'reference/index.md': 'reference/README.md'
 nav:
   - Home: index.md
   - Concepts:
@@ -32,6 +33,9 @@ nav:
       - Tags: notes/tags-index.md
       - Notes Directory: notes/index.md
       - Reference:
+          - Overview: reference/README.md
+          - Architecture: reference/architecture.md
+          - Type System: reference/type-system.md
           - ADR 002: reference/adr/002-inline-global-types-in-writing-guide.md
           - ADR 003: reference/adr/003-connect-skill-discovery-strategy.md
           - ADR 004: reference/adr/004-replace-areas-with-tags.md

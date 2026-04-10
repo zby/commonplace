@@ -9,6 +9,8 @@ status: current
 
 Browse the KB by tag. Each tag page has a curated editorial section and an auto-generated listing of all notes with that tag.
 
+For current-state documentation about the live commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
+
 ## Tag Indexes
 
 - [Foundations](./foundations-index.md) — core theory: contextual competence, bounded context, reach, design methodology, composability

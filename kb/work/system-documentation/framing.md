@@ -2,7 +2,7 @@
 
 ## Status
 
-One question from this framing is resolved: system documentation gets a new top-level collection `kb/reference/`, using the existing `note` type, and ADRs move there too. See [move-plan.md](./move-plan.md) for the concrete sub-efforts. The per-note scope signal question (options A–D below) remains open and is a separable sub-effort.
+The location question from this framing is fully resolved and the move is complete: system documentation lives in the new top-level collection `kb/reference/`, uses the existing `note` type, and now holds the ADRs, the two wholesale system-doc moves (`architecture.md`, `type-system.md`), and the five theory/reference split pairs. See [move-plan.md](./move-plan.md) (now marked complete) and [split-plan.md](./split-plan.md) (work queue all `done`) for the landed sub-efforts. The per-note scope signal question (options A–D below) remains open and is a separable sub-effort.
 
 ## The real problem
 

@@ -1,52 +1,67 @@
 ---
-description: The repo's own layout (kb/, sources, instructions, scripts) as distinct from the old two-tree installed layout; global base types now live under kb/types/ with the rest of the operational KB surface
+description: Current repo layout and operational surface — authored KB content, packaged runtime, shipped skills, and the boundary between commonplace itself and installed projects
 type: note
 traits: []
 tags: [architecture]
-status: seedling
+status: current
 ---
 
 # Commonplace architecture
 
-The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. This note covers the repo's own layout, distinct from the [two-tree installation layout](./adr/006-two-tree-installation-layout.md) that emerges when commonplace is installed into another project.
+The commonplace repo is itself a knowledge base and the framework implementation that ships into other projects. This note describes the repo as it exists today, distinct from the [two-tree installation layout](./adr/006-two-tree-installation-layout.md) that appears when commonplace is installed elsewhere.
 
 ## Current layout
 
-```
+```text
 commonplace/
     kb/
       types/                         ← global base types (`text`, `note`)
-      log.md                         ← improvement log (append-only)
-      notes/
-        types/                       ← note types (structured-claim, adr, etc.)
+      notes/                         ← transferable theory and methodology
+        types/
+        definitions/
         related-systems/
         research/
-        meta/
-        *.md                         ← methodology and theory notes
-      sources/
-        types/                       ← source types (source-review)
-        *.md                         ← reference material
-      tasks/
-        types/                       ← task types (active, backlog, recurring)
+        *.md
+      reference/                     ← current-state docs + ADRs for this repo
+        adr/
+        types/
+        *.md
+      sources/                       ← source snapshots and source-review notes
+        types/
+        *.md
+      tasks/                         ← task artifacts; status encoded by directory
+        types/
         backlog/
         active/
         completed/
-    kb/instructions/                 ← skills and instructions (connect, convert, ingest, snapshot-web, validate)
-    scripts/                         ← standalone tools (index generation, topic sync, snapshots)
-    LICENSE
+        recurring/
+      work/                          ← workshop material and design explorations
+      reports/                       ← generated review and fix artifacts
+      instructions/                  ← searchable procedures and promoted skills
+      log.md                         ← improvement log
+    src/commonplace/                 ← packaged CLI, library, review system, assets, scaffold
+    skills/                          ← shipped framework skill source files
+    test/                            ← CLI/lib/review tests
+    related-systems/                 ← checked-out external repos for review work
+    AGENTS.md                        ← project control-plane file
+    README.md                        ← external project overview
 ```
 
-## What's missing
+## Repo surface by role
 
-| Artifact | Status | Notes |
-|----------|--------|-------|
-| `.claude/skills/` | Missing | Symlinks for commonplace's own use — need to point to `kb/instructions/` |
-| `CLAUDE.md` | Missing | The repo's own instructions, routing table, and knowledge system section |
-| `README.md` | Missing | Project overview for GitHub |
+| Area | Role |
+|------|------|
+| `kb/notes/` | Transferable claims, theory, and methodology |
+| `kb/reference/` | Current-state docs and decision history for the live commonplace system |
+| `kb/instructions/` | Procedures, skills, and operator guidance |
+| `kb/work/` | Temporal workshop material and exploratory design work |
+| `kb/reports/` | Generated operational artifacts rather than curated knowledge |
+| `src/commonplace/` | Packaged implementation of the CLI, library, review system, and scaffold |
+| `skills/` | Framework skill sources that get installed into agent environments |
 
 ## Global types live under kb/types/
 
-Installed projects should keep Commonplace's structural surface inside `kb/`, rather than adding extra top-level directories. That keeps instructions, global base types, directory-local types, and authored artifacts in one subtree.
+Installed projects keep Commonplace's structural surface inside `kb/`, rather than adding extra top-level directories. That keeps instructions, global base types, directory-local types, and authored artifacts in one subtree.
 
 The distinction still matters:
 
@@ -55,15 +70,19 @@ The distinction still matters:
 
 The tradeoff is one extra directory under `kb/`, but it avoids a more intrusive top-level `types/` directory in installed projects. That is the better default for installation ergonomics.
 
-## Open Questions
+## Commonplace versus installed projects
 
-- Should kb/instructions/ include an install script, or is that separate tooling?
-- What goes in CLAUDE.md for the commonplace repo itself vs what gets generated for installed projects?
+The commonplace repo carries both methodology content and the framework implementation. Installed projects get the framework surface plus empty or project-local content areas.
+
+- Installed projects get scaffolded `kb/`, shipped skills, and generated control-plane files.
+- They do not inherit commonplace's theory library, workshop history, or review artifacts as their own authored content.
+- `kb/reference/` is now part of the installed collection contract: practitioners can document their own current system there and keep ADRs in the same collection.
 
 ---
 
 Relevant Notes:
 
+- [Reference](./README.md) — entry point for the current-state docs and ADR collection
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — the two-tree design for installed projects; this note covers the repo's own layout
 - [directory-scoped types are cheaper than global types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
-- [instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand
+- [instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in the control plane versus on-demand docs

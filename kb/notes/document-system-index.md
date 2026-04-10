@@ -10,6 +10,8 @@ status: current
 
 How documents are classified, structured, and quality-checked. These notes define the type system, writing conventions, and testing framework that make knowledge artifacts machine-verifiable and human-readable.
 
+For the live commonplace repo's current type inventory and migration summary, see [../reference/type-system.md](../reference/type-system.md).
+
 ## Foundations
 
 - [note base type](../types/note.md) — the base structured type: global fields (description, status, traits, areas), status ladder, traits system, design principles
@@ -40,4 +42,3 @@ How documents are classified, structured, and quality-checked. These notes defin
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
 
 ## Other tagged notes <!-- generated -->
-

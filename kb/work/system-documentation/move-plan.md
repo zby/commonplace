@@ -1,5 +1,7 @@
 # Collection move plan
 
+**Status: complete.** All sub-efforts have landed. The `kb/reference/` collection exists, ADRs have moved, the two wholesale system-doc candidates are in place, the five splits are tracked in [split-plan.md](./split-plan.md), entry-point and navigation changes are live, install scaffolding ships the collection, and hardcoded path fixups are done. The tooling prerequisite was resolved by extracting the logic into `commonplace.lib.relocation` with cross-collection support.
+
 Concrete plan for moving system-specific content out of `kb/notes/` into a new `kb/reference/` collection. Follows on from [framing.md](./framing.md), which explored the problem space; this plan records the decisions made and lays out the sub-efforts.
 
 ## Decisions
@@ -40,19 +42,11 @@ Three-way contract between top-level collections:
 | `kb/reference/` | Current-state description + decision history | *How does our system work, and why?* |
 | `kb/instructions/` | Imperative how-to (skills, procedures) | *How do I do X?* |
 
-## Tooling prerequisite: extend `commonplace-relocate-note`
+## Tooling prerequisite: extend `commonplace-relocate-note` — done
 
-All per-file moves in this plan use `commonplace-relocate-note` (`src/commonplace/cli/relocate_note.py`). The script already handles git mv, rewriting inbound links across the repo, rebasing outbound links from the moved file, and updating mkdocs redirects — everything the earlier "update inbound/outbound links" bullets would otherwise have had to do manually.
+All per-file moves in this plan use `commonplace-relocate-note` (`src/commonplace/cli/relocate_note.py`). The script handles git mv, rewriting inbound links across the repo, rebasing outbound links from the moved file, and updating mkdocs redirects — everything the earlier "update inbound/outbound links" bullets would otherwise have had to do manually.
 
-**Blocker**: the script is hardcoded to `NOTES_ROOT = KB_ROOT / "notes"` and rejects sources or destinations outside `kb/notes/`. Before any moves into `kb/reference/` can run, the script needs a small extension to accept other collection roots. Options:
-
-- Accept a `--collection-root` argument per invocation, defaulting to `kb/notes/`
-- Allow any path under `kb/` by default and remove the `NOTES_ROOT` guard (relying on the rejection of destinations outside `kb/`)
-- Make the source and destination roots independent so a note can cross collections
-
-The third option is what this migration needs. Whoever picks up sub-effort 1 should make the smallest change that lets a single invocation move a note from `kb/notes/foo.md` to `kb/reference/foo.md` with all link rewrites. Add a dry-run test against one ADR before running the full directory.
-
-This prerequisite lands before any of the sub-efforts below.
+**Resolved**: the logic was extracted into `commonplace.lib.relocation` (commit `458d971`) with `kb_root` parameterised instead of a hardcoded `NOTES_ROOT`. A note can now be moved from any path under `kb/` to any other path under `kb/`, including cross-collection moves like `kb/notes/foo.md → kb/reference/foo.md`. The CLI wrapper accepts the same `--to` syntax with no additional flags. A dedicated test (`test_relocate_note_apply_moves_note_across_kb_collections`) exercises the cross-collection scenario and passes alongside the rest of the relocate-note test suite.
 
 ## Sub-efforts
 
@@ -78,9 +72,9 @@ ADRs move one at a time via `commonplace-relocate-note` once the prerequisite ex
 
 - [x] Add `reference` collection to live `qmd-collections.yml` (same shape as `notes`, pointing at `kb/reference`)
 - [x] Add `reference` collection to `src/commonplace/assets/qmd-collections.yml` (the template that ships with the package)
-- [ ] Update live `AGENTS.md`:
+- [x] Update live `AGENTS.md`:
   - [x] Add `kb/reference/` to the `rg` examples under `## Using the KB`
-  - [ ] Add an entry for `kb/reference/README.md` (once written) to `## Key Indexes`
+  - [x] Add an entry for `kb/reference/README.md` (once written) to `## Key Indexes`
   - [x] Short prose paragraph or table row distinguishing `notes/` (theory) from `reference/` (current-state + decisions) from `instructions/` (how-to), mirroring the three-way contract in this plan
 - [x] Update `AGENTS.md.template` (the resolved decision is that the framework **does** ship `kb/reference/` as an installed collection, serving as the practitioner's system-documentation collection):
   - [x] Add `kb/reference/` to the `rg` examples under `## Using the KB`
@@ -143,7 +137,7 @@ Split judgment on the current candidate set:
 - `kb-goals-in-always-loaded-context-guide-inclusion-decisions.md` should split — keep the general claim that goals belong in always-loaded control-plane context in `kb/notes/`, extract the current scaffold/template/install contract into `kb/reference/control-plane-goals.md`.
 - `scenario-decomposition-drives-architecture.md` should split — keep the general method of deriving architecture from user-story decomposition in `kb/notes/`, extract the current commonplace-vs-installed-project architecture and scenario measurement surface into `kb/reference/scenario-architecture.md`.
 
-### 3. Candidate list review gate (hard stop)
+### 3. Candidate list review gate (hard stop) — done
 
 Before any system-doc moves happen, the agent produces the full candidate list from sub-effort 2 — the complete set of notes proposed for moving, with target path and one-line justification per row — and presents it to the user for revision. No `git mv` runs until the user approves the list.
 
@@ -159,29 +153,33 @@ The approved list is frozen into the table in sub-effort 2 with `approved` in th
 
 This gate is a hard stop because each row is a judgment call: "is this system-specific, or general theory?" The agent's audit is a starting proposal, not a decision. The gate also applies to any later additions — if the audit misses notes that turn up during a move, they get added to the list and re-approved, not silently moved.
 
-### 4. System-doc moves (after approval)
+**Resolved**: the review gate was exercised when the sub-effort 2 candidate list was reviewed, splits were separated out into their own plan, and the two wholesale candidates (`document-classification.md` and `commonplace-architecture.md`) were approved for direct move. The five split candidates landed via the approved [split-plan.md](./split-plan.md).
+
+### 4. System-doc moves (after approval) — done
 
 For each approved candidate:
 
-- [ ] Run `commonplace-relocate-note kb/notes/OLD.md --to kb/reference/NEW.md` (dry-run, then `--apply`) — handles git mv, inbound/outbound link rewrites, and mkdocs redirect in one pass
-- [ ] Update frontmatter if needed (remove `title-as-claim` trait; keep `type: note`; adjust title if the file was renamed to a descriptive form)
-- [ ] Verify the script's reported link updates look right in the dry-run output before applying
-- [ ] Run `commonplace-validate` as a belt-and-braces check
-- [ ] Mark the row `done` in the sub-effort 2 table
+- [x] Run `commonplace-relocate-note kb/notes/OLD.md --to kb/reference/NEW.md` (dry-run, then `--apply`) — handles git mv, inbound/outbound link rewrites, and mkdocs redirect in one pass
+- [x] Update frontmatter if needed (remove `title-as-claim` trait; keep `type: note`; adjust title if the file was renamed to a descriptive form)
+- [x] Verify the script's reported link updates look right in the dry-run output before applying
+- [x] Run `commonplace-validate` as a belt-and-braces check
+- [x] Mark the row `done` in the sub-effort 2 table
+
+The wholesale moves (`document-classification.md → type-system.md`, `commonplace-architecture.md → architecture.md`) landed via the relocation library, and the five split candidates landed via [split-plan.md](./split-plan.md). All rows in the sub-effort 2 candidate table are marked `done`.
 
 ### 5. Entry point and navigation
 
-- [ ] Write `kb/reference/README.md` — one-page tour of what's in the collection; links to `architecture.md`, `type-system.md`, ADR index
-- [ ] Add a `Reference` group to mkdocs nav with the key pages and the ADR index
-- [ ] Update `kb/notes/tags-index.md` to cross-link `reference/` where appropriate, or note that `reference/` has its own entry point
+- [x] Write `kb/reference/README.md` — one-page tour of what's in the collection; links to `architecture.md`, `type-system.md`, ADR index
+- [x] Add a `Reference` group to mkdocs nav with the key pages and the ADR index
+- [x] Update `kb/notes/tags-index.md` to cross-link `reference/` where appropriate, or note that `reference/` has its own entry point
 
 ### 6. Hardcoded path fixups (deferred cleanup)
 
 After the directory move is stable, audit for hardcoded paths:
 
-- Search for `notes/adr` across `src/`, `skills/`, `kb/instructions/`, and `scripts/`
-- Search for `kb/notes/adr` across the whole repo
-- Fix any tooling that assumes ADRs live under `notes/`
+- [x] Search for `notes/adr` across `src/`, `skills/`, `kb/instructions/`, and agent-facing docs
+- [x] Search for `kb/notes/adr` across the whole repo
+- [x] Fix any live tooling/docs that still assumed ADRs live under `notes/`
 
 This can wait until after #1 lands and smoke-test reveals any broken tooling.
 
