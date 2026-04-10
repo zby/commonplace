@@ -14,9 +14,11 @@ import os
 import re
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
+from commonplace.review import review_db, review_metadata
 
 
 REPO_ROOT = Path.cwd().resolve()
@@ -30,6 +32,8 @@ TOKEN_PATTERN = re.compile(
 EXTERNAL_TARGET = re.compile(r"^[a-z][a-z0-9+.-]*:")
 REDIRECT_MAP_HEADER = re.compile(r"^(\s*)redirect_maps:\s*$")
 REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$")
+
+
 def is_nested_git_repo_content(path: Path) -> bool:
     current = path.parent
     while current != REPO_ROOT and REPO_ROOT in current.parents:
@@ -203,6 +207,64 @@ def find_repo_markdown_files() -> list[Path]:
     )
 
 
+def reviews_root() -> Path:
+    return KB_ROOT / "reports" / "reviews"
+
+
+def repo_relative_note_path(note_path: Path) -> str:
+    return note_path.relative_to(REPO_ROOT).as_posix()
+
+
+def encode_review_export_dir(note_path: str) -> str:
+    stem = note_path[:-3] if note_path.endswith(".md") else note_path
+    return stem.replace("/", "__")
+
+
+def review_export_dir_for_note(note_path: Path) -> Path:
+    return reviews_root() / encode_review_export_dir(repo_relative_note_path(note_path))
+
+
+def rewrite_review_export_metadata(
+    content: str,
+    *,
+    old_note_path: str,
+    new_note_path: str,
+) -> tuple[str, bool]:
+    metadata = review_metadata.parse_review_metadata(content)
+    if metadata is None or metadata.note_path != old_note_path:
+        return content, False
+    return (
+        review_metadata.inject_review_metadata(
+            content,
+            replace(metadata, note_path=new_note_path),
+        ),
+        True,
+    )
+
+
+def collect_review_export_updates(
+    source: Path,
+    destination: Path,
+) -> tuple[Path, Path, dict[Path, str]]:
+    source_dir = review_export_dir_for_note(source)
+    destination_dir = review_export_dir_for_note(destination)
+    if not source_dir.is_dir():
+        return source_dir, destination_dir, {}
+
+    old_note_path = repo_relative_note_path(source)
+    new_note_path = repo_relative_note_path(destination)
+    updates: dict[Path, str] = {}
+    for review_file in sorted(source_dir.rglob("*.md")):
+        updated, changed = rewrite_review_export_metadata(
+            review_file.read_text(encoding="utf-8"),
+            old_note_path=old_note_path,
+            new_note_path=new_note_path,
+        )
+        if changed:
+            updates[review_file] = updated
+    return source_dir, destination_dir, updates
+
+
 def update_mkdocs_config(
     content: str,
     old_docs_path: str,
@@ -276,7 +338,7 @@ def update_mkdocs_config(
     return new_content, changes
 
 
-def move_note(source: Path, destination: Path) -> str:
+def move_path(source: Path, destination: Path) -> str:
     destination.parent.mkdir(parents=True, exist_ok=True)
     try:
         subprocess.run(
@@ -295,6 +357,10 @@ def move_note(source: Path, destination: Path) -> str:
     except (FileNotFoundError, subprocess.CalledProcessError):
         source.rename(destination)
         return "rename"
+
+
+def move_note(source: Path, destination: Path) -> str:
+    return move_path(source, destination)
 
 
 def relocate_note(
@@ -316,6 +382,29 @@ def relocate_note(
 
     old_docs_path = source.relative_to(KB_ROOT).as_posix()
     new_docs_path = destination.relative_to(KB_ROOT).as_posix()
+    source_review_dir, destination_review_dir, review_export_updates = collect_review_export_updates(
+        source,
+        destination,
+    )
+    if source_review_dir.exists() and destination_review_dir.exists():
+        print(
+            (
+                "Destination review export directory already exists: "
+                f"{destination_review_dir.relative_to(REPO_ROOT)}"
+            ),
+            file=sys.stderr,
+        )
+        return 1
+
+    db_path = review_db.resolve_db_path(REPO_ROOT)
+    review_db_counts = None
+    if db_path.exists():
+        with review_db.connect(db_path) as conn:
+            review_db_counts = review_db.count_note_path_records(
+                conn,
+                note_path=repo_relative_note_path(source),
+            )
+
     markdown_updates: dict[Path, tuple[str, list[str]]] = {}
 
     for md_file in find_repo_markdown_files():
@@ -355,17 +444,55 @@ def relocate_note(
     else:
         print("MkDocs updates: none")
 
+    if source_review_dir.exists():
+        print(
+            "Review exports:"
+            f" {source_review_dir.relative_to(REPO_ROOT)} -> {destination_review_dir.relative_to(REPO_ROOT)}"
+        )
+        if review_export_updates:
+            print(f"Review export files to rewrite: {len(review_export_updates)}")
+        else:
+            print("Review export files to rewrite: 0")
+    else:
+        print("Review exports: none")
+
+    if review_db_counts is None:
+        print("Review DB updates: none")
+    else:
+        print(
+            "Review DB updates:"
+            f" review_runs={review_db_counts.review_runs},"
+            f" gate_reviews={review_db_counts.gate_reviews},"
+            f" acceptance_events={review_db_counts.acceptance_events}"
+        )
+
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
 
     strategy = move_note(source, destination)
+    review_export_strategy = None
+    if source_review_dir.exists():
+        review_export_strategy = move_path(source_review_dir, destination_review_dir)
     for path, (updated, _changes) in markdown_updates.items():
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
+    for path, updated in review_export_updates.items():
+        target = destination_review_dir / path.relative_to(source_review_dir)
+        target.write_text(updated, encoding="utf-8")
     MKDOCS_CONFIG.write_text(mkdocs_updated, encoding="utf-8")
+    if review_db_counts is not None:
+        with review_db.connect(db_path) as conn:
+            review_db.rekey_note_path(
+                conn,
+                old_note_path=repo_relative_note_path(source),
+                new_note_path=repo_relative_note_path(destination),
+            )
+            conn.commit()
 
     print(f"\nMove strategy: {strategy}")
+    if review_export_strategy is not None:
+        print(f"Review export move strategy: {review_export_strategy}")
     print("Done.")
     return 0
 

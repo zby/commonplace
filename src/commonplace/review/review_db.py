@@ -84,6 +84,17 @@ class PendingGateReview:
     review_kind: str = "full-review"
 
 
+@dataclass(frozen=True)
+class NotePathUpdateCounts:
+    review_runs: int = 0
+    gate_reviews: int = 0
+    acceptance_events: int = 0
+
+    @property
+    def total(self) -> int:
+        return self.review_runs + self.gate_reviews + self.acceptance_events
+
+
 def connect(db_path: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
@@ -631,6 +642,49 @@ def append_acceptance_event(
         ),
     )
     return int(cursor.lastrowid)
+
+
+def count_note_path_records(
+    conn: sqlite3.Connection,
+    *,
+    note_path: str,
+) -> NotePathUpdateCounts:
+    def count_rows(table: str) -> int:
+        row = conn.execute(
+            f"SELECT COUNT(*) AS count FROM {table} WHERE note_path = ?",
+            (note_path,),
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
+    return NotePathUpdateCounts(
+        review_runs=count_rows("review_runs"),
+        gate_reviews=count_rows("gate_reviews"),
+        acceptance_events=count_rows("acceptance_events"),
+    )
+
+
+def rekey_note_path(
+    conn: sqlite3.Connection,
+    *,
+    old_note_path: str,
+    new_note_path: str,
+) -> NotePathUpdateCounts:
+    if old_note_path == new_note_path:
+        return NotePathUpdateCounts()
+
+    def update_rows(table: str) -> int:
+        cursor = conn.execute(
+            f"UPDATE {table} SET note_path = ? WHERE note_path = ?",
+            (new_note_path, old_note_path),
+        )
+        return int(cursor.rowcount or 0)
+
+    return NotePathUpdateCounts(
+        review_runs=update_rows("review_runs"),
+        gate_reviews=update_rows("gate_reviews"),
+        acceptance_events=update_rows("acceptance_events"),
+    )
+
 
 def load_gate_reviews_for_note(
     conn: sqlite3.Connection,

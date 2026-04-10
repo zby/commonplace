@@ -6,6 +6,7 @@ import pytest
 
 from commonplace.cli import relocate_note
 from commonplace.lib.naming import slugify_note_filename
+from commonplace.review import review_db
 
 
 def write(path: Path, content: str) -> Path:
@@ -170,6 +171,55 @@ nav:
   - Notes: notes/old-note.md
 """,
     )
+    legacy_review = write(
+        kb_root / "reports" / "reviews" / "kb__notes__old-note" / "prose__source-residue.opus-4-6.md",
+        """<!-- REVIEW-METADATA
+note-path: kb/notes/old-note.md
+gate-id: prose/source-residue
+review-type: gate-review
+-->
+## Result: PASS
+""",
+    )
+    db_path = kb_root / "reports" / "review-store.sqlite"
+    review_db.ensure_db(repo_root, db_path)
+    with review_db.connect(db_path) as conn:
+        review_run_id = review_db.insert_review_run(
+            conn,
+            note_path="kb/notes/old-note.md",
+            model_id="opus-4-6",
+            runner="codex",
+            reviewed_note_sha="note-sha",
+            reviewed_note_commit="note-commit",
+            started_at="2026-04-10T10:00:00+02:00",
+        )
+        review_id = review_db.insert_gate_review(
+            conn,
+            review_run_id=review_run_id,
+            note_path="kb/notes/old-note.md",
+            gate_id="prose/source-residue",
+            model_id="opus-4-6",
+            decision="pass",
+            rationale_markdown="ok",
+            evidence_json=None,
+            gate_sha="gate-sha",
+            reviewed_note_sha="note-sha",
+            reviewed_note_commit="note-commit",
+            reviewed_at="2026-04-10T10:05:00+02:00",
+        )
+        review_db.append_acceptance_event(
+            conn,
+            note_path="kb/notes/old-note.md",
+            gate_id="prose/source-residue",
+            model_id="opus-4-6",
+            accepted_review_id=review_id,
+            accepted_note_sha="note-sha",
+            accepted_note_commit="note-commit",
+            accepted_gate_sha="gate-sha",
+            accepted_at="2026-04-10T10:06:00+02:00",
+            acceptance_kind="full-review",
+        )
+        conn.commit()
 
     monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
     monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
@@ -202,6 +252,17 @@ nav:
     assert "'notes/already-old.md': 'notes/archive/new-note-title.md'" in mkdocs_content
     assert "'notes/old-note.md': 'notes/archive/new-note-title.md'" in mkdocs_content
     assert "notes/archive/new-note-title.md" in mkdocs_content
+    moved_review = kb_root / "reports" / "reviews" / "kb__notes__archive__new-note-title" / legacy_review.name
+    assert not legacy_review.exists()
+    assert moved_review.exists()
+    assert "note-path: kb/notes/archive/new-note-title.md" in moved_review.read_text(encoding="utf-8")
+    with review_db.connect(db_path) as conn:
+        counts = review_db.count_note_path_records(conn, note_path="kb/notes/archive/new-note-title.md")
+        old_counts = review_db.count_note_path_records(conn, note_path="kb/notes/old-note.md")
+    assert counts.review_runs == 1
+    assert counts.gate_reviews == 1
+    assert counts.acceptance_events == 1
+    assert old_counts.total == 0
 
 
 def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkeypatch) -> None:
