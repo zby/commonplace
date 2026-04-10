@@ -265,3 +265,86 @@ def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> No
 
     assert profile.resolved_type == "text"
     assert profile.required_fields == ()
+
+
+def test_type_specific_status_enum_overrides_note_status_via_base_schema(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note-base.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          status:
+            enum:
+              - seedling
+              - current
+        additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "adr.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: adr
+          status:
+            enum:
+              - proposed
+              - accepted
+              - superseded
+              - deprecated
+        additionalProperties: true
+""",
+    )
+    note = write(
+        tmp_path / "kb" / "notes" / "decision.md",
+        """---
+description: Decision
+type: adr
+status: accepted
+---
+
+# Decision
+""",
+    )
+
+    profile = type_resolver.resolve_type(note, {"description": "Decision", "type": "adr"}, repo_root=tmp_path)
+
+    assert profile.resolved_type == "adr"
+    assert profile.allowed_status == ("proposed", "accepted", "superseded", "deprecated")

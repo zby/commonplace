@@ -313,6 +313,137 @@ Watch.
     assert "frontmatter: missing required fields last-checked" in results.warns
 
 
+def test_adr_status_uses_type_specific_enum_from_note_base(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(
+        tmp_path / "kb" / "types" / "note-base.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+      status:
+        type: string
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          status:
+            enum:
+              - seedling
+              - current
+              - speculative
+              - outdated
+        additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "adr.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: adr
+          status:
+            enum:
+              - proposed
+              - accepted
+              - superseded
+              - deprecated
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Context"
+          - contains:
+              const: "## Decision"
+          - contains:
+              const: "## Consequences"
+""",
+    )
+    note = write(
+        notes_root / "decision.md",
+        """---
+description: ADR with custom lifecycle status values that should validate independently of note status
+type: adr
+status: accepted
+---
+
+# Decision
+
+## Context
+
+Context.
+
+## Decision
+
+Decision.
+
+## Consequences
+
+Consequences.
+""",
+    )
+
+    monkeypatch.setattr(validate_notes, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(validate_notes, "NOTES_ROOT", notes_root)
+
+    results = validate_notes.validate_note(note)
+
+    assert 'status: "accepted" — valid' in results.passes
+    assert all("status:" not in warning for warning in results.warns)
+
+
 def test_title_length_over_limit_fails_validation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     notes_root = configure_temp_repo(monkeypatch, tmp_path)
     title = "A" * 101
