@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.review import review_db, review_metadata, run_review_bundle_lib, warn_selector
+from commonplace.review import review_db, review_metadata, run_review_bundle, warn_selector
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -263,7 +263,7 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         env=env,
     )
     review_run_id = int(created.stdout.strip())
-    assert run_review_bundle_lib.bundle_artifact_dir(repo, review_run_id).is_dir()
+    assert run_review_bundle.bundle_artifact_dir(repo, review_run_id).is_dir()
 
     prose_review = write(
         repo / "tmp" / "prose.md",
@@ -363,7 +363,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         env=env,
     )
     payload = json.loads(created.stdout)
-    assert run_review_bundle_lib.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
+    assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
     assert payload["note_path"] == "kb/notes/sample.md"
     assert payload["model_id"] == TEST_MODEL
     assert payload["runner"] == "codex"
@@ -645,7 +645,7 @@ The note still needs one small fix.
         conn.commit()
 
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.warn_selector", "--json", "kb/notes/sample.md"],
+        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
         cwd=repo,
         env=env,
         check=True,
@@ -704,7 +704,7 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
         conn.commit()
 
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.warn_selector", "--json", "kb/notes/sample.md"],
+        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
         cwd=repo,
         env=env,
         check=True,
@@ -759,7 +759,7 @@ The note overstates one claim and needs a framing adjustment.
     )
 
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.warn_selector", "--json", "kb/notes/sample.md"],
+        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
         cwd=repo,
         env=env,
         check=True,
@@ -864,7 +864,7 @@ Looks good.
     selector_env = os.environ.copy()
     selector_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.warn_selector", "--json", "kb/notes/sample.md"],
+        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
         cwd=repo,
         env=selector_env,
         check=True,
@@ -942,7 +942,7 @@ for event in [
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "semantic/grounding-alignment",
@@ -989,7 +989,7 @@ for event in [
             ("semantic/grounding-alignment", "claude-sonnet-4-6"),
         ]
 
-    artifact_dir = run_review_bundle_lib.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert (artifact_dir / "prose__source-residue.md").is_file()
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
@@ -1042,7 +1042,7 @@ for event in [
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "--runner",
@@ -1082,7 +1082,7 @@ def test_run_review_bundle_rejects_dirty_gate(tmp_path: Path) -> None:
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "--runner",
@@ -1120,7 +1120,7 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "semantic/grounding-alignment",
@@ -1282,7 +1282,7 @@ Looks good.
 === GATE REVIEW END: semantic/grounding-alignment ===
 """
 
-    parsed = run_review_bundle_lib.extract_bundle_reviews(
+    parsed = run_review_bundle.extract_bundle_reviews(
         bundle,
         expected_gate_ids=["prose/source-residue", "semantic/grounding-alignment"],
     )
@@ -1330,7 +1330,7 @@ for event in [
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "semantic/grounding-alignment",
@@ -1359,7 +1359,7 @@ for event in [
         assert "missing gate reviews in bundle output" in run_row["failure_reason"]
         assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
 
-    artifact_dir = run_review_bundle_lib.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert not (artifact_dir / "prose__source-residue.md").exists()
 
@@ -1373,7 +1373,7 @@ def test_run_review_bundle_dry_run_does_not_persist_review_run(tmp_path: Path) -
         [
             sys.executable,
             "-m",
-            "commonplace.review.run_review_bundle",
+            "commonplace.cli.review.run_review_bundle",
             "kb/notes/sample.md",
             "prose",
             "semantic/grounding-alignment",

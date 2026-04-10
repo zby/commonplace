@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.review import ack_trivial_note_changes_lib, review_db, review_metadata
+from commonplace.review import ack_trivial_note_changes, review_db, review_metadata
 
 
 TEST_MODEL = "test-model"
@@ -177,7 +177,7 @@ status: current
 Body.
 """
 
-    assert ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"body"},
@@ -208,7 +208,7 @@ status: current
 Body changed.
 """
 
-    assert not ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert not ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"body"},
@@ -239,7 +239,7 @@ status: current
 Body changed.
 """
 
-    assert ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"title"},
@@ -270,7 +270,7 @@ status: current
 Body.
 """
 
-    assert not ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert not ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"title"},
@@ -301,7 +301,7 @@ status: current
 Body.
 """
 
-    assert not ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert not ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"title", "description"},
@@ -332,7 +332,7 @@ status: current
 Body.
 """
 
-    assert ack_trivial_note_changes_lib.has_only_unwatched_changes(
+    assert ack_trivial_note_changes.has_only_unwatched_changes(
         previous_text,
         current_text,
         watches={"title", "description"},
@@ -363,7 +363,7 @@ Body.
         [
             sys.executable,
             "-m",
-            "commonplace.review.ack_trivial_note_changes",
+            "commonplace.cli.review.ack_trivial_note_changes",
             "--model",
             TEST_MODEL,
             "prose",
@@ -419,7 +419,7 @@ Body changed.
         [
             sys.executable,
             "-m",
-            "commonplace.review.ack_trivial_note_changes",
+            "commonplace.cli.review.ack_trivial_note_changes",
             "--model",
             TEST_MODEL,
             "frontmatter/title-as-claim",
@@ -463,7 +463,7 @@ Body.
         [
             sys.executable,
             "-m",
-            "commonplace.review.ack_trivial_note_changes",
+            "commonplace.cli.review.ack_trivial_note_changes",
             "--model",
             TEST_MODEL,
             "frontmatter/title-body-alignment",
@@ -502,7 +502,7 @@ Body.
         [
             sys.executable,
             "-m",
-            "commonplace.review.ack_trivial_note_changes",
+            "commonplace.cli.review.ack_trivial_note_changes",
             "--model",
             TEST_MODEL,
             "--dry-run",
@@ -593,7 +593,7 @@ Body.
         [
             sys.executable,
             "-m",
-            "commonplace.review.ack_trivial_note_changes",
+            "commonplace.cli.review.ack_trivial_note_changes",
             "--model",
             TEST_MODEL,
             "prose",

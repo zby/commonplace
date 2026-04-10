@@ -8,7 +8,7 @@ import pytest
 
 from commonplace.cli.review import review_sweep
 from commonplace.review.review_target_selector import StaleGate
-from commonplace.review.run_review_bundle_lib import UsageExhausted
+from commonplace.review.run_review_bundle import UsageExhausted
 
 
 def make_fake_repo(tmp_path: Path) -> Path:

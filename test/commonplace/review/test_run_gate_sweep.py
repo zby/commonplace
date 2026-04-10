@@ -90,7 +90,7 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
 
 def run_gate_sweep(repo: Path, env: dict[str, str], *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "-m", "commonplace.review.run_gate_sweep", *args],
+        [sys.executable, "-m", "commonplace.cli.review.run_gate_sweep", *args],
         cwd=repo,
         env=env,
         check=False,
