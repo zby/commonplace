@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.review import review_sweep
+from commonplace.cli.review import review_sweep
 from commonplace.review.review_target_selector import StaleGate
 from commonplace.review.run_review_bundle_lib import UsageExhausted
 

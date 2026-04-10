@@ -236,7 +236,7 @@ print("=== GATE REVIEW END: semantic/grounding-alignment ===", flush=True)
 def run_script(repo: Path, script_name: str, *args: str, env: dict[str, str]) -> subprocess.CompletedProcess[str]:
     module_name = Path(script_name).stem
     return subprocess.run(
-        [sys.executable, "-m", f"commonplace.review.{module_name}", *args],
+        [sys.executable, "-m", f"commonplace.cli.review.{module_name}", *args],
         cwd=repo,
         env=env,
         check=True,
@@ -398,7 +398,7 @@ def test_create_review_run_allows_dirty_note_and_records_worktree_provenance(tmp
         [
             sys.executable,
             "-m",
-            "commonplace.review.create_review_run",
+            "commonplace.cli.review.create_review_run",
             "kb/notes/sample.md",
             "prose",
             "--runner",
@@ -437,7 +437,7 @@ def test_create_review_run_allows_untracked_note_and_records_worktree_provenance
         [
             sys.executable,
             "-m",
-            "commonplace.review.create_review_run",
+            "commonplace.cli.review.create_review_run",
             "kb/notes/draft.md",
             "prose",
             "--runner",
@@ -478,7 +478,7 @@ def test_create_review_run_rejects_dirty_gate(tmp_path: Path) -> None:
         [
             sys.executable,
             "-m",
-            "commonplace.review.create_review_run",
+            "commonplace.cli.review.create_review_run",
             "kb/notes/sample.md",
             "prose",
             "--runner",
@@ -555,7 +555,7 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
         [
             sys.executable,
             "-m",
-            "commonplace.review.write_gate_review",
+            "commonplace.cli.review.write_gate_review",
             "--review-run-id",
             str(review_run_id),
             "--gate-id",

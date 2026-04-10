@@ -41,7 +41,7 @@ def test_reparse_gate_review_decisions_updates_stored_decision(tmp_path: Path) -
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.reparse_gate_review_decisions"],
+        [sys.executable, "-m", "commonplace.cli.review.reparse_gate_review_decisions"],
         cwd=REPO_ROOT,
         env=env,
         check=True,
@@ -118,7 +118,7 @@ def test_reparse_gate_review_decisions_combined_only_skips_legacy_rows(tmp_path:
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.reparse_gate_review_decisions", "--combined-only"],
+        [sys.executable, "-m", "commonplace.cli.review.reparse_gate_review_decisions", "--combined-only"],
         cwd=REPO_ROOT,
         env=env,
         check=True,

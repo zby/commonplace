@@ -84,7 +84,7 @@ Borderline notes without a recoverable legacy decision.
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.repair_manual_import_review_results"],
+        [sys.executable, "-m", "commonplace.cli.review.repair_manual_import_review_results"],
         cwd=REPO_ROOT,
         env=env,
         check=True,

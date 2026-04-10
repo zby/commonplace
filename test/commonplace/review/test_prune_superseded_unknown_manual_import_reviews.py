@@ -162,7 +162,7 @@ def test_prune_superseded_unknown_manual_import_reviews_deletes_only_superseded_
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     result = subprocess.run(
-        [sys.executable, "-m", "commonplace.review.prune_superseded_unknown_manual_import_reviews"],
+        [sys.executable, "-m", "commonplace.cli.review.prune_superseded_unknown_manual_import_reviews"],
         cwd=REPO_ROOT,
         env=env,
         check=True,

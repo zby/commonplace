@@ -571,7 +571,7 @@ class TestResolveGates:
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         result = subprocess.run(
-            [sys.executable, "-m", "commonplace.review.resolve_gates", "prose/source-residue"],
+            [sys.executable, "-m", "commonplace.cli.review.resolve_gates", "prose/source-residue"],
             cwd=tmp_path,
             check=True,
             capture_output=True,
@@ -581,11 +581,11 @@ class TestResolveGates:
         assert "=== gate: prose/source-residue ===" in result.stdout
         assert "path:" not in result.stdout
 
-    def test_missing_gate_exits(self, tmp_path: Path) -> None:
+    def test_missing_gate_raises(self, tmp_path: Path) -> None:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         gates_dir.mkdir(parents=True, exist_ok=True)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(FileNotFoundError, match="prose/nonexistent"):
             resolve_gates.resolve_to_gate_ids(["prose/nonexistent"], gates_dir)
 
     def test_applicable_gate_ids_for_note_filters_by_requires_trait(self, tmp_path: Path) -> None:
