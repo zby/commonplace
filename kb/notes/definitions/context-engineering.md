@@ -1,5 +1,5 @@
 ---
-description: Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, and maintenance for each bounded call
+description: Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, maintenance, and observability for each bounded call
 type: note
 traits: [definition]
 tags: [computational-model]
@@ -12,17 +12,19 @@ Context engineering is the architectural discipline of designing systems around 
 
 Anthropic defines it as "strategies for curating and maintaining the optimal set of tokens during LLM inference" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). This KB's treatment is consistent with that operational view but broader in architectural scope, because [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md): when bounded context is the scarce resource, whole-system structure must be designed around it.
 
-The operational core decomposes into four components within a single bounded call:
+The operational core decomposes into five components within a single bounded call:
 
 **Routing** — deciding what knowledge is relevant before loading it. The [instruction-specificity/loading-frequency match](../instruction-specificity-should-match-loading-frequency.md) (always-loaded → on-reference → on-invoke → on-demand) is routing. [CLAUDE.md as a router](../agents-md-should-be-organized-as-a-control-plane.md) is routing. [Retrieval-oriented descriptions](../agents-navigate-by-deciding-what-to-read-next.md) that let agents decide "don't follow this" without loading the target are routing.
 
-**Loading** — assembling the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given state `K` and budget `M`, build prompt `P` with `|P| ≤ M`. Loading includes both what to include and how to frame it — the same knowledge under different framing has different [extractable value](../information-value-is-observer-relative.md).
+**Loading** — assembling the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given the scheduler's accumulated state and a token budget, build a prompt that fits within the budget. Loading includes both what to include and how to frame it — the same knowledge under different framing has different [extractable value](../information-value-is-observer-relative.md).
 
 **Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is scoping. The flat context has no scoping; architecture must impose it.
 
 **Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline are maintenance. Without maintenance, context accumulates debris that [degrades reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when token counts are low.
 
-[Distillation](./distillation.md) — compressing knowledge for a specific task under a context budget — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery: the `solve` loop where a symbolic scheduler drives routing, loading, and scoping decisions for each bounded LLM call.
+**Observability** — attribution of where tokens went and why, as a prerequisite for tuning the other four components. Per-source accounting — tool results vs. tool requests vs. assistant output vs. system prompt vs. attachments — reveals what actually dominates context. Intuition about token usage is almost always wrong: developers routinely assume model output is the biggest cost, while in agentic coding sessions tool *results* commonly dominate instead. Useful signals include duplicate-read detection (the model re-reading files it already saw is a direct symptom that flat history is failing as a working set) and query-source tracking (which agent or subsystem initiated each call). The other four components all have tuning surfaces, but none of those surfaces are usable without attribution to anchor them.
+
+[Distillation](./distillation.md) — compressing knowledge for a specific task under a context budget — is the main operation the first four components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery: the `solve` loop where a symbolic scheduler drives routing, loading, and scoping decisions for each bounded LLM call.
 
 ## Architectural scope beyond a single call
 
