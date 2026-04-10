@@ -4,7 +4,7 @@ type: related-system
 tags: [related-systems]
 traits: [has-comparison, has-external-sources]
 status: current
-last-checked: 2026-03-12
+last-checked: "2026-03-12"
 ---
 
 # SAGE (Sovereign Agent Governed Experience)

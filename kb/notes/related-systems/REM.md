@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: 2026-03-28
+last-checked: "2026-03-28"
 ---
 
 # REM is a database-heavy episodic memory service with LLM consolidation

@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-implementation]
 tags: [related-systems]
 status: current
-last-checked: 2026-04-09
+last-checked: "2026-04-09"
 ---
 
 # Virtual Context

@@ -106,10 +106,10 @@ Create or update `note_path` using the `related-system` template.
 Required properties:
 
 - frontmatter with a discriminating `description`
-- `type: note`
+- `type: related-system`
 - `tags: [related-systems]`
 - `status: current` unless clearly stale/outdated
-- `last-checked: {today}`
+- `last-checked: "{today}"`
 
 Required sections:
 

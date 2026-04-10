@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: 2026-04-06
+last-checked: "2026-04-06"
 ---
 
 # LLM Wiki

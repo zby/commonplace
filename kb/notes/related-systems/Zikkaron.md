@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: 2026-03-22
+last-checked: "2026-03-22"
 ---
 
 # Zikkaron

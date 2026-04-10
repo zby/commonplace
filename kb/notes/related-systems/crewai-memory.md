@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-external-sources]
 status: current
 tags: [related-systems]
-last-checked: 2026-03-05
+last-checked: "2026-03-05"
 ---
 
 # CrewAI Memory
