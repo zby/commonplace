@@ -48,11 +48,21 @@ def is_nested_git_repo_content(path: Path, notes_root: Path) -> bool:
     return False
 
 
+def is_type_definition_content(path: Path, notes_root: Path) -> bool:
+    """True if path lives under a types/ directory (templates, instructions)."""
+    try:
+        rel = path.relative_to(notes_root)
+    except ValueError:
+        return False
+    return "types" in rel.parent.parts
+
+
 def list_kb_note_paths(notes_root: Path) -> list[Path]:
     return sorted(
         path
         for path in notes_root.rglob("*.md")
         if not is_nested_git_repo_content(path, notes_root)
+        and not is_type_definition_content(path, notes_root)
     )
 
 

@@ -516,6 +516,53 @@ status: current
     assert nested_repo / "ignored.md" not in discovered
 
 
+def test_list_kb_note_paths_skips_type_definitions(tmp_path: Path) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(
+        notes_root / "real.md",
+        """---
+description: Real note that should be picked up by batch validation
+type: note
+traits: []
+status: current
+---
+
+# Real note
+""",
+    )
+    write(
+        notes_root / "types" / "adr.template.md",
+        """---
+description: Template skeleton for authoring ADRs, not a knowledge artifact
+type: adr
+---
+
+# {NNN}-{decision-title}
+""",
+    )
+    write(
+        notes_root / "types" / "adr.instructions.md",
+        "# ADR Instructions\n\nUse an ADR for a concrete architectural decision.\n",
+    )
+    write(
+        notes_root / "collection" / "types" / "nested.template.md",
+        """---
+description: Template nested deeper in the tree under a collection-local types directory
+type: collection-item
+---
+
+# Template
+""",
+    )
+
+    discovered = validation.list_kb_note_paths(notes_root)
+
+    assert notes_root / "real.md" in discovered
+    assert notes_root / "types" / "adr.template.md" not in discovered
+    assert notes_root / "types" / "adr.instructions.md" not in discovered
+    assert notes_root / "collection" / "types" / "nested.template.md" not in discovered
+
+
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     today_note = write(
