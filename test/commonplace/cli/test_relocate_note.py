@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.cli import relocate_note
+from commonplace.lib import relocation
 from commonplace.lib.naming import slugify_note_filename
 from commonplace.review import review_db
 
@@ -29,7 +29,7 @@ Inline: `[skip](../notes/old-note.md)`
 ```
 """
 
-    updated, changes = relocate_note.rewrite_links_to_relocated_note(
+    updated, changes = relocation.rewrite_links_to_relocated_note(
         content,
         ref_file,
         old_note,
@@ -54,7 +54,7 @@ def test_rebase_relative_markdown_links_updates_outbound_links_for_moved_note(tm
 Target: [concept](./definitions/concept.md)
 """
 
-    updated, changes = relocate_note.rebase_relative_markdown_links(
+    updated, changes = relocation.rebase_relative_markdown_links(
         content,
         old_note,
         tmp_path / "kb" / "notes" / "archive" / "relocated-note.md",
@@ -79,7 +79,7 @@ nav:
   - Example: notes/old-name.md
 """
 
-    updated, changes = relocate_note.update_mkdocs_config(
+    updated, changes = relocation.update_mkdocs_config(
         content,
         old_docs_path="notes/old-name.md",
         new_docs_path="notes/archive/new-name.md",
@@ -97,39 +97,33 @@ def test_slugify_rejects_overlong_note_slug() -> None:
         slugify_note_filename("a" * 101)
 
 
-def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path, monkeypatch) -> None:
+def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path) -> None:
     repo_root = tmp_path
-    kb_root = repo_root / "kb"
-    notes_root = kb_root / "notes"
+    notes_root = repo_root / "kb" / "notes"
     source = write(notes_root / "old-note.md", "# Old note\n")
-
-    monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
-    monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
-    monkeypatch.setattr(relocate_note, "NOTES_ROOT", notes_root)
 
     overlong_slug = "a" * 101
     with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
-        relocate_note.resolve_destination_path(
+        relocation.resolve_destination_path(
             source,
             None,
             f"kb/notes/{overlong_slug}.md",
+            repo_root=repo_root,
+            notes_root=notes_root,
         )
 
 
-def test_resolve_destination_path_accepts_directory_target(tmp_path: Path, monkeypatch) -> None:
+def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> None:
     repo_root = tmp_path
-    kb_root = repo_root / "kb"
-    notes_root = kb_root / "notes"
+    notes_root = repo_root / "kb" / "notes"
     source = write(notes_root / "old-note.md", "# Old note\n")
 
-    monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
-    monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
-    monkeypatch.setattr(relocate_note, "NOTES_ROOT", notes_root)
-
-    destination = relocate_note.resolve_destination_path(
+    destination = relocation.resolve_destination_path(
         source,
         None,
         "kb/notes/archive",
+        repo_root=repo_root,
+        notes_root=notes_root,
     )
 
     assert destination == notes_root / "archive" / "old-note.md"
@@ -221,20 +215,16 @@ review-type: gate-review
         )
         conn.commit()
 
-    monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
-    monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
-    monkeypatch.setattr(relocate_note, "NOTES_ROOT", notes_root)
-    monkeypatch.setattr(relocate_note, "MKDOCS_CONFIG", repo_root / "mkdocs.yml")
-
-    def fake_move(source: Path, destination: Path) -> str:
+    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
         destination.parent.mkdir(parents=True, exist_ok=True)
         source.rename(destination)
         return "rename"
 
-    monkeypatch.setattr(relocate_note, "move_note", fake_move)
+    monkeypatch.setattr(relocation, "move_note", fake_move)
 
-    result = relocate_note.relocate_note(
-        "old-note",
+    result = relocation.relocate_note(
+        repo_root=repo_root,
+        note_arg="old-note",
         dest_path="kb/notes/archive/new-note-title.md",
         apply=True,
     )
@@ -279,20 +269,16 @@ See [concept](./definitions/concept.md)
     write(notes_root / "definitions" / "concept.md", "# Concept\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
 
-    monkeypatch.setattr(relocate_note, "REPO_ROOT", repo_root)
-    monkeypatch.setattr(relocate_note, "KB_ROOT", kb_root)
-    monkeypatch.setattr(relocate_note, "NOTES_ROOT", notes_root)
-    monkeypatch.setattr(relocate_note, "MKDOCS_CONFIG", repo_root / "mkdocs.yml")
-
-    def fake_move(source: Path, destination: Path) -> str:
+    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
         destination.parent.mkdir(parents=True, exist_ok=True)
         source.rename(destination)
         return "rename"
 
-    monkeypatch.setattr(relocate_note, "move_note", fake_move)
+    monkeypatch.setattr(relocation, "move_note", fake_move)
 
-    result = relocate_note.relocate_note(
-        "old-note",
+    result = relocation.relocate_note(
+        repo_root=repo_root,
+        note_arg="old-note",
         dest_path="kb/notes/archive",
         apply=True,
     )
