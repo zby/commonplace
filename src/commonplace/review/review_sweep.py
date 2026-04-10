@@ -14,8 +14,9 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.resolve_gates import resolve_to_gate_ids
-from commonplace.review.review_db import GATES_ROOT, resolve_db_path
+from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
 from commonplace.review.run_review_bundle_lib import UsageExhausted, run_bundle
 

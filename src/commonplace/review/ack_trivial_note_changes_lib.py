@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
-    GATES_ROOT,
     connect,
     load_current_acceptances,
     prepare_review_db,
@@ -164,8 +164,10 @@ def qualifying_pairs(
     gate_ids: list[str],
     note_filter: list[str] | None = None,
     current_only: bool = False,
+    db_path: Path | None = None,
 ) -> list[str]:
-    db_path = prepare_review_db(repo_root)
+    if db_path is None:
+        db_path = prepare_review_db(repo_root)
     stale_records = [
         record
         for record in select_stale_gates(
@@ -175,6 +177,7 @@ def qualifying_pairs(
             note_filter=note_filter,
             current_only=current_only,
             include_diff=False,
+            db_path=db_path,
         )
         if record.reason == "note-changed"
     ]

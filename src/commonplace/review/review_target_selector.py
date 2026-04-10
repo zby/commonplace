@@ -10,9 +10,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids
 from commonplace.review.review_db import (
-    GATES_ROOT,
     append_acceptance_event,
     connect,
     ensure_db,
@@ -111,13 +111,15 @@ def select_stale_gates(
     note_filter: list[str] | None = None,
     current_only: bool = False,
     include_diff: bool = False,
+    db_path: Path | None = None,
 ) -> list[StaleGate]:
     gates_dir = repo_root / GATES_ROOT
     notes_dir = repo_root / NOTES_ROOT
     model = model.strip()
     if not model:
         raise ValueError("model is required")
-    db_path = resolve_db_path(repo_root)
+    if db_path is None:
+        db_path = resolve_db_path(repo_root)
 
     if note_filter and current_only:
         raise ValueError("--note and --current are mutually exclusive")
@@ -197,8 +199,9 @@ def print_grouped(records: list[StaleGate]) -> None:
             print(f"  - {record.gate_id} ({record.reason})")
 
 
-def ack_pairs(repo_root: Path, pairs: list[str], model: str) -> None:
-    db_path = resolve_db_path(repo_root)
+def ack_pairs(repo_root: Path, pairs: list[str], model: str, *, db_path: Path | None = None) -> None:
+    if db_path is None:
+        db_path = resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)
 
     with connect(db_path) as conn:

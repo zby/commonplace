@@ -8,7 +8,7 @@ from pathlib import Path
 
 from commonplace.review.ack_trivial_note_changes_lib import qualifying_pairs
 from commonplace.review.resolve_gates import resolve_to_gate_ids
-from commonplace.review.review_db import GATES_ROOT
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_target_selector import ack_pairs
 
 

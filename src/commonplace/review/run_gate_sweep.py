@@ -4,10 +4,9 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 
-from commonplace.review.review_db import DB_ENV_VAR, prepare_review_db
+from commonplace.review.review_db import prepare_review_db
 from commonplace.review.run_gate_sweep_lib import run_gate_sweep
 
 
@@ -30,10 +29,6 @@ def main() -> int:
 
     repo_root = Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
-    if args.db:
-        # Threading the override into select_stale_gates and friends, which
-        # still read the env var rather than taking an explicit db parameter.
-        os.environ[DB_ENV_VAR] = str(db_path)
 
     try:
         return run_gate_sweep(

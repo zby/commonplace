@@ -7,8 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
-    GATES_ROOT,
     connect,
     create_run,
     prepare_review_db,

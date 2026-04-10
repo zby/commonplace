@@ -15,8 +15,8 @@ from commonplace.review.gate_sweep_format import (
     build_gate_sweep_prompt,
     extract_gate_sweep_reviews,
 )
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
-    GATES_ROOT,
     attach_execution_data,
     connect,
     create_run,
@@ -212,6 +212,7 @@ def run_gate_sweep(
         note_filter=note_paths,
         current_only=current_only,
         include_diff=False,
+        db_path=db_path,
     )
 
     sweep_note_paths = [record.note_path for record in stale_records]

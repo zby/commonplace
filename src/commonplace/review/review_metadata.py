@@ -249,8 +249,9 @@ def resolve_review_target(
     Raises ValueError if note provenance or gate provenance cannot be resolved,
     or if no applicable gates are found.
     """
-    from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids, strip_frontmatter
-    from commonplace.review.review_db import GATES_ROOT
+    from commonplace.lib import frontmatter
+    from commonplace.review.paths import GATES_ROOT
+    from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids
 
     note_abs = repo_root / note_path
     gates_dir = repo_root / GATES_ROOT
@@ -270,7 +271,7 @@ def resolve_review_target(
             raise ValueError(f"gate not found: {gate_id}")
         gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
         run_gates.append((gate_id, gate_sha, ordinal))
-        gate_texts[gate_id] = strip_frontmatter(gate_abs.read_text(encoding="utf-8"))
+        gate_texts[gate_id] = frontmatter.strip(gate_abs.read_text(encoding="utf-8")).lstrip("\n")
 
     return note_sha, note_commit, started_at, run_gates, gate_texts
 

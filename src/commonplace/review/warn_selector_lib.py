@@ -10,8 +10,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
-    GATES_ROOT,
     GateReviewRow,
     connect,
     load_effective_gate_review_map,
@@ -108,8 +108,11 @@ def _current_gate_shas(repo_root: Path) -> dict[str, str]:
 def scan_reviews(
     repo_root: Path,
     note_filter: set[str] | None = None,
+    *,
+    db_path: Path | None = None,
 ) -> tuple[list[NoteWarns], list[str]]:
-    db_path = prepare_review_db(repo_root)
+    if db_path is None:
+        db_path = prepare_review_db(repo_root)
 
     by_note: dict[str, NoteWarns] = {}
     selected_by_gate: dict[tuple[str, str], GateReviewRow] = {}

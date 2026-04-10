@@ -19,11 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
-from commonplace.review.review_db import GATES_ROOT
-
-
-def strip_frontmatter(text: str) -> str:
-    return frontmatter.strip(text).lstrip("\n")
+from commonplace.review.paths import GATES_ROOT
 
 
 def resolve_to_gate_ids(args: list[str], gates_dir: Path) -> list[str]:
@@ -88,7 +84,7 @@ def main() -> None:
 
     for gate_id in gate_ids:
         gate_file = gates_dir / f"{gate_id}.md"
-        gate_text = strip_frontmatter(gate_file.read_text(encoding="utf-8"))
+        gate_text = frontmatter.strip(gate_file.read_text(encoding="utf-8")).lstrip("\n")
         print(f"=== gate: {gate_id} ===")
         print(gate_text)
 

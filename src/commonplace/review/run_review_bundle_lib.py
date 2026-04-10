@@ -12,8 +12,8 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
+from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
-    GATES_ROOT,
     PendingGateReview,
     attach_execution_data,
     connect,

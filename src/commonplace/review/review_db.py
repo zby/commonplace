@@ -13,7 +13,6 @@ from typing import Sequence
 from commonplace.review.review_decisions import normalize_review_decision
 from commonplace.review.review_metadata import iso_now
 
-GATES_ROOT = Path("kb/instructions/review-gates")
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
