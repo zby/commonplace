@@ -158,6 +158,23 @@ qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_IND
 
 Skills like `commonplace-connect` use `$COMMONPLACE_QMD_INDEX` automatically.
 
+## 6. Pre-approve commonplace CLI commands in Claude Code (optional)
+
+If you use Claude Code, you can skip the permission prompt for each `commonplace-*` command by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry for each `[project.scripts]` entry in `pyproject.toml`, e.g.:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(commonplace-validate-notes:*)",
+      "Bash(commonplace-refresh-indexes:*)"
+    ]
+  }
+}
+```
+
+Prefer `.claude/settings.local.json` over `.claude/settings.json` so the approvals stay local and don't get committed for other contributors.
+
 ## Resulting layout
 
 ```text
