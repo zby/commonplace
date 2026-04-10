@@ -10,8 +10,8 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Foundations
 
-- [note base type](../../types/note.md) — the base structured type: global fields (description, status, traits, areas), status ladder, traits system, design principles
-- [text root type](../../types/text.md) — the empty root type: no frontmatter, always valid
+- [note base type](../types/note.md) — the base structured type: global fields (description, status, traits, areas), status ladder, traits system, design principles
+- [text root type](../types/text.md) — the empty root type: no frontmatter, always valid
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — knowledge systems produce dual-audience documents (human + LLM), making cognitive differences a first-class design concern for type and convention design
 - [why-directories-despite-their-costs](./why-directories-despite-their-costs.md) — directories buy one-two orders of magnitude of navigable scale but each new directory taxes routing, search config, and cross-directory linking
 
@@ -38,4 +38,3 @@ How documents are classified, structured, and quality-checked. These notes defin
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
 
 ## Other tagged notes <!-- generated -->
-

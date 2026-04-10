@@ -99,17 +99,16 @@ Resolve structural note types from scoped JSON Schema definitions. Uses hierarch
 
 ### Schema discovery
 
-Schemas live in `types/` directories at each scope level. For a note at `kb/work/my-project/foo.md`, the search order is:
+Schemas live in `types/` directories at each scope level under `kb/`. For a note at `kb/work/my-project/foo.md`, the search order is:
 
 1. `kb/work/my-project/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
-3. `{workspace_root}/types/{type}.schema.yaml`
+2. `kb/work/types/{type}.schema.yaml`
+3. `kb/types/{type}.schema.yaml`
 
 For a note at `kb/notes/bar.md`:
 
 1. `kb/notes/types/{type}.schema.yaml`
 2. `kb/types/{type}.schema.yaml`
-3. `{workspace_root}/types/{type}.schema.yaml`
 
 ### Type resolution logic
 

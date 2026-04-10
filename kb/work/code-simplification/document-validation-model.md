@@ -40,7 +40,7 @@ class ParsedDocument:
 
 The repo's type system already allows new type names and new required fields to appear through scoped authored schemas such as:
 
-- [`types/note.schema.yaml`](../../../types/note.schema.yaml)
+- [`kb/types/note.schema.yaml`](../../types/note.schema.yaml)
 - [`kb/notes/types/structured-claim.schema.yaml`](../../../kb/notes/types/structured-claim.schema.yaml)
 - workshop-local or collection-local `types/{type}.schema.yaml`
 
@@ -68,7 +68,7 @@ Notes are open-world documents. Schemas are controlled configuration. Those shou
 
 The correct place for machine-readable structural validation is the type-definition files:
 
-- [types/note.schema.yaml](../../../types/note.schema.yaml)
+- [kb/types/note.schema.yaml](../../types/note.schema.yaml)
 - [kb/notes/types/adr.schema.yaml](../../../kb/notes/types/adr.schema.yaml)
 - [kb/notes/types/index.schema.yaml](../../../kb/notes/types/index.schema.yaml)
 - [kb/notes/types/related-system.schema.yaml](../../../kb/notes/types/related-system.schema.yaml)

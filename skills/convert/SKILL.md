@@ -51,7 +51,7 @@ status: seedling
 
 **Rules:**
 - `status` is always `seedling` — conversion structures the note but does not endorse it. Human review flips to `current`.
-- `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
+- `description` must add information beyond the title. See [note base type](../../kb/types/note.md) for quality criteria.
 - `traits` is always `[]` — trait assignment is semantic work, done later by the `commonplace-validate` skill or human review.
 - `tags` is always `[]` — tag assignment is semantic work, done later by the `commonplace-connect` skill or human review.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.

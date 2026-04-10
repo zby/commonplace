@@ -54,7 +54,8 @@ def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:
     try:
         rel = file_path.resolve().relative_to(workspace_root.resolve())
     except ValueError:
-        return [workspace_root]
+        kb_root = workspace_root / "kb"
+        return [kb_root] if kb_root.is_dir() else [workspace_root]
 
     parts = rel.parts
     scopes: list[Path] = []
@@ -62,7 +63,10 @@ def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:
         scopes.append(workspace_root / "kb" / "work" / parts[2])
     if len(parts) >= 2 and parts[0] == "kb":
         scopes.append(workspace_root / "kb" / parts[1])
-    scopes.append(workspace_root)
+        scopes.append(workspace_root / "kb")
+    else:
+        kb_root = workspace_root / "kb"
+        scopes.append(kb_root if kb_root.is_dir() else workspace_root)
     return scopes
 
 
@@ -275,7 +279,7 @@ def _resolve_known_type(type_name: str, file_path: Path, workspace_root: Path) -
         if type_name == "text":
             return TypeProfile(resolved_type="text", definition_path=None)
         if type_name == "note":
-            raise FileNotFoundError("types/note.schema.yaml is missing")
+            raise FileNotFoundError("kb/types/note.schema.yaml is missing")
         return _resolve_known_type("note", file_path, workspace_root)
 
     schema = _load_schema(str(definition_path.resolve()))

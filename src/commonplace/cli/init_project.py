@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 DEFAULT_DIRS = [
+    Path("kb/types"),
     Path("kb/notes"),
     Path("kb/notes/types"),
     Path("kb/sources"),
@@ -20,14 +21,13 @@ DEFAULT_DIRS = [
     Path("kb/work"),
     Path("kb/instructions"),
     Path("kb/reports"),
-    Path("types"),
 ]
 
 # Scaffold paths to copy, relative to the scaffold package.
 # Each entry is (scaffold_relative_path, target_relative_path).
 SCAFFOLD_TREES = [
     ("kb/instructions", "kb/instructions"),
-    ("types", "types"),
+    ("kb/types", "kb/types"),
 ]
 
 # Skills directories for supported runtimes.

@@ -1,5 +1,5 @@
 ---
-description: Taxonomy overview — the base types table and migration from old flat types; global field definitions, status, and traits live in types/note.md
+description: Taxonomy overview — the base types table and migration from old flat types; global field definitions, status, and traits live in kb/types/note.md
 type: spec
 tags: [type-system]
 status: current
@@ -7,11 +7,11 @@ status: current
 
 # Document classification
 
-See [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) for the design rationale. See [note base type](../../types/note.md) for the global fields, status ladder, traits, and design principles that all structured types inherit.
+See [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) for the design rationale. See [note base type](../types/note.md) for the global fields, status ladder, traits, and design principles that all structured types inherit.
 
 ## Base types
 
-A document has exactly one type. [text](../../types/text.md) has no frontmatter and no requirements. Every other type extends [note](../../types/note.md) — it defines the shared fields (description, status, traits, tags) that all structured documents carry.
+A document has exactly one type. [text](../types/text.md) has no frontmatter and no requirements. Every other type extends [note](../types/note.md) — it defines the shared fields (description, status, traits, tags) that all structured documents carry.
 
 The `type` field is a free-form string. The table below lists the common values; directory-scoped `types/` folders document the structural expectations for each.
 
@@ -45,7 +45,7 @@ Traits are a separate axis from type. They do not define structure; they declare
 
 Relevant Notes:
 
-- [note base type](../../types/note.md) — defines the global fields, status ladder, traits, and design principles
-- [text root type](../../types/text.md) — the empty root type: no frontmatter, always valid
+- [note base type](../types/note.md) — defines the global fields, status ladder, traits, and design principles
+- [text root type](../types/text.md) — the empty root type: no frontmatter, always valid
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — design rationale for verifiable types
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types

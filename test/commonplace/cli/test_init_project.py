@@ -22,7 +22,7 @@ def test_init_project_creates_core_directories(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "sources").is_dir()
     assert (tmp_path / "kb" / "instructions").is_dir()
     assert (tmp_path / "kb" / "reports").is_dir()
-    assert (tmp_path / "types").is_dir()
+    assert (tmp_path / "kb" / "types").is_dir()
     assert (tmp_path / "kb" / "log.md").is_file()
 
     rerun = init_project(tmp_path)
@@ -42,7 +42,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "instructions" / "connect" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "ingest" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "review-gates").is_dir()
-    assert (tmp_path / "types" / "note.schema.yaml").is_file()
+    assert (tmp_path / "kb" / "types" / "note.schema.yaml").is_file()
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 

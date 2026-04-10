@@ -4,7 +4,7 @@ Read this before creating or editing notes, ADRs, indexes, or source reviews. Th
 
 ## Before You Write
 
-**Text files** skip this checklist entirely. A `text` file is a markdown file with no frontmatter — just create the file and write. See [document-classification](../notes/document-classification.md) for the type taxonomy and [note base type](../../types/note.md) for field definitions, status, and traits.
+**Text files** skip this checklist entirely. A `text` file is a markdown file with no frontmatter — just create the file and write. See [document-classification](../notes/document-classification.md) for the type taxonomy and [note base type](../types/note.md) for field definitions, status, and traits.
 
 For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
 
@@ -19,7 +19,7 @@ If any answer is "no," fix it before saving.
 
 ## Templates
 
-The two most common types — `note` and `structured-claim` — are inlined below. The base type specification lives in `../../types/note.md` and the creation template in `../../types/note.template.md`. Directory-local types live in each collection's `types/` subdirectory:
+The two most common types — `note` and `structured-claim` — are inlined below. The base type specification lives in `../types/note.md` and the creation template in `../types/note.template.md`. Directory-local types live in each collection's `types/` subdirectory:
 
 - `notes/types/` — `structured-claim`, `adr`, `index`, `related-system`
 - `sources/types/` — `source-review`

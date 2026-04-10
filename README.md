@@ -7,7 +7,6 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 ## What's in the box
 
 ```
-types/                       Global types (text, note)
 skills/                      Framework skill source files
   write/SKILL.md             Route and draft notes by type
   connect/SKILL.md           Find connections, weave knowledge graph
@@ -18,6 +17,7 @@ skills/                      Framework skill source files
   revise-iterative/SKILL.md  Multi-pass prose revision
 
 kb/                          Knowledge base
+  types/                     Global types (text, note)
   instructions/WRITING.md     Writing conventions and quality checklist
   log.md                     Improvement log — one-line observations appended during traversal
   notes/                     Notes — the primary knowledge unit

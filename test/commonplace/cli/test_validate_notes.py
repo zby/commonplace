@@ -24,7 +24,7 @@ def write(path: Path, content: str) -> Path:
 def configure_temp_repo(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     notes_root = tmp_path / "kb" / "notes"
     write(
-        tmp_path / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -77,7 +77,7 @@ properties:
         tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../types/note.schema.yaml"
+  - $ref: "../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -102,7 +102,7 @@ allOf:
         tmp_path / "kb" / "notes" / "types" / "spec.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../types/note.schema.yaml"
+  - $ref: "../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -127,7 +127,7 @@ allOf:
         tmp_path / "kb" / "notes" / "types" / "related-system.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../types/note.schema.yaml"
+  - $ref: "../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:

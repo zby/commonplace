@@ -15,7 +15,7 @@ Agents are stateless and context is finite. [Types give agents structural hints 
 
 ## Metadata enforcement
 
-Navigation depends on metadata existing reliably. The [type system enforces metadata that navigation depends on](./type-system-enforces-metadata-that-navigation-depends-on.md) — descriptions exist because the [note base type](../../types/note.md) requires them. Without enforcement, agents and humans under time pressure skip metadata, and the knowledge base degrades to a collection navigable only by opening every document.
+Navigation depends on metadata existing reliably. The [type system enforces metadata that navigation depends on](./type-system-enforces-metadata-that-navigation-depends-on.md) — descriptions exist because the [note base type](../types/note.md) requires them. Without enforcement, agents and humans under time pressure skip metadata, and the knowledge base degrades to a collection navigable only by opening every document.
 
 ## Verification
 
@@ -23,7 +23,7 @@ Types must assert [verifiable structural properties, not subject matter](./docum
 
 ## Extensibility
 
-Different knowledge domains need different document structures. [Directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — the global layer stays thin ([text](../../types/text.md) and [note](../../types/note.md)), while each collection has its own `types/` subdirectory with templates that extend the base. This keeps per-session context cost low and lets users introduce new types by adding a template locally, with no global configuration changes.
+Different knowledge domains need different document structures. [Directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — the global layer stays thin ([text](../types/text.md) and [note](../types/note.md)), while each collection has its own `types/` subdirectory with templates that extend the base. This keeps per-session context cost low and lets users introduce new types by adding a template locally, with no global configuration changes.
 
 ## Output quality
 
@@ -37,7 +37,7 @@ The arguments are independent and complementary. Each stands alone; together the
 
 ## Maturation
 
-Content starts as [text](../../types/text.md) (no frontmatter, no structure) and gains type information as it develops — gradual typing applied to documents. The maturation path is: raw capture → add frontmatter (`note`) → accumulate traits → promote to a specific type when structural criteria are met. A bare note that persists without promotion is a signal. This mirrors the broader [constraining pattern](./methodology-enforcement-is-constraining.md): practices start stochastic and harden as they prove out.
+Content starts as [text](../types/text.md) (no frontmatter, no structure) and gains type information as it develops — gradual typing applied to documents. The maturation path is: raw capture → add frontmatter (`note`) → accumulate traits → promote to a specific type when structural criteria are met. A bare note that persists without promotion is a signal. This mirrors the broader [constraining pattern](./methodology-enforcement-is-constraining.md): practices start stochastic and harden as they prove out.
 
 ## Why free-form, not enum
 

@@ -18,7 +18,7 @@ The copies keep the same file contents, but the runtime path is different. That 
 
 When writing or editing a promoted skill:
 
-- Prefer stable workspace-root paths in prose and commands, such as `kb/notes/`, `kb/instructions/WRITING.md`, and `types/`
+- Prefer stable workspace-root paths in prose and commands, such as `kb/notes/`, `kb/instructions/WRITING.md`, and `kb/types/`
 - Do not assume markdown-relative links inside the skill will resolve from the runtime copy
 - Treat `kb/instructions/` as the searchable source surface, and the runtime skill directories as compiled copies
 

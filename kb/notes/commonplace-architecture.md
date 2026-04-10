@@ -1,5 +1,5 @@
 ---
-description: The repo's own layout (kb/, sources, instructions, scripts) as distinct from the two-tree installed layout; global types inlined in CLAUDE.md rather than kb/types/
+description: The repo's own layout (kb/, sources, instructions, scripts) as distinct from the old two-tree installed layout; global base types now live under kb/types/ with the rest of the operational KB surface
 type: note
 traits: []
 tags: [architecture]
@@ -15,7 +15,7 @@ The commonplace repo is itself a knowledge base — it uses its own knowledge sy
 ```
 commonplace/
     kb/
-      types/                         ← empty — see "Global types" below
+      types/                         ← global base types (`text`, `note`)
       log.md                         ← improvement log (append-only)
       notes/
         types/                       ← note types (structured-claim, adr, etc.)
@@ -44,16 +44,16 @@ commonplace/
 | `CLAUDE.md` | Missing | The repo's own instructions, routing table, and knowledge system section |
 | `README.md` | Missing | Project overview for GitHub |
 
-## Global types belong in CLAUDE.md, not kb/types/
+## Global types live under kb/types/
 
-The [installation layout ADR](./adr/006-two-tree-installation-layout.md) calls for `kb/types/` to hold global types — the maturity ladder (`text` and `note`). But these types are policy rules, not structural templates. The distinction:
+Installed projects should keep Commonplace's structural surface inside `kb/`, rather than adding extra top-level directories. That keeps instructions, global base types, directory-local types, and authored artifacts in one subtree.
 
-- **Collection types** (notes/types/, sources/types/, tasks/types/) define concrete structural templates the agent reads when creating a specific document kind. They earn their own files because each is a multi-section scaffold.
-- **Global types** define when a document promotes from one maturity level to another: no frontmatter means `text`, has frontmatter means `note`. This is a two-sentence rule, not a template.
+The distinction still matters:
 
-Putting the maturity ladder in CLAUDE.md costs zero hops — it's always loaded. Putting it in `kb/types/` costs one hop and adds a directory that exists only to hold a trivial distinction. The collection types justify their directories because agents read them repeatedly during document creation. The global types don't — the agent internalizes "no frontmatter = text" once and never looks it up again.
+- **Collection types** (`notes/types/`, `sources/types/`, `tasks/types/`) define concrete structural templates the agent reads when creating a specific document kind.
+- **Global types** (`kb/types/`) define the shared base layer: the `text`/`note` maturity boundary plus the shared `note` schema and template.
 
-Decision: drop `kb/types/` as a required directory. Encode the text/note maturity boundary in CLAUDE.md. Update the installation architecture spec to match.
+The tradeoff is one extra directory under `kb/`, but it avoids a more intrusive top-level `types/` directory in installed projects. That is the better default for installation ergonomics.
 
 ## Open Questions
 

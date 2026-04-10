@@ -19,7 +19,7 @@ def write(path: Path, content: str) -> Path:
 
 def test_root_note_profile_is_loaded_from_yaml(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -63,7 +63,7 @@ type: note
 
 def test_collection_definition_extends_note_profile(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -96,7 +96,7 @@ properties:
         tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../types/note.schema.yaml"
+  - $ref: "../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -137,7 +137,7 @@ type: structured-claim
 
 def test_missing_type_definition_falls_back_to_note(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -180,7 +180,7 @@ type: unknown-type
 
 def test_workshop_scope_overrides_collection_and_root(tmp_path: Path) -> None:
     write(
-        tmp_path / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -207,7 +207,7 @@ properties:
         tmp_path / "kb" / "work" / "types" / "memo.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../../types/note.schema.yaml"
+  - $ref: "../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -226,7 +226,7 @@ allOf:
         tmp_path / "kb" / "work" / "demo" / "types" / "memo.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../../../types/note.schema.yaml"
+  - $ref: "../../../types/note.schema.yaml"
   - type: object
     properties:
       frontmatter:
