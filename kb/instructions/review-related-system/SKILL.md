@@ -56,7 +56,8 @@ If the note already exists, treat the task as an update rather than a new review
 Read these files before drafting:
 
 - `kb/instructions/WRITING.md`
-- `kb/notes/types/related-system.md`
+- `kb/notes/types/related-system.template.md`
+- `kb/notes/types/related-system.instructions.md`
 - `kb/notes/related-systems/README.md`
 - `kb/instructions/run-review-bundle-on-note.md`
 

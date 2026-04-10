@@ -3,7 +3,7 @@
 
 Usage:
     commonplace-relocate-note kb/notes/my-note.md "New note title"
-    commonplace-relocate-note kb/notes/my-note.md --dir kb/notes/definitions
+    commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions
     commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions/new-note.md --apply
 """
 
@@ -74,23 +74,24 @@ def resolve_destination_dir(arg: str) -> Path:
     return resolved
 
 
-def resolve_destination_path(source: Path, new_name: str | None, dest_dir: str | None, dest_path: str | None) -> Path:
-    if dest_path and (new_name or dest_dir):
-        raise ValueError("Use either --to or the [new_name] / --dir form, not both")
+def resolve_destination_path(source: Path, new_name: str | None, dest_path: str | None) -> Path:
+    if dest_path and new_name:
+        raise ValueError("Use either --to or the [new_name] form, not both")
 
     if dest_path:
         raw = Path(dest_path)
         resolved = raw.resolve() if raw.is_absolute() else (REPO_ROOT / raw).resolve()
-        if resolved.suffix != ".md":
-            raise ValueError(f"Destination path must end with .md: {resolved}")
-        if NOTES_ROOT not in resolved.parents:
-            raise ValueError(f"Destination path must live under {NOTES_ROOT}: {resolved}")
-        ensure_note_slug_length(resolved.stem)
-        return resolved
+        if resolved.suffix == ".md":
+            if NOTES_ROOT not in resolved.parents:
+                raise ValueError(f"Destination path must live under {NOTES_ROOT}: {resolved}")
+            ensure_note_slug_length(resolved.stem)
+            return resolved
+
+        directory = resolve_destination_dir(dest_path)
+        return directory / source.name
 
     filename = source.name if new_name is None else f"{slugify_note_filename(new_name)}.md"
-    directory = source.parent if dest_dir is None else resolve_destination_dir(dest_dir)
-    return directory / filename
+    return source.parent / filename
 
 
 def format_relative_link(from_file: Path, to_file: Path) -> str:
@@ -300,12 +301,11 @@ def relocate_note(
     note_arg: str,
     new_name: str | None = None,
     *,
-    dest_dir: str | None = None,
     dest_path: str | None = None,
     apply: bool = False,
 ) -> int:
     source = resolve_note(note_arg)
-    destination = resolve_destination_path(source, new_name, dest_dir, dest_path)
+    destination = resolve_destination_path(source, new_name, dest_path)
 
     if destination == source:
         print(f"Destination matches source: {source.relative_to(REPO_ROOT)}", file=sys.stderr)
@@ -374,8 +374,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("note", help="Note path or unique note name under kb/notes/")
     parser.add_argument("new_name", nargs="?", help="New title or filename stem; omit to keep the current filename")
-    parser.add_argument("--dir", dest="dest_dir", help="Destination directory under kb/notes/")
-    parser.add_argument("--to", dest="dest_path", help="Full destination .md path under kb/notes/")
+    parser.add_argument("--to", dest="dest_path", help="Destination directory or .md path under kb/notes/")
     parser.add_argument("--apply", action="store_true", help="Write changes instead of dry-running")
     args = parser.parse_args()
 
@@ -384,7 +383,6 @@ def main() -> None:
             relocate_note(
                 args.note,
                 args.new_name,
-                dest_dir=args.dest_dir,
                 dest_path=args.dest_path,
                 apply=args.apply,
             )

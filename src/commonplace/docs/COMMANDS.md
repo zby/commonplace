@@ -53,7 +53,7 @@ Rename or move a note, updating all backlinks across the KB.
 
 ```bash
 commonplace-relocate-note old-note "New note title" --apply
-commonplace-relocate-note old-note --dir kb/notes/definitions --apply
+commonplace-relocate-note old-note --to kb/notes/definitions --apply
 commonplace-relocate-note old-note --to kb/notes/new-path.md --apply
 ```
 

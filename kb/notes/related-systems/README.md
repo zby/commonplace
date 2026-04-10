@@ -8,7 +8,10 @@ Convergence across independent projects is a stronger signal than any single des
 
 ## How to write a review
 
-Use the template: `kb/notes/types/related-system.md`
+Use the template pair:
+
+- `kb/notes/types/related-system.template.md`
+- `kb/notes/types/related-system.instructions.md`
 
 The recurring structure: **what it is → core ideas → how it compares → what to borrow → what to watch.**
 

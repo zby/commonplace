@@ -29,7 +29,7 @@ Known built-in types:
 - `index`
 - `source-review`
 
-If a non-built-in type is requested, scan `kb/*/types/` for `{type}.md`. If no matching template exists, stop and report the available types.
+If a non-built-in type is requested, scan `kb/*/types/` for `{type}.template.md`. If no matching template exists, stop and report the available types.
 
 ## Procedure
 
@@ -49,13 +49,16 @@ Read `kb/instructions/WRITING.md` before drafting any frontmatter-based artifact
   - no frontmatter template
 - `index`:
   - destination: `kb/notes/`
-  - template source: `kb/notes/types/index.md`
+  - template source: `kb/notes/types/index.template.md`
+  - instructions source: `kb/notes/types/index.instructions.md`
 - `source-review`:
   - destination: `kb/sources/`
-  - template source: `kb/sources/types/source-review.md`
+  - template source: `kb/sources/types/source-review.template.md`
+  - instructions source: `kb/sources/types/source-review.instructions.md`
 - any other discovered type:
-  - read its template from `kb/*/types/{type}.md`
-  - infer the target collection from the template path and any explicit instructions inside it
+  - read its template from `kb/*/types/{type}.template.md`
+  - if present, also read `kb/*/types/{type}.instructions.md`
+  - infer the target collection from the template path and the companion instructions
 
 4. Draft the artifact.
 

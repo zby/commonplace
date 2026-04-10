@@ -9,7 +9,7 @@ information gathering | ready for implementation | waiting for <dependency>
 - [ ] none
 
 ## Goal
-One sentence: what "done" looks like.
+{What done looks like}
 
 ## Context
 - Relevant files/symbols:
@@ -29,7 +29,7 @@ One sentence: what "done" looks like.
 - [ ] future step
 
 ## Current State
-Where things stand right now. Update as work progresses.
+{Current state}
 
 ## Notes
 - Short observations, gotchas, things tried

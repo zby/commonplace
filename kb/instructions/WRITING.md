@@ -1,33 +1,32 @@
 # Writing Guide for kb/
 
-Read this before creating or editing notes, ADRs, indexes, or source reviews. This file defines writing conventions, quality checks, and default templates. Routing, validation flow, and follow-up orchestration belong to the `write` skill from the `commonplace` plugin.
+Read this when you write or edit a note: any document in this knowledge base that has frontmatter. This file defines the general writing conventions, quality checks, and default `note` template for those documents. Text documents without frontmatter are exempt from these rules.
 
 ## Before You Write
 
-**Text files** skip this checklist entirely. A `text` file is a markdown file with no frontmatter — just create the file and write. See [document-classification](../notes/document-classification.md) for the type taxonomy and [note base type](../types/note.md) for field definitions, status, and traits.
+For any note in this sense, make sure it will be findable by a future agent who doesn't already know it exists. Before saving, check:
 
-For **notes and above** (any type with frontmatter), every note must be findable by a future agent who doesn't know it exists. Before saving, check:
-
-1. **[Title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md)** — Does it work as prose when linked? `since [title](./title.md)` reads naturally? A claim title should be contestable — someone could reasonably disagree. "Continuous learning is substrate-independent" passes the prose test but fails the contestability test: nobody would push back on it — the classification isn't revealing enough to contest. "Continuous learning can happen outside of weights" names the thing people actually doubt. Topical titles are correct for: multi-claim specs and frameworks, definitional notes (term pinning), and exploratory/seedling notes where the ideas aren't firm enough to assert as claims. Don't force a claim — if the title feels strained, the note is probably one of these cases. Keep note titles at or below 100 characters.
-2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value.
+1. **Title**
+   - **Title as claim is a useful convention** — When a title is a claim rather than a topic, links to it can read like reasoning: `since [title](./title.md)` or `because [title](./title.md)`. This makes the file tree scannable as arguments rather than topics, and it improves progressive disclosure because the title tells the reader or agent what the note argues before opening it. Ask whether the title states something that could be true or false. Topic labels, category names, and bare artifact names fail this test. If you use a claim title, add the `title-as-claim` trait so review gates can check that the title actually fulfills that promise. This is a useful convention, not a mandatory rule: don't force a claim title when it feels strained. Common exceptions are multi-claim specs and frameworks, definitional notes, indexes, and exploratory/seedling notes that are not ready to assert a clear claim.
+   - **If you use a claim title, check composability** — It should work as prose when linked: `since [title](./title.md)` or `because [title](./title.md)` should read naturally. If it forces awkward grammar and is not a concrete artifact name, it is not composable enough.
+   - **If you use a claim title, check claim strength** — Make it a contestable one. "Continuous learning is substrate-independent" passes the prose test but fails the contestability test: nobody would push back on it. "Continuous learning can happen outside of weights" names the thing people actually doubt. If the non-obvious claim is not clear yet, or the document is acting as a reference rather than a premise, use a topical title instead.
+   - **Title-body alignment** — Read the title, then the body. The body should actually support the title's claim or scope. Watch for claim drift (title says X, body establishes related claim Y) and scope drift (title is narrower or broader than the body).
+   - **Length** — Keep note titles at or below 100 characters.
+2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value. Keep it under 200 characters; around 50-200 is the intended range.
 3. **Tags** — Is it tagged with relevant keywords that help future readers find it? Use as many as genuinely useful.
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
 5. **KB vocabulary on first mention** — Terms like distillation, constraining, codification, and context engineering have definitions in `kb/notes/definitions/`. Authors know them from CLAUDE.md, but external readers (humans on GitHub Pages) do not. On first mention, provide an inline gloss and a link: `[distillation](./definitions/distillation.md) (directed context compression)`. The gloss lets the reader keep reading; the link lets them go deep.
-6. **[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** — Does the note explain *why*, not just record *what works*? Quick test: if you changed one premise, could you predict what changes in the conclusion? If yes, the note captures mechanism. If no, it may be recording a pattern without explaining it. Notes that only record "X works" are adaptive — useful but brittle. Notes that explain why X works have reach. Seedlings are exempt — reach is a maturation goal, not a gate.
+6. **[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md)** — Aim for notes to explain *why*, not just record *what works*. A note with reach captures mechanism rather than a successful pattern, so it transfers beyond the original case and helps the reader predict where the conclusion will change or fail when the assumptions change. Quick tests: if you changed one premise, could you predict what changes in the conclusion? Would the insight still apply in a different domain, or is it tightly fitted to one case? Could someone say exactly how the explanation is wrong, not just that it is incomplete? Notes that only record "X works" are adaptive — useful but brittle. Notes that explain why X works have reach. Reach is a goal to move toward, not a gate that every note must already clear.
 
 If any answer is "no," fix it before saving.
 
 ## Templates
 
-The two most common types — `note` and `structured-claim` — are inlined below. The base type specification lives in `../types/note.md` and the creation template in `../types/note.template.md`. Directory-local types live in each collection's `types/` subdirectory:
-
-- `notes/types/` — `structured-claim`, `adr`, `index`, `related-system`
-- `sources/types/` — `source-review`
-- `tasks/types/` — `task-active`, `task-backlog`, `task-recurring`
+This file only inlines the generic `note` template. If the current collection defines specialized types under its local `types/` directory, read both `{type}.template.md` and `{type}.instructions.md` for the type you are using, along with this guide.
 
 ### note
 
-Freeform exploration, insights, analysis. The default type for any document with frontmatter.
+Use this as the default template for any note with frontmatter.
 
 ```markdown
 ---
@@ -38,59 +37,19 @@ tags: []
 status: current
 ---
 
-# {claim title if single-claim; topical title if framework, definitional, or exploratory}
+# {Title}
 
-{Your analysis, reasoning, or exploration. Freeform.}
+{Body}
 
 ## Open Questions
 
-- {Unresolved points worth tracking — omit section if none}
+- {Question}
 
 ---
 
 Relevant Notes:
 
-- [related-note](./related-note.md) — how it relates
-```
-
-### structured-claim
-
-Developed arguments with Evidence/Reasoning/Caveats sections. Use when a note has matured from exploration into a defensible claim. **Caution:** in practice, without additional methodology (warrant extraction, claim sharpening, post-structuring revision), the Toulmin sections create flow problems (warrant extraction, claim sharpening, post-structuring revision). The type is experimental — don't promote notes unless the argument genuinely fits the scaffold without forcing.
-
-```markdown
----
-description: ""
-type: structured-claim
-traits: [title-as-claim]
-tags: []
-status: seedling
----
-
-# {Claim as title — an assertion, not a topic label}
-
-{Opening paragraph — claim stated as a full sentence with context. Why does this matter?}
-
-## Evidence
-
-{Observations, facts, references. Checkable.}
-{Toulmin: grounds}
-
-## Reasoning
-
-{The principle connecting evidence to claim. Why does this evidence imply this claim?}
-{Toulmin: warrant + backing}
-
-## Caveats
-
-- {Scope limits — when does this not apply?}
-- {Assumptions that must hold}
-- {Counterarguments and responses}
-
----
-
-Relevant Notes:
-
-- [related-note](./related-note.md) — how it relates
+- [related-note](./related-note.md) — {relationship}
 ```
 
 ## Frontmatter
@@ -103,14 +62,14 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | Field | Required | Constraints |
 |-------|----------|------------|
 | `description` | Yes | Must discriminate this note from similar ones |
-| `type` | No | Base type: `note` (default), `structured-claim`, `spec`, `review`, `index`, `adr`, `related-system`, `source-review`. See [document-classification](../notes/document-classification.md) |
+| `type` | No | Base type: `note` (default) or another specialized document type. See [document-classification](../notes/document-classification.md) |
 | `traits` | No | Review-routing properties: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation` |
-| `tags` | No | Tags for navigation — used to generate index listings and HTML tag links. Use as many as genuinely useful. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md). |
+| `tags` | No | Freeform tags for navigation |
 | `status` | No | `seedling`, `current`, `speculative`, `outdated`; some specialized types override this vocabulary |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
 
-Task files do not use frontmatter — their status is encoded by directory (backlog/active/completed). Seedlings also lack frontmatter, but are distinguished by location (they live in `notes/`, not `tasks/`).
+Tags are freeform navigation aids. Use as many as genuinely useful for helping future readers find the note. There is no parent/child restriction — a note can be tagged both `constraining` and `learning-theory` if both help navigation.
 
 ## Links
 
@@ -120,7 +79,7 @@ Internal workspace documents connect via standard markdown links. Each link is a
 
 - `[note title](./note-title.md)` links to a note in the same directory
 - `[note title](../note-title.md)` or `[note title](./subdir/note-title.md)` for cross-directory links
-- Links work as prose: "Since [title as claim enables traversal as reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md), we chose..."
+- Links work as prose: "Since [structure enables navigation without reading everything](./structure-enables-navigation-without-reading-everything.md), we chose..."
 - Link text doesn't have to match the target's title — use whatever text best informs the reader's decision
 
 ## Filenames
@@ -132,7 +91,7 @@ Filename slugs are capped at 100 characters. If a title would produce a longer s
 ### Inline vs Footer Links
 
 **Inline links** are woven into prose and carry richer relationship data:
-> The insight is that [title as claim enables traversal as reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md), which informed the index design.
+> The insight is that [structure enables navigation without reading everything](./structure-enables-navigation-without-reading-everything.md), which informed the index design.
 
 **Footer links** appear at the bottom in a structured section:
 ```markdown
@@ -185,7 +144,7 @@ The distilled artifact itself should NOT link back to its sources — it's optim
 There are two kinds of indexes:
 
 - **Directory indexes** (`index.md` in each collection) — auto-generated flat listings of all files with title, description, and type. Rebuild with `commonplace-generate-notes-index <directory>`.
-- **Tag indexes** (e.g. `learning-theory-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing. See [ADR 004](../notes/adr/004-replace-areas-with-tags.md).
+- **Tag indexes** (e.g. `learning-theory-index.md`) — navigation hubs for a tag, with optional curated section and auto-generated listing.
 
 ### Tag Index Structure
 
@@ -219,38 +178,15 @@ What is unexplored or unresolved.
 **Curate** when the generated listing alone isn't enough — add editorial groupings above the marker.
 **Merge** when both indexes are small with significant overlap.
 
-### Tag Assignment
-
-Tags are freeform navigation aids. Use as many as genuinely useful for helping future readers find the note. No parent/child restrictions — a note can be tagged both `constraining` and `learning-theory`. The HTML rendering (MkDocs) shows tags as clickable links.
-
-## Helper Functions
+## Useful Commands
 
 ### Safe Rename
-Never rename a note manually — it breaks links. Use:
+Never rename a note manually — it breaks links. Use `commonplace-relocate-note`, which renames or moves the note and updates backlinks across the KB.
+
 ```bash
-# Find and update all references
-rg '\[.*\]\(.*old-title\.md\)' --glob '*.md' -l  # find references first
-# Then git mv and update all references
-```
-
-### Graph Utilities
-```bash
-# Orphan detection (notes with no inbound links)
-rg -l '.' kb/notes/*.md | while read f; do
-  fname=$(basename "$f")
-  rg -q "$fname" --glob '*.md' kb/notes/ || echo "Orphan: $f"
-done
-
-# Dangling link detection (links to non-existent files)
-rg -o '\]\(([^)]+\.md)\)' kb/notes/ -r '$1' --no-filename | sort -u | while read target; do
-  [ -f "kb/notes/$target" ] || echo "Dangling: $target"
-done
-
-# Find text files (no frontmatter)
-rg -L '^---' kb/notes/*.md
-
-# Find notes missing descriptions (has frontmatter but no description — broken, not text)
-rg -l '^---' kb/notes/*.md | xargs rg -L '^description:'
+commonplace-relocate-note old-note "New note title" --apply
+commonplace-relocate-note old-note --to kb/notes/definitions --apply
+commonplace-relocate-note old-note --to kb/notes/new-path.md --apply
 ```
 
 ## Common Pitfalls

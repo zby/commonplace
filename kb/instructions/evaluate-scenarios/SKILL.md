@@ -40,8 +40,8 @@ Common fixed sources you'll encounter:
 - `kb/instructions/connect/SKILL.md` — connection skill body
 - `kb/instructions/ingest/SKILL.md` — ingestion skill body
 - `kb/instructions/snapshot-web/SKILL.md` — snapshot skill body
-- `kb/sources/types/source-review.md` — source review type template
-- `test/scenarios/types/scenario.md` — scenario type template
+- `kb/sources/types/source-review.template.md` — source review type template
+- `test/scenarios/types/scenario.template.md` — scenario type template
 
 **Important:** Count CLAUDE.md bytes once per scenario (it's always loaded, not a per-step cost). Count other fixed sources once per scenario even if referenced in multiple steps (they stay in context after first load).
 

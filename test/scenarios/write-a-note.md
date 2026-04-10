@@ -97,4 +97,4 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 **Installed project (escalation):** Adds 2-3 hops to a different tree. Estimated to occur ~10% of the time — most writes don't hit edge cases requiring full methodology reasoning.
 
-**Directory-local types:** When the target type is adr, index, or related-system, step 4 requires an additional hop to `kb/notes/types/{type}.md`. This adds 1 hop for ~20% of writes.
+**Directory-local types:** When the target type is adr, index, or related-system, step 4 requires an additional hop to `kb/notes/types/{type}.template.md` plus its companion `kb/notes/types/{type}.instructions.md`. This adds extra reads for the less common specialized-type path.

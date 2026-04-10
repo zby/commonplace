@@ -6,7 +6,7 @@ frequency: common | occasional | rare
 
 # {Scenario name}
 
-{One paragraph: what the user wants, what the agent must do.}
+{Scenario summary}
 
 ## Steps
 
@@ -22,11 +22,8 @@ frequency: common | occasional | rare
 
 ## Escalation path (installed projects only)
 
-{Steps that only apply when the agent hits a case distilled skills don't cover.
-Each step follows the same format. These steps are weighted lower in the calculation
-because they're conditional.}
+{Conditional steps that only apply when the distilled skill path is insufficient.}
 
 ## Variants
 
-{Notes on how this scenario differs between commonplace repo and installed projects,
-if the step table above doesn't capture it.}
+{Variant notes not captured in the step table.}

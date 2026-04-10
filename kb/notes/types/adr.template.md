@@ -12,18 +12,12 @@ status: accepted
 
 ## Context
 
-{What is the issue that motivates this decision?}
+{Context}
 
 ## Decision
 
-{What is the change being proposed/accepted?}
+{Decision}
 
 ## Consequences
 
-{What becomes easier or harder as a result?}
-
----
-
-Relevant Notes:
-
-- [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — foundation: why structural types deserve deterministic validation
+{Consequences}

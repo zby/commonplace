@@ -33,7 +33,7 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 ### 4. Read source type definition
 - **Context needed:** Structure for source-review documents
-- **Source:** `kb/sources/types/source-review.md`
+- **Source:** `kb/sources/types/source-review.template.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
 - **Notes:** Small file (~500 bytes). Defines the template for source reviews: Key Points, Relevance, Open Questions.

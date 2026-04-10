@@ -14,7 +14,7 @@ status: accepted
 
 When writing a note, the agent needs two things: the type template (what sections and frontmatter fields to include) and the writing conventions (title-as-claim, description quality, composability). These lived in separate files:
 
-- Type templates in `kb/types/note.md` and `kb/notes/types/structured-claim.md`
+- Type templates in `kb/types/note.template.md` and `kb/notes/types/structured-claim.template.md`
 - Writing conventions in `kb/instructions/WRITING.md`
 
 The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Since [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md), it points to WRITING.md for writing guidance — but WRITING.md then pointed elsewhere for the actual templates. Two hops for every write.
