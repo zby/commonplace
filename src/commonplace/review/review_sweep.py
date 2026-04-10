@@ -1,21 +1,26 @@
+"""Batch review sweep using the direct-write review runner.
+
+Selects stale (note, gate) pairs via review_target_selector.select_stale_gates
+and runs each bundled note through run_review_bundle_lib.run_bundle, in
+parallel worker threads.
+"""
+
 from __future__ import annotations
 
 import argparse
-import json
 import os
-import subprocess
 import sys
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.review.resolve_gates import resolve_to_gate_ids
+from commonplace.review.review_db import GATES_ROOT, resolve_db_path
+from commonplace.review.review_target_selector import StaleGate, select_stale_gates
+from commonplace.review.run_review_bundle_lib import UsageExhausted, run_bundle
 
-GATES_DIR = Path("kb/instructions/review-gates")
-USAGE_EXHAUSTION_TEXT = "out of extra usage"
-USAGE_EXHAUSTED_EXIT_CODE = 99
+
 DEFAULT_PARALLELISM = 4
-SELECTOR_COMMAND = "commonplace-review-target-selector"
-BUNDLE_COMMAND = "commonplace-run-review-bundle"
 
 
 @dataclass(frozen=True)
@@ -57,72 +62,55 @@ def parallelism_from_env() -> int:
     return int(raw)
 
 
-def bundle_names(select_all_gates: bool, positional: list[str]) -> tuple[list[str], list[str]]:
+def bundle_names(select_all_gates: bool, positional: list[str], repo_root: Path) -> tuple[list[str], list[str]]:
     if select_all_gates:
-        bundles = sorted(path.name for path in GATES_DIR.iterdir() if path.is_dir())
+        gates_dir = repo_root / GATES_ROOT
+        bundles = sorted(path.name for path in gates_dir.iterdir() if path.is_dir())
         return bundles, positional
     return [positional[0]], positional[1:]
 
 
-def load_selector_output(
-    *,
-    model: str,
-    bundle: str,
-    current_only: bool,
-    note_paths: list[str],
-) -> list[dict[str, str]]:
-    if current_only and note_paths:
-        raise SystemExit("error: --current and explicit note paths are mutually exclusive")
-
-    args = [SELECTOR_COMMAND, "--model", model, bundle, "--json"]
-    if current_only:
-        args.append("--current")
-    elif note_paths:
-        args.extend(["--note", *note_paths])
-
-    result = subprocess.run(args, capture_output=True, text=True, check=False)
-    if result.stdout:
-        print(result.stdout, end="")
-    if result.returncode != 0:
-        if result.stderr:
-            print(result.stderr, end="", file=sys.stderr)
-        raise SystemExit(result.returncode)
-    return json.loads(result.stdout or "[]")
-
-
-def group_selector_output(records: list[dict[str, str]]) -> list[SweepJob]:
+def group_stale_gates(records: list[StaleGate]) -> list[SweepJob]:
     grouped: dict[str, list[str]] = {}
-    for entry in records:
-        grouped.setdefault(entry["note_path"], []).append(entry["gate_id"])
+    for record in records:
+        grouped.setdefault(record.note_path, []).append(record.gate_id)
     return [
         SweepJob(note_path=note_path, gates=tuple(sorted(gates)))
         for note_path, gates in sorted(grouped.items())
     ]
 
 
-def render_bundle_review_command(*, runner: str, model: str, job: SweepJob) -> str:
-    args = [BUNDLE_COMMAND, "--runner", runner, "--model", model, job.note_path, *job.gates]
-    return " ".join(args)
-
-
-def run_bundle_review(*, runner: str, model: str, job: SweepJob) -> int:
-    result = subprocess.run(
-        [BUNDLE_COMMAND, "--runner", runner, "--model", model, job.note_path, *job.gates],
-        capture_output=True,
-        text=True,
-        check=False,
+def collect_sweep_jobs(
+    *,
+    repo_root: Path,
+    model: str,
+    bundle: str,
+    current_only: bool,
+    note_paths: list[str],
+) -> list[SweepJob]:
+    if current_only and note_paths:
+        raise SystemExit("error: --current and explicit note paths are mutually exclusive")
+    gates_dir = repo_root / GATES_ROOT
+    gate_ids = resolve_to_gate_ids([bundle], gates_dir)
+    stale = select_stale_gates(
+        repo_root,
+        model=model,
+        gate_ids=gate_ids,
+        note_filter=note_paths or None,
+        current_only=current_only,
     )
-    output = f"{result.stdout}{result.stderr}"
-    if output:
-        print(output, end="")
-    if USAGE_EXHAUSTION_TEXT in output.lower():
-        print("error: claude reported extra usage exhaustion; aborting sweep immediately.", file=sys.stderr)
-        return USAGE_EXHAUSTED_EXIT_CODE
-    return result.returncode
+    return group_stale_gates(stale)
+
+
+def render_bundle_review_command(*, runner: str, model: str, job: SweepJob) -> str:
+    args = ["commonplace-run-review-bundle", "--runner", runner, "--model", model, job.note_path, *job.gates]
+    return " ".join(args)
 
 
 def sweep_bundle(
     *,
+    repo_root: Path,
+    db_path: Path,
     bundle: str,
     model: str,
     runner: str,
@@ -130,12 +118,20 @@ def sweep_bundle(
     note_paths: list[str],
     dry_run: bool,
     parallelism: int,
-) -> tuple[int, int]:
-    jobs = group_selector_output(
-        load_selector_output(model=model, bundle=bundle, current_only=current_only, note_paths=note_paths)
+) -> tuple[int, int, bool]:
+    """Run one bundle over all stale notes.
+
+    Returns (reviewed_count, failed_count, usage_exhausted).
+    """
+    jobs = collect_sweep_jobs(
+        repo_root=repo_root,
+        model=model,
+        bundle=bundle,
+        current_only=current_only,
+        note_paths=note_paths,
     )
     if not jobs:
-        return 0, 0
+        return 0, 0, False
 
     print(f"Bundle '{bundle}': {len(jobs)} notes to review")
     if dry_run:
@@ -143,54 +139,71 @@ def sweep_bundle(
             print(f"--- Reviewing: {job.note_path} ({' '.join(job.gates)})")
             print(render_bundle_review_command(runner=runner, model=model, job=job))
             print()
-        return len(jobs), 0
+        return len(jobs), 0, False
 
     reviewed = 0
     failed = 0
     pending = list(jobs)
-    in_flight = {}
+    in_flight: dict = {}
+
+    def _submit(executor: ThreadPoolExecutor, job: SweepJob) -> None:
+        print(f"--- Reviewing: {job.note_path} ({' '.join(job.gates)})")
+        future = executor.submit(
+            run_bundle,
+            repo_root=repo_root,
+            db_path=db_path,
+            note_path=job.note_path,
+            gate_or_bundle=list(job.gates),
+            runner=runner,
+            model=model,
+            dry_run=False,
+        )
+        in_flight[future] = job
+        print()
+
     with ThreadPoolExecutor(max_workers=parallelism) as executor:
         while pending and len(in_flight) < parallelism:
-            job = pending.pop(0)
-            print(f"--- Reviewing: {job.note_path} ({' '.join(job.gates)})")
-            future = executor.submit(run_bundle_review, runner=runner, model=model, job=job)
-            in_flight[future] = job
-            print()
+            _submit(executor, pending.pop(0))
 
         while in_flight:
             done, _ = wait(in_flight, return_when=FIRST_COMPLETED)
             for future in done:
                 job = in_flight.pop(future)
-                status = future.result()
+                try:
+                    status = future.result()
+                except UsageExhausted:
+                    print(
+                        "error: runner reported usage exhausted; aborting sweep immediately.",
+                        file=sys.stderr,
+                    )
+                    for queued in list(in_flight):
+                        queued.cancel()
+                    return reviewed, failed, True
                 if status == 0:
                     reviewed += 1
-                elif status == USAGE_EXHAUSTED_EXIT_CODE:
-                    for queued in in_flight:
-                        queued.cancel()
-                    return reviewed, USAGE_EXHAUSTED_EXIT_CODE
                 else:
                     print(f"  FAILED: {job.note_path}", file=sys.stderr)
                     failed += 1
 
                 if pending:
-                    next_job = pending.pop(0)
-                    print(f"--- Reviewing: {next_job.note_path} ({' '.join(next_job.gates)})")
-                    future = executor.submit(run_bundle_review, runner=runner, model=model, job=next_job)
-                    in_flight[future] = next_job
-                    print()
-    return reviewed, failed
+                    _submit(executor, pending.pop(0))
+    return reviewed, failed, False
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     parallelism = parallelism_from_env()
-    bundles, note_paths = bundle_names(args.all_gates, args.bundle_or_note)
+    repo_root = Path.cwd().resolve()
+    db_path = resolve_db_path(repo_root)
+    bundles, note_paths = bundle_names(args.all_gates, args.bundle_or_note, repo_root)
 
     reviewed_total = 0
     failed_total = 0
     for bundle in bundles:
         print(f"=== Bundle: {bundle} ===")
-        reviewed, failed = sweep_bundle(
+        reviewed, failed, usage_exhausted = sweep_bundle(
+            repo_root=repo_root,
+            db_path=db_path,
             bundle=bundle,
             model=args.model,
             runner=args.runner,
@@ -199,10 +212,10 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
             parallelism=parallelism,
         )
-        if failed == USAGE_EXHAUSTED_EXIT_CODE:
-            return 1
         reviewed_total += reviewed
         failed_total += failed
+        if usage_exhausted:
+            return 1
         print()
 
     print("=== Sweep complete ===")

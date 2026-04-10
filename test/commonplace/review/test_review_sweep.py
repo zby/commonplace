@@ -1,214 +1,141 @@
 from __future__ import annotations
 
-import json
-import os
-import stat
-import subprocess
+import threading
+import time
 from pathlib import Path
 
+import pytest
 
-SCRIPT_ARGS = ["/usr/bin/env", "python3", "-m", "commonplace.review.review_sweep"]
-
-
-def write_executable(path: Path, content: str) -> None:
-    path.write_text(content, encoding="utf-8")
-    path.chmod(path.stat().st_mode | stat.S_IXUSR)
+from commonplace.review import review_sweep
+from commonplace.review.review_target_selector import StaleGate
+from commonplace.review.run_review_bundle_lib import UsageExhausted
 
 
 def make_fake_repo(tmp_path: Path) -> Path:
     repo = tmp_path / "repo"
-    (repo / "kb" / "instructions" / "review-gates" / "prose").mkdir(parents=True, exist_ok=True)
+    prose_dir = repo / "kb" / "instructions" / "review-gates" / "prose"
+    prose_dir.mkdir(parents=True, exist_ok=True)
+    (prose_dir / "source-residue.md").write_text("---\ntype: gate\n---\n\n# Source residue\n", encoding="utf-8")
     return repo
 
 
-def test_review_sweep_aborts_immediately_on_usage_exhaustion(tmp_path: Path) -> None:
+def test_review_sweep_aborts_immediately_on_usage_exhaustion(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     repo = make_fake_repo(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
+    monkeypatch.chdir(repo)
+    monkeypatch.setenv("REVIEW_SWEEP_JOBS", "1")
 
-    selector_output = [
-        {"note_path": "kb/notes/first.md", "gate_id": "prose/source-residue"},
-        {"note_path": "kb/notes/second.md", "gate_id": "prose/source-residue"},
-    ]
-    selector_path = tmp_path / "selector.json"
-    selector_path.write_text(json.dumps(selector_output), encoding="utf-8")
+    def fake_select_stale_gates(repo_root, *, model, gate_ids, note_filter=None, current_only=False, include_diff=False):
+        return [
+            StaleGate("kb/notes/first.md", "prose/source-residue", "missing-review"),
+            StaleGate("kb/notes/second.md", "prose/source-residue", "missing-review"),
+        ]
 
-    bundle_log = tmp_path / "run_review_bundle.log"
+    calls: list[str] = []
 
-    write_executable(
-        bin_dir / "commonplace-review-target-selector",
-        f"""#!/usr/bin/env bash
-cat "{selector_path}"
-""",
-    )
-    write_executable(
-        bin_dir / "commonplace-run-review-bundle",
-        f"""#!/usr/bin/env bash
-printf "invoked\\n" >> "{bundle_log}"
-printf "%s\\n" "You're out of extra usage · resets at 7pm"
-exit 1
-""",
-    )
+    def fake_run_bundle(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
+        calls.append(note_path)
+        raise UsageExhausted()
 
-    env = os.environ.copy()
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["REVIEW_SWEEP_JOBS"] = "1"
+    monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
+    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    result = subprocess.run(
-        [*SCRIPT_ARGS, "--model", "test-model", "prose"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        env=env,
-        check=False,
-    )
+    exit_code = review_sweep.main(["--model", "test-model", "prose"])
+    stderr = capsys.readouterr().err
 
-    assert result.returncode == 1
-    assert "You're out of extra usage" in result.stdout
-    assert "aborting sweep immediately" in result.stderr
-    assert bundle_log.read_text(encoding="utf-8").splitlines() == ["invoked"]
+    assert exit_code == 1
+    assert calls == ["kb/notes/first.md"]
+    assert "aborting sweep immediately" in stderr
 
 
-def test_review_sweep_passes_current_flag_to_selector(tmp_path: Path) -> None:
+def test_review_sweep_passes_current_flag_to_selector(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     repo = make_fake_repo(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
+    monkeypatch.chdir(repo)
 
-    selector_log = tmp_path / "selector.log"
+    captured_kwargs: dict[str, object] = {}
 
-    write_executable(
-        bin_dir / "commonplace-review-target-selector",
-        f"""#!/usr/bin/env bash
-printf "%s\\n" "$*" > "{selector_log}"
-printf "[]"
-""",
-    )
+    def fake_select_stale_gates(repo_root, **kwargs):
+        captured_kwargs.update(kwargs)
+        return []
 
-    env = os.environ.copy()
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
+    def fake_run_bundle(**kwargs):
+        raise AssertionError("run_bundle should not be called when selector returns no stale pairs")
 
-    result = subprocess.run(
-        [*SCRIPT_ARGS, "--model", "test-model", "--current", "prose"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        env=env,
-        check=False,
-    )
+    monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
+    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    assert result.returncode == 0
-    logged = selector_log.read_text(encoding="utf-8")
-    assert "--model test-model prose --json --current" in logged
+    exit_code = review_sweep.main(["--model", "test-model", "--current", "prose"])
+
+    assert exit_code == 0
+    assert captured_kwargs["current_only"] is True
+    assert captured_kwargs["note_filter"] is None
+    assert captured_kwargs["model"] == "test-model"
+    assert captured_kwargs["gate_ids"] == ["prose/source-residue"]
 
 
-def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(tmp_path: Path) -> None:
+def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     repo = make_fake_repo(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
+    monkeypatch.chdir(repo)
 
-    selector_output = [
-        {"note_path": f"kb/notes/note-{idx}.md", "gate_id": "prose/source-residue"}
-        for idx in range(5)
-    ]
-    selector_path = tmp_path / "selector.json"
-    selector_path.write_text(json.dumps(selector_output), encoding="utf-8")
+    def fake_select_stale_gates(repo_root, **kwargs):
+        return [
+            StaleGate(f"kb/notes/note-{idx}.md", "prose/source-residue", "missing-review")
+            for idx in range(5)
+        ]
 
-    lock_dir = tmp_path / "lock"
-    current_file = tmp_path / "current.txt"
-    max_file = tmp_path / "max.txt"
+    current_in_flight = 0
+    max_in_flight = 0
+    lock = threading.Lock()
 
-    write_executable(
-        bin_dir / "commonplace-review-target-selector",
-        f"""#!/usr/bin/env bash
-cat "{selector_path}"
-""",
-    )
-    write_executable(
-        bin_dir / "commonplace-run-review-bundle",
-        f"""#!/usr/bin/env bash
-while ! mkdir "{lock_dir}" 2>/dev/null; do sleep 0.01; done
-current=0
-max_seen=0
-if [[ -f "{current_file}" ]]; then
-  current=$(cat "{current_file}")
-fi
-if [[ -f "{max_file}" ]]; then
-  max_seen=$(cat "{max_file}")
-fi
-current=$((current + 1))
-if (( current > max_seen )); then
-  max_seen=$current
-fi
-printf "%s" "$current" > "{current_file}"
-printf "%s" "$max_seen" > "{max_file}"
-rmdir "{lock_dir}"
-sleep 0.2
-while ! mkdir "{lock_dir}" 2>/dev/null; do sleep 0.01; done
-current=$(cat "{current_file}")
-current=$((current - 1))
-printf "%s" "$current" > "{current_file}"
-rmdir "{lock_dir}"
-printf "completed %s\\n" "$5"
-""",
-    )
+    def fake_run_bundle(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
+        nonlocal current_in_flight, max_in_flight
+        with lock:
+            current_in_flight += 1
+            if current_in_flight > max_in_flight:
+                max_in_flight = current_in_flight
+        time.sleep(0.1)
+        with lock:
+            current_in_flight -= 1
+        return 0
 
-    env = os.environ.copy()
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
+    monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
+    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    result = subprocess.run(
-        [*SCRIPT_ARGS, "--model", "test-model", "prose"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        env=env,
-        check=False,
-    )
+    exit_code = review_sweep.main(["--model", "test-model", "prose"])
 
-    assert result.returncode == 0
-    assert "Reviewed: 5 notes" in result.stdout
-    assert int(max_file.read_text(encoding="utf-8")) >= 4
+    assert exit_code == 0
+    assert max_in_flight >= 4
 
 
-def test_review_sweep_passes_runner_to_run_review_bundle(tmp_path: Path) -> None:
+def test_review_sweep_passes_runner_to_run_review_bundle(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     repo = make_fake_repo(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
+    monkeypatch.chdir(repo)
+    monkeypatch.setenv("REVIEW_SWEEP_JOBS", "1")
 
-    selector_output = [
-        {"note_path": "kb/notes/first.md", "gate_id": "prose/source-residue"},
-    ]
-    selector_path = tmp_path / "selector.json"
-    selector_path.write_text(json.dumps(selector_output), encoding="utf-8")
+    def fake_select_stale_gates(repo_root, **kwargs):
+        return [StaleGate("kb/notes/first.md", "prose/source-residue", "missing-review")]
 
-    bundle_log = tmp_path / "bundle.log"
+    captured: dict[str, object] = {}
 
-    write_executable(
-        bin_dir / "commonplace-review-target-selector",
-        f"""#!/usr/bin/env bash
-cat "{selector_path}"
-""",
-    )
-    write_executable(
-        bin_dir / "commonplace-run-review-bundle",
-        f"""#!/usr/bin/env bash
-printf "%s\\n" "$*" > "{bundle_log}"
-printf "completed 1 1\\n"
-""",
-    )
+    def fake_run_bundle(**kwargs):
+        captured.update(kwargs)
+        return 0
 
-    env = os.environ.copy()
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
-    env["REVIEW_SWEEP_JOBS"] = "1"
+    monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
+    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    result = subprocess.run(
-        [*SCRIPT_ARGS, "--model", "test-model", "--runner", "codex", "--current", "prose"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        env=env,
-        check=False,
-    )
+    exit_code = review_sweep.main(["--model", "test-model", "--runner", "codex", "--current", "prose"])
 
-    assert result.returncode == 0
-    logged = bundle_log.read_text(encoding="utf-8")
-    assert "--runner codex --model test-model kb/notes/first.md prose/source-residue" in logged
+    assert exit_code == 0
+    assert captured["runner"] == "codex"
+    assert captured["model"] == "test-model"
+    assert captured["note_path"] == "kb/notes/first.md"
+    assert captured["gate_or_bundle"] == ["prose/source-residue"]
+    assert captured["dry_run"] is False

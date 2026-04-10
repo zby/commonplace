@@ -32,6 +32,15 @@ URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
 BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
+USAGE_EXHAUSTION_TEXT = "out of extra usage"
+
+
+class UsageExhausted(Exception):
+    """Raised when the runner reports that paid usage is exhausted.
+
+    Callers running multiple bundles (e.g. review_sweep) should catch this
+    and abort the whole batch rather than continuing.
+    """
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -411,7 +420,14 @@ def run_bundle(
             file=sys.stderr,
         )
 
-    if result.returncode != 0:
+    usage_exhausted = USAGE_EXHAUSTION_TEXT in (result.stdout + result.stderr).lower()
+
+    if result.returncode != 0 or usage_exhausted:
+        failure_reason = (
+            "runner reported usage exhausted"
+            if usage_exhausted
+            else f"{runner} exited {result.returncode}"
+        )
         with connect(db_path) as conn:
             attach_execution_data(
                 conn,
@@ -423,10 +439,12 @@ def run_bundle(
             fail_review_run(
                 conn,
                 review_run_id=review_run_id,
-                failure_reason=f"{runner} exited {result.returncode}",
+                failure_reason=failure_reason,
                 completed_at=iso_now(),
             )
             conn.commit()
+        if usage_exhausted:
+            raise UsageExhausted()
         return result.returncode
 
     try:
