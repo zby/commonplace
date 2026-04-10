@@ -4,7 +4,7 @@ type: related-system
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: 2026-03-16
+last-checked: "2026-04-10"
 ---
 
 # Pi Self-Learning
@@ -17,7 +17,7 @@ A [pi](https://github.com/badlogic/pi-mono) extension by Matteo Collina that kee
 
 **Automatic task-end reflection as the primary learning trigger.** On `agent_end`, the extension serialises the last N messages (default 8), sends them to an LLM with a prompt asking for `{"mistakes":["..."],"fixes":["..."]}`, and appends the result to a daily markdown file. The reflection prompt is framed as a "mistake-prevention reflection engine" — it explicitly excludes accomplishments and progress summaries. This is the tightest scope constraint among reviewed learning systems: the system only records what went wrong.
 
-**Scored core index with frequency + recency ranking.** Learnings accumulate in `core/index.json` as records with `key`, `text`, `kind` (learning or antiPattern), `hits`, `score`, `firstSeen`, `lastSeen`. Each new occurrence increments score by `1 + min(1, hits * 0.08)` — a light repetition bonus. Effective score decays at 0.05 points per day since last seen. The top-ranked items render into `CORE.md` with balanced representation (learnings and watch-outs each get reserved slots). This is the system's only transformation mechanism: repeated observations float up, stale ones sink.
+**Scored core index with frequency + recency ranking.** Learnings accumulate in `core/index.json` as records with `key`, `text`, `kind` (learning or antiPattern), `hits`, `score`, `firstSeen`, `lastSeen`. Each new occurrence increments score by `1 + min(1, hits * 0.08)` — a light repetition bonus. Effective score decays at 0.05 points per day since last seen. The top-ranked items render into `CORE.md` with balanced representation (learnings and watch-outs each get reserved slots). On the daily→core path, this ranking is the consolidation mechanism: repeated observations float up, stale ones sink.
 
 **Temporal memory hierarchy with git-backed persistence.** Four storage tiers:
 - `daily/YYYY-MM-DD.md` — raw per-task reflections, append-only
@@ -25,13 +25,13 @@ A [pi](https://github.com/badlogic/pi-mono) extension by Matteo Collina that kee
 - `core/CORE.md` — top-ranked durable learnings, rendered from the scored index
 - `long-term-memory.md` — complete learning history, also rendered from the index
 
-Each tier lives in a dedicated git repository (separate from the project repo). Commits happen automatically after each memory update. The hierarchy looks like progressive distillation but the daily→core pathway is ranking, not synthesis — the same text surfaces or sinks, it doesn't get compressed or rewritten (except by the redistill command, discussed below).
+Each tier lives in a dedicated git repository (separate from the project repo). Commits happen automatically after each memory update. The hierarchy looks like progressive distillation, but the daily→core pathway mainly distills by selection (ranking), not synthesis — the same text surfaces or sinks rather than being rewritten. Recent in-memory runtime notes also sit outside these persisted tiers, so the hierarchy is a coarse storage model rather than an exhaustive one.
 
 **Context injection before agent start.** On `before_agent_start`, the extension injects: (1) recent in-memory runtime notes from the current session, (2) contents of `CORE.md` and optionally daily/monthly files up to a budget (default 12K chars), and (3) a system prompt appendix instructing the agent to consult memory files for historical questions. The injection is configurable with three instruction modes (off, advisory, strict) that range from no policy to "you MUST consult self-learning memory."
 
 **Interruption signals as first-class learning inputs.** The extension scans recent tool results for blocked commands, permission denials, and user aborts (Esc/interrupt), treats these as intent-change signals, and includes them in the reflection prompt. The reflection prompt then requires at least one prevention-oriented mistake and fix for each interruption. This is a genuine design insight — user interruptions carry information about what the agent should not have done.
 
-**Two-scope storage modes for portability.** Project mode keeps repository-specific details; global mode distills reflections into cross-project reusable rules. The `redistill` command rewrites existing index entries through an LLM to remove project-specific identifiers (file names, paths, class names), converting project-local learnings into portable action rules. This is the only place the system performs actual content transformation.
+**Two-scope storage modes for portability.** Project mode keeps repository-specific details; global mode asks the reflection model to rewrite each extracted item into a cross-project reusable rule at capture time. The split is deliberately coarse — repository-local versus broadly portable — rather than a full hierarchy of team, org, or domain scopes. The `redistill` command performs the same rewrite over existing index entries, removing project-specific identifiers (file names, paths, class names) after the fact. This means the system has two genuine transformation points: global-mode reflection for new entries, and redistill for migrating old ones. The daily-to-core pathway is still ranking rather than synthesis.
 
 ## Comparison with Our System
 
@@ -64,9 +64,9 @@ Each tier lives in a dedicated git repository (separate from the project repo). 
 
 **What property does the reflection pipeline claim to produce?** It claims to produce "durable learnings" — persistent patterns extracted from ephemeral session data. The daily→core pathway is supposed to distill volatile session reflections into stable, reusable knowledge.
 
-**Does the mechanism transform the data, or just relocate it?** Mostly relocate. The reflection step does transform: unstructured conversation → structured `{mistakes, fixes}` JSON. But from there, the pipeline is ranking, not transformation. Daily entries are appended verbatim. The core index tracks the same text strings with scores — no synthesis, no compression, no connection to other knowledge. `CORE.md` is a sorted subset of `index.json`. `long-term-memory.md` is a complete dump of `index.json`. The monthly summary is the only tier that performs genuine consolidation (LLM summarises daily files), and it's optional and rarely injected into context.
+**Does the mechanism transform the data, or just relocate it?** Mostly relocate. The reflection step does transform: unstructured conversation → structured `{mistakes, fixes}` JSON. In global mode it transforms one step further by rewriting those items into cross-project action rules. But outside that capture-time rewrite, the pipeline is ranking, not synthesis. Daily entries are appended verbatim. The core index tracks the same text strings with scores — no synthesis, no compression, no connection to other knowledge. `CORE.md` is a sorted subset of `index.json`. `long-term-memory.md` is a complete dump of `index.json`. The monthly summary is the only tier that performs genuine consolidation (LLM summarises daily files), and it's optional and rarely injected into context.
 
-The redistill command is the exception — it genuinely transforms by rewriting entries to remove project-specific identifiers. But redistill is a manual, one-time operation (`/learning-redistill`), not part of the automatic pipeline.
+The redistill command is the other exception — it rewrites existing entries to remove project-specific identifiers after they were already captured. But redistill is a manual migration command (`/learning-redistill`), not part of the default automatic project-mode loop.
 
 **What's the simpler alternative that achieves the same result?** Append mistakes to a single file. Sort by recurrence count. Inject the top N into the system prompt. This achieves ~90% of what pi-self-learning does — the temporal hierarchy (daily/monthly), the dedicated git repo, the balanced kind representation, and the elaborate model resolution cascade add engineering complexity without proportionally more learning. The scored flat list IS the mechanism; the rest is presentation.
 
@@ -80,6 +80,8 @@ The redistill command is the exception — it genuinely transforms by rewriting 
 
 - **Does the mistake-only frame limit adoption?** Users who want to learn positive patterns (what worked well, design decisions, architectural insights) have no mechanism for it. Will the system evolve toward broader knowledge capture, or stay focused on mistake prevention?
 - **How does the scoring behave at scale?** With `maxCoreItems: 20` and unbounded `index.json`, the system will eventually have thousands of scored entries where only the top 20 are visible. Does the decay function cause useful-but-infrequent learnings to drop out prematurely?
+- **Can rare catastrophic failures survive the recurrence bias?** The ranking model rewards repetition and recency, which is reasonable for routine mistake prevention, but one-off high-severity failures may matter more than their recurrence count suggests.
+- **Does model selection actually match the advertised control surface?** The README and commands present branch-level model selection, but `learning-status` explicitly reports that the runtime `/learning-model` override is currently ignored for reflection. If that stays true, the system's "branch-level model" story is really config-level plus session fallback, not per-branch control.
 - **Will the pi extension ecosystem produce competing memory systems?** Pi's extension model (hooks on `agent_end`, `before_agent_start`) makes this kind of system easy to build. Multiple memory extensions with different approaches could emerge.
 
 ---
@@ -88,7 +90,7 @@ Relevant Notes:
 
 - [ClawVault](./clawvault.md) — also has scored observations with promotion, but richer taxonomy (decision/lesson/preference/commitment) vs. pi-self-learning's binary (learning/antiPattern)
 - [Automating KB learning is an open problem](../automating-kb-learning-is-an-open-problem.md) — the pi-self-learning scoring mechanism is a concrete implementation of automated triage, though limited to mistake-pattern extraction
-- [Distillation](../definitions/distillation.md) — the daily→core pathway claims distillation but primarily performs ranking; the redistill command is the only genuine content transformation
+- [Distillation](../definitions/distillation.md) — the daily→core pathway mainly distills by selection (ranking) rather than synthesis; richer transformation appears in global-mode rewrite, redistill migration, and monthly summarization
 - [A functioning KB needs a workshop layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — pi-self-learning's daily files are ephemeral workshop artifacts that get promoted to core; the temporal hierarchy IS a workshop-to-library bridge
 - [Inspectable substrate defeats the blackbox problem](../inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — pi-self-learning's shadow git repo maintains inspectability, though separation from the project repo reduces discoverability
 - [Context engineering](../definitions/context-engineering.md) — the context injection system (`before_agent_start` with budget, instruction modes, and selective file inclusion) is a lightweight context engineering implementation
