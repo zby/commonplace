@@ -23,15 +23,17 @@ The practical arguments above are real, but there's a deeper reason: a database 
 
 Files let you defer that commitment and [constrain incrementally](./definitions/constraining.md) as you learn. Raw markdown first, then frontmatter conventions, then grep-based queries, then derived indexes (semantic search, quality scores). Each step adds structure only after the access pattern has been observed in practice. This is the [constrain/relax cycle](./agentic-systems-interpret-underspecified-instructions.md) applied to storage architecture — stay at the least constrained medium until you've seen enough to know what to commit to.
 
-This isn't a files-forever position. Once access patterns stabilize, a database may earn its place — either as a replacement or, more likely, as a derived layer alongside files (the way qmd already works for semantic search). The point is that starting with a database front-loads a commitment you're not yet equipped to make. Files buy time to learn what the right schema would be. The browsing cost compounds this: early on, when the methodology itself was still forming, having to build a viewing layer before anyone could browse the knowledge would have been a real barrier. Files gave us a usable system from day one.
+This isn't a files-forever position. Once access patterns stabilize, a database may earn its place — either as a replacement or, more likely, as a derived layer alongside files. The point is that starting with a database front-loads a commitment you're not yet equipped to make. Files buy time to learn what the right schema would be. The browsing cost compounds this: early on, when the methodology is still forming, having to build a viewing layer before anyone can browse the knowledge is a real barrier. Files give a usable system from day one.
 
 ## What actually breaks at scale
 
-1. **Finding things** — solved by semantic search indexes (qmd)
+The failure modes files hit at scale are all addressable without abandoning the substrate:
+
+1. **Finding things** — solved by semantic search indexes derived from the files
 2. **Too many files per directory** — solved by subdirectories
 3. **Structured queries with scoring** — the real gap, but solvable with [note quality scores](./notes-need-quality-scores-to-scale-curation.md)
 
-The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time — qmd already works this way for semantic search, and proven patterns confirm the approach (frontmatter queries via grep, semantic search via qmd, progressive disclosure for token cost). [Cludebot's database stack](./related-systems/cludebot.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
+The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time. [Cludebot's database stack](./related-systems/cludebot.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
 
 ## Where the trade-off tips: Graphiti
 
@@ -41,12 +43,15 @@ The pattern is: files as source of truth, derived indexes for capabilities files
 - **Community detection** — label propagation over entity nodes discovers clusters automatically. Files have no native graph traversal; link-based clustering requires building an explicit graph representation first.
 - **Hybrid graph+semantic retrieval** — combining graph traversal with embedding similarity in a single query requires both representations co-located in a queryable store.
 
-The lesson is not that files are wrong for our KB — they remain the right choice for authored, agent-navigated knowledge where versioning, inspectability, and zero infrastructure matter most. The lesson is that the files-first argument has a boundary: systems that need temporal invalidation, automated graph analytics, or hybrid traversal+semantic queries have legitimate reasons to pay the database cost. Graphiti's use case (continuously streaming conversational data with contradictions over time) is genuinely different from ours (authored notes with explicit status transitions), and the architectural difference follows from the use case difference.
+The lesson is not that files are wrong for authored, agent-navigated knowledge where versioning, inspectability, and zero infrastructure matter most. The lesson is that the files-first argument has a boundary: systems that need temporal invalidation, automated graph analytics, or hybrid traversal+semantic queries have legitimate reasons to pay the database cost. Graphiti's use case (continuously streaming conversational data with contradictions over time) is genuinely different from authored-notes use cases (documents with explicit status transitions), and the architectural difference follows from the use case difference.
+
+A second kind of boundary shows up inside a mostly files-first system: a specific subsystem can outgrow the authored-document shape even when the rest of the KB stays file-backed. Once an artifact leaves git and the system mostly wants indexed state transitions over it, a local database is simpler than pretending the files are still the primary representation. That scoped exception is compatible with the files-first position, not a refutation of it.
 
 ---
 
 Relevant Notes:
 
+- [storage-architecture](../reference/storage-architecture.md) — current-state: how commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
 - [cludebot](./related-systems/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
 - [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — independent practitioner report validating the same architectural choice at 80+ file scale
 - [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
@@ -54,5 +59,4 @@ Relevant Notes:
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 - [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — extends: files are one important choice for the runtime's execution substrate
-- [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — scoped exception: review artifacts stopped being git-tracked authored documents and became indexed operational state
 - [Tracecraft](./related-systems/tracecraft.md) — tests: applies the files-over-database bet to ephemeral coordination state (write-heavy, latency-sensitive, disposable) rather than durable knowledge, where the access patterns differ significantly
