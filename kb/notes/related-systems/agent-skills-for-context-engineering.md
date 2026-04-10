@@ -25,14 +25,17 @@ A collection of reusable instructional modules ("skills") for building productio
 
 **Filesystem beats specialised memory tools.** Letta's filesystem memory (74% LoCoMo) outperforms Mem0's vector+graph tools (68.5%). Standard Unix utilities outperform custom exploration tools. Directly validates our markdown-files-as-source-of-truth approach.
 
-## Evaluation Methodology (worth borrowing)
+## Borrowable Ideas
 
-Their evaluation framework is more concrete than ours:
-- **Chain-of-thought before scoring** — 15-25% reliability improvement in LLM-as-judge
-- **Position-bias mitigation** — swap positions twice in pairwise comparison, check consistency
-- **Degradation testing** — run evals at different context sizes to find performance cliffs
+**Chain-of-thought before scoring (ready now).** In our system this is a good default for any soft-oracle evaluation: review, compare, or rank only after writing down the reasoning that led to the score. That would make [quality signals work](../quality-signals-for-kb-evaluation.md) less brittle when the judgment is not deterministic.
 
-These techniques could strengthen our [quality signals work](../quality-signals-for-kb-evaluation.md), particularly for soft-oracle cases where we're compositing weak signals.
+**Position-bias mitigation (ready now for pairwise comparisons).** When we compare two prompts, two context packages, or two candidate notes, we should swap order and check whether the conclusion changes. That is a cheap guard against false confidence in any future evaluation harness.
+
+**Degradation testing (needs a use case).** Running the same task at multiple context sizes is useful if we are trying to find cliffs in a retrieval or session pipeline. It is not a generic note-writing rule, but it would matter if we build a repeatable context-budget experiment.
+
+**Tokens-per-task, not tokens-per-request (ready now).** This is the clearest transfer: our workshop and review processes should be designed around end-to-end task cost, not isolated call size. It is a better lens than "keep each prompt short" because it accounts for multi-step work.
+
+**Anchored iterative summaries (needs a use case).** The Intent / Files Modified / Decisions / State / Next Steps format looks useful for workshop handoffs, but only once we have a stable session artifact to summarize. Right now it is a good candidate for future workshop design, not a universal KB convention.
 
 ## Other Notable Concepts
 
@@ -41,13 +44,21 @@ These techniques could strengthen our [quality signals work](../quality-signals-
 - **Anchored iterative summarization** — structured session summaries (Intent / Files Modified / Decisions / State / Next Steps). Also relevant for future session work.
 - **Telephone game problem** — supervisors paraphrasing sub-agent outputs lose fidelity. Fix: direct pass-through or file-based communication.
 
-## Alignment and Divergence
+## Comparison with Our System
 
-**Strong alignment:** Progressive disclosure, filesystem-first knowledge, start-simple philosophy, tool consolidation.
+**Strong alignment:** They independently converge with our progressive disclosure, filesystem-first knowledge, and tool consolidation. Their skills are loaded by name first and expanded on demand, which is the same general loading strategy we use in the KB.
 
-**We go deeper:** Our [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) provide theory for *when* and *why* to constrain — they have operational patterns but no learning framework. Our [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) has no counterpart in their work.
+**We go deeper:** Our [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md) and [oracle strength spectrum](../oracle-strength-spectrum.md) explain when a pattern should become a rule, a script, or stay a judgment call. Their material has operational tactics, but not a comparable theory for when to harden a practice.
 
-**They go deeper:** Attention mechanics and degradation data (model-specific thresholds, the four-bucket mitigation). Formal evaluation methodology (LLM-as-judge protocols, bias mitigation). Hosted agent infrastructure (sandboxing, warm pools, pre-built images).
+**They go deeper:** Attention mechanics, degradation data, and evaluation procedure. They give concrete evidence about model behavior under context pressure, while our notes are still mostly the theory and architecture layer around that problem.
+
+**Tradeoff:** Their system is stronger as an operator's playbook; ours is stronger as a knowledge architecture. Their value is "what to do"; ours is "how to structure and verify the durable artifacts those behaviors produce."
+
+## Curiosity Pass
+
+- **The main contribution may be reduction of attention burden, not the skill abstraction itself.** The repo is strong evidence that smaller loading surfaces and simpler tool surfaces help. The open question is whether the "skill" abstraction adds much beyond a convenient packaging layer for those reductions.
+- **The filesystem win may be pragmatic rather than ontological.** The Letta-versus-Mem0 result could reflect fewer moving parts, better integration with standard Unix tools, or better benchmark fit. It is evidence for files in this setting, not proof that files are universally the right memory substrate.
+- **The evaluation claims need replication outside this harness.** The degradation numbers and token-variance claim are interesting, but they should be treated as context-sensitive until we see them hold across other tasks and models. The simpler alternative explanation is that these are benchmark-specific effects.
 
 ## What to Watch
 

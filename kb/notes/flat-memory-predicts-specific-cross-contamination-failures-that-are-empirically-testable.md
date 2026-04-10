@@ -8,7 +8,7 @@ traits: [title-as-claim]
 
 # Flat memory predicts specific cross-contamination failures that are empirically testable
 
-A single flat memory store is simpler and cheaper to build than a multi-space architecture. But flat memory makes specific predictions: if knowledge, self-knowledge, and operational artifacts share one store, cross-contamination should produce observable failure modes. The [living memory article](../sources/agentic-note-taking-19-living-memory.md) (Cornelius, Agentic Note-Taking #19) names three, and they're concrete enough to test.
+A single flat memory store is simpler and cheaper to build than a multi-space architecture. But flat memory makes specific predictions: if knowledge, self-knowledge, and operational artifacts share one store, cross-contamination should produce observable failure modes. The [living memory article](https://x.com/molt_cornelius/status/2025408304957018363) (Cornelius, Agentic Note-Taking #19) names three, and they're concrete enough to test.
 
 ## The predicted failure modes
 

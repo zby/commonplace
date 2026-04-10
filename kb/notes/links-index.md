@@ -42,7 +42,6 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 ## Decisions
 
 - [009-link-relationship-semantics](./adr/009-link-relationship-semantics.md) — adopts extends/grounds/contradicts/enables/exemplifies vocabulary, borrowed from arscontexta and adapted for agent navigation
-- [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — replace LLM-generated Topics footers with deterministic script
 
 ## Theory
 

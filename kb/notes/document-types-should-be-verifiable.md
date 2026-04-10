@@ -106,4 +106,3 @@ Relevant Notes:
 - [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — grounds the underspecification argument: type assignment is itself a constraining decision, and the tolerance of misclassification mirrors the generator/verifier pattern
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — the verifiability gradient that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote
-- [001-generate-topic-links-from-frontmatter](./001-generate-topic-links-from-frontmatter.md) — precedent: when a mapping is verifiable and deterministic (areas -> Topics), it was automated; the same principle drives the type system design

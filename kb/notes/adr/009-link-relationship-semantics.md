@@ -26,7 +26,7 @@ Every link in the KB must articulate the relationship using one of these types:
 - **enables** — makes possible, is a prerequisite for
 - **exemplifies** (also: example) — is a concrete instance of
 
-The relationship appears in the prose surrounding the link. In body text: "since [title](./path.md)" or "because [title](./path.md)". In Relevant Notes footers: "- [title](./path.md) — extends: ..." with an explicit relationship word and a context phrase.
+The relationship appears in the prose surrounding the link. In body text: `since [title](./path.md)` or `because [title](./path.md)`. In Relevant Notes footers: `- [title](./path.md) — extends: ...` with an explicit relationship word and a context phrase.
 
 "Related" is not a relationship. If you cannot name the relationship, the link may not be worth making.
 

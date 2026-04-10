@@ -43,23 +43,23 @@ The "seen twice on different dates" heuristic is simple and testable — a concr
 
 **Observation-reflection-promotion pipeline.** Weekly reflection reviews accumulated observations, extracts durable insights, promotes to vault categories. This is a working implementation of the [boiling cauldron](../automating-kb-learning-is-an-open-problem.md) mutations (extract, synthesise, regroup) that we describe as an open problem.
 
-## What We Could Borrow
+## Borrowable Ideas
 
-**1. Session handoff documents.** The most immediately useful pattern. A structured format for end-of-session state capture — what was in progress, what's blocked, what should happen next. We have no mechanism for this. The handoff artifact type could live in the workshop layer alongside tasks.
+**1. Session handoff documents.** The clearest immediate borrow. A stable end-of-session record for what was in progress, what is blocked, and what should happen next would close a gap we still leave to ad hoc judgment. This belongs in the workshop layer, alongside tasks, not in durable notes.
 
-**2. Observation capture with type taxonomy.** Our `kb/log.md` accepts one-line observations appended during traversal. ClawVault's observation types (decision, lesson, preference, commitment) give agents a vocabulary for what they're recording. Even just "what kind of thing is this?" as a prefix convention in the log would improve discoverability and later triage.
+**2. Observation capture with type taxonomy.** Our `kb/log.md` already records one-line observations, but without a shared vocabulary the entries stay flat. ClawVault's decision/lesson/preference/commitment labels are useful because they tell later triage what kind of thing was observed, not just that something happened.
 
-**3. Promotion by recurrence.** A cheap signal for what matters: if the same insight surfaces across multiple sessions, it's probably worth promoting. This could be a heuristic for reviewing the log — check whether similar observations already exist, and if so, flag for promotion.
+**3. Promotion by recurrence.** The recurrence heuristic is useful as a low-cost filter, not as a final judge. If the same point shows up across sessions, that is evidence it deserves promotion review. That is a plausible first gate for our log, but only if we keep it clearly advisory.
 
-**4. The reflection cycle as a skill.** Their weekly `reflect` command reviews recent observations and produces a synthesis. This could be a `/reflect` skill for us — periodic review of the log and recent notes to surface patterns, contradictions, and promotion candidates. Lower-ceremony than their automated pipeline, but the practice itself is valuable.
+**4. The reflection cycle as a skill.** Their weekly `reflect` command is worth borrowing as a manual or semi-manual review rhythm even before automation. Periodic review of recent observations and notes would surface patterns, contradictions, and promotion candidates that otherwise decay in the log.
 
-**5. Retrieval codification patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — are interesting not as retrieval mechanisms but as a [codification](../deploy-time-learning-is-the-missing-middle.md) spectrum for how knowledge gets surfaced:
+**5. Retrieval codification patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — look like a codified retrieval ladder:
 
 - **Triggers** in frontmatter (`triggers: ["deployment", "rollback"]`) — codified retrieval conditions on individual artifacts. The knowledge becomes self-routing: instead of the agent needing to find it, the system knows when to surface it.
 - **Profiles** (`planning`, `incident`, `handoff`) — codified retrieval strategies for classes of tasks. Someone observed "during incident response, recent observations matter most" and hardened that into a named strategy.
 - **Full frontloading** — codified context assembly. The system pre-loads a curated package before the agent even starts.
 
-Each step encodes more retrieval judgment into the system and removes more from the agent. Each step is also premature if the pattern hasn't been validated through enough usage. We don't yet know which notes should have triggers, what retrieval profiles our work actually needs, or whether frontloading would help or waste tokens. ClawVault has the usage volume to discover these empirically; we're still building the KB that would be retrieved from. Worth revisiting once we have enough content and sessions to see recurring retrieval patterns.
+Each step encodes more retrieval judgment into the system and removes more from the agent. That is only worth adopting if the pattern has already proven itself through repeated use. We do not yet know which notes should have triggers, what retrieval profiles our work actually needs, or whether frontloading would help or just burn context. ClawVault has the usage volume to discover that empirically; we are still early enough that this should remain a candidate pattern, not a default.
 
 ## What We Should Not Borrow (Yet)
 
@@ -69,21 +69,25 @@ Each step encodes more retrieval judgment into the system and removes more from 
 
 **The specific scoring format.** Confidence and importance as floats (c=0.9, i=0.85) implies a precision that LLM extraction can't actually deliver. The buckets (structural/potential/contextual) are more honest than the numbers. If we adopt anything here, it should be the buckets, not the scores.
 
-## Key Divergences
+## Comparison with Our System
 
-**Frontloaded context vs. agent-driven retrieval.** ClawVault pre-assembles context before the agent starts work. Their `context` command gathers from 5 sources (daily notes, observations, search results, graph neighbors, structural observations), scores and deduplicates them, caps per source by profile, fits a token budget, and injects the result into the prompt. A hook fires on `session:start` and auto-injects up to 4 results. The agent gets a curated package.
+**Frontloaded context vs. agent-driven retrieval.** ClawVault pre-assembles context before the agent starts work. Their `context` command gathers from five sources, scores and deduplicates them, caps per source by profile, fits a token budget, and injects the result into the prompt. A `session:start` hook can also auto-inject results. The agent gets a curated package.
 
-Our approach — [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — takes the opposite tack: load CLAUDE.md (routing table + conventions) at startup, then trust the agent to navigate. Progressive disclosure — descriptions first, full content on demand. The agent reads, decides what's relevant, follows links.
+Our approach — [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — takes the opposite tack: load CLAUDE.md at startup, then trust the agent to navigate and fetch the rest. Progressive disclosure, not preassembly. The trade-off is sharp: frontloading reduces first-turn friction but has to guess relevance in advance; agent-driven retrieval is cheaper to scale and more precise, but only if the agent can navigate well.
 
-The trade-offs are real. Frontloading means the agent starts with relevant context immediately, no wasted turns — good for weaker models or constrained tool access. But the system must guess what's relevant *before knowing what the agent will need*, and tokens spent on pre-loaded context are tokens unavailable for the task. Agent-driven retrieval loads exactly what's needed when needed and scales better (the KB can grow without ballooning startup context), but depends on the agent being good at navigation and costs turns on retrieval.
+**They operationalized the workshop; we are still defining it.** ClawVault already has concrete artifacts for session lifecycle, checkpoints, handoffs, observations, and reflection. Our notes describe the need for a workshop layer and the kinds of artifacts it should hold, but we have not committed to this particular shape. That makes their pipeline a stronger operational reference than a theory reference.
 
-These aren't mutually exclusive. You could frontload a minimal context (as we already do with CLAUDE.md) and leave the agent to retrieve the rest. But the deeper question is whether frontloading is a fundamental pattern or a workaround for agents that can't navigate well. Both frontloading and the component patterns it's built from (triggers, profiles) can be viewed as retrieval codification — see "What We Could Borrow" item 5.
+**Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated: LLMs extract, score, and route observations, while recurrence heuristics decide what rises. Our model still keeps humans in the promotion loop. That means ClawVault is better evidence about what an automated curation loop can actually sustain, but also a stronger warning about opacity and score inflation.
 
-**They automated the workshop; we're still mapping it.** ClawVault has 40+ commands and a full pipeline from session transcript to vault knowledge. We're still figuring out what the workshop layer should contain. This is a legitimate strategic difference — [our KB-design notes](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) argue the workshop needs state machines, dependencies, and expiration, but we haven't committed to specific artifact types. ClawVault's choices (observations, handoffs, reflections) are one answer.
+**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something versus leave it fluid. No [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md), no constrain/relax boundary. The structure is designed; it does not explain its own maturation. That is the gap between an effective workflow and a theory of why the workflow should change over time.
 
-**Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated — LLMs extract, score, and route observations. Our model keeps humans in the promotion loop (text → seedling → note requires human judgment). This reflects different bets on whether LLM judgment is reliable enough for knowledge curation. We're more conservative, but their system generates evidence about whether the automated approach works.
+## Curiosity Pass
 
-**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something vs. leave it fluid. No [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md), no constrain/relax boundary. Their observation format was designed; it doesn't evolve based on what the system learns about its own learning. This is the gap between building a knowledge system and understanding knowledge systems.
+**The strongest claim here is operational, not theoretical.** ClawVault is interesting because it actually runs a workshop loop with handoffs, checkpoints, observations, and reflection. That makes it a useful answer to the "what does the middle layer look like?" question, even if its scoring and extraction choices remain somewhat opaque.
+
+**The recurrence heuristic is valuable mainly because it is inspectable.** "Seen twice on different dates" is crude, but that crudeness is a feature: it creates a transparent promotion threshold that can be challenged or replaced later. The important question is whether that cheap signal catches the right candidates without flooding the durable store.
+
+**There are two separable gains in the system.** One is artifact structure: session handoffs, observation labels, and reflection rhythm. The other is automation: preloaded context, scoring, and routing. If we borrow from ClawVault, we should be clear about which gain we are borrowing, because they do not transfer together.
 
 ## What to Watch
 

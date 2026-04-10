@@ -61,26 +61,26 @@ The same question applies to elaborative encoding — the original research is a
 
 Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md): we borrow from cognitive science but require first-principles support before adoption.
 
-## Our Relationship
+## Comparison with Our System
 
 Arscontexta is the **ancestor** of our KB. We installed it, used its pipeline, and learned from its approach. Over time we diverged.
 
 **What we borrowed:**
-- Propositional link titles (our title-as-claim convention)
-- Link relationship semantics in prose (our "extends", "foundation", "contradicts")
-- Curated links as primary organization, not embeddings
-- The intuition that traversal through reasoned links is a form of reasoning
-- Three-space memory separation (which we [documented](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) and remain uncertain about)
+- Propositional link titles became our title-as-claim convention.
+- Link relationship prose became our typed link semantics.
+- Curated links, not embeddings, became the primary organization mechanism.
+- The idea that traversal through reasoned links can itself be a reasoning act.
+- Three-space memory separation, which we [documented](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) and still treat as a hypothesis rather than a settled fact.
 
 These are not independent convergences — they're shared inheritance from wiki/Zettelkasten tradition, with arscontexta as the direct upstream source.
 
 **Where we diverged:**
 
-- **We built our own theory.** [Codification](../definitions/codification.md), [oracle strength](../oracle-strength-spectrum.md), [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) — these emerged from our own work and have no counterpart in arscontexta's research graph.
-- **We simplified the structure.** Arscontexta's three-space architecture (self/notes/ops) felt over-engineered for our use. We collapsed to a flatter `kb/` with notes, sources, and tasks. No separate identity/methodology/goals files.
-- **We developed verifiable document types.** Our [document classification](../document-classification.md) with types, traits, and status is structurally richer than arscontexta's template-with-schema approach. Types mark affordances; traits are independently checkable.
-- **We use embeddings for search.** We use embeddings (via qmd) for long-range search while rejecting them for organization. Article #23 positions the embedding critique as more absolute — embeddings produce fog. Our stance is more nuanced: embeddings are fine for search; curated links are for organization and reasoning.
-- **The local instance is stale.** It references `docs/notes/` and `docs/adr/` paths that no longer exist. Expected to be rewritten or retired.
+- **We built a theory layer they do not have.** [Codification](../definitions/codification.md), [oracle strength](../oracle-strength-spectrum.md), and [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) explain when to freeze, automate, or keep things fluid. Arscontexta has a research-grounded pipeline but not a comparable theory of change.
+- **We flattened the architecture.** Their `self/notes/ops` split is a meaningful model of agent continuity, but we chose a simpler `kb/` plus tasks/sources layout and did not carve out a dedicated identity layer.
+- **We made document affordances explicit.** Our [document classification](../document-classification.md) with types, traits, and status tells an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
+- **We keep embeddings in a narrower role.** We use embeddings for search, not for primary organization. Arscontexta's article #23 argues more aggressively against adjacency-style systems; our position is that embeddings are acceptable when they are kept out of the reasoning graph.
+- **The local checkout is stale.** It still points at `docs/notes/` and `docs/adr/`, so the clone is evidence of the system's shape but not an authoritative implementation snapshot.
 
 ## What Arscontexta Does Better
 
@@ -99,19 +99,27 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 ## Borrowable Ideas
 
-**Credibility erosion as a named failure mode (ready now).** When enough links lead nowhere useful, the agent learns to discount ALL links — burying genuine connections under noise. We document the Goodhart risk but not this second-order effect: the linking infrastructure itself loses credibility. Belongs in [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md).
+**Credibility erosion as a named failure mode (ready now).** When enough links lead nowhere useful, the agent can start discounting all links. That is stronger than the usual Goodhart warning: not just that a metric gets gamed, but that the graph's trustworthiness degrades as a navigation aid. Belongs in [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md).
 
-**The scaling question, honestly confronted (needs more thought).** "Can curation scale to 10,000 notes? To 100,000?" with the compounding hypothesis: every curated link makes the next link easier to place because the graph provides more context for judgment. We haven't estimated the scaling ceiling. Our [automating-kb-learning](../automating-kb-learning-is-an-open-problem.md) note frames the automation challenge but doesn't address where manual curation breaks.
+**The scaling question, honestly confronted (needs more thought).** "Can curation scale to 10,000 notes? To 100,000?" The useful part is not the exact numbers; it's the hypothesis that each curated link lowers the cost of placing the next one because the graph gives more context for judgment. Our [automating-kb-learning](../automating-kb-learning-is-an-open-problem.md) note frames the automation challenge but does not say where manual curation breaks.
 
-**"Adjacency is not connection" as vocabulary (ready now).** We have the concept scattered across link contracts and quality signals but no single crisp label.
+**"Adjacency is not connection" as vocabulary (ready now).** This is the sharpest label in the whole review. We already have the idea scattered across link contracts and quality signals, but naming it would make the distinction easier to reuse in other notes and skills.
 
-**The determinism boundary test as oracle strength shorthand (ready now).** "Would two skilled human reviewers always agree on the output?" is a more intuitive formulation of what we call "hard oracle" vs "soft oracle." Could improve how we explain oracle strength in the [spectrum note](../oracle-strength-spectrum.md).
+**The determinism boundary test as oracle strength shorthand (ready now).** "Would two skilled human reviewers always agree on the output?" is a cleaner way to explain what we call hard versus soft oracle. That phrasing belongs in the [oracle strength spectrum](../oracle-strength-spectrum.md) because it is easier to apply than the current abstraction.
 
-**The specificity test for link quality (ready now).** "Genuine elaboration is specific enough to be wrong." If a link's context phrase could apply to any two notes, it's not real elaboration. Could tighten the articulation requirement in /connect.
+**The specificity test for link quality (ready now).** "Genuine elaboration is specific enough to be wrong." If a link's context phrase could apply to any two notes, it is not a link contract, just decorative prose. This could tighten the articulation requirement in `/connect`.
 
-**The delegation shadow (needs more thought).** When agents perform all elaboration, the system gets richly connected but the human's understanding may stay shallow. Our system is designed for agent operation, but the human still needs to understand the knowledge.
+**The delegation shadow (needs more thought).** When agents perform all elaboration, the graph gets richer but the maintainer may understand less. That is a real risk for any agent-operated KB, but we do not yet know whether the right mitigation is human review, stronger templates, or a different division of labor.
 
-**Governance debt (ready now).** Emergence-only approaches accumulate structural problems without deliberate curation interventions. Related to our quality signals work — governance debt is what happens when you don't have periodic review.
+**Governance debt (ready now).** Emergence-only approaches accumulate structural problems without deliberate curation interventions. This is a good companion concept to our quality-signals work because it names the maintenance debt that builds when nobody periodically reasserts structure.
+
+## Curiosity Pass
+
+**The repo may be strongest as an existence proof for doctrine-rich agent systems, not for the specific cognitive-science story.** Arscontexta clearly demonstrates that a system can be organized around explicit methodology claims, typed link conventions, and phase-structured work. That practical success matters even if some of the cognitive analogies turn out to be decorative rather than causal.
+
+**The fresh-context-per-phase pattern could matter more than the research graph.** The most operationally distinctive mechanism here is not the 249-claim backing store but the discipline of resetting context between phases. If that pattern carries most of the practical benefit, the explanatory center of gravity may be harness design rather than cognitive science.
+
+**There may be two separable products hiding under one label.** One is the agent-facing doctrine and research framing. The other is the operational pipeline for queueing, phase execution, and maintenance. They reinforce each other in the repo, but they could turn out to have very different transfer properties for us.
 
 ## What article #23 supports vs what's new
 
