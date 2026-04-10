@@ -12,7 +12,7 @@ For any note in this sense, make sure it will be findable by a future agent who 
    - **If you use a claim title, check claim strength** — Make it a contestable one. "Continuous learning is substrate-independent" passes the prose test but fails the contestability test: nobody would push back on it. "Continuous learning can happen outside of weights" names the thing people actually doubt. If the non-obvious claim is not clear yet, or the document is acting as a reference rather than a premise, use a topical title instead.
    - **Title-body alignment** — Read the title, then the body. The body should actually support the title's claim or scope. Watch for claim drift (title says X, body establishes related claim Y) and scope drift (title is narrower or broader than the body).
    - **Length** — Keep note titles at or below 100 characters.
-2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value. Keep it under 200 characters; around 50-200 is the intended range.
+2. **Description** — Is it a retrieval filter, not a summary? The test: if an agent searched for this note's main concept and got 5 results, would this description help pick THIS one? Descriptions that paraphrase the title add zero retrieval value. Keep it under 200 characters; around 50-200 is the intended range. Write descriptions in double quotes: `description: "..."`. This avoids YAML coercion and parse breaks from characters like `: `.
 3. **Tags** — Is it tagged with relevant keywords that help future readers find it? Use as many as genuinely useful.
 4. **Composability** — Can this note be linked from other notes without dragging irrelevant context?
 5. **KB vocabulary on first mention** — Terms like distillation, constraining, codification, and context engineering have definitions in `kb/notes/definitions/`. Authors know them from CLAUDE.md, but external readers (humans on GitHub Pages) do not. On first mention, provide an inline gloss and a link: `[distillation](./definitions/distillation.md) (directed context compression)`. The gloss lets the reader keep reading; the link lets them go deep.
@@ -68,6 +68,8 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | `status` | No | `seedling`, `current`, `speculative`, `outdated`; some specialized types override this vocabulary |
 
 **`description` is the most important field.** It's a retrieval filter, not a summary — it helps agents decide whether to load the full note. A good description answers "why THIS note?" not "what is this note about?"
+
+Write `description` as a double-quoted string even when it looks simple. This is the house style because unquoted YAML scalars can be reinterpreted or broken by syntax-like content.
 
 Tags are freeform navigation aids. Use as many as genuinely useful for helping future readers find the note. There is no parent/child restriction — a note can be tagged both `constraining` and `learning-theory` if both help navigation.
 
