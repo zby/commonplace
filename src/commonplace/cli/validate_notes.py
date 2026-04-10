@@ -100,19 +100,18 @@ def parse_note(path: Path) -> tuple[ParsedNote | None, str | None]:
         return None, parse_error
     assert document is not None
 
-    note_type = "text" if document.frontmatter is None else str(document.frontmatter.get("type", "note") or "note")
     profile = resolve_type(path, document.frontmatter, repo_root=REPO_ROOT)
     return ParsedNote(
         path=path,
         content=content,
-        note_type=note_type,
+        note_type=profile.resolved_type,
         profile=profile,
         document=document,
     ), None
 
 
 def validate_description(results: CheckResults, description: Any) -> None:
-    if description in (None, "", "~"):
+    if description in (None, ""):
         results.fails.append("description: missing or empty")
         return
 
@@ -177,7 +176,7 @@ def validate_type_traits_status(
                 results.passes.append("traits: valid")
 
     status = frontmatter.get("status")
-    if status is not None:
+    if status is not None and profile.allowed_status:
         if status not in profile.allowed_status:
             results.warns.append(f'status: "{status}" is not one of {sorted(profile.allowed_status)}')
         else:
@@ -267,8 +266,11 @@ def _schema_error_message(error: ValidationError, profile: TypeProfile, document
             return "fail", "description: missing or empty"
 
     if path == ("frontmatter", "type"):
-        if error.validator in {"type", "const"}:
+        if error.validator == "type":
             return "fail", "type: must be a non-empty string"
+        if error.validator == "const":
+            actual = None if document.frontmatter is None else document.frontmatter.get("type")
+            return "fail", f'type: "{actual}" does not match required value "{error.validator_value}"'
 
     if path == ("frontmatter", "status") and error.validator == "enum":
         status = None if document.frontmatter is None else document.frontmatter.get("status")
@@ -331,15 +333,25 @@ def validate_note(path: Path) -> CheckResults:
 
 def orphan_info(all_paths: list[Path]) -> dict[Path, bool]:
     inbound: dict[Path, bool] = {path: False for path in all_paths}
-    texts = {path: path.read_text(encoding="utf-8") for path in all_paths}
-    for target in all_paths:
-        filename = target.name
-        for source, text in texts.items():
-            if source == target:
+    resolved_index: dict[Path, Path] = {path.resolve(): path for path in all_paths}
+    for source in all_paths:
+        content = source.read_text(encoding="utf-8")
+        document, _ = parse_document(content)
+        if document is None:
+            continue
+        source_resolved = source.resolve()
+        for link in document.links:
+            if re.match(r"^[a-z]+://", link):
                 continue
-            if filename in text:
-                inbound[target] = True
-                break
+            link_path = link.split("#", 1)[0]
+            if not link_path.endswith(".md"):
+                continue
+            target_resolved = (source.parent / link_path).resolve()
+            if target_resolved == source_resolved:
+                continue
+            key = resolved_index.get(target_resolved)
+            if key is not None:
+                inbound[key] = True
     return inbound
 
 
