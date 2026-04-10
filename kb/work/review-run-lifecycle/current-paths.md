@@ -88,10 +88,6 @@ Main mismatch:
 
 ## Path 3: nested runner bundle wrapper
 
-Command:
-
-- `commonplace-run-review-bundle`
-
 Current write flow:
 
 1. inserts a `review_runs` row immediately with `status='running'`

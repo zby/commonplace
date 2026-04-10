@@ -6,7 +6,7 @@ description: Run review gates on one note — create a review run, write one gat
 
 Review a specific note against an explicit list of gates.
 
-Use this instruction when you are already inside an agent harness and can execute shell commands directly. For unattended shell automation, use `commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...` instead.
+Use this instruction when you are already inside an agent harness and can execute shell commands directly.
 
 The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent.
 
@@ -90,16 +90,6 @@ commonplace-finalize-review-run --review-run-id {review-run-id}
 ```
 
 This validates coverage and appends the acceptance events for the run.
-
-## Shell automation
-
-For unattended shell automation or batch wrappers, use:
-
-```bash
-commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} {gate-or-bundle}...
-```
-
-This wrapper creates the review run, spawns a nested runner for semantic judgment, parses the bundle output, records gate reviews, and finalizes — all in one command.
 
 ## Do not
 

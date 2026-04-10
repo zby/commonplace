@@ -8,13 +8,7 @@ This file is a compatibility wrapper. The canonical complexity bundle now resolv
 
 - `kb/instructions/review-gates/complexity/`
 
-Preferred execution path for shell automation:
-
-```bash
-commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} complexity
-```
-
-If you are invoking this instruction from an agent, treat it as shorthand for:
+Treat this instruction as shorthand for:
 
 > Run `kb/instructions/run-review-bundle-on-note.md` on `{note-path}` for gates: `complexity`
 

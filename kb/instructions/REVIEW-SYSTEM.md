@@ -93,8 +93,6 @@ For live agent work, the preferred path is the direct-write helper chain:
 2. `commonplace-write-gate-review`
 3. `commonplace-finalize-review-run`
 
-`commonplace-run-review-bundle` remains the shell-automation wrapper. It delegates to a nested runner and performs the equivalent review-run write and finalize steps internally.
-
 A full review write contributes:
 
 1. one `gate_reviews` row
@@ -178,18 +176,13 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 4. `commonplace-write-gate-review --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
 5. `commonplace-finalize-review-run --review-run-id {id}`
 
-For unattended shell automation, use:
-
-1. `commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note} {gate-or-bundle}...`
-2. The wrapper creates the review run, launches a nested runner, records one review body per gate, and finalizes acceptance
-
 ### Sweep
 
 Instruction: `kb/instructions/review-sweep.md`
 
 1. `commonplace-review-target-selector --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
-3. For significant changes: run `commonplace-review-sweep` or invoke `commonplace-run-review-bundle` per note/group
+3. For significant changes: run `commonplace-review-sweep`, run `commonplace-run-gate-sweep`, or use `kb/instructions/run-review-bundle-on-note.md` per note/group
 4. `commonplace-review-sweep` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
 5. For insignificant changes: run `commonplace-ack-gate-review --model {model-id} {note-path} {gate-id} ...` to append acceptance events
 

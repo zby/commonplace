@@ -79,13 +79,7 @@ Example for current notes in Codex:
 commonplace-review-sweep --model gpt-5-4-xhigh --runner codex --current semantic
 ```
 
-If you are executing manually from the shell, run one bundle wrapper per note:
-
-```bash
-commonplace-run-review-bundle --runner {codex|claude-code} --model {model-id} {note-path} {gate-id-1} {gate-id-2} ...
-```
-
-If you are executing from an agent harness, run `kb/instructions/run-review-bundle-on-note.md` once per note instead of nesting `commonplace-run-review-bundle` inside another agent.
+For explicit one-note review from an agent harness, run `kb/instructions/run-review-bundle-on-note.md` once per note.
 
 Multiple note-local runs can execute in parallel since each note's reviews are independent.
 
