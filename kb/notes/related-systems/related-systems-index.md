@@ -23,7 +23,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Autocontext](./autocontext.md) — closed-loop control plane for iterative agent improvement via multi-role orchestration (competitor/analyst/coach/architect), tournament evaluation, accumulated playbooks, and MLX distillation; strongest reference for automated iterative learning loops, but context "compilation" is concatenation with budget-aware trimming, not transformation
 - [Binder](./binder.md) — local-first typed knowledge graph with markdown/YAML projections, schema-as-data, and immutable transactions; clearest reviewed example here of database-first structure surfaced as editable files
 - [browzy.ai](./browzy-ai.md) — terminal personal knowledge base that compiles raw sources into a markdown wiki, uses SQLite FTS as a derived retrieval layer, and writes lightweight session-derived digests and insight drafts
-- [ByteRover CLI](./byterover-cli.md) — agent-native coding CLI with local `.brv/context-tree` markdown memory, tiered query execution, derived summary/manifest artifacts, and four connector modes; strongest production reference so far for packaging file-backed memory into other coding-agent environments, though the adaptive lifecycle is thinner than the paper claims
+- [ByteRover CLI](./byterover-cli.md) — source-available coding-agent CLI with file-backed `.brv/context-tree`, tiered retrieval, live scoring/review/manifest layers, git-like context-tree VC, and four connector modes; strongest production reference so far for packaging file-backed memory into other coding-agent environments, though automatic archiving still looks less central than the paper's broader lifecycle framing
 - [cass-memory](./cass_memory_system.md) — cross-agent procedural memory with three-layer cognitive architecture (episodic/working/procedural), confidence-decayed playbook bullets, and trauma guard; closest production sibling to ACE's playbook-learning loop, with genuine cross-agent session mining
 - [ClawVault](./clawvault.md) — TypeScript memory system with scored observations, session handoffs, and reflection pipelines; has a working workshop layer where we have theory, strongest source of borrowable patterns for ephemeral knowledge
 - [Claude Context Guard](./claude-context-guard.md) — Claude Code continuity scaffold built from safeguard files, prompt-defined recovery skills, and light hooks; strongest reviewed example so far of workshop-state preservation without a dedicated runtime
@@ -110,4 +110,3 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
-
