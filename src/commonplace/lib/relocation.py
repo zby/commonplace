@@ -31,24 +31,24 @@ def is_nested_git_repo_content(path: Path, repo_root: Path) -> bool:
     return False
 
 
-def resolve_note(arg: str, *, repo_root: Path, notes_root: Path) -> Path:
+def resolve_note(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
     candidate = Path(arg)
-    if candidate.is_file():
+    if candidate.is_absolute() and candidate.is_file():
         resolved = candidate.resolve()
-        if notes_root not in resolved.parents:
-            raise FileNotFoundError(f"Note must live under {notes_root}: {resolved}")
+        if kb_root not in resolved.parents:
+            raise FileNotFoundError(f"Note must live under {kb_root}: {resolved}")
         return resolved
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_file():
-        if notes_root not in repo_candidate.parents:
-            raise FileNotFoundError(f"Note must live under {notes_root}: {repo_candidate}")
+        if kb_root not in repo_candidate.parents:
+            raise FileNotFoundError(f"Note must live under {kb_root}: {repo_candidate}")
         return repo_candidate
 
     name = arg if arg.endswith(".md") else f"{arg}.md"
-    matches = sorted(path.resolve() for path in notes_root.rglob(name))
+    matches = sorted(path.resolve() for path in kb_root.rglob(name))
     if not matches:
-        matches = sorted(path.resolve() for path in notes_root.rglob("*.md") if path.stem == arg)
+        matches = sorted(path.resolve() for path in kb_root.rglob("*.md") if path.stem == arg)
 
     if not matches:
         raise FileNotFoundError(f"No matching note found for: {arg}")
@@ -58,11 +58,11 @@ def resolve_note(arg: str, *, repo_root: Path, notes_root: Path) -> Path:
     return matches[0]
 
 
-def resolve_destination_dir(arg: str, *, repo_root: Path, notes_root: Path) -> Path:
+def resolve_destination_dir(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
     path = Path(arg)
     resolved = path.resolve() if path.is_absolute() else (repo_root / path).resolve()
-    if notes_root != resolved and notes_root not in resolved.parents:
-        raise ValueError(f"Destination directory must live under {notes_root}: {resolved}")
+    if kb_root != resolved and kb_root not in resolved.parents:
+        raise ValueError(f"Destination directory must live under {kb_root}: {resolved}")
     return resolved
 
 
@@ -72,7 +72,7 @@ def resolve_destination_path(
     dest_path: str | None,
     *,
     repo_root: Path,
-    notes_root: Path,
+    kb_root: Path,
 ) -> Path:
     if dest_path and new_name:
         raise ValueError("Use either --to or the [new_name] form, not both")
@@ -81,12 +81,12 @@ def resolve_destination_path(
         raw = Path(dest_path)
         resolved = raw.resolve() if raw.is_absolute() else (repo_root / raw).resolve()
         if resolved.suffix == ".md":
-            if notes_root not in resolved.parents:
-                raise ValueError(f"Destination path must live under {notes_root}: {resolved}")
+            if kb_root not in resolved.parents:
+                raise ValueError(f"Destination path must live under {kb_root}: {resolved}")
             ensure_note_slug_length(resolved.stem)
             return resolved
 
-        directory = resolve_destination_dir(dest_path, repo_root=repo_root, notes_root=notes_root)
+        directory = resolve_destination_dir(dest_path, repo_root=repo_root, kb_root=kb_root)
         return directory / source.name
 
     filename = source.name if new_name is None else f"{slugify_note_filename(new_name)}.md"
@@ -370,16 +370,15 @@ def relocate_note(
     apply: bool = False,
 ) -> int:
     kb_root = repo_root / "kb"
-    notes_root = kb_root / "notes"
     mkdocs_config = repo_root / "mkdocs.yml"
 
-    source = resolve_note(note_arg, repo_root=repo_root, notes_root=notes_root)
+    source = resolve_note(note_arg, repo_root=repo_root, kb_root=kb_root)
     destination = resolve_destination_path(
         source,
         new_name,
         dest_path,
         repo_root=repo_root,
-        notes_root=notes_root,
+        kb_root=kb_root,
     )
 
     if destination == source:

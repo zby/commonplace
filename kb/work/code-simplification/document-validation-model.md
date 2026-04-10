@@ -69,7 +69,7 @@ Notes are open-world documents. Schemas are controlled configuration. Those shou
 The correct place for machine-readable structural validation is the type-definition files:
 
 - [kb/types/note.schema.yaml](../../types/note.schema.yaml)
-- [kb/notes/types/adr.schema.yaml](../../../kb/notes/types/adr.schema.yaml)
+- [kb/reference/types/adr.schema.yaml](../../../kb/reference/types/adr.schema.yaml)
 - [kb/notes/types/index.schema.yaml](../../../kb/notes/types/index.schema.yaml)
 - [kb/notes/types/related-system.schema.yaml](../../../kb/notes/types/related-system.schema.yaml)
 - [kb/notes/types/review.schema.yaml](../../../kb/notes/types/review.schema.yaml)

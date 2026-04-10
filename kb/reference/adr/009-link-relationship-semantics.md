@@ -14,7 +14,7 @@ status: accepted
 
 Untyped links ("see also", "related") tell a reader that two notes are connected but not *how*. An agent navigating under context pressure needs to decide whether following a link will advance its task — and "related" gives no signal for that decision. Wiki-style hyperlinks are cheap to create but expensive to follow blindly.
 
-[Ars Contexta](../related-systems/arscontexta.md) proposes propositional link semantics drawn from concept-mapping research: causes, enables, contradicts, extends, specifies, supports. The key distinction is between mind mapping ("these relate somehow") and concept mapping ("this extends that because..."). We needed a vocabulary small enough to remember and use consistently, rich enough to support agent navigation decisions.
+[Ars Contexta](../../notes/related-systems/arscontexta.md) proposes propositional link semantics drawn from concept-mapping research: causes, enables, contradicts, extends, specifies, supports. The key distinction is between mind mapping ("these relate somehow") and concept mapping ("this extends that because..."). We needed a vocabulary small enough to remember and use consistently, rich enough to support agent navigation decisions.
 
 ## Decision
 
@@ -48,7 +48,7 @@ The relationship appears in the prose surrounding the link. In body text: `since
 
 Relevant Notes:
 
-- [Ars Contexta](../related-systems/arscontexta.md) — source: propositional link semantics vocabulary we borrowed and adapted
-- [title-as-claim-enables-traversal-as-reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles plus typed links make traversal read as reasoning
-- [link-strength-is-encoded-in-position-and-prose](../link-strength-is-encoded-in-position-and-prose.md) — extends: relationship type is one axis; position and prose encode a second axis (commitment strength)
-- [agents-navigate-by-deciding-what-to-read-next](../agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation-decision model that typed links serve
+- [Ars Contexta](../../notes/related-systems/arscontexta.md) — source: propositional link semantics vocabulary we borrowed and adapted
+- [title-as-claim-enables-traversal-as-reasoning](../../notes/title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles plus typed links make traversal read as reasoning
+- [link-strength-is-encoded-in-position-and-prose](../../notes/link-strength-is-encoded-in-position-and-prose.md) — extends: relationship type is one axis; position and prose encode a second axis (commitment strength)
+- [agents-navigate-by-deciding-what-to-read-next](../../notes/agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation-decision model that typed links serve

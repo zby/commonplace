@@ -4,8 +4,8 @@ This workshop is now mostly complete. The implemented design has been promoted i
 
 ## Accepted outcomes
 
-- [ADR-012: types for structure, traits for review](../../notes/adr/012-types-for-structure-traits-for-review.md)
-- [ADR-015: standardize authored type definitions on JSON Schema](../../notes/adr/015-standardize-authored-type-definitions-on-json-schema.md)
+- [ADR-012: types for structure, traits for review](../../reference/adr/012-types-for-structure-traits-for-review.md)
+- [ADR-015: standardize authored type definitions on JSON Schema](../../reference/adr/015-standardize-authored-type-definitions-on-json-schema.md)
 
 Together these ADRs capture the settled design:
 

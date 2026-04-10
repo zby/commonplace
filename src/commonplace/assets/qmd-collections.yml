@@ -9,6 +9,9 @@ collections:
   notes:
     path: /PATH/TO/COMMONPLACE/kb/notes
     pattern: "**/*.md"
+  reference:
+    path: /PATH/TO/COMMONPLACE/kb/reference
+    pattern: "**/*.md"
   sources:
     path: /PATH/TO/COMMONPLACE/kb/sources
     pattern: "**/*.md"

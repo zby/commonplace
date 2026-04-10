@@ -29,7 +29,7 @@ A Claude Code plugin that generates complete knowledge systems from conversation
 
 **Self-evolution through friction.** Observations (friction signals) and tensions (contradictions) accumulate during work. When thresholds are hit (10+ observations, 5+ tensions), `/rethink` triggers triage. The system grows at pain points, not before.
 
-**Propositional wiki links with relationship markers.** Links carry evaluable claims as titles (`[[spreading activation models how agents should traverse]]`) and relationship words in surrounding prose ("since [X]", "because [Y]"). This is the convention our [title-as-claim](../title-as-claim-enables-traversal-as-reasoning.md) and [link relationship semantics](../adr/009-link-relationship-semantics.md) descend from — we borrowed it from this system's wiki/Zettelkasten lineage.
+**Propositional wiki links with relationship markers.** Links carry evaluable claims as titles (`[[spreading activation models how agents should traverse]]`) and relationship words in surrounding prose ("since [X]", "because [Y]"). This is the convention our [title-as-claim](../title-as-claim-enables-traversal-as-reasoning.md) and [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) descend from — we borrowed it from this system's wiki/Zettelkasten lineage.
 
 **Adjacency is not connection** (article #23). Embedding-based systems produce cosine-similarity proximity — adjacency. Curated links with articulated reasons produce connections. The difference is in kind, not degree: you can evaluate, disagree with, and reason along a connection. You cannot disagree with a cosine similarity score. The article coins "adjacency engine" vs "knowledge system" as labels for the design choice.
 
@@ -37,7 +37,7 @@ A Claude Code plugin that generates complete knowledge systems from conversation
 
 Article #23 links to six methodology claims from the 249-claim research base. Reviewing them reveals the depth of the underlying research and several parallels to our design that go beyond what the articles show.
 
-**"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link relationship semantics](../adr/009-link-relationship-semantics.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, grounds, contradicts, enables, exemplifies. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link semantics enforce.
+**"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, grounds, contradicts, enables, exemplifies. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link semantics enforce.
 
 **"over-automation corrupts quality when hooks encode judgment rather than verification"** — Strikingly close to our [methodology enforcement gradient](../methodology-enforcement-is-constraining.md) and [oracle strength spectrum](../oracle-strength-spectrum.md). Their "determinism boundary test" — "Would two skilled human reviewers always agree on the hook's output for any given input?" — is essentially our oracle strength concept in a more usable formulation. Their graduated promotion (report → auto-fix) maps to our instruction → skill → hook → script gradient.
 
@@ -78,7 +78,7 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 - **We built a theory layer they do not have.** [Codification](../definitions/codification.md), [oracle strength](../oracle-strength-spectrum.md), and [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) explain when to freeze, automate, or keep things fluid. Arscontexta has a research-grounded pipeline but not a comparable theory of change.
 - **We flattened the architecture.** Their `self/notes/ops` split is a meaningful model of agent continuity, but we chose a simpler `kb/` plus tasks/sources layout and did not carve out a dedicated identity layer.
-- **We made document affordances explicit.** Our [document classification](../document-classification.md) with types, traits, and status tells an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
+- **We made document affordances explicit.** Our [document classification](../../reference/type-system.md) with types, traits, and status tells an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
 - **We keep embeddings in a narrower role.** We use embeddings for search, not for primary organization. Arscontexta's article #23 argues more aggressively against adjacency-style systems; our position is that embeddings are acceptable when they are kept out of the reasoning graph.
 - **The local checkout is stale.** It still points at `docs/notes/` and `docs/adr/`, so the clone is evidence of the system's shape but not an authoritative implementation snapshot.
 
@@ -146,7 +146,7 @@ The deepest divergence is in grounding discipline. Arscontexta draws on **cognit
 Relevant Notes:
 
 - [title-as-claim-enables-traversal-as-reasoning](../title-as-claim-enables-traversal-as-reasoning.md) — our implementation of the convention we borrowed from this lineage
-- [009-link-relationship-semantics](../adr/009-link-relationship-semantics.md) — our formalization of link relationship semantics
+- [009-link-relationship-semantics](../../reference/adr/009-link-relationship-semantics.md) — our formalization of link relationship semantics
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
 - [automating-kb-learning-is-an-open-problem](../automating-kb-learning-is-an-open-problem.md) — the scaling question connects here
 - [three-space-agent-memory-maps-to-tulving-taxonomy](../three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — our analysis of their article #19

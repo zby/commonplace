@@ -62,7 +62,7 @@ Frontmatter makes notes queryable via ripgrep. Its presence determines the note'
 | Field | Required | Constraints |
 |-------|----------|------------|
 | `description` | Yes | Must discriminate this note from similar ones |
-| `type` | No | Base type: `note` (default) or another specialized document type. See [document-classification](../notes/document-classification.md) |
+| `type` | No | Base type: `note` (default) or another specialized document type. See [document-classification](../reference/type-system.md) |
 | `traits` | No | Review-routing properties: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation` |
 | `tags` | No | Freeform tags for navigation |
 | `status` | No | `seedling`, `current`, `speculative`, `outdated`; some specialized types override this vocabulary |

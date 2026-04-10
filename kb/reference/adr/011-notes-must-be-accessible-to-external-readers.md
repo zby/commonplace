@@ -22,7 +22,7 @@ The [undefined-terms review gate](../../instructions/review-gates/accessibility/
 
 Notes must be written so that an external reader can follow the argument without leaving the page. Specifically:
 
-1. **KB vocabulary terms require an inline gloss and a definition link on first mention.** The gloss orients the reader enough to keep reading; the link provides depth. Example: `[distillation](./definitions/distillation.md) (directed context compression)`.
+1. **KB vocabulary terms require an inline gloss and a definition link on first mention.** The gloss orients the reader enough to keep reading; the link provides depth. Example: `[distillation](../../notes/definitions/distillation.md) (directed context compression)`.
 2. **The undefined-terms gate no longer exempts KB vocabulary.** These terms are now subject to the same first-mention test as any other technical term.
 3. **The WRITING.md checklist includes a KB vocabulary item** reminding authors that external readers lack CLAUDE.md context.
 
@@ -46,8 +46,8 @@ The general principle: authors write with full KB context loaded; readers arrive
 
 Relevant Notes:
 
-- [human-LLM differences are load-bearing for knowledge system design](../human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: the dual-audience analysis that motivates audience-aware writing; this ADR adds the third audience (external reader) that GitHub Pages introduced
+- [human-LLM differences are load-bearing for knowledge system design](../../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: the dual-audience analysis that motivates audience-aware writing; this ADR adds the third audience (external reader) that GitHub Pages introduced
 - [009-link-relationship-semantics](./009-link-relationship-semantics.md) — parallel: another intentional-friction authoring requirement that improves navigation at the cost of writing speed
-- [distillation](../definitions/distillation.md) — example: the term whose exemption from the undefined-terms gate prompted this decision
+- [distillation](../../notes/definitions/distillation.md) — example: the term whose exemption from the undefined-terms gate prompted this decision
 - [undefined-terms gate](../../instructions/review-gates/accessibility/undefined-terms.md) — implements: the updated gate that enforces first-mention glosses
 - [WRITING.md](../../instructions/WRITING.md) — implements: checklist item 5 (KB vocabulary on first mention)

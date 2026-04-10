@@ -44,5 +44,5 @@ None of these are needed yet.
 
 The core design is settled elsewhere:
 
-- [ADR-012: types for structure, traits for review](../../notes/adr/012-types-for-structure-traits-for-review.md)
-- [ADR-015: standardize authored type definitions on JSON Schema](../../notes/adr/015-standardize-authored-type-definitions-on-json-schema.md)
+- [ADR-012: types for structure, traits for review](../../reference/adr/012-types-for-structure-traits-for-review.md)
+- [ADR-015: standardize authored type definitions on JSON Schema](../../reference/adr/015-standardize-authored-type-definitions-on-json-schema.md)

@@ -71,6 +71,6 @@ The full installation procedure is in [INSTALL.md](../../../INSTALL.md).
 
 Relevant Notes:
 
-- [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
-- [agent statelessness makes routing architectural](../agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning aid it graduates from
-- [directory-scoped types are cheaper than global types](../directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal
+- [skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
+- [agent statelessness makes routing architectural](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning aid it graduates from
+- [directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal

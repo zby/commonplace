@@ -1,0 +1,1 @@
+../../../../../../kb/reference/types/adr.template.md

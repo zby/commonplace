@@ -65,5 +65,5 @@ The tradeoff is one extra directory under `kb/`, but it avoids a more intrusive 
 Relevant Notes:
 
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — the two-tree design for installed projects; this note covers the repo's own layout
-- [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
-- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand
+- [directory-scoped types are cheaper than global types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) — foundation: why collection-level types/ directories work but a global types/ directory is overhead
+- [instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — constrains: what goes in CLAUDE.md vs what the agent reads on demand

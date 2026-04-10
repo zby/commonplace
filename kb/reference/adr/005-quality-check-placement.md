@@ -20,7 +20,7 @@ The KB has multiple places where quality checks can live:
 4. **Ingest skill** — source-specific checks (curiosity gate, limitations, reach assessment). Run during ingestion.
 5. **Recurring tasks** — periodic sweeps (review-explanatory-reach). Batch, asynchronous.
 
-There is no documented principle for deciding where a new quality check should go. When the [explanatory reach](../first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) check was added to WRITING.md and the ingest skill, the placement was ad hoc. This ADR establishes the routing criteria.
+There is no documented principle for deciding where a new quality check should go. When the [explanatory reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) check was added to WRITING.md and the ingest skill, the placement was ad hoc. This ADR establishes the routing criteria.
 
 ## Decision
 
@@ -63,6 +63,6 @@ A quality check's placement depends on three properties:
 
 Relevant Notes:
 
-- [first-principles reasoning selects for explanatory reach](../first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — the quality criterion that prompted this ADR; its three-part test is split across WRITING.md (lightweight) and recurring tasks (full)
-- [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — the enforcement gradient (instructions → skills → hooks → scripts) parallels the placement gradient here; both trade flexibility for reliability
-- [ad hoc prompts extend the system without schema changes](../ad-hoc-prompts-extend-the-system-without-schema-changes.md) — WRITING.md checks are the lightest form of enforcement; this ADR defines when to keep a check at that level vs. promoting it
+- [first-principles reasoning selects for explanatory reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — the quality criterion that prompted this ADR; its three-part test is split across WRITING.md (lightweight) and recurring tasks (full)
+- [methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md) — the enforcement gradient (instructions → skills → hooks → scripts) parallels the placement gradient here; both trade flexibility for reliability
+- [ad hoc prompts extend the system without schema changes](../../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md) — WRITING.md checks are the lightest form of enforcement; this ADR defines when to keep a check at that level vs. promoting it

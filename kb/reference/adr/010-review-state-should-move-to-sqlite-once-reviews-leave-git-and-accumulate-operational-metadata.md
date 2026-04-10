@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-The original review system was file-shaped for good reasons. Review artifacts were markdown, inspectable in any editor, and fit the repo's broader [files beat a database for agent-operated knowledge bases](../files-not-database.md) bias.
+The original review system was file-shaped for good reasons. Review artifacts were markdown, inspectable in any editor, and fit the repo's broader [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) bias.
 
 That changed in two steps.
 
@@ -72,6 +72,6 @@ The boundary is: files remain the right default for authored knowledge under git
 
 Relevant Notes:
 
-- [files beat a database for agent-operated knowledge bases](../files-not-database.md) — constrains: this ADR is a scoped exception to the files-first rule, not a replacement for it
+- [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — constrains: this ADR is a scoped exception to the files-first rule, not a replacement for it
 - [007-reports-directory-for-generated-snapshots](./007-reports-directory-for-generated-snapshots.md) — enables: review artifacts had already moved into `kb/reports/`, which clarified that they were generated operational outputs rather than core notes
-- [review-db-migration workshop](../../work/review-db-migration/README.md) — develops: the workshop that turned this decision into a migration plan, schema, and compatibility checklist
+- [review system](../../instructions/REVIEW-SYSTEM.md) — implements: the current DB-backed review workflow and command surface that followed from this decision

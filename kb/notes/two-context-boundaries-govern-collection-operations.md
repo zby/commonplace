@@ -46,7 +46,7 @@ The parent index is not a taxonomic convenience — it's a distinct operational 
 
 ### Library/workshop separation is an operational necessity
 
-The [connect skill's discovery strategy](./adr/003-connect-skill-discovery-strategy.md) is built on the index boundary: `/connect` works by reading the full `index.md` in one pass, scanning all titles and descriptions to find candidates. ADR 003 explicitly identifies this as a scaling constraint — it works while `index.md` is small enough to scan in one read, and proposes portioned loading when it isn't.
+The [connect skill's discovery strategy](../reference/adr/003-connect-skill-discovery-strategy.md) is built on the index boundary: `/connect` works by reading the full `index.md` in one pass, scanning all titles and descriptions to find candidates. ADR 003 explicitly identifies this as a scaling constraint — it works while `index.md` is small enough to scan in one read, and proposes portioned loading when it isn't.
 
 The [quality scores note](./notes-need-quality-scores-to-scale-curation.md) identifies the same threshold from the other direction: `/connect` stops scaling without filtering once the candidate list exceeds what an agent can evaluate in context.
 
@@ -68,7 +68,7 @@ This means the library/workshop separation from [a functioning KB needs a worksh
 Relevant Notes:
 
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — extends: adds the two-boundary model to the single-constraint analysis; separates the orientation/comparative-reading tension by scale
-- [003-connect-skill-discovery-strategy](./adr/003-connect-skill-discovery-strategy.md) — grounds: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
+- [003-connect-skill-discovery-strategy](../reference/adr/003-connect-skill-discovery-strategy.md) — grounds: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: quality scores are a response to the index boundary — filtering candidates when the full index exceeds productive scanning
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context scarcity is why the boundaries exist; the volume/complexity distinction explains why the full-text boundary may not move with growing windows
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the two boundaries define two resolution levels (index and full-text) between which the KB must support fluid switching

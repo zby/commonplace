@@ -8,7 +8,7 @@ tags: [links]
 
 # Link strength is encoded in position and prose
 
-The [link relationship semantics](./adr/009-link-relationship-semantics.md) define what links should contain (relationship type, context phrase). But they treat all links as equal edges. In practice, links carry different commitment levels — an inline "since [X]" that uses a note as a premise is a stronger connection than a footer "related" entry.
+The [link relationship semantics](../reference/adr/009-link-relationship-semantics.md) define what links should contain (relationship type, context phrase). But they treat all links as equal edges. In practice, links carry different commitment levels — an inline "since [X]" that uses a note as a premise is a stronger connection than a footer "related" entry.
 
 This matters because it creates a weighted graph. The weight affects how agents should traverse, how notes should be scored, and how graph health should be measured.
 
@@ -67,7 +67,7 @@ The inferred approach is probably right for now — position (inline vs footer) 
 
 Relevant Notes:
 
-- [009-link-relationship-semantics](./adr/009-link-relationship-semantics.md) — defines link semantics (relationship types, context phrases); this note adds the strength dimension the ADR doesn't address
+- [009-link-relationship-semantics](../reference/adr/009-link-relationship-semantics.md) — defines link semantics (relationship types, context phrases); this note adds the strength dimension the ADR doesn't address
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — note scores should weight inbound links by strength; strong inbound links count more
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — link strength is a traversal heuristic: strong links are worth following, weak links are maybes
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — strong-to-weak link ratio is a graph health signal

@@ -69,5 +69,5 @@ Type discovery for custom types follows the template file naming convention rath
 
 Relevant Notes:
 
-- [directory-scoped types are cheaper than global types](../directory-scoped-types-are-cheaper-than-global-types.md) — foundation: low-frequency, collection-local type detail should load on demand rather than live in the always-loaded global guide
-- [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — grounds: the default write path and specialized-type path should pay different context costs
+- [directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — foundation: low-frequency, collection-local type detail should load on demand rather than live in the always-loaded global guide
+- [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — grounds: the default write path and specialized-type path should pay different context costs

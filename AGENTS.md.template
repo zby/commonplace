@@ -53,20 +53,23 @@ Example: "A design decision is worth a note when it affects more than one endpoi
 
 The knowledge base lives in `kb/`. Search it when the user asks about decisions, reasoning, design rationale, or project knowledge.
 
+`kb/notes/` holds transferable claims and theory. `kb/reference/` holds current-state documentation and decision history for this specific system. `kb/instructions/` holds imperative procedures and how-to guidance.
+
 ```bash
 # Find notes by description
-rg "^description:" kb/notes/ --glob "*.md"
+rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by type
-rg "^type: note" kb/notes/ --glob "*.md"
+rg "^type: note" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by tag
-rg "^tags:.*my-tag" kb/notes/ --glob "*.md"
+rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 ```
 
 Key entry points:
 
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
+- `kb/reference/README.md` — current-state documentation for this system and links to its ADRs
 
 <!-- Add curated tag indexes here as they emerge. Create a tag index when 5+ related notes accumulate without navigation structure. -->
 

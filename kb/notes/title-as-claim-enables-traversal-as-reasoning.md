@@ -31,7 +31,7 @@ The *traversal-as-reasoning* consequence — when titles are claims, link-follow
 
 ## Why it works
 
-Inline links carry richer relationship data than metadata fields. The prose surrounding a link encodes WHY the linked note matters here — "because [X]" is a causal claim, "since [Y]" is a foundation claim, "but [Z]" is a tension. Claim-as-title makes these constructions possible, because topic labels don't compose grammatically. You can write "since [claims must be specific enough to be wrong]" but not "since [specificity notes]." Our [link relationship semantics](./adr/009-link-relationship-semantics.md) formalize this — argumentative links ("since", "because") and referential links ("see", "as defined in") are different intents that require different anchor context.
+Inline links carry richer relationship data than metadata fields. The prose surrounding a link encodes WHY the linked note matters here — "because [X]" is a causal claim, "since [Y]" is a foundation claim, "but [Z]" is a tension. Claim-as-title makes these constructions possible, because topic labels don't compose grammatically. You can write "since [claims must be specific enough to be wrong]" but not "since [specificity notes]." Our [link relationship semantics](../reference/adr/009-link-relationship-semantics.md) formalize this — argumentative links ("since", "because") and referential links ("see", "as defined in") are different intents that require different anchor context.
 
 Progressive disclosure depends on this. The first disclosure layer is titles. If titles are claims, agents can curate what to load based on what each note argues. If titles are topics, agents must load notes to discover what they argue — the disclosure layer fails. This is why [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — the loading hierarchy assumes that titles and descriptions carry enough signal for agents to decide what to load next.
 
@@ -44,7 +44,7 @@ Progressive disclosure depends on this. The first disclosure layer is titles. If
 
 The pattern works best for ideas that ARE single claims. It breaks for **compositional documents** — specs, frameworks, classification systems — that embody multiple independent design choices.
 
-[Document classification](./document-classification.md) is a clear example. It contains several distinct claims: "types assert structure not subject matter," "status is orthogonal to type," "a document has exactly one base type but zero or more traits," "text is the root type." Each could be a standalone claim note. But no single claim subsumes them all — any attempt produces something so abstract it's useless ("documents should be classified").
+[Document classification](../reference/type-system.md) is a clear example. It contains several distinct claims: "types assert structure not subject matter," "status is orthogonal to type," "a document has exactly one base type but zero or more traits," "text is the root type." Each could be a standalone claim note. But no single claim subsumes them all — any attempt produces something so abstract it's useless ("documents should be classified").
 
 The traversal-as-reasoning framing explains why. A claim-titled note can serve as a premise: "since [X], therefore Y." A multi-claim document can't serve as a single premise because it IS multiple premises. When you write "see *document classification*," you're not invoking a reasoning step — you're pointing to a reference. The link semantics shift from argumentative ("since," "because") to referential ("see," "as defined in").
 
@@ -70,11 +70,11 @@ Relevant Notes:
 
 - [programming-language types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — example: a claim extracted from a multi-claim spec, enabling it to serve as a premise
-- [document classification](./document-classification.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
+- [document classification](../reference/type-system.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: claim titles make the navigation decision cheap by carrying the argument in the pointer itself
 - [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: claim titles are what make the first layer of progressive disclosure work in the loading hierarchy
-- [009-link-relationship-semantics](./adr/009-link-relationship-semantics.md) — extends: the relationship vocabulary (extends, grounds, contradicts, enables, exemplifies) that typed links use
+- [009-link-relationship-semantics](../reference/adr/009-link-relationship-semantics.md) — extends: the relationship vocabulary (extends, grounds, contradicts, enables, exemplifies) that typed links use
 - [linking-theory](./linking-theory.md) — extends: open questions about when and why typed links work
 - [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) is the theory behind what this note describes — claim titles are Toulmin claims, and "since"/"because" link semantics encode warrants
 - [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism

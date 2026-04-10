@@ -1,5 +1,9 @@
 # System Documentation Workshop
 
+## Status
+
+One question from this framing is resolved: system documentation gets a new top-level collection `kb/reference/`, using the existing `note` type, and ADRs move there too. See [move-plan.md](./move-plan.md) for the concrete sub-efforts. The per-note scope signal question (options A–D below) remains open and is a separable sub-effort.
+
 ## The real problem
 
 Practitioners get commonplace as a working system — the skills, the type system, the validation, the review gates, the indexes. They also get ~150 notes containing general theory about agent systems, design patterns for agentic KBs, and this system's specific implementation choices — all mixed together.
@@ -97,7 +101,7 @@ kb/
   log.md
 ```
 
-The practitioner then builds their own KB inside `kb/notes/`. **They should be able to organize it however they want.** Our `kb/notes/` has subdirectories (`adr/`, `related-systems/`, `definitions/`), indexes (`tags-index.md`, `learning-theory-index.md`), and 150+ notes — but those are *our content*, not framework structure.
+The practitioner then builds their own KB inside `kb/notes/`. **They should be able to organize it however they want.** Our KB has `kb/reference/adr/`, `kb/notes/related-systems/`, `kb/notes/definitions/`, indexes (`tags-index.md`, `learning-theory-index.md`), and 150+ notes — but those are *our content*, not framework structure.
 
 ### What's framework vs what's our content
 
@@ -106,7 +110,7 @@ The practitioner then builds their own KB inside `kb/notes/`. **They should be a
 | `kb/notes/types/` | Framework (copied at install) | Keep, extend with their own types |
 | `kb/instructions/WRITING.md` | Framework (copied at install) | Keep, customize the quality bar section |
 | Skills (symlinked from `commonplace/`) | Framework | Use as-is, write their own additional skills |
-| `kb/notes/adr/` directory | Convention (recommended, not required) | Use if they make architectural decisions |
+| `kb/reference/adr/` directory | Convention (recommended, not required) | Use if they make architectural decisions |
 | `kb/notes/related-systems/` | Our content | Ignore unless they're also comparing systems |
 | `kb/notes/tags-index.md` | Our content | Create their own indexes for their own tags |
 | `kb/notes/learning-theory-index.md` | Our content (general theory) | Read for theory, but it's not about their KB |
@@ -161,7 +165,7 @@ Our indexes (`tags-index.md`, `learning-theory-index.md`, etc.) are also our con
 ## Related notes
 
 - [CLAUDE.md](../../CLAUDE.md) — current routing table
-- [ADR-011: notes must be accessible to external readers](../notes/adr/011-notes-must-be-accessible-to-external-readers.md) — the commitment to external readership that makes this workshop load-bearing
+- [ADR-011: notes must be accessible to external readers](../reference/adr/011-notes-must-be-accessible-to-external-readers.md) — the commitment to external readership that makes this workshop load-bearing
 - [a-good-agentic-kb-maximizes-contextual-competence](../notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) — the theory this system instantiates
 - [agent-statelessness-makes-routing-architectural-not-learned](../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — why good routing/documentation matters: every session is day one
 - [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology-through-distillation.md) — the methodology-is-content principle

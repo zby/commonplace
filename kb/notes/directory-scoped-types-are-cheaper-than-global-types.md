@@ -8,7 +8,7 @@ tags: [type-system]
 
 # Directory-scoped types are cheaper than global types
 
-The [document classification](./document-classification.md) spec defines seven global base types: `text`, `note`, `structured-claim`, `spec`, `review`, `index`, `adr`. Every agent that touches the KB needs to know this vocabulary — it lives in the classification spec, is referenced from CLAUDE.md, and shapes how `/validate` works. Every global type is a permanent tax on context, loaded every session whether relevant or not.
+The [document classification](../reference/type-system.md) spec defines seven global base types: `text`, `note`, `structured-claim`, `spec`, `review`, `index`, `adr`. Every agent that touches the KB needs to know this vocabulary — it lives in the classification spec, is referenced from CLAUDE.md, and shapes how `/validate` works. Every global type is a permanent tax on context, loaded every session whether relevant or not.
 
 But most structural affordances are directory-local. An agent working in `notes/` doesn't need to know what sections an ADR requires. An agent working in `adr/` doesn't need to know what a related-system review looks like. The real structural expectations — what sections to write, what metadata to include, what validation to run — come from directory conventions (READMEs, templates), not from the global type field.
 
@@ -79,8 +79,8 @@ These are the real global affordances. They're thin — which is the point.
 
 The CLAUDE.md routing table and content workflow now implement this proposal:
 
-- **Global types** (`kb/types/`) define `text` and `note`. The `note` template is inlined in `kb/instructions/WRITING.md` (per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md)), so the agent gets it in the same hop as writing conventions. This covers ~80% of writes.
-- **Directory types** (`kb/*/types/`) are loaded only when the routing table points to a specific type. The routing table says "Default `note` type" for ordinary notes and gives an explicit file path (`kb/notes/types/adr.template.md`) only for specialized types. The content workflow makes this explicit: "Read the directory type — only if the routing table points to a specific type template. Skip this step for plain notes."
+- **Global types** (`kb/types/`) define `text` and `note`. The `note` template is inlined in `kb/instructions/WRITING.md` (per [ADR-002](../reference/adr/002-inline-global-types-in-writing-guide.md)), so the agent gets it in the same hop as writing conventions. This covers ~80% of writes.
+- **Directory types** (`kb/*/types/`) are loaded only when the routing table points to a specific type. The routing table says "Default `note` type" for ordinary notes and gives an explicit file path (`kb/reference/types/adr.template.md`) only for specialized types. The content workflow makes this explicit: "Read the directory type — only if the routing table points to a specific type template. Skip this step for plain notes."
 
 This is progressive disclosure applied to the type system: the agent always has `note`, and only loads `adr`, `structured-claim`, `index`, etc. when it's actually writing one.
 
@@ -95,7 +95,7 @@ This is progressive disclosure applied to the type system: the agent always has 
 
 Relevant Notes:
 
-- [document classification](./document-classification.md) — the global type system this note proposes to thin out
+- [document classification](../reference/type-system.md) — the global type system this note proposes to thin out
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — the verifiability principle still applies, but verification becomes directory-scoped

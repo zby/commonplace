@@ -7,7 +7,7 @@ status: seedling
 
 # Linking theory
 
-We have link practices — relationship types ([ADR 009](./adr/009-link-relationship-semantics.md)), title-as-claim, context phrases, position conventions — but no theory explaining *why* these practices work and *when* they break down. This note collects the grounding claims and builds toward one.
+We have link practices — relationship types ([ADR 009](../reference/adr/009-link-relationship-semantics.md)), title-as-claim, context phrases, position conventions — but no theory explaining *why* these practices work and *when* they break down. This note collects the grounding claims and builds toward one.
 
 ## Established claims about linking
 
@@ -77,7 +77,7 @@ If link quality is decision-cost reduction, the theory predicts:
 
 Relevant Notes:
 
-- [ADR 009: Link relationship semantics](./adr/009-link-relationship-semantics.md) — decision: the specific vocabulary this theory aims to ground
+- [ADR 009: Link relationship semantics](../reference/adr/009-link-relationship-semantics.md) — decision: the specific vocabulary this theory aims to ground
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation-decision model
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — grounds: claim titles as argument structure
 - [title-as-claim-exposes-commitments-enabling-popperian-maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — grounds: claim titles as maintenance surface

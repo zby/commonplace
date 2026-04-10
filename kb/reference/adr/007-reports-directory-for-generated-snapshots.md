@@ -68,6 +68,6 @@ The next report will be a **promotion candidates** report covering:
 
 Relevant Notes:
 
-- [a functioning KB needs a workshop layer](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — establishes the library/workshop distinction that reports sit outside of; reports are neither accumulated knowledge nor consumed work
-- [distillation status determines directory placement](../distillation-status-determines-directory-placement.md) — parallel: proposes directory boundaries based on artifact nature; reports are a third nature (generated/computed) alongside procedures (instructions) and reasoning (notes)
-- [stale indexes are worse than no indexes](../stale-indexes-are-worse-than-no-indexes.md) — reports face the same staleness risk, but regenerability is the mitigation — a stale report is replaced, not maintained
+- [a functioning KB needs a workshop layer](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — establishes the library/workshop distinction that reports sit outside of; reports are neither accumulated knowledge nor consumed work
+- [distillation status determines directory placement](../../notes/distillation-status-determines-directory-placement.md) — parallel: proposes directory boundaries based on artifact nature; reports are a third nature (generated/computed) alongside procedures (instructions) and reasoning (notes)
+- [stale indexes are worse than no indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) — reports face the same staleness risk, but regenerability is the mitigation — a stale report is replaced, not maintained

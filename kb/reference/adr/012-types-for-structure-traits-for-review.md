@@ -56,7 +56,7 @@ That made it unclear whether moving a file between directories changed its type 
 
 Relevant Notes:
 
-- [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — strengthened: types are purely structural, making verifiability the defining criterion
-- [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — extends: the "soft oracle stays in skill" tier is removed; all semantic checks move to review
-- [document-classification](../document-classification.md) — extends: adds the type/trait boundary test
+- [document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md) — strengthened: types are purely structural, making verifiability the defining criterion
+- [deterministic-validation-should-be-a-script](../../notes/deterministic-validation-should-be-a-script.md) — extends: the "soft oracle stays in skill" tier is removed; all semantic checks move to review
+- [document-classification](../type-system.md) — extends: adds the type/trait boundary test
 - [type-system-rationalization workshop](../../work/type-system-rationalization/README.md) — source: full design exploration behind this decision

@@ -41,7 +41,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Decisions
 
-- [009-link-relationship-semantics](./adr/009-link-relationship-semantics.md) — adopts extends/grounds/contradicts/enables/exemplifies vocabulary, borrowed from arscontexta and adapted for agent navigation
+- [009-link-relationship-semantics](../reference/adr/009-link-relationship-semantics.md) — adopts extends/grounds/contradicts/enables/exemplifies vocabulary, borrowed from arscontexta and adapted for agent navigation
 
 ## Theory
 

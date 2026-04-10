@@ -4,6 +4,7 @@
 Usage:
     commonplace-relocate-note kb/notes/my-note.md "New note title"
     commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions
+    commonplace-relocate-note kb/notes/my-note.md --to kb/reference/my-note.md
     commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions/new-note.md --apply
 """
 
@@ -18,9 +19,9 @@ from commonplace.lib.relocation import relocate_note
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("note", help="Note path or unique note name under kb/notes/")
+    parser.add_argument("note", help="Note path or unique note name under kb/")
     parser.add_argument("new_name", nargs="?", help="New title or filename stem; omit to keep the current filename")
-    parser.add_argument("--to", dest="dest_path", help="Destination directory or .md path under kb/notes/")
+    parser.add_argument("--to", dest="dest_path", help="Destination directory or .md path under kb/")
     parser.add_argument("--apply", action="store_true", help="Write changes instead of dry-running")
     args = parser.parse_args()
 

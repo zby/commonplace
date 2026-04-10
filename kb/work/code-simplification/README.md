@@ -42,8 +42,8 @@ That changes the remaining question. The next wins are no longer "how should the
 
 ## Current grounding
 
-- [ADR-014: scripts as Python package, one-tree model](../../notes/adr/014-scripts-as-python-package-one-tree-model.md) — the accepted packaging transition that makes new prerequisites viable
-- [ADR-015: standardize authored type definitions on JSON Schema](../../notes/adr/015-standardize-authored-type-definitions-on-json-schema.md) — the accepted type-definition design that retired the custom profile DSL
+- [ADR-014: scripts as Python package, one-tree model](../../reference/adr/014-scripts-as-python-package-one-tree-model.md) — the accepted packaging transition that makes new prerequisites viable
+- [ADR-015: standardize authored type definitions on JSON Schema](../../reference/adr/015-standardize-authored-type-definitions-on-json-schema.md) — the accepted type-definition design that retired the custom profile DSL
 - [INSTALL.md](../../../INSTALL.md) — the implemented installation flow that replaced the workshop plan
 - [`pyproject.toml`](../../../pyproject.toml) — current dependency surface: base runtime deps now include `jsonschema` and `PyYAML`
 - [`src/commonplace/lib/frontmatter.py`](../../../src/commonplace/lib/frontmatter.py) — current shared frontmatter parser

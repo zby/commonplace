@@ -39,6 +39,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/notes/related-systems/related-systems-index.md` — external system comparisons
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
+- `kb/reference/adr/` — architecture decision records for the current commonplace system
 - `kb/sources/index.md` — auto-generated source listing
 
 ## Vocabulary
@@ -69,15 +70,17 @@ Terms used in this KB with specific meanings:
 
 The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
 
+`kb/notes/` holds transferable claims and theory. `kb/reference/` holds current-state descriptions and decision history for this specific commonplace system. `kb/instructions/` holds imperative procedures and how-to guidance.
+
 ```bash
 # Find notes by description
-rg "^description:" kb/notes/ kb/instructions/ --glob "*.md"
+rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by type
-rg "^type: structured-claim" kb/notes/ kb/instructions/ --glob "*.md"
+rg "^type: structured-claim" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by tag
-rg "^tags:.*learning-theory" kb/notes/ kb/instructions/ --glob "*.md"
+rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 ```
 
 ### Skills

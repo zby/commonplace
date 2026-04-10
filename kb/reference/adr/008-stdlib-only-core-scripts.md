@@ -46,8 +46,8 @@ All scripts — including `validate_notes.py` — now use this shared module. Py
 
 Relevant Notes:
 
-- [commonplace-architecture](../commonplace-architecture.md) — overall system structure
-- [commonplace-architecture](../commonplace-architecture.md) — repo layout note that distinguishes the current one-tree repo from the older installed two-tree model this decision originally supported
+- [commonplace-architecture](../architecture.md) — overall system structure
+- [commonplace-architecture](../architecture.md) — repo layout note that distinguishes the current one-tree repo from the older installed two-tree model this decision originally supported
 - [006-two-tree-installation-layout](./006-two-tree-installation-layout.md) — the installation layout that motivates portable scripts
-- [deterministic-validation-should-be-a-script](../deterministic-validation-should-be-a-script.md) — validation now uses the shared grammar parser instead of PyYAML
-- [files-not-database](../files-not-database.md) — files-first philosophy that this decision extends to the tooling layer
+- [deterministic-validation-should-be-a-script](../../notes/deterministic-validation-should-be-a-script.md) — validation now uses the shared grammar parser instead of PyYAML
+- [files-not-database](../../notes/files-not-database.md) — files-first philosophy that this decision extends to the tooling layer

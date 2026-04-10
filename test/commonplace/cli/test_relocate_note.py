@@ -109,7 +109,7 @@ def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path)
             None,
             f"kb/notes/{overlong_slug}.md",
             repo_root=repo_root,
-            notes_root=notes_root,
+            kb_root=repo_root / "kb",
         )
 
 
@@ -123,7 +123,7 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
         None,
         "kb/notes/archive",
         repo_root=repo_root,
-        notes_root=notes_root,
+        kb_root=repo_root / "kb",
     )
 
     assert destination == notes_root / "archive" / "old-note.md"
@@ -289,3 +289,63 @@ See [concept](./definitions/concept.md)
     assert new_note.exists()
     relocated_text = new_note.read_text(encoding="utf-8")
     assert "[concept](../definitions/concept.md)" in relocated_text
+
+
+def test_relocate_note_apply_moves_note_across_kb_collections(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repo_root = tmp_path
+    kb_root = repo_root / "kb"
+    notes_root = kb_root / "notes"
+    source = write(
+        notes_root / "document-classification.md",
+        """# Document classification
+
+See [note](../types/note.md)
+""",
+    )
+    write(kb_root / "types" / "note.md", "# Note\n")
+    write(
+        notes_root / "reader.md",
+        """# Reader
+
+See [doc](./document-classification.md).
+""",
+    )
+    write(
+        repo_root / "mkdocs.yml",
+        """site_name: Commonplace
+plugins:
+  - redirects:
+      redirect_maps:
+        'notes/already-old.md': 'notes/document-classification.md'
+nav:
+  - Doc System: notes/document-classification.md
+""",
+    )
+
+    def fake_move(source_path: Path, destination_path: Path, *, repo_root: Path) -> str:
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        source_path.rename(destination_path)
+        return "rename"
+
+    monkeypatch.setattr(relocation, "move_note", fake_move)
+
+    result = relocation.relocate_note(
+        repo_root=repo_root,
+        note_arg="kb/notes/document-classification.md",
+        dest_path="kb/reference/type-system.md",
+        apply=True,
+    )
+
+    destination = kb_root / "reference" / "type-system.md"
+    assert result == 0
+    assert not source.exists()
+    assert destination.exists()
+    relocated_text = destination.read_text(encoding="utf-8")
+    assert "[note](../types/note.md)" in relocated_text
+    assert "[doc](../reference/type-system.md)" in (notes_root / "reader.md").read_text(encoding="utf-8")
+    mkdocs_content = (repo_root / "mkdocs.yml").read_text(encoding="utf-8")
+    assert "'notes/document-classification.md': 'reference/type-system.md'" in mkdocs_content
+    assert "'notes/already-old.md': 'reference/type-system.md'" in mkdocs_content
+    assert "- Doc System: reference/type-system.md" in mkdocs_content

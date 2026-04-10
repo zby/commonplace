@@ -4,7 +4,7 @@
 
 ### Current state
 
-- [ADR-004: replace areas with tags](../../notes/adr/004-replace-areas-with-tags.md) says removing Topics should eliminate `sync_topic_links.py`
+- [ADR-004: replace areas with tags](../../reference/adr/004-replace-areas-with-tags.md) says removing Topics should eliminate `sync_topic_links.py`
 - there are no live `areas:` fields or `Topics:` footers in active `kb/notes/`, `kb/sources/`, or `kb/work/` content
 - this deletion has now been executed: the package entry point, implementation file, and package docs were removed
 

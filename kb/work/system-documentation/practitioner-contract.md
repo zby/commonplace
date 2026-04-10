@@ -4,7 +4,7 @@ What the framework provides, what the practitioner owns, and where the boundary 
 
 ## The two-tree split
 
-[ADR-006](../notes/adr/006-two-tree-installation-layout.md) establishes:
+[ADR-006](../reference/adr/006-two-tree-installation-layout.md) establishes:
 
 - `kb/` — the practitioner's knowledge base. Their content, their organization, their git history.
 - `commonplace/` — the framework. Methodology, theory, type definitions, skills, scripts. A submodule or clone, read-only in normal use.

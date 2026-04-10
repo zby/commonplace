@@ -104,5 +104,5 @@ A note tagged `[constraining, learning-theory]` is findable from both index page
 
 Relevant Notes:
 
-- [areas exist because useful operations require reading notes together](../areas-exist-because-useful-operations-require-reading-notes-together.md) — the rationale this ADR partially supersedes; orientation and comparative reading operations that justified area constraints
-- [stale indexes are worse than no indexes](../stale-indexes-are-worse-than-no-indexes.md) — the generated section eliminates this failure mode for listings
+- [areas exist because useful operations require reading notes together](../../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) — the rationale this ADR partially supersedes; orientation and comparative reading operations that justified area constraints
+- [stale indexes are worse than no indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) — the generated section eliminates this failure mode for listings

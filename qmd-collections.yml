@@ -9,6 +9,9 @@ collections:
   notes:
     path: /home/zby/llm/commonplace/kb/notes
     pattern: "**/*.md"
+  reference:
+    path: /home/zby/llm/commonplace/kb/reference
+    pattern: "**/*.md"
   sources:
     path: /home/zby/llm/commonplace/kb/sources
     pattern: "**/*.md"

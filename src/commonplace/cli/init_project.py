@@ -13,6 +13,8 @@ DEFAULT_DIRS = [
     Path("kb/types"),
     Path("kb/notes"),
     Path("kb/notes/types"),
+    Path("kb/reference"),
+    Path("kb/reference/types"),
     Path("kb/sources"),
     Path("kb/sources/types"),
     Path("kb/tasks/backlog"),
@@ -27,6 +29,7 @@ DEFAULT_DIRS = [
 # Each entry is (scaffold_relative_path, target_relative_path).
 SCAFFOLD_TREES = [
     ("kb/instructions", "kb/instructions"),
+    ("kb/reference", "kb/reference"),
     ("kb/types", "kb/types"),
 ]
 

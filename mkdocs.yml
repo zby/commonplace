@@ -8,7 +8,9 @@ plugins:
   - redirects:
       redirect_maps:
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
+        'notes/commonplace-architecture.md': 'reference/architecture.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
+        'notes/document-classification.md': 'reference/type-system.md'
         'notes/epiplexity-eli5.md': 'work/information-measures/epiplexity-eli5.md'
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
@@ -29,6 +31,22 @@ nav:
   - Browse:
       - Tags: notes/tags-index.md
       - Notes Directory: notes/index.md
+      - Reference:
+          - ADR 002: reference/adr/002-inline-global-types-in-writing-guide.md
+          - ADR 003: reference/adr/003-connect-skill-discovery-strategy.md
+          - ADR 004: reference/adr/004-replace-areas-with-tags.md
+          - ADR 005: reference/adr/005-quality-check-placement.md
+          - ADR 006: reference/adr/006-two-tree-installation-layout.md
+          - ADR 007: reference/adr/007-reports-directory-for-generated-snapshots.md
+          - ADR 008: reference/adr/008-stdlib-only-core-scripts.md
+          - ADR 009: reference/adr/009-link-relationship-semantics.md
+          - ADR 010: reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md
+          - ADR 011: reference/adr/011-notes-must-be-accessible-to-external-readers.md
+          - ADR 012: reference/adr/012-types-for-structure-traits-for-review.md
+          - ADR 013: reference/adr/013-skills-first-delivery-with-core-local-type-split.md
+          - ADR 014: reference/adr/014-scripts-as-python-package-one-tree-model.md
+          - ADR 015: reference/adr/015-standardize-authored-type-definitions-on-json-schema.md
+          - ADR 016: reference/adr/016-custom-types-use-template-instruction-pairs.md
       - Related Systems: notes/related-systems/related-systems-index.md
       - Sources Directory: sources/index.md
       - Workshops: work/README.md

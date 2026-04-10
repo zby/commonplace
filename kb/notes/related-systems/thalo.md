@@ -28,7 +28,7 @@ last-checked: "2026-02-25"
 
 ## The Shared Bet
 
-Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../document-classification.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
+Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../../reference/type-system.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
 
 The comparison illuminates a design spectrum:
 
@@ -49,7 +49,7 @@ The comparison illuminates a design spectrum:
 
 **They don't have a learning theory.** Thalo has validation (is this entry well-formed?) but no framework for deciding *when* to formalise something vs. leave it stochastic. No [verifiability gradient](../deploy-time-learning-is-the-missing-middle.md), no constrain/relax boundary. Their 27 rules are all fixed at design time — equivalent to jumping straight to the "script" level of the [methodology enforcement gradient](../methodology-enforcement-is-constraining.md), skipping the instruction and skill phases where practices prove out before hardening.
 
-**No link semantics.** Their links are typed (the grammar knows `link` vs `link[]`) but don't carry relationship semantics. Our [link relationship semantics](../adr/009-link-relationship-semantics.md) — extends, grounds, contradicts, enables — have no counterpart.
+**No link semantics.** Their links are typed (the grammar knows `link` vs `link[]`) but don't carry relationship semantics. Our [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — extends, grounds, contradicts, enables — have no counterpart.
 
 ## What We've Borrowed
 
@@ -79,8 +79,8 @@ Relevant Notes:
 - [programming-practices-apply-to-prompting](../underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
 - [deploy-time-learning](../deploy-time-learning-is-the-missing-middle.md) — contrasts: Thalo has no verifiability gradient; their rules are fixed at design time, while the verifiability gradient explains why progressive formalization (prompt -> schema -> code) beats upfront commitment
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — converges: same goal (types with defined sections, checkable structure), different trajectory — they committed upfront via grammar, we discover through practice
-- [document-classification](../document-classification.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages
+- [document-classification](../../reference/type-system.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages
 - [methodology-enforcement-is-constraining](../methodology-enforcement-is-constraining.md) — contrasts: Thalo jumped straight to deterministic scripts; we maintain a gradient (instruction -> skill -> hook -> script) because not all methodology should complete the trajectory
-- [009-link-relationship-semantics](../adr/009-link-relationship-semantics.md) — gap: Thalo's typed links have no relationship semantics; our link vocabulary provides the semantic layer their grammar omits
+- [009-link-relationship-semantics](../../reference/adr/009-link-relationship-semantics.md) — gap: Thalo's typed links have no relationship semantics; our link vocabulary provides the semantic layer their grammar omits
 - [Ars Contexta](./arscontexta.md) — sibling: both are compared against our theoretical position; arscontexta grounds in cognitive psychology where Thalo grounds in programming language theory, making them complementary reference points
 - [files-not-database](../files-not-database.md) — convergence: Thalo's "plain text is paramount" independently validates the filesystem-over-databases pattern

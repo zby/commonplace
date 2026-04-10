@@ -15,7 +15,7 @@ index_key: "{tag-name}"
 
 ## Decisions
 
-- [decision](../adr/decision.md) — why it matters here
+- [decision](../../reference/adr/decision.md) — why it matters here
 
 ## Related Tags
 

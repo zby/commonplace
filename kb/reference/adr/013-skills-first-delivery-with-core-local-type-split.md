@@ -107,7 +107,7 @@ The open follow-up remains review-system packaging: once the review system becom
 Relevant Notes:
 
 - [ADR-006: two-tree installation layout](./006-two-tree-installation-layout.md) — foundation: establishes `kb/` as user content and `commonplace/` as framework
-- [agent context is constrained by soft degradation](../agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: why Goals must be always-loaded (scoping degrades silently)
-- [agent statelessness makes routing architectural](../agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: every session is day one; skills are permanent prosthetics
-- [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — grounds: the `/write` skill is a distillation of the routing table and content workflow
+- [agent context is constrained by soft degradation](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: why Goals must be always-loaded (scoping degrades silently)
+- [agent statelessness makes routing architectural](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: every session is day one; skills are permanent prosthetics
+- [skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) — grounds: the `/write` skill is a distillation of the routing table and content workflow
 - [practitioner contract](../../work/system-documentation/practitioner-contract.md) — extends: the full framework-vs-practitioner boundary this ADR establishes

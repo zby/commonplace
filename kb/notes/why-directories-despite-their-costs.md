@@ -26,7 +26,7 @@ A task in `tasks/active/` has `type: task` defining its structure (Goal, Tasks c
 
 A `structured-claim` works identically whether it lives in `notes/`, `notes/related-systems/`, or `claw-design/`. The directory carries provenance or topic grouping; the type carries structural expectations.
 
-If types depended on directories, you'd need to redefine types whenever someone creates a new subdirectory. If directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. The [document classification](./document-classification.md) system should work across any directory structure. Validation, search, and linking operate on individual documents via frontmatter, not on directory conventions.
+If types depended on directories, you'd need to redefine types whenever someone creates a new subdirectory. If directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. The [document classification](../reference/type-system.md) system should work across any directory structure. Validation, search, and linking operate on individual documents via frontmatter, not on directory conventions.
 
 ## Operational costs of directories
 
@@ -60,5 +60,5 @@ Relevant Notes:
 
 - [files not database](./files-not-database.md) — the foundational bet that directories extend
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
-- [document classification](./document-classification.md) — the type system that operates independently of directory structure
+- [document classification](../reference/type-system.md) — the type system that operates independently of directory structure
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem

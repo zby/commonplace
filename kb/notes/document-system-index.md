@@ -30,7 +30,7 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Decisions
 
-- [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — inline note and structured-claim templates into WRITING.md, eliminating one hop for the two most common note types
+- [002-inline-global-types-in-writing-guide](../reference/adr/002-inline-global-types-in-writing-guide.md) — inline note and structured-claim templates into WRITING.md, eliminating one hop for the two most common note types
 
 ## Related Tags
 
@@ -41,7 +41,3 @@ How documents are classified, structured, and quality-checked. These notes defin
 
 ## Other tagged notes <!-- generated -->
 
-- [011-Notes must be accessible to external readers](./adr/011-notes-must-be-accessible-to-external-readers.md) — GitHub Pages commits the KB to external readers who lack CLAUDE.md context — KB vocabulary needs inline glosses and definition links on first mention
-- [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — Types define structural requirements checked by validation; frontmatter type identifies artifact kind; traits route semantic review gates; type definitions split into prose template and machine-readable schema
-- [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — Accepted decision to replace the custom type-profile DSL with authored JSON Schema over a parsed note document model
-- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — Accepted decision that specialized and practitioner-defined types use separate template and instructions files, while WRITING.md stays the generic always-loaded guide
