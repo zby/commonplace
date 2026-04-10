@@ -24,7 +24,7 @@ Keep these docs self-contained within the shipped surface. A consuming project s
 
 You do not operate the KB directly. You instruct an agent, and the agent operates the KB for you.
 
-The agent reads the shipped skills (`.claude/skills/commonplace-*/SKILL.md` or `.agents/skills/commonplace-*/SKILL.md`), reads [WRITING.md](../instructions/WRITING.md), and writes output under `kb/`.
+The agent reads the shipped skills (`.claude/skills/cp-skill-*/SKILL.md` or `.agents/skills/cp-skill-*/SKILL.md`), reads [WRITING.md](../instructions/WRITING.md), and writes output under `kb/`.
 
 The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
 
@@ -133,7 +133,7 @@ This guide assumes you have a running agent session (Claude Code, Codex, etc.) w
 
 - "Validate `kb/notes/foo.md`."
 - "Run validation across the whole KB and report any failures."
-- Or run `uv run commonplace-validate kb/notes/foo.md`.
+- Or run `uv run commonplace-validate-notes kb/notes/foo.md`.
 
 *What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
 
@@ -165,7 +165,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 | Command | Purpose |
 |---|---|
-| `uv run commonplace-validate <path>` | Run the deterministic validator on a note or directory |
+| `uv run commonplace-validate-notes <path>` | Run the deterministic validator on a note or directory |
 | `uv run commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
 | `uv run commonplace-generate-notes-index <dir>` | Rebuild an auto-generated index file |
 | `uv run commonplace-refresh-indexes` | Rebuild generated index sections across the KB |

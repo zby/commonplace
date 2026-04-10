@@ -47,7 +47,7 @@ Each split should land as its own small batch:
 4. Rewrite the original `kb/notes/` note so it reads cleanly without the extracted local detail.
 5. Add reciprocal links between the theory note and the reference note.
 6. Update any index or navigation pages that should now point at the reference note rather than the theory note.
-7. Run `commonplace-validate` after the split lands.
+7. Run `commonplace-validate-notes` after the split lands.
 
 The split should not be done by copying the note wholesale and trimming later. That tends to preserve mixed framing on both sides. The target is two clean documents with different jobs.
 
@@ -122,7 +122,7 @@ A split candidate is done when:
 - the theory note no longer makes path- or implementation-specific claims
 - the reference note is clearly current-state documentation
 - links and indexes are updated
-- `commonplace-validate` passes
+- `commonplace-validate-notes` passes
 
 ## Not part of this plan
 

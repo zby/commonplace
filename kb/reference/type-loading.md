@@ -7,7 +7,7 @@ status: current
 
 # Type loading
 
-How commonplace splits the shipped type system across a thin global layer and directory-scoped type directories. This note describes which types live where, how they load, and how `commonplace-validate` looks them up.
+How commonplace splits the shipped type system across a thin global layer and directory-scoped type directories. This note describes which types live where, how they load, and how `commonplace-validate-notes` looks them up.
 
 ## The two layers today
 
@@ -47,7 +47,7 @@ The `type:` field is authoritative for artifact identity, but the structural con
 
 ## How validation looks up definitions
 
-`commonplace-validate` resolves a note's type by reading the `type:` frontmatter and then finding the matching schema in the owning collection's `types/` directory. Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md), schemas are authored JSON Schema in YAML. Per [ADR-012](./adr/012-types-for-structure-traits-for-review.md), the validator reads these schemas rather than carrying a hard-coded type-profile map — adding a new type is an authoring step, not a code change.
+`commonplace-validate-notes` resolves a note's type by reading the `type:` frontmatter and then finding the matching schema in the owning collection's `types/` directory. Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md), schemas are authored JSON Schema in YAML. Per [ADR-012](./adr/012-types-for-structure-traits-for-review.md), the validator reads these schemas rather than carrying a hard-coded type-profile map — adding a new type is an authoring step, not a code change.
 
 Collection-scoped lookup means a type name is scoped by where the note lives. Bare type names stay unambiguous as long as no two collections define the same type name with incompatible structure; qualified canonical ids were considered and deferred.
 
