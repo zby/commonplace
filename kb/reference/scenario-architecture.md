@@ -34,7 +34,7 @@ There is no separate vendored `commonplace/` framework tree anymore. The agent's
 | Know how to write well | Writing conventions | `kb/instructions/WRITING.md` |
 | Know the structure | Global or collection-local type definitions | `kb/types/`, `kb/*/types/` |
 | Write the file | All of the above | `kb/notes/` or another collection |
-| Connect it to existing knowledge | Skill or manual linking workflow | promoted `commonplace-connect` skill plus indexes |
+| Connect it to existing knowledge | Skill or manual linking workflow | promoted `cp-skill-connect` skill plus indexes |
 
 The key architectural property is locality: the common write path does not require the agent to leave the installed tree.
 

@@ -69,7 +69,7 @@ This creates:
 - **KB directories** — `kb/notes/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
 - **Instructions** — `kb/instructions/` seeded with writing conventions, review system, review gates, and fix instructions
 - **Type definitions** — `kb/types/` with note and text types
-- **Skills** — `.claude/skills/commonplace-write/` and `.agents/skills/commonplace-write/`, plus the matching `commonplace-validate/`, `commonplace-connect/`, etc. The `commonplace-` prefix avoids collisions with your project's own skills.
+- **Skills** — `.claude/skills/cp-skill-write/` and `.agents/skills/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
 - **`.envrc`** — project-scoped environment (PATH, UV_CACHE_DIR, COMMONPLACE_QMD_INDEX), ready to use
 - **`qmd-collections.yml`** — qmd config with paths filled in, ready to copy to `~/.config/qmd/`
 - **`AGENTS.md.template`** — control-plane template with project name filled in
@@ -156,7 +156,7 @@ Build the index:
 qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
-Skills like `commonplace-connect` use `$COMMONPLACE_QMD_INDEX` automatically.
+Skills like `cp-skill-connect` use `$COMMONPLACE_QMD_INDEX` automatically.
 
 ## 6. Pre-approve commonplace CLI commands in Claude Code (optional)
 
@@ -183,10 +183,10 @@ my-project/
   .envrc
   .claude/
     skills/
-      commonplace-write/
-      commonplace-validate/
-      commonplace-connect/
-      commonplace-snapshot-web/
+      cp-skill-write/
+      cp-skill-validate/
+      cp-skill-connect/
+      cp-skill-snapshot-web/
       ...
   kb/
     types/

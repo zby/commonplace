@@ -1,5 +1,5 @@
 ---
-name: commonplace-write
+name: cp-skill-write
 description: Write a KB artifact using the default note workflow or a discovered type template. Routes by type, reads WRITING.md, searches first, and validates after writing. Use with an optional type and optional topic.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -29,7 +29,7 @@ Known built-in types:
 - `index`
 - `source-review`
 
-If a non-built-in type is requested, scan `kb/*/types/` for `{type}.md`. If no matching template exists, stop and report the available types.
+If a non-built-in type is requested, scan `kb/*/types/` for `{type}.template.md`. If no matching template exists, stop and report the available types.
 
 ## Procedure
 
@@ -49,13 +49,16 @@ Read `kb/instructions/WRITING.md` before drafting any frontmatter-based artifact
   - no frontmatter template
 - `index`:
   - destination: `kb/notes/`
-  - template source: `kb/notes/types/index.md`
+  - template source: `kb/notes/types/index.template.md`
+  - instructions source: `kb/notes/types/index.instructions.md`
 - `source-review`:
   - destination: `kb/sources/`
-  - template source: `kb/sources/types/source-review.md`
+  - template source: `kb/sources/types/source-review.template.md`
+  - instructions source: `kb/sources/types/source-review.instructions.md`
 - any other discovered type:
-  - read its template from `kb/*/types/{type}.md`
-  - infer the target collection from the template path and any explicit instructions inside it
+  - read its template from `kb/*/types/{type}.template.md`
+  - if present, also read `kb/*/types/{type}.instructions.md`
+  - infer the target collection from the template path and the companion instructions
 
 4. Draft the artifact.
 
@@ -73,10 +76,10 @@ Read `kb/instructions/WRITING.md` before drafting any frontmatter-based artifact
 Create the file in the routed destination directory. If a topic was provided but no final title is obvious, choose the narrowest title that reflects the actual claim or subject of the draft.
 
 6. Validate immediately.
-Run the `commonplace-validate` skill on the new file after writing. If validation finds structural issues, fix them before stopping.
+Run the `cp-skill-validate` skill on the new file after writing. If validation finds structural issues, fix them before stopping.
 
 7. Finish by prompting for connection work.
-Tell the user where the file was written and suggest running the `commonplace-connect` skill on the new file as the next step.
+Tell the user where the file was written and suggest running the `cp-skill-connect` skill on the new file as the next step.
 
 ## Critical Constraints
 

@@ -1,5 +1,5 @@
 ---
-name: commonplace-connect
+name: cp-skill-connect
 description: Discover connections for a single note. Saves a connection report to the active workshop and does not mutate KB files. Use with a note path or note name.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -38,7 +38,7 @@ mkdir -p kb/work/connect/
 **Execute these steps:**
 
 1. Read the target note fully — understand its claim and context
-2. **Check note type.** If the target has no frontmatter (a `text` file), run the `commonplace-convert` skill on it first to add frontmatter with `status: seedling`.
+2. **Check note type.** If the target has no frontmatter (a `text` file), run the `cp-skill-convert` skill on it first to add frontmatter with `status: seedling`.
 3. **Throughout discovery:** Capture actual query strings, scores, and which candidates you evaluated or rejected. This becomes the Discovery Trace.
 4. Run Phase 0 (sync search index)
 5. Run discovery: index scan → topic indexes → semantic search → keyword search → link following

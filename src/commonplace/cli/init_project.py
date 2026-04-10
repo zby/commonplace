@@ -49,7 +49,7 @@ PROMOTED_SKILLS = [
     "revise-iterative",
 ]
 
-SKILL_PREFIX = "commonplace-"
+SKILL_PREFIX = "cp-skill-"
 
 
 @dataclass

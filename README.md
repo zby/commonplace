@@ -61,19 +61,19 @@ src/commonplace/             Packaged operational engine
 
 ## Skills and instructions
 
-Framework skills live in `skills/`. `commonplace-init` installs the shipped skill set into both `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix. Plain KB procedures remain under `kb/instructions/` and load on demand. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
+Framework skills are sourced from `kb/instructions/` and promoted by `commonplace-init` into `.claude/skills/` and `.agents/skills/` with a `cp-skill-` prefix. The prefix keeps them distinct from both a project's own skills and the `commonplace-*` CLI commands. Plain KB procedures remain under `kb/instructions/` and load on demand. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 Framework skills:
 
 | Skill | Purpose |
 |---|---|
-| `commonplace-write` | Route and draft a note, index, or discovered specialized type |
-| `commonplace-validate` | Check frontmatter, descriptions, types, links, structure |
-| `commonplace-connect` | Find connections between notes, update indexes |
-| `commonplace-convert` | Convert notes between types (text → note → structured-claim) |
-| `commonplace-ingest` | Ingest external source: snapshot → connect → classify → analyse |
-| `commonplace-snapshot-web` | Capture a URL to `kb/sources/` |
-| `commonplace-revise-iterative` | Iteratively revise a note without changing its claims |
+| `cp-skill-write` | Route and draft a note, index, or discovered specialized type |
+| `cp-skill-validate` | Check frontmatter, descriptions, types, links, structure |
+| `cp-skill-connect` | Find connections between notes, update indexes |
+| `cp-skill-convert` | Convert notes between types (text → note → structured-claim) |
+| `cp-skill-ingest` | Ingest external source: snapshot → connect → classify → analyse |
+| `cp-skill-snapshot-web` | Capture a URL to `kb/sources/` |
+| `cp-skill-revise-iterative` | Iteratively revise a note without changing its claims |
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
 - `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
@@ -91,7 +91,7 @@ Search the KB, read matching notes, follow links to deepen understanding. Link s
 2. **Read `kb/instructions/WRITING.md`** — it's the authority on writing conventions and default templates, and includes templates for `note` and `structured-claim`. For most notes, this is all you need.
 3. **Read the directory type** — only if you're writing a specialized type (adr, index, related-system, or scenario in `test/scenarios/`). Skip this step for plain notes.
 4. **Write** the note
-5. **Connect** — link the new note from related notes and indexes. Use the `commonplace-connect` skill or do it manually. Don't skip this — an unconnected note is invisible to future search.
+5. **Connect** — link the new note from related notes and indexes. Use the `cp-skill-connect` skill or do it manually. Don't skip this — an unconnected note is invisible to future search.
 
 ## Usage
 
@@ -106,7 +106,7 @@ cd commonplace
 
 If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH`, `UV_CACHE_DIR`, and `COMMONPLACE_QMD_INDEX` for the project.
 
-Skills are installed into `.claude/skills/commonplace-*/` and `.agents/skills/commonplace-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+Skills are installed into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the commonplace methodology itself

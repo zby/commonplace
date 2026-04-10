@@ -1,5 +1,5 @@
 ---
-name: commonplace-ingest
+name: cp-skill-ingest
 description: Ingest a source into the knowledge base. Accepts a URL (GitHub, X/Twitter, or web page) or a path to an existing snapshot. URLs are snapshotted first, then the snapshot is classified, connected, and analysed. Saves the report as .ingest.md.
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -16,7 +16,7 @@ Parse the target to determine what to do:
 
 1. **No target** — list `kb/sources/` recent `.md` files (excluding .json, .ingest.md), then ask which to ingest.
 
-2. **URL** (starts with `http://` or `https://`) — invoke the `commonplace-snapshot-web` skill to capture it. The `commonplace-snapshot-web` skill handles all URL types (web pages, PDFs, GitHub, X/Twitter).
+2. **URL** (starts with `http://` or `https://`) — invoke the `cp-skill-snapshot-web` skill to capture it. The `cp-skill-snapshot-web` skill handles all URL types (web pages, PDFs, GitHub, X/Twitter).
 
    Parse the "Snapshot saved:" line from the output to get the file path. That becomes the input for Step 1.
 
@@ -26,9 +26,9 @@ Parse the target to determine what to do:
 
 ---
 
-## Step 1: Run the `commonplace-connect` skill on the snapshot
+## Step 1: Run the `cp-skill-connect` skill on the snapshot
 
-Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding with the `commonplace-connect` skill on that path.
+Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding with the `cp-skill-connect` skill on that path.
 
 This creates a workshop at `kb/work/connect/<name>/` and saves the connection report there.
 
@@ -39,7 +39,7 @@ The report contains:
 - Index membership recommendations
 - Synthesis opportunities and flags
 
-Wait for the `commonplace-connect` skill to complete before proceeding.
+Wait for the `cp-skill-connect` skill to complete before proceeding.
 
 ## Step 2: Read Connection Report
 
@@ -77,7 +77,7 @@ contribution? Write for someone deciding whether to read the full source.
 
 ### 3.3 Connections Found
 
-Summarise what the `commonplace-connect` skill discovered. Which existing notes does this source
+Summarise what the `cp-skill-connect` skill discovered. Which existing notes does this source
 connect to, and how? Include the relationship types and the key insight about
 how this source fits (or doesn't) into our existing knowledge graph.
 
@@ -221,10 +221,10 @@ Tell the user where the report was saved and what the recommended action is.
 - Write any files other than `.ingest.md`
 - Modify any files in kb/notes/ — that happens in later steps if the human decides to proceed
 - Hallucinate connections — if the source isn't relevant, say so
-- Skip running the `commonplace-connect` skill — the connections are the foundation of the analysis
+- Skip running the `cp-skill-connect` skill — the connections are the foundation of the analysis
 
 **always:**
-- Run the `commonplace-connect` skill before doing classification or value extraction
+- Run the `cp-skill-connect` skill before doing classification or value extraction
 - Base extractable value on what's NEW relative to connections found
 - Be specific in the recommended action
 - Include effort tags on extractable value items

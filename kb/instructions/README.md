@@ -11,8 +11,8 @@ It contains two kinds of artifacts:
 
 Promoted skills are **not executed from `kb/instructions/`**. `commonplace-init` copies selected instruction directories into:
 
-- `.claude/skills/commonplace-<name>/`
-- `.agents/skills/commonplace-<name>/`
+- `.claude/skills/cp-skill-<name>/`
+- `.agents/skills/cp-skill-<name>/`
 
 The copies keep the same file contents, but the runtime path is different. That means promoted skills must not rely on their own on-disk location being `kb/instructions/<name>/`.
 

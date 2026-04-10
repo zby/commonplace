@@ -20,4 +20,4 @@ Always valid. No checks apply.
 
 ## Promotion
 
-`text` → [note](./note.md): add frontmatter with at least a `description` field. Use `/commonplace-convert` or do it manually.
+`text` → [note](./note.md): add frontmatter with at least a `description` field. Use `/cp-skill-convert` or do it manually.

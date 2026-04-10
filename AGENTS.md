@@ -86,17 +86,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-| Task | Commonplace skill |
-|---|---|
-| Write a note or index | `commonplace-write` |
-| Connect a note to related notes | `commonplace-connect` |
-| Validate note structure | `commonplace-validate` |
-| Snapshot an external URL | `commonplace-snapshot-web` |
-| Ingest and analyze a source | `commonplace-ingest` |
-| Convert between note types | `commonplace-convert` |
-| Iteratively revise a note | `commonplace-revise-iterative` |
-
-These skills are installed into both `.claude/skills/` and `.agents/skills/` by `commonplace-init`.
+`commonplace-init` installs the `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) into `.claude/skills/` and `.agents/skills/`. The harness loads them automatically.
 
 ### Commands
 

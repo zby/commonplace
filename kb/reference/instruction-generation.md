@@ -56,10 +56,10 @@ The two template sources live in different package subdirectories (`scaffold/` f
 
 In addition to copying the instructions tree, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `ingest`, `snapshot-web`, `revise-iterative`) into runtime discovery directories for multiple harnesses:
 
-- `.claude/skills/commonplace-<skill>/`
-- `.agents/skills/commonplace-<skill>/`
+- `.claude/skills/cp-skill-<skill>/`
+- `.agents/skills/cp-skill-<skill>/`
 
-The promotion is a recursive file copy, not a symlink. Each destination gets an independent copy with the `commonplace-` prefix applied to the skill name. This keeps skill discovery working in each runtime without relying on a shared live directory.
+The promotion is a recursive file copy, not a symlink. Each destination gets an independent copy with the `cp-skill-` prefix applied to the skill name. This keeps skill discovery working in each runtime without relying on a shared live directory.
 
 ## Re-running init
 

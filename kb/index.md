@@ -26,7 +26,7 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 Commonplace is open source. You can use it in two ways:
 
-**Clone and explore.** The repo is a functioning knowledge base out of the box. Add notes alongside the existing ones, run the agent skills (`/commonplace-connect`, `/commonplace-validate`, `/commonplace-ingest`), and build on the theory. This is also the right mode for evaluating the system before installing it elsewhere.
+**Clone and explore.** The repo is a functioning knowledge base out of the box. Add notes alongside the existing ones, run the agent skills (`/cp-skill-connect`, `/cp-skill-validate`, `/cp-skill-ingest`), and build on the theory. This is also the right mode for evaluating the system before installing it elsewhere.
 
 **Install into your own project as a theory builder for your domain.** Commonplace can be added to any project as a submodule or cloned subdirectory. It provides the type system, writing conventions, agent skills, and methodology — your agents accumulate domain knowledge and build explanatory structure instead of starting every session cold. See the [installation guide](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup instructions and the [installation architecture](./notes/commonplace-installation-architecture.md) for design rationale.
 

@@ -1,5 +1,5 @@
 ---
-name: commonplace-convert
+name: cp-skill-convert
 description: Convert notes between types. Currently supports text to note by adding frontmatter with status seedling, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
 user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
@@ -52,15 +52,15 @@ status: seedling
 **Rules:**
 - `status` is always `seedling` — conversion structures the note but does not endorse it. Human review flips to `current`.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
-- `traits` is always `[]` — trait assignment is semantic work, done later by the `commonplace-validate` skill or human review.
-- `tags` is always `[]` — tag assignment is semantic work, done later by the `commonplace-connect` skill or human review.
+- `traits` is always `[]` — trait assignment is semantic work, done later by the `cp-skill-validate` skill or human review.
+- `tags` is always `[]` — tag assignment is semantic work, done later by the `cp-skill-connect` skill or human review.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.
 
 #### Step 3a: Rename the file
 
 After adding frontmatter, check whether the filename matches the `# Title` heading.
 
-The filename should match the title — whether the title itself is good is a semantic question for the `commonplace-validate` skill.
+The filename should match the title — whether the title itself is good is a semantic question for the `cp-skill-validate` skill.
 
 **Decide whether to rename:**
 - If the current filename is already a good slug of the `# Title` — keep it
@@ -96,8 +96,8 @@ description: [the description you wrote]
 areas: [list or empty]
 
 Next steps:
-- Run the `commonplace-connect` skill on `new-filename.md` — find connections
-- Run the `commonplace-validate` skill on `new-filename.md` — check quality
+- Run the `cp-skill-connect` skill on `new-filename.md` — find connections
+- Run the `cp-skill-validate` skill on `new-filename.md` — check quality
 - Review and set status: current when endorsed
 ===
 ```
@@ -133,7 +133,7 @@ Sections added: Evidence, Reasoning, Caveats
 description: [unchanged]
 
 Next steps:
-- Run the `commonplace-validate` skill on `filename.md` — check quality
+- Run the `cp-skill-validate` skill on `filename.md` — check quality
 - Review and set status: current when endorsed
 ===
 ```

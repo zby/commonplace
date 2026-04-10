@@ -59,10 +59,10 @@ def test_init_project_installs_skills_with_prefix(tmp_path: Path) -> None:
         tmp_path / ".agents" / "skills",
     ):
         assert skills_dir.is_dir()
-        assert (skills_dir / "commonplace-write" / "SKILL.md").is_file()
-        assert (skills_dir / "commonplace-validate" / "SKILL.md").is_file()
-        assert (skills_dir / "commonplace-snapshot-web" / "SKILL.md").is_file()
-        assert (skills_dir / "commonplace-connect" / "SKILL.md").is_file()
+        assert (skills_dir / "cp-skill-write" / "SKILL.md").is_file()
+        assert (skills_dir / "cp-skill-validate" / "SKILL.md").is_file()
+        assert (skills_dir / "cp-skill-snapshot-web" / "SKILL.md").is_file()
+        assert (skills_dir / "cp-skill-connect" / "SKILL.md").is_file()
         # No unprefixed directories
         assert not (skills_dir / "write").exists()
 
