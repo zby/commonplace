@@ -12,7 +12,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [review-library-extraction/](./review-library-extraction/) — splitting the `commonplace.review` package into a library layer plus thin CLI wrappers; companion to validate-notes-redesign at 14-module scale
 - [trace-derived-systems-review/](./trace-derived-systems-review/) — review queue and execution packets for the next wave of trace-derived learning systems surfaced from web search
 - [tool-loop-control/](./tool-loop-control/) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
-- [code-simplification/](./code-simplification/) — analyzing which bespoke parsing and command-local helpers can now be deleted because Commonplace is a real Python package
 - [type-system-rationalization/](./type-system-rationalization/) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
 - [obsidian-affordances/](./obsidian-affordances/) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split

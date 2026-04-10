@@ -1,5 +1,5 @@
 ---
-description: Commonplace's current type loading mechanism — global base types in `kb/types/`, directory-scoped types in `kb/*/types/`, WRITING.md inlining, and how validation discovers definitions
+description: Commonplace's shipped type loading mechanism — global base types in `kb/types/`, directory-scoped types in `kb/*/types/`, WRITING.md inlining, and how validation discovers definitions
 type: note
 tags: [type-system]
 status: current
@@ -7,7 +7,7 @@ status: current
 
 # Type loading
 
-How commonplace currently splits the type system across a thin global layer and directory-scoped type directories. This is a current-state description of which types live where, how they load, and how `commonplace-validate` looks them up. For the general argument that directory-scoped types are cheaper than global types, see [directory-scoped types are cheaper than global types](../notes/directory-scoped-types-are-cheaper-than-global-types.md).
+How commonplace splits the shipped type system across a thin global layer and directory-scoped type directories. This note describes which types live where, how they load, and how `commonplace-validate` looks them up.
 
 ## The two layers today
 
@@ -67,10 +67,9 @@ Every other specialised type stays in its collection's `types/` directory and lo
 
 Relevant Notes:
 
-- [directory-scoped types are cheaper than global types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) — theory: the general economic argument for thin global types and directory-local specialisations
-- [type-system](./type-system.md) — current-state: the full type inventory and classification this note complements with loading-mechanism detail
+- [type-system](./type-system.md) — the full type inventory and classification this note complements with loading-mechanism detail
 - [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — decision: inlining `note` into WRITING.md
 - [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: types define structural requirements; directory-local `types/` scope definition lookup
 - [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: JSON Schema in YAML as the authoring form for type definitions
 - [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — decision: specialised types use template + instructions files, with WRITING.md as the generic always-loaded guide
-- [architecture](./architecture.md) — current-state: where the type loading mechanism sits inside the broader repo layout
+- [architecture](./architecture.md) — shipped architecture: where the type loading mechanism sits inside the installed surface

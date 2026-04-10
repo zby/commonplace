@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-Commonplace previously defined note types through a custom YAML mini-language in `types/*.yaml` and collection-local `types/*.yaml` files. That language was parsed and resolved by repo-local code in [`src/commonplace/lib/type_resolver.py`](../../../src/commonplace/lib/type_resolver.py).
+Commonplace previously defined note types through a custom YAML mini-language in `types/*.yaml` and collection-local `types/*.yaml` files. That language was parsed and resolved by package-local type-resolution code.
 
 This approach worked while the type layer was very small, but it left Commonplace owning:
 

@@ -65,12 +65,10 @@ This keeps the common-case write path entirely within `kb/` (route from always-l
 
 The naming choice `kb/` over `memory/` avoids collision with Claude Code's per-user auto-memory directory at `~/.claude/projects/<project>/memory/`. The two serve different purposes (shared project knowledge vs personal preferences), and using the same name would create ambiguity.
 
-The full installation procedure is in [INSTALL.md](../../../INSTALL.md).
+The historical installation procedure lived outside the shipped KB surface. This ADR is retained as superseded design history, not current setup guidance.
 
 ---
 
 Relevant Notes:
 
-- [skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) — foundation: why methodology must remain accessible — distillation is lossy, and the agent needs the full reasoning for edge cases
-- [agent statelessness makes routing architectural](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — foundation: methodology is permanent infrastructure the agent returns to, not a learning aid it graduates from
-- [directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — enables: the per-collection types/ directories implement the directory-scoped types proposal
+- [014-scripts-as-python-package-one-tree-model](./014-scripts-as-python-package-one-tree-model.md) — the accepted decision that superseded this layout

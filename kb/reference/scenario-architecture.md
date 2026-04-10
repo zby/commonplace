@@ -1,5 +1,5 @@
 ---
-description: Commonplace's current scenario-derived architecture — the two-tree split between this repo and installed projects, the escalation path to `commonplace/kb/`, the CLAUDE.md fragment contract, and the test/scenarios measurement surface
+description: Scenario-derived shipped architecture — one-tree installed KB, package-provided commands, promoted skills, and a measurable scenario decomposition
 type: note
 tags: [architecture]
 status: current
@@ -7,88 +7,73 @@ status: current
 
 # Scenario architecture
 
-How commonplace currently instantiates scenario-derived architecture. This is a current-state description of the two-tree split between the commonplace repo and installed projects, the escalation path, the CLAUDE.md fragment that makes it discoverable, and the measurement surface under `test/scenarios/`. For the general method of deriving architecture from scenario decomposition, see [scenario decomposition drives architecture](../notes/scenario-decomposition-drives-architecture.md).
+How commonplace instantiates scenario-derived architecture in the shipped system. This note describes the installed one-tree KB surface, the command-and-skill split that supports it, and the measurable scenario decomposition that explains those choices.
 
-## Two operating contexts
+## The shipped operating context
 
-**Commonplace repo.** This repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. The `kb/` directory contains methodology notes, source reviews, type definitions, and reference documentation. There's no separate `commonplace/` directory because this *is* commonplace. When an agent writes a note here, it writes about KB design, and the related notes it finds are other methodology notes. One tree, no escalation needed.
+An installed project has one KB tree under `kb/`, plus two supporting runtime surfaces:
 
-**Installed project.** When a project adopts commonplace, `commonplace-init` creates `kb/` (the practitioner's content) and a clone or submodule of the commonplace repo sits at `commonplace/` (the framework source). Operational artifacts — types, `WRITING.md`, skills — are copied into the project so the agent's normal workflow stays within one tree. Skills are promoted into `.claude/skills/` and `.agents/skills/`. In normal operation, the agent should not need to consult `commonplace/` at all — everything it needs is [distilled](../notes/skills-derive-from-methodology-through-distillation.md) into skills and the `AGENTS.md` fragment. When the agent hits a case the distilled procedures don't cover, it escalates to `commonplace/kb/notes/` for the full reasoning.
+- `commonplace-*` commands provided by the installed Python package
+- promoted framework skills under `.claude/skills/` and `.agents/skills/`
 
-The same user stories play out in both contexts. What differs is where context lives and whether escalation is possible.
+There is no separate vendored `commonplace/` framework tree anymore. The agent's normal path stays inside the project:
 
-## Write a note — decomposed against the current layout
+- route from `AGENTS.md`
+- read `kb/instructions/WRITING.md`
+- load the relevant type definition from `kb/types/` or `kb/*/types/`
+- write into `kb/`
+- invoke a promoted skill or CLI command when the workflow needs one
 
-### Common path (both contexts)
+## Write a note, decomposed against the shipped layout
 
-| Step | Context needed | Where it lives today | How the agent knows |
-|------|---------------|----------------------|---------------------|
-| Route to correct location | Routing table | `AGENTS.md` `## Using the KB` | Always loaded |
-| Find related notes | Search capability + good descriptions | Notes with frontmatter in `kb/notes/` | `AGENTS.md` search patterns, qmd index |
-| Read related notes | The notes themselves | `kb/notes/` | Search results |
-| Know the structure | Type definition | `kb/types/note.md` (inlined into WRITING.md) or `kb/*/types/` | `AGENTS.md` routing or WRITING.md reference |
-| Know how to write well | Writing conventions | `kb/instructions/WRITING.md` | `AGENTS.md` routing |
-| Write the file | All of the above in context | — | — |
-| Connect to existing knowledge | `commonplace-connect` skill + indexes | Skill body + `kb/notes/tags-index.md` and subordinates | Skill description (always loaded) |
+| Step | Context needed | Where it lives |
+|------|---------------|----------------|
+| Route to the correct location | Routing table | `AGENTS.md` |
+| Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals` |
+| Find related notes | Searchable note library | `kb/notes/` |
+| Know how to write well | Writing conventions | `kb/instructions/WRITING.md` |
+| Know the structure | Global or collection-local type definitions | `kb/types/`, `kb/*/types/` |
+| Write the file | All of the above | `kb/notes/` or another collection |
+| Connect it to existing knowledge | Skill or manual linking workflow | promoted `commonplace-connect` skill plus indexes |
 
-In commonplace, types and WRITING.md are the originals. In an installed project, they're copies produced by `commonplace-init`. The agent doesn't know or care — the paths are the same.
+The key architectural property is locality: the common write path does not require the agent to leave the installed tree.
 
-### The escalation path (installed projects only)
+## When the common path is not enough
 
-At the "know how to write well" step, the agent may hit a judgment call the distilled procedures don't cover — for example, recognising whether a document should use a claim title or a topical one. In that case it escalates:
+The shipped system still needs a place for deeper explanation, but that explanation now lives inside the same KB surface rather than in a separate framework checkout:
 
-| Escalation step | Context needed | Where it lives |
-|----------------|---------------|----------------|
-| Recognize the gap | Awareness that methodology exists | `AGENTS.md` fragment: "for why things work this way, search `commonplace/kb/`" |
-| Search methodology | Full reasoning behind the convention | `commonplace/kb/notes/` |
-| Read source reasoning | e.g. `title-as-claim-enables-traversal-as-reasoning.md` | `commonplace/kb/notes/` |
-| Apply judgment | The reasoning, now loaded, informs the decision | Already in context |
-| Return to common path | Continue with the write | Back in `kb/` |
+- `kb/reference/` explains how the shipped system works
+- `kb/reference/adr/` records why major architectural choices were made
+- project-local notes can extend that explanation when the shipped docs are not enough
 
-The escalation adds 2–3 hops to a different tree. It's expensive but rare — most writes don't hit the edge cases that require full methodology reasoning.
+That is the important reversal from the old two-tree design: explanatory material is part of the installed surface, not an external escalation target.
 
-**In commonplace, this escalation doesn't exist.** The methodology notes *are* the content the agent is searching in the "find related notes" step. When the agent writes a note about title-as-claim conventions, it naturally encounters the full reasoning because that reasoning lives in the same `kb/notes/` it's already reading. The one-tree design means there's no gap between operational instructions and their justification.
+## The control-plane contract
 
-## The AGENTS.md fragment contract
+`AGENTS.md` is still the always-loaded routing layer that makes the scenario executable. It carries:
 
-In installed projects, the `AGENTS.md` fragment that `commonplace-init` scaffolds is the single piece of always-loaded context that makes both the common path and the escalation path discoverable. It contains:
+- the KB goals that decide inclusion
+- the routing table for collections
+- the search hints for finding prior knowledge
+- the skill and command affordances the agent can invoke
 
-- The routing table (`## Using the KB`) — tells the agent where things go
-- Search patterns (`rg` examples) — tells the agent how to find things
-- An escalation hint — tells the agent that `commonplace/kb/` exists and when to consult it
-- The `## KB Goals` section (filled in by the practitioner) — tells the agent what belongs here
+Because this file is always loaded, it anchors the scenario decomposition: the agent knows where to start before it has opened any other artifact.
 
-The fragment is always loaded, so the agent always knows the escalation path exists. No other mechanism is needed — provenance links in skills would be redundant with what the fragment already provides, and harder to maintain.
+## Measurement surface
 
-## Measurable artifacts
+The decomposition can be represented as scenario files that name the source artifacts each step depends on and let evaluation tooling measure instruction bytes against the current files.
 
-The decomposition above is implemented as structured scenario files under `test/scenarios/` (for example `test/scenarios/write-a-note.md`). Each scenario file references actual source files by path, stores hop counts per step, and distinguishes fixed costs (always the same) from variable costs (depend on KB content). The `/evaluate-scenarios` skill reads these files, measures instruction bytes from the referenced sources, and produces a cost table — turning the architectural claims into verifiable measurements.
+This gives the architecture a falsifiable surface:
 
-The key design: hops are stored in the scenario files (they're architectural, determined by the step structure), but instruction bytes are NOT stored — they're calculated dynamically by reading the actual source files. When the architecture changes (for example, inlining a type into WRITING.md), the evaluation re-runs against the current files without editing the scenario files.
-
-## Current gaps
-
-**End-to-end orchestration.** Most scenarios are multi-step chains. The chain sometimes breaks at the transition from primary task to connection step.
-
-**The post-write connection gap.** Connecting new documents to existing knowledge is the final step in write and ingest scenarios — and the one most often dropped. It's modelled as a separate skill invocation (`commonplace-connect`) rather than an integral part of the write flow.
-
-**Escalation discoverability in installed projects.** The fragment tells the agent *that* `commonplace/kb/` exists, but the agent still has to recognise it's in an edge case. No amount of routing can guarantee that recognition — this is a soft failure mode.
-
-**Scenario awareness in skills.** The current skill set (`write`, `validate`, `connect`, `convert`, `ingest`, `snapshot-web`, `revise-iterative`) is operation-oriented rather than scenario-oriented. The agent composes them into workflows. Scenario-level orchestration could reduce this burden, but trades composability for convenience.
-
-## Open questions
-
-- Should connection be a step within the write/ingest workflow rather than a separate skill invocation? What's the mechanism — a skill that orchestrates the full scenario, or `AGENTS.md` instructions that remind the agent to connect after writing?
-- How specific should the fragment's escalation hints be? A blanket "for deeper reasoning, search `commonplace/kb/`" may be too vague. Per-topic hints (e.g., pointing at a specific ADR) are more precise but harder to maintain.
-- Orchestration quality (did the agent complete the full chain correctly?) remains unmeasured. Hop counts and byte budgets are tractable via `/evaluate-scenarios`; end-to-end correctness is not.
+- hop structure is encoded in the scenario description
+- instruction bytes are measured dynamically from the real files
+- architecture changes can be re-evaluated without rewriting the measurement method
 
 ---
 
 Relevant Notes:
 
-- [scenario-decomposition-drives-architecture](../notes/scenario-decomposition-drives-architecture.md) — theory: the general method of decomposing user stories into step-by-step context needs and deriving architectural requirements from the pattern
-- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the two-tree split between commonplace and installed projects that this architecture instantiates
-- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: `commonplace-init` as the install entry point and the one-tree model for operational artifacts
-- [architecture](./architecture.md) — current-state: the broader repo layout this scenario architecture sits inside
-- [control-plane-goals](./control-plane-goals.md) — current-state: how the `AGENTS.md` fragment carries the `## KB Goals` section that scenario decomposition depends on
-- [instruction-generation](./instruction-generation.md) — current-state: how `commonplace-init` produces the fragment and the rest of the installed tree
+- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: the one-tree shipped model this scenario note describes
+- [architecture](./architecture.md) — the broader shipped architecture this scenario view decomposes
+- [control-plane-goals](./control-plane-goals.md) — how the always-loaded control plane carries the inclusion and routing context the scenario depends on
+- [instruction-generation](./instruction-generation.md) — how `commonplace-init` materialises the files this scenario consumes

@@ -1,5 +1,5 @@
 ---
-description: Commonplace's current storage architecture — markdown files as source of truth, qmd and generated listings as derived indexes, SQLite as a scoped exception for review-state operational data
+description: Commonplace's shipped storage architecture — markdown files as source of truth, qmd and generated listings as derived indexes, SQLite as a scoped exception for review-state operational data
 type: note
 tags: [architecture]
 status: current
@@ -7,14 +7,14 @@ status: current
 
 # Storage architecture
 
-Commonplace's storage boundary as it exists today. This is a current-state description: what is file-backed, what is a derived index, and which subsystem crosses into SQLite and why. For the general argument that files beat a database for agent-operated knowledge bases, see [files-not-database](../notes/files-not-database.md).
+Commonplace's storage boundary in the shipped system. This note describes what is file-backed, what is a derived index, and which subsystem crosses into SQLite and why.
 
 ## Primary substrate: markdown files under git
 
 All authored library content lives as markdown under `kb/`:
 
 - `kb/notes/` — transferable claims and theory
-- `kb/reference/` — current-state descriptions of the commonplace system and ADR decision history (this collection)
+- `kb/reference/` — shipped-system reference docs and ADR decision history
 - `kb/sources/` — ingested external sources
 - `kb/tasks/` — task lifecycle documents
 - `kb/work/` — workshop artifacts
@@ -50,7 +50,6 @@ The boundary: **files remain the right default for authored knowledge under git.
 
 Relevant Notes:
 
-- [files-not-database](../notes/files-not-database.md) — theory: the general argument that files beat a database early, and why a scoped database exception does not refute the files-first position
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — decision: the full rationale and consequences of the SQLite boundary for review state
 - [007-reports-directory-for-generated-snapshots](./adr/007-reports-directory-for-generated-snapshots.md) — related: the move of review artifacts to `kb/reports/` preceded and enabled the SQLite transition
-- [architecture](./architecture.md) — current-state: how the storage substrate sits inside the broader repo layout
+- [architecture](./architecture.md) — shipped architecture: how the storage substrate sits inside the installed surface

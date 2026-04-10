@@ -17,9 +17,9 @@ When writing a note, the agent needs two things: the type template (what section
 - Type templates in `kb/types/note.template.md` and `kb/notes/types/structured-claim.template.md`
 - Writing conventions in `kb/instructions/WRITING.md`
 
-The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Since [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md), it points to WRITING.md for writing guidance — but WRITING.md then pointed elsewhere for the actual templates. Two hops for every write.
+The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Because instruction specificity should match loading frequency, WRITING.md handled writing guidance — but then pointed elsewhere for the actual templates. Two hops for every write.
 
-The [scenario decomposition](../../notes/scenario-decomposition-drives-architecture.md) confirmed this: the "know the structure" and "know how to write well" steps are adjacent in every write scenario. They always load together. Separating them costs a hop with no benefit.
+Scenario decomposition confirmed this: the "know the structure" and "know how to write well" steps are adjacent in every write scenario. They always load together. Separating them costs a hop with no benefit.
 
 The two global types — `note` and `structured-claim` — account for ~80% of note creation. The remaining types (`adr`, `index`, `related-system`) are directory-local and used less frequently.
 
@@ -33,7 +33,7 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 **Easier:**
 - The common write path drops from 2 hops to 1 at the "know the structure" step. The agent reads WRITING.md and has both conventions and the template for `note` or `structured-claim`.
-- The scenario cost evaluation (`test/scenarios/write-a-note.md`) confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
+- Scenario cost evaluation confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
 
 **Harder:**
 - Two sources of truth for the global type templates. If the template changes in `kb/types/note.md`, it must also change in `kb/instructions/WRITING.md`. This is a maintenance burden, but the templates are stable — they change rarely.
@@ -47,5 +47,5 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 Relevant Notes:
 
-- [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy principle (match instruction specificity to loading frequency) motivates combining two always-together loads into one
-- [scenario-decomposition-drives-architecture](../../notes/scenario-decomposition-drives-architecture.md) — grounds: the step decomposition shows "know the structure" and "know how to write well" are adjacent in every write scenario, confirming they belong in the same file
+- [type-loading](../type-loading.md) — shows the resulting inlining exception in the shipped type-loading model
+- [scenario-architecture](../scenario-architecture.md) — the scenario view that makes the shared load path visible

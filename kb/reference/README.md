@@ -1,19 +1,187 @@
 # Reference
 
-Current-state documentation for the commonplace system.
+Reference documentation for the system commonplace ships, including how to operate it once installed.
 
-Use this collection when the question is not "is this generally true?" but "how does commonplace work today?" It holds subsystem descriptions, current architecture notes, and architecture decision records for the live repo.
+Use this collection when the question is not "is this generally true?" but "how does the shipped commonplace system work?" It holds subsystem descriptions, operator-facing usage guidance, and architecture decision records for the installable framework surface.
+
+Use [WRITING.md](../instructions/WRITING.md) alongside this collection for day-to-day authoring conventions.
 
 ## Start here
 
-- [architecture.md](./architecture.md) — current repo layout, installed-project boundary, and where the operational surface lives now
+- [architecture.md](./architecture.md) — shipped architecture: installed KB surface, promoted skills, and the framework/content boundary
 - [type-system.md](./type-system.md) — current document taxonomy, base types, and the old-to-new type migration summary
-- [ADR 006: two-tree installation layout](./adr/006-two-tree-installation-layout.md) — the installed-project boundary and why commonplace ships the way it does
+- [ADR 014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision behind the current shipped surface
 
 ## Collection boundary
 
 - Use `kb/notes/` for transferable claims and theory.
-- Use `kb/reference/` for current-state descriptions and decision history.
-- Use `kb/instructions/` for imperative procedures and operator guidance.
+- Use `kb/reference/` for shipped-system documentation, operator guidance, and decision history.
+- Use `kb/instructions/` for imperative procedures and operator-facing process details.
 
-If a reference note names a general principle, it should link back to the theory note in `kb/notes/` that argues for it. If a theory note depends on a concrete commonplace implementation, it should link here.
+Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the commonplace source repository or methodology library.
+
+## Mental model
+
+You do not operate the KB directly. You instruct an agent, and the agent operates the KB for you.
+
+The agent reads the shipped skills (`.claude/skills/commonplace-*/SKILL.md` or `.agents/skills/commonplace-*/SKILL.md`), reads [WRITING.md](../instructions/WRITING.md), and writes output under `kb/`.
+
+The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
+
+This guide assumes you have a running agent session (Claude Code, Codex, etc.) with commonplace's skills in its discovery path. If `commonplace-init` has run and `.claude/skills/` or `.agents/skills/` exists, you're ready.
+
+## Core operations
+
+### Add a note
+
+*What it's for.* Capture an insight, decision, or observation as a structured artifact in the KB.
+
+*How to ask.*
+
+- "Write a note arguing that rate limits should be applied per-tenant rather than per-endpoint. Connect it to existing notes on rate limiting."
+- "I just realized our retry logic is swallowing errors. Write that up."
+- "Capture the decision we just made about moving auth to a sidecar."
+
+*What happens.* The agent searches the KB for related notes, picks a type, reads the writing conventions, drafts the file under `kb/notes/`, and connects it to related notes and indexes.
+
+*What you get.* A new markdown file under `kb/notes/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
+
+*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals` section in `AGENTS.md`. The `Exclude` subsection is load-bearing; without it, scope creeps.
+
+### Ingest a source
+
+*What it's for.* Pull an external source (URL, PDF, GitHub issue, tweet) into the KB as a snapshot plus an analysis.
+
+*How to ask.*
+
+- "Ingest https://example.com/some-article and connect it to our notes on context engineering."
+- "Read this PDF and ingest the key claims."
+- "Ingest the README at github.com/org/project as a related system."
+
+*What happens.* The agent snapshots the source into `kb/sources/`, reads the snapshot, classifies it, finds related notes, and writes an analysis report. Related-system work uses the dedicated `review-related-system` skill instead.
+
+*What you get.* A snapshot under `kb/sources/` and an ingest report named `<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
+
+*Limitations.* Paywalled or JavaScript-heavy pages can snapshot incompletely. Classification into "related system" versus "source" is sometimes a judgment call.
+
+### Search and navigate
+
+*What it's for.* Find notes relevant to a question without reading the whole KB.
+
+*How to ask.*
+
+- "Find notes about how we decided to validate schemas."
+- "What do we have on retry backoff strategies?"
+- "Is there anything in the KB about the tradeoff between X and Y?"
+
+*What happens.* The agent combines frontmatter search, structured ripgrep over note bodies, and optional qmd semantic search. It filters by descriptions first, then loads only the notes that look relevant.
+
+*What you get.* A short list of notes with justifications, usually followed by a synthesised answer that cites them inline.
+
+*Limitations.* Search quality depends heavily on frontmatter descriptions. qmd is optional but materially improves vocabulary-mismatched queries.
+
+### Connect an existing note
+
+*What it's for.* Discover relationships between a note and the rest of the KB, and wire them up.
+
+*How to ask.*
+
+- "Connect `kb/notes/my-new-note.md` to related notes."
+- "I just wrote a note on X. Find what it should link to."
+
+*What happens.* The agent searches for candidates by tag, description, keywords, and semantic similarity, evaluates the relationship label, and edits notes or produces a connection report.
+
+*What you get.* Updated "Relevant Notes" sections on the target and its neighbours, plus any required index updates.
+
+*Limitations.* Relationship labels are judgment calls and sometimes need correction. Connection is often underdone at write time, so running connect explicitly on new notes is a reasonable habit.
+
+### Convert between types
+
+*What it's for.* Promote a rough capture to a more structured form as understanding matures.
+
+*How to ask.*
+
+- "Convert `kb/notes/scratch.md` from text to a note."
+- "This note has enough argument behind it now. Promote it to a structured-claim."
+
+*What happens.* The agent adds frontmatter, renames the file to match the title where needed, or adds required structural sections such as Evidence and Reasoning.
+
+*What you get.* The same note at a higher point on the type ladder, with the required structure filled in or drafted from the existing prose.
+
+*Limitations.* Demotion is not supported, and converting weak content into a stronger type does not create rigor by itself.
+
+### Revise a note
+
+*What it's for.* Improve the prose of an existing note without changing its claims.
+
+*How to ask.*
+
+- "Revise `kb/notes/foo.md` for flow and clarity. Don't change what it argues."
+- "This note feels redundant in the middle section. Tighten it."
+
+*What happens.* The agent makes a revision pass, writes the result to a numbered copy, and asks you to compare before applying.
+
+*What you get.* A revised version for review and, after approval, an updated original.
+
+*Limitations.* Iterative revision can drift semantically over many passes. Keep passes short and verify that the claims survived.
+
+### Validate the KB
+
+*What it's for.* Check that notes have well-formed frontmatter, required fields, resolvable links, and valid type-specific structure. This is deterministic and does not call an LLM.
+
+*How to ask.*
+
+- "Validate `kb/notes/foo.md`."
+- "Run validation across the whole KB and report any failures."
+- Or run `uv run commonplace-validate kb/notes/foo.md`.
+
+*What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
+
+*What you get.* A pass/fail report per note with `FAIL`, `WARN`, and `INFO` lines.
+
+*Limitations.* Validation is structural only. Vacuous descriptions or weak claims are review problems, not validator problems.
+
+### Review notes
+
+*What it's for.* Run semantic-quality gates against notes and either accept or fix what the gates flag.
+
+*How to ask.*
+
+- "Review `kb/notes/foo.md` with the prose bundle."
+- "Run the semantic review sweep over anything I've changed recently."
+- "Ack the trivial changes in the review queue."
+
+*What happens.* The review system stores state in SQLite, runs one or more gates, writes per-gate reviews, and records acceptance events once all gates report.
+
+*What you get.* Per-gate `PASS` / `WARN` / `FAIL` decisions with rationale text, plus acceptance history.
+
+*Limitations.* The review UX is still in flux. Gate selection depends on note traits, and acceptance semantics are still more complex than they should be. Treat review as an agent-driven workflow rather than a first-class end-user CLI today.
+
+See [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
+
+## Direct CLI commands
+
+Most operations go through the agent, but a few CLI commands are reasonable to run directly:
+
+| Command | Purpose |
+|---|---|
+| `uv run commonplace-validate <path>` | Run the deterministic validator on a note or directory |
+| `uv run commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
+| `uv run commonplace-generate-notes-index <dir>` | Rebuild an auto-generated index file |
+| `uv run commonplace-refresh-indexes` | Rebuild generated index sections across the KB |
+| `uv run commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
+| `uv run commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
+
+`commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
+
+## Where to go deeper
+
+- [architecture.md](./architecture.md) — shipped architecture: the installed KB surface and its boundaries
+- [type-system.md](./type-system.md) — current taxonomy, base types, and migration story
+- [control-plane-goals.md](./control-plane-goals.md) — how `AGENTS.md` scopes the KB and shapes agent decisions
+- [instruction-generation.md](./instruction-generation.md) — how reusable instructions are produced and loaded
+- [type-loading.md](./type-loading.md) — how type definitions are resolved at runtime
+- [WRITING.md](../instructions/WRITING.md) — the authoritative guide for note structure, titles, descriptions, and templates
+- [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) — current review-system workflow
+- [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
+- [adr/](./adr/) — design history for major architectural choices

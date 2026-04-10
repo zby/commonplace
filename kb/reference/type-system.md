@@ -7,7 +7,7 @@ status: current
 
 # Document classification
 
-See [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) for the design rationale. See [note base type](../types/note.md) for the global fields, status ladder, traits, and design principles that all structured types inherit.
+See [note base type](../types/note.md) for the global fields, status ladder, traits, and design principles that all structured types inherit.
 
 ## Base types
 
@@ -27,7 +27,7 @@ The `type` field is a free-form string. The table below lists the common values;
 | `related-system` | External-system review; has fixed comparison sections and `last-checked` | Check required sections and field |
 | `source-review` | Processed source artifact under `kb/sources/` | Check source-specific structure in the source collection |
 
-`structured-claim` extends `note` with required argument sections: `## Evidence`, `## Reasoning`, and optionally `## Caveats`. It represents a fully developed argument — the [Toulmin scaffold](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) applied to a claim-titled note. The promotion path is `note` → `structured-claim`: when a note's argument matures enough to fill Evidence/Reasoning sections, it earns the type.
+`structured-claim` extends `note` with required argument sections: `## Evidence`, `## Reasoning`, and optionally `## Caveats`. It represents a fully developed argument scaffold applied to a claim-titled note. The promotion path is `note` → `structured-claim`: when a note's argument matures enough to fill Evidence/Reasoning sections, it earns the type.
 
 Traits are a separate axis from type. They do not define structure; they declare semantic review expectations. Examples: `title-as-claim` routes claim-quality gates, `definition` marks term-pinning notes, and `has-comparison` / `has-external-sources` describe reusable review-relevant properties that can appear across multiple types.
 
@@ -47,5 +47,5 @@ Relevant Notes:
 
 - [note base type](../types/note.md) — defines the global fields, status ladder, traits, and design principles
 - [text root type](../types/text.md) — the empty root type: no frontmatter, always valid
-- [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) — design rationale for verifiable types
-- [directory-scoped-types-are-cheaper-than-global-types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types
+- [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: structural types and review traits are separate axes
+- [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: the current authored type-definition format
