@@ -26,7 +26,7 @@ That made it unclear whether moving a file between directories changed its type 
 
 **Types are structural.** A type defines required sections, fields, and templates. The validator checks these deterministically. A distinction is a type only if it changes required structure beyond `note`.
 
-**Traits route semantic review.** A trait declares which review gates apply. The gate frontmatter gains `requires_trait`; review tooling filters gates by checking the note's explicit frontmatter `traits:` field. Current trait-gated gates: `claim-strength`, `title-composability`, `explanatory-reach` (all require `title-as-claim`). One new gate: `frontmatter/title-as-claim`. All other gates are universal.
+**Traits route semantic review.** A trait declares which review gates apply. The gate frontmatter gains `requires_trait`; review tooling filters gates by checking the note's explicit frontmatter `traits:` field. Current trait-gated gates: `claim-strength`, `title-composability`, `explanatory-reach` (all require `title-as-claim`). One new gate: `frontmatter/title-as-claim`. All other gates are universal. Type-specific review gates can also declare `requires-type` when a gate only applies to one artifact type, such as a definition-only or related-system-only gate.
 
 **Validation is purely structural.** No semantic checks in the validator. Description quality, composability, and other judgment calls live in review gates.
 

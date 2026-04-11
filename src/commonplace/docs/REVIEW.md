@@ -136,7 +136,7 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 ### Review execution flow
 
 ```
-1. resolve_gates     → expand bundle names to gate IDs, filter by note traits
+1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits
 2. create_run        → insert review_run + review_run_gates (status=running)
 3. review_runners    → invoke claude-code or codex CLI with review prompt
 4. attach_execution_data → persist runner artifacts and telemetry
@@ -196,7 +196,7 @@ Also provides:
 ### resolve_gates.py
 
 - `resolve_to_gate_ids(args, gates_dir) -> list[str]` — expand bundle names (e.g., `"prose"`) to gate files in `gates_dir/prose/*.md`
-- `applicable_gate_ids_for_note(note_path, gate_ids, gates_dir) -> list[str]` — filter by note `traits` vs gate `requires_trait`
+- `applicable_gate_ids_for_note(note_path, gate_ids, gates_dir) -> list[str]` — filter by note `traits` vs gate `requires_trait`, and note `type` vs gate `requires-type`
 
 ### warn_selector.py
 

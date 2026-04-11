@@ -21,12 +21,12 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path, title: str, body: str, *, traits: str = "[]") -> Path:
+def make_note(path: Path, title: str, body: str, *, traits: str = "[]", note_type: str = "note") -> Path:
     return write(
         path,
         f"""---
 description: Test note
-type: note
+type: {note_type}
 traits: {traits}
 status: current
 ---
@@ -37,8 +37,16 @@ status: current
     )
 
 
-def make_gate(path: Path, gate_id: str, lens: str, *, requires_trait: str | None = None) -> Path:
+def make_gate(
+    path: Path,
+    gate_id: str,
+    lens: str,
+    *,
+    requires_trait: str | None = None,
+    requires_type: str | None = None,
+) -> Path:
     requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
+    requires_type_line = f"requires-type: {requires_type}\n" if requires_type else ""
     return write(
         path,
         f"""---
@@ -47,7 +55,7 @@ name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
 staleness: changed
-{requires_trait_line}---
+{requires_trait_line}{requires_type_line}---
 
 ## Failure mode
 
@@ -110,6 +118,34 @@ def build_repo_fixture_with_trait_gate(tmp_path: Path) -> tuple[Path, Path]:
         "frontmatter/claim-strength",
         "frontmatter",
         requires_trait="title-as-claim",
+    )
+    commit_all(repo, "fixture")
+    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    return repo, db_path
+
+
+def build_repo_fixture_with_type_gate(tmp_path: Path) -> tuple[Path, Path]:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    init_repo(repo)
+
+    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type="definition")
+    make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
+        "prose/source-residue",
+        "prose",
+    )
+    make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "definition-precision.md",
+        "frontmatter/definition-precision",
+        "frontmatter",
+        requires_type="definition",
+    )
+    make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "related-system-fit.md",
+        "frontmatter/related-system-fit",
+        "frontmatter",
+        requires_type="related-system",
     )
     commit_all(repo, "fixture")
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
@@ -518,6 +554,30 @@ def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_p
 
     payload = json.loads(created.stdout)
     assert payload["gate_ids"] == ["prose/source-residue"]
+
+
+def test_create_review_run_filters_type_gated_gates_for_inapplicable_note(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture_with_type_gate(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose/source-residue",
+        "frontmatter/definition-precision",
+        "frontmatter/related-system-fit",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
+        "--json",
+        env=env,
+    )
+
+    payload = json.loads(created.stdout)
+    assert payload["gate_ids"] == ["prose/source-residue", "frontmatter/definition-precision"]
 
 
 def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:

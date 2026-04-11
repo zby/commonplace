@@ -33,16 +33,31 @@ def _load_frontmatter(path: Path) -> dict[str, Any]:
     return parsed.data
 
 
+def _matches_requirement(actual_values: set[str], required: Any) -> bool:
+    if required is None or required == "":
+        return True
+    if isinstance(required, str):
+        return required in actual_values
+    if isinstance(required, list):
+        required_values = {item for item in required if isinstance(item, str)}
+        return not required or bool(actual_values & required_values)
+    return False
+
+
 def applicable_gate_ids_for_note(note_path: Path, gate_ids: list[str], gates_dir: Path) -> list[str]:
-    note_traits_raw = _load_frontmatter(note_path).get("traits", [])
+    note_meta = _load_frontmatter(note_path)
+    note_type_raw = note_meta.get("type")
+    note_types = {note_type_raw} if isinstance(note_type_raw, str) else set()
+    note_traits_raw = note_meta.get("traits", [])
     note_traits = set(note_traits_raw) if isinstance(note_traits_raw, list) else set()
 
     applicable: list[str] = []
     for gate_id in gate_ids:
         gate_abs = gates_dir / f"{gate_id}.md"
         gate_meta = _load_frontmatter(gate_abs)
-        requires_trait = gate_meta.get("requires_trait")
-        if requires_trait and requires_trait not in note_traits:
+        if not _matches_requirement(note_traits, gate_meta.get("requires_trait")):
+            continue
+        if not _matches_requirement(note_types, gate_meta.get("requires-type")):
             continue
         applicable.append(gate_id)
     return applicable
