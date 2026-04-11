@@ -9,7 +9,7 @@ For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM
 The review subsystem is split between two packages, mirroring the project-wide `commonplace.cli` ↔ `commonplace.lib` split:
 
 - **`commonplace.review`** — library code only. Pure functions, dataclasses, the SQLite layer, the runner subprocess wrappers. No `main()` functions, no argparse, no `Path.cwd()` at import time. Importable from any caller without pulling in CLI machinery.
-- **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The 14 `commonplace-*` review entry points in `pyproject.toml` all live here.
+- **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The `commonplace-*` review entry points in `pyproject.toml` all live here.
 
 For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundle` is the library that owns the create_run → runner → record_and_finalize_run pipeline; `commonplace.cli.review.run_review_bundle` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
 
@@ -21,7 +21,7 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 ┌─────────────────────────────────────────────────┐
 │  Orchestration                                  │
 │  review_sweep       run_review_bundle           │
-│  run_gate_sweep     create/finalize_review_run  │
+│  run_gate_sweep     create/finalize/ingest      │
 ├─────────────────────────────────────────────────┤
 │  Gate resolution & targeting                    │
 │  resolve_gates      review_target_selector      │
@@ -146,12 +146,18 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 
 ### run_review_bundle.py — Multi-gate single-note review
 
-The primary review mode. Runs multiple gates against one note in a single LLM invocation.
+The bundle protocol owner for multi-gate single-note review. The subprocess path runs multiple gates against one note in a single LLM invocation; the live-agent path renders the same prompt and ingests the same sentinel-delimited bundle format.
 
 - Resolves markdown links in the note so the reviewer sees linked content
-- Builds a structured prompt with gate definitions and note content
+- Builds a structured prompt with the target note identity, pre-resolved link table, and gate definitions
 - Parses output delimited by `=== GATE REVIEW START/END: {gate-id} ===`
 - Records individual gate_reviews and acceptance_events
+
+The live-agent entry points reuse this protocol without launching a nested runner:
+
+1. `commonplace-create-review-run --with-prompt` creates the run and returns the canonical prompt
+2. the current agent writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run`
 
 ### run_gate_sweep.py — Single-gate multi-note review
 

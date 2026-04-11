@@ -132,16 +132,25 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 
 ### commonplace-create-review-run
 
-Create a review run record in the review database. Outputs JSON with the review_run_id and gate definitions.
+Create a review run record in the review database. With `--with-prompt`, also emits the canonical bundle prompt and artifact paths for live-agent review.
 
 ```bash
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --json
+commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --with-prompt
+```
+
+### commonplace-ingest-bundle-output
+
+Parse a sentinel-delimited review bundle and finalize its existing review run.
+
+```bash
+commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bundle-reviews/review-run-42/bundle-output.md
 ```
 
 ### commonplace-write-gate-review
 
-Record a single gate review from a file into an existing review run.
+Record a single gate review from a file into an existing review run. This remains available for manual edge cases; the normal live-agent bundle path uses `commonplace-ingest-bundle-output`.
 
 ```bash
 commonplace-write-gate-review --review-run-id 42 --gate-id prose/source-residue --input-file review-output.md

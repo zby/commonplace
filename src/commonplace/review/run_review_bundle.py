@@ -9,6 +9,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Literal
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
@@ -32,6 +33,7 @@ BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
 BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 USAGE_EXHAUSTION_TEXT = "out of extra usage"
+OutputMode = Literal["stdout", "file"]
 
 
 class UsageExhausted(Exception):
@@ -248,8 +250,25 @@ def build_prompt(
     resolved_links: list[tuple[str, str, str]],
     unresolved_links: list[tuple[str, str]],
     review_run_id: int,
+    output_mode: OutputMode = "stdout",
+    bundle_output_path: str | None = None,
 ) -> str:
     gates = " ".join(gate_ids)
+    if output_mode == "file":
+        if bundle_output_path is None:
+            raise ValueError("bundle_output_path is required for file output mode")
+        destination_lines = [
+            f"- Write exactly one markdown document to `{bundle_output_path}`.",
+            "- Do not invoke review helper scripts while writing the review bundle.",
+        ]
+    elif output_mode == "stdout":
+        destination_lines = [
+            "- Do not write files or invoke review helper scripts.",
+            "- Return exactly one markdown document in this process's stdout.",
+        ]
+    else:
+        raise ValueError(f"unknown output mode: {output_mode}")
+
     lines = [
         f"Write gate reviews for {note_path} for gates: {gates}",
         "",
@@ -261,8 +280,7 @@ def build_prompt(
         "- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.",
         "",
         "Output contract for this run:",
-        "- Do not write files or invoke review helper scripts.",
-        "- Return exactly one markdown document in this process's stdout.",
+        *destination_lines,
         "- Use exactly one block per requested gate.",
         "- Use these exact sentinels for every block:",
         "  === GATE REVIEW START: <gate-id> ===",
@@ -333,6 +351,36 @@ def build_prompt(
     return "\n".join(lines)
 
 
+def build_review_run_prompt(
+    *,
+    repo_root: Path,
+    note_path: str,
+    gate_ids: list[str],
+    gate_texts: dict[str, str],
+    review_run_id: int,
+    output_mode: OutputMode = "stdout",
+    bundle_output_path: str | None = None,
+) -> str:
+    note_abs = repo_root / note_path
+    note_text = note_abs.read_text(encoding="utf-8")
+    note_body = frontmatter.strip(note_text).lstrip("\n")
+    resolved_links, unresolved_links = resolve_note_markdown_links(
+        repo_root=repo_root,
+        note_abs=note_abs,
+        note_body=note_body,
+    )
+    return build_prompt(
+        note_path=note_path,
+        gate_ids=gate_ids,
+        gate_texts=gate_texts,
+        resolved_links=resolved_links,
+        unresolved_links=unresolved_links,
+        review_run_id=review_run_id,
+        output_mode=output_mode,
+        bundle_output_path=bundle_output_path,
+    )
+
+
 def run_bundle(
     *,
     repo_root: Path,
@@ -350,14 +398,6 @@ def run_bundle(
     """
     runner_model = model
     model = normalize_model_id(model)
-    note_abs = repo_root / note_path
-    note_text = note_abs.read_text(encoding="utf-8")
-    note_body = frontmatter.strip(note_text).lstrip("\n")
-    resolved_links, unresolved_links = resolve_note_markdown_links(
-        repo_root=repo_root,
-        note_abs=note_abs,
-        note_body=note_body,
-    )
 
     note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
         repo_root, note_path, gate_or_bundle,
@@ -365,12 +405,11 @@ def run_bundle(
     gate_ids = [g[0] for g in run_gates]
 
     if dry_run:
-        dry_run_prompt = build_prompt(
+        dry_run_prompt = build_review_run_prompt(
+            repo_root=repo_root,
             note_path=note_path,
             gate_ids=gate_ids,
             gate_texts=gate_texts,
-            resolved_links=resolved_links,
-            unresolved_links=unresolved_links,
             review_run_id=0,
         )
         print(dry_run_prompt)
@@ -391,12 +430,11 @@ def run_bundle(
         )
         conn.commit()
 
-    prompt = build_prompt(
+    prompt = build_review_run_prompt(
+        repo_root=repo_root,
         note_path=note_path,
         gate_ids=gate_ids,
         gate_texts=gate_texts,
-        resolved_links=resolved_links,
-        unresolved_links=unresolved_links,
         review_run_id=review_run_id,
     )
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)

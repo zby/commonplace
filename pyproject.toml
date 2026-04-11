@@ -12,6 +12,7 @@ commonplace-finalize-review-run = "commonplace.cli.review.finalize_review_run:ma
 commonplace-generate-notes-index = "commonplace.cli.generate_notes_index:main"
 commonplace-github-snapshot = "commonplace.cli.github_snapshot:main"
 commonplace-init = "commonplace.cli.init_project:main"
+commonplace-ingest-bundle-output = "commonplace.cli.review.ingest_bundle_output:main"
 commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"
 commonplace-refresh-indexes = "commonplace.cli.refresh_indexes:main"
 commonplace-prune-superseded-unknown-manual-import-reviews = "commonplace.cli.review.prune_superseded_unknown_manual_import_reviews:main"

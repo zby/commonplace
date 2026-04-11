@@ -1,14 +1,10 @@
 ---
-description: Run review gates on one note — create a review run, write one gate review per gate, then finalize acceptance
+description: Run review gates on one note from inside a live agent harness
 ---
 
 # Run a review bundle on one note
 
-Review a specific note against an explicit list of gates.
-
-Use this instruction when you are already inside an agent harness and can execute shell commands directly.
-
-The goal is to keep deterministic workflow plumbing in Python while leaving semantic judgment with the current agent.
+Review a specific note against an explicit list of gates from inside the current agent harness.
 
 Inputs:
 
@@ -17,83 +13,40 @@ Inputs:
 
 Do not run the selector to choose gates. Treat the provided list as the exact execution set.
 
-Reading scope for review:
-
-- Read the target note in full.
-- Read the requested gate definitions.
-- For semantic grounding or consistency checks, follow only links that appear in the target note.
-- When following a markdown link from the target note, resolve it directly from the note's path instead of searching by name.
-- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.
-- Do not do broad repo search or exploratory `rg` sweeps unless you need to resolve a specific linked path already referenced by the target note.
-
 ## Live agent path
 
-### 1. Create the review run and capture the resolved gates
+### 1. Create the review run and canonical prompt
 
 ```bash
-commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --json {note-path} {gate-or-bundle}...
+commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --with-prompt {note-path} {gate-or-bundle}...
 ```
 
-Capture from the JSON output:
+Capture the JSON output, especially:
 
 - `review_run_id`
+- `prompt`
+- `bundle_output_path`
 - `gate_ids`
-- `gates` — each entry includes `gate_id`, `path`, `text`
-- `model_id` — initial requested model partition for this run
 
 Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
 
-### 2. Read the target note
+### 2. Follow the returned prompt
 
-Read `{note-path}` in full. For semantic grounding or consistency checks, follow only links from the target note and resolve them directly from the note's location.
+Use the `prompt` field as the authoritative reviewer instruction. It contains the reading scope, gate definitions, link-resolution table, and sentinel output contract for this run.
 
-### 3. Produce one review file per gate
+Write the full sentinel-bracketed review bundle to `bundle_output_path`.
 
-For each requested gate, write one markdown review body with this layout:
-
-```
-### Summary
-<short paragraph>
-
-### Findings
-- <severity>: <finding>
-
-### Suggested Revision
-<optional; omit if not needed>
-
-## Result: PASS|WARN|FAIL|ERROR
-```
-
-Rules:
-
-- Apply each gate's failure mode and test to the note.
-- Write exactly one review file per requested gate, in the order from `gate_ids`.
-- The `## Result:` line must use one of: `PASS`, `WARN`, `FAIL`, `ERROR`.
-- Make the `## Result:` line the last non-empty line in each review file.
-
-### 4. Record each gate review
-
-For each requested gate:
+### 3. Ingest the bundle output
 
 ```bash
-commonplace-write-gate-review --review-run-id {review-run-id} --gate-id {gate-id} --input-file {review-file}
+commonplace-ingest-bundle-output --review-run-id {review-run-id} --input-file {bundle-output-path}
 ```
 
-This records one `gate_reviews` row for that gate under the existing review run.
-
-### 5. Finalize the run
-
-After all requested gates are written:
-
-```bash
-commonplace-finalize-review-run --review-run-id {review-run-id}
-```
-
-This validates coverage and appends the acceptance events for the run.
+This parses the bundle with the same parser used by `commonplace-run-review-bundle`, records the per-gate reviews, and finalizes the review run.
 
 ## Do not
 
 - Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
 - Do not invoke `commonplace-record-bundle-review`; that command is no longer part of the shipped CLI.
-- Do not skip writing a review file for any provided gate.
-- Do not write files or invoke commands other than what this instruction specifies.
+- Do not call `commonplace-write-gate-review` in the normal live-agent bundle flow; use `commonplace-ingest-bundle-output` instead.
+- Do not skip a requested gate block in the bundle output.

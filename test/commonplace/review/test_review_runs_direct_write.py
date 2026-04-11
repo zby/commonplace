@@ -380,6 +380,86 @@ Grounding is aligned.
         assert all(row["acceptance_kind"] == "full-review" for row in acceptance_rows)
 
 
+def test_ingest_bundle_output_finalizes_review_run(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
+        "--with-prompt",
+        env=env,
+    )
+    payload = json.loads(created.stdout)
+    review_run_id = payload["review_run_id"]
+    bundle_output_path = repo / payload["bundle_output_path"]
+    write(
+        bundle_output_path,
+        """# Review Bundle
+
+=== GATE REVIEW START: prose/source-residue ===
+## Findings
+
+**WARN — Residue remains.** Temporary review.
+=== GATE REVIEW END: prose/source-residue ===
+
+=== GATE REVIEW START: semantic/grounding-alignment ===
+Looks good.
+
+## Result: PASS
+=== GATE REVIEW END: semantic/grounding-alignment ===
+""",
+    )
+
+    result = run_script(
+        repo,
+        "ingest_bundle_output.py",
+        "--review-run-id",
+        str(review_run_id),
+        "--input-file",
+        str(bundle_output_path),
+        env=env,
+    )
+
+    assert result.stdout.strip() == f"completed {review_run_id} 2"
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run_row = conn.execute(
+            "SELECT status, raw_bundle_markdown FROM review_runs WHERE id = ?",
+            (review_run_id,),
+        ).fetchone()
+        assert run_row is not None
+        assert run_row["status"] == "completed"
+        assert "## Result: WARN" in run_row["raw_bundle_markdown"]
+        gate_rows = conn.execute(
+            "SELECT gate_id, decision FROM gate_reviews WHERE review_run_id = ? ORDER BY gate_id",
+            (review_run_id,),
+        ).fetchall()
+        assert [(row["gate_id"], row["decision"]) for row in gate_rows] == [
+            ("prose/source-residue", "warn"),
+            ("semantic/grounding-alignment", "pass"),
+        ]
+        acceptance_rows = conn.execute(
+            "SELECT gate_id, accepted_review_id FROM acceptance_events ORDER BY gate_id"
+        ).fetchall()
+        assert len(acceptance_rows) == 2
+        assert all(row["accepted_review_id"] is not None for row in acceptance_rows)
+
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    assert (artifact_dir / "bundle-output.md").is_file()
+    assert (artifact_dir / "prose__source-residue.md").is_file()
+    assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
+
+
 def test_create_review_run_json_output(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     env = os.environ.copy()
@@ -420,6 +500,44 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         },
     ]
     assert isinstance(payload["review_run_id"], int)
+
+
+def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    env = os.environ.copy()
+    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
+
+    created = run_script(
+        repo,
+        "create_review_run.py",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
+        "--with-prompt",
+        env=env,
+    )
+
+    payload = json.loads(created.stdout)
+    review_run_id = payload["review_run_id"]
+    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    prompt_path = repo / payload["prompt_path"]
+
+    assert payload["artifact_dir"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}"
+    assert payload["bundle_output_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/bundle-output.md"
+    assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
+    assert prompt_path.is_file()
+    assert payload["prompt"] == prompt_path.read_text(encoding="utf-8")
+    assert "Write gate reviews for kb/notes/sample.md" in payload["prompt"]
+    assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in payload["prompt"]
+    assert "Return exactly one markdown document in this process's stdout." not in payload["prompt"]
+    assert "=== GATE REVIEW START: prose/source-residue ===" in payload["prompt"]
+    assert "Requested gate definitions (authoritative for this run):" in payload["prompt"]
+    assert artifact_dir.is_dir()
+    assert not (artifact_dir / "bundle-output.md").exists()
 
 
 def test_create_review_run_allows_dirty_note_and_records_worktree_provenance(tmp_path: Path) -> None:

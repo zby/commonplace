@@ -15,13 +15,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_metadata import resolve_review_target
 from commonplace.review.review_model import normalize_model_id
-
-
-BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
-
-
-def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
-    return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
+from commonplace.review.run_review_bundle import build_review_run_prompt, bundle_artifact_dir
 
 
 def main() -> None:
@@ -32,6 +26,11 @@ def main() -> None:
     parser.add_argument("--model", required=True, help="Review model partition for this run.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--json", action="store_true", help="Print review run metadata as JSON.")
+    parser.add_argument(
+        "--with-prompt",
+        action="store_true",
+        help="Print JSON metadata plus the canonical review prompt for a live-agent run.",
+    )
     args = parser.parse_args()
 
     repo_root = Path.cwd()
@@ -66,22 +65,47 @@ def main() -> None:
         )
         conn.commit()
 
-    bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    prompt_path = artifact_dir / "prompt.md"
+    prompt_path_rel = prompt_path.relative_to(repo_root).as_posix()
+    bundle_output_path = artifact_dir / "bundle-output.md"
+    bundle_output_path_rel = bundle_output_path.relative_to(repo_root).as_posix()
 
-    if args.json:
+    prompt = None
+    if args.with_prompt:
+        prompt = build_review_run_prompt(
+            repo_root=repo_root,
+            note_path=args.note_path,
+            gate_ids=gate_ids,
+            gate_texts=gate_texts,
+            review_run_id=review_run_id,
+            output_mode="file",
+            bundle_output_path=bundle_output_path_rel,
+        )
+        prompt_path.write_text(prompt, encoding="utf-8")
+
+    if args.json or args.with_prompt:
+        payload = {
+            "review_run_id": review_run_id,
+            "note_path": args.note_path,
+            "gate_ids": gate_ids,
+            "gates": [
+                {"gate_id": gid, "path": str(GATES_ROOT / f"{gid}.md"), "text": gate_texts[gid]}
+                for gid in gate_ids
+            ],
+            "model_id": model_id,
+            "runner": args.runner,
+            "artifact_dir": artifact_dir_rel,
+            "bundle_output_path": bundle_output_path_rel,
+        }
+        if prompt is not None:
+            payload["prompt_path"] = prompt_path_rel
+            payload["prompt"] = prompt
         print(
             json.dumps(
-                {
-                    "review_run_id": review_run_id,
-                    "note_path": args.note_path,
-                    "gate_ids": gate_ids,
-                    "gates": [
-                        {"gate_id": gid, "path": str(GATES_ROOT / f"{gid}.md"), "text": gate_texts[gid]}
-                        for gid in gate_ids
-                    ],
-                    "model_id": model_id,
-                    "runner": args.runner,
-                },
+                payload,
                 ensure_ascii=True,
                 sort_keys=True,
             )

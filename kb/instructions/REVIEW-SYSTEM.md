@@ -84,19 +84,20 @@ For now, gate freshness is keyed by the raw git blob SHA of the gate file itself
 The canonical live path is:
 
 1. create a review run
-2. write one DB row per gate review
-3. finalize the run to append acceptance events
+2. follow the canonical bundle prompt in the current agent
+3. write the sentinel-delimited bundle artifact
+4. ingest the bundle artifact to write gate reviews and append acceptance events
 
-For live agent work, the preferred path is the direct-write helper chain:
+For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 
-1. `commonplace-create-review-run`
-2. `commonplace-write-gate-review`
-3. `commonplace-finalize-review-run`
+1. `commonplace-create-review-run --with-prompt`
+2. write `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+3. `commonplace-ingest-bundle-output`
 
 A full review write contributes:
 
-1. one `gate_reviews` row
-2. one `acceptance_events` row with `acceptance_kind = 'full-review'`
+1. one `gate_reviews` row per requested gate
+2. one `acceptance_events` row per requested gate with `acceptance_kind = 'full-review'`
 
 The important invariant is that the stored `reviewed_note_sha` and `gate_sha` are the exact values used during review generation.
 
@@ -170,11 +171,10 @@ This intentionally excludes legacy imported rows that are not attached to a revi
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --json {note} {gate-or-bundle}...`
-2. Read the resolved `gates` payload from the JSON output
-3. Review the note gate-by-gate in the current agent
-4. `commonplace-write-gate-review --review-run-id {id} --gate-id {gate-id} --input-file {tmp}`
-5. `commonplace-finalize-review-run --review-run-id {id}`
+1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --with-prompt {note} {gate-or-bundle}...`
+2. Follow the `prompt` field from the JSON output in the current agent
+3. Write the sentinel-delimited review bundle to `bundle_output_path`
+4. `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}`
 
 ### Sweep
 

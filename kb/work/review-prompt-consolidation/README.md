@@ -36,21 +36,28 @@ Everything above the last row is duplicated content. Only the last row — how t
 
 Make `build_prompt` the single source of truth for reviewer-facing instructions. Both paths use the same prompt. The only difference is who fills it in: a runner subprocess, or a live agent already inside a harness.
 
+This is already mostly true for the subprocess paths. `commonplace-review-sweep` calls the library `run_bundle`, and `run_bundle` owns both the prompt-building side (`build_prompt`) and the bundle-parsing side (`parse_bundle_gate_reviews`). The live-agent path should join that same bundle protocol instead of growing a parallel prompt/parser pair.
+
+For the live-agent path, this does **not** mean launching a new nested agent. `commonplace-create-review-run` only creates the review run and renders the canonical prompt for the already-running agent. The current agent follows that prompt, writes the bundle output, and then hands that output to a deterministic ingest command.
+
 ### Concrete shape
 
-- **`commonplace-create-review-run`** returns the structured header (`review_run_id`, `gate_ids`, `note_path`, `model_id`) **and** the full `build_prompt` text. The live agent uses the JSON for subsequent CLI calls and follows the prompt for the actual review.
+- **`commonplace-create-review-run --with-prompt`** returns the structured header (`review_run_id`, `gate_ids`, `note_path`, `model_id`, artifact paths) **and** the full `build_prompt` text. It does not invoke `claude-code`, `codex`, or any other runner.
 - **The live agent emits sentinel-bracketed output** — the same `=== GATE REVIEW START: <gate-id> ===` ... `=== GATE REVIEW END: <gate-id> ===` format the subprocess path produces.
-- **New command: `commonplace-ingest-bundle-output`** parses sentinel output and records per-gate reviews plus finalization in a single call. The parser (`parse_bundle_gate_reviews`) and recorder (`record_and_finalize_run`) already exist as library functions in `src/commonplace/review/run_review_bundle.py:216-241` and `src/commonplace/review/review_db.py` — the new CLI is a thin wrapper.
-- **`run-review-bundle-on-note.md` shrinks to a thin orchestration script:** run create-review-run, follow the prompt, write output to a file, run ingest. Roughly fifteen lines instead of ~100.
+- **The live agent writes that output to the canonical bundle artifact:** `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`.
+- **New command: `commonplace-ingest-bundle-output`** parses the bundle artifact and records per-gate reviews plus finalization in a single call. It must use the same bundle protocol library as `commonplace-review-sweep` / `commonplace-run-review-bundle`: `parse_bundle_gate_reviews`, `write_bundle_artifacts`, and the lifecycle recorder (`record_and_finalize_run`). The new CLI is a thin wrapper, not a second parser.
+- **`run-review-bundle-on-note.md` shrinks to a thin orchestration script:** run create-review-run with prompt output, follow the returned prompt in the current agent, write `bundle-output.md`, run ingest. Roughly fifteen lines instead of ~100.
 - **Per-gate `commonplace-write-gate-review` calls disappear from the normal live-agent flow.** The CLI stays available for manual recording edge cases (ack workflow, one-off edits, test fixtures) but is no longer the primary path.
+
+This refines the older `review-run-lifecycle` direction. That workshop removed the split bundled live-agent path because it had no clear reason to exist when the normal split path could write one gate at a time. The new reason is prompt single-sourcing: bundled sentinel output lets the live-agent path consume the same reviewer-facing contract as the subprocess path without duplicating prose.
 
 ## Blast radius
 
 Files and components that would change:
 
-- `src/commonplace/cli/review/create_review_run.py` — emit prompt text alongside JSON header.
-- `src/commonplace/cli/review/ingest_bundle_output.py` — **new**, thin wrapper around existing parser and recorder.
-- `src/commonplace/review/run_review_bundle.py` — `build_prompt` stays authoritative; may gain a small parameter for the output-destination variant (see open question 6).
+- `src/commonplace/cli/review/create_review_run.py` — add `--with-prompt`, include canonical artifact paths, and emit prompt text by calling the same library prompt builder used by `run_bundle`.
+- `src/commonplace/cli/review/ingest_bundle_output.py` — **new**, thin wrapper around the existing bundle parser, artifact writer, and lifecycle recorder.
+- `src/commonplace/review/run_review_bundle.py` — remains the bundle protocol owner for prompt construction, sentinel parsing, artifact writing, and review recording; may gain a small parameter for the output-destination variant (see open question 6), or some protocol helpers may be extracted if the module becomes too runner-specific.
 - `kb/instructions/run-review-bundle-on-note.md` — shrink from ~100 lines to ~15 lines; most prose deleted.
 - `src/commonplace/docs/REVIEW.md` — update the architecture description to reflect the unified shape.
 - Tests — add coverage for `ingest_bundle_output`. Existing subprocess tests (`test_review_runs_direct_write.py`, `test_review_target_selector.py`) remain unchanged.
@@ -68,27 +75,29 @@ Files and components that would change:
 
 These are the design decisions that need resolving before implementation begins.
 
-### 1. How does the live agent deliver output to the ingest command?
+### 1. How does the live agent deliver output to the ingest command? — resolved
 
-- **A (file-based):** write sentinel-bracketed output to a temp file, pass the path to `ingest-bundle-output --input-file`. Clear but requires a file-cleanup decision and picks a filename.
-- **B (stdin piped):** `cat review.md | commonplace-ingest-bundle-output --review-run-id N`. Elegant for one-shot execution but loses the ability to inspect the output before ingesting.
-- **C (both):** accept either `--input-file` or stdin. Most flexible, two code paths.
+Use a file-based canonical artifact:
 
-Recommendation pending: probably C, with the prompt instructing the live agent to use a file so a human can inspect the intermediate artifact.
+```bash
+kb/reports/bundle-reviews/review-run-{review_run_id}/bundle-output.md
+```
 
-### 2. How does the JSON-plus-prompt shape look on stdout?
+The live agent writes the sentinel-bracketed review bundle there. Then `commonplace-ingest-bundle-output --review-run-id {id} --input-file kb/reports/bundle-reviews/review-run-{id}/bundle-output.md` parses and records it.
+
+Stdin can be added later if there is a real caller. The first version should keep the intermediate artifact inspectable and reuse the existing bundle-review report directory.
+
+### 2. How does the JSON-plus-prompt shape look on stdout? — resolved
 
 - **A (marker-separated):** JSON on one line, then `=== PROMPT ===`, then prompt text. Easy to parse.
 - **B (prompt-only):** the prompt itself includes the structured fields as inline text. Removes JSON entirely but the live agent has to parse `review_run_id` out of prose.
-- **C (two modes):** `--json-only` (current behavior for scripts) and `--with-prompt` (new default for live-agent use).
+- **C (two modes):** keep the current JSON-only behavior for script callers, and add `--with-prompt` for live-agent use.
 
-Recommendation pending: probably A, because the live agent needs the structured fields programmatically for later CLI calls.
+Decision: use option C. `commonplace-create-review-run` keeps its current non-prompt behavior for script callers. `--with-prompt` emits JSON with the normal structured fields plus `prompt`, `prompt_path`, and `bundle_output_path`.
 
-### 3. Is `commonplace-write-gate-review` used anywhere outside the live-agent path?
+### 3. Is `commonplace-write-gate-review` used anywhere outside the live-agent path? — resolved
 
-- **Known:** tests use it as a fixture setup. That usage stays.
-- **Unknown:** whether any interactive workflow, ack process, or manual edit path depends on it.
-- **Action:** grep for `commonplace-write-gate-review` outside `test/` and `src/` before finalizing the instructions-file rewrite.
+Grep showed docs, tests, and the existing live-agent instruction path. The command stays available for manual edge cases and test fixtures, but the normal live-agent bundle workflow now uses `commonplace-ingest-bundle-output`.
 
 ### 4. How should ingest handle partial parsing failures?
 
@@ -98,27 +107,24 @@ If the live agent produces sentinel-bracketed output that parses cleanly for thr
 - Record the three successes, mark the fourth as ERROR.
 - Require all-or-nothing.
 
-Recommendation pending: match the subprocess path (fail whole run) — consistent behavior is more valuable than partial recovery.
+Decision: match the subprocess path and fail the whole run. Consistent all-or-nothing behavior is more valuable than partial recovery here.
 
-### 5. Should `create-review-run` emit the prompt by default?
+### 5. Should `create-review-run` emit the prompt by default? — resolved
 
-CLAUDE.md says "no backwards compatibility — with no external consumers, always prioritize cleaner design." So yes, by default is fine. But some test fixtures might only want the JSON header. A `--json-only` flag could preserve that case without changing the default.
+No. Keep the current non-prompt behavior for script callers and add `--with-prompt` for the live-agent path. The prompt is a reviewer-facing artifact, not the minimal run-creation response, so making it opt-in keeps the command easier to compose while still avoiding duplicated instructions.
 
-### 6. Does the output contract genuinely differ between paths?
+### 6. Does the output contract genuinely differ between paths? — resolved
 
-The current `build_prompt` output contract says `"- Do not write files or invoke review helper scripts."` — appropriate for a subprocess returning stdout only. But the live agent **must** write files (to feed ingest). This is the one part of the prompt that legitimately differs between paths.
+The current `build_prompt` output contract says `"- Do not write files or invoke review helper scripts."` — appropriate for a subprocess returning stdout only. But the live agent **must** write `bundle-output.md` and invoke the ingest helper after finishing the semantic review. This is the one part of the prompt that legitimately differs between paths.
 
 Options:
 - Parametrize `build_prompt` with an `output_mode` argument (`"stdout"` vs `"file"`) that swaps the relevant bullets.
 - Remove the "do not write files" bullet entirely from `build_prompt` and rely on the subprocess runner's sandbox to prevent file writes.
 - Have `build_prompt` describe only the **format** of the review output (sentinels, severity, result line) and have each caller inject its own **destination** instructions via a trailing block.
 
-The third option is probably the cleanest — it factors "what the review looks like" from "how to deliver it." The first option is the most conservative.
+Decision: use the first option. `build_prompt` owns both the shared bundle format and the small destination-specific contract, selected by `output_mode`.
 
 ## Next actions
 
-1. Resolve open questions 1, 2, and 6 — these shape the public CLI surface.
-2. Write an ADR capturing the architectural decision: one prompt source, two callers, sentinel-bracketed output protocol for both.
-3. Implement: extend `create-review-run`, add `ingest-bundle-output`, rewrite `run-review-bundle-on-note.md`, update `src/commonplace/docs/REVIEW.md`.
-4. Test parity: add coverage for the ingest path; verify that subprocess and live-agent paths produce equivalent database state for the same `(note, gates, model)` tuple.
-5. After landing: delete the duplicated prose from `run-review-bundle-on-note.md` and verify no new drift paths have been introduced by grepping for `"Read the requested gate"`, `"Reading scope"`, and the sentinel strings across `kb/` and `src/`.
+1. Write an ADR capturing the architectural decision: one prompt/parser protocol, two executors, sentinel-bracketed output for both.
+2. After landing: verify no new drift paths have been introduced by grepping for `"Read the requested gate"`, `"Reading scope"`, and the sentinel strings across `kb/` and `src/`.
