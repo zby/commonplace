@@ -254,6 +254,29 @@ class TestMissingReview:
 
         assert stale == []
 
+    def test_current_filter_includes_reference_top_level_notes(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        reference_dir = tmp_path / "kb" / "reference"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "note-current.md", "Note", "\nBody.\n", status="current")
+        make_note(reference_dir / "architecture.md", "Architecture", "\nBody.\n", status="current")
+        make_note(reference_dir / "adr" / "001-nested.md", "Nested ADR", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            current_only=True,
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/note-current.md",
+            "kb/reference/architecture.md",
+        ]
+
     def test_trait_gated_gates_are_skipped_for_notes_without_trait(self, tmp_path: Path) -> None:
         init_repo(tmp_path)
         notes_dir = tmp_path / "kb" / "notes"

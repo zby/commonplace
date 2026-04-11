@@ -26,6 +26,8 @@ from commonplace.review.review_metadata import (
 from commonplace.review.review_model import normalize_model_id
 
 NOTES_ROOT = Path("kb/notes")
+REFERENCE_ROOT = Path("kb/reference")
+REVIEWABLE_ROOTS: tuple[Path, ...] = (NOTES_ROOT, REFERENCE_ROOT)
 
 
 def _has_frontmatter(path: Path) -> bool:
@@ -49,17 +51,24 @@ def _frontmatter_status(path: Path) -> str | None:
     return result.data.get("status") if result.ok else None
 
 
-def list_reviewable_notes(notes_dir: Path) -> list[Path]:
-    return sorted(
-        p for p in notes_dir.glob("*.md")
-        if not _is_index(p) and _has_frontmatter(p)
-    )
+def list_reviewable_notes(repo_root: Path) -> list[Path]:
+    """Top-level `*.md` notes under each reviewable scan root that have YAML frontmatter."""
+    found: list[Path] = []
+    for rel_root in REVIEWABLE_ROOTS:
+        root = repo_root / rel_root
+        if not root.is_dir():
+            continue
+        for path in root.glob("*.md"):
+            if _is_index(path) or not _has_frontmatter(path):
+                continue
+            found.append(path)
+    return sorted(found)
 
 
-def list_current_notes(notes_dir: Path) -> list[Path]:
+def list_current_notes(repo_root: Path) -> list[Path]:
     return [
         path
-        for path in list_reviewable_notes(notes_dir)
+        for path in list_reviewable_notes(repo_root)
         if _frontmatter_status(path) == "current"
     ]
 
@@ -113,7 +122,6 @@ def select_stale_gates(
     db_path: Path | None = None,
 ) -> list[StaleGate]:
     gates_dir = repo_root / GATES_ROOT
-    notes_dir = repo_root / NOTES_ROOT
     model = model.strip()
     if not model:
         raise ValueError("model is required")
@@ -133,9 +141,9 @@ def select_stale_gates(
                 raise ValueError(f"Note not found: {raw}")
             notes.append(p)
     elif current_only:
-        notes = list_current_notes(notes_dir)
+        notes = list_current_notes(repo_root)
     else:
-        notes = list_reviewable_notes(notes_dir)
+        notes = list_reviewable_notes(repo_root)
 
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
     ensure_db(repo_root, db_path)
@@ -240,5 +248,4 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str, *, db_path: Path | 
             )
             print(f"acked: {note_path} {gate_id}")
         conn.commit()
-
 

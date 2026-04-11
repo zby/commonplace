@@ -189,7 +189,7 @@ Identifies (note, gate) pairs needing review by comparing current vs. accepted p
 
 Also provides:
 - `ack_pairs(repo_root, pairs, model)` — batch-acknowledge pairs with `trivial-change-ack`
-- `list_reviewable_notes / list_current_notes` — filter notes by status
+- `list_reviewable_notes(repo_root) / list_current_notes(repo_root)` — top-level `*.md` notes across the configured scan roots (`kb/notes/` and `kb/reference/`), non-recursive, skipping indexes and files without frontmatter
 - `note_diff_since()` — unified diff between accepted and current note
 
 ### resolve_gates.py
