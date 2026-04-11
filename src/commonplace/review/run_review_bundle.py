@@ -24,7 +24,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_decisions import parse_review_decision, rewrite_review_result_footer
 from commonplace.review.review_metadata import iso_now, resolve_review_target
-from commonplace.review.review_model import build_model_id
+from commonplace.review.review_model import build_model_id, normalize_model_id
 from commonplace.review.review_runners import run_prompt
 
 
@@ -353,6 +353,8 @@ def run_bundle(
     Callers are responsible for validating note_path and model before calling;
     this function assumes both are well-formed.
     """
+    runner_model = model
+    model = normalize_model_id(model)
     note_abs = repo_root / note_path
     note_text = note_abs.read_text(encoding="utf-8")
     note_body = frontmatter.strip(note_text).lstrip("\n")
@@ -404,7 +406,7 @@ def run_bundle(
     )
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
 
-    result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=model)
+    result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=runner_model)
     raw_bundle_markdown = result.stdout
     write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=raw_bundle_markdown)
     telemetry_json = serialize_telemetry(result.telemetry)

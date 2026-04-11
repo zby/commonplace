@@ -24,6 +24,7 @@ from commonplace.review.review_db import (
     record_and_finalize_run,
 )
 from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
+from commonplace.review.review_model import normalize_model_id
 from commonplace.review.review_runners import run_prompt
 from commonplace.review.review_target_selector import select_stale_gates
 from commonplace.review.run_review_bundle import (
@@ -198,6 +199,8 @@ def run_gate_sweep(
     Returns a process exit code. Raises ValueError on input/precondition
     errors so the caller can translate them to argparse-style failures.
     """
+    runner_model = model
+    model = normalize_model_id(model)
     gate_id = gate_id.removesuffix(".md")
     gate_abs = repo_root / GATES_ROOT / f"{gate_id}.md"
     if not gate_abs.is_file():
@@ -267,7 +270,7 @@ def run_gate_sweep(
 
         review_run_ids = [item.review_run_id for item in prepared]
         try:
-            result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=model)
+            result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=runner_model)
         except KeyboardInterrupt:
             fail_running_review_runs(
                 db_path=db_path,

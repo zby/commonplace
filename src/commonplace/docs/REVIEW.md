@@ -66,6 +66,7 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 Encode and normalize model identifiers with reasoning effort levels.
 
 - `encode_model(model) -> str` — sanitize model names (lowercase, special chars → hyphens)
+- `normalize_model_id(model_id) -> str` — collapse known aliases such as `opus-4-6` into canonical review partitions
 - `normalize_reasoning_effort(raw) -> str | None` — validate from {low, medium, high, xhigh}
 - `build_model_id(model, reasoning_effort) -> str` — canonical ID like `"claude-3-5-sonnet-xhigh"`
 

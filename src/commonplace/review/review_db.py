@@ -94,6 +94,17 @@ class NotePathUpdateCounts:
         return self.review_runs + self.gate_reviews + self.acceptance_events
 
 
+@dataclass(frozen=True)
+class ModelIdUpdateCounts:
+    review_runs: int = 0
+    gate_reviews: int = 0
+    acceptance_events: int = 0
+
+    @property
+    def total(self) -> int:
+        return self.review_runs + self.gate_reviews + self.acceptance_events
+
+
 def connect(db_path: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
@@ -679,6 +690,48 @@ def rekey_note_path(
         return int(cursor.rowcount or 0)
 
     return NotePathUpdateCounts(
+        review_runs=update_rows("review_runs"),
+        gate_reviews=update_rows("gate_reviews"),
+        acceptance_events=update_rows("acceptance_events"),
+    )
+
+
+def count_model_id_records(
+    conn: sqlite3.Connection,
+    *,
+    model_id: str,
+) -> ModelIdUpdateCounts:
+    def count_rows(table: str) -> int:
+        row = conn.execute(
+            f"SELECT COUNT(*) AS count FROM {table} WHERE model_id = ?",
+            (model_id,),
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
+    return ModelIdUpdateCounts(
+        review_runs=count_rows("review_runs"),
+        gate_reviews=count_rows("gate_reviews"),
+        acceptance_events=count_rows("acceptance_events"),
+    )
+
+
+def rekey_model_id(
+    conn: sqlite3.Connection,
+    *,
+    old_model_id: str,
+    new_model_id: str,
+) -> ModelIdUpdateCounts:
+    if old_model_id == new_model_id:
+        return ModelIdUpdateCounts()
+
+    def update_rows(table: str) -> int:
+        cursor = conn.execute(
+            f"UPDATE {table} SET model_id = ? WHERE model_id = ?",
+            (new_model_id, old_model_id),
+        )
+        return int(cursor.rowcount or 0)
+
+    return ModelIdUpdateCounts(
         review_runs=update_rows("review_runs"),
         gate_reviews=update_rows("gate_reviews"),
         acceptance_events=update_rows("acceptance_events"),

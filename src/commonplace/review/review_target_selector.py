@@ -23,6 +23,7 @@ from commonplace.review.review_metadata import (
     iso_now,
     review_note_provenance,
 )
+from commonplace.review.review_model import normalize_model_id
 
 NOTES_ROOT = Path("kb/notes")
 
@@ -116,6 +117,7 @@ def select_stale_gates(
     model = model.strip()
     if not model:
         raise ValueError("model is required")
+    model = normalize_model_id(model)
     if db_path is None:
         db_path = resolve_db_path(repo_root)
 
@@ -198,6 +200,7 @@ def print_grouped(records: list[StaleGate]) -> None:
 
 
 def ack_pairs(repo_root: Path, pairs: list[str], model: str, *, db_path: Path | None = None) -> None:
+    model = normalize_model_id(model)
     if db_path is None:
         db_path = resolve_db_path(repo_root)
     ensure_db(repo_root, db_path)

@@ -190,6 +190,21 @@ class TestMissingReview:
             ("prose/source-residue", "missing-review"),
         ]
 
+    def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+        with review_db.connect(db_path_for(tmp_path)) as conn:
+            review_db.rekey_model_id(conn, old_model_id=TEST_MODEL, new_model_id="claude-opus-4-6")
+            conn.commit()
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model="opus-4-6",
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+
+        assert stale == []
+
     def test_all_gates_finds_missing_across_bundles(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(

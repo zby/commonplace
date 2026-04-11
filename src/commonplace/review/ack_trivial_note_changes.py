@@ -18,6 +18,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_metadata import file_text_at_commit, file_text_at_provenance
+from commonplace.review.review_model import normalize_model_id
 from commonplace.review.review_target_selector import select_stale_gates
 
 
@@ -166,6 +167,7 @@ def qualifying_pairs(
     current_only: bool = False,
     db_path: Path | None = None,
 ) -> list[str]:
+    model = normalize_model_id(model)
     if db_path is None:
         db_path = prepare_review_db(repo_root)
     stale_records = [

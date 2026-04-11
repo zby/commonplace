@@ -14,6 +14,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_metadata import resolve_review_target
+from commonplace.review.review_model import normalize_model_id
 
 
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
@@ -40,6 +41,7 @@ def main() -> None:
     model_id = args.model.strip()
     if not model_id:
         parser.error("--model must not be empty")
+    model_id = normalize_model_id(model_id)
 
     db_path = prepare_review_db(repo_root, args.db)
 
