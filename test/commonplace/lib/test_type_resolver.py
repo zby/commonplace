@@ -264,6 +264,67 @@ def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> No
     assert profile.definition_path is None
 
 
+def test_notes_collection_definition_type_definition_extends_note_profile(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "definition.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: definition
+        additionalProperties: true
+""",
+    )
+    note = write(
+        tmp_path / "kb" / "notes" / "definitions" / "sample.md",
+        """---
+description: Definition of sample for testing
+type: definition
+---
+
+# Sample
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        note,
+        {"description": "Definition of sample for testing", "type": "definition"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.resolved_type == "definition"
+    assert profile.definition_path == tmp_path / "kb" / "notes" / "types" / "definition.schema.yaml"
+
+
 def test_reports_collection_type_definition_extends_note_profile(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note.schema.yaml",

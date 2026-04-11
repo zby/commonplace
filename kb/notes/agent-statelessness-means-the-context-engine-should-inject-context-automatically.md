@@ -29,11 +29,11 @@ This would make definitions behave like imported constants in a programming lang
 
 ### The `definition` type
 
-For the context engine to identify definitions, they need a machine-readable type. The current three definitional notes ([codification](./definitions/codification.md), [constraining](./definitions/constraining.md), [distillation](./definitions/distillation.md)) are `type: note`. A `type: definition` would:
+For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: definition`, which can:
 
 - Signal the context engine to auto-inject on first reference
-- Assert checkable structural properties: has examples, has negative examples ("Not X:"), links to sibling definitions, bounded length
-- Make the title convention (topical) part of the type contract — definitions are a recognized exception to [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md)
+- Assert checkable structural properties, such as scope, exclusions, misuse cases, sibling-definition links, or bounded length
+- Make the title convention topical as part of the type contract — definitions are a recognized exception to [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md)
 - Prevent unbounded growth — a definition that needs Evidence/Reasoning/Caveats is really a `structured-claim` about the term, not a definition
 
 ### Beyond definitions: other candidates for injection

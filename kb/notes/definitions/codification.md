@@ -1,7 +1,6 @@
 ---
 description: Definition — codification is constraining that crosses a medium boundary from natural language to a symbolic medium (code), where the consumer changes (LLM → interpreter) and verification becomes exact — the far end of the constraining spectrum
-type: note
-traits: [definition]
+type: definition
 tags: [learning-theory]
 status: current
 ---

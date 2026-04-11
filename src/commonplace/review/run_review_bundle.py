@@ -12,7 +12,6 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
-from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
     PendingGateReview,
     attach_execution_data,
@@ -256,7 +255,7 @@ def build_prompt(
         "",
         "Reading scope for this run:",
         "- Read the target note in full.",
-        "- Read the requested gate definitions included below.",
+        "- The requested gate definitions are included below. Do not read them from disk.",
         "- For semantic grounding or consistency checks, follow only links that appear in the target note.",
         "- When following a markdown link from the target note, use the pre-resolved path table below instead of searching for targets by name.",
         "- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.",
@@ -273,11 +272,7 @@ def build_prompt(
         "- End output after the final gate block.",
         "",
         f"Review run id: {review_run_id}",
-        "Requested gate definition files:",
     ]
-    for gate_id in gate_ids:
-        gate_path = GATES_ROOT / f"{gate_id}.md"
-        lines.append(f"- {gate_id} -> {gate_path}")
 
     lines.append("")
     lines.append("Pre-resolved markdown links from the target note:")
