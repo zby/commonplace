@@ -9,14 +9,14 @@ Inspect `note-changed` stale pairs and ack those where the diff is insignificant
 Inputs:
 
 - `{bundle-or-all}` — a bundle name (e.g. `prose`, `semantic`) or `--all-gates`
-- `{note-paths}` (optional) — one or more note paths to limit scope
+- `{note-scope}` — one or more note paths or directories to limit scope
 
 ## Steps
 
 ### 1. Get note-changed pairs
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-paths} --json --reason note-changed
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json --reason note-changed
 ```
 
 If the output is an empty array, stop — nothing to triage.

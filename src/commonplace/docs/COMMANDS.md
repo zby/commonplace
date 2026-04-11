@@ -105,10 +105,10 @@ The review system runs LLM-based quality reviews against notes using defined rev
 Run a full review sweep — selects notes needing review and runs gate bundles on them.
 
 ```bash
-commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code
+commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code
 commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code --current   # only current-status notes
-commonplace-review-sweep --all-gates --model claude-opus-4-6 --runner claude-code       # all gate bundles
-commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code --dry-run   # preview what would run
+commonplace-review-sweep --all-gates kb/notes kb/reference --model claude-opus-4-6 --runner claude-code       # all gate bundles
+commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code --dry-run   # preview what would run
 ```
 
 ### commonplace-run-review-bundle
@@ -124,10 +124,10 @@ commonplace-run-review-bundle kb/notes/my-note.md prose --runner claude-code --m
 Run a single gate across multiple notes in batched prompts.
 
 ```bash
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --current --batch-size 5
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes/specific.md
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --dry-run
+commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference --dry-run
 ```
 
 ### commonplace-create-review-run
@@ -168,9 +168,9 @@ commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/so
 Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically.
 
 ```bash
-commonplace-ack-trivial-note-changes prose --model claude-opus-4-6                        # all prose gates
+commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference  # all prose gates
 commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --current              # current-status notes only
-commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --dry-run              # preview what would ack
+commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference --dry-run  # preview what would ack
 ```
 
 ### commonplace-resolve-gates
@@ -187,9 +187,9 @@ commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # s
 List stale (note, gate) pairs that need review. Compares current note/gate SHAs against accepted SHAs.
 
 ```bash
-commonplace-review-target-selector prose --model claude-opus-4-6
+commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference
 commonplace-review-target-selector prose --model claude-opus-4-6 --current --json          # JSON output
-commonplace-review-target-selector prose --model claude-opus-4-6 --reason note-changed     # filter by staleness reason
+commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
 commonplace-review-target-selector prose --model claude-opus-4-6 --ack kb/notes/foo.md:prose/source-residue   # ack a pair
 ```
 

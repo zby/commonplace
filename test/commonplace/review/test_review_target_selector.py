@@ -277,6 +277,79 @@ class TestMissingReview:
             "kb/reference/architecture.md",
         ]
 
+    def test_directory_filter_expands_direct_reviewable_children_only(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        definitions_dir = tmp_path / "kb" / "notes" / "definitions"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(definitions_dir / "term.md", "Current term", "\nBody.\n", status="current")
+        make_note(definitions_dir / "index.md", "Definitions index", "\nBody.\n", status="current")
+        write(definitions_dir / "plain.txt", "not markdown\n")
+        write(definitions_dir / "no-frontmatter.md", "# No frontmatter\n")
+        make_note(definitions_dir / "nested" / "too-deep.md", "Nested", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes/definitions"],
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/definitions/term.md",
+        ]
+
+    def test_directory_filter_skips_type_definition_content(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        types_dir = tmp_path / "kb" / "notes" / "types"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(types_dir / "definition.template.md", "Definition template", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        with pytest.raises(ValueError, match="No reviewable notes found in directory: kb/notes/types"):
+            review_target_selector.select_stale_gates(
+                tmp_path,
+                model=TEST_MODEL,
+                gate_ids=["prose/source-residue"],
+                note_filter=["kb/notes/types"],
+            )
+
+    def test_directory_filter_deduplicates_overlapping_operands(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "one.md", "One", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes", "kb/notes/one.md"],
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/one.md",
+        ]
+
+    def test_selector_requires_explicit_scope_without_current(self, tmp_path: Path) -> None:
+        init_repo(tmp_path)
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        make_note(notes_dir / "current-top.md", "Current top", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        with pytest.raises(ValueError, match="provide note paths/directories or --current"):
+            review_target_selector.select_stale_gates(
+                tmp_path,
+                model=TEST_MODEL,
+                gate_ids=["prose/source-residue"],
+            )
+
     def test_trait_gated_gates_are_skipped_for_notes_without_trait(self, tmp_path: Path) -> None:
         init_repo(tmp_path)
         notes_dir = tmp_path / "kb" / "notes"

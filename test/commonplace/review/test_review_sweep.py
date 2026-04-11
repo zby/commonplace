@@ -41,7 +41,7 @@ def test_review_sweep_aborts_immediately_on_usage_exhaustion(
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
     monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    exit_code = review_sweep.main(["--model", "test-model", "prose"])
+    exit_code = review_sweep.main(["--model", "test-model", "prose", "kb/notes"])
     stderr = capsys.readouterr().err
 
     assert exit_code == 1
@@ -106,7 +106,7 @@ def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
     monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
 
-    exit_code = review_sweep.main(["--model", "test-model", "prose"])
+    exit_code = review_sweep.main(["--model", "test-model", "prose", "kb/notes"])
 
     assert exit_code == 0
     assert max_in_flight >= 4

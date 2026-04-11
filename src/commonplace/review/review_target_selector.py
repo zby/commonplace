@@ -42,6 +42,33 @@ def _is_index(path: Path) -> bool:
     return path.name == "index.md" or path.name.endswith("-index.md")
 
 
+def _is_type_definition_content(path: Path, repo_root: Path) -> bool:
+    try:
+        rel_path = path.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        return False
+    return "types" in rel_path.parent.parts
+
+
+def _expand_note_filter(repo_root: Path, raw: str) -> list[Path]:
+    path = Path(raw) if Path(raw).is_absolute() else repo_root / raw
+    path = path.resolve()
+    if path.is_file():
+        return [path]
+    if path.is_dir():
+        notes: list[Path] = []
+        for child in sorted(path.glob("*.md")):
+            if _is_index(child) or _is_type_definition_content(child, repo_root):
+                continue
+            if not _has_frontmatter(child):
+                continue
+            notes.append(child.resolve())
+        if not notes:
+            raise ValueError(f"No reviewable notes found in directory: {raw}")
+        return notes
+    raise ValueError(f"Note not found: {raw}")
+
+
 def _frontmatter_status(path: Path) -> str | None:
     try:
         text = path.read_text(encoding="utf-8")
@@ -134,16 +161,17 @@ def select_stale_gates(
 
     if note_filter:
         notes: list[Path] = []
+        seen: set[Path] = set()
         for raw in note_filter:
-            p = Path(raw) if Path(raw).is_absolute() else repo_root / raw
-            p = p.resolve()
-            if not p.is_file():
-                raise ValueError(f"Note not found: {raw}")
-            notes.append(p)
+            for path in _expand_note_filter(repo_root, raw):
+                if path in seen:
+                    continue
+                seen.add(path)
+                notes.append(path)
     elif current_only:
         notes = list_current_notes(repo_root)
     else:
-        notes = list_reviewable_notes(repo_root)
+        raise ValueError("provide note paths/directories or --current")
 
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
     ensure_db(repo_root, db_path)
@@ -248,4 +276,3 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str, *, db_path: Path | 
             )
             print(f"acked: {note_path} {gate_id}")
         conn.commit()
-

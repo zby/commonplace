@@ -131,7 +131,7 @@ Prompt-facing CLI remains stable:
 - `commonplace-review-target-selector`
 - positional gate IDs and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
 - `--all-gates` to check all gates
-- `--note` to filter to specific note paths
+- `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
 - `--model {model-id}` selects the review model partition to inspect or write
 - `--json`
@@ -180,7 +180,7 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `commonplace-review-target-selector --model {model-id} {bundle-or-all} [--current] --json` — get stale pairs with diffs
+1. `commonplace-review-target-selector --model {model-id} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `commonplace-review-sweep`, run `commonplace-run-gate-sweep`, or use `kb/instructions/run-review-bundle-on-note.md` per note/group
 4. `commonplace-review-sweep` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
@@ -188,6 +188,6 @@ Instruction: `kb/instructions/review-sweep.md`
 
 ### Gate sweep
 
-Use `commonplace-run-gate-sweep --runner {claude-code|codex} --model {model-id} [--current|--note ...] [--batch-size N] {gate-id}` when the execution set is one gate across many notes.
+Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-id} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
 
 This path keeps freshness gate-local and still creates one review run per note, but batches multiple notes into one runner prompt. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

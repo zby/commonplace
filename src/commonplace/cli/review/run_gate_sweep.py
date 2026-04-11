@@ -16,7 +16,7 @@ def main() -> int:
     parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
     parser.add_argument("--model", required=True, help="Requested runner model and initial review model partition.")
     parser.add_argument("--current", action="store_true", help="Limit to notes whose frontmatter status is current.")
-    parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths.")
+    parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--batch-size", type=int, default=5, help="Notes per runner invocation.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Print prompts without invoking the runner.")

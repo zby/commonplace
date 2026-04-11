@@ -9,7 +9,7 @@ Batch review across reviewable notes. Works with any bundle or all gates.
 Inputs:
 
 - `{bundle-or-all}` — a bundle name (e.g. `prose`, `semantic`, `frontmatter`) or `--all-gates`
-- `{note-paths}` (optional) — one or more note paths to limit the sweep to specific notes
+- `{note-scope}` — one or more note paths or directories to limit the sweep; omit only when using `--current`
 - `--current` (optional) — limit the sweep to notes whose frontmatter says `status: current`
 - `--runner {claude-code|codex}` (optional) — choose which review runner executes each note-local bundle run
 
@@ -17,12 +17,12 @@ Inputs:
 
 ### 1. Triage
 
-Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-all}` and `{note-paths}`. This uses `commonplace-ack-gate-review` to ack insignificant `note-changed` pairs, reducing the review queue.
+Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-all}` and `{note-scope}`. This uses `commonplace-ack-gate-review` to ack insignificant `note-changed` pairs, reducing the review queue.
 
 ### 2. Inventory
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-paths} --json | wc -l
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json | wc -l
 ```
 
 Or for current notes only:
@@ -38,7 +38,7 @@ Check the line count first (~5 lines per stale pair in JSON output).
 - **Otherwise**: read the JSON output and continue.
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-paths} --json
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json
 ```
 
 Or:
@@ -54,7 +54,7 @@ Group the remaining pairs by note.
 If the remaining execution set is one gate across many notes, prefer:
 
 ```bash
-commonplace-run-gate-sweep --runner {codex|claude-code} --model {model-id} [--current] [--note {note-paths} ...] {gate-id}
+commonplace-run-gate-sweep {gate-id} --runner {codex|claude-code} --model {model-id} [--current] [--note {note-scope} ...]
 ```
 
 This batches notes into one prompt while still recording one review run per note.
@@ -62,7 +62,7 @@ This batches notes into one prompt while still recording one review run per note
 If there are many notes, use:
 
 ```bash
-commonplace-review-sweep --model {model-id} {bundle-or-all} {note-paths...}
+commonplace-review-sweep --model {model-id} {bundle-or-all} {note-scope...}
 ```
 
 Or:

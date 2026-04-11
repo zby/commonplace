@@ -24,7 +24,7 @@ def main() -> None:
         help="Gate IDs (e.g. prose/source-residue) and/or bundle names (e.g. prose).",
     )
     parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
-    parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths.")
+    parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     parser.add_argument("--model", required=True, help="Review model partition to query or acknowledge.")

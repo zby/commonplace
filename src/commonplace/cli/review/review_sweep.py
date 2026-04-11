@@ -47,7 +47,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "bundle_or_note",
         nargs="*",
-        help="Bundle name followed by optional note paths, unless --all-gates is used.",
+        help="Bundle name followed by note paths or directories, unless --all-gates is used.",
     )
     args = parser.parse_args(argv)
 
