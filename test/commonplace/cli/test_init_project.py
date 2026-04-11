@@ -52,6 +52,9 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.template.md").is_file()
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.instructions.md").is_file()
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml").is_file()
+    assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.template.md").is_file()
+    assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.instructions.md").is_file()
+    assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml").is_file()
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 

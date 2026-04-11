@@ -33,6 +33,7 @@ SCAFFOLD_TREES = [
     ("kb/instructions", "kb/instructions"),
     ("kb/reference", "kb/reference"),
     ("kb/reports/types", "kb/reports/types"),
+    ("kb/sources/types", "kb/sources/types"),
     ("kb/types", "kb/types"),
 ]
 

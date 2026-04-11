@@ -1,0 +1,55 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - source_snapshot
+          - ingested
+          - type
+          - source_type
+          - domains
+        properties:
+          type:
+            const: ingest-report
+          source_snapshot:
+            type: string
+            minLength: 1
+          ingested:
+            type: string
+            format: date
+          source_type:
+            enum:
+              - scientific-paper
+              - practitioner-report
+              - conceptual-essay
+              - design-proposal
+              - tool-announcement
+              - github-issue
+              - conversation-thread
+          domains:
+            type: array
+            minItems: 2
+            maxItems: 4
+            items:
+              type: string
+              minLength: 1
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Classification"
+          - contains:
+              const: "## Summary"
+          - contains:
+              const: "## Connections Found"
+          - contains:
+              const: "## Extractable Value"
+          - contains:
+              const: "## Limitations (our opinion)"
+          - contains:
+              const: "## Recommended Next Action"

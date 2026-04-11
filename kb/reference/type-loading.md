@@ -25,7 +25,7 @@ These are the only types that cross every collection. `text` is the no-frontmatt
 Each collection or workshop can own its own specialised types:
 
 - `kb/notes/types/` — `structured-claim`, `adr` (being moved), `related-system`, `review`, `spec`, `index`
-- `kb/sources/types/` — `source-review`
+- `kb/sources/types/` — `source-review`, `ingest-report`
 - `kb/reference/types/` — `adr` (after the sub-effort 1 move lands)
 - `kb/tasks/types/` — `task-backlog`, `task-active`, `task-recurring`
 - `kb/reports/types/` — `connect-report`
@@ -41,9 +41,9 @@ The thick structural expectations — what sections to write, what metadata to i
 | Core Ideas / Comparison / Borrowable Ideas | `related-systems/` template + schema | `related-system` |
 | Context / Decision / Consequences | `adr/` template + schema | `adr` |
 | Goal / Tasks checklist / Current State | `tasks/` type templates | `task-active` etc. |
-| Summary / Key Claims / Relevance | `sources/` ingest pipeline | `source-review` |
+| Classification / Summary / Connections Found / Extractable Value / Limitations | `sources/` ingest-report template + schema | `ingest-report` |
 | Evidence / Reasoning / Caveats | `structured-claim` template | `structured-claim` |
-| Discovery Trace / Connections Found / Flags | `work/` connect-report template + schema | `connect-report` |
+| Discovery Trace / Connections Found / Flags | `reports/` connect-report template + schema | `connect-report` |
 
 The `type:` field is authoritative for artifact identity, but the structural contract for each type is carried by the template and schema in the collection's `types/` directory, not by a global definition.
 

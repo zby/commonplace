@@ -52,7 +52,10 @@ This is your connection context for the analysis below.
 
 ## Step 3: Produce the Ingestion Report
 
-Write the analysis, informed by the connections found in Steps 1-2.
+Write the analysis as an `ingest-report`, informed by the connections found in Steps 1-2. Before writing the report, read:
+
+- `kb/sources/types/ingest-report.instructions.md`
+- `kb/sources/types/ingest-report.template.md`
 
 ### 3.1 Classification
 
@@ -167,7 +170,7 @@ Pick ONE and be specific:
 
 ## Step 4: Save the Report
 
-Save the report next to the snapshot as `.ingest.md`:
+Save the `ingest-report` next to the snapshot as `.ingest.md`:
 
 - Input:  `kb/sources/some-article.md`
 - Output: `kb/sources/some-article.ingest.md`
@@ -180,8 +183,9 @@ The saved `.ingest.md` file should contain:
 ---
 description: {one-line retrieval filter — what makes this source distinctive, not a generic summary}
 source_snapshot: {input filename}
-ingested: {current UTC date}
-type: {source-type}
+ingested: "{current UTC date}"
+type: ingest-report
+source_type: {source-type}
 domains: [{tag1}, {tag2}, {tag3}]
 ---
 

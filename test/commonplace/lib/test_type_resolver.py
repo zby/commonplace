@@ -323,6 +323,72 @@ source: kb/notes/sample.md
     assert profile.definition_path == tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml"
 
 
+def test_sources_collection_ingest_report_type_definition_extends_note_profile(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - source_type
+        properties:
+          type:
+            const: ingest-report
+          source_type:
+            enum:
+              - practitioner-report
+        additionalProperties: true
+""",
+    )
+    report = write(
+        tmp_path / "kb" / "sources" / "sample.ingest.md",
+        """---
+description: Sample ingest report
+type: ingest-report
+source_type: practitioner-report
+---
+
+# Ingest: Sample
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        report,
+        {"description": "Sample ingest report", "type": "ingest-report", "source_type": "practitioner-report"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.resolved_type == "ingest-report"
+    assert profile.definition_path == tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml"
+
+
 def test_type_specific_status_enum_overrides_note_status_via_base_schema(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note-base.schema.yaml",
