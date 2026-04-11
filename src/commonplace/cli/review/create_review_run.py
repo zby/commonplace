@@ -73,7 +73,6 @@ def main() -> None:
     bundle_output_path = artifact_dir / "bundle-output.md"
     bundle_output_path_rel = bundle_output_path.relative_to(repo_root).as_posix()
 
-    prompt = None
     if args.with_prompt:
         prompt = build_review_run_prompt(
             repo_root=repo_root,
@@ -100,9 +99,8 @@ def main() -> None:
             "artifact_dir": artifact_dir_rel,
             "bundle_output_path": bundle_output_path_rel,
         }
-        if prompt is not None:
+        if args.with_prompt:
             payload["prompt_path"] = prompt_path_rel
-            payload["prompt"] = prompt
         print(
             json.dumps(
                 payload,

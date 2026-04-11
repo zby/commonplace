@@ -24,15 +24,15 @@ commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --
 Capture the JSON output, especially:
 
 - `review_run_id`
-- `prompt`
+- `prompt_path`
 - `bundle_output_path`
 - `gate_ids`
 
 Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
 
-### 2. Follow the returned prompt
+### 2. Follow the canonical prompt
 
-Use the `prompt` field as the authoritative reviewer instruction. It contains the reading scope, gate definitions, link-resolution table, and sentinel output contract for this run.
+Read the file at `prompt_path` and treat it as the authoritative reviewer instruction. It contains the reading scope, gate definitions, link-resolution table, and sentinel output contract for this run.
 
 Write the full sentinel-bracketed review bundle to `bundle_output_path`.
 

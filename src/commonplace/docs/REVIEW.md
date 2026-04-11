@@ -155,8 +155,8 @@ The bundle protocol owner for multi-gate single-note review. The subprocess path
 
 The live-agent entry points reuse this protocol without launching a nested runner:
 
-1. `commonplace-create-review-run --with-prompt` creates the run and returns the canonical prompt
-2. the current agent writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
+2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
 3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run`
 
 ### run_gate_sweep.py — Single-gate multi-note review

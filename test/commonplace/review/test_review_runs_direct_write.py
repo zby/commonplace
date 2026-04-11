@@ -529,13 +529,14 @@ def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Pat
     assert payload["artifact_dir"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}"
     assert payload["bundle_output_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/bundle-output.md"
     assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
+    assert "prompt" not in payload
     assert prompt_path.is_file()
-    assert payload["prompt"] == prompt_path.read_text(encoding="utf-8")
-    assert "Write gate reviews for kb/notes/sample.md" in payload["prompt"]
-    assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in payload["prompt"]
-    assert "Return exactly one markdown document in this process's stdout." not in payload["prompt"]
-    assert "=== GATE REVIEW START: prose/source-residue ===" in payload["prompt"]
-    assert "Requested gate definitions (authoritative for this run):" in payload["prompt"]
+    prompt_text = prompt_path.read_text(encoding="utf-8")
+    assert "Write gate reviews for kb/notes/sample.md" in prompt_text
+    assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in prompt_text
+    assert "Return exactly one markdown document in this process's stdout." not in prompt_text
+    assert "=== GATE REVIEW START: prose/source-residue ===" in prompt_text
+    assert "Requested gate definitions (authoritative for this run):" in prompt_text
     assert artifact_dir.is_dir()
     assert not (artifact_dir / "bundle-output.md").exists()
 

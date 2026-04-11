@@ -172,7 +172,7 @@ This intentionally excludes legacy imported rows that are not attached to a revi
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --with-prompt {note} {gate-or-bundle}...`
-2. Follow the `prompt` field from the JSON output in the current agent
+2. Read the file at `prompt_path` from the JSON output and follow it in the current agent
 3. Write the sentinel-delimited review bundle to `bundle_output_path`
 4. `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}`
 
