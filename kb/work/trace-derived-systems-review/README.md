@@ -39,6 +39,7 @@ This workshop holds the **execution packets** for those candidates so the work c
 17. **Claude Context Guard** — mines live agent sessions, user comments, plans, and git-state mismatches into durable safeguard files and archives; likely belongs as a weak prompt-mediated trace-to-artifact continuity system
 18. **xMemory** — mines ordered conversation transcripts into durable episode summaries, semantic fact strings, theme summaries, and kNN/graph retrieval artifacts; likely belongs as a conversation-trace symbolic artifact-learning system
 19. **Memori** — mines LLM conversations and, via the TypeScript integration path, optional agent traces into durable service/database facts, summaries, triples, and prompt-injected recall context; likely belongs as a service-owned trace-to-structured-memory system
+20. **GBrain** — mines daily conversations, meeting transcripts, emails, social events, and other signals through agent skills/cron jobs into durable compiled-truth/timeline brain pages and MEMORY.md; likely belongs as a prompt-mediated personal-intelligence trace-to-symbolic-artifact system
 
 ## Parked but likely worth a later pass
 
