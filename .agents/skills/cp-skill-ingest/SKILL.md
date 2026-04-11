@@ -30,7 +30,7 @@ Parse the target to determine what to do:
 
 Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding with the `cp-skill-connect` skill on that path.
 
-This creates a workshop at `kb/work/connect/<name>/` and saves the connection report there.
+This saves the connection report at `kb/reports/connect/<snapshot-name>.connect.md`.
 
 The report contains:
 - Discovery trace (what was searched, what matched)
@@ -43,7 +43,7 @@ Wait for the `cp-skill-connect` skill to complete before proceeding.
 
 ## Step 2: Read Connection Report
 
-Read the connection report from the workshop. Note:
+Read the connection report from `kb/reports/connect/<snapshot-name>.connect.md`. Note:
 - Which `kb/notes/` files were identified as connections
 - What relationship types were found
 - Any synthesis opportunities or tensions flagged

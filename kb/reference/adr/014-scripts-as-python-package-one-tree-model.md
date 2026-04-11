@@ -64,8 +64,10 @@ An earlier design proposed a `scaffold/` directory containing copies of instruct
 The `src/commonplace/scaffold/` directory contains symlinks to the repo's canonical files:
 
 - `kb/instructions` -> `../../../../kb/instructions`
-- `types` -> `../../../types`
-- `skills` -> `../../../skills`
+- `kb/reference` -> `../../../../kb/reference`
+- `kb/reports` -> `../../../../kb/reports`
+- `kb/types` -> `../../../../kb/types`
+- `kb/work` -> `../../../../kb/work`
 - `AGENTS.md.template` -> `../../../AGENTS.md.template`
 - `.envrc.template` -> `../../../.envrc.template`
 

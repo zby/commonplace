@@ -1,0 +1,50 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - source
+          - source_has_frontmatter
+          - date
+          - depth
+        properties:
+          type:
+            const: connect-report
+          source:
+            type: string
+            minLength: 1
+          source_has_frontmatter:
+            type: boolean
+          date:
+            type: string
+            format: date
+          depth:
+            enum:
+              - quick
+              - standard
+              - deep
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Discovery Trace"
+          - contains:
+              const: "## Connections Found"
+          - contains:
+              const: "## Bidirectional Candidates"
+          - contains:
+              const: "## Raw Text Candidates"
+          - contains:
+              const: "## Rejected Candidates"
+          - contains:
+              const: "## Index Membership"
+          - contains:
+              const: "## Synthesis Opportunities"
+          - contains:
+              const: "## Flags"

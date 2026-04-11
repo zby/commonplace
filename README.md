@@ -7,15 +7,6 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 ## What's in the box
 
 ```
-skills/                      Framework skill source files
-  write/SKILL.md             Route and draft notes by type
-  connect/SKILL.md           Find connections, weave knowledge graph
-  convert/SKILL.md           Convert notes between types
-  ingest/SKILL.md            Ingest external sources
-  snapshot-web/SKILL.md      Capture URLs to markdown
-  validate/SKILL.md          Schema and quality validation
-  revise-iterative/SKILL.md  Multi-pass prose revision
-
 kb/                          Knowledge base
   types/                     Global types (text, note)
   instructions/WRITING.md     Writing conventions and quality checklist
@@ -27,10 +18,10 @@ kb/                          Knowledge base
   sources/                   Snapshotted external sources + analysis
   tasks/                     Work tracking (status encoded by directory)
   work/                      Workshop space — connect reports, ingest staging, explorations
-  instructions/              Instructions, local procedures, and searchable skill copies
-    write/SKILL.md           Promoted framework skill, mirrored here for searchability
-    connect/SKILL.md         Promoted framework skill, mirrored here for searchability
-    ingest/SKILL.md          Promoted framework skill, mirrored here for searchability
+  instructions/              Framework skills, local procedures, and operator guidance
+    write/SKILL.md           Promoted framework skill source
+    connect/SKILL.md         Promoted framework skill source
+    ingest/SKILL.md          Promoted framework skill source
     evaluate-scenarios/SKILL.md  Measure scenario costs
     review-related-system/SKILL.md  Related-system review workflow
     re-ingest.md             Instruction (not yet promoted to skill)
@@ -69,7 +60,7 @@ Framework skills:
 |---|---|
 | `cp-skill-write` | Route and draft a note, index, or discovered specialized type |
 | `cp-skill-validate` | Check frontmatter, descriptions, types, links, structure |
-| `cp-skill-connect` | Find connections between notes, update indexes |
+| `cp-skill-connect` | Discover connections and write a `connect-report` artifact |
 | `cp-skill-convert` | Convert notes between types (text → note → structured-claim) |
 | `cp-skill-ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `cp-skill-snapshot-web` | Capture a URL to `kb/sources/` |

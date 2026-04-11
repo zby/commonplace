@@ -23,6 +23,8 @@ DEFAULT_DIRS = [
     Path("kb/work"),
     Path("kb/instructions"),
     Path("kb/reports"),
+    Path("kb/reports/connect"),
+    Path("kb/reports/types"),
 ]
 
 # Scaffold paths to copy, relative to the scaffold package.
@@ -30,6 +32,7 @@ DEFAULT_DIRS = [
 SCAFFOLD_TREES = [
     ("kb/instructions", "kb/instructions"),
     ("kb/reference", "kb/reference"),
+    ("kb/reports/types", "kb/reports/types"),
     ("kb/types", "kb/types"),
 ]
 

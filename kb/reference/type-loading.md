@@ -20,14 +20,15 @@ How commonplace splits the shipped type system across a thin global layer and di
 
 These are the only types that cross every collection. `text` is the no-frontmatter root; `note` is the base for every structured document. Per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md), the `note` template is inlined into `kb/instructions/WRITING.md` so that agents writing ordinary notes get the template in the same context hop as the writing conventions. This covers the majority of writes.
 
-**Directory-scoped types (`kb/*/types/`)**
+**Directory-scoped types (`types/` under collection or workshop directories)**
 
-Each collection owns its own specialised types:
+Each collection or workshop can own its own specialised types:
 
 - `kb/notes/types/` — `structured-claim`, `adr` (being moved), `related-system`, `review`, `spec`, `index`
 - `kb/sources/types/` — `source-review`
 - `kb/reference/types/` — `adr` (after the sub-effort 1 move lands)
 - `kb/tasks/types/` — `task-backlog`, `task-active`, `task-recurring`
+- `kb/reports/types/` — `connect-report`
 
 Each type ships as three files: `{type}.template.md` (prose template), `{type}.instructions.md` (how to fill it in), and `{type}.schema.yaml` (machine-readable schema). Directory-local types only get loaded when the routing table points to them — the agent doesn't carry every specialised type in context on every invocation.
 
@@ -42,6 +43,7 @@ The thick structural expectations — what sections to write, what metadata to i
 | Goal / Tasks checklist / Current State | `tasks/` type templates | `task-active` etc. |
 | Summary / Key Claims / Relevance | `sources/` ingest pipeline | `source-review` |
 | Evidence / Reasoning / Caveats | `structured-claim` template | `structured-claim` |
+| Discovery Trace / Connections Found / Flags | `work/` connect-report template + schema | `connect-report` |
 
 The `type:` field is authoritative for artifact identity, but the structural contract for each type is carried by the template and schema in the collection's `types/` directory, not by a global definition.
 

@@ -264,6 +264,65 @@ def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> No
     assert profile.definition_path is None
 
 
+def test_reports_collection_type_definition_extends_note_profile(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - source
+        properties:
+          type:
+            const: connect-report
+        additionalProperties: true
+""",
+    )
+    report = write(
+        tmp_path / "kb" / "reports" / "connect" / "sample.connect.md",
+        """---
+description: Sample
+type: connect-report
+source: kb/notes/sample.md
+---
+
+# Sample
+""",
+    )
+
+    profile = type_resolver.resolve_type(report, {"description": "Sample", "type": "connect-report"}, repo_root=tmp_path)
+
+    assert profile.resolved_type == "connect-report"
+    assert profile.definition_path == tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml"
+
+
 def test_type_specific_status_enum_overrides_note_status_via_base_schema(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note-base.schema.yaml",

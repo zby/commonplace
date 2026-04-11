@@ -40,6 +40,7 @@ skills-lock.json
 kb/sources/slate-moving-beyond-react-and-rlm.md
 
 # connect reports
+kb/reports/connect/*
 kb/work/connect/
 kb/work/review-db-migration/
 kb/work/review-runs-direct-write/

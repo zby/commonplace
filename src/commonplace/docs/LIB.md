@@ -114,6 +114,11 @@ Schemas live in `types/` directories at each scope level under `kb/`. For a note
 2. `kb/work/types/{type}.schema.yaml`
 3. `kb/types/{type}.schema.yaml`
 
+For a report at `kb/reports/connect/foo.connect.md`:
+
+1. `kb/reports/types/{type}.schema.yaml`
+2. `kb/types/{type}.schema.yaml`
+
 For a note at `kb/notes/bar.md`:
 
 1. `kb/notes/types/{type}.schema.yaml`

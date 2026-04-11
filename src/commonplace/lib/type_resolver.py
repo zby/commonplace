@@ -38,7 +38,7 @@ def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:
     parts = rel.parts
     scopes: list[Path] = []
     if len(parts) >= 3 and parts[0] == "kb" and parts[1] == "work":
-        scopes.append(workspace_root / "kb" / "work" / parts[2])
+        scopes.append(workspace_root / "kb" / parts[1] / parts[2])
     if len(parts) >= 2 and parts[0] == "kb":
         scopes.append(workspace_root / "kb" / parts[1])
         scopes.append(workspace_root / "kb")
