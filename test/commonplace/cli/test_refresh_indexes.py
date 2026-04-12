@@ -68,6 +68,17 @@ status: current
 """,
     )
     write(
+        sources_root / "index.md",
+        """---
+description: stale
+type: index
+index_source: directory
+---
+
+# Old sources directory
+""",
+    )
+    write(
         notes_root / "tags-index.md",
         """---
 description: Tags directory
@@ -84,7 +95,6 @@ status: current
 
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
-    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
     monkeypatch.setattr(sys, "argv", ["refresh_indexes.py"])
 
     assert refresh_indexes.main() == 0

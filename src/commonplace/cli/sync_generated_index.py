@@ -21,13 +21,36 @@ from pathlib import Path
 from commonplace.lib import frontmatter
 
 KB_ROOT = Path.cwd().resolve() / "kb"
-NOTES_DIR = KB_ROOT / "notes"
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
 GENERATED_HEADING_BY_SOURCE = {
     "tag": "## Other tagged notes",
     "tag-indexes": "## Other tag indexes",
 }
+
+
+def find_all_collections() -> list[Path]:
+    """Find all collection directories under KB_ROOT."""
+    return sorted(
+        p for p in KB_ROOT.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    )
+
+
+def collection_for_path(path: Path) -> Path:
+    """Return the collection root for a file path.
+
+    The collection is the first directory under KB_ROOT.
+    E.g., kb/notes/foo/bar.md -> kb/notes/
+    """
+    try:
+        rel = path.resolve().relative_to(KB_ROOT)
+    except ValueError:
+        return path.parent
+    parts = rel.parts
+    if parts:
+        return KB_ROOT / parts[0]
+    return KB_ROOT
 
 
 def get_title(content: str) -> str:
@@ -37,21 +60,22 @@ def get_title(content: str) -> str:
     return match.group(1) if match else "Untitled"
 
 
-def collect_notes_by_tag() -> dict[str, list[tuple[Path, str, str]]]:
-    """Scan all notes and group by tag.
+def collect_notes_by_tag(collection_dir: Path) -> dict[str, list[tuple[Path, str, str]]]:
+    """Scan a collection and group notes by tag.
 
     Returns {tag: [(path, title, description), ...]}.
     """
     by_tag: dict[str, list[tuple[Path, str, str]]] = {}
 
-    for path in sorted(NOTES_DIR.rglob("*.md")):
+    for path in sorted(collection_dir.rglob("*.md")):
         content = path.read_text()
         fm = frontmatter.parse(content).data
 
-        # Skip index pages and type templates
+        # Skip index pages and type/config directories
         if fm.get("type") == "index":
             continue
-        if "types" in path.relative_to(NOTES_DIR).parts:
+        rel_parts = path.relative_to(collection_dir).parts
+        if "types" in rel_parts or ".collection" in rel_parts:
             continue
 
         tags = fm.get(FIELD_NAME, [])
@@ -76,12 +100,13 @@ def index_frontmatter(path: Path, content: str | None = None) -> dict:
 
 def index_source(path: Path, content: str | None = None) -> str | None:
     """Return the declared generated-section source for a managed index."""
+    collection = collection_for_path(path)
     try:
-        rel_parts = path.relative_to(NOTES_DIR).parts
+        rel_parts = path.relative_to(collection).parts
     except ValueError:
         rel_parts = path.parts
 
-    if "types" in rel_parts:
+    if "types" in rel_parts or ".collection" in rel_parts:
         return None
     if path.name.endswith(".template.md"):
         return None
@@ -95,10 +120,10 @@ def index_source(path: Path, content: str | None = None) -> str | None:
     return None
 
 
-def collect_tag_index_entries() -> list[tuple[Path, str, str]]:
-    """Return all tag indexes that should appear in the tags directory."""
+def collect_tag_index_entries(collection_dir: Path) -> list[tuple[Path, str, str]]:
+    """Return all tag indexes within a collection."""
     entries: list[tuple[Path, str, str]] = []
-    for path in sorted(NOTES_DIR.rglob("*.md")):
+    for path in sorted(collection_dir.rglob("*.md")):
         content = path.read_text()
         if index_source(path, content) != "tag":
             continue
@@ -159,7 +184,8 @@ def sync_index(index_path: Path, notes_by_tag: dict, dry_run: bool = False) -> s
         entries = notes_by_tag.get(key, [])
         change_target = f"{len(entries)} notes for tag '{key}'"
     else:
-        entries = collect_tag_index_entries()
+        collection = collection_for_path(index_path)
+        entries = collect_tag_index_entries(collection)
         change_target = f"{len(entries)} tag indexes"
 
     generated = build_generated_section(
@@ -213,12 +239,13 @@ def find_index_files(args: list[str]) -> list[Path]:
                 indexes.append(path)
         return indexes
 
-    # Find all indexes with generated tails.
+    # Find all indexes with generated tails across all collections.
     indexes = []
-    for path in sorted(NOTES_DIR.rglob("*.md")):
-        content = path.read_text()
-        if index_source(path, content):
-            indexes.append(path)
+    for collection in find_all_collections():
+        for path in sorted(collection.rglob("*.md")):
+            content = path.read_text()
+            if index_source(path, content):
+                indexes.append(path)
     return indexes
 
 
@@ -233,8 +260,18 @@ def main():
     if args.dry_run:
         print("DRY RUN — no files will be modified\n")
 
-    notes_by_tag = collect_notes_by_tag()
-    print(f"Found {sum(len(v) for v in notes_by_tag.values())} tag assignments across {len(notes_by_tag)} tags\n")
+    # Collect tags per collection (tags are collection-scoped)
+    tags_by_collection: dict[Path, dict[str, list[tuple[Path, str, str]]]] = {}
+    for collection in find_all_collections():
+        tags = collect_notes_by_tag(collection)
+        if tags:
+            tags_by_collection[collection] = tags
+            total = sum(len(v) for v in tags.values())
+            print(f"  {collection.name}: {total} tag assignments across {len(tags)} tags")
+
+    total_assignments = sum(sum(len(v) for v in tags.values()) for tags in tags_by_collection.values())
+    total_tags = sum(len(tags) for tags in tags_by_collection.values())
+    print(f"Total: {total_assignments} tag assignments across {total_tags} tags\n")
 
     indexes = find_index_files(args.index_paths)
     if not indexes:
@@ -243,6 +280,8 @@ def main():
 
     changes = []
     for index_path in indexes:
+        collection = collection_for_path(index_path)
+        notes_by_tag = tags_by_collection.get(collection, {})
         result = sync_index(index_path, notes_by_tag, args.dry_run)
         if result:
             changes.append(result)

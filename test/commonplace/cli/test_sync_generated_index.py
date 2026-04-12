@@ -49,7 +49,7 @@ tags: [kb-design]
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
+    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
     monkeypatch.setattr(sys, "argv", ["sync_generated_index.py", "--dry-run", str(index_path)])
 
     sync_generated_index.main()
@@ -116,7 +116,7 @@ index_key: template
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
+    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
 
     indexes = sync_generated_index.find_index_files([])
 
@@ -169,7 +169,7 @@ index_key: tool-loop
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "NOTES_DIR", notes_root)
+    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
 
     result = sync_generated_index.sync_index(tags_index, {})
     updated = tags_index.read_text(encoding="utf-8")
