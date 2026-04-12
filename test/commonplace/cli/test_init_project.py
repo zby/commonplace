@@ -131,8 +131,8 @@ def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
 
 
 def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> None:
-    scaffold_pkg = files("commonplace.scaffold")
-    with as_file(scaffold_pkg) as scaffold_root:
+    data_pkg = files("commonplace") / "_data"
+    with as_file(data_pkg) as scaffold_root:
         raw_template = (scaffold_root / "AGENTS.md.template").read_text(encoding="utf-8")
     (tmp_path / "AGENTS.md.template").write_text(raw_template, encoding="utf-8")
 

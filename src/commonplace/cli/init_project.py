@@ -54,7 +54,6 @@ PROMOTED_SKILLS = [
     "cp-skill-ingest",
     "cp-skill-snapshot-web",
     "cp-skill-revise-iterative",
-    "review-related-system",
 ]
 
 
@@ -158,9 +157,9 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     else:
         _record_existing(report, Path("kb/log.md"), log_path, b"")
 
-    # Copy scaffold files from the installed package.
-    scaffold_pkg = files("commonplace.scaffold")
-    with as_file(scaffold_pkg) as scaffold_root:
+    # Copy scaffold files from the installed package data.
+    data_pkg = files("commonplace") / "_data"
+    with as_file(data_pkg) as scaffold_root:
         for src_rel, target_rel in SCAFFOLD_TREES:
             _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel, report)
 
