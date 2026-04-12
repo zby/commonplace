@@ -63,4 +63,4 @@ A quality check's placement depends on three properties:
 
 Relevant Notes:
 
-- [WRITING.md](../../instructions/WRITING.md) — one of the lowest-friction quality-check surfaces this ADR routes checks toward
+- [notes COLLECTION.md](../../notes/COLLECTION.md) — one of the lowest-friction quality-check surfaces this ADR routes checks toward

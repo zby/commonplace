@@ -47,7 +47,7 @@ User notices an upstream change (PR, RFC, API update) or has a design idea, and 
 
 ### 6. Read writing conventions
 - **Context needed:** How to write the response document — type template, quality conventions
-- **Source:** `kb/instructions/WRITING.md`
+- **Source:** target collection's `COLLECTION.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
 - **Notes:** Needed if the response is a KB note (analysis, ADR). May be skipped if the response is a PR comment or external message — but even then, the grounding conventions apply.
@@ -61,7 +61,7 @@ User notices an upstream change (PR, RFC, API update) or has a design idea, and 
 
 ### 8. Connect the response (if KB note)
 - **Context needed:** /connect skill body, area indexes
-- **Source:** `kb/instructions/connect/SKILL.md` + variable (area indexes)
+- **Source:** `kb/instructions/cp-skill-connect/SKILL.md` + variable (area indexes)
 - **Hops:** 1 (skill) + 1-3 (indexes and search)
 - **Fixed/Variable:** mixed — skill is fixed, index reads are variable
 - **Notes:** Only applies when the response is a KB note (analysis document, ADR). Skipped for external outputs (PR comments, messages).

@@ -36,10 +36,10 @@ wc -c < {source-path}
 
 Common fixed sources you'll encounter:
 - `CLAUDE.md` — always-loaded context (count once, not per-step)
-- `kb/instructions/WRITING.md` — writing conventions and type templates
-- `kb/instructions/connect/SKILL.md` — connection skill body
-- `kb/instructions/ingest/SKILL.md` — ingestion skill body
-- `kb/instructions/snapshot-web/SKILL.md` — snapshot skill body
+- `kb/notes/COLLECTION.md` — writing conventions for the notes collection
+- `kb/instructions/cp-skill-connect/SKILL.md` — connection skill body
+- `kb/instructions/cp-skill-ingest/SKILL.md` — ingestion skill body
+- `kb/instructions/cp-skill-snapshot-web/SKILL.md` — snapshot skill body
 - `kb/sources/types/source-review.template.md` — source review type template
 - `test/scenarios/types/scenario.template.md` — scenario type template
 
@@ -124,7 +124,7 @@ Variable estimates: {defaults or overrides used}
 
 After producing the table, sanity-check key numbers:
 - CLAUDE.md should be in the range of 4,000-7,000 bytes
-- WRITING.md should be in the range of 8,000-12,000 bytes
+- COLLECTION.md files should be in the range of 4,000-8,000 bytes
 - Skill files (connect, ingest) are typically 10,000-20,000 bytes
 - If any number looks implausible, re-read the source file and re-measure
 

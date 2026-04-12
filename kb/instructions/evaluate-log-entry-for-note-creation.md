@@ -147,7 +147,7 @@ Use only when the proposal survives the novelty tests and cannot be compressed i
 
 Action:
 
-- write the note following `kb/instructions/WRITING.md`
+- write the note following `kb/notes/COLLECTION.md`
 - connect it to the strongest related notes and indexes
 - remove or revise the originating log entry
 

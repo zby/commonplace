@@ -1,7 +1,7 @@
 ---
 description: GitHub Pages commits the KB to external readers who lack CLAUDE.md context — KB vocabulary needs inline glosses and definition links on first mention
 type: adr
-tags: [document-system]
+tags: []
 status: accepted
 ---
 
@@ -48,4 +48,4 @@ Relevant Notes:
 
 - [009-link-relationship-semantics](./009-link-relationship-semantics.md) — parallel: another intentional-friction authoring requirement that improves navigation at the cost of writing speed
 - [undefined-terms gate](../../instructions/review-gates/accessibility/undefined-terms.md) — implements: the updated gate that enforces first-mention glosses
-- [WRITING.md](../../instructions/WRITING.md) — implements: checklist item 5 (KB vocabulary on first mention)
+- [notes COLLECTION.md](../../notes/COLLECTION.md) — implements: checklist item 5 (KB vocabulary on first mention)

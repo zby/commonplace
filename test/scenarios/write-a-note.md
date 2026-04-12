@@ -33,17 +33,17 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 ### 4. Know the structure
 - **Context needed:** Type template for the target note type
-- **Source:** `kb/instructions/WRITING.md`
+- **Source:** target collection's `COLLECTION.md` (e.g. `kb/notes/COLLECTION.md`)
 - **Hops:** 1
 - **Fixed/Variable:** fixed
-- **Notes:** WRITING.md inlines the two global types (note, structured-claim). Directory-local types (adr, index, related-system) require an additional hop to `kb/notes/types/`. For the common case (note or structured-claim), one hop suffices.
+- **Notes:** Each COLLECTION.md inlines the default note template. Directory-local types (adr, index, related-system) require an additional hop to `kb/*/types/`. For the common case (note), one hop suffices.
 
 ### 5. Know how to write well
 - **Context needed:** Writing conventions — title-as-claim, description quality, composability
-- **Source:** `kb/instructions/WRITING.md`
+- **Source:** target collection's `COLLECTION.md`
 - **Hops:** 0
 - **Fixed/Variable:** fixed
-- **Notes:** Same file as step 4 — already loaded. WRITING.md serves double duty: type templates and writing conventions.
+- **Notes:** Same file as step 4 — already loaded. COLLECTION.md serves double duty: type templates and register-specific writing conventions.
 
 ### 6. Write the file
 - **Context needed:** All of the above in context
@@ -54,7 +54,7 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 ### 7. Connect to existing knowledge
 - **Context needed:** /connect skill body, area indexes
-- **Source:** `kb/instructions/connect/SKILL.md` + variable (area indexes)
+- **Source:** `kb/instructions/cp-skill-connect/SKILL.md` + variable (area indexes)
 - **Hops:** 1 (skill) + 1-3 (indexes and search)
 - **Fixed/Variable:** mixed — skill is fixed, index reads are variable
 - **Notes:** The connect step is a separate skill invocation. The skill body is substantial (~15KB). Index reads depend on how many areas the note touches.
@@ -93,7 +93,7 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 **Commonplace repo:** Escalation steps E1-E4 don't exist. The methodology notes ARE the content the agent searches in step 2. When writing a note about, say, title conventions, the agent naturally encounters the full reasoning because it lives in the same `kb/notes/` directory.
 
-**Installed project (common path):** Steps 1-7 are identical — the copied operational artifacts (`kb/instructions/WRITING.md`, `kb/types/`) ensure the paths are the same. The agent doesn't know or care whether it's in commonplace or an installed project.
+**Installed project (common path):** Steps 1-7 are identical — the copied operational artifacts (`COLLECTION.md` files, `kb/types/`) ensure the paths are the same. The agent doesn't know or care whether it's in commonplace or an installed project.
 
 **Installed project (escalation):** Adds 2-3 hops to a different tree. Estimated to occur ~10% of the time — most writes don't hit edge cases requiring full methodology reasoning.
 

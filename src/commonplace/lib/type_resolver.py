@@ -24,8 +24,64 @@ class TypeProfile:
     schema: dict[str, Any] | None = None
 
 
+_SCHEMA_SUFFIX = ".schema.yaml"
+_TEMPLATE_SUFFIX = ".template.md"
+
+
 def _schema_candidate_name(type_name: str) -> str:
-    return f"{type_name}.schema.yaml"
+    return f"{type_name}{_SCHEMA_SUFFIX}"
+
+
+def discover_all_types(workspace_root: Path) -> dict[str, list[Path]]:
+    """Scan all kb/*/types/ directories for type definitions.
+
+    Returns a mapping of type name → list of definition paths.
+    A well-formed KB has exactly one path per type name.
+    """
+    kb_root = workspace_root / "kb"
+    result: dict[str, list[Path]] = {}
+    if not kb_root.is_dir():
+        return result
+
+    for schema_path in kb_root.rglob(f"types/*{_SCHEMA_SUFFIX}"):
+        type_name = schema_path.name.removesuffix(_SCHEMA_SUFFIX)
+        result.setdefault(type_name, []).append(schema_path)
+
+    return result
+
+
+def _collection_names(workspace_root: Path) -> set[str]:
+    """Return the names of top-level KB collection directories."""
+    kb_root = workspace_root / "kb"
+    if not kb_root.is_dir():
+        return set()
+    return {
+        p.name
+        for p in kb_root.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    }
+
+
+def check_type_uniqueness(workspace_root: Path) -> list[str]:
+    """Return warnings for type names that collide with each other or with collection names."""
+    all_types = discover_all_types(workspace_root)
+    collection_names = _collection_names(workspace_root)
+    warnings: list[str] = []
+
+    for type_name, paths in sorted(all_types.items()):
+        if len(paths) > 1:
+            locations = ", ".join(
+                str(p.relative_to(workspace_root)) for p in sorted(paths)
+            )
+            warnings.append(
+                f"type {type_name!r} defined in multiple scopes: {locations}"
+            )
+        if type_name in collection_names:
+            warnings.append(
+                f"type {type_name!r} collides with collection directory kb/{type_name}/"
+            )
+
+    return warnings
 
 
 def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:

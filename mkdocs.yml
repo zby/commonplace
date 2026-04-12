@@ -55,7 +55,9 @@ nav:
       - Sources Directory: sources/index.md
       - Workshops: work/README.md
   - How To:
-      - Writing Guide: instructions/WRITING.md
+      - "Notes conventions": notes/COLLECTION.md
+      - "Reference conventions": reference/COLLECTION.md
+      - "Instructions conventions": instructions/COLLECTION.md
       - KB Maintenance: notes/kb-maintenance-index.md
       - Agents Notes: log.md
   - Recent Changes: https://github.com/zby/commonplace/commits/main/

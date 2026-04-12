@@ -1,7 +1,7 @@
 ---
 description: Accepted decision that specialized and practitioner-defined types use separate template and instructions files, while WRITING.md stays the generic always-loaded guide
 type: adr
-tags: [document-system, types]
+tags: []
 status: accepted
 ---
 
@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-[ADR-002](./002-inline-global-types-in-writing-guide.md) optimized the common write path by putting the default `note` template directly in [`kb/instructions/WRITING.md`](../../instructions/WRITING.md). That works for the always-loaded path because the agent needs generic writing conventions and the default note scaffold together on almost every write.
+[ADR-002](./002-inline-global-types-in-writing-guide.md) optimized the common write path by putting the default `note` template directly in [`kb/notes/COLLECTION.md`](../../notes/COLLECTION.md). That works for the always-loaded path because the agent needs generic writing conventions and the default note scaffold together on almost every write.
 
 Specialized types have a different loading profile. ADRs, indexes, related-system reviews, source reviews, task types, and practitioner-defined local types are all less common and more collection-specific. They should not bloat `WRITING.md`, but they still need a stable authoring interface.
 

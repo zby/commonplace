@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 from dataclasses import dataclass, field
 from importlib.resources import as_file, files
@@ -31,6 +32,7 @@ DEFAULT_DIRS = [
 # Each entry is (scaffold_relative_path, target_relative_path).
 SCAFFOLD_TREES = [
     ("kb/instructions", "kb/instructions"),
+    ("kb/notes", "kb/notes"),
     ("kb/reference", "kb/reference"),
     ("kb/reports/types", "kb/reports/types"),
     ("kb/sources/types", "kb/sources/types"),
@@ -44,16 +46,16 @@ SKILLS_DIRS = [
 ]
 
 PROMOTED_SKILLS = [
-    "write",
-    "validate",
-    "connect",
-    "convert",
-    "ingest",
-    "snapshot-web",
-    "revise-iterative",
+    "cp-skill-compile-collections",
+    "cp-skill-write",
+    "cp-skill-validate",
+    "cp-skill-connect",
+    "cp-skill-convert",
+    "cp-skill-ingest",
+    "cp-skill-snapshot-web",
+    "cp-skill-revise-iterative",
+    "review-related-system",
 ]
-
-SKILL_PREFIX = "cp-skill-"
 
 
 @dataclass
@@ -185,23 +187,30 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
                 report,
             )
 
-        # Promote selected instruction directories into runtime skills directories.
-        for skill_name in PROMOTED_SKILLS:
-            skill_src_rel = f"kb/instructions/{skill_name}"
-            if not (scaffold_root / skill_src_rel).is_dir():
-                raise FileNotFoundError(
-                    f"Promoted skill source is missing from scaffold: {skill_src_rel}"
-                )
-            prefixed_name = SKILL_PREFIX + skill_name
-            for skills_dest in SKILLS_DIRS:
-                target_rel = str(skills_dest / prefixed_name)
-                _copy_scaffold_tree(
-                    scaffold_root,
-                    skill_src_rel,
-                    root,
-                    target_rel,
-                    report,
-                )
+    # Promote selected instruction directories into runtime skills directories
+    # via symlinks. The source is the local kb/instructions/<name> directory
+    # (already scaffolded above), not the scaffold package.
+    for skill_name in PROMOTED_SKILLS:
+        skill_src = root / "kb" / "instructions" / skill_name
+        if not skill_src.is_dir():
+            raise FileNotFoundError(
+                f"Promoted skill source is missing: kb/instructions/{skill_name}"
+            )
+        for skills_dest in SKILLS_DIRS:
+            link = root / skills_dest / skill_name
+            link.parent.mkdir(parents=True, exist_ok=True)
+            # Compute relative path from the link's parent to the source.
+            target = Path(os.path.relpath(skill_src, link.parent))
+            if link.is_symlink():
+                if link.resolve() == skill_src.resolve():
+                    report.preserved_identical.append(skills_dest / skill_name)
+                    continue
+                link.unlink()
+            elif link.is_dir():
+                # Replace old copied directory with a symlink.
+                shutil.rmtree(link)
+            link.symlink_to(target)
+            report.created.append(skills_dest / skill_name)
 
     return report
 

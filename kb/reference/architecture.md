@@ -69,7 +69,7 @@ It does three things:
 2. Copies scaffolded framework artifacts into the project: `kb/instructions/`, `kb/types/`, `kb/reference/`, and the collection-local `types/` directories.
 3. Promotes selected skills into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/`, and resolves project-specific templates such as `AGENTS.md` and `qmd-collections.yml`.
 
-The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, `kb/instructions/WRITING.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
+The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
 
 ## Boundary between framework and authored content
 

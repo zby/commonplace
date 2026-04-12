@@ -35,7 +35,7 @@ Observer-relativity shapes inclusion decisions. A note's value depends on whethe
 
 Several KB conventions are optimizations for the agent observer:
 
-- **[Title as claim](../instructions/WRITING.md)** — a claim title lets the agent extract the main point without loading the note. This is a distillation targeting the lowest-cost reading: scanning titles in an index.
+- **[Title as claim](./COLLECTION.md)** — a claim title lets the agent extract the main point without loading the note. This is a distillation targeting the lowest-cost reading: scanning titles in an index.
 - **Descriptions as retrieval filters** — the description field exists because the agent needs to decide relevance before reading the full note. A good description is a distillation for the "should I read this?" decision.
 - **[Short composable notes](./short-composable-notes-maximize-combinatorial-discovery.md)** — many short notes give more combinatorial coverage than few long ones for a reader with bounded context.
 - **[Progressive refinement](./definitions/constraining.md)** — each level (text → note → structured-claim) adds structure that makes the content more extractable. A structured claim with Evidence/Reasoning/Caveats is more accessible to an agent than the same argument in prose.

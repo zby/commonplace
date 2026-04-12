@@ -8,7 +8,7 @@ status: seedling
 
 # Areas exist because useful operations require reading notes together
 
-This note is the analytical companion to [WRITING](../instructions/WRITING.md): `WRITING.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
+This note is the analytical companion to [COLLECTION.md](./COLLECTION.md): `COLLECTION.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
 
 ## The operations
 
@@ -102,4 +102,4 @@ Relevant Notes:
 
 Distilled into:
 
-- [WRITING.md](../instructions/WRITING.md) — area assignment rules, lifecycle split threshold, and areas field description
+- [COLLECTION.md](./COLLECTION.md) — area assignment rules, lifecycle split threshold, and areas field description

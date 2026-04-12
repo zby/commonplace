@@ -1,7 +1,7 @@
 ---
 description: Top-level kb/ subdirectory that groups authored artifacts sharing a domain, owns or inherits a type contract, and is the unit at which operational context-budgeting decisions (validation, areas, boundary reasoning) are made
 type: definition
-tags: [types]
+tags: []
 status: seedling
 ---
 

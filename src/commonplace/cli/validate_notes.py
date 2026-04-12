@@ -7,6 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from commonplace.lib.type_resolver import check_type_uniqueness
 from commonplace.lib.validation import (
     CheckResults,
     list_kb_note_paths,
@@ -124,11 +125,21 @@ def main(argv: list[str] | None = None) -> int:
             failure_items.extend((path, failure) for failure in results.fails)
 
     if args.target in {"all", "notes"}:
+        type_warnings = check_type_uniqueness(repo_root)
+        if type_warnings:
+            had_failures = True
+
         print("\n=== BATCH INFO ===\n")
         print(f"Files analysed: {len(paths)}")
         print(f"Text files: {text_count}")
         print(f"Notes with warnings: {warning_count}")
         print(f"Failing notes: {failure_count}")
+        print("\nType system:")
+        if type_warnings:
+            for tw in type_warnings:
+                print(f"- FAIL: {tw}")
+        else:
+            print("- PASS: all type names are globally unique")
         print("\nWarnings:")
         if warning_items:
             for path, warning in warning_items:

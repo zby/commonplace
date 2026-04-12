@@ -19,7 +19,7 @@ An installed project has one KB tree under `kb/`, plus two supporting runtime su
 There is no separate vendored `commonplace/` framework tree anymore. The agent's normal path stays inside the project:
 
 - route from `AGENTS.md`
-- read `kb/instructions/WRITING.md`
+- read the target collection's `COLLECTION.md`
 - load the relevant type definition from `kb/types/` or `kb/*/types/`
 - write into `kb/`
 - invoke a promoted skill or CLI command when the workflow needs one
@@ -31,7 +31,7 @@ There is no separate vendored `commonplace/` framework tree anymore. The agent's
 | Route to the correct location | Routing table | `AGENTS.md` |
 | Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals` |
 | Find related notes | Searchable note library | `kb/notes/` |
-| Know how to write well | Writing conventions | `kb/instructions/WRITING.md` |
+| Know how to write well | Writing conventions | target collection's `COLLECTION.md` |
 | Know the structure | Global or collection-local type definitions | `kb/types/`, `kb/*/types/` |
 | Write the file | All of the above | `kb/notes/` or another collection |
 | Connect it to existing knowledge | Skill or manual linking workflow | promoted `cp-skill-connect` skill plus indexes |

@@ -1,6 +1,6 @@
 # Draft: COLLECTION.md for kb/notes/ (theoretical register)
 
-> Draft for review. Target location: `kb/notes/.collection/COLLECTION.md` (or `kb/theory/.collection/COLLECTION.md` if the rename happens).
+> Draft for review. Target location: `kb/notes/COLLECTION.md`.
 
 ---
 register: theoretical
@@ -87,6 +87,91 @@ Relevant Notes:
 
 - [related-note](./related-note.md) — {relationship: extends / grounds / contradicts / enables / exemplifies}
 ```
+
+## Frontmatter
+
+Frontmatter makes notes queryable via ripgrep. Its presence determines the note's base type:
+
+- **No frontmatter** → `text` — raw capture, no structural expectations
+- **Has frontmatter** → `note` or more specific type — full quality checks apply
+
+| Field | Required | Constraints |
+|-------|----------|------------|
+| `description` | Yes | Must discriminate this note from similar ones |
+| `type` | No | Base type: `note` (default) or a specialized type |
+| `traits` | No | Review-routing properties: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation` |
+| `tags` | No | Freeform tags for navigation |
+| `status` | No | `seedling`, `current`, `speculative`, `outdated`; some types override this vocabulary |
+
+Write `description` as a double-quoted string. This avoids YAML coercion and parse breaks from characters like `: `.
+
+## Links
+
+Internal documents connect via standard markdown links with relative paths from the source file's directory.
+
+- `[note title](./note-title.md)` — same directory
+- `[note title](../note-title.md)` or `[note title](./subdir/note-title.md)` — cross-directory
+- Links work as prose: "Since [structure enables navigation](./structure-enables-navigation.md), we chose..."
+- Link text doesn't have to match the target's title — use whatever best informs the reader
+
+**Inline vs footer.** Prefer inline links — they carry more information. Footer links are for connections that don't fit naturally into prose:
+
+```markdown
+---
+Relevant Notes:
+
+- [related note](./related-note.md) — extends this by adding the temporal dimension
+```
+
+**Link semantics.** Every connection must articulate the relationship:
+- **extends** — builds on an idea by adding a new dimension
+- **foundation** — provides the evidence or reasoning this depends on
+- **contradicts** — conflicts with this claim
+- **enables** — makes this possible or practical
+- **example** — illustrates this concept in practice
+
+Bad: `[note](./note.md) — related`
+Good: `[note](./note.md) — extends this by adding the runtime perspective`
+
+**Target maturity.** Foundation/grounds links are load-bearing — if the target changes, the linking note's argument weakens. When using foundation links to `status: seedling` or `status: speculative` notes, acknowledge the instability.
+
+**Dangling link policy.** Every link must point to a real file. Before creating a link, verify the target exists with `ls`.
+
+## Filenames
+
+Use lowercase, hyphens for spaces, and the `.md` extension. Derive the filename from the `# Title` heading. Filename slugs are capped at 100 characters.
+
+## Distillation tracking
+
+When you distill content from notes into a focused artifact (instruction, skill body, COLLECTION.md section), add a "Distilled into:" entry in each source note's footer:
+
+```markdown
+Distilled into:
+
+- [COLLECTION.md](./COLLECTION.md) — the reach checklist
+```
+
+Each source gets its own link so that when it changes, the maintainer sees the downstream artifact that may need review. The distilled artifact itself should NOT link back to its sources.
+
+## Safe rename
+
+Never rename a note manually — it breaks links. Use `commonplace-relocate-note`, which renames or moves the note and updates backlinks across the KB.
+
+## Indexes
+
+There are two kinds of indexes in this collection:
+
+- **Directory indexes** (`index.md`) — auto-generated flat listings of all files with title, description, and type. Use `type: index` with `index_source: directory`.
+- **Generated-tail indexes** (e.g. `learning-theory-index.md`, `tags-index.md`) — navigation hubs with an optional curated section plus a generated listing. Use `type: index` with `index_source` describing what the generated section lists.
+
+Rebuild with `commonplace-refresh-indexes`.
+
+**Generated-tail index structure:**
+
+- **Curated section** (optional, hand-written): editorial groupings with context phrases. Curated entries MUST have context phrases — a bare link list is an address book, not a map.
+- **Generated section** (automatic): complete listing below the `<!-- generated -->` marker, rebuilt by `commonplace-sync-generated-index`.
+
+**Index lifecycle:** Create when 5+ related notes accumulate under a tag. Curate when the generated listing alone isn't enough. Merge when both indexes are small with significant overlap.
 
 ## What does NOT belong here
 

@@ -1,7 +1,7 @@
 ---
 description: Adopts a fixed vocabulary of link relationship types (extends, grounds, contradicts, enables, exemplifies) borrowed from arscontexta and adapted for agent navigation under bounded context
 type: adr
-tags: [links]
+tags: []
 status: accepted
 ---
 
@@ -48,4 +48,4 @@ The relationship appears in the prose surrounding the link. In body text: `since
 
 Relevant Notes:
 
-- [WRITING.md](../../instructions/WRITING.md) — the authoring guide that carries this relationship-label requirement into day-to-day note writing
+- [notes COLLECTION.md](../../notes/COLLECTION.md) — the authoring guide that carries this relationship-label requirement into day-to-day note writing

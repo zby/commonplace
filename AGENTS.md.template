@@ -45,7 +45,7 @@ Examples: raw logs without analysis, business rules (live in product wiki), gene
 
 <!--
 When is a piece of knowledge worth a note vs. a log entry vs. nothing?
-This complements WRITING.md's universal criteria with domain-specific standards.
+This complements each COLLECTION.md's universal criteria with domain-specific standards.
 Example: "A design decision is worth a note when it affects more than one endpoint. Single-endpoint implementation details belong in code comments. Observations about failure patterns are worth a log entry on first occurrence and a note on third."
 -->
 
@@ -84,4 +84,4 @@ The `llm-commonplace` package provides `commonplace-*` CLI commands for validati
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
 
-For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.
+For writing conventions, each collection has a `COLLECTION.md` at its root with register-specific conventions and universal mechanics.

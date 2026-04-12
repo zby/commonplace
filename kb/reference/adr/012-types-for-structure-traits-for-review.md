@@ -1,7 +1,7 @@
 ---
 description: Types define structural requirements checked by validation; frontmatter type identifies artifact kind; traits route semantic review gates; type definitions split into prose template and machine-readable schema
 type: adr
-tags: [document-system, types]
+tags: []
 status: accepted
 ---
 

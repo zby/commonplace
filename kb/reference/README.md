@@ -7,13 +7,13 @@ This collection answers two kinds of question:
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
 - **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-Use this collection when the question is specifically about the shipped commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For always-loaded authoring conventions, see [WRITING.md](../instructions/WRITING.md).
+Use this collection when the question is specifically about the shipped commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
 
 ## Mental model
 
 You do not operate the KB directly. You instruct an agent, and the agent operates the KB for you.
 
-The agent reads the shipped skills (`.claude/skills/cp-skill-*/SKILL.md` or `.agents/skills/cp-skill-*/SKILL.md`), reads [WRITING.md](../instructions/WRITING.md), and writes output under `kb/`.
+The agent reads the shipped skills (`.claude/skills/cp-skill-*/SKILL.md` or `.agents/skills/cp-skill-*/SKILL.md`), reads the target collection's `COLLECTION.md`, and writes output under `kb/`.
 
 The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
 
@@ -176,6 +176,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
+- [review-sweep-command.md](./review-sweep-command.md) — how `commonplace-review-sweep` works: staleness detection, job grouping, parallel execution
 
 ### Type system
 
@@ -187,7 +188,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
 
-- [WRITING.md](../instructions/WRITING.md) — authoritative guide for note structure, titles, descriptions, and templates
+- Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and templates
 - [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) — current review-system workflow
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 

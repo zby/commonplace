@@ -37,12 +37,14 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
     assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "WRITING.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "notes" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "reference" / "COLLECTION.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "REVIEW-SYSTEM.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "FIX-SYSTEM.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "write" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "connect" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "ingest" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "cp-skill-ingest" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "review-gates").is_dir()
     assert (tmp_path / "kb" / "reference" / "README.md").is_file()
     assert (tmp_path / "kb" / "reference" / "types" / "adr.template.md").is_file()
@@ -58,7 +60,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 
-def test_init_project_installs_skills_with_prefix(tmp_path: Path) -> None:
+def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
     init_project(tmp_path)
 
     for skills_dir in (
@@ -66,12 +68,12 @@ def test_init_project_installs_skills_with_prefix(tmp_path: Path) -> None:
         tmp_path / ".agents" / "skills",
     ):
         assert skills_dir.is_dir()
-        assert (skills_dir / "cp-skill-write" / "SKILL.md").is_file()
-        assert (skills_dir / "cp-skill-validate" / "SKILL.md").is_file()
-        assert (skills_dir / "cp-skill-snapshot-web" / "SKILL.md").is_file()
-        assert (skills_dir / "cp-skill-connect" / "SKILL.md").is_file()
-        # No unprefixed directories
-        assert not (skills_dir / "write").exists()
+        for skill_name in ("cp-skill-write", "cp-skill-validate", "cp-skill-snapshot-web", "cp-skill-connect"):
+            link = skills_dir / skill_name
+            assert link.is_symlink(), f"{link} should be a symlink"
+            assert (link / "SKILL.md").is_file()
+            # Symlink points back to kb/instructions/
+            assert link.resolve() == (tmp_path / "kb" / "instructions" / skill_name).resolve()
 
 
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
@@ -109,13 +111,13 @@ def test_init_project_defaults_name_to_directory(tmp_path: Path) -> None:
 def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
-    writing = tmp_path / "kb" / "instructions" / "WRITING.md"
-    writing.write_text("custom content", encoding="utf-8")
+    collection = tmp_path / "kb" / "instructions" / "COLLECTION.md"
+    collection.write_text("custom content", encoding="utf-8")
 
     rerun = init_project(tmp_path)
     assert rerun.created == []
-    assert Path("kb/instructions/WRITING.md") in rerun.preserved_different
-    assert writing.read_text(encoding="utf-8") == "custom content"
+    assert Path("kb/instructions/COLLECTION.md") in rerun.preserved_different
+    assert collection.read_text(encoding="utf-8") == "custom content"
 
 
 def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
@@ -123,7 +125,7 @@ def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
 
     rerun = init_project(tmp_path)
 
-    assert Path("kb/instructions/WRITING.md") in rerun.preserved_identical
+    assert Path("kb/instructions/COLLECTION.md") in rerun.preserved_identical
     assert Path(".envrc") in rerun.preserved_identical
     assert rerun.preserved_different == []
 
@@ -144,7 +146,7 @@ def test_main_reports_preserved_file_statuses(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     init_project(tmp_path)
-    (tmp_path / "kb" / "instructions" / "WRITING.md").write_text(
+    (tmp_path / "kb" / "instructions" / "COLLECTION.md").write_text(
         "custom content",
         encoding="utf-8",
     )
@@ -155,7 +157,7 @@ def test_main_reports_preserved_file_statuses(
     assert exit_code == 0
     assert "Preserved existing files already matching scaffold:" in captured.out
     assert "Preserved existing files differing from current scaffold output:" in captured.out
-    assert "- kb/instructions/WRITING.md" in captured.out
+    assert "- kb/instructions/COLLECTION.md" in captured.out
 
 
 def test_main_does_not_imply_manual_edits_for_template_name_drift(

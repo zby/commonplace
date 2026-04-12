@@ -1,7 +1,7 @@
 ---
 description: How commonplace resolves a note's type contract at authoring and validation time — collection-scoped lookup, the WRITING.md inlining exception, and skill-driven on-demand loading
 type: note
-tags: [types]
+tags: []
 status: current
 ---
 
@@ -33,7 +33,7 @@ Name collisions stay unambiguous as long as no two collections define the same t
 
 ## The inlining exception
 
-The `note` base type is the one type whose template is inlined into always-loaded context (`kb/instructions/WRITING.md`) rather than loaded on demand. Most writes are plain notes, so the marginal cost of inlining the small template beats the cost of an extra file read per write. [ADR-002](./adr/002-inline-global-types-in-writing-guide.md) also accepted inlining a second common type for the same reason, but only the `note` side of that decision has landed in `WRITING.md`.
+The `note` base type is the one type whose template is inlined into each collection's `COLLECTION.md` rather than loaded on demand. Most writes are plain notes, so the marginal cost of inlining the small template beats the cost of an extra file read per write. [ADR-002](./adr/002-inline-global-types-in-writing-guide.md) originally accepted inlining into a central `WRITING.md`; the template now lives in per-collection `COLLECTION.md` files instead.
 
 Every other shipped type stays in its collection's `types/` directory and loads only when an agent is explicitly writing one. A skill or routing table line points at the specific template file (e.g., `kb/reference/types/adr.template.md`) rather than relying on the agent to remember every type definition.
 
@@ -60,8 +60,8 @@ Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md)
 Relevant Notes:
 
 - [available-types](./available-types.md) — the shipped type inventory this note complements with loading-mechanism detail
-- [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — decision: inlining `note` into WRITING.md
+- [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — decision: inlining `note` template (originally into WRITING.md, now into per-collection COLLECTION.md)
 - [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: types define structural requirements; directory-local `types/` scope definition lookup
 - [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: JSON Schema in YAML as the authoring form for type definitions
-- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — decision: specialised types use template + instructions files, with WRITING.md as the generic always-loaded guide
+- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — decision: specialised types use template + instructions files; per-collection COLLECTION.md serves as the generic always-loaded guide
 - [architecture](./architecture.md) — shipped architecture: where the type loading mechanism sits inside the installed surface

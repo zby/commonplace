@@ -25,4 +25,4 @@ Relevant Notes:
 
 Distilled into:
 
-- [WRITING.md](../instructions/WRITING.md) — the title-as-claim checklist item operationalizes this principle
+- [COLLECTION.md](./COLLECTION.md) — the title-as-claim checklist item operationalizes this principle
