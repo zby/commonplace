@@ -141,6 +141,12 @@ The experiment succeeds if:
 
 Phases 1–3 are the experiment. Phases 4–5 are rollout, contingent on the experiment succeeding.
 
+## Relation to other workshops
+
+- `system-documentation/` — the commonplace-specific instance. That workshop produced `kb/reference/` as a descriptive collection. This workshop generalizes the pattern.
+- `philosophy-borrowing/` — evaluating speech-act theory as a candidate borrowing. The three-register frame is a speech-act-style decomposition (assertive / representative / directive). Worth cross-pollinating.
+- `type-system-rationalization/` — types encode operational role; registers encode content kind. Orthogonal axes, but decisions in one workshop affect the other.
+
 ## Decision: tags and indexes are per-collection
 
 Tags are index-routing metadata, not vocabulary. Indexes are per-collection. Therefore tags are per-collection.
