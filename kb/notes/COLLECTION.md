@@ -43,34 +43,6 @@ When linking FROM this collection:
 | Descriptive (reference, related-systems) | evidence / derived-from / exemplifies | Theories cite descriptions as observations and evidence. The theory must stand without any single description — if it can't, it's still a description, not yet a theory. |
 | Prescriptive (instructions) | evidence (rare) | Theories rarely need to cite procedures. When they do, it's usually to note that a practice exists, not to depend on it. |
 
-## Default template
-
-```markdown
----
-description: ""
-type: note
-traits: []
-tags: []
-status: current
----
-
-# {Claim title}
-
-{Opening paragraph: state the claim and why it matters.}
-
-{Body: argument, evidence, mechanism.}
-
-## Open Questions
-
-- {Question}
-
----
-
-Relevant Notes:
-
-- [related-note](./related-note.md) — {relationship: extends / grounds / contradicts / enables / exemplifies}
-```
-
 ## What does NOT belong here
 
 - Descriptions of how a specific system works → descriptive register (`kb/reference/` or `kb/related-systems/`)

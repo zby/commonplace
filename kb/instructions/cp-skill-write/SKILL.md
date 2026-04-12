@@ -32,7 +32,33 @@ Search the target collection first, then `kb/notes/` if different. Read closest 
 
 ### Step 4 — Draft and save
 
-**Template**: use the template found during type resolution. If `{type}.instructions.md` exists alongside it, follow it. For `text`, raw markdown without frontmatter. Never invent a type when no template exists.
+**Template**: for types other than `note`, use the template found during type resolution. If `{type}.instructions.md` exists alongside it, follow it. For `text`, raw markdown without frontmatter. Never invent a type when no template exists. For the default `note` type, use this template:
+
+```
+---
+description: ""
+type: note
+traits: []
+tags: []
+status: seedling
+---
+
+# {Title — style per collection conventions}
+
+{Opening paragraph.}
+
+{Body.}
+
+## Open Questions
+
+- {Omit section if none}
+
+---
+
+Relevant Notes:
+
+- [related-note](./related-note.md) — {relationship per collection's outbound linking rules}
+```
 
 **New notes**: follow resolved template and collection conventions. Derive lowercase-hyphenated filename from `# Title` (max 100 chars). Set traits only when clearly warranted: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation`.
 

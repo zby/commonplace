@@ -49,34 +49,6 @@ This collection uses several types with collection-local definitions in `types/`
 - **`note`** — general reference documents (architecture, type system, etc.)
 - **`definition`** — vocabulary terms used by the shipped system
 
-## Default template
-
-```markdown
----
-description: ""
-type: note
-traits: []
-tags: []
-status: current
----
-
-# {Topical title}
-
-{Opening paragraph: what this document describes and when to read it.}
-
-{Body: faithful account of the system aspect.}
-
-## Open questions
-
-- {Question}
-
----
-
-Relevant Notes:
-
-- [related-doc](./related-doc.md) — {relationship: cross-reference / rationale / supersedes}
-```
-
 ## What does NOT belong here
 
 - Transferable claims about KB methodology → theoretical register (`kb/notes/`)
