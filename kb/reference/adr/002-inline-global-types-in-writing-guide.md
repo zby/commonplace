@@ -1,13 +1,13 @@
 ---
 description: Decision to inline note and structured-claim templates into WRITING.md so the agent gets type structure and writing conventions in a single hop — eliminates one read for the two most common note types
 type: adr
-tags: [document-system, types]
-status: accepted
+tags: []
+status: superseded
 ---
 
 # 002-inline-global-types-in-writing-guide
 
-**Status:** accepted
+**Status:** superseded — WRITING.md was replaced by per-collection COLLECTION.md files; templates are now resolved by the write skill via type instructions
 **Date:** 2026-02-28
 
 ## Context

@@ -45,12 +45,13 @@ A design insight is worth a note when it changes how someone would build or oper
 
 ## Vocabulary
 
-Terms used in this KB with specific meanings:
+Terms used in this KB with specific meanings. On first mention in a note, gloss and link: `[distillation](./definitions/distillation.md) (directed context compression)`.
 
 - **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/definitions/context-engineering.md`.
 - **Distillation** — compressing knowledge for a specific task under a context budget. The main operation context engineering performs, but not the only one. Not ML knowledge distillation (training a student to mimic a teacher). See `kb/notes/definitions/distillation.md`.
 - **Constraining** — narrowing the interpretation space of an artifact (less generality, more reliability/speed/cost). Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
 - **Codification** — committing a procedure to a symbolic medium (natural language → code). The far end of constraining. See `kb/notes/definitions/codification.md`.
+- **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
 - **Workshop** — a named workspace for temporal, work-in-flight documents. Lives in `kb/work/<workshop-name>/`. Value is consumed rather than accumulated — workshop artifacts have lifecycles and expiration; they produce library artifacts (notes, ADRs) when done. Contrast with the library layer (notes, indexes) where value accumulates over time. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
 ## Development
@@ -99,4 +100,4 @@ The `llm-commonplace` package provides `commonplace-*` CLI commands for validati
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
 
-For the full writing checklist and conventions, see `kb/instructions/WRITING.md`.
+For writing conventions, each collection has a `COLLECTION.md` at its root: `kb/notes/COLLECTION.md` (theoretical register), `kb/reference/COLLECTION.md` (descriptive register), `kb/instructions/COLLECTION.md` (prescriptive register).

@@ -1,7 +1,7 @@
 ---
 description: Catalog of the types shipped by commonplace — the global base types, the global `definition` type, and the directory-scoped specialised types delivered with the framework scaffold
 type: note
-tags: [types]
+tags: []
 status: current
 ---
 
@@ -20,10 +20,11 @@ The `type:` frontmatter field is a free-form string — it is not validated agai
 | `text` | `text.md` | No frontmatter — raw capture, always valid. The root of the type ladder. |
 | `note` | `note.md`, `note.template.md`, `note.schema.yaml`, `note-base.schema.yaml` | Base structured type. Requires a non-empty `description`; carries shared `status`, `traits`, `tags`. Every specialised type inherits its frontmatter shape from here. |
 | `definition` | `definition.template.md`, `definition.instructions.md`, `definition.schema.yaml` | Vocabulary note with `Scope`, `Exclusions`, and `Misuse Cases` sections. |
+| `index` | `index.template.md`, `index.instructions.md`, `index.schema.yaml` | Navigation hub: directory listings or curated tag indexes with generated tails. |
 
-`text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `definition` is also global because vocabulary notes can occur in more than one collection — a consuming project might accumulate methodology vocabulary in one collection and shipped-system vocabulary in another — so duplicating the template and schema into each collection's local `types/` would buy nothing.
+`text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `definition` and `index` are also global because they can occur in any collection — duplicating the template and schema into each collection's local `types/` would buy nothing.
 
-Per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md), the `note` template is inlined into `kb/instructions/WRITING.md` so that agents writing ordinary notes get the template in the same context hop as the writing conventions.
+Per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md), the `note` template is inlined into each collection's `COLLECTION.md` so that agents writing ordinary notes get the template in the same context hop as the writing conventions.
 
 ## Directory-scoped types
 

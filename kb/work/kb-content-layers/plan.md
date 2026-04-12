@@ -20,19 +20,21 @@ Tags are index-routing metadata. Indexes are per-collection. Tags must match.
 - [x] Update `sync_generated_index.py` to be collection-aware — tags scoped per collection, indexes scan only their own collection
 - [x] Update `refresh_indexes.py` to discover collections dynamically
 - [x] Update tests
-- [ ] Remove dead tags from `kb/reference/` docs (tags route nowhere without reference-local indexes)
-- [ ] Remove dead tags from `kb/instructions/` docs (same)
-- [ ] Revert the `type-system` → `types` tag rename in `kb/notes/` (see [revert-instructions.md](./revert-instructions.md))
+- [x] Remove dead tags from `kb/reference/` docs (tags route nowhere without reference-local indexes)
+- [x] Remove dead tags from `kb/instructions/` docs (already empty — nothing to do)
+- [x] Revert the `type-system` → `types` tag rename in `kb/notes/` — already using `type-system`, no revert needed
 
-Code is done. Tag cleanup remains — runs in a separate session per revert-instructions.md.
+Phase 0 complete.
 
 ## Phase 1: Draft the three COLLECTION.md files
 
 No infrastructure changes. Write the files in the workshop and test them manually (load into context when writing or connecting, see if the guidance helps).
 
 - [x] `kb/notes/` (theoretical register) — [draft-collection-notes.md](./draft-collection-notes.md)
-- [ ] `kb/reference/` (descriptive register) — draft as `draft-collection-reference.md`
-- [ ] `kb/instructions/` (prescriptive register) — draft as `draft-collection-instructions.md`
+- [x] `kb/reference/` (descriptive register) — [draft-collection-reference.md](./draft-collection-reference.md)
+- [x] `kb/instructions/` (prescriptive register) — [draft-collection-instructions.md](./draft-collection-instructions.md)
+
+Phase 1 complete.
 
 Each COLLECTION.md has:
 - **Structured fields** (register, quality goal, title/description conventions, outbound linking conventions, default template) — what the compile step extracts and tools consume
@@ -43,34 +45,27 @@ COLLECTION.md lives at the collection root (e.g. `kb/notes/COLLECTION.md`), visi
 
 **No testing in Phase 1.** Drafting only — write the three COLLECTION.md files and review them for completeness by hand. Testing happens after the WRITING.md split (Phase 2), when the old guidance is gone and the agent has no choice but to use the new path.
 
-## Phase 2: Split WRITING.md
+## Phase 2: Delete WRITING.md
 
-Not retire — split. Universal mechanics still need an authored source of truth, even if the writing skill bakes a distilled copy into its body. The skill body is a *distillation* of the mechanics source, not the source itself. Keeping the separation follows the same distillation chain the theory note describes.
+WRITING.md was deleted (not slimmed). Universal mechanics (frontmatter, links, filenames, distillation tracking) were added to each COLLECTION.md so they are self-contained. Register-specific conventions were already in COLLECTION.md from Phase 1.
 
-Split into:
-- **Register-specific conventions** (title-as-claim, reach, linking rules, economy, precision) → already in each collection's COLLECTION.md
-- **Universal framework mechanics** (frontmatter format, link syntax, filename rules, distillation tracking) → slim mechanics document (source of truth); skill distills from it
-- **Useful commands** (relocate-note, validate, refresh-indexes) → `kb/reference/` as a description of available tools
-- **Index conventions** → COLLECTION.md for collections that manage indexes, or index skill
-- **Common pitfalls** → distribute: register-specific ones into COLLECTION.md, procedural ones into the skill
-
-Note: **distillation tracking is cross-register**, not mainly theoretical. Theory→instruction, report→note, workshop→ADR, source→source-review, procedure→skill are all distillation edges. It belongs in the universal mechanics, available to any collection that can be a distillation source.
-
-The loading hierarchy for writing: just `COLLECTION.md` for global types (`note`, `text`, `index`, `definition` — templates baked into the skill), plus `types/{type}.template.md` only for collection-local types. The common case is one document.
-
-**No testing in Phase 2.** The split is a refactoring step. Testing happens after deploy (Phase 3).
+Phase 2 complete.
 
 ## Phase 3: Deploy and test
 
-Deploy:
-- Place COLLECTION.md files at collection roots (visible, not hidden)
-- Decide on types/ location: keep where they are, or move to `.collection/types/` (hidden is fine for schemas and templates — they're config, not documentation)
-- Update type resolution if types/ moves
-- Update `commonplace-init` to create COLLECTION.md files for new collections
-- Slim WRITING.md to the mechanics source document
-- Update CLAUDE.md to point to COLLECTION.md files instead of WRITING.md
+Completed:
+- [x] Place COLLECTION.md files at collection roots (visible, not hidden)
+- [x] Types stay where they are (not moved to `.collection/types/`)
+- [x] Update `commonplace-init` to scaffold COLLECTION.md via `kb/notes` scaffold entry
+- [x] Delete WRITING.md
+- [x] Update AGENTS.md to point to COLLECTION.md files
+- [x] Update writing skill and promoted copies
+- [x] Update reference docs (README, architecture, type-loading, control-plane-goals, scenario-architecture, available-types)
+- [x] Update markdown links in notes and ADRs
+- [x] Update tests (init_project, scenarios)
+- [x] `uv run pytest` — all 192 tests pass
 
-Verify: `uv run pytest` — all tests pass. Validation still works. Skills still find type templates.
+Phase 3 complete.
 
 **Integration test (manual, three roles):**
 
@@ -89,23 +84,33 @@ Only if Phase 3 testing passes — the agent stays within the designed loading p
 
 ### Writing skill
 
-- Parameterize `cp-skill-write` with a target collection (default: `kb/notes/`)
-- Skill reads `{collection}/COLLECTION.md` for conventions
-- Skill has universal mechanics baked in (distilled from the mechanics source)
-- Skill reads `types/{type}.template.md` if using a collection-local type
-- Per-collection skill wrappers (e.g. `cp-skill-write-reference`) are thin: set the collection parameter, delegate
+- [x] Skill reads `{collection}/COLLECTION.md` for conventions
+- [x] Skill has universal mechanics baked in (distilled from COLLECTION.md sources)
+- [x] Skill resolves type templates via `kb/**/types/{type}.template.md`
+- [x] Natural language argument parsing (no rigid positional format)
+- [ ] Per-collection skill wrappers (e.g. `cp-skill-write-reference`) — deferred, natural language parsing handles collection selection
 
 ### Connect skill
 
-- Build `commonplace-compile-collections` command — reads all COLLECTION.md files, produces a compiled topology document with all registers and cross-register linking rules
-- Update `cp-skill-connect` to read the compiled topology
-- When connecting: determine source and target registers from their respective collections, suggest relationship types appropriate for that register pair
+- [x] Topology document at `kb/reports/collection-topology.md` — manually authored, compiled by `cp-skill-compile-collections` skill (not a Python command as originally planned)
+- [x] Connect skill reads topology for cross-collection linking rules
+- [x] Per-collection report directories (`kb/reports/connect/<collection>/`)
+- [x] Connection standards inlined into skill (no external file read for `connect-report.instructions.md`)
+- [x] Collection-aware discovery: source collection first, then others
 
 ### Validate
 
-- Consider a validation check for the formulation constraint (theory notes stating claims in general terms). May be too subjective for deterministic validation — could be a review gate instead.
+- [ ] Formulation constraint check — too subjective for deterministic validation, deferred to review gate.
 
-**Test:** Write a note using the adapted skill. Run connect. Are the relationship suggestions register-appropriate? Does the writing skill produce output consistent with the COLLECTION.md conventions?
+### Additional changes
+
+- [x] Stripped universal mechanics from all three COLLECTION.md files (now in write skill)
+- [x] Moved `index` type from `kb/notes/types/` to `kb/types/` (global type, used across collections)
+- [x] Added `register` definition note and AGENTS.md vocabulary entry
+- [x] Superseded ADR-002 (inline-global-types-in-writing-guide — WRITING.md no longer exists)
+- [x] Updated `kb/reference/available-types.md` with index as global type
+
+**Test:** Run connect on a reference note to validate collection-aware workflow end to end. Pending.
 
 ## Phase 5: Collection moves (separate tasks, after framework is working)
 
