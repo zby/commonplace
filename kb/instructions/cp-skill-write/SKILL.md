@@ -26,6 +26,8 @@ All documents in the KB live in a **collection** — a top-level directory under
 
 Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions.
 
+**Hard fail** if `kb/<collection>/COLLECTION.md` does not exist: stop and tell the user the collection is not configured. Every collection that accepts writes must have a COLLECTION.md — its register, quality goal, and linking rules are what distinguish collections. Do NOT proceed with default conventions; a silently-default write produces content that doesn't follow the collection's quality goals and the failure won't be caught until review.
+
 ### Step 3 — Search before writing
 
 Search the target collection first, then `kb/notes/` if different. Read closest matches to avoid duplication and find connection points. In edit mode, also search for notes linking to the target.
