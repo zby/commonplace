@@ -361,6 +361,330 @@ def move_note(source: Path, destination: Path, *, repo_root: Path) -> str:
     return move_path(source, destination, repo_root=repo_root)
 
 
+def resolve_directory(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
+    """Resolve a directory path argument to an absolute path under kb/."""
+    path = Path(arg)
+    resolved = path.resolve() if path.is_absolute() else (repo_root / path).resolve()
+    if not resolved.is_dir():
+        raise FileNotFoundError(f"Source directory does not exist: {resolved}")
+    if kb_root not in resolved.parents:
+        raise FileNotFoundError(f"Directory must live under {kb_root}: {resolved}")
+    return resolved
+
+
+def rewrite_links_to_moved_files(
+    content: str,
+    source_file: Path,
+    moves: dict[Path, Path],
+) -> tuple[str, list[str]]:
+    """Rewrite all links in `content` that point to any key in `moves`."""
+    changes: list[str] = []
+
+    def replace_match(match: re.Match[str]) -> str:
+        if match.group(1):
+            return match.group(0)
+
+        text = match.group(3)
+        target = match.group(4)
+        if not text or not target or not is_relative_markdown_target(target):
+            return match.group(0)
+
+        bare_target, anchor = split_link_target(target)
+        resolved = (source_file.parent / bare_target).resolve()
+        if resolved not in moves:
+            return match.group(0)
+
+        new_path = moves[resolved]
+        new_target = format_relative_link(source_file, new_path)
+        if anchor:
+            new_target = f"{new_target}{anchor}"
+        changes.append(f"{target} -> {new_target}")
+        return f"[{text}]({new_target})"
+
+    return TOKEN_PATTERN.sub(replace_match, content), changes
+
+
+def rebase_and_rewrite_in_moved_file(
+    content: str,
+    old_source_file: Path,
+    new_source_file: Path,
+    moves: dict[Path, Path],
+) -> tuple[str, list[str]]:
+    """Rewrite links inside a moved file.
+
+    Handles two cases:
+    - Links to other files in the same moved directory: update both the
+      source position (since our file moved) and recognize the target is
+      also in `moves` so the resolved path becomes the target's new location.
+    - Links to files outside the moved directory: rebase for the new
+      source position.
+    """
+    changes: list[str] = []
+
+    def replace_match(match: re.Match[str]) -> str:
+        if match.group(1):
+            return match.group(0)
+
+        text = match.group(3)
+        target = match.group(4)
+        if not text or not target or not is_relative_markdown_target(target):
+            return match.group(0)
+
+        bare_target, anchor = split_link_target(target)
+        resolved = (old_source_file.parent / bare_target).resolve()
+
+        if resolved in moves:
+            destination = moves[resolved]
+        elif resolved.exists():
+            destination = resolved
+        else:
+            return match.group(0)
+
+        new_target = format_relative_link(new_source_file, destination)
+        if anchor:
+            new_target = f"{new_target}{anchor}"
+        if new_target == target:
+            return match.group(0)
+        changes.append(f"{target} -> {new_target}")
+        return f"[{text}]({new_target})"
+
+    return TOKEN_PATTERN.sub(replace_match, content), changes
+
+
+def add_single_redirect(
+    content: str,
+    old_docs_path: str,
+    new_docs_path: str,
+) -> tuple[str, list[str]]:
+    """Add or update a single redirect entry in mkdocs config."""
+    lines = content.splitlines()
+    rebuilt_lines: list[str] = []
+    changes: list[str] = []
+    redirects: dict[str, str] | None = None
+    header_index: int | None = None
+    header_indent = 0
+    entry_indent: int | None = None
+    index = 0
+
+    while index < len(lines):
+        line = lines[index]
+        header_match = REDIRECT_MAP_HEADER.match(line)
+        if header_match:
+            redirects = {}
+            header_index = len(rebuilt_lines)
+            header_indent = len(header_match.group(1))
+            rebuilt_lines.append(line)
+            index += 1
+            while index < len(lines):
+                candidate = lines[index]
+                stripped = candidate.strip()
+                indent = len(candidate) - len(candidate.lstrip(" "))
+                if stripped and indent <= header_indent:
+                    break
+                if stripped:
+                    entry_match = REDIRECT_ENTRY.match(candidate)
+                    if not entry_match:
+                        raise ValueError(f"Unsupported redirect_maps entry: {candidate}")
+                    redirects[entry_match.group(1)] = entry_match.group(2)
+                    entry_indent = indent
+                index += 1
+            continue
+        rebuilt_lines.append(line)
+        index += 1
+
+    if redirects is None or header_index is None:
+        raise ValueError("No redirect_maps section found in mkdocs config")
+
+    if redirects.get(old_docs_path) != new_docs_path:
+        redirects[old_docs_path] = new_docs_path
+        changes.append(f"mkdocs redirect: {old_docs_path} -> {new_docs_path}")
+
+    indent = entry_indent if entry_indent is not None else header_indent + 2
+    redirect_lines = [f'{" " * header_indent}redirect_maps:']
+    for key in sorted(redirects, key=str.casefold):
+        redirect_lines.append(f'{" " * indent}\'{key}\': \'{redirects[key]}\'')
+    rebuilt_lines[header_index : header_index + 1] = redirect_lines
+
+    new_content = "\n".join(rebuilt_lines)
+    if content.endswith("\n"):
+        new_content += "\n"
+    return new_content, changes
+
+
+def relocate_directory(
+    *,
+    repo_root: Path,
+    source_arg: str,
+    dest_path: str,
+    redirect_from: str | None = None,
+    redirect_to: str | None = None,
+    apply: bool = False,
+) -> int:
+    kb_root = repo_root / "kb"
+    mkdocs_config = repo_root / "mkdocs.yml"
+
+    source = resolve_directory(source_arg, repo_root=repo_root, kb_root=kb_root)
+
+    # Destination may not exist yet
+    dest = Path(dest_path)
+    destination = dest.resolve() if dest.is_absolute() else (repo_root / dest).resolve()
+    if kb_root not in destination.parents and destination != kb_root:
+        print(f"Destination must live under {kb_root}: {destination}", file=sys.stderr)
+        return 1
+    if destination.exists():
+        print(f"Destination already exists: {destination.relative_to(repo_root)}", file=sys.stderr)
+        return 1
+
+    # Collect moved file map (old_path -> new_path) for all files under source
+    moves: dict[Path, Path] = {}
+    for f in source.rglob("*"):
+        if not f.is_file():
+            continue
+        rel = f.relative_to(source)
+        moves[f.resolve()] = (destination / rel).resolve()
+
+    md_moves = {k: v for k, v in moves.items() if k.suffix == ".md"}
+
+    # Rewrite links across the repo
+    markdown_updates: dict[Path, tuple[Path, str, list[str]]] = {}
+    for md_file in find_repo_markdown_files(repo_root):
+        original = md_file.read_text(encoding="utf-8")
+        md_resolved = md_file.resolve()
+        if md_resolved in md_moves:
+            new_path = md_moves[md_resolved]
+            updated, changes = rebase_and_rewrite_in_moved_file(
+                original, md_file, new_path, md_moves
+            )
+            target = new_path
+        else:
+            updated, changes = rewrite_links_to_moved_files(original, md_file, md_moves)
+            target = md_file
+        if changes:
+            markdown_updates[md_file] = (target, updated, changes)
+
+    # Optional single redirect entry
+    mkdocs_changes: list[str] = []
+    mkdocs_updated = None
+    if redirect_from and redirect_to:
+        mkdocs_original = mkdocs_config.read_text(encoding="utf-8")
+        mkdocs_updated, mkdocs_changes = add_single_redirect(
+            mkdocs_original, redirect_from, redirect_to
+        )
+
+    # Review exports and DB
+    review_export_moves: list[tuple[Path, Path]] = []
+    review_export_file_updates: dict[Path, tuple[Path, str]] = {}
+    review_db_rekeys: list[tuple[str, str]] = []
+    db_path = review_db.resolve_db_path(repo_root)
+    has_db = db_path.exists()
+
+    for old_md, new_md in md_moves.items():
+        src_review_dir, dst_review_dir, file_updates = collect_review_export_updates(
+            old_md, new_md, repo_root=repo_root, kb_root=kb_root
+        )
+        if src_review_dir.exists():
+            review_export_moves.append((src_review_dir, dst_review_dir))
+            for f, content in file_updates.items():
+                rel = f.relative_to(src_review_dir)
+                target = dst_review_dir / rel
+                review_export_file_updates[f] = (target, content)
+        if has_db:
+            review_db_rekeys.append(
+                (
+                    repo_relative_note_path(old_md, repo_root),
+                    repo_relative_note_path(new_md, repo_root),
+                )
+            )
+
+    # Report
+    mode = "APPLYING" if apply else "DRY RUN"
+    print(f"=== {mode} ===\n")
+    print(f"Relocate directory: {source.relative_to(repo_root)} -> {destination.relative_to(repo_root)}")
+    print(f"Files to move: {len(moves)} ({len(md_moves)} markdown)")
+
+    if markdown_updates:
+        print(f"Markdown files to update: {len(markdown_updates)}")
+        for path in sorted(markdown_updates):
+            _, _, changes = markdown_updates[path]
+            print(f"- {path.relative_to(repo_root)} ({len(changes)} link(s))")
+    else:
+        print("Markdown files to update: 0")
+
+    if mkdocs_changes:
+        print("MkDocs updates:")
+        for change in mkdocs_changes:
+            print(f"- {change}")
+    else:
+        print("MkDocs updates: none")
+
+    if review_export_moves:
+        print(f"Review export directories to move: {len(review_export_moves)}")
+
+    if has_db:
+        with review_db.connect(db_path) as conn:
+            total_counts = [
+                review_db.count_note_path_records(conn, note_path=old)
+                for old, _ in review_db_rekeys
+            ]
+        run_sum = sum(c.review_runs for c in total_counts)
+        gate_sum = sum(c.gate_reviews for c in total_counts)
+        ack_sum = sum(c.acceptance_events for c in total_counts)
+        print(
+            f"Review DB rekeys: review_runs={run_sum}, gate_reviews={gate_sum}, acceptance_events={ack_sum}"
+        )
+
+    if not apply:
+        print("\nThis was a dry run. Pass --apply to execute.")
+        return 0
+
+    # Execute: git mv the whole directory
+    try:
+        subprocess.run(
+            [
+                "git",
+                "mv",
+                str(source.relative_to(repo_root)),
+                str(destination.relative_to(repo_root)),
+            ],
+            cwd=repo_root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        strategy = "git mv"
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        source.rename(destination)
+        strategy = "rename"
+
+    # Write updated markdown files (targets reflect post-move locations)
+    for _, (target, updated, _changes) in markdown_updates.items():
+        target.write_text(updated, encoding="utf-8")
+
+    # Move review export directories
+    for src_review_dir, dst_review_dir in review_export_moves:
+        move_path(src_review_dir, dst_review_dir, repo_root=repo_root)
+
+    # Write updated review export files (at new locations)
+    for _, (target, content) in review_export_file_updates.items():
+        target.write_text(content, encoding="utf-8")
+
+    # mkdocs config
+    if mkdocs_updated is not None:
+        mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
+
+    # Rekey review DB
+    if has_db and review_db_rekeys:
+        with review_db.connect(db_path) as conn:
+            for old, new in review_db_rekeys:
+                review_db.rekey_note_path(conn, old_note_path=old, new_note_path=new)
+            conn.commit()
+
+    print(f"\nMove strategy: {strategy}")
+    print("Done.")
+    return 0
+
+
 def relocate_note(
     *,
     repo_root: Path,

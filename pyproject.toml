@@ -16,6 +16,7 @@ commonplace-ingest-bundle-output = "commonplace.cli.review.ingest_bundle_output:
 commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"
 commonplace-refresh-indexes = "commonplace.cli.refresh_indexes:main"
 commonplace-prune-superseded-unknown-manual-import-reviews = "commonplace.cli.review.prune_superseded_unknown_manual_import_reviews:main"
+commonplace-relocate-directory = "commonplace.cli.relocate_directory:main"
 commonplace-relocate-note = "commonplace.cli.relocate_note:main"
 commonplace-repair-manual-import-review-results = "commonplace.cli.review.repair_manual_import_review_results:main"
 commonplace-reparse-gate-review-decisions = "commonplace.cli.review.reparse_gate_review_decisions:main"
