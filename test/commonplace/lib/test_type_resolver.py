@@ -175,6 +175,101 @@ type: unknown-type
     assert profile.definition_path == tmp_path / "kb" / "types" / "note.schema.yaml"
 
 
+def test_global_schema_extends_sibling_global_schema(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note-base.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          status:
+            enum:
+              - seedling
+              - current
+        additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "index.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - index_source
+        properties:
+          type:
+            const: index
+          index_source:
+            enum:
+              - directory
+        additionalProperties: true
+""",
+    )
+    note = write(
+        tmp_path / "kb" / "notes" / "index.md",
+        """---
+description: Directory index
+type: index
+index_source: directory
+---
+
+# Index
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        note,
+        {"description": "Directory index", "type": "index", "index_source": "directory"},
+        repo_root=tmp_path,
+    )
+
+    errors = type_resolver.validate_instance(
+        profile,
+        {
+            "frontmatter": {
+                "description": "Directory index",
+                "type": "index",
+                "index_source": "directory",
+            },
+        },
+    )
+
+    assert profile.resolved_type == "index"
+    assert profile.definition_path == tmp_path / "kb" / "types" / "index.schema.yaml"
+    assert errors == []
+
+
 def test_workshop_scope_overrides_collection_and_root(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note.schema.yaml",

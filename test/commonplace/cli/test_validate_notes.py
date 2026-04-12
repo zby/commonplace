@@ -271,6 +271,7 @@ Design details.
 
     assert all("Design" not in item and "Implementation" not in item for item in results.warns)
     assert all("headings" not in item for item in results.warns)
+    assert "type schema: spec requirements satisfied" in results.passes
 
 
 def test_related_system_warns_when_last_checked_missing(tmp_path: Path) -> None:

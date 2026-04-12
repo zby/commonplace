@@ -158,7 +158,15 @@ def _schema_error_message(error: ValidationError) -> tuple[str, str]:
 
 
 def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
-    for error in validate_instance(parsed.profile, parsed.document.to_validation_object()):
+    if parsed.profile.definition_path is None or parsed.profile.schema is None:
+        return
+
+    errors = validate_instance(parsed.profile, parsed.document.to_validation_object())
+    if not errors:
+        results.passes.append(f"type schema: {parsed.note_type} requirements satisfied")
+        return
+
+    for error in errors:
         severity, message = _schema_error_message(error)
         if severity == "fail":
             results.fails.append(message)
