@@ -2,7 +2,7 @@
 description: Claude Code plugin that generates knowledge systems from conversation, backed by 249 research claims. Ancestor of our KB — we borrowed link semantics, propositional titles, and three-space architecture, then diverged in theory and structure.
 type: related-system
 traits: [has-comparison, has-external-sources]
-status: current
+status: seedling
 tags: [related-systems]
 last-checked: "2026-02-26"
 ---
@@ -78,7 +78,7 @@ These are not independent convergences — they're shared inheritance from wiki/
 
 - **We built a theory layer they do not have.** [Codification](../definitions/codification.md), [oracle strength](../oracle-strength-spectrum.md), and [methodology enforcement as constraining](../methodology-enforcement-is-constraining.md) explain when to freeze, automate, or keep things fluid. Arscontexta has a research-grounded pipeline but not a comparable theory of change.
 - **We flattened the architecture.** Their `self/notes/ops` split is a meaningful model of agent continuity, but we chose a simpler `kb/` plus tasks/sources layout and did not carve out a dedicated identity layer.
-- **We made document affordances explicit.** Our [document classification](../../reference/type-system.md) with types, traits, and status tells an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
+- **We made document affordances explicit.** Our [document classification](../../reference/available-types.md) with types, traits, and status tells an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
 - **We keep embeddings in a narrower role.** We use embeddings for search, not for primary organization. Arscontexta's article #23 argues more aggressively against adjacency-style systems; our position is that embeddings are acceptable when they are kept out of the reasoning graph.
 - **The local checkout is stale.** It still points at `docs/notes/` and `docs/adr/`, so the clone is evidence of the system's shape but not an authoritative implementation snapshot.
 

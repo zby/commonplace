@@ -3,7 +3,7 @@ description: Skills and tasks are typed callables — they accept document types
 type: note
 traits: [title-as-claim]
 tags: []
-status: speculative
+status: seedling
 ---
 
 # Instructions are typed callables with document type signatures
@@ -42,7 +42,7 @@ The operations afforded by a type can range from precise semantics (does this `s
 Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
-- [document-classification](../reference/type-system.md) — the spec defining the types that would appear in skill signatures
+- [document-classification](../reference/available-types.md) — the spec defining the types that would appear in skill signatures
 - [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [codification](./definitions/codification.md) — the operations afforded by types can themselves codify from LLM to code
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation

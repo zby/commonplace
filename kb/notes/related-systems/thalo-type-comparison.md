@@ -2,7 +2,7 @@
 description: Reference for borrowing recurring note shapes from Thalo — their entity types (opinion, reference, lore, journal, synthesis) map onto our types with concrete gaps still open (supersedes links, source status tracking)
 type: note
 traits: [has-comparison]
-status: current
+status: seedling
 tags: [related-systems]
 ---
 
@@ -156,7 +156,7 @@ When we encounter:
 
 Relevant Notes:
 
-- [document-classification](../../reference/type-system.md) — our type system being compared
+- [document-classification](../../reference/available-types.md) — our type system being compared
 - [document-types-should-be-verifiable](../document-types-should-be-verifiable.md) — the design principle both systems share
 - [claim-notes-should-use-toulmin-derived-sections](../claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
 - [codification](../definitions/codification.md) — the validation split (script vs skill) is codification applied to the validation process itself

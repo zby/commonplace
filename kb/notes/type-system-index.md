@@ -4,7 +4,7 @@ type: index
 index_source: tag
 index_key: type-system
 tags: [document-system]
-status: current
+status: seedling
 ---
 
 # Type system
@@ -14,7 +14,7 @@ Why documents have types, what the type system does, and how structured writing 
 ## Overview
 
 - [why-notes-have-types](./why-notes-have-types.md) — six roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality, and maturation through constraining
-- [document-classification](../reference/type-system.md) — taxonomy: base types table (text, note, spec, review, index, adr) and migration history
+- [document-classification](../reference/available-types.md) — taxonomy: base types table (text, note, spec, review, index, adr) and migration history
 
 ## Type Roles
 
@@ -47,4 +47,3 @@ Three independent arguments for why structured document types improve what gets 
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
 
 ## Other tagged notes <!-- generated -->
-

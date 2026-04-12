@@ -3,7 +3,7 @@ description: A Claw learning loop must target contextual competence (execution, 
 type: note
 traits: []
 tags: []
-status: speculative
+status: seedling
 ---
 
 # Claw learning loops must improve action capacity not just retrieval
@@ -37,7 +37,7 @@ If the KB's value is action capacity rather than retrieval accuracy, the learnin
 
 This list is illustrative, not exhaustive. [Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — a single practitioner's self-reported system — appears to store several of these: voice guides for style, AGENT.md decision tables for procedures, decision/failure logs for precedents, and values/goals YAML for preferences. This is anecdotal evidence, but it suggests that practitioner-built Claws converge on action-oriented knowledge types even without a theoretical framework for why.
 
-The current [document classification](../reference/type-system.md) system — base types like `note`, `spec`, `review` — is oriented around structural properties of reference knowledge. If the KB grows to store action-oriented knowledge, the type system may need to accommodate content whose value is "enabling correct action" rather than "answering questions."
+The current [document classification](../reference/available-types.md) system — base types like `note`, `spec`, `review` — is oriented around structural properties of reference knowledge. If the KB grows to store action-oriented knowledge, the type system may need to accommodate content whose value is "enabling correct action" rather than "answering questions."
 
 **Mutations.** The [boiling cauldron](./automating-kb-learning-is-an-open-problem.md) proposes extract, split, synthesise, relink, reformulate, regroup, retire — mostly oriented around findability and structure, though synthesise is generative (creates new knowledge) and retire is maintenance. An action-oriented system might also need mutations like:
 - **Codify preference** — turn an observed pattern in user decisions into an explicit rule
@@ -75,6 +75,6 @@ Relevant Notes:
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — the current scenario set is retrieval-oriented; an action-oriented framing would add classification, communication, and planning scenarios
 - [koylanai-personal-brain-os (ingest)](../sources/koylanai-personal-brain-os.ingest.md) — exemplifies: a practitioner-built Claw that already stores preferences, procedures, judgment precedents, and voice as distinct knowledge types
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — grounds: the artifact-accumulation model of learning applies, but action-oriented learning needs different artifact types than note/link mutations
-- [document-classification](../reference/type-system.md) — implication: current document types are structured for reference knowledge; action-oriented knowledge types may not fit the existing base types
+- [document-classification](../reference/available-types.md) — implication: current document types are structured for reference knowledge; action-oriented knowledge types may not fit the existing base types
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — concretizes: workshop documents (tasks, decision threads, experiments) are the action-oriented artifacts that produce preferences, procedures, and precedents; the workshop→library extraction bridge is where action-capacity learning is harvested
 - [brainstorming how to enrich web search](./brainstorming-how-to-enrich-web-search.md) — exemplifies: enriched web search is active research capacity — the agent discovers what it doesn't know rather than retrieving what it does, making it a concrete case of action beyond retrieval

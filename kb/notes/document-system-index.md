@@ -3,14 +3,14 @@ description: Index of notes about document types, writing conventions, validatio
 type: index
 index_source: tag
 index_key: document-system
-status: current
+status: seedling
 ---
 
 # Document system
 
 How documents are classified, structured, and quality-checked. These notes define the type system, writing conventions, and testing framework that make knowledge artifacts machine-verifiable and human-readable.
 
-For the live commonplace repo's current type inventory and migration summary, see [../reference/type-system.md](../reference/type-system.md).
+For the live commonplace repo's current type inventory and migration summary, see [../reference/available-types.md](../reference/available-types.md).
 
 ## Foundations
 
@@ -42,3 +42,5 @@ For the live commonplace repo's current type inventory and migration summary, se
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
 
 ## Other tagged notes <!-- generated -->
+
+- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) — Three exhaustive registers — theory, description, prescription — with distinct quality goals; formulation constraint and maintenance asymmetry make the split real, distillation connects them; registers classify content orthogonally to operational roles, and in agent systems the prescription/implementation boundary collapses

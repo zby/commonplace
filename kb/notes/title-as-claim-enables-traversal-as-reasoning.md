@@ -3,7 +3,7 @@ description: When note titles are claims rather than topics, following links bet
 type: note
 traits: [has-external-sources, title-as-claim]
 tags: [document-system, links]
-status: current
+status: seedling
 ---
 
 # Title as claim enables traversal as reasoning
@@ -44,7 +44,7 @@ Progressive disclosure depends on this. The first disclosure layer is titles. If
 
 The pattern works best for ideas that ARE single claims. It breaks for **compositional documents** — specs, frameworks, classification systems — that embody multiple independent design choices.
 
-[Document classification](../reference/type-system.md) is a clear example. It contains several distinct claims: "types assert structure not subject matter," "status is orthogonal to type," "a document has exactly one base type but zero or more traits," "text is the root type." Each could be a standalone claim note. But no single claim subsumes them all — any attempt produces something so abstract it's useless ("documents should be classified").
+[Document classification](../reference/available-types.md) is a clear example. It contains several distinct claims: "types assert structure not subject matter," "status is orthogonal to type," "a document has exactly one base type but zero or more traits," "text is the root type." Each could be a standalone claim note. But no single claim subsumes them all — any attempt produces something so abstract it's useless ("documents should be classified").
 
 The traversal-as-reasoning framing explains why. A claim-titled note can serve as a premise: "since [X], therefore Y." A multi-claim document can't serve as a single premise because it IS multiple premises. When you write "see *document classification*," you're not invoking a reasoning step — you're pointing to a reference. The link semantics shift from argumentative ("since," "because") to referential ("see," "as defined in").
 
@@ -70,7 +70,7 @@ Relevant Notes:
 
 - [programming-language types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — example: a claim extracted from a multi-claim spec, enabling it to serve as a premise
-- [document classification](../reference/type-system.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
+- [document classification](../reference/available-types.md) — example: a multi-claim spec that gets a topical title because no single claim subsumes its content
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: claim titles make the navigation decision cheap by carrying the argument in the pointer itself
 - [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: claim titles are what make the first layer of progressive disclosure work in the loading hierarchy
