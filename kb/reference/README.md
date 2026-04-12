@@ -1,24 +1,13 @@
 # Reference
 
-Reference documentation for the system commonplace ships, including how to operate it once installed.
+Reference documentation for the commonplace system — how to operate it and how it works.
 
-Use this collection when the question is not "is this generally true?" but "how does the shipped commonplace system work?" It holds subsystem descriptions, operator-facing usage guidance, and architecture decision records for the installable framework surface.
+This collection answers two kinds of question:
 
-Use [WRITING.md](../instructions/WRITING.md) alongside this collection for day-to-day authoring conventions.
+- **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
+- **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-## Start here
-
-- [architecture.md](./architecture.md) — shipped architecture: installed KB surface, promoted skills, and the framework/content boundary
-- [type-system.md](./type-system.md) — current document taxonomy, base types, and the old-to-new type migration summary
-- [ADR 014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision behind the current shipped surface
-
-## Collection boundary
-
-- Use `kb/notes/` for transferable claims and theory.
-- Use `kb/reference/` for shipped-system documentation, operator guidance, and decision history.
-- Use `kb/instructions/` for imperative procedures and operator-facing process details.
-
-Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the commonplace source repository or methodology library.
+Use this collection when the question is specifically about the shipped commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For always-loaded authoring conventions, see [WRITING.md](../instructions/WRITING.md).
 
 ## Mental model
 
@@ -30,7 +19,9 @@ The practical consequence: ask for outcomes, not internal procedures. "Write a n
 
 This guide assumes you have a running agent session (Claude Code, Codex, etc.) with commonplace's skills in its discovery path. If `commonplace-init` has run and `.claude/skills/` or `.agents/skills/` exists, you're ready.
 
-## Core operations
+## How to
+
+Most operations are things you ask the agent to do. Each entry below shows what the operation is for, how to phrase the request, what the agent does, and the practical limits.
 
 ### Add a note
 
@@ -159,7 +150,7 @@ This guide assumes you have a running agent session (Claude Code, Codex, etc.) w
 
 See [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
 
-## Direct CLI commands
+### Direct CLI commands
 
 Most operations go through the agent, but a few CLI commands are reasonable to run directly:
 
@@ -174,14 +165,45 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 `commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
 
-## Where to go deeper
+## Reference
 
-- [architecture.md](./architecture.md) — shipped architecture: the installed KB surface and its boundaries
-- [type-system.md](./type-system.md) — current taxonomy, base types, and migration story
-- [control-plane-goals.md](./control-plane-goals.md) — how `AGENTS.md` scopes the KB and shapes agent decisions
-- [instruction-generation.md](./instruction-generation.md) — how reusable instructions are produced and loaded
-- [type-loading.md](./type-loading.md) — how type definitions are resolved at runtime
-- [WRITING.md](../instructions/WRITING.md) — the authoritative guide for note structure, titles, descriptions, and templates
+Look up how the shipped system is put together: its architecture, type system, always-loaded context, authoring procedures, and decision history.
+
+### Architecture and packaging
+
+- [architecture.md](./architecture.md) — installed project layout, packaged runtime, scaffolded KB surface, promoted skills, and the framework/content boundary
+- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: one-tree installed KB, package-provided commands, and measurable scenario decomposition
+- [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
+- [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
+- [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
+
+### Type system
+
+- [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `definition`) and directory-scoped specialised types
+- [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
+- [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
+
+### Authoring and operator procedures
+
+Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
+
+- [WRITING.md](../instructions/WRITING.md) — authoritative guide for note structure, titles, descriptions, and templates
 - [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) — current review-system workflow
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
-- [adr/](./adr/) — design history for major architectural choices
+
+### Decision history
+
+[adr/](./adr/) contains the architecture decision records for major shipped-system choices. Notable entries:
+
+- [ADR-014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision behind the current shipped surface
+- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
+- [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
+- [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
+
+## Collection boundary
+
+- Use `kb/notes/` for transferable claims and theory.
+- Use `kb/reference/` for shipped-system documentation, operator guidance, and decision history.
+- Use `kb/instructions/` for imperative procedures and operator-facing process details.
+
+Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the commonplace source repository or methodology library.
