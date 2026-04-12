@@ -8,7 +8,7 @@ tags: [document-system]
 
 # Deterministic validation should be a script
 
-Our `/validate` skill runs all checks through an LLM (Sonnet), including checks that are purely deterministic. Comparing with [Thalo's 32 validation rules](./related-systems/thalo-type-comparison.md) — all of which are deterministic scripts — reveals that we're spending LLM tokens on work a Python script could do in milliseconds.
+Our `/validate` skill runs all checks through an LLM (Sonnet), including checks that are purely deterministic. Comparing with [Thalo's 32 validation rules](../agent-memory-systems/thalo-type-comparison.md) — all of which are deterministic scripts — reveals that we're spending LLM tokens on work a Python script could do in milliseconds.
 
 The split follows the [oracle strength spectrum](./oracle-strength-spectrum.md):
 

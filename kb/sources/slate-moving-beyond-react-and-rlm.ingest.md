@@ -32,7 +32,7 @@ Key relationships:
 - **Grounds** [context-efficiency-is-the-central-design-concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — Slate's core claim is direct practitioner convergence evidence for the KB's thesis.
 - **Extends** [conversation-vs-prompt-refinement](../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — Episodes introduce a new coordination primitive beyond conversation/refinement/forking.
 - **Partially contradicts** [ephemeral-computation-prevents-accumulation](../notes/ephemeral-computation-prevents-accumulation.md) — Episodes occupy a middle ground (per-session persistence, not cross-session) that the note's binary ephemeral/accumulating distinction doesn't capture.
-- **Parallels** [related-systems/spacebot](../notes/related-systems/spacebot.md) — Independent convergence on bounded typed execution units with compressed returns.
+- **Parallels** [related-systems/spacebot](../agent-memory-systems/reviews/spacebot.md) — Independent convergence on bounded typed execution units with compressed returns.
 
 ## Extractable Value
 

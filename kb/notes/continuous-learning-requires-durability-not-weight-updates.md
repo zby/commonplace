@@ -29,4 +29,4 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — extends: artifact-side learning fills the durable middle between weight training and ephemeral context
 - [Learning substrates, backends, and artifact forms](./substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — extends: names the main non-weight substrate family and separates substrate class from storage and artifact choices
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is the unsurprising weight-side case; this note argues the artifact-side case is learning too
-- [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — grounds: surveyed systems already split cleanly into weight-promotion and artifact-promotion loops
+- [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: surveyed systems already split cleanly into weight-promotion and artifact-promotion loops

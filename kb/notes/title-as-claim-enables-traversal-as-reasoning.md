@@ -25,7 +25,7 @@ Propositional titles are established practice in several fields:
 - **Evergreen notes** (Matuschak) — explicitly advocates for note titles as complete propositions rather than topic labels.
 - **Zettelkasten practice** — Luhmann used precise descriptive titles; the community has extensive discussion of atomicity and title quality.
 
-The *traversal-as-reasoning* consequence — when titles are claims, link-following reads as argument — came to us via [arscontexta](./related-systems/arscontexta.md), which likely drew on these same traditions. The [Toulmin argumentation model](../sources/purdue-owl-toulmin-argument.md) provides the formal structure behind the "since/because" link semantics this enables.
+The *traversal-as-reasoning* consequence — when titles are claims, link-following reads as argument — came to us via [arscontexta](../agent-memory-systems/reviews/arscontexta.md), which likely drew on these same traditions. The [Toulmin argumentation model](../sources/purdue-owl-toulmin-argument.md) provides the formal structure behind the "since/because" link semantics this enables.
 
 **TODO:** This survey is from the agent's training data, not systematic. Matuschak's writing on evergreen notes and Zettelkasten community resources on title conventions are worth ingesting.
 

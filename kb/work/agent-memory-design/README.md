@@ -17,7 +17,7 @@ The workshop is grounded in the KB's existing memory and context-engineering the
 
 ## Current grounding
 
-- [Agentic memory systems comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md) — comparative baseline across current memory architectures
+- [Agentic memory systems comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) — comparative baseline across current memory architectures
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — why retrieval and activation are the real bottleneck
 - [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) — raw traces are valuable but should not be loaded directly
 - [Agent statelessness makes routing architectural, not learned](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — why memory routing must be externalized

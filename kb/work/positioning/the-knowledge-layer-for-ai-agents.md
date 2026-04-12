@@ -30,8 +30,8 @@ We used Commonplace to review 15 agent memory systems — Mem0, Graphiti, Cognee
 
 This is what your agents could produce about *your* domain.
 
-[Read the comparative review →](../../notes/related-systems/agentic-memory-systems-comparative-review.md)
-[Browse all system reviews →](../../notes/related-systems/related-systems-index.md)
+[Read the comparative review →](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)
+[Browse all system reviews →](../../agent-memory-systems/related-systems-index.md)
 
 ---
 

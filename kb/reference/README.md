@@ -49,7 +49,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "Read this PDF and ingest the key claims."
 - "Ingest the README at github.com/org/project as a related system."
 
-*What happens.* The agent snapshots the source into `kb/sources/`, reads the snapshot, classifies it, finds related notes, and writes an analysis report. Related-system work uses the dedicated `review-related-system` skill instead.
+*What happens.* The agent snapshots the source into `kb/sources/`, reads the snapshot, classifies it, finds related notes, and writes an analysis report. Agent-memory-system reviews use the `agent-memory-system-review` type — write directly via `cp-skill-write agent-memory-system-review owner/repo`.
 
 *What you get.* A snapshot under `kb/sources/` and an ingest report named `<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
 

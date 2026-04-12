@@ -72,4 +72,4 @@ One synthesis opportunity flagged: skills distilled from external domain knowled
 
 ## Recommended Next Action
 
-Done: deep related-systems review written at [getsentry/skills](../notes/related-systems/getsentry-skills.md), focusing on the skill-writer meta-skill and the skill synthesis method rather than the trivial observation that skills are distilled. The review covers: source-driven synthesis with depth gates, labeled iteration, description-as-trigger optimization, the Agent Skills cross-tool spec, and borrowable patterns for our own skill creation process.
+Done: deep related-systems review written at [getsentry/skills](../agent-memory-systems/reviews/getsentry-skills.md), focusing on the skill-writer meta-skill and the skill synthesis method rather than the trivial observation that skills are distilled. The review covers: source-driven synthesis with depth gates, labeled iteration, description-as-trigger optimization, the Agent Skills cross-tool spec, and borrowable patterns for our own skill creation process.

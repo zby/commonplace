@@ -46,7 +46,7 @@ Setup:
 
 Then compare two judging schemes on the same examples:
 - **Scalar judge** — score each output independently on a 1-5 or 1-10 scale
-- **Pairwise judge** — compare outputs in pairs, optionally with position-swapping as recommended in [Agent Skills for Context Engineering](./related-systems/agent-skills-for-context-engineering.md)
+- **Pairwise judge** — compare outputs in pairs, optionally with position-swapping as recommended in [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md)
 
 Measures:
 - Agreement with human pairwise labels
@@ -167,7 +167,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — **extends**: turns that note's abstract oracle-hardening question into a concrete experimental program
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **qualifies**: asks whether pairwise comparison improves the base signal before amplification, rather than replacing amplification
-- [Agent Skills for Context Engineering](./related-systems/agent-skills-for-context-engineering.md) — **grounds**: supplies the concrete pairwise-comparison and position-bias-mitigation practices this note would test
-- [Autocontext](./related-systems/autocontext.md) — **example**: offers a live evaluation loop where pairwise ranking could be compared against scalar LLM judging
+- [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md) — **grounds**: supplies the concrete pairwise-comparison and position-bias-mitigation practices this note would test
+- [Autocontext](../agent-memory-systems/reviews/autocontext.md) — **example**: offers a live evaluation loop where pairwise ranking could be compared against scalar LLM judging
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — **parallel**: another brainstorming note about manufacturing better soft oracles, but at KB-wide rather than candidate-ranking scope
 - [Koylan pairwise-comparison source](../sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.ingest.md) — **source**: origin of the specific hypothesis this note turns into a test plan

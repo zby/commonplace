@@ -40,7 +40,7 @@ This matters because it creates a weighted graph. The weight affects how agents 
 
 **Traversal priority.** An agent deciding what to read next should follow strong links before weak ones. A "since [X]" link is almost certainly worth following — the current note depends on it. A footer "related" link is a maybe. This is the practical answer to the [navigation decision](./agents-navigate-by-deciding-what-to-read-next.md) problem: link strength is a traversal heuristic.
 
-**Note scoring.** A note's quality score should weight inbound links by strength. Three inline premise links from well-regarded notes say more about a note's value than twenty footer "related" links. This is PageRank with link-weight — and it's the mechanism that prevents the [credibility erosion](../notes/related-systems/arscontexta.md) problem (noisy weak links don't inflate scores the way unweighted link counts would).
+**Note scoring.** A note's quality score should weight inbound links by strength. Three inline premise links from well-regarded notes say more about a note's value than twenty footer "related" links. This is PageRank with link-weight — and it's the mechanism that prevents the [credibility erosion](../agent-memory-systems/reviews/arscontexta.md) problem (noisy weak links don't inflate scores the way unweighted link counts would).
 
 **Quality signals.** The ratio of strong to weak links is a graph health signal. A note with mostly strong inbound links is well-integrated into the KB's reasoning. A note with only weak footer links is catalogued but not used. The [quality signals](./quality-signals-for-kb-evaluation.md) note should track this ratio.
 
@@ -72,4 +72,4 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — link strength is a traversal heuristic: strong links are worth following, weak links are maybes
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — strong-to-weak link ratio is a graph health signal
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link strength legible: "since [claim-title]" is visibly a premise link
-- [Ars Contexta](../notes/related-systems/arscontexta.md) — the credibility erosion problem: unweighted link counts let noise drown signal; link-weighted scoring prevents this
+- [Ars Contexta](../agent-memory-systems/reviews/arscontexta.md) — the credibility erosion problem: unweighted link counts let noise drown signal; link-weighted scoring prevents this

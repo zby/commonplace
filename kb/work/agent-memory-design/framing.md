@@ -26,13 +26,13 @@ This inverts the emphasis of most memory system designs, which spend effort on w
 
 4. **Memory must serve action, not just retrieval** ([action-capacity](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)). The system needs preferences, procedures, and judgment precedents — not just facts.
 
-5. **The agency trilemma** ([comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)). The comparative review identifies a fundamental design tension: no system combines high agency, high throughput, and high curation quality.
+5. **The agency trilemma** ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)). The comparative review identifies a fundamental design tension: no system combines high agency, high throughput, and high curation quality.
 
 6. **Lifecycle separation matters** ([three-space](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md)). Knowledge, self-knowledge, and operational artifacts have different metabolic rates. Flat memory predicts search pollution and insight trapping.
 
-7. **Navigability vs retrieval** ([comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)). Vector search optimizes for QA; articulated link networks optimize for reasoning.
+7. **Navigability vs retrieval** ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)). Vector search optimizes for QA; articulated link networks optimize for reasoning.
 
-8. **Automated synthesis is the open frontier** ([comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)). Everyone automates extraction; nobody automates synthesis at production quality.
+8. **Automated synthesis is the open frontier** ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)). Everyone automates extraction; nobody automates synthesis at production quality.
 
 9. **Agent statelessness makes routing architectural** ([statelessness](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md)). Every session is day one; routing infrastructure is permanent prosthetics.
 
@@ -131,7 +131,7 @@ Core theory:
 - [contextual competence theory](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md)
 
 Memory architecture:
-- [comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)
+- [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)
 - [three-space model](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md)
 - [flat memory failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md)
 - [memory management policy](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)

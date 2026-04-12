@@ -77,7 +77,7 @@ When you build around prompt limitations, you're not just engineering what goes 
 
 ## How this connects to continuous learning
 
-The chat model has no built-in learning mechanism — each session starts fresh. The "memory" features that various platforms offer treat memory as a supplement to the conversation rather than redesigning around it. A [comparative review of eleven agent memory systems](../../notes/related-systems/agentic-memory-systems-comparative-review.md) finds that the deepest design split is not storage format but the *agency model* — who decides what to remember. Most systems automate extraction but not synthesis or curation, and no system has combined high agency, high throughput, and high curation quality.
+The chat model has no built-in learning mechanism — each session starts fresh. The "memory" features that various platforms offer treat memory as a supplement to the conversation rather than redesigning around it. A [comparative review of eleven agent memory systems](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that the deepest design split is not storage format but the *agency model* — who decides what to remember. Most systems automate extraction but not synthesis or curation, and no system has combined high agency, high throughput, and high curation quality.
 
 A system built around prompt limitations learns differently:
 
@@ -120,4 +120,4 @@ Related KB notes (for context, not formal links):
 - [agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md)
 - [agent runtimes decompose into scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md)
 - [three-space memory separation predicts measurable failure modes](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md)
-- [agentic memory systems comparative review](../../notes/related-systems/agentic-memory-systems-comparative-review.md)
+- [agentic memory systems comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)

@@ -34,7 +34,7 @@ These map to the three depths in [discovery](./discovery-is-seeing-the-particula
 
 ## The programming fast-pass as a reach bet
 
-The [design methodology](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) gives programming patterns a "fast pass." In Deutsch's terms, this is a reach bet — we expect programming patterns to transfer because agents interpreting prompts are structurally similar to interpreters interpreting programming languages, not because of surface analogy. The full argument and evidence (including [Thalo's](./related-systems/thalo.md) convergent evolution) are in the methodology note.
+The [design methodology](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) gives programming patterns a "fast pass." In Deutsch's terms, this is a reach bet — we expect programming patterns to transfer because agents interpreting prompts are structurally similar to interpreters interpreting programming languages, not because of surface analogy. The full argument and evidence (including [Thalo's](../agent-memory-systems/reviews/thalo.md) convergent evolution) are in the methodology note.
 
 ## Open Questions
 

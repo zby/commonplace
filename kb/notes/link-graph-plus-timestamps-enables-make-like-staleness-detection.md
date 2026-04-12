@@ -37,7 +37,7 @@ Possible filters to reduce noise:
 
 ## Scope
 
-This works for intra-KB links where both files are in git. It does not cover external references (URLs, API docs) — those need a different mechanism (periodic link checking, `last-checked` fields as [related-systems reviews](./related-systems/README.md) already use).
+This works for intra-KB links where both files are in git. It does not cover external references (URLs, API docs) — those need a different mechanism (periodic link checking, `last-checked` fields as [related-systems reviews](../agent-memory-systems/README.md) already use).
 
 ## Relationship to existing staleness work
 

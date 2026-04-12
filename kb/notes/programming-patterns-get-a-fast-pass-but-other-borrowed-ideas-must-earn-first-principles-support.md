@@ -8,7 +8,7 @@ tags: [foundations]
 
 # Programming patterns get a fast pass but other borrowed ideas must earn first-principles support
 
-The KB's design draws on programming language theory, cognitive science, HCI, and empirical observation. Any source is valid — the [related-systems](./related-systems/related-systems-index.md) reviews exist precisely to widen the input surface. What varies is the adoption gate: not all sources face the same bar.
+The KB's design draws on programming language theory, cognitive science, HCI, and empirical observation. Any source is valid — the [related-systems](../agent-memory-systems/related-systems-index.md) reviews exist precisely to widen the input surface. What varies is the adoption gate: not all sources face the same bar.
 
 ## The programming fast pass
 
@@ -16,13 +16,13 @@ We borrow programming patterns without a complete theory for why they transfer �
 
 Programming systems are formal, compositional, text-based. LLM knowledge systems are also formal (frontmatter schemas), compositional (notes link and compose), and text-based (markdown files). When we say "types mark affordances" or "validation is testing" or "promotion is progressive typing," these aren't metaphors — they describe the same mechanisms operating on different substrates.
 
-Evidence for the bet: [Thalo](../notes/related-systems/thalo.md) independently arrived at building an actual compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 validation rules. Someone else looked at the same problem and reached for the same toolbox. Convergence across independent projects is stronger evidence than any single design argument.
+Evidence for the bet: [Thalo](../agent-memory-systems/reviews/thalo.md) independently arrived at building an actual compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 validation rules. Someone else looked at the same problem and reached for the same toolbox. Convergence across independent projects is stronger evidence than any single design argument.
 
 ## First principles: the main filter for everything else
 
 If we can derive *why* something works from the constraints of the domain — finite context windows, no import/resolution mechanism, agents reason over text, everything loaded must compete for attention — we adopt it with confidence. The [context loading economy](./instruction-specificity-should-match-loading-frequency.md) and [directory-scoped types](./directory-scoped-types-are-cheaper-than-global-types.md) arguments are examples: they follow directly from the constraints without needing analogies.
 
-Cognitive science patterns, HCI patterns — these get adopted when first-principles reasoning supports them. [Three-space memory](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) is in the KB because it maps to a real architectural need (separating concerns with different churn rates), not because Tulving's taxonomy is authoritative for LLM agents. [Arscontexta's](../notes/related-systems/arscontexta.md) 249 research claims grounded in cognitive psychology are acknowledged but not adopted wholesale — the spreading activation model may not predict anything useful about how a 200k token context window behaves.
+Cognitive science patterns, HCI patterns — these get adopted when first-principles reasoning supports them. [Three-space memory](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) is in the KB because it maps to a real architectural need (separating concerns with different churn rates), not because Tulving's taxonomy is authoritative for LLM agents. [Arscontexta's](../agent-memory-systems/reviews/arscontexta.md) 249 research claims grounded in cognitive psychology are acknowledged but not adopted wholesale — the spreading activation model may not predict anything useful about how a 200k token context window behaves.
 
 The asymmetry between programming and cognitive science isn't about one field being better. It's about the nature of the target system. Human cognition is associative, embodied, affective. LLM agents process text in a fixed-size window with no persistent state between sessions. The mechanisms are different enough that cognitive science analogies need independent justification — they might transfer, but you can't assume they do.
 
@@ -44,7 +44,7 @@ Relevant Notes:
 
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — example of first-principles design: loading economy derived directly from context window constraints
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — example of first-principles design, explicitly frames directory-scoping as workaround for absent import mechanism
-- [Thalo](../notes/related-systems/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
-- [Ars Contexta](../notes/related-systems/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from
+- [Thalo](../agent-memory-systems/reviews/thalo.md) — independent convergence on programming patterns as evidence for the "knowledge bases are software" bet
+- [Ars Contexta](../agent-memory-systems/reviews/arscontexta.md) — the cognitive science alternative grounding; acknowledged, diverged from
 - [underspecification and indeterminism complicate the transfer](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — develops: the practices transfer but two LLM properties make them harder in distinct ways; testing is doubled for two different reasons
 - [constraining](./definitions/constraining.md) — example of empirical observation becoming theory

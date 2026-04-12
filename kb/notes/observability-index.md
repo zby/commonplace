@@ -38,4 +38,4 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 ## Other tagged notes <!-- generated -->
 
 - [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md) — April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
-- [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — Sixteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths
+- [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — Sixteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths

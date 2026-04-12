@@ -14,7 +14,7 @@ Christopher Alexander's architectural theory seems relevant to knowledge system 
 
 Alexander's patterns have defined structure — Context, Problem, Forces, Solution, Consequences. This is a document type with required sections. "A Pattern Language" is a knowledge base where every entry conforms to a structural contract, entries link to each other with explicit relationships (larger patterns contain smaller ones), and the structure enables traversal as reasoning.
 
-This is what we're working toward with [structured sections per type](./related-systems/thalo-type-comparison.md) and what Thalo already has with entity definitions. Alexander was doing document classification for architectural knowledge decades before any of us.
+This is what we're working toward with [structured sections per type](../agent-memory-systems/thalo-type-comparison.md) and what Thalo already has with entity definitions. Alexander was doing document classification for architectural knowledge decades before any of us.
 
 ## Structural: generative processes vs master plans
 

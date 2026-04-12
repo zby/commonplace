@@ -33,7 +33,7 @@ The `/connect` discovery found six substantive connections, informed by the fact
 
 3. **[bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md)** -- **exemplifies**: Karpathy lists "orchestration, scheduling, context, tool calls" as defining Claw properties. Claws are a product-category instantiation of the symbolic scheduling model with persistence as an additional dimension.
 
-4. **[ClawVault](../notes/related-systems/clawvault.md)** -- **enables**: This source provides the category definition that ClawVault is an instance of. ClawVault's scored observations, session handoffs, and reflection pipelines are a concrete Claw implementation.
+4. **[ClawVault](../agent-memory-systems/reviews/clawvault.md)** -- **enables**: This source provides the category definition that ClawVault is an instance of. ClawVault's scored observations, session handoffs, and reflection pipelines are a concrete Claw implementation.
 
 5. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** -- **exemplifies**: NanoClaw's ~4000-line core that "fits into both my head and that of AI agents" is a concrete endorsement of the inspectable substrate thesis from an independent practitioner.
 

@@ -8,8 +8,8 @@ Which Obsidian-facing affordances would make commonplace easier to use and inspe
 
 Commonplace already has a strong theory for document structure, retrieval filters, and link semantics, but it is comparatively thin on mainstream note-tool ergonomics. Two reviewed systems sharpen the opportunity from different sides:
 
-- [Napkin](../../notes/related-systems/napkin.md) shows that Obsidian compatibility can be a practical adoption strategy and that agent-facing UX defaults are load-bearing.
-- [LACP](../../notes/related-systems/lacp.md) shows an Obsidian-centered operations stack around local agent workflows, but also demonstrates how quickly a vault layer can sprawl into maintenance plumbing.
+- [Napkin](../../agent-memory-systems/reviews/napkin.md) shows that Obsidian compatibility can be a practical adoption strategy and that agent-facing UX defaults are load-bearing.
+- [LACP](../../agent-memory-systems/reviews/lacp.md) shows an Obsidian-centered operations stack around local agent workflows, but also demonstrates how quickly a vault layer can sprawl into maintenance plumbing.
 
 The goal is not "turn commonplace into an Obsidian vault." The goal is to decide which affordances are worth adding as an optional compatibility/interface layer, and which would undermine the KB's stronger commitments:
 
@@ -22,8 +22,8 @@ There is currently no `.obsidian/` directory, no `.canvas` files, and no `.base`
 
 ## Current grounding
 
-- [Napkin](../../notes/related-systems/napkin.md) — strongest source for Obsidian-compatible agent memory affordances
-- [LACP](../../notes/related-systems/lacp.md) — strongest source for Obsidian-centered local ops and memory automation
+- [Napkin](../../agent-memory-systems/reviews/napkin.md) — strongest source for Obsidian-compatible agent memory affordances
+- [LACP](../../agent-memory-systems/reviews/lacp.md) — strongest source for Obsidian-centered local ops and memory automation
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop framing for temporary design work and promotion boundaries
 - [Short composable notes maximize combinatorial discovery](../../notes/short-composable-notes-maximize-combinatorial-discovery.md) — reminder that longer synthesized views belong in workshops, not in the library
 - [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — useful contrast because Obsidian inherits stronger refinement-in-place assumptions than commonplace does

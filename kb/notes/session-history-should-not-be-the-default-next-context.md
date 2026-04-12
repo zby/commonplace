@@ -44,7 +44,7 @@ Across several systems, the shared move is [compression at the execution boundar
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
-- [Spacebot](./related-systems/spacebot.md) branches return only a scrubbed conclusion
+- [Spacebot](../agent-memory-systems/reviews/spacebot.md) branches return only a scrubbed conclusion
 - [Slate](../sources/slate-moving-beyond-react-and-rlm.ingest.md) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
@@ -83,7 +83,7 @@ Relevant Notes:
 - [distillation](./definitions/distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
-- [Spacebot](./related-systems/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
+- [Spacebot](../agent-memory-systems/reviews/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
 
 Distilled into:

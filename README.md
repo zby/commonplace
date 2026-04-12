@@ -25,7 +25,6 @@ kb/                          Knowledge base
     connect/SKILL.md         Promoted framework skill source
     ingest/SKILL.md          Promoted framework skill source
     evaluate-scenarios/SKILL.md  Measure scenario costs
-    review-related-system/SKILL.md  Related-system review workflow
     re-ingest.md             Instruction (not yet promoted to skill)
     review-gates/            Review gates grouped by bundle/lens name (e.g. semantic/)
     ...
@@ -70,7 +69,7 @@ Framework skills:
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
 - `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
-- `review-related-system` — related-system review workflow, still tied to local review infrastructure
+- Agent-memory-system reviews are handled by writing with the `agent-memory-system-review` type — workflow in `kb/agent-memory-systems/types/agent-memory-system-review.instructions.md`
 
 ## Content workflow
 

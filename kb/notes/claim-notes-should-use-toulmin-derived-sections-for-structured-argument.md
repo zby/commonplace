@@ -16,7 +16,7 @@ Three independent threads arrived at the same shape:
 
 1. **Claim titles.** [Title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) makes the title a Toulmin claim. Link semantics using "since" and "because" encode warrants — the assumptions connecting evidence to claim.
 
-2. **Thalo's opinion entity.** The [Thalo type comparison](../notes/related-systems/thalo-type-comparison.md) already flagged that their opinion entity (Claim / Reasoning / Caveats sections) maps to Toulmin's claim / grounds+warrant / qualifier+rebuttal — and that we lack structured sections for argument-shaped notes.
+2. **Thalo's opinion entity.** The [Thalo type comparison](../agent-memory-systems/thalo-type-comparison.md) already flagged that their opinion entity (Claim / Reasoning / Caveats sections) maps to Toulmin's claim / grounds+warrant / qualifier+rebuttal — and that we lack structured sections for argument-shaped notes.
 
 3. **The affordance table.** [Types mark affordances](../notes/instructions-are-typed-callables.md) lists `claim` affordances as: verify, gather evidence, challenge, use as assumption. These are Toulmin operations: verifying grounds, strengthening backing, raising rebuttals.
 
@@ -125,7 +125,7 @@ The other traits (`has-comparison`, `has-implementation`, `has-external-sources`
 Relevant Notes:
 
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles are Toulmin claims; `structured-claim` extends the convention with required argument sections while leaving the title convention available to all notes
-- [Thalo type comparison](../notes/related-systems/thalo-type-comparison.md) — converges: Thalo's opinion entity (Claim/Reasoning/Caveats) is the same Toulmin shape; this note resolves the gap they flagged
+- [Thalo type comparison](../agent-memory-systems/thalo-type-comparison.md) — converges: Thalo's opinion entity (Claim/Reasoning/Caveats) is the same Toulmin shape; this note resolves the gap they flagged
 - [programming-language types mark affordances](../notes/instructions-are-typed-callables.md) — foundation: the `claim` affordance table lists Toulmin operations without naming them
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — enables: `structured-claim` has concrete structural requirements (sections), making it verifiable in the way `has-claim` as a trait was not
 - [document-classification](../reference/available-types.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr

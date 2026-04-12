@@ -10,7 +10,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [validation/](./validation/) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [validate-notes-redesign/](./validate-notes-redesign/) — extracting validation rules from the CLI into `commonplace.lib`; deciding between a context dataclass, a validator class, and minimal-abstraction free functions
 - [review-library-extraction/](./review-library-extraction/) — splitting the `commonplace.review` package into a library layer plus thin CLI wrappers; companion to validate-notes-redesign at 14-module scale
-- [trace-derived-systems-review/](./trace-derived-systems-review/) — review queue and execution packets for the next wave of trace-derived learning systems surfaced from web search
 - [tool-loop-control/](./tool-loop-control/) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
 - [type-system-rationalization/](./type-system-rationalization/) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
 - [obsidian-affordances/](./obsidian-affordances/) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB

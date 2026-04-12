@@ -25,7 +25,7 @@ Text files: 3 | Seedlings: 108
 - [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md) — **49 links in**
   Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [005-quality-check-placement](../notes/adr/005-quality-check-placement.md) +46 more
 
-- [Trace-derived learning techniques in related systems](../notes/trace-derived-learning-techniques-in-related-systems.md) — **35 links in**
+- [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — **35 links in**
   Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md), [Learning theory](../notes/learning-theory-index.md) +32 more
 
 - [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **34 links in**

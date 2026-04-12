@@ -40,12 +40,12 @@ When linking FROM this collection:
 | To register | Appropriate relationships | Notes |
 |---|---|---|
 | Theoretical (same register) | since / because / contradicts / extends / qualifies | The claim-traversal graph. These are the argumentative links that make traversal-as-reasoning work. |
-| Descriptive (reference, related-systems) | evidence / derived-from / exemplifies | Theories cite descriptions as observations and evidence. The theory must stand without any single description — if it can't, it's still a description, not yet a theory. |
+| Descriptive (reference, agent-memory-systems) | evidence / derived-from / exemplifies | Theories cite descriptions as observations and evidence. The theory must stand without any single description — if it can't, it's still a description, not yet a theory. |
 | Prescriptive (instructions) | evidence (rare) | Theories rarely need to cite procedures. When they do, it's usually to note that a practice exists, not to depend on it. |
 
 ## What does NOT belong here
 
-- Descriptions of how a specific system works → descriptive register (`kb/reference/` or `kb/related-systems/`)
+- Descriptions of how a specific system works → descriptive register (`kb/reference/` or `kb/agent-memory-systems/`)
 - Procedures, conventions, how-to guidance → prescriptive register (`kb/instructions/`)
 - Raw captures without frontmatter → `text` type, any collection
 - Work in progress → `kb/work/` (workshops)

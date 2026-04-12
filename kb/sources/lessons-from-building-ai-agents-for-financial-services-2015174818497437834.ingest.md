@@ -34,7 +34,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 2. **[bitter-lesson-boundary](../notes/bitter-lesson-boundary.md)** — exemplifies the relaxing prediction. "The model will eat your scaffolding" is the bitter lesson applied to agent infrastructure. The author predicts basic skills become one-liners in two years as models improve, and describes the practical response: "write skills, delete them when unnecessary, build new ones for harder problems." This maps onto the codify-for-current-leverage-not-permanence heuristic. Critically, fiscal period normalization (10,000+ company calendars) is a clean calculator-regime counterexample — the spec IS the problem, so models will not absorb it.
 
-3. **[Agent Skills for Context Engineering](../notes/related-systems/agent-skills-for-context-engineering.md)** — provides production evidence for shared patterns. Fintool's skill architecture independently converges: markdown files with YAML frontmatter, progressive disclosure (discover metadata first, load full content on use), SQL discovery with lazy loading. Agent Skills identifies "hosted agent infrastructure (sandboxing, warm pools)" as an area they cover deeply; Fintool provides the production implementation detail.
+3. **[Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md)** — provides production evidence for shared patterns. Fintool's skill architecture independently converges: markdown files with YAML frontmatter, progressive disclosure (discover metadata first, load full content on use), SQL discovery with lazy loading. Agent Skills identifies "hosted agent infrastructure (sandboxing, warm pools)" as an area they cover deeply; Fintool provides the production implementation detail.
 
 4. **[llm-context-is-a-homoiconic-medium](../notes/llm-context-is-a-homoiconic-medium.md)** — exemplifies without naming. Skills, memories, and watchlists are all "just files" — the same markdown serves as both content and agent instructions. The copy-on-write skill shadowing system works because skills are text files, not compiled code. The author writes: "Skills tell the agent how to do things. Memories tell it what the user cares about. Both are just files." This is homoiconicity described as production architecture.
 
@@ -54,7 +54,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 11. **[Koylanai Personal Brain OS](./koylanai-personal-brain-os.ingest.md)** — parallel practitioner in a different domain. Both independently arrive at filesystem-as-knowledge-base, markdown-as-universal-format, and skills-as-product. Convergence across personal productivity and commercial finance strengthens the signal that these patterns are durable.
 
-12. **[related-systems-index](../notes/related-systems/related-systems-index.md)** — provides additional convergence evidence. The index already documents convergence on filesystem-first and progressive disclosure across independent systems; Fintool adds commercial production-scale evidence from a zero-error-tolerance domain.
+12. **[related-systems-index](../agent-memory-systems/related-systems-index.md)** — provides additional convergence evidence. The index already documents convergence on filesystem-first and progressive disclosure across independent systems; Fintool adds commercial production-scale evidence from a zero-error-tolerance domain.
 
 **Synthesis opportunities flagged by /connect:**
 

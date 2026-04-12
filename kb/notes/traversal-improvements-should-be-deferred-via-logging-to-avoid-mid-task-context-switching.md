@@ -41,4 +41,4 @@ Relevant Notes:
 - [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — foundation: the log is zero-friction capture; processing is progressive refinement
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — constrains: the agent shouldn't load writing methodology during traversal, which is why we defer
 - [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — the log catches staleness that defensive creation-time checks miss
-- [Ars Contexta](./related-systems/arscontexta.md) — source: the incremental formalization insight that motivated this design
+- [Ars Contexta](../agent-memory-systems/reviews/arscontexta.md) — source: the incremental formalization insight that motivated this design

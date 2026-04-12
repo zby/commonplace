@@ -33,7 +33,7 @@ The failure modes files hit at scale are all addressable without abandoning the 
 2. **Too many files per directory** — solved by subdirectories
 3. **Structured queries with scoring** — the real gap, but solvable with [note quality scores](./notes-need-quality-scores-to-scale-curation.md)
 
-The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time. [Cludebot's database stack](./related-systems/cludebot.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
+The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time. [Cludebot's database stack](../agent-memory-systems/reviews/cludebot.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
 
 ## Where the trade-off tips: Graphiti
 
@@ -52,11 +52,11 @@ A second kind of boundary shows up inside a mostly files-first system: a specifi
 Relevant Notes:
 
 - [storage-architecture](../reference/storage-architecture.md) — current-state: how commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
-- [cludebot](./related-systems/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
+- [cludebot](../agent-memory-systems/reviews/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
 - [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — independent practitioner report validating the same architectural choice at 80+ file scale
 - [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
 - [Coding Agents are Effective Long-Context Processors](../sources/coding-agents-are-effective-long-context-processors.ingest.md) — extends: benchmark evidence that exposing corpora as navigable files changes agent strategy (coordinate-based read/slice beats monolithic scans), suggesting part of files' value is operational, not just storage ergonomics
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
 - [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — extends: files are one important choice for the runtime's execution substrate
-- [Tracecraft](./related-systems/tracecraft.md) — tests: applies the files-over-database bet to ephemeral coordination state (write-heavy, latency-sensitive, disposable) rather than durable knowledge, where the access patterns differ significantly
+- [Tracecraft](../agent-memory-systems/reviews/tracecraft.md) — tests: applies the files-over-database bet to ephemeral coordination state (write-heavy, latency-sensitive, disposable) rather than durable knowledge, where the access patterns differ significantly

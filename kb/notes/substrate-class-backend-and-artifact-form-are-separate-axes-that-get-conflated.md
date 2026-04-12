@@ -17,7 +17,7 @@ The primary split is substrate class:
 
 ## Backend: where symbolic artifacts live
 
-Symbolic artifacts can live in different backends without changing substrate class — repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached symbolic records and provenance. This is why "repo artifacts" is too narrow as the umbrella term. Repo-hosted markdown is one important backend, especially for commonplace, but it is not the whole symbolic artifact substrate. [Cognee](./related-systems/cognee.md) keeps symbolic units in a database-backed poly-store; the backend changed, the learned result is still symbolic and inspectable.
+Symbolic artifacts can live in different backends without changing substrate class — repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached symbolic records and provenance. This is why "repo artifacts" is too narrow as the umbrella term. Repo-hosted markdown is one important backend, especially for commonplace, but it is not the whole symbolic artifact substrate. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps symbolic units in a database-backed poly-store; the backend changed, the learned result is still symbolic and inspectable.
 
 ## Artifact form: what symbolic artifacts look like
 
@@ -49,8 +49,8 @@ Relevant Notes:
 
 - [Continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — foundation: argues that non-weight adaptation is still learning if it durably changes capacity
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — applies: commonplace's main symbolic-artifact loop, currently implemented mostly through repo-hosted artifacts
-- [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — grounds: already distinguishes promotion targets, but this note separates substrate class from backend and artifact form
+- [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: already distinguishes promotion targets, but this note separates substrate class from backend and artifact form
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — sharpens: backend choice is downstream of substrate choice
 - [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: the core benefit of the symbolic artifact side is inspectability
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is a clean subsymbolic case that makes the symbolic/subsymbolic split visible
-- [Cognee](./related-systems/cognee.md) — counterexample: database-backed symbolic artifacts show that files are not the only artifact backend
+- [Cognee](../agent-memory-systems/reviews/cognee.md) — counterexample: database-backed symbolic artifacts show that files are not the only artifact backend

@@ -26,7 +26,7 @@ AgeMem proposes unifying long-term memory (LTM) and short-term memory (STM) mana
 
 ## Connections Found
 
-Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly connected sources in the KB. The primary analysis note ([memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)) integrates AgeMem into the bitter-lesson boundary, oracle theory, and deploy-time learning frameworks. The [comparative review](../notes/related-systems/agentic-memory-systems-comparative-review.md) covers AgeMem across all six analytical dimensions.
+Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly connected sources in the KB. The primary analysis note ([memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)) integrates AgeMem into the bitter-lesson boundary, oracle theory, and deploy-time learning frameworks. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) covers AgeMem across all six analytical dimensions.
 
 **Established connections (via analysis note and comparative review):**
 

@@ -53,6 +53,6 @@ This collection uses several types with collection-local definitions in `types/`
 
 - Transferable claims about KB methodology → theoretical register (`kb/notes/`)
 - Procedures and how-to guidance → prescriptive register (`kb/instructions/`)
-- Descriptions of external systems → `kb/notes/related-systems/` (or future `kb/related-systems/`)
+- Descriptions of external systems → `kb/agent-memory-systems/reviews/`
 - Work in progress → `kb/work/` (workshops)
 - Generated operational artifacts → `kb/reports/`

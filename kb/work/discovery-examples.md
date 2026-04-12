@@ -34,7 +34,7 @@ A shared feature is easy to verify or refute. A generative model can be compelli
 
 ## The Luhmann reframing
 
-A common framing in Zettelkasten-adjacent writing contrasts "topical" linking (filing by category) with "semantic" or "mechanistic" linking (connecting by shared deep structure). [Arscontexta's](../notes/related-systems/arscontexta.md) "controlled disorder engineers serendipity through semantic rather than topical linking" is the clearest statement.
+A common framing in Zettelkasten-adjacent writing contrasts "topical" linking (filing by category) with "semantic" or "mechanistic" linking (connecting by shared deep structure). [Arscontexta's](../agent-memory-systems/reviews/arscontexta.md) "controlled disorder engineers serendipity through semantic rather than topical linking" is the clearest statement.
 
 This framing is useful but the dichotomy is false. Topic and mechanism are the same cognitive operation — recognizing similarity — applied at different depths of abstraction. Topic is shallow recognition (these are both about economics). Mechanism is deeper (these both describe systems that degrade under structural overload). But once you *see* the shared mechanism, linking by it is exactly as easy as linking by topic.
 

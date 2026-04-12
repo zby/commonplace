@@ -20,7 +20,7 @@ This is an instance of [the boundary of automation is the boundary of verificati
 
 ## Current attempts
 
-The [comparative review](./related-systems/agentic-memory-systems-comparative-review.md) found that across eleven systems, everyone automates extraction but almost nobody automates synthesis. The few attempts:
+The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) found that across eleven systems, everyone automates extraction but almost nobody automates synthesis. The few attempts:
 
 - **Tip consolidation** ([trajectory-informed-memory paper](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md)) — clusters semantically similar tips and LLM-merges them. Works because task completion provides an oracle: consolidated tips either improve performance or don't. The oracle is narrow but real.
 - **A-MEM memory evolution** — neighboring notes update their context when new notes arrive. This is enrichment (adding context to existing items), not synthesis (producing something new from combination). No oracle needed because the operation is conservative.
@@ -56,7 +56,7 @@ Relevant Notes:
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: synthesis is an instance of the general principle; generation outpaces verification, so automation stalls
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — narrows: that note lists seven mutations; this note develops why one of them (synthesis) has a specific bottleneck distinct from the others
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: same oracle-dependency pattern in a different domain (memory management vs synthesis), same conclusion that the bottleneck is the oracle not the mechanism
-- [agentic memory systems comparative review](./related-systems/agentic-memory-systems-comparative-review.md) — evidence: the "everyone extracts, almost nobody synthesizes" convergence finding across eleven systems
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: the "everyone extracts, almost nobody synthesizes" convergence finding across eleven systems
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — potential solution: composite oracle from weak signals, untested for synthesis evaluation specifically
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — extends: synthesis evaluation sits in the weak-oracle zone; the spectrum predicts that engineering effort should go to oracle construction, not generation improvement
 - [synthesis is not error correction](./synthesis-is-not-error-correction.md) — shared structure: multi-agent output synthesis and knowledge synthesis both fail for the same reason — combining inputs without an oracle to evaluate the combination; error amplification (Kim et al.) is the within-task manifestation, spurious connections are the across-KB manifestation

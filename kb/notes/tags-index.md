@@ -24,7 +24,7 @@ For current-state documentation about the live commonplace system rather than tr
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
 - [Observability](./observability-index.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-index.md) — operations, audits, and maintenance methodology
-- [Related systems](./related-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
+- [Related systems](../agent-memory-systems/related-systems-index.md) — external systems tracked for comparison and convergence signals
 
 ## Workshop Layer
 

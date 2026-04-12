@@ -58,4 +58,4 @@ Relevant Notes:
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
 - [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
 - [What Survives in Multi-Agent Systems](../sources/voooooogel-multi-agent-future.ingest.md) — extends: forking is better treated as a coordination/scoping primitive than as another point on a single scheduler ladder
-- [Tracecraft](./related-systems/tracecraft.md) — exemplifies: occupies a distinctive point — no scheduler, ephemeral persistence, shared-state coordination, weak guarantees, structured return artifacts
+- [Tracecraft](../agent-memory-systems/reviews/tracecraft.md) — exemplifies: occupies a distinctive point — no scheduler, ephemeral persistence, shared-state coordination, weak guarantees, structured return artifacts
