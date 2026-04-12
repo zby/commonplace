@@ -1,7 +1,7 @@
 ---
 description: Decision to split installed projects into two directory trees — user content in kb/, framework in commonplace/ — with operational artifacts copied to kb/ for fast agent access and methodology kept in commonplace/ as fallback
 type: adr
-tags: [architecture]
+tags: []
 status: superseded
 ---
 

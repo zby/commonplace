@@ -1,7 +1,7 @@
 ---
 description: Core scripts use only Python stdlib by defining a strict frontmatter grammar that a regex parser handles completely
 type: adr
-tags: [architecture]
+tags: []
 status: accepted
 ---
 

@@ -1,7 +1,7 @@
 ---
 description: Types define structural requirements checked by validation; frontmatter type identifies artifact kind; traits route semantic review gates; type definitions split into prose template and machine-readable schema
 type: adr
-tags: [document-system]
+tags: [document-system, types]
 status: accepted
 ---
 
@@ -56,5 +56,5 @@ That made it unclear whether moving a file between directories changed its type 
 
 Relevant Notes:
 
-- [document-classification](../type-system.md) — extends: adds the type/trait boundary test
+- [document-classification](../available-types.md) — extends: adds the type/trait boundary test
 - [type-loading](../type-loading.md) — the shipped loading model that implements the structural side of this decision

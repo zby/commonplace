@@ -1,7 +1,7 @@
 ---
 description: Accepted decision that specialized and practitioner-defined types use separate template and instructions files, while WRITING.md stays the generic always-loaded guide
 type: adr
-tags: [document-system, architecture]
+tags: [document-system, types]
 status: accepted
 ---
 

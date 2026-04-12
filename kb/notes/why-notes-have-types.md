@@ -54,7 +54,7 @@ Convention establishes common values. Directory `types/` folders document struct
 Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that shapes what types can be
-- [document-classification](../reference/type-system.md) — the taxonomy: base types table and migration history
+- [document-classification](../reference/available-types.md) — the taxonomy: base types table and migration history
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — develops: the enforcement role that makes navigation reliable

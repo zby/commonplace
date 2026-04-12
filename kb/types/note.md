@@ -11,7 +11,7 @@ The base structured type. A markdown file with YAML frontmatter containing at le
 
 All other typed documents extend `note` — they inherit these global fields and add their own structural requirements. [text](./text.md) stands outside the hierarchy (no frontmatter = no fields).
 
-See [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) for the design rationale. See [document-classification](../reference/type-system.md) for the taxonomy overview of all types.
+See [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) for the design rationale. See [document-classification](../reference/available-types.md) for the taxonomy overview of all types.
 
 ## Structural test
 
@@ -99,5 +99,5 @@ status: seedling
 Relevant Notes:
 
 - [text](./text.md) — the root type that note extends; promotion from text to note is the first structural step
-- [document-classification](../reference/type-system.md) — taxonomy overview: the base types table and migration history
+- [document-classification](../reference/available-types.md) — taxonomy overview: the base types table and migration history
 - [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) — design rationale for verifiable types

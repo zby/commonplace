@@ -1,7 +1,7 @@
 ---
 description: Decision to inline note and structured-claim templates into WRITING.md so the agent gets type structure and writing conventions in a single hop — eliminates one read for the two most common note types
 type: adr
-tags: [document-system]
+tags: [document-system, types]
 status: accepted
 ---
 

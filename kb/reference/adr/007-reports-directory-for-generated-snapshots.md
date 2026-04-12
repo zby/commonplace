@@ -1,7 +1,7 @@
 ---
 description: Decision to create kb/reports/ for generated, regenerable analytical snapshots — distinct from workshop (temporal work-in-flight) and notes (durable claims)
 type: adr
-tags: [architecture]
+tags: []
 status: proposed
 ---
 

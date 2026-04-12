@@ -1,55 +1,61 @@
 ---
-description: Commonplace's shipped storage architecture — markdown files as source of truth, qmd and generated listings as derived indexes, SQLite as a scoped exception for review-state operational data
+description: Where commonplace stores data — authored markdown under kb/, derived indexes rebuilt from those files, and the review subsystem's local SQLite database
 type: note
-tags: [architecture]
+tags: []
 status: current
 ---
 
-# Storage architecture
+# Storage
 
-Commonplace's storage boundary in the shipped system. This note describes what is file-backed, what is a derived index, and which subsystem crosses into SQLite and why.
+Commonplace stores data in three layers: authored markdown files under `kb/`, derived indexes rebuilt from those files, and a local SQLite database scoped to the review subsystem.
 
-## Primary substrate: markdown files under git
+## Authored markdown
 
-All authored library content lives as markdown under `kb/`:
+All authored content lives as markdown with YAML frontmatter under `kb/`, tracked in git. Every file is readable and editable without tooling beyond an editor and `grep`.
 
-- `kb/notes/` — transferable claims and theory
-- `kb/reference/` — shipped-system reference docs and ADR decision history
-- `kb/sources/` — ingested external sources
-- `kb/tasks/` — task lifecycle documents
-- `kb/work/` — workshop artifacts
-- `kb/instructions/` — skills and procedural guidance
+| Directory | Contents |
+|---|---|
+| `kb/notes/` | Transferable claims and theory |
+| `kb/reference/` | Shipped-system reference docs and ADRs |
+| `kb/sources/` | Ingested external sources |
+| `kb/tasks/` | Task lifecycle documents |
+| `kb/work/` | Workshop artifacts |
+| `kb/instructions/` | Skills and procedural guidance |
+| `kb/types/`, `kb/*/types/` | Global and collection-scoped type definitions |
 
-Each document is a markdown file with YAML frontmatter. Types are identified by `type:` in frontmatter and validated by schemas declared in the collection's `types/` directory. Nothing about authored content requires tooling beyond an editor, grep, and git — agents read these files with the same Read/Grep tools they use for source code.
+Document type is declared by `type:` in frontmatter and validated against the matching schema in the owning collection's `types/` directory. See [available-types.md](./available-types.md) and [type-loading.md](./type-loading.md).
 
 ## Derived indexes
 
-Capabilities that files alone can't provide are added as derived layers. Each index is a build artifact rebuildable from the files at any time:
+Each index below is regenerable from the authored markdown. Losing an index is a rebuild, not a data loss.
 
-- **qmd** — semantic search index over all collections, configured via `qmd-collections.yml`. Rebuilt from markdown source, answers retrieval queries the `rg`+frontmatter layer can't handle economically.
-- **Generated listing indexes** — `kb/notes/index.md`, `kb/sources/index.md`, and similar files are produced by `commonplace-generate-notes-index`. They exist to give agents a scannable table of contents without having to list a directory.
-- **Tag indexes** — curated editorial pages (`kb/notes/tags-index.md` and subordinate tag pages) with auto-generated sections appended by `commonplace-sync-generated-index`.
-- **MkDocs site** — the whole KB is rendered to static HTML via `mkdocs.yml`, with a `redirect_maps` block that preserves external URLs across renames. The site is a derived view, not a source of truth.
+| Index | What it covers | Rebuild command |
+|---|---|---|
+| Directory listing pages (`kb/notes/index.md`, `kb/sources/index.md`) | Title, description, and type of every note in the directory | `commonplace-generate-notes-index <dir>` |
+| Tag-index generated tails (`kb/notes/tags-index.md` and subordinate tag pages) | Notes grouped by tag below the `<!-- generated -->` marker | `commonplace-sync-generated-index` |
+| All of the above at once | — | `commonplace-refresh-indexes` |
+| qmd semantic search index | Every collection listed in `qmd-collections.yml` | External `qmd` CLI |
+| MkDocs static site | Entire `kb/` tree, configured by `mkdocs.yml` | `mkdocs build` |
 
-None of these indexes are authored directly; they are all regenerable. Losing an index is a rebuild, not a data loss.
+The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note renames.
 
-## Scoped exception: SQLite for review state
+## Review state (SQLite)
 
-Review state is the one subsystem that is not file-backed. Per [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md), review runs, gate reviews, acceptance events, and their provenance live in a local SQLite database keyed by `(note_path, gate_id, model_id)`.
+Review state is the one subsystem that is not file-backed. The review database stores:
 
-The exception is justified by two shifts that moved review artifacts out of the authored-library shape:
+| Table | Contents |
+|---|---|
+| `review_runs` | One row per review invocation on a note |
+| `review_run_gates` | Gate set captured at run start, with per-gate SHAs |
+| `gate_reviews` | Append-only per-gate review history |
+| `acceptance_events` | Append-only per-gate acceptance history |
 
-1. Per-gate review artifacts were removed from git because they produced too much churn. Once they stopped participating in git history and diffs, the main file advantage weakened.
-2. To preserve selector and ack behavior outside git, each review had to carry operational metadata (accepted SHAs, gate fingerprints, acceptance timestamps, model partitions). The subsystem was no longer primarily reading prose — it was querying current state and mutating acceptance rows.
+Acceptance is keyed by `(note_path, gate_id, model_id)`. Current acceptance for any key is the latest `acceptance_events` row, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate SHAs from files and compares them against accepted SHAs from the database.
 
-At that point the read/write pattern had shifted from "load document, render prose" to "query state, transition state," which is exactly what a small local database is for. Notes, gates, instructions, and source material remain file-backed because they are still authored, human-reviewable, and versioned. Review state isn't any of those things anymore.
+Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) for the rationale.
 
-The boundary: **files remain the right default for authored knowledge under git. Once a specific artifact leaves git and the system mostly wants indexed state transitions over it, SQLite is the simpler representation.** The boundary is narrow and keyed to the review subsystem; no other commonplace subsystem currently sits on the operational-state side of it.
+## See also
 
----
-
-Relevant Notes:
-
-- [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — decision: the full rationale and consequences of the SQLite boundary for review state
-- [007-reports-directory-for-generated-snapshots](./adr/007-reports-directory-for-generated-snapshots.md) — related: the move of review artifacts to `kb/reports/` preceded and enabled the SQLite transition
-- [architecture](./architecture.md) — shipped architecture: how the storage substrate sits inside the installed surface
+- [architecture.md](./architecture.md) — installed project layout and surface-by-role
+- [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — decision: SQLite for review state
+- [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — decision: `kb/reports/` for generated operational artifacts

@@ -1,7 +1,7 @@
 ---
 description: Top-level kb/ subdirectory that groups authored artifacts sharing a domain, owns or inherits a type contract, and is the unit at which operational context-budgeting decisions (validation, areas, boundary reasoning) are made
 type: definition
-tags: [type-system, architecture]
+tags: [types]
 status: seedling
 ---
 
@@ -36,7 +36,7 @@ A directory is a collection when three properties co-occur:
 Relevant Notes:
 
 - [type-loading](../type-loading.md) — extends: describes the type contract each collection owns and how the resolver walks from a collection's `types/` to the global layer
-- [type-system](../type-system.md) — extends: the full shipped type inventory that collections instantiate
+- [available-types](../available-types.md) — extends: the shipped type inventory that collections instantiate
 - [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — grounds: the full-text/index boundary analysis for note collections that the "operational unit for context budgeting" property generalizes from
 - [a functioning KB needs a workshop layer not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: library collections vs workshop directories
 - [why directories despite their costs](../../notes/why-directories-despite-their-costs.md) — grounds: the general argument for directory-based organisation that collections make load-bearing

@@ -1,7 +1,7 @@
 ---
 description: Commonplace's shipped build-time instruction generation flow — scaffold trees, template substitution, the `commonplace-init` entry point, and the specific generated artifacts
 type: note
-tags: [architecture]
+tags: []
 status: current
 ---
 

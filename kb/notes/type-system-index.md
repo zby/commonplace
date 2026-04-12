@@ -47,3 +47,4 @@ Three independent arguments for why structured document types improve what gets 
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
 
 ## Other tagged notes <!-- generated -->
+
