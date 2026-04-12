@@ -2,7 +2,7 @@
 
 ## Goal
 
-Test whether per-collection `COLLECTION.md` files improve writing and connecting quality, and whether the three-register framework (theoretical / descriptive / prescriptive) holds up in practice.
+Test whether per-collection `COLLECTION.md` files improve writing and connecting quality, and whether the [three-register framework](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) (theoretical / descriptive / prescriptive) holds up in practice.
 
 All convention docs are deploy-time learning artifacts — iterate from use, don't design to completion upfront.
 
