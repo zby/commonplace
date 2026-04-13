@@ -1,5 +1,5 @@
 ---
-description: "Compiled collection topology — registers, linking rules, and constraints. Rebuild with cp-skill-compile-collections."
+description: "Compiled collection topology — registers and linking rules. Rebuild with cp-skill-compile-collections."
 type: note
 status: current
 ---
@@ -8,24 +8,23 @@ status: current
 
 ## Collections
 
-| Collection | Register | Quality goal | Titles |
+| Collection | Register / layer | Quality goal | Titles |
 |---|---|---|---|
-| `kb/notes/` | theoretical | reach | claim |
-| `kb/reference/` | descriptive | fidelity + economy | topical |
-| `kb/instructions/` | prescriptive | executability + precision | imperative |
+| `kb/notes/` | theoretical | reach | claim by default |
+| `kb/reference/` | descriptive | fidelity + economy | topical; ADRs numbered |
+| `kb/instructions/` | prescriptive | executability + precision | imperative or action-oriented |
+| `kb/agent-memory-systems/` | descriptive, with root-level analysis exceptions | fidelity + economy | repo-name for reviews; topical or claim-shaped for analyses |
+| `kb/work/` | catch-all workshop layer | move active work forward; extract durable conclusions | not specified |
 
-## Linking matrix
+## Linking Matrix
 
-What relationships to use when linking FROM a source register TO a target register.
+What relationships to use when linking FROM a source register or layer TO a target register or layer.
 
-| From → To | Theoretical | Descriptive | Prescriptive |
-|---|---|---|---|
-| **Theoretical** | since / because / contradicts / extends / qualifies | evidence / derived-from / exemplifies | evidence (rare) |
-| **Descriptive** | rationale | cross-reference / see-also / supersedes | procedure |
-| **Prescriptive** | justification | reference | composition |
+| From -> To | Theoretical | Descriptive | Prescriptive | Workshop |
+|---|---|---|---|---|
+| **Theoretical** | since / because / contradicts / extends / qualifies | evidence / derived-from / exemplifies | evidence (rare) | not specified |
+| **Descriptive** | rationale / grounds / evidence | cross-reference / see-also / supersedes | procedure | not specified |
+| **Prescriptive** | justification | reference | composition | not specified |
+| **Workshop** | permissive: whatever label clarifies work state | permissive: whatever label clarifies work state | permissive: whatever label clarifies work state | permissive: whatever label clarifies work state |
 
-## Register constraints
-
-- **Formulation** (theoretical): claims must be statable in general terms without referencing a particular system.
-- **Fidelity** (descriptive): faithful to the system as built, even when implementation deviates from theory.
-- **Reasoning** (prescriptive): cut explanations of *why* — reasoning belongs in theory notes, not instructions.
+For workshop links, examples include `draws-on`, `tests`, `depends-on`, `produces`, `supersedes`, or a local phrase. Workshop links are working notes, not durable graph contracts.

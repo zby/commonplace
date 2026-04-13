@@ -20,16 +20,19 @@ Compile a topology document from all per-collection COLLECTION.md files in the K
 kb/*/COLLECTION.md
 ```
 
-2. **Read each COLLECTION.md.** Extract:
-   - The YAML frontmatter fields (register, quality_goal, context_strategy, title_convention)
-   - The outbound linking conventions table
-   - Any register-specific constraints (formulation constraint, fidelity constraint, reasoning constraint)
+2. **Read each COLLECTION.md as prose.** Do not expect YAML frontmatter or structured fields. Infer only what the prose clearly states:
+   - register profile or layer role (for example theoretical, descriptive, prescriptive, catch-all workshop)
+   - quality goal
+   - title convention, if stated
+   - outbound linking conventions, if stated
+
+   Sparse collection files are valid. If a field is not stated, write `not specified` or omit it rather than inventing a rule. If a collection says linking is permissive, preserve that as the linking guidance.
 
 3. **Produce an optimized topology document.** The output must be compact — optimized for an agent loading it into bounded context before connecting notes. Do NOT reproduce the full COLLECTION.md prose. Distill to:
 
    - **Collection registry** — one table: collection path, register, quality goal, title convention
    - **Cross-register linking matrix** — for each (source register, target register) pair, the appropriate relationship types. Merge the per-collection outbound tables into a single matrix. Deduplicate where multiple collections describe the same register pair.
-   - **Register constraints** — one bullet per constraint (formulation, fidelity, reasoning). These are the rules that apply when linking FROM a given register.
+   Do not include register constraints in the topology output. They belong in collection conventions and writing/review workflows; the connect skill loads topology only to choose relationship labels.
 
    Target: under 1500 tokens total. If a section adds no information beyond what the matrix already says, cut it.
 
@@ -37,7 +40,7 @@ kb/*/COLLECTION.md
 
 ```yaml
 ---
-description: "Compiled collection topology — registers, linking rules, and constraints. Rebuild with cp-skill-compile-collections."
+description: "Compiled collection topology — registers and linking rules. Rebuild with cp-skill-compile-collections."
 type: note
 status: current
 ---
