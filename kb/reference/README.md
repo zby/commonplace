@@ -165,6 +165,8 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 `commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
 
+For the full CLI surface, see [commands.md](./commands.md).
+
 ## Reference
 
 Look up how the shipped system is put together: its architecture, type system, always-loaded context, authoring procedures, and decision history.
@@ -176,10 +178,13 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
+- [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
+- [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
 - [review-sweep-command.md](./review-sweep-command.md) — how `commonplace-review-sweep` works: staleness detection, job grouping, parallel execution
 
-### Type system
+### Type system and collection model
 
+- [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, link rules) and types (structural contracts) compose, and how the connect/compile-collections skills consume the topology
 - [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `definition`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
 - [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))

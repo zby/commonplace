@@ -79,7 +79,7 @@ Key entry points:
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. For the full reference, read `src/commonplace/docs/COMMANDS.md`.
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. For the full reference, read [kb/reference/commands.md](./kb/reference/commands.md).
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.

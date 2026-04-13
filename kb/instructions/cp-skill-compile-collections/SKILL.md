@@ -1,6 +1,6 @@
 ---
 name: cp-skill-compile-collections
-description: Compile all COLLECTION.md files into a single optimized topology document showing registers, quality goals, and cross-register linking rules. Run when COLLECTION.md files change or before connecting notes across collections.
+description: Compile all COLLECTION.md files into a single optimized topology document showing registers, quality goals, and cross-register linking rules. The project owner runs this whenever a COLLECTION.md changes; commonplace-init ships a pre-compiled default so the connect skill works on first run.
 user-invocable: true
 allowed-tools: Read, Write, Glob, Grep
 context: fork

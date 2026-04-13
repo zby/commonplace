@@ -1,4 +1,11 @@
-# Commonplace Library (`commonplace.lib`)
+---
+description: Internal API reference for commonplace.lib - frontmatter, naming, note_parser, type_resolver, validation, and relocation modules used by CLI commands and the review system
+type: note
+tags: []
+status: current
+---
+
+# Commonplace library (`commonplace.lib`)
 
 Shared library modules used by CLI commands and the review system. `frontmatter` and `type_resolver` require `PyYAML`; `type_resolver` also requires `jsonschema` (which transitively brings in `referencing`).
 

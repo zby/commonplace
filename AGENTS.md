@@ -91,11 +91,11 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. Documentation lives in `src/commonplace/docs/`:
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. Documentation lives in `kb/reference/`:
 
-- `COMMANDS.md` — CLI command reference
-- `LIB.md` — library modules (frontmatter, note_parser, type_resolver)
-- `REVIEW.md` — review system architecture and data model
+- [commands.md](./kb/reference/commands.md) — CLI command reference
+- [lib-modules.md](./kb/reference/lib-modules.md) — library modules (frontmatter, note_parser, type_resolver)
+- [review-architecture.md](./kb/reference/review-architecture.md) — review system architecture and data model
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.

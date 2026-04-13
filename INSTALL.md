@@ -31,7 +31,18 @@ qmd --version
 
 Commonplace installs into a project-local venv rather than globally, so each project can pin its own version independently.
 
-From your project root:
+> **Note:** `llm-commonplace` is not yet published to PyPI. For now, install from a local checkout of this repository. The PyPI-based instructions below are kept as a preview of how it will work once published.
+
+From your project root, install from a local checkout (also works if you're inside the commonplace repo itself):
+
+```bash
+uv venv
+uv pip install -e /PATH/TO/commonplace
+# or, if you're already in the commonplace directory:
+uv pip install -e .
+```
+
+Once the package is published, this will become:
 
 ```bash
 uv venv
@@ -43,15 +54,6 @@ Or without uv:
 ```bash
 python3 -m venv .venv
 pip install llm-commonplace
-```
-
-Or from a local checkout (also works if you're inside the commonplace repo itself):
-
-```bash
-uv venv
-uv pip install -e /PATH/TO/commonplace
-# or, if you're already in the commonplace directory:
-uv pip install -e .
 ```
 
 ## 2. Initialize the project
@@ -203,7 +205,7 @@ my-project/
 
 ## Updating
 
-Update the package in your project venv:
+Until `llm-commonplace` is on PyPI, update by pulling the latest commonplace checkout — an editable install (`uv pip install -e`) picks up the changes automatically. Once published, you'll be able to upgrade with:
 
 ```bash
 uv pip install --upgrade llm-commonplace

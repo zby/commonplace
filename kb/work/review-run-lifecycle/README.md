@@ -53,7 +53,7 @@ It is not a redesign of:
 - [review-runs-direct-write](../review-runs-direct-write/README.md) — introduced the parent `review_runs` model and direct-write framing
 - [review system](../../instructions/REVIEW-SYSTEM.md) — current workflow contract and user-facing commands
 - [run review bundle on note](../../instructions/run-review-bundle-on-note.md) — current split agent workflow
-- [REVIEW.md](../../../src/commonplace/docs/REVIEW.md) — code architecture overview
+- [review-architecture.md](../../reference/review-architecture.md) — code architecture overview
 
 ## Working direction
 

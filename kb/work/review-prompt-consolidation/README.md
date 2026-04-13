@@ -59,7 +59,7 @@ Files and components that would change:
 - `src/commonplace/cli/review/ingest_bundle_output.py` — **new**, thin wrapper around the existing bundle parser, artifact writer, and lifecycle recorder.
 - `src/commonplace/review/run_review_bundle.py` — remains the bundle protocol owner for prompt construction, sentinel parsing, artifact writing, and review recording; may gain a small parameter for the output-destination variant (see open question 6), or some protocol helpers may be extracted if the module becomes too runner-specific.
 - `kb/instructions/run-review-bundle-on-note.md` — shrink from ~100 lines to ~15 lines; most prose deleted.
-- `src/commonplace/docs/REVIEW.md` — update the architecture description to reflect the unified shape.
+- `kb/reference/review-architecture.md` — update the architecture description to reflect the unified shape.
 - Tests — add coverage for `ingest_bundle_output`. Existing subprocess tests (`test_review_runs_direct_write.py`, `test_review_target_selector.py`) remain unchanged.
 - `pyproject.toml` — register the new CLI entry point.
 

@@ -1,4 +1,11 @@
-# Commonplace CLI Commands
+---
+description: Reference for the commonplace-* CLI commands shipped by llm-commonplace - project setup, validation, indexing, snapshots, note operations, and the review system
+type: note
+tags: []
+status: current
+---
+
+# Commonplace CLI commands
 
 All commands are installed by `pip install llm-commonplace` and available as `commonplace-*` on PATH. Run any command with `--help` for full usage.
 
@@ -99,7 +106,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read `kb/instructions/REVIEW-SYSTEM.md`. For the code architecture, see `src/commonplace/docs/REVIEW.md`.
+The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [../instructions/REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 ### commonplace-review-sweep
 

@@ -1,8 +1,17 @@
-# Review System (`commonplace.review` + `commonplace.cli.review`)
+---
+description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, single-note bundle execution, targeting, prompt format, and repair utilities
+type: note
+tags: []
+status: current
+---
+
+# Review system architecture (`commonplace.review` + `commonplace.cli.review`)
 
 The review system runs LLM-based quality reviews against KB notes using defined review gates. It tracks provenance (note and gate versions), manages acceptance state, and detects staleness.
 
-For the review workflow and gate definitions, see `kb/instructions/REVIEW-SYSTEM.md`. This document covers the code architecture.
+For the review workflow and gate definitions, see [../instructions/REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md). This document covers the code architecture.
+
+> **Sweep commands are experimental.** `review_sweep`, `run_gate_sweep`, `gate_sweep_format`, and `ack_trivial_note_changes` are not yet stabilized and are intentionally not documented in detail here. Treat their interfaces as subject to change.
 
 ## Package layout
 
@@ -20,15 +29,14 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 ```
 ┌─────────────────────────────────────────────────┐
 │  Orchestration                                  │
-│  review_sweep       run_review_bundle           │
-│  run_gate_sweep     create/finalize/ingest      │
+│  run_review_bundle  create/finalize/ingest      │
 ├─────────────────────────────────────────────────┤
 │  Gate resolution & targeting                    │
 │  resolve_gates      review_target_selector      │
-│  warn_selector      ack_trivial_note_changes    │
+│  warn_selector                                  │
 ├─────────────────────────────────────────────────┤
 │  Execution                                      │
-│  review_runners     gate_sweep_format           │
+│  review_runners                                  │
 ├─────────────────────────────────────────────────┤
 │  Data model                                     │
 │  review_db          review_model                │
@@ -36,6 +44,8 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 │  paths                                          │
 └─────────────────────────────────────────────────┘
 ```
+
+Sweep-related modules (`review_sweep`, `run_gate_sweep`, `gate_sweep_format`, `ack_trivial_note_changes`) exist alongside these layers but are experimental — see the note above.
 
 ---
 
@@ -159,19 +169,6 @@ The live-agent entry points reuse this protocol without launching a nested runne
 2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
 3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run`
 
-### run_gate_sweep.py — Single-gate multi-note review
-
-Runs one gate across multiple notes in batched prompts.
-
-- Uses `review_target_selector` to find stale notes for a gate
-- Batches notes (default 5 per batch)
-- Output parsed by `gate_sweep_format.extract_gate_sweep_reviews()`
-- Each note gets its own review_run record
-
-### review_sweep.py — Full review sweep
-
-Orchestrates a complete review pass: selects all stale note/gate pairs, groups by note, runs bundles.
-
 ### review_runners.py — LLM execution
 
 Invokes `claude-code` or `codex` CLI processes with a review prompt. Captures:
@@ -208,15 +205,9 @@ Also provides:
 
 Query effective reviews with `decision="warn"`, skip stale gate revisions and legacy rows without a `review_run_id`, and extract actionable findings from the `### Findings` section.
 
-### ack_trivial_note_changes.py
-
-Auto-acknowledge `note-changed` pairs when only non-watched parts changed. Each gate declares what it `watches` (body, title, description) — if changes are outside the watched set, the pair can be acked without re-review.
-
 ---
 
-## Prompt formats
-
-### Bundle format (multi-gate)
+## Bundle prompt format (multi-gate, single note)
 
 ```
 === GATE REVIEW START: {gate-id} ===
@@ -231,17 +222,6 @@ Auto-acknowledge `note-changed` pairs when only non-watched parts changed. Each 
 
 ## Result: PASS|WARN|FAIL|ERROR
 === GATE REVIEW END: {gate-id} ===
-```
-
-### Gate sweep format (multi-note)
-
-```
-=== NOTE START: {note-path} ===
-=== GATE REVIEW START: {gate-id} ===
-...review...
-## Result: PASS|WARN|FAIL|ERROR
-=== GATE REVIEW END: {gate-id} ===
-=== NOTE END: {note-path} ===
 ```
 
 ---

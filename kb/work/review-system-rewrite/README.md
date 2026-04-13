@@ -21,7 +21,7 @@ This workshop designs the target architecture. Not a plan to execute now — a r
 
 ## Current grounding
 
-- [REVIEW.md](../../../src/commonplace/docs/REVIEW.md) — code architecture overview
+- [review-architecture.md](../../reference/review-architecture.md) — code architecture overview
 - [REVIEW-SYSTEM.md](../../instructions/REVIEW-SYSTEM.md) — workflow contract
 - [review-run-lifecycle](../review-run-lifecycle/README.md) — prior lifecycle tightening workshop
 - [review-prompt-consolidation](../review-prompt-consolidation/README.md) — prior prompt consolidation workshop

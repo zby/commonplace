@@ -39,6 +39,12 @@ SCAFFOLD_TREES = [
     ("kb/types", "kb/types"),
 ]
 
+# Individual scaffold files to copy. Used when only one file from a tree is
+# scaffolded (avoiding a full tree walk that would copy unrelated content).
+SCAFFOLD_FILES = [
+    ("kb/reports/collection-topology.md", "kb/reports/collection-topology.md"),
+]
+
 # Skills directories for supported runtimes.
 SKILLS_DIRS = [
     Path(".claude/skills"),
@@ -54,6 +60,7 @@ PROMOTED_SKILLS = [
     "cp-skill-ingest",
     "cp-skill-snapshot-web",
     "cp-skill-revise-iterative",
+    "cp-skill-revise-autoreason",
 ]
 
 
@@ -102,6 +109,26 @@ def _copy_scaffold_tree(
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_file, target)
         report.created.append(rel_path)
+
+
+def _copy_scaffold_file(
+    scaffold_root: Path,
+    src_rel: str,
+    dest_root: Path,
+    target_rel: str,
+    report: InitReport,
+) -> None:
+    """Copy a single scaffold file, classifying an existing target."""
+    src = scaffold_root / src_rel
+    rel_path = Path(target_rel)
+    target = dest_root / rel_path
+    expected_bytes = src.read_bytes()
+    if target.exists():
+        _record_existing(report, rel_path, target, expected_bytes)
+        return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, target)
+    report.created.append(rel_path)
 
 
 def _write_template(
@@ -162,6 +189,9 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     with as_file(data_pkg) as scaffold_root:
         for src_rel, target_rel in SCAFFOLD_TREES:
             _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel, report)
+
+        for src_rel, target_rel in SCAFFOLD_FILES:
+            _copy_scaffold_file(scaffold_root, src_rel, root, target_rel, report)
 
         # Resolve templates with project-specific values.
         templates = [
