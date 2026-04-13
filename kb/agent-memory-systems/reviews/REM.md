@@ -110,7 +110,7 @@ REM is a **service-owned trace backend** on axis 1 of the [trace-derived learnin
 
 Relevant Notes:
 
-- [agentic-memory-systems-comparative-review](../agentic-memory-systems-comparative-review.md) — extends: REM is the heaviest-infrastructure case in the survey, paired with the thinnest actual transformation layer; the gap between aspirational schema and implemented pipeline is wider here than in any other reviewed system.
+- [agentic-memory-systems-comparative-review](../agentic-memory-systems-comparative-review.md) — extends: the comparative review grounds the general retrieval-vs-knowledge-system framing, while the trace-derived survey grounds REM's placement as a service-owned artifact learner.
 - [trace-derived-learning-techniques-in-related-systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: REM is a service-owned, artifact-learning trace backend whose append-only consolidation with unimplemented lifecycle columns reinforces the survey's finding that extraction is tractable but maintenance is the open problem.
 - [cognee](./cognee.md) — compares: both are database-first rather than filesystem-first, but cognee runs a pipeline with Pydantic schemas and multi-tenant ACLs while REM's extraction is a keyword-clustered LLM compression into short fact strings.
 - [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — exemplifies: REM's gap between schema (contradiction, supersession, active flags) and implementation (append-only, no merge, no retire) is a direct instance of the survey's central finding that curation resists automation even when candidate generation is solved.

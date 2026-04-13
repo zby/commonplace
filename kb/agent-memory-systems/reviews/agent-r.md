@@ -41,7 +41,7 @@ Agent-R and Commonplace sit on opposite ends of the substrate-class axis. Agent-
 
 Agent-R is ahead of Commonplace on closed-loop supervision: once an AgentGym environment and a task list exist, the repo can turn its own failures into correction examples without human labeling. Commonplace is ahead on inspectability and incremental refinement — after Agent-R's fine-tuning step, the learned behavior is no longer an editable artifact and cannot be argued with or linked to other knowledge.
 
-Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a cleaner trajectory-to-weights case than [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) because the intermediate data structure is much richer: a paired search tree with step-local bad-step localization, not a stream of per-turn rewards.
+Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a cleaner trajectory-to-weights case than [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) because the intermediate data structure is much richer: not live next-state training samples with reward/directive signals, but a paired search tree with step-local bad-step localization and splice correction.
 
 ## Borrowable Ideas
 
@@ -81,6 +81,6 @@ Relevant Notes:
 
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Agent-R is a trajectory-to-weights case with an unusually structured intermediate dataset-construction layer between trace collection and training
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Agent-R works because AgentGym supplies both a reward oracle and an executable task family, not because weight learning removes the evaluation problem
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — compares: both mine interaction into weights, but Agent-R shows a richer intermediate supervision-construction step via search-tree pairing and step-local revision splices
+- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — compares: both mine interaction into weights, but Agent-R shows a richer intermediate supervision-construction step via search-tree pairing and step-local revision splices rather than OpenClaw-RL's next-state training samples with reward/directive signals
 - [ExpeL](./expel.md) — contrasts: ExpeL keeps its consolidation in a maintained natural-language rule list that persists across runs, while Agent-R uses inspectable traces only as supervision on the way to weight updates
 - [Autocontext](./autocontext.md) — compares: both bridge trajectories to weights, but Autocontext keeps a persistent playbook/report layer alongside training export, while Agent-R treats the JSONL as transient supervision only

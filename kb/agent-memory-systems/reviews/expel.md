@@ -1,5 +1,5 @@
 ---
-description: Two-stage trajectory-to-rule pipeline — gather attempts, extract rules via ADD/EDIT/REMOVE/AGREE verbs with strength counters, inject at eval with vectorstore trajectory retrieval; all inspectable artifacts, no weights
+description: Staged trajectory-to-rule pipeline with ADD/EDIT/REMOVE/AGREE rule updates and eval-time prompt injection; all inspectable artifacts, no weights
 type: agent-memory-system-review
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
@@ -85,6 +85,6 @@ Relevant Notes:
 - [Reflexion](./reflexion.md) — sharpens: ExpeL embeds the Reflexion retry loop but adds a cross-task consolidation pass and explicit rule maintenance on top
 - [trajectory-informed-memory-generation-self-improving-agents ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — compares: both extract durable guidance from trajectories, but ExpeL exposes a concrete CRUD protocol in code
 - [openclaw-rl: train any agent simply by talking ingest](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — contrasts: similar trace-ingestion instinct, opposite promotion target — OpenClaw-RL trains weights, ExpeL stays in prompt-visible text
-- [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) — sharpens: ExpeL implements deploy-time learning through prompt-visible rules and retrieved trajectories, even though the repo packages it as an offline benchmark pipeline
+- [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) — sharpens: ExpeL is a close non-weight artifact-learning analogue to deploy-time learning, although the repo packages it as an offline benchmark train/extract/eval pipeline
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: ExpeL's rule lifecycle depends on benchmark success as a strong oracle; the same mechanism would degrade under weaker signals
 - [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: evaluates ExpeL directly and finds raw trajectories remain more behaviorally binding than the condensed rule list

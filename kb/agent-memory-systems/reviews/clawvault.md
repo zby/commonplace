@@ -57,7 +57,7 @@ ClawVault is a TypeScript CLI and OpenClaw plugin that treats a local markdown v
 
 **Preassembled context bundles.** ClawVault's `context` command pre-loads the prompt from five sources before the agent speaks. We have chosen the opposite strategy, and until we have evidence that agent-driven navigation misroutes a meaningful fraction of queries, frontloading would just burn tokens on guessed relevance.
 
-**Scheduled LLM maintenance workers.** The Distiller and Surveyor make LLM calls on a timer and write artifacts without a review gate. We do not have the volume to justify this yet, and automation-before-understanding is exactly the pattern [deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) warns against.
+**Scheduled LLM maintenance workers.** The Distiller and Surveyor make LLM calls on a timer and write artifacts without a review gate. We do not have the volume to justify this yet, and automation-before-understanding is a related oracle/evaluation gap [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) warns about.
 
 **The eleven-type observation taxonomy as a library-level type.** The types are useful as workshop tags; they are not fundamental categories of knowledge. Imported wholesale, they would conflict with our existing type system and muddy the `note` vs. `structured-claim` vs. `adr` distinctions.
 
