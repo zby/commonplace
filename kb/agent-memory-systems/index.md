@@ -92,12 +92,14 @@ External systems doing similar work — knowledge management for AI agents, cont
 ## Patterns Across Systems
 
 Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independently converge on:
+
 - **Filesystem over databases** — plain text, version-controlled, no lock-in
 - **Progressive disclosure** — load descriptions at startup, full content on demand
 - **Start simple** — architectural reduction outperforms over-engineering
 - **Trace-derived learning** — [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) broadens the comparison beyond pi-adjacent session mining to include artifact-learning and weight-learning systems fed by live traces and trajectories
 
 The divergences are more revealing:
+
 - **Storage model** — Cognee uses a poly-store (graph + vector + relational with pluggable backends), Siftly uses SQLite, CrewAI uses LanceDB (embedded vector database), Hindsight uses PostgreSQL+pgvector, Zikkaron uses SQLite with FTS5+sqlite-vec, and SAGE uses SQLite+BadgerDB (personal) or PostgreSQL+pgvector (multi-node) as operational substrates, while the others keep files as the primary storage interface. OpenViking occupies a novel middle position: it presents a filesystem interface (`viking://` URIs, `ls`/`read`/`find` operations) but the substrate is AGFS + vector index — filesystem as metaphor, not mechanism. Cludebot uses Supabase (PostgreSQL+pgvector) for its full mode but also offers a local JSON file store that is the closest a database-first system gets to filesystem-first. Cognee, Hindsight, CrewAI, Zikkaron, Cludebot, and SAGE are the furthest from filesystem-first: memories are opaque database records, not readable files
 - **System boundary** — CocoIndex sits one layer below most systems here: it is an incremental engine for maintaining derived vector/graph/relational projections, not a primary knowledge medium. That makes it more relevant to our "operational layer beneath the KB" question than to the note/link semantics question directly
 - **Agent-facing UX** — Napkin is the clearest example of treating CLI output itself as part of the memory architecture: hidden scores, match-only snippets, and next-step hints are all tuned for model behavior rather than human browsing. Most other systems focus on storage and retrieval internals but leave the interaction layer human-shaped
