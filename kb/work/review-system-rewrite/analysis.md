@@ -8,7 +8,7 @@
 
 ### review_db.py (910 lines) — the monolith
 
-What it does: SQLite connection management, all CRUD for three tables, plus high-level finalization orchestration.
+What it does: SQLite connection management, all CRUD for the four-table execution/review model (`review_runs`, `review_run_gates`, `gate_reviews`, `acceptance_events`), plus high-level finalization orchestration.
 
 Tangles:
 - **Finalization logic baked into DB layer.** `record_and_finalize_run` validates gate coverage, rekeys the model ID if actual differs from requested, and auto-appends acceptance events. These are business rules that should be orchestration, not persistence.
@@ -62,11 +62,20 @@ Tangles:
 
 ### review_metadata.py (292 lines) — git provenance
 
-What it does: git-backed provenance (blob_sha, commit, file_text_at_commit) plus legacy ReviewMetadata block parsing.
+What it does: git-backed provenance (blob_sha, commit, file_text_at_commit) plus ReviewMetadata block parsing for legacy review export files.
 
 Tangles:
 - **Dual-path provenance.** `review_note_provenance` allows uncommitted state; `committed_file_provenance` forbids it. Callers must know which to use. Silent misuse causes SHA mismatches downstream.
-- **ReviewMetadata parse/render functions have zero callers.** Dead code from a prior design.
+- **ReviewMetadata parse/render is now relocation-export support, not dead code.** The base code-structure rewrite moved review export metadata rewriting into `commonplace.review.relocation_hook`, which calls `parse_review_metadata` and `inject_review_metadata` when note paths change. This is scar tissue from review exports, but it is active scar tissue until exports are retired or migrated.
+
+### relocation_hook.py (202 lines) — downstream relocation integration
+
+What it does: implements the core relocation hook protocol for review-owned state. It plans review export directory moves, rewrites ReviewMetadata note paths in exported review files, and rekeys review DB rows after core file/link/MkDocs relocation succeeds.
+
+Tangles:
+- **Cross-subsystem adapter.** This is intentionally not part of `commonplace.lib`: core relocation exposes `RelocationHook`, and the CLI composes `ReviewRelocationHook`. The rewrite must preserve this dependency direction.
+- **Post-core partial failure boundary.** Hook execution happens after core relocation writes. If review export moves or DB rekeys fail, the core note move has already happened. That failure mode is acceptable but must remain explicit in the integration design.
+- **Persistence bypasses future repos.** The hook currently calls `review_db` functions directly. In the target structure, this should use the persistence/repo layer's note-path rekey operation rather than raw review_db helpers.
 
 ### gate_sweep_format.py (287 lines) — sweep output parsing
 
@@ -93,6 +102,16 @@ Tangles:
 
 ## Cross-cutting concerns
 
+### Review/core integration (new boundary)
+
+The base code-structure rewrite removed the old direct dependency from `commonplace.lib.relocation` to `commonplace.review`. Review-specific relocation behavior now lives in `commonplace.review.relocation_hook`.
+
+This changes the review rewrite baseline:
+- Review path rekeying is no longer hidden inside core relocation.
+- Review export metadata parsing has an active caller.
+- The review system owns its own integration adapters for core workflows.
+- Any future rewrite must keep `commonplace.lib` review-free and wire review hooks only at CLI/composition boundaries.
+
 ### Prompt construction (scattered)
 
 - `run_review_bundle.py`: `build_review_run_prompt` — reads note, resolves links, builds gate prompt.
@@ -111,9 +130,9 @@ No single module owns the LLM I/O contract end to end.
 
 Five modules call provenance functions independently. No batch-loading, no caching. Each call site passes `(sha, commit)` as separate arguments or tuples.
 
-### Runner strategy (ad hoc)
+### Runner output boundary (ad hoc)
 
-Subprocess is implemented in review_runners.py. Live-agent is a separate command sequence (create-review-run + agent follows prompt + ingest-bundle-output). No shared protocol. If a third runner appears, nothing guides where it goes.
+Subprocess is implemented in review_runners.py. Live-agent is a separate command sequence (create-review-run + agent follows prompt + ingest-bundle-output). The problem is not primarily that each runner lacks its own module; the problem is that orchestration lacks a narrow shared result shape and resume boundary.
 
 ### Bundle vs gate-sweep duplication
 
@@ -132,6 +151,6 @@ Most wrappers are thin (~50 lines). Exception: **cli/review_sweep.py (231 lines)
 
 ## Dead code / scar tissue
 
-- `ReviewMetadata` parse/render in review_metadata.py — zero callers.
-- `review_run_gates.ordinal` column — written but never queried.
+- `ReviewMetadata` parse/render in review_metadata.py — active only for review export relocation. Keep it quarantined with export-management code; do not treat it as general provenance.
+- `review_run_gates.ordinal` column — used only for deterministic run-gate ordering during ingest/finalization; not part of freshness semantics.
 - Legacy decision regex patterns in review_decisions.py — support import formats that may no longer be produced.

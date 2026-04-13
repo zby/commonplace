@@ -2,21 +2,21 @@
 
 ## Organizing principle
 
-Current code is organized by **entry point** (bundle runner, gate-sweep runner, selector, sweep). Each entry point contains the same pipeline stages — target resolution, prompt construction, runner invocation, parsing, finalization — differing only in batching shape and runner strategy.
+Current code is organized by **entry point** (bundle runner, gate-sweep runner, selector, sweep). Each entry point contains the same pipeline stages — target resolution, prompt construction, runner invocation, parsing, finalization — differing mostly in batching shape and execution modality.
 
-The target structure organizes by **layer of concern**. Each layer has a clear dependency direction: domain has no dependencies; protocol depends on domain; provenance depends only on git; persistence depends on domain; orchestration composes everything; CLI is a thin shell.
+The target structure organizes by **layer of concern**. Each layer has a clear dependency direction: domain has no dependencies; protocol depends on domain; provenance depends only on git; persistence depends on domain; orchestration composes everything; integrations adapt review-owned behavior to core protocols; CLI is a thin shell.
 
 ## Layer layout
 
 ```
 commonplace/review/
 ├── domain/                    pure, no IO
-│   ├── snapshots.py           NoteSnapshot, GateSnapshot (frozen value objects)
+│   ├── snapshots.py           NoteSnapshot, GateSnapshot, AcceptanceSnapshot (frozen value objects)
 │   ├── staleness.py           classify_staleness(target, acceptance) -> Staleness
 │   ├── applicability.py       gate_applies_to_note(gate, note)
 │   ├── trivial_change.py      is_trivial_change(before, after, watched_fields)
 │   ├── coverage.py            validate_gate_coverage(requested, received)
-│   └── acceptance.py          decide_acceptance_kind(decision) -> AcceptanceKind
+│   └── acceptance.py          acceptance kind helpers for each write path
 │
 ├── protocol/                  LLM wire format — sole owner
 │   ├── prompt.py              render_prompt(targets, link_table) -> str
@@ -28,16 +28,12 @@ commonplace/review/
 │   ├── git.py                 blob_sha, file_text_at, last_commit_for_path
 │   └── loader.py              SnapshotLoader: batch-capture snapshots, cache within operation
 │
-├── runners/                   strategies behind one interface
-│   ├── base.py                Runner protocol + RunnerResult + RunContext
-│   ├── subprocess_claude.py   claude-code runner
-│   ├── subprocess_codex.py    codex runner
-│   └── live_agent.py          writes prompt file, returns handle for later ingest
+├── runners.py                 narrow runner result contract around existing subprocess code
 │
 ├── persistence/               thin SQL, rows in / rows out
 │   ├── schema.sql
 │   ├── db.py                  connect, ensure_db, transaction context manager
-│   └── repos.py               RunRepo, ReviewRepo, AcceptanceRepo — plain CRUD
+│   └── repos.py               RunRepo, RunGateRepo, ReviewRepo, AcceptanceRepo, NotePathRepo — plain CRUD
 │
 ├── orchestration/             composes the layers
 │   ├── targeting.py           Selector: stale pairs, optional diffs
@@ -46,6 +42,9 @@ commonplace/review/
 │   ├── finalization.py        Finalizer: atomic write of run + reviews + acceptances
 │   ├── ack.py                 trivial-change auto-ack pass
 │   └── sweep.py               multi-plan parallel driver
+│
+├── integrations/              adapters for non-review core protocols
+│   └── relocation.py          ReviewRelocationHook: export moves + DB path rekeys
 │
 └── cli/                       argparse + prepare_db + one orchestration call
     └── ...
@@ -76,6 +75,14 @@ class GateSnapshot:
     requires_trait: str | None
     requires_type: str | None
     body: str
+
+@dataclass(frozen=True)
+class AcceptanceSnapshot:
+    note_path: Path
+    gate_id: str
+    model_id: str
+    accepted_note_sha: str
+    accepted_gate_sha: str
 ```
 
 These replace the bare `(sha, commit)` tuples that currently flow through five modules. A snapshot is captured once and threaded through the pipeline.
@@ -86,12 +93,12 @@ These replace the bare `(sha, commit)` tuples that currently flow through five m
 def classify_staleness(
     note: NoteSnapshot,
     gate: GateSnapshot,
-    acceptance: AcceptanceRecord | None,
+    acceptance: AcceptanceSnapshot | None,
 ) -> Staleness | None:
     """Returns None if fresh, or a Staleness(reason=...) if stale."""
 ```
 
-One function, one place. Both targeting and warn-queue filtering call this.
+One function, one place. Both targeting and warn-queue filtering call this. Persistence rows are converted to `AcceptanceSnapshot` before entering the domain layer; `domain/` does not import repo row classes.
 
 **trivial_change.py**
 
@@ -177,37 +184,34 @@ class SnapshotLoader:
 
 Caching is natural: a loader instance holds a dict of already-resolved SHAs. The current code calls `git_blob_sha` per note per gate in a loop; the loader amortizes this.
 
-### runners/ — strategy pattern
+### runners.py — narrow runner boundary
 
-**base.py** defines the protocol:
+Keep this deliberately small at first. The current `review_runners.py` is messy, but much of the mess is real runner-specific operational detail: subprocess spawning, stream handling, session-log matching, and telemetry extraction. Splitting that across several files before the pipeline and persistence boundaries are clean would move complexity more than reduce it.
+
+The useful boundary is the shape orchestration receives:
 
 ```python
-class Runner(Protocol):
-    def run(self, prompt: str, ctx: RunContext) -> RunnerResult: ...
-
 @dataclass
 class RunnerResult:
     output: str                     # the review text
     telemetry: dict | None          # token counts, model, etc.
     actual_model_id: str | None     # may differ from requested
+
+Runner = Callable[[str], RunnerResult]
 ```
 
-Subprocess runners implement this with spawn + stream + telemetry extraction. Each runner's telemetry logic stays local to its module — that complexity is real and runner-specific, not abstractable.
+Subprocess execution can stay in one runner module until there is concrete pressure to split it: a third runner, recurring telemetry bugs, or tests that are blocked by the current file shape. The orchestration layer should depend on `RunnerResult`, not on Claude/Codex session-log details.
 
-**live_agent.py** models the "suspend and resume" pattern:
+Live-agent is not primarily a runner implementation. It is a suspended pipeline: create the run and prompt now, then resume at parse/finalize when the agent-produced bundle is ingested.
 
 ```python
-class LiveAgentRunner:
-    """Writes prompt to a file and returns a handle.
-    
-    The current agent follows the prompt and writes the bundle artifact.
-    A subsequent ingest command calls Executor.resume(handle, bundle_text)
-    to complete the parse -> finalize tail of the pipeline.
-    """
-    def run(self, prompt: str, ctx: RunContext) -> LiveAgentHandle: ...
+@dataclass(frozen=True)
+class LiveAgentPrompt:
+    run_id: int
+    prompt_path: Path
 ```
 
-The key insight: live-agent isn't a different pipeline — it's the same pipeline that suspends after prompt rendering and resumes at parsing. The Executor handles both: subprocess runners return a `RunnerResult` immediately; live-agent returns a handle that the ingest CLI uses to resume.
+The key insight: live-agent isn't a different review shape — it's the same pipeline that suspends after prompt rendering and resumes at parsing. Subprocess execution returns a `RunnerResult` immediately; live-agent returns a prompt artifact tied to an existing run id that the ingest CLI uses to resume.
 
 ### persistence/ — thin SQL
 
@@ -218,6 +222,11 @@ class RunRepo:
     def insert(self, conn, ...) -> int: ...
     def complete(self, conn, run_id, ...) -> None: ...
     def fail(self, conn, run_id, ...) -> None: ...
+    def rekey_model(self, conn, run_id, model_id) -> None: ...
+
+class RunGateRepo:
+    def insert_many(self, conn, run_id, gates) -> None: ...
+    def load_for_run(self, conn, run_id) -> list[RunGateRow]: ...
 
 class ReviewRepo:
     def insert(self, conn, ...) -> int: ...
@@ -226,11 +235,15 @@ class ReviewRepo:
 
 class AcceptanceRepo:
     def append(self, conn, ...) -> int: ...
-    def current_acceptances(self, conn) -> dict[tuple, AcceptanceRecord]: ...
-    def effective_reviews_with_warns(self, conn) -> list[...]: ...
+    def current_acceptances(self, conn) -> dict[tuple, AcceptanceRow]: ...
+    def effective_reviews_with_warns(self, conn) -> list[WarnReviewRow]: ...
+
+class NotePathRepo:
+    def count_records(self, conn, note_path: str) -> NotePathRecordCounts: ...
+    def rekey(self, conn, old_note_path: str, new_note_path: str) -> None: ...
 ```
 
-No coverage validation, no model rekeying, no auto-acceptance in the DB layer. The current `record_and_finalize_run` splits into: orchestration decides what to write, persistence writes it atomically.
+No coverage validation, no model-rekey decisions, no auto-acceptance in the DB layer. Repo methods return row DTOs and perform requested row updates. The targeting/orchestration layer maps `AcceptanceRow` into domain `AcceptanceSnapshot` before calling staleness logic, preserving dependency direction. The current `record_and_finalize_run` splits into: orchestration decides what to write, persistence writes it atomically. `review_run_gates` remains a first-class execution table: it captures the requested gate set before prompt rendering, and ingest/finalization load it as the expected gate contract for an existing run.
 
 **db.py** provides a transaction context:
 
@@ -266,37 +279,51 @@ class Planner:
 
 ```python
 class Executor:
-    def execute(self, plan: ReviewPlan, runner: Runner) -> ExecutionResult:
-        """plan -> prompt -> runner -> parse -> finalize"""
-        prompt = self.protocol.render(plan)
-        result = runner.run(prompt, ctx)
+    def execute_subprocess(self, plan: ReviewPlan, runner: Runner) -> ExecutionResult:
+        """plan -> create run -> prompt -> runner -> parse -> finalize existing run"""
+        run_id = self.finalizer.create_running_run(plan)
+        prompt = self.protocol.render(plan, run_id=run_id)
+        result = runner(prompt)
         parsed = self.protocol.parse(result.output, plan)
-        return self.finalizer.finalize(plan, parsed, result.telemetry)
+        return self.finalizer.finalize_existing_run(
+            run_id,
+            parsed,
+            telemetry=result.telemetry,
+            actual_model_id=result.actual_model_id,
+        )
 
-    def resume(self, handle: LiveAgentHandle, bundle_text: str) -> ExecutionResult:
+    def create_live_agent_prompt(self, plan: ReviewPlan) -> LiveAgentPrompt:
+        """Create a run and prompt artifact, then suspend until ingest."""
+        run_id = self.finalizer.create_running_run(plan)
+        prompt = self.protocol.render(plan, run_id=run_id)
+        return self.prompt_writer.write(run_id=run_id, prompt=prompt)
+
+    def resume(self, run_id: int, bundle_text: str) -> ExecutionResult:
         """Resume a suspended live-agent execution at the parse step."""
-        parsed = self.protocol.parse(bundle_text, handle.plan)
-        return self.finalizer.finalize(handle.plan, parsed, telemetry=None)
+        run = self.run_repo.require_running(run_id)
+        run_gates = self.run_gate_repo.load_for_run(run_id)
+        parsed = self.protocol.parse(bundle_text, run_gates, model_id=run.model_id)
+        return self.finalizer.finalize_existing_run(run_id, parsed, telemetry=None)
 ```
 
-The live-agent path reuses the same parse + finalize tail. No duplicate pipeline.
+The live-agent path reuses the same parse + finalize tail, but it resumes an existing run rather than creating a second run. The run id, reviewed note SHA, requested gate set, and gate SHAs are captured before prompt rendering; ingest loads that captured contract and finalizes the existing run.
 
 **finalization.py** — atomic writes:
 
 ```python
 class Finalizer:
-    def finalize(self, plan, parsed_reviews, telemetry) -> FinalizationResult:
+    def finalize_existing_run(self, run_id, parsed_reviews, telemetry, actual_model_id=None) -> FinalizationResult:
         with transaction(self.conn):
-            run_id = self.run_repo.insert(...)
+            if actual_model_id is not None:
+                self.run_repo.rekey_model(conn, run_id, actual_model_id)
             for review in parsed_reviews:
                 self.review_repo.insert(conn, run_id, ...)
-                kind = decide_acceptance_kind(review.decision)
-                self.acceptance_repo.append(conn, ...)
+                self.acceptance_repo.append(conn, acceptance_kind="full-review", ...)
             self.run_repo.complete(conn, run_id, ...)
         return FinalizationResult(run_id, ...)
 ```
 
-Gate-coverage validation calls `domain/coverage.py` before the transaction opens. If coverage fails, nothing is written.
+Gate-coverage validation calls `domain/coverage.py` before review rows or acceptance events are written. Because the run is captured before prompt rendering, parse or coverage failure should mark the existing run failed while keeping gate review inserts and acceptance events all-or-nothing. If runner telemetry reports an actual model partition that differs from the requested partition, model rekeying remains a finalization responsibility: the DB repo performs the row updates, but orchestration decides to apply them before writing reviews and acceptances.
 
 **sweep.py** — parallel driver:
 
@@ -307,6 +334,28 @@ class Sweep:
 ```
 
 Currently this logic lives in the CLI wrapper. Moving it here makes it testable and reusable.
+
+### integrations/ — downstream adapters for core workflows
+
+The base code-structure rewrite introduced `commonplace.lib.relocation.RelocationHook`. Core relocation now plans note path moves and calls hooks without importing review code. The review system implements that hook downstream.
+
+**relocation.py**
+
+```python
+class ReviewRelocationHook:
+    def plan(self, *, root: Path, moves: Sequence[NotePathMove]) -> ReviewRelocationPlan | None: ...
+    def describe(self, plan: ReviewRelocationPlan) -> list[str]: ...
+    def execute(self, plan: ReviewRelocationPlan) -> None: ...
+```
+
+Responsibilities:
+
+- Move review export directories when note paths change.
+- Rewrite legacy ReviewMetadata blocks inside exported review files.
+- Rekey review DB rows through the persistence layer.
+- Report preflight collisions before core relocation mutates files.
+
+This is an adapter, not a second orchestration pipeline. It exists because core relocation owns markdown link rewriting and file movement, while review owns review exports and review DB state. The dependency direction is non-negotiable: `commonplace.review.integrations.relocation` may import the core hook protocol, but `commonplace.lib.relocation` must never import review code.
 
 ## Design rationale
 
@@ -338,14 +387,16 @@ The live-agent path currently works as three separate CLI commands (create-run, 
 
 1. **One parser, one emitter.** LLM contract changes touch one module.
 2. **One pipeline, two shapes.** Adding a new batching strategy is adding a plan variant, not a new orchestrator.
-3. **Runners are pluggable.** Adding a third runner is implementing `Runner.run`.
+3. **Runner complexity is contained.** Orchestration receives a small `RunnerResult` and does not know about session logs or telemetry heuristics.
 4. **Pure domain is unit-testable.** Staleness, coverage, trivial-ack — all pure functions on value objects.
 5. **DB layer stays under ~400 lines.** Down from 910.
-6. **Finalization cliffs vanish.** One transaction, or nothing.
+6. **Finalization cliffs vanish.** Review rows and acceptance events commit together; parse or coverage failure marks the existing run failed without partial acceptance state.
 7. **Warn queue collapses.** A query in repos.py + findings extraction in protocol/format.py. No separate orchestrator.
+8. **Core/review coupling stays inverted.** Review-owned adapters plug into core protocols without making the core package depend on review.
 
 ## Open questions
 
-- **Should `Executor` be a class or a function?** Class carries injected dependencies (protocol, finalizer, repos). Function takes them as arguments. Class is more natural for the live-agent suspend/resume pattern.
+- **Should `Executor` be a class or a function?** Class carries injected dependencies (protocol, finalizer, repos, prompt writer). Function takes them as arguments. Class is more natural for the live-agent suspend/resume pattern.
 - **How to handle the existing legacy decision regexes?** Move to a one-off migration utility, or keep in protocol/decisions.py behind a `legacy=True` flag? Probably keep a reduced set in the main parser (some are still useful as fallbacks) and move import-specific patterns to a migration tool.
 - **Should `SnapshotLoader` batch git calls?** Currently each `git_blob_sha` call is a subprocess. Batching via `git cat-file --batch` would be faster for sweeps over many notes. Worth it only if profiling shows it matters.
+- **How long should review exports survive?** `ReviewMetadata` block parsing is now active only because exported review markdown has to move with notes. If exports become regenerable or deprecated, the relocation integration can drop that branch and keep only DB rekeying.
