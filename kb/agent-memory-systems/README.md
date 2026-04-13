@@ -10,8 +10,7 @@ Convergence across independent projects is a stronger signal than any single des
 
 - **`reviews/`** — one file per reviewed system. Each review is grounded in the system's code (not marketing), compares it with commonplace, and surfaces borrowable ideas.
 - **`source-only/`** — standard-note coverage for systems known from a paper, README, or article when the repo-backed review type would overclaim implementation evidence.
-- **`index.md`** — auto-generated directory index. Rebuild with `commonplace-generate-notes-index kb/agent-memory-systems`.
-- **`landscape.md`** — curated navigation with a "Patterns Across Systems" section.
+- **`index.md`** — curated navigation with a "Patterns Across Systems" section and a generated tail.
 - **`agentic-memory-systems-comparative-review.md`** — cross-system synthesis.
 - **`thalo-type-comparison.md`** — focused comparison that outgrew a single review section.
 

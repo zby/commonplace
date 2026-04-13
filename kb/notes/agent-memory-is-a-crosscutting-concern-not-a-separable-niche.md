@@ -8,7 +8,7 @@ status: seedling
 
 # Agent memory is a crosscutting concern, not a separable niche
 
-Many systems self-identify as "memory systems" — Mem0, Graphiti, Letta, ClawVault, cass-memory, CrewAI Memory, and others in the [related-systems index](../agent-memory-systems/landscape.md). The label suggests memory is a separable subsystem: build a memory layer, plug it in, the agent remembers things. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) of eleven such systems reveals that the interesting design questions are not about memory at all — they are about context engineering, learning theory, and action capacity, wearing a memory costume.
+Many systems self-identify as "memory systems" — Mem0, Graphiti, Letta, ClawVault, cass-memory, CrewAI Memory, and others in the [related-systems index](../agent-memory-systems/index.md). The label suggests memory is a separable subsystem: build a memory layer, plug it in, the agent remembers things. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) of eleven such systems reveals that the interesting design questions are not about memory at all — they are about context engineering, learning theory, and action capacity, wearing a memory costume.
 
 ## Memory decomposes into three problems
 
@@ -46,7 +46,7 @@ Memory is not a fourth component alongside these three. It is an aspect of all t
 
 ## What this means for reviewing systems
 
-The [related-systems index](../agent-memory-systems/landscape.md) contains 70+ systems reviewed with a consistent format. The current review template captures enough raw material to support crosscutting analysis — the comparative review already demonstrated this. No template change is needed to accommodate this observation.
+The [related-systems index](../agent-memory-systems/index.md) contains 70+ systems reviewed with a consistent format. The current review template captures enough raw material to support crosscutting analysis — the comparative review already demonstrated this. No template change is needed to accommodate this observation.
 
 What changes is interpretation. When reviewing a system that calls itself a "memory system," the review should assess which subproblem(s) it actually addresses:
 

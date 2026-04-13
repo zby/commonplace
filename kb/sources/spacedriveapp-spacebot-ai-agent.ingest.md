@@ -39,7 +39,7 @@ The `/connect` discovery identified 7 genuine connections to existing notes, plu
 - [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) -- **enables**: Spacebot's typed-but-unified memory with graph edges is a strong test case for whether typed categories within a single store mitigate the predicted failure modes (search pollution, identity scatter, insight trapping).
 
 **Index membership:**
-- [related-systems-index](../agent-memory-systems/landscape.md) -- **extends**: Spacebot adds a new position (Rust-level process separation, concurrent multi-user design) that no existing entry covers.
+- [related-systems-index](../agent-memory-systems/index.md) -- **extends**: Spacebot adds a new position (Rust-level process separation, concurrent multi-user design) that no existing entry covers.
 
 **Already connected:**
 - [voooooogel-multi-agent-future](./voooooogel-multi-agent-future.ingest.md) -- already discusses Spacebot as a concrete implementation of the forking pattern.

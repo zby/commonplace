@@ -38,7 +38,7 @@ Tracecraft is a CLI-based coordination layer for multi-agent AI systems that sto
 
 4. **[multi-agent-memory-computer-architecture-perspective.ingest](multi-agent-memory-computer-architecture-perspective.ingest.md)** (exemplifies) — Tracecraft is a concrete implementation of the shared-memory paradigm that paper describes theoretically, with exactly the consistency gaps the paper predicts. The paper names memory consistency as the critical unsolved problem; tracecraft ships without addressing it.
 
-**Index membership:** [related-systems-index](../agent-memory-systems/landscape.md) — tracecraft would be the first entry focused purely on coordination infrastructure rather than memory/knowledge management.
+**Index membership:** [related-systems-index](../agent-memory-systems/index.md) — tracecraft would be the first entry focused purely on coordination infrastructure rather than memory/knowledge management.
 
 **Synthesis opportunity flagged:** Coordination infrastructure (who does what, when, in what order) and memory infrastructure (what is known, remembered, shared) are distinct concerns that get conflated in multi-agent systems. Tracecraft uses the same substrate (S3) for both its `memory` commands and its `claim`/`send` commands, but these serve different purposes with different consistency requirements.
 

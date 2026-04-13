@@ -13,7 +13,8 @@ plugins:
   - search
   - redirects:
       redirect_maps:
-        'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/landscape.md'
+        'agent-memory-systems/landscape.md': 'agent-memory-systems/index.md'
+        'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/index.md'
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
@@ -23,7 +24,7 @@ plugins:
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/llm-frameworks-should-expose-the-loop.md': 'notes/tool-loop-index.md'
         'notes/minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md': 'notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md'
-        'notes/related-systems/related-systems-index.md': 'agent-memory-systems/landscape.md'
+        'notes/related-systems/related-systems-index.md': 'agent-memory-systems/index.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md'
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md'
@@ -42,8 +43,7 @@ nav:
       - Tags: notes/tags-index.md
       - Notes Directory: notes/index.md
       - Agent Memory Systems:
-          - Landscape: agent-memory-systems/landscape.md
-          - Directory: agent-memory-systems/index.md
+          - Index: agent-memory-systems/index.md
       - Reference:
           - Overview: reference/index.md
           - Architecture: reference/architecture.md
