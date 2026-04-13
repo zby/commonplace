@@ -32,7 +32,7 @@ Law has centuries of methodology for the same problem: writing natural language 
 
 ## Empirical observation: a different path entirely
 
-Direct observation of what works and what doesn't — the improvement log, friction notes, prose reviews — doesn't go through the borrowing/adoption filter at all. It's evidence from *this* system, not transferred from another domain. The [verifiability gradient](./deploy-time-learning-is-the-missing-middle.md) was discovered by watching patterns in use, not derived from first principles or borrowed from another field.
+Direct observation of what works and what doesn't — the improvement log, friction notes, prose reviews — doesn't go through the borrowing/adoption filter at all. It's evidence from *this* system, not transferred from another domain. The [verifiability gradient](./verifiability-gradient.md) was discovered by watching patterns in use, not derived from first principles or borrowed from another field.
 
 The asymmetry with first principles is quantity vs weight. Observations are plentiful — every session generates friction signals, every review surfaces patterns. But each individual observation is weak: it could be a local quirk, a one-time context, an artefact of current scale. First principles are scarce — we have only a handful (finite context, no import mechanism, text-in text-out) — but each one is strong because it's derived from real constraints that won't change. A single first principle can reshape the whole design; a single observation usually can't. Observations accumulate into confidence through repetition; first principles carry confidence immediately.
 

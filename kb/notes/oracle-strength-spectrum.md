@@ -70,7 +70,8 @@ Each extracted claim should link back here as its origin.
 Relevant Notes:
 
 - [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
-- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the verifiability gradient maps to oracle strength
+- [the verifiability gradient](./verifiability-gradient.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the gradient maps directly to oracle strength
+- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — frames where on the system-adaptation timescale the gradient operates
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the manufacturing step: extracting deterministic checks from observed behavior
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition
 - [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature

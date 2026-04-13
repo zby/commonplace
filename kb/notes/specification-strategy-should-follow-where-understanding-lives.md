@@ -46,7 +46,7 @@ These strategies look like competing ideologies only if you assume a system shou
 2. Switch to bidirectional maintenance as execution discovers mismatches.
 3. Promote recurring discoveries into extracted rules once the pattern is stable.
 
-This is why [deploy-time learning is agile for human-AI systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) needs a finer breakdown than "prose and code co-evolve." Co-evolution is real, but the right prose strategy depends on when the system can say something trustworthy.
+This is why [deploy-time learning's agile-style prose/code co-evolution](./deploy-time-learning-is-the-missing-middle.md) needs a finer breakdown than "prose and code co-evolve." Co-evolution is real, but the right prose strategy depends on when the system can say something trustworthy.
 
 The strongest version of the claim: **move the disambiguation burden to the earliest artifact that can carry it truthfully.**
 
@@ -72,7 +72,7 @@ The three-step sequence above is a common maturation path, not a law. Some syste
 
 Relevant Notes:
 
-- [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: splits "co-evolving prose and code" into distinct lifecycle strategies depending on where the understanding sits
+- [deploy-time-learning-is-the-missing-middle](./deploy-time-learning-is-the-missing-middle.md) — extends: splits "co-evolving prose and code" (the agile-style co-evolution that deploy-time learning adopts) into distinct lifecycle strategies depending on where the understanding sits
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — grounds: late-discovered "requirement changes" often indicate that understanding was not actually available upfront
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — situates: this is the late-phase strategy for rules that only become visible after repeated execution
 - [The Spec Is the New Code — A Guide to Spec Driven Development](../sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development-2033303156340240481.ingest.md) — source: grounds the spec-first end of the strategy space and the maturity model from Spec-First to Spec-as-Source

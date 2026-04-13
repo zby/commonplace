@@ -61,7 +61,8 @@ The answer to the first is disposable computation. The answer to the second is v
 Relevant Notes:
 
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — the dynamic that moves components between ephemeral and codified
-- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — codification's verifiability gradient
+- [The verifiability gradient](./verifiability-gradient.md) — the ladder codification sits at the far end of
+- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames the timescale at which these placements adapt
 - [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 - [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md) — extends: adds reach as the criterion that determines when the ephemeral/accumulating fork matters
 - [The Flawed Ephemeral Software Hypothesis (Kirsch)](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation

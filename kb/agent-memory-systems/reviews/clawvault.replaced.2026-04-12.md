@@ -65,7 +65,7 @@ Each step encodes more retrieval judgment into the system and removes more from 
 
 ## What We Should Not Borrow (Yet)
 
-**LLM-heavy automation.** Their compression, fact extraction, and injection pipelines all run through LLMs. This adds capability but also opacity — you can't easily tell why something was promoted or what was lost in compression. We want to understand the fundamental patterns before automating them. The [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md) matters here: automating a process before understanding it locks in assumptions.
+**LLM-heavy automation.** Their compression, fact extraction, and injection pipelines all run through LLMs. This adds capability but also opacity — you can't easily tell why something was promoted or what was lost in compression. We want to understand the fundamental patterns before automating them. The [verifiability gradient](../../notes/verifiability-gradient.md) matters here: automating a process before understanding it locks in assumptions.
 
 **The 8 primitives taxonomy.** Goals, Agents, State Space, Feedback, Capital, Institution, Synthesis, Recursion — this is a framework that organises their features, but it's unclear whether these are fundamental categories or a retroactive grouping of what they happened to build. We'd rather discover our categories from practice.
 
@@ -81,7 +81,7 @@ Our approach — [instruction specificity should match loading frequency](../../
 
 **Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated: LLMs extract, score, and route observations, while recurrence heuristics decide what rises. Our model still keeps humans in the promotion loop. That means ClawVault is better evidence about what an automated curation loop can actually sustain, but also a stronger warning about opacity and score inflation.
 
-**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something versus leave it fluid. No [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md), no constrain/relax boundary. The structure is designed; it does not explain its own maturation. That is the gap between an effective workflow and a theory of why the workflow should change over time.
+**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something versus leave it fluid. No [verifiability gradient](../../notes/verifiability-gradient.md), no constrain/relax boundary. The structure is designed; it does not explain its own maturation. That is the gap between an effective workflow and a theory of why the workflow should change over time.
 
 ## Curiosity Pass
 

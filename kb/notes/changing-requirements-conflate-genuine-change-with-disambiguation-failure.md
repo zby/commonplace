@@ -37,7 +37,7 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 ## Implications for deploy-time learning
 
-[Deploy-time learning extends agile's loop](./deploy-time-learning-is-agile-for-human-ai-systems.md) to human-AI systems. The disambiguation failure problem is amplified there because:
+[Deploy-time learning extends agile's loop](./deploy-time-learning-is-the-missing-middle.md) to human-AI systems through its prose/code co-evolution. The disambiguation failure problem is amplified there because:
 
 - LLM systems make the projection explicit — every prompt invocation picks an interpretation
 - The interpretation choice is visible (you can compare outputs across runs) but not controllable (you can't predict which interpretation will be chosen)
@@ -56,7 +56,7 @@ The deploy-time learning cycle (deploy → observe → constrain → repeat) is 
 Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the spec-to-program projection model that makes interpretation explicit
-- [deploy-time-learning-is-agile-for-human-ai-systems](./deploy-time-learning-is-agile-for-human-ai-systems.md) — extends: agile's loop applied to human-AI systems, where disambiguation is amplified
+- [deploy-time-learning-is-the-missing-middle](./deploy-time-learning-is-the-missing-middle.md) — extends: agile's loop applied to human-AI systems via deploy-time learning's prose/code co-evolution, where disambiguation is amplified
 - [constraining](./definitions/constraining.md) — enables: the mechanism for resolving disambiguation by committing to one interpretation
 - [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — extends: distinguishes when disambiguation should be resolved upfront, maintained bidirectionally, or extracted from repeated behavior
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — sharpens: the downstream cascade starts with a runtime event whose degraded status should have been surfaced when the first ambiguity was locally repaired

@@ -48,7 +48,7 @@ A collection of reusable instructional modules ("skills") for building productio
 
 **Strong alignment:** They independently converge with our progressive disclosure, filesystem-first knowledge, and tool consolidation. Their skills are loaded by name first and expanded on demand, which is the same general loading strategy we use in the KB.
 
-**We go deeper:** Our [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md) and [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explain when a pattern should become a rule, a script, or stay a judgment call. Their material has operational tactics, but not a comparable theory for when to harden a practice.
+**We go deeper:** Our [verifiability gradient](../../notes/verifiability-gradient.md) and [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explain when a pattern should become a rule, a script, or stay a judgment call. Their material has operational tactics, but not a comparable theory for when to harden a practice.
 
 **They go deeper:** Attention mechanics, degradation data, and evaluation procedure. They give concrete evidence about model behavior under context pressure, while our notes are still mostly the theory and architecture layer around that problem.
 

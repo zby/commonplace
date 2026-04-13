@@ -48,7 +48,7 @@ The fundamental difference: CrewAI Memory is **infrastructure** — a storage-an
 
 **Where they're stronger:** The composite scoring formula, non-blocking save architecture, and consolidation pipeline are well-engineered. The scope/slice access-control model is genuinely useful for multi-agent scenarios. The graceful degradation when LLMs fail is thoughtful — memory still works, just with defaults.
 
-**Where we're stronger:** Knowledge in our system has a lifecycle (status, type transitions, link semantics). A note can be challenged, refined, connected, promoted. In CrewAI Memory, a record is either present or consolidated — there's no maturation path. Our system also makes the [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md) explicit: you can see what's speculative vs. what's been validated. Their importance scores have no such grounding.
+**Where we're stronger:** Knowledge in our system has a lifecycle (status, type transitions, link semantics). A note can be challenged, refined, connected, promoted. In CrewAI Memory, a record is either present or consolidated — there's no maturation path. Our system also makes the [verifiability gradient](../../notes/verifiability-gradient.md) explicit: you can see what's speculative vs. what's been validated. Their importance scores have no such grounding.
 
 ### The Three-Space Problem
 

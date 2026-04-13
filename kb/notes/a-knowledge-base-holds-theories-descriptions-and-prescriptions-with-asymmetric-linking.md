@@ -123,7 +123,7 @@ LLM constraints (no persistent memory, no direct perception, no habit formation)
 
    Commonplace currently uses directories. The choice should match how the KB is operated — directories work well when collections are already separated; types work well when registers are mixed within directories.
 
-3. **Convention docs are [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) artifacts** — instructions to agents, early on the verifiability gradient. They should be iterated from use, not designed to completion upfront.
+3. **Convention docs are [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) artifacts** — instructions to agents, early on the [verifiability gradient](./verifiability-gradient.md). They should be iterated from use, not designed to completion upfront.
 
 ## Open questions
 
@@ -138,7 +138,8 @@ Relevant Notes:
 
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — extends: that note already carves out multi-claim and definitional docs from claim-title conventions; those are documents in the descriptive register getting a different convention because they play a different role in traversal
 - [Reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — qualifies: reach is the quality axis for the theoretical register specifically, not a universal goal; descriptions optimize for economy and prescriptions for precision
-- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — enables: per-register conventions are deploy-time artifacts on the verifiability gradient, to be iterated from use rather than designed upfront
+- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — enables: per-register conventions are deploy-time artifacts, to be iterated from use rather than designed upfront
+- [The verifiability gradient](./verifiability-gradient.md) — the ladder those deploy-time artifacts sit on
 - [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — foundation: the reach concept that serves as the quality criterion for the theoretical register
 - [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
 - [Distillation](./definitions/distillation.md) — foundation: the theory → prescription path is a distillation step; the full chain (theory → prescription → implementation → description) shows how registers connect through work

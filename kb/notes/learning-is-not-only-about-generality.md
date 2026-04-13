@@ -53,7 +53,8 @@ Relevant Notes:
 - [constraining](./definitions/constraining.md) — one mechanism: constrains the interpretation space, trading generality for compound
 - [distillation](./definitions/distillation.md) — the other mechanism: targeted extraction from reasoning under context budget constraints
 - [codification](./definitions/codification.md) — the far end of constraining where the compound gain is largest
-- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — the verifiability gradient that structures the compound dimension
+- [the verifiability gradient](./verifiability-gradient.md) — structures the compound dimension
+- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — frames where the gradient-moving happens on the system-adaptation timescale
 - [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion distinguishes facts (adaptive, no reach) from rules (explanatory, reach)
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the operation that converts facts into rules by positing abstractions
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem learns a policy for managing facts (when to store, retrieve, summarize) but operates entirely on facts, never producing rules or reach
