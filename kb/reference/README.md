@@ -180,7 +180,6 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
 - [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
-- [review-sweep-command.md](./review-sweep-command.md) — how `commonplace-review-sweep` works: staleness detection, job grouping, parallel execution
 
 ### Type system and collection model
 

@@ -105,4 +105,4 @@ Relevant Notes:
 - [deterministic-validation-should-be-a-script](../../notes/deterministic-validation-should-be-a-script.md) — foundation: deterministic cleanup around stochastic extraction follows the same hard-oracle direction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
 - [Evans: AI Components for a Deterministic System](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) — contrasts: Evans argues schema creation is harder than schema application and should use published standards where possible; sift-kg automates the step Evans says requires the most care
-- [agent memory systems landscape](../index.md) — master map of tracked systems
+- [agent memory systems landscape](../README.md) — master map of tracked systems

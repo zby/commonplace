@@ -14,7 +14,7 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 **Information and bounded observers.** [Information value is observer-relative](./notes/information-value-is-observer-relative.md) — the same data can contain extractable structure for one observer and noise for another. This grounds why [distillation creates value](./notes/definitions/distillation.md) and why [reverse-compression](./notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md) — expanding text without adding extractable structure — is a real failure mode.
 
-**Agent memory systems compared.** We reviewed [30+ agent memory systems](./agent-memory-systems/README.md) — Mem0, Graphiti, Cognee, Letta, and more — with a [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) across six architectural dimensions. The reviews were mostly agent-produced. The key finding — that the fundamental split is who decides what to remember, not storage format — emerged from an agent traversing linked reviews and spotting patterns across them.
+**Agent memory systems compared.** We reviewed [70+ agent memory systems](./agent-memory-systems/README.md) — Mem0, Graphiti, Cognee, Letta, and more — with a [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) across six architectural dimensions. The reviews were mostly agent-produced. The key finding — that the fundamental split is who decides what to remember, not storage format — emerged from an agent traversing linked reviews and spotting patterns across them.
 
 ## Browse by topic
 
