@@ -22,6 +22,12 @@ Claim strength test: the claim should be contestable. "Continuous learning is su
 
 If using a claim title, add the `title-as-claim` trait so review gates can check the promise.
 
+## Note composability
+
+A note should be linkable from other notes without dragging irrelevant context. The title-level prose test checks whether the link text can work in an argument; the note-level composability test asks whether the body is focused enough that another note can use it as a premise without inheriting unrelated claims, examples, or local context.
+
+If a note has one strong claim plus a second cluster that future links would not want to import, split the cluster into another note or move it to `kb/work/` until its role is clear.
+
 ## Reach as quality discipline
 
 Aim for notes that explain *why*, not just record *what works*. Quick tests:
