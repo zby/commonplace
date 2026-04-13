@@ -188,7 +188,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
 
-- Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and templates
+- Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and placement rules
 - [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) — current review-system workflow
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 
@@ -200,6 +200,7 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
 - [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
 - [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
+- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
 
 ## Collection boundary
 

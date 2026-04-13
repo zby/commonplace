@@ -24,7 +24,7 @@ The `type:` frontmatter field is a free-form string — it is not validated agai
 
 `text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `definition` and `index` are also global because they can occur in any collection — duplicating the template and schema into each collection's local `types/` would buy nothing.
 
-Per [ADR-002](./adr/002-inline-global-types-in-writing-guide.md), the `note` template is inlined into each collection's `COLLECTION.md` so that agents writing ordinary notes get the template in the same context hop as the writing conventions.
+Per [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md), each collection's `COLLECTION.md` carries register-specific writing conventions while the write skill carries the default `note` scaffold for the ordinary write path.
 
 ## Directory-scoped types
 
@@ -65,3 +65,4 @@ Relevant Notes:
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: framework types and local example types have different packaging roles
 - [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: structural types and review traits are separate axes
 - [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: the current authored type-definition format
+- [017-collection-md-is-the-register-convention-boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — decision: collection-level COLLECTION.md files own register conventions while type files stay structural

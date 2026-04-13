@@ -1,5 +1,5 @@
 ---
-description: How commonplace resolves a note's type contract at authoring and validation time — collection-scoped lookup, the WRITING.md inlining exception, and skill-driven on-demand loading
+description: How commonplace resolves a note's type contract at authoring and validation time - collection-scoped lookup, collection conventions, and skill-driven on-demand loading
 type: note
 tags: []
 status: current
@@ -31,9 +31,9 @@ The consequence is that bare type names are scoped by where the note lives: `typ
 
 Name collisions stay unambiguous as long as no two collections define the same type name with incompatible structure. Qualified canonical ids were considered and deferred.
 
-## The inlining exception
+## The default note path
 
-The `note` base type is the one type whose template is inlined into each collection's `COLLECTION.md` rather than loaded on demand. Most writes are plain notes, so the marginal cost of inlining the small template beats the cost of an extra file read per write. [ADR-002](./adr/002-inline-global-types-in-writing-guide.md) originally accepted inlining into a central `WRITING.md`; the template now lives in per-collection `COLLECTION.md` files instead.
+The `note` base type is the one type whose template is carried by the write skill rather than loaded on demand. Most writes are plain notes, so the marginal cost of keeping the small template on the default path beats the cost of an extra file read per write. [ADR-002](./adr/002-inline-global-types-in-writing-guide.md) originally accepted inlining into a central `WRITING.md`; [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) replaces that with collection-level `COLLECTION.md` files for register conventions while keeping the default structural scaffold in the write skill.
 
 Every other shipped type stays in its collection's `types/` directory and loads only when an agent is explicitly writing one. A skill or routing table line points at the specific template file (e.g., `kb/reference/types/adr.template.md`) rather than relying on the agent to remember every type definition.
 
@@ -60,8 +60,9 @@ Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md)
 Relevant Notes:
 
 - [available-types](./available-types.md) — the shipped type inventory this note complements with loading-mechanism detail
-- [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — decision: inlining `note` template (originally into WRITING.md, now into per-collection COLLECTION.md)
+- [002-inline-global-types-in-writing-guide](./adr/002-inline-global-types-in-writing-guide.md) — superseded decision: inlining `note` template into WRITING.md
 - [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: types define structural requirements; directory-local `types/` scope definition lookup
 - [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: JSON Schema in YAML as the authoring form for type definitions
-- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — decision: specialised types use template + instructions files; per-collection COLLECTION.md serves as the generic always-loaded guide
+- [016-custom-types-use-template-instruction-pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — decision: specialised types use template + instructions files
+- [017-collection-md-is-the-register-convention-boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — decision: collection-level COLLECTION.md files own register conventions while types stay structural
 - [architecture](./architecture.md) — shipped architecture: where the type loading mechanism sits inside the installed surface

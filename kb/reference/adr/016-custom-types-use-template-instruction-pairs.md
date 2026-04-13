@@ -1,5 +1,5 @@
 ---
-description: Accepted decision that specialized and practitioner-defined types use separate template and instructions files, while WRITING.md stays the generic always-loaded guide
+description: Accepted decision that specialized and practitioner-defined types use separate template and instructions files; the former WRITING.md loading assumption is superseded by ADR-017
 type: adr
 tags: []
 status: accepted
@@ -9,6 +9,8 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-10
+
+The template/instructions pair decision remains current. The parts of this ADR that describe `WRITING.md` as the generic always-loaded writing guide were superseded by [ADR-017](./017-collection-md-is-the-register-convention-boundary.md).
 
 ## Context
 
