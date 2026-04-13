@@ -1,82 +1,86 @@
 ---
-description: Iterative self-training agent that mines MCTS search trees into revision conversations and weight-update datasets, using strong environment rewards rather than persistent artifact memory
+description: Self-training agent that mines MCTS action-observation trees into path-paired revision conversations, then hands the resulting JSONL off to an external fine-tuner rather than keeping a persistent memory artifact
 type: agent-memory-system-review
-traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-03-20"
+last-checked: "2026-04-12"
 ---
 
 # Agent-R
 
-Agent-R is a research codebase for training language-model agents to revise mistakes during environment interaction. In the inspected repo, the concrete loop is: run Monte Carlo Tree Search over action trajectories, collect good and bad paths under environment reward, optionally ask a verifier model where the failed path first goes wrong, splice corrected continuations into revision conversations, then rewrite those conversations into a training dataset for later fine-tuning. Built by the ByteDance Seed team as the open-source implementation of the Agent-R paper.
+Agent-R is a research codebase for training language-model agents to reflect on failure during environment interaction. The concrete loop in the repo is: run a task-specific Monte Carlo Tree Search over action trajectories in an AgentGym environment, collect high-value and low-value leaf paths under environment reward, ask a verifier model where the bad path first goes wrong, splice the corrected continuation from a sibling good path onto that wrong step with a synthetic revision thought, and rewrite the resulting conversations into `{system, input, output}` JSONL training samples. Built by ByteDance Seed as the open-source implementation of the Agent-R paper.
 
 **Repository:** https://github.com/ByteDance-Seed/Agent-R
 
 ## Core Ideas
 
-**The primary learned target is model weights, not a memory artifact.** The repo's durable outputs are search trees and JSONL conversation datasets, but the README's training phase hands those datasets to Xtuner for fine-tuning. The inspectable artifacts are intermediate supervision products, not the final learning substrate.
+**The durable learning target is model weights; inspectable artifacts are intermediate.** The repo produces two kinds of files: MCTS search-tree JSON dumps under `mcts_result/{task}/{model}/` and per-task JSONL training data under the `--output_dir` passed to `path_collection.py`. The README then hands that JSONL off to Xtuner (`xtuner train llama3_8b_instruct_full_alpaca_e3_copy.py --deepspeed deepspeed_zero2`). Trees and conversations exist only to feed training; nothing in this checkout persists a reusable reflection, rule, or playbook.
 
-**Trajectory collection is MCTS over environment interaction.** `mcts_collection.py` drives task-specific `ExtendedMCTS` implementations for WebShop, SciWorld, and TextCraft. Each node executes a candidate action in the environment, records observation and reward, and backpropagates `env_score` through the tree. Failed branches can terminate early as `disaster` states when reward drops below zero.
+**Trajectory collection is MCTS over environment rollouts, not sampling from chat logs.** `mcts_collection.py` instantiates `ExtendedMCTS` from one of `mcts_utils/{webshop,sciworld,textcraft}/mcts_*.py`. Each task subclass overrides `_generate` to reset the environment to the task index, replay `node.recent_actions` to the current node, issue one more action via `FuncCallOffline.llm_func(...)`, and create a child node carrying `action`, `obs`, `env_score`, and a `disaster` flag when `new_env_score < 0`. `expand()` samples `N_GEN` children, deduplicates by LLM response, and back-propagates terminal rewards up the tree; `best_child()` selects by PUCT (`mcts_raw.py`).
 
-**Reflection is constructed by path surgery, not freeform summarization.** `path_collection.py` does not merely ask for a reflection string. It pairs high-value and low-value leaf paths, finds the first wrong step in the bad path through `revise_worst_path(...)`, inserts a synthetic revision thought, and then splices the remainder of a better path onto the corrected branch. The core artifact is a repaired conversation trace.
+**Reflection is path surgery over a search tree, not freeform self-critique.** `path_collection.py::find_leaf_paths` enumerates root-to-leaf paths; `sort_leaf_paths_by_value` ranks them by `node.value / node.visits`; `pair_leaf_paths` forms ordered pairs whose average-value gap exceeds `BETA`. For each pair, `revise_worst_path(calling, worst_path, best_path, task_description)` walks the bad path, asks the verifier about each step, and stops at the first `bad` judgement. `conversation_generation(bad_node_path, good_node_path)` then emits the bad prefix with `loss: False`, a randomly sampled `revision_thoughts` line plus `Action: wait` with `loss: True`, and the good continuation from the shared parent onwards.
 
-**The verifier is local and step-sensitive.** In revision mode, Agent-R prompts a verifier over the running action-observation history plus the next action and observation. The goal is to judge whether the step is good, uncertain, or wrong early enough to revise mid-trajectory rather than waiting for end-of-rollout failure.
+**The verifier is local, step-sensitive, and prompt-coupled to the corruption vocabulary.** In `llm_server.py`, `prompt_template` asks the verifier to classify the current action-observation pair as `good`, `bad`, or `uncertain` given task description and running action-observation history. In `revise_worst_path`, `good` and `uncertain` advance the revise path; `bad` (or `disaster`) terminates and becomes the splice point. There is no voting, no ensemble, no calibration — the verifier is a single prompted call whose output string must contain a keyword after `Judgement:`.
 
-**Dataset construction is explicit and lossy in a useful way.** `conversation_generation(...)` and `rewrite(...)` convert searched paths into training conversations with `loss` markers and simplified `{system,input,output}` style turns. The tree structure, branch statistics, and alternate paths are mostly discarded once the training sample is written. Agent-R intentionally compresses rich search traces into standard fine-tuning examples.
+**Dataset rewriting discards search structure aggressively.** `rewrite(dataset, output_path)` in `llm_server.py` converts each `revise_log` into a flattened Xtuner-style schema: the first three messages become `{system, input, output}`, then remaining pairs become `{input, output}` records inside a `conversation` list. Tree topology, sibling paths, verifier feedback, path values, and `BETA`/`ALPHA` gate thresholds all disappear at this boundary. The surgery is upstream of training; the trainer sees only rewritten conversations.
 
-**The repo implements collection and rewriting more concretely than training.** Search, path pairing, revision, and JSON/JSONL rewriting are all present in code. The actual fine-tuning stage is delegated to external Xtuner commands, and the README references a training config that is not included in this checkout. So the weight-learning story is real, but the inspected implementation is stronger on data generation than on the training harness itself.
+**The repo is much stronger on data construction than on the training harness.** Everything under `mcts_collection.py`, `path_collection.py`, and the three `mcts_utils/{task}/mcts_*.py` modules is present and runnable. The training step is delegated: Xtuner is an external project, the referenced config `llama3_8b_instruct_full_alpaca_e3_copy.py` is not in this checkout, and `xtuner_config/` does not exist. `eval.py` and `perform_test_revise(...)` in `llm_server.py` evaluate a separately trained model via an `agentenv` server. So "iterative self-training" is real as a data-generation pipeline; the training loop itself is out of repo.
 
 ## Comparison with Our System
 
-Agent-R is almost the opposite of Commonplace on substrate choice. It uses inspectable traces only as temporary supervision material, then pushes the learning into model weights. We keep the learned result in inspectable artifacts and accept the slower human+agent loop that comes with that choice.
+Agent-R and Commonplace sit on opposite ends of the substrate-class axis. Agent-R treats inspectable traces as temporary supervision material and compiles the learned result into model weights. Commonplace keeps the learned result in inspectable artifacts — notes, links, instructions — and accepts a slower human-plus-agent loop as the cost.
 
 | Dimension | Agent-R | Commonplace |
 |---|---|---|
-| Trace source | MCTS-searched task trajectories with action, observation, and reward | Human+agent editing traces, notes, links, workshop artifacts |
-| Learned substrate | Fine-tuning dataset first, then model weights | Notes, links, instructions, workshop artifacts |
-| Promotion target | Weight updates via external training | Inspectable text artifacts only |
-| Update style | Search, pair good/bad paths, splice corrected conversations, train | Manual curation and targeted file edits |
-| Oracle strength | Strong environment reward and path-value comparisons | Mostly human judgment and local validation |
-| Scope | Benchmark task families with executable environments | Cross-domain KB |
+| Trace source | Task-indexed MCTS trees with action, observation, env_score, disaster flags | Editing sessions, notes, links, workshop artifacts |
+| Learned substrate | Xtuner-ingested JSONL conversations, then model weights | Inspectable text artifacts only |
+| Promotion target | Model weights via external fine-tuning | Human-curated notes, indexes, and instructions |
+| Update style | Pair paths by value gap, splice corrections, rewrite, fine-tune | Manual curation, targeted file edits, review bundles |
+| Oracle strength | Strong environment reward plus step-sensitive verifier | Human judgment with local validation gates |
+| Scope | Three benchmark task families with executable AgentGym servers | Cross-domain methodology KB |
 
-Agent-R is stronger than our current system on automatic supervision generation toward a closed learning loop. Once the environments and rewards are in place, the repo can turn its own failures into training data and hand that data off to a weight-update stage.
+Agent-R is ahead of Commonplace on closed-loop supervision: once an AgentGym environment and a task list exist, the repo can turn its own failures into correction examples without human labeling. Commonplace is ahead on inspectability and incremental refinement — after Agent-R's fine-tuning step, the learned behavior is no longer an editable artifact and cannot be argued with or linked to other knowledge.
 
-Commonplace is stronger on inspectability and incremental refinement. Agent-R's datasets are readable, but the learned policy after training no longer participates in the same editable knowledge substrate as the traces that produced it.
-
-Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a clean weight-learning case with a more explicit correction-conversation construction phase than [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md). The interesting middle layer is the dataset surgery between trace collection and training.
+Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a cleaner trajectory-to-weights case than [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) because the intermediate data structure is much richer: a paired search tree with step-local bad-step localization, not a stream of per-turn rewards.
 
 ## Borrowable Ideas
 
-**Construct corrected conversations from paired good and bad paths.** Needs a use case first. Agent-R's splice operation is more informative than a simple success/failure label because it shows what the corrected continuation looks like from the failure point onward.
+**Pair high- and low-value traces and splice the correction at the first divergence.** Needs a use case first. Compared to a binary success/failure label or a freeform reflection, Agent-R's splice makes the correction itself visible in the artifact. The pattern transfers anywhere we have paired attempts at the same target, even without MCTS.
 
-**Use step-local verification instead of only end-of-run judgment.** Ready now as a design pattern where the oracle is strong enough. The verifier in `revise_worst_path(...)` tries to locate the first actionable mistake, which is exactly where repair guidance is most useful.
+**Use step-local verifier judgements to locate the failure point.** Ready now as a design pattern where the oracle is strong enough. The `good/uncertain/bad` prompt is simple and localizable; the value is in forcing the verifier to commit to a step, not a whole rollout.
 
-**Keep search traces and training samples as separate layers.** Ready now as a pattern. Agent-R makes an explicit distinction between rich exploratory logs and the compressed supervision format used downstream. That separation could help workshop pipelines that need both auditability and compact downstream artifacts.
+**Gate pairing on a meaningful value gap, not on strict success/failure.** Ready now as a pattern. The `BETA` threshold in `pair_leaf_paths` says "only contrast attempts whose outcomes differ enough that the diff is informative." That applies to any scoring system, including review or quality-gate data.
 
-**Exploit value gaps, not just binary success.** Needs a use case first. Pairing leaf paths only when their average values differ by more than `BETA` is a concrete reminder that not all failures are equally informative.
+**Separate rich exploratory traces from the compressed downstream artifact.** Ready now as a pattern. Agent-R keeps full MCTS JSON dumps on disk and emits flattened JSONL for training. Workshop pipelines that need both auditability and compact downstream artifacts can use the same split.
+
+**Sample revision-thought prefixes from a fixed pool.** Not borrowable as a direct technique, but instructive as a warning. The 20-phrase `revision_thoughts` list injects template-y self-criticism. It works as training-signal noise but would be immediately visible as a quality problem if it appeared in a text-artifact system; helpful boundary for what "reflection" can look like.
 
 ## Curiosity Pass
 
-The most interesting part of Agent-R is not that it does self-training. Many systems can say that. The interesting part is the intermediate representation it invents on the way to self-training: a repaired conversation built from adjacent good and bad branches in a search tree.
+The interesting contribution is not "self-training language agents." Many systems claim that. The novel piece is the intermediate representation: a repaired conversation assembled from adjacent branches in a search tree with a synthesized revision thought glued in. That representation carries more information than a success/failure label and more structure than an open-ended reflection.
 
-That makes Agent-R more relevant to our survey than a generic fine-tuning pipeline. It shows a concrete way to turn trajectories into better supervision than "successful rollout yes/no." The repo is effectively learning how to write better correction examples from search structure.
+The ceiling, though, is exactly the substrate choice. The repaired conversations exist as JSONL only long enough to feed Xtuner. After training, the correction capability lives in weights; nothing in the resulting model can be inspected, linked, or contested the way a note can. The trace is informative, the intermediate artifact is readable, and the learned result is opaque — and that is by design.
 
-The ceiling is the usual split-substrate problem. Once the correction capability is trained into weights, the system gets better behavior but loses the editable knowledge surface. The code can construct revision traces elegantly, but the final learner still becomes opaque.
+The verifier call is also simpler than it sounds. A single-prompt classification with a keyword-matched judgement field has no calibration or aggregation. The path-surgery loop trusts the verifier completely to pick the splice point. Whether this is robust enough outside curated benchmarks is a separate question the repo does not answer.
+
+And the training harness remaining out-of-repo is worth flagging. The "iterative self-training" narrative is doing some work here: the MCTS-to-JSONL pipeline is real, the fine-tuning step exists only as a README command plus a missing config file. Readers should treat the inspected repo as a data-generation codebase with a training story, not a training codebase.
 
 ## What to Watch
 
-- Whether later versions keep the path-surgery dataset construction or collapse to simpler preference pairs or outcome labels
-- Whether the missing training-harness details get filled in with a first-class in-repo fine-tuning pipeline
-- Whether step-local verifier judgments transfer outside benchmarks with clear action-observation traces
-- Whether similar correction-trace construction appears in systems that keep the promoted result as artifacts instead of weights
+- Whether later versions keep the path-surgery construction or collapse to simpler preference-pair (DPO-style) or outcome-label datasets
+- Whether the missing training harness gets included as first-class in-repo code or stays behind an Xtuner reference
+- Whether step-local verifier judgements transfer to domains without clear action-observation boundaries
+- Whether similar pair-splice correction appears in systems that keep the promoted artifact inspectable rather than compiling it into weights
+- Whether the `revision_thoughts` pool gets replaced with learned or context-dependent transitions
+
+**Trace-derived learning placement.** (1) Trace source: MCTS rollouts in three AgentGym environments (`webshop`, `sciworld`, `textcraft`); triggers are per-task-index search runs bounded by `MAX_DEPTH`, `ITERA`, and `N_GEN`, not per-turn or per-session. (2) Extraction: paired leaf paths, verifier-judged first-bad-step localization, and spliced revision conversations, then a flatten-and-rewrite pass to Xtuner conversation records; the oracle is the AgentGym `env_score` plus the verifier prompt. (3) Promotion target: model weights via external Xtuner fine-tuning; search trees and JSONL are intermediate. (4) Scope: per-benchmark task family (one task index at a time, generalizing within the benchmark), not cross-task or cross-domain. (5) Timing: staged in offline cycles — MCTS collection, then path pairing/revision, then rewriting, then fine-tuning; nothing runs online during deployment. On the survey's axes, Agent-R fits axis 1's **trajectory-run pattern** (repeated rollouts over a bounded task family) and axis 2's **weight learning** substrate. It strengthens the survey's claim that trajectory-to-weights systems can still carry a rich intermediate artifact layer, and it sharpens the subtype that pairs good and bad trajectories with explicit splice points rather than relying on binary outcome labels.
 
 ---
 
 Relevant Notes:
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Agent-R is a clean trajectory-to-weights case with an unusually explicit dataset-construction layer between trace collection and training
-- [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Agent-R also works because it has a strong environment oracle and executable task family, not because weight learning removes the evaluation problem
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — compares: both learn from interaction into weights, but Agent-R shows a richer intermediate supervision-construction step through search-tree pairing and revision traces
-- [ExpeL](./expel.md) — contrasts: ExpeL keeps its learned result in inspectable rules and retrieved traces, while Agent-R uses inspectable traces only as supervision on the way to weight updates
-- [Reflexion](./reflexion.md) — sharpens: Agent-R also cares about correction after failure, but it turns failure into training data rather than a prompt-visible verbal memory
+- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Agent-R is a trajectory-to-weights case with an unusually structured intermediate dataset-construction layer between trace collection and training
+- [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Agent-R works because AgentGym supplies both a reward oracle and an executable task family, not because weight learning removes the evaluation problem
+- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — compares: both mine interaction into weights, but Agent-R shows a richer intermediate supervision-construction step via search-tree pairing and step-local revision splices
+- [ExpeL](./expel.md) — contrasts: ExpeL keeps its consolidation in a maintained natural-language rule list that persists across runs, while Agent-R uses inspectable traces only as supervision on the way to weight updates
+- [Autocontext](./autocontext.md) — compares: both bridge trajectories to weights, but Autocontext keeps a persistent playbook/report layer alongside training export, while Agent-R treats the JSONL as transient supervision only

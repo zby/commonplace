@@ -1,8 +1,15 @@
 # Agent-memory-system-review instructions
 
-Use this type for a code-grounded review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
+Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
 
-**Topic argument.** The topic for this type is a GitHub repository — either `owner/repo` or a full `https://github.com/owner/repo` URL. If no repo is given, ask for one. If the topic is not a GitHub repo reference, stop and say this type only accepts GitHub repositories.
+**A reachable GitHub repository is required.** This type exists to capture what the reviewed system actually does, not what it claims. If the system is only documented via paper, README, or blog post without accessible source code, use the article-based review type instead — do not use this type. Abandoned repos are acceptable if the code is still readable.
+
+**Topic argument.** The topic is a GitHub repository — either `owner/repo` or a full `https://github.com/owner/repo` URL.
+
+- **New review (no existing note):** if no repo is given, ask. If the topic is not a GitHub repo reference, stop.
+- **Update (note already exists):** resolve the repo URL from the existing review's frontmatter, the `**Repository:**` line, or the `[name](https://github.com/...)` link in the opening. If no repo URL is findable, stop and tell the user — this review may have been written against an article and belongs in a different type.
+
+If the repo is unreachable (404, gone from GitHub), stop and report. Do not write or update a review of a system whose code you cannot read.
 
 ## Workflow
 
@@ -21,15 +28,15 @@ Use the repository name as the default review filename unless there is already a
 
 Before cloning or writing:
 
-- Check whether `checkout_dir` already exists — reuse if so, never delete or overwrite
-- Check whether `note_path` already exists — if so, treat this as an update
-- Read `git status --short` so you know whether the worktree is dirty
+- Check whether `checkout_dir` already exists
+- Check whether `note_path` already exists — if so, this is an **update**, not a new review (see update-mode notes below)
+- Read `git status --short` in the main repo so you know whether the worktree is dirty
 
 ### 3. Read existing reviews for style
 
 Read 1-2 existing reviews in `kb/agent-memory-systems/reviews/` to match local style and comparison depth. Also read `kb/agent-memory-systems/README.md`.
 
-### 4. Clone the repo
+### 4. Clone or refresh the repo
 
 If `checkout_dir` does not exist:
 
@@ -37,7 +44,18 @@ If `checkout_dir` does not exist:
 git clone "{repo_url}" "related-systems/{repo_name}"
 ```
 
-Gather quick orientation: top-level listing, most recent commit (`git log -1`), README, package/manifest files.
+If `checkout_dir` already exists, refresh it before reading so the review reflects current code:
+
+```bash
+cd "related-systems/{repo_name}"
+git fetch --all --prune
+git status --short
+git pull --ff-only
+```
+
+If the pull cannot fast-forward (local commits or conflicts), do not force — report the state and ask the user. Do not delete or overwrite an existing checkout.
+
+Gather orientation: top-level listing, most recent commit (`git log -1`), README, package/manifest files.
 
 ### 5. Read for mechanism, not marketing
 
@@ -60,7 +78,7 @@ Focus on:
 - integration surface (CLI, MCP, API, editor plugin, etc.)
 - what is genuinely implemented versus only proposed
 
-### 6. Fill the template
+### 6. Fill the template (new reviews)
 
 Write from the code outward:
 
@@ -76,6 +94,27 @@ Write from the code outward:
 - **What to Watch:** future changes in the reviewed system that might affect our design.
 
 Every review should end with explicit `Relevant Notes:` links into the KB.
+
+### 6b. Update mode — replacing an existing review
+
+When `note_path` already exists, archive the old review and write a fresh one. Do NOT diff or merge.
+
+**Archive the existing review:**
+
+```bash
+git mv "{note_path}" "{note_path%.md}.replaced.{YYYY-MM-DD}.md"
+```
+
+For example: `kb/agent-memory-systems/reviews/ace.md` → `kb/agent-memory-systems/reviews/ace.replaced.2026-04-12.md`. Use today's ISO date.
+
+Then mark the archived file so it isn't mistaken for a current review:
+- Set `status: outdated` in the frontmatter
+- Drop `tags: [related-systems, trace-derived]` to `tags: []` (removes it from indexes)
+- Add a one-line note at the top of the body, right after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
+
+**Then write a brand-new review at the original path** following the same workflow as a new review (steps 5-9). Do NOT read the archived `.replaced.*.md` file — the current code is the source of truth, and reading the prior review risks dragging stale claims or framing forward. The new review must be grounded in code, not in the prior reviewer's language.
+
+The `.replaced.*.md` archive is not curated content — it's a frozen prior version that lets the operator inspect the change with `git diff` and recover any borrowable insights manually if they want to.
 
 ### 7. Required frontmatter
 

@@ -1,109 +1,96 @@
 ---
-description: TypeScript memory system for AI agents with scored observations, session handoffs, and reflection pipelines — has a working workshop layer where we have theory, making it the strongest source of borrowable patterns for ephemeral knowledge
+description: TypeScript vault memory (now v3.5, deprecated in favor of OpenClaw native memory) with write-time fact extraction, a typed observation ledger, scored promotion, hybrid search, and OpenClaw memory-slot plugin
 type: agent-memory-system-review
-traits: [has-comparison, has-external-sources]
+traits: [has-comparison, has-implementation]
 status: current
 tags: [related-systems, trace-derived]
-last-checked: "2026-02-26"
+last-checked: "2026-04-12"
 ---
 
 # ClawVault
 
-**A structured memory system for AI agents** that uses markdown as the storage primitive. Solves "context death" (agents losing context between sessions) through checkpoints, handoffs, and observation pipelines.
+ClawVault is a TypeScript CLI and OpenClaw plugin that treats a local markdown vault as a structured memory backend for AI agents. It bundles session lifecycle commands (`wake`, `checkpoint`, `sleep`, `recover`), a typed observation ledger compressed from session transcripts, a write-time fact store with conflict resolution, a hybrid BM25+embedding+rerank search engine, context profiles that assemble prompts from five vault sources, and a set of background maintenance workers (Curator, Janitor, Distiller, Surveyor). It is authored by Versatly and, as of the April 2026 head commit, the README and docs explicitly deprecate it for new deployments in favor of OpenClaw's first-party memory stack — the repo remains maintained for legacy installs and as a plugin-based memory slot.
 
-**Repository:** https://github.com/nickarummel/clawvault
-**Status:** v2.6.1, 466 tests, 20+ PRs from external contributors, TypeScript/Node.js
+**Repository:** https://github.com/Versatly/clawvault (v3.5.2, Node 18+, 466+ tests, built as an OpenClaw `memory` slot plugin)
 
 ## Core Ideas
 
-**Session lifecycle as a first-class problem.** ClawVault's central contribution is treating context death not as an inconvenience but as the defining constraint. The wake/sleep/checkpoint/recover cycle makes session boundaries explicit and survivable:
+**Two-layer capture: typed memory writes and a scored observation ledger.** The `capture` subsystem (`src/capture/extractor.ts`) pulls typed memories directly out of assistant turns via `<memory_note>` tags and heuristic sentence classification, writing into category folders (`decisions/`, `preferences/`, `facts/`, `lessons/`, `people/`). In parallel, the `observer` pipeline (`src/observer/observer.ts`) watches session JSONL files, tracks per-session byte offsets in `.clawvault/observe-cursors.json`, compresses new content through a provider-agnostic LLM into scored observation lines (`[type|c=0.9|i=0.85] content`), and routes them through `Router.route()` into dated ledgers. Compression vs. capture are separate code paths with separate triggers.
 
-```
-wake → checkpoint* → sleep → [recovery if crash] → recap → wake
-```
+**Eleven-type observation taxonomy with regex noise filters.** `OBSERVATION_TYPES` in `src/lib/observation-format.ts` has expanded beyond the original decision/preference/lesson set to eleven values: `decision`, `preference`, `fact`, `commitment`, `task`, `todo`, `commitment-unresolved`, `milestone`, `lesson`, `relationship`, `project`. Compression is also defensive rather than just generative: `src/observer/compressor.ts` hardcodes a `NOISE_PREFIX_RE`, `STRUCTURED_NOISE_MARKER_RE`, `ACK_ONLY_RE`, `ROUTINE_MAINTENANCE_RE`, and a `BASE64_DATA_URI_RE` scrubber so tool-result wrappers, base64 blobs, and "ok, got it" turns never enter the ledger.
 
-Each transition produces artifacts: handoff documents capture "what was I doing, what's next, what's blocked," checkpoints snapshot mid-session state, recovery detects context death and restores from the last good state. These are exactly the [workshop layer](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) artifacts our design notes say we need but haven't built.
+**Scored promotion with a superseding fact store.** Importance thresholds (`IMPORTANCE_THRESHOLDS = { structural: 0.8, potential: 0.4 }`) drive observation promotion: `i >= 0.8` promotes immediately, `i >= 0.4` promotes if seen on two different dates, below that is context-only. Orthogonally, `src/lib/fact-store.ts` maintains a write-time `(entity, relation, value, validFrom, validUntil)` log in `.clawvault/facts.jsonl` with conflict resolution: when a new fact matches an existing one on entity+relation, the old fact's `validUntil` is set and the new fact replaces it in the indexed hot set. Facts therefore get bitemporal supersession, while observations get date-based recurrence promotion — two different lifecycle models living in the same vault.
 
-**Scored observations with promotion.** Observations extracted from sessions carry structured metadata:
+**Context profiles as named retrieval strategies with a cheap classifier.** `src/lib/context-profile.ts` defines four resolved profiles (`default`, `planning`, `incident`, `handoff`) and an `auto` value. The `auto` path runs three hardcoded regexes (`INCIDENT_PROMPT_RE`, `PLANNING_PROMPT_RE`, `HANDOFF_PROMPT_RE`) against the task string and picks a profile in a fixed priority order — no LLM involved. Each profile tunes which of the five vault sources (daily notes, observations, fact store, graph neighbors, project files) enters the prompt and in what order, fit to a token budget.
 
-```
-- [decision|c=0.9|i=0.85] Use PostgreSQL for persistence
-- [lesson|c=0.8|i=0.6] Context death is survivable with checkpointing
-- [preference|c=0.7|i=0.4] Prefer TypeScript for type safety
-```
+**OpenClaw memory-slot plugin with in-process hooks.** `src/openclaw-plugin.ts` registers ClawVault as a `memory` slot plugin against an `OpenClawPluginApi`. It attaches to `before_prompt_build` (priority 30), `message_sending` (priority 20), `gateway_start`, `session_start`, `session_end`, `before_reset`, `before_compaction`, and `agent_end`, and registers two tools — `memory_search` and `memory_get`. The 3.5.0 release explicitly moved these hooks from CLI shell-outs to direct library calls on `ClawVault.find()` and `buildSessionRecap()` to eliminate SQLite lock contention. The plugin surface, not the CLI, is now the canonical integration path.
 
-The type taxonomy — decision, lesson, preference, commitment, fact, relationship — maps directly to what [claw learning loops must improve action capacity not just retrieval](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) calls "action-oriented knowledge types": preferences, procedures, judgment precedents. They have concrete types for things we've identified theoretically but not structured.
+**Background maintenance workers as a first-class subsystem.** `src/lib/maintenance/` defines four workers run by `clawvault maintain`: Curator (organizes captures), Janitor (cleans), Distiller (`distiller-worker.ts` — extracts facts/decisions/lessons from inbox items over 80 words, writing `distilled-<hash>.md` files), and Surveyor (`surveyor-worker.ts` — globs the vault, counts link coverage, and writes a dated `surveyor-report.md` with recommendations). Each worker is a function taking a `WorkerExecutionContext`, a `MaintenanceState`, and an `WorkerLlmClient`, with explicit dry-run support and per-run action logs. This is structurally close to the "boiling cauldron" mutations — but scheduled, not event-driven, and partially LLM-dependent.
 
-**Promotion by recurrence.** Importance thresholds drive what gets promoted to permanent vault knowledge:
-- **structural** (i >= 0.8): auto-promotes
-- **potential** (i >= 0.4): promotes if seen on 2+ different dates
-- **contextual** (i < 0.4): reference only
-
-The "seen twice on different dates" heuristic is simple and testable — a concrete mechanism for the text-to-seedling transition that we currently handle through pure human judgment.
-
-**Observation-reflection-promotion pipeline.** Weekly reflection reviews accumulated observations, extracts durable insights, promotes to vault categories. This is a working implementation of the [boiling cauldron](../../notes/automating-kb-learning-is-an-open-problem.md) mutations (extract, synthesise, regroup) that we describe as an open problem.
-
-## Borrowable Ideas
-
-**1. Session handoff documents.** The clearest immediate borrow. A stable end-of-session record for what was in progress, what is blocked, and what should happen next would close a gap we still leave to ad hoc judgment. This belongs in the workshop layer, alongside tasks, not in durable notes.
-
-**2. Observation capture with type taxonomy.** Our `kb/log.md` already records one-line observations, but without a shared vocabulary the entries stay flat. ClawVault's decision/lesson/preference/commitment labels are useful because they tell later triage what kind of thing was observed, not just that something happened.
-
-**3. Promotion by recurrence.** The recurrence heuristic is useful as a low-cost filter, not as a final judge. If the same point shows up across sessions, that is evidence it deserves promotion review. That is a plausible first gate for our log, but only if we keep it clearly advisory.
-
-**4. The reflection cycle as a skill.** Their weekly `reflect` command is worth borrowing as a manual or semi-manual review rhythm even before automation. Periodic review of recent observations and notes would surface patterns, contradictions, and promotion candidates that otherwise decay in the log.
-
-**5. Retrieval codification patterns (needs more data).** ClawVault's KB-area patterns — injection triggers, retrieval profiles, context frontloading — look like a codified retrieval ladder:
-
-- **Triggers** in frontmatter (`triggers: ["deployment", "rollback"]`) — codified retrieval conditions on individual artifacts. The knowledge becomes self-routing: instead of the agent needing to find it, the system knows when to surface it.
-- **Profiles** (`planning`, `incident`, `handoff`) — codified retrieval strategies for classes of tasks. Someone observed "during incident response, recent observations matter most" and hardened that into a named strategy.
-- **Full frontloading** — codified context assembly. The system pre-loads a curated package before the agent even starts.
-
-Each step encodes more retrieval judgment into the system and removes more from the agent. That is only worth adopting if the pattern has already proven itself through repeated use. We do not yet know which notes should have triggers, what retrieval profiles our work actually needs, or whether frontloading would help or just burn context. ClawVault has the usage volume to discover that empirically; we are still early enough that this should remain a candidate pattern, not a default.
-
-## What We Should Not Borrow (Yet)
-
-**LLM-heavy automation.** Their compression, fact extraction, and injection pipelines all run through LLMs. This adds capability but also opacity — you can't easily tell why something was promoted or what was lost in compression. We want to understand the fundamental patterns before automating them. The [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md) matters here: automating a process before understanding it locks in assumptions.
-
-**The 8 primitives taxonomy.** Goals, Agents, State Space, Feedback, Capital, Institution, Synthesis, Recursion — this is a framework that organises their features, but it's unclear whether these are fundamental categories or a retroactive grouping of what they happened to build. We'd rather discover our categories from practice.
-
-**The specific scoring format.** Confidence and importance as floats (c=0.9, i=0.85) implies a precision that LLM extraction can't actually deliver. The buckets (structural/potential/contextual) are more honest than the numbers. If we adopt anything here, it should be the buckets, not the scores.
+**Deprecation in favor of OpenClaw native memory is the current framing.** The head README carries a prominent deprecation warning; `docs/openclaw-plugin-usage.md` is now a migration guide pointing at OpenClaw's builtin memory and QMD memory engines. The repo still ships plugin wiring and publishes to npm, but the project's stated position is that the good ideas were absorbed upstream and new deployments should use OpenClaw's first-party memory stack. This substantially changes how to read ClawVault as a reference: less as a product to evaluate, more as a frozen experiment whose mechanisms are public and readable.
 
 ## Comparison with Our System
 
-**Frontloaded context vs. agent-driven retrieval.** ClawVault pre-assembles context before the agent starts work. Their `context` command gathers from five sources, scores and deduplicates them, caps per source by profile, fits a token budget, and injects the result into the prompt. A `session:start` hook can also auto-inject results. The agent gets a curated package.
+**Two layers of structure vs. one.** ClawVault separates workshop-layer artifacts (session handoffs, checkpoints, observation ledgers, inbox captures) from library-layer artifacts (`decisions/`, `lessons/`, `preferences/`, fact store). We have the library layer (`kb/notes/`, `kb/reference/`) and a workshop layer (`kb/work/`), but the library-to-workshop boundary is still mostly about lifecycle and not about type. ClawVault additionally enforces a typed taxonomy on the workshop side (eleven observation types) that we have no equivalent for — our workshop is prose-shaped.
 
-Our approach — [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — takes the opposite tack: load CLAUDE.md at startup, then trust the agent to navigate and fetch the rest. Progressive disclosure, not preassembly. The trade-off is sharp: frontloading reduces first-turn friction but has to guess relevance in advance; agent-driven retrieval is cheaper to scale and more precise, but only if the agent can navigate well.
+**Retrieval preassembly vs. agent-driven navigation.** ClawVault's `context --profile` command pre-assembles a token-budgeted bundle from five sources before the agent speaks. Our position — [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) and [always-loaded context has two surfaces](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — keeps the always-loaded surface small and trusts the agent to search. ClawVault bets that a cheap classifier plus hardcoded profile shapes can pick relevance better than a model navigating on its own; we bet that a small routing prompt plus good descriptions scales better as the KB grows.
 
-**They operationalized the workshop; we are still defining it.** ClawVault already has concrete artifacts for session lifecycle, checkpoints, handoffs, observations, and reflection. Our notes describe the need for a workshop layer and the kinds of artifacts it should hold, but we have not committed to this particular shape. That makes their pipeline a stronger operational reference than a theory reference.
+**Separate lifecycles for facts vs. observations.** The fact store's bitemporal supersession (`validFrom`, `validUntil`) is a real lifecycle model for structured facts, distinct from the observation ledger's recurrence-based promotion. Our notes have neither: we track status (`seedling`, `current`, `outdated`) manually per note, without per-claim validity intervals or automatic conflict resolution. For durable-note-level assertions this may be fine; for fast-moving observational facts it is a gap.
 
-**Human-in-the-loop vs. agent-driven.** Their promotion pipeline is largely automated: LLMs extract, score, and route observations, while recurrence heuristics decide what rises. Our model still keeps humans in the promotion loop. That means ClawVault is better evidence about what an automated curation loop can actually sustain, but also a stronger warning about opacity and score inflation.
+**Automated maintenance workers vs. reviewed sweeps.** ClawVault runs Distiller and Surveyor on a schedule, generating artifacts without human authorship in the loop. We run semantic review bundles and batch sweeps, but every write into the library goes through a human or through an agent we review. The tradeoff is visibility: their workers produce artifacts continuously; our reviews produce artifacts deliberately. ClawVault accepts more noise in exchange for not losing signal.
 
-**No learning theory.** Like [Thalo](./thalo.md), ClawVault has no framework for deciding when to formalise something versus leave it fluid. No [verifiability gradient](../../notes/deploy-time-learning-is-the-missing-middle.md), no constrain/relax boundary. The structure is designed; it does not explain its own maturation. That is the gap between an effective workflow and a theory of why the workflow should change over time.
+**Deprecation narrative vs. methodology accumulation.** ClawVault is now a maintained legacy repo whose best ideas have been absorbed into OpenClaw's memory stack. Our position is opposite: we accumulate methodology in the repo itself as theory, and the theory is the product. That means a ClawVault-style deprecation does not apply to us — but it also means we cannot benefit from the "merged into a host runtime" consolidation path that made ClawVault's v3 architecture cheap to abandon.
+
+## Borrowable Ideas
+
+**1. Noise-prefix filters in transcript compression.** `NOISE_PREFIX_RE`, `ACK_ONLY_RE`, `STRUCTURED_NOISE_MARKER_RE`, and `BASE64_DATA_URI_RE` in `compressor.ts` are a concrete defensive layer we currently lack. If we add any form of trace-derived capture, these regex classes are a zero-cost filter we can copy almost verbatim. Ready to borrow the day we start consuming session logs.
+
+**2. Bitemporal facts for fast-moving operational claims.** The `(entity, relation, value, validFrom, validUntil)` schema with supersede-on-conflict is a compact, inspectable lifecycle. This would not replace our prose notes, but it fits a narrow class of claims we currently handle inconsistently — tool versions, config values, owner assignments, status of external systems. Needs a concrete use case before adopting; premature now.
+
+**3. Named retrieval profiles with a keyword-based selector.** The `auto` profile's three-regex classifier is the smallest interesting mechanism in the codebase. If we ever build task-kind-aware retrieval, starting with hardcoded regexes over task strings (rather than an LLM classifier) keeps the system inspectable and cheap. The profiles themselves are less borrowable — the right profiles depend on what work the system does.
+
+**4. A distiller-style worker as a contained experiment.** The Distiller's pattern — read inbox items above a word threshold, route into `distilled-<hash>.md` files in typed categories, keep a per-run action log — is a self-contained automation we could mirror for log entries we never promote. The bounded scope (inbox only, fixed categories, idempotent hash-based output) makes it safer than a general-purpose auto-promoter. Needs a real accumulation of unpromoted log entries first.
+
+**5. Explicit noise filtering for acknowledgment turns.** Separate from transcripts, `ACK_ONLY_RE` captures a broader lesson: some turns carry no durable signal at all and should be filtered before any extraction considers them. If we ever review our own log entries for patterns, an ack-class filter that drops "ok / got it / sounds good" entries is a first-pass win.
+
+## What We Should Not Borrow (Yet)
+
+**Preassembled context bundles.** ClawVault's `context` command pre-loads the prompt from five sources before the agent speaks. We have chosen the opposite strategy, and until we have evidence that agent-driven navigation misroutes a meaningful fraction of queries, frontloading would just burn tokens on guessed relevance.
+
+**Scheduled LLM maintenance workers.** The Distiller and Surveyor make LLM calls on a timer and write artifacts without a review gate. We do not have the volume to justify this yet, and automation-before-understanding is exactly the pattern [deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) warns against.
+
+**The eleven-type observation taxonomy as a library-level type.** The types are useful as workshop tags; they are not fundamental categories of knowledge. Imported wholesale, they would conflict with our existing type system and muddy the `note` vs. `structured-claim` vs. `adr` distinctions.
+
+**`c=`/`i=` float scoring.** The scored observation format (`[type|c=0.9|i=0.85]`) implies LLM-extractable precision we do not believe exists. The buckets (structural/potential/contextual) are the honest abstraction; the floats are cosmetic. If we adopt anything here, it should be the buckets.
 
 ## Curiosity Pass
 
-**The strongest claim here is operational, not theoretical.** ClawVault is interesting because it actually runs a workshop loop with handoffs, checkpoints, observations, and reflection. That makes it a useful answer to the "what does the middle layer look like?" question, even if its scoring and extraction choices remain somewhat opaque.
+**The workshop layer claim weakened once the OpenClaw deprecation landed.** The February reading of this system — "a working workshop where we have only theory" — is narrower now. ClawVault's workshop patterns are still concrete, but they also just shifted into OpenClaw's core. The signal is no longer "an independent system arrived at these primitives" so much as "these primitives graduated into a host runtime." That is still useful, but it is a different kind of evidence.
 
-**The recurrence heuristic is valuable mainly because it is inspectable.** "Seen twice on different dates" is crude, but that crudeness is a feature: it creates a transparent promotion threshold that can be challenged or replaced later. The important question is whether that cheap signal catches the right candidates without flooding the durable store.
+**The fact store does real work; the observation ledger mostly relocates data.** The fact store's supersession logic genuinely transforms inputs — incoming facts trigger lifecycle changes on existing records. The observation ledger, by contrast, mostly reorganizes and filters: compress session turns into typed lines, route into dated files, promote by recurrence. The transformation is small; the value is in the filtering. Useful to be clear which half of the system earns its complexity.
 
-**There are two separable gains in the system.** One is artifact structure: session handoffs, observation labels, and reflection rhythm. The other is automation: preloaded context, scoring, and routing. If we borrow from ClawVault, we should be clear about which gain we are borrowing, because they do not transfer together.
+**The `auto` context profile is weaker than it looks.** Three regexes over a task string will misclassify any task that does not self-declare its kind. The profile system still provides value for explicitly-invoked profiles (`--profile incident`), but the "automatic" intent inference is a cheap heuristic, not a real classifier. Honest in the code, slightly oversold in the docs.
+
+**Maintenance workers produce artifacts the system does not read back.** The Surveyor writes a report; nothing in the codebase consumes that report as input to later decisions. The Distiller's output goes into category folders that do feed retrieval, so that loop closes. The Surveyor loop currently does not. That is not a bug, but it is a good example of an automated write path that looks like learning and is actually logging.
+
+## Trace-derived learning placement
+
+**Trace-derived learning placement.** ClawVault still qualifies as trace-derived, and the mechanisms we noted in the survey remain — but the API has broadened. *Trace source:* assistant turns (`captureTurn` in `src/capture/`), OpenClaw session JSONL files watched with per-session byte cursors, and OpenClaw plugin hook events (`before_compaction`, `agent_end`, `session_start`, `session_end`, `before_reset`). Triggers are per-turn for capture, size-threshold for observer compression, event-driven for plugin hooks, and scheduled (cron/weekly) for reflection and maintenance workers. *Extraction:* the typed-memory extractor (`src/capture/extractor.ts`) plus the eleven-type observation compressor (`src/observer/compressor.ts`), plus the write-time fact extractor (`src/lib/fact-extractor.ts`, rule-based or LLM) that produces `(entity, relation, value)` tuples with conflict resolution. The oracle is a mix of regex rules and LLM judgment, not benchmark-grounded. *Promotion target:* inspectable markdown plus a JSONL fact log — purely symbolic artifacts, no weights. Still stored as service-adjacent files under a vault path, not a hosted service. *Scope:* per-vault, cross-session; no cross-agent pooling. *Timing:* online capture/compression during deployment, staged weekly reflection cycles, offline background maintenance workers. On the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md): axis 1 (ingestion pattern) — live session mining with event-driven and scheduled triggers; axis 2 (artifact vs weights) — symbolic artifacts only, no weight promotion. ClawVault continues to occupy the "live session mining into symbolic artifacts" quadrant. The new observation — write-time bitemporal facts as a separate lifecycle from recurrence-scored observations — is a useful refinement within the symbolic-artifact substrate: it *splits* the artifact-structure axis into "lifecycle-managed tuples" and "scored prose lines" at the same installation. That split is not yet captured as a subtype in the survey but would be worth one if another system shows the same pattern.
 
 ## What to Watch
 
-- Does promotion by recurrence actually surface the right things? Their system has enough usage to generate evidence.
-- How do handoff documents evolve over time — do they converge on a stable structure, or do they stay heterogeneous?
-- Does the observation type taxonomy (decision, lesson, preference, commitment) hold up, or do new types emerge that break the categories?
-- How does the system handle contradictory observations (high-confidence entries that conflict)?
+- Whether OpenClaw's native memory stack absorbs ClawVault's remaining distinct mechanisms (fact store, recurrence-scored observations) or keeps them as legacy. That answers whether the mechanisms were the insight or the packaging was.
+- Whether the maintenance workers (especially Surveyor) grow a consumer. Right now the Surveyor writes reports nothing reads back; if that loop closes, it becomes a real example of an automated review cadence.
+- Whether the two-lifecycle split (bitemporal facts + recurrence-scored observations) proves stable or collapses back into a single model as OpenClaw absorbs both.
+- Whether the `auto` context profile picks up a smarter classifier or stays as three regexes. The current setup is a useful reference point for "cheap-and-inspectable"; a shift to LLM classification would change the tradeoff.
 
 ---
 
 Relevant Notes:
 
-- [a-functioning-kb-needs-a-workshop-layer](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — foundation: ClawVault's observations, handoffs, and reflections are concrete workshop artifacts where we have only the theoretical need
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — foundation: ClawVault's observation types (decision, preference, lesson) are concrete implementations of the action-oriented knowledge types this note identifies as missing
-- [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — extends: ClawVault's reflection pipeline is a working (if LLM-heavy) implementation of the boiling cauldron mutations
-- [deploy-time-learning](../../notes/deploy-time-learning-is-the-missing-middle.md) — contrasts: ClawVault automates promotion without a theory of when automation is premature; their results would test whether early automation helps or locks in assumptions
-- [Always-loaded context has two surfaces with different affordances](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — contrasts: ClawVault frontloads context via profiles and injection; our two always-loaded surfaces use progressive disclosure with agent-driven retrieval — different bets on whether the system or the agent should decide what's relevant
-- [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), ClawVault formalised lifecycle (pipeline), we're formalising understanding (theory)
-- [Siftly](./siftly.md) — extends: another staged pipeline reference, but optimized for deterministic ingest throughput and resumable source loading
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — ClawVault's typed observation ledger and session-handoff artifacts remain a concrete implementation of workshop-layer primitives, though now partially absorbed into OpenClaw's memory stack
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — the eleven observation types (decision, preference, commitment, todo, milestone, etc.) are a concrete taxonomy for action-oriented knowledge this note identifies as missing from retrieval-only systems
+- [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — the Curator/Janitor/Distiller/Surveyor workers are a working (if partly LLM-dependent) implementation of the extract/synthesise/regroup mutations, with the Surveyor notably not yet read back
+- [deploy-time-learning-is-the-missing-middle](../../notes/deploy-time-learning-is-the-missing-middle.md) — ClawVault automates promotion (recurrence thresholds, fact supersession) without a theory of when automation is premature; the v3 deprecation suggests at least some of that automation did not justify the complexity
+- [always-loaded-context-mechanisms-in-agent-harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — ClawVault's profile-based preassembly contrasts with our two always-loaded surfaces; the regex-based `auto` selector is a cheap alternative to either extreme
+- [instruction-specificity-should-match-loading-frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — frontloaded context bundles face the same tradeoff this note describes: specificity costs tokens that are paid whether the task needs them or not
