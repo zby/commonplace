@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -111,6 +111,22 @@ Two mining paths: direct assistant-turn capture into typed markdown memories, an
 **Promotion.** Capture writes into category folders (`facts`, `preferences`, `decisions`, `lessons`, `people`). The observer writes dated observation ledgers. `runReflection(...)` promotes recurring observations into weekly reflections: importance ≥ 0.8 promotes immediately; importance ≥ 0.4 promotes when seen on at least two dates — implemented in `promoteWeekRecords(...)`.
 
 **Scope.** Single-agent vault with session lifecycle support. Owns its vault substrate and watches session files, but does not present as a multi-tenant backend. Best understood as a workshop-memory system around one workspace.
+
+## CrewAI Memory
+
+Framework-integrated runtime memory: it lives inside CrewAI's agent, crew, and flow execution paths rather than as an external service or offline reflector.
+
+**Trigger.** Task-result mining runs after agent execution; standalone agent and LiteAgent runs save input/result pairs after execution; `@human_feedback(..., learn=True)` distills lessons after non-empty human feedback. Recall runs before task execution, standalone kickoff, LiteAgent execution, and HITL pre-review.
+
+**Source format.** Thin runtime traces assembled by code: task description, agent role, expected output, and result; standalone input plus output; or method output plus raw human feedback. It does not mine full tool logs or long session transcripts in the inspected path.
+
+**Extraction.** `extract_memories_from_content(...)` asks an LLM for discrete reusable memory statements and falls back to storing the whole content if extraction fails. Save-time analysis infers scope, categories, importance, and metadata, then consolidation compares against similar records and can keep, update, delete, or insert. HITL learning uses a separate lesson-distillation prompt for reusable rules or preferences.
+
+**Promotion.** Symbolic service memory: `MemoryRecord` rows in LanceDB by default, optional Qdrant Edge, with content, scope, categories, metadata, importance, source, private flag, and vector embedding. The artifact is inspectable through APIs/TUI/events but not a human-authored note.
+
+**Reinjection.** Recalled records are injected into task prompts and standalone agent inputs; memory tools also let the agent explicitly search or save. HITL lessons are recalled before human review and used by an LLM to pre-review the method output.
+
+**Scope.** Per-crew, per-flow, per-agent, or caller-provided scope. Crew memory roots under `/crew/{name}`; flows under `/flow/{name}`; agent-scoped views and multi-scope slices are available.
 
 ## cass-memory
 
@@ -306,13 +322,15 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
 
+**Framework-integrated runtime memory.** Live inside the agent framework, consume task/run outputs and optional human feedback at the framework hook boundary, and promote into the same memory store that later prompt assembly uses. CrewAI Memory is the clear case here. It is not an external service, and it is not an offline trajectory learner; its distinctive feature is tight integration with agent execution.
+
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; nao as a product assistant with narrow user-memory extraction; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
 
 **Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data.
 
@@ -323,7 +341,7 @@ Within the symbolic-artifact branch, the artifact-learning systems span a wide r
 - **Minimal verbal hints:** Reflexion stores one or a few reflection sentences in a rolling buffer.
 - **Full-document rewrite:** Dynamic Cheatsheet carries forward one cheatsheet blob, rewritten wholesale each step.
 - **Scored flat rules:** ACE (bullet counters), ExpeL (strength counters with mutation verbs), G-Memory (scored insights with clustering).
-- **Structured records:** ReasoningBank (title/description/content JSONL), cass-memory (YAML playbook with maturity stages).
+- **Structured records:** ReasoningBank (title/description/content JSONL), CrewAI Memory (vector records with scope/categories/importance/source/private metadata), cass-memory (YAML playbook with maturity stages).
 - **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces), nao (user instruction/profile rows with supersession).
 - **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval).
 
@@ -341,6 +359,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | Operational Ontology Framework | Per-task model JSON fields (`result`, `decision`, `learned`) plus markdown project artifacts |
 | nao | Recent user/assistant UI message text from a product chat, with richer typed message parts stored but not mined by the memory extractor |
 | ClawVault | Assistant turns + incremental OpenClaw session JSONL, noise-stripped |
+| CrewAI Memory | Framework-assembled task outputs, standalone input/result pairs, and optional human-feedback output/feedback pairs |
 | cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
 | REM | Agent-submitted content strings via HTTP API, parsed by GPT-4o-mini into intent/entities/domain/emotion/importance |
 | Autocontext | Run trajectories from SQLite metrics, competitor outputs, playbooks, hints |
@@ -400,6 +419,7 @@ Relevant Notes:
 - [Operational Ontology Framework](./reviews/operational-ontology-framework.md) — source-inspected instance: local filesystem runner that promotes per-task model learnings into project facts, spec annotations, and handoff artifacts
 - [nao](./reviews/nao.md) — source-inspected instance: product analytics assistant that extracts conservative user instruction/profile memories from recent chat text into database rows
 - [ClawVault](./reviews/clawvault.md) — source-inspected instance: assistant-turn capture, incremental OpenClaw session observation, scored observation ledgers, and recurrence-based weekly reflection
+- [CrewAI Memory](./reviews/crewai-memory.md) — source-inspected instance: framework-integrated task/output and HITL feedback mining into scoped vector memory records with automatic prompt reinjection
 - [cass-memory](./reviews/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./reviews/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
