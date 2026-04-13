@@ -2,6 +2,8 @@
 
 Reference documentation for the commonplace system — how to operate it and how it works.
 
+Navigation: [directory index](./dir-index.md).
+
 This collection answers two kinds of question:
 
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.

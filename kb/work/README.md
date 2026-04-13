@@ -2,6 +2,8 @@
 
 Experimental workshop space. Purpose-driven working artifacts that haven't codified into notes yet.
 
+Navigation: [directory index](./dir-index.md).
+
 Each workshop is a directory exploring a specific workflow end-to-end: from question through sourcing and extraction to finished notes. The goal is to discover what patterns actually emerge from use, rather than designing structure upfront.
 
 ## Active Workshops

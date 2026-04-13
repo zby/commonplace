@@ -2,7 +2,7 @@
 
 `kb/instructions/` is the searchable home for reusable procedures in this repo.
 
-See [Instructions Directory](./dir-index.md) for the generated directory index.
+Navigation: [directory index](./dir-index.md).
 
 It contains two kinds of artifacts:
 

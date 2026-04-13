@@ -9,6 +9,8 @@ index_key: related-systems
 
 External systems doing similar work — knowledge management for AI agents, context engineering, structured note-taking. We track these not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
 
+Navigation: [directory index](./dir-index.md).
+
 **Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and optionally add a standard note under `source-only/` when the system needs a stable place in this collection. The [comparative review](./agentic-memory-systems-comparative-review.md) synthesises across both tiers. Database-backed memory systems (Mem0, Graphiti, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in `kb/sources/`.
 
 ## Systems

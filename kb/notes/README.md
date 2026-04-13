@@ -2,6 +2,8 @@
 
 Observations and design work toward a knowledge base for design history.
 
+Navigation: [directory index](./dir-index.md), [tags index](./tags-index.md).
+
 ## Goal
 
 Build a knowledge base that applies [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md), [constraining](./definitions/constraining.md), and the generator/verifier pattern to managing design notes, decisions, and architecture.

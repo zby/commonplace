@@ -1,8 +1,8 @@
 ---
 name: cp-skill-revise-autoreason
-description: "Experimental: revise a note with an AutoReason-style loop: keep the incumbent, generate a critique-driven revision and synthesis, then use blind Borda judging to decide whether to continue. Triggers on \"/cp-skill-revise-autoreason [note]\"."
+description: "Experimental: revise a note with an AutoReason-style loop using fresh Codex sub-agents for critic, revision, synthesis, and blind judging. Keep the incumbent, generate a critique-driven revision and synthesis, then use blind Borda judging to decide whether to continue. Triggers on \"/cp-skill-revise-autoreason [note]\"."
 user-invocable: true
-allowed-tools: Read, Edit, Write, Bash, Glob, Grep
+allowed-tools: Read, Edit, Write, Bash, Glob, Grep, Task
 argument-hint: <note-filename>
 context: fork
 model: opus
@@ -26,7 +26,7 @@ Three fresh judge agents rank blind candidate packets. Aggregate with Borda coun
 
 Resolve `$ARGUMENTS` to a full path. If it is a bare filename, search `kb/notes/` for a match. Read the file in full to confirm it exists and capture the original content.
 
-Before running the loop, report the call budget: up to 5 passes, 6 non-interactive Claude calls per pass (critic, revision author, synthesizer, 3 judges).
+Before running the loop, report the call budget: up to 5 passes, 6 fresh Codex sub-agents per pass (critic, revision author, synthesizer, 3 judges).
 
 ## Step 1: Initialize
 
@@ -53,6 +53,20 @@ last_good="$run_dir/current_a.md"
 
 Run until `pass > max_passes` or `incumbent_win_streak >= 2`.
 
+### Actor Execution Protocol
+
+Use fresh Codex sub-agents for actor work. The parent agent is the orchestrator: it resolves files, creates directories, builds blind packets, verifies outputs, aggregates rankings, performs the outer semantic fidelity check, and decides whether to apply any candidate. Do not use `claude -p`.
+
+For each actor prompt below:
+
+- Launch a new sub-agent. Do not reuse an actor across roles or passes.
+- Give the sub-agent only the files and instructions it needs. For judges, do not include `judge_mappings.md`, A/B/AB labels, or any provenance.
+- Prefer an unforked/minimal-context sub-agent when the harness supports that. If the harness exposes only forked workspaces, the sub-agent may write in its fork, but the parent must ensure the requested artifact exists in the parent run directory before continuing. If writeback is not automatic, have the sub-agent return the full artifact content and write it yourself.
+- In each actor prompt, keep the requested file path explicit. If the actor cannot write that path in the parent workspace, it must return the complete artifact content instead of a summary.
+- After each actor returns, use this handoff rule before verification: if the requested file exists and is non-empty in the parent workspace, continue; if it is missing but the actor returned the complete artifact, write that exact content to the requested path; if it is missing and the actor returned only a path or summary, rerun that actor once with the same prompt plus `Do not write a file; return the complete artifact content in your final response.`
+- Wait for dependent actors in order: critic, B author, synthesizer. Run the three judges in parallel when the harness supports it.
+- Close finished sub-agents when the harness requires explicit cleanup.
+
 ### 2a. Prepare The Pass Directory
 
 ```bash
@@ -63,10 +77,10 @@ cp "$run_dir/current_a.md" "$pass_dir/candidates/version_a.md"
 
 ### 2b. Run A Fresh Critic
 
-Run from the workspace root. Use explicit pass-scoped paths; do not rely on the current working directory for written files.
+Launch one fresh critic sub-agent with this prompt:
 
-```bash
-claude -p "Read $pass_dir/candidates/version_a.md. Write $pass_dir/critic/output.md.
+```text
+Read $pass_dir/candidates/version_a.md. Write $pass_dir/critic/output.md.
 
 You are the critic in an AutoReason-style note revision loop.
 
@@ -79,17 +93,17 @@ Constraints:
 - Treat semantic preservation as mandatory: the next agent may rewrite prose but must preserve all claims, evidence, caveats, and structure unless a structure change improves flow without changing the argument.
 - Write only to $pass_dir/critic/output.md. Do not create or modify files outside $pass_dir.
 
-Output only $pass_dir/critic/output.md." \
-  --allowedTools "Read,Write" \
-  --max-turns 5
+Final response: name only `$pass_dir/critic/output.md` if you wrote it successfully. If you cannot write that file in the parent workspace, return the complete critic report content instead, with no extra commentary.
 ```
 
 Verify that `$pass_dir/critic/output.md` exists and is non-empty. If it is missing or empty, stop and finalize with the last good version.
 
 ### 2c. Run A Fresh Revision Author For B
 
-```bash
-claude -p "Read $pass_dir/candidates/version_a.md and $pass_dir/critic/output.md. Write $pass_dir/author_b/version_b.md.
+Launch one fresh B-author sub-agent with this prompt:
+
+```text
+Read $pass_dir/candidates/version_a.md and $pass_dir/critic/output.md. Write $pass_dir/author_b/version_b.md.
 
 You are the B author in an AutoReason-style note revision loop.
 
@@ -105,17 +119,19 @@ Hard constraints:
 - Output the complete note, including frontmatter.
 - Write only to $pass_dir/author_b/version_b.md. Do not create or modify files outside $pass_dir.
 
-Write only $pass_dir/author_b/version_b.md. Do not modify $pass_dir/candidates/version_a.md or $pass_dir/critic/output.md." \
-  --allowedTools "Read,Write" \
-  --max-turns 8
+Write only $pass_dir/author_b/version_b.md. Do not modify $pass_dir/candidates/version_a.md or $pass_dir/critic/output.md.
+
+Final response: name only `$pass_dir/author_b/version_b.md` if you wrote it successfully. If you cannot write that file in the parent workspace, return the complete revised note content instead, with no extra commentary.
 ```
 
 Verify that `$pass_dir/author_b/version_b.md` exists and is non-empty. If it is missing or empty, stop and finalize with the last good version.
 
 ### 2d. Run A Fresh Synthesizer For AB
 
-```bash
-claude -p "Read $pass_dir/candidates/version_a.md and $pass_dir/author_b/version_b.md. Write $pass_dir/synthesizer/version_ab.md.
+Launch one fresh synthesizer sub-agent with this prompt:
+
+```text
+Read $pass_dir/candidates/version_a.md and $pass_dir/author_b/version_b.md. Write $pass_dir/synthesizer/version_ab.md.
 
 You are the AB synthesizer in an AutoReason-style note revision loop.
 
@@ -130,9 +146,9 @@ Hard constraints:
 - Output the complete note, including frontmatter.
 - Write only to $pass_dir/synthesizer/version_ab.md. Do not create or modify files outside $pass_dir.
 
-Write only $pass_dir/synthesizer/version_ab.md. Do not modify $pass_dir/candidates/version_a.md or $pass_dir/author_b/version_b.md." \
-  --allowedTools "Read,Write" \
-  --max-turns 8
+Write only $pass_dir/synthesizer/version_ab.md. Do not modify $pass_dir/candidates/version_a.md or $pass_dir/author_b/version_b.md.
+
+Final response: name only `$pass_dir/synthesizer/version_ab.md` if you wrote it successfully. If you cannot write that file in the parent workspace, return the complete synthesized note content instead, with no extra commentary.
 ```
 
 Verify that `$pass_dir/synthesizer/version_ab.md` exists and is non-empty. If it is missing or empty, stop and finalize with the last good version.
@@ -169,15 +185,17 @@ printf "judge_1: 1=A, 2=B, 3=AB\njudge_2: 1=AB, 2=A, 3=B\njudge_3: 1=B, 2=AB, 3=
 
 ### 2f. Run Three Fresh Judges
 
-For each judge `n` in `1 2 3`, run a separate non-interactive Claude call from the workspace root:
+For each judge `n` in `1 2 3`, launch a separate fresh judge sub-agent. Run the three judge sub-agents in parallel when the harness supports it.
 
-```bash
-claude -p "Read $pass_dir/judges/judge_${n}_candidate_1.md, $pass_dir/judges/judge_${n}_candidate_2.md, and $pass_dir/judges/judge_${n}_candidate_3.md. Write $pass_dir/judges/judge_${n}.md.
+Use this prompt for judge `${n}`:
+
+```text
+Read $pass_dir/judges/judge_${n}_candidate_1.md, $pass_dir/judges/judge_${n}_candidate_2.md, and $pass_dir/judges/judge_${n}_candidate_3.md. Write $pass_dir/judges/judge_${n}.md.
 
 You are an independent judge. You have no authorship stake in any version. You are evaluating three anonymized revisions of the same KB note.
 
 Rank the candidates by:
-1. Semantic fidelity to the original note: no changed claims, dropped caveats, invented evidence, broken links, or unauthorized frontmatter changes.
+1. Apparent semantic safety: no internal contradictions, invented-looking evidence, broken links, suspicious frontmatter changes, or signs that caveats/qualifiers were flattened. You do not have the original baseline, so do not try to infer which candidate is the incumbent.
 2. Editorial quality: flow, readability, cohesion, precision, and absence of filler.
 3. Conservative restraint: do not reward changes merely because they are more extensive.
 
@@ -187,9 +205,9 @@ RANKING: [best], [second], [worst]
 
 Where each slot is 1, 2, or 3.
 
-Write only $pass_dir/judges/judge_${n}.md. Do not create or modify files outside $pass_dir." \
-  --allowedTools "Read,Write" \
-  --max-turns 5
+Write only $pass_dir/judges/judge_${n}.md. Do not create or modify files outside $pass_dir.
+
+Final response: name only `$pass_dir/judges/judge_${n}.md` if you wrote it successfully. If you cannot write that file in the parent workspace, return the complete judge report content instead, with no extra commentary.
 ```
 
 If a judge output is missing, empty, or lacks a parseable `RANKING:` line containing all of `1`, `2`, and `3` exactly once, rerun that judge once. If fewer than two judges are valid after the rerun, stop and finalize with the last good version.
@@ -282,7 +300,7 @@ The best version is `last_good`.
 **Always:**
 
 - Keep A as a first-class candidate.
-- Use fresh non-interactive calls for critic, B author, synthesizer, and each judge.
+- Use fresh sub-agents for critic, B author, synthesizer, and each judge.
 - Aggregate valid judge rankings with Borda count and conservative tie-breaks.
 - Report the trajectory and final pass count.
 - Bail out early if required candidate or judge outputs fail.
