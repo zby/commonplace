@@ -89,17 +89,6 @@ def combine_logs(stdout: str, stderr: str) -> str | None:
     return (stdout + ("\n" if stdout and stderr else "") + stderr).strip() or None
 
 
-def extract_bundle_reviews(
-    bundle_markdown: str,
-    *,
-    expected_gate_ids: list[str],
-) -> dict[str, str]:
-    return review_protocol_parser.extract_bundle_reviews(
-        bundle_markdown,
-        expected_gate_ids=expected_gate_ids,
-    )
-
-
 def write_bundle_artifacts(
     *,
     artifact_dir: Path,
@@ -159,29 +148,6 @@ def parse_bundle_gate_reviews(
     return canonical_bundle_markdown, gate_reviews, canonical_reviews
 
 
-def build_prompt(
-    *,
-    note_path: str,
-    gate_ids: list[str],
-    gate_texts: dict[str, str],
-    resolved_links: list[tuple[str, str, str]],
-    unresolved_links: list[tuple[str, str]],
-    review_run_id: int,
-    output_mode: OutputMode = "stdout",
-    bundle_output_path: str | None = None,
-) -> str:
-    return render_bundle_prompt(
-        note_path=note_path,
-        gate_ids=gate_ids,
-        gate_texts=gate_texts,
-        resolved_links=resolved_links,
-        unresolved_links=unresolved_links,
-        review_run_id=review_run_id,
-        output_mode=output_mode,
-        bundle_output_path=bundle_output_path,
-    )
-
-
 def build_review_run_prompt(
     *,
     repo_root: Path,
@@ -200,7 +166,7 @@ def build_review_run_prompt(
         note_abs=note_abs,
         note_body=note_body,
     )
-    return build_prompt(
+    return render_bundle_prompt(
         note_path=note_path,
         gate_ids=gate_ids,
         gate_texts=gate_texts,
@@ -317,7 +283,7 @@ def run_bundle(
         from commonplace.review.bundle_ingest import parse_and_finalize_bundle_output
 
         try:
-            ingested = parse_and_finalize_bundle_output(
+            gate_count = parse_and_finalize_bundle_output(
                 conn,
                 repo_root=repo_root,
                 review_run_id=review_run_id,
@@ -333,5 +299,5 @@ def run_bundle(
             return 1
         conn.commit()
 
-    print(f"completed {review_run_id} {ingested.gate_count}")
+    print(f"completed {review_run_id} {gate_count}")
     return 0

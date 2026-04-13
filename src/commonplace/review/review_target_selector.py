@@ -115,14 +115,8 @@ def _acceptance_snapshot(acceptance: AcceptanceState | None) -> AcceptanceSnapsh
     if acceptance is None:
         return None
     return AcceptanceSnapshot(
-        note_path=acceptance.note_path,
-        gate_id=acceptance.gate_id,
-        model_id=acceptance.model_id,
         accepted_note_sha=acceptance.accepted_note_sha,
-        accepted_note_commit=acceptance.accepted_note_commit,
         accepted_gate_sha=acceptance.accepted_gate_sha,
-        accepted_at=acceptance.accepted_at,
-        acceptance_kind=acceptance.acceptance_kind,
     )
 
 

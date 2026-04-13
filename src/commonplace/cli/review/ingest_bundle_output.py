@@ -42,7 +42,7 @@ def main() -> None:
 
     with connect(db_path) as conn:
         try:
-            ingested = parse_and_finalize_bundle_output(
+            gate_count = parse_and_finalize_bundle_output(
                 conn,
                 repo_root=repo_root,
                 review_run_id=args.review_run_id,
@@ -54,7 +54,7 @@ def main() -> None:
             parser.error(str(exc))
         conn.commit()
 
-    print(f"completed {args.review_run_id} {ingested.gate_count}")
+    print(f"completed {args.review_run_id} {gate_count}")
 
 
 if __name__ == "__main__":

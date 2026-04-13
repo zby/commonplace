@@ -10,18 +10,15 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.gate_sweep_format import (
-    GateSweepNoteTarget,
-    build_gate_sweep_prompt,
-    extract_gate_sweep_reviews,
-)
+from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.paths import GATES_ROOT
+from commonplace.review.protocol.parser import extract_gate_sweep_reviews
+from commonplace.review.protocol.prompt import GateSweepNoteTarget, render_sweep_prompt
 from commonplace.review.review_db import (
     attach_execution_data,
     connect,
     create_run,
     fail_review_run,
-    record_and_finalize_run,
 )
 from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
 from commonplace.review.review_model import normalize_model_id
@@ -238,7 +235,7 @@ def run_gate_sweep(
             model_id=model,
             persist_runs=not dry_run,
         )
-        prompt = build_gate_sweep_prompt(
+        prompt = render_sweep_prompt(
             gate_id=gate_id,
             gate_text=gate_text,
             gate_path=str((GATES_ROOT / f"{gate_id}.md").as_posix()),

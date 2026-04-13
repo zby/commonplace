@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 
 from commonplace.review import review_db, review_metadata, run_review_bundle
+from commonplace.review.finalization import record_and_finalize_run
+from commonplace.review.protocol.parser import extract_bundle_reviews
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -1407,7 +1409,7 @@ Looks good.
     )
 
     with review_db.connect(db_path) as conn:
-        gate_count = review_db.record_and_finalize_run(
+        gate_count = record_and_finalize_run(
             conn,
             review_run_id=review_run_id,
             actual_model_id="actual-model",
@@ -1461,7 +1463,7 @@ Looks good.
 === GATE REVIEW END: semantic/grounding-alignment ===
 """
 
-    parsed = run_review_bundle.extract_bundle_reviews(
+    parsed = extract_bundle_reviews(
         bundle,
         expected_gate_ids=["prose/source-residue", "semantic/grounding-alignment"],
     )

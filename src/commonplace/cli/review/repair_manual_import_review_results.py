@@ -7,8 +7,8 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
+from commonplace.review.protocol.decisions import infer_manual_import_review_decision, rewrite_review_result_footer
 from commonplace.review.review_db import connect, prepare_review_db
-from commonplace.review.review_decisions import infer_manual_import_review_decision, rewrite_review_result_footer
 
 
 def main() -> None:

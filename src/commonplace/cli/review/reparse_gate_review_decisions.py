@@ -6,8 +6,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.review.protocol.decisions import parse_review_decision
 from commonplace.review.review_db import connect, prepare_review_db
-from commonplace.review.review_decisions import parse_review_decision
 
 
 def main() -> None:

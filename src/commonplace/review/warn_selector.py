@@ -13,13 +13,13 @@ from pathlib import Path
 from commonplace.review.domain.snapshots import AcceptanceSnapshot, GateSnapshot, NoteSnapshot
 from commonplace.review.domain.staleness import classify_staleness
 from commonplace.review.paths import GATES_ROOT
+from commonplace.review.protocol.decisions import strip_explicit_review_result_lines
 from commonplace.review.review_db import (
     GateReviewRow,
     connect,
     load_effective_gate_review_map,
     prepare_review_db,
 )
-from commonplace.review.review_decisions import strip_explicit_review_result_lines
 from commonplace.review.review_metadata import git_blob_sha
 
 
@@ -138,14 +138,8 @@ def scan_reviews(
                 NoteSnapshot(path=note_path, blob_sha=review.reviewed_note_sha),
                 GateSnapshot(id=gate_id, blob_sha=current_sha),
                 AcceptanceSnapshot(
-                    note_path=note_path,
-                    gate_id=gate_id,
-                    model_id=review.model_id,
                     accepted_note_sha=review.reviewed_note_sha,
-                    accepted_note_commit=review.reviewed_note_commit,
                     accepted_gate_sha=review.gate_sha,
-                    accepted_at=review.reviewed_at,
-                    acceptance_kind=review.review_kind,
                 ),
             )
         else:

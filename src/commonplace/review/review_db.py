@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
 
-from commonplace.review.review_decisions import normalize_review_decision
+from commonplace.review.protocol.decisions import normalize_review_decision
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
@@ -491,31 +491,6 @@ def rekey_review_run_model(
         WHERE review_run_id = ?
         """,
         (model_id, review_run_id),
-    )
-
-
-def record_and_finalize_run(
-    conn: sqlite3.Connection,
-    *,
-    review_run_id: int,
-    gate_reviews: Sequence[PendingGateReview] | None = None,
-    actual_model_id: str | None = None,
-    completed_at: str | None = None,
-    telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
-) -> int:
-    from commonplace.review.finalization import record_and_finalize_run as finalize
-
-    return finalize(
-        conn,
-        review_run_id=review_run_id,
-        gate_reviews=gate_reviews,
-        actual_model_id=actual_model_id,
-        completed_at=completed_at,
-        telemetry_json=telemetry_json,
-        raw_bundle_markdown=raw_bundle_markdown,
-        debug_log=debug_log,
     )
 
 

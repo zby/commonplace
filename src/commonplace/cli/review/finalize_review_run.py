@@ -6,10 +6,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.review_db import (
     connect,
     prepare_review_db,
-    record_and_finalize_run,
 )
 
 
