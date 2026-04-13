@@ -10,6 +10,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from commonplace.review.domain.snapshots import AcceptanceSnapshot, GateSnapshot, NoteSnapshot
+from commonplace.review.domain.staleness import classify_staleness
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
     GateReviewRow,
@@ -130,13 +132,25 @@ def scan_reviews(
             continue
         if review.review_run_id is None:
             continue
-        # Skip reviews made against a stale gate definition.
-        # TODO: The cleaner approach is to add a gate_shas parameter to
-        # load_effective_gate_review_map so freshness filtering happens in the
-        # shared query layer — the target selector does the same check in its
-        # own loop. Deferred to avoid changing the shared function's contract.
         current_sha = gate_shas.get(gate_id)
-        if current_sha is not None and review.gate_sha != current_sha:
+        if current_sha is not None:
+            staleness = classify_staleness(
+                NoteSnapshot(path=note_path, blob_sha=review.reviewed_note_sha),
+                GateSnapshot(id=gate_id, blob_sha=current_sha),
+                AcceptanceSnapshot(
+                    note_path=note_path,
+                    gate_id=gate_id,
+                    model_id=review.model_id,
+                    accepted_note_sha=review.reviewed_note_sha,
+                    accepted_note_commit=review.reviewed_note_commit,
+                    accepted_gate_sha=review.gate_sha,
+                    accepted_at=review.reviewed_at,
+                    acceptance_kind=review.review_kind,
+                ),
+            )
+        else:
+            staleness = None
+        if staleness is not None:
             stale_gates.add(gate_id)
             continue
         warns = extract_warns(review.rationale_markdown, decision=review.decision)

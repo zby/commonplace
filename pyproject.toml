@@ -32,7 +32,7 @@ commonplace-write-gate-review = "commonplace.cli.review.write_gate_review:main"
 commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 
 [dependency-groups]
-dev = ["pytest"]
+dev = ["pytest", "ruff"]
 
 [project.optional-dependencies]
 docs = ["mkdocs", "mkdocs-redirects"]

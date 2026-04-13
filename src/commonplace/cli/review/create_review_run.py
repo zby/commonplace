@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
+from commonplace.review.live_agent import write_live_agent_prompt
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
     connect,
@@ -83,7 +84,13 @@ def main() -> None:
             output_mode="file",
             bundle_output_path=bundle_output_path_rel,
         )
-        prompt_path.write_text(prompt, encoding="utf-8")
+        live_prompt = write_live_agent_prompt(
+            review_run_id=review_run_id,
+            artifact_dir=artifact_dir,
+            prompt=prompt,
+        )
+        prompt_path_rel = live_prompt.prompt_path.relative_to(repo_root).as_posix()
+        bundle_output_path_rel = live_prompt.bundle_output_path.relative_to(repo_root).as_posix()
 
     if args.json or args.with_prompt:
         payload = {

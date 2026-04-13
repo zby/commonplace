@@ -4,11 +4,10 @@ from importlib import resources
 import sqlite3
 from pathlib import Path
 
-FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures" / "review-decision"
-
 from commonplace.review import review_db, review_decisions
 
 
+FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures" / "review-decision"
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 

@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.review import review_db, review_metadata, run_review_bundle, warn_selector
+from commonplace.review import review_db, review_metadata, run_review_bundle
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -86,7 +86,7 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     repo.mkdir()
     init_repo(repo)
 
-    note = make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n")
+    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n")
     make_gate(
         repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
         "prose/source-residue",
@@ -1065,47 +1065,47 @@ def test_run_review_bundle_with_fake_claude(tmp_path: Path) -> None:
     fake_bin.mkdir()
     fake_claude = fake_bin / "claude"
     fake_claude.write_text(
-        f"""#!/usr/bin/env python3
+        """#!/usr/bin/env python3
 import json
 import sys
 
 for event in [
-    {{"type": "system", "subtype": "init"}},
-    {{
+    {"type": "system", "subtype": "init"},
+    {
         "type": "assistant",
         "requestId": "req-1",
         "uuid": "uuid-1",
         "sessionId": "session-1",
         "timestamp": "2026-04-05T12:00:00Z",
-        "message": {{
+        "message": {
             "id": "msg-1",
             "model": "claude-sonnet-4-6",
-            "usage": {{"input_tokens": 100, "output_tokens": 20}},
+            "usage": {"input_tokens": 100, "output_tokens": 20},
             "content": [
-                {{"type": "text", "text": "Working through the requested links.\\n"}},
-                {{"type": "tool_use", "name": "Read", "input": {{"file_path": "kb/notes/sample.md"}}}},
+                {"type": "text", "text": "Working through the requested links.\\n"},
+                {"type": "tool_use", "name": "Read", "input": {"file_path": "kb/notes/sample.md"}},
             ],
-        }},
-    }},
-    {{
+        },
+    },
+    {
         "type": "assistant",
         "requestId": "req-2",
         "uuid": "uuid-2",
         "sessionId": "session-1",
         "timestamp": "2026-04-05T12:00:02Z",
-        "message": {{
+        "message": {
             "id": "msg-2",
             "model": "claude-sonnet-4-6",
-            "usage": {{"input_tokens": 120, "output_tokens": 40}},
+            "usage": {"input_tokens": 120, "output_tokens": 40},
             "content": [
-                {{
+                {
                     "type": "text",
                     "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: semantic/grounding-alignment ===\\n",
-                }},
+                },
             ],
-        }},
-    }},
-    {{"type": "result", "subtype": "success", "is_error": False, "result": "done"}},
+        },
+    },
+    {"type": "result", "subtype": "success", "is_error": False, "result": "done"},
 ]:
     print(json.dumps(event), flush=True)
 """,

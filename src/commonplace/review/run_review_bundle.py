@@ -9,10 +9,11 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Literal
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
+from commonplace.review.protocol import parser as review_protocol_parser
+from commonplace.review.protocol.prompt import OutputMode, render_bundle_prompt
 from commonplace.review.review_db import (
     PendingGateReview,
     attach_execution_data,
@@ -20,20 +21,15 @@ from commonplace.review.review_db import (
     create_run,
     ensure_db,
     fail_review_run,
-    record_and_finalize_run,
 )
-from commonplace.review.review_decisions import parse_review_decision, rewrite_review_result_footer
 from commonplace.review.review_metadata import iso_now, resolve_review_target
 from commonplace.review.review_model import build_model_id, normalize_model_id
 from commonplace.review.review_runners import run_prompt
 
 
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
-BUNDLE_START_RE = re.compile(r"^=== GATE REVIEW START: (?P<gate_id>.+?) ===$")
-BUNDLE_END_RE = re.compile(r"^=== GATE REVIEW END: (?P<gate_id>.+?) ===$")
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 USAGE_EXHAUSTION_TEXT = "out of extra usage"
-OutputMode = Literal["stdout", "file"]
 
 
 class UsageExhausted(Exception):
@@ -98,84 +94,10 @@ def extract_bundle_reviews(
     *,
     expected_gate_ids: list[str],
 ) -> dict[str, str]:
-    expected = set(expected_gate_ids)
-    reviews: dict[str, str] = {}
-    current_gate_id: str | None = None
-    current_lines: list[str] = []
-
-    for raw_line in bundle_markdown.splitlines():
-        start_match = BUNDLE_START_RE.match(raw_line.strip())
-        if start_match is not None:
-            if current_gate_id is not None:
-                raise ValueError(f"nested gate review start before closing {current_gate_id}")
-            gate_id = start_match.group("gate_id")
-            if gate_id not in expected:
-                raise ValueError(f"unexpected gate in bundle output: {gate_id}")
-            if gate_id in reviews:
-                raise ValueError(f"duplicate gate in bundle output: {gate_id}")
-            current_gate_id = gate_id
-            current_lines = []
-            continue
-
-        end_match = BUNDLE_END_RE.match(raw_line.strip())
-        if end_match is not None:
-            gate_id = end_match.group("gate_id")
-            if current_gate_id is None:
-                raise ValueError(f"gate review end without start: {gate_id}")
-            if gate_id != current_gate_id:
-                raise ValueError(f"gate review end mismatch: expected {current_gate_id}, found {gate_id}")
-            review_text = "\n".join(current_lines).strip()
-            if not review_text:
-                raise ValueError(f"empty review body for gate: {gate_id}")
-            reviews[gate_id] = review_text + "\n"
-            current_gate_id = None
-            current_lines = []
-            continue
-
-        if current_gate_id is not None:
-            current_lines.append(raw_line)
-
-    if current_gate_id is not None:
-        raise ValueError(f"unterminated gate review block: {current_gate_id}")
-
-    missing = [gate_id for gate_id in expected_gate_ids if gate_id not in reviews]
-    if missing:
-        raise ValueError(f"missing gate reviews in bundle output: {', '.join(missing)}")
-
-    return reviews
-
-
-def rewrite_bundle_result_footers(
-    bundle_markdown: str,
-    *,
-    parsed_reviews: dict[str, str],
-) -> str:
-    rewritten_lines: list[str] = []
-    current_gate_id: str | None = None
-
-    for raw_line in bundle_markdown.splitlines():
-        start_match = BUNDLE_START_RE.match(raw_line.strip())
-        if start_match is not None:
-            current_gate_id = start_match.group("gate_id")
-            rewritten_lines.append(raw_line)
-            continue
-
-        end_match = BUNDLE_END_RE.match(raw_line.strip())
-        if end_match is not None:
-            gate_id = end_match.group("gate_id")
-            if current_gate_id == gate_id and gate_id in parsed_reviews:
-                rewritten_lines.extend(parsed_reviews[gate_id].rstrip("\n").splitlines())
-            rewritten_lines.append(raw_line)
-            current_gate_id = None
-            continue
-
-        if current_gate_id is None:
-            rewritten_lines.append(raw_line)
-
-    rewritten = "\n".join(rewritten_lines)
-    if bundle_markdown.endswith("\n"):
-        return rewritten + "\n"
-    return rewritten
+    return review_protocol_parser.extract_bundle_reviews(
+        bundle_markdown,
+        expected_gate_ids=expected_gate_ids,
+    )
 
 
 def write_bundle_artifacts(
@@ -219,26 +141,21 @@ def parse_bundle_gate_reviews(
     *,
     expected_gate_ids: list[str],
 ) -> tuple[str, list[PendingGateReview], dict[str, str]]:
-    parsed_reviews = extract_bundle_reviews(raw_bundle_markdown, expected_gate_ids=expected_gate_ids)
-    canonical_reviews: dict[str, str] = {}
+    canonical_bundle_markdown, parsed_reviews, canonical_reviews = review_protocol_parser.parse_bundle_output(
+        raw_bundle_markdown,
+        expected_gate_ids=expected_gate_ids,
+    )
     gate_reviews: list[PendingGateReview] = []
     for gate_id in expected_gate_ids:
-        review_text = parsed_reviews[gate_id]
-        decision = parse_review_decision(review_text)
-        canonical_review_text = rewrite_review_result_footer(review_text, decision=decision)
-        canonical_reviews[gate_id] = canonical_review_text
+        parsed_review = parsed_reviews[gate_id]
         gate_reviews.append(
             PendingGateReview(
                 gate_id=gate_id,
-                decision=decision,
-                rationale_markdown=canonical_review_text,
+                decision=parsed_review.decision,
+                rationale_markdown=parsed_review.rationale_markdown,
             )
         )
 
-    canonical_bundle_markdown = rewrite_bundle_result_footers(
-        raw_bundle_markdown,
-        parsed_reviews=canonical_reviews,
-    )
     return canonical_bundle_markdown, gate_reviews, canonical_reviews
 
 
@@ -253,102 +170,16 @@ def build_prompt(
     output_mode: OutputMode = "stdout",
     bundle_output_path: str | None = None,
 ) -> str:
-    gates = " ".join(gate_ids)
-    if output_mode == "file":
-        if bundle_output_path is None:
-            raise ValueError("bundle_output_path is required for file output mode")
-        destination_lines = [
-            f"- Write exactly one markdown document to `{bundle_output_path}`.",
-            "- Do not invoke review helper scripts while writing the review bundle.",
-        ]
-    elif output_mode == "stdout":
-        destination_lines = [
-            "- Do not write files or invoke review helper scripts.",
-            "- Return exactly one markdown document in this process's stdout.",
-        ]
-    else:
-        raise ValueError(f"unknown output mode: {output_mode}")
-
-    lines = [
-        f"Write gate reviews for {note_path} for gates: {gates}",
-        "",
-        "Reading scope for this run:",
-        "- Read the target note in full.",
-        "- The requested gate definitions are included below. Do not read them from disk.",
-        "- For semantic grounding or consistency checks, follow only links that appear in the target note.",
-        "- When following a markdown link from the target note, use the pre-resolved path table below instead of searching for targets by name.",
-        "- Ignore review backups, workshop copies, and historical artifacts unless the target note links to them explicitly.",
-        "",
-        "Output contract for this run:",
-        *destination_lines,
-        "- Use exactly one block per requested gate.",
-        "- Use these exact sentinels for every block:",
-        "  === GATE REVIEW START: <gate-id> ===",
-        "  === GATE REVIEW END: <gate-id> ===",
-        "- Inside each block, include a decision line in a parseable form such as `## Result: PASS` or `## Result: WARN`.",
-        "- Make the decision line the last non-empty line inside each gate block.",
-        "- End output after the final gate block.",
-        "",
-        f"Review run id: {review_run_id}",
-    ]
-
-    lines.append("")
-    lines.append("Pre-resolved markdown links from the target note:")
-    if resolved_links:
-        for link_text, raw_target, repo_rel in resolved_links:
-            lines.append(f"- [{link_text}]({raw_target}) -> {repo_rel}")
-    else:
-        lines.append("- none")
-
-    if unresolved_links:
-        lines.append("")
-        lines.append("Unresolved markdown links in the target note:")
-        lines.append("- Treat these as broken links if they become relevant; do not search for alternate targets.")
-        for link_text, raw_target in unresolved_links:
-            lines.append(f"- [{link_text}]({raw_target})")
-
-    lines.extend(
-        [
-            "",
-            "Bundle template:",
-            "# Review Bundle",
-            "",
-            f"Review run id: {review_run_id}",
-            f"Target: {note_path}",
-            "",
-        ]
+    return render_bundle_prompt(
+        note_path=note_path,
+        gate_ids=gate_ids,
+        gate_texts=gate_texts,
+        resolved_links=resolved_links,
+        unresolved_links=unresolved_links,
+        review_run_id=review_run_id,
+        output_mode=output_mode,
+        bundle_output_path=bundle_output_path,
     )
-    for gate_id in gate_ids:
-        lines.extend(
-            [
-                f"=== GATE REVIEW START: {gate_id} ===",
-                "### Summary",
-                "<short paragraph>",
-                "",
-                "### Findings",
-                "- <severity>: <finding>",
-                "",
-                "### Suggested Revision",
-                "<optional; omit if not needed>",
-                "",
-                "## Result: PASS|WARN|FAIL|ERROR",
-                f"=== GATE REVIEW END: {gate_id} ===",
-                "",
-            ]
-        )
-
-    lines.extend(
-        [
-        "",
-        "Requested gate definitions (authoritative for this run):",
-        ]
-    )
-    for gate_id in gate_ids:
-        lines.append(f"=== gate: {gate_id} ===")
-        lines.append(gate_texts[gate_id].rstrip())
-        lines.append("")
-
-    return "\n".join(lines)
 
 
 def build_review_run_prompt(
@@ -482,48 +313,18 @@ def run_bundle(
             raise UsageExhausted()
         return result.returncode
 
-    try:
-        canonical_bundle_markdown, gate_reviews, canonical_reviews = parse_bundle_gate_reviews(
-            raw_bundle_markdown,
-            expected_gate_ids=gate_ids,
-        )
-    except ValueError as exc:
-        with connect(db_path) as conn:
-            attach_execution_data(
-                conn,
-                review_run_id=review_run_id,
-                telemetry_json=telemetry_json,
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=runner_debug_log,
-            )
-            fail_review_run(
-                conn,
-                review_run_id=review_run_id,
-                failure_reason=str(exc),
-                completed_at=iso_now(),
-            )
-            conn.commit()
-        print(str(exc), file=sys.stderr)
-        return 1
-
-    write_bundle_artifacts(
-        artifact_dir=artifact_dir,
-        raw_bundle_markdown=canonical_bundle_markdown,
-        parsed_reviews=canonical_reviews,
-    )
     with connect(db_path) as conn:
-        attach_execution_data(
-            conn,
-            review_run_id=review_run_id,
-            telemetry_json=telemetry_json,
-            raw_bundle_markdown=canonical_bundle_markdown,
-            debug_log=runner_debug_log,
-        )
+        from commonplace.review.bundle_ingest import parse_and_finalize_bundle_output
+
         try:
-            gate_count = record_and_finalize_run(
+            ingested = parse_and_finalize_bundle_output(
                 conn,
+                repo_root=repo_root,
                 review_run_id=review_run_id,
-                gate_reviews=gate_reviews,
+                raw_bundle_markdown=raw_bundle_markdown,
+                expected_gate_ids=gate_ids,
+                telemetry_json=telemetry_json,
+                debug_log=runner_debug_log,
                 actual_model_id=actual_review_model,
             )
         except ValueError as exc:
@@ -532,5 +333,5 @@ def run_bundle(
             return 1
         conn.commit()
 
-    print(f"completed {review_run_id} {gate_count}")
+    print(f"completed {review_run_id} {ingested.gate_count}")
     return 0

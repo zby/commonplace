@@ -8,9 +8,12 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+from commonplace.review.domain.snapshots import AcceptanceSnapshot, GateSnapshot, NoteSnapshot
+from commonplace.review.domain.staleness import classify_staleness
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
+    AcceptanceState,
     append_acceptance_event,
     connect,
     ensure_db,
@@ -108,6 +111,21 @@ class StaleGate:
     diff: str | None = None
 
 
+def _acceptance_snapshot(acceptance: AcceptanceState | None) -> AcceptanceSnapshot | None:
+    if acceptance is None:
+        return None
+    return AcceptanceSnapshot(
+        note_path=acceptance.note_path,
+        gate_id=acceptance.gate_id,
+        model_id=acceptance.model_id,
+        accepted_note_sha=acceptance.accepted_note_sha,
+        accepted_note_commit=acceptance.accepted_note_commit,
+        accepted_gate_sha=acceptance.accepted_gate_sha,
+        accepted_at=acceptance.accepted_at,
+        acceptance_kind=acceptance.acceptance_kind,
+    )
+
+
 def note_diff_since(
     repo_root: Path,
     note_path: str,
@@ -181,6 +199,7 @@ def select_stale_gates(
     stale: list[StaleGate] = []
     for note_abs, note_path in zip(notes, note_paths):
         current_note_sha = git_blob_sha(note_abs)
+        note_snapshot = NoteSnapshot(path=note_path, blob_sha=current_note_sha)
         applicable_gate_ids = applicable_gate_ids_for_note(note_abs, gate_ids, gates_dir)
         for gate_id in applicable_gate_ids:
             gate_abs = gates_dir / f"{gate_id}.md"
@@ -189,14 +208,17 @@ def select_stale_gates(
 
             # Bundles resolve directly from gate directories, so the gate file hash is the whole contract today.
             current_gate_sha = git_blob_sha(gate_abs)
+            gate_snapshot = GateSnapshot(id=gate_id, blob_sha=current_gate_sha)
             acceptance = acceptances.get((note_path, gate_id, model))
-            if acceptance is None:
-                stale.append(StaleGate(note_path, gate_id, "missing-review"))
+            staleness = classify_staleness(
+                note_snapshot,
+                gate_snapshot,
+                _acceptance_snapshot(acceptance),
+            )
+            if staleness is None:
                 continue
-            if acceptance.accepted_gate_sha != current_gate_sha:
-                stale.append(StaleGate(note_path, gate_id, "gate-changed"))
-                continue
-            if acceptance.accepted_note_sha != current_note_sha:
+            if staleness.reason == "note-changed":
+                assert acceptance is not None
                 diff = None
                 if include_diff:
                     diff = note_diff_since(
@@ -206,7 +228,9 @@ def select_stale_gates(
                         acceptance.accepted_note_sha,
                         acceptance.accepted_note_commit,
                     )
-                stale.append(StaleGate(note_path, gate_id, "note-changed", diff=diff))
+                stale.append(StaleGate(note_path, gate_id, staleness.reason, diff=diff))
+                continue
+            stale.append(StaleGate(note_path, gate_id, staleness.reason))
 
     return sorted(stale, key=lambda s: (s.note_path, s.gate_id))
 

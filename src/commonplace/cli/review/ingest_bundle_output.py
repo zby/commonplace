@@ -6,19 +6,12 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.review.bundle_ingest import parse_and_finalize_bundle_output
 from commonplace.review.review_db import (
     connect,
-    fail_review_run,
     load_review_run,
     load_review_run_gates,
     prepare_review_db,
-    record_and_finalize_run,
-)
-from commonplace.review.review_metadata import iso_now
-from commonplace.review.run_review_bundle import (
-    bundle_artifact_dir,
-    parse_bundle_gate_reviews,
-    write_bundle_artifacts,
 )
 
 
@@ -47,46 +40,21 @@ def main() -> None:
             parser.error(f"review run is not ingestible: {review_run.status}")
         expected_gate_ids = [row.gate_id for row in load_review_run_gates(conn, review_run_id=args.review_run_id)]
 
-    artifact_dir = bundle_artifact_dir(repo_root, args.review_run_id)
-    write_bundle_artifacts(artifact_dir=artifact_dir, raw_bundle_markdown=raw_bundle_markdown)
-
-    try:
-        canonical_bundle_markdown, gate_reviews, canonical_reviews = parse_bundle_gate_reviews(
-            raw_bundle_markdown,
-            expected_gate_ids=expected_gate_ids,
-        )
-    except ValueError as exc:
-        with connect(db_path) as conn:
-            fail_review_run(
-                conn,
-                review_run_id=args.review_run_id,
-                failure_reason=str(exc),
-                completed_at=iso_now(),
-                raw_bundle_markdown=raw_bundle_markdown,
-            )
-            conn.commit()
-        parser.error(str(exc))
-
-    write_bundle_artifacts(
-        artifact_dir=artifact_dir,
-        raw_bundle_markdown=canonical_bundle_markdown,
-        parsed_reviews=canonical_reviews,
-    )
-
     with connect(db_path) as conn:
         try:
-            gate_count = record_and_finalize_run(
+            ingested = parse_and_finalize_bundle_output(
                 conn,
+                repo_root=repo_root,
                 review_run_id=args.review_run_id,
-                gate_reviews=gate_reviews,
-                raw_bundle_markdown=canonical_bundle_markdown,
+                raw_bundle_markdown=raw_bundle_markdown,
+                expected_gate_ids=expected_gate_ids,
             )
         except ValueError as exc:
             conn.commit()
             parser.error(str(exc))
         conn.commit()
 
-    print(f"completed {args.review_run_id} {gate_count}")
+    print(f"completed {args.review_run_id} {ingested.gate_count}")
 
 
 if __name__ == "__main__":
