@@ -64,10 +64,10 @@ At the end of this phase, bundle files are wrappers, not shadow copies of gate l
 
 ## Review-revise intake
 
-The review-revise workshop should feed this system through the same gate store.
+The review-revise experiments should feed this system through the same gate store.
 
 - gates extracted from manual before/after edits enter as `candidate`
-- provenance points back to the workshop artifact or change catalogue entry
+- provenance points back to the benchmark artifact or change catalogue entry
 - repeated useful hits or explicit review promotes a candidate gate to `active`
 
 This avoids inventing a second mechanism for "learned" gates.

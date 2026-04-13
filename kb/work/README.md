@@ -6,15 +6,13 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [gate-refactor/](./gate-refactor/) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
-- [validation/](./validation/) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
-- [validate-notes-redesign/](./validate-notes-redesign/) — extracting validation rules from the CLI into `commonplace.lib`; deciding between a context dataclass, a validator class, and minimal-abstraction free functions
-- [review-library-extraction/](./review-library-extraction/) — splitting the `commonplace.review` package into a library layer plus thin CLI wrappers; companion to validate-notes-redesign at 14-module scale
-- [tool-loop-control/](./tool-loop-control/) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
-- [type-system-rationalization/](./type-system-rationalization/) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
-- [obsidian-affordances/](./obsidian-affordances/) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
-- [harness-taxonomy-convergence/](./harness-taxonomy-convergence/) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split
-- [agent-memory-design/](./agent-memory-design/) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
-- [philosophy-borrowing/](./philosophy-borrowing/) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
-- [system-documentation/](./system-documentation/) — how to document the current commonplace system: separating general theory from system-specific design, finding an entry point beyond CLAUDE.md and scattered ADRs
-- [kb-content-layers/](./kb-content-layers/) — generalizing the theory/description/prescription split from commonplace to any KB; approaches the three layers as epistemology, ontology, and praxeology for LLMs
+- [gate-refactor](./gate-refactor/README.md) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
+- [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
+- [tool-loop-control](./tool-loop-control/README.md) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
+- [type-system-rationalization](./type-system-rationalization/README.md) — reconciling frontmatter types, directory-scoped `types/` templates, and path-based exemptions into one coherent design
+- [obsidian-affordances](./obsidian-affordances/README.md) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
+- [harness-taxonomy-convergence](./harness-taxonomy-convergence/README.md) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split
+- [agent-memory-design](./agent-memory-design/README.md) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
+- [philosophy-borrowing](./philosophy-borrowing/README.md) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
+- [system-documentation](./system-documentation/framing.md) — how to document the current commonplace system: separating general theory from system-specific design, finding an entry point beyond CLAUDE.md and scattered ADRs
+- [kb-content-layers](./kb-content-layers/plan.md) — generalizing the theory/description/prescription split from commonplace to any KB; approaches the three layers as epistemology, ontology, and praxeology for LLMs

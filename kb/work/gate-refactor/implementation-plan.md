@@ -151,5 +151,5 @@ Once gate-based reviews work:
 
 - **Summarize/reporting scripts**: `summarize_reviews.py` and its CSV reports can be rebuilt later once gate reviews accumulate. Don't port them preemptively.
 - **Applicator infrastructure**: humans do prioritization for now. Build the applicator when the review stage is stable and you have data on what findings look like.
-- **Gate extraction workflow**: `/extract-gates` from the review-revise brainstorm. Build this after the gate store exists and you have more manual edits to learn from.
+- **Gate extraction workflow**: `/extract-gates` from the selector-loaded gates note. Build this after the gate store exists and you have more manual edits to learn from.
 - **Gate ack script**: `gate_ack.py` for acknowledging trivial changes without re-reviewing. Useful but not needed until gate reviews are running and trivial-change noise becomes a real problem.

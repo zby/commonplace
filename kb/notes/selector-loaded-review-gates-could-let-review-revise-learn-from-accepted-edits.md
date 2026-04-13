@@ -8,7 +8,7 @@ status: speculative
 
 # Selector-loaded review gates could let review-revise learn from accepted edits
 
-The [review-revise workshop](../work/review-revise/README.md) suggests a promising learning loop. We already have the hard part that most automatic writing systems lack: explicit human-accepted before/after pairs, named changes, and review outputs that can be scored against those changes. That makes review methodology a candidate for [spec mining](./spec-mining-as-codification.md): instead of only improving one note, the system can try to extract reusable gates from accepted edits.
+The review-revise experiments suggest a promising learning loop. We already have the hard part that most automatic writing systems lack: explicit human-accepted before/after pairs, named changes, and review outputs that can be scored against those changes. That makes review methodology a candidate for [spec mining](./spec-mining-as-codification.md): instead of only improving one note, the system can try to extract reusable gates from accepted edits.
 
 The key architectural move is to stop treating a review lens as one large prompt bundle. A better substrate is a **registry of atomic gates** plus a selector that loads only the gates most relevant to the note under review. Storage can be flat; loading should be selective.
 
@@ -16,7 +16,7 @@ The key architectural move is to stop treating a review lens as one large prompt
 
 The workshop isolates a useful pattern:
 
-- A manual edit session produced a concrete [change catalogue](../work/review-revise/change-catalogue.md) with named failures and desired directions.
+- A manual edit session produced a concrete [change catalogue](../work/review-revise-gated/change-catalogue.md) with named failures and desired directions.
 - A five-review battery produced stable hits for some categories, especially accessibility and sentence-level issues.
 - Revision from review findings was useful but imperfect: some findings translated cleanly into edits, while others produced misses, wrong-direction changes, or hallucinated details.
 

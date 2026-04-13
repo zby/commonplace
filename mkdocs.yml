@@ -3,7 +3,10 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 exclude_docs: |
   reports/**
-  work/review-revise-gated/**
+  work/review-revise-gated/baseline.md
+  work/review-revise-gated/target.md
+  work/review-revise-gated/gates/**
+  work/review-revise-gated/run-08/**
 theme:
   name: mkdocs
 plugins:
