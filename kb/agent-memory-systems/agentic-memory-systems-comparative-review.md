@@ -12,9 +12,9 @@ Eleven systems for agent knowledge management reveal a design space defined by s
 
 ## The systems
 
-Six database-oriented memory systems: **Mem0** (vector-first fact store with LLM-judged CRUD), **Graphiti** (bi-temporal knowledge graph on Neo4j), **Cognee** (pipeline-first graph+vector poly-store), **Letta/MemGPT** (agent-self-managed three-tier memory hierarchy), **A-MEM** (Zettelkasten-inspired note network with memory evolution), **AgeMem** (RL-trained unified LTM/STM management with six learnable memory operations).
+Six non-filesystem-first memory systems: **[Mem0](../sources/mem0-memory-layer.ingest.md)** (vector-first fact store with LLM-judged CRUD), **[Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md)** (bi-temporal knowledge graph on Neo4j), **[Cognee](./reviews/cognee.md)** (pipeline-first graph+vector poly-store), **[Letta/MemGPT](../sources/letta-memgpt-stateful-agents.ingest.md)** (agent-self-managed three-tier memory hierarchy), **[A-MEM](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md)** (Zettelkasten-inspired in-memory note network with memory evolution), **[AgeMem](./source-only/agemem.md)** (RL-trained unified LTM/STM management with six learnable memory operations).
 
-Five filesystem-first knowledge systems: **Ars Contexta** (conversation-derived cognitive architecture with 249 research claims), **Thalo** (custom DSL with Tree-Sitter grammar and 27 validation rules), **ClawVault** (scored observations with session lifecycle and promotion pipelines), **Agent Skills** (instructional modules for context engineering), **commonplace** (this system -- methodology-as-content with typed notes and curated links).
+Five filesystem-first knowledge systems: **[Ars Contexta](./reviews/arscontexta.md)** (conversation-derived cognitive architecture with 249 research claims), **[Thalo](./reviews/thalo.md)** (custom DSL with Tree-Sitter grammar and 27 validation rules), **[ClawVault](./reviews/clawvault.md)** (scored observations with session lifecycle and promotion pipelines), **[Agent Skills](./reviews/agent-skills-for-context-engineering.md)** (instructional modules for context engineering), **commonplace** (this system -- methodology-as-content with typed notes and curated links).
 
 ## The six dimensions
 
@@ -65,6 +65,7 @@ This is the most consequential dimension. Four positions:
 | Ars Contexta | Propositional wiki-links with relationship semantics (causes, enables, contradicts) | Highest navigability; links are evaluable claims |
 | Thalo | Grammar-typed links without relationship semantics | Structural but not semantic |
 | ClawVault | Graph neighbors via observation co-occurrence | Weak emergent links |
+| Agent Skills | Activation-triggered modules; no memory-object links | Progressive disclosure over instructions, not navigability through a memory graph |
 | commonplace | Markdown links with semantic context phrases (extends, grounds, contradicts) | High navigability; relationship is articulated in prose |
 
 The link structure dimension reveals the deepest theoretical split. Mem0 and Letta have no links at all -- memory is a search index. A-MEM has links but they are "adjacency, not connection" (embedding similarity filtered by LLM confidence, with no articulated reason). Graphiti and Cognee have typed relationships but they are extracted automatically. Only Ars Contexta and commonplace require articulated reasons for every link -- what the Ars Contexta research calls the difference between an "adjacency engine" and a "knowledge system."
@@ -75,13 +76,14 @@ The link structure dimension reveals the deepest theoretical split. Mem0 and Let
 |--------|------------------|
 | Mem0 | None -- facts are current-state only; updates overwrite |
 | Graphiti | Bi-temporal: valid_at/invalid_at on every edge; point-in-time queries; contradictions resolved through temporal invalidation |
-| Cognee | Optional temporal_cognify; no invalidation model |
+| Cognee | [Optional temporal_cognify](../sources/cognee-knowledge-engine.ingest.md); no invalidation model |
 | Letta | Implicit via conversation history in recall memory; no temporal reasoning over knowledge |
 | A-MEM | Timestamps on notes; memory evolution updates context and tags but doesn't track what changed |
 | AgeMem | None -- LTM entries are current-state; no versioning or invalidation |
 | Ars Contexta | None explicit; git history provides implicit versioning |
 | Thalo | None explicit; git history |
 | ClawVault | Session timestamps; observation dates drive promotion-by-recurrence |
+| Agent Skills | None for memory state; skill files change through repository history |
 | commonplace | None explicit; git history; status field (seedling/current/outdated) marks lifecycle |
 
 Graphiti is the clear outlier here -- its bi-temporal model is a genuine capability that cannot be replicated over flat files. When "user works at Company A" is superseded by "user works at Company B," Graphiti invalidates the old edge with a timestamp rather than deleting it, enabling queries like "where did the user work in January?" This is the strongest argument for database infrastructure in the entire survey.
@@ -98,6 +100,7 @@ Graphiti is the clear outlier here -- its bi-temporal model is a genuine capabil
 | AgeMem | Add, Update, Delete (LTM); Retrieve, Summary, Filter (STM) -- all RL-trained | Operations are hand-crafted tools; the [policy for when to use them is learned](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). No synthesis or evolution of existing entries |
 | Ars Contexta | Record, Reduce, Reflect, Reweave, Verify, Rethink (6 Rs pipeline) | Most complete curation lifecycle; each phase has a separate skill |
 | ClawVault | Extract, score, promote, reflect | Promotion-by-recurrence is a concrete, testable curation heuristic |
+| Agent Skills | Write and revise instructional modules; tune activation descriptions | No persistent memory store to curate, synthesize, or retire |
 | commonplace | Write, connect, validate, convert (type promotion) | Manual curation; no automated evolution or promotion |
 
 A-MEM's memory evolution is distinctive: when a new note arrives, existing notes in its neighborhood have their context descriptions and tags updated. The ablation study shows this improves multi-hop reasoning more than link generation alone. No other system modifies existing knowledge in response to new knowledge arriving (Mem0's UPDATE replaces facts; A-MEM's evolution enriches neighboring notes).
@@ -114,18 +117,19 @@ A-MEM's memory evolution is distinctive: when a new note arrives, existing notes
 | AgeMem | No explicit schema -- agent decides what key-value pairs to store via learned policy |
 | Ars Contexta | Conversation-derived; schemas generated from user description |
 | Thalo | Formal grammar with typed entities and metadata fields |
-| ClawVault | Fixed observation types (decision, lesson, preference, commitment, fact, relationship) |
+| ClawVault | Fixed eleven-type observation taxonomy (decision, preference, fact, commitment, task, todo, commitment-unresolved, milestone, lesson, relationship, project) |
+| Agent Skills | Skill module contract: trigger description plus procedural instructions | No extraction schema for observations; the artifact itself is guidance |
 | commonplace | Progressive: text (no schema) to note (frontmatter) to structured-claim (sections) |
 
 The spectrum runs from no schema (Mem0, Letta) through fixed universal schema (A-MEM, ClawVault) to domain-customizable (Cognee, Thalo, Ars Contexta). Commonplace is unusual in making schema progression explicit -- the same content can start as raw text and progressively acquire structure as understanding develops.
 
 ## Convergences
 
-**The filesystem-first consensus breaks.** The landscape noted convergence on "filesystem over databases" across the four previously documented systems. The five new systems break this pattern decisively. Mem0, Graphiti, Cognee, and Letta all require database infrastructure (vector stores, graph databases, PostgreSQL). Only A-MEM uses in-memory storage with no persistent database requirement. The convergence on filesystem-first was a sampling artifact -- we were looking at systems in our own lineage.
+**The filesystem-first consensus breaks.** The landscape noted convergence on "filesystem over databases" across the four previously documented systems. The expanded survey breaks this pattern decisively. Mem0, Graphiti, Cognee, and Letta all require database infrastructure (vector stores, graph databases, PostgreSQL). A-MEM is non-filesystem-first but uses in-memory storage with no persistent database requirement, and AgeMem is source-only coverage of a learned memory-management policy rather than a code-inspected storage implementation. The convergence on filesystem-first was a sampling artifact -- we were looking at systems in our own lineage.
 
 **Everyone automates extraction, almost nobody automates synthesis.** Every system that processes incoming data (Mem0, Graphiti, Cognee, A-MEM, ClawVault, Ars Contexta) can automatically extract structured knowledge from unstructured input. Almost none can automatically synthesize across existing knowledge to produce novel insights, reformulate existing notes for clarity, or recognize when two separate threads should merge. Cognee's memify phase promises this but ships simpler. The closest counterexample is the [trajectory-informed memory paper's](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) tip consolidation step, which clusters semantically similar tips and LLM-merges them — proto-synthesis of operational knowledge, though narrow in scope, underdeveloped, and not ablated. The boundary between extraction and synthesis remains largely intact but is not absolute.
 
-**Context efficiency trade-off at ingestion.** Mem0, Graphiti, Cognee, and Ars Contexta all invest substantial LLM compute at ingestion time (multiple calls per item) to produce structured knowledge that is cheap to retrieve. This is the same bet: pay upfront in tokens and latency to save at query time. The filesystem-first systems (Thalo, commonplace) make the opposite bet -- minimal ingestion cost, richer retrieval-time reasoning.
+**Context efficiency trade-off at ingestion.** Mem0, Graphiti, Cognee, and Ars Contexta all invest substantial LLM compute at ingestion time (multiple calls per item) to produce structured knowledge that is cheap to retrieve. This is the same bet: pay upfront in tokens and latency to save at query time. Thalo and commonplace make the opposite bet -- minimal ingestion cost, richer retrieval-time reasoning.
 
 **Progressive disclosure appears everywhere.** Whether the system is database-backed or filesystem-backed, every system that handles non-trivial knowledge volumes implements some form of "load summaries first, details on demand." Mem0 returns relevant facts. Letta keeps core memory small and archives the rest. Agent Skills loads skill names at startup, full content on activation. Commonplace loads descriptions from frontmatter before full notes. This is the strongest convergence in the survey.
 
