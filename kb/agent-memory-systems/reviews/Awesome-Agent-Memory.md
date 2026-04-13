@@ -12,7 +12,7 @@ last-checked: "2026-04-12"
 Awesome Agent Memory is a TeleAI-UAGI curated bibliography for memory mechanisms in LLM and multimodal agents. The checked-out repository is not an agent memory runtime: it contains a single large `README.md`, a license, and `.gitignore`. Its value is coverage and categorization across products, tutorials, surveys, benchmarks, nonparametric memory, parametric memory, agent evolution, cognitive-science papers, articles, and workshops.
 
 **Repository:** https://github.com/TeleAI-UAGI/Awesome-Agent-Memory
-**Local instance reviewed:** `../../../related-systems/Awesome-Agent-Memory/`
+**Reviewed commit:** https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/tree/6dabfbc407c8ae057d2a3db5fb78846ce80b6627
 
 ## Core Ideas
 

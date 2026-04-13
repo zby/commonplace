@@ -12,6 +12,8 @@ last-checked: "YYYY-MM-DD"
 
 **Repository:** {URL}
 
+**Reviewed commit:** {GitHub commit URL}
+
 ## Core Ideas
 
 {Core ideas}

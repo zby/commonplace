@@ -1,6 +1,9 @@
 site_name: Commonplace
 site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
+exclude_docs: |
+  reports/**
+  work/review-revise-gated/**
 theme:
   name: mkdocs
 plugins:

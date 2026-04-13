@@ -55,7 +55,13 @@ git pull --ff-only
 
 If the pull cannot fast-forward (local commits or conflicts), do not force — report the state and ask the user. Do not delete or overwrite an existing checkout.
 
-Gather orientation: top-level listing, most recent commit (`git log -1`), README, package/manifest files.
+Gather orientation: top-level listing, most recent commit (`git log -1`), README, package/manifest files. Capture the reviewed commit SHA for citations:
+
+```bash
+git -C "related-systems/{repo_name}" rev-parse HEAD
+```
+
+When adding Markdown links to source files or directories, link to the reviewed GitHub commit, not the local checkout under `related-systems/`. Use `https://github.com/{owner}/{repo}/blob/{commit}/{path}` for files and `https://github.com/{owner}/{repo}/tree/{commit}/{path}` for directories. Local checkout paths are fine for your own inspection notes or final report, but review notes must remain readable on GitHub Pages.
 
 ### 5. Read for mechanism, not marketing
 
@@ -83,9 +89,11 @@ Focus on:
 Write from the code outward:
 
 - **Opening paragraph:** what the system is, what it is for, who built it. Include the repository URL.
+- **Repository metadata:** include `**Repository:** {URL}` and `**Reviewed commit:** {commit URL}` before the section headings.
 - **Core Ideas:** 3-6 mechanisms and design choices, not feature lists. Use bolded lead phrases for scanning.
 - **Comparison with Our System:** concrete alignments, divergences, and tradeoffs vs commonplace.
 - **Borrowable Ideas:** the most important section. For each idea, say what it would look like in our system and whether it is ready now or needs a use case first.
+- **Source citations:** when linking to repo code/docs, use commit-pinned GitHub links. Do not link to `../../../related-systems/...` or other local checkout paths.
 - **Curiosity Pass:** second-pass review. Re-read the draft and look for surprising claims, simpler alternatives, and mechanisms that sound more powerful than they really are. For each strong claim in Core Ideas, ask:
   - what property does this produce?
   - does the mechanism transform the data, or just relocate it?
@@ -181,11 +189,13 @@ After finishing, tell the user:
 - clone into `./related-systems/` (outside `kb/`)
 - write the review into `kb/agent-memory-systems/reviews/`
 - ground claims in repo code/docs, not just project marketing
+- cite source files and directories with GitHub URLs pinned to the reviewed commit
 - run semantic gate bundle before final validation
 
 **Never:**
 
 - put the checked-out repo under `kb/agent-memory-systems/reviews/`
+- write Markdown links from review notes into `../../../related-systems/...` or other local checkout paths
 - treat proposed docs as implemented behavior without checking the code
 - leave the review unvalidated
 - update `last-checked` without actually re-reading the system
