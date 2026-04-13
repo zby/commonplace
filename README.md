@@ -66,6 +66,7 @@ Framework skills:
 | `cp-skill-ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `cp-skill-snapshot-web` | Capture a URL to `kb/sources/` |
 | `cp-skill-revise-iterative` | Iteratively revise a note without changing its claims |
+| `cp-skill-revise-autoreason` | Revise a note with AutoReason-style incumbent/revision/synthesis judging |
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
 - `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
