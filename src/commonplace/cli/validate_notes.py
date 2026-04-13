@@ -11,20 +11,23 @@ from commonplace.lib.type_resolver import check_type_uniqueness
 from commonplace.lib.validation import (
     CheckResults,
     list_kb_note_paths,
+    list_notes_collection_paths,
     orphan_info,
     validate_note,
 )
 
 
 def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
-    if arg in {"all", "notes"}:
+    if arg == "all":
         return list_kb_note_paths(repo_root)
+    if arg == "notes":
+        return list_notes_collection_paths(repo_root)
 
     if arg in {"recent", "today"}:
         today = datetime.now().date()
         return sorted(
             path
-            for path in list_kb_note_paths(repo_root)
+            for path in list_notes_collection_paths(repo_root)
             if datetime.fromtimestamp(path.stat().st_mtime).date() == today
         )
 
@@ -114,7 +117,8 @@ def main(argv: list[str] | None = None) -> int:
         if results.note_type == "text":
             text_count += 1
         if args.target in {"all", "notes"} and path in inbound and not inbound[path] and results.note_type != "text":
-            results.infos.append("orphan check: no inbound links found in kb/")
+            scope = "kb/" if args.target == "all" else "kb/notes"
+            results.infos.append(f"orphan check: no inbound links found in {scope}")
         print(format_block(path, results))
         if results.warns:
             warning_count += 1

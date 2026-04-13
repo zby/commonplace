@@ -10,7 +10,7 @@ from jsonschema.exceptions import ValidationError
 
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
-from commonplace.lib.project_paths import list_kb_note_paths
+from commonplace.lib.project_paths import list_kb_note_paths, list_notes_collection_paths
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 

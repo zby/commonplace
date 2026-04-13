@@ -599,3 +599,38 @@ status: current
 
     assert today_note.resolve() in recent
     assert old_note.resolve() not in recent
+
+
+def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
+    note = write(
+        tmp_path / "kb" / "notes" / "note.md",
+        """---
+description: Note in the notes collection
+type: note
+traits: []
+status: current
+---
+
+# Note
+""",
+    )
+    report = write(
+        tmp_path / "kb" / "reports" / "report.md",
+        """---
+description: Report outside the notes collection
+type: note
+traits: []
+status: current
+---
+
+# Report
+""",
+    )
+
+    notes = validate_notes.resolve_targets("notes", repo_root=tmp_path)
+    all_paths = validate_notes.resolve_targets("all", repo_root=tmp_path)
+
+    assert note in notes
+    assert report not in notes
+    assert note in all_paths
+    assert report in all_paths

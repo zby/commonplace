@@ -78,6 +78,11 @@ def list_kb_note_paths(root: Path) -> list[Path]:
     ]
 
 
+def list_notes_collection_paths(root: Path) -> list[Path]:
+    """Return markdown note paths under kb/notes only."""
+    return list_collection_note_paths(kb_root(root) / "notes")
+
+
 def find_repo_markdown_files(root: Path) -> list[Path]:
     """Return markdown files under a repository, excluding nested git repositories."""
     resolved = root.resolve()

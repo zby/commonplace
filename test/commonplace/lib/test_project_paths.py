@@ -58,6 +58,16 @@ def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> Non
     assert type_doc not in discovered
 
 
+def test_list_notes_collection_paths_scans_only_kb_notes(tmp_path: Path) -> None:
+    note = write(tmp_path / "kb" / "notes" / "note.md")
+    report = write(tmp_path / "kb" / "reports" / "report.md")
+
+    discovered = project_paths.list_notes_collection_paths(tmp_path)
+
+    assert note in discovered
+    assert report not in discovered
+
+
 def test_resolve_note_returns_unique_match_across_kb(tmp_path: Path) -> None:
     note = write(tmp_path / "kb" / "reports" / "connect" / "sample.md")
 
