@@ -219,9 +219,47 @@ External link: [site](https://example.com/foo.md)
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "link health: all relative markdown links resolve" not in results.passes
+    assert "link health: all local relative links resolve" not in results.passes
     assert "link health: missing target ./missing.md" in results.warns
     assert all("ignored.md" not in item for item in results.warns)
+    assert all("example.com" not in item for item in results.warns)
+
+
+def test_link_validation_checks_all_relative_targets(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write(tmp_path / "target.txt", "Target\n")
+    (tmp_path / "existing-dir").mkdir()
+    note = write(
+        tmp_path / "note.md",
+        """---
+description: A note with local links to files and directories so link health checks all relative targets
+type: note
+traits: []
+status: current
+---
+
+# Link validation note
+
+Existing file: [target](./target.txt)
+Existing file with fragment and query: [target details](./target.txt?mode=brief#details)
+Existing directory: [directory](./existing-dir/)
+Missing directory: [missing directory](./missing-dir/)
+Missing non-md file: [missing text](./missing.txt)
+Anchor-only link: [heading](#heading)
+External scheme: [mail](mailto:person@example.com)
+Protocol-relative URL: [cdn](//example.com/file.txt)
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert "link health: all local relative links resolve" not in results.passes
+    assert "link health: missing target ./missing-dir/" in results.warns
+    assert "link health: missing target ./missing.txt" in results.warns
+    assert all("target.txt" not in item for item in results.warns)
+    assert all("existing-dir" not in item for item in results.warns)
+    assert all("#heading" not in item for item in results.warns)
+    assert all("person@example.com" not in item for item in results.warns)
     assert all("example.com" not in item for item in results.warns)
 
 

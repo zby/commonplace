@@ -5,12 +5,12 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 from jsonschema.exceptions import ValidationError
 
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
-from commonplace.lib.project_paths import list_kb_note_paths, list_notes_collection_paths
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
@@ -84,11 +84,13 @@ def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedD
 def validate_links_from_document(results: CheckResults, path: Path, links: tuple[str, ...]) -> None:
     missing: list[str] = []
     for link in links:
-        if re.match(r"^[a-z]+://", link):
+        parsed = urlsplit(link)
+        if parsed.scheme or parsed.netloc:
             continue
-        if not link.endswith(".md"):
+        link_path = unquote(parsed.path)
+        if not link_path or Path(link_path).is_absolute():
             continue
-        target = (path.parent / link).resolve()
+        target = (path.parent / link_path).resolve()
         if not target.exists():
             missing.append(link)
 
@@ -96,7 +98,7 @@ def validate_links_from_document(results: CheckResults, path: Path, links: tuple
         for link in missing:
             results.warns.append(f"link health: missing target {link}")
     else:
-        results.passes.append("link health: all relative markdown links resolve")
+        results.passes.append("link health: all local relative links resolve")
 
 
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:

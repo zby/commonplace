@@ -95,7 +95,7 @@ All `[text](url)` links as `(text, url)` pairs, ignoring links inside code regio
 Deduplicated ISO dates found in body text.
 
 **`remove_fenced_code_blocks(text: str) -> str`** / **`remove_code_regions(text: str) -> str`**
-Strip fenced code blocks, or both fenced and inline code. Used internally before heading/link extraction to avoid false matches.
+Strip fenced code blocks, or both fenced and inline code. Used internally before heading extraction and other text scans to avoid false matches.
 
 **`strip_frontmatter(content: str) -> str`**
 Delegates to `frontmatter.strip()`.
@@ -183,7 +183,7 @@ Run the full deterministic validation pipeline on one note: title/slug length, l
 Filesystem naming check: title length and slug length against `MAX_NOTE_TITLE_LENGTH` / `MAX_NOTE_SLUG_LENGTH`.
 
 **`validate_links_from_document(results, path, links)`**
-Filesystem link health: verify each relative `.md` link target actually exists.
+Filesystem link health: verify each local relative link target actually exists.
 
 **`apply_schema_validation(results, parsed)`**
 Run the parsed document through `validate_instance(...)` and translate each `jsonschema` error via `_schema_error_message` (severity from a 2-element fail-path set, with `contains` extraction for missing headings and an optional `description`/`title` hint from the schema).

@@ -63,16 +63,28 @@ def extract_headings(body: str) -> tuple[str, ...]:
     return tuple(headings)
 
 
+def _is_inside_span(start: int, end: int, spans: tuple[tuple[int, int], ...]) -> bool:
+    return any(span_start <= start and end <= span_end for span_start, span_end in spans)
+
+
+def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
+    cleaned = remove_fenced_code_blocks(body)
+    inline_code_spans = tuple(match.span() for match in _INLINE_CODE_RE.finditer(cleaned))
+    return tuple(
+        match
+        for match in _LINK_RE.finditer(cleaned)
+        if not _is_inside_span(match.start(), match.end(), inline_code_spans)
+    )
+
+
 def find_markdown_links(body: str) -> tuple[str, ...]:
-    cleaned = remove_code_regions(body)
-    return tuple(match.group(2) for match in _LINK_RE.finditer(cleaned))
+    return tuple(match.group(2) for match in _iter_markdown_link_matches(body))
 
 
 def find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]:
-    cleaned = remove_code_regions(body)
     return tuple(
         (match.group(1), match.group(2).strip())
-        for match in _LINK_RE.finditer(cleaned)
+        for match in _iter_markdown_link_matches(body)
     )
 
 

@@ -7,11 +7,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from commonplace.lib.project_paths import list_kb_note_paths, list_notes_collection_paths
 from commonplace.lib.type_resolver import check_type_uniqueness
 from commonplace.lib.validation import (
     CheckResults,
-    list_kb_note_paths,
-    list_notes_collection_paths,
     orphan_info,
     validate_note,
 )
