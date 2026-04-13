@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -69,6 +69,34 @@ Structurally different from Napkin and Pi Self-Learning because it owns the sess
 **Promotion.** Writes into typed memory directories with deduplication/merge logic. Mined items persist in a service-managed memory substrate, not human-authored notes.
 
 **Scope.** Multi-session, multi-tenant. The server has tenant auth, session isolation, user/agent-space initialization, and background task tracking by `session_id`. The only inspected system here built as a shared service.
+
+## Operational Ontology Framework
+
+A local filesystem runner that learns from a deliberately thin task-result trace rather than from raw transcripts or tool logs.
+
+**Trigger.** After each completed task in `run_cycle()`, the runner marks the task done, records a `Learned:` line in `_spec.md`, appends the learning to within-session context, and later consolidates non-trivial learnings into `_facts.md`. At run end, it writes a new handoff file.
+
+**Source format.** The source trace is the model's task response parsed into `result`, `decision`, and `learned`, plus the task line. The raw model output is retained in memory for the run, but the durable artifacts use the structured fields. OOF does not parse a conversation transcript, tool log, or external session file.
+
+**Extraction.** The task prompt itself asks the model to produce the three fields. Code validation caps lengths and supplies defaults, but there is no separate judge, recurrence check, or comparison against task outcome.
+
+**Promotion.** Symbolic filesystem artifacts. `learned` strings become `_facts.md` bullets with source/date/confidence metadata, `_spec.md` gets task-local `Learned:` annotations, and handoff markdown records decisions and continuation state. No database, embeddings, or weight update.
+
+**Scope.** Per-project, single-agent. It owns the project artifact schema but not a multi-agent trace bus or shared cross-project memory.
+
+## nao
+
+A product analytics assistant that separates file-shaped project context from database-backed user-personalization memory.
+
+**Trigger.** Memory extraction is scheduled during the live chat stream immediately after the request is sent to the agent. It is asynchronous and failure-tolerant rather than a blocking write path.
+
+**Source format.** Recent user/assistant UI messages from the current chat, limited to the last 17 messages and truncated per message. The application stores richer typed message parts, including tool input/output and feedback elsewhere, but the extractor consumes joined text parts rather than the full tool trace.
+
+**Extraction.** An LLM receives existing memories plus recent conversation text and returns structured `user_instructions` and `user_profile` arrays. The prompt defaults to no extraction, requires strong permanence signals for instructions, permits profile facts for identity/background information, and supports `supersedes_id` for replacements.
+
+**Promotion.** Database rows in `memories`, categorized as `global_rule` or `personal_fact`, with optional chat provenance and supersession. Active memories are reinjected into future system prompts under a 1000-token cap.
+
+**Scope.** Per-user and project-gated. This is personalization memory, not shared project knowledge, cross-agent playbooks, or analytics-doc synthesis.
 
 ## ClawVault
 
@@ -274,15 +302,17 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Single-session extension.** Run inside an existing agent runtime, mine the current conversation, reuse the runtime's session representation, write back into markdown artifacts. Napkin and Pi Self-Learning fit here, though Napkin is even looser — it treats the session as an opaque file and delegates extraction to a subprocess agent.
 
+**Local filesystem runner.** Own a small execution cycle and artifact schema, but keep all learned state in project files rather than a service backend. Operational Ontology Framework fits here: it promotes task-output learnings into `_facts.md`, `_spec.md`, and handoff markdown, but the trace is much thinner than a transcript or typed tool log.
+
 **Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
 
-**Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
+**Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; nao as a product assistant with narrow user-memory extraction; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, REM, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin and Pi Self-Learning in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
 
 **Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data.
 
@@ -294,7 +324,7 @@ Within the symbolic-artifact branch, the artifact-learning systems span a wide r
 - **Full-document rewrite:** Dynamic Cheatsheet carries forward one cheatsheet blob, rewritten wholesale each step.
 - **Scored flat rules:** ACE (bullet counters), ExpeL (strength counters with mutation verbs), G-Memory (scored insights with clustering).
 - **Structured records:** ReasoningBank (title/description/content JSONL), cass-memory (YAML playbook with maturity stages).
-- **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces).
+- **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces), nao (user instruction/profile rows with supersession).
 - **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval).
 
 The maintenance path also varies: append-only (Reflexion, ReasoningBank), rewrite-and-carry-forward (Dynamic Cheatsheet), counter-based (ACE), explicit CRUD verbs (ExpeL, G-Memory), and critic-gated promotion (Voyager). These differences matter more for real system design than the broader substrate-class distinction.
@@ -308,6 +338,8 @@ The biggest difference across systems is not extraction prompt wording but the s
 | Napkin | Opaque pi session file, delegated to subprocess |
 | Pi Self-Learning | Pi branch events: messages + tool-result interruptions |
 | OpenViking | Own typed message schema with text/context/tool parts, JSONL |
+| Operational Ontology Framework | Per-task model JSON fields (`result`, `decision`, `learned`) plus markdown project artifacts |
+| nao | Recent user/assistant UI message text from a product chat, with richer typed message parts stored but not mined by the memory extractor |
 | ClawVault | Assistant turns + incremental OpenClaw session JSONL, noise-stripped |
 | cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
 | REM | Agent-submitted content strings via HTTP API, parsed by GPT-4o-mini into intent/entities/domain/emotion/importance |
@@ -365,6 +397,8 @@ Relevant Notes:
 - [Napkin](./reviews/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates
 - [Pi Self-Learning](./reviews/pi-self-learning.md) — source-inspected instance: branch-event mining into strict `mistakes`/`fixes` JSON plus scored promotion
 - [OpenViking](./reviews/openviking.md) — source-inspected instance: typed session messages, commit-triggered extraction, and multi-tenant user/agent memory spaces
+- [Operational Ontology Framework](./reviews/operational-ontology-framework.md) — source-inspected instance: local filesystem runner that promotes per-task model learnings into project facts, spec annotations, and handoff artifacts
+- [nao](./reviews/nao.md) — source-inspected instance: product analytics assistant that extracts conservative user instruction/profile memories from recent chat text into database rows
 - [ClawVault](./reviews/clawvault.md) — source-inspected instance: assistant-turn capture, incremental OpenClaw session observation, scored observation ledgers, and recurrence-based weekly reflection
 - [cass-memory](./reviews/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
