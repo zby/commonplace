@@ -672,3 +672,63 @@ status: current
     assert report not in notes
     assert note in all_paths
     assert report in all_paths
+
+
+def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    collection_note = write(
+        tmp_path / "kb" / "agent-memory-systems" / "index.md",
+        """---
+description: Agent memory systems index note
+type: note
+traits: []
+status: current
+---
+
+# Agent Memory Systems
+""",
+    )
+    review_note = write(
+        tmp_path / "kb" / "agent-memory-systems" / "reviews" / "agent-r.md",
+        """---
+description: Agent R review note
+type: note
+traits: []
+status: current
+---
+
+# Agent R
+""",
+    )
+    template = write(
+        tmp_path / "kb" / "agent-memory-systems" / "types" / "review.template.md",
+        """---
+description: Template that should not be validated as collection content
+type: note
+---
+
+# Template
+""",
+    )
+    other_note = write(
+        tmp_path / "kb" / "reports" / "report.md",
+        """---
+description: Report outside the target collection
+type: note
+traits: []
+status: current
+---
+
+# Report
+""",
+    )
+
+    bare_collection = validate_notes.resolve_targets("agent-memory-systems", repo_root=tmp_path)
+    repo_relative_dir = validate_notes.resolve_targets("kb/agent-memory-systems", repo_root=tmp_path)
+
+    assert bare_collection == repo_relative_dir
+    assert collection_note in bare_collection
+    assert review_note in bare_collection
+    assert template not in bare_collection
+    assert other_note not in bare_collection
+    assert validate_notes.batch_scope("agent-memory-systems", repo_root=tmp_path) == "kb/agent-memory-systems"

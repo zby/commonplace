@@ -7,7 +7,12 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from commonplace.lib.project_paths import list_kb_note_paths, list_notes_collection_paths
+from commonplace.lib.project_paths import (
+    kb_root,
+    list_collection_note_paths,
+    list_kb_note_paths,
+    list_notes_collection_paths,
+)
 from commonplace.lib.type_resolver import check_type_uniqueness
 from commonplace.lib.validation import (
     CheckResults,
@@ -31,12 +36,20 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
         )
 
     candidate = Path(arg)
-    if candidate.is_file():
+    if candidate.is_absolute() and candidate.is_file():
         return [candidate.resolve()]
+    if candidate.is_absolute() and candidate.is_dir():
+        return list_collection_note_paths(candidate.resolve())
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_file():
         return [repo_candidate]
+    if repo_candidate.is_dir():
+        return list_collection_note_paths(repo_candidate)
+
+    collection_candidate = (kb_root(repo_root) / arg).resolve()
+    if collection_candidate.is_dir():
+        return list_collection_note_paths(collection_candidate)
 
     all_paths = list_kb_note_paths(repo_root)
     name = arg if arg.endswith(".md") else f"{arg}.md"
@@ -51,6 +64,35 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
             "Multiple matching notes found:\n" + "\n".join(str(path.relative_to(repo_root)) for path in matches)
         )
     return matches
+
+
+def _display_path(path: Path, *, repo_root: Path) -> str:
+    try:
+        return str(path.relative_to(repo_root))
+    except ValueError:
+        return str(path)
+
+
+def batch_scope(arg: str, *, repo_root: Path) -> str | None:
+    """Return a display label when the target should use batch reporting."""
+    if arg == "all":
+        return "kb/"
+    if arg == "notes":
+        return "kb/notes"
+
+    candidate = Path(arg)
+    if candidate.is_absolute() and candidate.is_dir():
+        return _display_path(candidate.resolve(), repo_root=repo_root)
+
+    repo_candidate = (repo_root / arg).resolve()
+    if repo_candidate.is_dir():
+        return _display_path(repo_candidate, repo_root=repo_root)
+
+    collection_candidate = (kb_root(repo_root) / arg).resolve()
+    if collection_candidate.is_dir():
+        return _display_path(collection_candidate, repo_root=repo_root)
+
+    return None
 
 
 def format_block(path: Path, results: CheckResults) -> str:
@@ -88,7 +130,7 @@ def format_block(path: Path, results: CheckResults) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("target", help="note path, note name, all, or recent")
+    parser.add_argument("target", help="note path, directory, note name, all, or recent")
     args = parser.parse_args(argv)
 
     repo_root = Path.cwd().resolve()
@@ -103,7 +145,8 @@ def main(argv: list[str] | None = None) -> int:
         print("No notes matched target.", file=sys.stderr)
         return 1
 
-    inbound = orphan_info(paths) if args.target in {"all", "notes"} else {}
+    scope = batch_scope(args.target, repo_root=repo_root)
+    inbound = orphan_info(paths) if scope is not None else {}
     had_failures = False
     text_count = 0
     warning_count = 0
@@ -115,8 +158,7 @@ def main(argv: list[str] | None = None) -> int:
         results = validate_note(path, repo_root=repo_root)
         if results.note_type == "text":
             text_count += 1
-        if args.target in {"all", "notes"} and path in inbound and not inbound[path] and results.note_type != "text":
-            scope = "kb/" if args.target == "all" else "kb/notes"
+        if scope is not None and path in inbound and not inbound[path] and results.note_type != "text":
             results.infos.append(f"orphan check: no inbound links found in {scope}")
         print(format_block(path, results))
         if results.warns:
@@ -127,7 +169,7 @@ def main(argv: list[str] | None = None) -> int:
             failure_count += 1
             failure_items.extend((path, failure) for failure in results.fails)
 
-    if args.target in {"all", "notes"}:
+    if scope is not None:
         type_warnings = check_type_uniqueness(repo_root)
         if type_warnings:
             had_failures = True

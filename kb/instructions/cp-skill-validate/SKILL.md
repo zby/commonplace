@@ -17,7 +17,9 @@ commonplace-validate "$ARGUMENTS"
 **Target: $ARGUMENTS**
 
 - Note path or name: validate that specific note
-- "all" or "notes": validate all `.md` files in `kb/notes/`
+- Directory path or collection name: validate `.md` files under that directory
+- "all": validate all `.md` files under `kb/`
+- "notes": validate all `.md` files in `kb/notes/`
 - "recent" or "today": validate notes modified today
 - Empty: ask which note to validate
 

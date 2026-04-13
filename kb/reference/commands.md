@@ -23,6 +23,7 @@ Deterministic validator for KB notes. Checks frontmatter validity, enum values, 
 
 ```bash
 commonplace-validate kb/notes/          # validate all notes
+commonplace-validate agent-memory-systems  # validate one collection
 commonplace-validate kb/notes/my-note.md  # validate one note
 ```
 
