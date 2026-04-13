@@ -1,10 +1,39 @@
-"""MkDocs hook: inject note metadata (status, type, tags) below the first heading."""
+"""MkDocs hooks: inject note metadata badge, generate top-level collection nav."""
 
 import os
 import re
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+
+
+def on_config(config):
+    """Generate top-level nav from kb/<collection>/README.md files.
+
+    Any directory directly under docs_dir containing a README.md becomes a
+    top-nav entry pointing at that README. Discovery is alphabetical;
+    fixed Home and external entries bracket the auto-discovered list.
+    """
+    docs_dir = Path(config["docs_dir"])
+    collection_entries = []
+    for child in sorted(docs_dir.iterdir()):
+        if not child.is_dir() or child.name.startswith("."):
+            continue
+        readme = child / "README.md"
+        if not readme.exists():
+            continue
+        label = child.name.replace("-", " ").title()
+        collection_entries.append({label: str(readme.relative_to(docs_dir))})
+
+    # TODO: read external links (Recent Changes, GitHub, etc.) from mkdocs.yml
+    # so consuming projects don't have to fork this hook to change them.
+    config["nav"] = [
+        {"Home": "index.md"},
+        *collection_entries,
+        {"Recent Changes": "https://github.com/zby/commonplace/commits/main/"},
+        {"GitHub": "https://github.com/zby/commonplace"},
+    ]
+    return config
 
 
 def _matches_tag_index(candidate: Path, tag: str) -> bool:

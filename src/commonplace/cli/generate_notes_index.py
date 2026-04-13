@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate index.md from frontmatter of all markdown files in a directory."""
+"""Generate dir-index.md from frontmatter of all markdown files in a directory."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from commonplace.lib.index_directory import write_index
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Generate index.md from frontmatter of markdown files in a directory.",
+        description="Generate dir-index.md from frontmatter of markdown files in a directory.",
     )
     parser.add_argument("directory", help="Directory to scan recursively for notes.")
     args = parser.parse_args()

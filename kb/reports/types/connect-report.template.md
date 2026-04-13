@@ -14,7 +14,7 @@ depth: standard
 ## Discovery Trace
 
 **Index scan:**
-- Read [notes index](../../notes/index.md) -- flagged candidates: {candidates with reasons}
+- Read [notes index](../../notes/dir-index.md) -- flagged candidates: {candidates with reasons}
 
 **Topic indexes:**
 - {topic index reads and candidates, or "None"}

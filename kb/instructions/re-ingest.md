@@ -52,7 +52,7 @@ rg -n "<ingest-filename>" kb/ --glob "*.md"
 ```
 
 Exclude:
-- `kb/sources/index.md` (auto-generated, will rebuild)
+- `kb/sources/dir-index.md` (auto-generated, will rebuild)
 - The ingest file itself (self-references)
 
 For each hit:
@@ -89,6 +89,6 @@ Issues fixed: {broken links, missing description, stale references — or "none"
 ## Do NOT
 
 - Do not delete the old `.ingest.md` manually — `/cp-skill-ingest` overwrites it.
-- Do not update `kb/sources/index.md` — it auto-generates.
+- Do not update `kb/sources/dir-index.md` — it auto-generates.
 - Do not modify the source snapshot.
 - Do not batch multiple re-ingests in one run. Each re-ingest may change the KB state that the next one depends on.

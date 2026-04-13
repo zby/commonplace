@@ -8,7 +8,7 @@ tags: [foundations]
 
 # Programming patterns get a fast pass but other borrowed ideas must earn first-principles support
 
-The KB's design draws on programming language theory, cognitive science, HCI, and empirical observation. Any source is valid — the [related-systems](../agent-memory-systems/index.md) reviews exist precisely to widen the input surface. What varies is the adoption gate: not all sources face the same bar.
+The KB's design draws on programming language theory, cognitive science, HCI, and empirical observation. Any source is valid — the [related-systems](../agent-memory-systems/README.md) reviews exist precisely to widen the input surface. What varies is the adoption gate: not all sources face the same bar.
 
 ## The programming fast pass
 

@@ -18,7 +18,7 @@ The root cause: semantic search queries stay within the source's vocabulary. A n
 
 ## Decision
 
-**Primary discovery: read `kb/notes/index.md` first.** The directory index lists every note with its description. Scanning the full list catches cross-domain connections that vocabulary-biased search misses. This works because:
+**Primary discovery: read `kb/notes/dir-index.md` first.** The directory index lists every note with its description. Scanning the full list catches cross-domain connections that vocabulary-biased search misses. This works because:
 
 - Descriptions are written as retrieval filters (KB convention)
 - The agent evaluates conceptual overlap, not keyword overlap

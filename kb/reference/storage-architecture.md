@@ -31,7 +31,7 @@ Each index below is regenerable from the authored markdown. Losing an index is a
 
 | Index | What it covers | Rebuild command |
 |---|---|---|
-| Directory listing pages (`kb/notes/index.md`, `kb/sources/index.md`) | Title, description, and type of every note in the directory | `commonplace-generate-notes-index <dir>` |
+| Directory listing pages (`kb/notes/dir-index.md`, `kb/sources/dir-index.md`) | Title, description, and type of every note in the directory | `commonplace-generate-notes-index <dir>` |
 | Tag-index generated tails (`kb/notes/tags-index.md` and subordinate tag pages) | Notes grouped by tag below the `<!-- generated -->` marker | `commonplace-sync-generated-index` |
 | All of the above at once | — | `commonplace-refresh-indexes` |
 | qmd semantic search index | Every collection listed in `qmd-collections.yml` | External `qmd` CLI |

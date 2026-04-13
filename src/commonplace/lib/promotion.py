@@ -41,7 +41,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     all_notes: dict[Path, dict] = {}
 
     for path in list_collection_note_paths(notes_dir):
-        if path.name in ("index.md", "README.md"):
+        if path.name in ("index.md", "dir-index.md", "README.md"):
             continue
 
         abs_path = path.resolve()
@@ -67,7 +67,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     text_with_links = []
     for path, title in sorted(text_files.items()):
         sources = incoming_links.get(path, [])
-        real_sources = [s for s in sources if all_notes[s]["rel"].name != "index.md"]
+        real_sources = [s for s in sources if all_notes[s]["rel"].name not in ("index.md", "dir-index.md")]
         rel = all_notes[path]["rel"].relative_to(notes_dir)
         text_with_links.append((rel, title, len(real_sources), real_sources))
     text_with_links.sort(key=lambda x: (-x[2], str(x[0])))
@@ -75,7 +75,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     seedling_ranked = []
     for path, title in sorted(seedlings.items()):
         sources = incoming_links.get(path, [])
-        real_sources = [s for s in sources if all_notes[s]["rel"].name != "index.md"]
+        real_sources = [s for s in sources if all_notes[s]["rel"].name not in ("index.md", "dir-index.md")]
         rel = all_notes[path]["rel"].relative_to(notes_dir)
         seedling_ranked.append((rel, title, len(real_sources), real_sources))
     seedling_ranked.sort(key=lambda x: (-x[2], str(x[0])))

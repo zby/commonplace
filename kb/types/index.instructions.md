@@ -13,7 +13,7 @@ Use an index when the document's main job is navigation rather than argument.
 
 There are two kinds of indexes:
 
-- **Directory indexes** (`index.md`) — fully auto-generated listings of all files with title, description, and type.
+- **Directory indexes** (`dir-index.md`) — fully auto-generated alphabetical listings of all files with title, description, and type. Each collection's canonical landing lives in `README.md`; `dir-index.md` is the separate per-collection enumeration.
 - **Generated-tail indexes** (e.g. `learning-theory-index.md`) — navigation hubs with an optional curated section plus a generated listing.
 
 **Generated-tail structure:**

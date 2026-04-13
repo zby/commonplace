@@ -11,9 +11,9 @@ from commonplace.lib.project_paths import collection_dirs, collection_for_path
 def main() -> int:
     root = Path.cwd().resolve()
 
-    # Generate directory indexes for collections that have index.md
+    # Generate directory indexes for collections that have dir-index.md
     for collection in collection_dirs(root):
-        index_file = collection / "index.md"
+        index_file = collection / "dir-index.md"
         if not index_file.is_file():
             continue
         content = index_file.read_text()

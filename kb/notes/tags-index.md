@@ -9,7 +9,7 @@ status: current
 
 Browse the KB by tag. Each tag page has a curated editorial section and an auto-generated listing of all notes with that tag.
 
-For current-state documentation about the live commonplace system rather than transferable theory, start at [../reference/index.md](../reference/index.md).
+For current-state documentation about the live commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
 
 ## Tag Indexes
 
@@ -24,7 +24,7 @@ For current-state documentation about the live commonplace system rather than tr
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
 - [Observability](./observability-index.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-index.md) — operations, audits, and maintenance methodology
-- [Related systems](../agent-memory-systems/index.md) — external systems tracked for comparison and convergence signals
+- [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
 
 ## Workshop Layer
 

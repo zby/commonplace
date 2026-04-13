@@ -28,7 +28,7 @@ Rewrite the proposal in one sentence in your own words. If you cannot restate it
 
 ### 2. Read the full notes index first
 
-Read `kb/notes/index.md` before opening individual notes.
+Read `kb/notes/dir-index.md` before opening individual notes.
 
 Scan the entire index, not just keyword matches. Flag notes whose descriptions suggest they may already cover:
 
@@ -46,7 +46,7 @@ Read the notes and source ingests most likely to overlap with the proposal.
 Prioritise:
 
 1. Notes explicitly named in the log entry
-2. Notes flagged from `kb/notes/index.md`
+2. Notes flagged from `kb/notes/dir-index.md`
 3. Any directly relevant source ingests
 
 Read enough to answer:

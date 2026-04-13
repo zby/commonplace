@@ -66,7 +66,7 @@ If the system has no reachable source code, stop and write a source-only note in
 
 9. **If delegating, keep ownership narrow.** The worker may read the checkout and write the review note or draft path only. The runner owns checkout, archive moves, curated index edits, semantic QA, validation, and final report. The worker must decide trace-derived status from implementation evidence and either include both the placement section and `trace-derived` tag, or omit both.
 
-10. **Update the curated index.** If this is a new review, update `kb/agent-memory-systems/index.md`:
+10. **Update the curated index.** If this is a new review, update `kb/agent-memory-systems/README.md`:
     - add the system to the `## Systems` list
     - update `## Patterns Across Systems` only if this repo adds a genuinely new cross-system pattern
     Keep the edit minimal and specific.

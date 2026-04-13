@@ -24,11 +24,12 @@ type: note
 """,
     )
     write(collection / "README.md", "# Readme\n")
-    write(collection / "index.md", "# Old index\n")
+    write(collection / "dir-index.md", "# Old dir-index\n")
     write(collection / "types" / "note.template.md", "# Template\n")
 
     content = generate(collection)
 
     assert "- [Real](./real.md) *(note)* - Real note" in content
     assert "README.md" not in content
+    assert "dir-index.md" not in content
     assert "note.template.md" not in content

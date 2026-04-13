@@ -54,7 +54,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 11. **[Koylanai Personal Brain OS](./koylanai-personal-brain-os.ingest.md)** — parallel practitioner in a different domain. Both independently arrive at filesystem-as-knowledge-base, markdown-as-universal-format, and skills-as-product. Convergence across personal productivity and commercial finance strengthens the signal that these patterns are durable.
 
-12. **[related-systems-index](../agent-memory-systems/index.md)** — provides additional convergence evidence. The index already documents convergence on filesystem-first and progressive disclosure across independent systems; Fintool adds commercial production-scale evidence from a zero-error-tolerance domain.
+12. **[related-systems-index](../agent-memory-systems/README.md)** — provides additional convergence evidence. The index already documents convergence on filesystem-first and progressive disclosure across independent systems; Fintool adds commercial production-scale evidence from a zero-error-tolerance domain.
 
 **Synthesis opportunities flagged by /connect:**
 

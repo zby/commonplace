@@ -46,7 +46,7 @@ tags: [kb-design]
 """,
     )
     write(
-        notes_root / "index.md",
+        notes_root / "dir-index.md",
         """---
 description: stale
 type: index
@@ -68,7 +68,7 @@ status: current
 """,
     )
     write(
-        sources_root / "index.md",
+        sources_root / "dir-index.md",
         """---
 description: stale
 type: index
@@ -98,8 +98,8 @@ status: current
 
     assert refresh_indexes.main() == 0
 
-    notes_index = (notes_root / "index.md").read_text(encoding="utf-8")
-    sources_index = (sources_root / "index.md").read_text(encoding="utf-8")
+    notes_index = (notes_root / "dir-index.md").read_text(encoding="utf-8")
+    sources_index = (sources_root / "dir-index.md").read_text(encoding="utf-8")
     tag_index = kb_design_index.read_text(encoding="utf-8")
     tags_directory = (notes_root / "tags-index.md").read_text(encoding="utf-8")
 

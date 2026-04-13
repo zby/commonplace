@@ -16,8 +16,8 @@ def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
 
 
 def generate(notes_dir: Path) -> str:
-    """Generate index.md content for a directory."""
-    output = notes_dir / "index.md"
+    """Generate dir-index.md content for a directory."""
+    output = notes_dir / "dir-index.md"
     entries: list[tuple[str, str, str, str]] = []
 
     for path in sorted(notes_dir.rglob("*.md")):
@@ -61,8 +61,8 @@ def generate(notes_dir: Path) -> str:
 
 
 def write_index(notes_dir: Path) -> tuple[Path, int]:
-    """Generate and write index.md for a directory."""
-    output = notes_dir / "index.md"
+    """Generate and write dir-index.md for a directory."""
+    output = notes_dir / "dir-index.md"
     content = generate(notes_dir)
     output.write_text(content, encoding="utf-8")
     count = content.count("\n- ")

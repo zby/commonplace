@@ -35,7 +35,7 @@ Capture discovery trace throughout — actual query strings, scores, candidate e
 
 ### 1. Index scan (primary discovery)
 
-Read `index.md` in the source collection first, then in other collections that have one. Each lists every note with its description — a complete, cheap candidate scan. Scan every entry; don't filter by vocabulary overlap — cross-domain connections often share no terminology. Flag candidates with a reason.
+Read `dir-index.md` in the source collection first, then in other collections that have one. Each lists every note with its description — a complete, cheap candidate scan. Scan every entry; don't filter by vocabulary overlap — cross-domain connections often share no terminology. Flag candidates with a reason. Collections without a `dir-index.md` (like `kb/instructions/`) can be scanned with `ls` or by reading the collection's `README.md` for curated entry points.
 
 ### 2. Tag indexes
 
