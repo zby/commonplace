@@ -2,6 +2,8 @@
 
 `kb/instructions/` is the searchable home for reusable procedures in this repo.
 
+See [Instructions Directory](./dir-index.md) for the generated directory index.
+
 It contains two kinds of artifacts:
 
 - Plain instructions: markdown procedures invoked manually from the KB
