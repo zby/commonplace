@@ -19,6 +19,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from commonplace.lib.naming import slugify_text
+from commonplace.lib.snapshot import dedup_existing_snapshot
 
 DEFAULT_SNAPSHOT_DIR = "kb/sources"
 
@@ -99,18 +100,6 @@ def _render_markdown(data: dict) -> str:
     return "\n".join(lines)
 
 
-def _dedup_existing_snapshot(out_dir: Path, source_url: str) -> Path | None:
-    marker = f"source: {source_url}"
-    for existing in out_dir.glob("*.md"):
-        try:
-            header = existing.read_text(encoding="utf-8")[:1000]
-        except OSError:
-            continue
-        if marker in header:
-            return existing
-    return None
-
-
 def snapshot_github_url(url: str, out_dir: str) -> str:
     api_url, source_url = _to_api_url(url)
 
@@ -119,7 +108,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
 
-    existing = _dedup_existing_snapshot(dest, source_url)
+    existing = dedup_existing_snapshot(dest, source_url)
     if existing:
         return f"Already snapshotted: {existing}"
 

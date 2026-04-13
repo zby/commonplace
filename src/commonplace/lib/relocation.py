@@ -1,4 +1,4 @@
-"""Relocate a KB note: rename, move, fix links, rewrite review exports, rekey the DB."""
+"""Relocate KB notes and directories while preserving markdown links."""
 
 from __future__ import annotations
 
@@ -6,11 +6,17 @@ import os
 import re
 import subprocess
 import sys
-from dataclasses import replace
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Protocol
 
 from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
-from commonplace.review import review_db, review_metadata
+from commonplace.lib.project_paths import (
+    find_repo_markdown_files,
+    kb_root as project_kb_root,
+    resolve_note as resolve_project_note,
+)
 
 
 TOKEN_PATTERN = re.compile(
@@ -22,40 +28,54 @@ REDIRECT_MAP_HEADER = re.compile(r"^(\s*)redirect_maps:\s*$")
 REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$")
 
 
-def is_nested_git_repo_content(path: Path, repo_root: Path) -> bool:
-    current = path.parent
-    while current != repo_root and repo_root in current.parents:
-        if (current / ".git").exists():
-            return True
-        current = current.parent
-    return False
+@dataclass(frozen=True)
+class NotePathMove:
+    old_path: Path
+    new_path: Path
 
 
-def resolve_note(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
-    candidate = Path(arg)
-    if candidate.is_absolute() and candidate.is_file():
-        resolved = candidate.resolve()
-        if kb_root not in resolved.parents:
-            raise FileNotFoundError(f"Note must live under {kb_root}: {resolved}")
-        return resolved
+class RelocationHook(Protocol):
+    def plan(self, *, root: Path, moves: Sequence[NotePathMove]) -> object | None:
+        """Return an opaque hook plan, or None when the hook has no work."""
+        ...
 
-    repo_candidate = (repo_root / arg).resolve()
-    if repo_candidate.is_file():
-        if kb_root not in repo_candidate.parents:
-            raise FileNotFoundError(f"Note must live under {kb_root}: {repo_candidate}")
-        return repo_candidate
+    def execute(self, plan: object) -> None:
+        """Execute hook work after the core relocation has written its changes."""
+        ...
 
-    name = arg if arg.endswith(".md") else f"{arg}.md"
-    matches = sorted(path.resolve() for path in kb_root.rglob(name))
-    if not matches:
-        matches = sorted(path.resolve() for path in kb_root.rglob("*.md") if path.stem == arg)
+    def describe(self, plan: object) -> list[str]:
+        """Return human-readable dry-run/apply output for a hook plan."""
+        ...
 
-    if not matches:
-        raise FileNotFoundError(f"No matching note found for: {arg}")
-    if len(matches) > 1:
-        formatted = "\n".join(str(path.relative_to(repo_root)) for path in matches)
-        raise FileNotFoundError(f"Multiple matching notes found:\n{formatted}")
-    return matches[0]
+
+def plan_hooks(
+    hooks: Sequence[RelocationHook] | None,
+    *,
+    root: Path,
+    moves: Sequence[NotePathMove],
+) -> list[tuple[RelocationHook, object]]:
+    plans: list[tuple[RelocationHook, object]] = []
+    for hook in hooks or []:
+        plan = hook.plan(root=root, moves=moves)
+        if plan is not None:
+            plans.append((hook, plan))
+    return plans
+
+
+def describe_hook_plans(plans: Sequence[tuple[RelocationHook, object]]) -> list[str]:
+    lines: list[str] = []
+    for hook, plan in plans:
+        lines.extend(hook.describe(plan))
+    return lines
+
+
+def execute_hook_plans(plans: Sequence[tuple[RelocationHook, object]]) -> None:
+    for hook, plan in plans:
+        hook.execute(plan)
+
+
+def resolve_note(arg: str, *, root: Path) -> Path:
+    return resolve_project_note(arg, root)
 
 
 def resolve_destination_dir(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
@@ -192,75 +212,6 @@ def rebase_relative_markdown_links(
         return f"[{text}]({new_target})"
 
     return TOKEN_PATTERN.sub(replace_match, content), changes
-
-
-def find_repo_markdown_files(repo_root: Path) -> list[Path]:
-    return sorted(
-        path
-        for path in repo_root.rglob("*.md")
-        if not is_nested_git_repo_content(path.resolve(), repo_root)
-    )
-
-
-def reviews_root(kb_root: Path) -> Path:
-    return kb_root / "reports" / "reviews"
-
-
-def repo_relative_note_path(note_path: Path, repo_root: Path) -> str:
-    return note_path.relative_to(repo_root).as_posix()
-
-
-def encode_review_export_dir(note_path: str) -> str:
-    stem = note_path[:-3] if note_path.endswith(".md") else note_path
-    return stem.replace("/", "__")
-
-
-def review_export_dir_for_note(note_path: Path, *, repo_root: Path, kb_root: Path) -> Path:
-    return reviews_root(kb_root) / encode_review_export_dir(repo_relative_note_path(note_path, repo_root))
-
-
-def rewrite_review_export_metadata(
-    content: str,
-    *,
-    old_note_path: str,
-    new_note_path: str,
-) -> tuple[str, bool]:
-    metadata = review_metadata.parse_review_metadata(content)
-    if metadata is None or metadata.note_path != old_note_path:
-        return content, False
-    return (
-        review_metadata.inject_review_metadata(
-            content,
-            replace(metadata, note_path=new_note_path),
-        ),
-        True,
-    )
-
-
-def collect_review_export_updates(
-    source: Path,
-    destination: Path,
-    *,
-    repo_root: Path,
-    kb_root: Path,
-) -> tuple[Path, Path, dict[Path, str]]:
-    source_dir = review_export_dir_for_note(source, repo_root=repo_root, kb_root=kb_root)
-    destination_dir = review_export_dir_for_note(destination, repo_root=repo_root, kb_root=kb_root)
-    if not source_dir.is_dir():
-        return source_dir, destination_dir, {}
-
-    old_note_path = repo_relative_note_path(source, repo_root)
-    new_note_path = repo_relative_note_path(destination, repo_root)
-    updates: dict[Path, str] = {}
-    for review_file in sorted(source_dir.rglob("*.md")):
-        updated, changed = rewrite_review_export_metadata(
-            review_file.read_text(encoding="utf-8"),
-            old_note_path=old_note_path,
-            new_note_path=new_note_path,
-        )
-        if changed:
-            updates[review_file] = updated
-    return source_dir, destination_dir, updates
 
 
 def update_mkdocs_config(
@@ -513,14 +464,16 @@ def add_single_redirect(
 
 def relocate_directory(
     *,
-    repo_root: Path,
+    root: Path,
     source_arg: str,
     dest_path: str,
     redirect_from: str | None = None,
     redirect_to: str | None = None,
     apply: bool = False,
+    hooks: Sequence[RelocationHook] | None = None,
 ) -> int:
-    kb_root = repo_root / "kb"
+    repo_root = root.resolve()
+    kb_root = project_kb_root(repo_root)
     mkdocs_config = repo_root / "mkdocs.yml"
 
     source = resolve_directory(source_arg, repo_root=repo_root, kb_root=kb_root)
@@ -544,6 +497,15 @@ def relocate_directory(
         moves[f.resolve()] = (destination / rel).resolve()
 
     md_moves = {k: v for k, v in moves.items() if k.suffix == ".md"}
+    note_moves = [
+        NotePathMove(old_path=old_path, new_path=new_path)
+        for old_path, new_path in sorted(md_moves.items())
+    ]
+    try:
+        hook_plans = plan_hooks(hooks, root=repo_root, moves=note_moves)
+    except Exception as exc:
+        print(f"Hook preflight failed: {exc}", file=sys.stderr)
+        return 1
 
     # Rewrite links across the repo
     markdown_updates: dict[Path, tuple[Path, str, list[str]]] = {}
@@ -571,31 +533,6 @@ def relocate_directory(
             mkdocs_original, redirect_from, redirect_to
         )
 
-    # Review exports and DB
-    review_export_moves: list[tuple[Path, Path]] = []
-    review_export_file_updates: dict[Path, tuple[Path, str]] = {}
-    review_db_rekeys: list[tuple[str, str]] = []
-    db_path = review_db.resolve_db_path(repo_root)
-    has_db = db_path.exists()
-
-    for old_md, new_md in md_moves.items():
-        src_review_dir, dst_review_dir, file_updates = collect_review_export_updates(
-            old_md, new_md, repo_root=repo_root, kb_root=kb_root
-        )
-        if src_review_dir.exists():
-            review_export_moves.append((src_review_dir, dst_review_dir))
-            for f, content in file_updates.items():
-                rel = f.relative_to(src_review_dir)
-                target = dst_review_dir / rel
-                review_export_file_updates[f] = (target, content)
-        if has_db:
-            review_db_rekeys.append(
-                (
-                    repo_relative_note_path(old_md, repo_root),
-                    repo_relative_note_path(new_md, repo_root),
-                )
-            )
-
     # Report
     mode = "APPLYING" if apply else "DRY RUN"
     print(f"=== {mode} ===\n")
@@ -617,21 +554,8 @@ def relocate_directory(
     else:
         print("MkDocs updates: none")
 
-    if review_export_moves:
-        print(f"Review export directories to move: {len(review_export_moves)}")
-
-    if has_db:
-        with review_db.connect(db_path) as conn:
-            total_counts = [
-                review_db.count_note_path_records(conn, note_path=old)
-                for old, _ in review_db_rekeys
-            ]
-        run_sum = sum(c.review_runs for c in total_counts)
-        gate_sum = sum(c.gate_reviews for c in total_counts)
-        ack_sum = sum(c.acceptance_events for c in total_counts)
-        print(
-            f"Review DB rekeys: review_runs={run_sum}, gate_reviews={gate_sum}, acceptance_events={ack_sum}"
-        )
+    for line in describe_hook_plans(hook_plans):
+        print(line)
 
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
@@ -661,24 +585,15 @@ def relocate_directory(
     for _, (target, updated, _changes) in markdown_updates.items():
         target.write_text(updated, encoding="utf-8")
 
-    # Move review export directories
-    for src_review_dir, dst_review_dir in review_export_moves:
-        move_path(src_review_dir, dst_review_dir, repo_root=repo_root)
-
-    # Write updated review export files (at new locations)
-    for _, (target, content) in review_export_file_updates.items():
-        target.write_text(content, encoding="utf-8")
-
     # mkdocs config
     if mkdocs_updated is not None:
         mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
 
-    # Rekey review DB
-    if has_db and review_db_rekeys:
-        with review_db.connect(db_path) as conn:
-            for old, new in review_db_rekeys:
-                review_db.rekey_note_path(conn, old_note_path=old, new_note_path=new)
-            conn.commit()
+    try:
+        execute_hook_plans(hook_plans)
+    except Exception as exc:
+        print(f"Hook execution failed after core relocation: {exc}", file=sys.stderr)
+        return 1
 
     print(f"\nMove strategy: {strategy}")
     print("Done.")
@@ -687,16 +602,18 @@ def relocate_directory(
 
 def relocate_note(
     *,
-    repo_root: Path,
+    root: Path,
     note_arg: str,
     new_name: str | None = None,
     dest_path: str | None = None,
     apply: bool = False,
+    hooks: Sequence[RelocationHook] | None = None,
 ) -> int:
-    kb_root = repo_root / "kb"
+    repo_root = root.resolve()
+    kb_root = project_kb_root(repo_root)
     mkdocs_config = repo_root / "mkdocs.yml"
 
-    source = resolve_note(note_arg, repo_root=repo_root, kb_root=kb_root)
+    source = resolve_note(note_arg, root=repo_root)
     destination = resolve_destination_path(
         source,
         new_name,
@@ -714,30 +631,15 @@ def relocate_note(
 
     old_docs_path = source.relative_to(kb_root).as_posix()
     new_docs_path = destination.relative_to(kb_root).as_posix()
-    source_review_dir, destination_review_dir, review_export_updates = collect_review_export_updates(
-        source,
-        destination,
-        repo_root=repo_root,
-        kb_root=kb_root,
-    )
-    if source_review_dir.exists() and destination_review_dir.exists():
-        print(
-            (
-                "Destination review export directory already exists: "
-                f"{destination_review_dir.relative_to(repo_root)}"
-            ),
-            file=sys.stderr,
+    try:
+        hook_plans = plan_hooks(
+            hooks,
+            root=repo_root,
+            moves=[NotePathMove(old_path=source, new_path=destination)],
         )
+    except Exception as exc:
+        print(f"Hook preflight failed: {exc}", file=sys.stderr)
         return 1
-
-    db_path = review_db.resolve_db_path(repo_root)
-    review_db_counts = None
-    if db_path.exists():
-        with review_db.connect(db_path) as conn:
-            review_db_counts = review_db.count_note_path_records(
-                conn,
-                note_path=repo_relative_note_path(source, repo_root),
-            )
 
     markdown_updates: dict[Path, tuple[str, list[str]]] = {}
 
@@ -778,54 +680,24 @@ def relocate_note(
     else:
         print("MkDocs updates: none")
 
-    if source_review_dir.exists():
-        print(
-            "Review exports:"
-            f" {source_review_dir.relative_to(repo_root)} -> {destination_review_dir.relative_to(repo_root)}"
-        )
-        if review_export_updates:
-            print(f"Review export files to rewrite: {len(review_export_updates)}")
-        else:
-            print("Review export files to rewrite: 0")
-    else:
-        print("Review exports: none")
-
-    if review_db_counts is None:
-        print("Review DB updates: none")
-    else:
-        print(
-            "Review DB updates:"
-            f" review_runs={review_db_counts.review_runs},"
-            f" gate_reviews={review_db_counts.gate_reviews},"
-            f" acceptance_events={review_db_counts.acceptance_events}"
-        )
+    for line in describe_hook_plans(hook_plans):
+        print(line)
 
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
 
     strategy = move_note(source, destination, repo_root=repo_root)
-    review_export_strategy = None
-    if source_review_dir.exists():
-        review_export_strategy = move_path(source_review_dir, destination_review_dir, repo_root=repo_root)
     for path, (updated, _changes) in markdown_updates.items():
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
-    for path, updated in review_export_updates.items():
-        target = destination_review_dir / path.relative_to(source_review_dir)
-        target.write_text(updated, encoding="utf-8")
     mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
-    if review_db_counts is not None:
-        with review_db.connect(db_path) as conn:
-            review_db.rekey_note_path(
-                conn,
-                old_note_path=repo_relative_note_path(source, repo_root),
-                new_note_path=repo_relative_note_path(destination, repo_root),
-            )
-            conn.commit()
+    try:
+        execute_hook_plans(hook_plans)
+    except Exception as exc:
+        print(f"Hook execution failed after core relocation: {exc}", file=sys.stderr)
+        return 1
 
     print(f"\nMove strategy: {strategy}")
-    if review_export_strategy is not None:
-        print(f"Review export move strategy: {review_export_strategy}")
     print("Done.")
     return 0

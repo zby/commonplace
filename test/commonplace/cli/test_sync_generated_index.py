@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 from commonplace.cli import sync_generated_index
+from commonplace.lib import index_generated
 
 
 def write(path: Path, content: str) -> Path:
@@ -49,7 +50,7 @@ tags: [kb-design]
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
+    monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(sys, "argv", ["sync_generated_index.py", "--dry-run", str(index_path)])
 
     sync_generated_index.main()
@@ -116,9 +117,7 @@ index_key: template
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
-
-    indexes = sync_generated_index.find_index_files([])
+    indexes = index_generated.find_index_files([], tmp_path)
 
     assert indexes == [kb_design_index, tags_index]
 
@@ -169,12 +168,10 @@ index_key: tool-loop
 """,
     )
 
-    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
-
-    result = sync_generated_index.sync_index(tags_index, {})
+    result = index_generated.sync_index(tags_index, {}, tmp_path)
     updated = tags_index.read_text(encoding="utf-8")
 
     assert result == "  Updated tags-index.md: 2 tag indexes"
     assert "- [KB design](./kb-design-index.md) — curated" in updated
-    assert "- [Tool loop](./tool-loop-index.md) — Tool loop" in updated
+    assert "- [Tool loop](./tool-loop-index.md) - Tool loop" in updated
     assert updated.count("./kb-design-index.md") == 1

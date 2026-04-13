@@ -54,8 +54,7 @@ Real link: [raw](./raw-capture.md)
 """,
     )
 
-    monkeypatch.setattr(promotion_candidates, "NOTES_DIR", notes_root)
-    monkeypatch.setattr(promotion_candidates, "REPORTS_DIR", reports_root)
+    monkeypatch.chdir(tmp_path)
 
     promotion_candidates.main()
 
@@ -64,6 +63,6 @@ Real link: [raw](./raw-capture.md)
 
     report = (reports_root / "promotion-candidates.md").read_text(encoding="utf-8")
     assert "Text files: 2 | Seedlings: 1" in report
-    assert "- [Raw capture](../notes/raw-capture.md) — **1 links in**" in report
+    assert "- [Raw capture](../notes/raw-capture.md) - **1 links in**" in report
     assert "Sources: [Seedling note](../notes/seedling.md)" in report
-    assert "- [Ignored](../notes/ignored.md) — **0 links in**" in report
+    assert "- [Ignored](../notes/ignored.md) - **0 links in**" in report

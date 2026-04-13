@@ -11,7 +11,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import validate_notes
-from commonplace.lib import validation
+from commonplace.lib import project_paths, validation
 
 
 def write(path: Path, content: str) -> Path:
@@ -511,7 +511,7 @@ status: current
 """,
     )
 
-    discovered = validation.list_kb_note_paths(notes_root)
+    discovered = project_paths.list_kb_note_paths(tmp_path)
 
     assert notes_root / "kept.md" in discovered
     assert nested_repo / "ignored.md" not in discovered
@@ -556,7 +556,7 @@ type: collection-item
 """,
     )
 
-    discovered = validation.list_kb_note_paths(notes_root)
+    discovered = project_paths.list_kb_note_paths(tmp_path)
 
     assert notes_root / "real.md" in discovered
     assert notes_root / "types" / "adr.template.md" not in discovered
@@ -595,7 +595,7 @@ status: current
     today_note.touch()
     os.utime(old_note, (old_ts, old_ts))
 
-    recent = validate_notes.resolve_targets("recent", repo_root=tmp_path, notes_root=notes_root)
+    recent = validate_notes.resolve_targets("recent", repo_root=tmp_path)
 
     assert today_note.resolve() in recent
     assert old_note.resolve() not in recent

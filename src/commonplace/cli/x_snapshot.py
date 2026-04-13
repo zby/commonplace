@@ -20,6 +20,7 @@ from urllib.parse import urlparse
 import xdk
 
 from commonplace.lib.naming import slugify_text
+from commonplace.lib.snapshot import dedup_existing_snapshot
 
 DEFAULT_SNAPSHOT_DIR = "kb/sources"
 DEFAULT_MAX_POSTS = 200
@@ -221,18 +222,6 @@ def _post_url(post: dict[str, Any], users: dict[str, dict[str, Any]]) -> str:
     return f"https://x.com/i/web/status/{post_id}"
 
 
-def _dedup_existing_snapshot(out_dir: Path, source_url: str) -> Path | None:
-    marker = f"source: {source_url}"
-    for existing in out_dir.glob("*.md"):
-        try:
-            header = existing.read_text(encoding="utf-8")[:1000]
-        except OSError:
-            continue
-        if marker in header:
-            return existing
-    return None
-
-
 def _render_markdown(
     source_url: str,
     timestamp: str,
@@ -327,7 +316,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
 
-    existing = _dedup_existing_snapshot(dest, source_url)
+    existing = dedup_existing_snapshot(dest, source_url)
     if existing:
         return f"Already snapshotted: {existing}"
 

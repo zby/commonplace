@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 
 from commonplace.lib.relocation import relocate_directory
+from commonplace.review.relocation_hook import ReviewRelocationHook
 
 
 def main() -> None:
@@ -40,12 +41,13 @@ def main() -> None:
     try:
         sys.exit(
             relocate_directory(
-                repo_root=repo_root,
+                root=repo_root,
                 source_arg=args.source,
                 dest_path=args.destination,
                 redirect_from=redirect_from,
                 redirect_to=redirect_to,
                 apply=args.apply,
+                hooks=[ReviewRelocationHook()],
             )
         )
     except (FileNotFoundError, ValueError) as exc:

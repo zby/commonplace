@@ -4,43 +4,49 @@
 import sys
 from pathlib import Path
 
-from commonplace.cli import generate_notes_index, sync_generated_index
+from commonplace.lib import index_directory, index_generated
+from commonplace.lib.project_paths import collection_dirs, collection_for_path
+
 
 def main() -> int:
+    root = Path.cwd().resolve()
+
     # Generate directory indexes for collections that have index.md
-    for collection in sync_generated_index.find_all_collections():
+    for collection in collection_dirs(root):
         index_file = collection / "index.md"
         if not index_file.is_file():
             continue
         content = index_file.read_text()
-        fm = sync_generated_index.index_frontmatter(index_file, content)
+        fm = index_generated.index_frontmatter(index_file, content)
         if fm.get("index_source") == "directory":
-            output, count = generate_notes_index.write_index(collection)
+            output, count = index_directory.write_index(collection)
             print(f"Generated {output} with {count} entries")
 
     # Collect tags per collection (tags are collection-scoped)
     tags_by_collection: dict[Path, dict] = {}
-    for collection in sync_generated_index.find_all_collections():
-        tags = sync_generated_index.collect_notes_by_tag(collection)
+    for collection in collection_dirs(root):
+        tags = index_generated.collect_notes_by_tag(collection)
         if tags:
             tags_by_collection[collection] = tags
             total = sum(len(v) for v in tags.values())
             print(f"  {collection.name}: {total} tag assignments across {len(tags)} tags")
 
-    total_assignments = sum(sum(len(v) for v in tags.values()) for tags in tags_by_collection.values())
+    total_assignments = sum(
+        sum(len(v) for v in tags.values()) for tags in tags_by_collection.values()
+    )
     total_tags = sum(len(tags) for tags in tags_by_collection.values())
     print(f"Total: {total_assignments} tag assignments across {total_tags} tags\n")
 
-    indexes = sync_generated_index.find_index_files([])
+    indexes = index_generated.find_index_files([], root)
     if not indexes:
         print("No generated-tail index files found.", file=sys.stderr)
         return 1
 
     changes = []
     for index_path in indexes:
-        collection = sync_generated_index.collection_for_path(index_path)
+        collection = collection_for_path(index_path, root)
         notes_by_tag = tags_by_collection.get(collection, {})
-        result = sync_generated_index.sync_index(index_path, notes_by_tag)
+        result = index_generated.sync_index(index_path, notes_by_tag, root)
         if result:
             changes.append(result)
 

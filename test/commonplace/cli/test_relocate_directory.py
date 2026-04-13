@@ -89,7 +89,7 @@ plugins:
 """)
 
     exit_code = relocation.relocate_directory(
-        repo_root=tmp_path,
+        root=tmp_path,
         source_arg="kb/notes/related-systems",
         dest_path="kb/agent-memory-systems",
         redirect_from="notes/related-systems/index.md",
@@ -122,7 +122,7 @@ plugins:
     subprocess.run(["git", "commit", "-q", "-m", "init"], cwd=tmp_path, check=True)
 
     exit_code = relocation.relocate_directory(
-        repo_root=tmp_path,
+        root=tmp_path,
         source_arg="kb/notes/related-systems",
         dest_path="kb/agent-memory-systems",
         redirect_from="notes/related-systems/foo.md",
@@ -164,7 +164,7 @@ def test_relocate_directory_rejects_existing_destination(tmp_path: Path) -> None
 """)
 
     exit_code = relocation.relocate_directory(
-        repo_root=tmp_path,
+        root=tmp_path,
         source_arg="kb/notes/related-systems",
         dest_path="kb/agent-memory-systems",
         apply=False,

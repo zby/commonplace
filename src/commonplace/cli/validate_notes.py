@@ -16,15 +16,15 @@ from commonplace.lib.validation import (
 )
 
 
-def resolve_targets(arg: str, *, repo_root: Path, notes_root: Path) -> list[Path]:
+def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
     if arg in {"all", "notes"}:
-        return list_kb_note_paths(notes_root)
+        return list_kb_note_paths(repo_root)
 
     if arg in {"recent", "today"}:
         today = datetime.now().date()
         return sorted(
             path
-            for path in list_kb_note_paths(notes_root)
+            for path in list_kb_note_paths(repo_root)
             if datetime.fromtimestamp(path.stat().st_mtime).date() == today
         )
 
@@ -36,10 +36,11 @@ def resolve_targets(arg: str, *, repo_root: Path, notes_root: Path) -> list[Path
     if repo_candidate.is_file():
         return [repo_candidate]
 
+    all_paths = list_kb_note_paths(repo_root)
     name = arg if arg.endswith(".md") else f"{arg}.md"
-    matches = sorted(path for path in notes_root.rglob(name))
+    matches = sorted(path for path in all_paths if path.name == name)
     if not matches:
-        matches = sorted(path for path in notes_root.rglob("*.md") if path.stem == arg)
+        matches = sorted(path for path in all_paths if path.stem == arg)
 
     if not matches:
         raise FileNotFoundError(f"No matching note found for: {arg}")
@@ -89,10 +90,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     repo_root = Path.cwd().resolve()
-    notes_root = repo_root / "kb" / "notes"
 
     try:
-        paths = resolve_targets(args.target, repo_root=repo_root, notes_root=notes_root)
+        paths = resolve_targets(args.target, repo_root=repo_root)
     except FileNotFoundError as exc:
         print(str(exc), file=sys.stderr)
         return 1
@@ -114,7 +114,7 @@ def main(argv: list[str] | None = None) -> int:
         if results.note_type == "text":
             text_count += 1
         if args.target in {"all", "notes"} and path in inbound and not inbound[path] and results.note_type != "text":
-            results.infos.append("orphan check: no inbound links found in kb/notes")
+            results.infos.append("orphan check: no inbound links found in kb/")
         print(format_block(path, results))
         if results.warns:
             warning_count += 1

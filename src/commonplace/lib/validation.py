@@ -10,6 +10,7 @@ from jsonschema.exceptions import ValidationError
 
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.project_paths import list_kb_note_paths
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
@@ -37,33 +38,6 @@ class ParsedNote:
     note_type: str
     profile: TypeProfile
     document: ParsedDocument
-
-
-def is_nested_git_repo_content(path: Path, notes_root: Path) -> bool:
-    current = path.parent
-    while current != notes_root and notes_root in current.parents:
-        if (current / ".git").exists():
-            return True
-        current = current.parent
-    return False
-
-
-def is_type_definition_content(path: Path, notes_root: Path) -> bool:
-    """True if path lives under a types/ directory (templates, instructions)."""
-    try:
-        rel = path.relative_to(notes_root)
-    except ValueError:
-        return False
-    return "types" in rel.parent.parts
-
-
-def list_kb_note_paths(notes_root: Path) -> list[Path]:
-    return sorted(
-        path
-        for path in notes_root.rglob("*.md")
-        if not is_nested_git_repo_content(path, notes_root)
-        and not is_type_definition_content(path, notes_root)
-    )
 
 
 def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]:

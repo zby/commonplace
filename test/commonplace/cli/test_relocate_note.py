@@ -7,6 +7,7 @@ import pytest
 from commonplace.lib import relocation
 from commonplace.lib.naming import slugify_note_filename
 from commonplace.review import review_db
+from commonplace.review.relocation_hook import ReviewRelocationHook
 
 
 def write(path: Path, content: str) -> Path:
@@ -223,10 +224,11 @@ review-type: gate-review
     monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
-        repo_root=repo_root,
+        root=repo_root,
         note_arg="old-note",
         dest_path="kb/notes/archive/new-note-title.md",
         apply=True,
+        hooks=[ReviewRelocationHook()],
     )
 
     new_note = notes_root / "archive" / "new-note-title.md"
@@ -277,7 +279,7 @@ See [concept](./definitions/concept.md)
     monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
-        repo_root=repo_root,
+        root=repo_root,
         note_arg="old-note",
         dest_path="kb/notes/archive",
         apply=True,
@@ -289,6 +291,41 @@ See [concept](./definitions/concept.md)
     assert new_note.exists()
     relocated_text = new_note.read_text(encoding="utf-8")
     assert "[concept](../definitions/concept.md)" in relocated_text
+
+
+def test_relocate_note_hook_plan_failure_aborts_before_core_writes(tmp_path: Path) -> None:
+    repo_root = tmp_path
+    notes_root = repo_root / "kb" / "notes"
+    old_note = write(notes_root / "old-note.md", "# Old note\n")
+    write(
+        repo_root / "mkdocs.yml",
+        """plugins:
+  - redirects:
+      redirect_maps:
+""",
+    )
+
+    class FailingHook:
+        def plan(self, *, root: Path, moves) -> object:
+            raise RuntimeError("preflight failed")
+
+        def describe(self, plan: object) -> list[str]:
+            return []
+
+        def execute(self, plan: object) -> None:
+            raise AssertionError("execute should not run")
+
+    result = relocation.relocate_note(
+        root=repo_root,
+        note_arg="old-note",
+        dest_path="kb/notes/archive/old-note.md",
+        apply=True,
+        hooks=[FailingHook()],
+    )
+
+    assert result == 1
+    assert old_note.exists()
+    assert not (notes_root / "archive" / "old-note.md").exists()
 
 
 def test_relocate_note_apply_moves_note_across_kb_collections(
@@ -332,7 +369,7 @@ nav:
     monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
-        repo_root=repo_root,
+        root=repo_root,
         note_arg="kb/notes/document-classification.md",
         dest_path="kb/reference/type-system.md",
         apply=True,

@@ -270,7 +270,7 @@ index_source: directory
     assert errors == []
 
 
-def test_workshop_scope_overrides_collection_and_root(tmp_path: Path) -> None:
+def test_workshop_types_do_not_override_collection_scope(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
@@ -347,7 +347,7 @@ type: memo
     profile = type_resolver.resolve_type(note, {"description": "Workshop note", "type": "memo"}, repo_root=tmp_path)
 
     assert profile.resolved_type == "memo"
-    assert profile.definition_path == tmp_path / "kb" / "work" / "demo" / "types" / "memo.schema.yaml"
+    assert profile.definition_path == tmp_path / "kb" / "work" / "types" / "memo.schema.yaml"
 
 
 def test_text_without_frontmatter_resolves_to_text_profile(tmp_path: Path) -> None:

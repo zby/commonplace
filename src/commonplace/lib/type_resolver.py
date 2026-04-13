@@ -13,8 +13,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
 
-
-WORKSPACE_ROOT = Path.cwd().resolve()
+from commonplace.lib.project_paths import collection_dirs, collection_for_path, kb_root
 
 
 @dataclass(frozen=True)
@@ -33,33 +32,34 @@ def _schema_candidate_name(type_name: str) -> str:
 
 
 def discover_all_types(workspace_root: Path) -> dict[str, list[Path]]:
-    """Scan all kb/*/types/ directories for type definitions.
+    """Scan global and collection-local type directories for type definitions.
 
     Returns a mapping of type name → list of definition paths.
     A well-formed KB has exactly one path per type name.
     """
-    kb_root = workspace_root / "kb"
     result: dict[str, list[Path]] = {}
-    if not kb_root.is_dir():
+    boundary = kb_root(workspace_root)
+    if not boundary.is_dir():
         return result
 
-    for schema_path in kb_root.rglob(f"types/*{_SCHEMA_SUFFIX}"):
-        type_name = schema_path.name.removesuffix(_SCHEMA_SUFFIX)
-        result.setdefault(type_name, []).append(schema_path)
+    type_dirs = [boundary / "types"]
+    type_dirs.extend(collection / "types" for collection in collection_dirs(workspace_root))
+    for type_dir in type_dirs:
+        if not type_dir.is_dir():
+            continue
+        for schema_path in sorted(type_dir.glob(f"*{_SCHEMA_SUFFIX}")):
+            type_name = schema_path.name.removesuffix(_SCHEMA_SUFFIX)
+            result.setdefault(type_name, []).append(schema_path)
 
     return result
 
 
 def _collection_names(workspace_root: Path) -> set[str]:
     """Return the names of top-level KB collection directories."""
-    kb_root = workspace_root / "kb"
-    if not kb_root.is_dir():
+    boundary = kb_root(workspace_root)
+    if not boundary.is_dir():
         return set()
-    return {
-        p.name
-        for p in kb_root.iterdir()
-        if p.is_dir() and not p.name.startswith(".")
-    }
+    return {p.name for p in collection_dirs(workspace_root)}
 
 
 def check_type_uniqueness(workspace_root: Path) -> list[str]:
@@ -86,22 +86,11 @@ def check_type_uniqueness(workspace_root: Path) -> list[str]:
 
 def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:
     try:
-        rel = file_path.resolve().relative_to(workspace_root.resolve())
+        collection = collection_for_path(file_path, workspace_root)
     except ValueError:
-        kb_root = workspace_root / "kb"
-        return [kb_root] if kb_root.is_dir() else [workspace_root]
-
-    parts = rel.parts
-    scopes: list[Path] = []
-    if len(parts) >= 3 and parts[0] == "kb" and parts[1] == "work":
-        scopes.append(workspace_root / "kb" / parts[1] / parts[2])
-    if len(parts) >= 2 and parts[0] == "kb":
-        scopes.append(workspace_root / "kb" / parts[1])
-        scopes.append(workspace_root / "kb")
-    else:
-        kb_root = workspace_root / "kb"
-        scopes.append(kb_root if kb_root.is_dir() else workspace_root)
-    return scopes
+        boundary = kb_root(workspace_root)
+        return [boundary] if boundary.is_dir() else [workspace_root]
+    return [collection, kb_root(workspace_root)]
 
 
 def _definition_path(type_name: str, file_path: Path, workspace_root: Path) -> Path | None:
@@ -187,9 +176,9 @@ def resolve_type(
     file_path: Path,
     frontmatter: dict[str, Any] | None,
     *,
-    repo_root: Path | None = None,
+    repo_root: Path,
 ) -> TypeProfile:
-    workspace_root = repo_root.resolve() if repo_root is not None else WORKSPACE_ROOT
+    workspace_root = repo_root.resolve()
     if frontmatter is None:
         type_name = "text"
     else:

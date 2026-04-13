@@ -3,7 +3,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from commonplace.cli import refresh_indexes, sync_generated_index
+from commonplace.cli import refresh_indexes
 
 
 def write(path: Path, content: str) -> Path:
@@ -94,7 +94,6 @@ status: current
     )
 
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(sync_generated_index, "KB_ROOT", tmp_path / "kb")
     monkeypatch.setattr(sys, "argv", ["refresh_indexes.py"])
 
     assert refresh_indexes.main() == 0
@@ -105,8 +104,8 @@ status: current
     tags_directory = (notes_root / "tags-index.md").read_text(encoding="utf-8")
 
     assert "# Notes Directory" in notes_index
-    assert "- [Example note](./example-note.md) *(note)* — Example note" in notes_index
+    assert "- [Example note](./example-note.md) *(note)* - Example note" in notes_index
     assert "# Sources Directory" in sources_index
-    assert "- [Example source](./example-source.md) *(source)* — Example source" in sources_index
-    assert "- [Example note](./example-note.md) — Example note" in tag_index
-    assert "- [KB design](./kb-design-index.md) — KB design tag index" in tags_directory
+    assert "- [Example source](./example-source.md) *(source)* - Example source" in sources_index
+    assert "- [Example note](./example-note.md) - Example note" in tag_index
+    assert "- [KB design](./kb-design-index.md) - KB design tag index" in tags_directory
