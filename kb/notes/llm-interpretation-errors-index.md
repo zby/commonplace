@@ -59,5 +59,5 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Other tagged notes <!-- generated -->
 
-- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) — Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
-- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two
+- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md) - Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
+- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) - Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two

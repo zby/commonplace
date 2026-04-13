@@ -39,4 +39,4 @@ For current-state documentation about the live commonplace system rather than tr
 
 ## Other tag indexes <!-- generated -->
 
-- [Tool loop](./tool-loop-index.md) — Index for the tool-loop argument — the framework-owned tool loop is useful but should yield control when tasks need different tool surfaces, exceed one context window, or codify scheduling
+- [Tool loop](./tool-loop-index.md) - Index for the tool-loop argument — the framework-owned tool loop is useful but should yield control when tasks need different tool surfaces, exceed one context window, or codify scheduling
