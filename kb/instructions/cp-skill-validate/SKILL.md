@@ -11,7 +11,7 @@ context: fork
 Run the packaged validation command:
 
 ```bash
-commonplace-validate-notes "$ARGUMENTS"
+commonplace-validate "$ARGUMENTS"
 ```
 
 **Target: $ARGUMENTS**

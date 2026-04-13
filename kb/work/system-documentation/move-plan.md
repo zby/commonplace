@@ -87,7 +87,7 @@ ADRs move one at a time via `commonplace-relocate-note` once the prerequisite ex
   - [x] Create a starter `src/commonplace/scaffold/kb/reference/README.md` — a short placeholder the practitioner fills in (*"Current-state documentation for this project's system. Describe how your KB is organized, which conventions you've chosen, and link to ADRs."*). Not to be confused with the commonplace-specific `kb/reference/README.md` written in sub-effort 5, which describes commonplace itself.
   - [x] Add a test under `test/` that runs `init_project` against a temp root and asserts `kb/reference/`, `kb/reference/types/`, and the scaffold files are present
 - [x] Update mkdocs nav — add `reference/adr/` to `Browse` or a new `Reference` group
-- [x] Run `commonplace-validate-notes` to catch missed links
+- [x] Run `commonplace-validate` to catch missed links
 
 **Deferred**: auditing hardcoded ADR paths in skills, scripts, and `src/commonplace/` beyond the files listed above (see sub-effort 6).
 
@@ -162,7 +162,7 @@ For each approved candidate:
 - [x] Run `commonplace-relocate-note kb/notes/OLD.md --to kb/reference/NEW.md` (dry-run, then `--apply`) — handles git mv, inbound/outbound link rewrites, and mkdocs redirect in one pass
 - [x] Update frontmatter if needed (remove `title-as-claim` trait; keep `type: note`; adjust title if the file was renamed to a descriptive form)
 - [x] Verify the script's reported link updates look right in the dry-run output before applying
-- [x] Run `commonplace-validate-notes` as a belt-and-braces check
+- [x] Run `commonplace-validate` as a belt-and-braces check
 - [x] Mark the row `done` in the sub-effort 2 table
 
 The wholesale moves (`document-classification.md → type-system.md`, `commonplace-architecture.md → architecture.md`) landed via the relocation library, and the five split candidates landed via [split-plan.md](./split-plan.md). All rows in the sub-effort 2 candidate table are marked `done`.

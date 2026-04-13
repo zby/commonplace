@@ -41,7 +41,7 @@ Cludebot ([sebbsssss/cludebot](https://github.com/sebbsssss/cludebot)) now ships
 |---|---|---|
 | Storage substrate | Supabase (Postgres + pgvector) or local JSON | Filesystem of versioned markdown notes |
 | Memory taxonomy | 5-type enum with per-type decay and recall boost | Typed notes (`note`, `structured-claim`, `adr`, `index`, `related-system`) with templates and link semantics |
-| Write path | SDK/MCP call with LLM importance scoring, fire-and-forget embedding + entity extraction + auto-link + optional Solana memo | Human or agent edits a markdown file; validated by `commonplace-validate-notes` |
+| Write path | SDK/MCP call with LLM importance scoring, fire-and-forget embedding + entity extraction + auto-link + optional Solana memo | Human or agent edits a markdown file; validated by `commonplace-validate` |
 | Retrieval | 7-phase hybrid: expand → vector (memory+fragment) → keyword/BM25 → knowledge-seed → entity graph → bond traversal → composite score × decay | `rg` search + description scan + tag index + qmd hybrid |
 | Consolidation | Automated 5-phase dream cycle with event-driven trigger and optional JEPA Phase 4.5 | Manual note writing; `/connect` assists with discovery |
 | Learning loop | Closed action→outcome→lesson pipeline with sentiment oracle and Hebbian reinforcement | Open: human observation, distillation into notes and instructions |

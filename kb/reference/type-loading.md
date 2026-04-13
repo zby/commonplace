@@ -16,7 +16,7 @@ Commonplace stores a type's structural contract as files on disk — typically a
 Two code paths read them:
 
 - **Authoring.** A skill (e.g., `cp-skill-write`) opens the template and instructions for the type it is about to produce, so the agent generates content against the contract.
-- **Validation.** `commonplace-validate-notes` reads the schema for the type recorded in the note's frontmatter and checks the note's frontmatter and body against it.
+- **Validation.** `commonplace-validate` reads the schema for the type recorded in the note's frontmatter and checks the note's frontmatter and body against it.
 
 Both paths resolve the same way: they start from the note's location on disk and walk outward to find a matching type name.
 
@@ -48,7 +48,7 @@ A write skill that already knows the target type opens the template and instruct
 
 ## What validation loads
 
-Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md), schemas are authored as JSON Schema in YAML. `commonplace-validate-notes` reads the note's frontmatter `type:` field, resolves it through the collection-scoped lookup described above, and checks the parsed note document against the resolved schema. The validator carries no hard-coded knowledge of any specific type; introducing a new type in a consuming project is an authoring step rather than a code change.
+Per [ADR-015](./adr/015-standardize-authored-type-definitions-on-json-schema.md), schemas are authored as JSON Schema in YAML. `commonplace-validate` reads the note's frontmatter `type:` field, resolves it through the collection-scoped lookup described above, and checks the parsed note document against the resolved schema. The validator carries no hard-coded knowledge of any specific type; introducing a new type in a consuming project is an authoring step rather than a code change.
 
 ## Open questions
 

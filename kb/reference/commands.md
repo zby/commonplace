@@ -17,13 +17,13 @@ commonplace-init --root /path/to/project
 
 ## Validation and indexing
 
-### commonplace-validate-notes
+### commonplace-validate
 
 Deterministic validator for KB notes. Checks frontmatter validity, enum values, link health, description quality, required sections, and batch signals (orphan detection, seedling counts).
 
 ```bash
-commonplace-validate-notes kb/notes/          # validate all notes
-commonplace-validate-notes kb/notes/my-note.md  # validate one note
+commonplace-validate kb/notes/          # validate all notes
+commonplace-validate kb/notes/my-note.md  # validate one note
 ```
 
 ### commonplace-generate-notes-index

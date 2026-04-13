@@ -124,7 +124,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 - "Validate `kb/notes/foo.md`."
 - "Run validation across the whole KB and report any failures."
-- Or run `uv run commonplace-validate-notes kb/notes/foo.md`.
+- Or run `uv run commonplace-validate kb/notes/foo.md`.
 
 *What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
 
@@ -156,7 +156,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 | Command | Purpose |
 |---|---|
-| `uv run commonplace-validate-notes <path>` | Run the deterministic validator on a note or directory |
+| `uv run commonplace-validate <path>` | Run the deterministic validator on a note or directory |
 | `uv run commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
 | `uv run commonplace-generate-notes-index <dir>` | Rebuild an auto-generated index file |
 | `uv run commonplace-refresh-indexes` | Rebuild generated index sections across the KB |

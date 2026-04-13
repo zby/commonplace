@@ -166,7 +166,7 @@ If you use Claude Code, you can skip the permission prompt for each `commonplace
 {
   "permissions": {
     "allow": [
-      "Bash(commonplace-validate-notes:*)",
+      "Bash(commonplace-validate:*)",
       "Bash(commonplace-refresh-indexes:*)"
     ]
   }

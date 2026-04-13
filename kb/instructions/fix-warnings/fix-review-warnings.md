@@ -39,7 +39,7 @@ After all fixes:
 
 - **Minimal edits.** Fix the warning, not the surrounding prose. Don't improve, refactor, or tighten text that wasn't flagged.
 - **Only edit flagged passages.** If no warning targets the description, title, or a specific section, don't rewrite it. Scope creep into adjacent text produces lower-quality edits because there's no review finding guiding the change.
-- **Description edits need their own procedure.** If you encounter description issues (from `commonplace-validate-notes` or as a side effect), use `kb/instructions/fix-warnings/fix-descriptions.md` rather than improvising a rewrite.
+- **Description edits need their own procedure.** If you encounter description issues (from `commonplace-validate` or as a side effect), use `kb/instructions/fix-warnings/fix-descriptions.md` rather than improvising a rewrite.
 - **Don't change arguments.** Fixes change framing, accuracy, and attribution — not the note's claims or structure.
 - **Don't remove examples.** Frame them ("In [domain], for instance...") instead of replacing with abstractions.
 - **Don't update stored reviews.** Gate reviews are regenerated or re-recorded separately from the DB-backed review flow.

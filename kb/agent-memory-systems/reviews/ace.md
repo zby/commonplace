@@ -36,7 +36,7 @@ ACE is one of the most structurally explicit artifact-learning systems in the su
 | Learned substrate | Sectioned plain-text playbook of counter-tagged bullets | Typed markdown notes with frontmatter and links |
 | Promotion target | Inspectable text playbook only (no weight path in repo) | Inspectable text notes only |
 | Write path | Reflector increments counters; curator emits ADD ops; optional embedding merge | Human+agent edits with validate/connect/mature conventions |
-| Oracle | `data_processor.answer_is_correct` against ground truth, or environment feedback | Mostly human judgment and `commonplace-validate-notes` |
+| Oracle | `data_processor.answer_is_correct` against ground truth, or environment feedback | Mostly human judgment and `commonplace-validate` |
 | Governance | Token budget, sectioned layout, optional similarity-merge | Type system, validation commands, link checks, review bundle |
 | Retrieval | Whole playbook concatenated to generator prompt; reflector gets only used-bullet subset | Agent navigation over linked files |
 

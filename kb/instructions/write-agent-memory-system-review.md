@@ -77,7 +77,7 @@ If the system has no reachable source code, stop and write a source-only note in
 
 13. **Validate.** Run:
     ```bash
-    commonplace-validate-notes "{note_path}"
+    commonplace-validate "{note_path}"
     ```
     If validation reports structural or description-quality issues, fix them and validate once more.
 
@@ -91,7 +91,7 @@ Report:
 - whether the curated index changed
 - whether `trace-derived-learning-techniques-in-related-systems.md` changed
 - semantic gate bundle outcome
-- final `commonplace-validate-notes` result
+- final `commonplace-validate` result
 
 ## Constraints
 

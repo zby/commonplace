@@ -9,7 +9,7 @@ frontmatter.py    Parse/validate markdown frontmatter (strict YAML subset)
 naming.py         Shared note title and filename-slug constraints
 note_parser.py    Parse markdown notes into a schema-friendly document model
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
-validation.py     Deterministic validation rules for KB notes (commonplace-validate-notes lib)
+validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
 relocation.py     Move/rename a KB note: rewrite backlinks, mkdocs config, review exports, DB rekey
 ```
 
@@ -159,7 +159,7 @@ Schema loading (`_load_schema`) and validator construction (`_validator_for_path
 
 ## validation
 
-Deterministic validation rules for KB notes. Used by `commonplace-validate-notes`. The schema (loaded via `type_resolver`) is the single source of truth for content rules; this module only adds checks the schema cannot express (filesystem-level constraints) plus a thin translator that turns raw `jsonschema` errors into user-facing messages.
+Deterministic validation rules for KB notes. Used by `commonplace-validate`. The schema (loaded via `type_resolver`) is the single source of truth for content rules; this module only adds checks the schema cannot express (filesystem-level constraints) plus a thin translator that turns raw `jsonschema` errors into user-facing messages.
 
 ### Public API
 

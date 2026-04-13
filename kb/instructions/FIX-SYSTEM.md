@@ -75,7 +75,7 @@ Instruction: `kb/instructions/fix-warnings/fix-review-warnings.md`
 
 Instruction: `kb/instructions/fix-warnings/fix-descriptions.md`
 
-A specialized sub-procedure for description-field warnings from `commonplace-validate-notes`. Called standalone or by the general fix instruction when it encounters description issues.
+A specialized sub-procedure for description-field warnings from `commonplace-validate`. Called standalone or by the general fix instruction when it encounters description issues.
 
 ### Fix sweep
 

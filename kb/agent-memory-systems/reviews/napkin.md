@@ -42,7 +42,7 @@ Napkin is a TypeScript/Bun knowledge system for LLM agents operating on Obsidian
 | Link model | Wikilinks + backlinks; links are structural and support lint/orphan/deadend checks | Explicit semantic link phrases ("foundation:", "extends:", "contrasts:") with relationship typing |
 | Knowledge structure | Folder templates + YAML frontmatter + tags + Bases views | Typed notes (`note`, `structured-claim`, `adr`, `index`, `related-system`) with methodology for each |
 | Learning/distillation | pi-extension distill forks session, agent subprocess writes into vault via SDK; no private scored store | Semantic review bundles, fix-workflow, human/agent-in-the-loop promotion through workshop layer |
-| Vault lint | `napkin_lint` tool: orphans, deadends, unresolved links, required-property coverage | `commonplace-validate-notes` plus review bundles |
+| Vault lint | `napkin_lint` tool: orphans, deadends, unresolved links, required-property coverage | `commonplace-validate` plus review bundles |
 
 The two systems sit at different layers of the same general argument. Both trust plain markdown; both are skeptical of heavy vector stacks; both bet that progressive disclosure is the right answer for long-term agent memory. Where Napkin commits its structure is in agent-facing tooling: a ladder of four commands, a typed SDK, a persistent search cache, and now a benchmark harness that empirically defends the design. Where we commit our structure is in the documents: typed notes, semantic links, description discipline, and a theory of distillation/constraining/codification that explains *why* the artifacts take the shapes they do.
 

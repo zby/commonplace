@@ -10,16 +10,16 @@ If target is empty, ask which note to fix. If target is a name without path, sea
 
 ## What this is
 
-A focused editing pass that fixes description-field warnings from `commonplace-validate-notes`. Descriptions are the most important frontmatter field — they're retrieval filters that help agents decide whether to load the full note. Getting them right requires reading the note, not just compressing the existing description.
+A focused editing pass that fixes description-field warnings from `commonplace-validate`. Descriptions are the most important frontmatter field — they're retrieval filters that help agents decide whether to load the full note. Getting them right requires reading the note, not just compressing the existing description.
 
 ## Prerequisites
 
-1. Run `commonplace-validate-notes {note-path}` or read a prior validate output to identify description warnings.
+1. Run `commonplace-validate {note-path}` or read a prior validate output to identify description warnings.
 2. Read the target note in full — title, opening paragraphs, and conclusion at minimum.
 
 ## The rules
 
-From `commonplace-validate-notes`:
+From `commonplace-validate`:
 - **Length:** 50–200 characters
 - **Single statement:** no sentence-ending punctuation mid-description
 - **No terminal punctuation:** don't end with `.` `!` `?`
@@ -59,7 +59,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 To fix descriptions across many notes:
 
 ```bash
-commonplace-validate-notes all 2>/dev/null | grep "description:"
+commonplace-validate all 2>/dev/null | grep "description:"
 ```
 
 This produces a list of all notes with description warnings. Process each note using the procedure above.
