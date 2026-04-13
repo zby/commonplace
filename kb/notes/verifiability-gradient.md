@@ -27,10 +27,10 @@ Moving down the table, verification gets cheaper and sharper. Restructured promp
 
 The tempting reading is that learning means climbing the gradient — prompts become schemas become tests become code. But that treats hardening as the whole game. Learning means moving in *either* direction based on evidence:
 
-- **Tighten** when patterns across runs make the commitment safe. Repeated judgment calls become schemas; stable behavior becomes tests; settled algorithms become code.
-- **Loosen** when new evidence exposes a wrong commitment. Tests that enshrine the wrong behavior get relaxed back to prose; schemas that break when requirements shift get widened or removed.
+- **Tighten** when verification holds up across runs. Repeated judgment calls become schemas; stable behavior becomes tests; settled algorithms become code.
+- **Loosen** when the verification itself turns out to be wrong — a test passing while quality regresses, a schema that excludes valid outputs, an eval that goodharted. When the check that justified a constraint breaks, the constraint loses its warrant.
 
-Verifiability is what *enables* movement, not what *picks* the direction. You cannot decide whether to tighten or loosen without being able to check whether the current level is working — that is the practical payoff of the gradient's Karpathy-style properties.
+Verifiability makes the choice possible. You cannot decide whether to tighten or loosen without being able to check whether the current level is working — that is the practical payoff of the gradient's Karpathy-style properties.
 
 [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) develops the bidirectional dynamics and the signals that trigger relaxation. This note specifies the ladder those movements happen along.
 
