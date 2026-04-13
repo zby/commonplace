@@ -1,6 +1,6 @@
 # Commonplace
 
-Commonplace is a theory builder and knowledge base for AI agent systems — it stores and processes knowledge, turning accumulated observations into theories with [reach](./notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md): they can't load everything, so the knowledge they load must cover many situations.
+Commonplace is a theory builder and knowledge base for AI agent systems — it stores and processes knowledge, turning accumulated observations into theories with [reach](./notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md): they can't load everything, so the knowledge they load must cover many situations. See the [Reference](./reference/README.md) collection for architecture, types, and CLI.
 
 **[Deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md)** is the central theory — deployed AI systems improve through structured knowledge that accumulates in the repo alongside the code. The notes here develop that theory and apply it to the design of agent-operated knowledge bases.
 
@@ -32,7 +32,7 @@ Commonplace is open source. You can use it in two ways:
 
 **Clone and explore.** The repo is a functioning knowledge base out of the box. Add notes alongside the existing ones, run the agent skills (`/cp-skill-connect`, `/cp-skill-validate`, `/cp-skill-ingest`), and build on the theory. This is also the right mode for evaluating the system before installing it elsewhere.
 
-**Install into your own project as a theory builder for your domain.** Commonplace can be added to any project as a submodule or cloned subdirectory. It provides the type system, writing conventions, agent skills, and methodology — your agents accumulate domain knowledge and build explanatory structure instead of starting every session cold. See the [installation guide](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup instructions and the [installation architecture](./notes/commonplace-installation-architecture.md) for design rationale.
+**Install into your own project as a theory builder for your domain.** Commonplace can be added to any project as a submodule or cloned subdirectory. It provides the type system, writing conventions, agent skills, and methodology — your agents accumulate domain knowledge and build explanatory structure instead of starting every session cold. See the [installation guide](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup instructions and the [installation architecture](./reference/architecture.md) for design rationale.
 
 Both paths use the same framework. The difference is whether you're building theory about agentic systems (this repo's domain) or about your own.
 
