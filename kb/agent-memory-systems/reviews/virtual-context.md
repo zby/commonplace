@@ -76,7 +76,7 @@ Virtual Context is also a useful counterexample to the repo-first instinct in th
 
 Relevant Notes:
 
-- [related-systems-index](../related-systems-index.md) — navigation hub for the related-systems collection
+- [agent memory systems landscape](../landscape.md) — navigation hub for the agent-memory-systems collection
 - [context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: Virtual Context is a direct systems-level response to context scarcity, with compaction and paging as its main architectural moves
 - [distillation](../../notes/definitions/distillation.md) — exemplifies: segment summaries, tag summaries, and fact extraction are runtime distillations of a larger conversational trace
 - [pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: tag summaries and paging tools form a query-time pointer stack over stored sessions rather than over KB notes

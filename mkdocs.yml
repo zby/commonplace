@@ -7,26 +7,27 @@ plugins:
   - search
   - redirects:
       redirect_maps:
+        'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/landscape.md'
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
-        'notes/document-classification.md': 'reference/type-system.md'
+        'notes/document-classification.md': 'reference/available-types.md'
         'notes/epiplexity-eli5.md': 'work/information-measures/epiplexity-eli5.md'
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/llm-frameworks-should-expose-the-loop.md': 'notes/tool-loop-index.md'
         'notes/minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md': 'notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md'
-        'notes/related-systems/related-systems-index.md': 'agent-memory-systems/index.md'
+        'notes/related-systems/related-systems-index.md': 'agent-memory-systems/landscape.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md'
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md'
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md'
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md'
-        'reference/index.md': 'reference/README.md'
+        'reference/README.md': 'reference/index.md'
 nav:
   - Home: index.md
   - Concepts:
-      - KB Design: notes/kb-design-index.md
+      - Foundations: notes/foundations-index.md
       - Learning Theory: notes/learning-theory-index.md
       - Document System: notes/document-system-index.md
       - Computational Model: notes/computational-model-index.md
@@ -34,10 +35,13 @@ nav:
   - Browse:
       - Tags: notes/tags-index.md
       - Notes Directory: notes/index.md
+      - Agent Memory Systems:
+          - Landscape: agent-memory-systems/landscape.md
+          - Directory: agent-memory-systems/index.md
       - Reference:
-          - Overview: reference/README.md
+          - Overview: reference/index.md
           - Architecture: reference/architecture.md
-          - Type System: reference/type-system.md
+          - Type System: reference/available-types.md
           - ADR 002: reference/adr/002-inline-global-types-in-writing-guide.md
           - ADR 003: reference/adr/003-connect-skill-discovery-strategy.md
           - ADR 004: reference/adr/004-replace-areas-with-tags.md
@@ -53,7 +57,6 @@ nav:
           - ADR 014: reference/adr/014-scripts-as-python-package-one-tree-model.md
           - ADR 015: reference/adr/015-standardize-authored-type-definitions-on-json-schema.md
           - ADR 016: reference/adr/016-custom-types-use-template-instruction-pairs.md
-      - Related Systems: notes/related-systems/related-systems-index.md
       - Sources Directory: sources/index.md
       - Workshops: work/README.md
   - How To:

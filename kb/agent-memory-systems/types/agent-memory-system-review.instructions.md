@@ -126,7 +126,7 @@ The `.replaced.*.md` archive is not curated content — it's a frozen prior vers
 
 ### 8. Update the curated index
 
-If this is a new review, update `kb/agent-memory-systems/related-systems-index.md`:
+If this is a new review, update `kb/agent-memory-systems/landscape.md`:
 
 - add the system to the `## Systems` list
 - update `## Patterns Across Systems` only if this repo adds a genuinely new cross-system pattern

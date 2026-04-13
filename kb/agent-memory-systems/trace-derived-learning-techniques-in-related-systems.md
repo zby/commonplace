@@ -1,5 +1,5 @@
 ---
-description: Sixteen code-inspected systems compared on trace ingestion pattern, promotion target (symbolic artifacts vs weights), artifact structure spectrum, and maintenance paths
+description: Trace-derived learning systems compared on ingestion pattern, promotion target, artifact structure, and evidence tier across repo reviews and source-only coverage
 type: note
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
@@ -8,9 +8,9 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Sixteen code-inspected systems and two source-only systems all learn from traces — CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
+Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
-The code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, REM, Autocontext, OpenClaw-RL, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). The first eight mine live sessions or service-owned event streams; the latter eight learn from repeated task trajectories or search trees. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, ClawVault, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -130,7 +130,7 @@ The clearest inspected system spanning both artifact learning and weight promoti
 
 ## OpenClaw-RL
 
-An implemented asynchronous training stack behind the paper's architecture.
+TODO: write a repo-backed review now that a reachable repository exists. The current placement is retained from source coverage rather than a current `agent-memory-system-review` note.
 
 **Trigger.** Live API traffic. `OpenClawAPIServer` proxies `POST /v1/chat/completions` with `X-Session-Id`, `X-Turn-Type`, and `X-Session-Done` headers. PRM judging runs asynchronously once next-state evidence arrives; rollout workers drain scored samples into training queues.
 
@@ -260,11 +260,11 @@ These systems are included on weaker evidence — no implementation code inspect
 
 ### AgeMem
 
-From the [AgeMem ingest](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
+From the [AgeMem source-only note](./source-only/agemem.md), [AgeMem ingest](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md), and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
 
 ### Trajectory-Informed Memory Generation
 
-From the [trajectory-informed ingest](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md): completed execution trajectories are analyzed into strategy, recovery, and optimization tips, then consolidated and retrieved at runtime. Same broad input class as AgeMem and OpenClaw-RL, but the promotion target is inspectable text artifacts with prompt-time retrieval — the direct non-weight counterpart. Implementation details, consolidation prompts, and thresholds are unknown locally.
+From the [Trajectory-Informed Memory Generation source-only note](./source-only/trajectory-informed-memory-generation.md) and [trajectory-informed ingest](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md): completed execution trajectories are analyzed into strategy, recovery, and optimization tips, then consolidated and retrieved at runtime. Same broad input class as AgeMem and OpenClaw-RL, but the promotion target is inspectable text artifacts with prompt-time retrieval — the direct non-weight counterpart. Implementation details, consolidation prompts, and thresholds are unknown locally.
 
 ## What the comparison makes concrete
 
@@ -369,7 +369,7 @@ Relevant Notes:
 - [cass-memory](./reviews/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./reviews/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — source-grounded and code-inspected instance: next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
+- [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — TODO for repo-backed review; current placement records source-grounded next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
 - [Reflexion](./reviews/reflexion.md) — source-inspected instance: early verbal reinforcement loop with rolling reflection buffer and bounded retry scope
 - [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md) — source-inspected instance: prompt-state artifact learning through full-document cheatsheet rewrites across benchmark queries
 - [ACE](./reviews/ace.md) — source-inspected instance: three-role playbook loop with bullet IDs, helpful/harmful counters, and append-heavy curation

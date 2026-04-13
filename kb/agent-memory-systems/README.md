@@ -9,10 +9,12 @@ Convergence across independent projects is a stronger signal than any single des
 ## What's here
 
 - **`reviews/`** — one file per reviewed system. Each review is grounded in the system's code (not marketing), compares it with commonplace, and surfaces borrowable ideas.
-- **`related-systems-index.md`** — curated navigation with a "Patterns Across Systems" section.
+- **`source-only/`** — standard-note coverage for systems known from a paper, README, or article when the repo-backed review type would overclaim implementation evidence.
+- **`index.md`** — auto-generated directory index. Rebuild with `commonplace-generate-notes-index kb/agent-memory-systems`.
+- **`landscape.md`** — curated navigation with a "Patterns Across Systems" section.
 - **`agentic-memory-systems-comparative-review.md`** — cross-system synthesis.
 - **`thalo-type-comparison.md`** — focused comparison that outgrew a single review section.
 
 ## For contributors
 
-Writing conventions and the review workflow live in [COLLECTION.md](./COLLECTION.md). New reviews use the `agent-memory-system-review` type — see `types/agent-memory-system-review.instructions.md` for the end-to-end workflow.
+Writing conventions and the review workflow live in [COLLECTION.md](./COLLECTION.md). New repo-backed reviews use the `agent-memory-system-review` type — see `types/agent-memory-system-review.instructions.md` for the end-to-end workflow. If there is no reachable repository to inspect, use a standard note under `source-only/` instead.

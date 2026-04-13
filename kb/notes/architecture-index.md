@@ -10,11 +10,11 @@ status: current
 
 How commonplace is structured and installed. Repo layout, the two-tree split between user content and framework, control-plane design, and the file-based storage decision.
 
-For current-state subsystem documentation and ADR navigation, start at [../reference/README.md](../reference/README.md).
+For current-state subsystem documentation and ADR navigation, start at [../reference/index.md](../reference/index.md).
 
 ## Notes
 
-- [reference overview](../reference/README.md) — entry point for current-state docs and architecture decisions
+- [reference overview](../reference/index.md) — entry point for current-state docs and architecture decisions
 - [commonplace-architecture](../reference/architecture.md) — the commonplace repo structure: KB collections, packaged runtime, shipped skills, and operational surfaces
 - [006-two-tree-installation-layout](../reference/adr/006-two-tree-installation-layout.md) — how commonplace installs into projects: two-tree layout, copy-vs-reference boundary, design rationale
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — review storage crosses the files-first boundary once reviews are gitignored operational state keyed by `(note, gate, model)`

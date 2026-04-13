@@ -10,6 +10,8 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **`reviews/`** — individual system reviews, one file per system, typed as `agent-memory-system-review`. The workflow and section rules live in `types/agent-memory-system-review.instructions.md`.
 
+**`source-only/`** — lightweight `type: note` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These entries keep source-only systems visible without using the repo-required review type.
+
 **Collection root** — navigation (index, README), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
 
 ## Title conventions

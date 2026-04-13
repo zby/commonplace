@@ -1,21 +1,22 @@
 ---
-description: Comparable knowledge/agent systems tracked for evolving ideas, convergence signals, and borrowable patterns
+description: Curated landscape of external agent memory and context-engineering systems, spanning repo-backed reviews and source-only coverage
 type: index
 index_source: tag
 index_key: related-systems
 ---
 
-# Related Systems
+# Agent Memory Systems Landscape
 
 External systems doing similar work — knowledge management for AI agents, context engineering, structured note-taking. We track these not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
 
-**Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and the ingest report is the coverage. The [comparative review](./agentic-memory-systems-comparative-review.md) synthesises across both tiers. Database-backed memory systems (Mem0, Graphiti, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in `kb/sources/`.
+**Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and optionally add a standard note under `source-only/` when the system needs a stable place in this collection. The [comparative review](./agentic-memory-systems-comparative-review.md) synthesises across both tiers. Database-backed memory systems (Mem0, Graphiti, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in `kb/sources/`.
 
 ## Systems
 
 - [ACE](./reviews/ace.md) — playbook-learning loop with generator, reflector, and curator roles; strongest nearby artifact-learning analogue to Autocontext, with bullet-level helpful/harmful counters but an append-heavy maintenance path
 - [Agent-R](./reviews/agent-r.md) — iterative self-training pipeline that mines MCTS search trees into corrected conversation traces and fine-tuning data; clearest search-to-weights learning system in this queue
 - [Agent Skills for Context Engineering](./reviews/agent-skills-for-context-engineering.md) — skill-based context engineering reference library loaded as agent guidance; strong on operational patterns, no learning theory
+- [AgeMem](./source-only/agemem.md) — source-only paper coverage of an RL-trained LTM/STM memory-management policy; trace-derived trajectory-to-weights case, but no local code-inspected review
 - [Archie](./reviews/archie.md) — Arch Linux config repo with Stow-managed multi-root deployment, Incus dev VMs, and agent-executable work-item docs; strong operational packaging, no real knowledge-learning loop
 - [Ars Contexta](./reviews/arscontexta.md) — Claude Code plugin that generates knowledge systems from conversation; ancestor of our KB, upstream source for link semantics and title-as-claim. Includes the "Agentic Note-Taking" article series (@molt_cornelius) — first-person agent testimony from inside the system
 - [Atomic](./reviews/atomic.md) — database-backed personal KB that stores markdown atoms in SQLite/Postgres, enriches them into embeddings/tags/semantic edges, and maintains per-tag wiki articles; strongest nearby database-first counterexample with a real derived wiki layer
@@ -62,6 +63,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Nuggets](./reviews/nuggets.md) — Pi-coupled personal memory assistant with local HRR nugget files, chat-channel scheduling, and a MEMORY.md promotion bridge; strongest reference so far for tiny file-backed scratch memory, though the promotion loop is only partially wired
 - [o-o](./reviews/o-o.md) — polyglot HTML/bash living-document system where each file carries its own update contract, rendering, source cache, and Claude dispatch; strongest reviewed example of the file-as-app pattern
 - [OpenSage](./reviews/OpenSage.md) — Google ADK-based agent framework with runtime subagent creation, AI-written tools, Neo4j graph memory, Docker sandbox isolation, agent ensemble coordination, and RL training integration; strongest reference for self-modifying agent topology, but knowledge structure is flat and the self-programming claims outrun the implementation
+- [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — live-RL framework that trains from next-state signals; TODO: repo now exists, so this should get a repo-backed review rather than source-only coverage
 - [OpenViking](./reviews/openviking.md) — ByteDance/Volcengine's context database with filesystem-paradigm virtual directories, L0/L1/L2 tiered loading, hierarchical recursive retrieval, and session-driven memory extraction; first production system to make progressive disclosure a native storage primitive, but the "filesystem" is a metaphor over a database, not actual files
 - [Pal](./reviews/pal.md) — Agno-based personal knowledge agent with a dual split between routing metadata, session-derived operational learnings, structured SQL state, and a compiled wiki; strongest reviewed example so far of "map versus compass" memory separation inside a live assistant runtime
 - [Pi Self-Learning](./reviews/pi-self-learning.md) — pi extension with automatic task-end reflection, scored learnings index, and context injection; purest implementation of the automated mistake-extraction loop, but the reflection pipeline primarily relocates rather than transforms
@@ -80,6 +82,7 @@ External systems doing similar work — knowledge management for AI agents, cont
 - [Thalo](./reviews/thalo.md) — custom plain-text language with grammar, types, validation, and LSP; makes the same programming-theory bet we do but with full compiler formalization
   - [Thalo entity types compared to commonplace document types](./thalo-type-comparison.md) — detailed type mapping showing gaps (supersedes links, source status tracking) and borrowable patterns
 - [Tracecraft](./reviews/tracecraft.md) — S3-backed CLI coordination layer for multi-agent systems with five primitives over object storage; cleanest exemplar of coordination-by-convention, where the coordination semantics live in naming conventions and client compliance rather than enforcement mechanisms; first entry focused purely on coordination infrastructure rather than memory/knowledge management
+- [Trajectory-Informed Memory Generation](./source-only/trajectory-informed-memory-generation.md) — source-only paper coverage of trajectory-derived strategy/recovery/optimization tips; artifact-learning counterpart to AgeMem's weight-learning path
 - [virtual-context](./reviews/virtual-context.md) — proxy-owned context virtualization layer with topic summarization, fact extraction, tool-chain stubbing, and demand-paged retrieval; strongest reviewed example of managing the context window itself rather than bolting retrieval onto it
 - [Voyager](./reviews/voyager.md) — embodied lifelong-learning loop with automatic curriculum, critic-gated retries, and promotion of successful trajectories into retrievable JavaScript skills; clearest executable-artifact learning system in this queue
 - [xMemory](./reviews/xMemory.md) — research-code agent memory system that turns dialogue streams into episodes, semantic facts, and theme hierarchies, then uses coverage-based representative selection plus entropy gates for top-down retrieval
