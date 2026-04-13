@@ -26,6 +26,10 @@ last-checked: "YYYY-MM-DD"
 
 {Borrowable ideas}
 
+## Trace-derived learning placement
+
+{Optional. Include only when the code-grounded review finds a qualifying trace-derived learning mechanism; otherwise delete this section. When included, also add `trace-derived` to `tags`. Cover trace source, extraction, promotion target, scope, timing, survey-axis placement, and whether the system strengthens, weakens, or splits any survey claim.}
+
 ## Curiosity Pass
 
 - {Surprises or curiosities}

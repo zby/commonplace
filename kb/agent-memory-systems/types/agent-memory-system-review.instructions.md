@@ -2,68 +2,52 @@
 
 Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
 
-**A reachable GitHub repository is required.** This type exists to capture what the reviewed system actually does, not what it claims. If the system is only documented via paper, README, or blog post without accessible source code, use the article-based review type instead — do not use this type. Abandoned repos are acceptable if the code is still readable.
+**A reachable GitHub repository is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a source-only note instead. Abandoned repos are acceptable if the code is still readable.
 
-**Topic argument.** The topic is a GitHub repository — either `owner/repo` or a full `https://github.com/owner/repo` URL.
+## Required Inputs
 
-- **New review (no existing note):** if no repo is given, ask. If the topic is not a GitHub repo reference, stop.
-- **Update (note already exists):** resolve the repo URL from the existing review's frontmatter, the `**Repository:**` line, or the `[name](https://github.com/...)` link in the opening. If no repo URL is findable, stop and tell the user — this review may have been written against an article and belongs in a different type.
+Before writing, you must have:
 
-If the repo is unreachable (404, gone from GitHub), stop and report. Do not write or update a review of a system whose code you cannot read.
+- `repo_url` — canonical full GitHub repository URL for citations, `https://github.com/{owner}/{repo}` with no trailing slash or `.git`
+- `checkout_dir` — local checkout under `related-systems/`
+- `note_path` — target review path under `kb/agent-memory-systems/reviews/`
 
-## Workflow
+If any required input is missing, stop and report exactly which one is missing. Do not infer checkout state from a stale local directory.
 
-### 1. Normalize the repository target
+## Establish Checkout State
 
-Derive:
+Before reading or writing, establish the checkout state from `checkout_dir`.
 
-- `repo_url` — full GitHub URL
-- `repo_name` — final path segment
-- `checkout_dir` — `related-systems/{repo_name}/`
-- `note_path` — `kb/agent-memory-systems/reviews/{repo_name}.md`
+Derive `reviewed_commit`:
 
-Use the repository name as the default review filename unless there is already an established house-style variant for the same system.
+```bash
+git -C "{checkout_dir}" rev-parse HEAD
+```
 
-### 2. Check existing state
+If the command fails, stop and report that the checkout commit could not be established.
 
-Before cloning or writing:
+Derive `checkout_refreshed_at` from the runner's refresh marker inside the checkout's Git directory:
 
-- Check whether `checkout_dir` already exists
-- Check whether `note_path` already exists — if so, this is an **update**, not a new review (see update-mode notes below)
-- Read `git status --short` in the main repo so you know whether the worktree is dirty
+```bash
+git_dir="$(git -C "{checkout_dir}" rev-parse --absolute-git-dir)"
+cat "$git_dir/commonplace-checkout-refreshed-at"
+```
 
-### 3. Read existing reviews for style
+If the marker does not exist or cannot be read, stop: `Checkout freshness could not be established from {checkout_dir}. Refresh the repo before writing this review.`
+
+Then apply the freshness gate:
+
+- If `checkout_refreshed_at` is more than 24 hours old, stop: `Checkout is stale: last refreshed {checkout_refreshed_at}. Refresh the repo before writing this review.`
+- If `checkout_refreshed_at` is more than 1 hour old but no more than 24 hours old, continue but carry this warning into the final report: `Checkout freshness warning: last refreshed {checkout_refreshed_at}.`
+- If `checkout_refreshed_at` is no more than 1 hour old, continue normally.
+
+Use `reviewed_commit` for all source citations. Do not update `last-checked` without actually reading the checkout.
+
+## Read for Style
 
 Read 1-2 existing reviews in `kb/agent-memory-systems/reviews/` to match local style and comparison depth. Also read `kb/agent-memory-systems/README.md`.
 
-### 4. Clone or refresh the repo
-
-If `checkout_dir` does not exist:
-
-```bash
-git clone "{repo_url}" "related-systems/{repo_name}"
-```
-
-If `checkout_dir` already exists, refresh it before reading so the review reflects current code:
-
-```bash
-cd "related-systems/{repo_name}"
-git fetch --all --prune
-git status --short
-git pull --ff-only
-```
-
-If the pull cannot fast-forward (local commits or conflicts), do not force — report the state and ask the user. Do not delete or overwrite an existing checkout.
-
-Gather orientation: top-level listing, most recent commit (`git log -1`), README, package/manifest files. Capture the reviewed commit SHA for citations:
-
-```bash
-git -C "related-systems/{repo_name}" rev-parse HEAD
-```
-
-When adding Markdown links to source files or directories, link to the reviewed GitHub commit, not the local checkout under `related-systems/`. Use `https://github.com/{owner}/{repo}/blob/{commit}/{path}` for files and `https://github.com/{owner}/{repo}/tree/{commit}/{path}` for directories. Local checkout paths are fine for your own inspection notes or final report, but review notes must remain readable on GitHub Pages.
-
-### 5. Read for mechanism, not marketing
+## Read for Mechanism
 
 Ground the review in primary repo sources:
 
@@ -83,129 +67,67 @@ Focus on:
 - validation/governance model if any
 - integration surface (CLI, MCP, API, editor plugin, etc.)
 - what is genuinely implemented versus only proposed
+- whether the system qualifies as trace-derived learning; if it does not, leave the placement section out and do not add the `trace-derived` tag
 
-### 6. Fill the template (new reviews)
+## Write the Review
 
 Write from the code outward:
 
 - **Opening paragraph:** what the system is, what it is for, who built it. Include the repository URL.
-- **Repository metadata:** include `**Repository:** {URL}` and `**Reviewed commit:** {commit URL}` before the section headings.
+- **Repository metadata:** include `**Repository:** {repo_url}` and `**Reviewed commit:** {repo_url}/commit/{reviewed_commit}` before the section headings.
 - **Core Ideas:** 3-6 mechanisms and design choices, not feature lists. Use bolded lead phrases for scanning.
 - **Comparison with Our System:** concrete alignments, divergences, and tradeoffs vs commonplace.
-- **Borrowable Ideas:** the most important section. For each idea, say what it would look like in our system and whether it is ready now or needs a use case first.
-- **Source citations:** when linking to repo code/docs, use commit-pinned GitHub links. Do not link to `../../../related-systems/...` or other local checkout paths.
-- **Curiosity Pass:** second-pass review. Re-read the draft and look for surprising claims, simpler alternatives, and mechanisms that sound more powerful than they really are. For each strong claim in Core Ideas, ask:
-  - what property does this produce?
-  - does the mechanism transform the data, or just relocate it?
-  - what simpler alternative might achieve the same result?
-  - what could this mechanism actually achieve, even if it worked perfectly?
+- **Borrowable Ideas:** for each idea, say what it would look like in commonplace and whether it is ready now or needs a use case first.
+- **Trace-derived learning placement:** include this section only when the code-grounded review finds a qualifying trace-derived learning mechanism; if included, also add `trace-derived` to `tags`.
+- **Curiosity Pass:** second-pass review. Re-read the draft and look for surprising claims, simpler alternatives, and mechanisms that sound more powerful than they really are.
 - **What to Watch:** future changes in the reviewed system that might affect our design.
 
 Every review should end with explicit `Relevant Notes:` links into the KB.
 
-### 6b. Update mode — replacing an existing review
+## Frontmatter
 
-When `note_path` already exists, archive the old review and write a fresh one. Do NOT diff or merge.
-
-**Archive the existing review:**
-
-```bash
-git mv "{note_path}" "{note_path%.md}.replaced.{YYYY-MM-DD}.md"
-```
-
-For example: `kb/agent-memory-systems/reviews/ace.md` → `kb/agent-memory-systems/reviews/ace.replaced.2026-04-12.md`. Use today's ISO date.
-
-Then mark the archived file so it isn't mistaken for a current review:
-- Set `status: outdated` in the frontmatter
-- Drop `tags: [related-systems, trace-derived]` to `tags: []` (removes it from indexes)
-- Add a one-line note at the top of the body, right after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
-
-**Then write a brand-new review at the original path** following the same workflow as a new review (steps 5-9). Do NOT read the archived `.replaced.*.md` file — the current code is the source of truth, and reading the prior review risks dragging stale claims or framing forward. The new review must be grounded in code, not in the prior reviewer's language.
-
-The `.replaced.*.md` archive is not curated content — it's a frozen prior version that lets the operator inspect the change with `git diff` and recover any borrowable insights manually if they want to.
-
-### 7. Required frontmatter
+Use:
 
 - `description` — discriminating retrieval filter (50-200 chars, double-quoted)
 - `type: agent-memory-system-review`
-- `tags: [related-systems]` — add `trace-derived` if the system learns from agent traces (see step 9)
+- `tags: [related-systems]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces. The finding drives both the tag and the placement section; the tag is not the reason to include the section.
 - `status: current` unless clearly stale/outdated
 - `last-checked: "{today}"`
 
-### 8. Update the curated index
+## Trace-Derived Learning Placement
 
-If this is a new review, update `kb/agent-memory-systems/index.md`:
+Decide whether the reviewed system learns from traces during the mechanism read. Qualifying source traces: agent/assistant session logs, conversation transcripts, tool/action traces, event streams, repeated task trajectories, rollouts. Qualifying promotion targets: durable notes/rules/playbooks/lessons/memories or similar symbolic artifacts; model weights or other compiled runtime state derived from those traces.
 
-- add the system to the `## Systems` list
-- update `## Patterns Across Systems` only if this repo adds a genuinely new cross-system pattern
+If the system qualifies, include a `## Trace-derived learning placement` section and add `trace-derived` to the frontmatter `tags`. The section should address:
 
-Keep the edit minimal and specific.
+1. **Trace source** — what raw signal is consumed, and with what trigger boundaries.
+2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
+3. **Promotion target** — whether the system stops at inspectable artifacts, promotes into weights, or uses another compiled state.
+4. **Scope** — per-task, per-benchmark, per-project, or cross-task generalizable.
+5. **Timing** — online during deployment, offline from collected traces, or staged in cycles.
+6. **Survey placement** — position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and state whether it strengthens, weakens, or splits any survey claim.
 
-### 9. Trace-derived learning placement (when relevant)
+## Citations
 
-Check whether the reviewed system learns from traces. Qualifying source traces: agent/assistant session logs, conversation transcripts, tool/action traces, event streams, repeated task trajectories, rollouts. Qualifying promotion targets: durable notes/rules/playbooks/lessons/memories or similar symbolic artifacts; model weights or other compiled runtime state derived from those traces.
+When linking to repo code/docs, use `repo_url` plus the locally derived `reviewed_commit`:
 
-If the system qualifies, add `trace-derived` to the frontmatter `tags` and include a `**Trace-derived learning placement.**` paragraph (bolded lead, not a heading) that addresses these questions:
+- files: `{repo_url}/blob/{reviewed_commit}/{path}`
+- directories: `{repo_url}/tree/{reviewed_commit}/{path}`
 
-1. **Trace source** — what raw signal is consumed (conversation logs, execution telemetry, task outcomes, environment feedback, trajectories)? With what trigger boundaries (per turn, per run, per tournament, per benchmark)?
-2. **Extraction** — what gets pulled out (freeform reflections, episodic memories, playbooks, skills, code, lessons)? What oracle or judge decides what becomes signal?
-3. **Promotion target** — does the system stop at inspectable artifacts, or promote into weights? Service-owned memory, or ephemeral?
-4. **Scope** — per-task, per-benchmark, or cross-task generalizable?
-5. **Timing** — online during deployment, offline from collected traces, or staged in cycles?
-
-Then position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md): axis 1 (ingestion pattern) and axis 2 (artifact vs weights). State whether the system strengthens, weakens, or splits any claim in the survey, and whether it warrants a new subtype.
-
-If the placement adds meaningfully to the survey (not a stub), update [`trace-derived-learning-techniques-in-related-systems.md`](../trace-derived-learning-techniques-in-related-systems.md) with the finding.
-
-### 10. Run semantic review as a QA pass
-
-Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the review note you just wrote, using the `semantic` bundle. Treat it as a read-only QA loop:
-
-- extract the findings
-- fix clearly valid issues in the review note
-- if a finding is uncertain, prefer noting it in your final report rather than forcing a rewrite
-
-Do not skip this step.
-
-### 11. Final validation
-
-Run `commonplace-validate-notes {note_path}`. If validation reports structural or description-quality issues, fix them and validate once more.
-
-## Report
-
-After finishing, tell the user:
-
-- repo cloned or reused
-- review path
-- whether the curated index changed
-- whether `trace-derived-learning-techniques-in-related-systems.md` was updated (if trace-derived placement applied)
-- semantic gate bundle outcome (warnings/info if any)
-- final `commonplace-validate-notes` result
+Do not link to `../../../related-systems/...` or other local checkout paths. Local checkout paths are fine for inspection notes or final reports, but review notes must remain readable on GitHub Pages.
 
 ## Constraints
 
 **Always:**
 
-- clone into `./related-systems/` (outside `kb/`)
 - write the review into `kb/agent-memory-systems/reviews/`
 - ground claims in repo code/docs, not just project marketing
 - cite source files and directories with GitHub URLs pinned to the reviewed commit
-- run semantic gate bundle before final validation
+- treat trace-derived status as a code-grounded review finding
 
 **Never:**
 
 - put the checked-out repo under `kb/agent-memory-systems/reviews/`
 - write Markdown links from review notes into `../../../related-systems/...` or other local checkout paths
 - treat proposed docs as implemented behavior without checking the code
-- leave the review unvalidated
 - update `last-checked` without actually re-reading the system
-
-## Maintenance
-
-Update `last-checked` when you substantially re-review the system. Reviews become stale when:
-
-- the reviewed system has had a major release or architectural change since `last-checked`
-- our own system has evolved enough that the comparison section no longer reflects reality
-- more than 3 months have passed without re-checking
-
-Stale reviews should be updated or demoted to `status: outdated`. Don't delete — the comparison history has value even when details drift.

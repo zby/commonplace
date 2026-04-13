@@ -17,6 +17,7 @@ allOf:
             format: date
         additionalProperties: true
       headings:
+        description: "Required review headings. ## Trace-derived learning placement is optional and used only when the review finds a qualifying trace-derived learning mechanism."
         type: array
         allOf:
           - contains:
@@ -29,3 +30,16 @@ allOf:
               const: "## Curiosity Pass"
           - contains:
               const: "## What to Watch"
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - tags
+          properties:
+            tags:
+              contains:
+                const: trace-derived
+    then:
+      properties:
+        body:
+          pattern: "Trace-derived learning placement"
