@@ -10,17 +10,21 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 **How agents learn.** [Deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md) fills the gap between training and in-context learning. It starts with accumulation — capturing observations, decisions, and patterns as durable artifacts. Three operations transform what's accumulated: [constraining](./notes/definitions/constraining.md) narrows interpretation (conventions → structured types → deterministic code), [distillation](./notes/definitions/distillation.md) extracts focused artifacts from larger reasoning, and [discovery](./notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) produces the high-reach theories that are accumulation's most valuable items. The [learning theory index](./notes/learning-theory-index.md) maps the full landscape.
 
-**What makes knowledge agent-usable.** A [good agentic KB](./notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md) maximizes contextual competence through three properties. Discoverable: agents find what they need without loading everything. Composable: notes chain into arguments via [explicit link semantics](./notes/links-index.md). Trustworthy: a [type ladder](./notes/types/structured-claim.md) from raw text to structured claims carries reliability signals.
+**What makes knowledge agent-usable.** A [good agentic KB](./notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) maximizes contextual competence through three properties. Discoverable: agents find what they need without loading everything. Composable: notes chain into arguments via [explicit link semantics](./notes/links-index.md). Trustworthy: notes declare their [maturity](./types/note.md) (`seedling` → `current`) and link to the sources or notes they rest on, so readers know how much weight a claim holds.
 
 **Information and bounded observers.** [Information value is observer-relative](./notes/information-value-is-observer-relative.md) — the same data can contain extractable structure for one observer and noise for another. This grounds why [distillation creates value](./notes/definitions/distillation.md) and why [reverse-compression](./notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md) — expanding text without adding extractable structure — is a real failure mode.
 
 **Agent memory systems compared.** We reviewed [70+ agent memory systems](./agent-memory-systems/README.md) — Mem0, Graphiti, Cognee, Letta, and more — with a [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) across six architectural dimensions. The reviews were mostly agent-produced. The key finding — that the fundamental split is who decides what to remember, not storage format — emerged from an agent traversing linked reviews and spotting patterns across them.
 
-## Browse by topic
+## Browse
 
-- [Tags](./notes/tags-index.md) — all tag indexes: foundations, architecture, evaluation, learning theory, and more
-- [Notes directory](./notes/dir-index.md) — auto-generated listing of all notes
-- [Sources](./sources/dir-index.md) — snapshotted external sources and analyses
+Each collection has a README that serves as its curated landing — all are linked from the top menu. The current collections are [Notes](./notes/README.md), [Reference](./reference/README.md), [Agent Memory Systems](./agent-memory-systems/README.md), [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md).
+
+For deeper navigation:
+
+- [Tags](./notes/tags-index.md) — tag indexes within Notes
+- [Notes directory](./notes/dir-index.md) — auto-generated listing of every note
+- [Workshops](./work/README.md) — the stuff we currently work on
 
 ## Use it yourself
 

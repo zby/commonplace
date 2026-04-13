@@ -11,16 +11,20 @@ from commonplace.lib.project_paths import collection_dirs, collection_for_path
 def main() -> int:
     root = Path.cwd().resolve()
 
-    # Generate directory indexes for collections that have dir-index.md
+    # Generate directory indexes for every collection. write_index recurses
+    # into qualifying subdirectories. kb/reports/ is operational and excluded
+    # from the published site, so it doesn't get auto-indexed.
+    # COLLECTION_MAX_DEPTH caps recursion per collection. instructions stops
+    # at one level because each cp-skill-* subdir is essentially a single
+    # SKILL.md and the review-gates/ tree is a deep but flat catalog of gate
+    # definitions — neither benefits from nested dir-indexes.
+    COLLECTION_MAX_DEPTH = {"instructions": 1}
     for collection in collection_dirs(root):
-        index_file = collection / "dir-index.md"
-        if not index_file.is_file():
+        if collection.name == "reports":
             continue
-        content = index_file.read_text()
-        fm = index_generated.index_frontmatter(index_file, content)
-        if fm.get("index_source") == "directory":
-            output, count = index_directory.write_index(collection)
-            print(f"Generated {output} with {count} entries")
+        max_depth = COLLECTION_MAX_DEPTH.get(collection.name)
+        output, count = index_directory.write_index(collection, max_depth=max_depth)
+        print(f"Generated {output} with {count} entries")
 
     # Collect tags per collection (tags are collection-scoped)
     tags_by_collection: dict[Path, dict] = {}

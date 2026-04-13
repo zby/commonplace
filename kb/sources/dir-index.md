@@ -6,6 +6,8 @@ index_source: directory
 
 # Sources Directory
 
+← [Parent](../index.md)
+
 - ["Creative Thinking"](./creative-thinking-by-claude-shannon.md) *(blog-post)*
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(academic-paper)*
 - [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md) *(note)* - Dissects A-MEM's four fully-automatic operations (construct, link, evolve, retrieve) — all accretive, none curative — identifying the missing vocabulary (delete, split, reorganize, assess quality) that separates accumulation from curation
