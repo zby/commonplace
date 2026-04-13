@@ -25,7 +25,7 @@ This workshop designs the target architecture. Not a plan to execute now — a r
 - [REVIEW-SYSTEM.md](../../instructions/REVIEW-SYSTEM.md) — workflow contract
 - [review-run-lifecycle](../review-run-lifecycle/README.md) — prior lifecycle tightening workshop
 - [review-prompt-consolidation](../review-prompt-consolidation/README.md) — prior prompt consolidation workshop
-- [code-structure-rewrite](../code-structure-rewrite/framing.md) — base-system rewrite that introduced `RelocationHook` and moved review export/DB rekey behavior into `commonplace.review.relocation_hook`
+- base-system code-structure rewrite — introduced `RelocationHook` and moved review export/DB rekey behavior into `commonplace.review.relocation_hook`
 
 ## Scope
 

@@ -6,7 +6,7 @@ type: scientific-paper
 domains: [agent-reliability, formal-methods, runtime-enforcement, design-by-contract]
 ---
 
-# Ingest: Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents
+# Ingest: Agent Behavioral Contracts for Reliable Agents
 
 Source: agent-behavioral-contracts-formal-specification-runtime-enforcement.md
 Captured: 2026-03-04
@@ -26,7 +26,7 @@ The paper introduces Agent Behavioral Contracts (ABC), applying Design-by-Contra
 
 ## Connections Found
 
-The `/connect` discovery found 11 genuine connections, concentrated in two clusters. Full trace and reasoning in `kb/work/connect/connect-report-agent-behavioral-contracts-formal-specification-runtime-enforcement.md`.
+The `/connect` discovery found 11 genuine connections, concentrated in two clusters.
 
 **Formalization cluster — ABC provides mathematical grounding for concepts the KB has developed informally:**
 

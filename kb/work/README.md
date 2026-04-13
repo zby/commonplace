@@ -15,4 +15,3 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [agent-memory-design](./agent-memory-design/README.md) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
 - [philosophy-borrowing](./philosophy-borrowing/README.md) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
 - [system-documentation](./system-documentation/framing.md) — how to document the current commonplace system: separating general theory from system-specific design, finding an entry point beyond CLAUDE.md and scattered ADRs
-- [kb-content-layers](./kb-content-layers/plan.md) — generalizing the theory/description/prescription split from commonplace to any KB; approaches the three layers as epistemology, ontology, and praxeology for LLMs

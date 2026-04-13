@@ -26,7 +26,7 @@ The paper introduces Natural-Language Agent Harnesses (NLAHs) — a framework fo
 
 ## Connections Found
 
-`/connect` found 10 genuine connections, 2 bidirectional candidates, and 1 synthesis opportunity. Full report at `kb/work/connect/connect-report-natural-language-agent-harnesses.md`.
+`/connect` found 10 genuine connections, 2 bidirectional candidates, and 1 synthesis opportunity.
 
 **Strongest structural connections:**
 
