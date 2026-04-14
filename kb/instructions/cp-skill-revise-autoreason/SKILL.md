@@ -34,7 +34,7 @@ Use a workshop directory so the original note remains untouched:
 
 ```bash
 repo_root="$(pwd)"
-run_dir="$repo_root/kb/reports/revise-autoreason/$(basename "${source_file}").$(date +%Y%m%d-%H%M%S)"
+run_dir="$repo_root/kb/work/revise-autoreason/$(basename "${source_file}").$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$run_dir"
 cp "$source_file" "$run_dir/original.md"
 cp "$source_file" "$run_dir/current_a.md"
