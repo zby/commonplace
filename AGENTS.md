@@ -48,7 +48,7 @@ A design insight is worth a note when it changes how someone would build or oper
 Terms used in this KB with specific meanings. On first mention in a note, gloss and link: `[distillation](./definitions/distillation.md) (directed context compression)`.
 
 - **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/definitions/context-engineering.md`.
-- **Distillation** — compressing knowledge for a specific task under a context budget. The main operation context engineering performs, but not the only one. Not ML knowledge distillation (training a student to mimic a teacher). See `kb/notes/definitions/distillation.md`.
+- **Distillation** — compression viewed as learning: goal-oriented compression whose purpose is the capacity change it produces in the consumer. KB application is directed context compression — the main operation context engineering performs. ML knowledge distillation (Hinton) is a sibling instance in a different substrate. See `kb/notes/definitions/distillation.md`.
 - **Constraining** — narrowing the interpretation space of an artifact (less generality, more reliability/speed/cost). Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
 - **Codification** — committing a procedure to a symbolic medium (natural language → code). The far end of constraining. See `kb/notes/definitions/codification.md`.
 - **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
