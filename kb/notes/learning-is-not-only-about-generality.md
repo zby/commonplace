@@ -8,7 +8,7 @@ tags: [learning-theory]
 
 # Learning is not only about generality
 
-People equate learning with generality — knowing more, handling more cases, covering wider scope. But making something more reliable, faster, or cheaper is equally learning. A system that can now multiply without hallucinating has learned, even though it handles no new cases. The insight is that capacity is not a single axis.
+People often equate learning with generality: knowing more, handling more cases, and covering wider scope. But making something more reliable, faster, or cheaper is equally learning. A system that can now multiply without hallucinating has learned, even though it handles no new cases. Capacity is not a single axis.
 
 Herbert Simon's definition grounds this: "learning is any change in a system that produces a more or less permanent change in its capacity for adapting to its environment." By this definition, almost every KB improvement is learning. But not all capacity changes are equal: a typo fix and a design principle discovery both increase capacity, but on different dimensions and at different scales.
 
