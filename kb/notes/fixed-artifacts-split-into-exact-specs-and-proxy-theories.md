@@ -8,39 +8,37 @@ status: current
 
 # Fixed artifacts split into exact specs and proxy theories
 
-Fixed artifacts are not all the same. Some artifacts implement **exact specs**: the specification fully captures the problem, correctness is mechanically checkable, and the implementation is an engineering route to that specified behavior. Other artifacts encode **proxy theories**: the artifact is precise, but the specification it satisfies is only a theory about a larger capability.
+A fixed artifact can be perfectly correct relative to its own specification and still be wrong for the system-level problem. The failure mode is treating proxy theories as if they were exact specs.
 
-The risk is treating proxy theories as if they were exact specs. A fixed artifact can be perfectly correct relative to its own specification and still be wrong for the system-level problem.
+**Exact-spec artifacts** implement problems where the spec *is* the problem. Arithmetic, sorting, schema validation, fiscal-period normalization, and legal move generation in chess all work this way. The specification of multiplication is multiplication; there is no separate target capability hiding behind it. If the implementation satisfies the spec, it has solved the problem.
 
-## Specs that define vs. specs that approximate
+**Proxy-theory artifacts** implement precise specifications that only approximate a larger capability. Vision features such as SIFT, Haar cascades, and Canny edge detection had mathematical formulations and useful invariants — scale invariance, rotation invariance, formal optimality criteria. They were exact solutions to their own specs. The problem was that "detect edges" was a theory about what seeing requires, not a definition of seeing itself. The artifacts met their local specs, but the local specs did not compose into the target capability.
 
-**Exact-spec artifacts** implement problems where the spec is the problem. Arithmetic, sorting, schema validation, fiscal-period normalization, and legal move generation in chess all work this way. The specification of multiplication is multiplication; there is no separate target capability hiding behind it. If the implementation satisfies the spec, it has solved the problem.
+Both kinds can be narrow, domain-specific, and human-engineered. The relevant difference is not scope — it is whether the specification fully captures the problem or approximates it.
 
-**Proxy-theory artifacts** implement precise specifications that approximate a larger capability. Vision features such as SIFT, Haar cascades, and Canny edge detection had mathematical formulations and useful invariants: scale invariance, rotation invariance, formal optimality criteria. They were exact solutions to their own specs. The problem was that "detect edges" was a theory about what seeing requires, not a definition of seeing itself. The artifacts met their local specs, but the local specs did not compose into the target capability.
+## The split can live inside one system
 
-Both kinds of artifact can be narrow, domain-specific, and human-engineered. The relevant difference is not scope. It is whether the specification fully captures the problem or approximates it.
+**Chess** has both kinds at once. The rules — legal moves, win conditions, board state — are fully specified, so move generation is an exact-spec artifact. Strategy is different: controlling the center, developing pieces early, and protecting king safety are theories about good play, not definitions of it. The rules survive as exact machinery; the strategic heuristics remain proxy theories that should be revised when better evidence appears.
 
-**Chess** shows the split inside one system. The rules of chess — legal moves, win conditions, board state — are fully specified; move generation is an exact-spec artifact. Chess strategy is different. Heuristics such as controlling the center, developing pieces early, and protecting king safety are theories about good play, not definitions of it. The rules survive as exact machinery. Strategic heuristics remain proxy theories that should be revised or replaced when better evidence is available.
-
-NP-hard optimization has the same structure. The objective and constraints can be fully specified, so any candidate solution can be checked. But policies for finding good candidates are often proxy theories: useful search heuristics, decompositions, and priority rules that may fail under distribution shift or composition pressure.
+NP-hard optimization has the same shape. The objective and constraints can be fully specified, so any candidate solution can be checked. But policies for *finding* good candidates are often proxy theories — search heuristics, decompositions, and priority rules that may fail under distribution shift or composition pressure.
 
 ## Composition failure is the strongest tell
 
-The exact/proxy distinction is real, but identifying which side an artifact sits on can be hard. Exact specs are easiest when the target was formal from the start. Many useful artifacts do not arrive with that clarity. They emerge as attempts to make an underspecified capability more tractable.
+Identifying which side an artifact sits on can be hard. Exact specs are easiest to recognize when the target was formal from the start; many useful artifacts instead emerge as attempts to make an underspecified capability more tractable, and arrive without that clarity.
 
-Composition failure is the strongest warning signal. The vision features were genuinely useful in isolation: edges, corners, and scale-invariant keypoints all captured something real. The failure was that the pieces did not add up to seeing. When individually sound components fail to compose into the larger capability, their specs are probably proxy theories rather than definitions.
+Composition failure is the strongest warning signal. The vision features were genuinely useful in isolation — edges, corners, and scale-invariant keypoints all captured something real. The failure was that the pieces did not add up to seeing. When individually sound components fail to compose into the larger capability, their specs are probably proxy theories rather than definitions.
 
-This matters because local correctness can hide system-level wrongness. A proxy-theory artifact often fails only after integration, when its assumptions meet the larger capability it was meant to support.
+Local correctness can hide system-level wrongness. Proxy-theory artifacts often fail only after integration, when their assumptions meet the larger capability they were meant to support.
 
 ## Confidence signals
 
 None of these signals is decisive. They shift confidence:
 
-| Signal | Raises "fully specified" confidence | Raises "proxy-spec" confidence |
+| Signal | Raises "exact spec" confidence | Raises "proxy theory" confidence |
 |--------|-------------------------------|-----------------------------------|
 | **Is correctness fully specifiable?** | Spec IS the problem (multiplication, sorting) | Spec approximates the problem (edge detection, sentiment) |
-| **Is the spec a definition or a proxy metric?** | Output has a single correct answer verifiable without judgment | Verification requires human evaluation or proxy scores |
-| **Are failures local or compositional?** | Bugs are in individual components; fixing them fixes the system | Components work in isolation but don't compose into the target capability |
+| **How is output verified?** | Single correct answer, checkable without judgment | Verification requires human evaluation or proxy scores |
+| **Are failures local or compositional?** | Bugs sit in individual components; fixing them fixes the system | Components work in isolation but don't compose into the target capability |
 
 The practical posture is provisional codification. Codify exact specs aggressively. Codify proxy theories when they provide current leverage, but keep them inspectable, tested, and easy to relax. [Spec mining](./spec-mining-as-codification.md) improves the odds by extracting candidate specs from working behavior rather than inventing decompositions upfront; [operational relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) help detect when a proxy theory is failing.
 
