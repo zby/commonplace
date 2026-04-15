@@ -1,5 +1,5 @@
 ---
-description: Tips, notes, rules, prompts, schemas, and playbooks belong to one symbolic artifact substrate even when stored in repos, databases, or memory services; backend and artifact form are separate axes
+description: Weights, memory entries, prompts, schemas, and scripts span three substrate classes (opaque, prose, symbolic) stored across many backends; conflating substrate, backend, and artifact form blurs substrate comparisons
 type: note
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
@@ -8,49 +8,59 @@ status: current
 
 # Substrate class, backend, and artifact form are separate axes that get conflated
 
-"Weights," "tips," and "repo artifacts" look like parallel terms, but they name things at three different levels. Weights names a **substrate class** — what kind of thing changes when the system learns. Tips names one **artifact form** within a substrate. Repo names a **storage backend**. Conflating the three makes the comparison space blurry: you end up arguing "tips vs weights" when the real contrast is between substrate classes, and treating "repo artifacts" as an umbrella when it is one backend choice.
+Agent-learning comparisons conflate three axes. The **substrate class** axis distinguishes how the learned result is represented: as non-interpretable distributed state, as natural-language units, or as formal-semantic units. The **artifact form** axis distinguishes what a learned unit looks like (memory entries, rules, schemas, scripts). The **storage backend** axis distinguishes where units live (repo files, database rows, memory services). Mixing the axes blurs the comparison space: you end up arguing "memory entries vs weights" when the real contrast is between substrate classes, or treating "repo artifacts" as an umbrella when it's one backend choice among many.
 
-The primary split is substrate class:
+## Three substrate classes
 
-- **Subsymbolic substrate** — the learned result lives in model parameters or other latent state. AgeMem and [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) are clean examples.
-- **Symbolic artifact substrate** — the learned result lives in discrete, inspectable symbolic objects. What those objects look like and where they are stored are separate decisions.
+The three substrate classes differ in representation, consumer, and semantics:
 
-## Backend: where symbolic artifacts live
+- **Opaque substrate** (the non-interpretable case) — the learned result lives in model weights or other hidden state; consumed by the model itself, not readable as discrete units. AgeMem and [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) are clean examples.
+- **Prose substrate** — the learned result lives in discrete *natural-language* objects — notes, memory entries, reflections, rules, prompts, playbooks. Consumed by an LLM interpreting [underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). Readable and diffable, but semantics are underspecified.
+- **Symbolic substrate** — the learned result lives in discrete objects with **formal semantics** — schemas, tests, scripts, tools, types. Consumed by a deterministic interpreter. Readable, diffable, *and* exactly verifiable.
 
-Symbolic artifacts can live in different backends without changing substrate class — repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached symbolic records and provenance. This is why "repo artifacts" is too narrow as the umbrella term. Repo-hosted markdown is one important backend, especially for commonplace, but it is not the whole symbolic artifact substrate. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps symbolic units in a database-backed poly-store; the backend changed, the learned result is still symbolic and inspectable.
+The split sits across two orthogonal axes: opaque vs. readable, and (within readable) informal vs. formal semantics. The prose/symbolic boundary is the phase transition [codification](./definitions/codification.md) crosses and [constraining](./definitions/constraining.md) aims for — medium changes (markdown → code), consumer changes (LLM → interpreter), verification regime changes (underspecified → formal).
 
-## Artifact form: what symbolic artifacts look like
+Opacity isn't binary — any substrate becomes practically opaque at enough scale, so what distinguishes substrates in practice is their opacity at operational scale. Distributed representations cross into opacity almost immediately: meaning is smeared across many weights jointly, so even a modestly-sized network resists per-unit inspection. Truly tiny networks can be read by hand (mechanistic interpretability on toy models does this), but the threshold is very low. Localized substrates stay readable at much larger aggregates: per-unit readability plus search, diffing, and modular revision let you work with scales that would be hopeless in a weight matrix of comparable size.
 
-Within the symbolic artifact substrate, systems can produce many different artifact forms — tips, notes, reflections, rules, prompts, schemas, tests, playbooks, ranked memories. These differ in granularity, retrieval mode, and how directly they constrain later behavior, but they belong to one family: durable symbolic objects that can be inspected, revised, and composed.
+## Backend: where artifacts live
+
+A substrate class says nothing about storage. Prose and symbolic artifacts both live in many backends — repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached records and provenance. This is why "repo artifacts" is too narrow as the umbrella term. Repo-hosted markdown is one important backend, especially for commonplace, but neither substrate is tied to it. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps prose-substrate units in a database-backed poly-store; the backend changed, the substrate class did not.
+
+## Artifact form: what the units look like within a substrate
+
+Within a substrate, systems can produce many artifact forms. Prose-substrate forms include memory entries, reflections, ranked memories, and playbook entries, differing in granularity, retrieval mode, and how directly they constrain later behaviour. Symbolic-substrate forms include schemas, tests, runnable scripts, and extracted tools. Artifact form is downstream of substrate but largely orthogonal to backend — you can push code into a database or memory entries into a repo, though backends differ in their affordances for each form.
 
 ## Why the distinction matters
 
-The three-level split prevents category mistakes that keep recurring in comparisons across this KB.
+Separating the three axes prevents category mistakes that keep recurring in comparisons across this KB.
 
-[Files beat a database for agent-operated knowledge bases](./files-not-database.md) argues that a database schema forces premature commitment to access patterns — a claim about **which backend** to pick within the symbolic artifact substrate, not about whether to use symbolic artifacts at all. Separating the levels makes that scope visible: files can beat a database for a young KB without implying that all symbolic artifact learning must live in files.
+[Files beat a database for agent-operated knowledge bases](./files-not-database.md) argues that a database schema forces premature commitment to access patterns — a claim about **which backend** to pick, not about which substrate class to use. Separating the axes makes that scope visible: files can beat a database for a young KB without implying anything about the prose/symbolic boundary.
 
-The comparison between [trajectory-informed memory generation](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) and [AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md) sharpens the same way. The real contrast is not "tips vs weights" but **symbolic artifact substrate vs subsymbolic substrate**. "Tips" are just one artifact form on the symbolic side.
+The comparison between [trajectory-informed memory generation](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — whose learned result is short natural-language entries the paper calls *tips* — and [AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md) sharpens too. The real contrast is not "tips vs weights" but **prose substrate vs opaque substrate**. Tips are one artifact form on the prose side.
 
-[Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) in Commonplace mostly operates through repo-hosted symbolic artifacts, but the repo is a backend choice. A different system could do deploy-time learning through a memory service or database and still remain in the same substrate class.
+[Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) can span all three substrates — fine-tuning and LoRA are deploy-time learning in the opaque substrate, at smaller scale than full training. Commonplace's version stays on the readable substrates: prose-substrate learning (notes, skills, prompts, rules) dominates day-to-day, while [codification](./definitions/codification.md) is the move to symbolic-substrate learning (schemas, tests, scripts). The repo is a backend choice — a different system could do the same two-substrate loop through a memory service or database.
 
 The taxonomy that falls out:
 
 | Learned result | Substrate class | Backend | Artifact form |
 |---|---|---|---|
-| AgeMem memory policy | Subsymbolic | Model parameters | Learned policy |
-| Trajectory-informed memory | Symbolic artifact | Memory store / DB / files | Tips |
-| Commonplace constraining | Symbolic artifact | Repo | Prompts, rules, schemas, tools, tests |
+| AgeMem memory policy | Opaque | Model weights | Learned policy |
+| Trajectory-informed memory | Prose | Memory store / DB / files | Tips (short natural-language memories) |
+| Commonplace notes, skills, prompts | Prose | Repo | Notes, rules, playbooks |
+| Commonplace codified procedures | Symbolic | Repo | Schemas, tests, scripts, tools |
 
-At this level, substrate trade-offs become easier to state. Subsymbolic learning usually buys tighter optimization and gives up inspectability. Symbolic artifact learning usually buys inspectability, diffability, and composability, while depending more heavily on retrieval design, lifecycle management, and governance.
+With the levels separated, substrate trade-offs become easier to state. Opaque learning usually buys tighter optimisation at the cost of per-unit inspection. Prose learning recovers readability, diffability, and composability but keeps underspecified semantics and depends on retrieval and lifecycle design. Symbolic learning adds formal semantics on top — exact verification, deterministic execution — at the cost of needing a strong enough oracle to commit to one interpretation.
 
 ---
 
 Relevant Notes:
 
 - [Continuous learning requires durability, not weight updates](./continuous-learning-requires-durability-not-weight-updates.md) — foundation: argues that non-weight adaptation is still learning if it durably changes capacity
-- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — applies: commonplace's main symbolic-artifact loop, currently implemented mostly through repo-hosted artifacts
-- [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: already distinguishes promotion targets, but this note separates substrate class from backend and artifact form
+- [codification](./definitions/codification.md) — defines the phase transition between prose and symbolic substrates
+- [constraining](./definitions/constraining.md) — the mechanism that operates across prose substrate and reaches symbolic substrate at its far end
+- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — applies: commonplace's main loop, spanning prose and symbolic substrates
+- [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: already distinguishes promotion targets; this note separates substrate class from backend and artifact form
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — sharpens: backend choice is downstream of substrate choice
-- [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: the core benefit of the symbolic artifact side is inspectability
-- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is a clean subsymbolic case that makes the symbolic/subsymbolic split visible
-- [Cognee](../agent-memory-systems/reviews/cognee.md) — counterexample: database-backed symbolic artifacts show that files are not the only artifact backend
+- [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: readability is shared by both non-opaque substrates
+- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is a clean opaque case that makes the substrate split visible
+- [Cognee](../agent-memory-systems/reviews/cognee.md) — counterexample: database-backed prose artifacts show that files are not the only backend
