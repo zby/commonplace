@@ -14,7 +14,7 @@ model: opus
 
 **Experimental.** This is the conservative note-revision adaptation of AutoReason, based on `related-systems/autoreason/`. Use it when you want to test the tournament workflow; prefer `cp-skill-revise-iterative` for the established revision path.
 
-This skill is for prose-preserving revision. If the note appears to need claim changes, evidence changes, source changes, or a different argument, use the claim-revision escape hatch: stop the tournament, preserve the run bundle, and ask the user whether to switch to a substantive revision workflow.
+This skill defaults to prose-preserving revision, but it may produce a separate substantive-revision sidecar when the revisions reveal that claim, evidence, source, or argument changes are actually needed. Keep that sidecar out of the B/AB blind tournament and never auto-apply it.
 
 Each pass compares three versions:
 
@@ -28,7 +28,7 @@ Three fresh judge agents rank blind candidate packets. Aggregate with Borda coun
 
 Resolve `$ARGUMENTS` to a full path. If it is a bare filename, search `kb/notes/` for a match. Read the file in full to confirm it exists and capture the original content.
 
-Before running the loop, report the call budget: up to 5 passes. A normal pass uses 7 fresh Codex sub-agents (critic, revision author, synthesizer, post-candidate auditor, 3 judges), but early stops may use fewer and bounded reruns may use more.
+Before running the loop, report the call budget: up to 5 passes. A normal pass uses 7 fresh Codex sub-agents (critic, revision author, synthesizer, post-candidate auditor, 3 judges). Early stops may use fewer, bounded reruns may use more, and the substantive-revision sidecar uses one additional sub-agent when triggered.
 
 ## Step 1: Initialize
 
@@ -51,6 +51,7 @@ incumbent_win_streak=0
 last_good="$run_dir/current_a.md"
 claim_revision_needed=false
 claim_revision_file=""
+claim_revision_artifact=""
 ```
 
 ## Step 2: Revision Loop
@@ -71,23 +72,48 @@ For each actor prompt below:
 - Wait for dependent actors in order: critic, B author, synthesizer, post-candidate auditor. Run parent-side hard-constraint checks before spawning downstream actors that depend on a generated candidate. Run the three judges in parallel when the harness supports it.
 - Close finished sub-agents when the harness requires explicit cleanup.
 
-### Claim-Revision Escape Hatch
+### Claim-Revision Sidecar
 
-Use this escape hatch when the best next edit would need to change claims, evidence, caveats, qualifiers, source usage, or argumentative commitments. Do not let that change enter the AutoReason candidate tournament.
+Use this sidecar when the best next edit would need to change claims, evidence, caveats, qualifiers, source usage, or argumentative commitments. Do not let that change enter the AutoReason candidate tournament, but do produce a useful artifact for the user to review.
 
 When triggered:
 
-1. Write `$pass_dir/claim_revision_needed.md` with the exact reason, including before/after snippets if a candidate exposed the issue, and set `claim_revision_file="$pass_dir/claim_revision_needed.md"`.
-2. Append a line to `$pass_dir/result.md`: `Escalation: claim revision needed`.
-3. Set `claim_revision_needed=true`.
-4. Stop the revision loop and finalize with `last_good` unchanged.
-5. In Step 3, report the escape-hatch reason and ask whether to keep the run bundle for a substantive revision pass. Do not ask to apply `last_good` if it is identical to the original.
+1. Write `$pass_dir/substantive/claim_revision_reason.md` with the exact reason, including before/after snippets if a candidate exposed the issue, and set `claim_revision_file="$pass_dir/substantive/claim_revision_reason.md"`.
+2. Launch one fresh substantive-revision sub-agent with the prompt below.
+3. Append a line to `$pass_dir/result.md`: `Escalation: claim revision needed`.
+4. Set `claim_revision_needed=true`.
+5. Stop the AutoReason loop and finalize with `last_good` unchanged.
+6. In Step 3, report the sidecar artifact path and ask whether to keep the run bundle for review. Do not ask to apply `last_good` if it is identical to the original.
+
+Substantive-revision prompt:
+
+```text
+Read $pass_dir/candidates/version_a.md, $claim_revision_file, and any existing candidate files in $pass_dir/author_b/ and $pass_dir/synthesizer/. Write either $pass_dir/substantive/version_claim_revision.md or $pass_dir/substantive/claim_revision_plan.md.
+
+You are the substantive-revision sidecar in an AutoReason-style note revision loop. This artifact is outside the blind prose tournament.
+
+Goal:
+- If the needed claim/evidence/caveat/source/argument correction can be made using only information already present in the note, critic report, and candidate files, write a complete revised note to $pass_dir/substantive/version_claim_revision.md.
+- If the correction would require new evidence, external source review, or a human decision about what the note should claim, write a concrete plan to $pass_dir/substantive/claim_revision_plan.md instead.
+
+Constraints:
+- Do not invent evidence or citations.
+- Do not change tags, type, status, or traits frontmatter fields unless the plan explicitly says a metadata follow-up is needed.
+- Preserve link targets unless the reason file identifies a target that must change.
+- If writing a complete revised note, include full frontmatter and the complete body.
+- If writing a plan, list the exact claim/evidence/source decisions needed and the passages they affect.
+- Write only under $pass_dir/substantive/. Do not create or modify files outside $pass_dir.
+
+Final response: name the artifact you wrote. If you cannot write into the parent workspace, return the complete artifact content and the intended target path, with no extra commentary.
+```
+
+After the sub-agent returns, use the normal handoff rule. Set `claim_revision_artifact` to whichever of `$pass_dir/substantive/version_claim_revision.md` or `$pass_dir/substantive/claim_revision_plan.md` exists and is non-empty. If neither exists and the returned artifact cannot be recovered, keep `claim_revision_artifact=""` and report only `$claim_revision_file`.
 
 ### 2a. Prepare The Pass Directory
 
 ```bash
 pass_dir="$run_dir/pass_$(printf '%02d' "$pass")"
-mkdir -p "$pass_dir/candidates" "$pass_dir/critic" "$pass_dir/author_b" "$pass_dir/synthesizer" "$pass_dir/auditor" "$pass_dir/judges"
+mkdir -p "$pass_dir/candidates" "$pass_dir/critic" "$pass_dir/author_b" "$pass_dir/synthesizer" "$pass_dir/auditor" "$pass_dir/substantive" "$pass_dir/judges"
 cp "$run_dir/current_a.md" "$pass_dir/candidates/version_a.md"
 ```
 
@@ -115,7 +141,7 @@ Final response: name only `$pass_dir/critic/output.md` if you wrote it successfu
 
 Verify that `$pass_dir/critic/output.md` exists and is non-empty. If it is missing or empty, stop and finalize with the last good version.
 
-If `$pass_dir/critic/output.md` contains `Claim revision needed`, trigger the claim-revision escape hatch immediately. Do not run B author, synthesizer, judge packets, judges, or aggregation.
+If `$pass_dir/critic/output.md` contains `Claim revision needed`, trigger the claim-revision sidecar immediately. Do not run B author, synthesizer, judge packets, judges, or aggregation.
 
 Read `$pass_dir/critic/output.md`. If it identifies no concrete, actionable editorial problem, write `$pass_dir/result.md` with `Winner: A`, `Reason: critic found no actionable problem`, and `Borda: not run`, then skip B author, synthesizer, judge packets, judges, and aggregation. Leave `$run_dir/current_a.md` unchanged, increment `incumbent_win_streak`, and continue at title/description change detection.
 
@@ -157,7 +183,7 @@ Before running the synthesizer, perform a parent-side hard-constraint check of B
 If B fails this check, decide whether the violation is accidental semantic drift or a plausible sign that prose-preserving revision is insufficient:
 
 - If it looks like accidental drift, record the exact problem in `$pass_dir/candidate_checks.md` and rerun the B-author sub-agent once with the same prompt plus the recorded problem and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/author_b/version_b.md` with the rerun output and repeat this hard-constraint check. If B still fails from accidental drift, stop and finalize with the last good version.
-- If the violation looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision escape hatch instead of rerunning B.
+- If the violation looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision sidecar instead of rerunning B.
 
 If B passes, continue.
 
@@ -191,7 +217,7 @@ Verify that `$pass_dir/synthesizer/version_ab.md` exists and is non-empty. If it
 Before building blind judge packets, perform a parent-side hard-constraint check of AB against `$pass_dir/candidates/version_a.md` using the same criteria as the B check. If AB fails, decide whether the violation is accidental semantic drift or a plausible sign that prose-preserving revision is insufficient:
 
 - If it looks like accidental drift, record the exact problem in `$pass_dir/candidate_checks.md` and rerun the synthesizer sub-agent once with the same prompt plus the recorded problem and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/synthesizer/version_ab.md` with the rerun output and repeat this hard-constraint check. If AB still fails from accidental drift, stop and finalize with the last good version.
-- If the violation looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision escape hatch instead of rerunning AB.
+- If the violation looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision sidecar instead of rerunning AB.
 
 If AB passes, continue.
 
@@ -236,10 +262,10 @@ Verify that `$pass_dir/auditor/output.md` exists, is non-empty, and has exactly 
 Handle the auditor decision before building judge packets:
 
 - `PASS`: continue.
-- `CLAIM_REVISION_NEEDED`: trigger the claim-revision escape hatch.
+- `CLAIM_REVISION_NEEDED`: trigger the claim-revision sidecar.
 - `REJECT`: stop and finalize with the last good version.
-- `RERUN_B`: rerun the B-author sub-agent once using the original B prompt plus the auditor's exact evidence and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/author_b/version_b.md` with the rerun output. Then rerun the synthesizer once from the corrected B, replace `$pass_dir/synthesizer/version_ab.md`, rerun the parent-side B and AB checks, and rerun this post-candidate auditor once. If the auditor does not return `PASS`, stop with either the claim-revision escape hatch for `CLAIM_REVISION_NEEDED` or `last_good` for any other decision.
-- `RERUN_AB`: rerun the synthesizer sub-agent once using the original synthesizer prompt plus the auditor's exact evidence and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/synthesizer/version_ab.md` with the rerun output. Then rerun the parent-side AB check and rerun this post-candidate auditor once. If the auditor does not return `PASS`, stop with either the claim-revision escape hatch for `CLAIM_REVISION_NEEDED` or `last_good` for any other decision.
+- `RERUN_B`: rerun the B-author sub-agent once using the original B prompt plus the auditor's exact evidence and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/author_b/version_b.md` with the rerun output. Then rerun the synthesizer once from the corrected B, replace `$pass_dir/synthesizer/version_ab.md`, rerun the parent-side B and AB checks, and rerun this post-candidate auditor once. If the auditor does not return `PASS`, stop with either the claim-revision sidecar for `CLAIM_REVISION_NEEDED` or `last_good` for any other decision.
+- `RERUN_AB`: rerun the synthesizer sub-agent once using the original synthesizer prompt plus the auditor's exact evidence and `Return a complete corrected note that fixes this violation without adding new content.` Replace `$pass_dir/synthesizer/version_ab.md` with the rerun output. Then rerun the parent-side AB check and rerun this post-candidate auditor once. If the auditor does not return `PASS`, stop with either the claim-revision sidecar for `CLAIM_REVISION_NEEDED` or `last_good` for any other decision.
 
 ### 2f. Build Blind Judge Packets
 
@@ -342,7 +368,7 @@ If rejected:
 
 - Record the exact before/after problem in `$pass_dir/result.md`.
 - Do not apply the rejected candidate.
-- If the semantic change looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision escape hatch.
+- If the semantic change looks like a necessary claim, evidence, caveat, qualifier, source, or argument correction, trigger the claim-revision sidecar.
 - Otherwise finalize with `last_good`.
 
 If accepted, copy the winning file (`$pass_dir/author_b/version_b.md` for B, `$pass_dir/synthesizer/version_ab.md` for AB) to `$run_dir/current_a.md`, set `last_good="$run_dir/current_a.md"`, and reset `incumbent_win_streak=0`.
@@ -365,7 +391,7 @@ The best version is `last_good`.
 
 1. Show a diff summary between the original file and `last_good`; list the key changes across all accepted passes.
 2. Report the AutoReason trajectory: pass winners, Borda scores or skip reasons, and final pass count.
-3. If `claim_revision_needed=true`, report the reason from `$claim_revision_file`, leave the original untouched, and ask whether to keep the run bundle for a substantive revision pass. Do not apply AutoReason changes. Skip the remaining apply/decline steps.
+3. If `claim_revision_needed=true`, report the reason from `$claim_revision_file` and the sidecar artifact path from `$claim_revision_artifact` if present. Leave the original untouched and ask whether to keep the run bundle for substantive-revision review. Do not apply AutoReason changes automatically. Skip the remaining apply/decline steps.
 4. If the title or description changed, report it explicitly with before/after values.
 5. Ask the user: "Apply these changes to `${source_file}`? (The AutoReason run bundle will be cleaned up unless you ask to keep it.)"
 6. If the user approves:
@@ -383,7 +409,7 @@ The best version is `last_good`.
 - Modify the original file until the user explicitly approves.
 - Let more than 5 passes run.
 - Accept a candidate that introduces semantic errors.
-- Force a claim-level correction through the prose-preserving revision path.
+- Force a claim-level correction through the prose-preserving tournament path.
 - Change tags, type, status, or traits frontmatter fields.
 - Let judge preference replace the outer semantic fidelity check.
 - Expose A/B/AB provenance to judges.
@@ -393,7 +419,7 @@ The best version is `last_good`.
 - Keep A as a first-class candidate.
 - Use fresh sub-agents for critic, B author, synthesizer, post-candidate auditor, each judge, and any rerun.
 - Run hard-constraint checks before blind judging so judges only rank viable candidates.
-- Trigger the claim-revision escape hatch when the hard rule itself is the wrong task boundary.
+- Trigger the claim-revision sidecar when the hard rule itself is the wrong task boundary.
 - Aggregate valid judge rankings with Borda count and conservative tie-breaks when judges run.
 - Report the trajectory and final pass count.
 - Bail out early if required candidate or judge outputs fail.
