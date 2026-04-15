@@ -63,20 +63,9 @@ None of these eliminate ambiguity entirely. Natural language specs remain unders
 
 ## Boundaries
 
-Agentic systems interleave LLM components and code. When an LLM calls a tool, or a tool triggers an LLM, execution crosses a boundary where both phenomena change simultaneously:
+Agentic systems interleave LLM components and code. When execution crosses from LLM to code (or back), both phenomena flip simultaneously: LLM components carry semantic underspecification and indeterminism, code has neither. Each crossing is therefore a natural **checkpoint** — the deterministic side doesn't care how it was reached, only what arguments arrived — which anchors debugging, testing, and refactoring against the mess upstream. See [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md).
 
-```
-       LLM           →        Tool          →        LLM
-underspecified + indeterministic   precise + deterministic   underspecified + indeterministic
-```
-
-At each crossing:
-- **LLM → Code**: Semantic underspecification resolves — the code treats the LLM's output as a concrete value, regardless of what other interpretations were possible. Indeterminism collapses — given the same arguments, the code returns the same result.
-- **Code → LLM**: Both are reintroduced. A concrete value enters a component that interprets a natural-language spec to decide what to do with it. The spec doesn't uniquely determine the behavior, and sampling adds further variation.
-
-The two phenomena are conceptually distinct but travel together in practice: LLM components have both, code has neither. This is why these boundaries are natural **checkpoints** — the deterministic code doesn't care how it was reached, only what arguments it received. This matters for debugging, testing, and reasoning about the system.
-
-But boundaries aren't fixed. As systems evolve, logic moves across them.
+Boundaries aren't fixed. As systems evolve, logic moves across them.
 
 ## Constraining and Relaxing
 
@@ -103,17 +92,7 @@ Constraining a pattern to code has three practical benefits:
 
 The tradeoff: code requires you to commit to one precise interpretation. LLMs let you specify *intent* in natural language and defer the choice of interpretation to runtime. That's why constraining is progressive — you wait until patterns emerge before committing to a specific semantics.
 
-### One-shot vs progressive constraining
-
-LLMs can generate code from a spec: spec in, code out. But this is projection, not compilation — the LLM resolves the semantic ambiguity, producing one valid implementation from the space the spec admits. This is one-shot constraining: freeze a single projection into code.
-
-Alternatively, you can constrain incrementally. As you observe the LLM's behavior across many runs, you learn which interpretations it consistently favours — and can extract those stable patterns into deterministic code while keeping the LLM for genuinely ambiguous cases.
-
-Example: a file-renaming agent initially uses LLM judgment for everything. You notice it always lowercases and replaces spaces with underscores — so you extract `sanitize_filename()` to code. The agent still handles ambiguous cases ("is '2024-03' a date or a version?"), but the common path is now deterministic.
-
-Either way, **version both spec and artifact**. Regeneration is a new projection from the same spec — potentially a different resolution of the same ambiguity, not a deterministic rebuild. Don't treat "re-generate later" as a build step.
-
-For the gradient of constraining techniques — from prompt restructuring through evals to deterministic modules — see [codification](./definitions/codification.md).
+LLM code generation is itself a constraining move, but only a one-shot form — freezing a single projection of the spec into code. Progressively extracting only the patterns that stabilize across many runs is a different mode with different tradeoffs; see [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md). For the wider gradient of constraining techniques — from prompt restructuring through evals to deterministic modules — see [codification](./definitions/codification.md). Either way, **version both spec and artifact** — regeneration is a new projection, not a deterministic rebuild.
 
 ### Relaxing as extension
 
@@ -127,7 +106,7 @@ The two phenomena create different challenges for testing and debugging.
 
 **Testing**: Execution indeterminism means you can't rely on assertion equality for LLM outputs — you need to run the same input multiple times and check that outputs fall within acceptable bounds. In practice this looks more like sampling and checking invariants than formal hypothesis testing, but the principle holds: you're characterising a distribution, not verifying a point. Semantic underspecification means you also need to verify that the space of valid interpretations is acceptable, not just that individual outputs look right. Every piece you constrain becomes traditionally testable — because you've committed to one interpretation in a precise language.
 
-**Debugging**: When a prompt "fails," the first question is which phenomenon is responsible. Is the LLM producing a bad execution of a good interpretation (indeterminism problem — may not reproduce)? Or is it consistently choosing an interpretation you didn't intend (underspecification problem — the spec admits it, so it will recur)? The fix is different: retry vs. rewrite the spec.
+**Debugging**: the two phenomena suggest different fixes — retry for indeterminism failures, rewrite the spec for underspecification failures. Mistaking one for the other wastes effort. See [LLM debugging starts with retry-versus-rewrite triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md).
 
 ## Design Implications
 
@@ -146,6 +125,9 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 Relevant Notes:
 
 - [learning-theory](./learning-theory-index.md) — parent index: learning mechanisms, oracle theory, memory architecture
+- [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — splits from this note: the boundary-as-checkpoint argument expanded with debugging, testing, and refactoring applications
+- [progressive-constraining-commits-only-after-patterns-stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — splits from this note: the one-shot vs progressive distinction for LLM code generation as a constraining mode
+- [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — splits from this note: the debugging heuristic derived from the two-phenomena model
 - [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — applies: typing, testing, and version control transfer to prompting under this framework
