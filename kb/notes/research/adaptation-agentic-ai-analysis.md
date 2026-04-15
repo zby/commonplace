@@ -247,7 +247,7 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the constrain/relax cycle applied to tool boundaries
 - [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: the relaxing signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
 - [unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: bidirectional refactoring between neural and symbolic only works with unified interfaces; the paper's adaptation mechanisms assume this
-- [bitter-lesson-boundary](../bitter-lesson-boundary.md) — context: the constraining/relaxing signals are empirical indicators of which side of the boundary a component sits on
+- [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — context: the constraining/relaxing signals are empirical indicators of which side of the exact-spec/proxy-theory distinction a component sits on
 
 Sources:
 - [Adaptation of Agentic AI (arXiv:2512.16301)](https://arxiv.org/abs/2512.16301)

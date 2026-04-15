@@ -50,7 +50,7 @@ Relevant Notes:
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — refines: inside one optimization loop, verifier construction is itself staged (comprehension -> specification -> generalization)
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — enables: the manufacturing step for building oracles where none exist
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: amplifying weak oracles into useful ones
-- [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines — the bitter lesson is strongest where oracles are hardest
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the binary distinction this note refines — exact-spec artifacts have stronger verification surfaces than proxy theories
 - [Tam et al. — "When code is free"](../sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.md) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
 - [Rabanser et al. reliability study](../sources/towards-a-science-of-ai-agent-reliability.md) — evidence: calibration improves but discrimination trends are mixed across benchmarks, suggesting self-assessment is not reliably scaling

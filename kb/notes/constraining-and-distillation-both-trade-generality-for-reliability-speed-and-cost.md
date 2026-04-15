@@ -49,4 +49,4 @@ Relevant Notes:
 - [constraining](./definitions/constraining.md) — one mechanism: constrains the interpretation space; codification is the far end
 - [distillation](./definitions/distillation.md) — the other mechanism: targeted extraction under context budget constraints
 - [codification](./definitions/codification.md) — where constraining yields the largest compound gain, because the substrate itself changes
-- [bitter lesson boundary](./bitter-lesson-boundary.md) — determines when the generality-vs-compound trade-off is permanent (calculators) vs when relaxing is needed (vision features)
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — determines when the generality-vs-compound trade-off can be hardened confidently (exact specs) vs when relaxing may be needed (proxy theories)

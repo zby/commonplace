@@ -42,7 +42,7 @@ The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB
 
 - [Frontloading spares execution context](../notes/frontloading-spares-execution-context.md) — **exemplifies**: Offloading expression parsing to an external tool that provides explicit ASTs is textbook frontloading. A deterministic parser resolves structural ambiguity before the LLM reasons about content, removing parsing from bounded context and freeing attention for convexity analysis.
 
-- [The bitter lesson stops at calculators](../notes/bitter-lesson-boundary.md) — **exemplifies**: Convexity verification via DCP rules is a pure calculator problem (spec IS the problem, correctness is mechanically verifiable). Yet frontier LLMs fail at depth. Scale alone does not solve calculator problems requiring compositional reasoning — engineering scaffolding is necessary.
+- [The bitter lesson stops at calculators](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — **exemplifies**: Convexity verification via DCP rules is a pure calculator problem (spec IS the problem, correctness is mechanically verifiable). Yet frontier LLMs fail at depth. Scale alone does not solve calculator problems requiring compositional reasoning — engineering scaffolding is necessary.
 
 - [Oracle-strength spectrum](../notes/oracle-strength-spectrum.md) — **exemplifies**: ConvexBench has a perfect hard oracle: DCP composition rules mechanically verify labels with zero judgment. Exemplifies the hard-oracle end of the spectrum and shows how hard oracles enable rigorous benchmarking.
 

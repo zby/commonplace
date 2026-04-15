@@ -32,7 +32,7 @@ The `/connect` discovery found 7 connections, all clustering tightly around the 
 
 - **[the-augmentation-automation-boundary-is-discrimination-not-accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md)** — grounds: Tam's argument about why research resists automation (no ground truth to optimize against) is the augmentation-automation boundary restated. The KB note's two routes — external hard oracles (route b, which works) vs self-assessment (route a, which stagnates) — explain precisely why engineering automates first and research doesn't.
 
-- **[bitter-lesson-boundary](../notes/bitter-lesson-boundary.md)** — exemplifies: autoresearch doing hyperparameter sweeps (arithmetic regime) but not problem selection (vision-feature regime) is a concrete instance of the boundary running through a single system, exactly like the chess example in the KB note.
+- **[bitter-lesson-boundary](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md)** — exemplifies: autoresearch doing hyperparameter sweeps (arithmetic regime) but not problem selection (vision-feature regime) is a concrete instance of the boundary running through a single system, exactly like the chess example in the KB note.
 
 - **[automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md)** — extends: both describe the same structural bottleneck at different scales. KB learning stalls on judgment-heavy mutations; research stalls on problem selection. Both are oracle-absent.
 
@@ -46,7 +46,7 @@ The connections are dense and coherent. This source lands squarely in the KB's e
 
 ## Extractable Value
 
-1. **The autoresearch example as a concrete bitter-lesson-boundary instance.** Karpathy's system ran 126 experiments overnight but only explored hyperparameter sweeps — a vivid case of the boundary running through a single tool. Could be added to bitter-lesson-boundary.md alongside chess and vehicle routing. [quick-win]
+1. **The autoresearch example as a concrete bitter-lesson-boundary instance.** Karpathy's system ran 126 experiments overnight but only explored hyperparameter sweeps — a vivid case of the boundary running through a single tool. Could be added to fixed-artifacts-split-into-exact-specs-and-proxy-theories.md alongside chess and vehicle routing. [quick-win]
 
 2. **Market pricing as oracle-strength evidence.** Quant firms paying \$600k to undergrads and Meta offering \$300M packages to researchers is an external signal that the market has priced in the oracle-strength prediction: verification-absent skills command extreme premiums. Not proof, but a novel evidential angle the KB hasn't used. [just-a-reference]
 
@@ -72,4 +72,4 @@ The connections are dense and coherent. This source lands squarely in the KB's e
 
 ## Recommended Next Action
 
-Write a note titled "The boundary of automation is the boundary of verification" connecting to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md), [the-augmentation-automation-boundary](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md), [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md), and [bitter-lesson-boundary](../notes/bitter-lesson-boundary.md). It would argue that across engineering, research, and knowledge curation, tasks become automatable precisely when verification becomes cheap — the hard problem is always oracle construction, never generation capability. This source, the oracle-strength note, and the augmentation-automation note each state a version of this claim from different domains; the synthesis note would unify them under a single thesis and test whether it holds as a general principle.
+Write a note titled "The boundary of automation is the boundary of verification" connecting to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md), [the-augmentation-automation-boundary](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md), [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md), and [bitter-lesson-boundary](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md). It would argue that across engineering, research, and knowledge curation, tasks become automatable precisely when verification becomes cheap — the hard problem is always oracle construction, never generation capability. This source, the oracle-strength note, and the augmentation-automation note each state a version of this claim from different domains; the synthesis note would unify them under a single thesis and test whether it holds as a general principle.

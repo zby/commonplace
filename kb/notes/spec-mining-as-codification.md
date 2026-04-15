@@ -21,9 +21,9 @@ This is codification as compilation: the system distills stochastic regularities
 
 The same pattern appears at the methodology level: the [maturation trajectory from instruction to script](./methodology-enforcement-is-constraining.md) is spec mining applied to methodology rather than system behavior. The codification trigger ("a pattern has emerged from repeated execution") is the same observation step.
 
-## Why this matters for the bitter lesson boundary
+## Why this matters for exact specs
 
-The [bitter lesson boundary](./bitter-lesson-boundary.md) says calculators survive scaling because the spec *is* the problem. Spec mining manufactures new calculators by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into the calculator regime.
+The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) says exact-spec artifacts are safest when the spec *is* the problem. Spec mining manufactures new exact-spec artifacts by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into a harder verification target.
 
 This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?" Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [cybernetics thread](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md) calls "externalizing system-specific judgment."
 
@@ -40,12 +40,12 @@ The Codex team's report on runtime engineering ([Lopopolo, 2026](../sources/harn
 
 ## Risks
 
-- Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a "vision feature" — a plausible theory that scale will eventually outperform.
-- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [relaxing](./operational-signals-that-a-component-is-a-relaxing-candidate.md), not permanent codification. The relaxing-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was a vision feature, not a calculator.
+- Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a proxy theory rather than an exact spec.
+- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [relaxing](./operational-signals-that-a-component-is-a-relaxing-candidate.md), not permanent codification. The relaxing-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was an accidental proxy theory, not an exact spec.
 
 ## Open questions
 
-- What's the right threshold for codifying a mined pattern? Too early and you lock in a vision feature; too late and you miss easy reliability wins.
+- What's the right threshold for codifying a mined pattern? Too early and you lock in a proxy theory; too late and you miss easy reliability wins.
 - Can spec mining be automated? LLMs could propose candidate rules from failure clusters, then validation suites confirm or reject them. The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) note explores a related version: the "boiling cauldron" mutations (extract, relink, synthesise) are spec mining applied to knowledge structure rather than system behavior.
 
 ---
@@ -56,7 +56,7 @@ Sources:
 Relevant Notes:
 
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — foundation: codification says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
-- [bitter-lesson-boundary](./bitter-lesson-boundary.md) — motivation: spec mining manufactures new calculators by converting implicit specs from the blurry zone into the calculator regime
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — motivation: spec mining manufactures exact-spec artifacts by converting implicit behavior into harder verification targets
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — mechanism: spec mining moves components from soft/delayed oracle toward hard oracle; each mined spec is a new verification target
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — amplification: mined specs create oracles with TPR > FPR that error correction can then boost through decorrelated repetition
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — exemplifies: evaluation tuning requires manual failure analysis and judge calibration before optimization loops can safely amplify

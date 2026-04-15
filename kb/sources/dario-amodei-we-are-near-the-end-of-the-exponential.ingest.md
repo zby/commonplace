@@ -42,7 +42,7 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 **Other connections:**
 
-- [bitter-lesson-boundary](../notes/bitter-lesson-boundary.md) — **exemplifies**: the "Big Blob of Compute Hypothesis" is the bitter lesson stated as corporate strategy.
+- [bitter-lesson-boundary](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — **exemplifies**: the "Big Blob of Compute Hypothesis" is the bitter lesson stated as corporate strategy.
 - [deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **extends**: Amodei's three mechanisms (pre-training, RL, in-context) are exactly the "training" and "in-context" timescales; his claim that they suffice sharpens the question of what deploy-time learning uniquely provides.
 - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — **exemplifies**: "diffusion isn't cope" plus scaling optimism illustrates the codify/relax dynamic at the organizational level.
 

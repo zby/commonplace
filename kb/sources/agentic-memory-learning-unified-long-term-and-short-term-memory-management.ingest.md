@@ -30,7 +30,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 
 **Established connections (via analysis note and comparative review):**
 
-- [Bitter lesson boundary](../notes/bitter-lesson-boundary.md) -- **exemplifies**: memory operations are the calculator part; the composition policy is the vision-feature part. AgeMem's hybrid architecture confirms the boundary's prediction.
+- [Bitter lesson boundary](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) -- **exemplifies**: memory operations are the calculator part; the composition policy is the vision-feature part. AgeMem's hybrid architecture confirms the boundary's prediction.
 - [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) -- **exemplifies**: task-completion oracle (binary: did the agent succeed?) sits at a specific position -- cheap, reliable, but domain-scoped.
 - [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) -- **grounds**: confirms RL can learn memory policy when a clear oracle exists; the KB's evaluation gap is the bottleneck, not the learning mechanism.
 - [Deploy-time learning](../notes/deploy-time-learning-is-the-missing-middle.md) -- **contrasts**: weight-based training vs inspectable artifact accumulation; same behavioral changes, different substrates.

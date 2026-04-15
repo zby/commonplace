@@ -8,7 +8,7 @@ status: current
 
 # Codification and relaxing navigate the bitter lesson boundary
 
-The [bitter lesson boundary](./bitter-lesson-boundary.md) separates arithmetic (spec is the problem) from vision features (spec is a theory about the problem). Since you can't reliably tell which regime you're in until scale tests the distinction, practical systems will always be hybrids — part codified, part learned.
+The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). Since you can't reliably tell which regime you're in until scale tests the distinction, practical systems will always be hybrids — part codified, part learned.
 
 ## The trade-off depends on which regime you're in
 
@@ -53,7 +53,7 @@ Sources:
 
 Relevant Notes:
 
-- [the bitter lesson has a boundary](./bitter-lesson-boundary.md) — foundation: the arithmetic/vision-feature distinction this note operationalizes
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode

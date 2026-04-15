@@ -40,7 +40,7 @@ Many constraints never need to codify. A well-written description field is const
 
 ## Relaxing
 
-Relaxing — replacing a constrained component with a general-purpose one — is the reverse operation. It increases generality at the cost of the compound. When scale makes a general approach good enough on reliability+speed+cost, the [bitter lesson boundary](../bitter-lesson-boundary.md) tells you to relax.
+Relaxing — replacing a constrained component with a general-purpose one — is the reverse operation. It increases generality at the cost of the compound. The [fixed-artifact distinction](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) tells you when relaxing is likely to matter: exact specs can be hardened confidently, while proxy theories should remain easy to revise or replace.
 
 The constrain/relax cycle is a learning cycle. Each constraining step narrows the [interpretation space](../agentic-systems-interpret-underspecified-instructions.md) — ruling out some of what the spec previously admitted. Each relaxing reopens it — making the system more capable for the general case. The cycle isn't maintenance — it's how the system adapts.
 
@@ -68,6 +68,6 @@ Relevant Notes:
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
 - [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which constraining operates
-- [bitter lesson boundary](../bitter-lesson-boundary.md) — determines when constraining is permanent vs when relaxing is needed
+- [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — determines when constraining can be hardened confidently vs when relaxing may be needed
 - [ABC: Agent Behavioral Contracts](../../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — grounds: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
 - [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale

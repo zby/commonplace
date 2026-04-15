@@ -19,7 +19,7 @@ A collection of reusable instructional modules ("skills") for building productio
 
 **Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [instruction specificity matching loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md).
 
-**Architectural reduction.** Fewer, more general tools outperform many specialised ones. Key evidence: Vercel's d0 went from 17 specialised tools to 2 primitives (bash + SQL), improving success from 80% to 100%. Aligns with our YAGNI stance and supports the claim that [the bitter lesson boundary](../../notes/bitter-lesson-boundary.md) favours simplicity.
+**Architectural reduction.** Fewer, more general tools outperform many specialised ones. Key evidence: Vercel's d0 went from 17 specialised tools to 2 primitives (bash + SQL), improving success from 80% to 100%. Aligns with our YAGNI stance and supports the claim that [proxy-theory artifacts](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) should remain easy to revise or replace.
 
 **Multi-agent for context isolation, not roles.** Sub-agents exist to get fresh context, not to anthropomorphise organisational charts. Token cost is ~15x single-agent but enables parallel work. Key finding: 80% of performance variance comes from token usage, only 5% from model choice.
 

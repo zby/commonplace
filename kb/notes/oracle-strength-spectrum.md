@@ -1,5 +1,5 @@
 ---
-description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the bitter lesson boundary, with hypotheses about engineering priorities and an oracle-hardening pipeline
+description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the exact-spec/proxy-theory distinction, with hypotheses about engineering priorities and an oracle-hardening pipeline
 type: note
 traits: []
 tags: [llm-interpretation-errors]
@@ -8,7 +8,7 @@ status: seedling
 
 # Oracle strength spectrum
 
-The [bitter lesson boundary](./bitter-lesson-boundary.md) draws a line between arithmetic (spec is the problem) and vision features (spec is a theory about the problem). This note proposes that the boundary is better understood as a gradient of **oracle strength** — how cheaply and reliably you can check whether output is correct — and explores what that would imply for engineering priorities. The framework is speculative; the individual hypotheses need testing.
+The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). This note proposes that the distinction is better understood as a gradient of **oracle strength** — how cheaply and reliably you can check whether output is correct — and explores what that would imply for engineering priorities. The framework is speculative; the individual hypotheses need testing.
 
 ## The spectrum
 
@@ -51,7 +51,7 @@ The [generator/verifier pattern](./storing-llm-outputs-is-constraining.md) — h
 
 This note stays seedling because it bundles several speculative claims under a coherent narrative. To mature, extract each and find adequate support — literature, external sources, worked examples, or direct argument:
 
-1. **Oracle strength is a gradient underlying the bitter lesson boundary** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
+1. **Oracle strength is a gradient underlying the exact-spec/proxy-theory distinction** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
 2. **"Harden the oracle" is the primary engineering move** — plausible prescription but no practitioner evidence. Cases where teams invested in eval infrastructure before capability (or failed by not doing so) would ground this.
 3. **The manufacture/amplify/monitor decomposition** — invented here. Each step has grounding (spec mining, error correction, relaxing signals) but the claim that these three compose into a complete pipeline is unverified. Are there missing steps?
 4. **Capability gains and reliability gains track independently** — leaning on Rabanser et al., which the note already hedges. Needs either stronger empirical evidence or a theoretical argument for why they decouple.
@@ -69,7 +69,7 @@ Each extracted claim should link back here as its origin.
 
 Relevant Notes:
 
-- [bitter-lesson-boundary](./bitter-lesson-boundary.md) — foundation: the binary distinction this note refines into a gradient
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the binary distinction this note refines into a gradient
 - [the verifiability gradient](./verifiability-gradient.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the gradient maps directly to oracle strength
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — frames where on the system-adaptation timescale the gradient operates
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the manufacturing step: extracting deterministic checks from observed behavior

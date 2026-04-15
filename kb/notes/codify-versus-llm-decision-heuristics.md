@@ -16,7 +16,7 @@ The KB offers at least four framings. They often agree in practice but ask diffe
 
 ### 1. Spec completeness — is the spec a definition or a theory?
 
-The [bitter lesson boundary](./bitter-lesson-boundary.md) draws the line. **Arithmetic specs** fully capture the problem — the specification of multiplication IS multiplication. Deterministic code is pure win. **Vision-feature specs** approximate the problem — "detect edges" was a plausible theory of what seeing requires, not a definition. Scale ate it.
+The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) draws the line. **Exact specs** fully capture the problem — the specification of multiplication is multiplication. Deterministic code is pure win. **Proxy theories** approximate the problem — "detect edges" was a plausible theory of what seeing requires, not a definition. The component can satisfy its local spec and still fail to compose into the target capability.
 
 Confidence signals:
 - Is correctness fully specifiable? (definition → codify)
@@ -93,11 +93,11 @@ The lenses above explain *why* these heuristics work. This section distills them
 
 ## The hybrid case
 
-Most real components are hybrids — part arithmetic, part vision-feature. The practical move is to extract the arithmetic subproblems into code and leave the rest for LLM.
+Most real components are hybrids — part exact spec, part proxy theory. The practical move is to extract exact-spec subproblems into code and leave the rest for LLM.
 
 The [deterministic validation note](./deterministic-validation-should-be-a-script.md) is a worked example: most checks in `/validate` are hard-oracle (frontmatter structure, enum matching, link resolution → script) while the remaining few are soft-oracle (description quality, composability → stays in LLM skill).
 
-[AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md), an RL-trained memory management agent, shows the same split. Its memory operations (Add, Delete, Retrieve) are arithmetic — their specs fully capture what they do. But the composition policy (when to use which) is a vision feature that benefits from RL training.
+[AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md), an RL-trained memory management agent, shows the same split. Its memory operations (Add, Delete, Retrieve) are exact-spec artifacts: their specs fully capture what they do. But the composition policy (when to use which) is a proxy theory that benefits from RL training.
 
 ## Three common mistakes
 
@@ -111,7 +111,7 @@ The [deterministic validation note](./deterministic-validation-should-be-a-scrip
 
 Relevant Notes:
 
-- [the bitter lesson has a boundary](./bitter-lesson-boundary.md) — foundation: the arithmetic/vision-feature distinction (lens 1)
+- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction (lens 1)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: verification cost as a gradient (lens 2)
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the interpretation-space framing (lens 3)
 - [codification](./definitions/codification.md) — foundation: pattern stability and the phase transition to code (lens 4)

@@ -14,7 +14,7 @@ Text files: 3 | Seedlings: 108
 ## Seedling → Current (top 20 by incoming links)
 
 - [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) — **65 links in**
-  Sources: [Automated synthesis is missing good oracles](../notes/automated-synthesis-is-missing-good-oracles.md), [The bitter lesson has a boundary](../notes/bitter-lesson-boundary.md), [Brainstorming how to enrich web search](../notes/brainstorming-how-to-enrich-web-search.md) +62 more
+  Sources: [Automated synthesis is missing good oracles](../notes/automated-synthesis-is-missing-good-oracles.md), [The bitter lesson has a boundary](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md), [Brainstorming how to enrich web search](../notes/brainstorming-how-to-enrich-web-search.md) +62 more
 
 - [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **53 links in**
   Sources: [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), [Access burden and transformation burden are independent query dimensions](../notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md), ["Agent" is a useful technical convention, not a definition](../notes/agent-is-a-tool-loop.md) +50 more
