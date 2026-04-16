@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, REM, Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, REM, Autocontext, Meta-Harness, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, and Agent-R (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -172,6 +172,20 @@ The clearest inspected system spanning both artifact learning and weight promoti
 
 **Scope.** A trajectory-learning control plane over many runs and generations. Knowledge is scenario-scoped, accumulated across runs, and optionally compiled into a model that no longer needs the full playbook at inference.
 
+## Meta-Harness
+
+A code-inspected outer loop for optimizing the harness around a fixed base model: memory-system classes for text classification and agent-scaffold subclasses for Terminal-Bench 2.
+
+**Trigger.** Iteration cycle: run baselines or current candidates, collect logs/results/frontiers, invoke a Claude proposer with a local skill, validate generated candidates, benchmark, update the frontier, repeat. Smoke tests gate the expensive Terminal-Bench run.
+
+**Source format.** Repeated run trajectories: prediction JSONL, saved memory state, prompt hashes, validation/test result JSON, frontier summaries, evolution summaries, Claude proposer sessions, Harbor job directories, verifier rewards, cost/token/turn metrics, and failed/successful task trajectories. It is not a conversation-memory system; it is a benchmark-trace consumer.
+
+**Extraction.** Claude Code reads those traces under task-specific skills and writes executable candidates plus `pending_eval.json` metadata. The text-classification path writes `MemorySystem` subclasses; the Terminal-Bench path writes Harbor-compatible `AgentHarness` subclasses.
+
+**Promotion.** Executable Python harness artifacts and run metadata. The frontier records winners, but the learned substrate is code. No weight promotion in the inspected repo; no durable prose playbook beyond run-local reports and summaries.
+
+**Scope.** Per-domain, per-benchmark optimization. The onboarding prompt generalizes the setup, but transfer between domains is manual through a new domain spec and new harness interface.
+
 ## OpenClaw-RL
 
 TODO: write a repo-backed review now that a reachable repository exists. The current placement is retained from source coverage rather than a current `agent-memory-system-review` note.
@@ -326,11 +340,11 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; nao as a product assistant with narrow user-memory extraction; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
-**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
+**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Meta-Harness, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success. Their backends differ, but their substrate class is the same.
+**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers. Their backends differ, but their substrate class is the same.
 
 **Weight learning.** Mine trajectories or next-state signals under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data.
 
@@ -363,6 +377,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
 | REM | Agent-submitted content strings via HTTP API, parsed by GPT-4o-mini into intent/entities/domain/emotion/importance |
 | Autocontext | Run trajectories from SQLite metrics, competitor outputs, playbooks, hints |
+| Meta-Harness | Benchmark run logs, saved memory/harness state, frontiers, proposer sessions, and task trajectories |
 | OpenClaw-RL | Live chat-completion traces + next-state feedback → training samples |
 | Reflexion | Failed task attempts + feedback (test results, rewards, success/failure) |
 | Dynamic Cheatsheet | Ordered benchmark queries and answers, optionally retrieved prior examples |
@@ -375,7 +390,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | AgeMem | RL trajectories over memory operations + task/context rewards |
 | Trajectory-Informed | Completed execution trajectories → strategy/recovery/optimization tips |
 
-Trace richness constrains what can be learned. Tool calls, statuses, gates, scores, and context snapshots enable operational pattern mining that plain transcripts cannot support. Opaque traces force the miner to trust the upstream runtime. Oracle-aligned traces enable promotion all the way to weights. [Meta-Harness](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) (Lee et al., 2025) provides the first controlled evidence: on text classification, a proposer agent with access to raw execution traces (10 MTok/iteration) achieves median 50.0% accuracy, while the same proposer with scores-only (34.6%) or scores+summary (34.9%) trails by 15+ points. Summaries do not recover the compressed signal and may actively hurt — the scores+summary variant underperforms scores-only on best-found accuracy. This quantifies what the survey table above implies: diagnostic richness is a binding constraint on outer-loop learning quality, not just a convenience.
+Trace richness constrains what can be learned. Tool calls, statuses, gates, scores, and context snapshots enable operational pattern mining that plain transcripts cannot support. Opaque traces force the miner to trust the upstream runtime. Oracle-aligned traces enable promotion all the way to weights. [Meta-Harness](./reviews/meta-harness.md) confirms the implementation side of the existing paper evidence: on text classification, the paper reports that a proposer agent with access to raw execution traces (10 MTok/iteration) achieves median 50.0% accuracy, while the same proposer with scores-only (34.6%) or scores+summary (34.9%) trails by 15+ points. The repo's local skills and loops are built around that lesson: the proposer is expected to read raw logs, memory states, trajectories, and frontier files, not just scores. Summaries do not recover the compressed signal and may actively hurt. This quantifies what the survey table above implies: diagnostic richness is a binding constraint on outer-loop learning quality, not just a convenience.
 
 ## What looks borrowable
 
@@ -389,6 +404,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Critic-gated promotion.** Voyager only promotes successful programs — a strong filter that prevents accumulation of failed attempts.
 - **Bidirectional extraction from successes and failures.** ReasoningBank uses separate prompts for successful and failed trajectories, yielding different kinds of insights.
 - **Executable code as promotion target.** Voyager shows that some trace-derived learnings should become callable programs, not just textual guidance.
+- **Harness code as promotion target.** Meta-Harness pushes the executable-artifact point one level outward: the learned artifact can be the retrieval, memory, context, or tool-use harness around a model.
 - **Dataset surgery between traces and training.** Agent-R's path-pairing and splice-correction is more informative than binary success/failure labels.
 - **Counter-based artifact scoring.** ACE's bullet-level helpful/harmful counters and ExpeL's strength counters create real lifecycle behavior without full curation.
 
@@ -423,6 +439,7 @@ Relevant Notes:
 - [cass-memory](./reviews/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./reviews/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
+- [Meta-Harness](./reviews/meta-harness.md) — source-inspected instance: benchmark-trace-driven outer loop that promotes generated memory systems and agent scaffolds into executable harness code
 - [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — TODO for repo-backed review; current placement records source-grounded next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
 - [Reflexion](./reviews/reflexion.md) — source-inspected instance: early verbal reinforcement loop with rolling reflection buffer and bounded retry scope
 - [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md) — source-inspected instance: prompt-state artifact learning through full-document cheatsheet rewrites across benchmark queries
