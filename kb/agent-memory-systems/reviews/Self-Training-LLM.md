@@ -102,7 +102,7 @@ This places it beside systems like Agent-R only at the broad "trace to model upd
 - [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md)
 - [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)
 - [Treat continual learning as substrate coevolution](../../notes/treat-continual-learning-as-substrate-coevolution.md)
-- [Continuous learning requires durability, not weight updates](../../notes/continuous-learning-requires-durability-not-weight-updates.md)
+- [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md)
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md)
 - [Continual Learning in Token Space](../../sources/continual-learning-in-token-space.md)

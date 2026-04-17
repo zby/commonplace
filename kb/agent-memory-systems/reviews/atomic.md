@@ -82,7 +82,7 @@ The deepest difference is where each system commits structure. Atomic commits st
 Relevant Notes:
 
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — contrasts: Atomic is a strong database-first counterexample where synchronized derived views are central, not a narrow operational exception
-- [Substrate class, backend, and artifact form are separate axes that get conflated](../../notes/substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — sharpens: Atomic keeps symbolic artifacts in a database/service backend, which separates the backend choice from the artifact class
+- [Axes of substrate analysis](../../notes/axes-of-substrate-analysis.md) — sharpens: Atomic keeps symbolic artifacts in a database/service backend, which separates the backend choice from the artifact class
 - [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — contrasts: Atomic leans on query-time retrieval and generated wiki layers where commonplace leans on authored pointers and link phrases
 - [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: Atomic keeps the code inspectable, but not the knowledge substrate itself at the same raw level as repo-hosted notes
 - [The fundamental split in agent memory is not storage format but who decides what to remember](../agentic-memory-systems-comparative-review.md) — extends: Atomic belongs on the database-backed, retrieval-first side of the broader agency/substrate design space
