@@ -137,7 +137,7 @@ Memory architecture:
 - [memory management policy](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)
 
 Learning theory:
-- [continuous learning = durability](../../notes/continuous-learning-requires-durability-not-weight-updates.md)
+- [continual learning: behaviour is the open half](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md)
 - [ephemerality prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md)
 - [agent statelessness](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md)
 
