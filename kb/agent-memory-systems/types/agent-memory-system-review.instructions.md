@@ -96,16 +96,19 @@ Use:
 
 ## Trace-Derived Learning Placement
 
-Decide whether the reviewed system learns from traces during the mechanism read. Qualifying source traces: agent/assistant session logs, conversation transcripts, tool/action traces, event streams, repeated task trajectories, rollouts. Qualifying promotion targets: durable notes/rules/playbooks/lessons/memories or similar symbolic artifacts; model weights or other compiled runtime state derived from those traces.
+Decide whether the reviewed system learns from traces during the mechanism read. Qualifying source traces: agent/assistant session logs, conversation transcripts, tool/action traces, event streams, repeated task trajectories, rollouts. Qualifying outputs: any durable artifact derived from those traces — natural-language notes/rules/playbooks/lessons/memories (prose substrate), formal-semantic units like schemas/scripts/tools (symbolic substrate), or weight updates and other compiled runtime state (opaque substrate).
+
+Many systems have a two-stage loop: raw traces accumulate as a knowledge substrate (session logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, playbooks, fine-tunes). When this pattern is present, document both stages: substrate and role at "raw" and at "distilled". The trigger, oracle, and curation policy of the distillation step is often the most discriminating part of the system.
 
 If the system qualifies, include a `## Trace-derived learning placement` section and add `trace-derived` to the frontmatter `tags`. The section should address:
 
 1. **Trace source** — what raw signal is consumed, and with what trigger boundaries.
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
-3. **Promotion target** — whether the system stops at inspectable artifacts, promotes into weights, or uses another compiled state.
-4. **Scope** — per-task, per-benchmark, per-project, or cross-task generalizable.
-5. **Timing** — online during deployment, offline from collected traces, or staged in cycles.
-6. **Survey placement** — position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and state whether it strengthens, weakens, or splits any survey claim.
+3. **Substrate class** — opaque (weights, distributed state), prose (natural-language units), or symbolic (formal-semantic units: schemas, code, tests).
+4. **Role** — knowledge (consumed as fact; storage grows reach but not disposition) or system-definition (consumed as policy; reading the artifact *is* part of the disposition).
+5. **Scope** — per-task, per-benchmark, per-project, or cross-task generalizable.
+6. **Timing** — online during deployment, offline from collected traces, or staged in cycles.
+7. **Survey placement** — position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and state whether it strengthens, weakens, or splits any survey claim.
 
 ## Citations
 

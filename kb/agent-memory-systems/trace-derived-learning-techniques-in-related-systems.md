@@ -8,11 +8,11 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the two axes that separate them: how they ingest traces (ingestion pattern) and where they promote the result (symbolic artifacts vs model weights — a **substrate-class** choice).
+Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what substrate they promote into (opaque vs prose vs symbolic — a **substrate-class** choice), and what role the result plays (knowledge consumed as fact vs system-definition consumed as policy).
 
 The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, REM, Autocontext, Meta-Harness, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
-**What the survey finds.** Within symbolic artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager). Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
+**What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
 ## The recurring stages
 
@@ -26,7 +26,7 @@ We organize each system around five recurring stages:
 
 Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is symbolic artifacts, service-managed memory, or model weights. [Learning substrates, backends, and artifact forms](../notes/substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) sharpens the distinction: "service memory" is usually a backend choice within the symbolic artifact substrate, not a third top-level substrate alongside artifacts and weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of substrate analysis](../notes/axes-of-substrate-analysis.md) sharpens the distinction: "service memory" is usually a backend choice within the readable substrate, not a third top-level substrate alongside readable artifacts and weights.
 
 ## Napkin
 
@@ -322,7 +322,7 @@ Corpus-grounded generation-trace self-training for factual QA.
 
 **Extraction.** NLI/SelfCheckGPT/BSDetector/semantic-entropy scoring, threshold filters for question quality and unknownness, and `get_dpo_sample` selection of chosen/rejected answer pairs.
 
-**Promotion.** SFT/DPO training data to model checkpoints via TRL SFTTrainer/DPOTrainer. No symbolic memory artifact; data files are staging.
+**Promotion.** SFT/DPO training data to model checkpoints via TRL SFTTrainer/DPOTrainer. No durable readable artifact; data files are staging.
 
 **Scope.** Wikipedia factual QA over predefined topic categories and model-specific configs. The source traces are corpus-grounded generation traces, not autonomous agent task trajectories.
 
@@ -358,13 +358,13 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 ### Axis 2: promotion target / substrate class
 
-**Symbolic artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers. Their backends differ, but their substrate class is the same.
+**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, or structured memory records. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers. The category spans from prose substrate (verbal hints, scored rules, structured records) to symbolic substrate (executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
 
 **Weight learning.** Mine trajectories, next-state signals, or generation traces under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, Self-Training-LLM, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data. Self-Training-LLM adds corpus-grounded answer-sample surgery: generated questions and sampled answers are scored, filtered, and paired before SFT/DPO.
 
 ### What the expanded survey reveals: artifact structure varies widely
 
-Within the symbolic-artifact branch, the artifact-learning systems span a wide range of structure and maintenance:
+Within the readable-artifact branch, the artifact-learning systems span a wide range of structure and maintenance:
 
 - **Minimal verbal hints:** Reflexion stores one or a few reflection sentences in a rolling buffer.
 - **Full-document rewrite:** Dynamic Cheatsheet carries forward one cheatsheet blob, rewritten wholesale each step.
@@ -435,14 +435,14 @@ None of the reviewed systems closes the harder learning-loop mutations — the o
 
 The additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). Self-Training-LLM shows the same oracle dependence from the weight-learning side: its "unknown" examples are only as good as the NLI/SelfCheck and judge signals that select them. cass-memory's score-based deprecation and `invertToAntiPattern()` mechanism are the closest to principled retirement, but they are mechanical (threshold-driven) rather than explanatory — they retire artifacts that stop working without reasoning about why. None of these systems demonstrates retirement grounded in explanatory reach, cross-domain abstraction, or open-ended judgment.
 
-The concrete update to [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed symbolic artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
+The concrete update to [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed readable artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
 
 ---
 
 Relevant Notes:
 
-- [continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md) — sharpens: the survey's non-weight cases count as continuous learning because their improvements persist, not because they imitate weight learning
-- [Learning substrates, backends, and artifact forms](../notes/substrate-class-backend-and-artifact-form-are-separate-axes-that-get-conflated.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually symbolic-artifact storage rather than a third substrate
+- [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via the readable system-definition mechanism; the weight-promotion cases take the expensive mechanism
+- [Axes of substrate analysis](../notes/axes-of-substrate-analysis.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually a backend within the readable substrate rather than a third substrate
 - [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
 - [Napkin](./reviews/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates
