@@ -12,7 +12,7 @@ A recurring comparison in this KB pits "readable artifacts vs weights" — one s
 
 Agent-learning comparisons turn on four axes. Three are **structural** — properties of the stored object:
 
-- **Substrate class** — how the learned result is represented: as non-interpretable distributed state, as natural-language units, or as formal-semantic units.
+- **Substrate class** — how the learned result is represented: as non-interpretable distributed state (**opaque**), as natural-language units (**prose**), or as formal-semantic units (**symbolic**). Prose and symbolic together form the **readable** substrates — the non-opaque side.
 - **Backend** — where units live (repo files, database rows, memory services).
 - **Artifact form** — what a unit looks like within a substrate (memory entries, rules, schemas, scripts).
 
