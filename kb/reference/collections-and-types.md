@@ -33,7 +33,7 @@ The shipped collections:
 
 Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions.
 
-`kb/types/` and `kb/instructions/` sit at the top level under `kb/` but are not collections in this sense — `kb/types/` is the global type layer and `kb/instructions/` is shipped framework content. See the [collection definition](./definitions/collection.md) for the full exclusion list.
+`kb/types/` sits at the top level under `kb/` but is not a collection in this sense — it is the global type layer. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts, register conventions, and type contracts. See the [collection definition](./definitions/collection.md) for the full exclusion list.
 
 ## Types
 
@@ -41,7 +41,7 @@ A **type** is a structural contract — a JSON Schema plus a template plus autho
 
 Two scopes:
 
-- **Global types** live in `kb/types/`. The shipped global types are `text` (no frontmatter, always valid — the root of the type ladder), `note` (the base structured type all others inherit from), `definition` (vocabulary), and `index` (navigation hubs). Globals are global because they can occur in any collection.
+- **Global types** live in `kb/types/`. The shipped global types are `text` (no frontmatter, always valid — the root of the type ladder), `note` (the base structured type all others inherit from), `instruction` (prescriptive procedures and review gates), `definition` (vocabulary), and `index` (navigation hubs). Globals are global because they can occur in any collection.
 - **Directory-scoped types** live in `kb/<collection>/types/`. They apply only to artifacts in that collection. Examples: `adr` in `kb/reference/types/`, `source-review` and `ingest-report` in `kb/sources/types/`, `connect-report` in `kb/reports/types/`.
 
 Type resolution is a path walk: from the artifact's path the resolver checks the collection's `types/` first, then falls back to `kb/types/`. See [type-loading](./type-loading.md) for the full mechanics.

@@ -1,5 +1,6 @@
 ---
 description: One worked recipe for onboarding an operator who wants to build a personal Second Brain on top of Commonplace. Use as a starting template, not the canonical path.
+type: instruction
 ---
 
 # Example: Onboard a Second Brain on Commonplace

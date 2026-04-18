@@ -1,6 +1,8 @@
 ---
 gate_id: frontmatter/claim-strength
 name: Claim strength
+description: 'The title is phrased as a claim but only asserts a truism or a point nobody knowledgeable would contest.'
+type: instruction
 lens: frontmatter
 watches: [title]
 staleness: changed

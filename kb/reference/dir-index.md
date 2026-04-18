@@ -15,7 +15,7 @@ index_source: directory
 
 ## Files
 
-- [Available Types](./available-types.md) *(note)* - Catalog of the types shipped by commonplace — the global base types, the global `definition` type, and the directory-scoped specialised types delivered with the framework scaffold
+- [Available Types](./available-types.md) *(note)* - Catalog of the types shipped by commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
 - [Collections and types](./collections-and-types.md) *(note)* - How collections and types compose in commonplace - collections own register conventions and link rules, types own structural contracts, and the two meet at collection-scoped type lookup; covers the COLLECTION.md surface, the compiled collection-topology used by the connect skill, and the compile-collections skill that produces it
 - [Commonplace architecture](./architecture.md) *(note)* - Shipped commonplace architecture — installed project layout, packaged runtime, scaffolded KB surface, promoted skills, and the boundary between framework-provided artifacts and practitioner-authored content
 - [Commonplace CLI commands](./commands.md) *(note)* - Reference for the commonplace-* CLI commands shipped by llm-commonplace - project setup, validation, indexing, snapshots, note operations, and the review system

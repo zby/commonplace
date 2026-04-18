@@ -1,6 +1,8 @@
 ---
 gate_id: sentence/clause-packing
 name: Clause packing
+description: 'A sentence chains too many subordinate clauses, qualifiers, or contrastive phrases. Each clause may be clear on its own, but the sentence as a whole requires the reader to hold too many pieces in working memory.'
+type: instruction
 lens: sentence
 watches: [body]
 staleness: changed

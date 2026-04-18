@@ -1,5 +1,11 @@
 ---
+gate_id: sentence/misleading-link-text
+name: Misleading Link Text
 description: Markdown link text implies a concept but the linked note discusses something different — reader gets wrong impression.
+type: instruction
+lens: sentence
+watches: [body]
+staleness: changed
 ---
 
 ## Failure mode

@@ -15,7 +15,7 @@ This note describes the architecture commonplace ships into projects: the instal
 ```text
 project/
     kb/
-      types/                         ← global base types (`text`, `note`)
+      types/                         ← global types (`text`, `note`, `instruction`, ...)
       notes/
         types/
         *.md
@@ -51,7 +51,7 @@ The installed project is a one-tree KB surface. The framework implementation its
 | `kb/notes/` | Project-authored transferable claims, theory, and methodology |
 | `kb/reference/` | Framework reference docs plus ADR history, extended locally when needed |
 | `kb/instructions/` | Framework-shipped procedures, promoted skills, and operator guidance |
-| `kb/types/` | Global base types shared across collections |
+| `kb/types/` | Global type contracts shared across collections |
 | `kb/*/types/` | Collection-local structural contracts for specialised documents |
 | `kb/sources/` | Ingested external sources and source reviews |
 | `kb/tasks/` | Task lifecycle artifacts |

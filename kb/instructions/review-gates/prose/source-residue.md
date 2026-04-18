@@ -1,6 +1,8 @@
 ---
 gate_id: prose/source-residue
 name: Source residue
+description: 'The note was generalized from a narrower source, but domain-specific framing leaked through and now overcommits the note to that source domain.'
+type: instruction
 lens: prose
 watches: [body]
 staleness: changed

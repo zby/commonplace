@@ -8,13 +8,13 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 
 ```
 kb/                          Knowledge base
-  types/                     Global types (text, note)
+  types/                     Global types (text, note, instruction, definition, index)
   notes/COLLECTION.md         Writing conventions (theoretical register)
   reference/COLLECTION.md     Writing conventions (descriptive register)
   instructions/COLLECTION.md  Writing conventions (prescriptive register)
   log.md                     Improvement log — one-line observations appended during traversal
   notes/                     Notes — the primary knowledge unit
-    types/                   Note type templates (structured-claim, adr, index, ...)
+    types/                   Note-local type templates (structured-claim)
     adr/                     Architecture Decision Records
     related-systems/         External system comparisons
   sources/                   Snapshotted external sources + analysis

@@ -1,6 +1,8 @@
 ---
 gate_id: prose/redundant-restatement
 name: Redundant restatement
+description: 'A section''s opening paragraph re-explains what the previous section already established before reaching its own contribution.'
+type: instruction
 lens: prose
 watches: [body]
 staleness: changed

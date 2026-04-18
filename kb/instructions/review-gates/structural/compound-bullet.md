@@ -1,6 +1,8 @@
 ---
 gate_id: structural/compound-bullet
 name: Compound bullet
+description: 'A bullet item packs two distinct ideas into one item, usually joined by a dash, semicolon, or `but`, so the second idea gets buried during scanning.'
+type: instruction
 lens: structural
 watches: [body]
 staleness: changed

@@ -186,7 +186,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 ### Type system and collection model
 
 - [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, link rules) and types (structural contracts) compose, and how the connect/compile-collections skills consume the topology
-- [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `definition`) and directory-scoped specialised types
+- [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
 - [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 

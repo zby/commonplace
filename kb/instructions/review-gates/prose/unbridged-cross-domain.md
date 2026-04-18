@@ -1,6 +1,8 @@
 ---
 gate_id: prose/unbridged-cross-domain
 name: Unbridged cross-domain evidence
+description: 'Evidence from one domain is cited as if it directly supports a claim in another domain without stating why the transfer is valid.'
+type: instruction
 lens: prose
 watches: [body]
 staleness: changed

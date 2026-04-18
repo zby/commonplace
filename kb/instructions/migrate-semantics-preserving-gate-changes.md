@@ -1,5 +1,6 @@
 ---
 description: Change gate wording without invalidating accepted reviews — update stored accepted reviews, then append gate-migration acceptance events that preserve the accepted note baseline
+type: instruction
 ---
 
 # Migrate semantics-preserving gate changes

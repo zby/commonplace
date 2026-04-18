@@ -44,7 +44,7 @@ When linking FROM this collection:
 
 ## Frontmatter
 
-Instructions use minimal frontmatter. Plain instructions need only `description`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`.
+Instructions use minimal frontmatter. Plain instructions need `description` and `type: instruction`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`.
 
 ## Promoted skills
 
@@ -59,6 +59,7 @@ Some instruction subdirectories are promoted into runtime skill surfaces (`.clau
 ```markdown
 ---
 description: ""
+type: instruction
 ---
 
 # {Imperative title}

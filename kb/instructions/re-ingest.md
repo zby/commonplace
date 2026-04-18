@@ -1,5 +1,6 @@
 ---
 description: Re-ingest a source whose .ingest.md report is stale — regenerate the analysis against current KB state, then update all notes that reference the old report.
+type: instruction
 ---
 
 # Re-Ingest

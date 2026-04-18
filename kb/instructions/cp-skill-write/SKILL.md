@@ -1,6 +1,7 @@
 ---
 name: cp-skill-write
 description: Write a KB artifact using the default note workflow or a discovered type template. Routes by type, reads the target collection's COLLECTION.md, searches first, and validates after writing. Use with an optional type and optional topic.
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -18,9 +19,16 @@ All documents in the KB live in a **collection** — a top-level directory under
 
 **Edit mode** — first argument is a path to an existing `.md` file: read it, infer collection from path (`kb/notes/` → notes, etc.), read `type` from frontmatter (default `note`; no frontmatter → `text`). Remaining arguments describe what to change.
 
-**New-note mode** — everything else. Extract the collection, type, and topic from the arguments (natural language is fine). Defaults: collection `notes`, type `note`. No arguments → ask the user what to write about.
+**New-note mode** — everything else. Extract the collection, type, and topic from the arguments (natural language is fine). Defaults: collection `notes`, type `note`. If the type is `instruction` and no collection is explicit, default the collection to `instructions`. No arguments → ask the user what to write about.
 
-**Type resolution**: for non-default types, find the template at `kb/**/types/{type}.template.md`. The template's location tells you which collection the type belongs to (e.g. `kb/reference/types/adr.template.md` → `kb/reference/`). If no template is found, list available types and stop.
+**Type resolution**: for non-default types, resolve the template the same way validation resolves schemas:
+
+1. If the collection is explicit, check `kb/<collection>/types/{type}.template.md`, then `kb/types/{type}.template.md`.
+2. If the collection is not explicit, search collection-local templates at `kb/*/types/{type}.template.md` excluding `kb/types/`.
+3. If exactly one collection-local template exists, use that template and its collection (e.g. `kb/reference/types/adr.template.md` -> `kb/reference/`).
+4. If no collection-local template exists, check the global template at `kb/types/{type}.template.md`.
+5. If the type is global, it does not choose a collection by itself. Use the parsed or write-skill default collection (`instructions` for `instruction`, otherwise `notes` unless the user said otherwise) and the global template.
+6. If more than one collection-local template exists and no collection was explicit, ask for the collection. If no template is found, list available types and stop.
 
 ### Step 2 — Load collection conventions
 

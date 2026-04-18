@@ -1,5 +1,6 @@
 ---
 description: Named fix strategies for review warnings. A living codebook — agents classify each fix by strategy name, enabling audit and taxonomy evolution. Strategies that recur from "new-pattern" reports get promoted here.
+type: instruction
 ---
 
 # Fix Strategy Taxonomy

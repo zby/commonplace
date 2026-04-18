@@ -1,5 +1,11 @@
 ---
+gate_id: sentence/parsing-ambiguity
+name: Parsing Ambiguity
 description: Sentence can be read two ways due to syntactic structure and the unintended reading is plausible.
+type: instruction
+lens: sentence
+watches: [body]
+staleness: changed
 ---
 
 ## Failure mode

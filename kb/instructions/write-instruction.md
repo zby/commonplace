@@ -1,5 +1,6 @@
 ---
 description: Create a new instruction in kb/instructions/ by distilling repeated manual operations into a reusable, execution-optimized procedure.
+type: instruction
 ---
 
 # Write an Instruction
@@ -29,6 +30,7 @@ You should have performed the task manually at least twice in different contexts
    ```yaml
    ---
    description: One line — what this instruction does, when to use it.
+   type: instruction
    ---
    ```
    The description helps a human scanning the directory decide whether this instruction fits their situation. It also makes promotion to a skill frictionless.

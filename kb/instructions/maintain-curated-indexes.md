@@ -1,5 +1,6 @@
 ---
 description: Audit and maintain curated sections of generated-tail index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
+type: instruction
 ---
 
 # Maintain curated indexes

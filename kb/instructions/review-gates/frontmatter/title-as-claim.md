@@ -1,6 +1,8 @@
 ---
 gate_id: frontmatter/title-as-claim
 name: Title as claim
+description: 'The note carries the `title-as-claim` trait, but the title is not actually a proposition.'
+type: instruction
 lens: frontmatter
 watches: [title]
 staleness: changed

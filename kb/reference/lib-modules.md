@@ -111,15 +111,21 @@ Delegates to `frontmatter.strip()`.
 
 ## type_resolver
 
-Resolve structural note types from scoped JSON Schema definitions. Uses hierarchical schema discovery — schemas are searched from most-specific scope to workspace root.
+Resolve structural note types from scoped JSON Schema definitions. Uses collection-scoped schema discovery — schemas are searched from the owning collection first, then the global KB type layer.
 
 ### Schema discovery
 
-Schemas live in `types/` directories at each scope level under `kb/`. For a note at `kb/work/my-project/foo.md`, the search order is:
+Schemas live in the global `kb/types/` directory and in optional collection-local `types/` directories. For a workshop artifact at `kb/work/my-project/foo.md`, the search order is:
 
-1. `kb/work/my-project/types/{type}.schema.yaml`
-2. `kb/work/types/{type}.schema.yaml`
-3. `kb/types/{type}.schema.yaml`
+1. `kb/work/types/{type}.schema.yaml`
+2. `kb/types/{type}.schema.yaml`
+
+For an instruction at `kb/instructions/foo.md`:
+
+1. `kb/instructions/types/{type}.schema.yaml`
+2. `kb/types/{type}.schema.yaml`
+
+In the shipped scaffold, plain instructions and review gates use the global `instruction` type at `kb/types/instruction.schema.yaml`.
 
 For a report at `kb/reports/connect/foo.connect.md`:
 

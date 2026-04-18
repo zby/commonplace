@@ -1,6 +1,8 @@
 ---
 gate_id: prose/confidence-miscalibration
 name: Confidence miscalibration
+description: 'Speculative frameworks are presented as established, or well-grounded findings are presented with unnecessary tentativeness.'
+type: instruction
 lens: prose
 watches: [body]
 staleness: changed

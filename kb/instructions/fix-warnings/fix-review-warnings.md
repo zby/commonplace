@@ -1,5 +1,6 @@
 ---
 description: General instruction for fixing actionable findings from current accepted warn reviews. Reads current accepted gate reviews for a note, applies fixes using judgment, classifies each fix by strategy from the taxonomy, and reports results
+type: instruction
 ---
 
 # Fix Review Warnings

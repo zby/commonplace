@@ -1,6 +1,7 @@
 ---
 name: cp-skill-convert
 description: Convert notes between types. Currently supports text to note by adding frontmatter with status seedling, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
+type: instruction
 user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
 context: fork

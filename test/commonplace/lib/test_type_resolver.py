@@ -479,6 +479,67 @@ source: kb/notes/sample.md
     assert profile.definition_path == tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml"
 
 
+def test_global_instruction_type_definition_extends_note_profile(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "instruction.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: instruction
+        additionalProperties: true
+""",
+    )
+    instruction = write(
+        tmp_path / "kb" / "instructions" / "write-thing.md",
+        """---
+description: Procedure for writing a thing
+type: instruction
+---
+
+# Write Thing
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        instruction,
+        {"description": "Procedure for writing a thing", "type": "instruction"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.resolved_type == "instruction"
+    assert profile.definition_path == tmp_path / "kb" / "types" / "instruction.schema.yaml"
+
+
 def test_sources_collection_ingest_report_type_definition_extends_note_profile(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note.schema.yaml",

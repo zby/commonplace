@@ -1,6 +1,7 @@
 ---
 name: evaluate-scenarios
 description: Read all scenario files, measure instruction bytes from referenced source files, and produce a cost report showing hops and byte counts per scenario weighted by frequency. Use to verify architectural claims about context loading costs.
+type: instruction
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 context: fork

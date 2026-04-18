@@ -1,0 +1,58 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: instruction
+          gate_id:
+            type: string
+            minLength: 1
+          name:
+            type: string
+            minLength: 1
+          lens:
+            type: string
+            minLength: 1
+          watches:
+            type: array
+            minItems: 1
+            items:
+              type: string
+          staleness:
+            type: string
+            minLength: 1
+          requires_trait:
+            type: string
+            minLength: 1
+          requires-type:
+            type: string
+            minLength: 1
+        additionalProperties: true
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - gate_id
+    then:
+      properties:
+        frontmatter:
+          required:
+            - gate_id
+            - name
+            - lens
+            - watches
+            - staleness
+        headings:
+          type: array
+          allOf:
+            - contains:
+                const: "## Failure mode"
+            - contains:
+                const: "## Test"

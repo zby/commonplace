@@ -31,7 +31,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Exclude | Per-installation | same |
 | Quality bar | Per-installation | same |
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
-| Type system | Framework | `kb/*/types/` directories with schemas and templates |
+| Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
 | Link semantics | Framework | `kb/notes/links-index.md` and related guidance in `kb/instructions/` |
 

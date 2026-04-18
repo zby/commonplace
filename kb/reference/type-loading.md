@@ -35,7 +35,7 @@ Name collisions stay unambiguous as long as no two collections define the same t
 
 The `note` base type is the one type whose template is carried by the write skill rather than loaded on demand. Most writes are plain notes, so the marginal cost of keeping the small template on the default path beats the cost of an extra file read per write. [ADR-002](./adr/002-inline-global-types-in-writing-guide.md) originally accepted inlining into a central `WRITING.md`; [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) replaces that with collection-level `COLLECTION.md` files for register conventions while keeping the default structural scaffold in the write skill.
 
-Every other shipped type stays in its collection's `types/` directory and loads only when an agent is explicitly writing one. A skill or routing table line points at the specific template file (e.g., `kb/reference/types/adr.template.md`) rather than relying on the agent to remember every type definition.
+Other shipped specialised types stay in either global `kb/types/` or their owning collection's `types/` directory and load only when an agent is explicitly writing one. A skill or routing table line points at the specific template file (e.g., `kb/types/instruction.template.md` or `kb/reference/types/adr.template.md`) rather than relying on the agent to remember every type definition.
 
 ## What authoring loads
 

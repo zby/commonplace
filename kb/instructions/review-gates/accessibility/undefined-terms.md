@@ -1,5 +1,11 @@
 ---
+gate_id: accessibility/undefined-terms
+name: Undefined Terms
 description: Technical term used without inline definition — reader must follow a link or know KB context to understand the sentence.
+type: instruction
+lens: accessibility
+watches: [body]
+staleness: changed
 ---
 
 ## Failure mode

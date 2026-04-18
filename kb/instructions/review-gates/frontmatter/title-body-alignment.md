@@ -1,6 +1,8 @@
 ---
 gate_id: frontmatter/title-body-alignment
 name: Title-body alignment
+description: 'The title promises one thing but the body now establishes something else because the note drifted during writing or later edits.'
+type: instruction
 lens: frontmatter
 watches: [title, body]
 staleness: rewrite(0.5)

@@ -1,5 +1,6 @@
 ---
 description: Batch review sweep — run the selector, triage note-changed pairs, and execute direct-write review runs for the rest
+type: instruction
 ---
 
 # Review sweep

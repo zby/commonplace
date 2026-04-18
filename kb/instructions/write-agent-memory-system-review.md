@@ -1,6 +1,6 @@
 ---
 description: Write or update a code-grounded agent memory system review from a GitHub repository checkout.
-type: note
+type: instruction
 ---
 
 # Write an Agent Memory System Review

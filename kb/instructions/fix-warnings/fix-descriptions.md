@@ -1,5 +1,6 @@
 ---
 description: Fix description warnings from /validate. Rewrites descriptions that are too long, multi-sentence, terminal-punctuated, or title-restating. Can be used standalone, in a sweep, or called by the fix-review-warnings agent when it encounters description issues.
+type: instruction
 ---
 
 # Fix Description Warnings

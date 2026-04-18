@@ -1,6 +1,7 @@
 ---
 name: cp-skill-validate
 description: Run the deterministic validation script on KB notes. Checks frontmatter validity, enum values, link health, required sections, and batch signals (orphans, seedling count).
+type: instruction
 user-invocable: true
 allowed-tools: Bash
 context: fork

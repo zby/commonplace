@@ -477,6 +477,124 @@ Consequences.
     assert all("status" not in warning for warning in results.warns)
 
 
+def test_instruction_type_accepts_review_gate_metadata(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note-base.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+""",
+    )
+    write(
+        tmp_path / "kb" / "types" / "instruction.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: instruction
+        additionalProperties: true
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - gate_id
+    then:
+      properties:
+        frontmatter:
+          required:
+            - gate_id
+            - name
+            - lens
+            - watches
+            - staleness
+        headings:
+          type: array
+          allOf:
+            - contains:
+                const: "## Failure mode"
+            - contains:
+                const: "## Test"
+""",
+    )
+    gate = write(
+        tmp_path / "kb" / "instructions" / "review-gates" / "prose" / "sample.md",
+        """---
+gate_id: prose/sample
+name: Sample
+description: Sample review gate for validating instruction metadata
+type: instruction
+lens: prose
+watches: [body]
+staleness: changed
+---
+
+# Sample
+
+## Failure mode
+
+The prose fails in a sample way.
+
+## Test
+
+Check the sample condition.
+""",
+    )
+
+    results = validation.validate_note(gate, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert results.warns == []
+    assert "type schema: instruction requirements satisfied" in results.passes
+
+
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     title = "A" * 101

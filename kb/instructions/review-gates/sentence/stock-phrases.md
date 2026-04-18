@@ -1,5 +1,11 @@
 ---
+gate_id: sentence/stock-phrases
+name: Stock Phrases
 description: Sentence uses a stock LLM pattern that adds no content — deletion test shows paragraph reads equally well without it.
+type: instruction
+lens: sentence
+watches: [body]
+staleness: changed
 ---
 
 ## Failure mode

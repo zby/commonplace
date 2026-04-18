@@ -23,7 +23,7 @@ All authored content lives as markdown with YAML frontmatter under `kb/`, tracke
 | `kb/instructions/` | Skills and procedural guidance |
 | `kb/types/`, `kb/*/types/` | Global and collection-scoped type definitions |
 
-Document type is declared by `type:` in frontmatter and validated against the matching schema in the owning collection's `types/` directory. See [available-types.md](./available-types.md) and [type-loading.md](./type-loading.md).
+Document type is declared by `type:` in frontmatter and validated against the matching schema, resolved from the owning collection's `types/` directory with fallback to global `kb/types/`. See [available-types.md](./available-types.md) and [type-loading.md](./type-loading.md).
 
 ## Derived indexes
 

@@ -41,7 +41,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 **Scaffold trees** — copied from packaged scaffold assets:
 
 - `kb/instructions/` — skill definitions and procedural guidance
-- `kb/types/` — global base types (`note`, `text`)
+- `kb/types/` — global types (`text`, `note`, `instruction`, `definition`, `index`)
 - `kb/reference/` — the reference collection's type definitions and reference docs
 
 **Resolved templates** — read, substituted, written:

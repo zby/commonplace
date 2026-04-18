@@ -1,5 +1,5 @@
 ---
-description: Catalog of the types shipped by commonplace — the global base types, the global `definition` type, and the directory-scoped specialised types delivered with the framework scaffold
+description: Catalog of the types shipped by commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
 type: note
 tags: []
 status: current
@@ -19,10 +19,11 @@ The `type:` frontmatter field is a free-form string — it is not validated agai
 |---|---|---|
 | `text` | `text.md` | No frontmatter — raw capture, always valid. The root of the type ladder. |
 | `note` | `note.md`, `note.template.md`, `note.schema.yaml`, `note-base.schema.yaml` | Base structured type. Requires a non-empty `description`; carries shared `status`, `traits`, `tags`. Every specialised type inherits its frontmatter shape from here. |
+| `instruction` | `instruction.template.md`, `instruction.instructions.md`, `instruction.schema.yaml` | Prescriptive procedure, promoted skill body, or review gate. Requires `description`; review gates additionally require gate metadata plus `Failure mode` and `Test` sections. |
 | `definition` | `definition.template.md`, `definition.instructions.md`, `definition.schema.yaml` | Vocabulary note with `Scope`, `Exclusions`, and `Misuse Cases` sections. |
 | `index` | `index.template.md`, `index.instructions.md`, `index.schema.yaml` | Navigation hub: directory listings or curated tag indexes with generated tails. |
 
-`text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `definition` and `index` are also global because they can occur in any collection — duplicating the template and schema into each collection's local `types/` would buy nothing.
+`text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `instruction`, `definition`, and `index` are also global because they can occur in any collection — duplicating the template and schema into each collection's local `types/` would buy nothing.
 
 Per [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md), each collection's `COLLECTION.md` carries register-specific writing conventions while the write skill carries the default `note` scaffold for the ordinary write path.
 
@@ -49,7 +50,7 @@ Each shipped collection owns its own specialised types under a local `types/` di
 |---|---|---|
 | `connect-report` | template + instructions + schema | Connection report: discovery trace, connections found, flags |
 
-The other shipped collections — `kb/instructions/` and `kb/work/` — carry no specialised types of their own. `kb/instructions/` holds imperative how-to content, and `kb/work/` is a workshop layer for temporal, work-in-flight documents where type extensions are expected to be defined locally per workshop as needed.
+The other shipped collection, `kb/work/`, carries no specialised types of its own. It is a workshop layer for temporal, work-in-flight documents where type extensions are expected to be defined locally per workshop as needed.
 
 ## Types versus traits
 
