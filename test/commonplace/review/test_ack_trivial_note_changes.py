@@ -3,10 +3,11 @@ from __future__ import annotations
 import os
 import sqlite3
 import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.review import ack_trivial_note_changes, review_db, review_metadata
+from commonplace.review.ack_trivial_note_changes import qualifying_pairs
+from commonplace.review.review_target_selector import ack_pairs
 
 
 TEST_MODEL = "test-model"
@@ -86,28 +87,16 @@ def commit_all(path: Path, message: str, *, date: str | None = None) -> str:
 def build_fixture(
     tmp_path: Path,
     *,
-    title: str = "Test note",
-    description: str = "Test note",
-    traits: str = "[]",
-    tags: str = "[]",
-    status: str = "current",
     gate_id: str = "prose/source-residue",
     lens: str = "prose",
     watches: str = "[body]",
 ) -> tuple[Path, Path]:
+    """Commit one note + one gate; seed DB with a full-review acceptance for that pair."""
     repo = tmp_path / "repo"
     repo.mkdir()
     init_repo(repo)
 
-    note = make_note(
-        repo / "kb" / "notes" / "sample.md",
-        "\nBody.\n",
-        title=title,
-        description=description,
-        traits=traits,
-        tags=tags,
-        status=status,
-    )
+    note = make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
     gate = make_gate(
         repo / "kb" / "instructions" / "review-gates" / lens / f"{gate_id.split('/', 1)[1]}.md",
         gate_id,
@@ -153,231 +142,87 @@ def build_fixture(
     return repo, db_path
 
 
-def test_has_only_unwatched_changes_accepts_frontmatter_change_for_body_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: seedling
----
+# --- Pure-function tests: has_only_unwatched_changes ------------------------
 
-# Test note
-Body.
-"""
-    current_text = """---
-description: Test note
+
+def _note(description: str, traits: str, tags: str, title: str, body: str) -> str:
+    return f"""---
+description: {description}
 type: kb/types/note.md
-traits: [title-as-claim]
-tags: [computational-model]
+traits: {traits}
+tags: {tags}
 status: current
 ---
 
-# Test note
-Body.
+# {title}
+{body}
 """
 
-    assert ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"body"},
-    )
+
+def test_has_only_unwatched_changes_accepts_frontmatter_change_for_body_gate() -> None:
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Test note", "[title-as-claim]", "[computational-model]", "Test note", "Body.")
+
+    assert ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"body"})
 
 
 def test_has_only_unwatched_changes_rejects_body_change_for_body_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Test note", "[]", "[]", "Test note", "Body changed.")
 
-# Test note
-Body.
-"""
-    current_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Test note
-Body changed.
-"""
-
-    assert not ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"body"},
-    )
+    assert not ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"body"})
 
 
 def test_has_only_unwatched_changes_accepts_body_change_for_title_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Test note", "[]", "[]", "Test note", "Body changed.")
 
-# Test note
-Body.
-"""
-    current_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Test note
-Body changed.
-"""
-
-    assert ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"title"},
-    )
+    assert ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"title"})
 
 
 def test_has_only_unwatched_changes_rejects_title_change_for_title_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Test note", "[]", "[]", "Updated title", "Body.")
 
-# Test note
-Body.
-"""
-    current_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Updated title
-Body.
-"""
-
-    assert not ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"title"},
-    )
+    assert not ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"title"})
 
 
 def test_has_only_unwatched_changes_rejects_description_change_for_title_description_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Test note
-Body.
-"""
-    current_text = """---
-description: Updated description
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Test note
-Body.
-"""
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Updated description", "[]", "[]", "Test note", "Body.")
 
     assert not ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"title", "description"},
+        previous, current, watches={"title", "description"}
     )
 
 
 def test_has_only_unwatched_changes_accepts_tag_change_for_title_description_gate() -> None:
-    previous_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-
-# Test note
-Body.
-"""
-    current_text = """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: [computational-model]
-status: current
----
-
-# Test note
-Body.
-"""
+    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
+    current = _note("Test note", "[]", "[computational-model]", "Test note", "Body.")
 
     assert ack_trivial_note_changes.has_only_unwatched_changes(
-        previous_text,
-        current_text,
-        watches={"title", "description"},
+        previous, current, watches={"title", "description"}
     )
 
 
-def test_command_acks_frontmatter_change_for_body_gate(tmp_path: Path) -> None:
+# --- Integration tests: qualifying_pairs + ack_pairs ------------------------
+
+
+def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records_it(tmp_path: Path) -> None:
     repo, db_path = build_fixture(tmp_path)
     note_path = repo / "kb" / "notes" / "sample.md"
-    note_path.write_text(
-        """---
-description: Test note
-type: kb/types/note.md
-traits: [title-as-claim]
-tags: [computational-model]
-status: current
----
-# Test note
-Body.
-""",
-        encoding="utf-8",
-    )
-    commit_all(repo, "frontmatter-only note change")
+    make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.ack_trivial_note_changes",
-            "--model",
-            TEST_MODEL,
-            "prose",
-            "--note",
-            "kb/notes",
-        ],
-        cwd=repo,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=True,
+    pairs = qualifying_pairs(
+        repo,
+        model=TEST_MODEL,
+        gate_ids=["prose/source-residue"],
+        note_filter=["kb/notes"],
+        db_path=db_path,
     )
+    assert pairs == ["kb/notes/sample.md:prose/source-residue"]
 
-    assert "acked: kb/notes/sample.md prose/source-residue" in result.stdout
+    ack_pairs(repo, pairs, TEST_MODEL, db_path=db_path)
 
     with sqlite3.connect(db_path) as conn:
         row = conn.execute(
@@ -392,53 +237,7 @@ Body.
     assert row[0] == "trivial-change-ack"
 
 
-def test_command_acks_body_change_for_title_only_gate(tmp_path: Path) -> None:
-    repo, db_path = build_fixture(
-        tmp_path,
-        gate_id="frontmatter/title-as-claim",
-        lens="frontmatter",
-        watches="[title]",
-    )
-    note_path = repo / "kb" / "notes" / "sample.md"
-    note_path.write_text(
-        """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: []
-status: current
----
-# Test note
-Body changed.
-""",
-        encoding="utf-8",
-    )
-    commit_all(repo, "body-only note change")
-
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.ack_trivial_note_changes",
-            "--model",
-            TEST_MODEL,
-            "frontmatter/title-as-claim",
-            "--note",
-            "kb/notes",
-        ],
-        cwd=repo,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-
-    assert "acked: kb/notes/sample.md frontmatter/title-as-claim" in result.stdout
-
-
-def test_command_does_not_ack_when_watched_parts_changed(tmp_path: Path) -> None:
+def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: Path) -> None:
     repo, db_path = build_fixture(
         tmp_path,
         gate_id="frontmatter/title-body-alignment",
@@ -446,106 +245,30 @@ def test_command_does_not_ack_when_watched_parts_changed(tmp_path: Path) -> None
         watches="[title, body]",
     )
     note_path = repo / "kb" / "notes" / "sample.md"
-    note_path.write_text(
-        """---
-description: Test note
-type: kb/types/note.md
-traits: []
-tags: [computational-model]
-status: current
----
+    make_note(note_path, "\nBody.\n", title="Updated title", tags="[computational-model]")
 
-# Updated title
-Body.
-""",
-        encoding="utf-8",
+    pairs = qualifying_pairs(
+        repo,
+        model=TEST_MODEL,
+        gate_ids=["frontmatter/title-body-alignment"],
+        note_filter=["kb/notes"],
+        db_path=db_path,
     )
-
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.ack_trivial_note_changes",
-            "--model",
-            TEST_MODEL,
-            "frontmatter/title-body-alignment",
-            "--note",
-            "kb/notes",
-        ],
-        cwd=repo,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-
-    assert result.stdout.strip() == "No qualifying stale pairs found."
+    assert pairs == []
 
 
-def test_dry_run_prints_pairs_without_acknowledging(tmp_path: Path) -> None:
-    repo, db_path = build_fixture(tmp_path)
-    note_path = repo / "kb" / "notes" / "sample.md"
-    note_path.write_text(
-        """---
-description: Test note
-type: kb/types/note.md
-traits: [title-as-claim]
-tags: [computational-model]
-status: current
----
-# Test note
-Body.
-""",
-        encoding="utf-8",
-    )
-    commit_all(repo, "recover previous text fixture")
-
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.ack_trivial_note_changes",
-            "--model",
-            TEST_MODEL,
-            "--dry-run",
-            "prose",
-            "--note",
-            "kb/notes",
-        ],
-        cwd=repo,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-
-    assert "kb/notes/sample.md:prose/source-residue" in result.stdout
-    assert "Would ack 1 stale pair(s)." in result.stdout
-
-    with sqlite3.connect(db_path) as conn:
-        row = conn.execute(
-            """
-            SELECT acceptance_kind
-            FROM current_gate_acceptances
-            WHERE note_path = ? AND gate_id = ? AND model_id = ?
-            """,
-            ("kb/notes/sample.md", "prose/source-residue", TEST_MODEL),
-        ).fetchone()
-    assert row is not None
-    assert row[0] == "full-review"
-
-
-def test_command_recovers_previous_text_from_first_commit_after_acceptance_time(tmp_path: Path) -> None:
+def test_qualifying_pairs_recovers_previous_text_from_git_log_when_blob_sha_is_missing(tmp_path: Path) -> None:
+    """When the accepted note SHA isn't in the git object store, fall back to the
+    first commit touching the note after `accepted_at`."""
     repo = tmp_path / "repo"
     repo.mkdir()
     init_repo(repo)
 
     note = make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
-    gate = make_gate(repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md", "prose/source-residue")
+    gate = make_gate(
+        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
+        "prose/source-residue",
+    )
     commit_all(repo, "initial fixture", date="2026-04-04T09:21:19+02:00")
 
     gate_sha = review_metadata.git_blob_sha(gate)
@@ -580,39 +303,13 @@ def test_command_recovers_previous_text_from_first_commit_after_acceptance_time(
         )
         conn.commit()
 
-    note.write_text(
-        """---
-description: Test note
-type: kb/types/note.md
-traits: [title-as-claim]
-tags: []
-status: current
----
-# Test note
-Body.
-""",
-        encoding="utf-8",
-    )
-    commit_all(repo, "recover previous text fixture")
+    make_note(note, "\nBody.\n", traits="[title-as-claim]")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.ack_trivial_note_changes",
-            "--model",
-            TEST_MODEL,
-            "prose",
-            "--note",
-            "kb/notes",
-        ],
-        cwd=repo,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=True,
+    pairs = qualifying_pairs(
+        repo,
+        model=TEST_MODEL,
+        gate_ids=["prose/source-residue"],
+        note_filter=["kb/notes"],
+        db_path=db_path,
     )
-
-    assert "acked: kb/notes/sample.md prose/source-residue" in result.stdout
+    assert pairs == ["kb/notes/sample.md:prose/source-residue"]

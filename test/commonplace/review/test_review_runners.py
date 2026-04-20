@@ -1,142 +1,140 @@
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 
 from commonplace.review import review_runners
 
 
-def install_fake_codex(fake_codex: Path, *, emit_session_id: bool, reasoning_effort: str = "xhigh") -> None:
-    session_id = "019d54ab-17a2-73b0-b341-3f36434aa48b"
-    emit_session_id_line = 'print(f"session id: {session_id}", flush=True)' if emit_session_id else ""
+CODEX_SESSION_ID = "019d54ab-17a2-73b0-b341-3f36434aa48b"
+
+
+def _codex_session_events(cwd: str, prompt: str) -> list[dict]:
+    """A minimal-but-realistic codex rollout: session_meta + turn_context +
+    user prompt + two token_count events + task_complete.
+
+    Used to build both the test JSONL fixture and the fake codex binary's log output.
+    """
+    return [
+        {
+            "type": "session_meta",
+            "payload": {
+                "id": CODEX_SESSION_ID,
+                "timestamp": "2026-04-03T20:46:32.019Z",
+                "cwd": cwd,
+                "originator": "codex_cli_rs",
+                "cli_version": "0.0.0",
+                "model_provider": "openai",
+            },
+        },
+        {
+            "type": "turn_context",
+            "payload": {
+                "cwd": cwd,
+                "model": "gpt-5.4",
+                "collaboration_mode": {
+                    "mode": "default",
+                    "settings": {"model": "gpt-5.4", "reasoning_effort": "xhigh"},
+                },
+                "effort": "xhigh",
+            },
+        },
+        {
+            "type": "response_item",
+            "payload": {
+                "type": "message",
+                "role": "user",
+                "content": [{"type": "input_text", "text": prompt}],
+            },
+        },
+        {"type": "event_msg", "payload": {"type": "task_started", "turn_id": "turn-1"}},
+        {
+            "type": "event_msg",
+            "payload": {
+                "type": "token_count",
+                "info": {
+                    "model_context_window": 272000,
+                    "last_token_usage": {
+                        "input_tokens": 100,
+                        "cached_input_tokens": 50,
+                        "output_tokens": 25,
+                        "reasoning_output_tokens": 10,
+                        "total_tokens": 175,
+                    },
+                    "total_token_usage": {
+                        "input_tokens": 100,
+                        "cached_input_tokens": 50,
+                        "output_tokens": 25,
+                        "reasoning_output_tokens": 10,
+                        "total_tokens": 175,
+                    },
+                },
+                "rate_limits": {"primary": {"used_percent": 7}},
+            },
+        },
+        {
+            "type": "event_msg",
+            "payload": {
+                "type": "token_count",
+                "info": {
+                    "model_context_window": 272000,
+                    "last_token_usage": {
+                        "input_tokens": 34414,
+                        "cached_input_tokens": 34304,
+                        "output_tokens": 267,
+                        "reasoning_output_tokens": 154,
+                        "total_tokens": 34681,
+                    },
+                    "total_token_usage": {
+                        "input_tokens": 387914,
+                        "cached_input_tokens": 375168,
+                        "output_tokens": 8994,
+                        "reasoning_output_tokens": 6144,
+                        "total_tokens": 396908,
+                    },
+                },
+                "rate_limits": {"primary": {"used_percent": 12}},
+            },
+        },
+        {
+            "type": "event_msg",
+            "payload": {
+                "type": "task_complete",
+                "turn_id": "turn-1",
+                "last_agent_message": "Finished review bundle",
+            },
+        },
+    ]
+
+
+def _write_codex_session_log(path: Path, cwd: str, prompt: str) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "\n".join(json.dumps(event) for event in _codex_session_events(cwd, prompt)) + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def install_fake_codex(fake_codex: Path, *, emit_session_id: bool) -> None:
+    """Fake codex binary: copies $CODEX_SESSION_LOG_SOURCE into ~/.codex/sessions/..., then
+    optionally prints its session id. The real event content is built in-process by the test;
+    this script just moves it into the location run_prompt expects to find it."""
+    emit = 'print(f"session id: {session_id}", flush=True)' if emit_session_id else ""
     fake_codex.write_text(
         f"""#!/usr/bin/env python3
-import json
-import os
-import sys
+import os, shutil, sys
 from pathlib import Path
 
-args = sys.argv[1:]
-required = ["exec", "--full-auto", "-C"]
-for item in required:
-    if item not in args:
-        raise SystemExit(f"missing arg: {{item}}")
-
-prompt = sys.argv[-1]
+session_id = "{CODEX_SESSION_ID}"
 home = Path(os.environ["HOME"])
-session_id = "{session_id}"
 session_dir = home / ".codex" / "sessions" / "2026" / "04" / "03"
 session_dir.mkdir(parents=True, exist_ok=True)
-session_log = session_dir / f"rollout-2026-04-03T20-46-32-{{session_id}}.jsonl"
-events = [
-    {{
-        "type": "session_meta",
-        "payload": {{
-            "id": session_id,
-            "timestamp": "2026-04-03T20:46:32.019Z",
-            "cwd": os.getcwd(),
-            "originator": "codex_cli_rs",
-            "cli_version": "0.0.0",
-            "model_provider": "openai",
-        }},
-    }},
-    {{
-        "type": "turn_context",
-        "payload": {{
-            "cwd": os.getcwd(),
-            "approval_policy": "never",
-            "sandbox_policy": {{
-                "mode": "workspace-write",
-                "writable_roots": [os.getcwd()],
-            }},
-            "model": "gpt-5.4",
-            "collaboration_mode": {{
-                "mode": "default",
-                "settings": {{
-                    "model": "gpt-5.4",
-                    "reasoning_effort": "{reasoning_effort}",
-                }},
-            }},
-            "effort": "{reasoning_effort}",
-        }},
-    }},
-    {{
-        "type": "response_item",
-        "payload": {{
-            "type": "message",
-            "role": "user",
-            "content": [{{"type": "input_text", "text": prompt}}],
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "task_started",
-            "turn_id": "turn-1",
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "token_count",
-            "info": {{
-                "model_context_window": 272000,
-                "last_token_usage": {{
-                    "input_tokens": 100,
-                    "cached_input_tokens": 50,
-                    "output_tokens": 25,
-                    "reasoning_output_tokens": 10,
-                    "total_tokens": 175,
-                }},
-                "total_token_usage": {{
-                    "input_tokens": 100,
-                    "cached_input_tokens": 50,
-                    "output_tokens": 25,
-                    "reasoning_output_tokens": 10,
-                    "total_tokens": 175,
-                }},
-            }},
-            "rate_limits": {{"primary": {{"used_percent": 7}}}},
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "token_count",
-            "info": {{
-                "model_context_window": 272000,
-                "last_token_usage": {{
-                    "input_tokens": 34414,
-                    "cached_input_tokens": 34304,
-                    "output_tokens": 267,
-                    "reasoning_output_tokens": 154,
-                    "total_tokens": 34681,
-                }},
-                "total_token_usage": {{
-                    "input_tokens": 387914,
-                    "cached_input_tokens": 375168,
-                    "output_tokens": 8994,
-                    "reasoning_output_tokens": 6144,
-                    "total_tokens": 396908,
-                }},
-            }},
-            "rate_limits": {{"primary": {{"used_percent": 12}}}},
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "task_complete",
-            "turn_id": "turn-1",
-            "last_agent_message": "Finished review bundle",
-        }},
-    }},
-]
-with session_log.open("w", encoding="utf-8") as handle:
-    for event in events:
-        handle.write(json.dumps(event) + "\\n")
+target = session_dir / f"rollout-2026-04-03T20-46-32-{{session_id}}.jsonl"
+shutil.copyfile(os.environ["CODEX_SESSION_LOG_SOURCE"], target)
 
-{emit_session_id_line}
+{emit}
 print("=== GATE REVIEW START: frontmatter ===", flush=True)
 print("Looks good.", flush=True)
 print("", flush=True)
@@ -146,6 +144,42 @@ print("=== GATE REVIEW END: frontmatter ===", flush=True)
         encoding="utf-8",
     )
     fake_codex.chmod(0o755)
+
+
+# --- Parser tests: feed canned JSONL directly to load_codex_session_log_telemetry ---
+
+
+def test_load_codex_session_log_telemetry_extracts_totals_and_metadata(tmp_path: Path) -> None:
+    log_path = _write_codex_session_log(tmp_path / "rollout.jsonl", cwd="/repo", prompt="test prompt")
+
+    telemetry = review_runners.load_codex_session_log_telemetry(log_path)
+
+    assert telemetry is not None
+    assert telemetry["provider"] == "codex"
+    assert telemetry["source"] == "session-log"
+    assert telemetry["session_id"] == CODEX_SESSION_ID
+    assert telemetry["model"] == "gpt-5.4"
+    assert telemetry["reasoning_effort"] == "xhigh"
+    assert telemetry["token_count_events"] == 2
+    assert telemetry["task_complete_message"] == "Finished review bundle"
+    assert telemetry["rate_limits"] == {"primary": {"used_percent": 12}}
+    assert telemetry["totals"] == {
+        "input_tokens": 387914,
+        "cached_input_tokens": 375168,
+        "output_tokens": 8994,
+        "reasoning_output_tokens": 6144,
+        "total_tokens": 396908,
+    }
+    assert telemetry["last_usage"] == {
+        "input_tokens": 34414,
+        "cached_input_tokens": 34304,
+        "output_tokens": 267,
+        "reasoning_output_tokens": 154,
+        "total_tokens": 34681,
+    }
+
+
+# --- Integration tests: run_prompt wiring (path resolution -> parser) ---
 
 
 def test_run_prompt_streams_claude_json(monkeypatch, tmp_path: Path, capsys) -> None:
@@ -446,67 +480,44 @@ for event in [
     assert result.telemetry["requests"][0]["source"] == "session-log"
 
 
-def test_run_prompt_collects_codex_telemetry_from_session_id(monkeypatch, tmp_path: Path) -> None:
+def _run_codex_prompt(monkeypatch, tmp_path: Path, *, emit_session_id: bool):
     fake_home = tmp_path / "home"
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
-    fake_codex = fake_bin / "codex"
-    install_fake_codex(fake_codex, emit_session_id=True)
+
+    # run_prompt prepends the system prompt to the user's prompt for codex; the prompt-match
+    # fallback greps the session log for that full string, so store it verbatim.
+    runner_prompt = f"{review_runners.REVIEW_RUNNER_SYSTEM_PROMPT}\n\ntest prompt"
+    session_log_source = tmp_path / "expected-session-log.jsonl"
+    _write_codex_session_log(session_log_source, cwd=str(tmp_path), prompt=runner_prompt)
+
+    install_fake_codex(fake_bin / "codex", emit_session_id=emit_session_id)
 
     monkeypatch.setenv("HOME", str(fake_home))
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
+    monkeypatch.setenv("CODEX_SESSION_LOG_SOURCE", str(session_log_source))
 
-    result = review_runners.run_prompt(
+    return review_runners.run_prompt(
         runner="codex",
         prompt="test prompt",
         repo_root=tmp_path,
         model="gpt-5.4",
     )
 
+
+def test_run_prompt_resolves_codex_session_log_by_session_id(monkeypatch, tmp_path: Path) -> None:
+    """run_prompt extracts the session id from codex stdout and loads the matching log."""
+    result = _run_codex_prompt(monkeypatch, tmp_path, emit_session_id=True)
+
     assert result.returncode == 0
     assert result.telemetry is not None
-    assert result.telemetry["provider"] == "codex"
-    assert result.telemetry["source"] == "session-log"
-    assert result.telemetry["session_id"] == "019d54ab-17a2-73b0-b341-3f36434aa48b"
-    assert result.telemetry["model"] == "gpt-5.4"
-    assert result.telemetry["reasoning_effort"] == "xhigh"
-    assert result.telemetry["token_count_events"] == 2
-    assert result.telemetry["totals"] == {
-        "input_tokens": 387914,
-        "cached_input_tokens": 375168,
-        "output_tokens": 8994,
-        "reasoning_output_tokens": 6144,
-        "total_tokens": 396908,
-    }
-    assert result.telemetry["last_usage"] == {
-        "input_tokens": 34414,
-        "cached_input_tokens": 34304,
-        "output_tokens": 267,
-        "reasoning_output_tokens": 154,
-        "total_tokens": 34681,
-    }
+    assert result.telemetry["session_id"] == CODEX_SESSION_ID
 
 
 def test_run_prompt_falls_back_to_codex_prompt_match(monkeypatch, tmp_path: Path) -> None:
-    fake_home = tmp_path / "home"
-    fake_bin = tmp_path / "bin"
-    fake_bin.mkdir()
-    fake_codex = fake_bin / "codex"
-    install_fake_codex(fake_codex, emit_session_id=False)
-
-    monkeypatch.setenv("HOME", str(fake_home))
-    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
-
-    result = review_runners.run_prompt(
-        runner="codex",
-        prompt="test prompt",
-        repo_root=tmp_path,
-        model="gpt-5.4",
-    )
+    """When codex doesn't print its session id, run_prompt finds the log by prompt match."""
+    result = _run_codex_prompt(monkeypatch, tmp_path, emit_session_id=False)
 
     assert result.returncode == 0
     assert result.telemetry is not None
-    assert result.telemetry["session_id"] == "019d54ab-17a2-73b0-b341-3f36434aa48b"
-    assert result.telemetry["task_complete_message"] == "Finished review bundle"
-    assert result.telemetry["reasoning_effort"] == "xhigh"
-    assert result.telemetry["rate_limits"] == {"primary": {"used_percent": 12}}
+    assert result.telemetry["session_id"] == CODEX_SESSION_ID

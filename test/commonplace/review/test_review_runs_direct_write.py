@@ -83,175 +83,130 @@ def commit_all(path: Path, message: str) -> str:
     return result.stdout.strip()
 
 
-def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
+DEFAULT_GATES: tuple[tuple[str, str, dict], ...] = (
+    ("prose/source-residue", "prose", {}),
+    ("semantic/grounding-alignment", "semantic", {}),
+)
+
+
+def build_repo_fixture(
+    tmp_path: Path,
+    *,
+    note_type: str = "kb/types/note.md",
+    gates: tuple[tuple[str, str, dict], ...] = DEFAULT_GATES,
+) -> tuple[Path, Path]:
     repo = tmp_path / "repo"
     repo.mkdir()
     init_repo(repo)
 
-    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n")
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
-        "prose/source-residue",
-        "prose",
-    )
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "semantic" / "grounding-alignment.md",
-        "semantic/grounding-alignment",
-        "semantic",
-    )
+    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type=note_type)
+    for gate_id, lens, extras in gates:
+        gate_name = gate_id.split("/", 1)[1]
+        make_gate(
+            repo / "kb" / "instructions" / "review-gates" / lens / f"{gate_name}.md",
+            gate_id,
+            lens,
+            **extras,
+        )
     commit_all(repo, "fixture")
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     return repo, db_path
 
 
-def build_repo_fixture_with_trait_gate(tmp_path: Path) -> tuple[Path, Path]:
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    init_repo(repo)
-
-    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n")
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
-        "prose/source-residue",
-        "prose",
-    )
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "claim-strength.md",
-        "frontmatter/claim-strength",
-        "frontmatter",
-        requires_trait="title-as-claim",
-    )
-    commit_all(repo, "fixture")
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
-    return repo, db_path
+CODEX_BUNDLE_SESSION_ID = "019d6000-17a2-73b0-b341-3f36434aa48b"
 
 
-def build_repo_fixture_with_type_gate(tmp_path: Path) -> tuple[Path, Path]:
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    init_repo(repo)
+def _build_codex_bundle_session_log(cwd: str, prompt: str, *, reasoning_effort: str) -> list[dict]:
+    return [
+        {
+            "type": "session_meta",
+            "payload": {
+                "id": CODEX_BUNDLE_SESSION_ID,
+                "timestamp": "2026-04-04T07:00:00.000Z",
+                "cwd": cwd,
+                "originator": "codex_exec",
+                "cli_version": "0.0.0",
+                "model_provider": "openai",
+            },
+        },
+        {
+            "type": "turn_context",
+            "payload": {
+                "cwd": cwd,
+                "model": "gpt-5.4",
+                "collaboration_mode": {
+                    "mode": "default",
+                    "settings": {"model": "gpt-5.4", "reasoning_effort": reasoning_effort},
+                },
+                "effort": reasoning_effort,
+            },
+        },
+        {
+            "type": "response_item",
+            "payload": {
+                "type": "message",
+                "role": "user",
+                "content": [{"type": "input_text", "text": prompt}],
+            },
+        },
+        {"type": "event_msg", "payload": {"type": "task_started", "turn_id": "turn-1"}},
+        {
+            "type": "event_msg",
+            "payload": {
+                "type": "token_count",
+                "info": {
+                    "model_context_window": 272000,
+                    "last_token_usage": {
+                        "input_tokens": 100,
+                        "cached_input_tokens": 50,
+                        "output_tokens": 25,
+                        "reasoning_output_tokens": 10,
+                        "total_tokens": 175,
+                    },
+                    "total_token_usage": {
+                        "input_tokens": 100,
+                        "cached_input_tokens": 50,
+                        "output_tokens": 25,
+                        "reasoning_output_tokens": 10,
+                        "total_tokens": 175,
+                    },
+                },
+                "rate_limits": {"primary": {"used_percent": 7}},
+            },
+        },
+        {
+            "type": "event_msg",
+            "payload": {
+                "type": "task_complete",
+                "turn_id": "turn-1",
+                "last_agent_message": (
+                    "=== GATE REVIEW START: prose/source-residue ===\n"
+                    "Needs revision.\n\n## Result: WARN\n"
+                    "=== GATE REVIEW END: prose/source-residue ===\n\n"
+                    "=== GATE REVIEW START: semantic/grounding-alignment ===\n"
+                    "Looks good.\n\n## Result: PASS\n"
+                    "=== GATE REVIEW END: semantic/grounding-alignment ==="
+                ),
+            },
+        },
+    ]
 
-    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type="kb/types/definition.md")
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
-        "prose/source-residue",
-        "prose",
-    )
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "definition-precision.md",
-        "frontmatter/definition-precision",
-        "frontmatter",
-        requires_type="kb/types/definition.md",
-    )
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "related-system-fit.md",
-        "frontmatter/related-system-fit",
-        "frontmatter",
-        requires_type="kb/types/note.md",
-    )
-    commit_all(repo, "fixture")
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
-    return repo, db_path
 
-
-def install_fake_codex_bundle_runner(fake_codex: Path, *, reasoning_effort: str = "xhigh") -> None:
-    session_id = "019d6000-17a2-73b0-b341-3f36434aa48b"
+def install_fake_codex_bundle_runner(fake_codex: Path) -> None:
+    """Fake codex: copies $CODEX_SESSION_LOG_SOURCE into the expected session-log
+    location, prints its session id, then prints the gate-review markers that
+    run_review_bundle parses out of stdout."""
     fake_codex.write_text(
         f"""#!/usr/bin/env python3
-import json
-import os
+import os, shutil
 from pathlib import Path
 
-session_id = "{session_id}"
+session_id = "{CODEX_BUNDLE_SESSION_ID}"
 home = Path(os.environ["HOME"])
 session_dir = home / ".codex" / "sessions" / "2026" / "04" / "04"
 session_dir.mkdir(parents=True, exist_ok=True)
-session_log = session_dir / f"rollout-2026-04-04T09-00-00-{{session_id}}.jsonl"
-prompt = os.sys.argv[-1]
-events = [
-    {{
-        "type": "session_meta",
-        "payload": {{
-            "id": session_id,
-            "timestamp": "2026-04-04T07:00:00.000Z",
-            "cwd": os.getcwd(),
-            "originator": "codex_exec",
-            "cli_version": "0.0.0",
-            "model_provider": "openai",
-        }},
-    }},
-    {{
-        "type": "turn_context",
-        "payload": {{
-            "cwd": os.getcwd(),
-            "approval_policy": "never",
-            "sandbox_policy": {{
-                "type": "workspace-write",
-                "writable_roots": [os.getcwd()],
-                "network_access": True,
-            }},
-            "model": "gpt-5.4",
-            "collaboration_mode": {{
-                "mode": "default",
-                "settings": {{
-                    "model": "gpt-5.4",
-                    "reasoning_effort": "{reasoning_effort}",
-                }},
-            }},
-            "effort": "{reasoning_effort}",
-        }},
-    }},
-    {{
-        "type": "response_item",
-        "payload": {{
-            "type": "message",
-            "role": "user",
-            "content": [{{"type": "input_text", "text": prompt}}],
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "task_started",
-            "turn_id": "turn-1",
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "token_count",
-            "info": {{
-                "model_context_window": 272000,
-                "last_token_usage": {{
-                    "input_tokens": 100,
-                    "cached_input_tokens": 50,
-                    "output_tokens": 25,
-                    "reasoning_output_tokens": 10,
-                    "total_tokens": 175,
-                }},
-                "total_token_usage": {{
-                    "input_tokens": 100,
-                    "cached_input_tokens": 50,
-                    "output_tokens": 25,
-                    "reasoning_output_tokens": 10,
-                    "total_tokens": 175,
-                }},
-            }},
-            "rate_limits": {{"primary": {{"used_percent": 7}}}},
-        }},
-    }},
-    {{
-        "type": "event_msg",
-        "payload": {{
-            "type": "task_complete",
-            "turn_id": "turn-1",
-            "last_agent_message": "=== GATE REVIEW START: prose/source-residue ===\\nNeeds revision.\\n\\n## Result: WARN\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: semantic/grounding-alignment ===",
-        }},
-    }},
-]
-with session_log.open("w", encoding="utf-8") as handle:
-    for event in events:
-        handle.write(json.dumps(event) + "\\n")
+target = session_dir / f"rollout-2026-04-04T09-00-00-{{session_id}}.jsonl"
+shutil.copyfile(os.environ["CODEX_SESSION_LOG_SOURCE"], target)
 
 print(f"session id: {{session_id}}", flush=True)
 print("=== GATE REVIEW START: prose/source-residue ===", flush=True)
@@ -655,7 +610,13 @@ def test_create_review_run_rejects_dirty_gate(tmp_path: Path) -> None:
 
 
 def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture_with_trait_gate(tmp_path)
+    repo, db_path = build_repo_fixture(
+        tmp_path,
+        gates=(
+            ("prose/source-residue", "prose", {}),
+            ("frontmatter/claim-strength", "frontmatter", {"requires_trait": "title-as-claim"}),
+        ),
+    )
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
@@ -678,7 +639,15 @@ def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_p
 
 
 def test_create_review_run_filters_type_gated_gates_for_inapplicable_note(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture_with_type_gate(tmp_path)
+    repo, db_path = build_repo_fixture(
+        tmp_path,
+        note_type="kb/types/definition.md",
+        gates=(
+            ("prose/source-residue", "prose", {}),
+            ("frontmatter/definition-precision", "frontmatter", {"requires_type": "kb/types/definition.md"}),
+            ("frontmatter/related-system-fit", "frontmatter", {"requires_type": "kb/types/note.md"}),
+        ),
+    )
     env = os.environ.copy()
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
@@ -1290,12 +1259,25 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
     fake_codex = fake_bin / "codex"
-    install_fake_codex_bundle_runner(fake_codex, reasoning_effort="xhigh")
+    install_fake_codex_bundle_runner(fake_codex)
+
+    session_log_source = tmp_path / "expected-session-log.jsonl"
+    session_log_source.write_text(
+        "\n".join(
+            json.dumps(event)
+            for event in _build_codex_bundle_session_log(
+                cwd=str(repo), prompt="", reasoning_effort="xhigh"
+            )
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     env = os.environ.copy()
     env["HOME"] = str(fake_home)
     env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     env["PATH"] = f"{fake_bin}:{env['PATH']}"
+    env["CODEX_SESSION_LOG_SOURCE"] = str(session_log_source)
 
     result = subprocess.run(
         [
