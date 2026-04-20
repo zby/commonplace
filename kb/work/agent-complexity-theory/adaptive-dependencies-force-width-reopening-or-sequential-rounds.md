@@ -1,6 +1,6 @@
 ---
 description: Exact orchestration over step-dependent discovery and dense cross-item interactions must pay in prompt width, repeated reopening, or sequential rounds; parallel fan-out alone cannot remove the dependency cost
-type: kb/notes/types/structured-claim.md
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering]
 status: seedling

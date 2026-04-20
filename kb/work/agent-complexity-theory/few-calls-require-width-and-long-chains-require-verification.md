@@ -1,6 +1,6 @@
 ---
 description: "Decomposition sits on a width-loss-reliability frontier: exact short pipelines need wide prompts or high-bandwidth interfaces, while long unchecked chains accumulate error and therefore need verifier or redundancy stages"
-type: kb/notes/types/structured-claim.md
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, llm-interpretation-errors]
 status: seedling
