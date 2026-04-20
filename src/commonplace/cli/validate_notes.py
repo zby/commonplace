@@ -10,7 +10,6 @@ from pathlib import Path
 from commonplace.lib.project_paths import (
     kb_root,
     list_collection_note_paths,
-    list_kb_validation_paths,
     list_kb_note_paths,
     list_notes_collection_paths,
 )
@@ -22,9 +21,16 @@ from commonplace.lib.validation import (
 )
 
 
+_TOO_BROAD_MESSAGE = (
+    "Validation scope must be a specific collection or file. "
+    "Pass one of: notes, reference, instructions, agent-memory-systems, sources, "
+    "or a note path."
+)
+
+
 def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
     if arg == "all":
-        return list_kb_validation_paths(repo_root)
+        raise ValueError(_TOO_BROAD_MESSAGE)
     if arg == "notes":
         return list_notes_collection_paths(repo_root)
 
@@ -36,20 +42,29 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
             if datetime.fromtimestamp(path.stat().st_mtime).date() == today
         )
 
+    kb = kb_root(repo_root).resolve()
+
     candidate = Path(arg)
     if candidate.is_absolute() and candidate.is_file():
         return [candidate.resolve()]
     if candidate.is_absolute() and candidate.is_dir():
-        return list_collection_note_paths(candidate.resolve())
+        resolved = candidate.resolve()
+        if resolved == kb:
+            raise ValueError(_TOO_BROAD_MESSAGE)
+        return list_collection_note_paths(resolved)
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_file():
         return [repo_candidate]
     if repo_candidate.is_dir():
+        if repo_candidate == kb:
+            raise ValueError(_TOO_BROAD_MESSAGE)
         return list_collection_note_paths(repo_candidate)
 
     collection_candidate = (kb_root(repo_root) / arg).resolve()
     if collection_candidate.is_dir():
+        if collection_candidate == kb:
+            raise ValueError(_TOO_BROAD_MESSAGE)
         return list_collection_note_paths(collection_candidate)
 
     all_paths = list_kb_note_paths(repo_root)
@@ -76,8 +91,6 @@ def _display_path(path: Path, *, repo_root: Path) -> str:
 
 def batch_scope(arg: str, *, repo_root: Path) -> str | None:
     """Return a display label when the target should use batch reporting."""
-    if arg == "all":
-        return "kb/"
     if arg == "notes":
         return "kb/notes"
 
@@ -138,7 +151,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         paths = resolve_targets(args.target, repo_root=repo_root)
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
 

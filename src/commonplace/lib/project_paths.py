@@ -92,11 +92,6 @@ def list_type_spec_paths(root: Path) -> list[Path]:
     )
 
 
-def list_kb_validation_paths(root: Path) -> list[Path]:
-    """Return KB markdown artifacts validated in batch mode, including type specs."""
-    return sorted([*list_kb_note_paths(root), *list_type_spec_paths(root)])
-
-
 def list_notes_collection_paths(root: Path) -> list[Path]:
     """Return markdown note paths under kb/notes only."""
     return list_collection_note_paths(kb_root(root) / "notes")

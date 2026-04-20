@@ -60,7 +60,9 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 To fix descriptions across many notes:
 
 ```bash
-commonplace-validate all 2>/dev/null | grep "description:"
+for c in notes reference instructions agent-memory-systems sources; do
+  commonplace-validate "$c"
+done 2>/dev/null | grep "description:"
 ```
 
-This produces a list of all notes with description warnings. Process each note using the procedure above.
+This produces a list of all notes with description warnings across the authored library. Process each note using the procedure above.

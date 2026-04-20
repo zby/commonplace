@@ -59,7 +59,7 @@ Run targeted validation on the written or edited artifact, not the whole KB:
 commonplace-validate path/to/written-file.md
 ```
 
-If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Do not run `commonplace-validate kb` or `cp-skill-validate all` as part of ordinary writing; full-KB validation is a separate maintenance operation and can surface unrelated warnings. Fix structural failures in the touched artifacts before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
+If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Bare `commonplace-validate kb` and `commonplace-validate all` are rejected — scope must be a specific collection or file. Fix structural failures in the touched artifacts before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
 
 ## Universal Mechanics
 

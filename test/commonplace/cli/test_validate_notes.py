@@ -10,6 +10,8 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
+import pytest  # noqa: E402
+
 from commonplace.cli import validate_notes  # noqa: E402
 from commonplace.lib import project_paths, validation  # noqa: E402
 
@@ -907,12 +909,18 @@ status: current
     )
 
     notes = validate_notes.resolve_targets("notes", repo_root=tmp_path)
-    all_paths = validate_notes.resolve_targets("all", repo_root=tmp_path)
 
     assert note in notes
     assert report not in notes
-    assert note in all_paths
-    assert report in all_paths
+
+
+def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
+    (tmp_path / "kb").mkdir()
+    (tmp_path / "kb" / "notes").mkdir()
+
+    for target in ("all", "kb", "kb/"):
+        with pytest.raises(ValueError):
+            validate_notes.resolve_targets(target, repo_root=tmp_path)
 
 
 def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:

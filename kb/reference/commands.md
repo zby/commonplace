@@ -29,9 +29,17 @@ commonplace-init --root /path/to/project
 Deterministic validator for KB notes. Checks frontmatter validity, enum values, link health, description quality, required sections, and batch signals (orphan detection, seedling counts).
 
 ```bash
-commonplace-validate kb/notes/          # validate all notes
-commonplace-validate agent-memory-systems  # validate one collection
-commonplace-validate kb/notes/my-note.md  # validate one note
+commonplace-validate notes               # validate one collection by name
+commonplace-validate kb/notes/           # validate one collection by path
+commonplace-validate kb/notes/my-note.md # validate one note
+```
+
+Bare `kb` and `all` are rejected — scope must be a specific collection or file. To validate the authored library, loop over the collections explicitly:
+
+```bash
+for c in notes reference instructions agent-memory-systems sources; do
+  commonplace-validate "$c"
+done
 ```
 
 ### commonplace-generate-notes-index
