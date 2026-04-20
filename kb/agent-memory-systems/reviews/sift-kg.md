@@ -87,6 +87,13 @@ Both systems share pipeline-first architecture with explicit stage boundaries (s
 
 [Evans (2026)](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) provides a third position on this axis. His core claim — "creating a classification system is a modeling task, which is much harder than the classification task itself" — implies sift-kg's schema discovery is the riskier move: it asks the LLM to do the hard thing (design entity types) rather than the easy thing (apply them). Evans' recommendation is to adopt published standards for generic domains and reserve custom modeling for core domains where it's strategically justified. sift-kg automates exactly the step Evans says requires the most care, betting that LLM-discovered schemas are good enough. Whether that bet pays off is the key question in "What to Watch" above.
 
+## Curiosity Pass
+
+- The most interesting strength is also the ceiling: the pipeline makes ontology creation feel like a setup step, but `domains/discovery.py` shows it is still one LLM call designing the conceptual frame from sampled text. If the first frame is wrong, later deterministic stages preserve the error more reliably.
+- The human review gate is narrower than the system framing can imply. It gates duplicate merges and relation decisions, not every extracted entity, relation, or narrative sentence. That is a useful checkpoint, but not full knowledge validation.
+- The simpler alternative to schema discovery is not "manual taxonomy forever"; it is a small set of published domain schemas with local extension points. sift-kg's auto-discovery becomes most compelling when the corpus has a domain shape the bundled schemas cannot already express.
+- The deterministic cleanup stack is a reminder that LLM extraction gets better when surrounded by boring code: Unicode normalization, title stripping, singularization, fuzzy matching, and relation normalization all reduce the surface area where the model has to be clever.
+
 ## What to Watch
 
 - **Per-document cost accounting is currently broken.** `extractor.py` computes `cost_for_doc` from `getattr(r, "_cost", 0.0)`, but `ExtractionResult` has no `_cost` field, so document-level `cost_usd` remains `0.0`.

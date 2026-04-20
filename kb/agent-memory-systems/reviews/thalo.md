@@ -26,7 +26,7 @@ last-checked: "2026-02-25"
 
 **Incremental everything.** Document edits apply incrementally (Tree-sitter edit API), semantic model updates incrementally, rules declare dependencies for targeted invalidation. The workspace is a live, incrementally-updated semantic model across files.
 
-## The Shared Bet
+## Comparison with Our System
 
 Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../../reference/available-types.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
 
@@ -41,7 +41,7 @@ The comparison illuminates a design spectrum:
 | Schema evolution | `alter-entity` directive | Edit templates, update conventions |
 | Link model | Typed links parsed by grammar | Markdown links with semantic context in prose |
 
-## Key Divergences
+### Key Divergences
 
 **They built a language; we stayed in markdown.** The trade-off is clear: a custom grammar gives you compiler-grade validation, LSP, incremental parsing. But it also means a new syntax to learn, tooling to maintain, and knowledge locked into a format that only thalo tools can process. Our markdown approach is lower-ceremony, works with every tool that reads text, but validation is softer.
 
@@ -51,17 +51,26 @@ The comparison illuminates a design spectrum:
 
 **No link semantics.** Their links are typed (the grammar knows `link` vs `link[]`) but don't carry relationship semantics. Our [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — extends, grounds, contradicts, enables — have no counterpart.
 
-## What We've Borrowed
+## Borrowable Ideas
+
+### What We've Borrowed
 
 - **Argument sections.** Their opinion entity (Claim/Reasoning/Caveats) was one of three threads that converged on [`structured-claim`](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) with Toulmin-derived Evidence/Reasoning/Caveats sections. See the [type comparison](../thalo-type-comparison.md) for details.
 
-## What We Could Still Borrow
+### What We Could Still Borrow
 
 - **The "unit tests for knowledge" framing.** Resonates with oracle hardening but is more accessible language. Could be useful when explaining our approach.
 - **Synthesis as map-reduce over knowledge.** Their `define-synthesis` is a saved query + prompt pair — a repeatable synthesis specification. The general mechanism is map-reduce: query selects entries, prompt maps over them, LLM reduces to output. Powerful pattern but needs a use case where you repeatedly ask the same shaped question over changing inputs. We don't have that pattern yet.
 - **Incremental workspace model.** If we ever build tooling beyond rg + skills, their architecture (workspace → documents → incremental semantic analysis) is a good reference.
 - **Supersedes links.** Explicitly tracking when one note replaces another — better than marking notes `outdated` without linking to the replacement.
 - **Source processing status.** Their `unread | read | processed` metadata for references — our `/ingest` pipeline does this operationally but doesn't persist it as queryable metadata.
+
+## Curiosity Pass
+
+- The custom language is not just surface syntax. The Tree-Sitter grammar, checker rule registry, Prettier plugin, LSP, merge driver, and virtual filesystem form a real compiler-tooling stack. The cost is that every knowledge convention becomes a product maintenance obligation.
+- Thalo's validation rules are strongest where structure is unambiguous: unknown entities, missing fields, unresolved links, required sections, duplicate IDs, and synthesis shape. They do not judge whether an opinion is true, whether evidence is strong, or whether a synthesis is insightful. The "unit tests for knowledge" framing is useful, but the oracle boundary is still structural.
+- `actualize` is deliberately conservative: it finds changed source entries and prints prompt material plus instructions instead of calling an LLM itself. That separation is cleaner than an integrated agent loop, but it means Thalo owns selection and packaging, not synthesis quality.
+- The simpler alternative for commonplace remains generated markdown plus deterministic validators. Thalo is the reference point for what happens if those validators become important enough to justify a grammar, not proof that a grammar should be the starting point.
 
 ## What to Watch
 

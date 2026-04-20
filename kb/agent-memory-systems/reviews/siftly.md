@@ -77,6 +77,13 @@ Siftly optimizes for operational throughput and resumability on a narrow artifac
 - **Structured vision analysis for image-bearing sources.** When ingesting sources with screenshots, diagrams, or charts, a structured prompt returning OCR text, scene type, and searchable tags could enrich snapshots. Only useful if commonplace starts handling visual sources.
 - **Same-URL deduplication for expensive operations.** Siftly tracks which image URLs have already been analyzed and reuses results. Pattern applies to any expensive per-source operation (LLM summarization, embedding generation) where the same URL may appear in multiple contexts.
 
+## Curiosity Pass
+
+- The strongest transferable pattern is not the SQLite database; it is the explicit distinction between raw payload, deterministic derived fields, and expensive AI-derived fields. That split lets Siftly retry and reprocess without pretending every stage has the same cost or failure mode.
+- Siftly's pipeline works because the artifact type is narrow. Tweet bookmarks have a stable enough shape for parser adapters, media extraction, category defaults, and FTS indexes. A commonplace ingest analogue would need the same narrowness at the adapter boundary, not just a generic "import anything" promise.
+- The model-facing category descriptions are an underappreciated detail. They turn taxonomy entries into classification instructions, which is closer to our desired area-index behavior than a human-only label list.
+- The capability ceiling is curation quality: the system can make bookmarks searchable and explorable, but it does not synthesize durable claims, resolve contradictions across bookmarks, or promote recurring patterns into a maintained library layer.
+
 ## What to Watch
 
 - Does Siftly generalize its pipeline beyond X/Twitter, or remain domain-specific?
