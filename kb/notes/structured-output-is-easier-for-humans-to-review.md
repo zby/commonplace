@@ -1,6 +1,6 @@
 ---
 description: Separated Evidence and Reasoning sections let human reviewers check facts and logic independently — a purely readability argument that doesn't depend on LLM behavior at all
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [type-system]
 status: seedling

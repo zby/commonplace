@@ -1,8 +1,8 @@
 ---
 description: Graph-first agent memory with bi-temporal edge invalidation — the strongest counterexample to files-first architecture in the surveyed memory systems
 source_snapshot: graphiti-temporal-knowledge-graph.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: design-proposal
 domains: [agent-memory, knowledge-graphs, temporal-data, retrieval-systems]
 ---

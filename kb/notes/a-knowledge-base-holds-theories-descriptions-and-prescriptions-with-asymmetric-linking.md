@@ -1,6 +1,6 @@
 ---
 description: "Three exhaustive registers — theory, description, prescription — with distinct quality goals; formulation constraint and maintenance asymmetry make the split real, distillation connects them; registers classify content orthogonally to operational roles, and in agent systems the prescription/implementation boundary collapses"
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
 status: current

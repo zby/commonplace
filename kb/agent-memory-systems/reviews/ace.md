@@ -1,6 +1,6 @@
 ---
 description: Three-role generator-reflector-curator loop that grows a sectioned playbook of ID-tagged bullets with helpful/harmful counters; curator prompt now only solicits ADD, with optional embedding-based merge
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

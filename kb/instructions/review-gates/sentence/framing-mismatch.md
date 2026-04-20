@@ -2,7 +2,7 @@
 gate_id: sentence/framing-mismatch
 name: Framing Mismatch
 description: Sentence frames its claim in terms of X but the actual mechanism is Y — narrows or misdirects the reader.
-type: instruction
+type: kb/types/instruction.md
 lens: sentence
 watches: [body]
 staleness: changed

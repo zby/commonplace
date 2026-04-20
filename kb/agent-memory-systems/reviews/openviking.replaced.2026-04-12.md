@@ -1,6 +1,6 @@
 ---
 description: Filesystem-paradigm context database for AI agents with L0/L1/L2 tiered loading, hierarchical recursive retrieval, three context types (Resource/Memory/Skill), and session-driven memory extraction — auto-generates and guarantees the same three-tier progressive disclosure pattern (link phrase / description / full text) that our system achieves through convention, but unifies all context into a virtual filesystem where the metaphor may promise more structure than it delivers
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

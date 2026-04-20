@@ -2,7 +2,7 @@
 gate_id: semantic/completeness-boundary-cases
 name: Completeness and boundary cases
 description: 'An enumeration, framework, or taxonomy claims to cover a space but leaves out edge cases or breaks when tested against the boundaries of its own scope.'
-type: instruction
+type: kb/types/instruction.md
 lens: semantic
 watches: [body]
 staleness: changed

@@ -1,6 +1,6 @@
 ---
 description: Hub for all tag indexes — browse the KB by conceptual domain rather than by directory
-type: index
+type: kb/types/index.md
 index_source: tag-indexes
 status: current
 ---

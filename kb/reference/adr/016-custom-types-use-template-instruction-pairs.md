@@ -1,6 +1,6 @@
 ---
 description: Accepted decision that specialized and practitioner-defined types use separate template and instructions files; the former WRITING.md loading assumption is superseded by ADR-017
-type: adr
+type: kb/reference/types/adr.md
 tags: []
 status: accepted
 ---

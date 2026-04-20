@@ -1,6 +1,6 @@
 ---
 description: Trace-derived learning systems compared on ingestion pattern, promotion target, artifact structure, and evidence tier across repo reviews and source-only coverage
-type: note
+type: kb/types/note.md
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
 status: seedling

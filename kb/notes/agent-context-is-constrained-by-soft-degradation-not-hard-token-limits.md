@@ -1,6 +1,6 @@
 ---
 description: The binding constraint on agent context is silent degradation across multiple dimensions (volume, complexity, possibly irrelevant context), not the hard token limit providers advertise
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, foundations]
 status: current

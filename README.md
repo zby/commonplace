@@ -70,7 +70,7 @@ Framework skills:
 
 Repo-local skills and procedures remain under `kb/instructions/`. Examples:
 - `evaluate-scenarios` — scenario-cost measurement for this repo's methodology work
-- Agent-memory-system reviews are handled by writing with the `agent-memory-system-review` type — workflow in `kb/agent-memory-systems/types/agent-memory-system-review.instructions.md`
+- Agent-memory-system reviews are handled by writing with the `agent-memory-system-review` type — workflow in `kb/agent-memory-systems/types/agent-memory-system-review.md`
 
 ## Content workflow
 

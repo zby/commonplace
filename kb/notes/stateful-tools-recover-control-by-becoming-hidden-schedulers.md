@@ -1,6 +1,6 @@
 ---
 description: Granting the strongest stateful-tool escape hatch shows that recovered control comes from relocating the scheduler into an exceptional tool or runtime, not from the framework loop itself
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
 status: seedling

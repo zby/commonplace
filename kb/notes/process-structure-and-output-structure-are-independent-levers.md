@@ -1,6 +1,6 @@
 ---
 description: Constraining what reasoning steps must occur (process structure) is an independent lever from constraining what the result looks like (output structure) — the KB's structured-reasoning cluster conflates the two, but the agentic-code-reasoning evidence shows process constraints driving accuracy gains where output format alone would not
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]
 status: seedling

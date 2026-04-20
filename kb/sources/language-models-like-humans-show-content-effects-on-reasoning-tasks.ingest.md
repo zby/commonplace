@@ -1,8 +1,8 @@
 ---
 description: Empirical demonstration that LLMs mirror human content effects on reasoning (syllogisms, NLI, Wason) — content bias survives scaling and instruction tuning but chain-of-thought partially restores content-independent reasoning
 source_snapshot: language-models-like-humans-show-content-effects-on-reasoning-tasks.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [cognitive-science, llm-reasoning, human-ai-comparison, dual-process-theory]
 ---

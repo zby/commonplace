@@ -1,6 +1,6 @@
 ---
 description: Evaluate a kb/log.md entry that suggests a new note — read the notes index first, load related notes, and decide whether to reject, fold into existing artifacts, keep in the log, or create a genuinely new note
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Evaluate a log entry for note creation

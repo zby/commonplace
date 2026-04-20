@@ -1,6 +1,6 @@
 ---
 description: Worst-case lower bound for opaque retrieval — without a pre-built pointer layer, exact discovery of all relevant items requires linear semantic inspection
-type: structured-claim
+type: kb/notes/types/structured-claim.md
 traits: []
 tags: [computational-model, context-engineering]
 status: seedling

@@ -1,8 +1,8 @@
 ---
 description: Ingest of SuperARC — AIT-grounded benchmark where frontier LLMs score phi ~0.03 while neuro-symbolic CTM/BDM achieves 1.000 on recursive compression; newer models regress; print-statement-only outputs demonstrate zero algorithmic abstraction
 source_snapshot: superarc-ait-benchmark-llm-compression-abstraction.md
-ingested: 2026-03-26
-type: ingest-report
+ingested: "2026-03-26"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [evaluation-methodology, learning-theory, algorithmic-information-theory, LLM-limitations]
 ---

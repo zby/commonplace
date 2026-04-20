@@ -3,7 +3,7 @@ source: https://github.com/NousResearch/autoreason/blob/main/paper/autoreason.pd
 description: Self-refinement paper that makes "do nothing" a first-class candidate via blind fresh-agent Borda tournaments, finding gains mostly in mid-tier models with a generation-evaluation gap
 captured: 2026-04-13
 capture: pdf-read
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

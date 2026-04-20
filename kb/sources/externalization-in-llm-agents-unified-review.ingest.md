@@ -2,7 +2,7 @@
 description: Survey paper unifying LLM agent memory, skills, protocols, and harness engineering as externalized cognitive infrastructure rather than model-weight capability alone
 source_snapshot: externalization-in-llm-agents-unified-review.md
 ingested: "2026-04-13"
-type: ingest-report
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [agent-architecture, context-engineering, agent-memory, harness-engineering]
 ---

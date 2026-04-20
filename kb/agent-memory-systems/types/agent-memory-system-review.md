@@ -1,4 +1,13 @@
-# Agent-memory-system-review instructions
+---
+type: kb/types/type-spec.md
+name: agent-memory-system-review
+description: Code-grounded review of an external agent memory or context-engineering system
+schema: kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml
+---
+
+# Agent memory system review
+
+## Authoring Instructions
 
 Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
 
@@ -89,7 +98,7 @@ Every review should end with explicit `Relevant Notes:` links into the KB.
 Use:
 
 - `description` — discriminating retrieval filter (50-200 chars, double-quoted)
-- `type: agent-memory-system-review`
+- `type: kb/agent-memory-systems/types/agent-memory-system-review.md`
 - `tags: [related-systems]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces. The finding drives both the tag and the placement section; the tag is not the reason to include the section.
 - `status: current` unless clearly stale/outdated
 - `last-checked: "{today}"`
@@ -134,3 +143,50 @@ Do not link to `../../../related-systems/...` or other local checkout paths. Loc
 - write Markdown links from review notes into `../../../related-systems/...` or other local checkout paths
 - treat proposed docs as implemented behavior without checking the code
 - update `last-checked` without actually re-reading the system
+
+## Template
+
+```markdown
+---
+description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+tags: [related-systems]
+status: current
+last-checked: "YYYY-MM-DD"
+---
+
+# {System name}
+
+{One-paragraph summary}
+
+**Repository:** {URL}
+
+**Reviewed commit:** {GitHub commit URL}
+
+## Core Ideas
+
+{Core ideas}
+
+## Comparison with Our System
+
+{Comparison}
+
+## Borrowable Ideas
+
+{Borrowable ideas}
+
+## Trace-derived learning placement
+
+{Optional. Include only when the code-grounded review finds a qualifying trace-derived learning mechanism; otherwise delete this section. When included, also add `trace-derived` to `tags`. Cover trace source, extraction, promotion target, scope, timing, survey-axis placement, and whether the system strengthens, weakens, or splits any survey claim.}
+
+## Curiosity Pass
+
+- {Surprises or curiosities}
+- {Simpler alternatives worth checking}
+- {What the mechanism could actually achieve, even if it works perfectly}
+
+## What to Watch
+
+- {What might change that affects our design?}
+- {What experiments are worth tracking?}
+```

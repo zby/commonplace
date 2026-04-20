@@ -2,7 +2,7 @@
 source: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
 captured: 2026-03-09
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Context surrounding a pointer determines how cheaply an agent judges relevance without loading the target; inline links carry most, search results least — descriptions are load-bearing
-type: note
+type: kb/types/note.md
 traits: []
 tags: [links]
 status: current

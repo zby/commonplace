@@ -1,6 +1,6 @@
 ---
 description: Multi-agent coding harness with git worktrees, checkpointed shared notes/skills, heartbeat prompts, and eval-gated iteration; strongest lightweight open-source outer loop for collaborative code search
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

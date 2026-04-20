@@ -3,7 +3,7 @@ source: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 description: Karpathy's idea file for agent-maintained personal wikis, centered on a persistent markdown layer between raw sources and query-time chat
 captured: 2026-04-04
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [web-page]
 ---
 

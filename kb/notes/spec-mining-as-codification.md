@@ -1,6 +1,6 @@
 ---
 description: "Operationalizes codification by extracting deterministic verifiers from observed stochastic behavior — the mechanism that converts blurry-zone components into calculators"
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory]
 status: current

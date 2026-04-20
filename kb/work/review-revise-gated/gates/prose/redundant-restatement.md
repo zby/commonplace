@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking redundant restatement during review-revise experiments
 gate_id: prose/redundant-restatement
 name: Redundant restatement
 lens: prose

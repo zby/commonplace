@@ -1,6 +1,6 @@
 ---
 description: Accepts SQLite as the canonical store for review state once review artifacts are removed from git and start carrying selector and ack metadata rather than just human-readable prose
-type: adr
+type: kb/reference/types/adr.md
 tags: []
 status: accepted
 ---

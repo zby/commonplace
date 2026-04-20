@@ -1,4 +1,4 @@
-"""Resolve structural note types from scoped JSON Schema definitions."""
+"""Resolve path-valued structural note types from type-spec documents."""
 
 from __future__ import annotations
 
@@ -13,92 +13,111 @@ from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
 
-from commonplace.lib.project_paths import collection_dirs, collection_for_path, kb_root
+from commonplace.lib import frontmatter
+from commonplace.lib.project_paths import kb_root
 
 
 @dataclass(frozen=True)
 class TypeProfile:
-    resolved_type: str
-    definition_path: Path | None
+    type_path: str
+    type_doc_path: Path | None
+    type_name: str
+    schema_path: Path | None
     schema: dict[str, Any] | None = None
 
 
-_SCHEMA_SUFFIX = ".schema.yaml"
-_TEMPLATE_SUFFIX = ".template.md"
+
+TYPE_SPEC_PATH = "kb/types/type-spec.md"
 
 
-def _schema_candidate_name(type_name: str) -> str:
-    return f"{type_name}{_SCHEMA_SUFFIX}"
-
-
-def discover_all_types(workspace_root: Path) -> dict[str, list[Path]]:
-    """Scan global and collection-local type directories for type definitions.
-
-    Returns a mapping of type name → list of definition paths.
-    A well-formed KB has exactly one path per type name.
-    """
-    result: dict[str, list[Path]] = {}
-    boundary = kb_root(workspace_root)
-    if not boundary.is_dir():
-        return result
-
-    type_dirs = [boundary / "types"]
-    type_dirs.extend(collection / "types" for collection in collection_dirs(workspace_root))
-    for type_dir in type_dirs:
-        if not type_dir.is_dir():
-            continue
-        for schema_path in sorted(type_dir.glob(f"*{_SCHEMA_SUFFIX}")):
-            type_name = schema_path.name.removesuffix(_SCHEMA_SUFFIX)
-            result.setdefault(type_name, []).append(schema_path)
-
-    return result
-
-
-def _collection_names(workspace_root: Path) -> set[str]:
-    """Return the names of top-level KB collection directories."""
-    boundary = kb_root(workspace_root)
-    if not boundary.is_dir():
-        return set()
-    return {p.name for p in collection_dirs(workspace_root)}
-
-
-def check_type_uniqueness(workspace_root: Path) -> list[str]:
-    """Return warnings for type names that collide with each other or with collection names."""
-    all_types = discover_all_types(workspace_root)
-    collection_names = _collection_names(workspace_root)
-    warnings: list[str] = []
-
-    for type_name, paths in sorted(all_types.items()):
-        if len(paths) > 1:
-            locations = ", ".join(
-                str(p.relative_to(workspace_root)) for p in sorted(paths)
-            )
-            warnings.append(
-                f"type {type_name!r} defined in multiple scopes: {locations}"
-            )
-        if type_name in collection_names:
-            warnings.append(
-                f"type {type_name!r} collides with collection directory kb/{type_name}/"
-            )
-
-    return warnings
-
-
-def _scope_roots(file_path: Path, workspace_root: Path) -> list[Path]:
+def _display_path(path: Path, workspace_root: Path) -> str:
     try:
-        collection = collection_for_path(file_path, workspace_root)
+        return path.relative_to(workspace_root).as_posix()
     except ValueError:
-        boundary = kb_root(workspace_root)
-        return [boundary] if boundary.is_dir() else [workspace_root]
-    return [collection, kb_root(workspace_root)]
+        return path.as_posix()
 
 
-def _definition_path(type_name: str, file_path: Path, workspace_root: Path) -> Path | None:
-    for scope_root in _scope_roots(file_path, workspace_root):
-        candidate = scope_root / "types" / _schema_candidate_name(type_name)
-        if candidate.is_file():
-            return candidate
-    return None
+def _validate_repo_relative_kb_path(
+    value: Any,
+    *,
+    workspace_root: Path,
+    suffix: str,
+    field_name: str,
+) -> tuple[str, Path]:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{field_name}: must be a non-empty repo-relative path")
+
+    rel = value.strip()
+    parsed = urlparse(rel)
+    path = Path(rel)
+    if parsed.scheme or parsed.netloc:
+        raise ValueError(f"{field_name}: URLs are not valid type paths: {rel}")
+    if path.is_absolute():
+        raise ValueError(f"{field_name}: absolute paths are not valid: {rel}")
+    if not rel.startswith("kb/"):
+        raise ValueError(f"{field_name}: must start with kb/: {rel}")
+    if not rel.endswith(suffix):
+        raise ValueError(f"{field_name}: must end with {suffix}: {rel}")
+    if ".." in path.parts:
+        raise ValueError(f"{field_name}: must not contain '..': {rel}")
+
+    resolved = (workspace_root / path).resolve()
+    boundary = kb_root(workspace_root).resolve()
+    try:
+        resolved.relative_to(boundary)
+    except ValueError as exc:
+        raise ValueError(f"{field_name}: path must stay under kb/: {rel}") from exc
+
+    return rel, resolved
+
+
+def validate_type_path(value: Any, *, repo_root: Path) -> tuple[str, Path]:
+    """Validate and resolve a repo-relative path-valued frontmatter type."""
+    return _validate_repo_relative_kb_path(
+        value,
+        workspace_root=repo_root.resolve(),
+        suffix=".md",
+        field_name="frontmatter.type",
+    )
+
+
+def _load_type_frontmatter(type_doc_path: Path, workspace_root: Path) -> dict[str, Any]:
+    if not type_doc_path.is_file():
+        raise FileNotFoundError(
+            f"frontmatter.type points to a missing type spec: {_display_path(type_doc_path, workspace_root)}"
+        )
+    parsed = frontmatter.parse(type_doc_path.read_text(encoding="utf-8"))
+    if not parsed.ok:
+        raise ValueError(
+            f"{_display_path(type_doc_path, workspace_root)}: invalid type-spec frontmatter: {'; '.join(parsed.errors)}"
+        )
+    if not parsed.data:
+        raise ValueError(f"{_display_path(type_doc_path, workspace_root)}: type spec must have frontmatter")
+    return parsed.data
+
+
+def _schema_path_from_type_doc(
+    type_doc_rel: str,
+    type_doc_path: Path,
+    type_frontmatter: dict[str, Any],
+    workspace_root: Path,
+) -> Path | None:
+    if "schema" not in type_frontmatter:
+        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include schema")
+
+    schema_value = type_frontmatter["schema"]
+    if schema_value is None:
+        return None
+
+    schema_rel, schema_path = _validate_repo_relative_kb_path(
+        schema_value,
+        workspace_root=workspace_root,
+        suffix=".schema.yaml",
+        field_name=f"{type_doc_rel}.schema",
+    )
+    if not schema_path.is_file():
+        raise FileNotFoundError(f"{type_doc_rel}: schema file is missing: {schema_rel}")
+    return schema_path
 
 
 @lru_cache(maxsize=None)
@@ -155,23 +174,6 @@ def _validator_for_path(path_str: str) -> Draft202012Validator:
     return Draft202012Validator(schema, registry=registry, format_checker=FormatChecker())
 
 
-def _resolve_known_type(type_name: str, file_path: Path, workspace_root: Path) -> TypeProfile:
-    definition_path = _definition_path(type_name, file_path, workspace_root)
-    if definition_path is None:
-        if type_name == "text":
-            return TypeProfile(resolved_type="text", definition_path=None)
-        if type_name == "note":
-            raise FileNotFoundError("kb/types/note.schema.yaml is missing")
-        return _resolve_known_type("note", file_path, workspace_root)
-
-    schema = _load_schema(str(definition_path.resolve()))
-    return TypeProfile(
-        resolved_type=type_name if type_name != "text" else "text",
-        definition_path=definition_path,
-        schema=schema,
-    )
-
-
 def resolve_type(
     file_path: Path,
     frontmatter: dict[str, Any] | None,
@@ -180,14 +182,73 @@ def resolve_type(
 ) -> TypeProfile:
     workspace_root = repo_root.resolve()
     if frontmatter is None:
-        type_name = "text"
+        return TypeProfile(
+            type_path="text",
+            type_doc_path=None,
+            type_name="text",
+            schema_path=None,
+            schema=None,
+        )
+
+    if "type" not in frontmatter:
+        raise ValueError("frontmatter.type is required for files with frontmatter")
+
+    type_doc_rel, type_doc_path = validate_type_path(frontmatter["type"], repo_root=workspace_root)
+    type_frontmatter = _load_type_frontmatter(type_doc_path, workspace_root)
+    declared_type = type_frontmatter.get("type")
+    if type_doc_rel == TYPE_SPEC_PATH:
+        expected_type = TYPE_SPEC_PATH
     else:
-        type_name = str(frontmatter.get("type", "note") or "note")
-    return _resolve_known_type(type_name, file_path, workspace_root)
+        expected_type = TYPE_SPEC_PATH
+    if declared_type != expected_type:
+        raise ValueError(
+            f"{type_doc_rel}: type spec must declare type: {expected_type}"
+        )
+
+    type_name = type_frontmatter.get("name")
+    if not isinstance(type_name, str) or not type_name.strip():
+        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include name")
+    if not isinstance(type_frontmatter.get("description"), str) or not type_frontmatter["description"].strip():
+        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include description")
+
+    schema_path = _schema_path_from_type_doc(
+        type_doc_rel,
+        type_doc_path,
+        type_frontmatter,
+        workspace_root,
+    )
+    schema = _load_schema(str(schema_path.resolve())) if schema_path is not None else None
+    return TypeProfile(
+        type_path=type_doc_rel,
+        type_doc_path=type_doc_path,
+        type_name=type_name.strip(),
+        schema_path=schema_path,
+        schema=schema,
+    )
 
 
 def validate_instance(profile: TypeProfile, instance: dict[str, Any]) -> list[ValidationError]:
-    if profile.definition_path is None or profile.schema is None:
+    if profile.schema_path is None or profile.schema is None:
         return []
-    validator = _validator_for_path(str(profile.definition_path.resolve()))
+    validator = _validator_for_path(str(profile.schema_path.resolve()))
     return sorted(validator.iter_errors(instance), key=lambda error: tuple(str(part) for part in error.absolute_path))
+
+
+def validate_type_specs(workspace_root: Path) -> list[str]:
+    """Return failures for malformed type-spec docs under kb/**/types/*.md."""
+    failures: list[str] = []
+    boundary = kb_root(workspace_root)
+    if not boundary.is_dir():
+        return failures
+    for path in sorted(boundary.glob("**/types/*.md")):
+        if path.name == "text.md":
+            continue
+        try:
+            parsed = frontmatter.parse(path.read_text(encoding="utf-8"))
+            if not parsed.ok:
+                failures.append(f"{path.relative_to(workspace_root)}: {'; '.join(parsed.errors)}")
+                continue
+            resolve_type(path, parsed.data, repo_root=workspace_root)
+        except (FileNotFoundError, ValueError) as exc:
+            failures.append(f"{path.relative_to(workspace_root)}: {exc}")
+    return failures

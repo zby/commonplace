@@ -8,14 +8,14 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.lib.note_parser import find_markdown_links_with_text, parse_document
+from commonplace.lib.note_parser import find_markdown_links_with_text, parse_document  # noqa: E402
 
 
 def test_parse_document_extracts_headings_and_excludes_fenced_code() -> None:
     document, error = parse_document(
         """---
 description: Example
-type: note
+type: kb/types/note.md
 ---
 
 # Title
@@ -37,7 +37,7 @@ def test_parse_document_extracts_links_and_body_dates() -> None:
     document, error = parse_document(
         """---
 description: Example
-type: review
+type: kb/types/note.md
 ---
 
 # Title

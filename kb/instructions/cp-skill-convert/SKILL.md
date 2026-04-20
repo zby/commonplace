@@ -1,7 +1,7 @@
 ---
 name: cp-skill-convert
 description: Convert notes between types. Currently supports text to note by adding frontmatter with status seedling, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
 context: fork
@@ -43,7 +43,7 @@ Add YAML frontmatter at the top of the file:
 ```yaml
 ---
 description: [50-200 chars, adds mechanism/scope/implication beyond the title]
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: seedling
@@ -109,7 +109,7 @@ Promotes a note with a claim title into a fully structured argument with Toulmin
 
 #### Step 1: Locate and verify
 
-Resolve the target to a file path. Read the file. Verify it has frontmatter with `type: note` (or no explicit type). If it's already `type: structured-claim`, report and stop.
+Resolve the target to a file path. Read the file. Verify it has frontmatter with `type: kb/types/note.md` (or no explicit type). If it's already `type: kb/notes/types/structured-claim.md`, report and stop.
 
 #### Step 2: Restructure body
 
@@ -120,7 +120,7 @@ Add or identify `## Evidence`, `## Reasoning`, and `## Caveats` sections. Move e
 
 #### Step 3: Update frontmatter
 
-- Set `type: structured-claim`
+- Set `type: kb/notes/types/structured-claim.md`
 - Keep `status` unchanged (conversion doesn't endorse)
 
 #### Step 4: Report

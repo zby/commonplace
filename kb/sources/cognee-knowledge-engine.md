@@ -2,7 +2,7 @@
 source: https://github.com/topoteretes/cognee
 captured: 2026-03-05
 capture: manual
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [github-repo]
 ---
 

@@ -1,8 +1,8 @@
 ---
 description: Augment's argument that spec-driven development fails unless agents co-maintain the spec — bidirectional spec as a mechanism for matching maintenance throughput to generation throughput
 source_snapshot: what-spec-driven-development-gets-wrong-2025993446633492725.md
-ingested: 2026-03-10
-type: ingest-report
+ingested: "2026-03-10"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [spec-driven-development, agent-architecture, documentation-maintenance]
 ---

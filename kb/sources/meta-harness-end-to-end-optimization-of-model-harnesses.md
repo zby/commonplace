@@ -3,7 +3,7 @@ source: https://yoonholee.com/meta-harness/paper.pdf
 description: Stanford/MIT paper proposing Meta-Harness, an outer-loop system that uses a coding agent with full filesystem access to prior code and execution traces to automatically search over and optimize LLM harnesses — outperforming hand-engineered baselines on text classification and TerminalBench-2.
 captured: 2026-03-31
 capture: pdf-read
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

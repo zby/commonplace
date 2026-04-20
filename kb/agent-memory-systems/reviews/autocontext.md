@@ -1,6 +1,6 @@
 ---
 description: Multi-role iterative control plane that turns repeated scenario runs into playbooks, typed lessons, harness mutations, and optionally distilled MLX models — now reorganized around a canonical concept model (Scenario/Task/Mission/Campaign) with a data-driven role DAG and trend-aware gating
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

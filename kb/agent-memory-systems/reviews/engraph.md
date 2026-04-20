@@ -1,6 +1,6 @@
 ---
 description: Obsidian vault server with SQLite hybrid index, wikilink graph expansion, section-level writes, and local MCP/HTTP surfaces; strongest local-first derived index over a human note substrate
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

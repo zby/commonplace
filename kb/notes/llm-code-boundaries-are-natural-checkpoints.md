@@ -1,6 +1,6 @@
 ---
 description: At each LLM↔code transition both semantic underspecification and execution indeterminism collapse simultaneously, making these boundaries natural places to anchor debugging, testing, and refactoring
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model]
 status: seedling

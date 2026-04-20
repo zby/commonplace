@@ -1,6 +1,6 @@
 ---
 description: "Filesystem-first operational memory framework with Pin/Spec/Facts/Handoff/Skills artifacts and a small Python runner that promotes task learnings into project facts"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison]
 tags: [related-systems, trace-derived]
 status: current

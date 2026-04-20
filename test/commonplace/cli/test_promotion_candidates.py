@@ -37,7 +37,7 @@ Only linked from code regions.
         notes_root / "seedling.md",
         """---
 description: Seedling note linking to the raw capture and mentioning another file only inside code
-type: note
+type: kb/types/note.md
 traits: []
 status: seedling
 ---

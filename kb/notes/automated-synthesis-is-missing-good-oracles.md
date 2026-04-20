@@ -1,6 +1,6 @@
 ---
 description: Generating synthesis candidates (cross-note connections, novel combinations) is easy — LLMs do it readily. The hard part is evaluating whether a candidate is genuine insight or noise.
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 status: speculative

@@ -1,8 +1,8 @@
 ---
 description: Ingest of NeurIPS 25 workshop paper benchmarking LLM web agents under long context (25k-150k tokens) with injected irrelevant task sequences — provides agent-level empirical evidence for soft degradation, loop entrapment, and objective loss, extending GSM-DC's distractor findings to multi-session agentic tasks.
 source_snapshot: llm-webagents-long-context-reasoning-benchmark.md
-ingested: 2026-03-26
-type: ingest-report
+ingested: "2026-03-26"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [context-degradation, agent-systems, web-agents, long-context-evaluation]
 ---

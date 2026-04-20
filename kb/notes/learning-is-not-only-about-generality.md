@@ -1,6 +1,6 @@
 ---
 description: Per Simon, any capacity change is learning; accumulation is the most basic learning operation and reach is its key property — facts (low reach) vs theories (high reach); capacity also decomposes into generality vs a reliability/speed/cost compound
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 status: current
 tags: [learning-theory]

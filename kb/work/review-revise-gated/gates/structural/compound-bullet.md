@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking compound bullet during review-revise experiments
 gate_id: structural/compound-bullet
 name: Compound bullet
 lens: structural

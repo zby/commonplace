@@ -1,0 +1,47 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+      - name
+      - description
+      - schema
+    properties:
+      type:
+        const: kb/types/type-spec.md
+      name:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 1
+      schema:
+        anyOf:
+          - type: "null"
+          - type: string
+            pattern: '^kb/.+\.schema\.yaml$'
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
+additionalProperties: false

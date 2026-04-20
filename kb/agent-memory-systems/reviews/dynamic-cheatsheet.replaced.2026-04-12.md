@@ -1,6 +1,6 @@
 ---
 description: Test-time adaptive memory that carries forward a prompt-shaped cheatsheet across queries — artifact-learning via full cheatsheet rewrites and optional retrieval/synthesis, without weight updates
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

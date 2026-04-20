@@ -1,6 +1,6 @@
 ---
 description: As the KB grows, /connect will retrieve too many candidates — note quality scores (status, type, inbound links, recency, link strength) filter candidates and prioritise what's worth connecting
-type: note
+type: kb/types/note.md
 traits: []
 status: seedling
 tags: [kb-maintenance, observability]

@@ -1,6 +1,6 @@
 ---
 description: Repo-native document-analysis workspace with staged/published KB boundaries, multimodal evidence channels, provenance tracing, and sync-time promotion of interaction logs into published memories
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: []
 status: outdated

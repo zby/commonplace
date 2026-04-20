@@ -1,6 +1,6 @@
 ---
 description: Methodology for testing prompt framings — uses controlled variation against a human-verified finding to identify which cognitive moves agents can reliably execute, then deploys the winning framing as instruction
-type: note
+type: kb/types/note.md
 traits: []
 tags: [evaluation]
 status: seedling
@@ -46,7 +46,7 @@ The conversion from human insight to agent framing is inherently lossy. The huma
 
 The curiosity-prompts experiment produced two deployed artifacts:
 
-- The [Curiosity Pass](./types/related-system.template.md) in the related-system template — a systematic per-claim review step combining broad curiosity, cost/benefit, and the oracle-strength question
+- The [Curiosity Pass](../agent-memory-systems/types/agent-memory-system-review.md#curiosity-pass) in the agent-memory-system-review type spec — a systematic per-claim review step combining broad curiosity, cost/benefit, and the oracle-strength question
 - The [Curiosity Gate](../instructions/ingest/SKILL.md) in the ingestion skill — a lighter two-question version (what surprises you? what's the simpler account?) adapted for source analysis
 
 Both include the oracle-strength question ("what could this achieve even if it works perfectly?") despite inconsistent agent performance, because it's the most powerful framing when it does fire.

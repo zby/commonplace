@@ -11,7 +11,7 @@ allOf:
           - index_source
         properties:
           type:
-            const: index
+            const: kb/types/index.md
           index_source:
             enum:
               - directory

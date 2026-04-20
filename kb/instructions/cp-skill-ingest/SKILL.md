@@ -1,7 +1,7 @@
 ---
 name: cp-skill-ingest
 description: Ingest a source into the knowledge base. Accepts a URL (GitHub, X/Twitter, or web page) or a path to an existing snapshot. URLs are snapshotted first, then the snapshot is classified, connected, and analysed. Saves the report as .ingest.md.
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -55,8 +55,8 @@ This is your connection context for the analysis below.
 
 Write the analysis as an `ingest-report`, informed by the connections found in Steps 1-2. Before writing the report, read:
 
-- `kb/sources/types/ingest-report.instructions.md`
-- `kb/sources/types/ingest-report.template.md`
+- `kb/sources/types/ingest-report.md`
+- `kb/sources/types/ingest-report.md`
 
 ### 3.1 Classification
 
@@ -185,7 +185,7 @@ The saved `.ingest.md` file should contain:
 description: {one-line retrieval filter — what makes this source distinctive, not a generic summary}
 source_snapshot: {input filename}
 ingested: "{current UTC date}"
-type: ingest-report
+type: kb/sources/types/ingest-report.md
 source_type: {source-type}
 domains: [{tag1}, {tag2}, {tag3}]
 ---

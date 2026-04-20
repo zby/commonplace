@@ -1,6 +1,6 @@
 ---
 description: Test-time adaptive memory where the core stateful cheatsheet variants rewrite a carried-forward cheatsheet string; v2.0 adds a hybrid cumulative-plus-retrieval approach and server-side code execution, but curation is still full-document rewrite with no enforced invariants
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

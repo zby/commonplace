@@ -1,6 +1,6 @@
 ---
 description: Counting lower bound on summary-based memory — exact universal answering over a rich query family requires summary space at least as large as the query-induced state partition
-type: structured-claim
+type: kb/notes/types/structured-claim.md
 traits: []
 tags: [computational-model, context-engineering, learning-theory]
 status: seedling

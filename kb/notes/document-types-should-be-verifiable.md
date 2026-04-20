@@ -1,6 +1,6 @@
 ---
 description: Document types should assert verifiable structural properties, not subject matter — with a base type + traits model inspired by gradual and structural typing
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [type-system]
 status: seedling
@@ -43,7 +43,7 @@ The original type system used a flat enum: `design`, `analysis`, `insight`, `res
 The solution borrows from subtyping and structural typing. Instead of a flat enum, use a **base type** (hard structural category) plus **traits** (independently checkable properties):
 
 ```yaml
-type: note
+type: kb/types/note.md
 traits: [has-comparison, has-external-sources]
 ```
 
@@ -51,10 +51,10 @@ traits: [has-comparison, has-external-sources]
 
 | Base type | What it tells the agent |
 |-----------|------------------------|
-| `note` | Default — read it to find out what you can do with it |
+| `kb/types/note.md` | Default — read it to find out what you can do with it |
 | `spec` | You can implement from this; it has enough detail to build against |
 | `review` | This examines specific code; expect findings and a date |
-| `index` | This is a navigation hub; follow its links to find related notes |
+| `kb/types/index.md` | This is a navigation hub; follow its links to find related notes |
 
 **Traits** are independently checkable properties — like interfaces or protocols that a value can satisfy in any combination:
 
@@ -64,7 +64,7 @@ traits: [has-comparison, has-external-sources]
 | `has-external-sources` | This connects to material outside the project |
 | `has-implementation` | This contains code sketches or concrete API proposals |
 
-A note can satisfy multiple traits without conflict. What the old system called "research" becomes `note` + `has-external-sources`. What it called "insight" becomes `structured-claim` (if the argument is developed) or stays `note` (if the title is a claim but the body is free-form). A research note with a codified conclusion is `structured-claim` + `has-external-sources` — no forced choice.
+A note can satisfy multiple traits without conflict. What the old system called "research" becomes `kb/types/note.md` + `has-external-sources`. What it called "insight" becomes `structured-claim` (if the argument is developed) or stays `kb/types/note.md` (if the title is a claim but the body is free-form). A research note with a codified conclusion is `kb/notes/types/structured-claim.md` + `has-external-sources` — no forced choice.
 
 ## The verifiability gradient
 

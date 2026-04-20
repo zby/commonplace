@@ -23,7 +23,7 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path, title: str, body: str, *, traits: str = "[]", note_type: str = "note") -> Path:
+def make_note(path: Path, title: str, body: str, *, traits: str = "[]", note_type: str = "kb/types/note.md") -> Path:
     return write(
         path,
         f"""---
@@ -131,7 +131,7 @@ def build_repo_fixture_with_type_gate(tmp_path: Path) -> tuple[Path, Path]:
     repo.mkdir()
     init_repo(repo)
 
-    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type="definition")
+    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type="kb/types/definition.md")
     make_gate(
         repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
         "prose/source-residue",
@@ -141,13 +141,13 @@ def build_repo_fixture_with_type_gate(tmp_path: Path) -> tuple[Path, Path]:
         repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "definition-precision.md",
         "frontmatter/definition-precision",
         "frontmatter",
-        requires_type="definition",
+        requires_type="kb/types/definition.md",
     )
     make_gate(
         repo / "kb" / "instructions" / "review-gates" / "frontmatter" / "related-system-fit.md",
         "frontmatter/related-system-fit",
         "frontmatter",
-        requires_type="related-system",
+        requires_type="kb/types/note.md",
     )
     commit_all(repo, "fixture")
     db_path = repo / "kb" / "reports" / "review-store.sqlite"

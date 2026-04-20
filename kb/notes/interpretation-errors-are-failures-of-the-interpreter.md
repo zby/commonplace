@@ -1,6 +1,6 @@
 ---
 description: Real LLMs produce outputs that no valid interpretation of the spec allows — violating explicit constraints, hallucinating, failing at fully specified bookkeeping — a property of the interpreter itself, absent from the idealised two-phenomena model
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-interpretation-errors]
 status: seedling

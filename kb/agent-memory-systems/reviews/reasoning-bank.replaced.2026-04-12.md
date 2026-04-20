@@ -1,6 +1,6 @@
 ---
 description: Trajectory-to-memory pipeline extracting structured items from successes and failures, with embedding retrieval and parallel-trajectory test-time scaling; append-only, sits between Reflexion and ExpeL
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

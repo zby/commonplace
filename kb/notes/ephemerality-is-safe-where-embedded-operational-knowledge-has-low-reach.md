@@ -1,6 +1,6 @@
 ---
 description: Kirsch's barriers all mark cases where software carries decisions that must survive into future runs, users, and audits; ephemerality is safe only when that knowledge stays local
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory]
 status: seedling

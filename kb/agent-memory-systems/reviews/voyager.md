@@ -1,6 +1,6 @@
 ---
 description: Embodied lifelong-learning Minecraft agent whose action/critic/curriculum/skill-manager loop promotes successful trajectories into a Chroma-indexed library of reusable JavaScript functions
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

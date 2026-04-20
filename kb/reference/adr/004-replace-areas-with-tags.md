@@ -1,6 +1,6 @@
 ---
 description: Replaces the areas frontmatter field with freeform tags and restructures index pages to have both curated and generated sections, decoupling navigation from comparative reading
-type: adr
+type: kb/reference/types/adr.md
 tags: []
 status: proposed
 ---

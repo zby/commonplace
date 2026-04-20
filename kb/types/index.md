@@ -1,4 +1,13 @@
-# Index Instructions
+---
+type: kb/types/type-spec.md
+name: index
+description: Navigation hub or generated directory listing with index metadata and managed generated sections
+schema: kb/types/index.schema.yaml
+---
+
+# Index
+
+## Authoring Instructions
 
 Use an index when the document's main job is navigation rather than argument.
 
@@ -33,3 +42,32 @@ There are two kinds of indexes:
 Create when 5+ related notes accumulate under a tag. Curate when the generated listing alone isn't enough. Merge when both indexes are small with significant overlap.
 
 Rebuild with `commonplace-refresh-indexes`. For detailed maintenance workflow, read `kb/instructions/maintain-curated-indexes.md`.
+
+## Template
+
+```markdown
+---
+description: "Template for generated-tail index pages — curated editorial section above a generated listing"
+type: kb/types/index.md
+index_source: tag
+index_key: "{tag-name}"
+---
+
+# {tag-name}
+
+{Orientation}
+
+## Notes
+
+- [note](./note.md) — why it matters here
+
+## Decisions
+
+- [decision](../../reference/adr/decision.md) — why it matters here
+
+## Related Tags
+
+- [related-tag-index](./related-tag-index.md) — how it connects
+
+## Other tagged notes <!-- generated -->
+```

@@ -50,7 +50,7 @@ Inline: `[skip](../notes/old-note.md)`
 
 def test_rebase_relative_markdown_links_updates_outbound_links_for_moved_note(tmp_path: Path) -> None:
     old_note = tmp_path / "kb" / "notes" / "old-note.md"
-    target = write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "# Concept\n")
+    write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "# Concept\n")
     content = """Self: [self](./old-note.md)
 Target: [concept](./definitions/concept.md)
 """

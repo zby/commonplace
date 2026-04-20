@@ -3,7 +3,7 @@ source: https://www.letta.com/blog/continual-learning
 description: Letta reframes continual learning for agents as optimization over learned context rather than weights, arguing token-space memory is the primary transferable substrate for long-lived agents
 captured: 2026-03-23
 capture: web-open
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 

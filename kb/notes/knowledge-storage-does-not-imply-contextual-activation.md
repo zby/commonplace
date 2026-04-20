@@ -1,6 +1,6 @@
 ---
 description: Distinguishes stored knowledge (retrievable on direct probe) from contextually activated knowledge (brought to bear during task execution without being directly queried); formalizes the activation gap and the expertise gap
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
 status: seedling

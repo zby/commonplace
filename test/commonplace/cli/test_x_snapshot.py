@@ -105,7 +105,7 @@ def test_x_snapshot_stamps_snapshot_family_tag_and_json_family(
     fm = frontmatter(md_path)
     sidecar = json.loads(json_path.read_text(encoding="utf-8"))
 
-    assert fm["type"] == "snapshot"
+    assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == [expected_family]
     assert sidecar["family"] == expected_family
     assert "type" not in sidecar

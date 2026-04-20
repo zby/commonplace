@@ -1,6 +1,6 @@
 ---
 description: Context database for AI agents exposing memory, resources, and skills as a viking:// virtual filesystem with auto-generated L0/L1/L2 tiers, hierarchical recursive retrieval, and background session-commit extraction — structurally guarantees a three-tier progressive disclosure our system enforces only by convention, but its "filesystem" is a service API rather than actual files
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

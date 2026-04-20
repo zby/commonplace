@@ -33,7 +33,7 @@ def make_note(
     *,
     status: str = "current",
     traits: str = "[]",
-    note_type: str = "note",
+    note_type: str = "kb/types/note.md",
 ) -> Path:
     return write(
         path,
@@ -417,19 +417,19 @@ class TestMissingReview:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="definition")
+        make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="kb/types/definition.md")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
         make_gate(
             gates_dir / "frontmatter" / "definition-precision.md",
             "frontmatter/definition-precision",
             "frontmatter",
-            requires_type="definition",
+            requires_type="kb/types/definition.md",
         )
         make_gate(
             gates_dir / "frontmatter" / "related-system-fit.md",
             "frontmatter/related-system-fit",
             "frontmatter",
-            requires_type="related-system",
+            requires_type="kb/types/note.md",
         )
 
         stale = review_target_selector.select_stale_gates(
@@ -774,18 +774,18 @@ class TestResolveGates:
     def test_applicable_gate_ids_for_note_filters_by_requires_type(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        note = make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="definition")
+        note = make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="kb/types/definition.md")
         make_gate(
             gates_dir / "frontmatter" / "definition-precision.md",
             "frontmatter/definition-precision",
             "frontmatter",
-            requires_type="definition",
+            requires_type="kb/types/definition.md",
         )
         make_gate(
             gates_dir / "frontmatter" / "related-system-fit.md",
             "frontmatter/related-system-fit",
             "frontmatter",
-            requires_type="related-system",
+            requires_type="kb/types/note.md",
         )
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
@@ -804,7 +804,7 @@ class TestResolveGates:
     def test_applicable_gate_ids_for_note_allows_requires_type_lists(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        note = make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="definition")
+        note = make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="kb/types/definition.md")
         write(
             gates_dir / "frontmatter" / "definitionish.md",
             """---
@@ -813,7 +813,7 @@ name: Definitionish
 lens: frontmatter
 watches: [body]
 staleness: changed
-requires-type: [definition, glossary-entry]
+requires-type: [kb/types/definition.md, kb/types/glossary-entry.md]
 ---
 
 ## Failure mode

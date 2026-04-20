@@ -1,6 +1,6 @@
 ---
 description: Behaviour change spans three substrate classes — opaque (weights), prose (prompts, notes, specs), and symbolic (code, schemas, tests) — so the coevolution question is how their improvement loops relate, not which is the real locus of learning
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 ---

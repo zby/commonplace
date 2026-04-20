@@ -1,8 +1,8 @@
 ---
 description: Speculative essay arguing mesa optimizers may emerge suddenly because language recursion and learned search both compress many cases into reusable generative rules.
 source_snapshot: mesa-optimizers-and-language-recursion.md
-ingested: 2026-03-31
-type: ingest-report
+ingested: "2026-03-31"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [mesa-optimization, language-theory, capability-emergence, learning-theory]
 ---

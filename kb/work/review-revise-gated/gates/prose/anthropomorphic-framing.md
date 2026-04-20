@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking anthropomorphic framing during review-revise experiments
 gate_id: prose/anthropomorphic-framing
 name: Anthropomorphic framing
 lens: prose

@@ -1,6 +1,6 @@
 ---
 description: Substrate analysis has four axes — three structural (class, backend, form) and one relational (role); conflating them blurs comparisons and hides missing cells
-type: note
+type: kb/types/note.md
 traits: [has-comparison]
 tags: [learning-theory]
 status: current
@@ -88,6 +88,7 @@ Relevant Notes:
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets the same content play either role
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — applies: deploy-time learning is timing-defined and lands in all three substrate classes (fine-tuning in opaque, commonplace in prose+symbolic)
 - [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: builds on the opaque/prose/symbolic split to ask how the three improvement loops should relate
+- [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md) — explains: the role axis exists because context/compute is bounded; under unbounded context most system-definition collapses into knowledge, but codified symbolic artifacts survive
 - [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: surveyed systems distinguish promotion targets that span these axes
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — sharpens: backend choice is downstream of substrate choice
 - [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: readability is shared by both non-opaque substrates

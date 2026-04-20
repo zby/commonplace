@@ -10,12 +10,20 @@ from commonplace.lib.project_paths import is_type_definition_content
 
 
 SKIP_DIR_NAMES = {"types"}
+INDEX_TYPE = "kb/types/index.md"
 
 
 def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
     """Sort by visible link text first, then by path for deterministic ties."""
     rel_path, title, _desc, _note_type = entry
     return (title.casefold(), rel_path.casefold())
+
+
+def _display_type(note_type: str) -> str:
+    """Display path-valued types compactly in generated directory indexes."""
+    if note_type.startswith("kb/") and note_type.endswith(".md"):
+        return Path(note_type).stem
+    return note_type
 
 
 def _has_indexable_content(directory: Path) -> bool:
@@ -98,7 +106,7 @@ def generate(notes_dir: Path, *, parent_link: str) -> str:
     lines = [
         "---",
         "description: Auto-generated directory - run commonplace-refresh-indexes to rebuild",
-        "type: index",
+        f"type: {INDEX_TYPE}",
         "index_source: directory",
         "---",
         "",
@@ -123,7 +131,7 @@ def generate(notes_dir: Path, *, parent_link: str) -> str:
         for rel, title, desc, note_type in file_entries:
             parts = [f"- [{title}](./{rel})"]
             if note_type:
-                parts.append(f"*({note_type})*")
+                parts.append(f"*({_display_type(note_type)})*")
             if desc:
                 parts.append(f"- {desc}")
             lines.append(" ".join(parts))

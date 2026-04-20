@@ -1,6 +1,6 @@
 ---
 description: Shipped commonplace architecture — installed project layout, packaged runtime, scaffolded KB surface, promoted skills, and the boundary between framework-provided artifacts and practitioner-authored content
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current

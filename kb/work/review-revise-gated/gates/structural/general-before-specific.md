@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking general before specific during review-revise experiments
 gate_id: structural/general-before-specific
 name: General before specific
 lens: structural

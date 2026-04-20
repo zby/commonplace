@@ -1,6 +1,6 @@
 ---
 description: Internal API reference for commonplace.lib - frontmatter, naming, note_parser, type_resolver, validation, and relocation modules used by CLI commands and the review system
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---
@@ -127,42 +127,33 @@ For an instruction at `kb/instructions/foo.md`:
 
 In the shipped scaffold, plain instructions and review gates use the global `instruction` type at `kb/types/instruction.schema.yaml`.
 
-For a report at `kb/reports/connect/foo.connect.md`:
-
-1. `kb/reports/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
-
-For a source ingest report at `kb/sources/foo.ingest.md`:
-
-1. `kb/sources/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
-
-For a note at `kb/notes/bar.md`:
-
-1. `kb/notes/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
+Type resolution now starts from the path stored in frontmatter. There is no collection-scoped enum lookup.
 
 ### Type resolution logic
 
-1. If the note has frontmatter with a `type` field → use that type name
-2. If the note has frontmatter but no `type` → default to `"note"`
-3. If the note has no frontmatter → `"text"` (no schema, no validation)
-4. If the type's schema file isn't found → fall back to `"note"` (except `"note"` itself, which raises `FileNotFoundError`)
+1. If the file has no frontmatter, treat it as implicit `text` and skip schema validation.
+2. If the file has frontmatter, require `type:` to be a repo-relative markdown path under `kb/`.
+3. Open the referenced type-spec doc and verify it declares `type: kb/types/type-spec.md`.
+4. Read the type spec's `name`, `description`, and `schema` fields.
+5. If `schema` is a path, load that JSON Schema YAML file and validate the parsed document against it. If `schema: null`, skip schema validation.
+
+Bare enum values, missing type files, missing `schema` fields in type specs, absolute paths, URLs, and paths outside `kb/` are validation errors.
 
 ### Public API
 
 **`TypeProfile`** — frozen dataclass describing a resolved type:
-- `resolved_type: str` — type name
-- `definition_path: Path | None` — path to the `.schema.yaml` file (or `None` for `"text"`)
-- `schema: dict | None` — parsed JSON Schema (or `None` for `"text"`)
+- `type_path: str` — repo-relative path stored in artifact frontmatter, or `text` for implicit no-frontmatter files
+- `type_doc_path: Path | None` — resolved filesystem path to the type-spec doc
+- `type_name: str` — `name` from type-spec frontmatter
+- `schema_path: Path | None` — resolved schema path, or `None` when `schema: null`
+- `schema: dict | None` — parsed JSON Schema mapping, or `None`
 
-The schema itself is the single source of truth for required headings, status enums, required fields, etc. There is no separate metadata extraction layer; all such checks happen by running the schema against `ParsedDocument.to_validation_object()`.
 
-**`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path | None = None) -> TypeProfile`**
-Main entry point. Determines the type name, locates the schema by walking the scope hierarchy, and loads it. Handles `$ref` resolution and `allOf` composition through `jsonschema`'s registry.
+**`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path) -> TypeProfile`**
+Main entry point. Validates the path-valued `type:`, loads the type-spec doc, and loads the declared schema when present.
 
 **`validate_instance(profile: TypeProfile, instance: dict) -> list[ValidationError]`**
-Validate a document instance (from `ParsedDocument.to_validation_object()`) against the type's JSON Schema. Returns errors sorted by document path. Returns empty list for types without schemas (e.g., `"text"`).
+Validate a document instance (from `ParsedDocument.to_validation_object()`) against the type's JSON Schema. Returns errors sorted by document path. Returns an empty list for implicit `text` and for type specs with `schema: null`.
 
 ### Caching
 

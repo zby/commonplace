@@ -1,4 +1,5 @@
 ---
+type: kb/types/instruction.md
 description: Markdown link text implies a concept but the linked note discusses something different — reader gets wrong impression.
 ---
 

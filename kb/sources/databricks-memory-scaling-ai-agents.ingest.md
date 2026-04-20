@@ -1,8 +1,8 @@
 ---
 description: Databricks memory-scaling experiments showing enterprise agent gains from external memory only when retrieval, distillation, and governance scale with the store
 source_snapshot: databricks-memory-scaling-ai-agents.md
-ingested: 2026-04-11
-type: ingest-report
+ingested: "2026-04-11"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [agent-memory, context-engineering, learning-theory, enterprise-ai]
 ---

@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking description discrimination during review-revise experiments
 gate_id: frontmatter/description-discrimination
 name: Description discrimination
 lens: frontmatter

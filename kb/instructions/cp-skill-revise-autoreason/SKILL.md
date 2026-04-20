@@ -1,7 +1,7 @@
 ---
 name: cp-skill-revise-autoreason
 description: "Experimental: revise a note with an AutoReason-style loop using fresh Codex sub-agents for critic, revision, synthesis, and blind judging. Keep the incumbent, generate a critique-driven revision and synthesis, then use blind Borda judging to decide whether to continue. Triggers on \"/cp-skill-revise-autoreason [note]\"."
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep, Task
 argument-hint: <note-filename>

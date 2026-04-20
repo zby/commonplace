@@ -1,69 +1,43 @@
 ---
 description: Catalog of the types shipped by commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---
 
-# Available Types
+# Available types
 
-The shipped commonplace scaffold installs one small set of global types plus a handful of directory-scoped specialised types under the collections it ships. This page lists them and says where each type's contract files live. For the mechanism that loads those files at authoring or validation time, see [type-loading](./type-loading.md).
+The shipped commonplace scaffold installs global type specs under `kb/types/` and a small set of collection-local type specs for generated or specialized artifacts. Artifacts store the path to the selected type spec in `type:`.
 
-A document has exactly one type. [text](../types/text.md) has no frontmatter and no requirements. Every other shipped type extends [note](../types/note.md), which defines the shared fields (`description`, `status`, `traits`, `tags`) that structured documents carry.
+## Global Types
 
-The `type:` frontmatter field is a free-form string — it is not validated against an enum, so consuming projects can add new types locally by dropping a template, instructions, and schema into the owning collection's `types/` directory. This page documents only the types the scaffold itself ships.
-
-## Global types (`kb/types/`)
-
-| Type | Files | Purpose |
+| Type | Path | Use |
 |---|---|---|
-| `text` | `text.md` | No frontmatter — raw capture, always valid. The root of the type ladder. |
-| `note` | `note.md`, `note.template.md`, `note.schema.yaml`, `note-base.schema.yaml` | Base structured type. Requires a non-empty `description`; carries shared `status`, `traits`, `tags`. Every specialised type inherits its frontmatter shape from here. |
-| `instruction` | `instruction.template.md`, `instruction.instructions.md`, `instruction.schema.yaml` | Prescriptive procedure, promoted skill body, or review gate. Requires `description`; review gates additionally require gate metadata plus `Failure mode` and `Test` sections. |
-| `definition` | `definition.template.md`, `definition.instructions.md`, `definition.schema.yaml` | Vocabulary note with `Scope`, `Exclusions`, and `Misuse Cases` sections. |
-| `index` | `index.template.md`, `index.instructions.md`, `index.schema.yaml` | Navigation hub: directory listings or curated tag indexes with generated tails. |
+| `note` | `kb/types/note.md` | Base structured note with description, status, traits, and tags. |
+| `instruction` | `kb/types/instruction.md` | Procedures, promoted skill bodies, wrapper prompts, and review gates. |
+| `definition` | `kb/types/definition.md` | Operational vocabulary definitions. |
+| `index` | `kb/types/index.md` | Navigation hubs and generated directory or tag indexes. |
+| `type-spec` | `kb/types/type-spec.md` | Metadata contract for type-spec docs themselves. |
 
-`text` and `note` are the maturity-ladder base types that every [collection](./definitions/collection.md) depends on. `instruction`, `definition`, and `index` are also global because they can occur in any collection — duplicating the template and schema into each collection's local `types/` would buy nothing.
+`kb/types/text.md` documents the implicit no-frontmatter text case. It is not an explicit type spec and should not be used as a `type:` value.
 
-Per [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md), each collection's `COLLECTION.md` carries register-specific writing conventions while the write skill carries the default `note` scaffold for the ordinary write path.
+## Collection-Local Types
 
-## Directory-scoped types
-
-Each shipped collection owns its own specialised types under a local `types/` directory. Directory-scoped types are only loaded when the agent is working in that collection.
-
-### `kb/reference/types/` — shipped-system documentation
-
-| Type | Files | Structural contract |
+| Type | Path | Use |
 |---|---|---|
-| `adr` | template + instructions + schema | Architecture decision record: `Context`, `Decision`, `Consequences` |
+| `adr` | `kb/reference/types/adr.md` | Architecture decision records. |
+| `structured-claim` | `kb/notes/types/structured-claim.md` | Developed arguments with Evidence and Reasoning sections. |
+| `agent-memory-system-review` | `kb/agent-memory-systems/types/agent-memory-system-review.md` | Code-grounded external system reviews. |
+| `snapshot` | `kb/sources/types/snapshot.md` | Captured external source copies. |
+| `ingest-report` | `kb/sources/types/ingest-report.md` | Source ingestion analysis artifacts. |
+| `source-review` | `kb/sources/types/source-review.md` | Structured source extraction notes. |
+| `connect-report` | `kb/reports/types/connect-report.md` | Generated connection discovery reports. |
 
-### `kb/sources/types/` — ingested sources
+Task type specs also exist under `kb/tasks/types/` for existing task workflows, but tasks are not currently a normal `cp-skill-write` target.
 
-| Type | Files | Structural contract |
-|---|---|---|
-| `source-review` | template + instructions + schema | Structured extraction and evaluation of an external source |
-| `ingest-report` | template + instructions + schema | Ingest workflow report: classification, summary, connections, extractable value, limitations |
+## Related
 
-### `kb/reports/types/` — generated snapshots
-
-| Type | Files | Structural contract |
-|---|---|---|
-| `connect-report` | template + instructions + schema | Connection report: discovery trace, connections found, flags |
-
-The other shipped collection, `kb/work/`, carries no specialised types of its own. It is a workshop layer for temporal, work-in-flight documents where type extensions are expected to be defined locally per workshop as needed.
-
-## Types versus traits
-
-Traits are a separate axis from type. They do not define structure; they declare semantic review expectations. See [note base type](../types/note.md) for the shipped trait vocabulary, and [ADR-012](./adr/012-types-for-structure-traits-for-review.md) for the reasoning behind the split.
-
----
-
-Relevant Notes:
-
-- [type-loading](./type-loading.md) — how these type definitions are resolved at authoring and validation time
-- [note base type](../types/note.md) — defines the global fields, status ladder, traits, and design principles
-- [text root type](../types/text.md) — the empty root type: no frontmatter, always valid
-- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: framework types and local example types have different packaging roles
-- [012-types-for-structure-traits-for-review](./adr/012-types-for-structure-traits-for-review.md) — decision: structural types and review traits are separate axes
-- [015-standardize-authored-type-definitions-on-json-schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — decision: the current authored type-definition format
-- [017-collection-md-is-the-register-convention-boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — decision: collection-level COLLECTION.md files own register conventions while type files stay structural
+- [type-loading](./type-loading.md) - resolution mechanics
+- [collections-and-types](./collections-and-types.md) - collection/type composition
+- [note](../types/note.md) - base note authoring contract
+- [text](../types/text.md) - implicit no-frontmatter capture state

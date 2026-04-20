@@ -79,7 +79,7 @@ The knowledge base lives in `kb/`. Search it when working on methodology, design
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by type
-rg "^type: structured-claim" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^type: kb/notes/types/structured-claim.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by tag
 rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

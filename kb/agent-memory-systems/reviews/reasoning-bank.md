@@ -1,6 +1,6 @@
 ---
 description: Three-step pipeline — run benchmark task, auto-evaluate, extract title/description/content memory items from success or failure; embedding retrieval over prior task queries; optional parallel-trajectory self-contrast extraction
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

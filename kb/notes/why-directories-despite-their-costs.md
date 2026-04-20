@@ -1,6 +1,6 @@
 ---
 description: Directories buy one–two orders of magnitude of human-navigable scale over flat files, and enable local conventions per subsystem — but each new directory taxes routing, search config, skills, and cross-directory linking
-type: note
+type: kb/types/note.md
 traits: []
 status: seedling
 tags: [document-system]

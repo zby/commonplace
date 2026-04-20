@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking internal consistency during review-revise experiments
 gate_id: semantic/internal-consistency
 name: Internal consistency
 lens: semantic

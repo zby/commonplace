@@ -18,6 +18,7 @@ from commonplace.lib.project_paths import (
 
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
+INDEX_TYPE = "kb/types/index.md"
 GENERATED_HEADING_BY_SOURCE = {
     "tag": "## Other tagged notes",
     "tag-indexes": "## Other tag indexes",
@@ -32,7 +33,7 @@ def collect_notes_by_tag(collection_dir: Path) -> dict[str, list[tuple[Path, str
         content = path.read_text(encoding="utf-8")
         fm = frontmatter.parse(content).data
 
-        if fm.get("type") == "index":
+        if fm.get("type") == INDEX_TYPE:
             continue
         rel_parts = path.relative_to(collection_dir).parts
         if "types" in rel_parts or ".collection" in rel_parts:
@@ -65,11 +66,8 @@ def index_source(path: Path, root: Path, content: str | None = None) -> str | No
 
     if is_type_definition_content(path, collection) or ".collection" in rel_parts:
         return None
-    if path.name.endswith(".template.md"):
-        return None
-
     fm = index_frontmatter(path, content)
-    if fm.get("type") != "index":
+    if fm.get("type") != INDEX_TYPE:
         return None
     source = fm.get("index_source")
     if source in GENERATED_HEADING_BY_SOURCE:

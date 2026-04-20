@@ -1,8 +1,8 @@
 ---
 description: Argues that pairwise judging plus round-robin win rates is a better evaluation primitive than absolute scoring for open-ended LLM tasks with no hard ground truth
 source_snapshot: kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.md
-ingested: 2026-03-23
-type: ingest-report
+ingested: "2026-03-23"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [evaluation, context-engineering, llm-interpretation-errors]
 ---

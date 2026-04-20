@@ -1,8 +1,8 @@
 ---
 description: Hypothesis that current frontier LMs are bottlenecked by learned decomposition/scaffold policy rather than base capability, using RLMs and orchestrator-subagent systems as evidence
 source_snapshot: the-mismanaged-geniuses-hypothesis-2042588627260018751.md
-ingested: 2026-04-10
-type: ingest-report
+ingested: "2026-04-10"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [agent-architecture, orchestration, test-time-scaling, model-harness-coevolution]
 ---

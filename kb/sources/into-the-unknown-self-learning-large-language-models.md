@@ -3,7 +3,7 @@ source: https://arxiv.org/html/2402.09147v4
 description: Self-learning LLM paper proposing Points in the Unknown, hallucination-based unknown detection, self-questioning/search/training loop, and self-learning capability metrics
 captured: "2026-04-16"
 capture: lynx-html
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

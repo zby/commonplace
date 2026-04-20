@@ -1,6 +1,6 @@
 ---
 description: Three independent threads converged on Toulmin's argument structure — adopting Toulmin sections as base type `structured-claim` separates claim-titled notes (any note) from fully argued claims (the type)
-type: structured-claim
+type: kb/notes/types/structured-claim.md
 traits: [has-comparison, has-external-sources, title-as-claim]
 tags: [type-system]
 status: seedling
@@ -43,7 +43,7 @@ Most claims don't need the structure — only the ones worth structuring do.
 
 ### The promotion path
 
-A note with a claim title starts as `type: note`. When the argument matures — evidence accumulates, reasoning gets explicit — it gets promoted to `type: structured-claim`. The remaining notes keep `type: note` with their claim-ish titles, honest about their level of development. Of the current 30 `has-claim` notes, perhaps 5-10 are developed enough for `type: structured-claim` today.
+A note with a claim title starts as `type: note`. When the argument matures — evidence accumulates, reasoning gets explicit — it gets promoted to `type: kb/notes/types/structured-claim.md`. The remaining notes keep `type: note` with their claim-ish titles, honest about their level of development. Of the current 30 `has-claim` notes, perhaps 5-10 are developed enough for `type: kb/notes/types/structured-claim.md` today.
 
 ### Evidence vs Reasoning (from Toulmin)
 
@@ -53,11 +53,11 @@ The key insight from Toulmin that a simple Reasoning/Caveats split misses: **evi
 2. Does the warrant actually connect this evidence to this claim? (bounded logical judgment)
 3. Are the caveats reasonable? (completeness check)
 
-## Section template for `type: structured-claim`
+## Section template for `type: kb/notes/types/structured-claim.md`
 
 ```markdown
 ---
-type: structured-claim
+type: kb/notes/types/structured-claim.md
 ---
 # [Claim as title]
 
@@ -92,7 +92,7 @@ this evidence imply this claim?
 
 **Deterministic checks enabled:**
 
-- `type: structured-claim` → file must contain `## Evidence` and `## Reasoning` headings
+- `type: kb/notes/types/structured-claim.md` → file must contain `## Evidence` and `## Reasoning` headings
 - Optional: `## Caveats`
 - Opening paragraph exists (first non-heading content after title)
 
@@ -108,7 +108,7 @@ Each of these is a bounded judgment within a known section, not an open-ended do
 
 The `has-claim` trait is retired. The 30 notes currently carrying it split into:
 
-- **`type: structured-claim`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections (estimated 5-10 today)
+- **`type: kb/notes/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections (estimated 5-10 today)
 - **`type: note`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
 
 The other traits (`has-comparison`, `has-implementation`, `has-external-sources`) remain as traits — they describe properties within a document, not its overall shape. A `structured-claim` can still carry `traits: [has-comparison]` if it uses a comparison table as evidence.

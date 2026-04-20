@@ -1,6 +1,6 @@
 ---
 description: Pi extension (v0.5.0) that auto-extracts mistake/fix learnings into a scored, git-backed-by-default memory and injects them back into the next run
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

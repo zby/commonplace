@@ -1,6 +1,6 @@
 ---
 description: Three-layer procedural memory (episodic/working/procedural) for AI coding agents with confidence-decayed YAML playbook, Jaccard conflict detection, cross-agent session mining, TOON/JSON output, and an MCP server
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

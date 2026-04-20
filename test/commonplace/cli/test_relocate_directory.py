@@ -41,7 +41,7 @@ def test_rebase_and_rewrite_in_moved_file_rebases_external_and_updates_internal(
     old_sibling = tmp_path / "kb" / "notes" / "old" / "sibling.md"
     new_self = tmp_path / "kb" / "new" / "self.md"
     new_sibling = tmp_path / "kb" / "new" / "sibling.md"
-    target = write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "x")
+    write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "x")
 
     moves = {old_self.resolve(): new_self.resolve(), old_sibling.resolve(): new_sibling.resolve()}
 

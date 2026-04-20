@@ -1,6 +1,6 @@
 ---
 description: In agent-maintained systems, cleanup throughput must match generation throughput — agents replicate existing patterns including bad ones, so without proportional maintenance, quality degrades as a function of output volume
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [kb-maintenance]
 status: seedling

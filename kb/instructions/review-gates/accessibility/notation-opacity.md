@@ -2,7 +2,7 @@
 gate_id: accessibility/notation-opacity
 name: Notation Opacity
 description: Formal notation from another note used in prose without local definition — opaque to readers who haven't read the source model.
-type: instruction
+type: kb/types/instruction.md
 lens: accessibility
 watches: [body]
 staleness: changed

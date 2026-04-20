@@ -1,6 +1,6 @@
 ---
 description: "Sentry's shared skills repo with a skill-writer meta-skill that codifies the skill creation process itself — source-driven synthesis with depth gates, labeled iteration, description-as-trigger optimization, and the Agent Skills cross-tool spec"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

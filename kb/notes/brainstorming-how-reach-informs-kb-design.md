@@ -1,6 +1,6 @@
 ---
 description: Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently
-type: note
+type: kb/types/note.md
 traits: []
 tags: [learning-theory, kb-maintenance]
 status: seedling

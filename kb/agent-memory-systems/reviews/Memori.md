@@ -1,6 +1,6 @@
 ---
 description: "Python/TypeScript SDK plus MCP/cloud memory layer that intercepts LLM calls, mines conversations and agent traces into facts/triples/summaries, and injects filtered recall context"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

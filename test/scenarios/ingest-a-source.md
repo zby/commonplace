@@ -33,10 +33,10 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 
 ### 4. Read source type definition
 - **Context needed:** Structure for source-review documents
-- **Source:** `kb/sources/types/source-review.template.md`
+- **Source:** `kb/sources/types/source-review.md`
 - **Hops:** 1
 - **Fixed/Variable:** fixed
-- **Notes:** Small file (~500 bytes). Defines the template for source reviews: Key Points, Relevance, Open Questions.
+- **Notes:** Defines the type spec for source reviews: required frontmatter, sections, and writing rules.
 
 ### 5. Find related notes
 - **Context needed:** Existing KB content related to the source's topic
@@ -46,7 +46,7 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 - **Notes:** Same as write-a-note step 2. The agent searches for notes that the source extends, contradicts, or grounds.
 
 ### 6. Write structured extraction
-- **Context needed:** Snapshotted content + source-review template + related notes context
+- **Context needed:** Snapshotted content + source-review type spec + related notes context
 - **Source:** — (agent produces output)
 - **Hops:** 0
 - **Fixed/Variable:** fixed

@@ -81,7 +81,7 @@ The note-template reconciliation between `kb/types/note.template.md` and `cp-ski
 ## Relation to other work
 
 - [link-label audit](../link-label-audit/) — shares the write skill as integration point only. Independent decisions.
-- [ADR 018 (proposed) — types are path references to instruction docs](./adr-018-draft.md) — the types-as-paths decision. Drafted in this workshop; narrates current → pain points → resolver-CLI considered → path-reference accepted.
+- [ADR 018 — types are path references to instruction docs](../../reference/adr/018-types-are-path-references-to-instruction-docs.md) — the types-as-paths decision. Drafted in this workshop; narrates current → pain points → resolver-CLI considered → path-reference accepted.
 - [ADR 016 — custom types use template/instruction pairs](../../reference/adr/016-custom-types-use-template-instruction-pairs.md) — the three-file split this workshop proposes collapsing. This workshop's outcome (if accepted) extends or supersedes ADR 016.
 - [ADR 015 — standardize authored type definitions on JSON schema](../../reference/adr/015-standardize-authored-type-definitions-on-json-schema.md) — schema-side decision; untouched by this workshop (schema stays separate).
 - [ADR 002 — inline global types in writing guide](../../reference/adr/002-inline-global-types-in-writing-guide.md) — the `note`-inlined-template decision; this workshop retires it as part of the whole-KB migration.
@@ -91,4 +91,4 @@ The note-template reconciliation between `kb/types/note.template.md` and `cp-ski
 This workshop closes when:
 
 - The whole-KB migration lands end-to-end: type docs authored, corpus migrated, skill updated, validator handles path `type:`, tests and validation pass.
-- [`adr-018-draft.md`](./adr-018-draft.md) moves to `kb/reference/adr/` and flips `status: proposed` → `accepted`.
+- [`018-types-are-path-references-to-instruction-docs.md`](../../reference/adr/018-types-are-path-references-to-instruction-docs.md) moves to `kb/reference/adr/` and flips `status: proposed` → `accepted`.

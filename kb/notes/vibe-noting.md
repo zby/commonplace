@@ -1,6 +1,6 @@
 ---
 description: Vibe coding works because code is inspectable, not just verifiable — a KB adds that same inspectability to knowledge work, enabling augmentation even where automation is blocked on oracle construction
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: seedling

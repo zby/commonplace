@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking title body alignment during review-revise experiments
 gate_id: frontmatter/title-body-alignment
 name: Title-body alignment
 lens: frontmatter

@@ -1,6 +1,6 @@
 ---
 description: Self-hosted skill registry with partial local-first editing resilience, dual version tracks, live MCP tool exposure, and agent-submitted per-version ratings
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

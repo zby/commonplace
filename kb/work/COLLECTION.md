@@ -9,3 +9,14 @@ Substantial work should usually live in a named subdirectory with a short `READM
 Linking from workshop files is permissive: use whatever relationship label makes the work state clear (`draws-on`, `tests`, `depends-on`, `produces`, `supersedes`, or a local phrase). Workshop links are working notes, not durable graph contracts.
 
 If a conclusion should remain useful after the workshop closes, extract it into the right durable collection: `kb/notes/` for transferable claims, `kb/reference/` for shipped-system descriptions, `kb/instructions/` for reusable procedures, or an ADR for architectural decisions.
+
+## Types
+
+- `note` -> `kb/types/note.md`
+  Use when workshop output needs normal note metadata before promotion.
+- `instruction` -> `kb/types/instruction.md`
+  Use for temporary procedures, experimental gates, or runbooks.
+- `structured-claim` -> `kb/notes/types/structured-claim.md`
+  Use when a workshop draft is already shaped as an evidence/reasoning argument.
+- `index` -> `kb/types/index.md`
+  Use for generated workshop directory indexes.

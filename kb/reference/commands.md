@@ -1,6 +1,6 @@
 ---
 description: Reference for the commonplace-* CLI commands shipped by llm-commonplace - project setup, validation, indexing, snapshots, note operations, and the review system
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---

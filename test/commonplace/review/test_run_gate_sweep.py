@@ -27,7 +27,7 @@ def make_note(path: Path, title: str, body: str) -> Path:
         path,
         f"""---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---

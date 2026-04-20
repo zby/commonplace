@@ -2,7 +2,7 @@
 description: Rosebud Journal memory essay reframing LLM memory as a policy stack over raw/derived artifacts, retrieval timing, curation, and forgetting propagation
 source_snapshot: everything-you-need-to-know-about-llm-memory.md
 ingested: "2026-04-13"
-type: ingest-report
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [agent-memory, context-engineering, memory-evaluation, knowledge-lifecycle]
 ---

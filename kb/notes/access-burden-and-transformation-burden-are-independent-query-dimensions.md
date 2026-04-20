@@ -1,6 +1,6 @@
 ---
 description: Queries have two independent difficulty axes — finding inputs (access) and producing the answer (transformation) — conflating them misroutes symbolic transformations through semantic processing
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model]
 status: seedling

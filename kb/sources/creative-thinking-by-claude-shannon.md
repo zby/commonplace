@@ -2,7 +2,7 @@
 source: https://jamesclear.com/great-speeches/creative-thinking-by-claude-shannon
 captured: 2026-03-08
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 

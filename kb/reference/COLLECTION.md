@@ -41,13 +41,16 @@ When linking FROM this collection:
 
 **Fidelity constraint.** Descriptions must be faithful to the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, the description says X and notes the deviation.
 
-## Types in this collection
+## Types
 
-This collection uses several types with collection-local definitions in `types/`:
-
-- **`adr`** — architecture decision records with status lifecycle (proposed → accepted → superseded/deprecated)
-- **`note`** — general reference documents (architecture, type system, etc.)
-- **`definition`** — vocabulary terms used by the shipped system
+- `note` -> `kb/types/note.md`
+  Use for general shipped-system reference documents.
+- `adr` -> `kb/reference/types/adr.md`
+  Use for architecture decision records.
+- `definition` -> `kb/types/definition.md`
+  Use for shipped-system vocabulary terms.
+- `index` -> `kb/types/index.md`
+  Use for reference navigation hubs and generated directory indexes.
 
 ## What does NOT belong here
 

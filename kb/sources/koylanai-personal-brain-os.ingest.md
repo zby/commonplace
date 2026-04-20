@@ -1,8 +1,8 @@
 ---
 description: Practitioner report on a file-based personal OS for AI agents, useful as self-reported evidence for filesystem-first context engineering.
 source_snapshot: koylanai-personal-brain-os.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [context-engineering, agent-architecture, knowledge-management, file-based-systems]
 ---

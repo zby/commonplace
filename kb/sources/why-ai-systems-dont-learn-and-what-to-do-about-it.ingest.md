@@ -1,8 +1,8 @@
 ---
 description: Position paper arguing current AI externalizes learning into human-run MLOps and proposing an A-B-M architecture where meta-control arbitrates observation and action learning for lifelong adaptation.
 source_snapshot: why-ai-systems-dont-learn-and-what-to-do-about-it.md
-ingested: 2026-03-18
-type: ingest-report
+ingested: "2026-03-18"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta-control]
 ---

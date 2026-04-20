@@ -22,7 +22,7 @@ def test_refresh_indexes_rebuilds_directory_and_tag_indexes(
         notes_root / "kb-design-index.md",
         """---
 description: KB design tag index
-type: index
+type: kb/types/index.md
 index_source: tag
 index_key: kb-design
 status: current
@@ -37,7 +37,7 @@ status: current
         notes_root / "example-note.md",
         """---
 description: Example note
-type: note
+type: kb/types/note.md
 status: current
 tags: [kb-design]
 ---
@@ -49,7 +49,7 @@ tags: [kb-design]
         notes_root / "dir-index.md",
         """---
 description: stale
-type: index
+type: kb/types/index.md
 index_source: directory
 ---
 
@@ -71,7 +71,7 @@ status: current
         sources_root / "dir-index.md",
         """---
 description: stale
-type: index
+type: kb/types/index.md
 index_source: directory
 ---
 
@@ -82,7 +82,7 @@ index_source: directory
         notes_root / "tags-index.md",
         """---
 description: Tags directory
-type: index
+type: kb/types/index.md
 index_source: tag-indexes
 status: current
 ---

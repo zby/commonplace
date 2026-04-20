@@ -1,6 +1,6 @@
 ---
 description: April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [evaluation, kb-maintenance, observability]
 status: current

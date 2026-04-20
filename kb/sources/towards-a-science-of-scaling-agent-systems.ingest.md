@@ -1,8 +1,8 @@
 ---
 description: Empirical multi-agent scaling study comparing topology, organization size, and communication patterns across 180 controlled configurations.
 source_snapshot: towards-a-science-of-scaling-agent-systems.md
-ingested: 2026-03-08
-type: ingest-report
+ingested: "2026-03-08"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [multi-agent-systems, agent-architecture, scaling-laws, coordination]
 ---

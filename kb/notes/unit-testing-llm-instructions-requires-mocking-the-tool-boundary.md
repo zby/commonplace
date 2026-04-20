@@ -1,6 +1,6 @@
 ---
 description: Skills are programs whose I/O boundary is tool calls — mocking that boundary creates controlled environments for testing whether instructions produce correct behavior, complementing text artifact testing with instruction-level regression detection
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system]
 status: seedling

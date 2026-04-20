@@ -1,7 +1,7 @@
 ---
 name: cp-skill-connect
 description: Discover connections for a single note. Writes a connect-report under kb/reports/connect/<collection>/ without mutating library notes or indexes. Use with a note path or note name.
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -76,7 +76,7 @@ From promising candidates, follow their existing links. Look for clusters and ch
 
 **Quality gates**: verify every candidate path exists. Flag load-bearing relationships (`grounds`, `synthesizes`) to `seedling` or `speculative` notes.
 
-Read `kb/reports/types/connect-report.template.md` for the report structure. Ensure `kb/reports/connect/<collection>/` exists, then save the report. Use file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
+Read `kb/reports/types/connect-report.md` for the report structure. Ensure `kb/reports/connect/<collection>/` exists, then save the report. Use file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
 ## Constraints
 

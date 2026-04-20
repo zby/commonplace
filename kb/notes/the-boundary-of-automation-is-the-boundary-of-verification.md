@@ -1,6 +1,6 @@
 ---
 description: Synthesis — three lines of evidence (oracle theory, labor economics, frontier-lab capability predictions) with distinct reasoning paths converge on verification cost as the primary structural determinant of automation
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors]
 status: current

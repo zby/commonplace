@@ -1,6 +1,6 @@
 ---
 description: Constraining narrows interpretation (largest gain at codification, where substrate changes); distillation extracts under a context budget. Same capacity decomposition, different operations
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 tags: [learning-theory]

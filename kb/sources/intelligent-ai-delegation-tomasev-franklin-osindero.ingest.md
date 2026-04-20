@@ -1,8 +1,8 @@
 ---
 description: Google DeepMind delegation framework centers verifiability, liability, trust, and 11 task axes in agent delegation; notable for accountability vacuum and liability firebreaks in long chains
 source_snapshot: intelligent-ai-delegation-tomasev-franklin-osindero.md
-ingested: 2026-03-16
-type: ingest-report
+ingested: "2026-03-16"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [agent-orchestration, delegation, verification, multi-agent-coordination]
 ---

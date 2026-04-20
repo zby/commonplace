@@ -1,6 +1,6 @@
 ---
 description: Staged trajectory-to-rule pipeline with ADD/EDIT/REMOVE/AGREE rule updates and eval-time prompt injection; all inspectable artifacts, no weights
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

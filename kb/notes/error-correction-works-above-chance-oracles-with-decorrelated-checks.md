@@ -1,6 +1,6 @@
 ---
 description: Error correction for LLM output is viable whenever the oracle has discriminative power (TPR > FPR) and checks are decorrelated — amplification cost scales with 1/(TPR-FPR)² and independence of errors
-type: note
+type: kb/types/note.md
 tags: [llm-interpretation-errors]
 status: seedling
 ---

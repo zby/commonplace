@@ -2,7 +2,7 @@
 source: https://openai.com/index/harness-engineering/
 captured: 2026-03-05
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 

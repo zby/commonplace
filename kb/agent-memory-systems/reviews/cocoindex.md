@@ -1,6 +1,6 @@
 ---
 description: Rust-backed incremental indexing framework that compiles Python-declared dataflows into continuously maintained vector, graph, and relational targets via Postgres tracking tables
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

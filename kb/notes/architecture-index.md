@@ -1,6 +1,6 @@
 ---
 description: How commonplace is structured and installed — repo layout, two-tree split, control-plane design, file-based storage
-type: index
+type: kb/types/index.md
 index_source: tag
 index_key: architecture
 status: current

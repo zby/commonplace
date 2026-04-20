@@ -1,8 +1,8 @@
 ---
 description: Esoteric-language code benchmark arguing standard coding scores mostly measure pretraining fit, with interpreter feedback beating textual critique on OOD tasks
 source_snapshot: esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming-languages.md
-ingested: 2026-03-19
-type: ingest-report
+ingested: "2026-03-19"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [benchmarking, out-of-distribution-generalization, agentic-scaffolding, code-generation]
 ---

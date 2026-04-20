@@ -1,6 +1,6 @@
 ---
 description: Terminal personal knowledge base that compiles raw sources into a markdown wiki, uses SQLite FTS as a derived retrieval layer, and writes lightweight session-derived digests and insight drafts
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: []
 status: outdated

@@ -2,7 +2,7 @@
 gate_id: complexity/claim-to-section-ratio
 name: Claim-to-section ratio
 description: 'The note has more sections than distinct non-obvious claims, so sections restate rather than extend the argument.'
-type: instruction
+type: kb/types/instruction.md
 lens: complexity
 watches: [body]
 staleness: changed

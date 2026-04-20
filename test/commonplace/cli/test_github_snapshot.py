@@ -42,7 +42,7 @@ def test_github_snapshot_stamps_snapshot_issue_family(
     md_path = next(tmp_path.glob("*.md"))
     fm = frontmatter(md_path)
 
-    assert fm["type"] == "snapshot"
+    assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == ["github-issue"]
     assert fm["api_url"] == "https://api.github.com/repos/example/project/issues/123"
 
@@ -69,6 +69,6 @@ def test_github_snapshot_stamps_snapshot_pr_family(
     md_path = next(tmp_path.glob("*.md"))
     fm = frontmatter(md_path)
 
-    assert fm["type"] == "snapshot"
+    assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == ["github-pr"]
     assert fm["api_url"] == "https://api.github.com/repos/example/project/pulls/456"

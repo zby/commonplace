@@ -212,10 +212,10 @@ Pre-action gate: no commit until the validation result is understood.
 
 Pre-action gate: Steps 1-8 must be green before the ADR flips to accepted.
 
-- Move [`adr-018-draft.md`](./adr-018-draft.md) to `kb/reference/adr/018-types-are-path-references-to-instruction-docs.md` (or the next available ADR number if 018 is taken by the time this lands).
+- Move [`018-types-are-path-references-to-instruction-docs.md`](../../reference/adr/018-types-are-path-references-to-instruction-docs.md) to `kb/reference/adr/018-types-are-path-references-to-instruction-docs.md` (or the next available ADR number if 018 is taken by the time this lands).
 - Flip `status: proposed` -> `status: accepted` in the frontmatter.
 - Harmonize the ADR prose with the migration as shipped: replace any residual sibling-schema language with the explicit `schema:` pointer policy; update the "Migration" section to reference the actual merged commit instead of the plan.
-- Update inbound references to the draft path (workshop `README.md`, `plan.md` links, any other notes that pointed at `adr-018-draft.md`).
+- Update inbound references to the draft path (workshop `README.md`, `plan.md` links, any other notes that pointed at `../../reference/adr/018-types-are-path-references-to-instruction-docs.md`).
 
 ## Not changing
 

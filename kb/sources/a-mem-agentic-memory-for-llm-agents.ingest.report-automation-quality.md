@@ -1,6 +1,6 @@
 ---
 description: Triangulates A-MEM, Notes Without Reasons, and the open-problem note — automated linking improves retrieval (QA benchmarks) but degrades navigability (agent trust in link infrastructure); the distinction is adjacency versus connection
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory]
 status: current

@@ -1,6 +1,6 @@
 ---
 description: Conversation preserves the execution trace; prompt refinement compresses it into a clean handoff. The right choice depends on architecture and how much intermediate work should survive
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model]
 status: seedling

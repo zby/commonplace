@@ -1,6 +1,6 @@
 ---
 description: Meta's self-referential agent-evolution harness using git diff lineage, Docker replay, and benchmark-scored parent selection; useful for deploy-time learning comparisons, but not a knowledge system
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

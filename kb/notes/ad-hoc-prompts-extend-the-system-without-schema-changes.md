@@ -1,6 +1,6 @@
 ---
 description: Any system with an LLM agent layer can absorb new requirements through natural language prompts without changing the deterministic base
-type: note
+type: kb/types/note.md
 traits: []
 tags: [learning-theory]
 status: seedling

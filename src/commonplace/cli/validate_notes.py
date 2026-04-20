@@ -10,10 +10,11 @@ from pathlib import Path
 from commonplace.lib.project_paths import (
     kb_root,
     list_collection_note_paths,
+    list_kb_validation_paths,
     list_kb_note_paths,
     list_notes_collection_paths,
 )
-from commonplace.lib.type_resolver import check_type_uniqueness
+from commonplace.lib.type_resolver import validate_type_specs
 from commonplace.lib.validation import (
     CheckResults,
     orphan_info,
@@ -23,7 +24,7 @@ from commonplace.lib.validation import (
 
 def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
     if arg == "all":
-        return list_kb_note_paths(repo_root)
+        return list_kb_validation_paths(repo_root)
     if arg == "notes":
         return list_notes_collection_paths(repo_root)
 
@@ -170,8 +171,8 @@ def main(argv: list[str] | None = None) -> int:
             failure_items.extend((path, failure) for failure in results.fails)
 
     if scope is not None:
-        type_warnings = check_type_uniqueness(repo_root)
-        if type_warnings:
+        type_failures = validate_type_specs(repo_root)
+        if type_failures:
             had_failures = True
 
         print("\n=== BATCH INFO ===\n")
@@ -180,11 +181,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Notes with warnings: {warning_count}")
         print(f"Failing notes: {failure_count}")
         print("\nType system:")
-        if type_warnings:
-            for tw in type_warnings:
-                print(f"- FAIL: {tw}")
+        if type_failures:
+            for failure in type_failures:
+                print(f"- FAIL: {failure}")
         else:
-            print("- PASS: all type names are globally unique")
+            print("- PASS: all type-spec docs are valid")
         print("\nWarnings:")
         if warning_items:
             for path, warning in warning_items:

@@ -1,6 +1,6 @@
 ---
 description: Python CLI that mines Claude Code transcripts into weighted user/guard profiles, benchmarks guards with per-model ablations, and compiles the result into assistant memory files
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

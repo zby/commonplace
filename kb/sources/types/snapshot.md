@@ -1,4 +1,13 @@
-# Snapshot Instructions
+---
+type: kb/types/type-spec.md
+name: snapshot
+description: Captured external source copy with capture metadata and no analysis
+schema: kb/sources/types/snapshot.schema.yaml
+---
+
+# Snapshot
+
+## Authoring Instructions
 
 Use `snapshot` for captured external source copies stored under `kb/sources/`.
 

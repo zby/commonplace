@@ -1,6 +1,6 @@
 ---
 description: LLM-based systems have two distinct properties — semantic underspecification of natural language specs (the deeper difference from traditional programming) and execution indeterminism (present in all practical systems) — the spec-to-program projection model captures the first, which indeterminism tends to obscure
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, computational-model]
 status: current

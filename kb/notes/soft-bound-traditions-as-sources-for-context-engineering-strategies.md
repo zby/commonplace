@@ -1,6 +1,6 @@
 ---
 description: Survey of twelve soft-bound traditions as candidate sources for context engineering strategies, with a three-tier assessment of what transfers, what's plausible, and what's blocked
-type: note
+type: kb/types/note.md
 tags: [learning-theory, foundations]
 status: seedling
 ---

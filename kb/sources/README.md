@@ -26,4 +26,4 @@ The skill chooses the right snapshotting backend based on the URL (GitHub API fo
 
 ## Collection conventions
 
-This collection operates in the descriptive register — sources are captured for fidelity, not transformed. Writing conventions for the `*.ingest.md` reports live in [types/ingest-report.instructions.md](./types/ingest-report.instructions.md). For the discovery and connection conventions used during ingest, see the `cp-skill-ingest` skill.
+This collection operates in the descriptive register — sources are captured for fidelity, not transformed. Writing conventions for the `*.ingest.md` reports live in [types/ingest-report.md](./types/ingest-report.md). For the discovery and connection conventions used during ingest, see the `cp-skill-ingest` skill.

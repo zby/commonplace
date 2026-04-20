@@ -49,6 +49,17 @@ When linking FROM this collection:
 | Descriptive (reference, agent-memory-systems) | evidence / derived-from / exemplifies | Theories cite descriptions as observations and evidence. The theory must stand without any single description — if it can't, it's still a description, not yet a theory. |
 | Prescriptive (instructions) | evidence (rare) | Theories rarely need to cite procedures. When they do, it's usually to note that a practice exists, not to depend on it. |
 
+## Types
+
+- `note` -> `kb/types/note.md`
+  Use for transferable theoretical notes.
+- `structured-claim` -> `kb/notes/types/structured-claim.md`
+  Use for developed arguments where explicit evidence and reasoning sections clarify the case.
+- `definition` -> `kb/types/definition.md`
+  Use for KB vocabulary definitions under `kb/notes/definitions/`.
+- `index` -> `kb/types/index.md`
+  Use for curated or generated navigation hubs.
+
 ## What does NOT belong here
 
 - Descriptions of how a specific system works → descriptive register (`kb/reference/` or `kb/agent-memory-systems/`)

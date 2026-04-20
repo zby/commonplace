@@ -1,8 +1,8 @@
 ---
 description: Evans argues that separating modeling (schema creation) from classification (schema application) tames LLM non-determinism — a practitioner case study of constraining via taxonomy freezing
 source_snapshot: eric-evans-ai-components-deterministic-system.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [constraining, classification-systems, LLM-integration, domain-driven-design]
 ---

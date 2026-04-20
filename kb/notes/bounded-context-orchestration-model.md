@@ -1,6 +1,6 @@
 ---
 description: Formalises agent orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop — explains why selection is hard while still supporting local strategy comparisons
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
 status: seedling

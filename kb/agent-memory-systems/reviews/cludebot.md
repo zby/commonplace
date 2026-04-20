@@ -1,6 +1,6 @@
 ---
 description: Clude/cludebot memory SDK — now a pnpm monorepo with Supabase/hosted/local-JSON modes, five-type decay, six-operation dream cycle plus optional JEPA Phase 4.5, clinamen, and 9-tool MCP with mode-specific capabilities including skill extraction and confidence-gated recall
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 traits: [has-comparison, has-external-sources]
 status: current

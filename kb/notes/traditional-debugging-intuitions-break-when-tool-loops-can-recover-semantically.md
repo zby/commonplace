@@ -1,6 +1,6 @@
 ---
 description: Programmers trained on traditional software expect broken infrastructure to fail loudly; semantic recovery in agent tool loops violates that expectation, so successful outcomes can create false confidence during debugging and maintenance
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model, kb-maintenance, observability]
 status: seedling

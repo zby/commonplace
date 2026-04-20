@@ -1,6 +1,6 @@
 ---
 description: Self-training agent that mines MCTS action-observation trees into path-paired revision conversations, then hands the resulting JSONL off to an external fine-tuner rather than keeping a persistent memory artifact
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

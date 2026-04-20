@@ -1,6 +1,6 @@
 ---
 description: Within substrate coevolution, the readable pair (prose + symbolic) is the tractable unit to build a first automated loop around — shared context, current tempo, and an existing codification boundary make joint optimization clean; the pair is also under-explored relative to the mainstream opaque effort
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 ---

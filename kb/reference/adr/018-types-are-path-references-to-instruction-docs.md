@@ -1,16 +1,16 @@
 ---
 description: "Replaces the enum `type:` field with a path reference to a single hand-authored instructions doc per type. Collapses the three-file-per-type layout (template / instructions / schema) into one authoring doc plus a sibling schema, and dissolves the filesystem-discovery, cross-collection ambiguity, and special-case routing problems that the current enum scheme forces onto the write skill."
-type: adr
+type: kb/reference/types/adr.md
 tags: []
-status: proposed
+status: accepted
 ---
 
 # 018-Types are path references to instruction docs
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-04-19
-**Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](../../reference/adr/016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](../../reference/adr/002-inline-global-types-in-writing-guide.md) at the `note` migration step.
-**Related:** [write-type-resolver workshop](./README.md), [ADR 009](../../reference/adr/009-link-relationship-semantics.md), [link-label audit ADR draft](../link-label-audit/adr-018-draft.md) (lands later, takes the next available number).
+**Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) at the `note` migration step.
+**Related:** [write-type-resolver workshop](../../../work/write-type-resolver/README.md), [ADR 009](./009-link-relationship-semantics.md).
 
 ## Context
 
@@ -27,13 +27,13 @@ The name is resolved by probing the filesystem:
 - `kb/<collection>/types/{type}.template.md` (collection-local)
 - `kb/types/{type}.template.md` (global fallback)
 
-Per [ADR 016](../../reference/adr/016-custom-types-use-template-instruction-pairs.md), each type is expressed as a triple of sidecars:
+Per [ADR 016](./016-custom-types-use-template-instruction-pairs.md), each type is expressed as a triple of sidecars:
 
 - `{type}.template.md` — the body skeleton agents fill in
 - `{type}.instructions.md` — authoring prose
 - `{type}.schema.yaml` — validator schema
 
-The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). The write skill does not call the resolver; it mirrors the same discovery logic in natural-language prose so the agent can probe the filesystem. Special cases live in the skill prose: `instruction` → `kb/instructions/`, `note` inlined in [ADR 002](../../reference/adr/002-inline-global-types-in-writing-guide.md) style.
+The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). The write skill does not call the resolver; it mirrors the same discovery logic in natural-language prose so the agent can probe the filesystem. Special cases live in the skill prose: `instruction` → `kb/instructions/`, `note` inlined in [ADR 002](./002-inline-global-types-in-writing-guide.md) style.
 
 ### Pain points
 
@@ -49,7 +49,7 @@ The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). Th
 
 ### Considered: a type-resolver CLI
 
-The [write-type-resolver workshop](./README.md) first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
+The [write-type-resolver workshop](../../../work/write-type-resolver/README.md) first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
 
 - Discover the triple for `(type, collection)` at runtime.
 - Return JSON shapes for resolved / ambiguous / not-found cases.
@@ -91,7 +91,7 @@ The pointed-at file is self-contained:
 
 ### What moves where
 
-- **Template and instructions fuse into the pointed-at doc.** [ADR 016](../../reference/adr/016-custom-types-use-template-instruction-pairs.md)'s three-file layout collapses to one authored file. `{type}.template.md` and `{type}.instructions.md` go away.
+- **Template and instructions fuse into the pointed-at doc.** [ADR 016](./016-custom-types-use-template-instruction-pairs.md)'s three-file layout collapses to one authored file. `{type}.template.md` and `{type}.instructions.md` go away.
 - **Schema stays separate.** Writers don't need the schema. Each type-spec doc declares its schema explicitly in frontmatter (`schema: <repo-relative path>` or `schema: null`); the validator reads that field. Sibling filenames remain only an author-chosen convention, not a resolver fallback. Broader schema wiring remains a future validator workshop.
 - **Global types live once.** `kb/types/<name>.md` is the authoritative location for a global type. Collection-local types live at `kb/<collection>/types/<name>.md`. Which collection hosts a given write comes from user intent or from the target collection's `COLLECTION.md` listing — not from a hardcoded special-case table in the skill.
 - **Self-referential root.** `kb/types/type-spec.md` has `type: kb/types/type-spec.md` — its own spec. Validators terminate on path-equals-self.
@@ -133,7 +133,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 
 - Does **not** change [`cp-skill-compile-collections`](../../instructions/cp-skill-compile-collections/SKILL.md). That skill compiles cross-register topology for connect/audit tooling — a cache for filesystem-expensive lookups, not authoring context assembly.
 - Does **not** fully redesign schema storage or validator behavior. The migration requires every type-spec doc to declare its schema explicitly in frontmatter (`schema: <path>` or `schema: null`); broader schema wiring remains a future validator workshop.
-- Retires the `note` inlining from [ADR 002](../../reference/adr/002-inline-global-types-in-writing-guide.md) as part of the whole-KB migration.
+- Retires the `note` inlining from [ADR 002](./002-inline-global-types-in-writing-guide.md) as part of the whole-KB migration.
 
 ### Migration
 
@@ -152,7 +152,7 @@ The implementation creates/fuses all type instruction docs, rewrites all explici
 Relevant Notes:
 
 - [ADR 009 — link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — grounds: the linking vocabulary embedded in `cp-skill-write/SKILL.md`; unchanged by this ADR.
-- [ADR 016 — custom types use template/instruction pairs](../../reference/adr/016-custom-types-use-template-instruction-pairs.md) — partially superseded: the three-file split fuses to one authoring file plus a sibling schema.
-- [ADR 002 — inline global types in writing guide](../../reference/adr/002-inline-global-types-in-writing-guide.md) — affected at `note` migration.
-- [link-label audit ADR draft](../link-label-audit/adr-018-draft.md) — applies the "canonical sources stay single edit point" principle to the linking vocabulary. Lands later and will take the next available number.
+- [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) — partially superseded: the three-file split fuses to one authoring file plus a sibling schema.
+- [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) — affected at `note` migration.
+- [link-label audit ADR draft](../../../work/link-label-audit/adr-018-draft.md) — applies the "canonical sources stay single edit point" principle to the linking vocabulary. Lands later and will take the next available number.
 - [linking-theory](../../notes/linking-theory.md) — grounds: decision-cost model for keeping context reads cheap.

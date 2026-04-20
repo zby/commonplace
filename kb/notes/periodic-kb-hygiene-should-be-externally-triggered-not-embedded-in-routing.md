@@ -1,6 +1,6 @@
 ---
 description: Routing instructions load every session for high-frequency decisions; periodic hygiene adds noise on every session while helping only occasionally, blurring routing and operations
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
 status: current

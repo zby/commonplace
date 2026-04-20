@@ -1,8 +1,8 @@
 ---
 description: Karpathy on agent-maintained research wikis in Obsidian — index files and brief summaries replacing fancy RAG at roughly 100-article scale
 source_snapshot: llm-knowledge-bases-something-i-m-finding-very-useful-recently-using-2039805659525644595.md
-ingested: 2026-04-03
-type: ingest-report
+ingested: "2026-04-03"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---

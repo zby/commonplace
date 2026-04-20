@@ -1,6 +1,6 @@
 ---
 description: "Analytics-agent framework that compiles data context into project files, exposes it through file/SQL tools, and extracts persistent user memories from chat traces"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

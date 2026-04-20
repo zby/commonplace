@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking bridge paragraph duplication during review-revise experiments
 gate_id: prose/bridge-paragraph-duplication
 name: Bridge paragraph duplication
 lens: prose

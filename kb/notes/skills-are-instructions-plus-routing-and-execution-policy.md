@@ -1,6 +1,6 @@
 ---
 description: Skills add structured discovery, user-facing invocation, and declarative execution policy (tool permissions, model override, context isolation) beyond the shared procedure
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
 status: seedling

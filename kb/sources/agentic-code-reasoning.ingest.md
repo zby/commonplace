@@ -1,8 +1,8 @@
 ---
 description: Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp — empirical evidence for structure-as-distribution-selector and interpretation-narrowing with quantified cost (2.8x steps)
 source_snapshot: agentic-code-reasoning.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [execution-free-verification, structured-reasoning, agentic-code-analysis, oracle-approximation]
 ---

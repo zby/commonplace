@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: structured-claim
+            const: kb/notes/types/structured-claim.md
         additionalProperties: true
       headings:
         type: array

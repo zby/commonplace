@@ -1,6 +1,6 @@
 ---
 description: Go coding-agent harness with role-scoped tools, sandboxed execution, and file-backed bug/changelog coordination; execution controls are real, but planning and sub-agent workflows are still stubbed
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

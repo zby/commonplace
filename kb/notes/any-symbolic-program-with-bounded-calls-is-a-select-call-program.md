@@ -1,6 +1,6 @@
 ---
 description: Any program whose symbolic execution between bounded LLM calls can be reified as explicit state can be mechanically converted into the select/call loop with the same call sequence
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 status: seedling

@@ -2,7 +2,7 @@
 gate_id: prose/pseudo-formalism
 name: Pseudo-formalism
 description: 'The note uses notation, equations, or formal-looking decomposition that does not add precision beyond the prose.'
-type: instruction
+type: kb/types/instruction.md
 lens: prose
 watches: [body]
 staleness: changed

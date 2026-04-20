@@ -2,7 +2,7 @@
 description: Hallucination-driven self-learning LLM paper proposing Points in the Unknown, a self-question/search/train loop, and metrics for selecting models that can discover factual knowledge gaps
 source_snapshot: into-the-unknown-self-learning-large-language-models.md
 ingested: "2026-04-16"
-type: ingest-report
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [learning-theory, continual-learning, evaluation, hallucination]
 ---

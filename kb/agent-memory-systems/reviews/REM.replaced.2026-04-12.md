@@ -1,6 +1,6 @@
 ---
 description: Four-database episodic memory service (Postgres+Qdrant+Neo4j+Redis) with LLM consolidation from episodes to scored semantic facts and temporal graph expansion; heaviest infra, thinnest transformation
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

@@ -1,6 +1,6 @@
 ---
 description: Ephemeral computation — discarding generated artifacts after use — trades accumulation for simplicity, making it the inverse of codification
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 status: current

@@ -1,6 +1,6 @@
 ---
 description: Tag index — PL concepts (scoping, homoiconicity, partial evaluation, typing) applied to LLM instructions, plus the scheduling architecture that follows from context scarcity
-type: index
+type: kb/types/index.md
 index_source: tag
 index_key: computational-model
 status: current

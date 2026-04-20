@@ -1,8 +1,8 @@
 ---
 description: RL framework that trains agents from live next-state signals (user replies, tool outputs, terminal feedback, GUI state) during deployment — collapses the training/deployment boundary and challenges the KB's three-timescale model by performing weight updates from interactions the agent is already having.
 source_snapshot: openclaw-rl-train-any-agent-simply-by-talking.md
-ingested: 2026-03-14
-type: ingest-report
+ingested: "2026-03-14"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [reinforcement-learning, continuous-learning, agent-training, personalization]
 ---

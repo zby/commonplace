@@ -1,4 +1,13 @@
-# Ingest-Report Instructions
+---
+type: kb/types/type-spec.md
+name: ingest-report
+description: Analysis artifact recording how a source snapshot fits the KB
+schema: kb/sources/types/ingest-report.schema.yaml
+---
+
+# Ingest report
+
+## Authoring Instructions
 
 Use `ingest-report` for source ingestion analysis. An ingest report records how one source snapshot fits the KB; it is an analysis artifact, not the source itself.
 
@@ -38,3 +47,48 @@ Choose one `source_type`:
 - Assess reach: high-reach findings explain why something works beyond the source's local context; context-bound observations should be flagged.
 - Before writing limitations, ask what is surprising, what simpler account could explain the result, and whether the central claim is hard to vary.
 - Be specific in the recommended action: name the note to update, the note to write, the brainstorming question, or why the source should only be filed as a reference.
+
+## Template
+
+```markdown
+---
+description: "{one-line retrieval filter}"
+source_snapshot: "{input filename}"
+ingested: "{YYYY-MM-DD}"
+type: kb/sources/types/ingest-report.md
+source_type: {source type}
+domains: [{tag1}, {tag2}, {tag3}]
+---
+
+# Ingest: {source title}
+
+Source: {filename}
+Captured: {date from frontmatter}
+From: {source URL from frontmatter}
+
+## Classification
+
+Type: {source type} -- {brief justification}
+Domains: {tag1}, {tag2}, {tag3}
+Author: {credibility signal}
+
+## Summary
+
+{One paragraph}
+
+## Connections Found
+
+{Summary of connect discovery: which notes, what relationships, and what this source adds}
+
+## Extractable Value
+
+1. **{item}** -- {why it matters relative to existing KB connections}. [{effort}]
+
+## Limitations (our opinion)
+
+{Where this source should not be trusted or over-generalized}
+
+## Recommended Next Action
+
+{One specific action}
+```

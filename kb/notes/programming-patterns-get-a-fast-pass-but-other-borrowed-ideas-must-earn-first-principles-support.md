@@ -1,6 +1,6 @@
 ---
 description: We borrow from any source but adopt based on first-principles support — except programming patterns, which get a fast pass because the bet is that knowledge bases are a new kind of software system
-type: note
+type: kb/types/note.md
 traits: []
 status: seedling
 tags: [foundations]

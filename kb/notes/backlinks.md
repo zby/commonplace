@@ -1,6 +1,6 @@
 ---
 description: Four use cases for inbound link visibility (hub identification, source-to-theory bridging, impact assessment, tension surfacing) with four design options and their maintenance trade-offs
-type: note
+type: kb/types/note.md
 traits: [has-comparison]
 tags: [links]
 status: speculative

@@ -2,7 +2,7 @@
 source: https://arxiv.org/abs/2502.12110
 captured: 2026-02-28
 capture: pdf-read
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

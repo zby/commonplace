@@ -1,6 +1,6 @@
 ---
 description: Playbook-learning loop with generator, reflector, and curator roles — learns from execution feedback by scoring bullets and appending new playbook entries, without weight promotion
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

@@ -1,6 +1,6 @@
 ---
 description: Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model, architecture]
 status: seedling

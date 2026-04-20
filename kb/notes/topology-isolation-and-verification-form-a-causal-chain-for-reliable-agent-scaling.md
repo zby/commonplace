@@ -1,6 +1,6 @@
 ---
 description: Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two
-type: note
+type: kb/types/note.md
 tags: [computational-model, llm-interpretation-errors]
 status: speculative
 ---

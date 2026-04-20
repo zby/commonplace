@@ -1,6 +1,6 @@
 ---
 description: Auto-generated directory - run commonplace-refresh-indexes to rebuild
-type: index
+type: kb/types/index.md
 index_source: directory
 ---
 
@@ -17,6 +17,7 @@ index_source: directory
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)
 - [information-measures/](./information-measures/dir-index.md)
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/dir-index.md)
+- [link-label-audit/](./link-label-audit/dir-index.md)
 - [obsidian-affordances/](./obsidian-affordances/dir-index.md)
 - [paper-bounded-context-orchestration/](./paper-bounded-context-orchestration/dir-index.md)
 - [philosophy-borrowing/](./philosophy-borrowing/dir-index.md)
@@ -31,6 +32,7 @@ index_source: directory
 - [token-wiki-review/](./token-wiki-review/dir-index.md)
 - [tool-loop-control/](./tool-loop-control/dir-index.md)
 - [type-system-rationalization/](./type-system-rationalization/dir-index.md)
+- [write-type-resolver/](./write-type-resolver/dir-index.md)
 
 ## Files
 

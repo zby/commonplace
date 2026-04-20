@@ -3,7 +3,7 @@ source: https://arxiv.org/html/2505.18761v2
 description: Introduces GSM-DC, a controlled benchmark using symbolic DAGs to systematically measure how irrelevant context degrades LLM reasoning — quantifies power-law error scaling with distractor count, and shows Hard-IC training plus PRM-guided tree search are the most effective robustness interventions.
 captured: 2026-03-26
 capture: pdf-read
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

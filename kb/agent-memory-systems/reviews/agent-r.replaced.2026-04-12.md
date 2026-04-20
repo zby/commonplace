@@ -1,6 +1,6 @@
 ---
 description: Iterative self-training agent that mines MCTS search trees into revision conversations and weight-update datasets, using strong environment rewards rather than persistent artifact memory
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

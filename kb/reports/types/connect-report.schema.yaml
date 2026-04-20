@@ -14,7 +14,7 @@ allOf:
           - depth
         properties:
           type:
-            const: connect-report
+            const: kb/reports/types/connect-report.md
           source:
             type: string
             minLength: 1

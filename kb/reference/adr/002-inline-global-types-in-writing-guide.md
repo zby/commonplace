@@ -1,6 +1,6 @@
 ---
 description: Decision to inline note and structured-claim templates into WRITING.md so the agent gets type structure and writing conventions in a single hop — eliminates one read for the two most common note types
-type: adr
+type: kb/reference/types/adr.md
 tags: []
 status: superseded
 ---

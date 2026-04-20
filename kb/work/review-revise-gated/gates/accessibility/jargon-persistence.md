@@ -1,4 +1,5 @@
 ---
+type: kb/types/instruction.md
 description: KB-internal term defined once then reused throughout the body without ongoing context — reader loses the grounding.
 ---
 

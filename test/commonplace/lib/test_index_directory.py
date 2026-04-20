@@ -17,7 +17,7 @@ def test_generate_directory_index_skips_readme_index_and_types(tmp_path: Path) -
         collection / "real.md",
         """---
 description: Real note
-type: note
+type: kb/types/note.md
 ---
 
 # Real
@@ -42,7 +42,7 @@ def test_write_index_recurses_and_lists_subdirs(tmp_path: Path) -> None:
         collection / "top.md",
         """---
 description: Top-level note
-type: note
+type: kb/types/note.md
 ---
 
 # Top
@@ -52,7 +52,7 @@ type: note
         collection / "adr" / "001-some-decision.md",
         """---
 description: First decision
-type: adr
+type: kb/reference/types/adr.md
 ---
 
 # 001 Some decision

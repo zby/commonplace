@@ -1,6 +1,6 @@
 ---
 description: Multi-agent memory harness that layers within-run state-graph traces, a task-similarity graph over Chroma-stored trajectories, and a scored JSON rule list with ADD/EDIT/REMOVE/AGREE maintenance
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

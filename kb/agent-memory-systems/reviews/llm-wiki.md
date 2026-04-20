@@ -1,6 +1,6 @@
 ---
 description: Claude Code plugin and portable AGENTS protocol for topic-isolated compiled markdown wikis, packaging ingest/research/query workflows as prompt artifacts rather than executable software
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

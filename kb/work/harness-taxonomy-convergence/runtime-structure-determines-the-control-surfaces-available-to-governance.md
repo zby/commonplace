@@ -1,6 +1,6 @@
 ---
 description: Runtime structure and runtime governance are separable, but the runtime's structure determines which inspection, validation, correction, and drift-control operations governance can actually perform
-type: note
+type: kb/types/note.md
 traits: []
 tags: [architecture, computational-model]
 status: seedling

@@ -78,6 +78,25 @@ def list_kb_note_paths(root: Path) -> list[Path]:
     ]
 
 
+def list_type_spec_paths(root: Path) -> list[Path]:
+    """Return first-class type-spec markdown paths under kb/**/types/."""
+    boundary = kb_root(root)
+    if not boundary.is_dir():
+        return []
+    return sorted(
+        path
+        for path in boundary.glob("**/types/*.md")
+        if not path.name.endswith(".template.md")
+        and not path.name.endswith(".instructions.md")
+        and path.name != "text.md"
+    )
+
+
+def list_kb_validation_paths(root: Path) -> list[Path]:
+    """Return KB markdown artifacts validated in batch mode, including type specs."""
+    return sorted([*list_kb_note_paths(root), *list_type_spec_paths(root)])
+
+
 def list_notes_collection_paths(root: Path) -> list[Path]:
     """Return markdown note paths under kb/notes only."""
     return list_collection_note_paths(kb_root(root) / "notes")

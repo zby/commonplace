@@ -2,7 +2,7 @@
 description: Autoreason paper showing self-refinement improves only when candidate synthesis is paired with blind comparative judging and incumbent survival, with gains concentrated in the generation-evaluation gap
 source_snapshot: autoreason-self-refinement-that-knows-when-to-stop.md
 ingested: "2026-04-13"
-type: ingest-report
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [evaluation, self-refinement, oracle-theory, agent-orchestration]
 ---

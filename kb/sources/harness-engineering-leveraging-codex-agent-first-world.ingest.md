@@ -1,8 +1,8 @@
 ---
 description: Practitioner report on 1M LOC fully agent-generated codebase — harness engineering as constrain/inform/verify/correct, entropy management via background cleanup agents, error messages as dual-function constraining
 source_snapshot: harness-engineering-leveraging-codex-agent-first-world.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [agent-systems, context-engineering, constraining, code-generation]
 ---

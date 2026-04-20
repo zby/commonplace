@@ -1,6 +1,6 @@
 ---
 description: Proposes that discovery has a dual structure — positing a new general concept while recognizing existing particulars as instances of it — and that similarity-based connections vary by abstraction depth (shared feature → shared structure → generative model), not link kind. Scoped to similarity connections; contrastive and causal links are a different axis.
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory]
 status: seedling

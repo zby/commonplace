@@ -1,6 +1,6 @@
 ---
 description: LLM context windows are homoiconic — instructions and data share the same representation (natural language tokens), so there is no structural boundary between program and content, producing both the extensibility benefits and the scoping hazards of Lisp, Emacs, and Smalltalk
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 status: seedling

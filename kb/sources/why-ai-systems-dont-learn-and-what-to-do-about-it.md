@@ -3,7 +3,7 @@ source: https://arxiv.org/html/2603.15381v1
 description: Dupoux, LeCun, and Malik argue current AI externalizes learning into human-run MLOps, then propose an A-B-M architecture where observation learning, action learning, and a meta-control plane are integrated for lifelong adaptation.
 captured: 2026-03-18
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

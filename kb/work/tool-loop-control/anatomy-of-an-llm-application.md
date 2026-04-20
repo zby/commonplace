@@ -1,6 +1,6 @@
 ---
 description: Starts from the standard prompted-agent tool loop, showing that the real control boundary appears when applications need to change the capability surface for later steps
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering]
 status: seedling

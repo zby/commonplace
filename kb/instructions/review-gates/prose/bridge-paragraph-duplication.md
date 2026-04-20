@@ -2,7 +2,7 @@
 gate_id: prose/bridge-paragraph-duplication
 name: Bridge paragraph duplication
 description: 'A transition paragraph at the end of one section previews exactly what the next section then enumerates. The reader gets the same content twice — once as preview, once as the section''s own development.'
-type: instruction
+type: kb/types/instruction.md
 lens: prose
 watches: [body]
 staleness: changed

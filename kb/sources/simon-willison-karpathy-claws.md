@@ -2,7 +2,7 @@
 source: https://simonwillison.net/2026/Feb/21/claws/
 captured: 2026-02-22
 capture: fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 

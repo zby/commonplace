@@ -1,6 +1,6 @@
 ---
 description: Scenario-derived shipped architecture — one-tree installed KB, package-provided commands, promoted skills, and a measurable scenario decomposition
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---

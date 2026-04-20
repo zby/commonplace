@@ -1,6 +1,6 @@
 ---
 description: NeurIPS 2023 research scaffolding where failed task attempts become short natural-language reflections that are appended to the next prompt; per-task rolling memory tail of three, no cross-task consolidation, no weight updates
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

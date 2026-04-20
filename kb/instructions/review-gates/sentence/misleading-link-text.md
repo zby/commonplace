@@ -2,7 +2,7 @@
 gate_id: sentence/misleading-link-text
 name: Misleading Link Text
 description: Markdown link text implies a concept but the linked note discusses something different — reader gets wrong impression.
-type: instruction
+type: kb/types/instruction.md
 lens: sentence
 watches: [body]
 staleness: changed

@@ -1,6 +1,6 @@
 ---
 description: Definition — constraining constrains the space of valid interpretations an underspecified spec admits, from partial narrowing (conventions, structured sections) to full commitment (stored outputs, deterministic code) — one of two co-equal learning mechanisms alongside distillation
-type: note
+type: kb/types/note.md
 traits: []
 tags: [learning-theory]
 status: current

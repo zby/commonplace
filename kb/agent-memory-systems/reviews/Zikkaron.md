@@ -1,6 +1,6 @@
 ---
 description: "MCP memory server for Claude Code: 26 neuroscience-branded subsystems implemented as heuristic Python without LLM calls — vocabulary over mechanism, but compaction hooks and WRRF retrieval fusion are genuinely borrowable"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

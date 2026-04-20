@@ -2,7 +2,7 @@
 source: https://github.com/mem0ai/mem0
 captured: 2026-03-05
 capture: manual
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [github-repo]
 ---
 

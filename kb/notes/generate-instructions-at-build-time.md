@@ -1,6 +1,6 @@
 ---
 description: Template generation pays the flexibility cost once at setup; runtime variables pay it on every use across every substitution site, with occasional LLM misreads
-type: note
+type: kb/types/note.md
 traits: []
 tags: [architecture]
 status: seedling

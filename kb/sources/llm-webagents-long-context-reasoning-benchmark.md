@@ -3,7 +3,7 @@ source: https://arxiv.org/html/2512.04307v1
 description: Benchmark showing LLM-based web agents fail badly under long context with injected irrelevant task sequences — success rates drop from 40-50% to under 10% at 150k tokens, with loop and lost-objective failures dominating; implicit RAG provides only modest relief.
 captured: 2026-03-26
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

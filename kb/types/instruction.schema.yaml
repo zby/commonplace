@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: instruction
+            const: kb/types/instruction.md
           gate_id:
             type: string
             minLength: 1

@@ -1,6 +1,6 @@
 ---
 description: Curated index of external agent memory and context-engineering systems, spanning repo-backed reviews and source-only coverage
-type: index
+type: kb/types/index.md
 index_source: tag
 index_key: related-systems
 ---

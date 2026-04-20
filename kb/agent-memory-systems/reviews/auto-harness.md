@@ -1,6 +1,6 @@
 ---
 description: Minimal agent-optimization harness for improving one file against tau-bench with regression-suite and held-out-score gates, keeping learnings as workshop state rather than structured evaluators
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

@@ -1,4 +1,5 @@
 ---
+type: kb/types/instruction.md
 description: Sentence uses a stock LLM pattern that adds no content — deletion test shows paragraph reads equally well without it.
 ---
 

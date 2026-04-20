@@ -1,6 +1,6 @@
 ---
 description: Arch Linux config repo with Stow-managed multi-root deployment, Incus dev VMs, and agent-executable work-item docs; strong operational packaging, no real knowledge-learning loop
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

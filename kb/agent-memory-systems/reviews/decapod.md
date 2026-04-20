@@ -1,6 +1,6 @@
 ---
 description: Rust governance kernel for AI coding agents that forces intent codification, proof-gated completion, and workspace isolation before code touches a repo — strongest reference for hard-oracle verification in agent workflows, but constitution documents claim transformations the code does not perform
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

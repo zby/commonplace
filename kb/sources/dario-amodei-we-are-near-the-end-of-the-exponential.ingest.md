@@ -1,8 +1,8 @@
 ---
 description: Anthropic CEO's capability-timeline predictions implicitly confirm oracle-strength thesis — verifiable domains (coding, math) get confident timelines while unverifiable domains (novel writing, science) get hedged ones
 source_snapshot: dario-amodei-we-are-near-the-end-of-the-exponential.md
-ingested: 2026-03-12
-type: ingest-report
+ingested: "2026-03-12"
+type: kb/sources/types/ingest-report.md
 source_type: conversation-thread
 domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
 ---

@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking concept attribution during review-revise experiments
 gate_id: sentence/concept-attribution
 name: Concept attribution
 lens: sentence

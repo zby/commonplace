@@ -1,6 +1,6 @@
 ---
 description: The value of information depends on the observer — prior knowledge, computational capacity, tools, and goals determine what they can extract. Grounds distillation, discovery, and context arrangement as observer-relative operations.
-type: note
+type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory]
 status: seedling

@@ -1,6 +1,6 @@
 ---
 description: TypeScript memory system for AI agents with scored observations, session handoffs, and reflection pipelines — has a working workshop layer where we have theory, making it the strongest source of borrowable patterns for ephemeral knowledge
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 status: outdated
 tags: []

@@ -32,7 +32,7 @@ def make_note(
         path,
         f"""---
 description: {description}
-type: note
+type: kb/types/note.md
 traits: {traits}
 tags: {tags}
 status: {status}
@@ -156,7 +156,7 @@ def build_fixture(
 def test_has_only_unwatched_changes_accepts_frontmatter_change_for_body_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: seedling
@@ -167,7 +167,7 @@ Body.
 """
     current_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 status: current
@@ -187,7 +187,7 @@ Body.
 def test_has_only_unwatched_changes_rejects_body_change_for_body_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -198,7 +198,7 @@ Body.
 """
     current_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -218,7 +218,7 @@ Body changed.
 def test_has_only_unwatched_changes_accepts_body_change_for_title_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -229,7 +229,7 @@ Body.
 """
     current_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -249,7 +249,7 @@ Body changed.
 def test_has_only_unwatched_changes_rejects_title_change_for_title_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -260,7 +260,7 @@ Body.
 """
     current_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -280,7 +280,7 @@ Body.
 def test_has_only_unwatched_changes_rejects_description_change_for_title_description_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -291,7 +291,7 @@ Body.
 """
     current_text = """---
 description: Updated description
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -311,7 +311,7 @@ Body.
 def test_has_only_unwatched_changes_accepts_tag_change_for_title_description_gate() -> None:
     previous_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -322,7 +322,7 @@ Body.
 """
     current_text = """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model]
 status: current
@@ -345,7 +345,7 @@ def test_command_acks_frontmatter_change_for_body_gate(tmp_path: Path) -> None:
     note_path.write_text(
         """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 status: current
@@ -403,7 +403,7 @@ def test_command_acks_body_change_for_title_only_gate(tmp_path: Path) -> None:
     note_path.write_text(
         """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: current
@@ -449,7 +449,7 @@ def test_command_does_not_ack_when_watched_parts_changed(tmp_path: Path) -> None
     note_path.write_text(
         """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model]
 status: current
@@ -490,7 +490,7 @@ def test_dry_run_prints_pairs_without_acknowledging(tmp_path: Path) -> None:
     note_path.write_text(
         """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 status: current
@@ -583,7 +583,7 @@ def test_command_recovers_previous_text_from_first_commit_after_acceptance_time(
     note.write_text(
         """---
 description: Test note
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
 status: current

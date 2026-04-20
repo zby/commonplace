@@ -2,7 +2,7 @@
 gate_id: complexity/could-be-a-paragraph
 name: Could be a paragraph
 description: 'After removing background and connections, the note reduces to a single simple insight that does not justify a multi-section structure.'
-type: instruction
+type: kb/types/instruction.md
 lens: complexity
 watches: [body]
 staleness: changed

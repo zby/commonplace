@@ -1,6 +1,6 @@
 ---
 description: "Compiled collection topology — registers and linking rules. Rebuild with cp-skill-compile-collections."
-type: note
+type: kb/types/note.md
 status: current
 ---
 

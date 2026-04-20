@@ -1,6 +1,6 @@
 ---
 description: The KB already learns through manual work (every improvement is capacity change per Simon). The open problem is automating the judgment-heavy mutations — connections, groupings, synthesis — which require oracles we can't yet manufacture.
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
 status: speculative

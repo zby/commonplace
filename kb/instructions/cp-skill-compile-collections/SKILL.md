@@ -1,7 +1,7 @@
 ---
 name: cp-skill-compile-collections
 description: Compile all COLLECTION.md files into a single optimized topology document showing registers, quality goals, and cross-register linking rules. The project owner runs this whenever a COLLECTION.md changes; commonplace-init ships a pre-compiled default so the connect skill works on first run.
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Glob, Grep
 context: fork
@@ -42,7 +42,7 @@ kb/*/COLLECTION.md
 ```yaml
 ---
 description: "Compiled collection topology — registers and linking rules. Rebuild with cp-skill-compile-collections."
-type: note
+type: kb/types/note.md
 status: current
 ---
 ```

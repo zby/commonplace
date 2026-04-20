@@ -1,6 +1,6 @@
 ---
 description: Brainstorming note that decomposes the "how should an agent find what it needs?" problem into substrate, pointers, navigation, synthesis, and maintenance beyond RAG-vs-filesystem debates
-type: note
+type: kb/types/note.md
 traits: []
 tags: [foundations]
 status: seedling

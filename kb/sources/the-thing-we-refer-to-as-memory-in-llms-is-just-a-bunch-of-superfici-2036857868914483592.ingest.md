@@ -1,8 +1,8 @@
 ---
 description: Deepfates argues LLM "memory" is just context-stuffing that creates false salience (Chekov's gun), advocates agentic context-building, but concludes weight updates are necessary — directly contradicts this KB's durability-not-weights position
 source_snapshot: the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici-2036857868914483592.md
-ingested: 2026-03-25
-type: ingest-report
+ingested: "2026-03-25"
+type: kb/sources/types/ingest-report.md
 source_type: conversation-thread
 domains: [context-engineering, memory-architecture, learning-theory]
 ---

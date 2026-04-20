@@ -1,6 +1,6 @@
 ---
 description: Without explicit goals in the always-loaded control-plane file, agents cannot reject well-written but off-scope material — a universal quality guide provides writing criteria but not domain scope
-type: note
+type: kb/types/note.md
 tags: [architecture]
 status: seedling
 ---

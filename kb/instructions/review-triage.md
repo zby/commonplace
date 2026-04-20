@@ -1,6 +1,6 @@
 ---
 description: Inspect diffs for note-changed review pairs and ack insignificant changes — run before a review sweep to reduce the review queue
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Review triage

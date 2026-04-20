@@ -1,6 +1,6 @@
 ---
 description: Distillation is transformation into a new shape, not lossy selection. Memory distillation (traces → preferences, ADRs, skills) is the concrete case.
-type: note
+type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: []
 status: current

@@ -1,8 +1,8 @@
 ---
 description: Practitioner taxonomy deriving harness components (filesystem, bash, sandboxes, memory, context management, long-horizon execution) from model limitations — provides the component anatomy that bridges Lopopolo's practice and the cybernetics framing
 source_snapshot: the-anatomy-of-an-agent-harness-2031408954517971368.md
-ingested: 2026-03-12
-type: ingest-report
+ingested: "2026-03-12"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [agent-systems, harness-engineering, context-engineering, model-harness-coevolution]
 ---

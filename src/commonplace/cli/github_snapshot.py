@@ -141,7 +141,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
         f"api_url: {api_url}\n"
         f"captured: {timestamp}\n"
         f"capture: gh-api\n"
-        f"type: snapshot\n"
+        f"type: kb/sources/types/snapshot.md\n"
         f"tags: [{family}]\n"
         f"---\n\n"
         f"{md_body}"

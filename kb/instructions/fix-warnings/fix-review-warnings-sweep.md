@@ -1,6 +1,6 @@
 ---
 description: Batch fix of actionable findings from warn reviews across notes. Runs warn_selector to build a priority queue, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Fix Review Warnings Sweep

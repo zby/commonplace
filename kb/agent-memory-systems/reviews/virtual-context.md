@@ -1,6 +1,6 @@
 ---
 description: Proxy-owned context virtualization layer that compacts conversation and tool traces into durable summaries, facts, and demand-paged topic memory instead of treating retrieval as an additive sidecar
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation]
 tags: [related-systems]
 status: current

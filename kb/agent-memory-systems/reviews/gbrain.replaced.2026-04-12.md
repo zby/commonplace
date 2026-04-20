@@ -1,6 +1,6 @@
 ---
 description: "Personal-brain CLI and MCP layer over markdown-derived Postgres/pgvector pages, with agent skillpacks for trace-to-entity enrichment and compiled-truth maintenance"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: []
 status: outdated

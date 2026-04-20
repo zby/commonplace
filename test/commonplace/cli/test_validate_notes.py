@@ -20,6 +20,28 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
+def write_type_spec(
+    root: Path,
+    rel_path: str,
+    *,
+    name: str,
+    schema: str | None,
+) -> Path:
+    schema_value = "null" if schema is None else schema
+    return write(
+        root / rel_path,
+        f"""---
+type: kb/types/type-spec.md
+name: {name}
+description: Type spec for {name}
+schema: {schema_value}
+---
+
+# {name}
+""",
+    )
+
+
 def configure_temp_repo(tmp_path: Path) -> Path:
     notes_root = tmp_path / "kb" / "notes"
     write(
@@ -86,7 +108,7 @@ allOf:
           - type
         properties:
           type:
-            const: structured-claim
+            const: kb/notes/types/structured-claim.md
         additionalProperties: true
       headings:
         type: array
@@ -157,6 +179,18 @@ allOf:
               const: "## What to Watch"
 """,
     )
+    write_type_spec(
+        tmp_path,
+        "kb/types/note.md",
+        name="note",
+        schema="kb/types/note.schema.yaml",
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema="kb/notes/types/structured-claim.schema.yaml",
+    )
     return notes_root
 
 
@@ -177,13 +211,19 @@ def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
             encoding="utf-8"
         ),
     )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
     snapshot = write(
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
 captured: 2026-04-19
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [blog-post]
 ---
 
@@ -207,13 +247,19 @@ def test_source_snapshot_requires_family_tag(tmp_path: Path) -> None:
             encoding="utf-8"
         ),
     )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
     snapshot = write(
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
 captured: 2026-04-19
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 ---
 
 # Sample
@@ -235,7 +281,7 @@ def test_duplicate_frontmatter_keys_follow_yaml_last_value_wins(tmp_path: Path) 
         """---
 description: first
 description: second
-type: note
+type: kb/types/note.md
 ---
 
 # Broken note
@@ -256,7 +302,7 @@ def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
         tmp_path / "note.md",
         f"""---
 description: A note with one real missing link and links that should be ignored by deterministic validation
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -291,7 +337,7 @@ def test_link_validation_checks_all_relative_targets(tmp_path: Path) -> None:
         tmp_path / "note.md",
         """---
 description: A note with local links to files and directories so link health checks all relative targets
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -327,7 +373,7 @@ def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> Non
         notes_root / "claim.md",
         """---
 description: Structured claim missing one required section so the validator should warn deterministically
-type: structured-claim
+type: kb/notes/types/structured-claim.md
 traits: []
 status: current
 ---
@@ -345,38 +391,45 @@ Some evidence.
     assert any("missing '## Reasoning'" in item for item in results.warns)
 
 
-def test_spec_accepts_design_or_implementation_heading(tmp_path: Path) -> None:
+def test_bare_enum_frontmatter_type_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     note = write(
-        notes_root / "spec.md",
+        notes_root / "legacy.md",
         """---
-description: Spec note with one structural section so the resolver-backed validator should preserve legacy any-of behavior
+description: Legacy enum-typed note should be rejected after path-valued type migration
 type: spec
 status: current
 ---
 
-# Spec note
-
-## Design
-
-Design details.
+# Legacy note
 """,
     )
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert all("Design" not in item and "Implementation" not in item for item in results.warns)
-    assert all("headings" not in item for item in results.warns)
-    assert "type schema: spec requirements satisfied" in results.passes
+    assert results.note_type == "unknown"
+    assert "frontmatter.type: must start with kb/: spec" in results.fails
 
 
-def test_related_system_warns_when_last_checked_missing(tmp_path: Path) -> None:
+def test_agent_memory_review_warns_when_last_checked_missing(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
+    write(
+        tmp_path / "kb" / "agent-memory-systems" / "types" / "agent-memory-system-review.schema.yaml",
+        (Path.cwd() / "kb" / "agent-memory-systems" / "types" / "agent-memory-system-review.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/agent-memory-systems/types/agent-memory-system-review.md",
+        name="agent-memory-system-review",
+        schema="kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml",
+    )
     note = write(
         notes_root / "system.md",
         """---
 description: Related system note missing the review freshness field so the structural validator should flag it
-type: related-system
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 status: current
 ---
 
@@ -486,7 +539,7 @@ allOf:
           - type
         properties:
           type:
-            const: adr
+            const: kb/notes/types/adr.md
           status:
             enum:
               - proposed
@@ -505,11 +558,17 @@ allOf:
               const: "## Consequences"
 """,
     )
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/adr.md",
+        name="adr",
+        schema="kb/notes/types/adr.schema.yaml",
+    )
     note = write(
         notes_root / "decision.md",
         """---
 description: ADR with custom lifecycle status values that should validate independently of note status
-type: adr
+type: kb/notes/types/adr.md
 status: accepted
 ---
 
@@ -597,7 +656,7 @@ allOf:
           - type
         properties:
           type:
-            const: instruction
+            const: kb/types/instruction.md
         additionalProperties: true
   - if:
       properties:
@@ -622,13 +681,19 @@ allOf:
                 const: "## Test"
 """,
     )
+    write_type_spec(
+        tmp_path,
+        "kb/types/instruction.md",
+        name="instruction",
+        schema="kb/types/instruction.schema.yaml",
+    )
     gate = write(
         tmp_path / "kb" / "instructions" / "review-gates" / "prose" / "sample.md",
         """---
 gate_id: prose/sample
 name: Sample
 description: Sample review gate for validating instruction metadata
-type: instruction
+type: kb/types/instruction.md
 lens: prose
 watches: [body]
 staleness: changed
@@ -660,7 +725,7 @@ def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
         notes_root / "short-slug.md",
         f"""---
 description: Note with an overly long title so the validator should fail deterministically on title length
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -681,7 +746,7 @@ def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> Non
         notes_root / f"{overlong_slug}.md",
         """---
 description: Note with an overly long slug so the validator should fail deterministically on filename length
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -701,7 +766,7 @@ def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
         notes_root / "kept.md",
         """---
 description: Kept note with enough description text to satisfy the deterministic validator heuristics well enough
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -716,7 +781,7 @@ status: current
         nested_repo / "ignored.md",
         """---
 description: This note lives under a cloned repo and should be skipped by batch validation path discovery
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -737,7 +802,7 @@ def test_list_kb_note_paths_skips_type_definitions(tmp_path: Path) -> None:
         notes_root / "real.md",
         """---
 description: Real note that should be picked up by batch validation
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -749,7 +814,7 @@ status: current
         notes_root / "types" / "adr.template.md",
         """---
 description: Template skeleton for authoring ADRs, not a knowledge artifact
-type: adr
+type: kb/notes/types/adr.md
 ---
 
 # {NNN}-{decision-title}
@@ -784,7 +849,7 @@ def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
         notes_root / "today.md",
         """---
 description: Note modified today so recent target resolution should find it deterministically
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -796,7 +861,7 @@ status: current
         notes_root / "old.md",
         """---
 description: Older note that should not be picked up by recent target resolution in deterministic validation
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -820,7 +885,7 @@ def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
         tmp_path / "kb" / "notes" / "note.md",
         """---
 description: Note in the notes collection
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -832,7 +897,7 @@ status: current
         tmp_path / "kb" / "reports" / "report.md",
         """---
 description: Report outside the notes collection
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -856,7 +921,7 @@ def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> No
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
         """---
 description: Agent memory systems index note
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -868,7 +933,7 @@ status: current
         tmp_path / "kb" / "agent-memory-systems" / "reviews" / "agent-r.md",
         """---
 description: Agent R review note
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---
@@ -880,7 +945,7 @@ status: current
         tmp_path / "kb" / "agent-memory-systems" / "types" / "review.template.md",
         """---
 description: Template that should not be validated as collection content
-type: note
+type: kb/types/note.md
 ---
 
 # Template
@@ -890,7 +955,7 @@ type: note
         tmp_path / "kb" / "reports" / "report.md",
         """---
 description: Report outside the target collection
-type: note
+type: kb/types/note.md
 traits: []
 status: current
 ---

@@ -1,6 +1,6 @@
 ---
 description: Continual learning splits into knowledge accumulation (solved by ordinary data engineering — DBs, files, vector stores, RAG) and behaviour change (the open problem). Within behaviour change, weight updates are expensive and system-definition artifacts (prose, symbolic) are cheap but under-addressed
-type: note
+type: kb/types/note.md
 traits:
   - title-as-claim
 tags:

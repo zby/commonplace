@@ -1,7 +1,7 @@
 ---
 name: evaluate-scenarios
 description: Read all scenario files, measure instruction bytes from referenced source files, and produce a cost report showing hops and byte counts per scenario weighted by frequency. Use to verify architectural claims about context loading costs.
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 context: fork
@@ -41,8 +41,8 @@ Common fixed sources you'll encounter:
 - `kb/instructions/cp-skill-connect/SKILL.md` — connection skill body
 - `kb/instructions/cp-skill-ingest/SKILL.md` — ingestion skill body
 - `kb/instructions/cp-skill-snapshot-web/SKILL.md` — snapshot skill body
-- `kb/sources/types/source-review.template.md` — source review type template
-- `test/scenarios/types/scenario.template.md` — scenario type template
+- `kb/sources/types/source-review.md` — source review type template
+- the scenario fixture template under `test/scenarios/types/`
 
 **Important:** Count CLAUDE.md bytes once per scenario (it's always loaded, not a per-step cost). Count other fixed sources once per scenario even if referenced in multiple steps (they stay in context after first load).
 

@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking connection inflation during review-revise experiments
 gate_id: complexity/connection-inflation
 name: Connection inflation
 lens: complexity

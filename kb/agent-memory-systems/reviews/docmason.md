@@ -1,6 +1,6 @@
 ---
 description: Repo-native document-analysis app with strict staging/published KB boundaries, multimodal evidence channels, typed interaction memories, and a governed canonical-ask front door that owns answer admissibility
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

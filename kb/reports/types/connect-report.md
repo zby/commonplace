@@ -1,4 +1,13 @@
-# Connect-Report Instructions
+---
+type: kb/types/type-spec.md
+name: connect-report
+description: Discovery report for possible KB connections from one source artifact
+schema: kb/reports/types/connect-report.schema.yaml
+---
+
+# Connect report
+
+## Authoring Instructions
 
 Use `connect-report` for discovery-only connection work. A connect report records evidence for future KB mutations; it is not itself a durable knowledge claim.
 
@@ -52,3 +61,66 @@ Use `connect-report` for discovery-only connection work. A connect report record
 - Remove any connection that cannot complete the sentence: "[A] connects to [B] because [specific reason]."
 - Do not propose regular note connections to raw text files; route them to `Raw Text Candidates`.
 - Do not create synthesis notes, edit indexes, or mutate library notes from a connect report.
+
+## Template
+
+```markdown
+---
+description: "Discovery report for possible KB connections from one source artifact"
+type: kb/reports/types/connect-report.md
+source: "{repo-root source path}"
+source_has_frontmatter: {true|false}
+date: "{YYYY-MM-DD}"
+depth: standard
+---
+
+# Connection Report: {source title}
+
+**Source:** [{source title}]({relative source link})
+
+## Discovery Trace
+
+**Index scan:**
+- Read [notes index](../../notes/dir-index.md) -- flagged candidates: {candidates with reasons}
+
+**Topic indexes:**
+- {topic index reads and candidates, or "None"}
+
+**Semantic search:** {via qmd | grep-only fallback}
+- query "{actual query}" -- top hits:
+  - [candidate](../../notes/candidate.md) ({score}) -- {evaluation}
+
+**Keyword search:**
+- rg "{actual query}" -- {results and evaluation}
+
+**Link following:**
+- {candidate neighborhoods traversed and what they revealed}
+
+## Connections Found
+
+- [target](../../notes/target.md) -- **extends**: {specific reason why this connection exists}
+
+## Bidirectional Candidates
+
+- [target](../../notes/target.md) <-> source -- **contradicts**: {reason the return path is also useful}
+
+## Raw Text Candidates
+
+- [text-file](../../notes/text-file.md) -- potential **extends**: {reason this text is relevant}
+
+## Rejected Candidates
+
+- [rejected](../../notes/rejected.md) -- {reason rejected}
+
+## Index Membership
+
+- [index-name](../../notes/index-name.md) -- {what the source would contribute to this area}
+
+## Synthesis Opportunities
+
+{Two or more notes that together imply a higher-order claim not yet captured, or "None"}
+
+## Flags
+
+- {split candidates, tensions, no-connections finding, or "None"}
+```

@@ -1,6 +1,6 @@
 ---
 description: Definition — distillation is compression viewed as learning; in KB methodology, directed context compression for a bounded consumer; co-equal learning mechanism alongside constraining
-type: definition
+type: kb/types/definition.md
 tags: [learning-theory]
 status: current
 ---

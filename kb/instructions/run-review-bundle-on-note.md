@@ -1,6 +1,6 @@
 ---
 description: Run review gates on one note from inside a live agent harness
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Run a review bundle on one note

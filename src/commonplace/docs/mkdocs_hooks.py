@@ -6,6 +6,8 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 
+INDEX_TYPE = "kb/types/index.md"
+
 
 def on_config(config):
     """Generate top-level nav from kb/<collection>/README.md files.
@@ -43,7 +45,7 @@ def _matches_tag_index(candidate: Path, tag: str) -> bool:
     content = candidate.read_text(encoding="utf-8")
     fm = frontmatter.parse(content).data
     return (
-        fm.get("type") == "index"
+        fm.get("type") == INDEX_TYPE
         and fm.get("index_source") == "tag"
         and fm.get("index_key") == tag
     )

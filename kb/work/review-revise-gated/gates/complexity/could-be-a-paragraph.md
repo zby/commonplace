@@ -1,4 +1,6 @@
 ---
+type: kb/types/instruction.md
+description: Workshop review gate for checking could be a paragraph during review-revise experiments
 gate_id: complexity/could-be-a-paragraph
 name: Could be a paragraph
 lens: complexity

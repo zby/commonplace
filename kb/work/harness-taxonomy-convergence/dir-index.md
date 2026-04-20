@@ -1,6 +1,6 @@
 ---
 description: Auto-generated directory - run commonplace-refresh-indexes to rebuild
-type: index
+type: kb/types/index.md
 index_source: directory
 ---
 

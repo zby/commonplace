@@ -1,6 +1,6 @@
 ---
 description: Reference for borrowing recurring note shapes from Thalo — their entity types (opinion, reference, lore, journal, synthesis) map onto our types with concrete gaps still open (supersedes links, source status tracking)
-type: note
+type: kb/types/note.md
 traits: [has-comparison]
 status: seedling
 tags: [related-systems]

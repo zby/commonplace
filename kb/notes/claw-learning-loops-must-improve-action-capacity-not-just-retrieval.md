@@ -1,6 +1,6 @@
 ---
 description: A Claw learning loop must target contextual competence (execution, classification, planning, communication), not just retrieval accuracy — question-answering is one mode among many
-type: note
+type: kb/types/note.md
 traits: []
 tags: []
 status: seedling

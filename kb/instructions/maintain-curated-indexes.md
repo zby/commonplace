@@ -1,6 +1,6 @@
 ---
 description: Audit and maintain curated sections of generated-tail index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Maintain curated indexes
@@ -46,7 +46,7 @@ For each orphan, consider whether adding tags would help future readers find it.
 When a tag's generated section grows large and internal clusters emerge:
 
 1. Look at the curated section's groupings — these often reveal natural sub-tags.
-2. Create a new tag-backed index page with `type: index`, `index_source: tag`, and `index_key: <tag>`.
+2. Create a new tag-backed index page with `type: kb/types/index.md`, `index_source: tag`, and `index_key: <tag>`.
 3. Add the new tag to relevant notes' `tags:` field.
 4. Run `commonplace-sync-generated-index` to populate the generated section.
 5. Optionally write a curated section for the new index.

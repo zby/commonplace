@@ -1,8 +1,8 @@
 ---
 description: Shannon's 1952 lecture cataloguing six explicit problem-solving operators (simplification, analogy, restatement, generalization, structural analysis, inversion) as a portable creative toolkit
 source_snapshot: creative-thinking-by-claude-shannon.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [creativity, problem-solving, research-methods, agent-orchestration]
 ---

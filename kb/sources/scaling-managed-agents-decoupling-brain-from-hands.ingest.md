@@ -1,8 +1,8 @@
 ---
 description: Anthropic Managed Agents report showing brain/hand/session interface decomposition, durable session logs, and stale harness assumptions as model capability changes
 source_snapshot: scaling-managed-agents-decoupling-brain-from-hands.md
-ingested: 2026-04-11
-type: ingest-report
+ingested: "2026-04-11"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [agent-runtime, context-engineering, orchestration, isolation]
 ---

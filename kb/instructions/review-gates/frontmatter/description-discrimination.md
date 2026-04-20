@@ -2,7 +2,7 @@
 gate_id: frontmatter/description-discrimination
 name: Description discrimination
 description: 'The description restates the title or is so generic that it would not help an agent pick this note from a short result list.'
-type: instruction
+type: kb/types/instruction.md
 lens: frontmatter
 watches: [title, description]
 staleness: changed

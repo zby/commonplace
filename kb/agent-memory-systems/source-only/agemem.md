@@ -1,6 +1,6 @@
 ---
 description: "Source-only coverage note for AgeMem, an RL-trained LTM/STM memory-management policy covered through paper ingest rather than local code review"
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [related-systems, trace-derived]
 status: current
@@ -16,7 +16,7 @@ AgeMem learns a memory-management policy from task trajectories. The policy oper
 
 ## Review boundary
 
-Do not create `kb/agent-memory-systems/reviews/agemem.md` unless a reachable repository is found and inspected. The review type in `../types/agent-memory-system-review.instructions.md` requires code access; this note exists to keep the system visible without pretending the KB has repo-grounded coverage.
+Do not create `kb/agent-memory-systems/reviews/agemem.md` unless a reachable repository is found and inspected. The review type in `../types/agent-memory-system-review.md` requires code access; this note exists to keep the system visible without pretending the KB has repo-grounded coverage.
 
 ---
 

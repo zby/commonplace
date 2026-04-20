@@ -1,8 +1,8 @@
 ---
 description: Wikipedia-contextualized capture of Sutton's Bitter Lesson, useful for scaling arguments and caveats about general methods versus hand-coded knowledge.
 source_snapshot: wikipedia-bitter-lesson.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [ai-philosophy, scaling, learning-theory, system-design]
 ---

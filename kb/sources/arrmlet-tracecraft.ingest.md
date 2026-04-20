@@ -1,8 +1,8 @@
 ---
 description: S3-backed CLI coordination tool for multi-agent systems — exemplifies coordination-without-guarantees and the files-over-database bet applied to inter-agent state rather than knowledge storage
 source_snapshot: arrmlet-tracecraft.md
-ingested: 2026-04-04
-type: ingest-report
+ingested: "2026-04-04"
+type: kb/sources/types/ingest-report.md
 source_type: tool-announcement
 domains: [multi-agent-coordination, agent-infrastructure, distributed-systems]
 ---

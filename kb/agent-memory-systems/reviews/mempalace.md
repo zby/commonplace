@@ -1,6 +1,6 @@
 ---
 description: "Local-first Python memory system storing verbatim conversation and project chunks as ChromaDB drawers with wing/room metadata, a SQLite temporal fact graph, optional AAAK lossy summaries, 19 MCP tools, and a write-ahead log"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

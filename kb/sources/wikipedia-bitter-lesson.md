@@ -2,7 +2,7 @@
 source: https://en.wikipedia.org/wiki/Bitter_lesson
 captured: 2026-02-23
 capture: fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [encyclopedia-article]
 ---
 

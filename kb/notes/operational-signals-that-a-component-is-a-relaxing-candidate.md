@@ -1,6 +1,6 @@
 ---
 description: Six operational signals — five early-detection (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failure modes, distribution sensitivity) plus composition failure as late-stage confirmation — for shifting confidence about whether a component encodes theory or specification.
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 status: seedling

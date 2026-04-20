@@ -1,8 +1,8 @@
 ---
 description: MIA mixed-substrate deep-research agent memory paper — search trajectories become both workflow memory and Planner weight updates during test-time learning
 source_snapshot: memory-intelligence-agent.md
-ingested: 2026-04-11
-type: ingest-report
+ingested: "2026-04-11"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [agent-memory, trace-derived-learning, test-time-learning, reinforcement-learning]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Definition — a register is one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules"
-type: definition
+type: kb/types/definition.md
 tags: [document-system]
 status: current
 ---

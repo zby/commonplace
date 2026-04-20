@@ -1,6 +1,6 @@
 ---
 description: Catalogues data-driven constraining and relaxing signals from an agentic AI adaptation taxonomy — maps the paper's agent/tool × execution/output signal grid onto llm-do's neural/symbolic spectrum and the constrain/relax cycle
-type: note
+type: kb/types/note.md
 ---
 
 # Analysis: Adaptation of Agentic AI (arXiv:2512.16301)

@@ -1,6 +1,6 @@
 ---
 description: Links are decision points; link quality is the reduction of navigation uncertainty per token of context consumed. Grounds our relationship vocabulary, title-as-claim, and position-encodes-strength practices under one model.
-type: note
+type: kb/types/note.md
 tags: [links]
 status: seedling
 ---

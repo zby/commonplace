@@ -1,4 +1,5 @@
 ---
+type: kb/types/instruction.md
 description: Technical term used without inline definition — reader must follow a link or know KB context to understand the sentence.
 ---
 

@@ -2,7 +2,7 @@
 gate_id: prose/orphan-references
 name: Orphan references
 description: 'A specific figure, data point, named study, or empirical claim appears without enough source or context for the reader to evaluate it.'
-type: instruction
+type: kb/types/instruction.md
 lens: prose
 watches: [body]
 staleness: changed

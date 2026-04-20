@@ -48,11 +48,14 @@ def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str |
         return None, parse_error
     assert document is not None
 
-    profile = resolve_type(path, document.frontmatter, repo_root=repo_root)
+    try:
+        profile = resolve_type(path, document.frontmatter, repo_root=repo_root)
+    except (FileNotFoundError, ValueError) as exc:
+        return None, str(exc)
     return ParsedNote(
         path=path,
         content=content,
-        note_type=profile.resolved_type,
+        note_type=profile.type_name,
         profile=profile,
         document=document,
     ), None
@@ -135,7 +138,7 @@ def _schema_error_message(error: ValidationError) -> tuple[str, str]:
 
 
 def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
-    if parsed.profile.definition_path is None or parsed.profile.schema is None:
+    if parsed.profile.schema_path is None or parsed.profile.schema is None:
         return
 
     errors = validate_instance(parsed.profile, parsed.document.to_validation_object())

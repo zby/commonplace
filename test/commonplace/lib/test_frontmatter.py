@@ -11,7 +11,7 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.lib import frontmatter
+from commonplace.lib import frontmatter  # noqa: E402
 
 
 class TestParseScalars(unittest.TestCase):

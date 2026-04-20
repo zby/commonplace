@@ -1,6 +1,6 @@
 ---
 description: How collections and types compose in commonplace - collections own register conventions and link rules, types own structural contracts, and the two meet at collection-scoped type lookup; covers the COLLECTION.md surface, the compiled collection-topology used by the connect skill, and the compile-collections skill that produces it
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---

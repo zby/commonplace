@@ -1,8 +1,8 @@
 ---
 description: Causal-intervention paper showing compressed agent memories can improve systems yet fail faithfulness tests, making behavioral dependence the missing metric for self-evolving agents
 source_snapshot: large-language-model-agents-are-not-always-faithful-self-evolvers.md
-ingested: 2026-03-22
-type: ingest-report
+ingested: "2026-03-22"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [agent-memory, distillation, verification, llm-agents]
 ---

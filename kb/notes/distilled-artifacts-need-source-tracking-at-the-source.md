@@ -1,6 +1,6 @@
 ---
 description: Distilled artifacts should not link back to sources (focus), but sources should link forward to distilled targets ("Distilled into:") so that source changes trigger staleness review of downstream artifacts
-type: note
+type: kb/types/note.md
 tags: [links]
 status: seedling
 ---

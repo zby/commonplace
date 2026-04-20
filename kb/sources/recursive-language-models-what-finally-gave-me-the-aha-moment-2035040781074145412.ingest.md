@@ -1,8 +1,8 @@
 ---
 description: Detailed practitioner walkthrough of RLM architecture via five-architecture comparison (direct gen, RAG, ReAct, CodeAct, CodeAct+subagents, RLM) — the most concrete evidence for REPL-as-substrate, symbolic variable return, and scaffold-level truncation in the KB
 source_snapshot: recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.md
-ingested: 2026-03-22
-type: ingest-report
+ingested: "2026-03-22"
+type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
 domains: [agent-architecture, context-engineering, orchestration]
 ---

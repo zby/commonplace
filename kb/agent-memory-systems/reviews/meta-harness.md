@@ -1,6 +1,6 @@
 ---
 description: "Stanford IRIS Lab harness-code optimizer with Claude-proposed memory/scaffold variants, benchmark-gated promotion, run logs, frontiers, and executable candidate artifacts"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-15"

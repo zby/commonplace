@@ -1,8 +1,8 @@
 ---
 description: 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking due to absence of step-by-step induction bias; introduces sharing factor kappa quantifying cross-length mechanism reuse
 source_snapshot: induction-bias-sequence-models-ebrahimi-2026.md
-ingested: 2026-03-09
-type: ingest-report
+ingested: "2026-03-09"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [ml-architecture, state-tracking, data-efficiency, inductive-bias]
 ---

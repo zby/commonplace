@@ -1,7 +1,7 @@
 ---
 name: cp-skill-write
-description: Write a KB artifact using the default note workflow or a discovered type template. Routes by type, reads the target collection's COLLECTION.md, searches first, and validates after writing. Use with an optional type and optional topic.
-type: instruction
+description: Write a KB artifact by reading the target collection conventions and the selected path-valued type-spec doc before drafting and validating.
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -13,83 +13,60 @@ argument-hint: "[path | collection | type] [topic] — a note path for editing, 
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection** — a top-level directory under `kb/` (`kb/notes/`, `kb/reference/`, `kb/instructions/`). Each collection has a `COLLECTION.md` with its writing conventions. Documents have a **type** (`note`, `definition`, `adr`, etc.) that determines their structural template.
+All documents in the KB live in a **collection**: a top-level directory under `kb/` such as `kb/notes/`, `kb/reference/`, or `kb/instructions/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions.
 
-### Step 1 — Parse arguments
+Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 
-**Edit mode** — first argument is a path to an existing `.md` file: read it, infer collection from path (`kb/notes/` → notes, etc.), read `type` from frontmatter (default `note`; no frontmatter → `text`). Remaining arguments describe what to change.
+### Step 1 - Parse Arguments
 
-**New-note mode** — everything else. Extract the collection, type, and topic from the arguments (natural language is fine). Defaults: collection `notes`, type `note`. If the type is `instruction` and no collection is explicit, default the collection to `instructions`. No arguments → ask the user what to write about.
+**Edit mode**: first argument is a path to an existing `.md` file. Read it, infer collection from the path, and read its `type:` path from frontmatter. If it has frontmatter but no `type:`, stop and fix that structural problem before editing. If it has no frontmatter, treat it as implicit `text`. Open the type-spec doc named by `type:` before making structural edits.
 
-**Type resolution**: for non-default types, resolve the template the same way validation resolves schemas:
+**New-write mode**: everything else. Extract collection, type, and topic from the arguments. Defaults: collection `notes`, type `kb/types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
 
-1. If the collection is explicit, check `kb/<collection>/types/{type}.template.md`, then `kb/types/{type}.template.md`.
-2. If the collection is not explicit, search collection-local templates at `kb/*/types/{type}.template.md` excluding `kb/types/`.
-3. If exactly one collection-local template exists, use that template and its collection (e.g. `kb/reference/types/adr.template.md` -> `kb/reference/`).
-4. If no collection-local template exists, check the global template at `kb/types/{type}.template.md`.
-5. If the type is global, it does not choose a collection by itself. Use the parsed or write-skill default collection (`instructions` for `instruction`, otherwise `notes` unless the user said otherwise) and the global template.
-6. If more than one collection-local template exists and no collection was explicit, ask for the collection. If no template is found, list available types and stop.
+For new writes, read the target collection's `## Types` section in `kb/<collection>/COLLECTION.md`. Pick one listed type path. If the requested type is not listed and the user did not give an explicit path, stop and list the available types. If the user gives an explicit `kb/.../*.md` type path, open that file and verify it is a type-spec doc before using it.
 
-### Step 2 — Load collection conventions
+### Step 2 - Load Collection Conventions
 
 Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions.
 
-**Hard fail** if `kb/<collection>/COLLECTION.md` does not exist: stop and tell the user the collection is not configured. Every collection that accepts writes must have a COLLECTION.md — its register, quality goal, and linking rules are what distinguish collections. Do NOT proceed with default conventions; a silently-default write produces content that doesn't follow the collection's quality goals and the failure won't be caught until review.
+**Hard fail** if `kb/<collection>/COLLECTION.md` does not exist. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 
-### Step 3 — Search before writing
+### Step 3 - Load The Type Spec
+
+Read the selected type-spec doc. Its frontmatter must include `type: kb/types/type-spec.md`, `name`, `description`, and `schema`. Its body supplies the artifact shape and may include a template block. Follow that body as the structural authoring contract.
+
+Do not use legacy split type sidecars. Do not fall back from a missing type path to `note`.
+
+For `text`, write raw markdown with no frontmatter only when the user explicitly wants unstructured capture. Otherwise use `kb/types/note.md`.
+
+### Step 4 - Search Before Writing
 
 Search the target collection first, then `kb/notes/` if different. Read closest matches to avoid duplication and find connection points. In edit mode, also search for notes linking to the target.
 
-### Step 4 — Draft and save
+### Step 5 - Draft And Save
 
-**Template**: for types other than `note`, use the template found during type resolution. If `{type}.instructions.md` exists alongside it, follow it. For `text`, raw markdown without frontmatter. Never invent a type when no template exists. For the default `note` type, use this template:
+Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed artifacts, set `type:` to the exact repo-relative type-spec path, not the type name.
 
-```
----
-description: ""
-type: note
-traits: []
-tags: []
-status: seedling
----
+Set traits only when clearly warranted: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation`.
 
-# {Title — style per collection conventions}
+Preserve existing frontmatter and links during edits unless the requested change requires changing them.
 
-{Opening paragraph.}
+### Step 6 - Validate
 
-{Body.}
+Run `cp-skill-validate` on the written file. Fix structural failures before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
 
-## Open Questions
-
-- {Omit section if none}
-
----
-
-Relevant Notes:
-
-- [related-note](./related-note.md) — {relationship per collection's outbound linking rules}
-```
-
-**New notes**: follow resolved template and collection conventions. Derive lowercase-hyphenated filename from `# Title` (max 100 chars). Set traits only when clearly warranted: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation`.
-
-**Edits**: apply requested changes respecting collection conventions. Preserve existing frontmatter and links unless the edit specifically changes them.
-
-### Step 5 — Validate
-
-Run `cp-skill-validate` on the written file. Fix structural issues before stopping. Suggest `cp-skill-connect` as the next step.
-
-## Universal mechanics
+## Universal Mechanics
 
 These apply to all typed artifacts regardless of collection.
 
-**Frontmatter** makes notes queryable. No frontmatter → `text` type. Required: `description` (double-quoted, 50-200 chars). Optional: `type`, `traits` list, `tags` list, `status` (`seedling` / `current` / `speculative` / `outdated`).
+**Frontmatter** makes notes queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library notes also need `description` (double-quoted, 50-200 chars), plus optional `traits`, `tags`, and `status`.
 
-**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick THIS one? Paraphrasing the title adds zero retrieval value.
+**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
-**Links**: relative markdown paths from source file. Prefer inline links as prose ("Since [claim](./claim.md)..."). Footer links for connections outside prose, always with relationship annotation (`— extends / foundation / contradicts / enables / example`). Every link must point to a real file — verify with `ls`.
+**Links** use relative markdown paths from the source file. Prefer inline links as prose. Footer links for connections outside prose should carry a relationship annotation (`extends`, `foundation`, `contradicts`, `enables`, `example`). Every link must point to a real file.
 
-**Filenames**: lowercase, hyphens, `.md`, derived from `# Title`, max 100 chars.
+**Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 100 chars.
 
-**Distillation tracking**: when distilling from notes into a focused artifact, add `Distilled into:` in each source note's footer. The distilled artifact does NOT link back.
+**Distillation tracking**: when distilling from notes into a focused artifact, add `Distilled into:` in each source note's footer. The distilled artifact does not link back.
 
-**Renames**: never rename manually — use `commonplace-relocate-note` to update backlinks.
+**Renames**: never rename manually. Use `commonplace-relocate-note` to update backlinks.

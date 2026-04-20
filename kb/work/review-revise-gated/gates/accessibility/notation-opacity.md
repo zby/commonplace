@@ -1,4 +1,5 @@
 ---
+type: kb/types/instruction.md
 description: Formal notation from another note used in prose without local definition — opaque to readers who haven't read the source model.
 ---
 

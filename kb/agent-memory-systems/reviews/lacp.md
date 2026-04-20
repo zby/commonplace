@@ -1,6 +1,6 @@
 ---
 description: Local agent control plane for Claude/Codex/Hermes with policy-gated execution, Claude hooks, Obsidian memory automation, and provenance receipts; strongest reviewed governance-heavy local ops stack
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

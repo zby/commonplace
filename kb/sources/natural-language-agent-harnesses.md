@@ -3,7 +3,7 @@ source: https://arxiv.org/html/2603.25723
 description: "Proposes externalizing agent control logic (contracts, roles, stages, failure taxonomy) as portable natural-language artifacts (NLAHs) with an Intelligent Harness Runtime, evaluated on SWE-bench and OSWorld — key finding: explicit structure helps only when it tightens alignment with evaluator acceptance criteria."
 captured: 2026-03-28
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

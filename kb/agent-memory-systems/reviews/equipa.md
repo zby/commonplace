@@ -1,6 +1,6 @@
 ---
 description: Python/stdlib multi-agent coding orchestrator with git-worktree dev-test loops, SQLite operational memory, three-tier trace-derived tuning (ForgeSmith/SIMBA/GEPA), SWE-bench harness, and cumulative-knowledge warm-start
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

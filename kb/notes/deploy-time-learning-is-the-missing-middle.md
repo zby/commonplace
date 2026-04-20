@@ -1,6 +1,6 @@
 ---
 description: Deploy-time learning fills the gap between training (slow, opaque) and in-context (ephemeral) — durable system-definition artifacts updated across sessions during deployment
-type: note
+type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
 ---

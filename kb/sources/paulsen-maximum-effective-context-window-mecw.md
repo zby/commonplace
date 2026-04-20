@@ -3,7 +3,7 @@ source: https://arxiv.org/pdf/2509.21361
 description: Empirical study defining and measuring Maximum Effective Context Window (MECW) across 11 frontier LLMs — finds MECW is drastically smaller than advertised MCW, shifts by task type, and that large context windows cause hallucination rates to approach 100%.
 captured: 2026-03-16
 capture: pdf-read
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

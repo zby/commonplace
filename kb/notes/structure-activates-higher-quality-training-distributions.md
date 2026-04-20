@@ -1,6 +1,6 @@
 ---
 description: Structured templates like Evidence/Reasoning sections steer autoregressive generation toward higher-quality training data (scientific papers, legal analyses) rather than unstructured web text — the structure acts as a distribution selector
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [type-system]
 status: seedling

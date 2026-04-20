@@ -1,6 +1,6 @@
 ---
 description: RLM packs orchestration over sub-agents into the tool-loop model by having the model write orchestrators in a REPL — elegant but ephemeral because the orchestrators are discarded after each run
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model]
 status: seedling

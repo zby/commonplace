@@ -1,6 +1,6 @@
 ---
 description: "Source-only coverage note for Trajectory-Informed Memory Generation, a trajectory-to-tip learning pipeline without local code-inspected review coverage"
-type: note
+type: kb/types/note.md
 traits: [has-external-sources]
 tags: [related-systems, trace-derived]
 status: current
@@ -16,7 +16,7 @@ The system analyzes completed execution trajectories into strategy, recovery, an
 
 ## Review boundary
 
-Do not create `kb/agent-memory-systems/reviews/trajectory-informed-memory-generation.md` unless a reachable repository is found and inspected. The review type in `../types/agent-memory-system-review.instructions.md` requires code access; this note keeps the system visible without overclaiming implementation evidence.
+Do not create `kb/agent-memory-systems/reviews/trajectory-informed-memory-generation.md` unless a reachable repository is found and inspected. The review type in `../types/agent-memory-system-review.md` requires code access; this note keeps the system visible without overclaiming implementation evidence.
 
 ---
 

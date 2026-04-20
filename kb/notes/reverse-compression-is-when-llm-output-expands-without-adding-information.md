@@ -1,6 +1,6 @@
 ---
 description: LLMs can inflate a compact seed into verbose prose that carries no more extractable structure — the test for whether a KB resists this is whether notes accumulate epiplexity across the network, not just token count
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
 status: seedling

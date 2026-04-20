@@ -1,4 +1,13 @@
-# Structured-Claim Instructions
+---
+type: kb/types/type-spec.md
+name: structured-claim
+description: Developed argument note with explicit Evidence and Reasoning sections
+schema: kb/notes/types/structured-claim.schema.yaml
+---
+
+# Structured claim
+
+## Authoring Instructions
 
 Use `structured-claim` for arguments where separating evidence from reasoning genuinely clarifies the case.
 
@@ -12,3 +21,33 @@ Do not force this scaffold onto arguments it does not fit.
 
 - Definitional or classification claims often work better as plain `note`s.
 - If the evidence and reasoning are inseparable, splitting them can make the argument harder to follow rather than clearer.
+
+## Template
+
+```markdown
+---
+description: Template for developed arguments — claim-titled notes with explicit Evidence, Reasoning, and optional Caveats sections
+type: kb/notes/types/structured-claim.md
+traits: [title-as-claim]
+tags: []
+status: seedling
+---
+
+# {Claim as title — an assertion, not a topic label}
+
+{Opening paragraph}
+
+## Evidence
+
+{Evidence}
+
+## Reasoning
+
+{Reasoning}
+
+## Caveats
+
+- {Scope limits}
+- {Assumptions}
+- {Counterarguments}
+```

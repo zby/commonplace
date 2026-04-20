@@ -1,6 +1,6 @@
 ---
 description: "Research-code agent memory system that turns dialogue streams into episodes, semantic facts, and theme hierarchies, then uses coverage selection plus entropy gates for top-down retrieval"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

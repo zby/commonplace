@@ -3,7 +3,7 @@ source: https://arxiv.org/abs/2603.09678
 description: OOD code benchmark using esoteric languages to separate transferable reasoning from benchmark memorization and contamination
 captured: 2026-03-19
 capture: web-fetch
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Index of notes about keeping the KB healthy over time — detection of staleness and quality degradation, maintenance operations, and the dynamics that govern system entropy
-type: index
+type: kb/types/index.md
 index_source: tag
 index_key: kb-maintenance
 status: current

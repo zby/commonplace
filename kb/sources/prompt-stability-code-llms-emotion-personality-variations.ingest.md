@@ -1,8 +1,8 @@
 ---
 description: Empirical study measuring code LLM stability under emotion/personality prompt variations — finds performance and stability are decoupled objectives, smaller models can be more stable, and emotional prompting reveals confidence miscalibration invisible to standard benchmarks
 source_snapshot: prompt-stability-code-llms-emotion-personality-variations.md
-ingested: 2026-03-12
-type: ingest-report
+ingested: "2026-03-12"
+type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
 domains: [prompt-sensitivity, llm-evaluation, code-generation, reliability]
 ---

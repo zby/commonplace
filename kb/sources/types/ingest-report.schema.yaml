@@ -14,7 +14,7 @@ allOf:
           - domains
         properties:
           type:
-            const: ingest-report
+            const: kb/sources/types/ingest-report.md
           source_snapshot:
             type: string
             minLength: 1

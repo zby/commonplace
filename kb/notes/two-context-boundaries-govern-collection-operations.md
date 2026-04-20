@@ -1,6 +1,6 @@
 ---
 description: Any note collection faces two context boundaries — a full-text boundary where all bodies can be loaded together, and an index boundary where all titles+descriptions fit — creating three operational regimes that govern areas, /connect, and whole-KB operations differently
-type: note
+type: kb/types/note.md
 tags: []
 status: seedling
 ---

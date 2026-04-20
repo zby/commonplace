@@ -1,7 +1,7 @@
 ---
 name: cp-skill-snapshot-web
 description: Snapshot any URL into kb/sources/. Routes by URL type — GitHub issues/PRs via gh API, X/Twitter via xdk, PDFs via download+Read, web pages via WebFetch. One skill, URL in, markdown snapshot out. Triggers on "/cp-skill-snapshot-web", "/cp-skill-snapshot-web [url]".
-type: instruction
+type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, WebFetch, Bash
 context: fork
@@ -113,7 +113,7 @@ source: {url}
 description: {description}
 captured: {YYYY-MM-DD}
 capture: {capture_method}
-type: snapshot
+type: kb/sources/types/snapshot.md
 tags: [{family-tag}]
 ---
 

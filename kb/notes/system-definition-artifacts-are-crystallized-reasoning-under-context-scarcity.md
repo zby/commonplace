@@ -1,6 +1,6 @@
 ---
 description: Heuristic system-definition artifacts (tips, playbooks, rules) are mostly crystallized reasoning — pre-compiled shortcuts for what a capable LLM would derive if it had all facts and unlimited compute; under unbounded context heuristic prose collapses into knowledge plus read-time derivation, authority-bearing constraints persist regardless, and codification has a compound motivation that partly collapses (scale decomposition) and partly survives (constraining compound)
-type: note
+type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
 ---

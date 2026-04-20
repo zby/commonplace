@@ -1,6 +1,6 @@
 ---
 description: Shows how a framework-owned tool loop can recover branching, recursive decomposition, and state projection by moving the control stack into a singleton runtime/tool instead of application code
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering]
 status: seedling

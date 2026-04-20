@@ -1,6 +1,6 @@
 ---
 description: Local-first typed knowledge graph with markdown/YAML projections, schema-as-data, and immutable transactions; clearest reviewed example of database-first structure surfaced as editable files
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

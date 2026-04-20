@@ -2,7 +2,7 @@
 gate_id: frontmatter/title-composability
 name: Title composability
 description: 'The title does not work as a linkable prose fragment inside other notes.'
-type: instruction
+type: kb/types/instruction.md
 lens: frontmatter
 watches: [title]
 staleness: changed

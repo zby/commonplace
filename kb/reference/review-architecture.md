@@ -1,6 +1,6 @@
 ---
 description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, single-note bundle execution, targeting, prompt format, and repair utilities
-type: note
+type: kb/types/note.md
 tags: []
 status: current
 ---

@@ -1,6 +1,6 @@
 ---
 description: As agent behavior matures, deterministic next-step policies need explicit control logic; if the framework offers only tools, scheduling patterns end up there and the tools become hidden schedulers
-type: note
+type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
 status: seedling

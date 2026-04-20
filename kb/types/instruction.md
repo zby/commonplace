@@ -1,4 +1,13 @@
-# Instruction Instructions
+---
+type: kb/types/type-spec.md
+name: instruction
+description: Prescriptive procedure, skill body, wrapper prompt, or review gate used by agents and maintainers
+schema: kb/types/instruction.schema.yaml
+---
+
+# Instruction
+
+## Authoring Instructions
 
 Use an instruction for prescriptive content: manual procedures, promoted skill bodies, wrapper prompts, and review gates.
 
@@ -22,3 +31,29 @@ Review gates are instructions for reviewers. When `gate_id` is present, include:
 
 - `## Failure mode` — the failure the reviewer is looking for
 - `## Test` — the concrete procedure for deciding PASS, WARN, or INFO
+
+## Template
+
+```markdown
+---
+description: "{When to use this instruction}"
+type: kb/types/instruction.md
+---
+
+# {Imperative title}
+
+{Opening: what this procedure does and when to use it.}
+
+## Prerequisites
+
+- {What must be true before starting}
+
+## Steps
+
+1. {Step}
+2. {Step}
+
+## Verify
+
+- {How to confirm the procedure succeeded}
+```

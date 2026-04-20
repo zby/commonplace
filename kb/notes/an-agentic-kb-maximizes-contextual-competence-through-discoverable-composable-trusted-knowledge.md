@@ -1,6 +1,6 @@
 ---
 description: Theory of why commonplace's arrangements work — three properties (discoverable, composable, trustworthy) serve contextual competence under bounded context; accumulation is the basic learning operation (reach distinguishes facts from theories); constraining, distillation, and discovery transform accumulated knowledge; Deutsch's reach criterion distinguishes knowledge that transfers from knowledge that merely fits
-type: note
+type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, foundations]
 status: seedling

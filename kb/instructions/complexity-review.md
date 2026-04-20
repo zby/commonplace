@@ -1,6 +1,6 @@
 ---
 description: Complexity review wrapper — keep the old entrypoint, but route execution through the gate bundle
-type: instruction
+type: kb/types/instruction.md
 ---
 
 # Complexity Review

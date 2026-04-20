@@ -1,6 +1,6 @@
 ---
 description: Six roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, output quality through structured writing discipline, and maturation through constraining
-type: note
+type: kb/types/note.md
 tags: [type-system]
 status: seedling
 ---

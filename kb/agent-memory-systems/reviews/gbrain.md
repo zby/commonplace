@@ -1,6 +1,6 @@
 ---
 description: "Personal-brain system with pluggable PGLite/Postgres engines, compiled-truth-plus-timeline pages, deterministic CLI primitives, and fat markdown skills that route integration recipes through an external agent"
-type: agent-memory-system-review
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-12"

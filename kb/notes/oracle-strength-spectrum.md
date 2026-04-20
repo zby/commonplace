@@ -1,6 +1,6 @@
 ---
 description: Exploratory framework — proposes oracle strength (how cheaply you can verify correctness) as a gradient underlying the exact-spec/proxy-theory distinction, with hypotheses about engineering priorities and an oracle-hardening pipeline
-type: note
+type: kb/types/note.md
 traits: []
 tags: [llm-interpretation-errors]
 status: seedling

@@ -2,7 +2,7 @@
 gate_id: complexity/framework-decoration
 name: Framework decoration
 description: 'A table, taxonomy, or framework looks rigorous but does not communicate more than a short paragraph would.'
-type: instruction
+type: kb/types/instruction.md
 lens: complexity
 watches: [body]
 staleness: changed

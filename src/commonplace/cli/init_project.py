@@ -95,7 +95,6 @@ def _copy_scaffold_tree(
 ) -> None:
     """Recursively copy a scaffold subtree, classifying existing files."""
     src_dir = scaffold_root / src_rel
-    dest_dir = dest_root / target_rel
     for src_file in sorted(src_dir.rglob("*")):
         if not src_file.is_file():
             continue
