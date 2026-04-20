@@ -19,7 +19,6 @@ This is no longer an `adr` pilot. The implementation should move the repo from e
 - No enum-to-path redirect table. After the migration, explicit `type:` values are paths. Enum values such as `type: adr`, `type: note`, or `type: snapshot` are validation errors.
 - `type:` paths are repo-relative markdown paths under `kb/`: they must start with `kb/`, end with `.md`, must not contain `..`, and must not be absolute paths or URLs.
 - Schema remains separate from authoring prose. Every type-spec doc must declare a `schema:` frontmatter field. The value is a repo-relative path to the schema file, or `null` when the type has no schema.
-- `*.template.md` and `*.instructions.md` sidecars are absorbed into `*.md` type-spec docs. No old template/instruction sidecar mechanism remains after the migration.
 - Collection type offerings use a readable, regular section in `COLLECTION.md`:
 
 ```markdown
@@ -39,7 +38,7 @@ These policies are fixed before implementation so the migration does not invent 
 type: kb/reference/types/adr.md
 ```
 
-- Type instruction docs carry type metadata:
+- Type-spec docs carry type metadata:
 
 ```yaml
 ---
@@ -50,7 +49,6 @@ schema: kb/reference/types/adr.schema.yaml
 ---
 ```
 
-- `schema:` is required on every type-spec doc. Use `schema: null` for types with no schema.
 - Templates are authoring material, not a code contract. The validator does not inspect the body of type-spec docs, and does not check that template-produced documents conform to the declared schema. Template-to-schema conformance testing is deferred.
 - The resolver loads the note's `type:` path, parses the type-spec doc, and derives all runtime metadata from that doc. Internally it may expose the note's type path, the type doc path, the type doc `name`, and the declared schema path, but none of those become note-frontmatter fields.
 - The internal `TypeProfile` should distinguish storage identity and validation target. Expected fields are:
@@ -70,7 +68,7 @@ schema: kb/reference/types/adr.schema.yaml
 - `kb/tasks/` is not part of the shipped scaffold today, but it has existing task type sidecars. Migrate those contracts too: create `task-active`, `task-backlog`, and `task-recurring` type-spec docs under `kb/tasks/types/` with `schema: null` unless real schemas are added in the same bundle. Do not add `kb/tasks/COLLECTION.md` unless tasks become a normal `cp-skill-write` target in this migration.
 - The shipped scaffold and init tests migrate in the same bundle. Newly initialized projects must ship type-spec docs, not absorbed `*.template.md` / `*.instructions.md` sidecars.
 - `commonplace-init` ships all global type-spec docs under `kb/types/`: `type-spec.md` (the self-referential root), `note.md`, `instruction.md`, `index.md`, `definition.md`, plus the accompanying schemas (`note.schema.yaml`, `note-base.schema.yaml`, `index.schema.yaml`, `instruction.schema.yaml`, `definition.schema.yaml`) and the `text.md` documentation page for the implicit no-frontmatter type. Collection-local type-spec docs (`adr`, `structured-claim`, `agent-memory-system-review`, source artifact types, task types) are not part of the shipped scaffold unless the corresponding collection is also part of the scaffold.
-- Type instruction docs are first-class validation targets even though ordinary batch note discovery currently skips `types/` directories. The migration must add an explicit type-doc validation path, or widen batch validation deliberately, so malformed `kb/**/types/*.md` files cannot pass unnoticed.
+- Type-spec docs are first-class validation targets even though ordinary batch note discovery currently skips `types/` directories. The migration must add an explicit type-doc validation path, or widen batch validation deliberately, so malformed `kb/**/types/*.md` files cannot pass unnoticed.
 - Type-aware readers must compare path-valued type identities. Any code that currently does `frontmatter["type"] == "index"` or similar must either compare against the canonical path (`kb/types/index.md`) or resolve through `TypeProfile`; do not leave enum comparisons in active behavior.
 - `spec` has exactly one KB artifact using `type: spec` today — `kb/types/note.md` — and that file is being replaced wholesale. After the migration there are no `spec`-typed artifacts in the corpus. Delete `kb/notes/types/spec.schema.yaml` in the same bundle and do not create a `spec` type-spec doc. The only remaining `type: spec` reference is a test fixture in `test/commonplace/cli/test_validate_notes.py`, which must migrate to a path-valued type or a deliberately-invalid fixture depending on what the test asserts.
 - `review` is retired on the same basis. `kb/notes/types/review.schema.yaml` exists schema-only with zero KB artifacts declaring `type: review`. Delete the schema in the same bundle and do not create a `review` type-spec doc. The only remaining `type: review` reference is a test fixture in `test/commonplace/lib/test_note_parser.py`, which must migrate to a path-valued type or a deliberately-invalid fixture depending on what the test asserts.
@@ -122,7 +120,7 @@ Pre-action gate: review representative fused docs from each family before applyi
 - Delete absorbed `*.template.md` and `*.instructions.md` sidecars in the same migration. Leave sibling `*.schema.yaml` files in place.
 - Existing global types become `kb/types/<type>.md`; collection-local types remain under `kb/<collection>/types/<type>.md`.
 - Existing `kb/types/note.md` is replaced wholesale. The current prose about the base type does not carry over — the file is rewritten with type-spec frontmatter (`type: kb/types/type-spec.md`, `name: note`, `schema: kb/types/note.schema.yaml`), authoring prose for how to write a note, and the template content absorbed from `kb/types/note.template.md`. Any surviving value from the current prose (field definitions, status ladder, trait vocabulary) belongs elsewhere — in `kb/types/note.schema.yaml`, in existing theory notes, or in a new note — not in the `note` type-spec doc.
-- Existing `kb/types/text.md` remains documentation for the implicit no-frontmatter type. Do not convert it into an explicit type-spec doc, and do not allow `type: kb/types/text.md` in artifact frontmatter.
+- Do not convert `kb/types/text.md` into a type-spec doc; see the `text.md` policy in the implementation policy addendum.
 
 ## Step 4: Declare offered types in collection conventions
 
@@ -195,7 +193,7 @@ Pre-action gate: show the validator diff and tests before applying the full migr
 - Remove collection-scoped enum lookup from explicit frontmatter validation. The note's path chooses the type doc directly; the collection no longer participates in resolving an explicit type.
 - Keep collection/type uniqueness checks only if they still prove something useful in the path-valued system. Otherwise replace them with checks that type doc paths are valid.
 - Preserve the existing behavior that a file with no frontmatter is `text` if that behavior is still needed for raw text artifacts; this is not an enum fallback. Explicit frontmatter `type: text` fails.
-- Add explicit validation coverage for type-spec docs under `kb/**/types/*.md`. Current note discovery skips `types/` directories; either introduce a separate `validate_type_instruction_docs` pass or deliberately include type docs in batch validation with clear filtering for non-artifact side files.
+- Add explicit validation coverage for type-spec docs under `kb/**/types/*.md`. Current note discovery skips `types/` directories; either introduce a separate `validate_type_spec_docs` pass or deliberately include type docs in batch validation with clear filtering for non-artifact side files.
 - Update review type gates (`requires-type`) to path values or equivalent path-aware matching; do not leave enum matching against note frontmatter.
 - Update active type-aware readers such as generated-index syncing and MkDocs tag-index discovery so they recognize path-valued type references.
 - Update reference docs: commands, type loading, available types, collections/types, and any ADR/reference page that describes enum-valued types or three-file type contracts.
