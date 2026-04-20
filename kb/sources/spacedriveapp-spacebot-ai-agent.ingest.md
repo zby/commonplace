@@ -1,10 +1,10 @@
 ---
-description: Spacebot README ingest covering a Rust concurrent agent framework with cortex scheduling, branch scoping, typed memory categories, and hybrid recall
+description: Spacebot README ingest covering process-typed concurrent agent runtime architecture, branch scoping, cortex supervision, and typed unified memory
 source_snapshot: spacedriveapp-spacebot-ai-agent.md
-ingested: "2026-03-09"
+ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 source_type: tool-announcement
-domains: [agent-architecture, memory-systems, orchestration, concurrency]
+domains: [agent-architecture, orchestration, context-engineering, memory-systems]
 ---
 
 # Ingest: Spacebot: AI Agent for Teams and Communities
@@ -15,54 +15,40 @@ From: https://github.com/spacedriveapp/spacebot
 
 ## Classification
 
-Type: tool-announcement -- Spacebot is an open-source Rust framework for building concurrent AI agents; the source is the project README describing its architecture, capabilities, and deployment options. It presents design choices but does not argue a thesis or report on empirical results.
+Type: tool-announcement -- The source is a GitHub README announcing and describing an open-source Rust framework for concurrent multi-user AI agents. It presents architecture and capabilities, but does not provide empirical evaluation or a sustained design argument.
 
-Domains: agent-architecture, memory-systems, orchestration, concurrency
+Domains: agent-architecture, orchestration, context-engineering, memory-systems
 
-Author: spacedriveapp (the team behind Spacedrive, a cross-platform file manager). The project has 1.2k GitHub stars. The team has production experience building Rust desktop/cloud software, which lends credibility to the concurrent-process architecture claims but does not establish agent-system research credentials.
+Author: spacedriveapp, the team behind Spacedrive. Their Rust product background makes the systems architecture worth attending to, but the README alone is still vendor-authored project material rather than independent evidence.
 
 ## Summary
 
-Spacebot is a concurrent AI agent framework written in Rust, designed for multi-user environments (Discord, Slack, Telegram, etc.). Its core architectural choice is splitting agent functionality across five specialized process types: channels (user-facing, never-blocking LLM conversations), branches (independent thinking forks inheriting channel context), workers (deterministic task executors), a compactor (context overflow prevention), and a cortex (Rust-level supervisor managing memory, process health, and knowledge synthesis). The memory system uses eight typed categories (Fact, Preference, Decision, Identity, Event, Observation, Goal, Todo) with graph edges (RelatedTo, Updates, Contradicts, CausedBy, PartOf) and hybrid recall via Reciprocal Rank Fusion over vector similarity and full-text search. A four-level model routing system selects appropriate LLM providers per call. The design philosophy is "never blocks, never forgets" -- preventing the bottlenecks of single-threaded agent frameworks where conversation freezes during compaction or task execution.
+Spacebot is a Rust AI agent framework for multi-user environments such as Discord, Slack, Telegram, Twitch, and webchat. Its central design move is splitting one agent into concurrent process types: channels handle user-facing conversation, branches fork channel context for independent thinking, workers execute specialized tasks, a compactor manages context overflow, and a cortex supervises process health, memory, and synthesis. The source also describes typed memory categories with graph edges, hybrid recall via vector and full-text search, message coalescing for rapid multi-user input, model routing across providers, MCP and skills.sh extensibility, and scheduled jobs. The main contribution for this KB is not a new memory algorithm; it is a concrete runtime shape where responsiveness, context isolation, task execution, and memory activation are assigned to different process roles.
 
 ## Connections Found
 
-The `/connect` discovery identified 7 genuine connections to existing notes, plus 1 already-existing link:
-
-**Orchestration and scheduling (strongest cluster):**
-- [bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md) -- **exemplifies**: Spacebot's cortex is the cleanest production implementation of the clean scheduling model among reviewed systems. The cortex is a Rust-level symbolic scheduler; channels and branches are bounded LLM calls; workers are deterministic tool executions.
-- [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) -- **contradicts**: Spacebot's cortex demonstrates that the "factoring into code" recovery strategy is achievable in production, not merely theoretical.
-- [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) -- **exemplifies**: Spacebot addresses both context cost dimensions -- compactor handles volume, branches provide complexity isolation.
-- [llm-context-is-composed-without-scoping](../notes/llm-context-is-composed-without-scoping.md) -- **exemplifies**: Branches inherit channel context (dynamic scope) but execute in independent frames (lexical scope), making them an explicit scoping mechanism.
-
-**Memory (second cluster):**
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) -- **exemplifies**: Spacebot's 8 memory types partially map onto the three spaces (Identity to self-space, Goal/Todo to operational, Fact/Event to knowledge) but remain flat categories in a single store, making it a hybrid test case.
-- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) -- **enables**: Spacebot's typed-but-unified memory with graph edges is a strong test case for whether typed categories within a single store mitigate the predicted failure modes (search pollution, identity scatter, insight trapping).
-
-**Index membership:**
-- [related-systems-index](../agent-memory-systems/README.md) -- **extends**: Spacebot adds a new position (Rust-level process separation, concurrent multi-user design) that no existing entry covers.
-
-**Already connected:**
-- [voooooogel-multi-agent-future](./voooooogel-multi-agent-future.ingest.md) -- already discusses Spacebot as a concrete implementation of the forking pattern.
-
-Two synthesis opportunities were flagged: (1) a note arguing production frameworks are converging on the clean scheduling model, combining Spacebot, Ars Contexta, and the theoretical analysis; (2) a note arguing typed memory categories are a middle ground between flat stores and three-space separation. A tension was also flagged: whether Spacebot's five fixed process types are structural (correct) or contingent (will dissolve with stronger models).
+The connection pass found that this snapshot now has a durable downstream analysis in [Spacebot](../agent-memory-systems/reviews/spacebot.md), which should be the preferred traversal target for code-inspected claims. At the theory layer, the source **exemplifies** [bounded-context orchestration model](../notes/bounded-context-orchestration-model.md): the cortex/process split is a production-shaped instance of symbolic scheduling over bounded LLM calls. It also **exemplifies** [agent runtimes decompose into scheduler context engine and execution substrate](../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md), because Spacebot visibly separates supervision, context maintenance, memory activation, and tool execution. Branches connect to [LLM context is composed without scoping](../notes/llm-context-is-composed-without-scoping.md) as an architectural scoping mechanism, while compaction, message coalescing, memory bulletin, and routing connect to [context efficiency is the central design concern in agent systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md). The memory design extends the [three-space agent memory](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) discussion by giving a typed-but-unified middle ground, and enables testing of [flat memory failure predictions](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md). The pass also flagged [agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md): Spacebot varies scheduler placement, coordination form, scoping guarantee, and return artifact together.
 
 ## Extractable Value
 
-1. **Production exemplar of the clean scheduling model.** Spacebot's cortex is a Rust-level supervisor doing bookkeeping while LLMs do judgment in bounded calls -- the first reviewed system that implements the model without degradation. The scheduling model note currently has no production exemplars. [quick-win]
+1. **Process types as runtime-enforced context boundaries** -- Spacebot's channel/branch/worker/cortex split is a high-reach example of scoping being enforced by runtime architecture rather than prompt convention. This is already captured in the Spacebot review, but remains useful evidence for scoping and orchestration notes. [quick-win]
 
-2. **Typed-but-unified memory as a testable middle ground.** Eight memory types with graph edges in a single store, using hybrid recall (vector + full-text via RRF). This is neither the flat store nor the three-space separation -- it occupies a position the three-space analysis does not yet account for. Testing whether typed categories mitigate flat-store failure modes without full separation would be a concrete empirical contribution. [experiment]
+2. **Typed unified memory as a middle-ground test case** -- The eight memory categories plus graph relations challenge the binary of flat memory versus physically separate knowledge/self/operational spaces. The useful question is whether retrieval and promotion policies actually use the types enough to prevent cross-contamination. [experiment]
 
-3. **Branches as a production scoping mechanism.** Branches inherit channel context but execute independently and return results without polluting the parent -- this is the closest thing to lexical scoping in an agent system we have reviewed. The context-without-scoping note identifies the problem but has no production solution examples. [quick-win]
+3. **Non-blocking multi-user agents force scheduling earlier** -- Spacebot's "never blocks" goal is not just performance polish; multi-user chat makes sequential single-session agent loops visibly inadequate. This gives a concrete reason scheduler/context-engine separation appears in production systems. [quick-win]
 
-4. **Concurrent non-blocking architecture for multi-user agents.** The channel/branch/worker separation prevents conversation freezing during compaction or task execution. This is an architectural response to multi-user requirements that single-user agent frameworks do not face. No existing note captures this pattern. [deep-dive]
+4. **Message coalescing is context engineering for social input** -- Debouncing rapid-fire messages into one attributed LLM turn is a small, transferable volume-control technique. It has lower reach than scheduler separation, but it names a missing primitive for chat-native agents. [just-a-reference]
 
-5. **Message coalescing as a context volume strategy.** Detecting rapid-fire message bursts and batching them into single LLM turns is a specific technique for managing context volume in conversational agents. Not yet captured anywhere. [just-a-reference]
+5. **Memory bulletins are push-based activation** -- Periodic briefings injected into channels are an alternative to purely pull-based retrieval. This could inform session-start or workshop-start context in commonplace, but the README does not show enough detail to judge whether the bulletins improve behavior. [experiment]
 
-6. **Model routing by process type and prompt complexity.** Four-level model selection (process-type defaults, task-type overrides, complexity scoring, fallback chains) is a cost-optimization pattern. No existing notes cover model routing. The source provides too little detail on how complexity scoring works to extract actionable design patterns. [just-a-reference]
+6. **Model routing by process type is a cost/control pattern** -- Choosing models by process type, task type, complexity, and fallback chains treats runtime architecture as the unit of model selection. The idea transfers, but the source does not explain the complexity scorer enough to borrow directly. [just-a-reference]
 
-7. **Memory bulletin as periodic context injection.** The cortex periodically injects memory briefings into conversations -- a push-based alternative to on-demand retrieval. This is a different memory access pattern from what the three-space or comparative review frameworks describe. [experiment]
+## Limitations (our opinion)
+
+The source is a project README, so it should not be trusted as independent evidence that the architecture works at scale. It lists capabilities and design philosophy, but gives no benchmark, production incident analysis, concurrency stress test, memory-quality evaluation, or comparison against simpler single-loop agents. The central claim is somewhat easy to vary: "never blocks, never forgets" could be attached to many systems that combine background workers, memory search, and async execution. The harder-to-vary part is the five-process architecture, where changing channel/branch/worker/cortex boundaries would materially change the system's behavior.
+
+The simpler account is "an async chat bot with background jobs and memory," not necessarily a new agent architecture. Spacebot earns attention only where process types enforce different context and tool boundaries; claims about memory, model routing, and scheduling should be checked against code or independent use before being promoted. The dedicated [Spacebot review](../agent-memory-systems/reviews/spacebot.md) already narrows this by distinguishing code-owned supervision from LLM-owned synthesis. The memory claims are especially under-evidenced: typed categories and graph edges might mitigate the failures predicted by [flat memory](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md), but the README does not show retrieval traces or failure cases. Treat this source as architecture discovery material, not validation.
 
 ## Recommended Next Action
 
-Write a related-system note titled "Spacebot demonstrates code-level scheduling over concurrent bounded LLM calls" in `kb/notes/related-systems/spacebot.md`, following the related-system template. The note should connect to [bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md) (exemplifies the clean model in production), [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (typed-but-unified memory as a middle-ground test case), and [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (addresses both volume and complexity dimensions). It would argue that Spacebot is the strongest production exemplar of the clean scheduling model among reviewed systems, while noting the open question of whether its fixed process types are structural or contingent. Add an entry to the related-systems-index.
+Update [bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) with a short "production exemplar" source entry pointing to [Spacebot](../agent-memory-systems/reviews/spacebot.md), not this raw snapshot. The addition should use Spacebot only as an example that code-owned scheduling over bounded LLM calls exists in a real framework, while leaving empirical performance claims out.

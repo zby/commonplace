@@ -1,7 +1,7 @@
 ---
-description: Willison and Karpathy framing "Claw" as a term of art for AI-augmented applications that expose ordinary software through LLM interfaces.
+description: Willison and Karpathy framing "Claw" as a term of art for local persistent AI-agent systems with scheduling, context, tools, and personal-hardware execution.
 source_snapshot: simon-willison-karpathy-claws.md
-ingested: "2026-03-09"
+ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
 domains: [ai-agents, terminology, agent-architecture, personal-computing]
@@ -15,48 +15,35 @@ From: https://simonwillison.net/2026/Feb/21/claws/
 
 ## Classification
 
-Type: **conceptual-essay** -- Simon Willison amplifies and contextualizes Karpathy's tweet-essay, arguing that "Claw" is codifying as a term of art for a new category of AI system. The primary content is definitional framing, not a build report or research finding.
-
+Type: conceptual-essay -- Willison is amplifying and contextualizing Karpathy's mini-essay as a category definition. The source argues that "Claw" is becoming a term of art; it does not report an implementation, experiment, or formal design.
 Domains: ai-agents, terminology, agent-architecture, personal-computing
-
-Author: Simon Willison is one of the most widely-read voices in the developer tools / AI intersection, with a strong track record of identifying terms and trends early (helped popularize "vibe coding" coverage). Karpathy, the quoted source, coined "vibe coding" itself and has broad credibility as an ML practitioner turned public educator. When both endorse a term, adoption is likely.
+Author: Simon Willison is a high-signal developer-tools and AI commentator; Andrej Karpathy, the quoted source, is an influential ML practitioner whose public terminology often propagates into AI engineering practice.
 
 ## Summary
 
-Karpathy describes "Claws" as a new layer of the AI stack sitting on top of LLM agents, characterized by orchestration, scheduling, persistent context, tool calls, and personal-hardware execution. He highlights NanoClaw's ~4000-line auditable core and container-by-default execution as appealing properties. Willison endorses the terminological shift, arguing "Claw" is becoming the generic term for the OpenClaw-like category of agent systems that run locally, communicate via messaging protocols, and handle both direct instructions and autonomous scheduled tasks. The post is primarily about naming a category that has been emerging across multiple projects.
+Karpathy frames "Claws" as a new layer above LLM agents: systems that add orchestration, scheduling, persistent context, tool calls, and local/personal execution to agent workflows. He points to OpenClaw with caution, and to NanoClaw's small auditable core and container-by-default execution as attractive implementation traits. Willison argues that "Claw" is becoming the generic term for OpenClaw-like systems: AI agents that usually run on personal hardware, communicate through messaging protocols, respond to direct instructions, and schedule tasks. The source's main contribution is vocabulary and category boundary-setting, not technical evidence.
 
 ## Connections Found
 
-The `/connect` discovery found six substantive connections, informed by the fact that the "Claw" term has already been deeply absorbed into the KB's vocabulary (20+ files reference it across notes, ingest reports, and comparative analyses):
-
-1. **[claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)** -- **grounds**: This source is the definitional anchor that note builds on. The note explicitly cites this snapshot as the source for what a "Claw" is and argues the learning loop must serve action capacity (classification, planning, communication), not just retrieval.
-
-2. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md)** -- **extends**: Claws embody deploy-time learning's "across sessions" timescale applied to agent infrastructure itself. Karpathy's emphasis on persistence and accumulated context is the Claw variant of artifact-mediated adaptation. Karpathy is also quoted in this note for the verifiability concept.
-
-3. **[bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md)** -- **exemplifies**: Karpathy lists "orchestration, scheduling, context, tool calls" as defining Claw properties. Claws are a product-category instantiation of the symbolic scheduling model with persistence as an additional dimension.
-
-4. **[ClawVault](../agent-memory-systems/reviews/clawvault.md)** -- **enables**: This source provides the category definition that ClawVault is an instance of. ClawVault's scored observations, session handoffs, and reflection pipelines are a concrete Claw implementation.
-
-5. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** -- **exemplifies**: NanoClaw's ~4000-line core that "fits into both my head and that of AI agents" is a concrete endorsement of the inspectable substrate thesis from an independent practitioner.
-
-6. **[What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md)** -- **exemplifies**: Claws are the productized realization of voooooogel's prediction about what survives in multi-agent systems: filesystem collaboration, agent spawning, persistent cross-session state. What was theoretical now has a category name and commercial implementations.
-
-The strongest connection is to [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- the source has already done its primary work by grounding the "Claw" concept that the note theorizes about. The term's adoption into the KB vocabulary is effectively complete.
+The connect pass found a small, coherent cluster. The strongest connection is [Claw learning loops must improve action capacity not just retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md), where this snapshot already grounds the definition of a Claw as an AI-assisted system that accumulates context and acts on behalf of a user; that connection is load-bearing but the target note is still `status: seedling`. The source also **exemplifies** [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md), because Karpathy's list of orchestration, scheduling, context, tools, and persistence is a product-category version of scheduler-plus-bounded-calls architecture. It **exemplifies** [Deploy-time learning is the missing middle](../notes/deploy-time-learning-is-the-missing-middle.md), because Claws are cross-session systems whose behavior changes through durable context rather than only ephemeral prompting. NanoClaw's small auditable core **exemplifies** [Inspectable substrate, not supervision, defeats the blackbox problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md). The source **enables** reading [ClawVault](../agent-memory-systems/reviews/clawvault.md) as a Claw-family memory subsystem, and **extends** [What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.ingest.md) by naming a concrete product family near persistent, filesystem-and-spawning-oriented agent systems.
 
 ## Extractable Value
 
-1. **Term adoption already complete.** The "Claw" category name has been fully absorbed into the KB vocabulary, used in note titles, descriptions, and cross-references across 20+ files. The primary extractable value of this source -- the terminology -- has already been captured. [just-a-reference]
+1. **Claw as action-capacity vocabulary** -- The highest-reach value is the term itself: it names systems whose success criterion is not retrieval but competent cross-session action. The KB has already absorbed this through the Claw learning note, so the source is mostly a grounding reference. [just-a-reference]
+2. **Three-layer stack framing** -- Karpathy's `LLMs -> LLM agents -> Claws` stack cleanly separates base model capability, agent-loop scaffolding, and persistent personal-agent systems. This could later sharpen architecture discussions, but the source is too thin to support a standalone note without more implementation sources. [experiment]
+3. **Cross-session scheduling as a category boundary** -- Scheduling appears as a distinguishing property of Claws, not just an internal orchestration tactic. That adds pressure to the KB's scheduling theory: within-session select/call loops and cross-session task execution have different failure modes around persistence, recovery, and intent drift. [experiment]
+4. **Small auditable cores as agent-readable infrastructure** -- NanoClaw's reported ~4000-line core is useful evidence for the inspectable-substrate thesis: the code must fit not only human review but also agent review and modification. This is a citation point rather than a new mechanism. [just-a-reference]
+5. **Container-by-default as convergence signal** -- NanoClaw's default container execution is another weak signal that local agent systems converge on OS/process isolation as their safety boundary. The post names the pattern but does not analyze it. [just-a-reference]
+6. **Ecosystem proliferation as adoption evidence** -- The mention of NanoClaw, nanobot, zeroclaw, ironclaw, and picoclaw suggests a category forming independently around OpenClaw-like designs. This supports terminology adoption, but not any specific technical claim about which architecture will survive. [just-a-reference]
 
-2. **NanoClaw's auditable ~4000-line core as evidence for inspectability.** Karpathy's emphasis on codebase size "fitting into both my head and that of AI agents" is an independent endorsement of the inspectable substrate thesis. Useful as a citation point but not a new insight for the KB. [just-a-reference]
+## Limitations (our opinion)
 
-3. **Container-by-default as ecosystem convergence signal.** NanoClaw's container approach adds another data point to the convergence pattern already noted in the related-systems index. Multiple independent Claw implementations choosing containers as the default security boundary strengthens the pattern. [just-a-reference]
+This is a short blog post quoting a tweet, so it should not be trusted as evidence that Claws work, that OpenClaw-like systems are safe, or that any named implementation has the advertised properties. The central claim is partly sociological: a term is becoming a term of art. That claim is plausible because Willison and Karpathy are strong signal sources for developer vocabulary, but it is not hard to vary; the same architecture could be renamed and the technical implications would barely change.
 
-4. **Karpathy's three-layer stack model (LLMs -> LLM agents -> Claws).** This framing positions the Claw category relative to other system types. The KB's computational model notes (symbolic scheduling, context efficiency) operate at the "LLM agents" layer. The question of whether and how the scheduling model extends to the persistent Claw layer -- adding scheduling across sessions and autonomous task execution -- remains unexplored. [experiment]
+The simpler account is that "Claw" is branding for a familiar bundle: local agent runtime plus scheduler plus memory plus tool sandbox. The source does not distinguish which part is essential. It lists orchestration, scheduling, context, tool calls, persistence, personal hardware, messaging protocols, and task scheduling, but does not test whether all are necessary category features or merely current OpenClaw-family conventions.
 
-5. **Scheduling as a distinguishing feature.** Karpathy identifies scheduling (autonomous task execution, cron-like behavior) as a defining Claw property. The KB's scheduling model currently addresses within-session orchestration. Cross-session scheduling is a different problem with different constraints (state persistence, failure recovery, user intent drift). [experiment]
-
-6. **Ecosystem proliferation as a convergence signal.** The mention of multiple independent Claw implementations (NanoClaw, nanobot, zeroclaw, ironclaw, picoclaw) is itself evidence that the architectural pattern is robust -- independent teams converge on similar designs. This convergence pattern is already tracked in the related-systems index but could be strengthened with the Claw ecosystem as additional evidence. [just-a-reference]
+The most technically interesting details, NanoClaw's small core and container-by-default execution, are second-hand and unevaluated. They support [Inspectable substrate, not supervision, defeats the blackbox problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) only as practitioner preference evidence, not as proof that small cores or containers produce safer systems. The source also says nothing about failure modes: malicious tool use, persistence drift, scheduled-task surprises, stale context, or cross-session recovery.
 
 ## Recommended Next Action
 
-File as reference -- the source's primary value (the "Claw" category definition and terminology) has already been fully absorbed into the KB through the [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) note and its downstream connections. The extractable value items marked [experiment] (three-layer stack model, cross-session scheduling) are genuinely interesting but would need separate source material on specific Claw implementations to develop further -- this blog post is too thin on technical detail to ground new notes.
+File as reference -- the source's primary durable value is already captured by [Claw learning loops must improve action capacity not just retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md). Do not write a new note from this source alone; revisit the three-layer stack and cross-session scheduling ideas only after ingesting or reviewing more concrete Claw implementations.
