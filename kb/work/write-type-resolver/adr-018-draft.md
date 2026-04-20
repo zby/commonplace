@@ -92,7 +92,7 @@ The pointed-at file is self-contained:
 ### What moves where
 
 - **Template and instructions fuse into the pointed-at doc.** [ADR 016](../../reference/adr/016-custom-types-use-template-instruction-pairs.md)'s three-file layout collapses to one authored file. `{type}.template.md` and `{type}.instructions.md` go away.
-- **Schema stays separate.** Writers don't need the schema. Validator schema lookup uses the sibling convention: `kb/reference/types/adr.md` maps to `kb/reference/types/adr.schema.yaml` when that file exists. Broader schema wiring remains a future validator workshop.
+- **Schema stays separate.** Writers don't need the schema. Each type-spec doc declares its schema explicitly in frontmatter (`schema: <repo-relative path>` or `schema: null`); the validator reads that field. Sibling filenames remain only an author-chosen convention, not a resolver fallback. Broader schema wiring remains a future validator workshop.
 - **Global types live once.** `kb/types/<name>.md` is the authoritative location for a global type. Collection-local types live at `kb/<collection>/types/<name>.md`. Which collection hosts a given write comes from user intent or from the target collection's `COLLECTION.md` listing — not from a hardcoded special-case table in the skill.
 - **Self-referential root.** `kb/types/type-spec.md` has `type: kb/types/type-spec.md` — its own spec. Validators terminate on path-equals-self.
 - **Paths are repository-relative.** Valid `type:` paths start with `kb/`, end with `.md`, contain no `..`, and are not absolute paths or URLs.
@@ -132,7 +132,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 ### Scope
 
 - Does **not** change [`cp-skill-compile-collections`](../../instructions/cp-skill-compile-collections/SKILL.md). That skill compiles cross-register topology for connect/audit tooling — a cache for filesystem-expensive lookups, not authoring context assembly.
-- Does **not** fully redesign schema storage or validator behavior. The migration uses sibling schema lookup for path-valued types; broader schema wiring remains a future validator workshop.
+- Does **not** fully redesign schema storage or validator behavior. The migration requires every type-spec doc to declare its schema explicitly in frontmatter (`schema: <path>` or `schema: null`); broader schema wiring remains a future validator workshop.
 - Retires the `note` inlining from [ADR 002](../../reference/adr/002-inline-global-types-in-writing-guide.md) as part of the whole-KB migration.
 
 ### Migration

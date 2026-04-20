@@ -40,7 +40,7 @@ Valid type paths are repository-relative markdown paths under `kb/`: they start 
 
 **Hand-authored instructions docs.** The pointed-at doc is self-contained. Body is authoring prose; template is an inlined fenced block (use `~~~markdown` or a longer backtick run so nested fences inside the template don't collide). Template sidecars are not preserved as an alternate authoring mechanism.
 
-**Schema stays separate.** Writers don't need the schema. Validator schema lookup uses the sibling convention: `kb/reference/types/adr.md` maps to `kb/reference/types/adr.schema.yaml` when that file exists. Broader schema wiring remains a future validator workshop.
+**Schema stays separate.** Writers don't need the schema. Each type-spec doc declares its schema explicitly in frontmatter: `schema: kb/reference/types/adr.schema.yaml`, or `schema: null` when the type has no schema. The validator reads that field; sibling filenames are only a convention authors may choose, not a resolver fallback. Broader schema wiring remains a future validator workshop.
 
 **No resolver CLI.** The write skill reads the path named by `type:` (in the note being edited) or the path named in the target collection's `COLLECTION.md` (for a new write). Ambiguity dissolves — paths are lexical. No `--collection` flag, no three-shape JSON contract, no `status: ambiguous` branch.
 

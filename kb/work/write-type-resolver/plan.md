@@ -87,7 +87,7 @@ Pre-action gate: save the inventory in the PR/workshop notes before editing.
   - whether the type has existing template/instructions sidecars, schema-only support, no sidecar, or is implicit text
   - the migration action for explicit `type: text` files
   - generated or non-write-target classifications, especially source artifact types
-- The inventory from 2026-04-20 had 13 explicit frontmatter type values. `spec` is retired in this migration (see the `spec` retirement policy above). `type-spec` is introduced by this migration as the self-referential meta type declared by every type-spec doc. Accepted post-migration type values for authored artifacts: `adr`, `agent-memory-system-review`, `connect-report`, `definition`, `index`, `ingest-report`, `instruction`, `note`, `snapshot`, `source-review`, `structured-claim`, `text`, `type-spec`. Sidecar-only contracts migrated without current artifact users (`task-active`, `task-backlog`, `task-recurring`) are valid type-spec docs but not part of the accepted-for-authoring list.
+- The inventory from 2026-04-20 had 13 explicit frontmatter type values. `spec` is retired in this migration (see the `spec` retirement policy above). `type-spec` is introduced by this migration as the self-referential meta type declared by every type-spec doc. Logical types backed by a type-spec doc after the migration: `adr`, `agent-memory-system-review`, `connect-report`, `definition`, `index`, `ingest-report`, `instruction`, `note`, `snapshot`, `source-review`, `structured-claim`, `type-spec`. Stored `type:` values are the paths to those docs (for example `type: kb/types/note.md`). `text` is the implicit no-frontmatter case only: files with no frontmatter are `text`; explicit `type: text` is invalid, and there is no `text` type-spec doc — only the `kb/types/text.md` documentation page. Sidecar-only contracts migrated without current artifact users (`task-active`, `task-backlog`, `task-recurring`) are valid type-spec docs but not part of the accepted-for-authoring list.
 
 ## Step 2: Create the root type-spec doc
 
@@ -97,15 +97,6 @@ Pre-action gate: review before applying the full migration.
 - Frontmatter: `type: kb/types/type-spec.md` (self-reference); `name: type-spec`; `description: …`; `schema: null`.
 - Body: describes what a valid type-spec doc is — required frontmatter fields (`type`, `name`, `description`, `schema`) and the relationship to declared schema files. Whether to include an example, template, or authoring checklist is an authoring decision made in the body; the validator does not inspect body content.
 - This file is the validator's terminator: when resolution reaches path-equals-self, stop.
-
-## Step 2.5: Reconcile decision docs with schema-pointer policy
-
-Pre-action gate: no validator work until the workshop docs agree on schema lookup policy.
-
-- Update [`README.md`](./README.md) and [`adr-018-draft.md`](./adr-018-draft.md) so they match this plan's explicit `schema:` policy.
-- Remove or revise sibling-schema language such as "`kb/reference/types/adr.md` maps to `kb/reference/types/adr.schema.yaml` when that file exists."
-- State the final rule consistently: the type-spec doc declares `schema:`; the validator uses that field; sibling naming is only a convention authors may choose, not a resolver fallback.
-- Keep `schema: null` as the only way to declare a type-spec doc with no schema validation.
 
 ## Step 3: Fuse every existing type contract
 
@@ -166,6 +157,7 @@ Pre-action gate: inventory every non-validator code path and skill that writes, 
   - `src/commonplace/cli/x_snapshot.py`: `type: snapshot` -> `type: kb/sources/types/snapshot.md`
   - `src/commonplace/lib/index_directory.py`: `type: index` -> `type: kb/types/index.md`
 - Search `src/` for generated markdown frontmatter and migrate any additional `type:` literals found during implementation.
+- Workshop-area code (`kb/work/**/*.py`) is out of scope. Workshop scripts are not migrated, even when they emit enum frontmatter into corpus areas (known case: `kb/work/link-label-audit/extract_labels.py`). If a workshop is revived later, update its scripts then.
 - Search `src/` for type-value consumers, not just writers. Update direct enum comparisons and filters, including:
   - `src/commonplace/lib/index_generated.py`: `fm.get("type") == "index"` and `fm.get("type") != "index"` must use the path-valued index type or a path-aware helper.
   - `src/commonplace/docs/mkdocs_hooks.py`: tag-index discovery must recognize `type: kb/types/index.md`.
@@ -212,10 +204,10 @@ Pre-action gate: no commit until the validation result is understood.
 - Search for `requires-type:` values that still reference bare enum names.
 - Search for remaining `*.template.md` and `*.instructions.md` files under `kb/**/types/`; none should remain unless explicitly justified as non-type historical material.
 - Search operational code and promoted skills for stale sidecar references and enum-writing examples:
-  - `rg -n "\.template\.md|\.instructions\.md|type: (note|index|definition|instruction|adr|structured-claim|agent-memory-system-review|connect-report|snapshot|ingest-report|source-review|spec|review|text)\b|requires-type: (note|index|definition|instruction|adr|structured-claim|agent-memory-system-review|connect-report|snapshot|ingest-report|source-review|spec|review|text)\b|get\(\"type\"\).*==|get\(\"type\"\).*!=" src test kb AGENTS.md README.md`
+  - `rg -n "\.template\.md|\.instructions\.md|type: (note|index|definition|instruction|adr|structured-claim|agent-memory-system-review|connect-report|snapshot|ingest-report|source-review|spec|review|text)\b|requires-type: (note|index|definition|instruction|adr|structured-claim|agent-memory-system-review|connect-report|snapshot|ingest-report|source-review|spec|review|text)\b|get\(\"type\"\).*==|get\(\"type\"\).*!=" src test kb scripts AGENTS.md README.md`
 - Treat historical ADR/theory prose as acceptable only when it clearly describes pre-migration behavior. Active instructions, reference docs, root control-plane docs, scaffolded files, tests, generated examples, and scenario docs must not retain stale operational sidecar paths or enum-valued examples.
 - Search active code for direct enum type comparisons and path-model field names that should have changed:
-  - `rg -n "get\(\"type\"\)|note_type|resolved_type|definition_path|check_type_uniqueness|discover_all_types" src test`
+  - `rg -n "get\(\"type\"\)|note_type|resolved_type|definition_path|check_type_uniqueness|discover_all_types" src test scripts`
 - Run or update `commonplace-init` scaffold tests to prove new projects receive the migrated type-doc surface.
 - If the migrated state fails, fix forward in the same migration bundle or revert the bundle. Do not introduce a compatibility layer.
 
