@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 from commonplace.cli import sync_generated_index
@@ -13,11 +12,7 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def test_sync_generated_index_main_dry_run_reports_changes(
-    tmp_path: Path,
-    monkeypatch,
-    capsys,
-) -> None:
+def test_sync_generated_index_main_dry_run_reports_changes(tmp_path: Path, capsys) -> None:
     notes_root = tmp_path / "kb" / "notes"
     index_path = write(
         notes_root / "kb-design-index.md",
@@ -50,10 +45,7 @@ tags: [kb-design]
 """,
     )
 
-    monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(sys, "argv", ["sync_generated_index.py", "--dry-run", str(index_path)])
-
-    sync_generated_index.main()
+    sync_generated_index.main(["--dry-run", str(index_path)], cwd=tmp_path)
 
     captured = capsys.readouterr()
     assert "Would change 1 index(es):" in captured.out

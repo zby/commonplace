@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -14,6 +15,9 @@ import pytest  # noqa: E402
 
 from commonplace.cli import validate_notes  # noqa: E402
 from commonplace.lib import project_paths, validation  # noqa: E402
+
+
+FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
 
 
 def write(path: Path, content: str) -> Path:
@@ -44,143 +48,20 @@ schema: {schema_value}
     )
 
 
+def install_schema_tree(tmp_path: Path, tree_name: str) -> None:
+    """Copy a prebuilt schema tree (fixtures/schemas/<tree_name>/) into tmp_path.
+
+    Trees mirror the kb/ layout so each file lands at its expected location.
+    """
+    src = FIXTURES_ROOT / tree_name
+    for path in src.rglob("*.yaml"):
+        dest = tmp_path / path.relative_to(src)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, dest)
+
+
 def configure_temp_repo(tmp_path: Path) -> Path:
-    notes_root = tmp_path / "kb" / "notes"
-    write(
-        tmp_path / "kb" / "types" / "note.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-type: object
-required:
-  - frontmatter
-  - body
-  - headings
-  - links
-  - body_dates
-properties:
-  frontmatter:
-    type: object
-    required:
-      - description
-      - type
-    properties:
-      description:
-        type: string
-        minLength: 1
-      type:
-        type: string
-      status:
-        enum:
-          - seedling
-          - current
-          - speculative
-          - outdated
-      traits:
-        type: array
-        items:
-          type: string
-    additionalProperties: true
-  body:
-    type: string
-  headings:
-    type: array
-    items:
-      type: string
-  links:
-    type: array
-    items:
-      type: string
-  body_dates:
-    type: array
-    items:
-      type: string
-      format: date
-""",
-    )
-    write(
-        tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "../../types/note.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        required:
-          - description
-          - type
-        properties:
-          type:
-            const: kb/notes/types/structured-claim.md
-        additionalProperties: true
-      headings:
-        type: array
-        allOf:
-          - contains:
-              const: "## Evidence"
-          - contains:
-              const: "## Reasoning"
-""",
-    )
-    write(
-        tmp_path / "kb" / "notes" / "types" / "spec.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "../../types/note.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        required:
-          - description
-          - type
-        properties:
-          type:
-            const: spec
-        additionalProperties: true
-      headings:
-        type: array
-        anyOf:
-          - contains:
-              const: "## Design"
-          - contains:
-              const: "## Implementation"
-""",
-    )
-    write(
-        tmp_path / "kb" / "notes" / "types" / "related-system.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "../../types/note.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        required:
-          - description
-          - type
-          - last-checked
-        properties:
-          type:
-            const: related-system
-          last-checked:
-            type: string
-            format: date
-        additionalProperties: true
-      headings:
-        type: array
-        allOf:
-          - contains:
-              const: "## Core Ideas"
-          - contains:
-              const: "## Comparison with Our System"
-          - contains:
-              const: "## Borrowable Ideas"
-          - contains:
-              const: "## Curiosity Pass"
-          - contains:
-              const: "## What to Watch"
-""",
-    )
+    install_schema_tree(tmp_path, "flat")
     write_type_spec(
         tmp_path,
         "kb/types/note.md",
@@ -193,7 +74,7 @@ allOf:
         name="structured-claim",
         schema="kb/notes/types/structured-claim.schema.yaml",
     )
-    return notes_root
+    return tmp_path / "kb" / "notes"
 
 
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
@@ -466,100 +347,7 @@ Watch.
 
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
-    write(
-        tmp_path / "kb" / "types" / "note-base.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-type: object
-required:
-  - frontmatter
-  - body
-  - headings
-  - links
-  - body_dates
-properties:
-  frontmatter:
-    type: object
-    required:
-      - description
-      - type
-    properties:
-      description:
-        type: string
-        minLength: 1
-      type:
-        type: string
-      status:
-        type: string
-    additionalProperties: true
-  body:
-    type: string
-  headings:
-    type: array
-    items:
-      type: string
-  links:
-    type: array
-    items:
-      type: string
-  body_dates:
-    type: array
-    items:
-      type: string
-      format: date
-""",
-    )
-    write(
-        tmp_path / "kb" / "types" / "note.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "./note-base.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        properties:
-          status:
-            enum:
-              - seedling
-              - current
-              - speculative
-              - outdated
-        additionalProperties: true
-""",
-    )
-    write(
-        tmp_path / "kb" / "notes" / "types" / "adr.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "../../types/note-base.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        required:
-          - description
-          - type
-        properties:
-          type:
-            const: kb/notes/types/adr.md
-          status:
-            enum:
-              - proposed
-              - accepted
-              - superseded
-              - deprecated
-        additionalProperties: true
-      headings:
-        type: array
-        allOf:
-          - contains:
-              const: "## Context"
-          - contains:
-              const: "## Decision"
-          - contains:
-              const: "## Consequences"
-""",
-    )
+    install_schema_tree(tmp_path, "adr")
     write_type_spec(
         tmp_path,
         "kb/notes/types/adr.md",
@@ -597,92 +385,7 @@ Consequences.
 
 
 def test_instruction_type_accepts_review_gate_metadata(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "types" / "note-base.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-type: object
-required:
-  - frontmatter
-  - body
-  - headings
-  - links
-  - body_dates
-properties:
-  frontmatter:
-    type: object
-    required:
-      - description
-      - type
-    properties:
-      description:
-        type: string
-        minLength: 1
-      type:
-        type: string
-    additionalProperties: true
-  body:
-    type: string
-  headings:
-    type: array
-    items:
-      type: string
-  links:
-    type: array
-    items:
-      type: string
-  body_dates:
-    type: array
-    items:
-      type: string
-      format: date
-""",
-    )
-    write(
-        tmp_path / "kb" / "types" / "note.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "./note-base.schema.yaml"
-""",
-    )
-    write(
-        tmp_path / "kb" / "types" / "instruction.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-allOf:
-  - $ref: "./note.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        required:
-          - description
-          - type
-        properties:
-          type:
-            const: kb/types/instruction.md
-        additionalProperties: true
-  - if:
-      properties:
-        frontmatter:
-          required:
-            - gate_id
-    then:
-      properties:
-        frontmatter:
-          required:
-            - gate_id
-            - name
-            - lens
-            - watches
-            - staleness
-        headings:
-          type: array
-          allOf:
-            - contains:
-                const: "## Failure mode"
-            - contains:
-                const: "## Test"
-""",
-    )
+    install_schema_tree(tmp_path, "instruction")
     write_type_spec(
         tmp_path,
         "kb/types/instruction.md",

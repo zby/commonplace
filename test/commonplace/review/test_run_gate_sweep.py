@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-import os
 import sqlite3
-import stat
 import subprocess
 from pathlib import Path
+
+from commonplace.review import run_gate_sweep as run_gate_sweep_lib
+from commonplace.review.review_runners import RunnerResult
 
 from ._run_cli import run_cli
 
@@ -16,11 +17,6 @@ def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
-
-
-def write_executable(path: Path, content: str) -> None:
-    path.write_text(content, encoding="utf-8")
-    path.chmod(path.stat().st_mode | stat.S_IXUSR)
 
 
 def make_note(path: Path, title: str, body: str) -> Path:
@@ -93,33 +89,31 @@ def run_gate_sweep(repo: Path, *args: str):
     return run_cli("run_gate_sweep", *args, cwd=repo, check=False)
 
 
+def _fake_run_prompt_factory(stdout: str, *, returncode: int = 0):
+    def fake_run_prompt(**_kwargs):
+        return RunnerResult(stdout=stdout, stderr="", returncode=returncode, telemetry=None)
+
+    return fake_run_prompt
+
+
 def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
 
-    write_executable(
-        bin_dir / "codex",
-        """#!/usr/bin/env python3
-print("=== NOTE START: kb/notes/first.md ===")
-print("=== GATE REVIEW START: accessibility/undefined-terms ===")
-print("Needs a definition for Alpha.")
-print("")
-print("## Result: WARN")
-print("=== GATE REVIEW END: accessibility/undefined-terms ===")
-print("=== NOTE END: kb/notes/first.md ===")
-print("")
-print("=== NOTE START: kb/notes/second.md ===")
-print("=== GATE REVIEW START: accessibility/undefined-terms ===")
-print("No undefined terms found.")
-print("")
-print("## Result: PASS")
-print("=== GATE REVIEW END: accessibility/undefined-terms ===")
-print("=== NOTE END: kb/notes/second.md ===")
-""",
+    bundle_output = (
+        "=== NOTE START: kb/notes/first.md ===\n"
+        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "Needs a definition for Alpha.\n\n"
+        "## Result: WARN\n"
+        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
+        "=== NOTE END: kb/notes/first.md ===\n\n"
+        "=== NOTE START: kb/notes/second.md ===\n"
+        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "No undefined terms found.\n\n"
+        "## Result: PASS\n"
+        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
+        "=== NOTE END: kb/notes/second.md ===\n"
     )
-
-    monkeypatch.setenv("PATH", f"{bin_dir}:{os.environ['PATH']}")
+    monkeypatch.setattr(run_gate_sweep_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,
@@ -172,23 +166,17 @@ print("=== NOTE END: kb/notes/second.md ===")
 
 def test_run_gate_sweep_marks_all_runs_failed_when_batch_parse_fails(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
 
-    write_executable(
-        bin_dir / "codex",
-        """#!/usr/bin/env python3
-print("=== NOTE START: kb/notes/first.md ===")
-print("=== GATE REVIEW START: accessibility/undefined-terms ===")
-print("Needs a definition for Alpha.")
-print("")
-print("## Result: WARN")
-print("=== GATE REVIEW END: accessibility/undefined-terms ===")
-print("=== NOTE END: kb/notes/first.md ===")
-""",
+    # Bundle with only one note — parser will reject because the second note is missing.
+    bundle_output = (
+        "=== NOTE START: kb/notes/first.md ===\n"
+        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "Needs a definition for Alpha.\n\n"
+        "## Result: WARN\n"
+        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
+        "=== NOTE END: kb/notes/first.md ===\n"
     )
-
-    monkeypatch.setenv("PATH", f"{bin_dir}:{os.environ['PATH']}")
+    monkeypatch.setattr(run_gate_sweep_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,

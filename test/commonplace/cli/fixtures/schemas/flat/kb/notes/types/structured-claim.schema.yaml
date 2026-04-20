@@ -1,0 +1,21 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: kb/notes/types/structured-claim.md
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Evidence"
+          - contains:
+              const: "## Reasoning"

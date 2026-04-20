@@ -1,0 +1,31 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - last-checked
+        properties:
+          type:
+            const: related-system
+          last-checked:
+            type: string
+            format: date
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Core Ideas"
+          - contains:
+              const: "## Comparison with Our System"
+          - contains:
+              const: "## Borrowable Ideas"
+          - contains:
+              const: "## Curiosity Pass"
+          - contains:
+              const: "## What to Watch"

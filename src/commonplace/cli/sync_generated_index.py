@@ -15,15 +15,15 @@ from commonplace.lib.index_generated import (
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Rebuild generated sections of index pages with generated tails.",
     )
     parser.add_argument("index_paths", nargs="*", help="Optional index files to process.")
     parser.add_argument("--dry-run", action="store_true", help="Print changes without writing files.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    root = Path.cwd().resolve()
+    root = (cwd if cwd is not None else Path.cwd()).resolve()
 
     if args.dry_run:
         print("DRY RUN - no files will be modified\n")

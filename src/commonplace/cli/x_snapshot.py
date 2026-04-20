@@ -295,6 +295,20 @@ def _render_markdown(
     return "\n".join(lines)
 
 
+def _classify_family(target_post: dict, posts_sorted: list[dict]) -> str:
+    """Decide whether a captured X status is an article, thread, or single post.
+
+    An article wins over a thread even if the post has replies, because
+    article-bearing posts carry their own distinctive content.
+    """
+    article_text = str(((target_post.get("article") or {}).get("plain_text") or "")).strip()
+    if article_text:
+        return "x-article"
+    if len(posts_sorted) > 1:
+        return "x-thread"
+    return "x-post"
+
+
 def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     source_url = _canonical_source_url(url.strip())
     status_id = _extract_status_id(source_url)
@@ -349,8 +363,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
         posts_sorted.append(target_post)
         posts_sorted.sort(key=_post_sort_key)
 
-    article_text = str(((target_post.get("article") or {}).get("plain_text") or "")).strip()
-    kind = "x-article" if article_text else ("x-thread" if len(posts_sorted) > 1 else "x-post")
+    kind = _classify_family(target_post, posts_sorted)
 
     base_title = (
         str(((target_post.get("article") or {}).get("title") or "")).strip()
