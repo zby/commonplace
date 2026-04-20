@@ -10,7 +10,7 @@ model: opus
 
 # Connect — Discovery Only
 
-Find connections for a single note. Output is a connection report saved to `kb/reports/connect/<collection>/<note-name>.connect.md`. Library notes and indexes are not edited.
+Find connections for a single note. Output is a connection report saved to `kb/reports/connect/<collection>/<note-name>.connect.md`. Library notes and indexes are not edited. Connect reports are normally gitignored; they are immediate downstream context and can be regenerated from the source artifact plus current KB state.
 
 ## Input
 

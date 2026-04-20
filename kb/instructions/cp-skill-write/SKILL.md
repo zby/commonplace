@@ -53,7 +53,13 @@ Preserve existing frontmatter and links during edits unless the requested change
 
 ### Step 6 - Validate
 
-Run `cp-skill-validate` on the written file. Fix structural failures before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
+Run targeted validation on the written or edited artifact, not the whole KB:
+
+```bash
+commonplace-validate path/to/written-file.md
+```
+
+If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Do not run `commonplace-validate kb` or `cp-skill-validate all` as part of ordinary writing; full-KB validation is a separate maintenance operation and can surface unrelated warnings. Fix structural failures in the touched artifacts before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
 
 ## Universal Mechanics
 

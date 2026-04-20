@@ -39,6 +39,10 @@ Each index below is regenerable from the authored markdown. Losing an index is a
 
 The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note renames.
 
+## Generated reports
+
+Generated reports record operational work products rather than curated library knowledge. Connect reports under `kb/reports/connect/` are discovery artifacts produced by `/cp-skill-connect` and consumed by downstream workflows such as ingestion. They are intentionally gitignored because they are regenerable from the source artifact and current KB state; their absence from `git status` is expected.
+
 ## Review state (SQLite)
 
 Review state is the one subsystem that is not file-backed. The review database stores:

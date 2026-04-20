@@ -176,6 +176,8 @@ Save the `ingest-report` next to the snapshot as `.ingest.md`:
 - Input:  `kb/sources/some-article.md`
 - Output: `kb/sources/some-article.ingest.md`
 
+After creating or replacing a source/ingest pair, regenerate the affected source index rather than hand-editing it. Updating `kb/sources/dir-index.md` is expected because it is generated; avoid or revert unrelated generated-index churn from broad refresh commands.
+
 ## Output Format
 
 The saved `.ingest.md` file should contain:
