@@ -81,11 +81,6 @@ Fixture test.
     )
 
 
-def git_init(path: Path) -> None:
-    """Bare `git init` — sufficient for `git status` to succeed in ack tests."""
-    subprocess.run(["git", "init"], cwd=path, check=True, capture_output=True)
-
-
 def seed_acceptance(
     repo_root: Path,
     *,
@@ -129,14 +124,8 @@ def seed_acceptance(
         conn.commit()
 
 
-def build_fixture(tmp_path: Path, *, with_git: bool = False) -> dict[str, Path]:
-    """2 notes + 3 gates; `stable` has 3 accepted reviews, `unreviewed` has none.
-
-    `with_git=True` runs `git init` so `ack_pairs` (which calls `git status`) works.
-    """
-    if with_git:
-        git_init(tmp_path)
-
+def build_fixture(tmp_path: Path) -> dict[str, Path]:
+    """2 notes + 3 gates; `stable` has 3 accepted reviews, `unreviewed` has none."""
     notes_dir = tmp_path / "kb" / "notes"
     gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
@@ -474,7 +463,7 @@ class TestNoteChanged:
 
 class TestAckMetadata:
     def test_ack_appends_acceptance_event_without_creating_new_gate_reviews(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path, with_git=True)
+        fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
@@ -523,7 +512,7 @@ class TestAckMetadata:
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
 
     def test_ack_allows_dirty_note_and_records_worktree_provenance(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path, with_git=True)
+        fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
         review_target_selector.ack_pairs(
             tmp_path,
@@ -546,7 +535,7 @@ class TestAckMetadata:
         assert row["acceptance_kind"] == "trivial-change-ack"
 
     def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path, with_git=True)
+        build_fixture(tmp_path)
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
             model=TEST_MODEL,

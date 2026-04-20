@@ -149,6 +149,12 @@ def review_note_provenance(repo_root: Path, path: Path) -> tuple[str, str | None
         file_abs = path.resolve()
     else:
         file_abs = (repo_root / path).resolve()
+
+    # Outside a git checkout we still need a SHA to record the acceptance against;
+    # fall back to the worktree blob SHA with no commit (same shape as a dirty file).
+    if not (repo_root / ".git").exists():
+        return git_blob_sha(file_abs), None
+
     file_path = file_abs.relative_to(repo_root.resolve())
 
     status = _run_git(repo_root, ["status", "--porcelain", "--", file_path.as_posix()])
