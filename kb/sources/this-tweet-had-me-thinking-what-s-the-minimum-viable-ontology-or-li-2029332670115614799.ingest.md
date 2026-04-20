@@ -2,7 +2,8 @@
 description: Tweet thread proposing "minimum viable ontology" — the smallest term list to orient a newcomer in a domain — with a vibecoded prototype (domainmaps.co) and pedagogical framing via "conceptual thresholds"
 source_snapshot: this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.md
 ingested: 2026-03-09
-type: conversation-thread
+type: ingest-report
+source_type: conversation-thread
 domains: [domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-engineering]
 ---
 

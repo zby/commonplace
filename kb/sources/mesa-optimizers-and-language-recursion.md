@@ -3,7 +3,8 @@ source: https://malloc.dog/blog/2021/10/12/mesa-optimizers-and-language-recursio
 description: Speculative blog post connecting mesa optimizers to language recursion by treating both as compressed generative rules that can appear as sudden capability jumps.
 captured: 2026-03-31
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Mesa Optimizers and Language Recursion

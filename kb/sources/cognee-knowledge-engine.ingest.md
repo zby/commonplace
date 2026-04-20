@@ -2,7 +2,8 @@
 description: Pipeline-first knowledge engine with custom Pydantic schemas for LLM entity extraction, poly-store graph+vector design, and an undersized enrichment phase that concretely marks the boundary between automatable extraction and open enrichment problems
 source_snapshot: cognee-knowledge-engine.md
 ingested: 2026-03-09
-type: tool-announcement
+type: ingest-report
+source_type: tool-announcement
 domains: [agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction]
 ---
 

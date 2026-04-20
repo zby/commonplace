@@ -2,7 +2,8 @@
 description: Agent memory platform where the LLM self-manages a three-tier memory hierarchy (core/recall/archival) using an OS analogy — the strongest existing exemplar of the agent-self-managed agency model, now evolving toward git-backed memory files
 source_snapshot: letta-memgpt-stateful-agents.md
 ingested: 2026-03-09
-type: design-proposal
+type: ingest-report
+source_type: design-proposal
 domains: [agent-memory, context-engineering, stateful-agents, memory-architecture]
 ---
 

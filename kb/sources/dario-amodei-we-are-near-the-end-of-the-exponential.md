@@ -3,7 +3,8 @@ source: https://www.dwarkesh.com/p/dario-amodei-2
 description: Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged, implicitly confirming oracle-strength thesis
 captured: 2026-03-12
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Dario Amodei — "We are near the end of the exponential"

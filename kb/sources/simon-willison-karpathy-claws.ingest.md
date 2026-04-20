@@ -1,7 +1,9 @@
 ---
+description: Willison and Karpathy framing "Claw" as a term of art for AI-augmented applications that expose ordinary software through LLM interfaces.
 source_snapshot: simon-willison-karpathy-claws.md
 ingested: 2026-03-09
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [ai-agents, terminology, agent-architecture, personal-computing]
 ---
 

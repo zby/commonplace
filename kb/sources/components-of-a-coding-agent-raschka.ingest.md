@@ -2,7 +2,8 @@
 description: Practitioner decomposition of coding agent harnesses into six named components, with the central claim that apparent model quality is really context quality — independent convergent evidence for the KB's context-efficiency thesis.
 source_snapshot: components-of-a-coding-agent-raschka.md
 ingested: 2026-04-05
-type: practitioner-report
+type: ingest-report
+source_type: practitioner-report
 domains: [agent-architecture, context-engineering, coding-agents]
 ---
 

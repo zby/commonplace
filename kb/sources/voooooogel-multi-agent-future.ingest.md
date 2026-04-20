@@ -2,7 +2,8 @@
 description: Applied bitter-lesson analysis predicting which multi-agent patterns survive stronger models — argues filesystem, forking, and spawning are structural while fixed orchestration is a vision feature
 source_snapshot: voooooogel-multi-agent-future.md
 ingested: 2026-03-09
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [multi-agent-systems, bitter-lesson, agent-orchestration, context-management]
 ---
 

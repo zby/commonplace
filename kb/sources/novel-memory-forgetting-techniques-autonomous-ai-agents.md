@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2604.02280v1
 description: Adaptive budgeted forgetting framework for long-horizon conversational agents — relevance scoring (recency, frequency, semantic alignment) plus constrained optimization to prune memory while reducing false memory propagation.
 captured: 2026-04-04
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Novel Memory Forgetting Techniques for Autonomous AI Agents: Balancing Relevance and Efficiency

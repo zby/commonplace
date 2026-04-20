@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2604.08224v1
 description: Survey paper framing LLM agent progress as externalization into memory, skills, protocols, and harness engineering rather than only stronger model weights.
 captured: 2026-04-13
 capture: arxiv-html-lynx
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering

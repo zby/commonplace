@@ -2,7 +2,8 @@
 source: https://en.wikipedia.org/wiki/Bitter_lesson
 captured: 2026-02-23
 capture: fetch
-type: encyclopedia-article
+type: snapshot
+tags: [encyclopedia-article]
 ---
 
 # The Bitter Lesson

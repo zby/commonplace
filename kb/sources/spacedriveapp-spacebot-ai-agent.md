@@ -2,7 +2,8 @@
 source: https://github.com/spacedriveapp/spacebot
 captured: 2026-02-23
 capture: web-fetch
-type: web-page
+type: snapshot
+tags: [web-page]
 ---
 
 # Spacebot: AI Agent for Teams and Communities

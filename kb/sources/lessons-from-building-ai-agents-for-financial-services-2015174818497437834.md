@@ -2,7 +2,8 @@
 source: https://x.com/nicbstme/status/2015174818497437834
 captured: 2026-03-03T20:27:26.085015+00:00
 capture: xdk
-type: x-article
+type: snapshot
+tags: [x-article]
 status_id: 2015174818497437834
 conversation_id: 2015174818497437834
 post_count: 1

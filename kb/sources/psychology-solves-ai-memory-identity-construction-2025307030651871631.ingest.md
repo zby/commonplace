@@ -2,7 +2,8 @@
 description: Thread proposing five psychology principles (Conway, Damasio, Bruner, Klein & Nichols) for AI memory as identity construction — directly engages the KB's open question about whether cognitive science analogies are decorative or mechanistic
 source_snapshot: psychology-solves-ai-memory-identity-construction-2025307030651871631.md
 ingested: 2026-04-04
-type: conversation-thread
+type: ingest-report
+source_type: conversation-thread
 domains: [memory-architecture, learning-theory, context-engineering]
 ---
 

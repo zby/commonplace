@@ -2,10 +2,11 @@
 source: https://arxiv.org/html/2601.01885v1
 captured: 2026-03-08
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
-# Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents
+# Agentic Memory for LLM Agents
 
 Author: Yi Yu, Liuyi Yao, Yuexiang Xie, Qingquan Tan, Jiaqi Feng, Yaliang Li, Libing Wu (Alibaba Group, Wuhan University)
 Source: https://arxiv.org/html/2601.01885v1

@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2601.22436v2
 description: Causal-intervention paper showing self-evolving agents rely on raw trajectories more faithfully than condensed experience, exposing a compression-faithfulness gap across frameworks, models, and environments
 captured: 2026-03-22
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Large Language Model Agents Are Not Always Faithful Self-Evolvers

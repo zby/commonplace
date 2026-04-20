@@ -2,7 +2,8 @@
 description: RL-trained unified LTM/STM memory policy for LLM agents — confirms memory management is learnable when task-completion oracles exist, but operates on opaque weights and low-reach facts
 source_snapshot: agentic-memory-learning-unified-long-term-and-short-term-memory-management.md
 ingested: 2026-03-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-memory, reinforcement-learning, context-management, llm-agents]
 ---
 

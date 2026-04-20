@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -246,7 +245,8 @@ def _render_markdown(
         f"source: {source_url}",
         f"captured: {timestamp}",
         "capture: xdk",
-        f"type: {kind}",
+        "type: snapshot",
+        f"tags: [{kind}]",
         f"status_id: {status_id}",
         f"conversation_id: {conversation_id}",
         f"post_count: {len(posts_sorted)}",
@@ -365,7 +365,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     payload = {
         "source": source_url,
         "captured": timestamp,
-        "type": kind,
+        "family": kind,
         "status_id": status_id,
         "conversation_id": conversation_id,
         "target_post": target_post,

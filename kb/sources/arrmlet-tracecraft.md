@@ -3,7 +3,8 @@ source: https://github.com/Arrmlet/tracecraft
 description: S3-backed CLI coordination layer for multi-agent AI systems — shared memory, messaging, task claiming, and barriers stored as JSON files in any S3-compatible bucket, with no servers or databases required.
 captured: 2026-04-04
 capture: gh-cli
-type: web-page
+type: snapshot
+tags: [web-page]
 ---
 
 # tracecraft

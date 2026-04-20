@@ -2,7 +2,8 @@
 source: https://arxiv.org/abs/2502.12110
 captured: 2026-02-28
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # A-Mem: Agentic Memory for LLM Agents

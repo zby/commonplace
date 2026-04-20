@@ -3,7 +3,8 @@ source: https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM
 description: Notion essay arguing that LLM memory needs retrieval, salience, summarization, forgetting, and memory objects rather than raw chat logs.
 captured: 2026-04-13
 capture: notion-api
-type: web-page
+type: snapshot
+tags: [web-page]
 ---
 
 # Everything you need to know about LLM memory

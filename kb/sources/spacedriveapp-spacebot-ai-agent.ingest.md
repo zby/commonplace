@@ -2,7 +2,8 @@
 description: Spacebot README ingest covering a Rust concurrent agent framework with cortex scheduling, branch scoping, typed memory categories, and hybrid recall
 source_snapshot: spacedriveapp-spacebot-ai-agent.md
 ingested: 2026-03-09
-type: tool-announcement
+type: ingest-report
+source_type: tool-announcement
 domains: [agent-architecture, memory-systems, orchestration, concurrency]
 ---
 

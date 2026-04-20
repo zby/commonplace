@@ -1,7 +1,9 @@
 ---
+description: Epiplexity paper reframing information as computationally bounded predictive utility, with formal definitions and empirical grounding for learning-theory discussions.
 source_snapshot: from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md
 ingested: 2026-03-05
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [information-theory, machine-learning, computational-complexity, learning-theory]
 ---
 

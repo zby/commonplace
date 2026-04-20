@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2603.10062v1
 description: Position paper reframing multi-agent memory management through a computer architecture lens — proposes shared vs. distributed memory paradigms, a three-layer hierarchy (I/O, cache, memory), and identifies memory consistency as the most urgent unresolved challenge for scalable multi-agent systems.
 captured: 2026-03-13
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Multi-Agent Memory from a Computer Architecture Perspective: Visions and Challenges Ahead

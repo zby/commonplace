@@ -2,7 +2,8 @@
 description: Essay distinguishing vibe coding from true software ephemerality, arguing that state, integration, interface stability, and auditability keep important systems anchored to durable artifact stacks.
 source_snapshot: the-flawed-ephemeral-software-hypothesis.md
 ingested: 2026-03-19
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [software-engineering, agent-systems, verification, artifact-durability]
 ---
 

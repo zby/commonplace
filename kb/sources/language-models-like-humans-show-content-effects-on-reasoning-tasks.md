@@ -2,7 +2,8 @@
 source: https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372
 captured: 2026-03-08
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Language Models, Like Humans, Show Content Effects on Reasoning Tasks

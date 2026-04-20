@@ -2,7 +2,8 @@
 source: https://x.com/zeeg/status/2032179291031806408
 captured: 2026-03-13T00:00:00+00:00
 capture: webfetch
-type: x-post
+type: snapshot
+tags: [x-post]
 status_id: 2032179291031806408
 linked_url: https://cra.mr/skill-synthesis
 ---

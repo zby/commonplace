@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2604.04503v2
 description: MIA paper on converting deep-research search trajectories into workflow memory and Planner test-time training
 captured: 2026-04-11
 capture: lynx-html
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Memory Intelligence Agent

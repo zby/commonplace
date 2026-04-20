@@ -3,7 +3,8 @@ source: https://www.databricks.com/blog/memory-scaling-ai-agents
 description: Databricks AI Research argument and experiments for external-memory scaling as a third agent improvement axis alongside model and inference scaling
 captured: 2026-04-11
 capture: web-fetch-paraphrase
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Memory Scaling for AI Agents

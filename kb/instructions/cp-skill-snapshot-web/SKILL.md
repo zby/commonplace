@@ -97,7 +97,7 @@ From the fetched content and URL, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
-- **type**: One of: `blog-post`, `documentation`, `forum-thread`, `news-article`, `academic-paper`, `web-page` (default)
+- **family tag**: One of: `blog-post`, `documentation`, `forum-thread`, `news-article`, `academic-paper`, `web-page` (default)
 - **description**: One sentence describing what makes this source worth retrieving. Not a summary — a retrieval filter (e.g. "Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged"). Focus on what distinguishes this source from others on the same topic.
 - **slug**: Lowercase, hyphenated, max 70 chars. Derived from title. Example: `simon-willison-karpathy-claws`
 
@@ -113,7 +113,8 @@ source: {url}
 description: {description}
 captured: {YYYY-MM-DD}
 capture: {capture_method}
-type: {type}
+type: snapshot
+tags: [{family-tag}]
 ---
 
 # {title}

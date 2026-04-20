@@ -1,7 +1,9 @@
 ---
+description: "Conceptual thread framing harness engineering as cybernetic feedback-loop design: sensors, actuators, constraints, and externalized judgment."
 source_snapshot: harness-engineering-is-cybernetics-2030416758138634583.md
 ingested: 2026-03-09
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [agent-systems, cybernetics, constraining, software-engineering]
 ---
 

@@ -2,7 +2,8 @@
 source: https://x.com/nurijanian/status/2035257434365976671
 captured: 2026-03-21T19:45:41.107797+00:00
 capture: xdk
-type: x-article
+type: snapshot
+tags: [x-article]
 status_id: 2035257434365976671
 conversation_id: 2035257434365976671
 post_count: 1

@@ -3,7 +3,8 @@ source: https://pathway.com/research/beyond-transformers-sudoku-bench
 description: Pathway's BDH model achieves 97.4% accuracy on extreme Sudoku while leading LLMs score 0%, using the gap as evidence that transformer architecture has fundamental limits for constraint-satisfaction reasoning and arguing for post-transformer latent-space models.
 captured: 2026-03-26
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Beyond Transformers: Sudoku Bench

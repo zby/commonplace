@@ -2,7 +2,8 @@
 description: MercadoLibre engineering lead's practitioner guide to Spec Driven Development — the spec/plan/task/implement cascade as methodology for eliminating agent ambiguity, with ecosystem convergence evidence and maturity-level progression
 source_snapshot: the-spec-is-the-new-code-a-guide-to-spec-driven-development-2033303156340240481.md
 ingested: 2026-03-16
-type: practitioner-report
+type: ingest-report
+source_type: practitioner-report
 domains: [spec-driven-development, agent-architecture, context-engineering, constraining]
 ---
 

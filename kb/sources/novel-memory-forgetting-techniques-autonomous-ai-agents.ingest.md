@@ -2,7 +2,8 @@
 description: Formula-based adaptive forgetting with constrained optimization for agent memory — the inspectable alternative to RL-trained memory policy, with empirical evidence that uncontrolled accumulation causes false memory propagation
 source_snapshot: novel-memory-forgetting-techniques-autonomous-ai-agents.md
 ingested: 2026-04-04
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-memory, context-efficiency, memory-curation, forgetting]
 ---
 

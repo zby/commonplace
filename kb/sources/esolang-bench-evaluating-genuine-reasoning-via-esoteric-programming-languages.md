@@ -3,10 +3,11 @@ source: https://arxiv.org/abs/2603.09678
 description: OOD code benchmark using esoteric languages to separate transferable reasoning from benchmark memorization and contamination
 captured: 2026-03-19
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
-# EsoLang-Bench: Evaluating Genuine Reasoning in Large Language Models via Esoteric Programming Languages
+# EsoLang-Bench
 
 Author: Aman Sharma, Paras Chopra (Lossfunk)
 Source: https://arxiv.org/abs/2603.09678

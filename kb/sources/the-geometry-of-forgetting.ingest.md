@@ -2,7 +2,8 @@
 description: Embedding-memory paper arguing that interference and low effective dimensionality, not time decay, drive forgetting and false recall in similarity retrieval.
 source_snapshot: the-geometry-of-forgetting.md
 ingested: 2026-04-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 ---
 

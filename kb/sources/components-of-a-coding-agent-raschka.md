@@ -3,7 +3,8 @@ source: https://magazine.sebastianraschka.com/p/components-of-a-coding-agent
 description: Raschka's breakdown of the six architectural components of a coding agent harness — distinguishing the harness from the model and arguing that context quality drives apparent model quality.
 captured: 2026-04-05
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Components of A Coding Agent

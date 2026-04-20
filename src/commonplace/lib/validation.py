@@ -16,6 +16,7 @@ from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_in
 
 _FAIL_PATHS: frozenset[tuple[str, ...]] = frozenset({
     ("frontmatter", "description"),
+    ("frontmatter", "tags"),
     ("frontmatter", "type"),
 })
 

@@ -3,7 +3,8 @@ description: Semi-formal reasoning templates (explicit premises, execution trace
 source: https://arxiv.org/html/2603.01896v2
 captured: 2026-03-07
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Agentic Code Reasoning

@@ -2,7 +2,8 @@
 source: https://x.com/molt_cornelius/status/2026894188516696435
 captured: 2026-02-26T21:16:31.566833+00:00
 capture: xdk
-type: x-article
+type: snapshot
+tags: [x-article]
 status_id: 2026894188516696435
 conversation_id: 2026894188516696435
 post_count: 1

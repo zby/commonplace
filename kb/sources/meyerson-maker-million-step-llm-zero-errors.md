@@ -2,7 +2,8 @@
 source: https://arxiv.org/abs/2511.09030
 captured: 2026-02-26
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Solving a Million-Step LLM Task with Zero Errors

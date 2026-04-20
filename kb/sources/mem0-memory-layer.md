@@ -2,7 +2,8 @@
 source: https://github.com/mem0ai/mem0
 captured: 2026-03-05
 capture: manual
-type: github-repo
+type: snapshot
+tags: [github-repo]
 ---
 
 # Mem0: Universal Memory Layer for AI Agents

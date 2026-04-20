@@ -10,8 +10,8 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli import validate_notes
-from commonplace.lib import project_paths, validation
+from commonplace.cli import validate_notes  # noqa: E402
+from commonplace.lib import project_paths, validation  # noqa: E402
 
 
 def write(path: Path, content: str) -> Path:
@@ -168,6 +168,64 @@ def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     assert results.note_type == "text"
     assert results.fails == []
     assert any("no frontmatter" in item for item in results.passes)
+
+
+def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
+        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    snapshot = write(
+        tmp_path / "kb" / "sources" / "sample.md",
+        """---
+source: https://example.com/article
+captured: 2026-04-19
+capture: web-fetch
+type: snapshot
+tags: [blog-post]
+---
+
+# Sample
+
+Captured text.
+""",
+    )
+
+    results = validation.validate_note(snapshot, repo_root=tmp_path)
+
+    assert results.note_type == "snapshot"
+    assert results.fails == []
+    assert any("type schema: snapshot requirements satisfied" in item for item in results.passes)
+
+
+def test_source_snapshot_requires_family_tag(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
+        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    snapshot = write(
+        tmp_path / "kb" / "sources" / "sample.md",
+        """---
+source: https://example.com/article
+captured: 2026-04-19
+capture: web-fetch
+type: snapshot
+---
+
+# Sample
+
+Captured text.
+""",
+    )
+
+    results = validation.validate_note(snapshot, repo_root=tmp_path)
+
+    assert results.note_type == "snapshot"
+    assert any("'tags' is a required property" in item for item in results.fails)
 
 
 def test_duplicate_frontmatter_keys_follow_yaml_last_value_wins(tmp_path: Path) -> None:

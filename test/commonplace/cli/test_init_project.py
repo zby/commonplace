@@ -11,7 +11,7 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli.init_project import init_project, main
+from commonplace.cli.init_project import init_project, main  # noqa: E402
 
 
 def test_init_project_creates_core_directories(tmp_path: Path) -> None:
@@ -61,6 +61,9 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.template.md").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.instructions.md").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml").is_file()
+    assert (tmp_path / "kb" / "sources" / "types" / "snapshot.instructions.md").is_file()
+    assert (tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml").is_file()
+    assert not (tmp_path / "kb" / "sources" / "types" / "snapshot.template.md").exists()
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 

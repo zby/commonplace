@@ -2,7 +2,8 @@
 description: Benchmark paper claiming coding agents beat RAG and context scaling on long-context tasks by using filesystem-native search, slicing, and scripting
 source_snapshot: coding-agents-are-effective-long-context-processors.md
 ingested: 2026-03-31
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [context-engineering, long-context, tool-loop, evaluation]
 ---
 

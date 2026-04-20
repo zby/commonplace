@@ -2,7 +2,8 @@
 description: Formal no-escape theorem for semantic memory interference, with exact-record and symbolic-verifier escape clauses that sharpen retrieval-vs-verification tradeoffs.
 source_snapshot: the-price-of-meaning-why-every-semantic-memory-system-forgets.md
 ingested: 2026-04-10
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 ---
 

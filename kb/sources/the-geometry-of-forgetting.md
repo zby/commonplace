@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2604.06222v1
 description: Embedding-space account of human-like forgetting and false memory — interference, low effective dimensionality, and semantic clustering reproduce classic memory effects.
 captured: 2026-04-09
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # The Geometry of Forgetting

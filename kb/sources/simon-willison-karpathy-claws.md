@@ -2,7 +2,8 @@
 source: https://simonwillison.net/2026/Feb/21/claws/
 captured: 2026-02-22
 capture: fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Andrej Karpathy talks about "Claws"

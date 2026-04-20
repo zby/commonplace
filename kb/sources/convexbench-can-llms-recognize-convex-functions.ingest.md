@@ -2,7 +2,8 @@
 description: Benchmark proving LLM compositional reasoning collapses with depth (not token count), recovered by recursive decomposition with focused context — quantitative evidence for scheduling model predictions
 source_snapshot: convexbench-can-llms-recognize-convex-functions.md
 ingested: 2026-03-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [compositional-reasoning, agentic-scaffolding, context-management, benchmarking]
 ---
 

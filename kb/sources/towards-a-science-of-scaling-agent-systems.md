@@ -2,7 +2,8 @@
 source: https://arxiv.org/pdf/2512.08296
 captured: 2026-03-08
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # Towards a Science of Scaling Agent Systems

@@ -2,7 +2,8 @@
 description: Karpathy's long-form agent-maintained wiki manifesto — explicit raw/wiki/schema architecture plus index/log separation beyond his earlier X-post workflow sketch
 source_snapshot: karpathy-llm-wiki.md
 ingested: 2026-04-04
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---
 

@@ -2,7 +2,8 @@
 description: Zettelkasten-inspired flat agent memory with embedding linking and LLM-driven evolution — benchmark success without curation operations or inspectable links
 source_snapshot: a-mem-agentic-memory-for-llm-agents.md
 ingested: 2026-03-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-memory, knowledge-management, llm-agents, zettelkasten]
 ---
 

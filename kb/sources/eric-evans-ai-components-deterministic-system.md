@@ -2,7 +2,8 @@
 source: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
 captured: 2026-03-09
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # AI Components for a Deterministic System (An Example)

@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2603.27116v1
 description: Formal no-escape theorem paper arguing semantic memory systems face interference-driven forgetting and false recall under finite effective dimensionality.
 captured: 2026-04-10
 capture: html-lynx
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # The Price of Meaning: Why Every Semantic Memory System Forgets

@@ -2,7 +2,8 @@
 source: https://x.com/neural_avb/status/2035040781074145412
 captured: 2026-03-22T12:45:38.021318+00:00
 capture: xdk
-type: x-article
+type: snapshot
+tags: [x-article]
 status_id: 2035040781074145412
 conversation_id: 2035040781074145412
 post_count: 7

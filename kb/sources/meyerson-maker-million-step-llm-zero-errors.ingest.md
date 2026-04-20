@@ -2,7 +2,8 @@
 description: MAKER achieves zero errors over one million LLM steps via maximal decomposition into single-step microagents with first-to-ahead-by-k voting and red-flagging — proves O(s ln s) cost scaling when hard per-step oracles exist
 source_snapshot: meyerson-maker-million-step-llm-zero-errors.md
 ingested: 2026-03-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [multi-agent-systems, error-correction, scaling-laws, reliability-engineering]
 ---
 

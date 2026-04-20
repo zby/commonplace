@@ -2,7 +2,8 @@
 description: Practitioner report on thread-weaving agent architecture — bounded worker threads return compressed episodes to an orchestrator, solving working memory, strategic coherence, and task decomposition simultaneously; the strongest practitioner convergence evidence for the bounded-context orchestration model to date
 source_snapshot: slate-moving-beyond-react-and-rlm.md
 ingested: 2026-03-12
-type: practitioner-report
+type: ingest-report
+source_type: practitioner-report
 domains: [agent-architecture, context-engineering, orchestration, episodic-memory]
 ---
 

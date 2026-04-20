@@ -2,7 +2,8 @@
 description: Objective-vs-subjective intelligence essay arguing that AI's real bottleneck is taste and boringness judgment, not benchmarked competence
 source_snapshot: adam-mastroianni-infinite-midwit.md
 ingested: 2026-04-06
-type: conceptual-essay
+type: ingest-report
+source_type: conceptual-essay
 domains: [automation-boundary, oracle-theory, research-methodology, writing-quality]
 ---
 

@@ -2,7 +2,8 @@
 source: https://github.com/getzep/graphiti
 captured: 2026-03-05
 capture: manual
-type: github-repo
+type: snapshot
+tags: [github-repo]
 ---
 
 # Graphiti: Temporal Knowledge Graph for AI Agents

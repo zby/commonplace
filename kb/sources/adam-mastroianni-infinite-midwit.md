@@ -3,7 +3,8 @@ source: https://www.experimental-history.com/p/infinite-midwit
 description: Adam Mastroianni's objective-vs-subjective intelligence framing for why AI competence and benchmarks still miss taste, wisdom, and idea selection.
 captured: 2026-04-06
 capture: web-fetch
-type: blog-post
+type: snapshot
+tags: [blog-post]
 ---
 
 # Infinite midwit

@@ -2,7 +2,8 @@
 description: Computer-architecture analogy for multi-agent memory — shared/distributed paradigms, three-layer hierarchy, consistency protocols as the critical unsolved problem
 source_snapshot: multi-agent-memory-computer-architecture-perspective.md
 ingested: 2026-03-13
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [multi-agent-systems, memory-architecture, context-engineering, agent-coordination]
 ---
 

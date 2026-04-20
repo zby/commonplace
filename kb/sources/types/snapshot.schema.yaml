@@ -1,0 +1,60 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - source
+      - captured
+      - capture
+      - type
+      - tags
+    properties:
+      source:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 1
+      captured:
+        anyOf:
+          - format: date
+          - format: date-time
+      capture:
+        type: string
+        minLength: 1
+      type:
+        const: snapshot
+      tags:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      api_url:
+        type: string
+        minLength: 1
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
+additionalProperties: false

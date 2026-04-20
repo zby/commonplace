@@ -2,10 +2,11 @@
 source: https://arxiv.org/html/2602.22302v1
 captured: 2026-03-04
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
-# Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents
+# Agent Behavioral Contracts for Reliable Agents
 
 Author: Varun Pratap Bhardwaj, Senior Manager & Solution Architect, Accenture
 Source: https://arxiv.org/html/2602.22302v1

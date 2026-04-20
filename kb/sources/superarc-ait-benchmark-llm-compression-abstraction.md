@@ -3,10 +3,11 @@ source: https://arxiv.org/html/2503.16743v5
 description: Introduces SuperARC, an AIT-grounded benchmark showing frontier LLMs score near zero on recursive compression tasks and newer versions often regress, while neuro-symbolic CTM/BDM methods achieve perfect scores — evidence that statistical pattern matching differs fundamentally from algorithmic abstraction.
 captured: 2026-03-26
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
-# Can Complexity and Uncomputability Explain Intelligence? SuperARC: A Test for Artificial Super Intelligence Based on Recursive Compression
+# SuperARC: Recursive Compression Benchmark
 
 Author: Alberto Hernández-Espinosa, Luan Ozelim, Felipe S. Abrahão, Hector Zenil
 Source: https://arxiv.org/html/2503.16743v5

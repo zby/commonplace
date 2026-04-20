@@ -2,11 +2,12 @@
 description: Empirical study measuring Maximum Effective Context Window (MECW) across 11 frontier LLMs — finds MECW is up to 99% smaller than advertised MCW, varies by task type, and that exceeding MECW drives hallucination rates toward 100%; directly grounds the KB's bounded-context theory with multi-model dose-response data
 source_snapshot: paulsen-maximum-effective-context-window-mecw.md
 ingested: 2026-03-16
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [context-windows, llm-evaluation, rag-systems, agent-architecture]
 ---
 
-# Ingest: Context Is What You Need — The Maximum Effective Context Window for Real World Limits of LLMs
+# Ingest: Maximum Effective Context Window
 
 Source: paulsen-maximum-effective-context-window-mecw.md
 Captured: 2026-03-16

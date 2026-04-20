@@ -2,7 +2,8 @@
 source: https://arxiv.org/html/2602.01075v2
 captured: 2026-03-04
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # ConvexBench: Can LLMs Recognize Convex Functions?

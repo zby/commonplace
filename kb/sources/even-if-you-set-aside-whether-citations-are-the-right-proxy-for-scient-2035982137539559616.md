@@ -2,7 +2,8 @@
 source: https://x.com/koylanai/status/2035982137539559616
 captured: 2026-03-23T08:06:15.726975+00:00
 capture: xdk
-type: x-post
+type: snapshot
+tags: [x-post]
 status_id: 2035982137539559616
 conversation_id: 2035982137539559616
 post_count: 1

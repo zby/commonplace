@@ -2,10 +2,11 @@
 source: https://arxiv.org/pdf/2509.13680
 captured: 2026-03-11
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
-# Prompt Stability in Code LLMs: Measuring Sensitivity across Emotion- and Personality-Driven Variations
+# Prompt Stability in Code LLMs
 
 Author: Wei Ma, Yixiao Yang, Jingquan Ge, Xiaofei Xie, Lingxiao Jiang
 Source: https://arxiv.org/pdf/2509.13680

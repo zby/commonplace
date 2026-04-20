@@ -1,7 +1,9 @@
 ---
+description: Reliability framework paper arguing mean task success is inadequate for agents, replacing it with consistency, robustness, predictability, and safety.
 source_snapshot: towards-a-science-of-ai-agent-reliability.md
 ingested: 2026-03-09
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-reliability, evaluation-methodology, safety-engineering, deployment-governance]
 ---
 

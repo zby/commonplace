@@ -2,7 +2,8 @@
 source: https://arxiv.org/pdf/2602.18333
 captured: 2026-03-03
 capture: pdf-read
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # On the "Induction Bias" in Sequence Models

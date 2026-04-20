@@ -2,7 +2,8 @@
 description: "NLAH paper externalizes agent control logic as portable natural-language artifacts — key empirical finding: explicit structure helps only when it tightens alignment with evaluator acceptance criteria, not by adding process layers"
 source_snapshot: natural-language-agent-harnesses.md
 ingested: 2026-03-28
-type: scientific-paper
+type: ingest-report
+source_type: scientific-paper
 domains: [agent-orchestration, harness-engineering, specification-level-separation, deploy-time-learning]
 ---
 

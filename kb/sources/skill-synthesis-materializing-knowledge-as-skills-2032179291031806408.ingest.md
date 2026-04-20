@@ -2,7 +2,8 @@
 description: "Sentry co-founder's practitioner report on synthesizing Claude Code skills from domain-specific source material (commit history, security patches, OWASP docs) — found 8 real IDORs missed by professional pen testing"
 source_snapshot: skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md
 ingested: 2026-03-13
-type: practitioner-report
+type: ingest-report
+source_type: practitioner-report
 domains: [skill-synthesis, security-automation, deploy-time-learning, context-engineering]
 ---
 

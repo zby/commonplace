@@ -3,7 +3,8 @@ source: https://arxiv.org/html/2603.10165v1
 description: Framework that converts live next-state signals (user replies, tool outputs, terminal feedback, GUI state) into RL rewards and token-level supervision, enabling a single policy to personalize and improve on agentic tasks simultaneously.
 captured: 2026-03-14
 capture: web-fetch
-type: academic-paper
+type: snapshot
+tags: [academic-paper]
 ---
 
 # OpenClaw-RL: Train Any Agent Simply by Talking
