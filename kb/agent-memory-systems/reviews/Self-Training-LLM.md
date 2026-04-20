@@ -3,7 +3,7 @@ description: "Wikipedia self-training pipeline that turns generated QA samples a
 type: kb/agent-memory-systems/types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-04-16"
+last-checked: "2026-04-20"
 ---
 
 # Self-Training-LLM
