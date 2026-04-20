@@ -191,10 +191,10 @@ def sweep_bundle(
     return reviewed, failed, False
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parse_args(argv)
     parallelism = parallelism_from_env()
-    repo_root = Path.cwd().resolve()
+    repo_root = (cwd if cwd is not None else Path.cwd()).resolve()
     db_path = resolve_db_path(repo_root)
     bundles, note_paths = bundle_names(args.all_gates, args.bundle_or_note, repo_root)
 

@@ -3,12 +3,13 @@ from __future__ import annotations
 import json
 import sqlite3
 import subprocess
-import sys
 from pathlib import Path
 
 import pytest
 
 from commonplace.review import resolve_gates, review_db, review_metadata, review_target_selector
+
+from ._run_cli import run_cli
 
 TEST_MODEL = "test-model"
 PLACEHOLDER_COMMIT = "0" * 40
@@ -686,13 +687,7 @@ class TestResolveGates:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
-        result = subprocess.run(
-            [sys.executable, "-m", "commonplace.cli.review.resolve_gates", "prose/source-residue"],
-            cwd=tmp_path,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
+        result = run_cli("resolve_gates", "prose/source-residue", cwd=tmp_path)
 
         assert "=== gate: prose/source-residue ===" in result.stdout
         assert "path:" not in result.stdout

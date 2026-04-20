@@ -1,28 +1,22 @@
 from __future__ import annotations
 
-import os
 import sqlite3
-import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.review import review_db
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
-def _run_repair(repo_root: Path, db_path: Path) -> subprocess.CompletedProcess[str]:
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PYTHONPATH"] = str(REPO_ROOT / "src")
-    return subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.migrations.repair_model_partitions"],
+def _run_repair(repo_root: Path, db_path: Path, *, check: bool = True):
+    return run_cli(
+        "migrations.repair_model_partitions",
         cwd=repo_root,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
+        check=check,
     )
 
 
@@ -134,17 +128,7 @@ def test_repair_model_partitions_refuses_to_overwrite_legacy_review_files(tmp_pa
     legacy_path.write_text("legacy review\n", encoding="utf-8")
     target_path.write_text("canonical review\n", encoding="utf-8")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PYTHONPATH"] = str(REPO_ROOT / "src")
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.migrations.repair_model_partitions"],
-        cwd=tmp_path,
-        env=env,
-        check=False,
-        capture_output=True,
-        text=True,
-    )
+    result = _run_repair(tmp_path, db_path, check=False)
 
     assert result.returncode != 0
     assert "refusing to overwrite 1 legacy review file(s)" in result.stderr

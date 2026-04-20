@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import os
 import sqlite3
-import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.review import review_db
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -159,15 +158,10 @@ def test_prune_superseded_unknown_manual_import_reviews_deletes_only_superseded_
         )
         conn.commit()
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.prune_superseded_unknown_manual_import_reviews"],
+    result = run_cli(
+        "prune_superseded_unknown_manual_import_reviews",
         cwd=REPO_ROOT,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
 
     assert "target_rows: 2" in result.stdout

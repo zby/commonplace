@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import os
 import sqlite3
-import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.review import review_db
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -81,16 +80,7 @@ Borderline notes without a recoverable legacy decision.
         )
         conn.commit()
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.repair_manual_import_review_results"],
-        cwd=REPO_ROOT,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    result = run_cli("repair_manual_import_review_results", cwd=REPO_ROOT, db_path=db_path)
 
     assert "scanned: 3" in result.stdout
     assert "updated: 2" in result.stdout or "updated: 3" in result.stdout

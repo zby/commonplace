@@ -33,15 +33,17 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = build_parser()
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     model = args.model.strip()
     if not model:
         parser.error("--model must not be empty")
     pairs = [f"{args.note_path}:{gate_id}" for gate_id in args.gate_ids]
-    ack_pairs(Path.cwd(), pairs, model)
+    repo_root = cwd if cwd is not None else Path.cwd()
+    ack_pairs(repo_root, pairs, model)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

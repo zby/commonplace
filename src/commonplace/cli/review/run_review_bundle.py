@@ -10,7 +10,7 @@ from commonplace.review.review_db import resolve_db_path
 from commonplace.review.run_review_bundle import run_bundle
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run one review bundle and persist it into the review DB.")
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
@@ -18,9 +18,9 @@ def main() -> int:
     parser.add_argument("--model", required=True, help="Requested runner model and initial review model partition.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Print the prompt and staging plan without invoking the runner.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd().resolve()
+    repo_root = (cwd if cwd is not None else Path.cwd()).resolve()
     note_abs = repo_root / args.note_path
     if not note_abs.is_file():
         parser.error(f"note not found: {args.note_path}")

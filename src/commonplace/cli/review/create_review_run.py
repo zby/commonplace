@@ -18,7 +18,7 @@ from commonplace.review.review_model import normalize_model_id
 from commonplace.review.run_review_bundle import build_review_run_prompt, bundle_artifact_dir
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a review run for one note and gate set.")
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
@@ -31,9 +31,9 @@ def main() -> None:
         action="store_true",
         help="Print JSON metadata plus the canonical review prompt for a live-agent run.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     note_abs = repo_root / args.note_path
     if not note_abs.is_file():
         parser.error(f"note not found: {args.note_path}")
@@ -110,7 +110,8 @@ def main() -> None:
         )
     else:
         print(review_run_id)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

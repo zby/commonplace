@@ -11,15 +11,15 @@ from commonplace.review.protocol.decisions import infer_manual_import_review_dec
 from commonplace.review.review_db import connect, prepare_review_db
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Repair manual-import review rows by rewriting stale result footers and decisions."
     )
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Report changes without writing them.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     scanned = 0
@@ -79,7 +79,8 @@ def main() -> None:
     for decision in ("pass", "warn", "fail", "error", "unknown"):
         print(f"inferred_{decision}: {inferred_counts[decision]}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

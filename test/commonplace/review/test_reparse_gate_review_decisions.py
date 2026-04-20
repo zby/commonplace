@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import os
 import sqlite3
-import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.review import review_db
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -38,16 +37,7 @@ def test_reparse_gate_review_decisions_updates_stored_decision(tmp_path: Path) -
         )
         conn.commit()
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.reparse_gate_review_decisions"],
-        cwd=REPO_ROOT,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
-        )
+    result = run_cli("reparse_gate_review_decisions", cwd=REPO_ROOT, db_path=db_path)
 
     assert "changed: 1" in result.stdout
     assert "unknown: 1" in result.stdout
@@ -115,15 +105,11 @@ def test_reparse_gate_review_decisions_combined_only_skips_legacy_rows(tmp_path:
         )
         conn.commit()
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.reparse_gate_review_decisions", "--combined-only"],
+    result = run_cli(
+        "reparse_gate_review_decisions",
+        "--combined-only",
         cwd=REPO_ROOT,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
 
     assert "scanned: 1" in result.stdout

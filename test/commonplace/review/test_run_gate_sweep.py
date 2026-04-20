@@ -4,8 +4,9 @@ import os
 import sqlite3
 import stat
 import subprocess
-import sys
 from pathlib import Path
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -88,18 +89,11 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     return repo, db_path
 
 
-def run_gate_sweep(repo: Path, env: dict[str, str], *args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.run_gate_sweep", *args],
-        cwd=repo,
-        env=env,
-        check=False,
-        capture_output=True,
-        text=True,
-    )
+def run_gate_sweep(repo: Path, *args: str):
+    return run_cli("run_gate_sweep", *args, cwd=repo, check=False)
 
 
-def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(tmp_path: Path) -> None:
+def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
@@ -125,13 +119,10 @@ print("=== NOTE END: kb/notes/second.md ===")
 """,
     )
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
+    monkeypatch.setenv("PATH", f"{bin_dir}:{os.environ['PATH']}")
 
     result = run_gate_sweep(
         repo,
-        env,
         "accessibility/undefined-terms",
         "--runner",
         "codex",
@@ -179,7 +170,7 @@ print("=== NOTE END: kb/notes/second.md ===")
         assert (artifact_dir / "accessibility__undefined-terms.md").is_file()
 
 
-def test_run_gate_sweep_marks_all_runs_failed_when_batch_parse_fails(tmp_path: Path) -> None:
+def test_run_gate_sweep_marks_all_runs_failed_when_batch_parse_fails(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
@@ -197,13 +188,10 @@ print("=== NOTE END: kb/notes/first.md ===")
 """,
     )
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{bin_dir}:{env['PATH']}"
+    monkeypatch.setenv("PATH", f"{bin_dir}:{os.environ['PATH']}")
 
     result = run_gate_sweep(
         repo,
-        env,
         "accessibility/undefined-terms",
         "--runner",
         "codex",

@@ -4,12 +4,14 @@ import json
 import os
 import sqlite3
 import subprocess
-import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 from commonplace.review import review_db, review_metadata, run_review_bundle
 from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.protocol.parser import extract_bundle_reviews
+
+from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -226,23 +228,14 @@ print("=== GATE REVIEW END: semantic/grounding-alignment ===", flush=True)
     fake_codex.chmod(0o755)
 
 
-def run_script(repo: Path, script_name: str, *args: str, env: dict[str, str]) -> subprocess.CompletedProcess[str]:
+def run_script(repo: Path, script_name: str, *args: str, db_path: Path | None = None) -> SimpleNamespace:
+    """Run a CLI module in-process. Pass db_path to append --db automatically."""
     module_name = Path(script_name).stem
-    return subprocess.run(
-        [sys.executable, "-m", f"commonplace.cli.review.{module_name}", *args],
-        cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    return run_cli(module_name, *args, cwd=repo, db_path=db_path)
 
 
 def test_create_write_finalize_review_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -253,7 +246,7 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         "codex",
         "--model",
         TEST_MODEL,
-        env=env,
+        db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
     assert run_review_bundle.bundle_artifact_dir(repo, review_run_id).is_dir()
@@ -282,7 +275,7 @@ Grounding is aligned.
         "prose/source-residue",
         "--input-file",
         str(prose_review),
-        env=env,
+        db_path=db_path,
     )
     semantic_result = run_script(
         repo,
@@ -293,7 +286,7 @@ Grounding is aligned.
         "semantic/grounding-alignment",
         "--input-file",
         str(semantic_review),
-        env=env,
+        db_path=db_path,
     )
     assert int(prose_result.stdout.strip()) > 0
     assert int(semantic_result.stdout.strip()) > 0
@@ -303,7 +296,7 @@ Grounding is aligned.
         "finalize_review_run.py",
         "--review-run-id",
         str(review_run_id),
-        env=env,
+        db_path=db_path,
     )
     assert finalized.stdout.strip() == f"completed {review_run_id} 2"
 
@@ -339,9 +332,6 @@ Grounding is aligned.
 
 def test_ingest_bundle_output_finalizes_review_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -353,7 +343,7 @@ def test_ingest_bundle_output_finalizes_review_run(tmp_path: Path) -> None:
         "--model",
         TEST_MODEL,
         "--with-prompt",
-        env=env,
+        db_path=db_path,
     )
     payload = json.loads(created.stdout)
     review_run_id = payload["review_run_id"]
@@ -383,7 +373,7 @@ Looks good.
         str(review_run_id),
         "--input-file",
         str(bundle_output_path),
-        env=env,
+        db_path=db_path,
     )
 
     assert result.stdout.strip() == f"completed {review_run_id} 2"
@@ -419,9 +409,6 @@ Looks good.
 
 def test_create_review_run_json_output(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -433,7 +420,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         "--model",
         TEST_MODEL,
         "--json",
-        env=env,
+        db_path=db_path,
     )
     payload = json.loads(created.stdout)
     assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
@@ -461,9 +448,6 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
 
 def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -475,7 +459,7 @@ def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Pat
         "--model",
         TEST_MODEL,
         "--with-prompt",
-        env=env,
+        db_path=db_path,
     )
 
     payload = json.loads(created.stdout)
@@ -503,26 +487,17 @@ def test_create_review_run_allows_dirty_note_and_records_worktree_provenance(tmp
     note_path = repo / "kb" / "notes" / "sample.md"
     note_path.write_text(note_path.read_text(encoding="utf-8") + "\nDirty change.\n", encoding="utf-8")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.create_review_run",
-            "kb/notes/sample.md",
-            "prose",
-            "--runner",
-            "codex",
-            "--model",
-            TEST_MODEL,
-        ],
+    result = run_cli(
+        "create_review_run",
+        "kb/notes/sample.md",
+        "prose",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
 
     assert result.returncode == 0
@@ -542,26 +517,17 @@ def test_create_review_run_allows_untracked_note_and_records_worktree_provenance
     repo, db_path = build_repo_fixture(tmp_path)
     note_path = make_note(repo / "kb" / "notes" / "draft.md", "Draft", "\nDraft body.\n")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.create_review_run",
-            "kb/notes/draft.md",
-            "prose",
-            "--runner",
-            "codex",
-            "--model",
-            TEST_MODEL,
-        ],
+    result = run_cli(
+        "create_review_run",
+        "kb/notes/draft.md",
+        "prose",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
 
     assert result.returncode == 0
@@ -583,26 +549,17 @@ def test_create_review_run_rejects_dirty_gate(tmp_path: Path) -> None:
     gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
     gate_path.write_text(gate_path.read_text(encoding="utf-8") + "\nExtra gate note.\n", encoding="utf-8")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.create_review_run",
-            "kb/notes/sample.md",
-            "prose",
-            "--runner",
-            "codex",
-            "--model",
-            TEST_MODEL,
-        ],
+    result = run_cli(
+        "create_review_run",
+        "kb/notes/sample.md",
+        "prose",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
 
     assert result.returncode != 0
@@ -617,9 +574,6 @@ def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_p
             ("frontmatter/claim-strength", "frontmatter", {"requires_trait": "title-as-claim"}),
         ),
     )
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -631,7 +585,7 @@ def test_create_review_run_filters_trait_gated_gates_for_inapplicable_note(tmp_p
         "--model",
         TEST_MODEL,
         "--json",
-        env=env,
+        db_path=db_path,
     )
 
     payload = json.loads(created.stdout)
@@ -648,9 +602,6 @@ def test_create_review_run_filters_type_gated_gates_for_inapplicable_note(tmp_pa
             ("frontmatter/related-system-fit", "frontmatter", {"requires_type": "kb/types/note.md"}),
         ),
     )
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -663,7 +614,7 @@ def test_create_review_run_filters_type_gated_gates_for_inapplicable_note(tmp_pa
         "--model",
         TEST_MODEL,
         "--json",
-        env=env,
+        db_path=db_path,
     )
 
     payload = json.loads(created.stdout)
@@ -672,9 +623,6 @@ def test_create_review_run_filters_type_gated_gates_for_inapplicable_note(tmp_pa
 
 def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -684,7 +632,7 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
         "codex",
         "--model",
         TEST_MODEL,
-        env=env,
+        db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
     review_file = write(repo / "tmp" / "review.md", "## Result: PASS\n\nLooks good.\n")
@@ -698,26 +646,20 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
         "prose/source-residue",
         "--input-file",
         str(review_file),
-        env=env,
+        db_path=db_path,
     )
 
-    duplicate = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.write_gate_review",
-            "--review-run-id",
-            str(review_run_id),
-            "--gate-id",
-            "prose/source-residue",
-            "--input-file",
-            str(review_file),
-        ],
+    duplicate = run_cli(
+        "write_gate_review",
+        "--review-run-id",
+        str(review_run_id),
+        "--gate-id",
+        "prose/source-residue",
+        "--input-file",
+        str(review_file),
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
     assert duplicate.returncode != 0
     assert "UNIQUE constraint failed" in duplicate.stderr
@@ -725,9 +667,6 @@ def test_duplicate_gate_write_fails_within_run(tmp_path: Path) -> None:
 
 def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_id(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -737,7 +676,7 @@ def test_warn_selector_uses_latest_current_review_when_acceptance_has_no_review_
         "codex",
         "--model",
         TEST_MODEL,
-        env=env,
+        db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
     review_file = write(
@@ -761,7 +700,7 @@ The note still needs one small fix.
             "prose/source-residue",
             "--input-file",
             str(review_file),
-            env=env,
+            db_path=db_path,
         ).stdout.strip()
     )
     run_script(
@@ -769,7 +708,7 @@ The note still needs one small fix.
         "finalize_review_run.py",
         "--review-run-id",
         str(review_run_id),
-        env=env,
+        db_path=db_path,
     )
 
     note_path = repo / "kb" / "notes" / "sample.md"
@@ -794,13 +733,12 @@ The note still needs one small fix.
         )
         conn.commit()
 
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
+    result = run_cli(
+        "warn_selector",
+        "--json",
+        "kb/notes/sample.md",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     payload = json.loads(result.stdout)
     assert payload[0]["note_path"] == "kb/notes/sample.md"
@@ -812,9 +750,6 @@ The note still needs one small fix.
 
 def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     note_path = repo / "kb" / "notes" / "sample.md"
     gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
     note_sha = review_metadata.git_blob_sha(note_path)
@@ -853,22 +788,18 @@ def test_warn_selector_skips_legacy_reviews_without_review_run_id(tmp_path: Path
         )
         conn.commit()
 
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
+    result = run_cli(
+        "warn_selector",
+        "--json",
+        "kb/notes/sample.md",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     assert json.loads(result.stdout) == []
 
 
 def test_warn_selector_falls_back_to_summary_for_current_warn_without_warn_bullets(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -878,7 +809,7 @@ def test_warn_selector_falls_back_to_summary_for_current_warn_without_warn_bulle
         "codex",
         "--model",
         TEST_MODEL,
-        env=env,
+        db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
     review_file = write(
@@ -898,23 +829,22 @@ The note overstates one claim and needs a framing adjustment.
         "prose/source-residue",
         "--input-file",
         str(review_file),
-        env=env,
+        db_path=db_path,
     )
     run_script(
         repo,
         "finalize_review_run.py",
         "--review-run-id",
         str(review_run_id),
-        env=env,
+        db_path=db_path,
     )
 
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
+    result = run_cli(
+        "warn_selector",
+        "--json",
+        "kb/notes/sample.md",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     payload = json.loads(result.stdout)
     assert payload[0]["note_path"] == "kb/notes/sample.md"
@@ -923,9 +853,6 @@ The note overstates one claim and needs a framing adjustment.
 
 def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-
-    warn_env = os.environ.copy()
-    warn_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
     created = run_script(
         repo,
@@ -936,7 +863,7 @@ def test_warn_selector_ignores_active_model_and_collapses_per_gate(tmp_path: Pat
         "codex",
         "--model",
         "model-a",
-        env=warn_env,
+        db_path=db_path,
     )
     warn_run_id = int(created.stdout.strip())
     warn_review = write(
@@ -960,7 +887,7 @@ The note still needs one small fix.
             "prose/source-residue",
             "--input-file",
             str(warn_review),
-            env=warn_env,
+            db_path=db_path,
         ).stdout.strip()
     )
     run_script(
@@ -968,11 +895,9 @@ The note still needs one small fix.
         "finalize_review_run.py",
         "--review-run-id",
         str(warn_run_id),
-        env=warn_env,
+        db_path=db_path,
     )
 
-    pass_env = os.environ.copy()
-    pass_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
     created = run_script(
         repo,
         "create_review_run.py",
@@ -982,7 +907,7 @@ The note still needs one small fix.
         "codex",
         "--model",
         "model-b",
-        env=pass_env,
+        db_path=db_path,
     )
     pass_run_id = int(created.stdout.strip())
     pass_review = write(
@@ -1001,25 +926,22 @@ Looks good.
         "prose/source-residue",
         "--input-file",
         str(pass_review),
-        env=pass_env,
+        db_path=db_path,
     )
     run_script(
         repo,
         "finalize_review_run.py",
         "--review-run-id",
         str(pass_run_id),
-        env=pass_env,
+        db_path=db_path,
     )
 
-    selector_env = os.environ.copy()
-    selector_env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    result = subprocess.run(
-        [sys.executable, "-m", "commonplace.cli.review.warn_selector", "--json", "kb/notes/sample.md"],
+    result = run_cli(
+        "warn_selector",
+        "--json",
+        "kb/notes/sample.md",
         cwd=repo,
-        env=selector_env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     payload = json.loads(result.stdout)
     assert payload[0]["note_path"] == "kb/notes/sample.md"
@@ -1030,7 +952,7 @@ Looks good.
     assert "Cross-model warn" in warn["text"]
 
 
-def test_run_review_bundle_with_fake_claude(tmp_path: Path) -> None:
+def test_run_review_bundle_with_fake_claude(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
@@ -1084,30 +1006,19 @@ for event in [
     )
     fake_claude.chmod(0o755)
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "semantic/grounding-alignment",
-            "--runner",
-            "claude-code",
-            "--model",
-            "claude-requested",
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "claude-code",
+        "--model",
+        "claude-requested",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     assert "completed" in result.stdout
     assert "requested model partition claude-requested" in result.stderr
@@ -1145,7 +1056,7 @@ for event in [
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
 
 
-def test_run_review_bundle_allows_dirty_note_and_records_worktree_provenance(tmp_path: Path) -> None:
+def test_run_review_bundle_allows_dirty_note_and_records_worktree_provenance(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     note_path = repo / "kb" / "notes" / "sample.md"
     note_path.write_text(note_path.read_text(encoding="utf-8") + "\nDirty change.\n", encoding="utf-8")
@@ -1184,29 +1095,18 @@ for event in [
     )
     fake_claude.chmod(0o755)
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "--runner",
-            "claude-code",
-            "--model",
-            "claude-requested",
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "--runner",
+        "claude-code",
+        "--model",
+        "claude-requested",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     assert "completed" in result.stdout
 
@@ -1225,35 +1125,24 @@ def test_run_review_bundle_rejects_dirty_gate(tmp_path: Path) -> None:
     gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
     gate_path.write_text(gate_path.read_text(encoding="utf-8") + "\nExtra gate note.\n", encoding="utf-8")
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "--runner",
-            "codex",
-            "--model",
-            TEST_MODEL,
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
 
     assert result.returncode != 0
     assert "gate has uncommitted changes: kb/instructions/review-gates/prose/source-residue.md" in result.stderr
 
 
-def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path) -> None:
+def test_run_review_bundle_rekeys_to_actual_codex_model_partition(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     fake_home = tmp_path / "home"
     fake_bin = tmp_path / "bin"
@@ -1273,32 +1162,21 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
         encoding="utf-8",
     )
 
-    env = os.environ.copy()
-    env["HOME"] = str(fake_home)
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{fake_bin}:{env['PATH']}"
-    env["CODEX_SESSION_LOG_SOURCE"] = str(session_log_source)
+    monkeypatch.setenv("HOME", str(fake_home))
+    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
+    monkeypatch.setenv("CODEX_SESSION_LOG_SOURCE", str(session_log_source))
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "semantic/grounding-alignment",
-            "--runner",
-            "codex",
-            "--model",
-            "gpt-5-4-high",
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        "--model",
+        "gpt-5-4-high",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
 
     assert "completed" in result.stdout
@@ -1335,9 +1213,6 @@ def test_run_review_bundle_rekeys_to_actual_codex_model_partition(tmp_path: Path
 
 def test_record_and_finalize_run_rekeys_existing_gate_reviews_to_actual_model_partition(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-
     created = run_script(
         repo,
         "create_review_run.py",
@@ -1348,7 +1223,7 @@ def test_record_and_finalize_run_rekeys_existing_gate_reviews_to_actual_model_pa
         "codex",
         "--model",
         TEST_MODEL,
-        env=env,
+        db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
 
@@ -1376,7 +1251,7 @@ Looks good.
         "prose/source-residue",
         "--input-file",
         str(prose_review),
-        env=env,
+        db_path=db_path,
     )
     run_script(
         repo,
@@ -1387,7 +1262,7 @@ Looks good.
         "semantic/grounding-alignment",
         "--input-file",
         str(semantic_review),
-        env=env,
+        db_path=db_path,
     )
 
     with review_db.connect(db_path) as conn:
@@ -1454,7 +1329,7 @@ Looks good.
     assert parsed["semantic/grounding-alignment"] == "Looks good.\n\n## Result: PASS\n"
 
 
-def test_run_review_bundle_parse_failure_persists_raw_bundle(tmp_path: Path) -> None:
+def test_run_review_bundle_parse_failure_persists_raw_bundle(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
@@ -1485,30 +1360,20 @@ for event in [
     )
     fake_claude.chmod(0o755)
 
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
-    env["PATH"] = f"{fake_bin}:{env['PATH']}"
+    monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "semantic/grounding-alignment",
-            "--runner",
-            "claude-code",
-            "--model",
-            "claude-requested",
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "claude-code",
+        "--model",
+        "claude-requested",
         cwd=repo,
-        env=env,
+        db_path=db_path,
         check=False,
-        capture_output=True,
-        text=True,
     )
 
     assert result.returncode == 1
@@ -1529,30 +1394,19 @@ for event in [
 
 def test_run_review_bundle_dry_run_does_not_persist_review_run(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    env = os.environ.copy()
-    env["COMMONPLACE_REVIEW_DB"] = str(db_path)
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "commonplace.cli.review.run_review_bundle",
-            "kb/notes/sample.md",
-            "prose",
-            "semantic/grounding-alignment",
-            "--runner",
-            "codex",
-            "--model",
-            TEST_MODEL,
-            "--dry-run",
-            "--db",
-            str(db_path),
-        ],
+    result = run_cli(
+        "run_review_bundle",
+        "kb/notes/sample.md",
+        "prose",
+        "semantic/grounding-alignment",
+        "--runner",
+        "codex",
+        "--model",
+        TEST_MODEL,
+        "--dry-run",
         cwd=repo,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
+        db_path=db_path,
     )
     assert "Write gate reviews for kb/notes/sample.md" in result.stdout
     assert not db_path.exists()

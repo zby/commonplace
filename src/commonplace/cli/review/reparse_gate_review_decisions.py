@@ -10,7 +10,7 @@ from commonplace.review.protocol.decisions import parse_review_decision
 from commonplace.review.review_db import connect, prepare_review_db
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Reparse gate_reviews.decision from rationale_markdown.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument(
@@ -26,9 +26,9 @@ def main() -> None:
         help="Restrict to reviews written by bundle runs with raw_bundle_markdown.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Report changes without writing them.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     where_clauses: list[str] = []
@@ -88,7 +88,8 @@ def main() -> None:
     print(f"changed: {changed}")
     print(f"unknown: {unknown}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

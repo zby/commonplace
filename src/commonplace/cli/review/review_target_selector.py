@@ -16,7 +16,7 @@ from commonplace.review.review_target_selector import (
 )
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="List stale (note, gate) review pairs.")
     parser.add_argument(
         "gate_or_bundle",
@@ -39,16 +39,16 @@ def main() -> None:
         metavar="NOTE:GATE",
         help="Ack (note, gate) pairs. Format: note_path:gate_id",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     model = args.model.strip()
     if not model:
         parser.error("--model must not be empty")
 
     if args.ack:
         ack_pairs(repo_root, args.ack, model)
-        return
+        return 0
 
     gates_dir = repo_root / GATES_ROOT
 
@@ -87,7 +87,8 @@ def main() -> None:
         print(render_json(records))
     else:
         print_grouped(records)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

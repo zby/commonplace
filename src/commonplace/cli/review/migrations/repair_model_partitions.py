@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -63,7 +64,7 @@ def _legacy_review_file_moves(repo_root: Path) -> list[ReviewFileMove]:
     return moves
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Collapse known review model aliases to canonical partitions.",
     )
@@ -73,9 +74,9 @@ def main() -> None:
         action="store_true",
         help="Report changes without writing them.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     with connect(db_path) as conn:
@@ -107,7 +108,11 @@ def main() -> None:
             print(f"collision: {move.source} -> {move.target}")
         if len(collisions) > 20:
             print(f"collision: ... {len(collisions) - 20} more")
-        raise SystemExit(f"refusing to overwrite {len(collisions)} legacy review file(s)")
+        print(
+            f"refusing to overwrite {len(collisions)} legacy review file(s)",
+            file=sys.stderr,
+        )
+        return 1
 
     if not args.dry_run:
         for move in file_moves:
@@ -132,7 +137,8 @@ def main() -> None:
     print(f"acceptance_events: {totals['acceptance_events']}")
     print(f"legacy_review_files: {len(file_moves)}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

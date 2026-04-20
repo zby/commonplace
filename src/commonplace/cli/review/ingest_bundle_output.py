@@ -15,16 +15,16 @@ from commonplace.review.review_db import (
 )
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Parse a review bundle artifact and finalize its review run.",
     )
     parser.add_argument("--review-run-id", type=int, required=True, help="Review run id to ingest.")
     parser.add_argument("--input-file", required=True, help="Path to sentinel-delimited bundle output.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     input_path = Path(args.input_file)
@@ -55,7 +55,8 @@ def main() -> None:
         conn.commit()
 
     print(f"completed {args.review_run_id} {gate_count}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

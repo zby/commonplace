@@ -10,7 +10,7 @@ from pathlib import Path
 from commonplace.review.review_db import connect, prepare_review_db
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Delete manual-import reviews with decision=unknown when the same "
@@ -19,9 +19,9 @@ def main() -> None:
     )
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Report candidates without deleting them.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     with connect(db_path) as conn:
@@ -101,7 +101,8 @@ def main() -> None:
     print(f"replaced_by_manual_import: {replacement_counts['manual-import']}")
     print(f"deleted: {deleted}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

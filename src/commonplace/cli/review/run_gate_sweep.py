@@ -10,7 +10,7 @@ from commonplace.review.review_db import prepare_review_db
 from commonplace.review.run_gate_sweep import run_gate_sweep
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run one gate across many notes using batched prompts.")
     parser.add_argument("gate_id", help="Single gate id, e.g. accessibility/undefined-terms.")
     parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
@@ -20,14 +20,14 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=5, help="Notes per runner invocation.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Print prompts without invoking the runner.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if args.batch_size < 1:
         parser.error("--batch-size must be a positive integer")
     if args.current and args.note_paths:
         parser.error("--current and --note are mutually exclusive")
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     try:

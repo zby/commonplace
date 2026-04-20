@@ -32,11 +32,11 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = build_parser()
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     gates_dir = repo_root / GATES_ROOT
     model = args.model.strip()
     if not model:
@@ -65,17 +65,18 @@ def main() -> None:
 
     if not pairs:
         print("No qualifying stale pairs found.")
-        return
+        return 0
 
     if args.dry_run:
         for pair in pairs:
             print(pair)
         print(f"\nWould ack {len(pairs)} stale pair(s).")
-        return
+        return 0
 
     ack_pairs(repo_root, pairs, model)
     print(f"acked {len(pairs)} stale pair(s)")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

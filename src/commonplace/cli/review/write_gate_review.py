@@ -18,15 +18,15 @@ from commonplace.review.protocol.decisions import parse_review_decision, rewrite
 from commonplace.review.review_metadata import _METADATA_BLOCK_RE, iso_now
 
 
-def main() -> None:
+def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Write one gate review into the canonical review DB.")
     parser.add_argument("--review-run-id", type=int, required=True, help="Parent review run id.")
     parser.add_argument("--gate-id", required=True, help="Gate id being recorded.")
     parser.add_argument("--input-file", required=True, help="Path to markdown review body.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    repo_root = Path.cwd()
+    repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
 
     input_path = Path(args.input_file)
@@ -72,7 +72,8 @@ def main() -> None:
         conn.commit()
 
     print(review_id)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
