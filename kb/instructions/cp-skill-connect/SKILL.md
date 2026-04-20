@@ -20,13 +20,13 @@ Target: `$ARGUMENTS` — one note path or note name. If none provided, ask which
 
 1. Read the target note fully. Identify its claim, mechanism, implications, scope, and tensions. If the target has no frontmatter (`text` file), continue discovery from its title/body and mark the report as provisional.
 2. Read `kb/reports/collection-topology.md` — the linking matrix tells you which relationship types are appropriate when source and target are in different collections.
-3. Sync the search index if qmd is available:
+3. Sync the search index if shell qmd is available. MCP qmd tools are search/retrieval only; they do not run `update` or `embed`.
 
 ```bash
 command -v qmd && qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
-If qmd is not found, log "qmd unavailable — grep-only fallback" and skip. Do not attempt to install it.
+If shell qmd is not found, log "qmd index sync unavailable — using existing MCP/index state or grep-only fallback" and continue. Do not attempt to install it.
 
 ## Discovery
 
@@ -46,13 +46,22 @@ If the source note has `tags:` in its frontmatter, check the corresponding tag i
 
 Reaches inside note bodies for connections buried in sections, examples, or open questions that descriptions don't capture.
 
-If qmd was available:
+If qmd MCP tools are available, prefer them for discovery because they run outside Codex's shell sandbox:
+
+```text
+mcp__qmd__.deep_search(query="[core concepts]", collection="<collection>", limit=15)
+mcp__qmd__.vector_search(query="[adjacent concepts]", collection="<collection>", limit=15)
+```
+
+Use `deep_search` for broad concept discovery and `vector_search` for cheaper follow-ups. If MCP qmd is unavailable but shell qmd works, use the CLI fallback:
+
 ```bash
 qmd --index "$COMMONPLACE_QMD_INDEX" query "[core concepts]" --collection <collection> -n 15
 ```
-Run against the source collection and others. Record query strings and top results with scores.
 
-If qmd unavailable, rely on index + keyword search only.
+Run against the source collection and others. Record the tool used, query strings, and top results with scores.
+
+If qmd is unavailable through both MCP and shell, rely on index + keyword search only.
 
 ### 4. Keyword search
 

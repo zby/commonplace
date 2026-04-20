@@ -14,7 +14,7 @@ Treat each phase as a gate: confirm it works before moving on. If a step fails, 
 ## Prerequisites
 
 - A workspace initialised by `commonplace-init` (ships `kb/notes/`, `kb/reference/`, `kb/instructions/`, the `cp-skill-*` family, and a pre-compiled collection topology).
-- `qmd` installed and the `COMMONPLACE_QMD_INDEX` env var pointing at a writable index path.
+- `qmd` installed and the `COMMONPLACE_QMD_INDEX` env var pointing at a writable index path. In Codex, qmd MCP tools (`mcp__qmd__.search`, `mcp__qmd__.vector_search`, `mcp__qmd__.deep_search`) may be used for search, but shell `qmd` is still needed for `update` and `embed`.
 - The operator available for an interview (Phase 1 is conversational, not a form).
 
 Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` before starting so register vocabulary is loaded.
@@ -72,9 +72,9 @@ Bulk-import the operator's existing material into the collections designed in Ph
    qmd --index "$COMMONPLACE_QMD_INDEX" update
    qmd --index "$COMMONPLACE_QMD_INDEX" embed
    ```
-5. Test together. Ask the operator for three things they remember working on. Search the KB with both `rg` (keyword) and `qmd` (semantic). If recall is poor, troubleshoot — bad results here mean Phases 3–5 are building on sand.
+5. Test together. Ask the operator for three things they remember working on. Search the KB with both `rg` (keyword) and qmd semantic search. In Codex, prefer MCP qmd tools (`mcp__qmd__.deep_search` or `mcp__qmd__.vector_search`) when available; otherwise use shell `qmd --index "$COMMONPLACE_QMD_INDEX" query`. If recall is poor, troubleshoot — bad results here mean Phases 3–5 are building on sand.
 
-**Verify Phase 2**: at least one note in each populated collection passes `cp-skill-validate`. The operator can find at least 80% of the things they remember via combined `rg` + `qmd` search.
+**Verify Phase 2**: at least one note in each populated collection passes `cp-skill-validate`. The operator can find at least 80% of the things they remember via combined `rg` + qmd search, either through MCP or the CLI.
 
 ## Phase 3 — Distill context summaries
 
@@ -89,7 +89,7 @@ In the context collection designed in Phase 1 (commonly `kb/context/`), write:
 
 For each note, follow the standard Commonplace content workflow:
 
-1. Search first (`rg` + `qmd`, ≥10 queries mixing both).
+1. Search first (`rg` + qmd semantic search, ≥10 queries mixing both). In Codex, use MCP qmd tools when available; otherwise use shell `qmd --index "$COMMONPLACE_QMD_INDEX" query`.
 2. Read the target collection's `COLLECTION.md` before writing.
 3. Use `/cp-skill-write` with the appropriate type.
 4. Cite source notes with markdown links and the right link semantics for the register pair (`evidence`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
@@ -110,7 +110,7 @@ Add a `UserPromptSubmit` hook that enriches every prompt with relevant KB contex
 
 1. Create `~/.claude/hooks/context-enrichment.sh` that:
    - Extracts key terms from the prompt.
-   - Runs `qmd --index "$COMMONPLACE_QMD_INDEX" query` and `rg` in parallel against `kb/`.
+   - Runs `qmd --index "$COMMONPLACE_QMD_INDEX" query` and `rg` in parallel against `kb/`. Claude Code hooks run as shell scripts, so they cannot call Codex MCP tools directly; use qmd MCP for interactive Codex-session search instead.
    - Returns top results inside a `<context>` block.
    - Times out at 2 seconds — kill any search that runs longer.
 2. Register it in `~/.claude/settings.local.json` under `hooks.UserPromptSubmit`.

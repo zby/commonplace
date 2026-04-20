@@ -110,16 +110,6 @@ For qmd, also export the index name (use the same value you passed to `--name`):
 export COMMONPLACE_QMD_INDEX="<your-project>"
 ```
 
-If you use Codex and encounter uv cache permission errors, set `UV_CACHE_DIR` in `~/.codex/config.toml`:
-
-```toml
-[shell_environment_policy]
-inherit = "all"
-
-[shell_environment_policy.set]
-UV_CACHE_DIR = ".uv-cache"
-```
-
 ## 4. Set up the control-plane file
 
 The control-plane file (`CLAUDE.md` or `AGENTS.md`) is always loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available.
@@ -149,16 +139,84 @@ qmd adds semantic search — it finds notes by meaning, not just keywords. Witho
 Ensure your environment is active (step 3) so `$COMMONPLACE_QMD_INDEX` is set, then:
 
 ```bash
+mkdir -p ~/.config/qmd
 cp qmd-collections.yml ~/.config/qmd/$COMMONPLACE_QMD_INDEX.yml
 ```
 
-Build the index:
+Build the index. If you have GPU acceleration available on the host, run this outside sandboxed agent environments so qmd can see the device:
 
 ```bash
 qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
 ```
 
 Skills like `cp-skill-connect` use `$COMMONPLACE_QMD_INDEX` automatically.
+
+### qmd through MCP for Codex
+
+Codex can call qmd directly as a shell command, but in `workspace-write` sessions the shell sandbox may hide GPU device nodes even when CUDA is installed on the host. For GPU-backed qmd queries from Codex, start qmd's HTTP MCP daemon from a normal host shell, then configure Codex to talk to that daemon over localhost.
+
+Current qmd releases do not reliably serve a custom `--index` through the HTTP MCP daemon; see [qmd issue #343](https://github.com/tobi/qmd/issues/343). Until that issue is fixed, Codex MCP should use qmd's default `index` database. Mirror the project qmd config into the default qmd config and build the default index:
+
+```bash
+qmd mcp stop
+
+mkdir -p ~/.config/qmd ~/.cache/qmd
+if [ -f ~/.config/qmd/index.yml ]; then cp ~/.config/qmd/index.yml ~/.config/qmd/index.yml.bak; fi
+if [ -f ~/.cache/qmd/index.sqlite ]; then cp ~/.cache/qmd/index.sqlite ~/.cache/qmd/index.sqlite.bak; fi
+
+cp qmd-collections.yml ~/.config/qmd/index.yml
+qmd --index index update && qmd --index index embed
+```
+
+> TODO 2026-04-27: Recheck qmd issue #343. If `qmd --index <name> mcp --http` correctly serves `<name>.sqlite`, remove the default-index mirroring workaround and start MCP with `$COMMONPLACE_QMD_INDEX` directly.
+
+Start qmd MCP outside Codex:
+
+```bash
+qmd mcp --http --daemon --port 8181
+curl http://127.0.0.1:8181/health
+```
+
+Verify that the default qmd index is the intended project:
+
+```bash
+qmd --index index status
+```
+
+For deeper MCP debugging, you can initialize the HTTP endpoint directly and inspect the response instructions:
+
+```bash
+curl -sS -N -X POST http://127.0.0.1:8181/mcp \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"curl","version":"test"}}}'
+```
+
+The response instructions should list this project's collections. For the commonplace repo itself, it should include `reference`, `notes`, `sources`, and `instructions`. Current qmd MCP keeps a single initialized HTTP session, so if you run the raw `curl` initialize request, restart the daemon before starting Codex:
+
+```bash
+qmd mcp stop
+qmd mcp --http --daemon --port 8181
+```
+
+Add the MCP server to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.qmd]
+url = "http://127.0.0.1:8181/mcp"
+enabled = true
+enabled_tools = ["search", "vector_search", "deep_search", "get", "multi_get", "status"]
+startup_timeout_sec = 30
+tool_timeout_sec = 180
+```
+
+Restart Codex after changing MCP configuration. This keeps qmd's model process outside the Codex shell sandbox while exposing only qmd search and retrieval tools to Codex.
+
+Stop the daemon when you no longer need it:
+
+```bash
+qmd mcp stop
+```
 
 ## 6. Pre-approve commonplace CLI commands in Claude Code (optional)
 

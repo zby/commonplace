@@ -71,7 +71,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 *What you get.* A short list of notes with justifications, usually followed by a synthesised answer that cites them inline.
 
-*Limitations.* Search quality depends heavily on frontmatter descriptions. qmd is optional but materially improves vocabulary-mismatched queries.
+*Limitations.* Search quality depends heavily on frontmatter descriptions. qmd is optional but materially improves vocabulary-mismatched queries; see [qmd](./qmd.md) for setup and Codex permission requirements.
 
 ### Connect an existing note
 
