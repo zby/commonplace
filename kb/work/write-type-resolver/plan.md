@@ -51,6 +51,7 @@ schema: kb/reference/types/adr.schema.yaml
 ```
 
 - `schema:` is required on every type-spec doc. Use `schema: null` for types with no schema.
+- Templates are authoring material, not a code contract. The validator does not inspect the body of type-spec docs, and does not check that template-produced documents conform to the declared schema. Template-to-schema conformance testing is deferred.
 - The resolver loads the note's `type:` path, parses the type-spec doc, and derives all runtime metadata from that doc. Internally it may expose the note's type path, the type doc path, the type doc `name`, and the declared schema path, but none of those become note-frontmatter fields.
 - The internal `TypeProfile` should distinguish storage identity and validation target. Expected fields are:
   - `type_path`: repo-relative path stored in note frontmatter, for example `kb/reference/types/adr.md`
@@ -96,8 +97,7 @@ Pre-action gate: review before applying the full migration.
 
 - Create `kb/types/type-spec.md`.
 - Frontmatter: `type: kb/types/type-spec.md` (self-reference); `name: type-spec`; `description: …`; `schema: null`.
-- Body: what makes a valid type-spec doc — required frontmatter fields (`type`, `name`, `description`, `schema`), body expectations (authoring prose plus an inlined template or an explicit "no dedicated template" statement), and relationship to declared schema files.
-- Include a short template for new type docs as an inlined fence.
+- Body: describes what a valid type-spec doc is — required frontmatter fields (`type`, `name`, `description`, `schema`) and the relationship to declared schema files. Whether to include an example, template, or authoring checklist is an authoring decision made in the body; the validator does not inspect body content.
 - This file is the validator's terminator: when resolution reaches path-equals-self, stop.
 
 ## Step 2.5: Reconcile decision docs with schema-pointer policy
@@ -115,14 +115,13 @@ Pre-action gate: review representative fused docs from each family before applyi
 
 - For every existing `{type}.template.md` / `{type}.instructions.md` pair, create `{type}.md` in the same type directory:
   - frontmatter: `type: kb/types/type-spec.md`, `name: <type>`, `description: …`, `schema: <repo-relative schema path or null>`
-  - body: existing instructions prose
-  - template: existing template in an inline `~~~markdown` fence
+  - body: absorbs the existing instructions prose and, when present, the existing template content; section structure and fence style are the migrating agent's choice.
 - The two existing schema-only types (`spec`, `review`) are both retired rather than fused; see the retirement policies in the implementation policy addendum. No `spec.md` or `review.md` type-spec doc is created; both `*.schema.yaml` files are deleted.
 - For frontmatter type values that currently have no sidecar, create minimal type-spec docs in the owning collection's `types/` directory. Source artifact types live under `kb/sources/types/`.
 - For task sidecar-only types under `kb/tasks/types/`, create type-spec docs and absorb their templates/instructions even though no task artifacts currently declare those types in frontmatter.
 - Delete absorbed `*.template.md` and `*.instructions.md` sidecars in the same migration. Leave sibling `*.schema.yaml` files in place.
 - Existing global types become `kb/types/<type>.md`; collection-local types remain under `kb/<collection>/types/<type>.md`.
-- Existing `kb/types/note.md` is replaced wholesale. The current prose about the base type does not carry over — the file is rewritten with type-spec frontmatter (`type: kb/types/type-spec.md`, `name: note`, `schema: kb/types/note.schema.yaml`), authoring prose for how to write a note, and the inlined template absorbed from `kb/types/note.template.md`. Any surviving value from the current prose (field definitions, status ladder, trait vocabulary) belongs elsewhere — in `kb/types/note.schema.yaml`, in existing theory notes, or in a new note — not in the `note` type-spec doc.
+- Existing `kb/types/note.md` is replaced wholesale. The current prose about the base type does not carry over — the file is rewritten with type-spec frontmatter (`type: kb/types/type-spec.md`, `name: note`, `schema: kb/types/note.schema.yaml`), authoring prose for how to write a note, and the template content absorbed from `kb/types/note.template.md`. Any surviving value from the current prose (field definitions, status ladder, trait vocabulary) belongs elsewhere — in `kb/types/note.schema.yaml`, in existing theory notes, or in a new note — not in the `note` type-spec doc.
 - Existing `kb/types/text.md` remains documentation for the implicit no-frontmatter type. Do not convert it into an explicit type-spec doc, and do not allow `type: kb/types/text.md` in artifact frontmatter.
 
 ## Step 4: Declare offered types in collection conventions
