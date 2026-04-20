@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-19
 **Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) at the `note` migration step.
-**Related:** [write-type-resolver workshop](../../../work/write-type-resolver/README.md), [ADR 009](./009-link-relationship-semantics.md).
+**Related:** [write-type-resolver workshop](../../work/write-type-resolver/README.md), [ADR 009](./009-link-relationship-semantics.md).
 
 ## Context
 
@@ -49,7 +49,7 @@ The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). Th
 
 ### Considered: a type-resolver CLI
 
-The [write-type-resolver workshop](../../../work/write-type-resolver/README.md) first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
+The [write-type-resolver workshop](../../work/write-type-resolver/README.md) first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
 
 - Discover the triple for `(type, collection)` at runtime.
 - Return JSON shapes for resolved / ambiguous / not-found cases.
@@ -137,7 +137,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 
 ### Migration
 
-This decision lands as a whole-KB migration, not an `adr` pilot and not a per-type rollout. See [`plan.md`](./plan.md) for concrete steps.
+This decision lands as a whole-KB migration, not an `adr` pilot and not a per-type rollout. See [`plan.md`](../../work/write-type-resolver/plan.md) for concrete steps.
 
 The implementation creates/fuses all type instruction docs, rewrites all explicit frontmatter `type:` values to paths, updates `cp-skill-write`, updates validation, and validates the corpus in one migration bundle. There is no enum-to-path redirect period and no compatibility table. If the migrated state fails, revert the bundle from git instead of carrying two type mechanisms.
 
@@ -154,5 +154,5 @@ Relevant Notes:
 - [ADR 009 — link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — grounds: the linking vocabulary embedded in `cp-skill-write/SKILL.md`; unchanged by this ADR.
 - [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) — partially superseded: the three-file split fuses to one authoring file plus a sibling schema.
 - [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) — affected at `note` migration.
-- [link-label audit ADR draft](../../../work/link-label-audit/adr-018-draft.md) — applies the "canonical sources stay single edit point" principle to the linking vocabulary. Lands later and will take the next available number.
+- [link-label audit ADR draft](../../work/link-label-audit/adr-018-draft.md) — applies the "canonical sources stay single edit point" principle to the linking vocabulary. Lands later and will take the next available number.
 - [linking-theory](../../notes/linking-theory.md) — grounds: decision-cost model for keeping context reads cheap.

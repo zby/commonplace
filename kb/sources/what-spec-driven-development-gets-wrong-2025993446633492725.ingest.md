@@ -35,7 +35,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](../notes/changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — **exemplifies**: The dark mode example is a disambiguation failure surfacing mid-execution. The human's spec assumed a new store; the agent found an existing context provider. The bidirectional spec catches disambiguation failures in real time rather than at iteration boundaries.
 
-- [deploy-time-learning-is-agile-for-human-ai-systems](../notes/deploy-time-learning-is-agile-for-human-ai-systems.md) — **exemplifies**: Augment independently arrives at the same co-evolution loop — prose spec and code co-evolve, with the spec updating as agents discover reality. The spec isn't temporary backlog waiting to become code; it's a persistent co-maintained artifact.
+- [deploy-time-learning-is-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **exemplifies**: Augment independently arrives at the same co-evolution loop — prose spec and code co-evolve, with the spec updating as agents discover reality. The spec isn't temporary backlog waiting to become code; it's a persistent co-maintained artifact.
 
 - [entropy-management-must-scale-with-generation-throughput](../notes/entropy-management-must-scale-with-generation-throughput.md) — **extends**: The core observation ("documentation-first initiatives fail because maintenance is invisible work") is the entropy management problem stated for specs. The bidirectional spec is Augment's answer to throughput matching — agents maintain the spec as a side effect of work, so maintenance scales automatically with generation.
 

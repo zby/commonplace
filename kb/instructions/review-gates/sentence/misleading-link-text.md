@@ -20,4 +20,4 @@ Follow at most 5 links per review.
 
 ## Example (fail)
 
-"This is the [return-value problem](./llm-context-is-composed-without-scoping.md) in architectural form" — link text says "return-value problem" but the target's "return value problem" section discusses interface typing, not trace leakage.
+`"This is the [return-value problem](./llm-context-is-composed-without-scoping.md) in architectural form"` — link text says "return-value problem" but the target's "return value problem" section discusses interface typing, not trace leakage.

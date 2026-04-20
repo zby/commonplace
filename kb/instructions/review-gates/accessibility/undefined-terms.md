@@ -36,4 +36,4 @@ KB vocabulary terms (`kb/notes/definitions/` — currently: distillation, constr
 
 ## Example (pass — KB vocabulary with gloss and link)
 
-"The skill is produced by [distillation](./definitions/distillation.md) (directed context compression) from the methodology notes."
+`"The skill is produced by [distillation](./definitions/distillation.md) (directed context compression) from the methodology notes."`

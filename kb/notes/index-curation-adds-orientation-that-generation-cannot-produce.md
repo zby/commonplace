@@ -20,7 +20,7 @@ Curation adds editorial information that generation cannot: groupings that refle
 
 **Stale curation is costly, but the alternative is worse.** [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) shows that a stale index suppresses search entirely — the agent trusts the map and stops exploring. Curated sections can fall behind as new notes arrive, but generated-tail indexes mitigate this by keeping the generated section always complete. A reader who doesn't find what they need in the curated section can fall back to the generated listing. The staleness risk applies to the curated section, not the index as a whole.
 
-**Auto-aggregation loses editorial context.** The [OpenViking review](./related-systems/openviking.md) considered borrowing bottom-up summary aggregation for indexes, but noted that "our index entries carry editorial context phrases that auto-aggregation would lose." Orientation resists automation: it requires judgment about what matters, not summarization of what exists.
+**Auto-aggregation loses editorial context.** The [OpenViking review](../agent-memory-systems/reviews/openviking.md) considered borrowing bottom-up summary aggregation for indexes, but noted that "our index entries carry editorial context phrases that auto-aggregation would lose." Orientation resists automation: it requires judgment about what matters, not summarization of what exists.
 
 ## Reasoning
 
