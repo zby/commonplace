@@ -20,7 +20,7 @@ Quick map of the main project artifacts by class and role:
 | Changelogs | Prose | Knowledge |
 | Issue threads | Prose | Mostly knowledge |
 
-Memory system artifacts (session logs, observations, cues, notes) span both roles. The pattern: memory fills in the prose-role cells that project artifacts under-serve, and provides the signal for which symbolic system-definition artifacts (tests, lint rules) are worth codifying.
+Memory system artifacts (session logs, observations, cues, notes) span both roles. The pattern: memory fills in the prose cells that project artifacts under-serve, and provides the signal for which symbolic system-definition artifacts (tests, lint rules) are worth codifying.
 
 ### Code
 
