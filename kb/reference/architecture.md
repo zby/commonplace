@@ -39,7 +39,7 @@ project/
     .claude/skills/cp-skill-*/    ← promoted framework skills
     .agents/skills/cp-skill-*/    ← promoted framework skills
     AGENTS.md                        ← project control-plane file
-    qmd-collections.yml              ← semantic-search config
+    .envrc                           ← project environment for local commands
 ```
 
 The installed project is a one-tree KB surface. The framework implementation itself is not vendored into the project as a sibling checkout; it is provided by the installed Python package and exposed through `commonplace-*` commands.
@@ -67,7 +67,7 @@ It does three things:
 
 1. Creates the directory shell under `kb/`.
 2. Copies scaffolded framework artifacts into the project: `kb/instructions/`, `kb/types/`, `kb/reference/`, and the collection-local `types/` directories.
-3. Promotes selected skills into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/`, and resolves project-specific templates such as `AGENTS.md` and `qmd-collections.yml`.
+3. Promotes selected skills into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/`, and resolves project-specific templates such as `AGENTS.md` and `.envrc`.
 
 The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
 

@@ -86,11 +86,7 @@ depth: standard
 **Topic indexes:**
 - {topic index reads and candidates, or "None"}
 
-**Semantic search:** {via qmd | grep-only fallback}
-- query "{actual query}" -- top hits:
-  - [candidate](../../notes/candidate.md) ({score}) -- {evaluation}
-
-**Keyword search:**
+**Body search:**
 - rg "{actual query}" -- {results and evaluation}
 
 **Link following:**

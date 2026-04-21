@@ -48,9 +48,8 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 
 - `AGENTS.md.template` → `AGENTS.md.template` in the target root (practitioner then copies or renames to `AGENTS.md`)
 - `.envrc.template` → `.envrc`
-- packaged qmd collections template → `qmd-collections.yml` with `/PATH/TO/COMMONPLACE/` resolved to the actual root path
 
-The two template sources live in different package subdirectories (`scaffold/` for the KB-facing templates, `assets/` for tooling config) but both flow through the same `_write_template` helper with the same replacements dictionary.
+Both flow through the same `_write_template` helper with the same replacements dictionary.
 
 ## Skill promotion
 
@@ -78,7 +77,7 @@ A short list of things that are still authored by hand rather than generated:
 - Static-site navigation configuration, if a project publishes the KB as a site
 - Per-project customisation of the `## KB Goals` section in a generated `AGENTS.md` — the template carries placeholder prose; the practitioner fills in real values
 
-These could all move to generated form later, but the current build-time step covers the cases where runtime parameterisation would have cost the most interpretation overhead: paths in skills, qmd collection roots, and the project name stamped across multiple files.
+These could all move to generated form later, but the current build-time step covers the cases where runtime parameterisation would have cost the most interpretation overhead: paths in promoted skills and the project name stamped into the control-plane template.
 
 ---
 

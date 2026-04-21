@@ -202,19 +202,6 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             target = root / target_rel
             _write_template(src, target, Path(target_rel), replacements, report)
 
-        # Generate qmd config from the assets template.
-        assets_pkg = files("commonplace.assets")
-        with as_file(assets_pkg) as assets_root:
-            qmd_src = assets_root / "qmd-collections.yml"
-            qmd_target = root / "qmd-collections.yml"
-            _write_template(
-                qmd_src,
-                qmd_target,
-                Path("qmd-collections.yml"),
-                replacements,
-                report,
-            )
-
     # Promote selected instruction directories into runtime skills directories
     # via symlinks. The source is the local kb/instructions/<name> directory
     # (already scaffolded above), not the scaffold package.

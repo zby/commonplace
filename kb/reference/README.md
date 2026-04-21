@@ -67,11 +67,11 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "What do we have on retry backoff strategies?"
 - "Is there anything in the KB about the tradeoff between X and Y?"
 
-*What happens.* The agent combines frontmatter search, structured ripgrep over note bodies, and optional qmd semantic search. It filters by descriptions first, then loads only the notes that look relevant.
+*What happens.* The agent combines frontmatter search, generated directory indexes, tag indexes, structured ripgrep over note bodies, and link following. It filters by descriptions first, then loads only the notes that look relevant.
 
 *What you get.* A short list of notes with justifications, usually followed by a synthesised answer that cites them inline.
 
-*Limitations.* Search quality depends heavily on frontmatter descriptions. qmd is optional but materially improves vocabulary-mismatched queries; see [qmd](./qmd.md) for setup and Codex permission requirements.
+*Limitations.* Search quality depends heavily on frontmatter descriptions, tag coverage, and the query terms an agent chooses. Vocabulary-mismatched concepts need synonym searches and link traversal rather than an external semantic-search daemon.
 
 ### Connect an existing note
 

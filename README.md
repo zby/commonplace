@@ -97,7 +97,7 @@ git clone https://github.com/anthropics/commonplace.git
 cd commonplace
 ```
 
-If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH`, `UV_CACHE_DIR`, and `COMMONPLACE_QMD_INDEX` for the project.
+If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project.
 
 Skills are installed into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
@@ -120,33 +120,6 @@ Commonplace can be installed into any project as a Python package. See **[INSTAL
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |
 | [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
 | [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `snapshot-web` and `commonplace-github-snapshot` |
-| [qmd](https://github.com/qmdnotes/qmd) | no | Semantic search — hybrid BM25 + vector + reranking. Skills degrade gracefully to grep-only when unavailable |
-
-### Setting up qmd
-
-qmd adds semantic search — it finds notes by meaning, not just keywords. Without it, skills fall back to ripgrep, which works but misses vocabulary mismatches (e.g. searching for "modularity" won't find a note about "composability").
-
-1. [Install qmd](https://github.com/qmdnotes/qmd) and ensure it's on your PATH.
-
-2. `commonplace-init` generates a `qmd-collections.yml` with paths filled in. Copy it to the qmd config directory:
-
-```bash
-cp qmd-collections.yml ~/.config/qmd/$COMMONPLACE_QMD_INDEX.yml
-```
-
-3. Build the index:
-
-```bash
-qmd --index "$COMMONPLACE_QMD_INDEX" update && qmd --index "$COMMONPLACE_QMD_INDEX" embed
-```
-
-4. Search:
-
-```bash
-qmd --index "$COMMONPLACE_QMD_INDEX" query "your search terms"
-```
-
-After adding or editing notes, re-run the update+embed commands to keep the index current. Both are idempotent and fast.
 
 ## Commands
 

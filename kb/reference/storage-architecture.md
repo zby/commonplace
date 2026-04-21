@@ -34,7 +34,6 @@ Each index below is regenerable from the authored markdown. Losing an index is a
 | Directory listing pages (`kb/notes/dir-index.md`, `kb/sources/dir-index.md`) | Title, description, and type of every note in the directory | `commonplace-generate-notes-index <dir>` |
 | Tag-index generated tails (`kb/notes/tags-index.md` and subordinate tag pages) | Notes grouped by tag below the `<!-- generated -->` marker | `commonplace-sync-generated-index` |
 | All of the above at once | — | `commonplace-refresh-indexes` |
-| qmd semantic search index | Every collection listed in `qmd-collections.yml`; see [qmd](./qmd.md) for config and sandbox caveats | External `qmd` CLI |
 | MkDocs static site | Entire `kb/` tree, configured by `mkdocs.yml` | `mkdocs build` |
 
 The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note renames.
@@ -61,6 +60,5 @@ Notes, gates, instructions, and source material remain file-backed. See [ADR-010
 ## See also
 
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
-- [qmd.md](./qmd.md) — qmd collection config, semantic-search role, and Codex permission requirements
 - [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — decision: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — decision: `kb/reports/` for generated operational artifacts
