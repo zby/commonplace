@@ -2,7 +2,7 @@
 
 Evaluation of two candidate substrates for the role qmd plays in Commonplace today. For what qmd is used for and what the replacement must cover, see [README.md](./README.md); for the qmd problems being addressed, see [qmd-issues.md](./qmd-issues.md).
 
-Both candidates share the key property qmd lacks: **search is pure vector math; embedding generation is a separate, pluggable concern.** They also avoid qmd MCP's single-client daemon problem — parallel agents can run independent read-only search commands against the same SQLite-backed state without negotiating session ownership. They differ in how much of the stack is already built.
+Both candidates share the key property qmd lacks: **search is pure vector math; embedding generation is a separate, pluggable concern.** They also avoid qmd MCP's single-client daemon problem — parallel agents can run independent read-only search commands against the same SQLite-backed state without negotiating session ownership. Reseek was checked and excluded from the comparison because it is a hosted second-brain product, not a local substrate.
 
 ## Option A — `llm` CLI with SQLite storage
 

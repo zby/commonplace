@@ -94,7 +94,10 @@ We can drop:
 
 Two candidate substrates: Simon Willison's `llm` CLI, and Alex Garcia's `sqlite-vec` SQLite extension. Full comparison — process model, storage, embedding backends, sandbox behavior, side-by-side table, and recommendation — lives in [llm-vs-sqlite-vec.md](./llm-vs-sqlite-vec.md).
 
-Short version: lead with `llm` for v1 (CLI surface already exists, SQLite-backed, sandbox-clean, plugin ecosystem for embedders); keep `sqlite-vec` as the fallback if `llm`'s schema or CLI assumptions become load-bearing against us. Reject the hybrid unless forced.
+Short version: lead with `llm` for v1 (CLI surface already exists, SQLite-backed, sandbox-clean, plugin ecosystem for embedders); keep `sqlite-vec` as the fallback if `llm`'s schema or CLI assumptions become load-bearing against us. Reseek was checked and excluded because it is hosted rather than a local substrate. Reject the hybrid unless forced.
+
+Migration plan: [plan-replace-qmd-with-llm.md](./plan-replace-qmd-with-llm.md).
+Proposed ADR: [adr-replace-qmd-with-llm.md](./adr-replace-qmd-with-llm.md).
 
 ## Open Questions
 
