@@ -21,7 +21,7 @@ The action-capacity note reframes the problem: the memory system doesn't just an
 
 The activation gap note decomposes activation into cue match, priority arbitration, and commitment. Each stage has a different failure mode and a different design surface.
 
-**Cue match: making relevant system-definition knowledge fire.** The system must connect the agent's proposed action to stored cues even when the surface terms don't overlap. This is specifically the system-definition problem — for knowledge-role retrieval, cue match is just query match and the standard approach (embedding + links) suffices. Approaches:
+**Cue match: making relevant system-definition cues fire.** The system must connect the agent's proposed action to stored cues even when the surface terms don't overlap. This is specifically the system-definition problem — for knowledge-role retrieval, cue match is just query match and the standard approach (embedding + links) suffices. Approaches:
 
 - *Semantic embedding search* over session logs and extracted artifacts. Standard RAG. Works for factual retrieval ("what did we decide about the API versioning scheme?").
 
