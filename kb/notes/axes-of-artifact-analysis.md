@@ -24,7 +24,7 @@ The opaque/readable line isn't a hard categorical split: [any class becomes prac
 
 Within each class, artifacts take different **forms**: prose forms include memory entries, reflections, ranked memories, and playbook entries; symbolic forms include schemas, tests, runnable scripts, and extracted tools. Form matters when two systems share class, backend, and role but diverge on lifecycle and retrieval — ranked memories and playbook entries are both prose, both file-or-DB-backed, both system-definition, yet the consumer pulls one by relevance versus reading the whole set in order.
 
-**Backend** — where units live: repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached records and provenance. An artifact class says nothing about backend: neither readable class is tied to repo-hosted markdown, which is why "repo artifacts" is too narrow as the umbrella term. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps prose-class units in a database-backed poly-store; the backend changed, the class did not.
+**Backend** — where units live: repo files, database rows, service-managed memory objects, graph stores, or vector stores with attached records and provenance. An artifact class says nothing about backend. Prose and symbolic artifacts can live in any of the above — "repo artifacts" is too narrow an umbrella. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps prose-class units in a database-backed poly-store; the backend changed, the class did not.
 
 **Role** — how the consumer reads the object. Two options:
 
