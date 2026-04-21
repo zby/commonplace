@@ -1,12 +1,12 @@
 ---
-description: Chollet frames agentic coding as ML producing blackbox codebases — codification counters this not by requiring human review but by choosing a substrate (repo artifacts) that any agent can inspect, diff, test, and verify
+description: Chollet frames agentic coding as ML producing blackbox codebases — codification counters this not by requiring human review but by choosing readable artifacts (code, prompts, schemas) that any agent can inspect, diff, test, and verify
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, observability]
 status: current
 ---
 
-# Inspectable substrate, not supervision, defeats the blackbox problem
+# Inspectable artifact, not supervision, defeats the blackbox problem
 
 ## The claim from ML
 
@@ -16,7 +16,7 @@ He predicts classic ML failure modes will follow: overfitting to the spec, Cleve
 
 ## Where the framing breaks
 
-The blackbox analogy holds only if the output substrate is opaque. Neural network weights are opaque to any inspector — human or LLM. But repo artifacts (prompts, schemas, evals, deterministic code) are inherently inspectable. They can be diffed, tested, reverted, and reviewed — by humans or by LLMs. The substrate is what matters, not who reviews it.
+The blackbox analogy holds only if the output is an opaque artifact. Neural network weights are opaque to any inspector — human or LLM. But readable artifacts (prompts, schemas, evals, deterministic code) are inherently inspectable. They can be diffed, tested, reverted, and reviewed — by humans or by LLMs. The artifact class is what matters, not who reviews it.
 
 An LLM can review a diff and catch a Clever Hans shortcut in generated code. It can run evals and detect overfitting to the test suite. It can compare a codified function against its specification and flag edge cases. None of this is possible with weight updates — not because LLMs lack judgment, but because weights lack structure.
 
@@ -35,7 +35,7 @@ Every mitigation relies on the same property: the artifact is inspectable. You c
 
 ## The real question
 
-Chollet asks "what will be the Keras of agentic coding?" — the abstraction layer that lets humans steer codebase "training" with minimal cognitive overhead. The [verifiability gradient](./verifiability-gradient.md) is a candidate answer: it tells you which grade of codification to use for each piece of your system, based on how verifiable you need it to be. The constrain/relax cycle is the steering mechanism — codify when patterns emerge, relax when new requirements appear. And crucially, neither the gradient nor the cycle requires a human in the loop. They require an inspectable substrate.
+Chollet asks "what will be the Keras of agentic coding?" — the abstraction layer that lets humans steer codebase "training" with minimal cognitive overhead. The [verifiability gradient](./verifiability-gradient.md) is a candidate answer: it tells you which grade of codification to use for each piece of your system, based on how verifiable you need it to be. The constrain/relax cycle is the steering mechanism — codify when patterns emerge, relax when new requirements appear. And crucially, neither the gradient nor the cycle requires a human in the loop. They require an inspectable artifact.
 
 ---
 
@@ -43,6 +43,6 @@ Relevant Notes:
 
 - [codification](./definitions/codification.md) — foundation: codification as system-level learning through repo artifacts
 - [the verifiability gradient](./verifiability-gradient.md) — determines when and how to codify
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque substrate; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable substrate at production scale with zero manual code
+- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque artifacts; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
+- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable artifacts at production scale with zero manual code
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names inspectable repo artifacts and tools as the execution substrate layer of the runtime

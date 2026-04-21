@@ -66,7 +66,7 @@ Relevant Notes:
 - [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md) — explains: the role axis exists because context/compute is bounded; under unbounded context most system-definition collapses into knowledge, but codified symbolic artifacts survive
 - [trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — grounds: surveyed systems distinguish promotion targets that span these axes
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — sharpens: backend choice is downstream of class choice
-- [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: readability is shared by both non-opaque artifact classes
+- [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — grounds: readability is shared by both non-opaque artifact classes
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is a clean opaque case that makes the role axis visible
 - [Cognee](../agent-memory-systems/reviews/cognee.md) — counterexample: database-backed prose artifacts show that files are not the only backend
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: Simon's capacity-change test catches both roles — knowledge writes grow reach, system-definition writes change disposition
