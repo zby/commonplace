@@ -1,5 +1,5 @@
 ---
-description: How collections and types compose in commonplace - collections own register conventions and link rules, types own structural contracts, and the two meet at collection-scoped type lookup; covers the COLLECTION.md surface, the compiled collection-topology used by the connect skill, and the compile-collections skill that produces it
+description: How collections and types compose in commonplace - collections own register conventions and link rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface, the compiled collection-topology used by the connect skill, and the compile-collections skill that produces it
 type: kb/types/note.md
 tags: []
 status: current
@@ -12,7 +12,7 @@ Every authored artifact in commonplace makes two independent decisions:
 - **Which collection it lives in** — picks the *register* (theoretical, descriptive, prescriptive), the writing conventions, and the rules for how it links to artifacts in other collections.
 - **Which type it instantiates** — picks the *structural contract*: what frontmatter the artifact carries and what required sections the body must contain.
 
-Collections and types are orthogonal. The collection answers "what kind of thing does this aim to be (a claim, a description, a procedure)?"; the type answers "what shape does the file have?". They meet at one place: the type resolver looks for a type's definition first inside the artifact's collection, then falls back to the global layer.
+Collections and types are orthogonal. The collection answers "what kind of thing does this aim to be (a claim, a description, a procedure)?"; the type answers "what shape does the file have?". They meet in `COLLECTION.md`: each collection's `## Types` section lists the type-spec docs it offers for new writes, and an artifact's `type:` frontmatter stores the path of the chosen type-spec doc directly.
 
 Read this document to get the model. For the type catalog see [available-types](./available-types.md); for the resolution mechanics see [type-loading](./type-loading.md); for the precise definition of "collection" see [definitions/collection](./definitions/collection.md).
 
@@ -37,14 +37,14 @@ Each collection's writing conventions live in its own `COLLECTION.md` at the col
 
 ## Types
 
-A **type** is a structural contract — a JSON Schema plus a template plus authoring instructions. Every artifact has exactly one type, declared in its `type:` frontmatter field. The `type:` field is a free-form string, not an enum, so consuming projects can add types locally by dropping a template, instructions, and schema into a collection's `types/` directory.
+A **type** is a structural contract expressed as a hand-authored **type-spec doc**: a markdown file carrying type-spec frontmatter (`type: kb/types/type-spec.md`, `name`, `description`, `schema`) plus authoring prose and an optional template block. Every artifact with frontmatter has exactly one type, declared as the repo-relative path to its type-spec doc in the `type:` field — for example `type: kb/reference/types/adr.md`. Consuming projects add types by dropping a new type-spec doc (and, when structural validation is desired, a sibling `.schema.yaml`) into the appropriate `types/` directory and listing it in the owning collection's `COLLECTION.md`.
 
 Two scopes:
 
-- **Global types** live in `kb/types/`. The shipped global types are `text` (no frontmatter, always valid — the root of the type ladder), `note` (the base structured type all others inherit from), `instruction` (prescriptive procedures and review gates), `definition` (vocabulary), and `index` (navigation hubs). Globals are global because they can occur in any collection.
-- **Directory-scoped types** live in `kb/<collection>/types/`. They apply only to artifacts in that collection. Examples: `adr` in `kb/reference/types/`, `source-review` and `ingest-report` in `kb/sources/types/`, `connect-report` in `kb/reports/types/`.
+- **Global type-spec docs** live in `kb/types/`. The shipped globals are `type-spec` (the self-referential root), `note` (the base structured type), `instruction` (prescriptive procedures and review gates), `definition` (vocabulary), and `index` (navigation hubs). Globals are global because they can occur in any collection. `kb/types/text.md` documents the implicit no-frontmatter case and is not itself a selectable type.
+- **Collection-local type-spec docs** live in `kb/<collection>/types/`. They apply only to artifacts in that collection. Examples: `adr` in `kb/reference/types/`, `structured-claim` in `kb/notes/types/`, `snapshot`, `ingest-report`, and `source-review` in `kb/sources/types/`, `connect-report` in `kb/reports/types/`.
 
-Type resolution is a path walk: from the artifact's path the resolver checks the collection's `types/` first, then falls back to `kb/types/`. See [type-loading](./type-loading.md) for the full mechanics.
+Type resolution is lexical: the path stored in `type:` names the type-spec doc directly. The collection does not participate in explicit type resolution; collection scoping shows up only in `COLLECTION.md`'s `## Types` menu when an author is picking a type for a new write. See [type-loading](./type-loading.md) for the full mechanics.
 
 Types describe structure, not semantics. Semantic review expectations live on a separate axis — the `traits` field on `note`-derived types — per [ADR-012](./adr/012-types-for-structure-traits-for-review.md).
 
@@ -67,7 +67,7 @@ The topology document is regenerated from the `COLLECTION.md` files; treat it as
 For an existing artifact, the two axes resolve like this:
 
 1. The artifact's path identifies its collection. The collection's `COLLECTION.md` defines the writing conventions that apply, and the collection's outbound linking table (compiled into the topology) defines what relationship labels to use when linking outward.
-2. The artifact's `type:` frontmatter identifies its type. The type resolver walks from the artifact's path through the collection's `types/` to `kb/types/` to find the type's schema, template, and instructions. The schema defines what frontmatter is required and what body sections must exist.
+2. The artifact's `type:` frontmatter names the path of its type-spec doc directly. The validator opens that doc, confirms it is itself a type spec (its own `type:` resolves to `kb/types/type-spec.md`), and loads the schema declared in the doc's `schema:` field — or skips schema validation when `schema:` is `null`. The schema defines what frontmatter is required and what body sections must exist; authoring prose and any template block live in the same doc.
 3. The validator checks structural conformance (type contract). Review gates check semantic conformance (the `traits` axis).
 
 When authoring a new artifact, the same two decisions happen in reverse: pick the collection (which register fits the intent?), then pick the type (what shape best carries the content?).
@@ -77,7 +77,7 @@ When authoring a new artifact, the same two decisions happen in reverse: pick th
 Relevant Notes:
 
 - [available-types](./available-types.md) — extends: the catalog of shipped global and collection-scoped types
-- [type-loading](./type-loading.md) — extends: the resolution mechanics that walk from artifact path to type definition
+- [type-loading](./type-loading.md) — extends: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
 - [definitions/collection](./definitions/collection.md) — extends: the precise definition of "collection" with scope, exclusions, and misuse cases
 - [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — grounds: the decision to keep structural types and semantic-review traits on separate axes
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — grounds: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
