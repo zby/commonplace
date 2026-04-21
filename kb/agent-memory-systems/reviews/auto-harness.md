@@ -83,6 +83,6 @@ Relevant Notes:
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — exemplifies: `workspace/` is a concrete workshop layer around one active optimization process
 - [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md) — contrasts: auto-harness automates because it has a benchmark oracle where KB mutations usually do not
 - [spec mining as codification](../../notes/spec-mining-as-codification.md) — extends: promoting repaired failures into the regression suite is a narrow spec-mining move
-- [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — foundation: the whole loop remains legible because the mutable surface, gate, and logs are ordinary files
+- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — foundation: the whole loop remains legible because the mutable surface, gate, and logs are ordinary files
 - [Autocontext](./autocontext.md) — contrasts: both run iterative improvement loops, but auto-harness uses a far thinner control plane and a more uniformly benchmark-gated regime
 - [HyperAgents](./hyperagents.md) — contrasts: both self-edit around benchmark feedback, but auto-harness narrows mutation to one file and one task family instead of evolving a larger code agent stack

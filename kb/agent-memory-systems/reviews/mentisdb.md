@@ -79,7 +79,7 @@ The deepest difference is what each system thinks memory is for. MentisDB treats
 Relevant Notes:
 
 - [files-not-database](../../notes/files-not-database.md) — contrasts: MentisDB makes a binary ledger plus service layer the source of truth where commonplace keeps primary knowledge in editable files
-- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: MentisDB keeps code and exports inspectable, but the canonical memory substrate itself is opaque without its own tooling
+- [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: MentisDB keeps code and exports inspectable, but the canonical memory substrate itself is opaque without its own tooling
 - [agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels](../../notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: shared memory is a coordination channel, but MentisDB adds attribution and integrity more than semantic conflict resolution
 - [mcp-bundles-stateless-tools-with-stateful-runtime](../../notes/mcp-bundles-stateless-tools-with-stateful-runtime.md) — exemplifies: MentisDB is an explicit case where MCP fronts a genuinely stateful runtime rather than a stateless file operation bundle
 - [storing-llm-outputs-is-constraining](../../notes/storing-llm-outputs-is-constraining.md) — extends: the append-only ledger constrains writes structurally by making accumulation cheap and overwrite impossible

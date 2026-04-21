@@ -102,7 +102,7 @@ The deepest divergence is substrate class. Closure-SDK's `closure_ea` is neither
 Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: Closure-SDK adds an opaque runtime-state endpoint for trace-derived learning, distinct from readable artifacts and model weights
-- [Axes of substrate analysis](../../notes/axes-of-substrate-analysis.md) - sharpens: Closure-SDK separates code inspectability from knowledge inspectability; the runtime is inspectable, but the learned substrate is not human-readable knowledge
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - sharpens: Closure-SDK separates code inspectability from knowledge inspectability; the runtime is inspectable, but the learned substrate is not human-readable knowledge
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) - contrasts: Closure DNA is a database-first local memory substrate with file-level persistence, but not a file-native KB
 - [The fundamental split in agent memory is not storage format but who decides what to remember](../agentic-memory-systems-comparative-review.md) - extends: Closure-SDK shows a third agency pattern where deterministic geometry and thresholds decide what persists
 - [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) - contrasts: Closure-SDK has learned runtime state, but its promotion oracle is geometric closure/feedback rather than an external task-success judge

@@ -82,9 +82,9 @@ The deepest difference is where each system commits structure. Atomic commits st
 Relevant Notes:
 
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — contrasts: Atomic is a strong database-first counterexample where synchronized derived views are central, not a narrow operational exception
-- [Axes of substrate analysis](../../notes/axes-of-substrate-analysis.md) — sharpens: Atomic keeps symbolic artifacts in a database/service backend, which separates the backend choice from the artifact class
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — sharpens: Atomic keeps symbolic artifacts in a database/service backend, which separates the backend choice from the artifact class
 - [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — contrasts: Atomic leans on query-time retrieval and generated wiki layers where commonplace leans on authored pointers and link phrases
-- [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: Atomic keeps the code inspectable, but not the knowledge substrate itself at the same raw level as repo-hosted notes
+- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: Atomic keeps the code inspectable, but not the knowledge substrate itself at the same raw level as repo-hosted notes
 - [The fundamental split in agent memory is not storage format but who decides what to remember](../agentic-memory-systems-comparative-review.md) — extends: Atomic belongs on the database-backed, retrieval-first side of the broader agency/substrate design space
 - [browzy.ai](./browzy-ai.md) — compares: both systems maintain a wiki-like intermediate layer, but browzy keeps readable files as the main artifact while Atomic keeps the center of gravity in database-backed atoms and tags
 - [Pal](./pal.md) — compares: both systems use a maintained wiki layer inside a broader agent/runtime architecture, but PAL splits routing metadata, learnings, and wiki more explicitly while Atomic recenters everything on tags and atoms

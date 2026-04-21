@@ -83,6 +83,6 @@ Relevant Notes:
 
 - [Constraining](../../notes/definitions/constraining.md) — exemplifies: the embedded update contract constrains agent behavior by narrowing research scope, budget, and output structure — a deployment-time constraining mechanism
 - [Files, not database](../../notes/files-not-database.md) — converges: o-o takes filesystem-first design to an extreme by collapsing renderer, updater, cache, and article into one readable file
-- [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — foundation: o-o keeps everything in one readable file — contract, source cache, changelog, article — making the agent's inputs and outputs fully inspectable
+- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — foundation: o-o keeps everything in one readable file — contract, source cache, changelog, article — making the agent's inputs and outputs fully inspectable
 - [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) — contrasts: o-o avoids ephemeral computation by persisting source cache and changelog in the file itself, but the accumulation is raw rather than synthesized
 - [Distillation](../../notes/definitions/distillation.md) — contrasts: o-o does lightweight document-local distillation into `sources` and `facts`, but it stops short of reusable cross-document knowledge artifacts

@@ -84,7 +84,7 @@ SAGE ([l33tdawg/sage](https://github.com/l33tdawg/sage)) is an open-source agent
 
 Relevant Notes:
 
-- [inspectable substrate not supervision defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — SAGE's storage is opaque without API mediation; its supervision model (validators, signed transactions, audit trail) is the alternative to inspectable substrate
+- [inspectable substrate not supervision defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — SAGE's storage is opaque without API mediation; its supervision model (validators, signed transactions, audit trail) is the alternative to inspectable substrate
 - [distillation](../../notes/definitions/distillation.md) — SAGE has no distillation mechanism; memories are stored as-is, never extracted or compressed into higher-order knowledge
 - [constraining and distillation both trade generality for reliability speed and cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — SAGE's validation pipeline constrains (rejects low-quality input) but the system has no distillation arm; one-sided constraining without knowledge synthesis
 - [ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) — SAGE is maximally anti-ephemeral: every agent interaction produces a signed, stored, consensus-validated record; but without consolidation, the accumulation is flat (facts pile up, never synthesized)

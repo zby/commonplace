@@ -81,7 +81,7 @@ The deepest split is what each system thinks improvement means. engraph improves
 Relevant Notes:
 
 - [Files, not database](../../notes/files-not-database.md) — contrasts: engraph is a strong counterexample only if you mistake the derived SQLite layer for the primary substrate; the actual source of truth remains files
-- [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: engraph keeps the inspectable markdown substrate even while adding heavier retrieval machinery underneath
+- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — grounds: engraph keeps the inspectable markdown substrate even while adding heavier retrieval machinery underneath
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — extends: engraph improves storage and retrieval access, but that does not by itself produce good activation decisions for agents
 - [Agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md) — contrasts: engraph automates ranking aggressively, while commonplace leans more on explicit descriptions, indexes, and traversal choices
 - [An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — contrasts: engraph is strong on discoverability, thinner on composability and trustworthiness in the knowledge-design sense

@@ -69,7 +69,7 @@ Hindsight ([vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)) 
 
 **LLM-mediated writes.** Every retain still costs an LLM call (often several — fact extraction, entity resolution, consolidation). Adopting this would break our near-zero-cost write path and introduce silent extraction errors. For a human-authored KB, the savings from automated extraction do not offset the loss of authorial control.
 
-**PostgreSQL-as-substrate.** The capabilities that make Hindsight production-grade (per-tenant schemas, partial HNSW indexes, async operations, webhooks) are only possible because the substrate trades direct file-level inspectability for database-backed operational structure. This is the inverse of our [inspectable-substrate thesis](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) and a direct counterexample in the design space.
+**PostgreSQL-as-substrate.** The capabilities that make Hindsight production-grade (per-tenant schemas, partial HNSW indexes, async operations, webhooks) are only possible because the substrate trades direct file-level inspectability for database-backed operational structure. This is the inverse of our [inspectable-substrate thesis](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) and a direct counterexample in the design space.
 
 **Fully automated consolidation.** The evidence-grounded observations are a step up from the previous version, but the consolidator still auto-promotes without human review. The curation discipline we maintain through manual writing would be undermined if an LLM decided when claims graduate into first-class notes.
 
@@ -102,7 +102,7 @@ On the [survey's axes](../trace-derived-learning-techniques-in-related-systems.m
 Relevant Notes:
 
 - [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — exemplifies: Hindsight's CRUD-verb consolidation is the most structured attempt we've reviewed to automate part of KB learning, but still relies on LLM judgment without a human oracle loop
-- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — contrasts: PostgreSQL + pgvector + audit logs substitutes supervision infrastructure for an inspectable substrate
+- [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: PostgreSQL + pgvector + audit logs substitutes supervision infrastructure for an inspectable substrate
 - [distillation](../../notes/definitions/distillation.md) — exemplifies: retain → observations is automated distillation with evidence-grounded output; the directive layer is a constraining layer on top of distilled output
 - [constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — exemplifies: fact typing constrains; consolidation distils; directive schema constrains reflect output; each trades generality for reliability
 - [memory-management-policy-is-learnable-but-oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — extends: the consolidator's CRUD oracle is the LLM itself, which the survey's oracle-dependency framing predicts as the ceiling

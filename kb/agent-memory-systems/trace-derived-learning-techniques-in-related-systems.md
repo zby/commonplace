@@ -26,7 +26,7 @@ We organize each system around five recurring stages:
 
 Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of substrate analysis](../notes/axes-of-substrate-analysis.md) sharpens the distinction: "service memory" is usually a backend choice within the readable substrate, not a third top-level substrate alongside readable artifacts and weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) sharpens the distinction: "service memory" is usually a backend choice within the readable substrate, not a third top-level substrate alongside readable artifacts and weights.
 
 ## Napkin
 
@@ -442,7 +442,7 @@ The concrete update to [automating KB learning is an open problem](../notes/auto
 Relevant Notes:
 
 - [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via the readable system-definition mechanism; the weight-promotion cases take the expensive mechanism
-- [Axes of substrate analysis](../notes/axes-of-substrate-analysis.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually a backend within the readable substrate rather than a third substrate
+- [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually a backend within the readable substrate rather than a third substrate
 - [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
 - [Napkin](./reviews/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates

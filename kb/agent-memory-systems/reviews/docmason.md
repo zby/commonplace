@@ -85,8 +85,8 @@ On the [survey axes](../trace-derived-learning-techniques-in-related-systems.md)
 Relevant Notes:
 
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — foundation: DocMason pushes the file-first bet from KB authoring into multimodal private-document analysis and published evidence serving
-- [Inspectable substrate, not supervision, defeats the blackbox problem](../../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — foundation: DocMason's trust story depends on inspectable manifests, renders, and trace artifacts rather than a hidden service boundary
+- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — foundation: DocMason's trust story depends on inspectable manifests, renders, and trace artifacts rather than a hidden service boundary
 - [Deterministic validation should be a script](../../notes/deterministic-validation-should-be-a-script.md) — exemplifies: DocMason makes validation a hard publish gate, and `admissibility.py` extends that discipline into answer commit
 - [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: interaction-memory promotion is a concrete workshop-to-library bridge built from host-session traces
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: DocMason adds a repo-native live-session artifact-learning case with typed `memory_kind`/`answer_use_policy` semantics that gate retrieval
-- [Axes of substrate analysis](../../notes/axes-of-substrate-analysis.md) — sharpens: DocMason's interaction memories are symbolic artifacts in a file backend, typed enough to carry policy without becoming a separate substrate
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — sharpens: DocMason's interaction memories are symbolic artifacts in a file backend, typed enough to carry policy without becoming a separate substrate
