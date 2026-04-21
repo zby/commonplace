@@ -36,6 +36,8 @@ This inverts the emphasis of most memory system designs, which spend effort on w
 
 9. **Agent statelessness makes routing architectural** ([statelessness](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md)). Every session is day one; routing infrastructure is permanent prosthetics.
 
+10. **Artifacts have three independent axes** ([axes-of-artifact-analysis](../../notes/axes-of-artifact-analysis.md)). Class (opaque/prose/symbolic) and backend (files, DB, weights) are structural. **Role** (knowledge vs system-definition) is relational: the same bytes are *knowledge* when consumed as fact (grow the agent's reach) and *system-definition* when consumed as policy (change the agent's disposition). The axis matters here because memory in an agent system serves both roles, and they need different extraction, retrieval, and graduation pipelines.
+
 ### What the KB identifies as missing
 
 - **Session logs** — currently not captured at all (noted in [workshop-layer](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md))
@@ -45,18 +47,24 @@ This inverts the emphasis of most memory system designs, which spend effort on w
 
 ## The user's key addition: session logs as primary input
 
-Session interaction logs are a rich, underexploited substrate. They contain:
-- **Decisions made** — what the user chose when alternatives were presented
+Session interaction logs are a rich, underexploited substrate. They contain material that plays both roles:
+
+**System-definition signal** (changes what the agent does):
 - **Corrections** — where the agent went wrong and how it was redirected
-- **Discoveries** — insights that emerged during work
 - **Preferences** — implicit patterns in what the user accepts/rejects
 - **Procedures** — workflows that recur across sessions
-- **Questions asked** — what the user needs to know (activation cues for future sessions)
+
+**Knowledge signal** (grows the agent's reach):
+- **Decisions made** — what the user chose when alternatives were presented, and the alternatives rejected
+- **Discoveries** — insights that emerged during work
+- **Questions asked** — what the user needs to know (both a knowledge signal about gaps *and* a system-definition signal for future-session activation)
+
+The role split matters because a session log is ambiguous at capture time. The same exchange — "we chose approach A after debating approach B" — can be distilled into a knowledge artifact (an ADR answering "why A?") *or* a system-definition artifact (a cue that fires when the agent proposes B again). A useful memory system extracts both from the same raw substrate.
 
 Since storage is cheap, the system should capture all of this. The design challenge is entirely in the retrieval/activation layer:
-- How do you find the relevant precedent from 1000 sessions ago?
-- How do you surface a correction made in session 47 when the same mistake is about to recur in session 312?
-- How do you graduate a pattern observed across 5 sessions into an explicit preference?
+- How do you find the relevant precedent from 1000 sessions ago? (knowledge-role retrieval)
+- How do you surface a correction made in session 47 when the same mistake is about to recur in session 312? (system-definition activation)
+- How do you graduate a pattern observed across 5 sessions into an explicit preference? (graduation, with a choice of role — document the preference as prose for reference, or codify it as a lint rule)
 
 ## Use cases: how memory gets consumed
 
@@ -79,6 +87,8 @@ This generalizes beyond ADRs. Any "why" question — why this architecture, why 
 In a software project, not everything belongs in the memory system. Code, tests, documentation, CI configuration — these are project artifacts with their own homes. The memory system is not a replacement for standard project structure.
 
 The boundary principle: **the memory system stores what project artifacts don't preserve** — the reasoning, context, and process knowledge that produced the artifacts.
+
+Project artifacts divide across the class/role grid: code and tests are symbolic system-definition; docs are prose knowledge; ADRs are prose knowledge; CLAUDE.md is prose system-definition; lint rules are symbolic system-definition. The memory system is the substrate from which prose artifacts in both roles get distilled, and the signal for which symbolic system-definition artifacts are worth codifying (a correction recurring enough times to warrant a lint rule).
 
 | What | Where it lives | Why |
 |------|---------------|-----|
@@ -129,6 +139,8 @@ Core theory:
 - [session-history](../../notes/session-history-should-not-be-the-default-next-context.md)
 - [action-capacity](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md)
 - [contextual competence theory](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md)
+- [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — class, backend, role; the role axis splits memory's dual function
+- [continual learning: behaviour is the open half](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — the system-definition role is the under-addressed half
 
 Memory architecture:
 - [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)

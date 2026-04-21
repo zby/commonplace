@@ -4,7 +4,23 @@ Workshop: [agent-memory-design](./framing.md)
 
 ## 1. The boundary, artifact by artifact
 
-The framing proposes: "the memory system stores what project artifacts don't preserve." Let's stress-test this against every artifact type in a typical software project.
+The framing proposes: "the memory system stores what project artifacts don't preserve." Let's stress-test this against every artifact type in a typical software project. The [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) gives us a grid — class (opaque/prose/symbolic), backend (where it lives), role (knowledge vs system-definition) — that lets us place each artifact precisely. The boundary isn't a single line; it's a pattern of which cells project artifacts occupy and which cells the memory system fills in.
+
+Quick map of the main project artifacts by class and role:
+
+| Artifact | Class | Role |
+|---|---|---|
+| Code | Symbolic | System-definition |
+| Tests | Symbolic | System-definition |
+| Lint rules / CI checks | Symbolic | System-definition |
+| Docs / README | Prose | Knowledge |
+| ADRs | Prose | Knowledge |
+| Code comments | Prose | Mixed (usually knowledge, sometimes system-definition warnings) |
+| CLAUDE.md | Prose | System-definition |
+| Changelogs | Prose | Knowledge |
+| Issue threads | Prose | Mostly knowledge |
+
+Memory system artifacts (session logs, observations, cues, notes) span both roles. The pattern: memory fills in the prose cells that project artifacts under-serve, and provides the signal for which symbolic system-definition artifacts (tests, lint rules) are worth codifying.
 
 ### Code
 
@@ -24,11 +40,11 @@ CI config preserves *what checks run*. It doesn't preserve: why a check was adde
 
 ### CLAUDE.md / agent instructions
 
-This is the interesting edge case. CLAUDE.md is *already* a memory artifact — it stores routing knowledge the agent needs every session. The boundary question: what belongs in CLAUDE.md vs. the broader memory system?
+This is the interesting edge case. CLAUDE.md is *already* a memory artifact in prose-class, system-definition role — it is the always-load policy file. The boundary question: what belongs in CLAUDE.md vs. the broader memory system?
 
-Proposed distinction: **CLAUDE.md is compiled routing; the memory system is the source.** CLAUDE.md holds the distilled, always-load instructions. The memory system holds the session experiences that revealed what CLAUDE.md needs to say. When a user corrects the agent three times for the same mistake, the correction pattern lives in session logs (memory system) and eventually graduates to a CLAUDE.md entry (project artifact). CLAUDE.md is the deployment artifact; the memory system is the learning substrate.
+Proposed distinction: **CLAUDE.md is compiled system-definition; the memory system is the source.** CLAUDE.md holds the distilled, always-load instructions — the most context-expensive system-definition slot in the whole architecture, because every token in it costs every session. The memory system holds the session experiences that revealed what CLAUDE.md needs to say, plus the larger body of system-definition cues that are cheap enough (because they fire on demand) not to need always-load promotion. When a user corrects the agent three times for the same mistake, the correction pattern lives in session logs (memory system) and either graduates to a typed cue (system-definition, fires on trigger) or further to a CLAUDE.md entry (system-definition, always loaded) depending on how often the trigger would fire anyway.
 
-This means CLAUDE.md and the memory system have a producer-consumer relationship, not a boundary. The memory system feeds CLAUDE.md; CLAUDE.md is one of several graduation destinations.
+This means CLAUDE.md and the memory system have a producer-consumer relationship, not a boundary. The memory system feeds CLAUDE.md; CLAUDE.md is one of several graduation destinations within the system-definition role.
 
 ### ADRs
 
@@ -54,7 +70,9 @@ Proposed heuristic: **if the knowledge is load-bearing for understanding the adj
 
 ### Summary: where the framing breaks down
 
-The "stores what project artifacts don't preserve" principle is *necessary but not sufficient*. Two problems:
+The class/role grid gives the first-pass answer: the memory system mostly fills prose cells that project artifacts can't fill, in both roles, while preserving the provenance that makes graduation possible. Code occupies the symbolic system-definition cell; the memory system adds the knowledge cell alongside (the reasoning that code can't carry). Docs occupy the prose knowledge cell; the memory system adds the system-definition cell alongside (cues that fire when the agent would repeat a documented mistake).
+
+But "stores what project artifacts don't preserve" as a single principle is *necessary but not sufficient*. Two problems:
 
 1. **Overlap zone.** Some knowledge legitimately belongs in both places. An ADR is a project artifact *and* a memory artifact. A CLAUDE.md entry is a project artifact *and* routing knowledge derived from memory. The boundary isn't a line — it's a gradient with artifacts that have a foot in both worlds.
 
@@ -68,9 +86,9 @@ A better formulation: **The memory system is the substrate from which project ar
 
 ## 2. Graduation pathways
 
-When does a pattern in session logs become a durable artifact?
+When does a pattern in session logs become a durable artifact? The destination depends on role first, then on class. System-definition patterns graduate toward CLAUDE.md, conventions, lint rules, tests, scripts — moving along the codification gradient as the pattern stabilizes. Knowledge patterns graduate toward ADRs, notes, documentation. The same source pattern sometimes produces graduates in both roles: a recurring correction may yield a lint rule (symbolic system-definition) and an ADR (prose knowledge) that explains why the rule exists.
 
-### Session log -> ADR
+### Session log -> ADR (knowledge role)
 
 **Trigger:** A decision was debated across multiple sessions, or a past decision was questioned and the answer required reconstructing context that wasn't documented.
 
@@ -84,7 +102,7 @@ When does a pattern in session logs become a durable artifact?
 
 **Example:** Sessions 12, 15, and 23 all touch on whether to use a monorepo or multi-repo. Session 23 finally commits to monorepo. An ADR captures the conclusion; the sessions preserve the full deliberation.
 
-### Session log -> Documented procedure
+### Session log -> Documented procedure (system-definition role)
 
 **Trigger:** The same workflow appears in 3+ sessions, possibly with slight variations that converge over time.
 
@@ -98,7 +116,7 @@ When does a pattern in session logs become a durable artifact?
 
 **Example:** In sessions 8, 14, 22, and 31, the user asks the agent to "do the release process." Each time, the agent figures out the steps from scratch (or loads the same context). After the fourth occurrence, the pattern graduates to a documented release procedure.
 
-### Session log -> Linting rule or test
+### Session log -> Linting rule or test (system-definition role, symbolic class)
 
 **Trigger:** A constraint was violated repeatedly, and each violation was caught and corrected manually.
 
@@ -114,7 +132,7 @@ When does a pattern in session logs become a durable artifact?
 
 This is the constraining gradient in action: observation -> documented convention -> automated check -> deterministic enforcement.
 
-### Session log -> CLAUDE.md entry
+### Session log -> CLAUDE.md entry (system-definition role, always-loaded)
 
 **Trigger:** The agent repeatedly needs the same routing or context knowledge at session start, and it's not currently in the always-loaded context.
 
@@ -128,7 +146,7 @@ This is the constraining gradient in action: observation -> documented conventio
 
 **Example:** In five consecutive sessions, the user reminds the agent that this project uses pnpm, not npm. The correction graduates from session-level to CLAUDE.md: "This project uses pnpm. Do not use npm."
 
-### Session log -> Code comment
+### Session log -> Code comment (usually knowledge role)
 
 **Trigger:** A piece of context was needed to understand or modify a specific code location, and it wasn't obvious from the code itself.
 
@@ -149,11 +167,12 @@ A useful way to model the shared structure:
 1. **Observation** — something happens in a session (a decision, a correction, a recurring pattern)
 2. **Accumulation** — the memory system records it
 3. **Recognition** — the pattern is noticed (by repetition count, by search cost, by correction frequency)
-4. **Distillation** — the raw observations are compressed into a durable artifact
-5. **Placement** — the artifact goes to its proper home (ADR, procedure, test, CLAUDE.md, comment)
-6. **Provenance** — the session logs remain as source material, linked from the graduated artifact
+4. **Role assignment** — decide whether the graduated artifact is consumed as fact (knowledge) or as policy (system-definition), or both. Some source patterns naturally commit to one role (corrections → system-definition); others produce paired artifacts (a debated decision → ADR + cue).
+5. **Distillation** — the raw observations are compressed into a durable artifact in the assigned role
+6. **Placement** — the artifact goes to its proper home (ADR, procedure, test, CLAUDE.md, comment), selected by role and by how tightly the pattern can be constrained
+7. **Provenance** — the session logs remain as source material, linked from the graduated artifact
 
-Recognition is the bottleneck. Automated recognition is possible for some signals (repetition count, correction frequency) but hard for others (when a decision becomes "load-bearing enough" to warrant an ADR). This maps directly to the agency trilemma from the comparative review: high-quality graduation decisions require context that costs reasoning budget.
+Recognition is the bottleneck. Automated recognition is possible for some signals (repetition count, correction frequency) but hard for others (when a decision becomes "load-bearing enough" to warrant an ADR). This maps directly to the agency trilemma from the comparative review: high-quality graduation decisions require context that costs reasoning budget. Role assignment is a second, related judgment — automatable for clear cases (a repeated correction is always system-definition) but requiring taste for ambiguous ones (a discovery with unclear operational implications).
 
 ## 3. Relationship to existing manual distillation processes
 
@@ -188,6 +207,8 @@ The KB's reach concept (from Deutsch via the ephemerality note) maps cleanly ont
 **High-reach knowledge wants to be in the library layer.** "Systems that optimize for normal-load efficiency sacrifice overload resilience" applies to many contexts. It belongs in a permanent note, not in session logs.
 
 **Low-reach knowledge can stay in session logs.** "The bug in PR #247 was caused by a race condition in the connection pool" is specific to that PR. It doesn't need to graduate — the PR itself and the fix commit carry the essential information.
+
+Reach behaves differently across roles. For knowledge-role artifacts, reach means how widely the claim applies — a generalizable principle covers many future questions. For system-definition-role artifacts, reach is narrower and stranger: a cue is valuable when it fires accurately in the situations it covers, not when it fires in many unrelated ones. A broad cue that over-fires wastes context; a narrow cue that fires accurately earns its budget. Graduating to CLAUDE.md moves a cue from on-demand to always-loaded — the reach increases in a different sense (fires every session) but so does the context cost. The system-definition graduation question is "does this fire enough to earn its slot?" not "does it apply widely?"
 
 **But here's the tension: you often can't tell the reach of an observation when you first make it.** The connection pool race condition might be a one-off (low reach), or it might be the third instance of a pattern where async resource pools need explicit shutdown ordering (high reach). You only discover the reach by accumulating instances.
 
