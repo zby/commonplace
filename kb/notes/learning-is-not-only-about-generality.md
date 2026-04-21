@@ -31,7 +31,7 @@ Argyris's [single-loop vs double-loop learning](https://infed.org/dir/welcome/ch
 
 ## The compound — reliability, speed, cost
 
-Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once by changing the substrate. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, distilled skills reduce cost.
+Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, distilled skills reduce cost.
 
 The generality-vs-compound trade-off is the primary dynamic: [constraining and distillation both trade generality for compound gains](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md)).
 

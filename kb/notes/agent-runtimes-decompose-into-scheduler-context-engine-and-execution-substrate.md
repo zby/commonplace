@@ -24,7 +24,7 @@ Each component also maps to existing KB theory:
 
 - The scheduler is formalized by the [bounded-context orchestration model](./bounded-context-orchestration-model.md): symbolic bookkeeping outside the model, bounded calls for judgment.
 - The context engine is formalized by [context engineering](./definitions/context-engineering.md): routing, loading, scoping, and maintenance of bounded context.
-- The execution substrate is grounded by [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) and [files beat a database for agent-operated knowledge bases](./files-not-database.md).
+- The execution substrate is grounded by [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) and [files beat a database for agent-operated knowledge bases](./files-not-database.md).
 
 ## Mapping the practitioner taxonomy
 
@@ -80,7 +80,7 @@ Both the scheduler and context engine depend on exact external state. The schedu
 
 Two existing notes ground this component from different angles:
 
-- [Inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — repo artifacts are governable in a way weights are not: they can be diffed, tested, reviewed, and reverted.
+- [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — repo artifacts are governable in a way weights are not: they can be diffed, tested, reviewed, and reverted.
 - [Files beat a database for agent-operated knowledge bases](./files-not-database.md) — files defer schema commitment while giving versioning, browsing, and agent access immediately.
 
 Practitioner component lists place filesystems, bash, sandboxes, and versioned memory artifacts here. These are not mainly "reasoning aids." They are the environment in which reasoning becomes durable and actionable.
@@ -109,7 +109,7 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — formalizes: the scheduler component as symbolic control over bounded calls
 - [context engineering](./definitions/context-engineering.md) — formalizes: the context engine as routing, loading, scoping, and maintenance
 - [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — specializes: reference-triggered loading as one context-engine mechanism
-- [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — grounds: why repo artifacts and exact state belong to a separate substrate component
+- [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — grounds: why repo artifacts and exact state belong to a separate substrate component
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — grounds: why the substrate is often filesystem-first early on
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: runtime constraints mature differently across layers, which becomes clearer once the runtime is decomposed
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — exemplifies: the scheduler layer as the control-flow-owning part of the runtime

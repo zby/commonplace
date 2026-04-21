@@ -17,7 +17,7 @@ status: current
 3. Extract those regularities into deterministic artifacts: functions, schema rules, unit tests, checkers.
 4. Re-run with these constraints in place. The system becomes more reliable without weight updates.
 
-This is codification as compilation: the system distills stochastic regularities into deterministic code. The output is an [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — reviewable, testable, revertable artifacts rather than opaque weight updates. Inspectability is what makes mined specs falsifiable: you can test them under distribution shift and relax them back if they break.
+This is codification as compilation: the system distills stochastic regularities into deterministic code. The output is an [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — reviewable, testable, revertable artifacts rather than opaque weight updates. Inspectability is what makes mined specs falsifiable: you can test them under distribution shift and relax them back if they break.
 
 The same pattern appears at the methodology level: the [maturation trajectory from instruction to script](./methodology-enforcement-is-constraining.md) is spec mining applied to methodology rather than system behavior. The codification trigger ("a pattern has emerged from repeated execution") is the same observation step.
 
@@ -62,6 +62,6 @@ Relevant Notes:
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — exemplifies: evaluation tuning requires manual failure analysis and judge calibration before optimization loops can safely amplify
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — risk mitigation: relaxing signals detect when a mined spec encodes an accidental regularity rather than a genuine spec
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — parallels: the maturation trajectory (instruction → script) is spec mining applied to methodology rather than system behavior
-- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — enables: mined specs produce inspectable, testable, revertable artifacts — inspectability is what makes them falsifiable
+- [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — enables: mined specs produce inspectable, testable, revertable artifacts — inspectability is what makes them falsifiable
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallels: case law constraining (courts converging on one reading of a statute) is spec mining in a legal medium
 - [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — situates: spec mining is the late-phase strategy for rules that only become legible after repeated execution

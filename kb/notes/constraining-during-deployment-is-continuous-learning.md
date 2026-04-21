@@ -14,7 +14,7 @@ Each constraining step [trades generality for compound gains in reliability, spe
 
 Herbert Simon: learning is any change that produces a more or less permanent change in a system's [capacity for adapting to its environment](learning-is-not-only-about-generality.md). Constraining during deployment meets every part of this definition — it changes the system (new or modified artifacts), the change is permanent (versioned, committed), and the capacity for adaptation improves. The definition doesn't require weight updates. It requires capacity change.
 
-This note is therefore a subset claim, not the umbrella claim. It does not argue that symbolic artifacts are the only continuous-learning substrate. It argues that constraining is one concrete way continuous learning happens outside weights.
+This note is therefore a subset claim, not the umbrella claim. It does not argue that symbolic artifacts are the only form of continuous learning. It argues that constraining is one concrete way continuous learning happens outside weights.
 
 This isn't hypothetical. Systems like DSPy and ProTeGi already automate one slice of constraining — searching over prompt components to optimize against an objective — and the ML community recognizes this as learning. Research on [professional developers using AI agents](../sources/professional-software-developers-dont-vibe-they-control.ingest.md) shows the same pattern in manual form: developers iteratively refine prompts, tools, and workflows based on deployment experience. Agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions. All of this is continuous learning through constraining — it just isn't recognized as such.
 
@@ -25,7 +25,7 @@ Weight-based learning captures distributional knowledge (style, tone, world know
 Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: this note is one concrete readable-artifact behaviour-change loop under the broader claim
-- [Axes of substrate analysis](./axes-of-substrate-analysis.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
 - [constraining](./definitions/constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [constraining and distillation both trade generality for compound](constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that constraining operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim

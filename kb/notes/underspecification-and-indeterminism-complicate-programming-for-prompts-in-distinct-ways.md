@@ -20,7 +20,7 @@ Much of what we do in llm-do and this knowledge base is applying established pro
 
 **Version control.** We version prompts, templates, and knowledge artifacts in git, treating them as source code. [Storing a specific LLM output](./storing-llm-outputs-is-constraining.md) resolves the underspecification to a fixed interpretation — freezing one concrete value from the space the spec admits. Versioning the spec matters because regeneration is a new projection from the same underspecified spec — potentially a different interpretation, not a deterministic rebuild.
 
-**Design for testability.** [Codification chooses repo artifacts](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) as the substrate specifically because they're inspectable — any agent can diff, test, and verify them. Testability as a design property, applied to LLM output.
+**Design for testability.** [Codification chooses repo artifacts](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) specifically because they're inspectable — any agent can diff, test, and verify them. Testability as a design property, applied to LLM output.
 
 ## The hard cases
 
@@ -56,7 +56,7 @@ Relevant Notes:
 - [codification: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — progressive compilation in practice
 - [constraining is learning](./definitions/constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
 - [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — version control practice applied to LLM outputs
-- [inspectable substrate](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts
+- [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts
 - [automated tests for text](./automated-tests-for-text.md) — extends the testing discussion: concrete test pyramid for the doubled testing surface this note identifies
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: progressive compilation applied specifically to KB methodology, with a concrete gradient (instruction -> skill -> hook -> script) and the insight that judgment-requiring operations stay at skill level permanently
 - [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: 466 OSS projects independently apply version control, iterative refinement, and structured conventions to AI context files — empirical confirmation that programming practices transfer to prompting at scale

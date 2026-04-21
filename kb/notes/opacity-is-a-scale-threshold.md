@@ -16,4 +16,4 @@ Opacity isn't binary — any [artifact class](./axes-of-artifact-analysis.md) be
 Relevant Notes:
 
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the artifact class axis this claim qualifies
-- [inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — tempers: inspectability is real but scale-dependent, not a categorical guarantee
+- [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — tempers: inspectability is real but scale-dependent, not a categorical guarantee

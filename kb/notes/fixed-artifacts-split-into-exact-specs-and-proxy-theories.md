@@ -46,7 +46,7 @@ The practical posture is provisional codification. Codify exact specs aggressive
 
 Relevant Notes:
 
-- [The readable-substrate loop is the tractable unit for continual learning](./readable-substrate-loop-is-the-tractable-unit-for-continual-learning.md) — parent frame: handworked artifact evolution is provisional, but durable substrate evolution is better than forgetting; cites the arithmetic regime as permanent-advantage codification
+- [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — parent frame: handworked artifact evolution is provisional, but durable artifact evolution is better than forgetting; cites the arithmetic regime as permanent-advantage codification
 - [Spec mining as codification](./spec-mining-as-codification.md) — method: starts from working behavior to discover candidate exact specs instead of guessing decompositions upfront
 - [Operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — applies: gives earlier signals for detecting badly fitting proxy theories before full composition failure
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — refines: oracle strength determines how cheaply exactness can be checked and how safely an artifact can be hardened
