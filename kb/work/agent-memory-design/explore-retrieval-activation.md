@@ -158,7 +158,7 @@ The comparative review identifies a deep split: Mem0/Graphiti/Cognee treat knowl
 |---|---|---|---|---|
 | Raw session logs | Complete interaction transcripts | "Find the session where we discussed X" | Full-text search + temporal filtering | Substrate (ambiguous) |
 | Extracted cues | Typed trigger-lesson pairs | "What corrections apply to this action?" | Action-type index + embedding match | System-definition |
-| Synthesized artifacts | Consolidated preferences, procedures, precedents | "What are our conventions for X?" | Navigable links from domain indexes | Mixed (preferences/procedures are system-definition; precedents are knowledge) |
+| Synthesized artifacts | Consolidated preferences, procedures, precedents | "What are our conventions for X?" | Navigable links from domain indexes | Mixed (preferences/procedures are system-definition; precedents span both roles) |
 | Library notes | Curated knowledge with articulated relationships | "How does X relate to Y?" | Link traversal + semantic navigation | Knowledge |
 
 **Search works for the lower layers** (raw logs and extracted cues) because the access pattern is retrieval: you have a query and you want matching items. The items are numerous, weakly structured, and connected only by temporal co-occurrence or semantic similarity. Extracted cues, although stored like search-retrievable records, are activated differently — the trigger is the agent's proposed action, not a query.
