@@ -1,6 +1,15 @@
 # Exploration: How does the memory system find and activate the right information?
 
-This explores the retrieval and activation layer of a store-everything agent memory system. The framing assumes storage is cheap and complete (all session logs, all artifacts). The hard problem is finding the right information at the right time under bounded context. Grounded in the KB's activation gap analysis, action-capacity framing, elicitation strategies, statelessness constraint, and the comparative review of 11 memory systems.
+This explores the retrieval and activation layer of a store-everything agent memory system. The framing assumes storage is cheap and complete (all session logs, all artifacts). The hard problem is finding the right information at the right time under bounded context. Grounded in the KB's activation gap analysis, action-capacity framing, elicitation strategies, statelessness constraint, the comparative review of 11 memory systems, and the [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) role distinction.
+
+## Retrieval divides by role, not by content
+
+The central organizing move is to split retrieval by the role the retrieved artifact will play. A single store can serve both roles, but the access patterns differ:
+
+- **Knowledge-role retrieval** answers questions at consumption time. The consumer is the agent or user looking up a fact or navigating to understand a decision. Standard RAG plus articulated links cover this.
+- **System-definition-role activation** injects policy when a situation matches. The consumer is the agent about to act. The "retrieval" is a watcher-plus-trigger, not a query.
+
+Most of the difficulty in this section is system-definition activation — the knowledge retrieval side mostly reuses patterns the KB already documents (search + navigation). The typed cue indexes, priority arbitration, and commitment mechanisms below are all machinery for the system-definition role. The knowledge-role flow sits on top as a less novel layer.
 
 ---
 
@@ -12,7 +21,7 @@ The action-capacity note reframes the problem: the memory system doesn't just an
 
 The activation gap note decomposes activation into cue match, priority arbitration, and commitment. Each stage has a different failure mode and a different design surface.
 
-**Cue match: making relevant knowledge findable.** The system must connect the current task context to stored knowledge even when the surface terms don't overlap. Approaches:
+**Cue match: making relevant system-definition knowledge fire.** The system must connect the agent's proposed action to stored cues even when the surface terms don't overlap. This is specifically the system-definition problem — for knowledge-role retrieval, cue match is just query match and the standard approach (embedding + links) suffices. Approaches:
 
 - *Semantic embedding search* over session logs and extracted artifacts. Standard RAG. Works for factual retrieval ("what did we decide about the API versioning scheme?").
 
@@ -49,13 +58,13 @@ The activation gap note decomposes activation into cue match, priority arbitrati
 
 ### Action-specific retrieval patterns
 
-| Action mode | What to retrieve | Retrieval method |
-|---|---|---|
-| Execution | Corrections for the action type; relevant procedures | Action-type index lookup + semantic match on task description |
-| Classification | Precedent decisions for similar items; active category definitions | Precedent index lookup by item features |
-| Communication | Voice/style patterns; relationship history with the recipient | Entity-keyed retrieval (by person/channel) |
-| Planning | Past plans for similar goals; outcomes of previous approaches | Goal-similarity search + outcome-weighted ranking |
-| Pattern recognition | Historical situations resembling the current one | Situation embedding search with temporal spread |
+| Action mode | What to retrieve | Retrieval method | Role |
+|---|---|---|---|
+| Execution | Corrections for the action type; relevant procedures | Action-type index lookup + semantic match on task description | System-definition |
+| Classification | Precedent decisions for similar items; active category definitions | Precedent index lookup by item features | System-definition (precedents as policy) or Knowledge (category definitions as reference) |
+| Communication | Voice/style patterns; relationship history with the recipient | Entity-keyed retrieval (by person/channel) | System-definition |
+| Planning | Past plans for similar goals; outcomes of previous approaches | Goal-similarity search + outcome-weighted ranking | Mixed — past plans are knowledge; outcome-weighted ranking generates system-definition cues |
+| Pattern recognition | Historical situations resembling the current one | Situation embedding search with temporal spread | Knowledge (providing context) |
 
 ---
 
@@ -145,25 +154,25 @@ The comparative review identifies a deep split: Mem0/Graphiti/Cognee treat knowl
 
 ### Layer map
 
-| Layer | Content | Access pattern | Method |
-|---|---|---|---|
-| Raw session logs | Complete interaction transcripts | "Find the session where we discussed X" | Full-text search + temporal filtering |
-| Extracted cues | Typed trigger-lesson pairs | "What corrections apply to this action?" | Action-type index + embedding match |
-| Synthesized artifacts | Consolidated preferences, procedures, precedents | "What are our conventions for X?" | Navigable links from domain indexes |
-| Library notes | Curated knowledge with articulated relationships | "How does X relate to Y?" | Link traversal + semantic navigation |
+| Layer | Content | Access pattern | Method | Primary role |
+|---|---|---|---|---|
+| Raw session logs | Complete interaction transcripts | "Find the session where we discussed X" | Full-text search + temporal filtering | Substrate (ambiguous) |
+| Extracted cues | Typed trigger-lesson pairs | "What corrections apply to this action?" | Action-type index + embedding match | System-definition |
+| Synthesized artifacts | Consolidated preferences, procedures, precedents | "What are our conventions for X?" | Navigable links from domain indexes | Mixed (preferences/procedures are system-definition; precedents are knowledge) |
+| Library notes | Curated knowledge with articulated relationships | "How does X relate to Y?" | Link traversal + semantic navigation | Knowledge |
 
-**Search works for the lower layers** (raw logs and extracted cues) because the access pattern is retrieval: you have a query and you want matching items. The items are numerous, weakly structured, and connected only by temporal co-occurrence or semantic similarity.
+**Search works for the lower layers** (raw logs and extracted cues) because the access pattern is retrieval: you have a query and you want matching items. The items are numerous, weakly structured, and connected only by temporal co-occurrence or semantic similarity. Extracted cues, although stored like search-retrievable records, are activated differently — the trigger is the agent's proposed action, not a query.
 
-**Navigation works for the upper layers** (synthesized artifacts and library notes) because the access pattern is reasoning: you have a starting point and you want to follow connections to build understanding. The items are fewer, richly structured, and connected by articulated relationships.
+**Navigation works for the upper layers** (synthesized artifacts and library notes) because the access pattern is reasoning: you have a starting point and you want to follow connections to build understanding. The items are fewer, richly structured, and connected by articulated relationships. Navigation is natural for knowledge-role consumption (a human or agent looking up "why" and following links); it serves system-definition consumption poorly because it assumes someone is already asking a question rather than acting.
 
-### Composition: search feeds navigation
+### Composition: activation, search, and navigation
 
-The two approaches compose vertically. A typical retrieval flow:
+Three access patterns compose, and they sort by role. A typical full retrieval flow:
 
-1. **Search** raw logs and extracted cues for items matching the current task context.
-2. **Follow links** from matched items to synthesized artifacts and library notes.
-3. **Navigate** the library layer to gather related context.
-4. **Load** the assembled context into the agent's working memory.
+1. **Activation** fires any system-definition cues whose triggers match the agent's proposed action. Correction cues load imperatively; preference and procedure cues fill their reserved slots.
+2. **Search** over the lower layers surfaces knowledge-role records related to the task (past decisions, negative results, relevant notes).
+3. **Navigate** from matched knowledge records through articulated links to library notes, assembling the connected reasoning.
+4. **Load** the assembled context into the agent's working memory, with system-definition items framed as instructions and knowledge items as reference.
 
 Example: Agent is writing a database migration.
 1. Search finds 3 correction cues related to migrations.
@@ -179,9 +188,9 @@ Possible mechanism: when a new correction cue is extracted in domain D, query fo
 
 ---
 
-## 5. Finding "why" across thousands of sessions
+## 5. Finding "why" across thousands of sessions (knowledge-role retrieval)
 
-The framing identifies a key use case: answering "why did we do it this way?" when the answer is distributed across session logs.
+The framing identifies a key use case: answering "why did we do it this way?" when the answer is distributed across session logs. This is pure knowledge-role retrieval — the consumer is a human or agent asking a question, not an agent about to act. The mechanisms below (decision extraction, backlinks, temporal clustering, negative-result preservation) build the knowledge-role index over session logs. The complementary system-definition retrieval — firing a cue when the agent proposes the already-rejected alternative — is covered by the typed cue indexes in section 1.
 
 ### The problem's structure
 

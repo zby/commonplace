@@ -38,9 +38,10 @@ Concrete examples from the framing's taxonomy:
 
 Each observation is:
 - **Typed** (decision, correction, preference, discovery, question, procedure-fragment). This list is illustrative, not exhaustive — plausible additional types include affective/engagement signals (frustration, satisfaction, disengagement patterns) and meta-operational observations (observations about the memory system's own behavior, such as "retrieval missed a relevant note" or "extraction pipeline misclassified X").
+- **Role-tagged** — knowledge (consumed as fact) or system-definition (consumed as policy), following the [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md). Some types have a natural role (corrections are system-definition; negative results are knowledge). Others are role-ambiguous at extraction and produce paired artifacts (a decision observation yields both a knowledge record "why we chose A" and a system-definition cue keyed on the rejected alternative).
 - **Timestamped** and linked to source session(s)
 - **Scored** — confidence (how certain is the extraction?) and importance (how likely to matter later?)
-- **Indexed** for retrieval — keywords, tags, embeddings, whatever the retrieval layer needs
+- **Indexed** for retrieval — keywords, tags, embeddings, whatever the retrieval layer needs; the role tag selects which index the observation populates (search+navigation indexes for knowledge, trigger indexes for system-definition)
 
 The observation layer is where [ClawVault](../../agent-memory-systems/reviews/clawvault.md), a scored-observation memory system with session lifecycle management and promotion pipelines (see the [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)), is most instructive: scored observations with explicit types and promotion pathways. The difference from ClawVault: we derive observations from stored traces rather than extracting them at interaction time. This decouples capture speed from extraction quality — the extraction pipeline can be rerun, improved, and backfilled.
 
@@ -124,11 +125,13 @@ This is the less obvious direction but equally important. Library notes should g
 
 Concretely: a library note about "prefer staging specific files over `git add -A`" should generate observation-layer entries that activate when a session involves git staging. The activation cue is: "when the agent is about to run git add, check if the user has a preference about staging strategy."
 
-## How does "store everything" interact with lifecycle separation?
+## How does "store everything" interact with lifecycle and role?
 
-The framing identifies three memory spaces with different metabolic rates: knowledge (steady growth), self (slow evolution), operational (high churn). If you store everything, the separation moves from storage to retrieval — you tag/index differently rather than storing differently.
+The framing identifies three memory spaces with different metabolic rates: knowledge (steady growth), self (slow evolution), operational (high churn). If you store everything, the separation moves from storage to retrieval — you tag/index differently rather than storing differently. The role axis adds a second orthogonal tag: knowledge vs system-definition. A single observation carries both a lifecycle tag (how fast does it churn?) and a role tag (how is it consumed?).
 
-This is mostly right, but with a nuance: **the layers interact with the lifecycle separation, not orthogonally to it.**
+Note a terminology collision: the three-space model uses "knowledge" as one of three lifecycle spaces (the one with long-lived factual accumulation), while the role axis uses "knowledge" as one of two consumption roles (consumed as fact). The two senses overlap but do not coincide. An operational-space observation about a debugging procedure is typically system-definition in role (fire it when the situation recurs). A self-space observation about preferences is also system-definition. Lifecycle and role answer different questions — *when does this expire?* vs *how is this consumed?* — and both matter for retrieval.
+
+With that said, the layers interact with the lifecycle separation, not orthogonally to it.
 
 | Layer | Knowledge content | Self content | Operational content |
 |-------|------------------|-------------|-------------------|
@@ -142,7 +145,7 @@ The metabolic rate applies within each layer:
 - Self observations evolve slowly — a preference observed 5 times is likely stable
 - Knowledge observations accumulate — a factual discovery doesn't expire (though it may be superseded)
 
-So the practical implication is: **tag observations by lifecycle space, and use the tag in promotion heuristics.** A knowledge observation with high recurrence should promote to a library note. An operational observation with high recurrence should promote to a procedure. A self observation that recurs across many sessions should promote to CLAUDE.md. Different promotion thresholds, different target artifacts, same pipeline.
+So the practical implication is: **tag observations by lifecycle space *and* role, and use both tags in promotion heuristics.** A knowledge-space + knowledge-role observation with high recurrence should promote to a library note. An operational-space + system-definition-role observation with high recurrence should promote to a procedure (prose) or script (symbolic). A self-space + system-definition-role observation that recurs across many sessions should promote to CLAUDE.md. Different promotion thresholds, different target artifacts, same pipeline. The role tag determines *what kind of artifact* to produce; the lifecycle tag determines *how aggressively to promote and expire*.
 
 This is more useful than storing them separately. Separate storage creates boundaries that inhibit cross-space connections (a debugging procedure might reveal a knowledge insight; a self-preference might have implications for operational workflow). Unified storage with lifecycle tags preserves those connections while still allowing lifecycle-appropriate retrieval.
 

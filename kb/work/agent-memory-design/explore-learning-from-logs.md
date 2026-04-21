@@ -4,11 +4,17 @@ Workshop exploration for questions 7-9 from the [framing](./framing.md).
 
 ## The extraction taxonomy
 
-Session logs contain at least four distinct signal types. They differ in oracle clarity, extraction difficulty, and promotion pathway.
+Session logs contain at least four distinct signal types. They differ in oracle clarity, extraction difficulty, promotion pathway, and — following the [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — the role the extracted artifact plays when consumed.
 
-### 1. Correction consolidation
+Role sorts the four types cleanly. Corrections, preferences, and procedures are **system-definition**: the extracted artifact is consumed as policy that changes what the agent does. Decision provenance and negative results (covered in the framing and synthesis) are **knowledge**: they are consumed as reference to answer "why" questions. Discoveries start as knowledge candidates and may graduate into either role — or both, if the insight both deserves a note (knowledge) and implies a cue (system-definition).
+
+The role affects how the graduated artifact is used, how retrieval finds it, and what destination makes sense. A correction that graduates as a CLAUDE.md entry (system-definition, prose) serves a different consumer than the ADR that documents *why* the correction exists (knowledge, prose). Both can come from the same underlying pattern.
+
+### 1. Correction consolidation (system-definition)
 
 **What it is.** The user says "no, do X instead," "that's wrong," or rejects a tool call and provides a different instruction. The session log records the wrong output, the rejection signal, and the corrected direction.
+
+**Role.** System-definition. The graduated artifact's job is to prevent the wrong action next time. A correction may also seed a companion knowledge artifact ("why do we prefer approach B?") but the primary product is a constraint on future behavior.
 
 **Example extracted artifact:**
 
@@ -26,9 +32,11 @@ occurrences: 3
 
 **Graduated artifact:** A rule in CLAUDE.md, a convention in WRITING.md, a preference in a memory file, or (at the far end of codification) a linting check or validation script.
 
-### 2. Preference mining
+### 2. Preference mining (system-definition)
 
 **What it is.** The user consistently accepts certain patterns and rejects others, but never explicitly articulates a rule. The signal is distributed across many sessions — no single session contains enough evidence.
+
+**Role.** System-definition. A preference steers future choices; it is not primarily consumed to answer questions.
 
 **Example extracted artifact:**
 
@@ -53,9 +61,11 @@ confidence: 0.8  # 6 accepts, 2 rejects matching pattern
 
 **Graduated artifact:** A style guide entry, a CLAUDE.md instruction, a configuration setting. The hardest preferences to graduate are taste-based ones ("I prefer shorter function names") that resist codification into deterministic rules.
 
-### 3. Procedure extraction
+### 3. Procedure extraction (system-definition)
 
 **What it is.** The same workflow recurs across sessions: "search for related notes, read the type template, write the note, connect it, validate." The session log records each step; across sessions, the recurring sequence becomes visible.
+
+**Role.** System-definition. A procedure is consumed to steer how a task is performed. The codification gradient (instruction → skill → script) stays within the system-definition role while shifting class (prose → prose with formal shape → symbolic).
 
 **Example extracted artifact:**
 
@@ -82,9 +92,11 @@ variations:
 
 **Graduated artifact:** An instruction file (if human judgment is needed at steps), a skill (if it can be automated with parameters), or a script (if it is fully deterministic). The graduation pathway mirrors the codification spectrum from the KB's theory.
 
-### 4. Discovery flagging
+### 4. Discovery flagging (knowledge, sometimes system-definition)
 
 **What it is.** During work, an insight emerges — a connection between ideas, a design principle, an abstraction that unifies several observations. These are the highest-value extractions and the hardest to detect automatically.
+
+**Role.** Discoveries enter as knowledge: claims that grow the agent's reach when retrieved for reference. Some develop a system-definition companion after the fact — a discovery about async resource cleanup may produce both a note (knowledge) and a cue that fires when the agent writes async cleanup code (system-definition). Role is assigned at graduation, not extraction, because the operational implications are visible only with use.
 
 **Example extracted artifact:**
 
@@ -145,23 +157,23 @@ Runs periodically (daily? weekly? on explicit trigger?). Reviews accumulated can
 
 These thresholds are untested starting points for discussion, not empirically validated numbers. They should be calibrated against real session data before any implementation.
 
-| Type | Promotion signal | Threshold sketch |
-|------|-----------------|-----------------|
-| Correction | Same mistake corrected N times | N >= 2, different sessions |
-| Preference | Consistent accept/reject pattern | 5+ instances, 80%+ consistency, 3+ sessions |
-| Procedure | Same tool-call subsequence recurs | 3+ sessions with aligned subsequence |
-| Discovery | Referenced or re-derived in later sessions | 2+ later references, or explicit user flag |
+| Type | Promotion signal | Threshold sketch | Role |
+|------|-----------------|-----------------|------|
+| Correction | Same mistake corrected N times | N >= 2, different sessions | System-definition |
+| Preference | Consistent accept/reject pattern | 5+ instances, 80%+ consistency, 3+ sessions | System-definition |
+| Procedure | Same tool-call subsequence recurs | 3+ sessions with aligned subsequence | System-definition |
+| Discovery | Referenced or re-derived in later sessions | 2+ later references, or explicit user flag | Knowledge (may add system-definition companion) |
 
 The promotion filter is itself a judgment-heavy operation. It sits on the inspectability-learnability spectrum from the memory-management-policy note. Starting with inspectable heuristic rules (threshold-based, like the table above) makes sense. Whether to learn the promotion policy from data (like AgeMem's RL-trained policy) depends on having enough volume — and on having an oracle for "was this promotion good?", which loops back to the core problem.
 
 ### Stage 4: Graduation
 
-A promoted candidate becomes a library artifact. The specific form depends on the type:
+A promoted candidate becomes a library artifact. The specific form depends on both the source type and the role the graduated artifact will play:
 
-- **Correction -> rule/convention.** Codifiable corrections become CLAUDE.md entries or validation checks. Judgment-dependent corrections become documented conventions.
-- **Preference -> style guide / configuration.** Preferences with high consistency become explicit instructions. Preferences with lower consistency become documented tendencies with exceptions noted.
-- **Procedure -> instruction / skill / script.** Along the codification spectrum: instructions (human-in-the-loop), skills (agent-automated with parameters), scripts (fully deterministic).
-- **Discovery -> note.** The hardest graduation because the artifact needs to be well-written, well-connected, and situated within the existing KB structure. This is the only graduation type that cannot be fully automated — it requires the authorial judgment the KB's writing methodology demands.
+- **Correction -> rule/convention (system-definition).** Codifiable corrections become CLAUDE.md entries or validation checks. Judgment-dependent corrections become documented conventions. Optionally produces a companion knowledge artifact (an ADR or note) explaining *why* the convention exists.
+- **Preference -> style guide / configuration (system-definition).** Preferences with high consistency become explicit instructions. Preferences with lower consistency become documented tendencies with exceptions noted.
+- **Procedure -> instruction / skill / script (system-definition).** Along the codification spectrum: instructions (prose), skills (prose with formal shape), scripts (symbolic). Role stays constant; class tightens.
+- **Discovery -> note (knowledge), possibly plus cue (system-definition).** The primary graduation is a knowledge artifact: a note, structured claim, or new index entry. If the discovery has clear operational implications, it also produces a system-definition cue. This is the hardest graduation because the knowledge artifact needs authorial judgment — the only graduation type that cannot be fully automated.
 
 ## Session logs as oracle substrate
 
@@ -218,7 +230,7 @@ A practical system should start at the easy end and work up. Correction consolid
 
 ## Open threads
 
-**Deduplication across extraction types.** A correction ("don't sort imports alphabetically") may also be a preference observation ("prefers grouped imports") and eventually a procedure fragment ("import ordering step in code review"). The same underlying knowledge can appear in multiple extraction schemas. Does the system merge them? Keep them separate and let the promotion filter sort it out? The answer probably depends on whether the graduated artifacts differ — if a correction becomes a rule and a preference becomes a style guide entry, they are different artifacts serving different functions even if derived from the same underlying pattern.
+**Deduplication across extraction types.** A correction ("don't sort imports alphabetically") may also be a preference observation ("prefers grouped imports") and eventually a procedure fragment ("import ordering step in code review"). The same underlying knowledge can appear in multiple extraction schemas. Does the system merge them? Keep them separate and let the promotion filter sort it out? The answer probably depends on whether the graduated artifacts differ — if a correction becomes a rule and a preference becomes a style guide entry, they are different artifacts serving different functions even if derived from the same underlying pattern. The role axis adds a further distinction: a single source may legitimately produce both a system-definition cue (the lint rule) and a knowledge note (the explanation of why the convention exists). These are not duplicates; they serve different consumers.
 
 **Extraction timing.** Pi Self-Learning extracts at session end. ClawVault extracts incrementally during the session. Napkin extracts on a timer. The right timing depends on the signal type: corrections are best extracted immediately (the context is fresh), preferences need cross-session accumulation (no single session has enough data), procedures need enough sessions to detect recurrence. A system with multiple extraction types probably needs multiple extraction clocks.
 

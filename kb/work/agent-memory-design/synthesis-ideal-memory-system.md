@@ -10,6 +10,21 @@ This produces a design inversion. In traditional systems, you optimize storage a
 
 "Store everything" is a bet, not an axiom. It trades storage costs for indexing overhead, search pollution risk, and potential privacy exposure. The bet is that selective retrieval can manage what aggressive storage introduces. But it shifts the hard problem to the right place: the scarce resource is attention, not disk.
 
+## Memory plays two roles
+
+A memory system for agents is not doing one thing. It is doing two things that look superficially similar but differ in how the stored content is consumed, how it is retrieved, and what a durable write changes about the system's behavior. The [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) names this as the **role** axis: artifacts are consumed in either a **knowledge role** (as fact — durable writes grow the agent's reach) or a **system-definition role** (as policy — durable writes change the agent's disposition).
+
+The distinction is relational, not structural. The same stored bytes can play either role depending on the consumer. A note documenting "we use URL-path versioning" is knowledge when retrieved to answer "how do we version APIs?" and system-definition when loaded to steer the agent's next API design.
+
+For agent memory, the two roles motivate different machinery:
+
+- **Knowledge retrieval** answers questions posed at consumption time. It fits navigation: start with a question, follow links, reason along connections. Standard RAG optimizes for this. Failure mode: the retrieval never happens because no one asked the question.
+- **System-definition activation** injects policy when a matching situation occurs. It fits triggered activation: watch for cues in the agent's proposed action, surface the constraint before commitment. This is the territory the [activation gap](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) note targets. Failure mode: relevant policy is stored but never fires.
+
+Most existing agent-memory systems optimize for knowledge-role retrieval (RAG over stored facts) and underserve the system-definition role — which is [the open half of continual learning](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md). "Adding RAG is learning" is true for the knowledge role and empty for the system-definition role.
+
+Session logs are the common substrate. A single correction in session 47 can produce **both** a knowledge artifact (an ADR that answers "why do we use approach B?") and a system-definition artifact (a cue that fires when a future session proposes approach A). The extraction pipeline must produce artifacts in both roles and the retrieval machinery must serve both consumption patterns.
+
 ## Why existing approaches fall short
 
 A comparative analysis of eleven agent memory systems -- from vector-first fact stores (Mem0) through knowledge graphs (Graphiti) to filesystem-first curated systems (Ars Contexta, commonplace) -- reveals three structural problems that no current system fully solves.
@@ -17,6 +32,8 @@ A comparative analysis of eleven agent memory systems -- from vector-first fact 
 **The agency trilemma.** Every memory system must answer: who decides what to remember? If the agent manages its own memory (as Letta does), it has full context but burns reasoning tokens on housekeeping. If an external service manages memory (Mem0, Graphiti, Cognee), extraction runs cheaply but guesses what matters without the agent's reasoning context. If humans co-manage memory (commonplace, Ars Contexta), curation quality is highest but throughput is lowest. AgeMem trains the memory policy through reinforcement learning, which approaches all three goals but requires a task-completion oracle that may not exist in open-ended domains, and the learned policy is opaque. No system combines high agency, high throughput, and high curation quality.
 
 **Navigability versus retrieval.** The systems split on how knowledge is accessed. Mem0, Graphiti, and Cognee treat knowledge as something you *search* for -- embed a query, return the top-k results. Ars Contexta and commonplace treat knowledge as something you *navigate* -- follow links with articulated relationships, reason along connections. Search-optimized systems score well on QA benchmarks. But QA accuracy does not measure whether the knowledge structure supports agent reasoning -- whether the agent can follow a chain of decisions to understand why the system works the way it does, or trace a correction back through the episodes that established it. The two approaches optimize for different things, and a memory system needs both.
+
+This split overlaps the role axis: knowledge-role consumption fits navigation (start with a question, follow links); system-definition-role consumption fits neither search nor navigation directly but requires a third pattern — **triggered activation**, where the system watches for cues in the agent's proposed action and injects relevant policy before commitment. QA benchmarks test knowledge-role retrieval. Neither search nor navigation tests system-definition activation well, which is one reason the comparative review finds no system solving the activation gap.
 
 **Everyone automates extraction; nobody automates synthesis.** Every system that processes incoming data can automatically extract structured knowledge from unstructured input. Almost none can automatically synthesize across existing knowledge to produce novel insights, recognize when two separate threads should merge, or reformulate existing entries for clarity. The boundary between extraction and synthesis remains the open frontier. This is where a "store everything" design has a structural advantage: with complete session logs retained, synthesis can be attempted retrospectively, improved over time, and rerun when techniques improve.
 
@@ -26,7 +43,7 @@ A store-everything system without structure is a haystack. Between raw session l
 
 **Layer 1: Trace.** Complete session logs -- every interaction, tool call, model output, user message. Append-only structured records with timestamps and session identifiers. The trace layer is the audit log, the ground truth, the substrate from which all higher layers derive. It answers one question well: "What exactly happened in session X?" It answers nothing else efficiently, and that is by design. Traces are for provenance and offline extraction, not for agent consumption. The agent never loads raw traces into a working context.
 
-**Layer 2: Observation.** Extracted atomic facts: decisions made, corrections given, preferences expressed, discoveries surfaced, questions asked, procedure fragments identified. Each observation is typed, timestamped, linked to its source session, and scored for confidence and importance. Observations are the first extraction from traces. They answer: "What discrete facts, decisions, and corrections exist across all sessions?"
+**Layer 2: Observation.** Extracted atomic facts: decisions made, corrections given, preferences expressed, discoveries surfaced, questions asked, procedure fragments identified. Each observation is typed, timestamped, linked to its source session, scored for confidence and importance, and **tagged with its role** — knowledge (consumed as fact) or system-definition (consumed as policy). Some observation types commit to a single role at extraction (a correction is system-definition; a negative result is knowledge); others are ambiguous and the extractor produces paired artifacts (a decision observation yields both a knowledge record for "why we chose A" and a system-definition cue for "if B is proposed, surface the reasoning for A"). Observations answer: "What discrete facts, decisions, and corrections exist across all sessions?"
 
 The observation layer is where ClawVault's design -- scored observations with explicit types and promotion pathways -- is most instructive. The difference: observations here are derived from stored traces rather than extracted at interaction time. This decouples capture speed from extraction quality. The extraction pipeline can be rerun, improved, and backfilled because traces are retained.
 
@@ -62,15 +79,27 @@ The layers matter less than the promotion pathways between them. Each transition
 
 **Library to Observation (backflow).** The less obvious direction, but equally important. Library notes should generate activation cues in the observation layer. A library note about "prefer staging specific files over `git add -A`" should produce an observation-layer entry that activates when a session involves git staging. Without this backflow, library knowledge sits inert -- stored but not activated.
 
-### Lifecycle separation through tagging, not storage
+### Lifecycle and role: orthogonal tags on the same store
 
 Knowledge, self-knowledge, and operational artifacts have different metabolic rates. Operational observations churn fast -- a debugging procedure that worked yesterday might be superseded today. Self-observations evolve slowly -- a preference observed across five sessions is likely stable. Knowledge observations accumulate -- a factual discovery does not expire, though it may be superseded.
 
 Rather than storing these in separate systems (which inhibits cross-space connections), the architecture tags observations by lifecycle space and uses the tag in promotion heuristics. A knowledge observation with high recurrence promotes to a library note. An operational observation with high recurrence promotes to a procedure. A self-observation that recurs across many sessions promotes to CLAUDE.md. Different promotion thresholds, different target artifacts, same pipeline. Unified storage with lifecycle tags preserves connections while enabling lifecycle-appropriate retrieval.
 
+The role tag is orthogonal to the lifecycle tag. A "self" observation is usually system-definition (a stable preference steers future sessions), but can also be knowledge ("I remember that we discussed how I work"). An operational observation about a debugging procedure is typically system-definition (fire it next time the situation recurs) but may also be knowledge when someone asks "how do we debug this class of bug?" The two tags answer different questions: *when does this expire?* (lifecycle) and *how is this consumed?* (role). Retrieval uses both — the lifecycle tag to weight recency, the role tag to select the activation mechanism.
+
 ## Retrieval and activation: bridging the gap between storage and context
 
 The hardest problem in the architecture is not extraction or storage. It is activation -- getting the right knowledge into the right context when it matters. The knowledge-activation gap formalizes this: a system can store relevant knowledge, prove that knowledge on demand, and still fail to surface it when it matters. Storage and activation are distinct, and most memory designs test only retrieval under direct query.
+
+### Retrieval splits by role, not by content
+
+The central design move is to build two retrieval pipelines, one for each role, sharing the same underlying store.
+
+**Knowledge-role retrieval** serves questions posed at consumption time. The canonical query is a human or agent asking "why did we do X?" or "what do we know about Y?" The retrieval interface is navigable: enter at an index, follow links, read connected notes. Embedding search over descriptions is a first-pass filter, and the library layer's articulated links do the rest. Failure mode: *the question is never asked.* Mitigation is outside this pipeline — it is the elicitation problem, which the memory system can assist but not solve.
+
+**System-definition-role activation** serves the agent's in-flight work. The canonical trigger is the agent about to take an action that matches a stored cue. The retrieval interface is not a query — it is a watcher. Cues are indexed by action signature, preference domain, or situation template, and fire when the agent's proposed action matches. This is what typed cue indexes, described below, are for. Failure mode: *the cue never fires even though it applies.* This is the activation gap proper, and it is where most of the design surface lives.
+
+The two pipelines share the observation store and cross-reference each other — a fired system-definition cue often carries a pointer into the knowledge layer for context ("this correction is part of a documented convention, see ADR 014"), and knowledge-layer navigation can reveal system-definition cues that would otherwise sit dormant ("while you're here, note that this note has an active correction attached"). But the mechanisms differ: search plus navigation for knowledge, triggered activation for system-definition.
 
 ### Three stages of activation failure
 
@@ -82,9 +111,9 @@ Activation decomposes into at least three stages, each with a different failure 
 
 **Commitment:** even when relevant knowledge is loaded into context, the agent may ignore it in favor of training-time defaults. The agent behaves like an expert witness -- giving accurate answers to whatever is asked, but not proactively raising concerns the questioner has not thought of.
 
-### Typed cue indexes
+### Typed cue indexes (system-definition activation)
 
-The central mechanism for bridging the activation gap is typed cue indexes. Instead of searching raw logs at retrieval time, the system extracts typed cues at ingestion time. Each type has a different retrieval signature:
+The central mechanism for bridging the activation gap is typed cue indexes. These are system-definition artifacts by design — the goal is to inject policy when a matching situation occurs, not to answer a question. Instead of searching raw logs at retrieval time, the system extracts typed cues at ingestion time. Each type has a different retrieval signature:
 
 A **correction cue** matches against the action the agent is about to take. It has a trigger condition and a lesson:
 
@@ -125,41 +154,47 @@ Loading relevant knowledge is not enough. The agent must actually use it. Three 
 
 *Contradiction surfacing.* When the agent's proposed action contradicts a stored correction or preference, surface the contradiction explicitly: "You are about to use approach A. In session 47, approach A failed because Z. The established alternative is approach B."
 
-### Search and navigation compose vertically
+### Search, navigation, and activation compose vertically
 
-The lower layers (traces and extracted cues) use search: you have a query and want matching items. The items are numerous, weakly structured, and connected only by temporal co-occurrence or semantic similarity.
+Three access patterns run across the layers, and a full retrieval uses all three. Search operates over the lower layers (traces and extracted items) because the items are numerous and weakly structured. Navigation operates over the upper layers (synthesized artifacts and library notes) because the items are fewer and richly linked. Activation operates over system-definition cues, regardless of layer, because the trigger is the agent's proposed action rather than a query.
 
-The upper layers (synthesized artifacts and library notes) use navigation: you have a starting point and want to follow connections to build understanding. The items are fewer, richly structured, and connected by articulated relationships.
+A typical retrieval flow for an agent about to write a database migration:
 
-A typical retrieval flow: search extracted cues for items matching the current task. Follow links from matched cues to synthesized artifacts (a correction cue links to a "migration safety checklist"). Navigate from the artifact to related library notes ("our deployment strategy requires zero-downtime migrations"). The agent receives the specific corrections, the procedure, and the architectural constraint -- assembled from three layers without loading a single raw trace.
+1. **Activation** fires any cues whose triggers match the proposed action. Correction cues load as imperative instructions; preference cues reserve a context budget; procedure cues suggest a checklist.
+2. **Search** over extracted items surfaces any knowledge-role records related to the task (past decisions about migrations, negative results, ADRs in draft).
+3. **Navigation** follows links from the surfaced records to library notes, gathering the articulated relationships that turn isolated facts into a coherent picture.
+
+The agent receives: the specific corrections (system-definition, via activation), the past decisions and alternatives (knowledge, via search + navigation), the architectural constraints (knowledge, via navigation). Three access patterns, two roles, all assembled without loading a raw trace.
 
 ## Learning from session logs: the extraction taxonomy
 
-Session logs contain at least four distinct signal types. They differ in how clear the oracle signal is, how difficult extraction is, and what they graduate into. The types, ranked from easiest to hardest:
+Session logs contain at least four distinct signal types. They differ in how clear the oracle signal is, how difficult extraction is, what role the extracted artifact plays, and what it graduates into. Role sorts the taxonomy cleanly: corrections, preferences, and procedures are system-definition (they change what the agent does); decision provenance and negative results are knowledge (they answer why-questions without changing behavior on their own); discoveries start as knowledge candidates and may graduate into either role. The types, ranked from easiest to hardest:
 
-### Corrections: the strongest signal
+### Corrections: the strongest signal (system-definition)
 
 The user says "no, do X instead" or rejects a tool call with a different instruction. The session log records the wrong output, the rejection, and the corrected direction. This is the clearest oracle in the entire system -- an explicit negative signal paired with a positive signal. Pi Self-Learning's extraction schema targets exactly this pattern: `{"mistakes": [...], "fixes": [...]}`.
 
-A correction observed twice in different sessions is not a fluke. The promotion threshold can be as low as two occurrences. The graduated artifact is a rule in CLAUDE.md, a convention in a style guide, or -- at the far end of the codification spectrum -- a linting check or validation script.
+A correction observed twice in different sessions is not a fluke. The promotion threshold can be as low as two occurrences. Corrections are natively system-definition: their value is in firing the next time the situation arises, not in answering a question. The graduated artifact sits on the codification gradient within the system-definition role: a rule in CLAUDE.md (prose), a convention in a style guide (prose), or a linting check or validation script (symbolic). A correction may also produce a companion knowledge artifact -- a note or ADR answering "why do we prefer X over Y?" -- but the primary artifact is the one that steers future behavior.
 
 Concrete example: the agent sorts Python imports alphabetically. The user corrects: "Group by stdlib / third-party / local, not alphabetical." When this correction recurs in a second session, it graduates from session-level memory to a documented preference. If it recurs a third time, the question becomes whether it should be a pre-commit hook.
 
-### Preferences: distributed signal, inferential extraction
+### Preferences: distributed signal, inferential extraction (system-definition)
 
-The user consistently accepts certain patterns and rejects others, but never articulates a rule. The signal is distributed across many sessions -- no single session contains enough evidence. Individual accept/reject signals are clear, but the pattern connecting them requires inference. The extraction step must hypothesize "short commit messages" as the latent variable from a scatter of individual approvals and rejections.
+The user consistently accepts certain patterns and rejects others, but never articulates a rule. The signal is distributed across many sessions -- no single session contains enough evidence. Individual accept/reject signals are clear, but the pattern connecting them requires inference. The extraction step must hypothesize "short commit messages" as the latent variable from a scatter of individual approvals and rejections. Like corrections, preferences are system-definition: the value is steering future choices, not answering questions.
 
 Detection works bottom-up (cluster accept/reject decisions by domain, look for feature splits that predict acceptance) or top-down (periodically prompt an LLM: "here are the last 50 decisions in domain X; what preferences explain the pattern?"). A reasonable promotion threshold: observed in five or more decisions across three or more sessions with over 80% consistency.
 
-### Procedures: sequence alignment across sessions
+### Procedures: sequence alignment across sessions (system-definition)
 
 The same workflow recurs: search for related notes, read the type template, write the note, connect it, validate. The sequence is analogous across sessions but not identical -- session 14 ingests a blog post, session 45 ingests a paper. Tool-call sequences are more reliable signals than natural-language descriptions. If four sessions all contain the subsequence `[WebFetch -> Read -> Write -> Grep -> Write -> Bash(validate)]`, that is a detectable pattern even when the surrounding conversation differs.
 
-The graduated artifact sits on the codification spectrum: an instruction document (if human judgment is needed at steps), a skill definition (if it can be automated with parameters), or a script (if fully deterministic). The graduation pathway mirrors the constraining gradient: observation, then documented convention, then automated check, then deterministic enforcement.
+Procedures are system-definition: the graduated artifact is used to steer how the agent performs the task. It sits on the codification gradient within the role: an instruction document (prose, if human judgment is needed at steps), a skill definition (prose-plus-formal-shape, if it can be automated with parameters), or a script (symbolic, if fully deterministic). The graduation pathway mirrors the constraining gradient: observation, then documented convention, then automated check, then deterministic enforcement. Role stays constant; class changes as the artifact constrains tighter.
 
-### Discoveries: the oracle problem at its purest
+### Discoveries: the oracle problem at its purest (knowledge, sometimes system-definition)
 
 An insight emerges during work -- a connection between ideas, a design principle, an abstraction that unifies several observations. These are the highest-value extractions and the hardest to detect. Unlike corrections (explicit rejection signal) or preferences (statistical pattern), a discovery is a one-off event. "Feels important" is not a verifiable signal.
+
+Discoveries usually enter as knowledge: a claim that grows the agent's reach when retrieved for reference. Some discoveries then acquire a system-definition companion — a discovery about how async resource pools fail may produce both a note (knowledge) and a cue that fires whenever the agent writes async cleanup code (system-definition). The role assignment is made at graduation, not extraction, because the insight's operational implications only become visible with use.
 
 Detection heuristics are all weak but worth trying: explicit markers ("that's interesting," "write this down"), surprise signals (claims connecting previously unlinked notes), elaboration depth (unusual number of turns spent developing a point), and post-hoc validation (the claimed discovery gets referenced in later sessions). Discoveries should enter as candidates with low confidence and promote based on reference frequency. A discovery that is never referenced again was probably not worth keeping.
 
@@ -187,7 +222,9 @@ No single signal is sufficient for all extraction types. But the combination is 
 
 ## Use cases: how memory gets consumed
 
-### Decision provenance: answering "why"
+These use cases are the canonical knowledge-role consumption patterns. Their system-definition counterparts — preventing the already-rejected approach from being proposed again — run through the typed cue index described above. Both roles draw from the same session logs; they differ in what consumer uses the extracted artifact.
+
+### Decision provenance: answering "why" (knowledge role)
 
 The recurring high-value question is: *why did we do it this way and not that way?* This is what ADRs are designed to answer, but ADRs are manually authored summaries written after the fact. Session logs contain the raw deliberation: alternatives considered, reasoning for each, constraints that were active, objections raised and addressed.
 
@@ -195,11 +232,13 @@ The memory system enables a semi-automated ADR pipeline. Detection: flag session
 
 More generally, session logs answer the "why" questions that ADRs do not anticipate. An ADR captures the decisions the author thought to document. Session logs preserve what was discarded, not just what was chosen. The memory system's job is to make those answers findable without requiring someone to write them down first.
 
-### Negative result preservation
+A well-drafted ADR often produces a system-definition companion: a cue that fires when the agent proposes one of the rejected alternatives. The ADR explains *why* (knowledge); the cue prevents repetition (system-definition). Both live in the memory system and point at each other.
+
+### Negative result preservation (knowledge role)
 
 "What was tried and abandoned" has no home in standard project structure. The code shows what was built; it does not show what was tried and discarded. When someone later proposes an approach that was already explored and rejected, only the memory system can answer "we tried that in session 34, and it failed because the proxy servers strip custom headers in our infrastructure."
 
-Negative results are extracted as structured records with the approach attempted, the failure reason, the source session, and a link to the decision that followed. They are indexed by the approach name, so a "why didn't we do X?" query finds them directly.
+Negative results are extracted as structured records with the approach attempted, the failure reason, the source session, and a link to the decision that followed. They are indexed by the approach name, so a "why didn't we do X?" query finds them directly. When a negative result is severe enough to warrant preventing recurrence, it also produces a system-definition cue keyed on the attempted approach — the knowledge record answers "why not?", the cue prevents the attempt in the first place.
 
 ## Where memory ends and the project begins
 
@@ -207,9 +246,11 @@ A memory system for a software project exists alongside code, tests, documentati
 
 ### The boundary, refined
 
-Artifact by artifact, the memory system's contribution is consistent: it adds the reasoning, context, and process knowledge that produced the artifact. Code says "retry loop with exponential backoff." The memory system says "we tried a circuit breaker in session 47 but it interacted badly with the connection pool." Tests say "this invariant holds." The memory system says "this test was written because of the bug in PR #247." Documentation says "use this API." The memory system says "three users asked the same question that the docs failed to answer."
+Project artifacts themselves split across the class/role grid, and that grid makes the boundary clearer. Code and tests are symbolic system-definition. Documentation is prose knowledge. ADRs are prose knowledge. CLAUDE.md is prose system-definition. Lint rules are symbolic system-definition. The memory system is a substrate — prose-class, file-backed — from which both knowledge-role and system-definition-role project artifacts get distilled.
 
-The interesting edge case is CLAUDE.md (or any always-loaded agent instruction file). CLAUDE.md is already a memory artifact -- it stores routing knowledge the agent needs every session. The proposed distinction: **CLAUDE.md is compiled routing; the memory system is the source.** When the user corrects the agent three times for the same mistake, the correction pattern lives in session logs and eventually graduates to a CLAUDE.md entry. CLAUDE.md is the deployment artifact; the memory system is the learning substrate.
+Artifact by artifact, the memory system's contribution is consistent: it adds the reasoning, context, and process knowledge that produced the artifact. Code (symbolic system-definition) says "retry loop with exponential backoff." The memory system adds the knowledge-role complement: "we tried a circuit breaker in session 47 but it interacted badly with the connection pool." Tests (symbolic system-definition) say "this invariant holds." The memory system adds knowledge: "this test was written because of the bug in PR #247." Documentation (prose knowledge) says "use this API." The memory system adds knowledge: "three users asked the same question that the docs failed to answer."
+
+The interesting edge case is CLAUDE.md (or any always-loaded agent instruction file). CLAUDE.md is already a memory artifact -- it is prose system-definition, loaded every session to steer the agent. The proposed distinction: **CLAUDE.md is compiled system-definition; the memory system is the source.** When the user corrects the agent three times for the same mistake, the correction pattern lives in session logs and eventually graduates to a CLAUDE.md entry (or further, to a lint rule — same role, tighter constraining). CLAUDE.md is the deployment artifact; the memory system is the learning substrate.
 
 ### Where the boundary blurs
 
@@ -223,15 +264,18 @@ A better formulation: **the memory system is the substrate from which project ar
 
 ### Graduation pathways
 
-When a pattern in session logs becomes a durable artifact, the destination depends on what was learned:
+When a pattern in session logs becomes a durable artifact, the destination depends on both what was learned and which role the artifact will play. The same source pattern can produce artifacts in both roles, serving different consumers:
 
-| Pattern | Graduation trigger | Destination |
-|---|---|---|
-| Decision debated across sessions | "Why did we decide X?" is expensive to answer | ADR linking back to source sessions |
-| Same workflow in 3+ sessions | Repetition detection | Documented procedure, skill, or script |
-| Same mistake corrected 2+ times | Correction frequency | Convention, CLAUDE.md entry, or lint rule |
-| Agent needs same orientation each session | Recurring first-message pattern | CLAUDE.md entry |
-| Context needed to understand specific code | Explanation given during session | Code comment |
+| Pattern | Graduation trigger | Destination | Role |
+|---|---|---|---|
+| Decision debated across sessions | "Why did we decide X?" is expensive to answer | ADR linking back to source sessions | Knowledge |
+| Decision with a commonly-proposed reject alternative | Agent re-proposed rejected option | Cue keyed on the rejected alternative | System-definition |
+| Same workflow in 3+ sessions | Repetition detection | Documented procedure, skill, or script | System-definition |
+| Same mistake corrected 2+ times | Correction frequency | Convention, CLAUDE.md entry, or lint rule | System-definition |
+| Same mistake, with instructive rationale | The reasoning for the correction is worth preserving | Companion note or ADR | Knowledge |
+| Agent needs same orientation each session | Recurring first-message pattern | CLAUDE.md entry | System-definition |
+| Context needed to understand specific code | Explanation given during session | Code comment | Knowledge (usually) |
+| Negative result: tried and abandoned | Approach explored and rejected | Negative-result record + "why not X?" index entry | Knowledge |
 
 The meta-pattern across all graduation types is: observation, accumulation, recognition, distillation, placement, provenance. Recognition is the bottleneck -- detecting that a pattern deserves graduation requires the kind of judgment the system is trying to automate. For signals with clear triggers (correction frequency, repetition count), recognition can be automated. For signals requiring judgment (when a decision is "load-bearing enough" to warrant an ADR), the system can only flag and assist.
 
@@ -240,6 +284,8 @@ A critical constraint on graduation: every graduated artifact creates a maintena
 ### The reach heuristic
 
 The concept of *reach* -- how broadly an insight applies across contexts -- maps onto the graduation question. High-reach knowledge ("systems that optimize for normal-load efficiency sacrifice overload resilience") wants to be in the library layer. Low-reach knowledge ("the bug in PR #247 was a race condition in the connection pool") can stay in session logs.
+
+Reach behaves asymmetrically across roles. A knowledge artifact is worth promoting when its claim applies broadly — generalization is what makes the note worth reading across many situations. A system-definition artifact is worth promoting when its trigger fires often enough *in the specific situations it covers* — a narrow cue that fires accurately is more valuable than a broad one that mostly misfires. Graduating a correction into CLAUDE.md increases reach in both directions (it fires in every session, now) but also multiplies the cost of being wrong (every session loads it). The reach heuristic for knowledge is "does this claim apply more widely?"; for system-definition it is "does this trigger fire when it should, often enough to earn its context budget?"
 
 But you often cannot tell the reach of an observation when you first make it. The connection pool race condition might be a one-off, or it might be the third instance of a pattern where async resource pools need explicit shutdown ordering. Reach is revealed by accumulation: when multiple low-reach observations cluster around the same structural pattern, the pattern has high reach and should graduate.
 
