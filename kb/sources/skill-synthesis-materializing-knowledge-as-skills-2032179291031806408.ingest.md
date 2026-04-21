@@ -35,7 +35,7 @@ The `/connect` discovery found 6 strong connections, all in the **exemplifies** 
 
 3. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** — exemplifies. Mining commit history and past security patches for IDOR patterns, then encoding them as a detection skill, maps directly to the spec mining workflow: observe behavior, identify regularities, extract rules, re-run with constraints.
 
-4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies. The skill file is diffable, versionable, collaboratively refinable. The `npx skills add` distribution model treats skills as inspectable artifacts.
+4. **[inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies. The skill file is diffable, versionable, collaboratively refinable. The `npx skills add` distribution model treats skills as inspectable artifacts.
 
 5. **[constraining-during-deployment-is-continuous-learning](../notes/constraining-during-deployment-is-continuous-learning.md)** — exemplifies. Iterative refinement through false positive analysis is constraining during deployment per Simon's definition.
 

@@ -53,7 +53,7 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 5. **Difficulty-3 tasks show the largest gains (+28.5 pp SGC)** — complex multi-step tasks benefit disproportionately from accumulated operational knowledge. This suggests memory systems' value is non-linear with task complexity, which has implications for when deploy-time learning investments pay off. [just-a-reference]
 
-6. **The inspectability advantage over AgeMem is concrete** — both systems learn from trajectories with similar oracle requirements, but this paper's output is diffable, searchable, and composable. This is a direct data point for the [inspectable-substrate](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) argument, and the paper shows no performance penalty for inspectability. [quick-win]
+6. **The inspectability advantage over AgeMem is concrete** — both systems learn from trajectories with similar oracle requirements, but this paper's output is diffable, searchable, and composable. This is a direct data point for the [inspectable-artifact](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) argument, and the paper shows no performance penalty for inspectability. [quick-win]
 
 ## Limitations (our opinion)
 

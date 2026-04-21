@@ -35,7 +35,7 @@ The `/connect` discovery run found 9 new connections beyond the 6 already establ
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- exemplifies all four action-oriented knowledge types without theoretical framing
 - [deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) -- exemplifies graduated artifact loading across the verifiability gradient
 - [constraining](../notes/definitions/constraining.md) -- exemplifies learning through versioned artifact accumulation
-- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) -- exemplifies Git-versioned files as inspectable substrate
+- [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) -- exemplifies Git-versioned files as inspectable substrate
 
 **New connections found (9):**
 1. [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) -- **exemplifies (anecdotally)**: the author frames the whole architecture as a response to context efficiency, citing claimed volume effects like a 1,200-line voice-guide degradation threshold and 40% token savings from module splitting.

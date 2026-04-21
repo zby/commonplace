@@ -34,7 +34,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 3. **[deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md)** — exemplifies: "Good harnesses compound" is deploy-time learning in practitioner language. Each constraint is a repo artifact that makes future work more reliable.
 
-4. **[inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
+4. **[inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
 
 5. **[constraining](../notes/definitions/constraining.md)** — exemplifies: "Encode standards directly into the repository" is constraining in practitioner language. The progression from AGENTS.md conventions through structural tests to deterministic linters maps onto the constraining spectrum.
 

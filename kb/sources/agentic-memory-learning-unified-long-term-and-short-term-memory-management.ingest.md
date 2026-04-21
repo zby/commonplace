@@ -35,7 +35,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 - [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) -- **exemplifies**: task-completion oracle (binary: did the agent succeed?) sits at a specific position -- cheap, reliable, but domain-scoped.
 - [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) -- **grounds**: confirms RL can learn memory policy when a clear oracle exists; the KB's evaluation gap is the bottleneck, not the learning mechanism.
 - [Deploy-time learning](../notes/deploy-time-learning-is-the-missing-middle.md) -- **contrasts**: weight-based training vs inspectable artifact accumulation; same behavioral changes, different substrates.
-- [Inspectable substrate defeats the blackbox problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) -- **contrasts**: split substrate (facts in store, policy in weights) vs unified substrate (both in files).
+- [Inspectable substrate defeats the blackbox problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) -- **contrasts**: split substrate (facts in store, policy in weights) vs unified substrate (both in files).
 - [Learning is not only about generality](../notes/learning-is-not-only-about-generality.md) -- **foundation**: LTM Add is accumulation at the low-reach end; facts without reach to theories.
 - [Distillation](../notes/definitions/distillation.md) -- **applies**: STM operations are distillation -- extracting focused content for working context.
 

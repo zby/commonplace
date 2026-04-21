@@ -34,7 +34,7 @@ Vtrivedy10 proposes a clean definition of "harness" — everything that is not t
 - [deploy-time-learning-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **exemplifies**: AGENTS.md memory files are deploy-time learning via harness primitives, described in the source's "continual learning" framing
 - [bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md) — **exemplifies**: the Ralph Loop pattern (hook intercepts model exit, reinjects prompt in clean context) is a concrete instance of the select/call/absorb loop
 - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — **exemplifies**: the model/harness co-training feedback loop is codify/relax operating at the training boundary
-- [inspectable-substrate-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — **exemplifies**: filesystem + git as the first harness primitive derived from model limitations is the inspectable substrate thesis arrived at from component derivation
+- [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — **exemplifies**: filesystem + git as the first harness primitive derived from model limitations is the inspectable substrate thesis arrived at from component derivation
 - [files-not-database](../notes/files-not-database.md) — **exemplifies**: independent practitioner convergence: filesystem is "the most foundational harness primitive" for workspace, offloading, persistence, and multi-agent collaboration
 
 **Additional validated connections:**
