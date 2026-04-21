@@ -24,9 +24,9 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — dependency-aware staleness detection turns silent drift into an explicit review queue
 - [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) — adversarial reading supplies visibility into content failures that deterministic validation never surfaces
 
-## Inspectable Substrate
+## Inspectable Artifact
 
-- [Inspectable substrate, not supervision, defeats the blackbox problem](./inspectable-substrate-not-supervision-defeats-the-blackbox-problem.md) — the substrate choice determines whether failures and drift can be inspected, diffed, tested, and verified at all
+- [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — the artifact class determines whether failures and drift can be inspected, diffed, tested, and verified at all
 
 ## Related Tags
 
