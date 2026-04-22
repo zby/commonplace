@@ -57,8 +57,20 @@ def is_type_definition_content(path: Path, boundary: Path) -> bool:
     return "types" in rel.parent.parts
 
 
+def is_replaced_archive(path: Path) -> bool:
+    """Return True when path is a `.replaced.*.md` archive of a superseded note.
+
+    Replaced archives are frozen snapshots whose links are not maintained as
+    referenced notes get renamed; directory sweeps skip them so link-health
+    warnings against decayed targets do not accumulate. Direct-path validation
+    of a single archive still runs normally.
+    """
+    return ".replaced." in path.name
+
+
 def list_collection_note_paths(collection: Path) -> list[Path]:
-    """Return markdown note paths under a collection, excluding nested repos and types."""
+    """Return markdown note paths under a collection, excluding nested repos,
+    types, and replaced archives."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     return sorted(
@@ -66,6 +78,7 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
         for path in collection.rglob("*.md")
         if not is_nested_git_repo(path, collection)
         and not is_type_definition_content(path, collection)
+        and not is_replaced_archive(path)
     )
 
 

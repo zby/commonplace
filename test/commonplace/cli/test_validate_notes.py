@@ -548,6 +548,37 @@ type: collection-item
     assert notes_root / "collection" / "types" / "nested.template.md" not in discovered
 
 
+def test_list_kb_note_paths_skips_replaced_archives(tmp_path: Path) -> None:
+    reviews_root = tmp_path / "kb" / "agent-memory-systems" / "reviews"
+    current = write(
+        reviews_root / "napkin.md",
+        """---
+description: Current review of napkin as an agent-memory-system
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+last-checked: "2026-04-20"
+---
+
+# Napkin
+""",
+    )
+    archive = write(
+        reviews_root / "napkin.replaced.2026-04-12.md",
+        """---
+description: Archived review of napkin superseded on 2026-04-12
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+last-checked: "2026-04-12"
+---
+
+# Napkin (replaced)
+""",
+    )
+
+    discovered = project_paths.list_kb_note_paths(tmp_path)
+
+    assert current in discovered
+    assert archive not in discovered
+
+
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     today_note = write(
