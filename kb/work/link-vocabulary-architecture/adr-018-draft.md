@@ -15,7 +15,7 @@ status: proposed
 
 ADR 009 adopted a five-label vocabulary (`extends`, `grounds`/`foundation`, `contradicts`, `enables`, `exemplifies`/`example`) and committed to slow, evidence-driven expansion.
 
-The [link-label audit workshop](./) extracted every `- [title](path) — label:` footer annotation across `kb/**/*.md` (3420 matches, 32 source/target register pairs, 236 distinct labels). Most off-vocabulary labels fold into existing ADR 009 aliases — `sharpens`/`refines`/`clarifies` collapse into `extends`'s "refines" sense; `applies`/`instance` into `exemplifies`; `motivates` into `grounds`; `tension` into `contradicts`. Two candidates survive with genuine semantic daylight.
+The [link-label audit](./findings.md) extracted every `- [title](path) — label:` footer annotation across `kb/**/*.md` (3420 matches, 32 source/target register pairs, 236 distinct labels). Most off-vocabulary labels fold into existing ADR 009 aliases — `sharpens`/`refines`/`clarifies` collapse into `extends`'s "refines" sense; `applies`/`instance` into `exemplifies`; `motivates` into `grounds`; `tension` into `contradicts`. Two candidates survive with genuine semantic daylight.
 
 ### `contrasts` occupies a slot no ADR 009 label covers
 

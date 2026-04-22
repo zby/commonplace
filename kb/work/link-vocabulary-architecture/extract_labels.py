@@ -154,7 +154,7 @@ def main() -> None:
 
     out_lines = [
         "---",
-        'description: "Machine-generated audit of link-relationship labels used across KB footer annotations. Rebuild with kb/work/link-label-audit/extract_labels.py."',
+        'description: "Machine-generated audit of link-relationship labels used across KB footer annotations. Rebuild with kb/work/link-vocabulary-architecture/extract_labels.py."',
         "type: note",
         "status: current",
         "---",

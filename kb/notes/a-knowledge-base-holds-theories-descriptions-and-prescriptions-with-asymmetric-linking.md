@@ -93,7 +93,7 @@ Commonplace's existing collections instantiate this pattern:
 - `kb/instructions/` → prescriptive register (procedures and conventions, imperative titles, optimized for executability)
 - `kb/notes/related-systems/` → a second descriptive collection (external landscape), candidate for promotion to `kb/related-systems/`
 
-The separation was not designed from the three-register theory — it emerged from practical pressure. `kb/reference/` was created because system documentation didn't fit the theory-optimized conventions of `kb/notes/` (see [system-documentation workshop](../work/system-documentation/framing.md)). The theory names what practice already discovered.
+The separation was not designed from the three-register theory — it emerged from practical pressure. `kb/reference/` was created because system documentation didn't fit the theory-optimized conventions of `kb/notes/`. The theory names what practice already discovered.
 
 The maintenance asymmetry is already visible in the link graph. A link audit found substantial inbound linking from theory notes into `kb/notes/related-systems/` — theories citing related systems as evidence and illustrations. The theories are stated in general terms; the related-system descriptions serve as supporting observations.
 

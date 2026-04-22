@@ -154,5 +154,4 @@ Relevant Notes:
 - [ADR 009 — link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — grounds: the linking vocabulary embedded in `cp-skill-write/SKILL.md`; unchanged by this ADR.
 - [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) — partially superseded: the three-file split fuses to one authoring file plus a sibling schema.
 - [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) — affected at `note` migration.
-- [link-label audit ADR draft](../../work/link-label-audit/adr-018-draft.md) — applies the "canonical sources stay single edit point" principle to the linking vocabulary. Lands later and will take the next available number.
 - [linking-theory](../../notes/linking-theory.md) — grounds: decision-cost model for keeping context reads cheap.
