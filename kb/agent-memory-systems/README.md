@@ -127,3 +127,5 @@ The divergences are more revealing:
 - Are there systems we're missing that take a fundamentally different approach?
 
 ## Other tagged notes <!-- generated -->
+
+- [Closure-SDK](./reviews/Closure-SDK.md) - Geometric S3 memory and integrity runtime where ordered carrier streams promote into quaternion genome state, not readable notes or model weights
