@@ -27,7 +27,7 @@ For new writes, read the target collection's `## Types` section in `kb/<collecti
 
 ### Step 2 - Load Collection Conventions
 
-Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. The "Outbound linking conventions" section is organised per destination collection: each destination block declares **when to prospect that destination for link candidates** (search guidance) and **which labels you may use with what reader-need** (the authorised set). Treat it as authoritative — there is no separate linking doc to consult.
+Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which destination collections this source may link to, which destinations are excluded, which labels are authorised for which source→destination pairs, and the reader-need each label serves. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
 
 **Hard fail** if `kb/<collection>/COLLECTION.md` does not exist. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 
@@ -43,7 +43,7 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 
 Unless the user requests otherwise, the write flow does not run active discovery. Link candidates come from three cheap sources, in order:
 
-1. **Destination `dir-index.md`.** For each destination block in the source `COLLECTION.md`, read that destination's `dir-index.md` once. Titles and descriptions are the full surface — enough to catch near-duplicates in the target collection and enough to surface obvious connection points in other destinations. Do not open candidate notes to inspect their bodies unless the dir-index line itself is a match.
+1. **Destination `dir-index.md`.** For each destination collection authorised by the source `COLLECTION.md`'s outbound section, read that destination's `dir-index.md` once. Titles and descriptions are the full surface — enough to catch near-duplicates in the target collection and enough to surface obvious connection points in other destinations. Do not open candidate notes to inspect their bodies unless the dir-index line itself is a match.
 2. **Context already loaded.** Notes, sources, and ingests that were pulled into the session for this write are first-class candidates. If it was worth reading, it is worth considering as a link.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 

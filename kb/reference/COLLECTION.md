@@ -1,101 +1,59 @@
 # Writing conventions for kb/reference/ (descriptive register)
 
-## Register
+## Register and fidelity
 
-This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). Documents here account for what exists in the shipped commonplace system — its architecture, type system, operator surface, and decision history. They aim for faithful representation of the system as built, not transferable theory about KB methodology.
+Descriptive [register](../notes/definitions/register.md): accounts of what exists in the shipped commonplace system — architecture, type system, operator surface, decision history. Aim at faithful representation of the system as built, not transferable theory.
 
-The quality goal is **fidelity + economy**: say what the system actually does, in minimum tokens, without omitting load-bearing details. A description that misrepresents the system is worse than none; a description that takes 2000 tokens where 500 would do wastes bounded context.
+Quality goal is **fidelity + economy** — say what the system actually does in minimum tokens, without omitting load-bearing details. An agent loading these docs is usually trying to act; every extra token competes with the task.
 
-## Title conventions
-
-**Topical titles by default.** Name the document after what it describes: "Type loading", "Available types", "Storage architecture". The title should answer "what is this about?" not "what does this argue?"
-
-Composability test: a link like `see [type loading](./type-loading.md) for how types are resolved` should read naturally. Topical titles work as noun-phrase references.
-
-**Exceptions.** ADRs use a numbered-decision format: `012-types-for-structure-traits-for-review.md`. Definitions use the term itself as title.
-
-## Description conventions
-
-For reference docs, descriptions should name the specific system aspect covered — "how commonplace resolves a note's type contract at authoring and validation time" beats "type loading in commonplace".
-
-## Economy as quality discipline
-
-Reference docs face the hardest economy pressure. An agent loading system documentation into context is usually trying to do something — write a note, debug validation, understand a decision. Every token beyond what's needed for that task competes with the task itself.
-
-Quick tests:
+Tests for economy:
 - Could this section be cut without losing information the reader needs to act?
 - Is the same fact stated in two places? Deduplicate or link.
 - Would a table or list say this more compactly than prose?
 
-Economy is a goal, not a gate. Some topics genuinely need exposition. But prefer compact forms when they don't sacrifice clarity.
+**Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rationale` link may carry the qualifier.
 
-## Outbound linking conventions
+## Title and description conventions
 
-Outbound rules are organised by destination collection. Each block declares when to search the destination for link targets and which labels writers may use.
+**Topical titles by default.** Answer "what is this about?" — "Type loading", "Storage architecture". A link like `see [type loading](./type-loading.md) for how types are resolved` reads naturally.
 
-### → `kb/reference/` (within this collection)
+Exceptions: ADRs use numbered-decision format (`012-types-for-structure-traits-for-review.md`); definitions use the term as title.
 
-**Search:** when the current doc describes a piece of a larger described system, a realization of a specified contract, or a decision that updates or follows from an earlier ADR.
+**Description** (frontmatter) should name the specific system aspect covered — "how commonplace resolves a note's type contract at authoring and validation time" beats "type loading in commonplace".
 
-**Labels:**
+## Outbound links
 
-| label | reader-need |
-|---|---|
-| `part-of` / `contains` | wants to situate this in the larger system |
-| `implements` / `implemented-by` | wants the concrete realization (or the abstract contract) |
-| `supersedes` / `superseded-by` | wants the current or prior version (primarily ADR chains) |
-| `see-also` | might benefit but author can't name a specific need; use sparingly |
+Forward-authored; backlinks are computed. Inline for strongest commitment, with a connective word that fits the argument (e.g. `implements [title](path)`, `rests on [title](path)`, `defined in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-### → `kb/agent-memory-systems/`
-
-**Search:** uncommon but worth a scan — commonplace and external systems occasionally share design patterns, and thematic adjacency can be instructive. Search when a design decision has known analogues, contrasts, or antecedents in reviewed systems, whether or not the connection was explicit. Let the agent filter.
+Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rationale` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/` and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
 
 **Labels:**
 
-| label | reader-need |
-|---|---|
-| `see-also` | the external system is an instructive adjacent reference |
-
-### → `kb/notes/`
-
-**Search:** when a design choice here rests on a theoretical claim. Descriptions justify their shape by pointing at theory; this is the primary theory-ward edge.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `rationale` | this design rests on this claim |
-| `defined-in` | reader may not know a term; target is under `kb/notes/definitions/` |
-| `see-also` | might benefit but no specific need; use sparingly |
-
-### → `kb/instructions/`
-
-**Search:** when the described system component has an operational how-to documented as an instruction. Reference docs point outward to the instructions that act on them.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `procedure` | for how to do this, see this instruction |
-| `see-also` | might benefit but no specific need; use sparingly |
-
-**Fidelity constraint.** Descriptions must be faithful to the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, the description says X and notes the deviation — the `rationale` link may carry the qualifier.
+| label | destinations | reader-need |
+|---|---|---|
+| `part-of` / `contains` | reference | situate this in the larger system |
+| `implements` / `implemented-by` | reference | concrete realization ↔ abstract contract |
+| `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
+| `rationale` | notes | this design rests on this claim |
+| `defined-in` | notes/definitions | reader may not know the term |
+| `derived-from` | sources, agent-memory | this design choice was abstracted from this external source/system |
+| `evidence` | sources, agent-memory | this external source/system corroborates the description |
+| `procedure` | instructions | for how to do this, see this instruction |
+| `see-also` | any | adjacent companion; use sparingly |
 
 ## Types
 
-- `note` -> `kb/types/note.md`
-  Use for general shipped-system reference documents.
-- `adr` -> `kb/reference/types/adr.md`
-  Use for architecture decision records.
-- `definition` -> `kb/types/definition.md`
-  Use for shipped-system vocabulary terms.
-- `index` -> `kb/types/index.md`
-  Use for reference navigation hubs and generated directory indexes.
+| type | file | use for |
+|---|---|---|
+| `note` | `kb/types/note.md` | general shipped-system reference documents |
+| `adr` | `kb/reference/types/adr.md` | architecture decision records |
+| `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
+| `index` | `kb/types/index.md` | reference navigation hubs and generated directory indexes |
 
 ## What does NOT belong here
 
-- Transferable claims about KB methodology → theoretical register (`kb/notes/`)
-- Procedures and how-to guidance → prescriptive register (`kb/instructions/`)
+- Transferable claims about KB methodology → `kb/notes/`
+- Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of external systems → `kb/agent-memory-systems/reviews/`
 - Work in progress → `kb/work/` (workshops)
 - Generated operational artifacts → `kb/reports/`

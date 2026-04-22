@@ -9,7 +9,9 @@ schema: kb/reports/types/connect-report.schema.yaml
 
 ## Authoring Instructions
 
-Use `connect-report` for discovery-only connection work. A connect report records evidence for future KB mutations; it is not itself a durable knowledge claim.
+Use `connect-report` for discovery-only connection work. **Every section of a connect report describes candidate edges for a future writer to act on, not edges already encoded anywhere.** The connect skill never edits the source artifact or any other library note — the report is the entire deliverable. Readers of the report should treat its contents as suggestions to evaluate, not as state already in the KB.
+
+A connect report records evidence for future KB authoring; it is not itself a durable knowledge claim.
 
 ## Metadata
 
@@ -35,12 +37,15 @@ Use `connect-report` for discovery-only connection work. A connect report record
 
 ## Sections
 
-- Put reverse links that are also worth adding under `Bidirectional Candidates`.
-- Put notes in **other** collections that should link **to** this target — under their own `COLLECTION.md` rules — under `Reverse-edge Candidates`. The connect report names these so the source-side author (or a future connect run on the source) can decide whether to author them; the connect skill never edits those notes.
+All sections list **candidates** — recommended edges, not committed ones. Whoever consumes the report decides which to author and where.
+
+- Put candidate outbound edges from the source under `Connections Found`. For an authored source, these are recommendations for a future edit of the source. For an immutable source (e.g. a snapshot under `kb/sources/`), these are recommendations for whichever artifact carries the source's authored surface (typically the matching `.ingest.md`).
+- Put return links worth adding from the target side under `Bidirectional Candidates`.
+- Put notes in **other** collections that should link **to** this source — under their own `COLLECTION.md` rules — under `Reverse-edge Candidates`. Especially load-bearing when the source is immutable or has narrow outbound (snapshots, system reviews).
 - Put candidates that pass the articulation test but have no authorised label for the source→destination pair under `Off-authorisation Candidates`. Each entry should suggest either extending the destination's authorised set in `COLLECTION.md` or rejecting as off-scope.
-- Put candidates without frontmatter under `Raw Text Candidates`, not under `Connections Found`.
+- Put candidate targets without frontmatter under `Raw Text Candidates`, not under `Connections Found`.
 - Include weak matches in `Rejected Candidates` when they explain why obvious search hits were not kept.
-- Use `Index Membership` for indexes where the source might belong, even if no direct note-to-note link should be added.
+- Use `Index Membership` for indexes where the source might belong (a future writer would add the entry; connect does not).
 - Use `Synthesis Opportunities` only for higher-order claims implied by multiple notes; do not create the synthesis note during connect.
 - Use `Flags` for split candidates, unresolved tensions, no-connections findings, or other follow-up work.
 - If a section has no content, write `None` rather than deleting the section.

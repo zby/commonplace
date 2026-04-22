@@ -71,6 +71,18 @@ Outbound rules are organised by destination collection. Each block declares when
 | `defined-in` | reader may not know a term; target is under `kb/notes/definitions/` |
 | `see-also` | might benefit but no specific need; use sparingly |
 
+### → `kb/sources/`
+
+**Search:** common for reviews. Most reviews are grounded in snapshots — the reviewed system's README, paper, or repository capture lives in `kb/sources/`. Link back to the snapshot the review was derived from.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `derived-from` | this review was abstracted from this snapshot |
+| `evidence` | this snapshot corroborates a claim in the review |
+| `see-also` | adjacent source captured in the KB |
+
 ### → `kb/instructions/`
 
 **Search:** uncommon. Reviews don't typically cite commonplace procedures, but scan when a review describes an operational workflow that has a commonplace counterpart.
