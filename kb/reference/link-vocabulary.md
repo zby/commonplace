@@ -1,6 +1,10 @@
-# Link vocabulary — a resource for COLLECTION.md authors
+---
+description: Label catalogue plus authoring guidance for COLLECTION.md authors writing outbound-linking rules; groups labels by register-of-origin (theoretical, descriptive, prescriptive, universal) and tells collection authors how to structure per-destination outbound blocks
+type: kb/types/note.md
+status: current
+---
 
-> Workshop draft. Final location TBD — candidate: `kb/reference/link-vocabulary.md`.
+# Link vocabulary — a resource for COLLECTION.md authors
 
 ## Audience and purpose
 
@@ -10,13 +14,13 @@
 
 The architecture is deliberately loose. The theory of links is weak — experiment. Invent intra-collection labels your work needs, propose additions to the catalogue, diverge from suggestions where it makes sense.
 
-("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../../notes/definitions/register.md).)
+("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/register.md).)
 
 ## How to author a COLLECTION.md linking section
 
 Organise the outbound-linking section **per destination collection**, not per register. For each collection your source links to, declare:
 
-1. **Search guidance** — when the [connect skill](../../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
+1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
 
 If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link to collections outside the authorised set.
@@ -31,7 +35,7 @@ The catalogue below groups labels by register-of-origin — the kind of content 
 2. **Per-destination rules enable fine-grained experimentation.** `kb/notes/ → kb/reference/` can diverge from `kb/notes/ → kb/agent-memory-systems/`, even though both destinations share a register.
 3. **Search guidance serves the connect skill.** When an agent helps a writer find link targets, it reads the source `COLLECTION.md`, enumerates authorised destinations, and uses the search-when guidance to prioritise.
 4. **Labels work best when shared.** Both endpoints need to recognise the label for the link to carry its intended meaning. Use catalogue labels when they fit; add to the catalogue when your work calls for something new, and coordinate with the target-side collection.
-5. **Every label names a reader-need.** See [`links-as-possibility.md`](./links-as-possibility.md) for the theory.
+5. **Every label names a reader-need.** See [`links-encode-conditional-possibilities-not-obligations.md`](../notes/links-encode-conditional-possibilities-not-obligations.md) for the theory.
 6. **Articulation test applies to every link.** Every outbound link should complete: *"[source] connects to [target] because [specific reason]."*
 
 ## Label catalogue
@@ -100,3 +104,13 @@ Usable from any source to any destination.
 - Is register-of-origin the right catalogue grouping, or would alphabetical be cleaner? Register-of-origin helps authors find labels that match their source's shape; alphabetical is flatter but less suggestive.
 - How should the connect skill treat authorized-but-rarely-used destinations? Speculative — probably depends on use-frequency signal.
 - Should `supersedes` be restricted to intra-descriptive use? Most use is ADR chains inside `kb/reference/`; cross-collection supersession is rare.
+
+---
+
+Relevant Notes:
+
+- [ADR 019 — collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the architecture this catalogue serves
+- [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — rationale: the original theoretical vocabulary whose core labels seed this catalogue
+- [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
+- [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
+- [Register](../notes/definitions/register.md) — defined-in: content-mode groupings used to organise the catalogue
