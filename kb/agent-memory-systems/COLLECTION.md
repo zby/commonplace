@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection is **descriptive**: it documents external agent memory, knowledge, and context-engineering systems — how each one is built, what it does, how it compares with commonplace.
+This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — how each one is built, what it does, how it compares with commonplace.
 
 The quality goal is **fidelity + economy**: faithful to what the code actually does, in minimum tokens. A review that misrepresents the reviewed system is worse than none — it pollutes the landscape.
 
@@ -18,7 +18,10 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **Reviews:** the repository name (`napkin.md`, `crewai-memory.md`) unless there is an established house-style variant.
 
-**Root-level analyses:** topical for surveys (`agentic-memory-systems-comparative-review.md`); claim-shaped, with the `title-as-claim` trait, when the analysis makes a specific argument.
+**Root-level analyses.** Two cases:
+
+- **Surveys and overviews** — use a topical title naming the subject (e.g., `agentic-memory-systems-comparative-review.md`).
+- **Argumentative analyses** — analyses asserting a specific claim — use a claim-shaped title and add the `title-as-claim` trait, following the same conventions as `kb/notes/` (see `kb/notes/COLLECTION.md`).
 
 ## Fidelity discipline
 
@@ -28,13 +31,55 @@ When the system's docs say X but the code does Y, the review says Y and notes th
 
 ## Outbound linking conventions
 
-When linking FROM this collection:
+Outbound rules are organised by destination collection. Each block declares when to search the destination for link targets and which labels writers may use.
 
-| To register | Appropriate relationships |
+### → `kb/agent-memory-systems/` (within this collection)
+
+**Search:** when a review describes a component of a larger reviewed system, realizes an abstract contract named in another review, or can be compared to another system on a specific design axis (the comparative work is the collection's core).
+
+**Labels:**
+
+| label | reader-need |
 |---|---|
-| Descriptive (same register) | cross-reference / see-also |
-| Theoretical (kb/notes/) | grounds / evidence |
-| Prescriptive (kb/instructions/) | procedure (rare) |
+| `part-of` / `contains` | wants to situate this in the larger system |
+| `implements` / `implemented-by` | wants the concrete realization or the abstract contract |
+| `compares-with` | wants a specific design-axis comparison with another system (collection extension) |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+**`compares-with` vs `contrasts`.** `contrasts` (theoretical) names a difference in *claims*; `compares-with` names a difference in *systems* on a design axis. Use `compares-with` here; reserve `contrasts` for theoretical notes.
+
+### → `kb/reference/`
+
+**Search:** uncommon but worth a scan — commonplace and external systems are mostly described independently, but thematic analogues turn up. Search when a review's design element has a direct analogue in the commonplace system, or when the topic area overlaps a commonplace subsystem. Let the agent filter.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `see-also` | the commonplace component is an instructive adjacent reference |
+
+### → `kb/notes/`
+
+**Search:** when a reviewed system's design rests on a theoretical claim. Note the asymmetry: theoretical notes more often link *into* this collection via `evidence` / `derived-from`; a review promoting a novel claim should promote it to `kb/notes/` and let the theory link back, rather than authoring a new theoretical claim from within the review.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `rationale` | this system's design rests on this claim |
+| `evidence` | rare; this system corroborates the claim |
+| `defined-in` | reader may not know a term; target is under `kb/notes/definitions/` |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+### → `kb/instructions/`
+
+**Search:** uncommon. Reviews don't typically cite commonplace procedures, but scan when a review describes an operational workflow that has a commonplace counterpart.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `see-also` | directly relevant adjacent reference |
 
 ## Types
 

@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection operates in the **theoretical register**. Documents here make transferable claims about what is true — mechanisms, principles, and general arguments that should hold across systems, not just in this one.
+This collection operates in the **theoretical [register](./definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). Documents here make transferable claims about what is true — mechanisms, principles, and general arguments that should hold across systems, not just in this one.
 
 The quality goal is **reach**: the most general formulation the argument supports, with boundaries mapped explicitly. A note with reach compresses many situations into one explanation, making bounded context work harder.
 
@@ -41,13 +41,62 @@ Notes that only record "X works" are adaptive — useful but brittle. Notes that
 
 ## Outbound linking conventions
 
-When linking FROM this collection:
+Outbound rules are organised by destination collection. Each block declares when to search the destination for link targets (for the connect skill) and what labels writers may use.
 
-| To register | Appropriate relationships | Notes |
+Inline position for strongest commitment: `since [title](./path.md)`, `because [title](./path.md)`, `but [title](./path.md)`. Footer position with explicit label and context phrase: `- [title](./path.md) — label: context phrase`. Asymmetric labels are forward-authored; don't write a reverse edge — backlinks are computed.
+
+### → `kb/notes/` (within this collection)
+
+**Search:** the densest path. Most notes connect to other notes — to sharpen, ground, challenge, or generalise a claim. Search when the current note's argument touches any ongoing thread in the collection, or when a premise is asserted without being developed here.
+
+**Labels:**
+
+| label | kind | reader-need |
 |---|---|---|
-| Theoretical (same register) | since / because / contradicts / extends / qualifies | The claim-traversal graph. These are the argumentative links that make traversal-as-reasoning work. |
-| Descriptive (reference, agent-memory-systems) | evidence / derived-from / exemplifies | Theories cite descriptions as observations and evidence. The theory must stand without any single description — if it can't, it's still a description, not yet a theory. |
-| Prescriptive (instructions) | evidence (rare) | Theories rarely need to cite procedures. When they do, it's usually to note that a practice exists, not to depend on it. |
+| `extends` | asymmetric | wants to see the argument developed further |
+| `grounds` | asymmetric | wants to verify the premise / check the basis |
+| `enables` | asymmetric | wants to check the operational prerequisite |
+| `exemplifies` | asymmetric (instance → general) | wants the general claim this instance falls under |
+| `mechanism` | asymmetric | wants to understand how the claim operates |
+| `contradicts` | symmetric | wants to resolve a disagreement |
+| `contrasts` | symmetric | wants to see the neighbouring-shape distinction |
+| `defined-in` | asymmetric | reader may not know a term; target is under `kb/notes/definitions/` |
+
+### → `kb/reference/`
+
+**Search:** when the claim describes behaviour the commonplace system exhibits, was abstracted from a shipped-system fact, or touches a system component in an adjacent way. Reference docs are where theoretical claims touch ground in the system as built. Scan liberally — the agent filters candidates that don't connect.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `evidence` | this shipped-system observation corroborates the claim |
+| `derived-from` | this shipped-system fact is where the claim was abstracted from |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+### → `kb/agent-memory-systems/`
+
+**Search:** when the claim is about how external agent memory / knowledge / context-engineering systems work or should work, or when a reviewed system is a plausible counterexample, parallel, or source of abstraction. Reviews here are primary sources for deriving theoretical claims; scan broadly when the theme overlaps, the agent filters.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `evidence` | this external system corroborates the claim |
+| `derived-from` | this review is where the claim was abstracted from |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+### → `kb/instructions/`
+
+**Search:** uncommon. Theoretical notes typically don't cite procedures, but a scan is worth it when the claim has operational implications — a procedure may enforce it, or an adjacent instruction may exist. The primary edge is usually the inverse (`instruction → this note` via `rationale`); backlinks surface it.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `see-also` | the instruction is a directly relevant companion |
+
+**Theory-independence constraint.** The claim must stand without any single descriptive example — if the claim collapses when any one cited description is removed, it's still a description, not yet a theory.
 
 ## Types
 

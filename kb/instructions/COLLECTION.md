@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection operates in the **prescriptive register**. Documents here direct what to do — procedures, conventions, skill bodies, and operational rules. They optimize for an agent (or human) executing them on first reading, without prior context.
+This collection operates in the **prescriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). Documents here direct what to do — procedures, conventions, skill bodies, and operational rules. They optimize for an agent (or human) executing them on first reading, without prior context.
 
 The quality goal is **executability + precision**: every step must be actionable, every decision point must be explicit, and ambiguity must be eliminated. A vague prescription wastes the reader's bounded context on interpretation rather than action.
 
@@ -32,15 +32,57 @@ Prescriptions fail when they leave room for interpretation. Quick tests:
 
 ## Outbound linking conventions
 
-When linking FROM this collection:
+**Instructions frontload.** A procedure must be executable from its own text; an executing agent should not be expected to follow outbound links to complete the task. Outbound links in instructions are therefore **exceptional** — limited to cases where linking is the right mechanism:
 
-| To register | Appropriate relationships | Notes |
-|---|---|---|
-| Prescriptive (same register) | composition — "after [step A], follow [step B]" | Procedures can chain to other procedures. Keep the chain shallow — deep composition defeats frontloading. |
-| Theoretical (kb/notes/) | justification — "this rule exists because [theory]" | Instructions can cite theories as rationale for why a rule exists. The instruction depends on the theory — if the theory changes, the instruction may need revision. |
-| Descriptive (kb/reference/) | reference — "this procedure acts on [system X]" | Instructions reference system descriptions when the agent needs to understand what it's operating on. |
+- **Context-transfer** — sub-agent invocations. The link is the bootstrap for a new, clean context, not a required read in the current one.
+- **Conditional deviations** — error procedures, conditional branches to specialised procedures, and any path the reader follows only if a specific trigger applies. Frontloading every possible deviation would bloat the main path.
+- **Meta-reader needs** — `rationale` links serve reviewers and developers updating the procedure, not executing agents. These are kept with an explicit audience disclaimer; execution must work without following them.
 
-**Reasoning constraint.** Cut explanations of *why* each step exists. If the reasoning is worth preserving, it belongs in a methodology note that links to this instruction — not in the instruction itself. Keep only enough reasoning for the agent to handle edge cases and decision points.
+Outbound rules are organised per destination collection.
+
+### → `kb/instructions/` (within this collection)
+
+**Search:** procedure composition. The current procedure chains to, requires, branches to, or invokes another procedure. Intra-collection links are operational edges — the reader follows only when the composition dictates.
+
+**Labels:**
+
+| label | reader-need / when to use |
+|---|---|
+| `composition` | sequential: complete this procedure, then follow target. Reader drops current context when moving on. |
+| `precondition` | conditional: reader verifies target is done/true before starting — skip if already satisfied |
+| `invokes` | subroutine call. **Prefer sub-agent invocation** so context resets; use same-context invocation only for small, heavily-reused procedures |
+| `applies-when` | conditional branch; reader follows only if the trigger applies |
+| `see-also` | reserved for error procedures and conditional fallbacks the reader may need only on deviation |
+
+Keep chains shallow. Deep composition defeats frontloading — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
+
+### → `kb/notes/`
+
+**Audience: meta-readers.** These links serve reviewers and developers updating the procedure, not executing agents. Any definition or reasoning the execution path depends on must be frontloaded into the instruction body, not deferred to a linked note. An agent executing the instruction is not expected to follow these links.
+
+**Search:** when a rule in this procedure exists because of a theoretical claim — worth recording so a future reviewer can locate the rationale.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `rationale` | (meta-reader) wants the theoretical claim this rule rests on |
+
+### → `kb/reference/`
+
+**Audience: mixed.** `operates-on` identifies the system component the procedure acts on. For execution, the instruction must frontload enough to operate; the link is for readers (meta or execution) who need depth beyond what can be frontloaded.
+
+**Search:** when the procedure's scope is defined by a specific system component and naming it precisely matters.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `operates-on` | wants to know what system component the procedure acts on |
+
+(No `→ kb/agent-memory-systems/` destination — instructions do not have an active link path to external system reviews. If a specific instruction develops a legitimate need, add the destination then.)
+
+**Reasoning constraint.** Cut explanations of *why* each step exists from the instruction body. If the reasoning is worth preserving, record it in a theory note and link via `rationale` for meta-readers — never inline it for the execution reader. Keep only enough reasoning for the agent to handle edge cases and decision points.
 
 ## Frontmatter
 

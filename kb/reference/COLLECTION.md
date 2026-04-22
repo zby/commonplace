@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection operates in the **descriptive register**. Documents here account for what exists in the shipped commonplace system — its architecture, type system, operator surface, and decision history. They aim for faithful representation of the system as built, not transferable theory about KB methodology.
+This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). Documents here account for what exists in the shipped commonplace system — its architecture, type system, operator surface, and decision history. They aim for faithful representation of the system as built, not transferable theory about KB methodology.
 
 The quality goal is **fidelity + economy**: say what the system actually does, in minimum tokens, without omitting load-bearing details. A description that misrepresents the system is worse than none; a description that takes 2000 tokens where 500 would do wastes bounded context.
 
@@ -31,15 +31,55 @@ Economy is a goal, not a gate. Some topics genuinely need exposition. But prefer
 
 ## Outbound linking conventions
 
-When linking FROM this collection:
+Outbound rules are organised by destination collection. Each block declares when to search the destination for link targets and which labels writers may use.
 
-| To register | Appropriate relationships | Notes |
-|---|---|---|
-| Descriptive (same register) | cross-reference / see-also / supersedes | Internal navigation within the system account. ADRs reference each other through supersedes chains. |
-| Theoretical (kb/notes/) | rationale — "shaped this way because [theory]" | Descriptions can cite theories as justification for design choices. The description depends on the theory — if the theory changes, the design rationale may need revision. |
-| Prescriptive (kb/instructions/) | procedure — "for how to do this, see [instruction]" | Reference docs point to instructions for the operational how-to. |
+### → `kb/reference/` (within this collection)
 
-**Fidelity constraint.** Descriptions must be faithful to the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, the description says X and notes the deviation.
+**Search:** when the current doc describes a piece of a larger described system, a realization of a specified contract, or a decision that updates or follows from an earlier ADR.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `part-of` / `contains` | wants to situate this in the larger system |
+| `implements` / `implemented-by` | wants the concrete realization (or the abstract contract) |
+| `supersedes` / `superseded-by` | wants the current or prior version (primarily ADR chains) |
+| `see-also` | might benefit but author can't name a specific need; use sparingly |
+
+### → `kb/agent-memory-systems/`
+
+**Search:** uncommon but worth a scan — commonplace and external systems occasionally share design patterns, and thematic adjacency can be instructive. Search when a design decision has known analogues, contrasts, or antecedents in reviewed systems, whether or not the connection was explicit. Let the agent filter.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `see-also` | the external system is an instructive adjacent reference |
+
+### → `kb/notes/`
+
+**Search:** when a design choice here rests on a theoretical claim. Descriptions justify their shape by pointing at theory; this is the primary theory-ward edge.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `rationale` | this design rests on this claim |
+| `defined-in` | reader may not know a term; target is under `kb/notes/definitions/` |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+### → `kb/instructions/`
+
+**Search:** when the described system component has an operational how-to documented as an instruction. Reference docs point outward to the instructions that act on them.
+
+**Labels:**
+
+| label | reader-need |
+|---|---|
+| `procedure` | for how to do this, see this instruction |
+| `see-also` | might benefit but no specific need; use sparingly |
+
+**Fidelity constraint.** Descriptions must be faithful to the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, the description says X and notes the deviation — the `rationale` link may carry the qualifier.
 
 ## Types
 
