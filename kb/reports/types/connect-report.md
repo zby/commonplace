@@ -27,20 +27,17 @@ Use `connect-report` for discovery-only connection work. A connect report record
 ## Connection Standards
 
 - Every item in `Connections Found` must pass the articulation test: you can say specifically why the source connects to the target.
-- Use relationship labels only when the reason is explicit:
-  - `extends` when the source adds a dimension to the target.
-  - `grounds` when the source provides a foundation for the target.
-  - `contradicts` when the source creates a real tension with the target.
-  - `exemplifies` when the source is a concrete instance of the target.
-  - `synthesizes` when the source combines multiple insights.
-  - `enables` when the source makes the target actionable.
+- Pick relationship labels from the **authorised set declared in the source collection's `COLLECTION.md`** for the source→destination pair. Each authorised label carries a reader-need; use the label whose reader-need matches the connection's purpose. Do not propose labels outside the authorised set.
+- If a candidate passes the articulation test but no authorised label fits, route it to `Off-authorisation Candidates` — do not invent a label or downgrade to `see-also` to make it fit.
 - Reject candidates that are merely "related", keyword-only matches, too obvious to help traversal, or likely to confuse an agent following the link.
 - Ask what an agent gains by following the link. Keep links that provide reasoning foundation, implementation pattern, trade-off awareness, or a concrete example.
-- If a target note has `status: seedling` or `status: speculative`, flag load-bearing relationships such as `grounds`, `foundation`, or `synthesizes`. Additive relationships such as `extends`, `exemplifies`, and `enables` are fine.
+- If a target note has `status: seedling` or `status: speculative`, flag load-bearing labels such as `grounds`, `mechanism`, or `derived-from`. Additive labels such as `extends`, `exemplifies`, and `enables` are fine.
 
 ## Sections
 
 - Put reverse links that are also worth adding under `Bidirectional Candidates`.
+- Put notes in **other** collections that should link **to** this target — under their own `COLLECTION.md` rules — under `Reverse-edge Candidates`. The connect report names these so the source-side author (or a future connect run on the source) can decide whether to author them; the connect skill never edits those notes.
+- Put candidates that pass the articulation test but have no authorised label for the source→destination pair under `Off-authorisation Candidates`. Each entry should suggest either extending the destination's authorised set in `COLLECTION.md` or rejecting as off-scope.
 - Put candidates without frontmatter under `Raw Text Candidates`, not under `Connections Found`.
 - Include weak matches in `Rejected Candidates` when they explain why obvious search hits were not kept.
 - Use `Index Membership` for indexes where the source might belong, even if no direct note-to-note link should be added.
@@ -99,6 +96,14 @@ depth: standard
 ## Bidirectional Candidates
 
 - [target](../../notes/target.md) <-> source -- **contradicts**: {reason the return path is also useful}
+
+## Reverse-edge Candidates
+
+- [other-source](../../notes/other-source.md) → source -- **evidence**: {note that should author a link TO this target under its own COLLECTION.md rules}
+
+## Off-authorisation Candidates
+
+- [target](../../reference/target.md) -- {reason the candidate connects + which authorised set it falls outside, with a suggestion to extend or reject}
 
 ## Raw Text Candidates
 

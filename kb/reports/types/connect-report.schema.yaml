@@ -39,6 +39,10 @@ allOf:
           - contains:
               const: "## Bidirectional Candidates"
           - contains:
+              const: "## Reverse-edge Candidates"
+          - contains:
+              const: "## Off-authorisation Candidates"
+          - contains:
               const: "## Raw Text Candidates"
           - contains:
               const: "## Rejected Candidates"
