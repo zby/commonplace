@@ -1,5 +1,5 @@
 ---
-description: How collections and types compose in commonplace - collections own register conventions and link rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface, the compiled collection-topology used by the connect skill, and the compile-collections skill that produces it
+description: How collections and types compose in commonplace - collections own register conventions and per-destination outbound linking rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface and the live per-destination model the write and connect skills consume
 type: kb/types/note.md
 tags: []
 status: current
@@ -50,23 +50,27 @@ Types describe structure, not semantics. Semantic review expectations live on a 
 
 ## Cross-collection linking
 
-The collection determines the *register* of an artifact, and links between registers carry different meaning than links inside one. A theoretical note linking to a descriptive note is citing evidence; a descriptive note linking to a theoretical note is citing rationale. Each collection's `COLLECTION.md` carries an outbound linking table for these cases.
+The collection determines the *register* of an artifact, and links between registers carry different meaning than links inside one. A theoretical note linking to a descriptive note is citing evidence; a descriptive note linking to a theoretical note is citing rationale.
 
-To avoid every author having to read every `COLLECTION.md` before adding a link, the linking rules are compiled into one place:
+Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single authoritative source** for that collection's outbound rules. The section is organised **per destination collection** — one block per destination the source may link to. Each destination block declares two things:
 
-- **`kb/reports/collection-topology.md`** — a compiled, compact view of the collection registry plus a register-pair linking matrix. Optimized for an agent loading it into bounded context to make one decision: what relationship label to use when linking from collection A to collection B.
-- **[cp-skill-compile-collections](../instructions/cp-skill-compile-collections/SKILL.md)** — the skill that reads every `COLLECTION.md`, distills the registers, quality goals, and outbound linking tables into the topology document, and writes it to `kb/reports/collection-topology.md`. Run it when a `COLLECTION.md` changes or before a connection sweep.
-- **[cp-skill-connect](../instructions/cp-skill-connect/SKILL.md)** — the skill that loads the topology document during discovery so it can pick relationship labels appropriate to the source/target register pair without re-reading every collection's conventions.
+- **Search guidance** — when to prospect this destination from the current source. Used by the connect skill to decide breadth and by writers manually choosing where to look for link candidates.
+- **Authorised labels** — labels the writer may use for links to this destination, each with a one-line reader-need context specific to the *source → destination* pairing. Per-destination authorisation lets `kb/notes/ → kb/reference/` differ from `kb/notes/ → kb/agent-memory-systems/` even though both targets share the descriptive register.
 
-The topology document is regenerated from the `COLLECTION.md` files; treat it as cache, not source. If a linking rule needs to change, edit the relevant `COLLECTION.md` and rerun `cp-skill-compile-collections`. The compile skill is LLM-driven (it reads each `COLLECTION.md` as prose), so two runs on identical input can produce different bytes that say the same thing — that's why the trigger is "rerun on edit," not "regenerate-and-diff in CI."
+Two skills consume this directly:
 
-`commonplace-init` ships a default `kb/reports/collection-topology.md` compiled from the default `COLLECTION.md` files in the scaffold, so the connect skill works on first run. Any project that adds collections, edits a `COLLECTION.md`, or changes a register's outbound linking table is responsible for rerunning the compile skill — there is no automatic staleness check today.
+- **[cp-skill-write](../instructions/cp-skill-write/SKILL.md)** reads the source `COLLECTION.md`, treats its outbound section as the authoritative label and reader-need reference, and prospects per destination using cheap surfaces (dir-index, already-loaded context, user-named targets).
+- **[cp-skill-connect](../instructions/cp-skill-connect/SKILL.md)** reads the source `COLLECTION.md`, enumerates destination blocks, runs the full prospecting procedure on each (search guidance, dir-index, tag indexes, body search, link-following), and labels candidates from the destination's authorised set. Candidates that pass the articulation test but fall outside any authorised label go in a dedicated "Off-authorisation candidates" report section as a signal for the collection author.
+
+There is no compiled topology and no separate vocabulary document for the skills to read; live `COLLECTION.md` reads remove the drift risk a compile step would introduce. A separate authoring resource at [`link-vocabulary.md`](./link-vocabulary.md) catalogues labels and authoring guidance for `COLLECTION.md` authors revising the outbound rules; note writers and the connect skill do not read it.
+
+The architecture and the per-destination structure are pinned by [ADR-019](./adr/019-collection-owned-link-vocabulary.md) (which extends ADR 017's COLLECTION.md boundary) and [ADR-020](./adr/020-theoretical-default-contrasts-mechanism.md) (which extends ADR 009's vocabulary).
 
 ## How an artifact comes together
 
 For an existing artifact, the two axes resolve like this:
 
-1. The artifact's path identifies its collection. The collection's `COLLECTION.md` defines the writing conventions that apply, and the collection's outbound linking table (compiled into the topology) defines what relationship labels to use when linking outward.
+1. The artifact's path identifies its collection. The collection's `COLLECTION.md` defines the writing conventions that apply, and its per-destination outbound linking section defines what relationship labels to use when linking outward.
 2. The artifact's `type:` frontmatter names the path of its type-spec doc directly. The validator opens that doc, confirms it is itself a type spec (its own `type:` resolves to `kb/types/type-spec.md`), and loads the schema declared in the doc's `schema:` field — or skips schema validation when `schema:` is `null`. The schema defines what frontmatter is required and what body sections must exist; authoring prose and any template block live in the same doc.
 3. The validator checks structural conformance (type contract). Review gates check semantic conformance (the `traits` axis).
 
@@ -76,8 +80,10 @@ When authoring a new artifact, the same two decisions happen in reverse: pick th
 
 Relevant Notes:
 
-- [available-types](./available-types.md) — extends: the catalog of shipped global and collection-scoped types
-- [type-loading](./type-loading.md) — extends: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
-- [definitions/collection](./definitions/collection.md) — extends: the precise definition of "collection" with scope, exclusions, and misuse cases
-- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — grounds: the decision to keep structural types and semantic-review traits on separate axes
-- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — grounds: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
+- [available-types](./available-types.md) — part-of: the catalog of shipped global and collection-scoped types
+- [type-loading](./type-loading.md) — part-of: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
+- [definitions/collection](./definitions/collection.md) — defined-in: the precise definition of "collection" with scope, exclusions, and misuse cases
+- [link-vocabulary](./link-vocabulary.md) — part-of: the label catalogue and authoring guidance COLLECTION.md authors consult when writing outbound rules
+- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — rationale: the decision to keep structural types and semantic-review traits on separate axes
+- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — rationale: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
+- [ADR-019: collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the decision pinning the per-destination outbound structure inside COLLECTION.md and retiring the compiled topology

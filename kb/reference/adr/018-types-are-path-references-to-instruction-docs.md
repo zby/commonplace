@@ -131,7 +131,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 
 ### Scope
 
-- Does **not** change [`cp-skill-compile-collections`](../../instructions/cp-skill-compile-collections/SKILL.md). That skill compiles cross-register topology for connect/audit tooling — a cache for filesystem-expensive lookups, not authoring context assembly.
+- Does **not** change `cp-skill-compile-collections` (the cross-register topology compile skill at the time this ADR was authored — later retired by ADR 019, which moved the connect/write skills to live per-destination reads of `COLLECTION.md`).
 - Does **not** fully redesign schema storage or validator behavior. The migration requires every type-spec doc to declare its schema explicitly in frontmatter (`schema: <path>` or `schema: null`); broader schema wiring remains a future validator workshop.
 - Retires the `note` inlining from [ADR 002](./002-inline-global-types-in-writing-guide.md) as part of the whole-KB migration.
 

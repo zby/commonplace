@@ -13,7 +13,7 @@ Treat each phase as a gate: confirm it works before moving on. If a step fails, 
 
 ## Prerequisites
 
-- A workspace initialised by `commonplace-init` (ships `kb/notes/`, `kb/reference/`, `kb/instructions/`, the `cp-skill-*` family, and a pre-compiled collection topology).
+- A workspace initialised by `commonplace-init` (ships `kb/notes/`, `kb/reference/`, `kb/instructions/`, and the `cp-skill-*` family).
 - `rg` available for fast local search. No semantic-search service is required; the baseline is generated indexes plus keyword search.
 - The operator available for an interview (Phase 1 is conversational, not a form).
 
@@ -52,11 +52,11 @@ A Second Brain usually needs more. Interview the operator about what else they w
 For each agreed collection:
 
 1. Create the directory under `kb/`.
-2. Write a `COLLECTION.md` defining: register, quality goal, title conventions, scope (what belongs and what doesn't), and outbound linking conventions. Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
+2. Write a `COLLECTION.md` defining: register, quality goal, title conventions, scope (what belongs and what doesn't), and outbound linking conventions organised per destination collection (one block per destination, each declaring search guidance and authorised labels — see `kb/reference/link-vocabulary.md` for the catalogue and `kb/reference/adr/019-collection-owned-link-vocabulary.md` for the architecture). Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
 3. Distinguish library collections (value accumulates) from workshop collections (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 4. Add the collection to the routing table in `CLAUDE.md`.
 
-Run `/cp-skill-compile-collections` once all new `COLLECTION.md` files are written. This rebuilds the topology document the connect skill relies on.
+The write and connect skills read each new `COLLECTION.md` directly — there is no compile step to run after editing.
 
 **Verify Phase 1**: every new collection has a `COLLECTION.md` whose register and quality goal an agent could state without re-reading. The routing table in `CLAUDE.md` mentions every collection. `me.md` exists, validates, and has at least one connection.
 

@@ -41,9 +41,7 @@ SCAFFOLD_TREES = [
 
 # Individual scaffold files to copy. Used when only one file from a tree is
 # scaffolded (avoiding a full tree walk that would copy unrelated content).
-SCAFFOLD_FILES = [
-    ("kb/reports/collection-topology.md", "kb/reports/collection-topology.md"),
-]
+SCAFFOLD_FILES: list[tuple[str, str]] = []
 
 # Skills directories for supported runtimes.
 SKILLS_DIRS = [
@@ -52,7 +50,6 @@ SKILLS_DIRS = [
 ]
 
 PROMOTED_SKILLS = [
-    "cp-skill-compile-collections",
     "cp-skill-write",
     "cp-skill-validate",
     "cp-skill-connect",

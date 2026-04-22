@@ -54,7 +54,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "types" / "instruction.md").is_file()
     assert not (tmp_path / "kb" / "types" / "instruction.instructions.md").exists()
     assert (tmp_path / "kb" / "types" / "instruction.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "reports" / "collection-topology.md").is_file()
+    assert not (tmp_path / "kb" / "reports" / "collection-topology.md").exists()
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.md").is_file()
     assert not (tmp_path / "kb" / "reports" / "types" / "connect-report.instructions.md").exists()
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml").is_file()
