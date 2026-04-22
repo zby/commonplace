@@ -82,9 +82,9 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "Connect `kb/notes/my-new-note.md` to related notes."
 - "I just wrote a note on X. Find what it should link to."
 
-*What happens.* The agent searches for candidates by tag, description, keywords, and semantic similarity, evaluates the relationship label, and edits notes or produces a connection report.
+*What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (dir-index, tag indexes, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
 
-*What you get.* Updated "Relevant Notes" sections on the target and its neighbours, plus any required index updates.
+*What you get.* A report at `kb/reports/connect/<collection>/<note-name>.connect.md` (gitignored) listing candidate outbound edges, bidirectional candidates, reverse-edge candidates (notes that should link *to* this target under their own COLLECTION.md rules), off-authorisation candidates (articulated but outside the authorised label set), index memberships, synthesis opportunities, and a discovery trace. Review the candidates and apply the ones worth keeping — connect never mutates the source, so applying the suggestions is a separate step.
 
 *Limitations.* Relationship labels are judgment calls and sometimes need correction. Connection is often underdone at write time, so running connect explicitly on new notes is a reasonable habit.
 
@@ -185,9 +185,10 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 ### Type system and collection model
 
-- [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, link rules) and types (structural contracts) compose, and how the connect/compile-collections skills consume the topology
+- [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, per-destination outbound rules) and types (structural contracts) compose, and how the connect/write skills read each source `COLLECTION.md` directly for linking rules
 - [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
+- [link-vocabulary.md](./link-vocabulary.md) — label catalogue and authoring guidance for `COLLECTION.md` authors writing outbound rules (note writers and the connect skill don't read this; they read the collection's own `COLLECTION.md`)
 - [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 
 ### Authoring and operator procedures
@@ -207,6 +208,8 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
 - [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
+- [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per destination collection, and why the connect/write skills read it directly instead of a compiled topology
+- [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle for the theoretical register
 
 ## Collection boundary
 

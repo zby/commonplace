@@ -41,6 +41,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/adr/` — architecture decision records for the shipped commonplace system
+- `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 - `kb/sources/index.md` — auto-generated source listing
 
 ## Vocabulary
