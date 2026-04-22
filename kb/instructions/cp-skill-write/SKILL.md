@@ -27,7 +27,7 @@ For new writes, read the target collection's `## Types` section in `kb/<collecti
 
 ### Step 2 - Load Collection Conventions
 
-Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions.
+Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. The "Outbound linking conventions" section is organised per destination collection: each destination block declares **when to prospect that destination for link candidates** (search guidance) and **which labels you may use with what reader-need** (the authorised set). Treat it as authoritative — there is no separate linking doc to consult.
 
 **Hard fail** if `kb/<collection>/COLLECTION.md` does not exist. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 
@@ -41,7 +41,15 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 
 ### Step 4 - Search Before Writing
 
-Search the target collection first, then `kb/notes/` if different. Read closest matches to avoid duplication and find connection points. In edit mode, also search for notes linking to the target.
+Unless the user requests otherwise, the write flow does not run active discovery. Link candidates come from three cheap sources, in order:
+
+1. **Destination `dir-index.md`.** For each destination block in the source `COLLECTION.md`, read that destination's `dir-index.md` once. Titles and descriptions are the full surface — enough to catch near-duplicates in the target collection and enough to surface obvious connection points in other destinations. Do not open candidate notes to inspect their bodies unless the dir-index line itself is a match.
+2. **Context already loaded.** Notes, sources, and ingests that were pulled into the session for this write are first-class candidates. If it was worth reading, it is worth considering as a link.
+3. **User-named targets.** Link targets the user mentions in the prompt.
+
+In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
+
+Active prospecting (body search, tag traversal, link-following, reverse-edge reasoning) belongs to `cp-skill-connect`, not here.
 
 ### Step 5 - Draft And Save
 
@@ -59,7 +67,9 @@ Run targeted validation on the written or edited artifact, not the whole KB:
 commonplace-validate path/to/written-file.md
 ```
 
-If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Bare `commonplace-validate kb` and `commonplace-validate all` are rejected — scope must be a specific collection or file. Fix structural failures in the touched artifacts before stopping. Suggest `cp-skill-connect` as the next step when connection discovery would help.
+If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Bare `commonplace-validate kb` and `commonplace-validate all` are rejected — scope must be a specific collection or file. Fix structural failures in the touched artifacts before stopping.
+
+Then suggest `cp-skill-connect` as the next step. Step 4 commits links the author already had reason to believe in (dir-index, loaded context, user-named); the rest of the note's share of the graph — body-search candidates, tag-traversal hits, link-following, reverse-edge candidates from other collections — only surfaces under the connect skill. The suggestion is not optional polish.
 
 ## Universal Mechanics
 
@@ -69,7 +79,11 @@ These apply to all typed artifacts regardless of collection.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
-**Links** use relative markdown paths from the source file. Prefer inline links as prose. Footer links for connections outside prose should carry a relationship annotation (`extends`, `foundation`, `contradicts`, `enables`, `example`). Every link must point to a real file.
+**Links.** Use relative markdown paths from the source file. Every link must point to a real file.
+
+Position encodes commitment. **Inline** prose connectors (`since [X](./x.md)`, `because [X](./x.md)`, `but [X](./x.md)`) are strongest — the target is a premise of the current argument. **Footer** links carry an explicit label and context phrase: `- [title](./path.md) — label: context phrase`.
+
+The collection's `COLLECTION.md` authorises labels per destination and names the reader-need each label serves. Pick a label whose reader-need matches the link's purpose; write the context phrase to answer *"[source] connects to [target] because [specific reason]."* If no authorised label fits, the candidate is off-scope for this collection — drop the link or raise it to the collection author to extend the authorisation.
 
 **Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 100 chars.
 
