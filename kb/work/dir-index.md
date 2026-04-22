@@ -17,7 +17,6 @@ index_source: directory
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)
 - [information-measures/](./information-measures/dir-index.md)
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/dir-index.md)
-- [link-vocabulary-architecture/](./link-vocabulary-architecture/dir-index.md)
 - [obsidian-affordances/](./obsidian-affordances/dir-index.md)
 - [paper-bounded-context-orchestration/](./paper-bounded-context-orchestration/dir-index.md)
 - [philosophy-borrowing/](./philosophy-borrowing/dir-index.md)

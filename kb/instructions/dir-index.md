@@ -10,7 +10,6 @@ index_source: directory
 
 ## Subdirectories
 
-- [cp-skill-compile-collections/](./cp-skill-compile-collections/SKILL.md)
 - [cp-skill-connect/](./cp-skill-connect/SKILL.md)
 - [cp-skill-convert/](./cp-skill-convert/SKILL.md)
 - [cp-skill-ingest/](./cp-skill-ingest/SKILL.md)

@@ -55,4 +55,5 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Other tagged notes <!-- generated -->
 
+- [Links encode conditional possibilities, not obligations](./links-encode-conditional-possibilities-not-obligations.md) - Links encode conditional possibilities, not obligations — every label must name a specific reader-need (the condition under which following pays off); content required for all reachable readers should be inlined, not linked
 - [Pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) - Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline

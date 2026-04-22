@@ -19,7 +19,7 @@ ADR 009 adopted a small universal link vocabulary (`extends`, `grounds`, `contra
 2. **The compiled topology drifted.** `cp-skill-connect` reads `kb/reports/collection-topology.md`, a register × register matrix built by `cp-skill-compile-collections` from each `COLLECTION.md`'s outbound table. The compiled form loses per-destination fidelity and lags the source files.
 3. **Label theory is weak.** The [link-label audit](../../notes/links-encode-conditional-possibilities-not-obligations.md) finds that labels earn their place only when they name a specific reader-need. A single universal vocabulary commits every collection to the same reader-need taxonomy regardless of what its readers actually want; per-destination rules let collections experiment.
 
-The [link-label audit](../../work/link-vocabulary-architecture/label-audit.md) retrofitted every label in the current and proposed vocabularies against the reader-need test. Results: drop `cross-reference` (no specific need); merge `rationale` + `justification` into `rationale` (same need, source register recoverable from the graph); fold `describes` into `part-of` or `see-also` per case.
+A label-by-label audit (closed out in this ADR and the catalogue) retrofitted every label in the current and proposed vocabularies against the reader-need test. Results: drop `cross-reference` (no specific need); merge `rationale` + `justification` into `rationale` (same need, source register recoverable from the graph); fold `describes` into `part-of` or `see-also` per case. The corpus the audit ran on is the [link-vocabulary report](../link-vocabulary.md).
 
 ## Decision
 
