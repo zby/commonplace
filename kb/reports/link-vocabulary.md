@@ -1,5 +1,5 @@
 ---
-description: "Machine-generated audit of link-relationship labels used across KB footer annotations. Rebuild with kb/work/link-vocabulary-architecture/extract_labels.py."
+description: "Frozen audit snapshot of link-relationship labels used across KB footer annotations. Generator script retired; kept as evidence for the link-vocabulary-architecture workshop and ADR 018 draft."
 type: kb/types/note.md
 status: current
 ---

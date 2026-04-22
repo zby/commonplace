@@ -2,7 +2,7 @@
 
 > Workshop draft. Delta from current `kb/notes/COLLECTION.md`:
 > - Outbound linking section reorganised **per destination collection** rather than by register. Each destination block declares when the connect skill should search it and which labels writers may use.
-> - Intra-collection labels align with the seven canonical labels (ADR 009 + ADR 018 draft), replacing the current informal mix of `since / because / contradicts / extends / qualifies`.
+> - Intra-collection labels align with the seven theoretical-default labels (ADR 009 + ADR 018 draft additions), replacing the current informal mix of `since / because / contradicts / extends / qualifies`.
 > - Cross-collection labels selected from the shared catalogue in [`link-vocabulary.md`](./link-vocabulary.md). This `COLLECTION.md` is authoritative for writers; `link-vocabulary.md` is a resource for `COLLECTION.md` authors.
 > - All other sections unchanged.
 

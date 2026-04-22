@@ -1,5 +1,5 @@
 ---
-description: "Extends ADR 009 by promoting `contrasts` and `mechanism` into the link relationship vocabulary on corpus evidence, and explicitly declares the directional-asymmetry principle that governs how the vocabulary is authored and read."
+description: "Adds `contrasts` and `mechanism` to the theoretical-register default template on corpus evidence, and declares the directional-asymmetry principle that governs how the theoretical vocabulary is authored and read."
 type: kb/reference/types/adr.md
 tags: []
 status: proposed
@@ -11,11 +11,13 @@ status: proposed
 **Date:** 2026-04-19
 **Extends:** [ADR-009](../../reference/adr/009-link-relationship-semantics.md)
 
+**Scope.** This ADR's additions land in the theoretical-register default template (as recorded in the catalogue at [`link-vocabulary.md`](./link-vocabulary.md), pending its library fold-in at `kb/reference/link-vocabulary.md`). Cross-register labels (`rationale`, `evidence`, `procedure`, `operates-on`, `defined-in`) are a separate concern handled by the catalogue and selected per destination in each `COLLECTION.md`; this ADR does not speak to them.
+
 ## Context
 
 ADR 009 adopted a five-label vocabulary (`extends`, `grounds`/`foundation`, `contradicts`, `enables`, `exemplifies`/`example`) and committed to slow, evidence-driven expansion.
 
-The [link-label audit](./findings.md) extracted every `- [title](path) — label:` footer annotation across `kb/**/*.md` (3420 matches, 32 source/target register pairs, 236 distinct labels). Most off-vocabulary labels fold into existing ADR 009 aliases — `sharpens`/`refines`/`clarifies` collapse into `extends`'s "refines" sense; `applies`/`instance` into `exemplifies`; `motivates` into `grounds`; `tension` into `contradicts`. Two candidates survive with genuine semantic daylight.
+The [link-label audit](./findings.md) extracted every `- [title](path) — label:` footer annotation across `kb/**/*.md` (3420 matches, 32 source/target register pairs, 236 distinct labels). The extraction was done with a one-off Python script that walked the KB and classified labels by source/target collection; the script has since been retired, the snapshot it produced ([`kb/reports/link-vocabulary.md`](../../reports/link-vocabulary.md)) preserved as evidence. Most off-vocabulary labels fold into existing ADR 009 aliases — `sharpens`/`refines`/`clarifies` collapse into `extends`'s "refines" sense; `applies`/`instance` into `exemplifies`; `motivates` into `grounds`; `tension` into `contradicts`. Two candidates survive with genuine semantic daylight.
 
 ### `contrasts` occupies a slot no ADR 009 label covers
 
@@ -39,7 +41,7 @@ The audit also surfaced that ADR 009's vocabulary is directionally asymmetric by
 
 ### Additions
 
-Promote two labels to the canonical vocabulary, bringing the total to seven:
+Add two labels to the theoretical-register default template. Collections adopting that template (currently `kb/notes/`) will surface these for authoring; collections with their own declared grammar pick them up only if their `COLLECTION.md` authors opt in.
 
 - **contrasts** — names a difference between peers on a specified axis, without claiming either is wrong. Self-dual.
 - **mechanism** — target is the operational principle or machinery that makes the source's claim work. Upstream-pointing (target is more operationally fundamental than source).
@@ -73,15 +75,17 @@ These are pair-level relationships with low fan-out. Both ends may legitimately 
 
 Upstream notes *may* link downstream selectively — to index a canonical application, to pin a key example, to flag a known tension. This is editorial curation, not inverse-duty. It does not scale with fan-out and is a conscious per-note decision.
 
-### Label folds
+### Label folds (theoretical defaults)
 
-The audit surfaced off-vocabulary labels that fold cleanly into existing canonical labels or aliases. These are recorded so authors drifting toward them are redirected rather than the vocabulary being extended:
+The audit surfaced off-vocabulary labels that fold cleanly into existing theoretical-default labels or aliases. These are recorded so authors drifting toward them are redirected:
 
 - `sharpens`, `refines`, `clarifies` → `extends` (covers "builds on, adds a dimension to, refines")
-- `motivates`, `rationale`, `justification` → `grounds`
+- `motivates` → `grounds`
 - `applies`, `instance`, `application` → `exemplifies`
 - `complements`, `consequence`, `sibling` → `extends` or `see-also` for pure navigation
 - `tension`, `challenges` → `contradicts`
+
+Not folded: `rationale` and `justification` are **kept distinct** in the catalogue as cross-register labels (descriptive / prescriptive → theoretical, with the reader-need *"why does this design/rule exist?"*). They do not collapse into `grounds`, which is intra-theoretical.
 
 ## Consequences
 
@@ -99,13 +103,13 @@ The audit surfaced off-vocabulary labels that fold cleanly into existing canonic
 
 ### Not changing
 
-- ADR 009 remains canonical; this ADR extends rather than supersedes.
+- ADR 009's decisions for the theoretical default remain in force; this ADR extends rather than supersedes.
 - Backlinks remain auto-computed; upstream notes are not required to carry forward links back to their users.
-- The per-collection outbound tables in `COLLECTION.md` files are updated separately to list the new labels on edges where they fire.
+- Per-destination outbound blocks in each `COLLECTION.md` are updated separately to list the new labels on edges where they fire.
 
 ### Update discipline
 
-The operational distillation of this vocabulary is embedded inside `kb/instructions/cp-skill-write/SKILL.md` rather than living in a standalone library doc (to avoid drift from canon). Any future change to ADR 009 or ADR 018 that touches the vocabulary **must** re-sync that embedded section as part of the same edit.
+The operational distillation of this vocabulary lives in the [`link-vocabulary.md`](./link-vocabulary.md) catalogue (final library path: `kb/reference/link-vocabulary.md`), which `COLLECTION.md` authors consult when authoring outbound rules. Authoritative per-source rules live in each `COLLECTION.md`'s outbound-linking section. Note writers and the connect skill read only the collection's `COLLECTION.md` — they do not read the catalogue. Any future change to ADR 009 or ADR 018 that touches the theoretical default **must** re-sync the catalogue *and* any `COLLECTION.md` files whose authorised labels reflect the change, in the same edit.
 
 ---
 

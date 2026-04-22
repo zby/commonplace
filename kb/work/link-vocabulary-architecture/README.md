@@ -2,7 +2,7 @@
 
 ## Question
 
-Link vocabulary currently lives in several places that disagree: [ADR 009](../../reference/adr/009-link-relationship-semantics.md) declares five canonical labels (extended toward seven in [ADR 018 draft](./adr-018-draft.md)); each `COLLECTION.md` has an outbound table; and [`linking-conventions.md`](./linking-conventions.md) compresses the vocabulary for embedding in `cp-skill-write`. The existing design treats the seven labels as universal and lets `COLLECTION.md` narrow per edge. An alternative architecture fits the observed drift better and serves the connect skill's needs: **each `COLLECTION.md` declares outbound rules per destination collection** (search guidance + authorised labels), selecting from a shared [link-vocabulary.md](./link-vocabulary.md) catalogue. The theory of links is weak; per-destination rules enable fine-grained experimentation and give the connect skill a concrete map of where to search for link targets.
+Link vocabulary currently lives in several places that disagree: [ADR 009](../../reference/adr/009-link-relationship-semantics.md) declares five canonical labels (extended toward seven in [ADR 018 draft](./adr-018-draft.md)) and each `COLLECTION.md` has an outbound table. The existing design treats the seven labels as universal and lets `COLLECTION.md` narrow per edge. An alternative architecture fits the observed drift better and serves the connect skill's needs: **each `COLLECTION.md` declares outbound rules per destination collection** (search guidance + authorised labels), selecting from a shared [link-vocabulary.md](./link-vocabulary.md) catalogue. The theory of links is weak; per-destination rules enable fine-grained experimentation and give the connect skill a concrete map of where to search for link targets.
 
 ("Register" throughout this workshop means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../../notes/definitions/register.md).)
 
@@ -45,7 +45,6 @@ Each label in the proposed vocabularies is retrofitted against this theory in [`
 
 - [ADR 009](../../reference/adr/009-link-relationship-semantics.md) — declares five canonical labels. Under this proposal, ADR 009 records the default template for theoretical collections. `kb/notes/` adopts it; future theoretical collections may copy and adapt.
 - [ADR 018 draft](./adr-018-draft.md) — proposes `mechanism` and `contrasts`. Complementary: extensions fit inside the theoretical register's default template.
-- [`linking-conventions.md`](./linking-conventions.md) — operational distillation. Under this proposal, the skill still carries a teaching version, but defers to the authoring collection's `COLLECTION.md` and the shared cross-register toolkit for canonical definitions.
 - [`linking-theory.md`](../../notes/linking-theory.md) open question *"Is the vocabulary the right one?"* — reframes to *"one universal vocabulary, or a shared catalogue with per-destination selections in each collection?"*
 - [`findings.md`](./findings.md) — corpus drift analysis (3420 footer links, 236 distinct labels) that drove `mechanism` and `contrasts` adoption. Informs which labels the register-level defaults should include.
 
@@ -57,11 +56,14 @@ Each label in the proposed vocabularies is retrofitted against this theory in [`
 4. Retrofit each label against the theory — `label-audit.md`.
 5. Apply audit recommendations to the proposed drafts (drops, merges, folds).
 6. Design the consuming connect skill for per-destination discovery — [`connect-skill-design.md`](./connect-skill-design.md).
-7. Decide: fold into library, iterate, or abandon.
+7. Design the write-skill update so linking guidance defers to `COLLECTION.md` — [`write-skill-design.md`](./write-skill-design.md).
+8. Plan the fold-in — [`migration-plan.md`](./migration-plan.md).
+9. Decide: fold into library, iterate, or abandon.
 
 ## What closes this workshop
 
 - Four proposed `COLLECTION.md` revisions reviewed; each either merged into library or rejected with reasons.
 - A decision about where `link-vocabulary.md` lives in the library (candidates: `kb/reference/link-vocabulary.md`, absorbed into `kb/notes/links-index.md`, or split between `kb/reference/` and `kb/instructions/`).
 - `cp-skill-connect/SKILL.md` rewritten per [`connect-skill-design.md`](./connect-skill-design.md); `kb/reports/collection-topology.md` and `cp-skill-compile-collections` retired.
+- `cp-skill-write/SKILL.md` updated per [`write-skill-design.md`](./write-skill-design.md); embedded link-vocabulary block retired.
 - ADR 009 either updated, superseded, or explicitly left as-is with rationale for how it composes with this architecture.

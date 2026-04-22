@@ -16,7 +16,7 @@ The architecture is deliberately loose. The theory of links is weak — experime
 
 Organise the outbound-linking section **per destination collection**, not per register. For each collection your source links to, declare:
 
-1. **Search guidance** — when the [connect skill](../../instructions/connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
+1. **Search guidance** — when the [connect skill](../../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
 
 If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link to collections outside the authorised set.
