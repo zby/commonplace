@@ -15,7 +15,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [harness-taxonomy-convergence](./harness-taxonomy-convergence/README.md) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split
 - [agent-memory-design](./agent-memory-design/README.md) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
 - [philosophy-borrowing](./philosophy-borrowing/README.md) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
-- [link-vocabulary-architecture](./link-vocabulary-architecture/README.md) — reorganising link vocabulary so each COLLECTION.md owns outbound rules per destination collection; proposes a shared catalogue, per-destination search guidance for the connect skill, and frontloading-strict rules for instructions
 - [agent-complexity-theory](./agent-complexity-theory/README.md) — formal consequences of the bounded-context orchestration model; candidate theorem sketches for academic collaboration
 - [write-type-resolver](./write-type-resolver/README.md) — migrating `type:` from an enum-string to a path-valued pointer addressing a hand-authored instructions doc per type
 - [semantic-search-replacement](./semantic-search-replacement/README.md) — evaluating whether to replace qmd as the semantic-search layer, and with what
