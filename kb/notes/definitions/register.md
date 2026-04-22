@@ -23,6 +23,10 @@ Registers are orthogonal to operational roles (what an artifact *does* in the sy
 
 Two properties make the distinction real: the **formulation constraint** (theories must be statable in general terms, without referencing a particular system) and **maintenance asymmetry** (changes flow downstream from theory through prescriptions into descriptions).
 
+Register shapes link vocabulary through defaults, not inheritance. Each register has a characteristic link grammar — inference labels (extends, grounds, mechanism, contrasts) for theoretical, structural labels (part-of, implements) for descriptive, operational labels (composition, precondition, invokes) for prescriptive. These are *defaults* offered as starting templates when a new collection is authored; the authoritative home of a collection's outbound grammar is its own `COLLECTION.md`, not the register. Collections can diverge from the register default when their work requires it.
+
+Cross-register links use a shared, smaller vocabulary (rationale, evidence, procedure, operates-on, defined-in) drawn from a common catalogue. A reader crossing a register boundary typically has a different unmet need (operational vs. evidential vs. definitional) than one moving within, and both endpoints need to recognise the label — so the vocabulary is shared across collections rather than owned by any single one.
+
 ---
 
 Relevant Notes:
