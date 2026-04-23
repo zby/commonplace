@@ -10,7 +10,7 @@ status: seedling
 
 An LLM's context is assembled by concatenating system prompts, skill bodies, user messages, and tool outputs into a single token stream. Everything is global: every token is visible to every other token, with no way to say "this binding is local to this skill" or "this tool output should not influence instruction interpretation."
 
-This is not even dynamic scoping, which at least maintains a stack with push and pop. Flat concatenation is the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) with no structure imposed on top — yet it produces dynamic scoping's pathologies, and the analogy to dynamically scoped Lisp clarifies them:
+This is not even dynamic scoping (name bindings resolved through the call stack rather than the source structure), which at least maintains a stack with push and pop. Flat concatenation is the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) (instructions and data share one representation) with no structure imposed on top, yet it produces dynamic scoping's pathologies — and the Lisp analogy still clarifies them:
 
 **Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
 
@@ -20,7 +20,7 @@ This is not even dynamic scoping, which at least maintains a stack with push and
 
 ## The capture problem
 
-Flat concatenation creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." The data-level use of "summarize" captures the instruction-level meaning. This is a hygiene failure that leads to prompt injection — the same problem Scheme's hygienic macros solve for code generation.
+Flat concatenation creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." The data-level use of "summarize" captures the instruction-level meaning. This is a hygiene failure that leads to prompt injection — the same problem Scheme's hygienic macros (macros that rewrite code without accidentally capturing names from the call site) solve for code generation.
 
 ## Within-frame hygiene
 
@@ -44,9 +44,9 @@ At invocation time this surfaces as a design choice — **flat (parent context)*
 
 **Sub-agents** are the canonical architectural move: code outside the LLM constructs a fresh flat context, the LLM sees only that, and the scope lives in the orchestration code rather than in the LLM itself.
 
-This is one specialization of the general constraining argument in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — enforcement is the qualitative reason to move a property to code, distinct from the quantitative reasons (cost, latency, reliability). The error-profile version is [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md): bookkeeping has catastrophic error cost on the semantic substrate and zero error cost on the symbolic substrate, which is why all bookkeeping — scope included — belongs on the symbolic side.
+This is one specialization of the general constraining argument in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — enforcement is the qualitative reason to move a property to code, distinct from the quantitative reasons (cost, latency, reliability). The error-profile version is [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md): bookkeeping has catastrophic error cost on the semantic substrate (the LLM) and zero error cost on the symbolic substrate (the surrounding code). Scope is bookkeeping, so it belongs on the symbolic side.
 
-Empirical validation comes from ConvexBench ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)): LLMs verifying convexity of composed functions collapse from F1=1.0 to F1≈0.2 at depth 100, even though the total token count (~5,331) is trivial relative to the context window. The failure is compositional reasoning depth, not token capacity — each recursive step conditions on an expanding history that dilutes attention on the current step. Pruning to retain only direct dependencies at each sub-step (one clean frame per call) recovers F1=1.0 at all depths.
+Empirical validation comes from ConvexBench ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)), a benchmark for recognizing convexity in deeply composed symbolic functions: LLMs collapse from F1=1.0 to F1≈0.2 at depth 100, even though the total token count (~5,331) is trivial relative to the context window. The failure is compositional reasoning depth, not token capacity — each recursive step conditions on an expanding history that dilutes attention on the current step. Pruning to retain only direct dependencies at each sub-step (one clean frame per call) recovers F1=1.0 at all depths.
 
 ---
 
