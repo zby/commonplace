@@ -11,7 +11,6 @@ index_source: directory
 ## Subdirectories
 
 - [agent-complexity-theory/](./agent-complexity-theory/dir-index.md)
-- [agent-memory-design/](./agent-memory-design/dir-index.md)
 - [curiosity-prompts/](./curiosity-prompts/dir-index.md)
 - [gate-refactor/](./gate-refactor/dir-index.md)
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)

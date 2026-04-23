@@ -40,7 +40,7 @@ The reason is that **"what to store" is not easy to answer from inputs alone**. 
 2. How does the output spec itself get maintained? If goals drift, the whole criterion drifts with them — who audits the Goals section, and how often?
 3. Where does input-driven make sense even in this KB? (Log entries? First-occurrence observations that haven't yet been understood as mechanisms?)
 4. Does the output-driven stance break down at the boundary where the KB's purpose is itself uncertain or exploratory?
-5. Relationship to the [agent-memory-design workshop](../agent-memory-design/README.md): that workshop asks *what architecture* makes store-everything + selective-loading work. This workshop is upstream — it asks *whether you should be storing everything in the first place*, or only what the output spec calls for.
+5. Relationship to [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) (graduated from the former `agent-memory-design` workshop): that design asks *what architecture* makes store-everything + selective-loading work. This workshop is upstream — it asks *whether you should be storing everything in the first place*, or only what the output spec calls for.
 
 ## Graduated artifacts
 

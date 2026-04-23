@@ -45,6 +45,7 @@ Traits route semantic review. They do not change structural validation.
 | `has-comparison` | The note compares alternatives. |
 | `has-external-sources` | The note cites material outside the project. |
 | `has-implementation` | The note includes implementation sketches or code-facing detail. |
+| `synthesis` | The note composes multiple cited claims into a unified argument; cite as a unit and expect inline restatement. Waives the default body-composability rule. |
 
 ## Writing Shape
 

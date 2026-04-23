@@ -1,3 +1,11 @@
+---
+description: Design study of an ideal agent memory system under store-everything premise — four-layer architecture (trace/observation/episode/library), role-split retrieval, typed cue indexes, session-log extraction pipeline
+type: kb/types/note.md
+traits: [synthesis, has-external-sources]
+tags: [agent-memory, context-engineering, learning-theory]
+status: current
+---
+
 # Designing a Memory System for LLM-Based Agents
 
 ## The core insight: storage is cheap, context is scarce
@@ -12,16 +20,16 @@ This produces a design inversion. In traditional systems, you optimize storage a
 
 ## Memory plays two roles
 
-A memory system for agents is not doing one thing. It is doing two things that look superficially similar but differ in how the stored content is consumed, how it is retrieved, and what a durable write changes about the system's behavior. The [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) names this as the **role** axis: artifacts are consumed in either a **knowledge role** (as fact — durable writes grow the agent's reach) or a **system-definition role** (as policy — durable writes change the agent's disposition).
+A memory system for agents is not doing one thing. It is doing two things that look superficially similar but differ in how the stored content is consumed, how it is retrieved, and what a durable write changes about the system's behavior. The [axes of artifact analysis](./axes-of-artifact-analysis.md) names this as the **role** axis: artifacts are consumed in either a **knowledge role** (as fact — durable writes grow the agent's reach) or a **system-definition role** (as policy — durable writes change the agent's disposition).
 
 The distinction is relational, not structural. The same stored bytes can play either role depending on the consumer. A note documenting "we use URL-path versioning" is knowledge when retrieved to answer "how do we version APIs?" and system-definition when loaded to steer the agent's next API design.
 
 For agent memory, the two roles motivate different machinery:
 
 - **Knowledge retrieval** answers questions posed at consumption time. It fits navigation: start with a question, follow links, reason along connections. Standard RAG optimizes for this. Failure mode: the retrieval never happens because no one asked the question.
-- **System-definition activation** injects policy when a matching situation occurs. It fits triggered activation: watch for cues in the agent's proposed action, surface the constraint before commitment. This is the territory the [activation gap](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) note targets. Failure mode: relevant policy is stored but never fires.
+- **System-definition activation** injects policy when a matching situation occurs. It fits triggered activation: watch for cues in the agent's proposed action, surface the constraint before commitment. This is the territory the [activation gap](./knowledge-storage-does-not-imply-contextual-activation.md) note targets. Failure mode: relevant policy is stored but never fires.
 
-Most existing agent-memory systems optimize for knowledge-role retrieval (RAG over stored facts) and underserve the system-definition role — which is [the open half of continual learning](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md). "Adding RAG is learning" is true for the knowledge role and empty for the system-definition role.
+Most existing agent-memory systems optimize for knowledge-role retrieval (RAG over stored facts) and underserve the system-definition role — which is [the open half of continual learning](./continual-learning-open-problem-is-behaviour-not-knowledge.md). "Adding RAG is learning" is true for the knowledge role and empty for the system-definition role.
 
 Session logs are the common substrate. A single correction in session 47 can produce **both** a knowledge artifact (an ADR that answers "why do we use approach B?") and a system-definition artifact (a cue that fires when a future session proposes approach A). The extraction pipeline must produce artifacts in both roles and the retrieval machinery must serve both consumption patterns.
 
@@ -290,6 +298,18 @@ Reach behaves asymmetrically across roles. A knowledge artifact is worth promoti
 But you often cannot tell the reach of an observation when you first make it. The connection pool race condition might be a one-off, or it might be the third instance of a pattern where async resource pools need explicit shutdown ordering. Reach is revealed by accumulation: when multiple low-reach observations cluster around the same structural pattern, the pattern has high reach and should graduate.
 
 This creates a two-phase dynamic: accumulate promiscuously (because you do not know what is low-reach yet), then graduate based on revealed reach. The reach-revealing mechanism is exactly the recognition step from the promotion pipeline.
+
+## Alternatives considered
+
+Four exploration branches shaped the design. Each considered alternatives that were ultimately folded into the structure above; they are recorded here rather than separately to preserve the "why not otherwise" trail without duplicating their content.
+
+**Three layers instead of four.** An earlier version collapsed observation and episode into a single "indexed memory" layer distinguished by type tag. Rejected because atomic lookup ("has this correction been given before?") and narrative retrieval ("what happened when we tried this approach?") have different indexing strategies, and forcing one interface to serve both adds complexity without payoff. The two share storage but stay conceptually distinct.
+
+**Retrieval as a single unified pipeline.** The knowledge and system-definition roles were initially treated as two phases of the same search-and-rank flow. Rejected because the consumers differ fundamentally: a question-asker navigates from a query, while an acting agent needs policy injected without asking. They share the observation store but run as parallel pipelines — search plus navigation for knowledge, triggered activation for system-definition.
+
+**Extraction at ingestion time only, no backfill.** An alternative kept cue extraction per-session at session end and never revisited older traces. Rejected because it couples capture speed to extraction quality. Retaining raw traces and decoupling extraction from capture is the structural advantage of "store everything" — the pipeline can be rerun, improved, and backfilled as techniques advance.
+
+**Memory/project boundary as a binary split.** A simpler model classified each artifact as "project" or "memory" and routed it to one store. Rejected because the real boundary is patterned across the class/role grid rather than falling along artifact kind — the same class of content appears in both places with different operational purposes. The adopted framing treats the memory system as the substrate from which project artifacts are distilled, not a parallel store.
 
 ## What remains open
 

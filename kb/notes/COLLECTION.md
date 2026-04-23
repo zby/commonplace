@@ -28,6 +28,8 @@ Add the `title-as-claim` trait when using one, so review gates check the promise
 
 **Body composability.** Another note should be able to cite this one as a premise without inheriting unrelated claims or examples. If a second cluster would poison imports, split it off or move it to `kb/work/`.
 
+Exception: notes with the `synthesis` trait weave multiple cited claims into a single argument and are cited as a unit. Component claims that need to stand as citable premises should be extracted into their own notes.
+
 Exceptions to claim titles: multi-claim specs, definitions, indexes, seedlings not ready to assert.
 
 ## Outbound links

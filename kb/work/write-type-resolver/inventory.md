@@ -198,7 +198,6 @@ Generated: 2026-04-20
 - `kb/tasks/recurring/dir-index.md`
 - `kb/types/index.template.md`
 - `kb/work/agent-complexity-theory/dir-index.md`
-- `kb/work/agent-memory-design/dir-index.md`
 - `kb/work/curiosity-prompts/dir-index.md`
 - `kb/work/dir-index.md`
 - `kb/work/gate-refactor/dir-index.md`

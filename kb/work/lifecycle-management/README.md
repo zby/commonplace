@@ -8,7 +8,9 @@ What life-cycle does a KB artifact travel — from workshop intake through promo
 
 The KB has strong conventions for the two poles: workshops (temporal, value-consumed) and the library (durable, value-accumulated). The transitions between and within them are only sketched. [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) names the bridges but leaves the mechanics open.
 
-Concrete trigger: some workshops — `agent-memory-design` is the clearest case — feel like coherent wholes rather than a pile of extractable claims. The current closure protocol in [kb/work/COLLECTION.md](../COLLECTION.md) ("extract durable conclusions, delete the workshop") assumes atomization works. When a workshop reads as a monograph, atomization would destroy the structure that makes it useful. Where does such a workshop land?
+Concrete trigger: some workshops — `agent-memory-design` was the clearest case — feel like coherent wholes rather than a pile of extractable claims. The current closure protocol in [kb/work/COLLECTION.md](../COLLECTION.md) ("extract durable conclusions, delete the workshop") assumes atomization works. When a workshop reads as a monograph, atomization would destroy the structure that makes it useful. Where does such a workshop land?
+
+**Resolution for `agent-memory-design` (2026-04-23):** promoted as a single `kb/notes/designing-agent-memory-systems.md` carrying the new `synthesis` trait. The trait waives `kb/notes/`'s default body-composability rule for the note (cite as unit; extract component claims into their own notes if they need to be cited as premises). The four `explore-*` workshop files were folded into an "Alternatives considered" section within the promoted note and then deleted. This exercises one closure pathway — whole-thing promotion via a trait — and leaves the broader map below still to complete.
 
 We start from workshops because that is where we have the most active practice. The aim is a map of stages and transitions across the whole KB, not just workshop intake.
 
@@ -31,9 +33,9 @@ We start from workshops because that is where we have the most active practice. 
    - A new collection type for extended theoretical artifacts — "monographs," "design studies," "theory bundles." Would need its own `COLLECTION.md`, register, and linking rules.
    - Something else.
 
-   `agent-memory-design` is the concrete test case — whichever answer we pick has to accommodate it without breaking it.
+   `agent-memory-design` was the concrete test case. It landed as option (d): **single-file promotion with a `synthesis` trait** — neither a sub-directory nor a new collection, because the workshop reduced to one durable artifact once the explore-* files were folded into an "Alternatives considered" section.
 
-   **Current lean (2026-04-23): experiment with the sub-directory option first.** Cheapest to try, reversible, and reuses the existing `kb/notes/` machinery. The monograph-collection option stays as a fallback if sub-dirs drift.
+   That resolution is n=1. Whether the pattern generalizes depends on the shape of the next monograph-style workshop. If a future case has multiple durable artifacts that must stay together, the sub-directory option or a monograph collection returns to the table.
 
    **Sketch of how a monograph collection would work, kept for reference:**
    - *Location.* `kb/monographs/<name>/` — one collection, many monographs as subdirectories; one `COLLECTION.md` governs all.
@@ -56,7 +58,7 @@ We start from workshops because that is where we have the most active practice. 
 
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — library/workshop distinction, extraction and composition bridges, open questions this workshop inherits.
 - [Workshop COLLECTION.md](../COLLECTION.md) — current closure protocol (extract-and-delete).
-- [agent-memory-design workshop](../agent-memory-design/README.md) — concrete test case for whole-thing promotion.
+- [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) — the promoted artifact from the `agent-memory-design` workshop; first instance of the `synthesis` trait.
 - [kb/agent-memory-systems/COLLECTION.md](../../agent-memory-systems/COLLECTION.md) — one precedent for a sibling collection with its own register.
 - [kb/notes/COLLECTION.md](../../notes/COLLECTION.md) — theoretical-register conventions a promoted workshop would have to satisfy.
 
@@ -68,4 +70,4 @@ We start from workshops because that is where we have the most active practice. 
 
 ## What would close this workshop
 
-An updated life-cycle map (probably a note) naming each stage, its valid transitions, and its conventions — plus a concrete decision about where `agent-memory-design` lands and an updated `kb/work/COLLECTION.md` closure section that reflects the richer set of pathways.
+An updated life-cycle map (probably a note) naming each stage, its valid transitions, and its conventions, and an updated `kb/work/COLLECTION.md` closure section that reflects the richer set of pathways. The `agent-memory-design` landing is resolved (single-file promotion with `synthesis` trait) and can serve as one worked example in the map.

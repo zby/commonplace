@@ -13,11 +13,10 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [tool-loop-control](./tool-loop-control/README.md) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
 - [obsidian-affordances](./obsidian-affordances/README.md) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
 - [harness-taxonomy-convergence](./harness-taxonomy-convergence/README.md) — mapping five independent harness decompositions into one table; uncovered a structure × governance two-axis split
-- [agent-memory-design](./agent-memory-design/README.md) — designing an ideal agent memory system: store everything (especially session logs), invest all design intelligence in retrieval/activation
 - [philosophy-borrowing](./philosophy-borrowing/README.md) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
 - [agent-complexity-theory](./agent-complexity-theory/README.md) — formal consequences of the bounded-context orchestration model; candidate theorem sketches for academic collaboration
 - [write-type-resolver](./write-type-resolver/README.md) — migrating `type:` from an enum-string to a path-valued pointer addressing a hand-authored instructions doc per type
 - [semantic-search-replacement](./semantic-search-replacement/README.md) — evaluating whether to replace qmd as the semantic-search layer, and with what
 - [review-revise-gated](./review-revise-gated/README.md) — finding review/revise arrangements that reliably produce the manual-edit quality bar, then codifying as reusable instructions
 - [shipping-model](./shipping-model/README.md) — deciding how commonplace ships its content so user collections stay theirs while our library sits alongside as a read-only dependency
-- [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement) and resolving where whole-thing workshops like `agent-memory-design` land
+- [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/notes/designing-agent-memory-systems.md`
