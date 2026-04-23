@@ -26,6 +26,7 @@ The [comparative review](../agent-memory-systems/agentic-memory-systems-comparat
 - **A-MEM memory evolution** — neighboring notes update their context when new notes arrive. This is enrichment (adding context to existing items), not synthesis (producing something new from combination). No oracle needed because the operation is conservative.
 - **Cognee memify** — promises synthesis-like operations but ships simpler extraction. The gap between ambition and shipping is itself evidence of the difficulty.
 - **This KB's `/connect` skill** — surfaces synthesis opportunities by finding cross-note patterns. Human-triggered and human-evaluated. The human is the oracle.
+- **Latent-space diversity conditioning** ([Bystroński et al., 2025](../sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md)) — shifts generation diversity from the prompt surface to the embedding surface via anchor+interpolation, improving NoveltyBench and AUT scores. The authors explicitly flag (Limitation 1) the absence of any low-quality or OOD detector — a rare generator-side acknowledgement that the diversity numbers measure *reachable* novelty, not *useful* novelty.
 
 The pattern: synthesis works when there's an oracle (tip consolidation has task completion; `/connect` has a human reviewer). It stalls when there isn't one.
 
@@ -45,7 +46,7 @@ The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) not
 
 ## Open questions
 
-- Could a tiered oracle work? Fast heuristic filters (graph distance, embedding similarity, contradiction detection) discard obvious noise, human reviews only the survivors. What false-negative rate is acceptable?
+- Could a tiered oracle work? Fast heuristic filters (graph distance, embedding similarity, contradiction detection) discard obvious noise, human reviews only the survivors. What false-negative rate is acceptable? Bystroński et al. report the first-tier gap concretely — their diversity pipeline ships without any OOD/low-quality detector.
 - The tip consolidation oracle (task completion) works because it has a closed evaluation loop. Could scenario-based evaluation provide a similar loop for KB synthesis? Run the synthesis, then test whether a scenario agent performs better with the synthesized note loaded.
 - Is there a "synthesis complexity spectrum" analogous to the oracle strength spectrum? Simple combinations (two notes that cite the same source but don't reference each other) vs deep combinations (two notes from different traditions that share unnamed structure).
 
@@ -60,3 +61,4 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — potential solution: composite oracle from weak signals, untested for synthesis evaluation specifically
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — extends: synthesis evaluation sits in the weak-oracle zone; the spectrum predicts that engineering effort should go to oracle construction, not generation improvement
 - [synthesis is not error correction](./synthesis-is-not-error-correction.md) — shared structure: multi-agent output synthesis and knowledge synthesis both fail for the same reason — combining inputs without an oracle to evaluate the combination; error amplification (Kim et al.) is the within-task manifestation, spurious connections are the across-KB manifestation
+- [Geometry of Knowledge (Bystroński et al., 2025)](../sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md) — evidence: generators self-identify the missing low-quality/OOD detector while reporting diversity wins on NoveltyBench and AUT — unusually candid self-report of the generate-cheap-verify-expensive asymmetry
