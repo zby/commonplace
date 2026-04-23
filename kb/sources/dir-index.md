@@ -9,6 +9,7 @@ index_source: directory
 ← [Parent](../index.md)
 
 - ["Creative Thinking"](./creative-thinking-by-claude-shannon.md) *(snapshot)*
+- [A new way to think about composing skills to increase leverage: Skill Graphs 2.0](./a-new-way-to-think-about-composing-skills-to-increase-leverage-skill-g-2047124337191444844.md) *(snapshot)*
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(snapshot)*
 - [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md) *(note)* - Dissects A-MEM's four fully-automatic operations (construct, link, evolve, retrieve) — all accretive, none curative — identifying the missing vocabulary (delete, split, reorganize, assess quality) that separates accumulation from curation
 - [Agent Behavioral Contracts for Reliable Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.md) *(snapshot)*
@@ -41,6 +42,7 @@ index_source: directory
 - [Improving AI Skills with autoresearch & evals-skills](./improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.md) *(snapshot)*
 - [Infinite midwit](./adam-mastroianni-infinite-midwit.md) *(snapshot)* - Adam Mastroianni's objective-vs-subjective intelligence framing for why AI competence and benchmarks still miss taste, wisdom, and idea selection.
 - [Ingest: "Creative Thinking"](./creative-thinking-by-claude-shannon.ingest.md) *(ingest-report)* - Shannon's 1952 lecture cataloguing six explicit problem-solving operators (simplification, analogy, restatement, generalization, structural analysis, inversion) as a portable creative toolkit
+- [Ingest: A new way to think about composing skills to increase leverage — Skill Graphs 2.0](./a-new-way-to-think-about-composing-skills-to-increase-leverage-skill-g-2047124337191444844.ingest.md) *(ingest-report)* - Sakhuja's practitioner reframe of skill graphs into a three-tier compositional hierarchy (atoms/molecules/compounds) driven by the reliability ceiling of deep skill chains and the 'brain RAM' bottleneck in parallel-agent supervision
 - [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(ingest-report)* - Zettelkasten-inspired flat agent memory with embedding linking and LLM-driven evolution — benchmark success without curation operations or inspectable links
 - [Ingest: Agent Behavioral Contracts for Reliable Agents](./agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) *(ingest-report)* - Formal framework (ABC) extending Design-by-Contract to autonomous agents — introduces probabilistic compliance model (p,delta,k), Lyapunov drift bounds, hard/soft constraint separation with typed recovery, and a YAML DSL for specifying behavioral contracts
 - [Ingest: Agentic Code Reasoning](./agentic-code-reasoning.ingest.md) *(ingest-report)* - Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp — empirical evidence for structure-as-distribution-selector and interpretation-narrowing with quantified cost (2.8x steps)
