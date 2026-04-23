@@ -1,0 +1,525 @@
+{
+  "source": "https://x.com/LechMazur/status/2046661738339430489",
+  "captured": "2026-04-23T16:14:07.941709+00:00",
+  "family": "x-thread",
+  "status_id": "2046661738339430489",
+  "conversation_id": "2046661738339430489",
+  "target_post": {
+    "conversation_id": "2046661738339430489",
+    "id": "2046661738339430489",
+    "text": "Does an LLM keep the same judgment when you swap the answer order? New LLM Position Bias Benchmark!\n\nJudge models compare two lightly edited versions of the same story twice, with the order swapped. The median model flips in 45% of decisive case pairs. GPT-5.4 is worst at 66%! https://t.co/Ydgkz1TdIe",
+    "created_at": "2026-04-21T18:45:58.000Z",
+    "author_id": "35654959",
+    "edit_history_tweet_ids": [
+      "2046661738339430489"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "start": 278,
+          "end": 301,
+          "url": "https://t.co/Ydgkz1TdIe",
+          "expanded_url": "https://x.com/LechMazur/status/2046661738339430489/photo/1",
+          "display_url": "pic.x.com/Ydgkz1TdIe",
+          "media_key": "3_2046536862773211136"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "id": "2046661738339430489",
+      "text": "Does an LLM keep the same judgment when you swap the answer order? New LLM Position Bias Benchmark!\n\nJudge models compare two lightly edited versions of the same story twice, with the order swapped. The median model flips in 45% of decisive case pairs. GPT-5.4 is worst at 66%! https://t.co/Ydgkz1TdIe",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 278,
+            "end": 301,
+            "url": "https://t.co/Ydgkz1TdIe",
+            "expanded_url": "https://x.com/LechMazur/status/2046661738339430489/photo/1",
+            "display_url": "pic.x.com/Ydgkz1TdIe",
+            "media_key": "3_2046536862773211136"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661738339430489"
+      ],
+      "created_at": "2026-04-21T18:45:58.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661738339430489"
+        }
+      ],
+      "id": "2046661740998586793",
+      "text": "As LLMs are used more often as graders and preference labelers, judge reliability matters more. This benchmark isolates one basic and frustrating failure mode.\n\nThe model-average first-shown pick rate is 63%. GPT-5.4 (high) is the most position-sensitive model in the run. https://t.co/t74VKC84vb",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 273,
+            "end": 296,
+            "url": "https://t.co/t74VKC84vb",
+            "expanded_url": "https://x.com/LechMazur/status/2046661740998586793/photo/1",
+            "display_url": "pic.x.com/t74VKC84vb",
+            "media_key": "3_2046536896289853440"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661740998586793"
+      ],
+      "created_at": "2026-04-21T18:45:58.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661740998586793"
+        }
+      ],
+      "id": "2046661743888486508",
+      "text": "Many models don't just pick the first story more often, they also rate it higher. Average first-position rating bonus is +0.26 on a 1-7 scale. Mistral Large 3 is the outlier in the opposite direction. https://t.co/Wj24qyu4rb",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 201,
+            "end": 224,
+            "url": "https://t.co/Wj24qyu4rb",
+            "expanded_url": "https://x.com/LechMazur/status/2046661743888486508/photo/1",
+            "display_url": "pic.x.com/Wj24qyu4rb",
+            "media_key": "3_2046536980234694656"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661743888486508"
+      ],
+      "created_at": "2026-04-21T18:45:59.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661743888486508"
+        }
+      ],
+      "id": "2046661746635763960",
+      "text": "Two failure modes in one chart: directional first-position pull, and order instability even when net first-position lift looks modest. https://t.co/sLkye2c8hO",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 135,
+            "end": 158,
+            "url": "https://t.co/sLkye2c8hO",
+            "expanded_url": "https://x.com/LechMazur/status/2046661746635763960/photo/1",
+            "display_url": "pic.x.com/sLkye2c8hO",
+            "media_key": "3_2046545938668310528"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661746635763960"
+      ],
+      "created_at": "2026-04-21T18:46:00.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661746635763960"
+        }
+      ],
+      "id": "2046661749425021090",
+      "text": "This chart decomposes each model's two-view outcomes into stable picks, position-following flips, and unresolved cases. Xiaomi MiMo V2 Pro has the lowest flip rate (20%) but only 55% coverage. ByteDance Seed2.0 Pro and DeepSeek V3.2 are the cleanest with solid coverage. https://t.co/98CdOGOZ2Z",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 271,
+            "end": 294,
+            "url": "https://t.co/98CdOGOZ2Z",
+            "expanded_url": "https://x.com/LechMazur/status/2046661749425021090/photo/1",
+            "display_url": "pic.x.com/98CdOGOZ2Z",
+            "media_key": "3_2046537873348825088"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661749425021090"
+      ],
+      "created_at": "2026-04-21T18:46:00.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661749425021090"
+        }
+      ],
+      "id": "2046661752549671122",
+      "text": "Worked example: Case 3 \"midnight bakery\". Same pair, opposite orders.\n\nhttps://t.co/MdkgSpGMiV\n\nGPT-5.4 (high) returns &lt;answer&gt;1&lt;/answer&gt; in both prompts. Always the first-shown story, so the underlying winner flips on swap.",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 71,
+            "end": 94,
+            "url": "https://t.co/MdkgSpGMiV",
+            "expanded_url": "https://github.com/lechmazur/position_bias#worked-example",
+            "display_url": "github.com/lechmazur/posi\u2026",
+            "images": [
+              {
+                "url": "https://pbs.twimg.com/news_img/2046653306840498176/09uDOmsN?format=jpg&name=orig",
+                "width": 1200,
+                "height": 600
+              },
+              {
+                "url": "https://pbs.twimg.com/news_img/2046653306840498176/09uDOmsN?format=jpg&name=150x150",
+                "width": 150,
+                "height": 150
+              }
+            ],
+            "status": 200,
+            "title": "GitHub - lechmazur/position_bias: A benchmark for testing whether LLM judges keep the same preference when two lightly edited versions of the same story are shown in opposite orders.",
+            "description": "A benchmark for testing whether LLM judges keep the same preference when two lightly edited versions of the same story are shown in opposite orders. - lechmazur/position_bias",
+            "unwound_url": "https://github.com/lechmazur/position_bias#worked-example"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661752549671122"
+      ],
+      "created_at": "2026-04-21T18:46:01.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "35654959",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046661752549671122"
+        }
+      ],
+      "id": "2046661754722398345",
+      "text": "More info, including charts, per-case metrics, raw judge outputs, and the parsed answer dump: https://t.co/253BJNvbqw",
+      "conversation_id": "2046661738339430489",
+      "entities": {
+        "urls": [
+          {
+            "start": 94,
+            "end": 117,
+            "url": "https://t.co/253BJNvbqw",
+            "expanded_url": "https://github.com/lechmazur/position_bias/",
+            "display_url": "github.com/lechmazur/posi\u2026",
+            "images": [
+              {
+                "url": "https://pbs.twimg.com/news_img/2046653306840498176/09uDOmsN?format=jpg&name=orig",
+                "width": 1200,
+                "height": 600
+              },
+              {
+                "url": "https://pbs.twimg.com/news_img/2046653306840498176/09uDOmsN?format=jpg&name=150x150",
+                "width": 150,
+                "height": 150
+              }
+            ],
+            "status": 200,
+            "title": "GitHub - lechmazur/position_bias: A benchmark for testing whether LLM judges keep the same preference when two lightly edited versions of the same story are shown in opposite orders.",
+            "description": "A benchmark for testing whether LLM judges keep the same preference when two lightly edited versions of the same story are shown in opposite orders. - lechmazur/position_bias",
+            "unwound_url": "https://github.com/lechmazur/position_bias/"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046661754722398345"
+      ],
+      "created_at": "2026-04-21T18:46:02.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "1722268285071478784",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 16,
+            "username": "RamonVi25791296",
+            "id": "1722268285071478784"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046678208909619519"
+        }
+      ],
+      "id": "2046682066184740926",
+      "text": "@RamonVi25791296 On this chart, yes.",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2046682066184740926"
+      ],
+      "created_at": "2026-04-21T20:06:44.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "1818423632466788354",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "StartWaiting",
+            "id": "1818423632466788354"
+          }
+        ],
+        "urls": [
+          {
+            "start": 18,
+            "end": 41,
+            "url": "https://t.co/8UaAGb0h97",
+            "expanded_url": "https://web.stanford.edu/dept/communication/faculty/krosnick/docs/2007/2007%20Response%20Order%20Effects%20in%20Dichotomous%20Categorical%20Questions.pdf",
+            "display_url": "web.stanford.edu/dept/communica\u2026",
+            "status": 200,
+            "unwound_url": "https://web.stanford.edu/dept/communication/faculty/krosnick/docs/2007/2007%20Response%20Order%20Effects%20in%20Dichotomous%20Categorical%20Questions.pdf"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046674196118610334"
+        }
+      ],
+      "id": "2046685064529141971",
+      "text": "@StartWaiting Yes\nhttps://t.co/8UaAGb0h97",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2046685064529141971"
+      ],
+      "created_at": "2026-04-21T20:18:39.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "1818423632466788354",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "StartWaiting",
+            "id": "1818423632466788354"
+          }
+        ],
+        "urls": [
+          {
+            "start": 19,
+            "end": 42,
+            "url": "https://t.co/uaqkWWIA1k",
+            "expanded_url": "https://www.cambridge.org/core/journals/judgment-and-decision-making/article/order-effects-in-the-results-of-song-contests-evidence-from-the-eurovision-and-the-new-wave/C03D0D5AA384362736FE1EB59A75516C",
+            "display_url": "cambridge.org/core/journals/\u2026",
+            "status": 200,
+            "title": "Order effects in the results of song contests: Evidence from the Eurovision and the New Wave | Judgment and Decision Making | Cambridge Core",
+            "description": "Order effects in the results of song contests: Evidence from the Eurovision and the New Wave - Volume 12 Issue 4",
+            "unwound_url": "https://www.cambridge.org/core/journals/judgment-and-decision-making/article/order-effects-in-the-results-of-song-contests-evidence-from-the-eurovision-and-the-new-wave/C03D0D5AA384362736FE1EB59A75516C"
+          },
+          {
+            "start": 47,
+            "end": 70,
+            "url": "https://t.co/0viBr5Fy4s",
+            "expanded_url": "https://pubmed.ncbi.nlm.nih.gov/7381797/",
+            "display_url": "pubmed.ncbi.nlm.nih.gov/7381797/",
+            "images": [
+              {
+                "url": "https://pbs.twimg.com/news_img/2046685734850191361/VZ6MxGSv?format=jpg&name=orig",
+                "width": 1600,
+                "height": 830
+              },
+              {
+                "url": "https://pbs.twimg.com/news_img/2046685734850191361/VZ6MxGSv?format=jpg&name=150x150",
+                "width": 150,
+                "height": 150
+              }
+            ],
+            "status": 200,
+            "title": "Presentation order effects in product taste tests - PubMed",
+            "description": "Presentation order in paired-comparison testing was varied to measure the impact of primacy versus recency effects on consumer product evaluations. Overall preference and product rating scores were gathered for 1196 male and female Ss aged 13--49 years in two consumer research studies covering 11 ta \u2026",
+            "unwound_url": "https://pubmed.ncbi.nlm.nih.gov/7381797/"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046674196118610334"
+        }
+      ],
+      "id": "2046685734313271623",
+      "text": "@StartWaiting Also https://t.co/uaqkWWIA1k and https://t.co/0viBr5Fy4s (thanks ChatGPT)",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2046685734313271623"
+      ],
+      "created_at": "2026-04-21T20:21:19.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "15758107",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "the_internaut",
+            "id": "15758107"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046715112514371699"
+        }
+      ],
+      "id": "2046715943959532017",
+      "text": "@the_internaut Yes, GPT-5.4 annoyed me so much by doing this in my regular-use ChatGPT comparison prompts that I decided to turn it into a benchmark to shame the labs into eliminating this failure mode in future models.",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2046715943959532017"
+      ],
+      "created_at": "2026-04-21T22:21:21.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "1446479195018711049",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 16,
+            "username": "JeremyNguyenPhD",
+            "id": "1446479195018711049"
+          }
+        ],
+        "urls": [
+          {
+            "start": 68,
+            "end": 91,
+            "url": "https://t.co/8UaAGaZJjz",
+            "expanded_url": "https://web.stanford.edu/dept/communication/faculty/krosnick/docs/2007/2007%20Response%20Order%20Effects%20in%20Dichotomous%20Categorical%20Questions.pdf",
+            "display_url": "web.stanford.edu/dept/communica\u2026",
+            "status": 200,
+            "unwound_url": "https://web.stanford.edu/dept/communication/faculty/krosnick/docs/2007/2007%20Response%20Order%20Effects%20in%20Dichotomous%20Categorical%20Questions.pdf"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2046904956159213992"
+        }
+      ],
+      "id": "2046984888478249124",
+      "text": "@JeremyNguyenPhD Humans look less order-biased than the LLM judges.\nhttps://t.co/8UaAGaZJjz",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2046984888478249124"
+      ],
+      "created_at": "2026-04-22T16:10:03.000Z",
+      "author_id": "35654959"
+    },
+    {
+      "in_reply_to_user_id": "1086869964760539136",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "_Suresh2",
+            "id": "1086869964760539136"
+          }
+        ]
+      },
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047009460082852222"
+        }
+      ],
+      "id": "2047057828154577216",
+      "text": "@_Suresh2 I haven't tested longer stories. The models have the option to avoid being decisive, which removes one reason length might make a difference.",
+      "conversation_id": "2046661738339430489",
+      "edit_history_tweet_ids": [
+        "2047057828154577216"
+      ],
+      "created_at": "2026-04-22T20:59:53.000Z",
+      "author_id": "35654959"
+    }
+  ],
+  "users": {
+    "35654959": {
+      "id": "35654959",
+      "name": "Lech Mazur",
+      "username": "LechMazur"
+    },
+    "1086869964760539136": {
+      "id": "1086869964760539136",
+      "name": "Suresh",
+      "username": "_Suresh2"
+    },
+    "1446479195018711049": {
+      "id": "1446479195018711049",
+      "name": "Jeremy Nguyen \u270d\ud83c\udffc \ud83d\udea2",
+      "username": "JeremyNguyenPhD"
+    },
+    "1713240860366938113": {
+      "id": "1713240860366938113",
+      "name": "Quintus \ud83c\udfdb\ufe0f",
+      "username": "QuintusActual"
+    },
+    "15758107": {
+      "id": "15758107",
+      "name": "internaut",
+      "username": "the_internaut"
+    },
+    "1818423632466788354": {
+      "id": "1818423632466788354",
+      "name": "Waiting for the start",
+      "username": "StartWaiting"
+    },
+    "1722268285071478784": {
+      "id": "1722268285071478784",
+      "name": "Ramon Vinicius \ud83c\udde8\ud83c\uddf3\ud83c\udde7\ud83c\uddf7",
+      "username": "RamonVi25791296"
+    },
+    "2045767213433450496": {
+      "id": "2045767213433450496",
+      "name": "Kurate.org",
+      "username": "KurateOrg"
+    },
+    "407193353": {
+      "id": "407193353",
+      "name": "P",
+      "username": "Pier4r"
+    }
+  },
+  "thread_fetch_error": null
+}

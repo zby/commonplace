@@ -28,6 +28,7 @@ index_source: directory
 - [Evaluate a log entry for note creation](./evaluate-log-entry-for-note-creation.md) *(instruction)* - Evaluate a kb/log.md entry that suggests a new note — read the notes index first, load related notes, and decide whether to reject, fold into existing artifacts, keep in the log, or create a genuinely new note
 - [Example: Onboard a Second Brain on Commonplace](./example-onboard-second-brain.md) *(instruction)* - One worked recipe for onboarding an operator who wants to build a personal Second Brain on top of Commonplace. Use as a starting template, not the canonical path.
 - [Fix system](./FIX-SYSTEM.md)
+- [Ingest a directory](./ingest-directory.md) *(instruction)* - Ingest a directory of related files (e.g. a cloned code repository) as a single source unit, producing one coherent `.ingest.md` that cites evidence across files.
 - [Maintain curated indexes](./maintain-curated-indexes.md) *(instruction)* - Audit and maintain curated sections of generated-tail index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
 - [Migrate semantics-preserving gate changes](./migrate-semantics-preserving-gate-changes.md) *(instruction)* - Change gate wording without invalidating accepted reviews — update stored accepted reviews, then append gate-migration acceptance events that preserve the accepted note baseline
 - [Prose Review](./prose-review.md) *(instruction)* - Prose review wrapper — keep the old entrypoint, but route execution through the gate bundle

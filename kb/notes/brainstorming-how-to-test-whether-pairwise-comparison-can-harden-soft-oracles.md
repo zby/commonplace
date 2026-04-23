@@ -171,3 +171,4 @@ Relevant Notes:
 - [Autocontext](../agent-memory-systems/reviews/autocontext.md) — **example**: offers a live evaluation loop where pairwise ranking could be compared against scalar LLM judging
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — **parallel**: another brainstorming note about manufacturing better soft oracles, but at KB-wide rather than candidate-ranking scope
 - [Koylan pairwise-comparison source](https://x.com/koylanai/status/2035982137539559616) — **source**: origin of the specific hypothesis this note turns into a test plan
+- [Mazur position-bias benchmark](../sources/position-bias.ingest.md) — **evidence**: concrete empirical baseline for the Test 1 "position bias rate" measure — across 27 LLM judges on 193 sibling-edit story pairs, the median model flips its pairwise winner in 44.8% of decisive cases when display order is swapped (preprint-tier; sibling-edit surface only)
