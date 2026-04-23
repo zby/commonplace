@@ -43,41 +43,84 @@ def _validate_repo_relative_kb_path(
     workspace_root: Path,
     suffix: str,
     field_name: str,
+    source_file: Path | None = None,
 ) -> tuple[str, Path]:
+    """Validate a path-valued field. Accepts two forms:
+
+    - Repo-relative: starts with ``kb/``. Resolved against ``workspace_root``.
+    - File-relative: starts with ``./`` or ``../``. Resolved against
+      ``source_file.parent``. Requires ``source_file``.
+
+    In both cases the resolved path must stay under ``workspace_root/kb/``.
+    Returns ``(canonical_repo_rel, resolved_path)`` where
+    ``canonical_repo_rel`` is always the normalized ``kb/...`` form (so
+    downstream identity comparisons like ``TYPE_SPEC_PATH`` work regardless
+    of input style).
+    """
     if not isinstance(value, str) or not value.strip():
-        raise ValueError(f"{field_name}: must be a non-empty repo-relative path")
+        raise ValueError(f"{field_name}: must be a non-empty path")
 
     rel = value.strip()
     parsed = urlparse(rel)
-    path = Path(rel)
     if parsed.scheme or parsed.netloc:
         raise ValueError(f"{field_name}: URLs are not valid type paths: {rel}")
+
+    path = Path(rel)
     if path.is_absolute():
         raise ValueError(f"{field_name}: absolute paths are not valid: {rel}")
-    if not rel.startswith("kb/"):
-        raise ValueError(f"{field_name}: must start with kb/: {rel}")
+
+    is_file_relative = rel.startswith("./") or rel.startswith("../")
+    is_repo_relative = rel.startswith("kb/")
+
+    if not (is_file_relative or is_repo_relative):
+        raise ValueError(
+            f"{field_name}: must start with kb/ or be file-relative (./ or ../): {rel}"
+        )
+
     if not rel.endswith(suffix):
         raise ValueError(f"{field_name}: must end with {suffix}: {rel}")
-    if ".." in path.parts:
-        raise ValueError(f"{field_name}: must not contain '..': {rel}")
 
-    resolved = (workspace_root / path).resolve()
+    if is_repo_relative:
+        if ".." in path.parts:
+            raise ValueError(
+                f"{field_name}: repo-relative paths must not contain '..': {rel}"
+            )
+        resolved = (workspace_root / path).resolve()
+    else:  # is_file_relative
+        if source_file is None:
+            raise ValueError(
+                f"{field_name}: file-relative path requires source file context: {rel}"
+            )
+        resolved = (source_file.parent / path).resolve()
+
     boundary = kb_root(workspace_root).resolve()
     try:
         resolved.relative_to(boundary)
     except ValueError as exc:
         raise ValueError(f"{field_name}: path must stay under kb/: {rel}") from exc
 
-    return rel, resolved
+    canonical_repo_rel = resolved.relative_to(workspace_root.resolve()).as_posix()
+    return canonical_repo_rel, resolved
 
 
-def validate_type_path(value: Any, *, repo_root: Path) -> tuple[str, Path]:
-    """Validate and resolve a repo-relative path-valued frontmatter type."""
+def validate_type_path(
+    value: Any,
+    *,
+    repo_root: Path,
+    source_file: Path | None = None,
+) -> tuple[str, Path]:
+    """Validate and resolve a path-valued frontmatter type.
+
+    Accepts repo-relative ``kb/...`` paths or file-relative ``./``/``../``
+    paths when ``source_file`` is given. The returned path string is always
+    normalized to the ``kb/...`` form.
+    """
     return _validate_repo_relative_kb_path(
         value,
         workspace_root=repo_root.resolve(),
         suffix=".md",
         field_name="frontmatter.type",
+        source_file=source_file,
     )
 
 
@@ -193,7 +236,11 @@ def resolve_type(
     if "type" not in frontmatter:
         raise ValueError("frontmatter.type is required for files with frontmatter")
 
-    type_doc_rel, type_doc_path = validate_type_path(frontmatter["type"], repo_root=workspace_root)
+    type_doc_rel, type_doc_path = validate_type_path(
+        frontmatter["type"],
+        repo_root=workspace_root,
+        source_file=file_path,
+    )
     type_frontmatter = _load_type_frontmatter(type_doc_path, workspace_root)
     declared_type = type_frontmatter.get("type")
     if type_doc_rel == TYPE_SPEC_PATH:
@@ -230,6 +277,12 @@ def resolve_type(
 def validate_instance(profile: TypeProfile, instance: dict[str, Any]) -> list[ValidationError]:
     if profile.schema_path is None or profile.schema is None:
         return []
+    # Normalize frontmatter.type to the canonical kb/... form so schemas with
+    # `const: kb/<col>/types/<name>.md` match regardless of whether the source
+    # used repo-relative or file-relative form.
+    fm = instance.get("frontmatter")
+    if isinstance(fm, dict) and fm.get("type") != profile.type_path:
+        instance = {**instance, "frontmatter": {**fm, "type": profile.type_path}}
     validator = _validator_for_path(str(profile.schema_path.resolve()))
     return sorted(validator.iter_errors(instance), key=lambda error: tuple(str(part) for part in error.absolute_path))
 

@@ -1,6 +1,6 @@
 ---
 description: "Generated indexes guarantee completeness but not orientation — curation adds editorial grouping and context phrases that turn a listing into a navigable map"
-type: kb/notes/types/structured-claim.md
+type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
 status: seedling

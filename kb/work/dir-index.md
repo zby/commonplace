@@ -26,6 +26,7 @@ index_source: directory
 - [review-run-lifecycle/](./review-run-lifecycle/dir-index.md)
 - [review-system-rewrite/](./review-system-rewrite/dir-index.md)
 - [semantic-search-replacement/](./semantic-search-replacement/dir-index.md)
+- [shipping-model/](./shipping-model/dir-index.md)
 - [skill-creator-distillation/](./skill-creator-distillation/dir-index.md)
 - [skills-vs-instructions/](./skills-vs-instructions/dir-index.md)
 - [token-wiki-review/](./token-wiki-review/dir-index.md)
@@ -35,4 +36,4 @@ index_source: directory
 ## Files
 
 - [Discovery examples — working material](./discovery-examples.md)
-- [kb/work/](./COLLECTION.md)
+- [Writing conventions for kb/work/ (workshop layer)](./COLLECTION.md)

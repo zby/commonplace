@@ -1,6 +1,6 @@
 ---
 description: Adopts a fixed vocabulary of link relationship types (extends, grounds, contradicts, enables, exemplifies) borrowed from arscontexta and adapted for agent navigation under bounded context
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: Accepted decision to replace the custom type-profile DSL with authored JSON Schema over a parsed note document model
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: accepted
 ---

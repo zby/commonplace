@@ -21,7 +21,11 @@ def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
 
 def _display_type(note_type: str) -> str:
     """Display path-valued types compactly in generated directory indexes."""
-    if note_type.startswith("kb/") and note_type.endswith(".md"):
+    if note_type.endswith(".md") and (
+        note_type.startswith("kb/")
+        or note_type.startswith("./")
+        or note_type.startswith("../")
+    ):
         return Path(note_type).stem
     return note_type
 

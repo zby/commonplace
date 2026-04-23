@@ -1,6 +1,6 @@
 ---
 description: Decision to create kb/reports/ for generated, regenerable analytical snapshots — distinct from workshop (temporal work-in-flight) and notes (durable claims)
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: proposed
 ---

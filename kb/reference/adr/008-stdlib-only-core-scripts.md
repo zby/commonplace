@@ -1,6 +1,6 @@
 ---
 description: Core scripts use only Python stdlib by defining a strict frontmatter grammar that a regex parser handles completely
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: accepted
 ---

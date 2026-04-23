@@ -1,6 +1,6 @@
 ---
 description: Each COLLECTION.md owns its outbound-linking rules per destination collection, selecting from a shared authoring catalogue; the connect and write skills read COLLECTION.md directly, and the compiled register-by-register topology is retired
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: proposed
 ---

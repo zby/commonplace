@@ -261,6 +261,130 @@ description: Missing schema field
         )
 
 
+def test_file_relative_type_same_directory(tmp_path: Path) -> None:
+    """`type: ./types/foo.md` from a note at the collection root resolves
+    to the sibling `types/` directory."""
+    write_note_schema(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema="kb/types/note.schema.yaml",
+    )
+
+    note_path = tmp_path / "kb" / "notes" / "sample.md"
+    write(note_path, "---\ndescription: Sample\ntype: ./types/structured-claim.md\n---\n# Sample\n")
+
+    profile = type_resolver.resolve_type(
+        note_path,
+        {"description": "Sample", "type": "./types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/notes/types/structured-claim.md"
+    assert profile.type_doc_path == tmp_path / "kb" / "notes" / "types" / "structured-claim.md"
+    assert profile.type_name == "structured-claim"
+
+
+def test_file_relative_type_parent_directory(tmp_path: Path) -> None:
+    """`type: ../types/foo.md` from a note in a subdirectory resolves
+    to the collection's types/ sibling."""
+    write_note_schema(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema="kb/types/note.schema.yaml",
+    )
+
+    adr_path = tmp_path / "kb" / "reference" / "adr" / "001-example.md"
+    write(adr_path, "---\ndescription: ADR\ntype: ../types/adr.md\n---\n# ADR\n")
+
+    profile = type_resolver.resolve_type(
+        adr_path,
+        {"description": "ADR", "type": "../types/adr.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/reference/types/adr.md"
+    assert profile.type_doc_path == tmp_path / "kb" / "reference" / "types" / "adr.md"
+
+
+def test_file_relative_type_escape_attempt_is_invalid(tmp_path: Path) -> None:
+    """A file-relative type that resolves outside kb/ must be rejected."""
+    with pytest.raises(ValueError, match="must stay under kb/"):
+        type_resolver.resolve_type(
+            tmp_path / "kb" / "notes" / "sample.md",
+            {"description": "Sample", "type": "../../../etc/passwd.md"},
+            repo_root=tmp_path,
+        )
+
+
+def test_repo_relative_type_still_works_with_source_file_context(tmp_path: Path) -> None:
+    """Absolute `kb/...` paths keep working unchanged when source_file is
+    also available (B1 path — global types stay absolute)."""
+    write_note_schema(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/types/note.md",
+        name="note",
+        schema="kb/types/note.schema.yaml",
+    )
+
+    note_path = tmp_path / "kb" / "notes" / "sample.md"
+    write(note_path, "---\ndescription: Sample\ntype: kb/types/note.md\n---\n# Sample\n")
+
+    profile = type_resolver.resolve_type(
+        note_path,
+        {"description": "Sample", "type": "kb/types/note.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/types/note.md"
+
+
+def test_validate_instance_normalizes_file_relative_type_for_const_match(tmp_path: Path) -> None:
+    """When a note uses file-relative type (`../types/adr.md`), the schema
+    validator still matches a `const: kb/...` check because validate_instance
+    normalizes the frontmatter.type to the canonical form first."""
+    write(
+        tmp_path / "kb" / "reference" / "types" / "adr.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+    properties:
+      type:
+        const: kb/reference/types/adr.md
+    additionalProperties: true
+""",
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema="kb/reference/types/adr.schema.yaml",
+    )
+
+    adr_path = tmp_path / "kb" / "reference" / "adr" / "001-example.md"
+    profile = type_resolver.resolve_type(
+        adr_path,
+        {"type": "../types/adr.md"},
+        repo_root=tmp_path,
+    )
+    errors = type_resolver.validate_instance(
+        profile,
+        {"frontmatter": {"type": "../types/adr.md"}},
+    )
+
+    assert errors == []
+
+
 def test_root_type_spec_self_reference_terminates(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "type-spec.schema.yaml",

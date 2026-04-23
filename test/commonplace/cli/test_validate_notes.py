@@ -291,7 +291,7 @@ status: current
     results = validation.validate_note(note, repo_root=tmp_path)
 
     assert results.note_type == "unknown"
-    assert "frontmatter.type: must start with kb/: spec" in results.fails
+    assert "frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec" in results.fails
 
 
 def test_agent_memory_review_warns_when_last_checked_missing(tmp_path: Path) -> None:

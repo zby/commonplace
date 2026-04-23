@@ -1,6 +1,6 @@
 ---
 description: Since agents can't carry vocabulary or decisions between reads, the context engine should auto-inject referenced context — definitions once per session, ADRs when relevant. The trigger mechanism is open; the need follows from statelessness
-type: kb/notes/types/structured-claim.md
+type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: []
 status: speculative

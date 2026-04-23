@@ -1,6 +1,6 @@
 ---
 description: Decision to split installed projects into two directory trees — user content in kb/, framework in commonplace/ — with operational artifacts copied to kb/ for fast agent access and methodology kept in commonplace/ as fallback
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: superseded
 ---
