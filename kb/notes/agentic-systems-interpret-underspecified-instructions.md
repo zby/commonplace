@@ -82,13 +82,15 @@ Underspecified (flexible, handles ambiguity)  <——relax———  Precise (re
 
 ### Why constrain?
 
-Constraining a pattern to code has three practical benefits:
+Constraining a pattern to code has four benefits — three quantitative, one qualitative:
 
 **Cost.** LLM API calls are priced per token. A simple operation like sanitising a filename might cost fractions of a cent, but at scale those fractions compound. The same operation in code costs effectively nothing.
 
 **Latency.** Every LLM call involves network round-trip plus inference time. Even fast models add hundreds of milliseconds. Code executes in microseconds.
 
 **Reliability.** Deterministic code returns the same output for the same input, every time. No hallucination, no refusal, no silent behavior changes when the underlying model is updated.
+
+**Enforcement.** Some properties — scope rules, type rules, contract checks, invariants — only exist if a deterministic interpreter checks them. Prose can describe them but can't enforce them; LLM adherence is always probabilistic. Reliability is about output consistency on typical inputs; enforcement is the binary fact that a constraint holds for *all* inputs. For properties that require enforcement, the constraining move is not optional — the alternative is to go without the guarantee. Scope is one such property ([LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md)); bookkeeping is another ([scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
 
 The tradeoff: code requires you to commit to one precise interpretation. LLMs let you specify *intent* in natural language and defer the choice of interpretation to runtime. That's why constraining is progressive — you wait until patterns emerge before committing to a specific semantics.
 
@@ -138,6 +140,8 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — grounds: contracts resolve semantic underspecification with formal YAML DSL; probabilistic compliance model (p,δ,k) quantifies how tightly a contract narrows the interpretation space
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — bounded by: the two-phenomena model assumes a perfect interpreter; real LLMs add a third failure mode with different remedies
+- [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — applies: scoping is one interpreter-enforced property that has to be imposed via the constraining move; sub-agents are that move for scope
+- [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — applies: bookkeeping is another interpreter-enforced property; symbolic substrates enforce it for free while prose accumulates correction cost
 
 Sources:
 
