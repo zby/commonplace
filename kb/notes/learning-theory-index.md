@@ -83,11 +83,11 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — o
 - [three-space-agent-memory-maps-to-tulving-taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — agent memory split into knowledge, self, and operational spaces mirrors Tulving's semantic/episodic/procedural distinction
 - [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — the three-space claim is testable: flat memory predicts specific cross-contamination failures
 - [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — codification counters the blackbox problem not by requiring human review but by choosing readable artifacts (code, prompts, schemas) that any agent can inspect, diff, test, and verify
-- [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — academic paper: Zettelkasten-inspired agent memory with automated link generation; flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale
+- [A-MEM: Agentic Memory for LLM Agents](https://arxiv.org/abs/2502.12110) — academic paper: Zettelkasten-inspired agent memory with automated link generation; flat single-space design provides a test case for whether three-space separation matters at QA-benchmark scale
 - [memory-management-policy-is-learnable-but-oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — AgeMem's RL-trained memory policy demonstrates low-reach accumulation (facts) and distillation (STM); frames memory policy as a proxy theory over exact-spec operations, but requires a task-completion oracle the KB cannot yet provide
 - [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — memory decomposes into storage (solved), retrieval/activation (context engineering), and learning (learning theory); the hard problems live at the intersections, not inside a standalone "memory system"
-- [Multi-Agent Memory from a Computer Architecture Perspective](../sources/multi-agent-memory-computer-architecture-perspective.ingest.md) — computer-architecture analogy for multi-agent memory: shared/distributed paradigms, three-layer hierarchy, and consistency protocols as the critical unsolved problem
-- [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — temporally-aware knowledge graph with bi-temporal edge invalidation; strongest temporal model in the surveyed memory systems and strongest counterexample to files-first architecture
+- [Multi-Agent Memory from a Computer Architecture Perspective](https://arxiv.org/html/2603.10062v1) — computer-architecture analogy for multi-agent memory: shared/distributed paradigms, three-layer hierarchy, and consistency protocols as the critical unsolved problem
+- [Graphiti](https://github.com/getzep/graphiti) — temporally-aware knowledge graph with bi-temporal edge invalidation; strongest temporal model in the surveyed memory systems and strongest counterexample to files-first architecture
 
 ## Applications
 
@@ -100,8 +100,8 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — o
 
 ## Reference material
 
-- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.md) — empirical study of AGENTS.md/CLAUDE.md evolution in 466 OSS projects; commit-level analysis shows constraining maturation trajectory confirming continuous learning through versioned artifacts
-- [On the "Induction Bias" in Sequence Models](../sources/induction-bias-sequence-models-ebrahimi-2026.md) — 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity
+- [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — empirical study of AGENTS.md/CLAUDE.md evolution in 466 OSS projects; commit-level analysis shows constraining maturation trajectory confirming continuous learning through versioned artifacts
+- [On the "Induction Bias" in Sequence Models](https://arxiv.org/pdf/2602.18333) — 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking; architectural induction bias determines data efficiency and weight sharing, grounding the computational bounds dimension of learning capacity
 
 ## Related Tags
 

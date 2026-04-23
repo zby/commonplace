@@ -57,7 +57,7 @@ This doesn't replace the programming lens — typing, testing, and compilation r
 
 ## ABC as a case study
 
-Agent Behavioral Contracts ([ABC](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md)) provides independent support for this note's thesis. The paper extends Design-by-Contract (a programming practice) to autonomous agents, but its entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary. The convergence could reflect shared problem structure (as this note argues) or simply shared metaphorical vocabulary; the paper doesn't cite law as a source discipline, so the connection is circumstantial.
+Agent Behavioral Contracts ([ABC](https://arxiv.org/html/2602.22302v1)) provides independent support for this note's thesis. The paper extends Design-by-Contract (a programming practice) to autonomous agents, but its entire vocabulary — contracts, enforcement, compliance, violation, recovery — is legal vocabulary. The convergence could reflect shared problem structure (as this note argues) or simply shared metaphorical vocabulary; the paper doesn't cite law as a source discipline, so the connection is circumstantial.
 
 ABC's hard/soft constraint hierarchy answers the open question below about interpretation hierarchies: hard constraints (zero-tolerance invariants, deterministic rejection) take absolute precedence over soft constraints (which permit transient violations if recovered within k steps). This mirrors the legal hierarchy where constitutional provisions override statutes, which override regulations.
 
@@ -79,7 +79,7 @@ Relevant Notes:
 - [distillation](./definitions/distillation.md) — mapped, loosely: legal commentary extracts principles from case law without changing medium; legal briefs are the tighter analogue for task-targeted compression
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — complementary: legal techniques address what goes inside instructions; writing styles address how instructions are framed
 
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — validates: ABC reinvents legal enforcement patterns via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question
+- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — validates: ABC reinvents legal enforcement patterns via programming's Design-by-Contract; its hard/soft constraint hierarchy partially answers the interpretation hierarchy question
 
 Source:
 - Prompted by a social media post observing that context engineering is close to law

@@ -8,7 +8,7 @@ status: seedling
 
 # Claim notes should use Toulmin-derived sections for structured argument
 
-KB conventions independently converged on [Toulmin's argumentation model](../sources/purdue-owl-toulmin-argument.md) without naming it. Adopting Toulmin's vocabulary as a new base type `structured-claim` makes the distinction explicit: any note can have a claim title (the title-as-claim convention), but only a `structured-claim` commits to the full argument scaffold.
+KB conventions independently converged on [Toulmin's argumentation model](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) without naming it. Adopting Toulmin's vocabulary as a new base type `structured-claim` makes the distinction explicit: any note can have a claim title (the title-as-claim convention), but only a `structured-claim` commits to the full argument scaffold.
 
 ## Evidence
 
@@ -131,4 +131,4 @@ Relevant Notes:
 - [document-classification](../reference/available-types.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr
 - [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
 - [constraining](./definitions/constraining.md) — foundation: the note → structured-claim promotion path is the constraining pattern applied to the type system
-- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — source: the canonical framework this note adapts
+- [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — source: the canonical framework this note adapts

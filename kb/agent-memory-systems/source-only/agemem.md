@@ -8,7 +8,7 @@ status: current
 
 # AgeMem
 
-AgeMem is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) and the analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). There is no local repo-backed review for this system.
+AgeMem is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [AgeMem ingest](https://arxiv.org/html/2601.01885v1) and the analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). There is no local repo-backed review for this system.
 
 ## Trace-derived placement
 
@@ -24,4 +24,4 @@ Relevant Notes:
 
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
-- [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) — source coverage: paper snapshot analysis and limitations
+- [AgeMem ingest](https://arxiv.org/html/2601.01885v1) — source coverage: paper snapshot analysis and limitations

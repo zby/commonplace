@@ -45,14 +45,14 @@ Across several systems, the shared move is [compression at the execution boundar
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
 - [Spacebot](../agent-memory-systems/reviews/spacebot.md) branches return only a scrubbed conclusion
-- [Slate](../sources/slate-moving-beyond-react-and-rlm.ingest.md) workers return compressed episodes rather than full tactical traces
+- [Slate](https://randomlabs.ai/blog/slate) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
 Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call. But the compression itself should be goal-oriented rather than uniform. A fixed strategy — "summarize what happened" — produces a general-purpose artifact that serves no consumer particularly well. Distillation targeted at a specific next stage can produce a much tighter result: a structured failure signal for a retry decision, a claim list for a synthesis step, a status line for a progress report. The same execution trace might warrant different compressions for different consumers.
 
 ## Tension: Slate's episodes sit between traces and artifacts
 
-Random Labs' Slate is the main tension case. From the [public description](../sources/slate-moving-beyond-react-and-rlm.ingest.md), workers return **episodes** — compressed representations of what happened during a bounded action. These are not raw transcripts, so they fit the anti-transcript argument. But they are more trace-shaped than a narrow result like `yes/no` or `found X`.
+Random Labs' Slate is the main tension case. From the [public description](https://randomlabs.ai/blog/slate), workers return **episodes** — compressed representations of what happened during a bounded action. These are not raw transcripts, so they fit the anti-transcript argument. But they are more trace-shaped than a narrow result like `yes/no` or `found X`.
 
 What we cannot tell from public evidence is the loading policy around episodes: how much is later loaded into context, whether episodes are further summarized before reuse, and whether full traces are kept elsewhere. Slate appears to prefer compressed handoff artifacts over raw transcript inheritance. Whether that compression boundary is the right one remains unknown.
 
@@ -84,7 +84,7 @@ Relevant Notes:
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
 - [Spacebot](../agent-memory-systems/reviews/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
-- [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
+- [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
 
 Distilled into:
 

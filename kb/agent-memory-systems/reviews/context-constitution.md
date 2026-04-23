@@ -76,8 +76,8 @@ The deepest difference is that this repo is an instruction-defined system. Its m
 
 Relevant Notes:
 
-- [Continual Learning in Token Space](../../sources/continual-learning-in-token-space.ingest.md) — grounds: the Constitution is the doctrine-level expression of Letta’s token-space learning framing
-- [Letta (MemGPT): Stateful Agents with Self-Managed Memory](../../sources/letta-memgpt-stateful-agents.ingest.md) — grounds: the broader Letta architecture this repository assumes but does not implement locally
+- [Continual Learning in Token Space](https://www.letta.com/blog/continual-learning) — grounds: the Constitution is the doctrine-level expression of Letta’s token-space learning framing
+- [Letta (MemGPT): Stateful Agents with Self-Managed Memory](https://github.com/letta-ai/letta) — grounds: the broader Letta architecture this repository assumes but does not implement locally
 - [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — converges: durable identity policy stays always loaded, richer context moves outward into on-demand artifacts
 - [Always-loaded context has two surfaces with different affordances](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: this repo pushes one surface to the limit by making the always-loaded policy layer itself the main artifact
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: the entire Constitution is a policy about managing scarce context rather than assuming larger windows solve the problem

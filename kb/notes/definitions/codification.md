@@ -34,4 +34,4 @@ Relevant Notes:
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — determines what can codify: hard oracles enable it, weak oracles resist it
-- [Harness Engineering (Lopopolo, 2026)](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale

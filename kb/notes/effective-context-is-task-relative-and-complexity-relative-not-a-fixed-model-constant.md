@@ -12,11 +12,11 @@ How much context an LLM can actually use is not a fixed property of the model. I
 
 Three independent sources converge on this:
 
-**Volume varies by task type.** Paulsen ([2025](../sources/paulsen-maximum-effective-context-window-mecw.md)) measures Maximum Effective Context Window (MECW) across 11 frontier models and finds it far smaller than advertised limits. Crucially, the threshold shifts by problem type. This rejects the common simplification that a model has one stable "usable context length."
+**Volume varies by task type.** Paulsen ([2025](https://arxiv.org/pdf/2509.21361)) measures Maximum Effective Context Window (MECW) across 11 frontier models and finds it far smaller than advertised limits. Crucially, the threshold shifts by problem type. This rejects the common simplification that a model has one stable "usable context length."
 
-**Complexity can dominate volume.** ConvexBench ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)) shows performance collapsing with compositional depth at just 5,331 tokens — far below nominal limits — then recovering when recursive steps get focused local frames. Token count alone does not determine whether a prompt is usable.
+**Complexity can dominate volume.** ConvexBench ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)) shows performance collapsing with compositional depth at just 5,331 tokens — far below nominal limits — then recovering when recursive steps get focused local frames. Token count alone does not determine whether a prompt is usable.
 
-**Irrelevant context degrades effective capacity at fixed task difficulty.** GSM-DC ([Yang et al., 2025](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.md)) constructs math problems as symbolic DAGs, then injects distractor nodes while holding the solution path fixed. Error scales as a power law with distractor count, and the exponent grows with reasoning depth (delta from 0.11 at depth 2 to 0.49 at depth 5). This is the clean empirical regime the first open question below asks for: volume (distractor count) varies independently of task difficulty (solution path unchanged), and the degradation is measurable. Critically, distractors degrade both reasoning path selection and arithmetic execution independently — two distinct channels through which irrelevant context reduces effective capacity.
+**Irrelevant context degrades effective capacity at fixed task difficulty.** GSM-DC ([Yang et al., 2025](https://arxiv.org/html/2505.18761v2)) constructs math problems as symbolic DAGs, then injects distractor nodes while holding the solution path fixed. Error scales as a power law with distractor count, and the exponent grows with reasoning depth (delta from 0.11 at depth 2 to 0.49 at depth 5). This is the clean empirical regime the first open question below asks for: volume (distractor count) varies independently of task difficulty (solution path unchanged), and the degradation is measurable. Critically, distractors degrade both reasoning path selection and arithmetic execution independently — two distinct channels through which irrelevant context reduces effective capacity.
 
 The synthesis is **effective context is relational**: model choice matters, task type matters, and prompt difficulty changes the effective cost of a prompt. This is weaker and cleaner than treating MECW as a single parameterized scalar `MECW(model, task_type, complexity)`. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), this note interprets that relationship more naturally as a task-shaped cost measure `||P||_t ≤ M` — the cost norm depends on what you're asking the model to do.
 
@@ -33,9 +33,9 @@ This sharpens the [context-efficiency](./context-efficiency-is-the-central-desig
 ---
 
 Sources:
-- Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](../sources/convexbench-can-llms-recognize-convex-functions.md) — complexity can dominate context usability even at trivial token counts.
-- Paulsen (2025). [Context Is What You Need — The Maximum Effective Context Window](../sources/paulsen-maximum-effective-context-window-mecw.md) — MECW is much smaller than MCW and varies by problem type.
-- Yang et al. (2025). [GSM-DC: How Is LLM Reasoning Distracted by Irrelevant Context?](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.md) — irrelevant context degrades effective capacity at fixed task difficulty, with power-law error scaling and dual-channel degradation.
+- Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — complexity can dominate context usability even at trivial token counts.
+- Paulsen (2025). [Context Is What You Need — The Maximum Effective Context Window](https://arxiv.org/pdf/2509.21361) — MECW is much smaller than MCW and varies by problem type.
+- Yang et al. (2025). [GSM-DC: How Is LLM Reasoning Distracted by Irrelevant Context?](https://arxiv.org/html/2505.18761v2) — irrelevant context degrades effective capacity at fixed task difficulty, with power-law error scaling and dual-channel degradation.
 
 Relevant Notes:
 

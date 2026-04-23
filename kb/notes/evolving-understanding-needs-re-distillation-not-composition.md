@@ -58,4 +58,4 @@ Relevant Notes:
 - [A functioning knowledge base needs a workshop layer, not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the narrative's lifecycle is workshop, not library; extraction into durable notes is a second distillation step
 - [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — tension: composition maximizes combinatorial discovery but reconciliation can exceed effective context when the consumer needs a coherent whole
 - [Storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — contrast: storing constrains by freezing; re-distillation is the opposite, rewriting to maintain coherence
-- [Augment bidirectional spec](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — extends: distributes the re-distillation burden between human review and agent-generated updates
+- [Augment bidirectional spec](https://x.com/augmentcode/status/2025993446633492725) — extends: distributes the re-distillation burden between human review and agent-generated updates

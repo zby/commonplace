@@ -98,13 +98,13 @@ This places it beside systems like Agent-R only at the broad "trace to model upd
 ## Relevant Notes
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md)
-- [Into the Unknown ingest](../../sources/into-the-unknown-self-learning-large-language-models.ingest.md)
+- [Into the Unknown ingest](https://arxiv.org/html/2402.09147v4)
 - [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md)
 - [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)
 - [Treat continual learning as substrate coevolution](../../notes/treat-continual-learning-as-substrate-coevolution.md)
 - [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md)
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md)
-- [Continual Learning in Token Space](../../sources/continual-learning-in-token-space.md)
+- [Continual Learning in Token Space](https://www.letta.com/blog/continual-learning)
 - [Agent-R](./agent-r.md)
 - [Autocontext](./autocontext.md)

@@ -7,7 +7,7 @@ status: speculative
 
 # Topology, isolation, and verification form a causal chain for reliable agent scaling
 
-This KB treats hierarchical decomposition, scope isolation, and error correction as largely independent design concerns — developed in [bounded-context orchestration model](./bounded-context-orchestration-model.md), [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md), and [error correction with above-chance oracles](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) respectively. [Tu (2026)](../sources/xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md) argues they form a causal dependency chain instead: topology creates decomposition boundaries, isolation manufactures verifiable atomic units, verification exploits the structure they produce. If the dependency is real, you cannot "just add verification" to a flat system — you must first have decomposition and isolation in place.
+This KB treats hierarchical decomposition, scope isolation, and error correction as largely independent design concerns — developed in [bounded-context orchestration model](./bounded-context-orchestration-model.md), [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md), and [error correction with above-chance oracles](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) respectively. [Tu (2026)](https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/) argues they form a causal dependency chain instead: topology creates decomposition boundaries, isolation manufactures verifiable atomic units, verification exploits the structure they produce. If the dependency is real, you cannot "just add verification" to a flat system — you must first have decomposition and isolation in place.
 
 ## The dependency argument
 
@@ -21,9 +21,9 @@ This KB treats hierarchical decomposition, scope isolation, and error correction
 
 Several existing notes contain evidence consistent with the dependency ordering, though none name it explicitly:
 
-- **ConvexBench** ([Liu et al., 2026](../sources/convexbench-can-llms-recognize-convex-functions.md)): F1 collapses from 1.0 to ≈0.2 at depth 100 under flat accumulation, but recovers to 1.0 when history is pruned to direct dependencies. Under the chain framing, topology was always present (the compositional function structure) and the intervention added isolation — without verification, full performance already recovers. This supports the chain but equally supports the simpler account below.
+- **ConvexBench** ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)): F1 collapses from 1.0 to ≈0.2 at depth 100 under flat accumulation, but recovers to 1.0 when history is pruned to direct dependencies. Under the chain framing, topology was always present (the compositional function structure) and the intervention added isolation — without verification, full performance already recovers. This supports the chain but equally supports the simpler account below.
 
-- **MAKER** ([Meyerson et al., 2025](../sources/meyerson-maker-million-step-llm-zero-errors.md)): Maximal decomposition (m=1) with voting achieves zero errors over 1M steps — under the chain framing, all three mechanisms present. The [decomposition heuristics](./decomposition-heuristics-for-bounded-context-scheduling.md) call this "exploit clean frames recursively."
+- **MAKER** ([Meyerson et al., 2025](https://arxiv.org/abs/2511.09030)): Maximal decomposition (m=1) with voting achieves zero errors over 1M steps — under the chain framing, all three mechanisms present. The [decomposition heuristics](./decomposition-heuristics-for-bounded-context-scheduling.md) call this "exploit clean frames recursively."
 
 - **Scheduler-LLM separation** ([seedling](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)): Already develops two-thirds of the chain — symbolic substrates eliminate error for bookkeeping (topology + isolation), leaving semantic error correction for bounded calls. Tu's two-channel failure model (global drift = depth-driven, residual leaf errors = work-driven) offers a different decomposition of the same phenomenon.
 
@@ -46,7 +46,7 @@ The dependency claim makes predictions the simpler account does not:
 
 2. **Isolation without topology should partially succeed.** A flat system with strong scoping conventions (role markers, XML delimiters) but no decomposition should show some verification benefit. If the simpler account is right, this configuration shouldn't exist: you can't have meaningful isolation without decomposition.
 
-3. **Verification without isolation should degrade with scale.** An LLM judge reviewing outputs from a flat, unscoped system should see its discriminative power shrink as context grows, because shared context biases the judge toward the generator's errors. The [content effects evidence](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) already suggests this: content bias is shared across model families and survives scaling. This is the most tractable test — if the dependency claim is right, shared context should measurably degrade judge accuracy; if verification is independent of isolation, it should not.
+3. **Verification without isolation should degrade with scale.** An LLM judge reviewing outputs from a flat, unscoped system should see its discriminative power shrink as context grows, because shared context biases the judge toward the generator's errors. The [content effects evidence](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) already suggests this: content bias is shared across model families and survives scaling. This is the most tractable test — if the dependency claim is right, shared context should measurably degrade judge accuracy; if verification is independent of isolation, it should not.
 
 ## Open Questions
 
@@ -59,7 +59,7 @@ The dependency claim makes predictions the simpler account does not:
 
 Sources:
 
-- Tu (2026). [Structured Test-Time Scaling: From Multi-Agent Systems to General Inference Architectures](../sources/xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md) — the causal dependency chain claim this note examines
+- Tu (2026). [Structured Test-Time Scaling: From Multi-Agent Systems to General Inference Architectures](https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/) — the causal dependency chain claim this note examines
 
 Relevant Notes:
 

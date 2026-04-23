@@ -43,6 +43,6 @@ Relevant Notes:
 
 - [codification](./definitions/codification.md) — foundation: codification as system-level learning through repo artifacts
 - [the verifiability gradient](./verifiability-gradient.md) — determines when and how to codify
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — grounds: embedding latent spaces are opaque artifacts; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable artifacts at production scale with zero manual code
+- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — grounds: embedding latent spaces are opaque artifacts; curated propositional links are inspectable — the adjacency-vs-connection distinction is inspectability applied to knowledge architecture
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: 1M lines of agent-generated code, fully repo-hosted, CI-gated, and PR-reviewed — inspectable artifacts at production scale with zero manual code
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names inspectable repo artifacts and tools as the execution substrate layer of the runtime

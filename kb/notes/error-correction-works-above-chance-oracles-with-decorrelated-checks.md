@@ -7,7 +7,7 @@ status: seedling
 
 # Error correction works with above-chance oracles and decorrelated checks
 
-Error correction builds reliable systems from unreliable parts through redundancy and verification. The [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) demonstrates this for LLM execution tasks: voting across independent samples achieves zero errors over a million steps. But MAKER uses hard oracles (deterministic verification). The general principle is broader — error correction works whenever the oracle has discriminative power, provided the checks are sufficiently decorrelated. This note develops both conditions: what discriminative power means precisely, how many repetitions it costs, and why decorrelation is the binding constraint for LLM-based checks.
+Error correction builds reliable systems from unreliable parts through redundancy and verification. The [MAKER paper](https://arxiv.org/abs/2511.09030) demonstrates this for LLM execution tasks: voting across independent samples achieves zero errors over a million steps. But MAKER uses hard oracles (deterministic verification). The general principle is broader — error correction works whenever the oracle has discriminative power, provided the checks are sufficiently decorrelated. This note develops both conditions: what discriminative power means precisely, how many repetitions it costs, and why decorrelation is the binding constraint for LLM-based checks.
 
 ## The amplification condition: TPR > FPR
 
@@ -59,7 +59,7 @@ Since LLMs have systematic biases, naive repetition (same prompt, same model) pr
 
 ### Content bias: an empirically measured correlation source
 
-[Lampinen et al. (2024)](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) demonstrate a concrete source of correlated error: content effects on reasoning. LLMs reason more accurately when semantic content supports the correct inference (familiar, believable premises) and less accurately on abstract or belief-violating content — mirroring human performance patterns across syllogisms, NLI, and the Wason selection task.
+[Lampinen et al. (2024)](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) demonstrate a concrete source of correlated error: content effects on reasoning. LLMs reason more accurately when semantic content supports the correct inference (familiar, believable premises) and less accurately on abstract or belief-violating content — mirroring human performance patterns across syllogisms, NLI, and the Wason selection task.
 
 The critical finding for decorrelation: content effects are shared across architecturally different models (Chinchilla, PaLM 2, GPT-3.5) and survive both scaling and instruction tuning (Flan-PaLM 2). **Model diversity alone is insufficient for decorrelating reasoning errors** driven by content bias. Voting across different models on the same content-biased problem converges to the shared bias, not to the truth — exactly the correlated-noise failure that defeats amplification.
 
@@ -91,12 +91,12 @@ The progression from [oracle hardening](./oracle-strength-spectrum.md) to error 
 Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the spectrum of oracle strength this note extends with error correction as an amplification mechanism
-- [MAKER paper](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
+- [MAKER paper](https://arxiv.org/abs/2511.09030) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
 - [codification](./definitions/codification.md) — parallel: codification moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
 - [spec mining as codification](./spec-mining-as-codification.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition
 - [operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — enables: metamorphic checks double as relaxing signal detectors — measuring paraphrase brittleness classifies components on the bitter lesson spectrum
-- [content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md) — grounds: content bias is shared across model families and survives scaling/instruction tuning, making it a concrete example of correlated error that model diversity alone cannot decorrelate
+- [content effects on reasoning tasks](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) — grounds: content bias is shared across model families and survives scaling/instruction tuning, making it a concrete example of correlated error that model diversity alone cannot decorrelate
 - [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — speculative: process constraints (forced reasoning steps) may serve as content-bias decorrelation mechanisms
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues that verification depends on isolation to maintain decorrelation — shared context biases the verifier toward the generator's errors

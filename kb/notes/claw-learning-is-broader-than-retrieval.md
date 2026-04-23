@@ -10,7 +10,7 @@ status: seedling
 
 ## The narrow framing
 
-The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) frames the KB's value as "question-answering capacity" — a note is valuable if it helps answer a question. This works as a model for a reference knowledge base, but commonplace is a [Claw](../sources/simon-willison-karpathy-claws.md): an AI-assisted system that accumulates context and evolves with use. The KB is its most developed subsystem, but the system's purpose is broader than lookup.
+The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) frames the KB's value as "question-answering capacity" — a note is valuable if it helps answer a question. This works as a model for a reference knowledge base, but commonplace is a [Claw](https://simonwillison.net/2026/Feb/21/claws/): an AI-assisted system that accumulates context and evolves with use. The KB is its most developed subsystem, but the system's purpose is broader than lookup.
 
 ## What a Claw actually does
 
@@ -35,7 +35,7 @@ If the KB's value is action capacity rather than retrieval accuracy, several thi
 - **Judgment precedents** — past decisions and their reasoning, so future similar cases can be handled consistently
 - **Voice and style** — patterns in how the user communicates, enabling the agent to act as a credible proxy
 
-[Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) already stores all four: voice guides and brand files for style, AGENT.md decision tables for procedures, decisions.jsonl and failures.jsonl for judgment precedents, and values/goals YAML for preferences. It demonstrates that practitioner-built Claws converge on action-oriented knowledge types even without a theoretical framework for why.
+[Koylanai's Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) already stores all four: voice guides and brand files for style, AGENT.md decision tables for procedures, decisions.jsonl and failures.jsonl for judgment precedents, and values/goals YAML for preferences. It demonstrates that practitioner-built Claws converge on action-oriented knowledge types even without a theoretical framework for why.
 
 **Document types.** The current [document classification](../reference/available-types.md) system — base types like `note`, `spec`, `review` — is oriented around structural properties of reference knowledge. Preferences, procedures, and judgment precedents don't fit neatly into these categories. If the KB grows to store action-oriented knowledge, the type system may need to accommodate content whose value is "enabling correct action" rather than "answering questions."
 
@@ -66,7 +66,7 @@ Relevant Notes:
 - [three-space-agent-memory-maps-to-tulving-taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — the three memory spaces may map to different learning dynamics: semantic (knowledge), procedural (operations), episodic (self/preferences)
 - [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — the predicted failures of flat memory are symptoms of forcing action-oriented knowledge into a retrieval-oriented structure
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — the current scenario set is retrieval-oriented; an action-oriented framing would add classification, communication, and planning scenarios
-- [koylanai-personal-brain-os (ingest)](../sources/koylanai-personal-brain-os.ingest.md) — exemplifies: a practitioner-built Claw that already stores preferences, procedures, judgment precedents, and voice as distinct knowledge types
+- [koylanai-personal-brain-os (ingest)](https://x.com/koylanai/status/2025286163641118915) — exemplifies: a practitioner-built Claw that already stores preferences, procedures, judgment precedents, and voice as distinct knowledge types
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — grounds: the artifact-accumulation model of learning applies, but action-oriented learning needs different artifact types than note/link mutations
 - [document-classification](../reference/available-types.md) — implication: current document types are structured for reference knowledge; action-oriented knowledge types may not fit the existing base types
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — concretizes: workshop documents (tasks, decision threads, experiments) are the action-oriented artifacts that produce preferences, procedures, and precedents; the workshop→library extraction bridge is where action-capacity learning is harvested

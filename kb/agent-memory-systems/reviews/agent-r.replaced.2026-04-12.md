@@ -46,7 +46,7 @@ Agent-R is stronger than our current system on automatic supervision generation 
 
 Commonplace is stronger on inspectability and incremental refinement. Agent-R's datasets are readable, but the learned policy after training no longer participates in the same editable knowledge substrate as the traces that produced it.
 
-Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a clean weight-learning case with a more explicit correction-conversation construction phase than [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md). The interesting middle layer is the dataset surgery between trace collection and training.
+Relative to [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a clean weight-learning case with a more explicit correction-conversation construction phase than [OpenClaw-RL](https://arxiv.org/html/2603.10165v1). The interesting middle layer is the dataset surgery between trace collection and training.
 
 ## Borrowable Ideas
 
@@ -79,6 +79,6 @@ Relevant Notes:
 
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Agent-R is a clean trajectory-to-weights case with an unusually explicit dataset-construction layer between trace collection and training
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Agent-R also works because it has a strong environment oracle and executable task family, not because weight learning removes the evaluation problem
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — compares: both learn from interaction into weights, but Agent-R shows a richer intermediate supervision-construction step through search-tree pairing and revision traces
+- [OpenClaw-RL: Train Any Agent Simply by Talking](https://arxiv.org/html/2603.10165v1) — compares: both learn from interaction into weights, but Agent-R shows a richer intermediate supervision-construction step through search-tree pairing and revision traces
 - [ExpeL](./expel.md) — contrasts: ExpeL keeps its learned result in inspectable rules and retrieved traces, while Agent-R uses inspectable traces only as supervision on the way to weight updates
 - [Reflexion](./reflexion.md) — sharpens: Agent-R also cares about correction after failure, but it turns failure into training data rather than a prompt-visible verbal memory

@@ -30,4 +30,4 @@ Relevant Notes:
 
 Sources:
 
-- Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — cleanest empirical separation of indeterminism from underspecification: by varying prompt framing (emotion/personality) while holding task constant, they isolate the effect of interpretation choice from run-to-run sampling noise
+- Ma et al. (2026). [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — cleanest empirical separation of indeterminism from underspecification: by varying prompt framing (emotion/personality) while holding task constant, they isolate the effect of interpretation choice from run-to-run sampling noise

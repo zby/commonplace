@@ -45,4 +45,4 @@ Relevant Notes:
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames where on the system-adaptation timescale the gradient operates
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — develops the bidirectional movement along the gradient
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — parallel framing: Karpathy's verifiability properties are an oracle-strength argument
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — exemplifies: behavioral contracts (YAML DSL specs with runtime enforcement) sit at the far end of the gradient for behavioral constraints
+- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — exemplifies: behavioral contracts (YAML DSL specs with runtime enforcement) sit at the far end of the gradient for behavioral constraints

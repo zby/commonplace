@@ -8,13 +8,13 @@ status: current
 
 # Memory management policy is learnable but oracle-dependent
 
-[AgeMem](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) trains an LLM agent through RL to decide when and how to use six memory operations: Add, Update, Delete (LTM) and Retrieve, Summary, Filter (STM). The results are strong — 23-49% improvement over no-memory baselines, 8-9 percentage points attributable to RL training specifically. This is genuine learning in [Simon's sense](./learning-is-not-only-about-generality.md): a capacity change that persists and improves adaptation.
+[AgeMem](https://arxiv.org/html/2601.01885v1) trains an LLM agent through RL to decide when and how to use six memory operations: Add, Update, Delete (LTM) and Retrieve, Summary, Filter (STM). The results are strong — 23-49% improvement over no-memory baselines, 8-9 percentage points attributable to RL training specifically. This is genuine learning in [Simon's sense](./learning-is-not-only-about-generality.md): a capacity change that persists and improves adaptation.
 
 ## What it learns: the policy, not the operations
 
 The six operations are hand-crafted tools — their specs fully capture what they do. "Store this key-value pair" has a single correct implementation. What AgeMem learns through RL is the **policy for when to apply them**: when storing something is worth the cost, when summarising is better than retrieving verbatim, when filtering is needed.
 
-This policy cannot be fully specified in advance. "Store information that will be useful later" is a theory about what being useful means, not a definition. Different tasks, contexts, and trajectories make different memory decisions optimal. In [fixed-artifact](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) terms, the operations are exact-spec artifacts, while the composition policy is a proxy theory. AgeMem's results confirm: the RL-trained policy outperforms both no-memory baselines and the LLM's own instruction-following attempts. The hand-crafted heuristics of systems like [A-MEM](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md) are plausible theories about memory management, not definitions of it.
+This policy cannot be fully specified in advance. "Store information that will be useful later" is a theory about what being useful means, not a definition. Different tasks, contexts, and trajectories make different memory decisions optimal. In [fixed-artifact](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) terms, the operations are exact-spec artifacts, while the composition policy is a proxy theory. AgeMem's results confirm: the RL-trained policy outperforms both no-memory baselines and the LLM's own instruction-following attempts. The hand-crafted heuristics of systems like [A-MEM](https://arxiv.org/abs/2502.12110) are plausible theories about memory management, not definitions of it.
 
 ## Why it works: the oracle
 
@@ -62,7 +62,7 @@ But the comparison cuts both ways. **AgeMem has a closed learning loop; we don't
 
 ## The inspectability-learnability spectrum
 
-AgeMem is not the only approach to memory management policy. [Fofadiya & Tiwari's adaptive budgeted forgetting](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md) specifies the policy as an explicit formula — relevance = f(recency, frequency, semantic alignment) — with constrained optimization to enforce a hard memory budget. The policy is fully inspectable: you can see exactly why a memory was pruned. But it cannot adapt: the formula is fixed at design time, tuned on benchmarks, and applies uniformly regardless of task.
+AgeMem is not the only approach to memory management policy. [Fofadiya & Tiwari's adaptive budgeted forgetting](https://arxiv.org/html/2604.02280v1) specifies the policy as an explicit formula — relevance = f(recency, frequency, semantic alignment) — with constrained optimization to enforce a hard memory budget. The policy is fully inspectable: you can see exactly why a memory was pruned. But it cannot adapt: the formula is fixed at design time, tuned on benchmarks, and applies uniformly regardless of task.
 
 This establishes a spectrum across systems reviewed in this KB:
 
@@ -75,7 +75,7 @@ This establishes a spectrum across systems reviewed in this KB:
 
 The pattern: inspectable policies avoid oracle dependency because their designers embed the judgment upfront. Learned policies need oracles because the judgment emerges from training signal. The more you can specify in advance, the less you need to learn — but the less you can adapt to tasks the designer didn't anticipate.
 
-Fofadiya & Tiwari's key empirical finding — that controlled forgetting *improves* performance rather than merely maintaining it under budget — suggests that even a fixed formula can outperform unbounded accumulation. But a missing random-pruning baseline leaves open whether the specific formula or simply budget enforcement drives the improvement (see [ingest limitations](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md#limitations-our-opinion)).
+Fofadiya & Tiwari's key empirical finding — that controlled forgetting *improves* performance rather than merely maintaining it under budget — suggests that even a fixed formula can outperform unbounded accumulation. But a missing random-pruning baseline leaves open whether the specific formula or simply budget enforcement drives the improvement (see [ingest limitations](https://arxiv.org/html/2604.02280v1)).
 
 ---
 
@@ -92,4 +92,4 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — contrasts: AgeMem learns at training time through weights; deploy-time learning through symbolic artifacts during deployment; same behavioral changes, different artifact classes
 - [inspectable artifact defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: AgeMem's split storage (facts in store, policy in weights) vs commonplace's unified storage (both in files)
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — contrasts: AgeMem is training-time learning achieving what deploy-time constraining achieves; they differ on inspectability but AgeMem has closed the loop
-- [adaptive budgeted forgetting (Fofadiya & Tiwari)](../sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md) — extends: the inspectable-side counterpart to AgeMem's opaque policy; explicit relevance formula vs RL-trained weights, establishing the inspectability-learnability spectrum for memory management policy
+- [adaptive budgeted forgetting (Fofadiya & Tiwari)](https://arxiv.org/html/2604.02280v1) — extends: the inspectable-side counterpart to AgeMem's opaque policy; explicit relevance formula vs RL-trained weights, establishing the inspectability-learnability spectrum for memory management policy

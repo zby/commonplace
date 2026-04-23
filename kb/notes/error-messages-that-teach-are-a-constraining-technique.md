@@ -12,7 +12,7 @@ In agent systems, every error message the agent sees — linter output, test fai
 
 This means the difference between `FAIL` and `FAIL: description must be under 200 chars, yours is 247 — trim the last sentence` is not cosmetic. The first forces the agent to spend context diagnosing the problem. The second [frontloads](./frontloading-spares-execution-context.md) the answer. The cost difference is negligible — same hook, better message. The reliability difference is large.
 
-Lopopolo's report on [OpenAI's Codex team](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) puts it directly: "Linter error messages double as remediation instructions — every failure message teaches the agent the fix." And: "every mistake is a harness bug" — when an agent makes an error the system could have prevented through a better message, the system is at fault.
+Lopopolo's report on [OpenAI's Codex team](https://openai.com/index/harness-engineering/) puts it directly: "Linter error messages double as remediation instructions — every failure message teaches the agent the fix." And: "every mistake is a harness bug" — when an agent makes an error the system could have prevented through a better message, the system is at fault.
 
 ## Orthogonal to enforcement strength
 
@@ -27,5 +27,5 @@ Relevant Notes:
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: adds the inform axis orthogonal to the enforcement gradient
 - [constraining](./definitions/constraining.md) — instance: teaching errors constrain interpretation by simultaneously blocking wrong outputs and demonstrating correct ones
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: teaching errors frontload the fix instead of leaving the agent to derive it
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: linter messages as remediation instructions in a 1M LOC agent-generated codebase
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — primary evidence: linter messages as remediation instructions in a 1M LOC agent-generated codebase
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: teaching messages are the inform axis of recovery; structured recovery adds follow-through (corrective → fallback → escalation)

@@ -18,7 +18,7 @@ The two dimensions are independent: you can have output structure without proces
 
 ## Empirical support
 
-[Ugare & Chandra (2026)](../sources/agentic-code-reasoning.ingest.md) provide the strongest available evidence. Their semi-formal reasoning templates require agents to construct explicit premises, trace execution paths, and derive formal conclusions — all process constraints. The templates yield 5-12pp accuracy gains on code verification. The paper does not ablate individual template components, so it cannot isolate how much of the gain comes from process constraints versus the incidental output formatting the templates also impose. But the templates' design makes the locus of effect visible: instructions like "must state premises" and "must trace paths" force specific reasoning work that a heading-only constraint would not.
+[Ugare & Chandra (2026)](https://arxiv.org/html/2603.01896v2) provide the strongest available evidence. Their semi-formal reasoning templates require agents to construct explicit premises, trace execution paths, and derive formal conclusions — all process constraints. The templates yield 5-12pp accuracy gains on code verification. The paper does not ablate individual template components, so it cannot isolate how much of the gain comes from process constraints versus the incidental output formatting the templates also impose. But the templates' design makes the locus of effect visible: instructions like "must state premises" and "must trace paths" force specific reasoning work that a heading-only constraint would not.
 
 ## Two mechanisms, split two ways
 
@@ -32,7 +32,7 @@ The [methodology-enforcement note](./methodology-enforcement-is-constraining.md)
 
 ## Open questions
 
-- **Scaling properties.** Do process constraints and output constraints scale differently with model capability? The Sonnet non-improvement on code QA ([Ugare & Chandra, 2026](../sources/agentic-code-reasoning.ingest.md)) is consistent with process constraints helping less when a model has already internalised the reasoning patterns they enforce. Whether output constraints (distribution selection) are more robust to model scaling is untested.
+- **Scaling properties.** Do process constraints and output constraints scale differently with model capability? The Sonnet non-improvement on code QA ([Ugare & Chandra, 2026](https://arxiv.org/html/2603.01896v2)) is consistent with process constraints helping less when a model has already internalised the reasoning patterns they enforce. Whether output constraints (distribution selection) are more robust to model scaling is untested.
 - **Error decorrelation.** If each process step probes a different aspect of the problem, the steps function as structurally decorrelated checks — connecting process structure to [error-correction amplification](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md). This would give process constraints a role that output constraints cannot play: not just improving single-pass accuracy, but enabling multi-pass verification.
 
 ---
@@ -44,4 +44,4 @@ Relevant Notes:
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — connects: methodology enforcement is primarily process structure (constraining how the agent reasons), not output structure
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — context: human writing genres bundle both process and output structure; the per-convention transfer evaluation should assess each dimension separately
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — speculative: process steps as structurally decorrelated checks could connect process structure to error-correction amplification
-- [Agentic Code Reasoning](../sources/agentic-code-reasoning.ingest.md) — grounds: semi-formal templates with process constraints (state premises, trace paths, derive conclusions) yield 5-12pp accuracy gains; template components not individually ablated
+- [Agentic Code Reasoning](https://arxiv.org/html/2603.01896v2) — grounds: semi-formal templates with process constraints (state premises, trace paths, derive conclusions) yield 5-12pp accuracy gains; template components not individually ablated

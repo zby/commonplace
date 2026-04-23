@@ -332,11 +332,11 @@ These systems are included on weaker evidence — no implementation code inspect
 
 ### AgeMem
 
-From the [AgeMem source-only note](./source-only/agemem.md), [AgeMem ingest](../sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md), and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
+From the [AgeMem source-only note](./source-only/agemem.md), [AgeMem ingest](https://arxiv.org/html/2601.01885v1), and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
 
 ### Trajectory-Informed Memory Generation
 
-From the [Trajectory-Informed Memory Generation source-only note](./source-only/trajectory-informed-memory-generation.md) and [trajectory-informed ingest](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md): completed execution trajectories are analyzed into strategy, recovery, and optimization tips, then consolidated and retrieved at runtime. Same broad input class as AgeMem and OpenClaw-RL, but the promotion target is inspectable text artifacts with prompt-time retrieval — the direct non-weight counterpart. Implementation details, consolidation prompts, and thresholds are unknown locally.
+From the [Trajectory-Informed Memory Generation source-only note](./source-only/trajectory-informed-memory-generation.md) and [trajectory-informed ingest](https://arxiv.org/html/2603.10600v1): completed execution trajectories are analyzed into strategy, recovery, and optimization tips, then consolidated and retrieved at runtime. Same broad input class as AgeMem and OpenClaw-RL, but the promotion target is inspectable text artifacts with prompt-time retrieval — the direct non-weight counterpart. Implementation details, consolidation prompts, and thresholds are unknown locally.
 
 ## What the comparison makes concrete
 
@@ -456,7 +456,7 @@ Relevant Notes:
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./reviews/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
 - [Meta-Harness](./reviews/meta-harness.md) — source-inspected instance: benchmark-trace-driven outer loop that promotes generated memory systems and agent scaffolds into executable harness code
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — TODO for repo-backed review; current placement records source-grounded next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
+- [OpenClaw-RL: Train Any Agent Simply by Talking](https://arxiv.org/html/2603.10165v1) — TODO for repo-backed review; current placement records source-grounded next-state feedback, PRM scoring, OPD-style supervision, and live background weight updates
 - [Reflexion](./reviews/reflexion.md) — source-inspected instance: early verbal reinforcement loop with rolling reflection buffer and bounded retry scope
 - [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md) — source-inspected instance: prompt-state artifact learning through full-document cheatsheet rewrites across benchmark queries
 - [ACE](./reviews/ace.md) — source-inspected instance: three-role playbook loop with bullet IDs, helpful/harmful counters, and append-heavy curation

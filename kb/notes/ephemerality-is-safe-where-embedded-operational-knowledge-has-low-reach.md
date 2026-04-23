@@ -8,7 +8,7 @@ status: seedling
 
 # Ephemerality is safe where embedded operational knowledge has low reach
 
-Kirsch's [essay against the ephemeral software hypothesis](../sources/the-flawed-ephemeral-software-hypothesis.md) names four structural barriers to treating software as disposable: edge cases discovered through deployment, state and integration surfaces, interface stability expectations, and ambiguity/auditability requirements. These look like separate engineering concerns, but they share a deeper structure: each is a case where the software embeds operational knowledge that [has reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — knowledge that transfers across runs, versions, users, or audit events. The reach of the embedded knowledge, not the complexity of the code, is what makes ephemerality unsafe.
+Kirsch's [essay against the ephemeral software hypothesis](https://www.blackhc.net/essays/future_of_software/) names four structural barriers to treating software as disposable: edge cases discovered through deployment, state and integration surfaces, interface stability expectations, and ambiguity/auditability requirements. These look like separate engineering concerns, but they share a deeper structure: each is a case where the software embeds operational knowledge that [has reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — knowledge that transfers across runs, versions, users, or audit events. The reach of the embedded knowledge, not the complexity of the code, is what makes ephemerality unsafe.
 
 ## Kirsch's barriers all describe cross-context transfer
 
@@ -40,7 +40,7 @@ This gives a cleaner prediction: **the ephemeral/malleable boundary sits where t
 
 - **High-reach zone (malleability required):** production services, shared internal tools, stateful systems, regulated workflows. The embedded knowledge persists across contexts. [Codification](./definitions/codification.md) is how it gets committed to durable, inspectable, testable artifacts. Re-derivation costs grow because more runs, people, and surrounding processes depend on the same resolutions.
 
-Kirsch's [five-step malleable software model](../sources/the-flawed-ephemeral-software-hypothesis.md) describes this trajectory in practice: a prototype starts with mostly local knowledge, then deployment discovers memory that must be carried forward.
+Kirsch's [five-step malleable software model](https://www.blackhc.net/essays/future_of_software/) describes this trajectory in practice: a prototype starts with mostly local knowledge, then deployment discovers memory that must be carried forward.
 
 ## Connection to vibe-noting
 
@@ -50,7 +50,7 @@ This sharpens the vibe-coding/vibe-noting parallel. Vibe coding works well in lo
 
 ## What this framing does and doesn't explain
 
-The reach framing predicts *where* durability pressure appears but not *which artifact* should carry the knowledge. AI may expand the low-reach zone by making some medium-reach knowledge cheaper to re-derive from logs, traces, or tests — but that relocates the durable substrate rather than eliminating it. Kirsch's [falsification criteria](../sources/the-flawed-ephemeral-software-hypothesis.md) test whether this relocation is happening at scale.
+The reach framing predicts *where* durability pressure appears but not *which artifact* should carry the knowledge. AI may expand the low-reach zone by making some medium-reach knowledge cheaper to re-derive from logs, traces, or tests — but that relocates the durable substrate rather than eliminating it. Kirsch's [falsification criteria](https://www.blackhc.net/essays/future_of_software/) test whether this relocation is happening at scale.
 
 The asymmetry remains: AI can make re-derivation cheaper, but it cannot remove the structural reach of constraints like data model compatibility, user expectations, or regulatory traceability. Somewhere, that knowledge still has to survive.
 
@@ -64,4 +64,4 @@ Relevant Notes:
 - [Vibe-noting](./vibe-noting.md) — extends: reach explains when inspectability becomes load-bearing for accumulation; low-reach coding tolerates discard more often than high-reach knowledge work does
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — grounds: codification is how high-reach operational knowledge gets committed to durable artifacts; the arithmetic/vision-feature distinction parallels the high-reach/low-reach boundary
 - [Codification](./definitions/codification.md) — extends: the note reframes Kirsch's "malleable software" as systems that codify high-reach operational knowledge rather than discarding it
-- [The Flawed Ephemeral Software Hypothesis (Kirsch)](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) — source: the four structural barriers reinterpreted as reach indicators
+- [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — source: the four structural barriers reinterpreted as reach indicators

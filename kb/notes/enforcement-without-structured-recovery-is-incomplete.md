@@ -24,7 +24,7 @@ The gap is sharpest at the warning-hook level. Warning hooks target soft violati
 
 ## Recovery as a typed strategy
 
-The [ABC framework](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) provides vocabulary for this missing layer. ABC distinguishes three recovery strategies for soft constraint violations, ordered by cost and human involvement:
+The [ABC framework](https://arxiv.org/html/2602.22302v1) provides vocabulary for this missing layer. ABC distinguishes three recovery strategies for soft constraint violations, ordered by cost and human involvement:
 
 1. **Corrective action** — the agent fixes the violation directly. This requires knowing what "fixed" looks like — a hard oracle for the corrected state.
 2. **Fallback chain** — if direct correction fails, the agent falls back to a simpler, safer strategy. This requires pre-specified fallback options.
@@ -66,6 +66,6 @@ Relevant Notes:
 - [error-messages-that-teach-are-a-constraining-technique](./error-messages-that-teach-are-a-constraining-technique.md) — extends: teaching messages are the inform axis of recovery but stop at "teaches the fix" — this note adds the structured follow-through (corrective → fallback → escalation) that turns teaching into recovery
 - [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — extends: fallback strategy also needs observability; otherwise successful recovery erases evidence that would trigger repair
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines: oracle strength constrains which recovery strategies are viable; hard oracles enable auto-correction, soft oracles require agent interpretation, no-oracle means no structured recovery
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — provides framework: the corrective → fallback → escalation recovery vocabulary and Drift Bounds Theorem that formalise the missing layer
+- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — provides framework: the corrective → fallback → escalation recovery vocabulary and Drift Bounds Theorem that formalise the missing layer
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: error correction through repetition is one implementation of automated recovery for soft-oracle domains — amplification converts weak detection into reliable correction
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — contextualises: the safety dimension ("what happens when it doesn't work?") is the recovery question stated as a reliability property

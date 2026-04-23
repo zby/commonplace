@@ -48,7 +48,7 @@ Relevant Notes:
 
 - [alexander-patterns-and-knowledge-system-design](./alexander-patterns-and-knowledge-system-design.md) — source: the three depths draw on Alexander's levels of concreteness (structural templates → generative processes → centers strengthening centers)
 - [arscontexta](../agent-memory-systems/reviews/arscontexta.md) — refines: the "controlled disorder" claim is right about judgment-based linking but the topic-vs-mechanism framing is a false dichotomy
-- [Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
+- [Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [constraining](./definitions/constraining.md) — suggestive parallel: constraining and discovery are both gradients where each step trades generality for power, though on different axes
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem

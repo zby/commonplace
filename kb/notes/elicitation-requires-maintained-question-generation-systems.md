@@ -84,6 +84,6 @@ Relevant Notes:
 - [knowledge-storage-does-not-imply-contextual-activation](./knowledge-storage-does-not-imply-contextual-activation.md) — foundation: the activation gap and expertise gap that this note addresses
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — enables: elicitation strategies are oracle-hardening moves for activation-limited settings
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — complements: question coverage is a prerequisite for the per-instance discrimination that automation requires
-- [the-bug-that-shipped-2035319413474206122](../sources/the-bug-that-shipped-2035319413474206122.md) — evidence: deployment-failure insights retrievable on probe but absent in undirected review; motivates structured elicitation
-- [professional-software-developers-dont-vibe-they-control](../sources/professional-software-developers-dont-vibe-they-control.md) — complement: expert practitioners compensate for activation limits through explicit planning, narrow tasking, and supervision — a human version of two-pass review
-- [towards-a-science-of-ai-agent-reliability](../sources/towards-a-science-of-ai-agent-reliability.md) — context: reliability dimensions motivate the measurement framework
+- [the-bug-that-shipped-2035319413474206122](https://x.com/KatanaLarp/status/2035319413474206122) — evidence: deployment-failure insights retrievable on probe but absent in undirected review; motivates structured elicitation
+- [professional-software-developers-dont-vibe-they-control](https://arxiv.org/html/2512.14012v1) — complement: expert practitioners compensate for activation limits through explicit planning, narrow tasking, and supervision — a human version of two-pass review
+- [towards-a-science-of-ai-agent-reliability](https://arxiv.org/pdf/2602.16666) — context: reliability dimensions motivate the measurement framework

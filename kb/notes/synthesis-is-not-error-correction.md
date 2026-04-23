@@ -10,7 +10,7 @@ status: seedling
 
 Merging agent outputs and selecting among them are fundamentally different operations. Synthesis propagates errors; voting corrects them. Conflating the two leads to misleading conclusions about whether multi-agent coordination works.
 
-The concrete case: [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) report up to 17.2× error amplification in multi-agent systems. [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) achieves zero errors over a million LLM steps. The results seem contradictory but aren't — Kim et al. tested synthesis, MAKER tested voting.
+The concrete case: [Kim et al.](https://arxiv.org/pdf/2512.08296) report up to 17.2× error amplification in multi-agent systems. [MAKER](https://arxiv.org/abs/2511.09030) achieves zero errors over a million LLM steps. The results seem contradictory but aren't — Kim et al. tested synthesis, MAKER tested voting.
 
 ## The distinction
 
@@ -65,6 +65,6 @@ Relevant Notes:
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
 - [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
-- [Kim et al.](../sources/towards-a-science-of-scaling-agent-systems.ingest.md) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
-- [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) — evidence: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation
+- [Kim et al.](https://arxiv.org/pdf/2512.08296) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
+- [MAKER](https://arxiv.org/abs/2511.09030) — evidence: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: the voting/synthesis distinction explains why the verification layer requires atomic units from isolation

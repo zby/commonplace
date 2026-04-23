@@ -22,7 +22,7 @@ This is an instance of [the boundary of automation is the boundary of verificati
 
 The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) found that across eleven systems, everyone automates extraction but almost nobody automates synthesis. The few attempts:
 
-- **Tip consolidation** ([trajectory-informed-memory paper](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md)) — clusters semantically similar tips and LLM-merges them. Works because task completion provides an oracle: consolidated tips either improve performance or don't. The oracle is narrow but real.
+- **Tip consolidation** ([trajectory-informed-memory paper](https://arxiv.org/html/2603.10600v1)) — clusters semantically similar tips and LLM-merges them. Works because task completion provides an oracle: consolidated tips either improve performance or don't. The oracle is narrow but real.
 - **A-MEM memory evolution** — neighboring notes update their context when new notes arrive. This is enrichment (adding context to existing items), not synthesis (producing something new from combination). No oracle needed because the operation is conservative.
 - **Cognee memify** — promises synthesis-like operations but ships simpler extraction. The gap between ambition and shipping is itself evidence of the difficulty.
 - **This KB's `/connect` skill** — surfaces synthesis opportunities by finding cross-note patterns. Human-triggered and human-evaluated. The human is the oracle.

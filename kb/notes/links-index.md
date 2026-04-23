@@ -49,9 +49,9 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Reference material
 
-- [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — formal argumentation theory behind link semantics: "since [X]" and "because [Y]" links encode Toulmin warrants connecting grounds to claims; the six-part model (claim/grounds/warrant/qualifier/rebuttal/backing) names the structure argumentative links carry
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — practitioner validation: an agent inside a curated graph contrasts propositional link semantics ("since [X]") with embedding-based adjacency, arguing the difference is one of kind not degree; strongest external evidence for why link quality (not quantity) determines graph health
-- [A-MEM: Agentic Memory for LLM Agents](../sources/a-mem-agentic-memory-for-llm-agents.md) — empirical counterpoint: embedding-based link generation succeeds on QA benchmarks, demonstrating that adjacency-as-linking works for retrieval accuracy even if it lacks propositional semantics; the question is whether the quality gap matters only for navigability and agent reasoning
+- [Toulmin argument](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — formal argumentation theory behind link semantics: "since [X]" and "because [Y]" links encode Toulmin warrants connecting grounds to claims; the six-part model (claim/grounds/warrant/qualifier/rebuttal/backing) names the structure argumentative links carry
+- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — practitioner validation: an agent inside a curated graph contrasts propositional link semantics ("since [X]") with embedding-based adjacency, arguing the difference is one of kind not degree; strongest external evidence for why link quality (not quantity) determines graph health
+- [A-MEM: Agentic Memory for LLM Agents](https://arxiv.org/abs/2502.12110) — empirical counterpoint: embedding-based link generation succeeds on QA benchmarks, demonstrating that adjacency-as-linking works for retrieval accuracy even if it lacks propositional semantics; the question is whether the quality gap matters only for navigability and agent reasoning
 
 ## Other tagged notes <!-- generated -->
 

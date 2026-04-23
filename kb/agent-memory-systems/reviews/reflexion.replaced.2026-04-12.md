@@ -42,7 +42,7 @@ Reflexion is an early and important artifact-learning reference, but it is much 
 
 **Trace-derived learning placement.** On axis 1 of the survey, Reflexion fits the **trajectory-run pattern**: it learns from repeated bounded attempts at the same task family. On axis 2, it is a narrow **trace-derived artifact-learning** system: the promoted result is textual reflection, but usually only as short prompt memory rather than a rich artifact store. It belongs in the survey as a historical precedent and as a lower-structure comparison point.
 
-Relative to [OpenClaw-RL ingest](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md), Reflexion preserves inspectable verbal feedback but gives up the possibility of parameter adaptation. Relative to [ClawVault](./clawvault.md), it has a much weaker artifact lifecycle: hints are reused, but not matured into typed durable documents.
+Relative to [OpenClaw-RL ingest](https://arxiv.org/html/2603.10165v1), Reflexion preserves inspectable verbal feedback but gives up the possibility of parameter adaptation. Relative to [ClawVault](./clawvault.md), it has a much weaker artifact lifecycle: hints are reused, but not matured into typed durable documents.
 
 ## Borrowable Ideas
 
@@ -74,5 +74,5 @@ Relevant Notes:
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Reflexion is an early artifact-learning precedent for trajectory-based verbal memory
 - [ClawVault](./clawvault.md) — contrasts: both preserve inspectable text, but ClawVault has a richer artifact lifecycle and typed promotion path
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Reflexion also depends on strong local oracles, but keeps the result in prompt-visible text rather than weights
-- [OpenClaw-RL: Train Any Agent Simply by Talking](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) — contrasts: same broad idea of learning from ongoing interaction, different promotion target and much weaker training machinery
+- [OpenClaw-RL: Train Any Agent Simply by Talking](https://arxiv.org/html/2603.10165v1) — contrasts: same broad idea of learning from ongoing interaction, different promotion target and much weaker training machinery
 - [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) — sharpens: Reflexion sits in the deploy-time artifact-update space, where learning happens by changing prompt-visible text rather than training weights

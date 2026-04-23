@@ -28,7 +28,7 @@ Each component also maps to existing KB theory:
 
 ## Mapping the practitioner taxonomy
 
-The [Anatomy of an Agent Harness ingest](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) derives six practitioner components from model limitations: filesystem, bash, sandboxes, memory/search, context management, and long-horizon execution. Those map cleanly into the three-part decomposition:
+The [Anatomy of an Agent Harness ingest](https://x.com/Vtrivedy10/status/2031408954517971368) derives six practitioner components from model limitations: filesystem, bash, sandboxes, memory/search, context management, and long-horizon execution. Those map cleanly into the three-part decomposition:
 
 | Practitioner component | Runtime component | Why |
 |---|---|---|
@@ -43,7 +43,7 @@ The source's "everything not the model" definition is descriptively useful but a
 
 ### Raschka's six components
 
-[Raschka (2026)](../sources/components-of-a-coding-agent-raschka.ingest.md) independently decomposes coding agent harnesses into six named components. These map onto the same three-part split:
+[Raschka (2026)](https://magazine.sebastianraschka.com/p/components-of-a-coding-agent) independently decomposes coding agent harnesses into six named components. These map onto the same three-part split:
 
 | Raschka component | Runtime component | Why |
 |---|---|---|
@@ -89,10 +89,10 @@ Practitioner component lists place filesystems, bash, sandboxes, and versioned m
 
 Four independent practitioner sources each emphasize different parts of the runtime, but the convergence is clearer under this decomposition:
 
-- **[Lopopolo's report](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)** emphasizes how constraints harden across the runtime — instructions, structural tests, cleanup agents. That improvement path runs through all three components but is most visible in the scheduler and substrate becoming more reliable over time.
-- **[The cybernetics thread](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md)** frames the space as sensors, actuators, and feedback loops. That language cuts across all three components but especially clarifies the scheduler/substrate interface: the scheduler reads state from the substrate and writes decisions back to it.
+- **[Lopopolo's report](https://openai.com/index/harness-engineering/)** emphasizes how constraints harden across the runtime — instructions, structural tests, cleanup agents. That improvement path runs through all three components but is most visible in the scheduler and substrate becoming more reliable over time.
+- **[The cybernetics thread](https://x.com/odysseus0z/status/2030416758138634583)** frames the space as sensors, actuators, and feedback loops. That language cuts across all three components but especially clarifies the scheduler/substrate interface: the scheduler reads state from the substrate and writes decisions back to it.
 - **Vtrivedy10's component taxonomy** provides the anatomy — the concrete pieces a runtime needs once you work backward from model limitations.
-- **[Raschka's six components](../sources/components-of-a-coding-agent-raschka.ingest.md)** reach the same decomposition from a pedagogical angle — asking what makes agent-mode tools outperform plain chat, and finding that the answer is context quality, not model quality.
+- **[Raschka's six components](https://magazine.sebastianraschka.com/p/components-of-a-coding-agent)** reach the same decomposition from a pedagogical angle — asking what makes agent-mode tools outperform plain chat, and finding that the answer is context quality, not model quality.
 
 The KB already had the theory for the scheduler and context engine. What was missing was the runtime-level note connecting those theories as components of one architecture, and showing that remaining practitioner components cluster under execution substrate rather than floating as unrelated infrastructure.
 
@@ -113,7 +113,7 @@ Relevant Notes:
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — grounds: why the substrate is often filesystem-first early on
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: runtime constraints mature differently across layers, which becomes clearer once the runtime is decomposed
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — exemplifies: the scheduler layer as the control-flow-owning part of the runtime
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — evidence: practitioner report on runtime hardening through instructions, tests, and cleanup agents
-- [Harness Engineering as Cybernetics (@odysseus0z, 2026)](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — evidence: control-theoretic framing for the scheduler/substrate feedback loop
-- [The Anatomy of an Agent Harness](../sources/the-anatomy-of-an-agent-harness-2031408954517971368.ingest.md) — evidence: the practitioner component taxonomy this note reorganizes
-- [Components of A Coding Agent (Raschka, 2026)](../sources/components-of-a-coding-agent-raschka.ingest.md) — evidence: independent six-component taxonomy converging on the same three-part decomposition from a pedagogical starting point
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — evidence: practitioner report on runtime hardening through instructions, tests, and cleanup agents
+- [Harness Engineering as Cybernetics (@odysseus0z, 2026)](https://x.com/odysseus0z/status/2030416758138634583) — evidence: control-theoretic framing for the scheduler/substrate feedback loop
+- [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — evidence: the practitioner component taxonomy this note reorganizes
+- [Components of A Coding Agent (Raschka, 2026)](https://magazine.sebastianraschka.com/p/components-of-a-coding-agent) — evidence: independent six-component taxonomy converging on the same three-part decomposition from a pedagogical starting point

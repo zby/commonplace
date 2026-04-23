@@ -24,7 +24,7 @@ This matters most during cold-start orientation in an unfamiliar area.
 
 ### 2. Source-to-theory bridge — "what practitioner evidence exists for this claim?"
 
-Ingest reports in `kb/sources/` link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](../sources/koylanai-personal-brain-os.ingest.md) links to [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md)). But the theory note doesn't know it has practitioner evidence pointing at it. As sources accumulate, backlinks would let an agent see how well-grounded a theoretical claim is — and spot synthesis opportunities when enough sources converge.
+Ingest reports in `kb/sources/` link TO KB notes (e.g., [koylanai-personal-brain-os.ingest.md](https://x.com/koylanai/status/2025286163641118915) links to [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md)). But the theory note doesn't know it has practitioner evidence pointing at it. As sources accumulate, backlinks would let an agent see how well-grounded a theoretical claim is — and spot synthesis opportunities when enough sources converge.
 
 ### 3. Impact assessment — "what breaks if I change this?"
 

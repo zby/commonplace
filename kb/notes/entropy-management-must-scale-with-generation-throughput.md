@@ -14,7 +14,7 @@ This creates a scaling requirement: cleanup throughput must be proportional to g
 
 ## Evidence
 
-OpenAI's Codex team found this empirically at 1M LOC scale. Early on, engineers spent 20% of their time on "AI slop cleanup" — manual Friday sessions fixing drift. The fix was not working harder but matching throughput: background cleanup agents that continuously scan for pattern violations and open small refactoring PRs, most auto-merged. "Garbage collection for code quality" — a continuous process, not a periodic chore. The transition from manual Fridays to automated cleanup is [spec mining](./spec-mining-as-codification.md) completing: observe drift patterns, extract standards, codify into automated enforcement. ([Harness Engineering](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md))
+OpenAI's Codex team found this empirically at 1M LOC scale. Early on, engineers spent 20% of their time on "AI slop cleanup" — manual Friday sessions fixing drift. The fix was not working harder but matching throughput: background cleanup agents that continuously scan for pattern violations and open small refactoring PRs, most auto-merged. "Garbage collection for code quality" — a continuous process, not a periodic chore. The transition from manual Fridays to automated cleanup is [spec mining](./spec-mining-as-codification.md) completing: observe drift patterns, extract standards, codify into automated enforcement. ([Harness Engineering](https://openai.com/index/harness-engineering/))
 
 The [stagnation finding](./methodology-enforcement-is-constraining.md) from the context engineering study reinforces this from the negative direction: 50% of AGENTS.md files were never changed after creation. These are systems where maintenance throughput is zero — and instructions accumulate without pruning.
 
@@ -33,4 +33,4 @@ Relevant Notes:
 - [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operationalizes: the catalogue lists what needs scaling; this note argues it must scale proportionally with generation
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — constrains: if boiling cauldron mutations are automated, maintenance must be automated at matching throughput or quality degrades
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — detects: the credibility erosion failure mode is what happens when entropy management falls behind generation
-- [Harness Engineering](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — primary evidence: 1M LOC agent-generated codebase where background cleanup agents maintain quality at generation-matching throughput
+- [Harness Engineering](https://openai.com/index/harness-engineering/) — primary evidence: 1M LOC agent-generated codebase where background cleanup agents maintain quality at generation-matching throughput

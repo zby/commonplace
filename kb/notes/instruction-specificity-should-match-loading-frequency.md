@@ -29,5 +29,5 @@ Sources:
 
 Relevant Notes:
 
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: 100-line AGENTS.md as "a map with pointers" converges independently on the routing concept at production scale
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: 100-line AGENTS.md as "a map with pointers" converges independently on the routing concept at production scale
 - [Always-loaded context has two surfaces with different affordances](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: distinguishes the two always-loaded surfaces (CLAUDE.md vs skill descriptions) and their design tradeoffs

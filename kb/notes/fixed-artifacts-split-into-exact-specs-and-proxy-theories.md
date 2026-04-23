@@ -51,5 +51,5 @@ Relevant Notes:
 - [Operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — applies: gives earlier signals for detecting badly fitting proxy theories before full composition failure
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — refines: oracle strength determines how cheaply exactness can be checked and how safely an artifact can be hardened
 - [Memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: memory operations are exact-spec artifacts, while the policy for composing them is a proxy theory
-- [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — exemplifies: fiscal period normalization is a clean exact-spec artifact inside an otherwise judgment-heavy domain
-- [MAKER: million-step zero errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — exemplifies: decomposition to minimal subtasks with hard per-step oracles works when each subtask has exact-spec structure
+- [Fintool: Lessons from Financial Services](https://x.com/nicbstme/status/2015174818497437834) — exemplifies: fiscal period normalization is a clean exact-spec artifact inside an otherwise judgment-heavy domain
+- [MAKER: million-step zero errors](https://arxiv.org/abs/2511.09030) — exemplifies: decomposition to minimal subtasks with hard per-step oracles works when each subtask has exact-spec structure

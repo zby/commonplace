@@ -50,7 +50,7 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Sources
 
-- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — empirical evidence: separates all three phenomena methodologically; performance-stability decoupling confirms they are independent
+- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — empirical evidence: separates all three phenomena methodologically; performance-stability decoupling confirms they are independent
 
 ## Related Tags
 

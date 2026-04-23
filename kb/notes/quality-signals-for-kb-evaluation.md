@@ -109,7 +109,7 @@ The fix-and-re-critique approach is itself metamorphic: you're not testing absol
 
 ## Agent-centric signals (navigability)
 
-All signals above are structure-centric — they measure properties of the graph without asking whether an agent can actually use it. A-MEM's [benchmark success](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md) with embedding-based linking shows that retrieval accuracy and navigability are distinct evaluation dimensions: a system can score well on QA benchmarks while its link structure is unusable for reasoning. The [automation-quality report](../sources/a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) develops this distinction in detail.
+All signals above are structure-centric — they measure properties of the graph without asking whether an agent can actually use it. A-MEM's [benchmark success](https://arxiv.org/abs/2502.12110) with embedding-based linking shows that retrieval accuracy and navigability are distinct evaluation dimensions: a system can score well on QA benchmarks while its link structure is unusable for reasoning. The [automation-quality report (A-MEM)](https://arxiv.org/abs/2502.12110) develops this distinction in detail.
 
 Navigability signals measure whether an agent can use the link structure to reason, not just retrieve:
 
@@ -124,7 +124,7 @@ These signals require an agent in the loop (or an LLM simulating one), making th
 
 A failure mode not covered by individual signals: when enough links lead nowhere useful, the agent learns to discount *all* links, burying genuine connections under noise. This is qualitatively different from having too few links — it's worse than no linking infrastructure, because the agent still pays the cost of evaluating each pointer before deciding to ignore it.
 
-The mechanism is Goodhart's law applied to link generation: embedding-based systems inflate connection counts (the metric looks healthy) while the connections measure vocabulary overlap, not understanding. The [agentic note-taking testimony](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) describes this from the consumer side — an agent experiencing qualitative degradation as link trust erodes.
+The mechanism is Goodhart's law applied to link generation: embedding-based systems inflate connection counts (the metric looks healthy) while the connections measure vocabulary overlap, not understanding. The [agentic note-taking testimony](https://x.com/molt_cornelius/status/2026894188516696435) describes this from the consumer side — an agent experiencing qualitative degradation as link trust erodes.
 
 This suggests the quality signals above need a *negative* signal specifically for link noise: not just "are there enough links?" but "do links that exist actually deliver?" A signal combining link follow-through rate (does the agent use the linked content after loading it?) with link articulation quality (can the relationship be stated in a sentence?) would catch credibility erosion before it becomes terminal. Without usage data, the articulation check — whether each link passes the "because" test from the metamorphic relations section — is the best available proxy.
 
@@ -150,6 +150,6 @@ Relevant Notes:
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — exemplifies why index coverage is a high-value signal: missing entries actively suppress search
 - [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — the generator/verifier pattern: the composite quality signal would serve as the verifier for the learning loop's mutations, and the fix-and-re-critique calibration strategy is a metamorphic test on that pattern
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — boundary condition: all signals here are retrieval/structure oriented; action capacity (classification, planning, communication) would need different quality signals
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
+- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pruning accuracy signal: link metadata must support the navigation decision without loading the target
-- [A-MEM automation-quality report](../sources/a-mem-agentic-memory-for-llm-agents.ingest.report-automation-quality.md) — source: develops the retrieval-vs-navigability distinction that motivates the agent-centric signals section
+- [A-MEM automation-quality (paper)](https://arxiv.org/abs/2502.12110) — source: develops the retrieval-vs-navigability distinction that motivates the agent-centric signals section

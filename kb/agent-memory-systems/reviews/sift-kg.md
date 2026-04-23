@@ -79,13 +79,13 @@ sift-kg and commonplace operate at different levels: sift-kg is a *processing pi
 
 ## Comparison with Cognee
 
-[Cognee](../../sources/cognee-knowledge-engine.ingest.md) solves the same core problem — LLM-driven document-to-knowledge-graph extraction with explicit pipeline stages — but makes the opposite schema bet. sift-kg discovers schemas from the corpus: sample 5 chunks, ask the LLM to design entity and relation types, cache the result. Cognee requires schemas upfront: developers define custom Pydantic models specifying which entities and relationships to extract.
+[Cognee](https://github.com/topoteretes/cognee) solves the same core problem — LLM-driven document-to-knowledge-graph extraction with explicit pipeline stages — but makes the opposite schema bet. sift-kg discovers schemas from the corpus: sample 5 chunks, ask the LLM to design entity and relation types, cache the result. Cognee requires schemas upfront: developers define custom Pydantic models specifying which entities and relationships to extract.
 
 The trade-off is cold-start cost vs. extraction precision. sift-kg avoids the "what entities should I define?" problem entirely — you point it at documents and it proposes a schema. But discovered schemas may be noisy or inconsistent across corpora. Cognee's Pydantic schemas guarantee that extraction conforms to the developer's domain model, but the developer must already understand the domain well enough to write that model — a chicken-and-egg problem for unfamiliar domains.
 
 Both systems share pipeline-first architecture with explicit stage boundaries (sift-kg: extract→build→resolve→review; Cognee: add→cognify→memify) and materialized intermediate state. The deeper difference is who does the ontology work: the LLM (sift-kg) or the developer (Cognee). This axis — schema discovery vs. schema definition — cuts across all document-to-KG systems and is orthogonal to other design choices like storage backend or confidence handling.
 
-[Evans (2026)](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) provides a third position on this axis. His core claim — "creating a classification system is a modeling task, which is much harder than the classification task itself" — implies sift-kg's schema discovery is the riskier move: it asks the LLM to do the hard thing (design entity types) rather than the easy thing (apply them). Evans' recommendation is to adopt published standards for generic domains and reserve custom modeling for core domains where it's strategically justified. sift-kg automates exactly the step Evans says requires the most care, betting that LLM-discovered schemas are good enough. Whether that bet pays off is the key question in "What to Watch" above.
+[Evans (2026)](https://www.domainlanguage.com/articles/ai-components-deterministic-system/) provides a third position on this axis. His core claim — "creating a classification system is a modeling task, which is much harder than the classification task itself" — implies sift-kg's schema discovery is the riskier move: it asks the LLM to do the hard thing (design entity types) rather than the easy thing (apply them). Evans' recommendation is to adopt published standards for generic domains and reserve custom modeling for core domains where it's strategically justified. sift-kg automates exactly the step Evans says requires the most care, betting that LLM-discovered schemas are good enough. Whether that bet pays off is the key question in "What to Watch" above.
 
 ## Curiosity Pass
 
@@ -107,9 +107,9 @@ Both systems share pipeline-first architecture with explicit stage boundaries (s
 
 Relevant Notes:
 
-- [Cognee](../../sources/cognee-knowledge-engine.ingest.md) — contrasts: same problem (LLM document-to-KG pipeline) but opposite schema bet — Cognee requires upfront Pydantic schemas where sift-kg discovers schemas from corpus samples
+- [Cognee](https://github.com/topoteretes/cognee) — contrasts: same problem (LLM document-to-KG pipeline) but opposite schema bet — Cognee requires upfront Pydantic schemas where sift-kg discovers schemas from corpus samples
 - [Siftly](./siftly.md) — contrasts: similar ingestion ambition but uses SQLite and deterministic-first enrichment rather than LLM extraction
 - [deterministic-validation-should-be-a-script](../../notes/deterministic-validation-should-be-a-script.md) — foundation: deterministic cleanup around stochastic extraction follows the same hard-oracle direction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — example: review queues are concrete workshop artifacts for controlled transformation
-- [Evans: AI Components for a Deterministic System](../../sources/eric-evans-ai-components-deterministic-system.ingest.md) — contrasts: Evans argues schema creation is harder than schema application and should use published standards where possible; sift-kg automates the step Evans says requires the most care
+- [Evans: AI Components for a Deterministic System](https://www.domainlanguage.com/articles/ai-components-deterministic-system/) — contrasts: Evans argues schema creation is harder than schema application and should use published standards where possible; sift-kg automates the step Evans says requires the most care
 - [agent memory systems landscape](../README.md) — master map of tracked systems

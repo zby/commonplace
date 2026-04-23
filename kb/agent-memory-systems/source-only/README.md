@@ -7,4 +7,4 @@ Use this directory for standard `type: note` coverage when the `agent-memory-sys
 - [AgeMem](./agemem.md) — RL-trained memory-management policy covered through source ingest and analysis notes.
 - [Trajectory-Informed Memory Generation](./trajectory-informed-memory-generation.md) — trajectory-to-tip learning pipeline covered through source ingest.
 
-TODO: [OpenClaw-RL](../../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) now has a reachable repository (`Gen-Verse/OpenClaw-RL`) and should get a repo-backed review rather than a source-only note.
+TODO: [OpenClaw-RL](https://arxiv.org/html/2603.10165v1) now has a reachable repository (`Gen-Verse/OpenClaw-RL`) and should get a repo-backed review rather than a source-only note.

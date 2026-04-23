@@ -10,7 +10,7 @@ status: seedling
 
 The KB has a recurring tension: cognitive science analogies keep appearing in agent memory discourse (Tulving's taxonomy, Conway's self-memory system, Damasio's somatic markers), but it's unclear whether they transfer mechanistically or just provide vocabulary. The [three-space memory note](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) leaves this open explicitly: "whether the cognitive science analogy adds explanatory power beyond [simpler advice] remains to be seen."
 
-Three existing KB notes contain the components of a methodology for testing this. This note assembles them and runs the test against [Youssef's five psychology principles for AI memory](../sources/psychology-solves-ai-memory-identity-construction-2025307030651871631.ingest.md).
+Three existing KB notes contain the components of a methodology for testing this. This note assembles them and runs the test against [Youssef's five psychology principles for AI memory](https://x.com/rryssf_/status/2025307030651871631).
 
 ## The methodology
 
@@ -90,7 +90,7 @@ The bet is that the separation is useful but the Tulving mapping is decorative �
 
 - Is there a version of the methodology that can evaluate principles for *future* agent architectures, not just current ones? The co-emergent self-model is genuinely interesting but can't be tested against systems that don't exist yet.
 - Does the "decorative but useful for communication" category have value? Psychology vocabulary might help interdisciplinary teams think about agent memory even if the mechanisms don't transfer. Naming is not nothing.
-- The ingest notes a source-to-source tension: [deepfates](../sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici-2036857868914483592.ingest.md) and Youssef diagnose the same problem (AI memory is broken) but propose opposite solutions (weight updates vs architecture). The failure-mode methodology could adjudicate: which failure modes require weight changes and which can be addressed architecturally?
+- The ingest notes a source-to-source tension: [deepfates](https://x.com/deepfates/status/2036857868914483592) and Youssef diagnose the same problem (AI memory is broken) but propose opposite solutions (weight updates vs architecture). The failure-mode methodology could adjudicate: which failure modes require weight changes and which can be addressed architecturally?
 
 ---
 
@@ -99,6 +99,6 @@ Relevant Notes:
 - [human writing structures transfer because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — foundation: provides the per-convention failure-mode matching methodology this note generalizes
 - [LLM learning phases fall between human modes](./llm-learning-phases-fall-between-human-learning-modes.md) — foundation: the intermediate-position warning that prevents 1:1 human-to-LLM mapping
 - [three-space agent memory echoes Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — extends: this note's methodology directly addresses the "decorative?" question left open there
-- [Youssef: psychology principles for AI memory](../sources/psychology-solves-ai-memory-identity-construction-2025307030651871631.ingest.md) — source: the five principles used as worked examples
+- [Youssef: psychology principles for AI memory](https://x.com/rryssf_/status/2025307030651871631) — source: the five principles used as worked examples
 - [flat memory predicts specific cross-contamination failures](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — evidence: documents the search pollution failure mode that principles 1 and 2 address
-- [deepfates LLM memory critique](../sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici-2036857868914483592.ingest.md) — contradicts source: same diagnosis, opposite solution — weight updates vs architecture
+- [deepfates LLM memory critique](https://x.com/deepfates/status/2036857868914483592) — contradicts source: same diagnosis, opposite solution — weight updates vs architecture

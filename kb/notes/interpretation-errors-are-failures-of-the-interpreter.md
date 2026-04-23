@@ -13,7 +13,7 @@ Real LLMs produce outputs outside the space of valid interpretations. The spec r
 Examples:
 - **Constraint violation**: "Output JSON only" → LLM produces markdown with a JSON block
 - **Hallucination**: "Summarise this document" → LLM includes facts not in the document
-- **Bookkeeping failure**: tracking compositional depth (fully specified, one correct answer) → [F1 collapses from 1.0 to 0.2](../sources/convexbench-can-llms-recognize-convex-functions.md) at depth 100 despite short context
+- **Bookkeeping failure**: tracking compositional depth (fully specified, one correct answer) → [F1 collapses from 1.0 to 0.2](https://arxiv.org/html/2602.01075v2) at depth 100 despite short context
 - **Content bias**: reasoning accuracy varies with semantic content rather than logical structure, producing errors on valid syllogisms with unfamiliar premises
 - **Emotional prompt sensitivity**: [Ma et al.](https://arxiv.org/pdf/2509.13680) show that semantically equivalent prompts with different emotional framing produce systematic performance degradation — bias, not noise, since the functional spec is unchanged
 
@@ -36,4 +36,4 @@ Relevant Notes:
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — parent area: the three-phenomena taxonomy this note is part of
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — remedy: the general theory of error correction applicable to interpretation errors
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — architectural remedy: moving error-prone bookkeeping to a reliable substrate
-- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — evidence: emotional prompt variation produces systematic performance degradation (bias) on functionally identical tasks
+- [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidence: emotional prompt variation produces systematic performance degradation (bias) on functionally identical tasks

@@ -33,9 +33,9 @@ The vision researchers made this bet at maximum disadvantage. They formalized su
 
 But it's still a bet. A mined spec might capture an accidental regularity — a pattern that holds on the observed data but isn't what makes the system work. [Relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) are how you detect a losing bet: distribution shift, paraphrase brittleness, and isolation-vs-integration gaps reveal when a codified component encodes an accident rather than a spec.
 
-Two formal results help bound when codification bets are safe. The epiplexity framework ([Finzi et al., 2026](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md)) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds). High-epiplexity regularities are genuinely structural — codifying them is safer because they reflect real patterns, not artefacts of the observer's computational budget. Low-epiplexity patterns that appear regular may be accidents visible only at current scale.
+Two formal results help bound when codification bets are safe. The epiplexity framework ([Finzi et al., 2026](https://arxiv.org/html/2601.03220v1)) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds). High-epiplexity regularities are genuinely structural — codifying them is safer because they reflect real patterns, not artefacts of the observer's computational budget. Low-epiplexity patterns that appear regular may be accidents visible only at current scale.
 
-The induction bias results ([Ebrahimi et al., 2026](../sources/induction-bias-sequence-models-ebrahimi-2026.md)) provide evidence from the other direction: for calculator-class state tracking, architectural induction bias (step-by-step decomposition) is a permanent advantage, not a temporary one that scale dissolves. Transformers show sharing factor κ ≈ 1 or κ < 1 across all supervision formats — they learn length-specific solutions in isolation, with training diversity actively hurting (κ = 0.28 for CoT). This means codification bets in the arithmetic regime are not merely safe-for-now; the step-by-step structure that codification encodes is the kind of regularity that persists under scaling.
+The induction bias results ([Ebrahimi et al., 2026](https://arxiv.org/pdf/2602.18333)) provide evidence from the other direction: for calculator-class state tracking, architectural induction bias (step-by-step decomposition) is a permanent advantage, not a temporary one that scale dissolves. Transformers show sharing factor κ ≈ 1 or κ < 1 across all supervision formats — they learn length-specific solutions in isolation, with training diversity actively hurting (κ = 0.28 for CoT). This means codification bets in the arithmetic regime are not merely safe-for-now; the step-by-step structure that codification encodes is the kind of regularity that persists under scaling.
 
 ## Working heuristics
 
@@ -48,8 +48,8 @@ The induction bias results ([Ebrahimi et al., 2026](../sources/induction-bias-se
 ---
 
 Sources:
-- Finzi et al. (2026). [From entropy to epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) — formal framework distinguishing learnable structure from observer-relative artefacts; grounds when codification targets real patterns.
-- Ebrahimi et al. (2026). [On the "induction bias" in sequence models](../sources/induction-bias-sequence-models-ebrahimi-2026.md) — 190K training runs showing architectural induction bias is permanent for calculator-class tasks; codification bets in the arithmetic regime persist under scaling.
+- Finzi et al. (2026). [From entropy to epiplexity](https://arxiv.org/html/2601.03220v1) — formal framework distinguishing learnable structure from observer-relative artefacts; grounds when codification targets real patterns.
+- Ebrahimi et al. (2026). [On the "induction bias" in sequence models](https://arxiv.org/pdf/2602.18333) — 190K training runs showing architectural induction bias is permanent for calculator-class tasks; codification bets in the arithmetic regime persist under scaling.
 
 Relevant Notes:
 

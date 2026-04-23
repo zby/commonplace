@@ -22,4 +22,4 @@ Relevant Notes:
 - [interpretation errors are failures of the interpreter](./interpretation-errors-are-failures-of-the-interpreter.md) — distinguishes: this note is about insufficient specification, not violating a sufficient one
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — applies: ambiguity handling also needs typed recovery and escalation
 - [observability](./observability-index.md) — belongs to: semantic recovery must be visible to learn whether contracts are sufficient
-- [What Spec-Driven Development Gets Wrong](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md) — exemplifies: bidirectional spec updates make semantic recovery visible
+- [What Spec-Driven Development Gets Wrong](https://x.com/augmentcode/status/2025993446633492725) — exemplifies: bidirectional spec updates make semantic recovery visible

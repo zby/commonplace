@@ -19,7 +19,7 @@ Deployed systems adapt at three timescales, each with a different durable medium
 | **In-context** | Within a session | Context window | Inspectable but ephemeral; evaporates at session end |
 | **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (prose + symbolic) | Durable, inspectable, versionable |
 
-Medium and timing are orthogonal axes in principle. The combination the table leaves empty — weight updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md), which runs live RL from user interactions, is a current example.
+Medium and timing are orthogonal axes in principle. The combination the table leaves empty — weight updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example.
 
 Deploy-time learning is system-level adaptation: behaviour improves because *artifacts* improve — during deployment like in-context, durable like training, but inspectable and tool-compatible throughout.
 
@@ -56,8 +56,8 @@ Relevant Notes:
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — lever: selective access patterns make the effective context far larger than the window, which is what lets stored-artifact behaviour change reach weight-update scale
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — extends: agile's "changing requirements" reframed through the interpretation-error lens
-- [Context Engineering for AI Agents in OSS](../sources/context-engineering-ai-agents-oss.ingest.md) — validates: 466 OSS projects treat AI context files as maintained software artifacts
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: behavioural contracts are verifiable repo artifacts that improve reliability without weight updates
-- [Harness Engineering (Lopopolo, 2026)](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md) — exemplifies: "good harnesses compound" in practitioner language
-- [Flawed Ephemeral Software Hypothesis](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) — sibling: AI lowers the cost of mutating durable artifact stacks, not replacing them
+- [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: 466 OSS projects treat AI context files as maintained software artifacts
+- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — extends: behavioural contracts are verifiable repo artifacts that improve reliability without weight updates
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: "good harnesses compound" in practitioner language
+- [Flawed Ephemeral Software Hypothesis](https://www.blackhc.net/essays/future_of_software/) — sibling: AI lowers the cost of mutating durable artifact stacks, not replacing them
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: in-context learning depends on deploy-time learning to build the context-engineering machinery

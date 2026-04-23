@@ -8,7 +8,7 @@ status: seedling
 
 # Brainstorming: how to test whether pairwise comparison can harden soft oracles
 
-The [Koylan source on pairwise comparison](../sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.ingest.md) suggests a plausible mechanism: in open-ended tasks, asking a judge "which of these two outputs is better?" may be easier and more stable than asking "score this output 1-5." That is an interesting hypothesis, but still only a hypothesis. Before promoting it into a stronger claim, we need a test design that can distinguish genuine oracle hardening from mere prompt reformulation.
+The [Koylan source on pairwise comparison](https://x.com/koylanai/status/2035982137539559616) suggests a plausible mechanism: in open-ended tasks, asking a judge "which of these two outputs is better?" may be easier and more stable than asking "score this output 1-5." That is an interesting hypothesis, but still only a hypothesis. Before promoting it into a stronger claim, we need a test design that can distinguish genuine oracle hardening from mere prompt reformulation.
 
 The core question is not whether pairwise comparison *sounds* more natural. It is whether it improves the properties that actually matter for a soft oracle: discrimination, stability, calibration, and usefulness inside an optimization loop.
 
@@ -170,4 +170,4 @@ Relevant Notes:
 - [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md) — **grounds**: supplies the concrete pairwise-comparison and position-bias-mitigation practices this note would test
 - [Autocontext](../agent-memory-systems/reviews/autocontext.md) — **example**: offers a live evaluation loop where pairwise ranking could be compared against scalar LLM judging
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — **parallel**: another brainstorming note about manufacturing better soft oracles, but at KB-wide rather than candidate-ranking scope
-- [Koylan pairwise-comparison source](../sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.ingest.md) — **source**: origin of the specific hypothesis this note turns into a test plan
+- [Koylan pairwise-comparison source](https://x.com/koylanai/status/2035982137539559616) — **source**: origin of the specific hypothesis this note turns into a test plan

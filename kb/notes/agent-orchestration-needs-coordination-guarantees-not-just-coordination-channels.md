@@ -18,7 +18,7 @@ In [LLM context is composed without scoping](./llm-context-is-composed-without-s
 
 ### Inconsistency across agents
 
-In [Multi-Agent Memory from a Computer Architecture Perspective](../sources/multi-agent-memory-computer-architecture-perspective.ingest.md), the shared substrate is multi-agent memory, composed by concurrent reads and writes from multiple agents. Without visibility rules, ownership rules, or conflict-resolution protocols, agents diverge. The failure mode is **inconsistency**: the architecture does not specify when writes become visible, who may overwrite what, or how semantic conflicts are reconciled.
+In [Multi-Agent Memory from a Computer Architecture Perspective](https://arxiv.org/html/2603.10062v1), the shared substrate is multi-agent memory, composed by concurrent reads and writes from multiple agents. Without visibility rules, ownership rules, or conflict-resolution protocols, agents diverge. The failure mode is **inconsistency**: the architecture does not specify when writes become visible, who may overwrite what, or how semantic conflicts are reconciled.
 
 ### Amplification across outputs
 
@@ -39,7 +39,7 @@ The first three rows are failures over shared semantic substrates. The fourth is
 
 ### Accountability vacuum in delegation chains
 
-[Intelligent AI Delegation](../sources/intelligent-ai-delegation-tomasev-franklin-osindero.ingest.md) calls this the **accountability vacuum**: in a chain `X → A → B → C → … → Y`, intermediaries pass authority onward without necessarily retaining liability for what follows. The bad outcome is not "the system believes false things" or "the merged artifact contains an error" but "no one in the chain is clearly answerable for the error." This can arise even when every handoff is locally legible and no combined output exists — it is a governance failure, not a semantic one.
+[Intelligent AI Delegation](https://arxiv.org/pdf/2602.11865) calls this the **accountability vacuum**: in a chain `X → A → B → C → … → Y`, intermediaries pass authority onward without necessarily retaining liability for what follows. The bad outcome is not "the system believes false things" or "the merged artifact contains an error" but "no one in the chain is clearly answerable for the error." This can arise even when every handoff is locally legible and no combined output exists — it is a governance failure, not a semantic one.
 
 The proposed remedy is a **liability firebreak**: at certain points in a delegation chain, an intermediate node must either assume full, non-transitive liability for downstream actions or halt and request a fresh transfer of authority from the human principal. That primitive plays the same architectural role as scoping, consistency protocols, and adjudication in the first three cases — it does not make the action correct, but it makes the chain answerable.
 
@@ -58,8 +58,8 @@ Relevant Notes:
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: splits coordination into form and guarantee because the same channel can support or omit very different protections
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — evidence: flat inherited context fails by contamination when there is no isolation primitive
 - [synthesis is not error correction](./synthesis-is-not-error-correction.md) — evidence: output aggregation fails by amplification when there is no adjudication primitive
-- [Ingest: Multi-Agent Memory from a Computer Architecture Perspective](../sources/multi-agent-memory-computer-architecture-perspective.ingest.md) — evidence: shared multi-agent memory fails by inconsistency when there is no consistency protocol
-- [Intelligent AI Delegation](../sources/intelligent-ai-delegation-tomasev-franklin-osindero.ingest.md) — evidence: source of the accountability-vacuum and liability-firebreak vocabulary
+- [Ingest: Multi-Agent Memory from a Computer Architecture Perspective](https://arxiv.org/html/2603.10062v1) — evidence: shared multi-agent memory fails by inconsistency when there is no consistency protocol
+- [Intelligent AI Delegation](https://arxiv.org/pdf/2602.11865) — evidence: source of the accountability-vacuum and liability-firebreak vocabulary
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: verification cost determines whether accountability stays local or must be refreshed from the principal
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — extends: execution-boundary design is one place where coordination guarantees determine what survives
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues the four failure modes map to what breaks when elements of a dependency chain (topology → isolation → verification) are missing

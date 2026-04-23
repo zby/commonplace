@@ -36,7 +36,7 @@ Agent orchestration architectures are often discussed as if they sit on a single
 
 ## Why this matters
 
-The multi-dimensional framing explains why single-axis taxonomies keep breaking. Slate adds a new combination because it changes persistence horizon and boundary-return artifact simultaneously. [Forking](../sources/voooooogel-multi-agent-future.ingest.md) changes coordination form without changing scheduler placement. Treating both as "extra points on one line" obscures what each system actually varies.
+The multi-dimensional framing explains why single-axis taxonomies keep breaking. Slate adds a new combination because it changes persistence horizon and boundary-return artifact simultaneously. [Forking](https://x.com/voooooogel/status/2015976774128341421) changes coordination form without changing scheduler placement. Treating both as "extra points on one line" obscures what each system actually varies.
 
 The value is not taxonomy for its own sake but sharper questions:
 
@@ -56,6 +56,6 @@ Relevant Notes:
 - [tool loop](./tool-loop-index.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination forms vary independently of scheduler placement
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
-- [Ingest: Slate: Moving Beyond ReAct and RLM](../sources/slate-moving-beyond-react-and-rlm.ingest.md) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
-- [What Survives in Multi-Agent Systems](../sources/voooooogel-multi-agent-future.ingest.md) — extends: forking is better treated as a coordination/scoping primitive than as another point on a single scheduler ladder
+- [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
+- [What Survives in Multi-Agent Systems](https://x.com/voooooogel/status/2015976774128341421) — extends: forking is better treated as a coordination/scoping primitive than as another point on a single scheduler ladder
 - [Tracecraft](../agent-memory-systems/reviews/tracecraft.md) — exemplifies: occupies a distinctive point — no scheduler, ephemeral persistence, shared-state coordination, weak guarantees, structured return artifacts

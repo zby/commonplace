@@ -10,7 +10,7 @@ status: seedling
 
 Agent harnesses inject several kinds of context before the agent sees its first user message. This note catalogues the user-facing mechanisms — the surfaces that project authors and tool developers control. Platform-injected context (safety preambles, behavioral guidelines, tool schemas) also competes for the same token budget but is not configurable and falls outside the scope of this survey.
 
-The same structural roles appear across platforms — Claude Code, Codex, Gemini, Cursor — despite independent implementations. Whether this reflects genuine convergence or shared ancestry from early prompt-engineering practices is unclear; the [OSS study](../sources/context-engineering-ai-agents-oss.ingest.md) documents current similarity but not the history.
+The same structural roles appear across platforms — Claude Code, Codex, Gemini, Cursor — despite independent implementations. Whether this reflects genuine convergence or shared ancestry from early prompt-engineering practices is unclear; the [OSS study](https://arxiv.org/pdf/2510.21413) documents current similarity but not the history.
 
 ## System prompt files
 
@@ -26,9 +26,9 @@ Loaded every session, these files carry several distinct kinds of content:
 
 What unifies these is not that they're all directives — definitions are purely informational — but that the agent needs them available before it knows what task it's working on.
 
-The last category deserves a caveat: the [OSS study](../sources/context-engineering-ai-agents-oss.ingest.md) found build commands in 40 repos and testing instructions in 25, making operational recipes common in practice. But the [control-plane model](./agents-md-should-be-organized-as-a-control-plane.md) would route most of them to on-demand documents, reserving the system prompt file for pointers. The tension between what practitioners embed and what theory recommends is real and unresolved.
+The last category deserves a caveat: the [OSS study](https://arxiv.org/pdf/2510.21413) found build commands in 40 repos and testing instructions in 25, making operational recipes common in practice. But the [control-plane model](./agents-md-should-be-organized-as-a-control-plane.md) would route most of them to on-demand documents, reserving the system prompt file for pointers. The tension between what practitioners embed and what theory recommends is real and unresolved.
 
-**In practice:** Lopopolo (OpenAI/Codex, 2026) maintains a 100-line AGENTS.md as "a map with pointers to deeper sources of truth" for a 1M LOC agent-generated codebase. Across open source, AGENTS.md files average 142 lines (SD=231), with 50% never updated after creation; CLAUDE.md files average 287 lines (SD=112) ([OSS study](../sources/context-engineering-ai-agents-oss.ingest.md)).
+**In practice:** Lopopolo (OpenAI/Codex, 2026) maintains a 100-line AGENTS.md as "a map with pointers to deeper sources of truth" for a 1M LOC agent-generated codebase. Across open source, AGENTS.md files average 142 lines (SD=231), with 50% never updated after creation; CLAUDE.md files average 287 lines (SD=112) ([OSS study](https://arxiv.org/pdf/2510.21413)).
 
 **Internal organization:** The [control-plane model](./agents-md-should-be-organized-as-a-control-plane.md) proposes three layers: invariants (safety, universal conventions), routing (where artifacts go, what to read next), and escalation boundaries (when to leave the system prompt and load deeper guidance).
 

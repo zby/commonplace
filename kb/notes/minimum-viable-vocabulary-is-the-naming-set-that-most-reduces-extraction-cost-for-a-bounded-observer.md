@@ -20,7 +20,7 @@ Two mechanisms already in the KB explain why a set of names can have this effect
 
 **Distillation targets a bounded observer.** [Distillation](./definitions/distillation.md) is targeted extraction shaped by a use case, a context budget, and an agent. A minimum viable vocabulary is a distillation of domain knowledge where the target is a newcomer and the context budget is minimal. Because each distillation is shaped by a specific observer's bounds, multiple minimum viable vocabularies for the same domain are expected — a human learning 3D graphics and an agent parsing 3D file formats face different computational limits, so the vocabulary that maximally reduces extraction cost differs for each.
 
-Together, the two mechanisms ground the optimization claim: naming provides the unit of cost reduction (each name amortizes a discovery), and distillation explains why the optimal set varies by observer (each observer has different computational bounds). This framing also makes the concept testable in principle. Given two candidate vocabularies and the same set of domain artifacts, the better vocabulary is the one that enables a bounded observer to extract more structure. The test requires a measure of extraction — the [epiplexity framework's](../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md) prequential coding is one candidate — and a fixed observer. Kim's prototype (domainmaps.co) provides neither, but the framework specifies what an evaluation would need.
+Together, the two mechanisms ground the optimization claim: naming provides the unit of cost reduction (each name amortizes a discovery), and distillation explains why the optimal set varies by observer (each observer has different computational bounds). This framing also makes the concept testable in principle. Given two candidate vocabularies and the same set of domain artifacts, the better vocabulary is the one that enables a bounded observer to extract more structure. The test requires a measure of extraction — the [epiplexity framework's](https://arxiv.org/html/2601.03220v1) prequential coding is one candidate — and a fixed observer. Kim's prototype (domainmaps.co) provides neither, but the framework specifies what an evaluation would need.
 
 ## Open Questions
 
@@ -31,7 +31,7 @@ Together, the two mechanisms ground the optimization claim: naming provides the 
 
 Sources:
 
-- [Minimum Viable Ontology tweet thread (Kim, 2026)](../sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md) — origin: names the concept and the "conceptual thresholds" framing; this note regrounds the intuition in the KB's information-theoretic framework
+- [Minimum Viable Ontology tweet thread (Kim, 2026)](https://x.com/melodyskim/status/2029332670115614799) — origin: names the concept and the "conceptual thresholds" framing; this note regrounds the intuition in the KB's information-theoretic framework
 
 Relevant Notes:
 

@@ -30,4 +30,4 @@ Relevant Notes:
 
 - [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — extends: decomposes the context-varies-by-pointer observation into two navigation modes with distinct metadata needs
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles carry the argument in the pointer itself, reducing the cost of the navigation decision
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following
+- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following

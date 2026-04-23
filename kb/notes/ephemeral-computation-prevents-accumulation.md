@@ -40,7 +40,7 @@ Every pattern the system discovers must be rediscovered on the next run:
 - **No review.** There is no artifact for a human to inspect, approve, or improve.
 - **No reuse.** Two users with the same question trigger two independent generations.
 
-Kirsch's [essay against the strong ephemeral-software claim](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) supplies the concrete software-engineering version of this cost. What has to be rediscovered is not just code shape but production memory: deployment-discovered edge cases, migrations and integration constraints, interface expectations, and audit-relevant interpretations. Important systems accumulate this operational knowledge whether or not the code is easy to regenerate.
+Kirsch's [essay against the strong ephemeral-software claim](https://www.blackhc.net/essays/future_of_software/) supplies the concrete software-engineering version of this cost. What has to be rediscovered is not just code shape but production memory: deployment-discovered edge cases, migrations and integration constraints, interface expectations, and audit-relevant interpretations. Important systems accumulate this operational knowledge whether or not the code is easy to regenerate.
 
 ## Ephemerality as anti-codification
 
@@ -65,4 +65,4 @@ Relevant Notes:
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames the timescale at which these placements adapt
 - [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
 - [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md) — extends: adds reach as the criterion that determines when the ephemeral/accumulating fork matters
-- [The Flawed Ephemeral Software Hypothesis (Kirsch)](../sources/the-flawed-ephemeral-software-hypothesis.ingest.md) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation
+- [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation

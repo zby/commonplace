@@ -38,7 +38,7 @@ This suggests a tentative design heuristic rather than a hard principle: **conve
 
 ## Onboarding and forking
 
-The [voooooogel multi-agent prediction](../sources/voooooogel-multi-agent-future.md) proposes onboarding interviews — spawned instances ask questions back to their parent in an interactive conversation to gather context before starting. The argument: "it's just too difficult to ask a model to reliably spawn a subagent with a single prompt."
+The [voooooogel multi-agent prediction](https://x.com/voooooogel/status/2015976774128341421) proposes onboarding interviews — spawned instances ask questions back to their parent in an interactive conversation to gather context before starting. The argument: "it's just too difficult to ask a model to reliably spawn a subagent with a single prompt."
 
 One reading through the refinement lens: the onboarding interview is useful not because conversation is the right interface, but because the caller's initial prompt was underspecified. The interview surfaces what the caller should have said. A refinement-oriented caller could capture those answers and build a better single-shot prompt — possibly for re-use across many similar sub-agent invocations, which a pure conversation model cannot reuse.
 

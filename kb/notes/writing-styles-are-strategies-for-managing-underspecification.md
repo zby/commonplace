@@ -8,7 +8,7 @@ status: seedling
 
 # Writing styles are strategies for managing underspecification
 
-An [empirical study of AI context files](../sources/context-engineering-ai-agents-oss.md) across 466 open-source projects identified five writing styles in convention sections: descriptive, prescriptive, prohibitive, explanatory, and conditional. The authors treat these as stylistic variation, but viewed through the [underspecification lens](./agentic-systems-interpret-underspecified-instructions.md), each style is a distinct strategy for narrowing the interpretation space — and the choice encodes how much autonomy the author grants the agent.
+An [empirical study of AI context files](https://arxiv.org/pdf/2510.21413) across 466 open-source projects identified five writing styles in convention sections: descriptive, prescriptive, prohibitive, explanatory, and conditional. The authors treat these as stylistic variation, but viewed through the [underspecification lens](./agentic-systems-interpret-underspecified-instructions.md), each style is a distinct strategy for narrowing the interpretation space — and the choice encodes how much autonomy the author grants the agent.
 
 ## The five styles as constraint strategies
 
@@ -49,5 +49,5 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: prescriptive style is constraining within the instruction medium, short of extracting to code
-- [context engineering for AI agents in OSS](../sources/context-engineering-ai-agents-oss.md) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
-- [Toulmin Argument (Purdue OWL)](../sources/purdue-owl-toulmin-argument.md) — grounds: the "warrant" concept used in the explanatory style description originates from Toulmin's argumentation model
+- [context engineering for AI agents in OSS](https://arxiv.org/pdf/2510.21413) — source: the empirical taxonomy of five writing styles observed across 466 open-source projects
+- [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — grounds: the "warrant" concept used in the explanatory style description originates from Toulmin's argumentation model

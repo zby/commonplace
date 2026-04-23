@@ -25,7 +25,7 @@ Propositional titles are established practice in several fields:
 - **Evergreen notes** (Matuschak) — explicitly advocates for note titles as complete propositions rather than topic labels.
 - **Zettelkasten practice** — Luhmann used precise descriptive titles; the community has extensive discussion of atomicity and title quality.
 
-The *traversal-as-reasoning* consequence — when titles are claims, link-following reads as argument — came to us via [arscontexta](../agent-memory-systems/reviews/arscontexta.md), which likely drew on these same traditions. The [Toulmin argumentation model](../sources/purdue-owl-toulmin-argument.md) provides the formal structure behind the "since/because" link semantics this enables.
+The *traversal-as-reasoning* consequence — when titles are claims, link-following reads as argument — came to us via [arscontexta](../agent-memory-systems/reviews/arscontexta.md), which likely drew on these same traditions. The [Toulmin argumentation model](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) provides the formal structure behind the "since/because" link semantics this enables.
 
 **TODO:** This survey is from the agent's training data, not systematic. Matuschak's writing on evergreen notes and Zettelkasten community resources on title conventions are worth ingesting.
 
@@ -76,8 +76,8 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: claim titles are what make the first layer of progressive disclosure work in the loading hierarchy
 - [009-link-relationship-semantics](../reference/adr/009-link-relationship-semantics.md) — extends: the relationship vocabulary (extends, grounds, contradicts, enables, exemplifies) that typed links use
 - [linking-theory](./linking-theory.md) — extends: open questions about when and why typed links work
-- [Toulmin argument](../sources/purdue-owl-toulmin-argument.md) — grounds: Toulmin's formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) is the theory behind what this note describes — claim titles are Toulmin claims, and "since"/"because" link semantics encode warrants
-- [Agentic Note-Taking 23: Notes Without Reasons](../sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism
+- [Toulmin argument](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — grounds: Toulmin's formal argumentation model (claim/grounds/warrant/qualifier/rebuttal/backing) is the theory behind what this note describes — claim titles are Toulmin claims, and "since"/"because" link semantics encode warrants
+- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates from inside: an agent operating in a curated graph describes first-person the qualitative difference between following propositional links ("since [X]") and browsing embedding-based similarity results — the strongest external validation of the claim-as-traversal mechanism
 - [Title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — extends: the maintenance/falsification benefit is a separate argument from the traversal benefit made here
 - [Title as claim makes overlap between notes visible](./title-as-claim-makes-overlap-between-notes-visible.md) — extends: overlap detection at the index level is a separate maintenance benefit from falsifiability
 

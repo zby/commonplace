@@ -8,7 +8,7 @@ status: seedling
 
 # Reliability dimensions map to oracle-hardening stages
 
-The [oracle-strength spectrum](./oracle-strength-spectrum.md) describes a gradient from hard oracles (cheap deterministic checks) to no oracle (vibes). The engineering move is to harden oracles — convert no-oracle into some-oracle, then tighten. But *which* oracle are you hardening? The Rabanser et al. reliability framework ([source](../sources/towards-a-science-of-ai-agent-reliability.md)) decomposes agent reliability into four dimensions, and each one targets a distinct verification question:
+The [oracle-strength spectrum](./oracle-strength-spectrum.md) describes a gradient from hard oracles (cheap deterministic checks) to no oracle (vibes). The engineering move is to harden oracles — convert no-oracle into some-oracle, then tighten. But *which* oracle are you hardening? The Rabanser et al. reliability framework ([source](https://arxiv.org/pdf/2602.16666)) decomposes agent reliability into four dimensions, and each one targets a distinct verification question:
 
 | Dimension | Oracle question | Hardening move |
 |-----------|----------------|----------------|
@@ -21,7 +21,7 @@ The [oracle-strength spectrum](./oracle-strength-spectrum.md) describes a gradie
 
 The oracle-strength note says "invest in telemetry and eval harnesses *before* investing in capability, because guidance is the bottleneck." The reliability framework shows exactly where to invest: each dimension is a separate oracle that can be hardened independently. You don't need to solve all four at once.
 
-The empirical finding that capability gains have outpaced reliability gains over 18 months of model releases is the oracle-strength prediction confirmed at scale: the bottleneck is verification quality, not generation quality. [MAKER's million-step zero-error result](../sources/meyerson-maker-million-step-llm-zero-errors.md) demonstrates what happens when you take this seriously for consistency: decompose to minimal subtasks, vote across independent samples, discard red-flagged outputs. The entire MDAP framework is architectural oracle hardening — and it works precisely because per-step oracle strength is hard (each Towers of Hanoi move has a deterministic correct answer).
+The empirical finding that capability gains have outpaced reliability gains over 18 months of model releases is the oracle-strength prediction confirmed at scale: the bottleneck is verification quality, not generation quality. [MAKER's million-step zero-error result](https://arxiv.org/abs/2511.09030) demonstrates what happens when you take this seriously for consistency: decompose to minimal subtasks, vote across independent samples, discard red-flagged outputs. The entire MDAP framework is architectural oracle hardening — and it works precisely because per-step oracle strength is hard (each Towers of Hanoi move has a deterministic correct answer).
 
 ## Connection to spec mining
 
@@ -43,7 +43,7 @@ Relevant Notes:
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism for hardening consistency and robustness oracles
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — reliability hardening as deploy-time learning, not training-time learning
 - [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a relaxing signal measured at scale
-- [MAKER: Solving a Million-Step LLM Task with Zero Errors](../sources/meyerson-maker-million-step-llm-zero-errors.md) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
-- [ABC: Agent Behavioral Contracts](../sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
+- [MAKER: Solving a Million-Step LLM Task with Zero Errors](https://arxiv.org/abs/2511.09030) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
+- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
 - [the augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — deepens: extracts and develops the predictability gap paragraph into a standalone claim — the boundary depends on per-instance discrimination, which is empirically stagnant
-- Ma et al. (2026). [Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.md) — exemplifies: AUC-E metric directly operationalizes robustness (R_Rob) hardening — measures how much prompt perturbation changes outputs, quantifying the soft-to-hard oracle transition for robustness
+- Ma et al. (2026). [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — exemplifies: AUC-E metric directly operationalizes robustness (R_Rob) hardening — measures how much prompt perturbation changes outputs, quantifying the soft-to-hard oracle transition for robustness

@@ -8,7 +8,7 @@ status: current
 
 # Trajectory-Informed Memory Generation
 
-Trajectory-Informed Memory Generation is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [trajectory-informed ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md), which records the paper's method and limitations. The ingest says no public source code was found as of 2026-03-13, so this belongs outside `../reviews/` until code is available and inspected.
+Trajectory-Informed Memory Generation is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [trajectory-informed ingest](https://arxiv.org/html/2603.10600v1), which records the paper's method and limitations. The ingest says no public source code was found as of 2026-03-13, so this belongs outside `../reviews/` until code is available and inspected.
 
 ## Trace-derived placement
 
@@ -23,5 +23,5 @@ Do not create `kb/agent-memory-systems/reviews/trajectory-informed-memory-genera
 Relevant Notes:
 
 - [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — cross-system placement: uses the system as a source-ingested trajectory-to-artifact case
-- [Trajectory-Informed Memory Generation ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — source coverage: paper snapshot analysis and limitations
+- [Trajectory-Informed Memory Generation ingest](https://arxiv.org/html/2603.10600v1) — source coverage: paper snapshot analysis and limitations
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrast: same trajectory/oracle family as AgeMem, different promotion substrate

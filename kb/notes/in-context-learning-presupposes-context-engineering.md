@@ -8,7 +8,7 @@ status: seedling
 
 # In-context learning presupposes context engineering
 
-Amodei [argues](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md) that continual learning may be unnecessary because pre-training + RL + in-context learning suffice. The claim treats in-context learning as a given capability — million-token windows can hold enough deployment-specific information within a session, so persistent cross-session adaptation adds little.
+Amodei [argues](https://www.dwarkesh.com/p/dario-amodei-2) that continual learning may be unnecessary because pre-training + RL + in-context learning suffice. The claim treats in-context learning as a given capability — million-token windows can hold enough deployment-specific information within a session, so persistent cross-session adaptation adds little.
 
 But in-context learning doesn't happen by itself. It only works when the right knowledge is already in the window. Something has to decide what "right" means, find the relevant knowledge, organize it, and load it — all before the model sees a single token. That something is [context engineering](./definitions/context-engineering.md): routing, loading, scoping, and maintenance.
 
@@ -26,4 +26,4 @@ Relevant Notes:
 - [deploy-time learning: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — foundation: the framework that context engineering improvement belongs to; the artifacts it produces are the substrate of deploy-time learning
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: the three timescales remain necessary even if weight updates are eliminated; this note adds a dependency arrow between in-context and deploy-time
-- [Dario Amodei ingest](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md) — responds to: Amodei's claim that continual learning may be unnecessary
+- [Dario Amodei ingest](https://www.dwarkesh.com/p/dario-amodei-2) — responds to: Amodei's claim that continual learning may be unnecessary

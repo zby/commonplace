@@ -56,7 +56,7 @@ On axis 2, ReasoningBank is a clear **trace-derived artifact-learning** system. 
 
 The test-time scaling variant is the interesting subtype signal. By running multiple parallel trajectories and comparing them with `PARALLEL_SI`, ReasoningBank uses test-time compute to improve extraction quality -- a mechanism that is orthogonal to the core memory loop but potentially composable with it. This is distinct from both ExpeL's sequential fold-based consolidation and Dynamic Cheatsheet's carry-forward rewrite.
 
-The [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) paper is directly relevant here, since ReasoningBank shares the same trajectory-to-condensed-experience pipeline family. The finding that condensed experience often has limited causal influence at inference time is a ceiling risk for any append-only memory system that lacks explicit maintenance operations.
+The [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) paper is directly relevant here, since ReasoningBank shares the same trajectory-to-condensed-experience pipeline family. The finding that condensed experience often has limited causal influence at inference time is a ceiling risk for any append-only memory system that lacks explicit maintenance operations.
 
 ## Borrowable Ideas
 
@@ -101,5 +101,5 @@ Relevant Notes:
 - [Dynamic Cheatsheet](./dynamic-cheatsheet.md) -- compares: both are artifact-learning systems, but Dynamic Cheatsheet carries forward one cheatsheet via rewrite while ReasoningBank accumulates discrete memory items
 - [Reflexion](./reflexion.md) -- sharpens: ReasoningBank inherits the verbal-reflection idea but adds structured extraction, cross-task accumulation, and embedding-based retrieval
 - [Autocontext](./autocontext.md) -- compares: both learn from repeated runs, but Autocontext has richer multi-role orchestration while ReasoningBank has a simpler three-step pipeline
-- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) -- evidence: evaluates the trajectory-to-condensed-experience pipeline family and finds limited causal influence of condensed artifacts, which is a ceiling risk for ReasoningBank's append-only memory
+- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) -- evidence: evaluates the trajectory-to-condensed-experience pipeline family and finds limited causal influence of condensed artifacts, which is a ceiling risk for ReasoningBank's append-only memory
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) -- sharpens: ReasoningBank depends on auto-evaluation quality for its extraction signal, making it another case of oracle-dependent artifact learning

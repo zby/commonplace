@@ -15,7 +15,7 @@ The temptation as a KB grows is to move to a database. But a database migration 
 - **Agent access**: Agents use Read/Write/Grep — tools they already have. A database requires an API layer or DB client on every interaction.
 - **Infrastructure**: Files need nothing. A database needs hosting, backups, migrations, and someone to maintain it.
 
-[Koylanai's Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step.
+[Koylanai's Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step.
 
 ## Premature schema commitment
 
@@ -37,7 +37,7 @@ The pattern is: files as source of truth, derived indexes for capabilities files
 
 ## Where the trade-off tips: Graphiti
 
-[Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) is the strongest counterexample to the files-first position. Its graph database dependency is not incidental — it requires capabilities that files genuinely cannot replicate:
+[Graphiti](https://github.com/getzep/graphiti) is the strongest counterexample to the files-first position. Its graph database dependency is not incidental — it requires capabilities that files genuinely cannot replicate:
 
 - **Bi-temporal edge invalidation** — every relationship carries valid_at/invalid_at timestamps, enabling point-in-time queries ("what was true on date X?") and contradiction resolution through temporal supersession rather than overwriting. Git history tracks *when a file changed*, not *when the fact it describes became true or false*.
 - **Community detection** — label propagation over entity nodes discovers clusters automatically. Files have no native graph traversal; link-based clustering requires building an explicit graph representation first.
@@ -53,10 +53,10 @@ Relevant Notes:
 
 - [storage-architecture](../reference/storage-architecture.md) — current-state: how commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
 - [cludebot](../agent-memory-systems/reviews/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
-- [Koylanai Personal Brain OS](../sources/koylanai-personal-brain-os.ingest.md) — independent practitioner report validating the same architectural choice at 80+ file scale
-- [Fintool: Lessons from Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
-- [Coding Agents are Effective Long-Context Processors](../sources/coding-agents-are-effective-long-context-processors.ingest.md) — extends: benchmark evidence that exposing corpora as navigable files changes agent strategy (coordinate-based read/slice beats monolithic scans), suggesting part of files' value is operational, not just storage ergonomics
+- [Koylanai Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) — independent practitioner report validating the same architectural choice at 80+ file scale
+- [Fintool: Lessons from Financial Services](https://x.com/nicbstme/status/2015174818497437834) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
+- [Coding Agents are Effective Long-Context Processors](https://arxiv.org/html/2603.20432v1) — extends: benchmark evidence that exposing corpora as navigable files changes agent strategy (coordinate-based read/slice beats monolithic scans), suggesting part of files' value is operational, not just storage ergonomics
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
-- [Graphiti](../sources/graphiti-temporal-knowledge-graph.ingest.md) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
+- [Graphiti](https://github.com/getzep/graphiti) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — extends: files are one important choice for the runtime's execution substrate
 - [Tracecraft](../agent-memory-systems/reviews/tracecraft.md) — tests: applies the files-over-database bet to ephemeral coordination state (write-heavy, latency-sensitive, disposable) rather than durable knowledge, where the access patterns differ significantly

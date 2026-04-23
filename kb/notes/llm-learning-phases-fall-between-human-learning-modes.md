@@ -42,7 +42,7 @@ The implication for knowledge system design: rather than mapping agent memory to
 
 ## Open Questions
 
-- Where does RLHF/RLAIF fall on the spectrum? It's post-pre-training but pre-deployment, and it shapes behavioral tendencies rather than factual knowledge — closer to socialization than to either evolution or learning? [OpenClaw-RL](../sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md) pushes further — live RL during deployment from user interactions — though training infrastructure makes this impractical for most deployments.
+- Where does RLHF/RLAIF fall on the spectrum? It's post-pre-training but pre-deployment, and it shapes behavioral tendencies rather than factual knowledge — closer to socialization than to either evolution or learning? [OpenClaw-RL](https://arxiv.org/html/2603.10165v1) pushes further — live RL during deployment from user interactions — though training infrastructure makes this impractical for most deployments.
 - As models get larger, does pre-training shift toward the "evolution" end (acquiring more structural priors) or the "learning" end (acquiring more specific knowledge)?
 - Does the intermediate position of in-context learning explain why few-shot prompting works so well? It's leveraging a mode that has more capacity than short-term human memory but less than long-term human learning — a sweet spot that humans don't have a clean analogue for.
 
@@ -50,7 +50,7 @@ The implication for knowledge system design: rather than mapping agent memory to
 
 Sources:
 
-- [Dario Amodei — "We are near the end of the exponential"](../sources/dario-amodei-we-are-near-the-end-of-the-exponential.md) — the spectrum framing: pre-training between evolution and learning, in-context between long-term and short-term
+- [Dario Amodei — "We are near the end of the exponential"](https://www.dwarkesh.com/p/dario-amodei-2) — the spectrum framing: pre-training between evolution and learning, in-context between long-term and short-term
 
 Relevant Notes:
 

@@ -99,7 +99,7 @@ Spacebot is a runtime agent framework; commonplace is a knowledge system with ag
 
 ## What to Watch
 
-- Whether the five fixed process types survive as stronger models emerge. The [multi-agent future prediction](../../sources/voooooogel-multi-agent-future.ingest.md) suggests fixed roles dissolve, but Spacebot's types encode concurrency guarantees and tool-set isolation, not persona-style roles — structural constraints may prove more durable than role assignments.
+- Whether the five fixed process types survive as stronger models emerge. The [multi-agent future prediction](https://x.com/voooooogel/status/2015976774128341421) suggests fixed roles dissolve, but Spacebot's types encode concurrency guarantees and tool-set isolation, not persona-style roles — structural constraints may prove more durable than role assignments.
 - Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
 - Whether the cortex's signal buffer evolves beyond observability. The 100-item rolling window of process events is currently used for health checks and circuit breakers. If it starts informing adaptive scheduling (learning which branch configurations succeed), it becomes a deploy-time learning mechanism.
 

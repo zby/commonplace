@@ -15,7 +15,7 @@ Prose and symbolic cluster as the **readable artifacts** — inspectable, editab
 
 Computer vision provides the model. Before representation learning, features (SIFT, HOG) were hand-crafted and classifiers (SVMs) were learned — a clean separation that looked normal. Representation learning won by extending gradient descent across both, end-to-end. The general method didn't change; it covered more of the pipeline.
 
-The [bitter lesson](../sources/wikipedia-bitter-lesson.md) extrapolates: general methods that leverage computation eat hand-crafted components. Applied today, mainstream research extends the opaque loop — RLHF, RLAIF, continual pretraining, online learning, fast adapters — hoping to subsume the hand-crafted prompts, tools, and evals that deployed systems depend on. This may or may not succeed; new architectures could close the tempo gap, or structural limits could keep large opaque updates on a slower cycle. This note takes no position on the outcome.
+The [bitter lesson](https://en.wikipedia.org/wiki/Bitter_lesson) extrapolates: general methods that leverage computation eat hand-crafted components. Applied today, mainstream research extends the opaque loop — RLHF, RLAIF, continual pretraining, online learning, fast adapters — hoping to subsume the hand-crafted prompts, tools, and evals that deployed systems depend on. This may or may not succeed; new architectures could close the tempo gap, or structural limits could keep large opaque updates on a slower cycle. This note takes no position on the outcome.
 
 ## Per-class loops today
 
@@ -54,4 +54,4 @@ Relevant Notes:
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and distill are artifact-side update operators
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — evidence: a fixed-weight proposer mutates harness code and context/memory logic from raw traces — a readable-artifact loop in practice
-- [Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) — evidence: raw execution traces outperform scores-only or summarized feedback in automated harness search
+- [Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses](https://yoonholee.com/meta-harness/paper.pdf) — evidence: raw execution traces outperform scores-only or summarized feedback in automated harness search

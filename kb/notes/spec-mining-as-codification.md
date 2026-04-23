@@ -25,7 +25,7 @@ The same pattern appears at the methodology level: the [maturation trajectory fr
 
 The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) says exact-spec artifacts are safest when the spec *is* the problem. Spec mining manufactures new exact-spec artifacts by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into a harder verification target.
 
-This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?" Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [cybernetics thread](../sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md) calls "externalizing system-specific judgment."
+This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?" Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [cybernetics thread](https://x.com/odysseus0z/status/2030416758138634583) calls "externalizing system-specific judgment."
 
 ## Concrete workflow
 
@@ -36,7 +36,7 @@ For an agentic system:
 4. If no → the failure mode stays in the learned regime, but you now have a regression test (partial codification).
 5. Repeat. The calculator surface grows monotonically.
 
-The Codex team's report on runtime engineering ([Lopopolo, 2026](../sources/harness-engineering-leveraging-codex-agent-first-world.md)) documents this workflow at production scale. Early on, 20% of engineering time (Fridays) went to manually cleaning "AI slop" — observing failure patterns. The team then codified those observations into structural tests and linter rules whose error messages teach the fix, and finally automated the observation step itself with background cleanup agents that scan for drift and open refactoring PRs. The progression — manual observation, extracted rules, automated monitoring — is the spec mining loop completing.
+The Codex team's report on runtime engineering ([Lopopolo, 2026](https://openai.com/index/harness-engineering/)) documents this workflow at production scale. Early on, 20% of engineering time (Fridays) went to manually cleaning "AI slop" — observing failure patterns. The team then codified those observations into structural tests and linter rules whose error messages teach the fix, and finally automated the observation step itself with background cleanup agents that scan for drift and open refactoring PRs. The progression — manual observation, extracted rules, automated monitoring — is the spec mining loop completing.
 
 ## Risks
 
@@ -51,7 +51,7 @@ The Codex team's report on runtime engineering ([Lopopolo, 2026](../sources/harn
 ---
 
 Sources:
-- Lopopolo (2026). [Harness engineering: leveraging Codex in an agent-first world](../sources/harness-engineering-leveraging-codex-agent-first-world.md) — production-scale spec mining: manual failure observation → structural tests → automated cleanup agents.
+- Lopopolo (2026). [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — production-scale spec mining: manual failure observation → structural tests → automated cleanup agents.
 
 Relevant Notes:
 
