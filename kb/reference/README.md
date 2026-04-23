@@ -175,8 +175,8 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 ### Architecture and packaging
 
-- [architecture.md](./architecture.md) — installed project layout, packaged runtime, scaffolded KB surface, promoted skills, and the framework/content boundary
-- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: one-tree installed KB, package-provided commands, and measurable scenario decomposition
+- [architecture.md](./architecture.md) — installed project layout (library under `kb/commonplace/`, user collections at top level), packaged runtime, promoted skills, and path invariance across source and ship
+- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
@@ -203,7 +203,8 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 
 [adr/](./adr/) contains the architecture decision records for major shipped-system choices. Notable entries:
 
-- [ADR-014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision behind the current shipped surface
+- [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the library/user boundary, path invariance rules, and scaffold layout behind the current installed surface
+- [ADR-014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision ADR-021 refines
 - [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
 - [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
 - [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged

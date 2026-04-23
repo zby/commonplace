@@ -79,8 +79,9 @@ The knowledge base lives in `kb/`. Search it when working on methodology, design
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
-# Find notes by type
-rg "^type: kb/notes/types/structured-claim.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+# Find notes by type (collection-local types use file-relative paths)
+rg "^type: \./types/structured-claim.md" kb/notes/ --glob "*.md"
+rg "^type: \.\./types/adr.md" kb/reference/ --glob "*.md"
 
 # Find notes by tag
 rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

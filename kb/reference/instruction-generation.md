@@ -29,20 +29,34 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 
 ## Generated artifacts
 
-`commonplace-init` produces three kinds of output:
+`commonplace-init` produces four kinds of output:
 
-**Directories** (from `DEFAULT_DIRS`) — empty directory shells that practitioners fill in:
+**Directories** (from `DEFAULT_DIRS`) — empty directory shells the practitioner fills in:
 
-- `kb/types/`, `kb/notes/`, `kb/notes/types/`, `kb/sources/`, `kb/sources/types/`
-- `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/`
-- `kb/work/`, `kb/instructions/`, `kb/reports/`
-- `kb/reference/`, `kb/reference/types/` (added when the reference collection shipped)
+- `kb/types/` — shared global types
+- `kb/notes/`, `kb/notes/types/` — user's notes collection
+- `kb/reference/`, `kb/reference/types/` — user's reference collection
+- `kb/instructions/` — user's instructions collection
+- `kb/sources/`, `kb/sources/types/` — user's source captures
+- `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
+- `kb/work/`, `kb/reports/`, `kb/reports/connect/`, `kb/reports/types/` — user's workshops and reports
 
 **Scaffold trees** — copied from packaged scaffold assets:
 
-- `kb/instructions/` — skill definitions and procedural guidance
-- `kb/types/` — global types (`text`, `note`, `instruction`, `definition`, `index`)
-- `kb/reference/` — the reference collection's type definitions and reference docs
+- `kb/commonplace/notes/` — shipped methodology library (from our `kb/notes/`)
+- `kb/commonplace/reference/` — shipped-system documentation and ADRs
+- `kb/commonplace/instructions/` — shipped procedures and `cp-skill-*` skills
+- `kb/commonplace/agent-memory-systems/` — shipped reviews of external systems
+- `kb/types/` — shared global types (`text`, `note`, `instruction`, `definition`, `index`)
+- `kb/reports/types/`, `kb/sources/types/` — collection-local type definitions for user-space collections
+
+**Scaffold files** — individual files copied into the user's collections:
+
+- `kb/notes/COLLECTION.md` — minimal theoretical/descriptive/prescriptive template
+- `kb/reference/COLLECTION.md` — minimal template
+- `kb/instructions/COLLECTION.md` — minimal template
+
+Each template invites the practitioner to pick a register, state a quality goal, and declare outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example.
 
 **Resolved templates** — read, substituted, written:
 
@@ -53,12 +67,12 @@ Both flow through the same `_write_template` helper with the same replacements d
 
 ## Skill promotion
 
-In addition to copying the instructions tree, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `ingest`, `snapshot-web`, `revise-iterative`) into runtime discovery directories for multiple harnesses:
+In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into runtime discovery directories for multiple harnesses:
 
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
 
-The promotion is a recursive file copy, not a symlink. Each destination gets an independent copy with the `cp-skill-` prefix applied to the skill name. This keeps skill discovery working in each runtime without relying on a shared live directory.
+Each promotion is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working in each runtime while the canonical skill content stays in one place inside the shipped library — edits to the library update both harnesses' views simultaneously.
 
 ## Re-running init
 
