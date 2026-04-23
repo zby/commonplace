@@ -43,6 +43,7 @@ The first and third cases call for **[sub-agents](./agent-is-a-tool-loop.md)** �
 
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — sub-tasks should start with constructed prompts, not inherit the parent's full conversation
 - [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — when the framework owns recovery, the parent cannot distinguish intended-path success from workaround success
+- [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — applies the fallback/recovery problem to memory extraction: successful runs can still teach the system about broken primary paths and degraded guarantees
 - [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — programmers expect broken infrastructure to fail loudly; semantic recovery violates that, creating false confidence
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — the same observability problem for ambiguous specs rather than broken tools
 

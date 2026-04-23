@@ -42,3 +42,9 @@ The inventory of shapes evolves. A shape that captured something well at one poi
 - The raw trace is what can't be re-derived. Losing a distillate means redistilling; losing a trace means the underlying material is gone.
 - Storage is finite, so perfect retention isn't possible — but the asymmetry argues for biasing toward trace retention over eager pruning.
 - Distilled artifacts are not permanent products. They are current-best representations under the inventory of shapes in force at the time, and may need to be re-derived as the inventory evolves.
+
+---
+
+Relevant Notes:
+
+- [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — exemplifies: the same raw trace can be distilled into different target artifacts depending on the future capacity the system wants to change
