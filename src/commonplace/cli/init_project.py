@@ -11,18 +11,21 @@ from pathlib import Path
 
 
 DEFAULT_DIRS = [
+    # Shared top-level (types are shared between library and user).
     Path("kb/types"),
+    # User collections — start empty; user adds their own content.
     Path("kb/notes"),
     Path("kb/notes/types"),
     Path("kb/reference"),
     Path("kb/reference/types"),
+    Path("kb/instructions"),
+    # User-space directories — no shipped content.
     Path("kb/sources"),
     Path("kb/sources/types"),
     Path("kb/tasks/backlog"),
     Path("kb/tasks/active"),
     Path("kb/tasks/completed"),
     Path("kb/work"),
-    Path("kb/instructions"),
     Path("kb/reports"),
     Path("kb/reports/connect"),
     Path("kb/reports/types"),
@@ -30,10 +33,14 @@ DEFAULT_DIRS = [
 
 # Scaffold paths to copy, relative to the scaffold package.
 # Each entry is (scaffold_relative_path, target_relative_path).
+# Shipped library content lands under kb/commonplace/ (ADR-021). Shared types
+# stay at top-level kb/types/. User-space type scaffolds (sources, reports)
+# land in their conventional locations under the user's tree.
 SCAFFOLD_TREES = [
-    ("kb/instructions", "kb/instructions"),
-    ("kb/notes", "kb/notes"),
-    ("kb/reference", "kb/reference"),
+    ("kb/instructions", "kb/commonplace/instructions"),
+    ("kb/notes", "kb/commonplace/notes"),
+    ("kb/reference", "kb/commonplace/reference"),
+    ("kb/agent-memory-systems", "kb/commonplace/agent-memory-systems"),
     ("kb/reports/types", "kb/reports/types"),
     ("kb/sources/types", "kb/sources/types"),
     ("kb/types", "kb/types"),
@@ -41,7 +48,13 @@ SCAFFOLD_TREES = [
 
 # Individual scaffold files to copy. Used when only one file from a tree is
 # scaffolded (avoiding a full tree walk that would copy unrelated content).
-SCAFFOLD_FILES: list[tuple[str, str]] = []
+# User-collection COLLECTION.md templates land in the user's empty collections
+# so write skills have a starting register/convention stub to fill in.
+SCAFFOLD_FILES: list[tuple[str, str]] = [
+    ("templates/user-notes-COLLECTION.md", "kb/notes/COLLECTION.md"),
+    ("templates/user-reference-COLLECTION.md", "kb/reference/COLLECTION.md"),
+    ("templates/user-instructions-COLLECTION.md", "kb/instructions/COLLECTION.md"),
+]
 
 # Skills directories for supported runtimes.
 SKILLS_DIRS = [
@@ -200,13 +213,14 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             _write_template(src, target, Path(target_rel), replacements, report)
 
     # Promote selected instruction directories into runtime skills directories
-    # via symlinks. The source is the local kb/instructions/<name> directory
-    # (already scaffolded above), not the scaffold package.
+    # via symlinks. The source is the local kb/commonplace/instructions/<name>
+    # directory (scaffolded above from the shipped library), not the scaffold
+    # package itself.
     for skill_name in PROMOTED_SKILLS:
-        skill_src = root / "kb" / "instructions" / skill_name
+        skill_src = root / "kb" / "commonplace" / "instructions" / skill_name
         if not skill_src.is_dir():
             raise FileNotFoundError(
-                f"Promoted skill source is missing: kb/instructions/{skill_name}"
+                f"Promoted skill source is missing: kb/commonplace/instructions/{skill_name}"
             )
         for skills_dest in SKILLS_DIRS:
             link = root / skills_dest / skill_name

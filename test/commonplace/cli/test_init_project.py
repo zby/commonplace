@@ -36,36 +36,46 @@ def test_init_project_creates_core_directories(tmp_path: Path) -> None:
 def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
-    assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
+    # Shipped library content lives under kb/commonplace/ (ADR-021).
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "README.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "notes" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "reference" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "REVIEW-SYSTEM.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "FIX-SYSTEM.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-ingest" / "SKILL.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "review-gates").is_dir()
+    assert (tmp_path / "kb" / "commonplace" / "reference" / "README.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.schema.yaml").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "agent-memory-systems" / "README.md").is_file()
+
+    # User collections get minimal COLLECTION.md templates to fill in.
     assert (tmp_path / "kb" / "notes" / "COLLECTION.md").is_file()
     assert (tmp_path / "kb" / "reference" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "REVIEW-SYSTEM.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "FIX-SYSTEM.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "cp-skill-ingest" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "review-gates").is_dir()
-    assert (tmp_path / "kb" / "reference" / "README.md").is_file()
-    assert (tmp_path / "kb" / "reference" / "types" / "adr.md").is_file()
-    assert not (tmp_path / "kb" / "reference" / "types" / "adr.instructions.md").exists()
-    assert (tmp_path / "kb" / "reference" / "types" / "adr.schema.yaml").is_file()
+    assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
+
+    # Shared global types stay at top-level kb/types/ (ADR-021: B1 paths are
+    # invariant when the global types dir is shared, not nested under commonplace).
     assert (tmp_path / "kb" / "types" / "note.schema.yaml").is_file()
     assert (tmp_path / "kb" / "types" / "instruction.md").is_file()
     assert not (tmp_path / "kb" / "types" / "instruction.instructions.md").exists()
     assert (tmp_path / "kb" / "types" / "instruction.schema.yaml").is_file()
-    assert not (tmp_path / "kb" / "reports" / "collection-topology.md").exists()
+    assert (tmp_path / "kb" / "types" / "type-spec.md").is_file()
+    assert (tmp_path / "kb" / "types" / "type-spec.schema.yaml").is_file()
+
+    # User-space type scaffolds (sources, reports) stay in the user's tree.
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.md").is_file()
     assert not (tmp_path / "kb" / "reports" / "types" / "connect-report.instructions.md").exists()
     assert (tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.md").is_file()
-    assert not (tmp_path / "kb" / "sources" / "types" / "ingest-report.instructions.md").exists()
     assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "snapshot.md").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml").is_file()
     assert not (tmp_path / "kb" / "sources" / "types" / "snapshot.template.md").exists()
-    assert (tmp_path / "kb" / "types" / "type-spec.md").is_file()
-    assert (tmp_path / "kb" / "types" / "type-spec.schema.yaml").is_file()
+
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 
@@ -81,8 +91,8 @@ def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
             link = skills_dir / skill_name
             assert link.is_symlink(), f"{link} should be a symlink"
             assert (link / "SKILL.md").is_file()
-            # Symlink points back to kb/instructions/
-            assert link.resolve() == (tmp_path / "kb" / "instructions" / skill_name).resolve()
+            # Symlink points back into the shipped library.
+            assert link.resolve() == (tmp_path / "kb" / "commonplace" / "instructions" / skill_name).resolve()
 
 
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
