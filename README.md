@@ -62,7 +62,7 @@ Framework skills:
 | `cp-skill-write` | Route and draft a note, index, or discovered specialized type |
 | `cp-skill-validate` | Check frontmatter, descriptions, types, links, structure |
 | `cp-skill-connect` | Discover connections and write a `connect-report` artifact |
-| `cp-skill-convert` | Convert notes between types (text → note → structured-claim) |
+| `cp-skill-convert` | Convert raw text captures into structured notes |
 | `cp-skill-ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `cp-skill-snapshot-web` | Capture a URL to `kb/sources/` |
 | `cp-skill-revise-iterative` | Iteratively revise a note without changing its claims |
@@ -128,7 +128,7 @@ Install the package first, then use the commands directly:
 ```bash
 commonplace-generate-notes-index kb/notes
 commonplace-relocate-note old-note "New note title" --apply
-commonplace-relocate-note old-note --dir kb/notes/definitions --apply
+commonplace-relocate-note old-note --to kb/notes/definitions --apply
 commonplace-github-snapshot <url>
 commonplace-x-snapshot <url>
 ```

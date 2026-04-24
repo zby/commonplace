@@ -6,7 +6,7 @@ user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
 context: fork
 model: sonnet
-argument-hint: "[note] — path or filename in kb/notes/. Optional: [note] to [type]"
+argument-hint: "[note] — path or filename in kb/notes/"
 ---
 
 ## EXECUTE NOW
@@ -15,7 +15,7 @@ argument-hint: "[note] — path or filename in kb/notes/. Optional: [note] to [t
 
 Parse immediately:
 - If target contains just a note name or path: convert text → note
-- If target contains "[note] to [type]": convert to the specified type
+- If target requests another conversion form, explain that only text → note is currently implemented
 - If target is empty: ask which note to convert
 
 ## Supported conversions
@@ -94,7 +94,7 @@ renamed: old-filename.md → new-filename.md  [or "filename unchanged" if no ren
 backlinks updated: 3 files  [or "none" if no backlinks]
 
 description: [the description you wrote]
-areas: [list or empty]
+tags: []
 
 Next steps:
 - Run the `cp-skill-connect` skill on `new-filename.md` — find connections
@@ -103,46 +103,11 @@ Next steps:
 ===
 ```
 
-### note → structured-claim
-
-Promotes a note with a claim title into a fully structured argument with Toulmin-derived sections.
-
-#### Step 1: Locate and verify
-
-Resolve the target to a file path. Read the file. Verify it has frontmatter with `type: kb/types/note.md` (or no explicit type). If it's already `type: kb/notes/types/structured-claim.md`, report and stop.
-
-#### Step 2: Restructure body
-
-Add or identify `## Evidence`, `## Reasoning`, and `## Caveats` sections. Move existing content into the appropriate sections:
-- Observations, facts, references → `## Evidence`
-- Principles connecting evidence to the title claim → `## Reasoning`
-- Scope limits, assumptions, counterarguments → `## Caveats`
-
-#### Step 3: Update frontmatter
-
-- Set `type: kb/notes/types/structured-claim.md`
-- Keep `status` unchanged (conversion doesn't endorse)
-
-#### Step 4: Report
-
-```
-=== CONVERTED: filename.md ===
-
-note → structured-claim
-
-Sections added: Evidence, Reasoning, Caveats
-description: [unchanged]
-
-Next steps:
-- Run the `cp-skill-validate` skill on `filename.md` — check quality
-- Review and set status: current when endorsed
-===
-```
-
 ### Future conversions (not yet implemented)
 
 These are documented as directions, not working features. If a user requests one, explain it's not implemented yet.
 
+- **note → structured-claim**: add Evidence/Reasoning/Caveats sections and set the collection-local structured-claim type
 - **note → spec**: add Design/Implementation sections
 - **note → review**: add Findings section, date
 - **note → adr**: add Context/Decision/Consequences sections

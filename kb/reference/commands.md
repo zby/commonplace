@@ -83,6 +83,17 @@ commonplace-relocate-note old-note --to kb/notes/new-path.md --apply
 
 Without `--apply`, previews changes without writing.
 
+### commonplace-relocate-directory
+
+Move a KB directory, updating links and optionally adding one MkDocs redirect.
+
+```bash
+commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems --apply
+commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems --redirect notes/related-systems/related-systems-index.md:agent-memory-systems/index.md --apply
+```
+
+Without `--apply`, previews changes without writing. `--redirect` takes `OLD:NEW` docs paths for a single redirect entry.
+
 ### commonplace-promotion-candidates
 
 List text files and seedling notes that may be ready for promotion to higher status.
