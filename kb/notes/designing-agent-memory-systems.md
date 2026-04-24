@@ -74,6 +74,8 @@ Realistic import methods include:
 
 The point is not to erase the source's original shape. It is to make enough of that source available in the memory system's own language that future agents can find, trust, activate, and revise it.
 
+[sift-kg](../agent-memory-systems/reviews/sift-kg.md) is a partial fulfillment of this import need in a document-to-graph setting. It turns document folders into a derived knowledge graph with discovered schemas, materialized pipeline stages, confidence scores, provenance, and human-gated merge/relation review. Commonplace would not copy that graph-first architecture directly, but the implementation shows what import requires beyond "upload documents": schema choice, source preservation, deduplication, review state, and derived artifacts that can be regenerated.
+
 ## Need 3: Preserve Evidence Without Making History The Next Context
 
 The memory system needs a capture substrate that keeps enough source material for later extraction, audit, debugging, and redistillation. Broad trace retention is useful because the future consumer is often unknown when the session occurs.
@@ -114,6 +116,8 @@ Realistic methods include:
 
 Reviewed trace-mining systems provide evidence for this meta-learning path, but not a complete solution. [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) shows many systems mining traces into tips, memories, rules, procedures, and skills. Commonplace shows the first-order path: useful memory can be written directly when the agent or maintainer already understands the artifact to create. Both paths still need evaluation, promotion, retirement, and evidence that memory changes future behavior.
 
+[cass-memory](../agent-memory-systems/reviews/cass_memory_system.md) partially fulfills the trace-to-procedure path: it mines sessions from multiple coding agents into a shared YAML playbook, tracks feedback, and stores source sessions on each rule. [REM](../agent-memory-systems/reviews/REM.md) fulfills a narrower trace-to-fact path by storing episodes and compressing clusters into short semantic memories. The contrast is useful because it separates the extraction problem from the later questions of lifecycle, authority, and behavioral uptake.
+
 ## Need 5: Serve Multiple Consumers, Not One Retrieval Interface
 
 A memory system has more than one consumer. A human maintainer asks why a decision was made. An acting agent needs constraints before it acts. A context scheduler needs compact metadata and budget rules. A reviewer needs provenance. A learning loop needs candidate observations. Governance needs authority, redaction, retention, and retirement state. These consumers should not be forced through one retrieval interface.
@@ -149,6 +153,8 @@ Typed cue indexes provide the on-situation loading form of this family. A cue ca
 
 The harder requirement is behavioral faithfulness. A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-priority system-definition material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
+[Synapptic](../agent-memory-systems/reviews/synapptic.md) is the clearest reviewed system that treats activation as something to test rather than assume. It extracts behavioral guards from Claude Code sessions, runs WITH/WITHOUT ablations with an LLM judge, records per-model verdicts, and excludes guards marked redundant or harmful before compiling them into assistant-facing memory surfaces. The oracle is still soft, but the test is aimed at the right question: whether the remembered rule changes behavior enough to earn its prompt budget.
+
 ## Need 7: Promote Only When Future Value Exceeds Maintenance Cost
 
 The system needs a promotion path from candidate memory to durable artifacts, but promotion is not automatically good. Durable artifacts create obligations: review, update, invalidation, connection, retirement, and consistency with sources. System-definition promotions add risk because they change behavior.
@@ -175,6 +181,8 @@ The system needs source-of-truth rules for every behavior-changing derivative. A
 
 This need applies more strongly to system-definition artifacts than to ordinary summaries because drift can change behavior. [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) shows that behavior-shaping context can live in many places: prompts, files, tool descriptions, capabilities, configs, skills, and memory. The more surfaces exist, the more explicit the authority model must be.
 
+The same Synapptic design also provides a concrete compiled-view pattern: the YAML profile is the durable state, while Claude memory, Cursor rules, Copilot instructions, `AGENTS.md`, and other assistant files are render targets with target-specific filtering. That is closer to the right authority model than treating every emitted prompt file as an independent memory.
+
 ## Need 9: Retire, Redact, Supersede, And Relax Memory
 
 Learning is incomplete without forgetting and revision. Raw traces can contain secrets or obsolete assumptions. Observations can be duplicates, wrong, low-value, or superseded. Cues can grow stale. Policies can become too broad. Tests can fossilize temporary workarounds.
@@ -191,6 +199,8 @@ Realistic methods include:
 - Relaxation paths from rigid enforcement back to prose guidance when a codified rule proves brittle.
 
 This is the lifecycle side of the same context-efficiency problem. Every stale artifact competes for attention, search rank, review time, or behavioral authority.
+
+Reviewed systems show both partial fulfillment and a common failure mode. cass-memory has candidate/established/proven/deprecated states, harmful-feedback weighting, and decay. REM defines `active`, `contradicted_by`, and `superseded` columns but does not wire them into an actual update path. The distinction is architectural: lifecycle metadata is only memory management if some process reads and acts on it.
 
 ## Need 10: Make Authority Explicit
 
