@@ -1,5 +1,5 @@
 ---
-description: "Needs-focused requirements map for realistic agent memory systems: direct memory creation, trace-derived meta-learning, activation, promotion, authority, lifecycle, and evaluation"
+description: "Needs-focused requirements map for realistic agent memory systems: direct memory creation, external knowledge import, trace-derived meta-learning, activation, promotion, authority, lifecycle, and evaluation"
 type: kb/types/note.md
 traits: [synthesis, has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
@@ -8,27 +8,27 @@ status: current
 
 # Designing a Memory System for LLM-Based Agents
 
-An ideal memory system for LLM-based agents should be defined first by the needs it must satisfy, not by its storage architecture. It must preserve useful evidence, turn experience into future capacity, assemble the right context for bounded calls, steer future behavior when past lessons apply, and retire or revise memory when it stops earning its cost.
+An ideal memory system for LLM-based agents should be defined first by the needs it must satisfy, not by its storage architecture. It must preserve useful evidence, turn experience into future capacity, assemble the right context for bounded calls, steer future behavior when past lessons apply, and revise or retire memory when it stops earning its cost.
 
-The first version of this note proposed an integrated design around trace, observation, episode, and library layers. That integration was premature. The narrower claim is more useful: agent memory is a [context engineering](./definitions/context-engineering.md) (right-knowledge-into-bounded-context) problem. The hard part is deciding which remembered material should affect a future answer, action, artifact, or system rule.
+The first version of this note proposed an integrated design around trace, observation, episode, and library layers. That integration was premature. The narrower claim has more reach: agent memory is a [context engineering](./definitions/context-engineering.md) (right-knowledge-into-bounded-context) problem. The hard part is deciding which remembered material should affect a future answer, action, artifact, or system rule.
 
-The realistic target is a bounded memory system: one that names its consumers, captures or authors enough evidence for them, uses the strongest available signals first, exposes uncertainty, and moves learned material toward stronger behavior-changing surfaces only when evidence and maintenance economics justify it.
+The realistic target is a bounded memory system: one that names its consumers, captures or authors enough evidence for them, uses the strongest available signals first, exposes uncertainty, and moves learned material toward stronger behavior-changing surfaces only when evidence, authority, and maintenance economics justify it.
 
 ## The Memory Problem Is Crosscutting
 
 Agent memory cuts across the runtime rather than sitting in one component. [Agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md): storage belongs on the execution substrate, retrieval and activation belong in the context engine, and learning belongs in the loop that turns experience into readable or executable artifacts.
 
-The base path is direct memory creation. A memory system is not useful until a human or agent can recognize a durable claim, policy, procedure, index, test, instruction, or plugin and write it into the right artifact. Trace-derived extraction is a higher-order loop: the system studies its own sessions to discover missed memory-creation opportunities.
+The base path is direct memory creation. A memory system cannot serve its core role until a human or agent can recognize a durable claim, policy, procedure, index, test, instruction, or plugin and write it into the right artifact. Trace-derived extraction then becomes a higher-order loop: the system studies its own sessions to discover memory-creation opportunities that direct authoring missed.
 
 ## Memory Is More Than Retrieval
 
 The learning loop should not stop at prose memory. [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md): deployed agent systems improve across sessions by updating durable system-definition artifacts such as prompts, instructions, schemas, checks, scripts, plugins, and tools. When a learned pattern becomes deterministic enough, it should move toward [codification](./definitions/codification.md) (committing procedure to a symbolic medium), because [bookkeeping work is more reliable on a symbolic substrate than when re-run through the LLM each time](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
 
-Calling those behavior-changing artifacts "memory" is not just metaphorical overreach from knowledge retrieval. Human memory vocabulary already distinguishes declarative memory, which supports explicit recall, from procedural memory, which is expressed as learned skill, habit, and action disposition. The KB's [Tulving taxonomy note](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) treats the semantic/episodic/procedural split as suggestive but not decisive. The agent analogue here is functional, not biological: a note that answers "what do we know?" is declarative memory, while a checklist, skill, test, guard, or instruction that changes what the agent does next is procedural memory.
+Calling those behavior-changing artifacts "memory" is not only an extension of retrieval vocabulary. Human memory vocabulary already distinguishes declarative memory, which supports explicit recall, from procedural memory, which is expressed as learned skill, habit, and action disposition. The KB's [Tulving taxonomy note](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) treats the semantic/episodic/procedural split as suggestive but not decisive. The agent analogue here is functional, not biological: a note that answers "what do we know?" is declarative memory, while a checklist, skill, test, guard, or instruction that changes what the agent does next is procedural memory.
 
 That distinction matters because the same remembered material can serve different roles. [Axes of artifact analysis](./axes-of-artifact-analysis.md) distinguishes knowledge-role artifacts, which answer questions, from system-definition-role artifacts, which steer behavior. A decision rationale is knowledge when the agent asks "why did we choose this?" The same rationale becomes system-definition when it prevents the agent from proposing the rejected alternative again.
 
-This role split prevents a common design error: treating memory as better retrieval-augmented generation (RAG). RAG is a declarative-memory pattern: ask a question, retrieve relevant knowledge, and put it in context. Agent memory also needs proceduralization: lessons must become instructions, skills, tests, checks, tools, guardrails, or work-surface changes that alter future action. Search can answer direct questions; it does not decide which routines should be compiled, when they should fire unasked, or when they should be retired. [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md): a stored lesson has not helped unless it appears in the right bounded context, with enough priority and framing to change what happens next.
+This role split prevents a common design error: treating memory as better retrieval-augmented generation (RAG). RAG is a declarative-memory pattern: ask a question, retrieve relevant knowledge, and put it in context. Agent memory also needs proceduralization: lessons must become instructions, skills, tests, checks, tools, guardrails, or work-surface changes that alter future action. Search can answer direct questions, but it does not decide which routines should be compiled, when they should fire unasked, or when they should be retired. [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md): a stored lesson has not helped unless it appears in the right bounded context, with enough priority and framing to change what happens next.
 
 ## Need 1: Create Memory Directly
 
@@ -36,7 +36,7 @@ Direct memory creation is the base operation. If current work reveals a stable c
 
 This direct path is what makes Commonplace useful before any session-scraping pipeline exists. Notes, indexes, instructions, reviews, validation scripts, and generated indexes are all memory artifacts: they preserve learned structure and change what future agents can find or do.
 
-Direct creation should not mean blank-page authoring. A useful memory system should help the agent choose the right artifact shape and satisfy that artifact's quality contract at write time. In Commonplace, collections carry quality and linking requirements, writing skills retrieve those requirements, and type references point to files that describe how to create artifacts of that type. The general pattern is broader than Commonplace: memory destinations should expose their creation contract, not just accept content after the fact.
+Direct creation should not mean blank-page authoring. The system should help the agent choose the right artifact shape and satisfy that artifact's quality contract at write time. In Commonplace, collections carry quality and linking requirements, writing skills retrieve those requirements, and type references point to files that describe how to create artifacts of that type. The general pattern is broader than Commonplace: memory destinations should expose their creation contract, not just accept content after the fact.
 
 Realistic memory artifacts include:
 
@@ -53,18 +53,36 @@ Realistic authoring supports include:
 - Type-specific procedures, templates, schemas, or rubrics for producing valid artifacts.
 - Link and index obligations that make the new memory findable rather than merely stored.
 - Validators, linters, review gates, or preview checks that catch malformed or low-quality memory before promotion.
+- Import tools that convert external knowledge into the system's own artifact forms.
 
-Direct authoring still needs evaluation and lifecycle management. A note can be accurate but hard to find. An instruction can steer behavior incorrectly. A check can fossilize a temporary workaround. Direct memory is not automatically good; it is simply the first-order capability that trace-derived learning improves.
+Direct authoring still needs evaluation and lifecycle management. A note can be accurate but hard to find. An instruction can steer behavior incorrectly. A check can fossilize a temporary workaround. Direct memory is not automatically good; it is the first-order capability that trace-derived learning later improves.
 
-## Need 2: Preserve Evidence Without Making History The Next Context
+## Need 2: Import External Knowledge Into Internal Form
+
+Memory creation does not only happen by writing new artifacts from the current session. The system should also import external knowledge bases, documents, repositories, source snapshots, tickets, notes, or prior archives into its own internal form. Import is not copying; it is a [distillation](./definitions/distillation.md) (directed context compression) and [constraining](./definitions/constraining.md) (narrowing interpretation space) step. External material is converted into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
+
+This matters because much of the memory a system needs already exists elsewhere. A project may have an old wiki, a README forest, issue threads, source snapshots, API docs, chat exports, or another knowledge base. Leaving that material external preserves evidence but does not make it agent-usable. The memory system needs import paths that add structure the external source may not have: summaries, semantic descriptions, typed artifacts, links to existing concepts, authority markers, lifecycle status, and source pointers.
+
+Realistic import methods include:
+
+- Snapshots that preserve external sources before analysis, so later claims can be audited.
+- Ingest reports or source reviews that classify external material, summarize it, name limitations, and link it into the internal graph.
+- Conversion tools that turn raw text or legacy notes into typed internal artifacts with frontmatter, descriptions, links, and status.
+- Directory or repository ingestion that treats a related file tree as one source unit rather than many disconnected snippets.
+- Re-ingest workflows that rerun classification and connection after the internal KB has changed.
+- Staging in a [workshop](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) when the imported material is too large, messy, or contested to promote directly.
+
+The point is not to erase the source's original shape. It is to make enough of that source available in the memory system's own language that future agents can find, trust, activate, and revise it.
+
+## Need 3: Preserve Evidence Without Making History The Next Context
 
 The memory system needs a capture substrate that keeps enough source material for later extraction, audit, debugging, and redistillation. Broad trace retention is useful because the future consumer is often unknown when the session occurs.
 
 For a single-user agent harness, broad retention is usually cheap because the stream is mostly text: prompts, model outputs, tool calls, file diffs, command output, and small structured artifacts. Traditional software and current hardware can store that volume trivially compared with the cost of reconstructing missing reasoning later. This justifies storing text traces broadly when retention and redaction policy allow it.
 
-The limits are payload class and scale. Once traces include large binary or media artifacts -- movies, long audio, screenshots, screen recordings, datasets, build products, or telemetry firehoses -- "store everything" stops being a safe default.
+The limits are payload class and scale. Once traces include large binary or media artifacts -- movies, long audio, screenshots, screen recordings, datasets, build products, or telemetry firehoses -- "store everything" stops being a safe default. Multi-user systems also change the calculation: aggregate volume grows faster, traces contain other people's private or regulated material, authority over retention becomes contested, and search pollution becomes a shared operational cost.
 
-Multi-user systems also change the calculation. Aggregate volume grows faster. Traces contain other people's private or regulated material. Authority over retention becomes contested, and search pollution becomes a shared operational cost. For large payloads, the memory system may keep metadata, thumbnails, transcripts, hashes, sampled excerpts, or provenance pointers instead of raw files. For shared use, it may need per-user retention policies, access controls, or externally managed blobs.
+For large payloads, the memory system may keep metadata, thumbnails, transcripts, hashes, sampled excerpts, or provenance pointers instead of raw files. For shared use, it may need per-user retention policies, access controls, or externally managed blobs.
 
 But store-everything is only a capture posture. [Session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) because persistence and loading are separate decisions. Raw traces should usually remain outside the acting agent's ordinary context and load only for provenance checks, dispute resolution, debugging, redistillation, or evaluation.
 
@@ -78,13 +96,13 @@ Realistic methods for this need include:
 
 The design choice is not "store everything or summarize everything." It is "store eligible material under policy, then load selectively." [Distillation](./definitions/distillation.md) (directed context compression) works better when source material remains available, but the source material still needs governance.
 
-## Need 3: Use Trace-Derived Extraction As Meta-Learning
+## Need 4: Use Trace-Derived Extraction As Meta-Learning
 
 Once direct memory creation exists, the system can improve it by studying what direct authoring missed. Session logs contain latent memory-creation opportunities, but they differ by oracle strength.
 
 Corrections are strongest because the log contains both a negative and positive signal. Silent failures are weaker: the task appears completed, but the trace shows errors, retries, fallback paths, warning output, or weakened guarantees. Preferences are distributed over many accept/reject events. Procedures show up as recurring action sequences. Discoveries and broad syntheses have the weakest immediate oracle; their value often appears only through later reuse.
 
-An ideal system therefore needs a meta-learning taxonomy ordered by signal quality, not by topic popularity. It should start where the oracle is strongest and delay automation where the oracle is weak.
+The system therefore needs a meta-learning taxonomy ordered by signal quality, not by topic popularity. It should start where the oracle is strongest and delay automation where the oracle is weak. In [bitter lesson](https://en.wikipedia.org/wiki/Bitter_lesson) terms, memory systems should prefer scalable search and learning where feedback is strong, while keeping weak-oracle knowledge work in reviewable artifacts until evaluation can justify relaxation.
 
 Realistic methods include:
 
@@ -94,13 +112,13 @@ Realistic methods include:
 - Human or agent review queues for weak-oracle candidates such as discoveries, broad design principles, or high-impact policy changes.
 - Confidence, source pointers, and candidate status fields so extracted items do not masquerade as durable knowledge.
 
-Reviewed trace-mining systems provide evidence for this meta-learning path, but not a complete solution. [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) shows many systems mining traces into tips, memories, rules, procedures, and skills. Commonplace shows the first-order path: useful memory can be written directly when the agent or maintainer already understands the artifact to create. Both paths still need evaluation, promotion, retirement, and proof that memory changes future behavior.
+Reviewed trace-mining systems provide evidence for this meta-learning path, but not a complete solution. [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) shows many systems mining traces into tips, memories, rules, procedures, and skills. Commonplace shows the first-order path: useful memory can be written directly when the agent or maintainer already understands the artifact to create. Both paths still need evaluation, promotion, retirement, and evidence that memory changes future behavior.
 
-## Need 4: Serve Multiple Consumers, Not One Retrieval Interface
+## Need 5: Serve Multiple Consumers, Not One Retrieval Interface
 
-A memory system has more than one consumer. A human maintainer asks why a decision was made. An acting agent needs constraints before it acts. A context scheduler needs compact metadata and budget rules. A reviewer needs provenance. A learning loop needs candidate observations. Governance needs authority, redaction, retention, and retirement state. These consumers should not share one retrieval interface.
+A memory system has more than one consumer. A human maintainer asks why a decision was made. An acting agent needs constraints before it acts. A context scheduler needs compact metadata and budget rules. A reviewer needs provenance. A learning loop needs candidate observations. Governance needs authority, redaction, retention, and retirement state. These consumers should not be forced through one retrieval interface.
 
-No single retrieval surface satisfies all of these. Search is useful for question answering. Navigation is useful when the reader must follow articulated relationships. Triggered activation is useful when the agent would not know to ask. Trace replay is useful when a summary is under suspicion. Active work artifacts are useful when the task is not yet finished.
+No single surface satisfies all of these needs. Search is useful for question answering. Navigation is useful when the reader must follow articulated relationships. Triggered activation is useful when the agent would not know to ask. Trace replay is useful when a summary is under suspicion. Active work artifacts are useful when the task is not yet finished.
 
 Realistic method families include:
 
@@ -113,7 +131,7 @@ Realistic method families include:
 
 The important distinction is between retrospective memory and active work. [A functioning KB needs a workshop layer, not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md): work in motion needs state, dependencies, expiration, and unresolved alternatives. Retrospective episodes should not replace the active work surface.
 
-## Need 5: Activate Behavior-Changing Memory Before The Mistake
+## Need 6: Activate Behavior-Changing Memory Before The Mistake
 
 The system must not merely answer "what do we know?" It must sometimes answer a question the agent did not ask: "what past lesson applies to the action I am about to take?"
 
@@ -131,7 +149,7 @@ Typed cue indexes provide the on-situation loading form of this family. A cue ca
 
 The harder requirement is behavioral faithfulness. A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-priority system-definition material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
-## Need 6: Promote Only When Future Value Exceeds Maintenance Cost
+## Need 7: Promote Only When Future Value Exceeds Maintenance Cost
 
 The system needs a promotion path from candidate memory to durable artifacts, but promotion is not automatically good. Durable artifacts create obligations: review, update, invalidation, connection, retirement, and consistency with sources. System-definition promotions add risk because they change behavior.
 
@@ -149,7 +167,7 @@ This promotion path is a [constraining](./definitions/constraining.md) (narrowin
 
 Promotion thresholds should depend on signal type and role. One serious correction may deserve a candidate cue immediately. A preference may require several consistent decisions across sessions. A discovery may need later reuse. Always-loaded or enforced system-definition artifacts should require stronger review than knowledge notes.
 
-## Need 7: Keep Source Of Truth And Compiled Views From Drifting
+## Need 8: Keep Source Of Truth And Compiled Views From Drifting
 
 Memory systems often create derived surfaces: a note produces a cue, a policy produces a checklist, a convention produces a lint rule, a guide produces an `AGENTS.md` excerpt, or a trace-derived observation produces a generated reminder. These artifacts put knowledge where it can act, but become dangerous when they turn into independent sources of truth.
 
@@ -157,7 +175,7 @@ The system needs source-of-truth rules for every behavior-changing derivative. A
 
 This need applies more strongly to system-definition artifacts than to ordinary summaries because drift can change behavior. [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) shows that behavior-shaping context can live in many places: prompts, files, tool descriptions, capabilities, configs, skills, and memory. The more surfaces exist, the more explicit the authority model must be.
 
-## Need 8: Retire, Redact, Supersede, And Relax Memory
+## Need 9: Retire, Redact, Supersede, And Relax Memory
 
 Learning is incomplete without forgetting and revision. Raw traces can contain secrets or obsolete assumptions. Observations can be duplicates, wrong, low-value, or superseded. Cues can grow stale. Policies can become too broad. Tests can fossilize temporary workarounds.
 
@@ -174,7 +192,7 @@ Realistic methods include:
 
 This is the lifecycle side of the same context-efficiency problem. Every stale artifact competes for attention, search rank, review time, or behavioral authority.
 
-## Need 9: Make Authority Explicit
+## Need 10: Make Authority Explicit
 
 The memory system must say who or what is allowed to write, promote, activate, enforce, revise, and retire memory. The [comparative review's agency trilemma](../agent-memory-systems/agentic-memory-systems-comparative-review.md) remains decisive: no option combines high agency, high throughput, and high curation quality without trade-offs. Agent-managed memory has task context but spends reasoning budget. External services scale but guess what matters. Humans curate well but slowly. Learned policies need strong oracles.
 
@@ -189,7 +207,7 @@ Authority should vary by risk:
 
 This requirement prevents a memory system from silently rewriting the agent's behavior. A system can choose automation, human review, learned policy, or hybrid authority, but the choice is part of the architecture.
 
-## Need 10: Evaluate Memory By Effects, Not By Existence
+## Need 11: Evaluate Memory By Effects, Not By Existence
 
 The system should not count "memory written" as learning. It should evaluate whether memory improved the future task, answer, artifact, or behavior.
 
@@ -210,13 +228,14 @@ These evaluation dimensions are separable. QA-style retrieval tests can pass whi
 The needs do not imply one integrated architecture. They imply a practical order: build where the signal is strongest, the risk is lowest, and the behavioral test is clearest.
 
 1. Support direct authoring of notes, instructions, checks, scripts, plugins, and indexes as the first-order memory operation.
-2. Capture eligible traces with provenance, redaction, and retention rules so later meta-learning has evidence.
-3. Extract explicit corrections and silent failures as missed memory-creation opportunities before trying to infer discoveries.
-4. Test whether correction-derived cues activate in plausible future situations.
-5. Test whether activated cues actually change behavior.
-6. Add promotion queues for high-confidence candidates whose future value exceeds maintenance cost.
-7. Add work-surface and episode support only where retrospective narrative or active state materially improves future tasks.
-8. Move repeated, high-confidence lessons toward instructions, checks, scripts, plugins, or guardrails only when authority and evaluation are explicit.
+2. Add import paths for existing external knowledge bases, documents, repositories, and source archives.
+3. Capture eligible traces with provenance, redaction, and retention rules so later meta-learning has evidence.
+4. Extract explicit corrections and silent failures as missed memory-creation opportunities before trying to infer discoveries.
+5. Test whether correction-derived cues activate in plausible future situations.
+6. Test whether activated cues actually change behavior.
+7. Add promotion queues for high-confidence candidates whose future value exceeds maintenance cost.
+8. Add work-surface and episode support only where retrospective narrative or active state materially improves future tasks.
+9. Move repeated, high-confidence lessons toward instructions, checks, scripts, plugins, or guardrails only when authority and evaluation are explicit.
 
 Direct authoring can produce useful memory before trace mining exists at all. Trace-derived extraction is a meta-learning layer over that base: it looks for memory that should have been created but was not. The failure tests are sequential: can correction extraction produce useful candidates, can those candidates activate, and do activated cues change behavior? If not, more trace processing only makes the system more elaborate. The memory system should grow from validated needs, not from an attractive taxonomy.
 
@@ -228,7 +247,7 @@ Discovery extraction also remains weak. Corrections and failures have visible si
 
 The boundary between learned memory and work-surface authority is domain-dependent. Software projects have tests, linters, code review, issue trackers, and deployment gates. Other domains may lack those surfaces or have different authorities. A memory design must first name the domain's observable traces, recurring tasks, durable work surfaces, evaluable outcomes, and authority to modify behavior.
 
-Finally, learned memory-management policy is attractive but oracle-dependent. Where the domain has clear success metrics, a learned policy may outperform inspectable heuristics. In open-ended knowledge work, reviewable rules, provenance, and behavioral tests remain the safer default.
+Finally, learned memory-management policy is attractive but oracle-dependent. Where the domain has clear success metrics, a learned policy may outperform inspectable heuristics. In open-ended knowledge work, reviewable rules, provenance, and behavioral tests remain the safer default. Memory management sits on the same [bitter-lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md): relax into learned policy where feedback is good, and keep artifact-side control where feedback is weak.
 
 ---
 
@@ -242,6 +261,7 @@ Relevant Notes:
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — grounds: memory-mediated behavior change should happen through durable system-definition artifacts updated across sessions
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: bookkeeping and deterministic state tracking should migrate to symbolic substrates when possible
 - [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — grounds: memory-mediated behavior change spans prose, symbolic, and opaque substrates rather than one learning surface
+- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — grounds: trace-derived meta-learning should use scalable search and learning where oracles are strong while keeping weak-oracle updates in reviewable artifacts
 - [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — grounds: extraction is easier than deciding which candidate memory deserves durable promotion
 - [Automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) — grounds: discovery extraction and cross-session synthesis need stronger success tests than "the artifact was generated"
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: correction, silent-failure, preference, procedure, decision, and discovery extraction differ by signal quality
