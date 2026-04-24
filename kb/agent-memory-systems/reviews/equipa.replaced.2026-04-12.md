@@ -1,6 +1,6 @@
 ---
 description: Multi-agent coding orchestrator with git-worktree dev/test loops, SQLite run memory, trace-derived lessons/rules/prompt tuning, and partial training-data export from the same execution traces
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: []
 status: outdated

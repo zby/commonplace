@@ -1,6 +1,6 @@
 ---
 description: S3-backed CLI coordination layer for multi-agent systems — cleanest exemplar of coordination-by-convention, where coordination semantics live in naming conventions and client compliance rather than enforcement
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

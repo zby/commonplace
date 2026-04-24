@@ -1,6 +1,6 @@
 ---
 description: ADK-based agent framework where agents create subagents and tools at runtime, with Neo4j graph memory, Docker sandboxes, and RL training hooks — strongest reference for self-modifying agent topology
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

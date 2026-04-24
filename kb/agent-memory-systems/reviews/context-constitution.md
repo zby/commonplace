@@ -1,6 +1,6 @@
 ---
 description: Instruction-first governance corpus for Letta agents treating context management as identity, memory, and continuity policy; a related system defined mainly by doctrine rather than code
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

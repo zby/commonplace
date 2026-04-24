@@ -18,6 +18,8 @@ def test_refresh_indexes_rebuilds_directory_and_tag_indexes(
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
     sources_root = tmp_path / "kb" / "sources"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    write(sources_root / "COLLECTION.md", "# Sources collection\n")
     kb_design_index = write(
         notes_root / "kb-design-index.md",
         """---

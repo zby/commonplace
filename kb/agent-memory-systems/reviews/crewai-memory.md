@@ -1,6 +1,6 @@
 ---
 description: "CrewAI's in-framework memory layer with LLM-scoped vector records, composite recall, async save barriers, agent memory tools, and HITL lesson distillation"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation]
 tags: [related-systems, trace-derived]
 status: current

@@ -1,6 +1,6 @@
 ---
 description: Generative Agents memory SDK with five-type decay, six-phase dream cycles, entity graph, Hebbian reinforcement, and clinamen anomaly retrieval; richest trajectory-to-lesson loop reviewed
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 tags: []
 traits: [has-comparison, has-external-sources]
 status: outdated

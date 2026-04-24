@@ -1,6 +1,6 @@
 ---
 description: Four-database episodic memory service (Postgres + Qdrant + Neo4j + Redis) where a Go API ingests agent episodes, a Python Celery worker LLM-clusters and compresses them into scored semantic facts, and retrieval widens via temporal graph hops
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

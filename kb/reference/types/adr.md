@@ -2,7 +2,7 @@
 type: kb/types/type-spec.md
 name: adr
 description: Architecture decision record for accepted or proposed system decisions
-schema: kb/reference/types/adr.schema.yaml
+schema: ./adr.schema.yaml
 ---
 
 # ADR
@@ -23,7 +23,7 @@ Use an ADR for a concrete architectural decision that has been proposed, accepte
 ```markdown
 ---
 description: Template for architecture decision records — accepted/proposed decisions with Context, Decision, and Consequences sections
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 tags: []
 status: accepted
 ---

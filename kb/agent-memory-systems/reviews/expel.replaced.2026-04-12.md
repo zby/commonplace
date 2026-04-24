@@ -1,6 +1,6 @@
 ---
 description: Cross-task experiential learning pipeline that gathers trajectories, maintains natural-language rules, and retrieves past traces at inference; reviewed source promotes artifacts, not weights
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

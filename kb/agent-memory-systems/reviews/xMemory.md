@@ -1,6 +1,6 @@
 ---
 description: "Research-code dialogue-memory system that distills conversations into episodes, semantic facts, and LLM-summarized themes, then retrieves top-down with coverage selection plus entropy-gated episode inclusion"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

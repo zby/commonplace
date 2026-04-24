@@ -1,6 +1,6 @@
 ---
 description: "Research implementation that converts key-value KB records into trainable attention key/value tensors, replacing external retrieval with model-internal KB attention"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

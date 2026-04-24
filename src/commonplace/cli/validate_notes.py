@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 from commonplace.lib.project_paths import (
+    is_collection_dir,
     kb_root,
     list_collection_note_paths,
     list_kb_note_paths,
@@ -96,14 +97,15 @@ def batch_scope(arg: str, *, repo_root: Path) -> str | None:
 
     candidate = Path(arg)
     if candidate.is_absolute() and candidate.is_dir():
-        return _display_path(candidate.resolve(), repo_root=repo_root)
+        resolved = candidate.resolve()
+        return _display_path(resolved, repo_root=repo_root) if is_collection_dir(resolved) else None
 
     repo_candidate = (repo_root / arg).resolve()
-    if repo_candidate.is_dir():
+    if repo_candidate.is_dir() and is_collection_dir(repo_candidate):
         return _display_path(repo_candidate, repo_root=repo_root)
 
     collection_candidate = (kb_root(repo_root) / arg).resolve()
-    if collection_candidate.is_dir():
+    if collection_candidate.is_dir() and is_collection_dir(collection_candidate):
         return _display_path(collection_candidate, repo_root=repo_root)
 
     return None

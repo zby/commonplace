@@ -1,6 +1,6 @@
 ---
 description: "Wikipedia self-training pipeline that turns generated QA samples and hallucination scores into SFT/DPO datasets for weight updates, with no persistent memory artifact"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
 last-checked: "2026-04-20"

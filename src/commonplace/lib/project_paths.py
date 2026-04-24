@@ -11,30 +11,38 @@ def kb_root(root: Path) -> Path:
 
 
 def collection_dirs(root: Path) -> list[Path]:
-    """Return top-level content collection directories under kb/."""
+    """Return content collection directories under kb/.
+
+    A collection is identified by a local COLLECTION.md file. This lets
+    installed library collections live under kb/commonplace/<collection>/ while
+    support directories such as kb/reports/ are ignored unless they explicitly
+    opt in as collections.
+    """
     boundary = kb_root(root)
     if not boundary.is_dir():
         raise FileNotFoundError(f"KB root does not exist: {boundary}")
     return sorted(
-        path
-        for path in boundary.iterdir()
-        if path.is_dir() and not path.name.startswith(".") and path.name != "types"
+        path.parent
+        for path in boundary.rglob("COLLECTION.md")
+        if not any(part.startswith(".") or part == "types" for part in path.relative_to(boundary).parts)
     )
 
 
 def collection_for_path(path: Path, root: Path) -> Path:
-    """Return the top-level kb/<collection>/ directory containing path."""
+    """Return the nearest COLLECTION.md-bearing directory containing path."""
     boundary = kb_root(root).resolve()
+    resolved = path.resolve()
     try:
-        rel = path.resolve().relative_to(boundary)
+        resolved.relative_to(boundary)
     except ValueError as exc:
         raise ValueError(f"Path is not under {boundary}: {path}") from exc
-    if not rel.parts:
-        raise ValueError(f"Path is not inside a KB collection: {path}")
-    collection = boundary / rel.parts[0]
-    if collection.name == "types" or collection.name.startswith("."):
-        raise ValueError(f"Path is not inside a content collection: {path}")
-    return collection
+
+    current = resolved if resolved.is_dir() else resolved.parent
+    while current != boundary and boundary in current.parents:
+        if (current / "COLLECTION.md").is_file():
+            return current
+        current = current.parent
+    raise ValueError(f"Path is not inside a KB collection: {path}")
 
 
 def is_nested_git_repo(path: Path, boundary: Path) -> bool:
@@ -68,16 +76,29 @@ def is_replaced_archive(path: Path) -> bool:
     return ".replaced." in path.name
 
 
+def is_collection_metadata(path: Path) -> bool:
+    """Return True for collection control files that are not collection content."""
+    return path.name == "COLLECTION.md"
+
+
+def is_collection_dir(path: Path) -> bool:
+    """Return True when path is a collection root."""
+    return path.is_dir() and (path / "COLLECTION.md").is_file()
+
+
 def list_collection_note_paths(collection: Path) -> list[Path]:
     """Return markdown note paths under a collection, excluding nested repos,
     types, and replaced archives."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
+    if not is_collection_dir(collection):
+        raise ValueError(f"Directory is not a KB collection: {collection}")
     return sorted(
         path
         for path in collection.rglob("*.md")
         if not is_nested_git_repo(path, collection)
         and not is_type_definition_content(path, collection)
+        and not is_collection_metadata(path)
         and not is_replaced_archive(path)
     )
 

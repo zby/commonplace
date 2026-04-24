@@ -2,7 +2,7 @@
 type: kb/types/type-spec.md
 name: agent-memory-system-review
 description: Code-grounded review of an external agent memory or context-engineering system
-schema: kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml
+schema: ./agent-memory-system-review.schema.yaml
 ---
 
 # Agent memory system review
@@ -98,7 +98,7 @@ Every review should end with explicit `Relevant Notes:` links into the KB.
 Use:
 
 - `description` — discriminating retrieval filter (50-200 chars, double-quoted)
-- `type: kb/agent-memory-systems/types/agent-memory-system-review.md`
+- `type: ../types/agent-memory-system-review.md`
 - `tags: [related-systems]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces. The finding drives both the tag and the placement section; the tag is not the reason to include the section.
 - `status: current` unless clearly stale/outdated
 - `last-checked: "{today}"`
@@ -149,7 +149,7 @@ Do not link to `../../../related-systems/...` or other local checkout paths. Loc
 ```markdown
 ---
 description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 tags: [related-systems]
 status: current
 last-checked: "YYYY-MM-DD"

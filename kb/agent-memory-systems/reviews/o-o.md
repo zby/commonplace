@@ -1,6 +1,6 @@
 ---
 description: Polyglot HTML/bash living-document system where each file carries its own update contract, agent dispatch, rendering, and source cache — the file is the app, with no server, database, or build step
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

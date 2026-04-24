@@ -1,6 +1,6 @@
 ---
 description: Local-first agent knowledge commons with SQLite local/team stores, approval-gated team sharing, and a plugin-packaged query/propose/confirm loop; strongest reviewed shared-learning reference so far
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

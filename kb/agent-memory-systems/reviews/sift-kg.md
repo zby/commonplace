@@ -1,6 +1,6 @@
 ---
 description: LLM-powered document-to-knowledge-graph pipeline with schema discovery, human-in-the-loop entity resolution, and interactive visualization
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

@@ -111,38 +111,26 @@ Delegates to `frontmatter.strip()`.
 
 ## type_resolver
 
-Resolve structural note types from scoped JSON Schema definitions. Uses collection-scoped schema discovery — schemas are searched from the owning collection first, then the global KB type layer.
+Resolve structural note types from path-valued type-spec documents and their declared JSON Schemas.
 
 ### Schema discovery
-
-Schemas live in the global `kb/types/` directory and in optional collection-local `types/` directories. For a workshop artifact at `kb/work/my-project/foo.md`, the search order is:
-
-1. `kb/work/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
-
-For an instruction at `kb/instructions/foo.md`:
-
-1. `kb/instructions/types/{type}.schema.yaml`
-2. `kb/types/{type}.schema.yaml`
-
-In the shipped scaffold, plain instructions and review gates use the global `instruction` type at `kb/types/instruction.schema.yaml`.
 
 Type resolution now starts from the path stored in frontmatter. There is no collection-scoped enum lookup.
 
 ### Type resolution logic
 
 1. If the file has no frontmatter, treat it as implicit `text` and skip schema validation.
-2. If the file has frontmatter, require `type:` to be a repo-relative markdown path under `kb/`.
+2. If the file has frontmatter, require `type:` to be a markdown path under `kb/`, either repository-relative (`kb/...`) or file-relative (`./...` or `../...`).
 3. Open the referenced type-spec doc and verify it declares `type: kb/types/type-spec.md`.
 4. Read the type spec's `name`, `description`, and `schema` fields.
-5. If `schema` is a path, load that JSON Schema YAML file and validate the parsed document against it. If `schema: null`, skip schema validation.
+5. If `schema` is a path, resolve it the same way from the type-spec doc, load that JSON Schema YAML file, and validate the parsed document against it. If `schema: null`, skip schema validation.
 
 Bare enum values, missing type files, missing `schema` fields in type specs, absolute paths, URLs, and paths outside `kb/` are validation errors.
 
 ### Public API
 
 **`TypeProfile`** — frozen dataclass describing a resolved type:
-- `type_path: str` — repo-relative path stored in artifact frontmatter, or `text` for implicit no-frontmatter files
+- `type_path: str` — canonical repo-relative path for the resolved type, or `text` for implicit no-frontmatter files
 - `type_doc_path: Path | None` — resolved filesystem path to the type-spec doc
 - `type_name: str` — `name` from type-spec frontmatter
 - `schema_path: Path | None` — resolved schema path, or `None` when `schema: null`

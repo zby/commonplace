@@ -1,6 +1,6 @@
 ---
 description: Custom plain-text language for knowledge management with Tree-Sitter grammar, typed entities, 27 validation rules, and LSP. Makes the same programming-theory-over-psychology bet we do, but went further into formalization with a custom DSL.
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 status: seedling
 tags: [related-systems]

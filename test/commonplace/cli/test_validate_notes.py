@@ -62,6 +62,7 @@ def install_schema_tree(tmp_path: Path, tree_name: str) -> None:
 
 def configure_temp_repo(tmp_path: Path) -> Path:
     install_schema_tree(tmp_path, "flat")
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     write_type_spec(
         tmp_path,
         "kb/types/note.md",
@@ -467,6 +468,7 @@ status: current
 
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     write(
         notes_root / "kept.md",
         """---
@@ -503,6 +505,7 @@ status: current
 
 def test_list_kb_note_paths_skips_type_definitions(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     write(
         notes_root / "real.md",
         """---
@@ -549,6 +552,7 @@ type: collection-item
 
 
 def test_list_kb_note_paths_skips_replaced_archives(tmp_path: Path) -> None:
+    write(tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md", "# Agent memory systems\n")
     reviews_root = tmp_path / "kb" / "agent-memory-systems" / "reviews"
     current = write(
         reviews_root / "napkin.md",
@@ -581,6 +585,7 @@ last-checked: "2026-04-12"
 
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     today_note = write(
         notes_root / "today.md",
         """---
@@ -617,6 +622,7 @@ status: current
 
 
 def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     note = write(
         tmp_path / "kb" / "notes" / "note.md",
         """---
@@ -659,6 +665,7 @@ def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
 
 def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
+    write(tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md", "# Agent memory systems\n")
     collection_note = write(
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
         """---
@@ -715,3 +722,24 @@ status: current
     assert template not in bare_collection
     assert other_note not in bare_collection
     assert validate_notes.batch_scope("agent-memory-systems", repo_root=tmp_path) == "kb/agent-memory-systems"
+
+
+def test_directory_without_collection_file_is_not_a_validation_scope(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write(
+        tmp_path / "kb" / "reports" / "report.md",
+        """---
+description: Report in a support directory without collection conventions
+type: kb/types/note.md
+traits: []
+status: current
+---
+
+# Report
+""",
+    )
+
+    with pytest.raises(ValueError, match="not a KB collection"):
+        validate_notes.resolve_targets("kb/reports", repo_root=tmp_path)
+
+    assert validate_notes.batch_scope("kb/reports", repo_root=tmp_path) is None

@@ -138,6 +138,7 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = write(notes_root / "old-note.md", "# Old note\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
     legacy_review = write(
@@ -215,6 +216,7 @@ def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkey
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = write(
         notes_root / "old-note.md",
         """# Old note
@@ -250,6 +252,7 @@ See [concept](./definitions/concept.md)
 def test_relocate_note_hook_plan_failure_aborts_before_core_writes(tmp_path: Path) -> None:
     repo_root = tmp_path
     notes_root = repo_root / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = write(notes_root / "old-note.md", "# Old note\n")
     write(
         repo_root / "mkdocs.yml",

@@ -1,6 +1,6 @@
 ---
 description: "Curated Awesome-list for agent memory papers, products, benchmarks, and surveys; useful as a discovery map but not an implemented memory system"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

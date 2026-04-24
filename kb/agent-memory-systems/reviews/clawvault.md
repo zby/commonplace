@@ -1,6 +1,6 @@
 ---
 description: TypeScript vault memory (now v3.5, deprecated in favor of OpenClaw native memory) with write-time fact extraction, a typed observation ledger, scored promotion, hybrid search, and OpenClaw memory-slot plugin
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation]
 status: current
 tags: [related-systems, trace-derived]

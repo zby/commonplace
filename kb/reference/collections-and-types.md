@@ -18,7 +18,7 @@ Read this document to get the model. For the type catalog see [available-types](
 
 ## Collections
 
-A **collection** is a top-level subdirectory of `kb/` that groups artifacts sharing a domain, owns or inherits a type contract, and is the unit at which context-budget decisions (validation scope, connect discovery, area splits) are made. Subdirectories inside a collection are *areas* — they share the collection's type contract and budget rather than defining their own.
+A **collection** is a `kb/` directory with a local `COLLECTION.md` that groups artifacts sharing a domain, owns or inherits a type contract, and is the unit at which context-budget decisions (validation scope, connect discovery, area splits) are made. Subdirectories inside a collection are *areas* — they share the collection's type contract and budget rather than defining their own.
 
 The shipped collections:
 
@@ -37,7 +37,7 @@ Each collection's writing conventions live in its own `COLLECTION.md` at the col
 
 ## Types
 
-A **type** is a structural contract expressed as a hand-authored **type-spec doc**: a markdown file carrying type-spec frontmatter (`type: kb/types/type-spec.md`, `name`, `description`, `schema`) plus authoring prose and an optional template block. Every artifact with frontmatter has exactly one type, declared as the repo-relative path to its type-spec doc in the `type:` field — for example `type: kb/reference/types/adr.md`. Consuming projects add types by dropping a new type-spec doc (and, when structural validation is desired, a sibling `.schema.yaml`) into the appropriate `types/` directory and listing it in the owning collection's `COLLECTION.md`.
+A **type** is a structural contract expressed as a hand-authored **type-spec doc**: a markdown file carrying type-spec frontmatter (`type: kb/types/type-spec.md`, `name`, `description`, `schema`) plus authoring prose and an optional template block. Every artifact with frontmatter has exactly one type, declared as the path to its type-spec doc in the `type:` field — for example `type: ../types/adr.md` or `type: kb/reference/types/adr.md`. Consuming projects add types by dropping a new type-spec doc (and, when structural validation is desired, a sibling `.schema.yaml`) into the appropriate `types/` directory and listing it in the owning collection's `COLLECTION.md`.
 
 Two scopes:
 

@@ -1,6 +1,6 @@
 ---
 description: Beta Python CLI that mines Claude Code JSONL sessions into a weighted nine-dimension profile, runs WITH/WITHOUT guard ablations with LLM-as-judge scoring, and compiles guards into nine assistant-specific memory surfaces with per-model filtering
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation]
 tags: [related-systems, trace-derived]
 status: current

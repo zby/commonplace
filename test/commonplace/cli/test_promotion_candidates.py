@@ -18,6 +18,7 @@ def test_promotion_candidates_uses_shared_markdown_parsing(
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
     reports_root = tmp_path / "kb" / "reports"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
 
     write(
         notes_root / "raw-capture.md",

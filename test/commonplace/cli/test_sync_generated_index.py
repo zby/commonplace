@@ -14,6 +14,7 @@ def write(path: Path, content: str) -> Path:
 
 def test_sync_generated_index_main_dry_run_reports_changes(tmp_path: Path, capsys) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     index_path = write(
         notes_root / "kb-design-index.md",
         """---
@@ -58,6 +59,7 @@ def test_find_index_files_only_returns_tag_indexes(
     monkeypatch,
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     write(
         notes_root / "index.md",
         """---
@@ -119,6 +121,7 @@ def test_sync_generated_index_supports_tag_index_directory(
     monkeypatch,
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
     tags_index = write(
         notes_root / "tags-index.md",
         """---

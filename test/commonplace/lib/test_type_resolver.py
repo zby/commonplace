@@ -385,6 +385,136 @@ properties:
     assert errors == []
 
 
+def test_file_relative_schema_path_resolves_from_type_spec(tmp_path: Path) -> None:
+    write_note_schema(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema="./structured-claim.schema.yaml",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+    properties:
+      type:
+        const: kb/notes/types/structured-claim.md
+    additionalProperties: true
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        tmp_path / "kb" / "notes" / "claim.md",
+        {"description": "Sample", "type": "./types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.schema_path == tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml"
+
+
+def test_repo_relative_collection_local_type_still_works(tmp_path: Path) -> None:
+    write_note_schema(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema="./structured-claim.schema.yaml",
+    )
+    write(
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  frontmatter:
+    type: object
+    properties:
+      type:
+        const: kb/notes/types/structured-claim.md
+    additionalProperties: true
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        tmp_path / "kb" / "notes" / "claim.md",
+        {"description": "Sample", "type": "kb/notes/types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/notes/types/structured-claim.md"
+    assert profile.schema_path == tmp_path / "kb" / "notes" / "types" / "structured-claim.schema.yaml"
+
+
+def test_wrapped_library_schema_refs_fall_back_to_shared_global_types(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+    properties:
+      description:
+        type: string
+        minLength: 1
+      type:
+        type: string
+    additionalProperties: true
+""",
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/commonplace/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema="./structured-claim.schema.yaml",
+    )
+    write(
+        tmp_path / "kb" / "commonplace" / "notes" / "types" / "structured-claim.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          type:
+            const: kb/notes/types/structured-claim.md
+        additionalProperties: true
+""",
+    )
+
+    profile = type_resolver.resolve_type(
+        tmp_path / "kb" / "commonplace" / "notes" / "claim.md",
+        {"description": "Sample", "type": "./types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+    errors = type_resolver.validate_instance(
+        profile,
+        {
+            "frontmatter": {
+                "description": "Sample",
+                "type": "./types/structured-claim.md",
+            },
+            "headings": ["# Claim"],
+        },
+    )
+
+    assert errors == []
+
+
 def test_root_type_spec_self_reference_terminates(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "type-spec.schema.yaml",

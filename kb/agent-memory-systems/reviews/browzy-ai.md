@@ -1,6 +1,6 @@
 ---
 description: Terminal TypeScript PKB that compiles raw sources into a markdown wiki, uses SQLite FTS5 as a derived retrieval index, and writes thin session-derived digests and crystallized insight drafts
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

@@ -1,6 +1,6 @@
 ---
 description: Pi extension with automatic task-end reflection, scored learnings index, temporal memory hierarchy (daily/monthly/core), and context injection — purest implementation of the automated mistake-extraction loop among reviewed systems, but the reflection pipeline relocates rather than transforms
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

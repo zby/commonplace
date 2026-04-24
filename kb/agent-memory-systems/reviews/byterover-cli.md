@@ -1,6 +1,6 @@
 ---
 description: "Source-available coding-agent CLI with file-backed `.brv/context-tree`, tiered search/query, live scoring+archive/manifest layers, git-like context-tree VC, and multi-agent connector packaging"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

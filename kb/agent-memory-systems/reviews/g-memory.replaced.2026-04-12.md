@@ -1,6 +1,6 @@
 ---
 description: Multi-agent memory harness that combines state-graph traces, task-neighborhood retrieval, and scored text insights for prompt-time reuse across fixed agent workflows
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: []
 status: outdated

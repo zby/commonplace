@@ -1,6 +1,6 @@
 ---
 description: Hash-chained semantic memory ledger with binary append-only storage, additive ranked retrieval, and a diff-based signed skill registry exposed over MCP and REST
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

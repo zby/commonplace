@@ -78,7 +78,7 @@ Replace the enum `type:` field with a path reference to a single hand-authored i
 Every note's `type:` field holds the path of its instructions doc:
 
 ```yaml
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 ```
 
 The field name stays `type:` — the semantic role ("what kind of artifact is this") is unchanged; only the encoding shifts from enum to path. Keeping the name preserves existing habit and captures the honest observation that the path *is* the richer form of the type's name.
@@ -92,10 +92,10 @@ The pointed-at file is self-contained:
 ### What moves where
 
 - **Template and instructions fuse into the pointed-at doc.** [ADR 016](./016-custom-types-use-template-instruction-pairs.md)'s three-file layout collapses to one authored file. `{type}.template.md` and `{type}.instructions.md` go away.
-- **Schema stays separate.** Writers don't need the schema. Each type-spec doc declares its schema explicitly in frontmatter (`schema: <repo-relative path>` or `schema: null`); the validator reads that field. Sibling filenames remain only an author-chosen convention, not a resolver fallback. Broader schema wiring remains a future validator workshop.
+- **Schema stays separate.** Writers don't need the schema. Each type-spec doc declares its schema explicitly in frontmatter (`schema: <path>` or `schema: null`); the validator reads that field. Sibling filenames remain only an author-chosen convention, not a resolver fallback. Broader schema wiring remains a future validator workshop.
 - **Global types live once.** `kb/types/<name>.md` is the authoritative location for a global type. Collection-local types live at `kb/<collection>/types/<name>.md`. Which collection hosts a given write comes from user intent or from the target collection's `COLLECTION.md` listing — not from a hardcoded special-case table in the skill.
 - **Self-referential root.** `kb/types/type-spec.md` has `type: kb/types/type-spec.md` — its own spec. Validators terminate on path-equals-self.
-- **Paths are repository-relative.** Valid `type:` paths start with `kb/`, end with `.md`, contain no `..`, and are not absolute paths or URLs.
+- **Paths are under `kb/`.** Valid `type:` paths are either repository-relative (`kb/...`) or file-relative (`./...` or `../...`), end with `.md`, resolve under `kb/`, and are not absolute paths or URLs.
 
 ### No resolver CLI; no compile step
 

@@ -1,6 +1,6 @@
 ---
 description: Document-grounded annotation kernel with W3C annotations, git-backed events, working-tree URIs, and shared human/agent flows; strongest example here of annotation-first KB infrastructure
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

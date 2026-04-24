@@ -1,6 +1,6 @@
 ---
 description: "Executable local-first LLM Wiki pipeline with Python ingestion, LLM extraction/merge, BM25 search, monitors, UI, and a partial prompt-optimization loop"
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation]
 tags: [related-systems]
 status: current

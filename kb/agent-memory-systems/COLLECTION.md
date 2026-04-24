@@ -8,7 +8,7 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 ## Structure
 
-**`reviews/`** — individual system reviews, one file per system, typed as `kb/agent-memory-systems/types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
+**`reviews/`** — individual system reviews, one file per system, typed as `../types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
 **`source-only/`** — lightweight `type: kb/types/note.md` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These entries keep source-only systems visible without using the repo-required review type.
 
@@ -95,7 +95,7 @@ Outbound rules are organised by destination collection. Each block declares when
 
 ## Types
 
-- `agent-memory-system-review` -> `kb/agent-memory-systems/types/agent-memory-system-review.md`
+- `agent-memory-system-review` -> `./types/agent-memory-system-review.md`
   Use for code-grounded reviews of external agent memory or context-engineering systems.
 - `note` -> `kb/types/note.md`
   Use for source-only coverage and cross-system descriptive analyses.

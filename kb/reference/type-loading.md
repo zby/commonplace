@@ -10,10 +10,10 @@ status: current
 Commonplace stores each explicit artifact type as a path-valued pointer to a type-spec doc. A typed artifact carries frontmatter like:
 
 ```yaml
-type: kb/reference/types/adr.md
+type: ../types/adr.md
 ```
 
-The path is repository-relative, starts with `kb/`, ends with `.md`, and must not contain `..`, be absolute, or be a URL.
+The path may be repository-relative (`kb/...`) or file-relative (`./...` or `../...`). It must end with `.md`, resolve under `kb/`, and must not be absolute or be a URL. Repository-relative paths must not contain `..`.
 
 ## Type Specs
 
@@ -23,10 +23,10 @@ A type-spec doc is a normal markdown file with frontmatter:
 type: kb/types/type-spec.md
 name: adr
 description: Architecture decision record for accepted or proposed system decisions
-schema: kb/reference/types/adr.schema.yaml
+schema: ./adr.schema.yaml
 ```
 
-The body contains authoring instructions and an optional template block. The validator does not inspect the body; it reads `schema:` and validates artifacts against that schema. `schema: null` means the type has no structural schema.
+The body contains authoring instructions and an optional template block. The validator does not inspect the body; it reads `schema:` and validates artifacts against that schema. `schema:` accepts the same path forms as `type:`, except it must end with `.schema.yaml`. `schema: null` means the type has no structural schema.
 
 `kb/types/type-spec.md` is the root type spec. It points at itself with `type: kb/types/type-spec.md`, which terminates type resolution.
 
@@ -34,7 +34,7 @@ The body contains authoring instructions and an optional template block. The val
 
 For a file with no frontmatter, validation returns implicit `text` and applies no schema.
 
-For a file with frontmatter, `type:` is required. The validator opens the referenced type-spec doc, verifies that it is itself a type spec, loads the declared schema when present, and validates the parsed markdown document against that schema. Missing type files, bare enum values, absolute paths, URLs, and `type: kb/types/text.md` fail validation.
+For a file with frontmatter, `type:` is required. The validator opens the referenced type-spec doc, verifies that it is itself a type spec, loads the declared schema when present, and validates the parsed markdown document against that schema. Missing type files, bare enum values, absolute paths, URLs, paths escaping `kb/`, and `type: kb/types/text.md` fail validation.
 
 Collection scoping no longer participates in explicit type resolution. Collections offer types by listing readable names and paths in `COLLECTION.md`; artifacts store the chosen path directly.
 

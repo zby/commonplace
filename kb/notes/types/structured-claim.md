@@ -2,7 +2,7 @@
 type: kb/types/type-spec.md
 name: structured-claim
 description: Developed argument note with explicit Evidence and Reasoning sections
-schema: kb/notes/types/structured-claim.schema.yaml
+schema: ./structured-claim.schema.yaml
 ---
 
 # Structured claim
@@ -27,7 +27,7 @@ Do not force this scaffold onto arguments it does not fit.
 ```markdown
 ---
 description: Template for developed arguments — claim-titled notes with explicit Evidence, Reasoning, and optional Caveats sections
-type: kb/notes/types/structured-claim.md
+type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: []
 status: seedling

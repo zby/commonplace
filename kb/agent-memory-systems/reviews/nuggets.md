@@ -1,6 +1,6 @@
 ---
 description: Pi-coupled personal memory assistant with local HRR nugget files and chat-channel scheduling - strongest reference for file-backed scratch memory, though its promotion loop is only partially wired
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current

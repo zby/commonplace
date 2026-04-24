@@ -59,7 +59,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | type | file | use for |
 |---|---|---|
 | `note` | `kb/types/note.md` | transferable theoretical notes |
-| `structured-claim` | `kb/notes/types/structured-claim.md` | developed arguments with explicit evidence and reasoning sections |
+| `structured-claim` | `./types/structured-claim.md` | developed arguments with explicit evidence and reasoning sections |
 | `definition` | `kb/types/definition.md` | KB vocabulary under `kb/notes/definitions/` |
 | `index` | `kb/types/index.md` | curated or generated navigation hubs |
 

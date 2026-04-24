@@ -1,6 +1,6 @@
 ---
 description: Claude Code plugin that generates knowledge systems from conversation, backed by 249 research claims. Ancestor of our KB — we borrowed link semantics, propositional titles, and three-space architecture, then diverged in theory and structure.
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-external-sources]
 status: seedling
 tags: [related-systems]

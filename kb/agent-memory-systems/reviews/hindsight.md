@@ -1,6 +1,6 @@
 ---
 description: Production agent memory backend with LLM-based fact extraction, three biomimetic fact types with partial HNSW indexes, 4-way parallel retrieval (semantic + BM25 + link-expansion graph + temporal spreading), evidence-grounded auto-consolidation, and a reflect agent whose hierarchical tools now include directive enforcement
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 traits: [has-comparison, has-external-sources]
 status: current

@@ -53,11 +53,11 @@ The key insight from Toulmin that a simple Reasoning/Caveats split misses: **evi
 2. Does the warrant actually connect this evidence to this claim? (bounded logical judgment)
 3. Are the caveats reasonable? (completeness check)
 
-## Section template for `type: kb/notes/types/structured-claim.md`
+## Section template for `type: ./types/structured-claim.md`
 
 ```markdown
 ---
-type: kb/notes/types/structured-claim.md
+type: ./types/structured-claim.md
 ---
 # [Claim as title]
 

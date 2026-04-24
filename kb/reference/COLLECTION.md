@@ -46,7 +46,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | type | file | use for |
 |---|---|---|
 | `note` | `kb/types/note.md` | general shipped-system reference documents |
-| `adr` | `kb/reference/types/adr.md` | architecture decision records |
+| `adr` | `./types/adr.md` | architecture decision records |
 | `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
 | `index` | `kb/types/index.md` | reference navigation hubs and generated directory indexes |
 

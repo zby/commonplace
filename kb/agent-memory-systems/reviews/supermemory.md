@@ -1,6 +1,6 @@
 ---
 description: Monorepo that open-sources Supermemory's MCP/SDK integration layer while delegating core memory extraction, contradiction handling, and profile synthesis to hosted /v3 and /v4 APIs
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current

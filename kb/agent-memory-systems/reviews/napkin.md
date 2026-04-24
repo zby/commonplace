@@ -1,6 +1,6 @@
 ---
 description: Obsidian-compatible markdown-vault CLI/SDK with cached BM25 search, TF-IDF folder overviews, pi-based auto-distill, native pi tools, and LongMemEval benchmarks — reference for agent-shaped retrieval UX on a plain-file substrate
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
+type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems, trace-derived]
 status: current

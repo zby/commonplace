@@ -157,6 +157,7 @@ def _schema_path_from_type_doc(
         workspace_root=workspace_root,
         suffix=".schema.yaml",
         field_name=f"{type_doc_rel}.schema",
+        source_file=type_doc_path,
     )
     if not schema_path.is_file():
         raise FileNotFoundError(f"{type_doc_rel}: schema file is missing: {schema_rel}")
@@ -190,6 +191,50 @@ def _iter_local_refs(node: Any) -> tuple[str, ...]:
     return tuple(refs)
 
 
+def _resolve_local_schema_ref(base_path: Path, ref: str) -> Path:
+    resolved = (base_path.parent / ref).resolve()
+    if resolved.exists():
+        return resolved
+
+    parts = resolved.parts
+    for idx in range(len(parts) - 2):
+        if parts[idx : idx + 3] == ("kb", "commonplace", "types"):
+            fallback = Path(*parts[: idx + 1], "types", *parts[idx + 3 :])
+            if fallback.exists():
+                return fallback
+    return resolved
+
+
+def _register_schema_alias_tree(
+    registry: Registry,
+    *,
+    actual_path: Path,
+    alias_path: Path,
+    seen: set[Path] | None = None,
+) -> Registry:
+    if seen is None:
+        seen = set()
+
+    actual = actual_path.resolve()
+    alias = alias_path.resolve()
+    if alias in seen:
+        return registry
+    seen.add(alias)
+
+    schema = {**_load_schema(str(actual)), "$id": alias.as_uri()}
+    registry = registry.with_resource(alias.as_uri(), Resource.from_contents(schema))
+    for ref in _iter_local_refs(schema):
+        unresolved_child = (alias.parent / ref).resolve()
+        actual_child = _resolve_local_schema_ref(actual, ref)
+        registry = _register_schema_alias_tree(
+            registry,
+            actual_path=actual_child,
+            alias_path=unresolved_child,
+            seen=seen,
+        )
+    return registry
+
+
 def _build_registry_for_path(path: Path, registry: Registry | None = None, seen: set[Path] | None = None) -> Registry:
     if registry is None:
         registry = Registry()
@@ -205,7 +250,15 @@ def _build_registry_for_path(path: Path, registry: Registry | None = None, seen:
     registry = registry.with_resource(schema["$id"], Resource.from_contents(schema))
 
     for ref in _iter_local_refs(schema):
-        registry = _build_registry_for_path((resolved.parent / ref).resolve(), registry, seen)
+        unresolved = (resolved.parent / ref).resolve()
+        ref_path = _resolve_local_schema_ref(resolved, ref)
+        registry = _build_registry_for_path(ref_path, registry, seen)
+        if ref_path != unresolved:
+            registry = _register_schema_alias_tree(
+                registry,
+                actual_path=ref_path,
+                alias_path=unresolved,
+            )
     return registry
 
 
@@ -215,6 +268,13 @@ def _validator_for_path(path_str: str) -> Draft202012Validator:
     schema = _load_schema(str(path))
     registry = _build_registry_for_path(path)
     return Draft202012Validator(schema, registry=registry, format_checker=FormatChecker())
+
+
+def _schema_identity_type_path(profile: TypeProfile) -> str:
+    parts = Path(profile.type_path).parts
+    if len(parts) >= 4 and parts[0] == "kb" and parts[1] == "commonplace":
+        return Path("kb", *parts[2:]).as_posix()
+    return profile.type_path
 
 
 def resolve_type(
@@ -281,8 +341,9 @@ def validate_instance(profile: TypeProfile, instance: dict[str, Any]) -> list[Va
     # `const: kb/<col>/types/<name>.md` match regardless of whether the source
     # used repo-relative or file-relative form.
     fm = instance.get("frontmatter")
-    if isinstance(fm, dict) and fm.get("type") != profile.type_path:
-        instance = {**instance, "frontmatter": {**fm, "type": profile.type_path}}
+    schema_type_path = _schema_identity_type_path(profile)
+    if isinstance(fm, dict) and fm.get("type") != schema_type_path:
+        instance = {**instance, "frontmatter": {**fm, "type": schema_type_path}}
     validator = _validator_for_path(str(profile.schema_path.resolve()))
     return sorted(validator.iter_errors(instance), key=lambda error: tuple(str(part) for part in error.absolute_path))
 
