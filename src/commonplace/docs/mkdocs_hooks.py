@@ -2,6 +2,7 @@
 
 import os
 import re
+from functools import cache
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -16,6 +17,7 @@ def on_config(config):
     top-nav entry pointing at that README. Discovery is alphabetical;
     fixed Home and external entries bracket the auto-discovered list.
     """
+    _index_metadata.cache_clear()
     docs_dir = Path(config["docs_dir"])
     collection_entries = []
     for child in sorted(docs_dir.iterdir()):
@@ -38,17 +40,20 @@ def on_config(config):
     return config
 
 
-def _matches_tag_index(candidate: Path, tag: str) -> bool:
-    """Return True when a page declares itself as the index for a tag."""
+@cache
+def _index_metadata(candidate: Path) -> tuple[str | None, str | None, str | None]:
+    """Return index-related frontmatter for a markdown page."""
     if not candidate.is_file() or candidate.suffix != ".md":
-        return False
+        return (None, None, None)
     content = candidate.read_text(encoding="utf-8")
     fm = frontmatter.parse(content).data
-    return (
-        fm.get("type") == INDEX_TYPE
-        and fm.get("index_source") == "tag"
-        and fm.get("index_key") == tag
-    )
+    return (fm.get("type"), fm.get("index_source"), fm.get("index_key"))
+
+
+def _matches_tag_index(candidate: Path, tag: str) -> bool:
+    """Return True when a page declares itself as the index for a tag."""
+    note_type, index_source, index_key = _index_metadata(candidate)
+    return note_type == INDEX_TYPE and index_source == "tag" and index_key == tag
 
 
 def _find_tag_index(tag: str, note_dir: Path) -> str | None:
