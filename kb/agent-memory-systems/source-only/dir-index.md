@@ -9,4 +9,5 @@ index_source: directory
 ← [Parent](../dir-index.md)
 
 - [AgeMem](./agemem.md) *(note)* - Source-only coverage note for AgeMem, an RL-trained LTM/STM memory-management policy covered through paper ingest rather than local code review
+- [Sig](./sig.md) *(note)* - Source-only coverage note for Sig, a private-beta macOS work-memory app that stores meeting and decision context as local files for AI tools
 - [Trajectory-Informed Memory Generation](./trajectory-informed-memory-generation.md) *(note)* - Source-only coverage note for Trajectory-Informed Memory Generation, a trajectory-to-tip learning pipeline without local code-inspected review coverage
