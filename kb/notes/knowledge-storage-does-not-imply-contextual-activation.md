@@ -1,5 +1,5 @@
 ---
-description: Distinguishes stored knowledge (retrievable on direct probe) from contextually activated knowledge (brought to bear during task execution without being directly queried); formalizes the activation gap and the expertise gap
+description: Separates knowledge that exists, knowledge loaded into context, and knowledge that actually changes behavior; explains why retrieval and long context do not guarantee activation
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
@@ -8,71 +8,62 @@ status: seedling
 
 # Knowledge storage does not imply contextual activation
 
-A model can contain relevant knowledge, prove that knowledge on demand, and still fail to surface it when it matters. Storage and activation are distinct, and most capability evaluations test only retrieval under direct query.
+An agent system can have the right knowledge and still fail to use it. The knowledge may exist in model weights, notes, memory records, documentation, source files, or even the live context window. That does not mean it will affect the next answer or action.
 
-## The expert-witness failure mode
+The missing step is **contextual activation**: making available knowledge action-relevant in the current task. Retrieval proves that the system can produce a fact when asked. Context presence proves that the fact was visible to the model. Activation is stronger: the fact changes what the agent notices, says, checks, or does without the user naming it directly.
 
-The model often behaves like an expert witness rather than an advisor. An expert witness gives full, accurate answers to whatever questions are put to them. An advisor proactively raises concerns the questioner hasn't thought of. The model does the first reliably and the second unreliably — even when the unsurfaced concern would change the outcome.
+This is why "the model knows X" is often the wrong operational question. The useful question is: will X be brought to bear at the moment when it matters?
 
-An experienced practitioner examining a system brings decades of hard-won pattern recognition. They see a design choice and immediately flag the failure mode it invites — not because anyone asked, but because past experience has made that association automatic. The model may have equivalent knowledge and demonstrates it the moment someone asks directly. It just does not volunteer it.
+## Two Places The Transition Fails
 
-The operative distinction is not *knows* vs. *does not know* but *stored* vs. *activated in this context*. A piece of knowledge is retrievable when the model produces it in response to a direct query. It is contextually activated when the model brings it to bear during task execution without being explicitly asked. Activation failure is the regime where retrievability is high, contextual activation is low, and the value of surfacing the knowledge is high.
+Activation can fail before knowledge reaches the context window, or after it is already there.
 
-PlugLab AI's article [The Second Brain Trap](https://x.com/pluglab_ai/status/2041486539067154753) is a compact practitioner articulation of the same failure mode: the author reports having abundant stored notes and summaries while still "starting from zero" when it mattered, because the knowledge was not available in context.
+**Storage-to-context failure.** Relevant knowledge exists somewhere, but the workflow never retrieves or loads it. This is the ordinary second-brain failure: a note, memory, or prior lesson is stored, but nothing cues it during the task. PlugLab AI's [Second Brain Trap ingest](../sources/the-second-brain-trap-2041486539067154753.ingest.md) is a practitioner example: abundant stored notes still left the author "starting from zero" because the material was not available in the working context.
 
-## Why activation fails
+**Context-to-action failure.** Relevant knowledge is visible, but the agent does not connect it to the task, plan, or next action. Englaender et al.'s [Agents Explore but Agents Ignore](../sources/agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.ingest.md) demonstrates this boundary with solution injection. Agents often discovered explicit task solutions in their environment but did not exploit them. In AppWorld, discovery was above 90%, while exploitation was below 7%. The problem was not missing information. The information was seen and still treated as background.
 
-Activation requires more than stored capability. A plausible decomposition involves at least three stages:
+Both failures produce the same practical result: a lesson that could have changed the outcome does not enter the active computation.
 
-1. **Cue match** — the current context must contain enough signal to trigger retrieval of the relevant knowledge.
-2. **Priority arbitration** — even when partially cued, the candidate competes with other activated knowledge for limited reasoning budget.
-3. **Commitment** — the model must decide to externalize the candidate rather than suppress it in favor of staying on the apparent task.
+## The Expert-Witness Pattern
 
-This decomposition is proposed, not established — the internal mechanics are not directly observable. But the stages are independently useful for reasoning about where interventions can help: expanding contextual cues, reducing competition, or lowering the threshold for volunteering concerns.
+Models often behave like expert witnesses rather than advisors. An expert witness answers the question asked. An advisor raises the concern the questioner did not know to ask about. Current models are much better at the first than the second.
 
-Most "the model can do X" demonstrations pre-supply all three stages by asking directly for X. They test execution after activation, not activation itself.
+The gap is easiest to see in review tasks. A model may explain a failure mode perfectly when prompted directly, yet omit it during an open-ended review where that failure mode would change the decision. The knowledge is retrievable. It is not reliably self-triggering.
 
-This is not uniquely an LLM phenomenon. Humans show the same structure: "I knew this, but it didn't occur to me." Inspiration is often just cue arrival — the knowledge existed; the trigger showed up in time. LLM systems make the control surface unusually explicit: prompt context is where cue match succeeds or fails, which makes the gap both more visible and more tractable than its human counterpart.
+Humans have the same shape of failure: "I knew this, but it did not occur to me." LLM systems make the control surface more explicit. Prompt context, retrieved notes, tool observations, role assignments, and checklists are the cues that decide what becomes active.
 
-## The question-generation bottleneck
+## What Helps
 
-Whether relevant knowledge activates depends on whether the workflow's questions — user prompts, system prompts, checklist probes — happen to cue it. For many high-value failure modes, no question in the workflow targets the right knowledge. The question is never asked.
+Different interventions target different transitions.
 
-This reframes reliability from "does the model know enough?" to "does the workflow ask the right questions?" The model's knowledge is a necessary but insufficient condition. The question set is the binding constraint.
+Storage-to-context failures need routing: indexes, search, retrieval filters, skill triggers, maintained summaries, and explicit loading rules.
 
-## The expertise gap
+Context-to-action failures need integration pressure: reflection prompts, "revise the plan in light of observations" steps, mandatory investigation of surprising evidence, salience checks, and process structures that make the agent ask whether visible information should change the current plan. This is one reason [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md): changing the reasoning process can activate knowledge without changing the final answer format.
 
-The question-generation bottleneck has a structural asymmetry that makes it self-reinforcing: the person who most needs activation scaffolds is usually the person least able to construct them.
+Both transitions are affected by context scarcity. More context can help by making knowledge present, but it can also hurt by diluting cues or increasing competition. [Agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) is the broader mechanism: well-formed output can hide the fact that important material in the context was ignored.
 
-The user who delegates a task to the model is typically doing so because they lack the expertise to do it themselves — which means they also lack the expertise to ask the probing questions that would activate the model's deeper knowledge. The safety net gets a hole shaped exactly like the thing it is supposed to catch.
+## Why It Matters
 
-This is not solvable at the individual interaction level. The user cannot ask questions they don't know to ask. The model has the knowledge but won't activate it without appropriate cues. Neither party can independently close the gap. This is why [elicitation requires maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md) rather than better individual prompts — the questions must come from somewhere outside the user-model pair.
+Most evaluations collapse these stages. They ask whether the model can answer a question, solve a task, or use information after its relevance has been made explicit. That tests capability after activation. It does not test whether the system will activate the right knowledge unprompted.
 
-The expertise gap also explains why activation failure disproportionately affects high-stakes decisions. Routine problems get routine questions that models handle well. Novel or rare failure modes require questions that only experienced practitioners would think to ask — and those are precisely the situations where the user is most likely to be relying on the model as a substitute for that experience.
+The expertise problem makes this worse. The user who most needs the model's latent expertise is often least able to ask the question that would activate it. That is why [elicitation requires maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md), not just better one-off prompts. The missing questions have to come from somewhere outside the novice user and the activation-limited model.
 
-## The initiative gradient
+For memory and KB design, the implication is simple: storing more knowledge is not enough, and loading more context is not enough. The system must also create reliable routes from stored knowledge to context, and from context to action.
 
-Empirically, the activation gap scales with distance from the immediate task artifact. Models reliably catch surface-level errors (syntax, type mismatches, logical contradictions). They less reliably catch operational failure patterns (resource exhaustion, race conditions, cascading failures). They rarely catch systemic failures unprompted (deployment topology issues, organizational process gaps, second-order effects across system boundaries).
+## Open Questions
 
-The further the failure mode lives from the artifact under review, the less likely the context provides adequate cues. This gradient appears consistent across domains, though the specific failure families differ.
-
-## Open questions
-
-- Does the initiative gradient (artifact → operational → systemic) hold consistently across non-technical domains?
-- ~~What is the relationship between context window size and activation probability — does more context help or hurt by diluting cues?~~ Partly answered by [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md): more context can hurt by diluting cues, especially when irrelevant material competes for attention. What remains open is how activation-specific effects relate to the broader soft-degradation surface.
-- Can the three-stage decomposition (cue match, priority arbitration, commitment) be empirically separated, or is it only useful as a reasoning tool?
+- How often does context-to-action failure occur in ordinary agent workflows, outside artificial solution-injection benchmarks?
+- Which process structures most cheaply convert visible information into plan updates?
+- Does the activation gap reliably grow with distance from the immediate artifact: syntax, operational behavior, system-level consequences?
 
 ---
 
 Relevant Notes:
 
 - [elicitation-requires-maintained-question-generation-systems](./elicitation-requires-maintained-question-generation-systems.md) — extends: strategies and systems for closing the activation gap described here
-- [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — complements: distinguishes per-instance discrimination from aggregate accuracy; this note adds the prior activation requirement
-- [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — parallels: both require stage separation instead of aggregate score reading
-- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — enables: retrieval scaffolds are oracle-hardening moves for activation-limited settings
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: prompt context determines which interpretations are activated
 - [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — complements: soft degradation explains why adding more context can suppress activation through cue dilution and irrelevant-context interference
+- [process-structure-and-output-structure-are-independent-levers](./process-structure-and-output-structure-are-independent-levers.md) — enables: reflection and investigation prompts can improve context-to-action integration without changing output format
 - [silent-disambiguation-is-the-semantic-analogue-of-tool-fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — example: low activation of critical branches can be masked by superficially successful outputs
 - [the-bug-that-shipped-2035319413474206122](https://x.com/KatanaLarp/status/2035319413474206122) — evidence: deployment-failure insights retrievable on probe but often absent in undirected review
-- [The Second Brain Trap ingest](https://x.com/pluglab_ai/status/2041486539067154753) — practitioner evidence: a first-person note-taking failure report that frames the problem as stored knowledge failing to activate in working context
-- [towards-a-science-of-ai-agent-reliability](https://arxiv.org/pdf/2602.16666) — context: reliability dimensions motivate separating stored capability from operationally activated behavior
+- [The Second Brain Trap ingest](../sources/the-second-brain-trap-2041486539067154753.ingest.md) — evidence: a first-person note-taking failure report that frames the problem as stored knowledge failing to activate in working context
+- [Agents Explore but Agents Ignore ingest](../sources/agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.ingest.md) — evidence: solution-injection experiments separate discovery from action, showing context-present solutions can remain unintegrated
