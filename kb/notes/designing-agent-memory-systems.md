@@ -57,6 +57,8 @@ Realistic authoring supports include:
 
 Direct authoring still needs evaluation and lifecycle management. A note can be accurate but hard to find. An instruction can steer behavior incorrectly. A check can fossilize a temporary workaround. Direct memory is not automatically good; it is the first-order capability that trace-derived learning later improves.
 
+Commonplace is strongest as evidence for this quality-KB side of memory: typed artifacts, semantic links, validation, review gates, generated indexes, and writing procedures that make directly authored knowledge more reliable and reusable. The reviewed agent-memory systems are stronger evidence for the trace-derived learning loop, where session data is mined into candidate rules, facts, guards, or playbooks.
+
 ## Need 2: Import External Knowledge Into Internal Form
 
 Memory creation does not only happen by writing new artifacts from the current session. The system should also import external knowledge bases, documents, repositories, source snapshots, tickets, notes, or prior archives into its own internal form. Import is not copying; it is a [distillation](./definitions/distillation.md) (directed context compression) and [constraining](./definitions/constraining.md) (narrowing interpretation space) step. External material is converted into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
@@ -114,7 +116,7 @@ Realistic methods include:
 - Human or agent review queues for weak-oracle candidates such as discoveries, broad design principles, or high-impact policy changes.
 - Confidence, source pointers, and candidate status fields so extracted items do not masquerade as durable knowledge.
 
-Reviewed trace-mining systems provide evidence for this meta-learning path, but not a complete solution. [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) shows many systems mining traces into tips, memories, rules, procedures, and skills. Commonplace shows the first-order path: useful memory can be written directly when the agent or maintainer already understands the artifact to create. Both paths still need evaluation, promotion, retirement, and evidence that memory changes future behavior.
+This is where the reviewed trace-mining systems contribute most evidence, though not a complete solution. [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) shows many systems mining traces into tips, memories, rules, procedures, and skills. Commonplace covers a different part of the design space: how to maintain high-quality memory artifacts once the agent or maintainer understands what should be written. Both paths still need evaluation, promotion, retirement, and evidence that memory changes future behavior.
 
 [cass-memory](../agent-memory-systems/reviews/cass_memory_system.md) partially fulfills the trace-to-procedure path: it mines sessions from multiple coding agents into a shared YAML playbook, tracks feedback, and stores source sessions on each rule. [REM](../agent-memory-systems/reviews/REM.md) fulfills a narrower trace-to-fact path by storing episodes and compressing clusters into short semantic memories. The contrast is useful because it separates the extraction problem from the later questions of lifecycle, authority, and behavioral uptake.
 
