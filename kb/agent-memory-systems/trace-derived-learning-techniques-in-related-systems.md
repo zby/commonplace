@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what substrate they promote into (opaque vs prose vs symbolic — a **substrate-class** choice), and what role the result plays (knowledge consumed as fact vs system-definition consumed as policy).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Gnosis, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -312,6 +312,20 @@ Multi-agent memory harness with three distinct reuse substrates.
 
 **Scope.** Multi-agent benchmark runs across three MAS orchestration styles. The only multi-agent trace-mining system in this survey.
 
+## Gnosis
+
+Doctrine-mediated live capture into repo-local prose memory.
+
+**Trigger.** Agent workflow instructions: read `gn help plan` before implementation, write entries during work when a decision or external constraint appears, and read `gn help review` after finishing.
+
+**Source format.** Live coding-session context as interpreted by the agent — human statements, rejected alternatives, empirical observations, and work decisions. Gnosis does not preserve or parse raw transcripts.
+
+**Extraction.** Agent judgment under a fixed doctrine: prefer perishable human or empirical knowledge, avoid analysis another agent could rederive from code, and prefer a code comment when the knowledge has a precise code anchor.
+
+**Promotion.** Repo-local `.gnosis/entries.jsonl` records with ID, topics, text, related IDs, and timestamps. SQLite FTS5 is a disposable search projection in a per-repo cache.
+
+**Scope.** Per-repository, online during normal work. It is the lightest inspected trace-derived system: no hook, observer, transcript miner, or judge, but a real recurring capture loop through AGENTS instructions plus a CLI.
+
 ## Voyager
 
 Trajectory-to-executable-code promotion gated by a critic.
@@ -374,6 +388,8 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Single-session extension.** Run inside an existing agent runtime, mine the current conversation, reuse the runtime's session representation, write back into markdown artifacts. Napkin and Pi Self-Learning fit here, though Napkin is even looser — it treats the session as an opaque file and delegates extraction to a subprocess agent.
 
+**Doctrine-mediated live capture.** Do not mine a stored log; instead, instruct the acting agent to identify durable session knowledge while working and write it through a small CLI. Gnosis is the clean case. It is trace-derived in the weak/manual sense: the raw signal is session context, but extraction happens through agent compliance with doctrine rather than a hook or offline miner.
+
 **Local filesystem runner.** Own a small execution cycle and artifact schema, but keep all learned state in project files rather than a service backend. Operational Ontology Framework fits here: it promotes task-output learnings into `_facts.md`, `_spec.md`, and handoff markdown, but the trace is much thinner than a transcript or typed tool log.
 
 **Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
@@ -386,7 +402,7 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 ### Axis 2: promotion target / substrate class
 
-**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, or skill patches. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, and Operational Ontology Framework in a narrower sense; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose substrate (verbal hints, scored rules, structured records) to symbolic substrate (workflow instructions and executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
+**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, or skill patches. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose substrate (verbal hints, scored rules, structured records, repo-local entries) to symbolic substrate (workflow instructions and executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
 
 **Weight learning.** Mine trajectories, next-state signals, or generation traces under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, Self-Training-LLM, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data. Self-Training-LLM adds corpus-grounded answer-sample surgery: generated questions and sampled answers are scored, filtered, and paired before SFT/DPO.
 
@@ -398,6 +414,7 @@ Within the readable-artifact branch, the artifact-learning systems span a wide r
 - **Full-document rewrite:** Dynamic Cheatsheet carries forward one cheatsheet blob, rewritten wholesale each step.
 - **Scored flat rules:** ACE (bullet counters), ExpeL (strength counters with mutation verbs), G-Memory (scored insights with clustering).
 - **Structured records:** ReasoningBank (title/description/content JSONL), CrewAI Memory (vector records with scope/categories/importance/source/private metadata), cass-memory (YAML playbook with maturity stages).
+- **Repo-local prose entries:** Gnosis (JSONL why-memory with topics, related IDs, and timestamps, extracted by live agent judgment).
 - **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces), nao (user instruction/profile rows with supersession).
 - **Workflow instruction patches:** ARIS (hook-log-derived diffs to markdown skills and workflow defaults).
 - **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval).
@@ -429,6 +446,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | ExpeL | Succeeded and failed task trajectories gathered across benchmark folds |
 | ReasoningBank | Benchmark task trajectories (WebArena, SWE-Bench), successes and failures |
 | G-Memory | Multi-agent benchmark trajectories with state-graph coordination structure |
+| Gnosis | Live coding-session context selected by the acting agent; no raw transcript mining |
 | Voyager | Embodied task trajectories: execution errors, inventory state, critic feedback |
 | Agent-R | MCTS search trees: action-observation-reward nodes with backpropagated scores |
 | Self-Training-LLM | Generated Wikipedia QA traces: question records, gold/context answers, raw sampled answers, NLI/SelfCheck scores |
@@ -454,6 +472,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Dataset surgery between traces and training.** Agent-R's path-pairing and splice-correction is more informative than binary success/failure labels.
 - **Oracle/filtering surgery before weight updates.** Self-Training-LLM separates question-quality filtering from unknownness filtering before constructing SFT/DPO records.
 - **Counter-based artifact scoring.** ACE's bullet-level helpful/harmful counters and ExpeL's strength counters create real lifecycle behavior without full curation.
+- **Human-context capture filter.** Gnosis shows the lowest-friction way to control noise in agent-written memory: tell agents to preserve perishable human or empirical context, not reasoning that future agents can rederive from code.
 
 ## What remains open
 
