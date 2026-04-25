@@ -24,6 +24,7 @@ Thumbs.db
 
 .env
 kb/work/paper-bounded-context-orchestration/
+kb/work/aris-full-trial/private/
 
 # static site build artifacts
 site/
