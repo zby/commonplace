@@ -15,6 +15,7 @@ index_source: directory
 
 ## Files
 
+- [Agent memory coverage](./agent-memory-coverage.md) *(note)* - How commonplace's shipped surfaces realize agent-memory requirements: control plane, contracts, storage roles, validation, review, activation, promotion, lifecycle, and current gaps
 - [Available types](./available-types.md) *(note)* - Catalog of the types shipped by commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
 - [Collections and types](./collections-and-types.md) *(note)* - How collections and types compose in commonplace - collections own register conventions and per-destination outbound linking rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface and the live per-destination model the write and connect skills consume
 - [Commonplace architecture](./architecture.md) *(note)* - Shipped commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, empty user collections, promoted skills, and the library/user boundary
