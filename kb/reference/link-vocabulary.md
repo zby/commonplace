@@ -22,19 +22,15 @@ The [connect skill](../instructions/cp-skill-connect/SKILL.md) operationalizes t
 
 ## Relationship to the control plane
 
-`AGENTS.md` and `COLLECTION.md` route at different levels.
+`AGENTS.md` handles always-loaded routing: purpose, domain, scope boundaries, key indexes, commands, and durable operating conventions. See [control-plane goals](./control-plane-goals.md).
 
-`AGENTS.md` is always-loaded control-plane memory. It tells the agent the KB's purpose, domain, scope boundaries, key indexes, commands, and durable operating conventions. See [control-plane goals](./control-plane-goals.md).
+`COLLECTION.md` handles collection-local authoring: how artifacts in that collection should be written and how they may link outward.
 
-`COLLECTION.md` is collection-local authoring authority. It tells the agent how artifacts in that collection should be written and how they may link outward. Link rules live there because linking depends on the source collection's register, quality goal, and destination-specific reader needs.
-
-This page explains the shared linking approach and label vocabulary. It is not the always-loaded routing surface and not the authoritative vocabulary for any specific collection.
+This page sits below both. It explains the shared linking approach and label vocabulary, but it is not the control plane and not the authoritative vocabulary for any specific collection.
 
 ## Authoring collection link rules
 
-This page is most directly useful to `COLLECTION.md` authors: the people defining or revising a collection's outbound-linking rules. It helps them choose labels for each destination collection their collection links to.
-
-Note writers normally read only their collection's `COLLECTION.md`, which contains the authoritative vocabulary for that collection, organised by destination.
+Collection authors use this page when defining or revising outbound-linking rules. Note writers normally read only their collection's `COLLECTION.md`.
 
 The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
 
@@ -49,7 +45,7 @@ If a destination isn't listed, it isn't an active link target from this collecti
 
 **Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
 
-Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/`, even though both destinations share a register. Labels work best when shared, so use catalogue labels when they fit and add to the catalogue when a repeated need deserves common recognition.
+Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/`, even though both destinations share a register.
 
 ## Label catalogue
 
@@ -105,12 +101,11 @@ Usable from any source to any destination.
 | `defined-in` | reader doesn't know the term; target is under `kb/notes/definitions/` |
 | `see-also` | reader might benefit but author can't name a specific need; escape hatch — use only after ruling out a more specific label |
 
-## What this document is not
+## Limits
 
-- **Not a constraint.** Labels and authoring guidance. Add to it, adapt it, experiment. Soft pressure only: labels need shared recognition to carry consistent meaning across collections.
-- **Not the authoritative vocabulary for any collection.** Each `COLLECTION.md` is authoritative for its source collection. This document is a palette.
-- **Not the control plane.** `AGENTS.md` handles always-loaded routing and goals; this page explains linking once an agent is already working inside the KB.
-- **Not a fallback for lazy labelling.** If the `COLLECTION.md` authorises specific labels for a destination, use those — don't downgrade to `see-also`.
+The catalogue is guidance, not a closed enum. Add to it, adapt it, or ignore it where a collection has a better local vocabulary. Labels still need shared recognition to carry stable meaning across collections.
+
+Do not use this page as a fallback for lazy labelling. If the source `COLLECTION.md` authorises specific labels for a destination, use those rather than downgrading to `see-also`.
 
 ## Open questions
 
