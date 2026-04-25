@@ -11,6 +11,8 @@ index_source: directory
 ## Subdirectories
 
 - [agent-complexity-theory/](./agent-complexity-theory/dir-index.md)
+- [agent-memory-design/](./agent-memory-design/dir-index.md)
+- [aris-full-trial/](./aris-full-trial/dir-index.md)
 - [curiosity-prompts/](./curiosity-prompts/dir-index.md)
 - [gate-refactor/](./gate-refactor/dir-index.md)
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)
@@ -21,6 +23,7 @@ index_source: directory
 - [philosophy-borrowing/](./philosophy-borrowing/dir-index.md)
 - [positioning/](./positioning/dir-index.md)
 - [prompt-bottleneck/](./prompt-bottleneck/dir-index.md)
+- [research-wiki-integration/](./research-wiki-integration/dir-index.md)
 - [review-revise-gated/](./review-revise-gated/dir-index.md)
 - [review-run-lifecycle/](./review-run-lifecycle/dir-index.md)
 - [review-system-rewrite/](./review-system-rewrite/dir-index.md)

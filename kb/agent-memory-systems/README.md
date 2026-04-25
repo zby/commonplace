@@ -136,4 +136,4 @@ The divergences are more revealing:
 ## Other tagged notes <!-- generated -->
 
 - [Closure-SDK](./reviews/Closure-SDK.md) - Geometric S3 memory and integrity runtime where ordered carrier streams promote into quaternion genome state, not readable notes or model weights
-- [Voiden](./reviews/voiden.md) - Git-native API workspace whose .void files combine markdown docs, structured request blocks, linked reuse, local history, and installable agent skills
+- [Tolaria](./reviews/tolaria.md) - Mac and Linux markdown-vault app with git-backed files, type lenses, saved views, agent context snapshots, MCP tools, and managed guidance
