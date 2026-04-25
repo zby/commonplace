@@ -37,12 +37,13 @@ A design insight is worth a note when it changes how someone would build or oper
 
 - `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
-- `kb/agent-memory-systems/related-systems-index.md` — reviews of external agent-memory/knowledge systems
-- `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
+- `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
+- `kb/agent-memory-systems/dir-index.md` — auto-generated directory listing for agent-memory-system coverage
+- `kb/notes/dir-index.md` — auto-generated directory listing (rebuild with `commonplace-refresh-indexes`)
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/adr/` — architecture decision records for the shipped commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
-- `kb/sources/index.md` — auto-generated source listing
+- `kb/sources/dir-index.md` — auto-generated source listing
 
 ## Vocabulary
 
