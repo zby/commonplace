@@ -14,13 +14,9 @@ The first version of this note proposed an integrated design around trace, obser
 
 The contextual-competence test from [An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) makes the requirement concrete. Whatever created a memory -- direct authoring, import, trace extraction, synthesis, or codification -- the result must be discoverable enough to find, composable enough to use with other knowledge, and trustworthy enough to rely on without redoing the original work. The hard part is deciding which remembered material should affect a future answer, action, artifact, or system rule.
 
-A realistic target is therefore a bounded memory system: one that names its consumers, preserves or creates useful memory for them, makes that memory discoverable, composable, and trustworthy, exposes uncertainty and authority, and moves learned material toward stronger behavior-changing surfaces only when evidence, authority, and maintenance economics justify it.
-
 ## The Memory Problem Is Crosscutting
 
 Agent memory cuts across the runtime rather than sitting in one component. As [Agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) argues, storage belongs on the execution substrate, retrieval and activation belong in the context engine, and learning belongs in the loop that turns experience into readable or executable artifacts.
-
-The simplest production path is direct memory creation. When a human or agent recognizes a durable claim, policy, procedure, index, test, instruction, or plugin, it can write the useful artifact immediately. That does not make direct authoring the definition of memory. Trace-derived extraction, import, and synthesis are equally valid when they produce memory that future agents can find, compose, trust, activate, and maintain.
 
 ## Memory Is More Than Retrieval
 
@@ -82,8 +78,6 @@ Realistic import methods include:
 - Re-ingest workflows that rerun classification and connection after the internal KB has changed.
 - Staging in a [workshop](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) when the imported material is too large, messy, or contested to promote directly.
 
-The point is not to erase the source's original shape. It is to make enough of that source available in the memory system's own language that future agents can find, trust, activate, and revise it.
-
 Commonplace status: partially implements this need through source snapshots, ingest reports, conversion tooling, and staged workshops; it does not yet have a mature graph-first or bulk-reingest pipeline.
 
 [sift-kg](../agent-memory-systems/reviews/sift-kg.md) is a partial fulfillment of this import need in a document-to-graph setting. It turns document folders into a derived knowledge graph with discovered schemas, materialized pipeline stages, confidence scores, provenance, and human-gated merge/relation review. The implementation shows what import requires beyond "upload documents": schema choice, source preservation, deduplication, review state, and derived artifacts that can be regenerated.
@@ -107,8 +101,6 @@ Realistic methods for this need include:
 - Artifact provenance records that link durable notes, policies, decisions, tests, scripts, or plugins back to the sessions and sources that produced them.
 - Redacted trace stores where secret scrubbing and retention policy run before extraction or model inspection.
 - Selective capture in high-risk domains where privacy, legal retention, media payloads, or data volume make broad logging unacceptable.
-
-The design choice is not "store everything or summarize everything." It is "store eligible material under policy, then load selectively." [Distillation](./definitions/distillation.md) (directed context compression) works better when source material remains available, but the source material still needs governance.
 
 Commonplace status: implements evidence preservation for external sources through snapshots and ingests, but does not yet provide broad session-trace capture, redaction, retention, and replay as a memory substrate.
 
@@ -161,7 +153,7 @@ Commonplace status: implements multiple consumer surfaces through notes, referen
 
 The system must not merely answer "what do we know?" It must sometimes answer an unasked question: "what past lesson applies to the action I am about to take?"
 
-This is the system-definition side of memory. [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md): adding retrievable facts is easier than changing future action. A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
+[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md): adding retrievable facts is easier than changing future action. A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
 
 Realistic activation methods form a range:
 
@@ -173,7 +165,7 @@ Realistic activation methods form a range:
 
 Typed cue indexes provide the on-situation loading form of this family. A cue can carry a trigger condition, lesson, source pointer, role, consequence weight, and placement target. Matching can use rules, embeddings, action classifiers, or LLM relevance judgments. The choice depends on consequence, false-positive tolerance, and cost.
 
-The harder requirement is behavioral faithfulness. A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-priority system-definition material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
+The harder requirement is behavioral faithfulness. A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-priority system-definition material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
 [Synapptic](../agent-memory-systems/reviews/synapptic.md) is the clearest reviewed system that treats activation as something to test rather than assume. It extracts behavioral guards from Claude Code sessions, runs WITH/WITHOUT ablations with an LLM judge, records per-model verdicts, and excludes guards marked redundant or harmful before compiling them into assistant-facing memory surfaces. The oracle is still soft, but the test is aimed at the right question: whether the remembered rule changes behavior enough to earn its prompt budget.
 
@@ -181,9 +173,7 @@ Commonplace status: implements always-loaded control-plane context and on-invoke
 
 ## Need 7: Promote Only When Future Value Exceeds Maintenance Cost
 
-The system needs a promotion path from candidate memory to durable artifacts, but promotion is not automatically good. Durable artifacts create obligations: review, update, invalidation, connection, retirement, and consistency with sources. System-definition promotions add risk because they change behavior.
-
-Candidate observations should therefore remain cheaper and less authoritative than library notes, policies, instructions, tests, or scripts. Promotion is justified when future retrieval or activation value exceeds review and maintenance cost.
+Promotion from candidate memory to durable artifacts creates obligations: review, update, invalidation, connection, retirement, and consistency with sources. System-definition promotions add risk because they change behavior. Candidate observations should remain cheaper and less authoritative than library notes, policies, instructions, tests, or scripts until future retrieval or activation value exceeds review and maintenance cost.
 
 An observation inbox can be the lightest candidate stage. Its job is to record a noticed pattern, bug, missing link, possible synthesis, or improvement opportunity before the mechanism is understood. It should be cheap enough to use during unrelated work, but it needs later triage so it does not become a second untrusted library.
 
@@ -221,7 +211,7 @@ Commonplace status: distinguishes authored markdown, generated indexes/reports, 
 
 Learning is incomplete without forgetting and revision. Raw traces can contain secrets or obsolete assumptions. Observations can be duplicates, wrong, low-value, or superseded. Cues can grow stale. Policies can become too broad. Tests can fossilize temporary workarounds.
 
-The memory system needs lifecycle fields and maintenance operations at every layer. Append-only capture is useful for provenance, but indexes, extracted observations, and activated policy surfaces must support redaction, decay, supersession, retirement, and relaxation.
+Append-only capture is useful for provenance, but indexes, extracted observations, and activated policy surfaces must support redaction, decay, supersession, retirement, and relaxation.
 
 Realistic methods include:
 
@@ -365,6 +355,6 @@ Relevant Notes:
 - [Silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends: fallback and silent repair should become memory candidates when final success hides degraded guarantees
 - [Enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: system-definition memory should include recovery, reporting, and relaxation paths, not only prohibitions
 - [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — evidence: surveyed systems already mine traces into preferences, tips, rules, skills, playbooks, and policy updates
-- [Trajectory-informed Memory Generation for Self-improving Agents](../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — evidence: trajectory-to-tip learning supports trace-derived future-context artifacts while leaving lifecycle and retirement underdeveloped
-- [Large Language Model Agents are not Always Faithful Self-Evolvers](../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: written memory must be evaluated for behavioral influence rather than assumed to work because it is present
-- [Meta-Harness: End-to-End Optimization of Model-Harnesses](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) — evidence: raw execution traces and explicit oracles can support later optimization better than premature summaries
+- [Trajectory-informed Memory Generation for Self-improving Agents](https://arxiv.org/html/2603.10600v1) — evidence: trajectory-to-tip learning supports trace-derived future-context artifacts while leaving lifecycle and retirement underdeveloped
+- [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) — evidence: written memory must be evaluated for behavioral influence rather than assumed to work because it is present
+- [Meta-Harness: End-to-End Optimization of Model-Harnesses](https://yoonholee.com/meta-harness/paper.pdf) — evidence: raw execution traces and explicit oracles can support later optimization better than premature summaries
