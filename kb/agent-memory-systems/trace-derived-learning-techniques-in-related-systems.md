@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what substrate they promote into (opaque vs prose vs symbolic — a **substrate-class** choice), and what role the result plays (knowledge consumed as fact vs system-definition consumed as policy).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -143,6 +143,20 @@ The only inspected system that makes cross-agent session mining a first-class fe
 **Reinjection.** `cm context "<task>"` retrieves relevant bullets by keyword matching, effective score, and optional embedding similarity, returning ranked rules, anti-patterns, related session history, and warnings about deprecated patterns. Cross-agent enrichment happens during diary generation: `enrichWithRelatedSessions()` queries the `cass` search engine for sessions from *other* agents that match the current diary's challenges and learnings, with access logged to `privacy-audit.jsonl`.
 
 **Scope.** Cross-agent, multi-session. Reflects over sessions from Claude Code, Cursor, Codex, Aider, and Pi within a configurable lookback window (default 7 days, up to N sessions). A single shared playbook accumulates rules from all agents, with optional per-repo overlays. `ProcessedLog` in `tracking.ts` tracks which sessions have been reflected on to enable incremental processing.
+
+## WUPHF
+
+A local multi-agent office where trace-derived learning sits inside the broker/wiki runtime rather than a standalone memory daemon.
+
+**Trigger.** Raw artifacts commit through the wiki artifact path, then extraction runs asynchronously through the wiki worker hook. Entity brief synthesis and playbook synthesis run at thresholds or on demand; playbook learning is triggered after enough recorded executions.
+
+**Source format.** Immutable markdown artifacts under `wiki/artifacts/{source}/{sha}.md`, append-only fact logs, channel and broker state, notebook drafts, and `team/playbooks/{slug}.executions.jsonl`.
+
+**Extraction.** Artifact extraction prompts for entities and facts, resolves entities, computes deterministic fact IDs, and persists facts to both index state and JSONL logs. Playbook synthesis reads recent execution entries and updates only `## What we've learned`, preserving the authored procedure body.
+
+**Promotion.** Facts, entity briefs, wiki articles, playbooks, and compiled `SKILL.md` files in the git wiki, plus team skills in broker state. The learned substrate is readable or symbolic artifact state, not model weights.
+
+**Scope.** Workspace/team-scoped multi-agent office. The strongest new subtype is the execution-log-to-playbook-skill loop: repeated procedure runs revise a bounded learned section, which then recompiles into the next invokable skill wrapper.
 
 ## REM
 
