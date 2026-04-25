@@ -6,7 +6,7 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import extract_title, strip_frontmatter
-from commonplace.lib.project_paths import is_type_definition_content
+from commonplace.lib.project_paths import is_replaced_archive, is_type_definition_content
 
 
 SKIP_DIR_NAMES = {"types"}
@@ -40,6 +40,8 @@ def _has_indexable_content(directory: Path) -> bool:
     for path in directory.rglob("*.md"):
         if path.name in ("README.md", "dir-index.md"):
             continue
+        if is_replaced_archive(path):
+            continue
         if is_type_definition_content(path, directory):
             continue
         if any(part in SKIP_DIR_NAMES for part in path.relative_to(directory).parts):
@@ -67,7 +69,11 @@ def _subdir_link_target(subdir: Path) -> str:
         return f"./{subdir.name}/dir-index.md"
     if (subdir / "README.md").is_file():
         return f"./{subdir.name}/README.md"
-    md_files = [p for p in subdir.iterdir() if p.is_file() and p.suffix == ".md"]
+    md_files = [
+        p
+        for p in subdir.iterdir()
+        if p.is_file() and p.suffix == ".md" and not is_replaced_archive(p)
+    ]
     if len(md_files) == 1:
         return f"./{subdir.name}/{md_files[0].name}"
     return f"./{subdir.name}/"
@@ -92,6 +98,8 @@ def generate(notes_dir: Path, *, parent_link: str) -> str:
         if path.suffix != ".md":
             continue
         if path == output or path.name == "README.md":
+            continue
+        if is_replaced_archive(path):
             continue
         if is_type_definition_content(path, notes_dir):
             continue

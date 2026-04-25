@@ -12,6 +12,7 @@ from commonplace.lib.note_parser import extract_title, strip_frontmatter
 from commonplace.lib.project_paths import (
     collection_dirs,
     collection_for_path,
+    is_replaced_archive,
     is_type_definition_content,
 )
 
@@ -30,6 +31,8 @@ def collect_notes_by_tag(collection_dir: Path) -> dict[str, list[tuple[Path, str
     by_tag: dict[str, list[tuple[Path, str, str]]] = {}
 
     for path in sorted(collection_dir.rglob("*.md")):
+        if is_replaced_archive(path):
+            continue
         content = path.read_text(encoding="utf-8")
         fm = frontmatter.parse(content).data
 
@@ -64,6 +67,8 @@ def index_source(path: Path, root: Path, content: str | None = None) -> str | No
     collection = collection_for_path(path, root)
     rel_parts = path.relative_to(collection).parts
 
+    if is_replaced_archive(path):
+        return None
     if is_type_definition_content(path, collection) or ".collection" in rel_parts:
         return None
     fm = index_frontmatter(path, content)
@@ -79,6 +84,8 @@ def collect_tag_index_entries(collection_dir: Path, root: Path) -> list[tuple[Pa
     """Return all tag indexes within a collection."""
     entries: list[tuple[Path, str, str]] = []
     for path in sorted(collection_dir.rglob("*.md")):
+        if is_replaced_archive(path):
+            continue
         content = path.read_text(encoding="utf-8")
         if index_source(path, root, content) != "tag":
             continue

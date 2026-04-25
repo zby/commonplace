@@ -36,6 +36,36 @@ type: kb/types/note.md
     assert "← [Parent](../index.md)" in content
 
 
+def test_generate_directory_index_skips_replaced_archives(tmp_path: Path) -> None:
+    collection = tmp_path / "kb" / "agent-memory-systems" / "reviews"
+    write(
+        collection / "current.md",
+        """---
+description: Current review
+type: ../types/agent-memory-system-review.md
+---
+
+# Current
+""",
+    )
+    write(
+        collection / "current.replaced.2026-04-25.md",
+        """---
+description: Replaced review
+type: ../types/agent-memory-system-review.md
+---
+
+# Current
+""",
+    )
+
+    content = generate(collection, parent_link="../dir-index.md")
+
+    assert "- [Current](./current.md) *(agent-memory-system-review)* - Current review" in content
+    assert "current.replaced.2026-04-25.md" not in content
+    assert "Replaced review" not in content
+
+
 def test_write_index_recurses_and_lists_subdirs(tmp_path: Path) -> None:
     collection = tmp_path / "kb" / "reference"
     write(

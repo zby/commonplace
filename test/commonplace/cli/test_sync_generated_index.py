@@ -116,6 +116,40 @@ index_key: template
     assert indexes == [kb_design_index, tags_index]
 
 
+def test_generated_tag_entries_skip_replaced_archives(tmp_path: Path) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    write(
+        notes_root / "current.md",
+        """---
+description: Current tagged note
+type: kb/types/note.md
+tags: [agent-memory]
+---
+
+# Current
+""",
+    )
+    write(
+        notes_root / "current.replaced.2026-04-25.md",
+        """---
+description: Replaced tagged note
+type: kb/types/note.md
+tags: [agent-memory]
+---
+
+# Current
+""",
+    )
+
+    notes_by_tag = index_generated.collect_notes_by_tag(notes_root)
+
+    entries = notes_by_tag["agent-memory"]
+    assert [(path.name, title, desc) for path, title, desc in entries] == [
+        ("current.md", "Current", "Current tagged note")
+    ]
+
+
 def test_sync_generated_index_supports_tag_index_directory(
     tmp_path: Path,
     monkeypatch,
