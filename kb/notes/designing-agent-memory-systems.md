@@ -30,6 +30,10 @@ Calling those behavior-changing artifacts "memory" is not just a stretch of retr
 
 Agents also need a small control-plane memory layer: purpose, scope, routing hints, vocabulary, quality bars, commands, skills, and safety rules that shape how the agent finds and interprets the rest of memory. This layer is expensive because it is always or frequently loaded. Since [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md), the control plane should route the agent toward the right memory rather than contain the memory itself. It is the stable, high-frequency complement to on-demand retrieval and situation-specific activation.
 
+Bounded context also means memory will not collapse into one model call over one complete store. Long-lived agents need external information because everything cannot fit in weights, but they also need context-construction machinery because everything cannot fit in one context. The agentic loop must repeatedly decide what to inspect, what to load, what to execute, what to update, and what to ignore.
+
+That leaves two plausible end states for the symbolic layer. One is that symbolic artifacts -- indexes, schemas, instructions, scripts, validators, cues, generated views, and work-surface state -- are themselves memory stores, which implies automatic learning over symbolic artifacts. The other is a more universal symbolic layer that operates over a broad prose memory store. Even in that case the symbolic layer has to evolve, because today's routing, validation, activation, source-tracking, and maintenance machinery is not complete enough to be treated as fixed infrastructure.
+
 This role distinction matters because the same remembered material can serve different functions. [Axes of artifact analysis](./axes-of-artifact-analysis.md) distinguishes knowledge-role artifacts, which answer questions, from system-definition-role artifacts, which steer behavior. A decision rationale is knowledge when the agent asks "why did we choose this?" The same rationale becomes system-definition when it prevents the agent from proposing the rejected alternative again.
 
 The role split prevents a common design error: treating memory as better retrieval-augmented generation (RAG). RAG is a declarative-memory pattern: ask a question, retrieve relevant knowledge, and put it in context. Agent memory also needs proceduralization, where lessons become instructions, skills, tests, checks, tools, guardrails, or work-surface changes that alter future action. Search can answer direct questions, but it does not decide which routines should be compiled, when they should fire unasked, or when they should be retired. [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md): a stored lesson has not helped unless it appears in the right bounded context, with enough priority and framing to change what happens next.
@@ -115,6 +119,8 @@ Once direct memory creation exists, the system can improve it by studying what d
 Corrections are strongest because the log contains both a negative and positive signal. Silent failures are weaker: the task appears completed, but the trace shows errors, retries, fallback paths, warning output, or weakened guarantees. Preferences are distributed over many accept/reject events. Procedures show up as recurring action sequences. Discoveries and broad syntheses have the weakest immediate oracle; their value often appears only through later reuse.
 
 The system therefore needs a meta-learning taxonomy ordered by signal quality, not by topic popularity. It should start where the oracle is strongest and delay automation where the oracle is weak. In [bitter lesson](https://en.wikipedia.org/wiki/Bitter_lesson) terms, memory systems should prefer scalable search and learning where feedback is strong, while keeping weak-oracle knowledge work in reviewable artifacts until evaluation can justify relaxation.
+
+The bitter-lesson analogy should therefore not be read as "eventually memory becomes one opaque learned component." Scalable learning can improve how memories and memory artifacts are searched, generated, ranked, and revised, but bounded context keeps context-construction machinery inside the memory problem rather than outside it.
 
 Realistic methods include:
 
@@ -279,6 +285,21 @@ The needs above define whether a memory system improves contextual competence. O
 - **Cost-model flexibility.** A memory system that rides on the host agent or IDE can use whatever economic model that host already exposes, including subscription-based coding agents where available, instead of requiring every memory lookup, write, or review to consume a separate metered API call. This is an adoption advantage rather than a semantic memory requirement.
 - **Portable degradation.** If the specialized agent harness disappears, a markdown-and-git memory system still works in editors, terminals, GitHub, static sites, and ordinary scripts. That makes the memory more durable than a store that can only be queried through one product API.
 - **Inspectable generated surfaces.** Generated indexes, reports, and compiled views are easier to trust when they are rebuildable, diffable, and tied to visible source artifacts. This does not replace source-of-truth rules, but it reduces the operational cost of maintaining them.
+
+## Partial Memory Systems Need External Maintenance
+
+Several common designs solve real parts of memory, but leave other requirements to surrounding workflows:
+
+- A vector database can provide retrieval, but artifact contracts, authority, activation, lifecycle, and behavioral evaluation must come from elsewhere.
+- A transcript archive can preserve evidence, but usable future context still requires extraction, summarization, promotion, and selective loading.
+- A summarizer can compress history, but provenance, uncertainty, scope, and actionability need separate handling.
+- An always-loaded profile can activate memory, but ranking, source alignment, and retirement must be maintained outside the profile.
+- A self-editing prompt loop can change behavior, but authority, testing, rollback, and source-of-truth rules need external governance.
+- A wiki can preserve durable knowledge, but runtime activation, artifact contracts, and behavioral closure need additional machinery.
+- A rules engine can enforce behavior, but deciding which lessons deserve enforcement, when rules should relax, and how exceptions are handled remains outside the engine.
+- A reusable memory package can give an initial prior, but local truth, local authority, and project-specific lifecycle have to be maintained by the consuming project.
+
+These are real memory systems or memory subsystems. The distinction is that they externalize some of the maintenance burden. A realistic architecture should name which requirements are handled internally and which are delegated to humans, scripts, review processes, host applications, or adjacent systems.
 
 ## A Practical Build Order Follows The Needs
 
