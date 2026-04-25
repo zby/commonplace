@@ -1,5 +1,5 @@
 ---
-description: "AI co-worker substrate with file-and-vector memory split, multi-block prompt assembly, and a sandbox-deny reflection subprocess that mutates evolved identity files under deterministic invariant checks"
+description: "AI co-worker substrate with file-and-vector memory split, multi-block prompt assembly, and a sandbox-deny reflection subprocess mutating identity files under deterministic invariants"
 type: ../types/agent-memory-system-review.md
 traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems, trace-derived]
@@ -43,7 +43,7 @@ Phantom is Ghostwright's open-source AI co-worker platform: a Linux container ru
 | Governance | Byte-equality invariants, line-growth caps, credential regex, URL allowlist, sandbox deny on subprocess writes | Type specs, frontmatter validation, semantic review, collection conventions |
 | Evaluation | Drain metrics tracked but no behavioral oracle; invariants are structural, not predictive | Validation plus review bundles; effect on downstream agent behavior is implicit |
 
-Phantom is ahead of commonplace on runtime authority enforcement. Where commonplace relies on review and validation as advisory gates, Phantom enforces a byte-comparison invariant on the constitution, a deterministic line-growth cap, and a sandbox-deny on the subprocess process itself. The reflection subprocess cannot accidentally rewrite constitution.md because the OS-level sandbox denies the write and the post-write invariant catches anything the sandbox missed.
+Phantom is ahead of commonplace on runtime authority enforcement. Where commonplace relies on review and validation as advisory gates, Phantom enforces a byte-comparison invariant on the constitution, a deterministic line-growth cap, and a sandbox-deny on the subprocess process itself. The reflection subprocess cannot accidentally rewrite `constitution.md` because the OS-level sandbox denies the write and the post-write invariant catches anything the sandbox missed.
 
 Commonplace is ahead on knowledge-artifact semantics. Phantom's `phantom-config/*.md` files are prose with very few structural constraints; their meaning is whatever the prompt block does with them. Commonplace types its artifacts (notes, instructions, sources, reviews), labels link relationships (`extends`, `grounds`, `contradicts`, `exemplifies`), and tracks status transitions explicitly. A Phantom strategy file is a free-form list; a commonplace note is a typed object that participates in a graph.
 
