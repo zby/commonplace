@@ -41,6 +41,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/agent-memory-systems/dir-index.md` — auto-generated directory listing for agent-memory-system coverage
 - `kb/notes/dir-index.md` — auto-generated directory listing (rebuild with `commonplace-refresh-indexes`)
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
+- `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - `kb/reference/adr/` — architecture decision records for the shipped commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 - `kb/sources/dir-index.md` — auto-generated source listing
@@ -75,6 +76,8 @@ Terms used in this KB with specific meanings. On first mention in a note, gloss 
 The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
 
 `kb/notes/` holds transferable claims and theory. `kb/reference/` holds shipped-system documentation and decision history for commonplace. `kb/instructions/` holds imperative procedures and how-to guidance.
+
+For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in directory/curated indexes before opening full files, and follow authored links when local context makes the relationship useful.
 
 ```bash
 # Find notes by description
