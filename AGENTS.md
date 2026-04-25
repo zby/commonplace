@@ -95,6 +95,8 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 `commonplace-init` installs the `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) into `.claude/skills/` and `.agents/skills/`. The harness loads them automatically.
 
+This repo also has a local-only `write-agent-memory-system-review` skill for external agent-memory-system reviews. It is symlinked into `.claude/skills/` and `.agents/skills/` here, but is not a promoted `cp-skill-*` framework skill.
+
 ### Commands
 
 The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. Documentation lives in `kb/reference/`:

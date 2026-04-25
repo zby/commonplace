@@ -11,7 +11,9 @@ schema: ./agent-memory-system-review.schema.yaml
 
 Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
 
-**A reachable GitHub repository is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a source-only note instead. Abandoned repos are acceptable if the code is still readable.
+**A local source directory with readable code is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a source-only note instead. Abandoned code is acceptable if the directory is still readable.
+
+This type spec is also the worker contract for delegated drafting from the local `write-agent-memory-system-review` skill. The parent skill owns source preparation, archive moves, index edits, semantic QA, validation, and reporting; the worker owns only code inspection and review-note drafting from the inputs below.
 
 ## Comparison Lens
 
@@ -35,40 +37,34 @@ Check the reviewed system against these needs selectively:
 
 Before writing, you must have:
 
-- `repo_url` — canonical full GitHub repository URL for citations, `https://github.com/{owner}/{repo}` with no trailing slash or `.git`
-- `checkout_dir` — local checkout under `related-systems/`
+- `source_dir` — local directory containing the source code to inspect
 - `note_path` — target review path under `kb/agent-memory-systems/reviews/`
 
-If any required input is missing, stop and report exactly which one is missing. Do not infer checkout state from a stale local directory.
+The caller may also provide source identity or a citation format. Treat that as caller-supplied context, not as part of this type's required contract.
 
-## Establish Checkout State
+If any required input is missing, stop and report exactly which one is missing. Do not infer source state from a different directory.
 
-Before reading or writing, establish the checkout state from `checkout_dir`.
+## Establish Source State
 
-Derive `reviewed_commit`:
+Before reading or writing, establish the source state from `source_dir`.
 
-```bash
-git -C "{checkout_dir}" rev-parse HEAD
-```
-
-If the command fails, stop and report that the checkout commit could not be established.
-
-Derive `checkout_refreshed_at` from the runner's refresh marker inside the checkout's Git directory:
+Verify the directory exists and is readable:
 
 ```bash
-git_dir="$(git -C "{checkout_dir}" rev-parse --absolute-git-dir)"
-cat "$git_dir/commonplace-checkout-refreshed-at"
+test -d "{source_dir}"
 ```
 
-If the marker does not exist or cannot be read, stop: `Checkout freshness could not be established from {checkout_dir}. Refresh the repo before writing this review.`
+If the command fails, stop and report that the source directory could not be established.
 
-Then apply the freshness gate:
+If `source_dir` is a git repository, derive `reviewed_revision`:
 
-- If `checkout_refreshed_at` is more than 24 hours old, stop: `Checkout is stale: last refreshed {checkout_refreshed_at}. Refresh the repo before writing this review.`
-- If `checkout_refreshed_at` is more than 1 hour old but no more than 24 hours old, continue but carry this warning into the final report: `Checkout freshness warning: last refreshed {checkout_refreshed_at}.`
-- If `checkout_refreshed_at` is no more than 1 hour old, continue normally.
+```bash
+git -C "{source_dir}" rev-parse HEAD
+```
 
-Use `reviewed_commit` for all source citations. Do not update `last-checked` without actually reading the checkout.
+If the command fails because the directory is not a git repository, continue without a revision but say so in the final report. Do not refresh, fetch, pull, or otherwise mutate `source_dir`; source preparation belongs to the caller.
+
+Use `reviewed_revision` and any caller-supplied source metadata for review metadata and citations. Do not update `last-checked` without actually reading `source_dir`.
 
 ## Read for Style
 
@@ -76,13 +72,13 @@ Read 1-2 existing reviews in `kb/agent-memory-systems/reviews/` to match local s
 
 ## Read for Mechanism
 
-Ground the review in primary repo sources:
+Ground the review in primary source files:
 
 - `README.md`
 - architecture/design docs
 - `CLAUDE.md` / `AGENTS.md` if present
 - package manifests and build metadata
-- core source files implementing the repo's central claims
+- core source files implementing the system's central claims
 
 Do not rely only on the README if the implementation clarifies or contradicts it.
 
@@ -100,8 +96,8 @@ Focus on:
 
 Write from the code outward:
 
-- **Opening paragraph:** what the system is, what it is for, who built it. Include the repository URL.
-- **Repository metadata:** include `**Repository:** {repo_url}` and `**Reviewed commit:** {repo_url}/commit/{reviewed_commit}` before the section headings.
+- **Opening paragraph:** what the system is, what it is for, who built it. Include caller-supplied source identity when available.
+- **Source metadata:** before the section headings, include source identity and reviewed revision when available. Use labels that match the source metadata the caller provided.
 - **Core Ideas:** 3-6 mechanisms and design choices, not feature lists. Use bolded lead phrases for scanning.
 - **Comparison with Our System:** concrete alignments, divergences, and tradeoffs vs commonplace.
 - **Borrowable Ideas:** for each idea, say what it would look like in commonplace and whether it is ready now or needs a use case first.
@@ -139,26 +135,23 @@ If the system qualifies, include a `## Trace-derived learning placement` section
 
 ## Citations
 
-When linking to repo code/docs, use `repo_url` plus the locally derived `reviewed_commit`:
+Use the caller-supplied citation format when one is provided.
 
-- files: `{repo_url}/blob/{reviewed_commit}/{path}`
-- directories: `{repo_url}/tree/{reviewed_commit}/{path}`
-
-Do not link to `../../../related-systems/...` or other local checkout paths. Local checkout paths are fine for inspection notes or final reports, but review notes must remain readable on GitHub Pages.
+If no citation format is provided, cite source files in prose with source-relative paths in code spans, not as markdown links into the local directory. Local source paths are fine for inspection notes or final reports, but review notes must remain readable without access to the local directory.
 
 ## Constraints
 
 **Always:**
 
 - write the review into `kb/agent-memory-systems/reviews/`
-- ground claims in repo code/docs, not just project marketing
-- cite source files and directories with GitHub URLs pinned to the reviewed commit
+- ground claims in source code/docs, not just project marketing
+- cite source evidence using the caller-supplied citation format when available, otherwise use readable source-relative path references in prose
 - treat trace-derived status as a code-grounded review finding
 
 **Never:**
 
-- put the checked-out repo under `kb/agent-memory-systems/reviews/`
-- write Markdown links from review notes into `../../../related-systems/...` or other local checkout paths
+- put the source directory under `kb/agent-memory-systems/reviews/`
+- write Markdown links from review notes into `../../../related-systems/...` or other local source paths
 - treat proposed docs as implemented behavior without checking the code
 - update `last-checked` without actually re-reading the system
 
@@ -177,9 +170,9 @@ last-checked: "YYYY-MM-DD"
 
 {One-paragraph summary}
 
-**Repository:** {URL}
+**Source:** {source identity, if available}
 
-**Reviewed commit:** {GitHub commit URL}
+**Reviewed revision:** {revision, if available}
 
 ## Core Ideas
 

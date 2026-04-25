@@ -4,9 +4,10 @@
 
 Navigation: [directory index](./dir-index.md).
 
-It contains two kinds of artifacts:
+It contains three kinds of artifacts:
 
 - Plain instructions: markdown procedures invoked manually from the KB
+- Local skills: instruction subdirectories containing `SKILL.md` that are used inside this repo but are not installed by `commonplace-init`
 - Promoted skills: instruction subdirectories containing `SKILL.md` that `commonplace-init` copies into runtime skill directories
 
 ## Warning: Promoted Skills Run From A Different Path
@@ -32,4 +33,4 @@ To promote an instruction into a runtime skill:
 2. Add `<name>` to the promoted skill list in `src/commonplace/cli/init_project.py`
 3. Keep any auxiliary files in the same directory so `commonplace-init` copies them with the skill
 
-Not every instruction subdirectory is promoted. The explicit list in `commonplace-init` is the source of truth for what gets copied into runtime skill surfaces.
+Not every instruction subdirectory is promoted. Local-only skills stay in `kb/instructions/<name>/SKILL.md` and may be symlinked directly into this repo's `.claude/skills/` and `.agents/skills/` surfaces without adding them to `PROMOTED_SKILLS`. The explicit list in `commonplace-init` is the source of truth for what gets copied into runtime skill surfaces.

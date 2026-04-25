@@ -21,6 +21,7 @@ index_source: directory
 - [evaluate-scenarios/](./evaluate-scenarios/SKILL.md)
 - [fix-warnings/](./fix-warnings/)
 - [review-gates/](./review-gates/)
+- [write-agent-memory-system-review/](./write-agent-memory-system-review/SKILL.md)
 
 ## Files
 
@@ -38,6 +39,5 @@ index_source: directory
 - [Review triage](./review-triage.md) *(instruction)* - Inspect diffs for note-changed review pairs and ack insignificant changes — run before a review sweep to reduce the review queue
 - [Revise Note](./revise-note.md) *(instruction)* - Editorial revision of a single KB note — rewrites for logic, flow, and cohesion. Reads linked notes for context. Edits the file in place and reports changes.
 - [Run a review bundle on one note](./run-review-bundle-on-note.md) *(instruction)* - Run review gates on one note from inside a live agent harness
-- [Write an Agent Memory System Review](./write-agent-memory-system-review.md) *(instruction)* - Write or update a code-grounded agent memory system review from a GitHub repository checkout.
 - [Write an Instruction](./write-instruction.md) *(instruction)* - Create a new instruction in kb/instructions/ by distilling repeated manual operations into a reusable, execution-optimized procedure.
 - [Writing conventions for kb/instructions/ (prescriptive register)](./COLLECTION.md)
