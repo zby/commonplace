@@ -13,6 +13,24 @@ Use this type for a **code-grounded** review of an external agent memory, knowle
 
 **A reachable GitHub repository is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a source-only note instead. Abandoned repos are acceptable if the code is still readable.
 
+## Comparison Lens
+
+Use this embedded lens when comparing the reviewed system with commonplace. Do not load a separate memory-system design note during ordinary review writing; this distillation is the review-time contract. It is a comparison aid, not a required section template. Mention only the axes where the reviewed system has a distinctive mechanism, absence, or tradeoff.
+
+Agent memory is a context-engineering problem: it improves future agent action by making prior work discoverable, composable, trustworthy, activatable, and maintainable under bounded context. The important question is not "does the system store memories?" but "what future answer, action, artifact, or rule can change because of the remembered material?"
+
+Check the reviewed system against these needs selectively:
+
+- **Creation and import:** Can useful memory be authored directly, imported from existing artifacts, or extracted from traces without losing provenance or structure?
+- **Evidence and trust:** Does the system preserve enough source material, metadata, review state, validation, or confidence information for a future agent to rely on the memory without redoing the original work?
+- **Artifact contracts:** Does it distinguish memory roles, such as declarative knowledge, procedural instructions, source evidence, generated views, active work state, and executable checks?
+- **Consumer surfaces:** Does it serve different consumers differently: acting agents, humans, context schedulers, reviewers, learning loops, governance, and active work surfaces?
+- **Activation:** Can relevant behavior-changing memory load before the agent repeats a mistake, or is the system limited to question-answer retrieval?
+- **Promotion and codification:** Is there a path from candidate observations toward notes, instructions, skills, tests, scripts, guardrails, or other stronger behavior-changing surfaces when evidence and authority justify the cost?
+- **Compiled views and lifecycle:** Are generated reminders, indexes, rules, assistant files, and other derived surfaces tied back to sources of truth, with retirement, redaction, supersession, regeneration, and relaxation paths?
+- **Authority and evaluation:** Who or what can write, promote, activate, enforce, revise, and retire memory, and does the system evaluate memory by downstream effects rather than by storage volume?
+- **Adoption affordances:** Does the system fit the agent's native work environment, reuse existing editor/terminal/git workflows, avoid unnecessary metered API surfaces, or degrade gracefully into inspectable files and scripts?
+
 ## Required Inputs
 
 Before writing, you must have:

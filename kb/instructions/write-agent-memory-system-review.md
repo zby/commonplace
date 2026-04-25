@@ -62,7 +62,7 @@ If the system has no reachable source code, stop and write a source-only note in
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
-8. **Write or delegate the review.** Use the artifact contract in `kb/agent-memory-systems/types/agent-memory-system-review.md` as the writing prompt. Pass the writer these inputs: `repo_url`, `checkout_dir`, and `note_path`.
+8. **Write or delegate the review.** Use the artifact contract in `kb/agent-memory-systems/types/agent-memory-system-review.md` as the writing prompt. Its embedded comparison lens is the review-time distillation of the memory-system design; do not ask the writer to load the full design note during ordinary review writing. Pass the writer these inputs: `repo_url`, `checkout_dir`, and `note_path`.
 
 9. **If delegating, keep ownership narrow.** The worker may read the checkout and write the review note or draft path only. The runner owns checkout, archive moves, curated index edits, semantic QA, validation, and final report. The worker must decide trace-derived status from implementation evidence and either include both the placement section and `trace-derived` tag, or omit both.
 
