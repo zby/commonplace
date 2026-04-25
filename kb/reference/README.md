@@ -73,6 +73,8 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 *Limitations.* Search quality depends heavily on frontmatter descriptions, tag coverage, and the query terms an agent chooses. Vocabulary-mismatched concepts need synonym searches and link traversal rather than an external semantic-search daemon.
 
+For the full read path and scaling direction, see [navigation.md](./navigation.md).
+
 ### Connect an existing note
 
 *What it's for.* Discover relationships between a note and the rest of the KB, and wire them up.
@@ -178,6 +180,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [architecture.md](./architecture.md) — installed project layout (library under `kb/commonplace/`, user collections at top level), packaged runtime, promoted skills, and path invariance across source and ship
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
+- [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
@@ -188,7 +191,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, per-destination outbound rules) and types (structural contracts) compose, and how the connect/write skills read each source `COLLECTION.md` directly for linking rules
 - [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
-- [link-vocabulary.md](./link-vocabulary.md) — label catalogue and authoring guidance for `COLLECTION.md` authors writing outbound rules (note writers and the connect skill don't read this; they read the collection's own `COLLECTION.md`)
+- [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 
 ### Authoring and operator procedures

@@ -1,22 +1,44 @@
 ---
-description: Label catalogue plus authoring guidance for COLLECTION.md authors writing outbound-linking rules; groups labels by register-of-origin (theoretical, descriptive, prescriptive, universal) and tells collection authors how to structure per-destination outbound blocks
+description: "Commonplace's linking approach: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and the shared label catalogue for COLLECTION.md authors"
 type: kb/types/note.md
 status: current
 ---
 
-# Link vocabulary — a resource for COLLECTION.md authors
+# Link vocabulary and linking approach
 
-## Audience and purpose
+## Approach
 
-**Audience: `COLLECTION.md` authors** — the people defining or revising the outbound-linking rules of a collection. This document is a **catalogue of labels** plus **authoring guidance**. It helps a collection author pick labels for each destination collection their collection links to.
+Commonplace treats links as authored reader aids, not automatic graph decoration. A link should tell a future reader why following it might help from the source artifact they are already reading.
 
-**Note writers do not read this document.** They read only their collection's `COLLECTION.md`, which has the authoritative vocabulary for that collection, organised by destination.
+The source collection owns that decision. Each `COLLECTION.md` defines which destination collections writers may link to, when an agent should search those destinations, and which labels are authorised for each source-to-destination pairing. The shared catalogue on this page is a palette; the collection's own rules are authoritative.
 
-The architecture is deliberately loose. The theory of links is weak — experiment. Invent intra-collection labels your work needs, propose additions to the catalogue, diverge from suggestions where it makes sense.
+Labels name reader needs rather than ontology edges. A `grounds` link says "follow this if you need to verify the premise." An `implements` link says "follow this if you need the concrete realization." The label is useful only when the source, target, and reason form an articulated relationship.
+
+The articulation test applies to every outbound link:
+
+> `[source] connects to [target] because [specific reason].`
+
+The [connect skill](../instructions/cp-skill-connect/SKILL.md) operationalizes this model without silently rewriting notes. It reads the source collection's `COLLECTION.md`, searches authorised destinations according to their search guidance, applies the articulation test, and writes a report of candidate links. A maintainer or later editing pass decides which candidates become authored links.
+
+## Relationship to the control plane
+
+`AGENTS.md` and `COLLECTION.md` route at different levels.
+
+`AGENTS.md` is always-loaded control-plane memory. It tells the agent the KB's purpose, domain, scope boundaries, key indexes, commands, and durable operating conventions. See [control-plane goals](./control-plane-goals.md).
+
+`COLLECTION.md` is collection-local authoring authority. It tells the agent how artifacts in that collection should be written and how they may link outward. Link rules live there because linking depends on the source collection's register, quality goal, and destination-specific reader needs.
+
+This page explains the shared linking approach and label vocabulary. It is not the always-loaded routing surface and not the authoritative vocabulary for any specific collection.
+
+## Authoring collection link rules
+
+This page is most directly useful to `COLLECTION.md` authors: the people defining or revising a collection's outbound-linking rules. It helps them choose labels for each destination collection their collection links to.
+
+Note writers normally read only their collection's `COLLECTION.md`, which contains the authoritative vocabulary for that collection, organised by destination.
+
+The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
 
 ("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/register.md).)
-
-## How to author a COLLECTION.md linking section
 
 Organise the outbound-linking section **per destination collection**, not per register. For each collection your source links to, declare:
 
@@ -27,20 +49,11 @@ If a destination isn't listed, it isn't an active link target from this collecti
 
 **Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
 
-The catalogue below groups labels by register-of-origin — the kind of content they emerged to describe — but each `COLLECTION.md` picks whichever labels fit each destination. The register tagging is advisory.
-
-## Key principles
-
-1. **`COLLECTION.md` governs all outbound links**, organised per destination.
-2. **Per-destination rules enable fine-grained experimentation.** `kb/notes/ → kb/reference/` can diverge from `kb/notes/ → kb/agent-memory-systems/`, even though both destinations share a register.
-3. **Search guidance serves the connect skill.** When an agent helps a writer find link targets, it reads the source `COLLECTION.md`, enumerates authorised destinations, and uses the search-when guidance to prioritise.
-4. **Labels work best when shared.** Both endpoints need to recognise the label for the link to carry its intended meaning. Use catalogue labels when they fit; add to the catalogue when your work calls for something new, and coordinate with the target-side collection.
-5. **Every label names a reader-need.** See [`links-encode-conditional-possibilities-not-obligations.md`](../notes/links-encode-conditional-possibilities-not-obligations.md) for the theory.
-6. **Articulation test applies to every link.** Every outbound link should complete: *"[source] connects to [target] because [specific reason]."*
+Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/`, even though both destinations share a register. Labels work best when shared, so use catalogue labels when they fit and add to the catalogue when a repeated need deserves common recognition.
 
 ## Label catalogue
 
-Labels cluster by register-of-origin. Each `COLLECTION.md` selects whichever labels fit each destination.
+Labels cluster by register-of-origin: the kind of content they emerged to describe. Each `COLLECTION.md` selects whichever labels fit each destination. The register grouping is advisory.
 
 ### Theoretical-shaped labels
 
@@ -95,7 +108,8 @@ Usable from any source to any destination.
 ## What this document is not
 
 - **Not a constraint.** Labels and authoring guidance. Add to it, adapt it, experiment. Soft pressure only: labels need shared recognition to carry consistent meaning across collections.
-- **Not the authoritative vocabulary for any collection.** Each `COLLECTION.md` is authoritative for its source. This document is a palette.
+- **Not the authoritative vocabulary for any collection.** Each `COLLECTION.md` is authoritative for its source collection. This document is a palette.
+- **Not the control plane.** `AGENTS.md` handles always-loaded routing and goals; this page explains linking once an agent is already working inside the KB.
 - **Not a fallback for lazy labelling.** If the `COLLECTION.md` authorises specific labels for a destination, use those — don't downgrade to `see-also`.
 
 ## Open questions
