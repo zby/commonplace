@@ -23,7 +23,11 @@ def main() -> int:
         if collection.name == "reports":
             continue
         max_depth = COLLECTION_MAX_DEPTH.get(collection.name)
-        output, count = index_directory.write_index(collection, max_depth=max_depth)
+        output, count = index_directory.write_index(
+            collection,
+            max_depth=max_depth,
+            ignore_root=root,
+        )
         print(f"Generated {output} with {count} entries")
 
     # Collect tags per collection (tags are collection-scoped)
@@ -33,7 +37,9 @@ def main() -> int:
         if tags:
             tags_by_collection[collection] = tags
             total = sum(len(v) for v in tags.values())
-            print(f"  {collection.name}: {total} tag assignments across {len(tags)} tags")
+            print(
+                f"  {collection.name}: {total} tag assignments across {len(tags)} tags"
+            )
 
     total_assignments = sum(
         sum(len(v) for v in tags.values()) for tags in tags_by_collection.values()

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 from commonplace.lib.index_directory import generate, write_index
@@ -9,6 +10,16 @@ def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def init_git_repo(path: Path) -> None:
+    subprocess.run(
+        ["git", "init"],
+        cwd=path,
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def test_generate_directory_index_skips_readme_index_and_types(tmp_path: Path) -> None:
@@ -61,7 +72,10 @@ type: ../types/agent-memory-system-review.md
 
     content = generate(collection, parent_link="../dir-index.md")
 
-    assert "- [Current](./current.md) *(agent-memory-system-review)* - Current review" in content
+    assert (
+        "- [Current](./current.md) *(agent-memory-system-review)* - Current review"
+        in content
+    )
     assert "current.replaced.2026-04-25.md" not in content
     assert "Replaced review" not in content
 
@@ -105,7 +119,10 @@ type: kb/reference/types/adr.md
     assert "← [Parent](../index.md)" in root_index
 
     # Subdir index lists its file and points its parent at ../dir-index.md
-    assert "- [001 Some decision](./001-some-decision.md) *(adr)* - First decision" in adr_index
+    assert (
+        "- [001 Some decision](./001-some-decision.md) *(adr)* - First decision"
+        in adr_index
+    )
     assert "← [Parent](../dir-index.md)" in adr_index
 
     # Empty and types directories are not indexed
@@ -130,3 +147,39 @@ def test_write_index_max_depth_cleans_stale_subdir_indexes(tmp_path: Path) -> No
     # Subdir entry falls back to a sensible link target (SKILL.md exists; no
     # README, no dir-index → bare directory URL is acceptable too)
     assert "skill-foo/" in root_index
+
+
+def test_write_index_prunes_gitignored_directories(tmp_path: Path) -> None:
+    init_git_repo(tmp_path)
+    write(tmp_path / ".gitignore", "kb/reference/generated/\n")
+    collection = tmp_path / "kb" / "reference"
+    write(
+        collection / "kept.md",
+        """---
+description: Kept note
+type: kb/types/note.md
+---
+
+# Kept
+""",
+    )
+    write(
+        collection / "generated" / "ignored.md",
+        """---
+description: Ignored note
+type: kb/types/note.md
+---
+
+# Ignored
+""",
+    )
+    write(collection / "generated" / "dir-index.md", "# Stale ignored index\n")
+
+    write_index(collection, ignore_root=tmp_path)
+
+    root_index = (collection / "dir-index.md").read_text(encoding="utf-8")
+
+    assert "- [Kept](./kept.md) *(note)* - Kept note" in root_index
+    assert "generated/" not in root_index
+    assert "Ignored note" not in root_index
+    assert (collection / "generated" / "dir-index.md").exists()

@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import os
+import subprocess
+from collections.abc import Iterator
+from functools import lru_cache
 from pathlib import Path
 
 
@@ -23,8 +27,12 @@ def collection_dirs(root: Path) -> list[Path]:
         raise FileNotFoundError(f"KB root does not exist: {boundary}")
     return sorted(
         path.parent
-        for path in boundary.rglob("COLLECTION.md")
-        if not any(part.startswith(".") or part == "types" for part in path.relative_to(boundary).parts)
+        for path in iter_unignored_markdown_files(boundary, ignore_root=root)
+        if not any(
+            part.startswith(".") or part == "types"
+            for part in path.relative_to(boundary).parts
+        )
+        and path.name == "COLLECTION.md"
     )
 
 
@@ -95,7 +103,7 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
         raise ValueError(f"Directory is not a KB collection: {collection}")
     return sorted(
         path
-        for path in collection.rglob("*.md")
+        for path in iter_unignored_markdown_files(collection)
         if not is_nested_git_repo(path, collection)
         and not is_type_definition_content(path, collection)
         and not is_collection_metadata(path)
@@ -136,9 +144,76 @@ def find_repo_markdown_files(root: Path) -> list[Path]:
     resolved = root.resolve()
     return sorted(
         path
-        for path in resolved.rglob("*.md")
+        for path in iter_unignored_markdown_files(resolved, ignore_root=resolved)
         if not is_nested_git_repo(path, resolved)
     )
+
+
+@lru_cache(maxsize=None)
+def is_git_ignored(path: Path, root: Path | None = None) -> bool:
+    """Return True when Git ignore rules exclude `path`.
+
+    Git is the source of truth because .gitignore syntax is richer than the
+    small subset this package should own. Outside a Git worktree, paths are
+    treated as visible so commonplace can still operate in plain directories.
+    """
+    check_root = (root or path.parent).resolve()
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(check_root),
+                "check-ignore",
+                "--quiet",
+                "--no-index",
+                "--",
+                str(path.resolve()),
+            ],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+    except (FileNotFoundError, OSError):
+        return False
+    return result.returncode == 0
+
+
+def walk_unignored(
+    root: Path,
+    *,
+    ignore_root: Path | None = None,
+) -> Iterator[tuple[Path, list[str], list[str]]]:
+    """Yield an os.walk stream with gitignored directories pruned."""
+    resolved_root = root.resolve()
+    resolved_ignore_root = (ignore_root or resolved_root).resolve()
+    if is_git_ignored(resolved_root, resolved_ignore_root):
+        return
+
+    for current, dirnames, filenames in os.walk(resolved_root):
+        current_path = Path(current)
+        dirnames[:] = sorted(
+            dirname
+            for dirname in dirnames
+            if not is_git_ignored(current_path / dirname, resolved_ignore_root)
+        )
+        yield current_path, dirnames, sorted(filenames)
+
+
+def iter_unignored_markdown_files(
+    root: Path,
+    *,
+    ignore_root: Path | None = None,
+) -> Iterator[Path]:
+    """Yield visible markdown files below `root`, pruning gitignored directories."""
+    resolved_ignore_root = (ignore_root or root).resolve()
+    for current, _dirnames, filenames in walk_unignored(
+        root, ignore_root=resolved_ignore_root
+    ):
+        for filename in filenames:
+            path = current / filename
+            if path.suffix == ".md" and not is_git_ignored(path, resolved_ignore_root):
+                yield path
 
 
 def resolve_note(arg: str, root: Path) -> Path:
@@ -157,20 +232,18 @@ def resolve_note(arg: str, root: Path) -> Path:
     repo_candidate = (root / arg).resolve()
     if repo_candidate.is_file():
         if boundary not in repo_candidate.parents:
-            raise FileNotFoundError(f"Note must live under {boundary}: {repo_candidate}")
+            raise FileNotFoundError(
+                f"Note must live under {boundary}: {repo_candidate}"
+            )
         return repo_candidate
 
     name = arg if arg.endswith(".md") else f"{arg}.md"
     matches = sorted(
-        path.resolve()
-        for path in list_kb_note_paths(root)
-        if path.name == name
+        path.resolve() for path in list_kb_note_paths(root) if path.name == name
     )
     if not matches:
         matches = sorted(
-            path.resolve()
-            for path in list_kb_note_paths(root)
-            if path.stem == arg
+            path.resolve() for path in list_kb_note_paths(root) if path.stem == arg
         )
 
     if not matches:

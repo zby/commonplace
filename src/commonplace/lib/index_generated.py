@@ -14,6 +14,7 @@ from commonplace.lib.project_paths import (
     collection_for_path,
     is_replaced_archive,
     is_type_definition_content,
+    iter_unignored_markdown_files,
 )
 
 
@@ -26,11 +27,13 @@ GENERATED_HEADING_BY_SOURCE = {
 }
 
 
-def collect_notes_by_tag(collection_dir: Path) -> dict[str, list[tuple[Path, str, str]]]:
+def collect_notes_by_tag(
+    collection_dir: Path,
+) -> dict[str, list[tuple[Path, str, str]]]:
     """Scan a collection and group notes by tag."""
     by_tag: dict[str, list[tuple[Path, str, str]]] = {}
 
-    for path in sorted(collection_dir.rglob("*.md")):
+    for path in sorted(iter_unignored_markdown_files(collection_dir)):
         if is_replaced_archive(path):
             continue
         content = path.read_text(encoding="utf-8")
@@ -80,10 +83,12 @@ def index_source(path: Path, root: Path, content: str | None = None) -> str | No
     return None
 
 
-def collect_tag_index_entries(collection_dir: Path, root: Path) -> list[tuple[Path, str, str]]:
+def collect_tag_index_entries(
+    collection_dir: Path, root: Path
+) -> list[tuple[Path, str, str]]:
     """Return all tag indexes within a collection."""
     entries: list[tuple[Path, str, str]] = []
-    for path in sorted(collection_dir.rglob("*.md")):
+    for path in sorted(iter_unignored_markdown_files(collection_dir)):
         if is_replaced_archive(path):
             continue
         content = path.read_text(encoding="utf-8")
@@ -139,7 +144,9 @@ def sync_index(
         return None
 
     marker_pos_for_curated = content.find(MARKER)
-    curated_section = content[:marker_pos_for_curated] if marker_pos_for_curated != -1 else content
+    curated_section = (
+        content[:marker_pos_for_curated] if marker_pos_for_curated != -1 else content
+    )
     curated_links = extract_curated_links(curated_section)
 
     if source == "tag":
@@ -197,7 +204,7 @@ def find_index_files(args: list[str], root: Path) -> list[Path]:
 
     indexes = []
     for collection in collection_dirs(root):
-        for path in sorted(collection.rglob("*.md")):
+        for path in sorted(iter_unignored_markdown_files(collection)):
             content = path.read_text(encoding="utf-8")
             if index_source(path, root, content):
                 indexes.append(path)
