@@ -57,3 +57,9 @@ kb/reports/review-store.sqlite
 kb/reports/revise-autoreason/
 
 tmp/
+
+kb/work/agent-memory-design/
+
+kb/work/auditable-llm-editing/experiment-01-memory-derivation/
+kb/work/auditable-llm-editing/experiment-02-full-memory-article/
+
