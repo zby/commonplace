@@ -99,6 +99,7 @@ Candidate format:
 candidate_id: CAND001
 direction_id: D001
 active_part: text
+candidate_source: editor_loop
 base_text: memory-derivation.md
 base_status: status.yaml
 direction_file: directions/D001.yaml
@@ -122,6 +123,57 @@ self_check:
 ```
 
 For non-text candidates, `active_part` changes and `candidate_file` points to a complete candidate `status.yaml`.
+
+## Side-Loaded Candidate Intake
+
+A candidate does not have to be produced by the editor prompt. A human or another session may prepare a complete candidate state and submit it directly for verification. Side-loading skips candidate generation only; it does not skip active-part selection, direction, verification, acceptance, or logging.
+
+Use side-loading when a human or separate agent session has already improved the article and wants the result evaluated as a ready-made candidate without running the full editor loop.
+
+Side-loaded candidates must still provide:
+
+- one `candidate_id`,
+- one `direction_id`,
+- exactly one `active_part`,
+- a complete candidate file,
+- the current `base_text` and `base_status`,
+- a direction file describing the intended improvement and verification focus,
+- lightweight metadata marking the candidate as side-loaded.
+
+Side-loaded metadata format:
+
+```yaml
+candidate_id: CAND011
+direction_id: D011
+active_part: text
+candidate_source: side_loaded
+producer: human_or_external_session
+base_text: memory-system-article.md
+base_status: status.yaml
+direction_file: directions/D011.yaml
+candidate_file: candidates/CAND011.memory-system-article.md
+reason: "Improve article coherence under the current approved status."
+
+touched_claims: unknown
+
+gap_action:
+  type: none
+  marker: null
+
+self_check:
+  changes_unselected_parts: unknown
+  adds_new_requirement: unknown
+  changes_claims: unknown
+  changes_architecture_framing: unknown
+  hides_theory_derivation: unknown
+
+intake_notes:
+  - "Prepared outside the editor loop."
+```
+
+Use `unknown` when the intake session cannot honestly self-certify a check. The verifier must treat side-loaded metadata as provenance and triage context, not evidence that the candidate is correct.
+
+The direction file for a side-loaded candidate may be brief, but it must be specific enough for the verifier to decide whether the candidate improved the selected part. A broad rewrite that changes claims and text together is not a valid v0 side-loaded candidate unless the controller explicitly selects a claim-changing status part first or records human approval for the claim change.
 
 ## Coupled Status-Then-Text Cycle
 

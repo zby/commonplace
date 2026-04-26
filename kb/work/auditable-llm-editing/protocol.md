@@ -43,6 +43,8 @@ Use the [v0 two-loop algorithm](./v0-two-loop-algorithm.md):
 5. Verify the candidate against the frozen tuple parts.
 6. Accept, reject, or send warning-level cases to human review.
 
+The editor loop is the default candidate-production path, but not the only one. A human or separate session may side-load a complete candidate state for the selected tuple part, then send it through the same verification and acceptance rules. Side-loading skips only editor generation; it does not skip direction, active-part selection, verification, or logging.
+
 Default typed request:
 
 ```text

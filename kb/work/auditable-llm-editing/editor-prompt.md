@@ -46,6 +46,7 @@ Write two files:
 candidate_id:
 direction_id:
 active_part:
+candidate_source: editor_loop
 base_text:
 base_status:
 direction_file:

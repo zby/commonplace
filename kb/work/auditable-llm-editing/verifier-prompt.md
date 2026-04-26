@@ -11,11 +11,13 @@ You will receive:
 - `source_path` — current source text path.
 - `status_path` — current approved status file path.
 - `candidate_file` — complete candidate source or status file.
-- `candidate_metadata` — editor metadata file.
+- `candidate_metadata` — editor or side-loaded intake metadata file.
 - `direction_path` — controller-authored direction file for this loop.
 - `active_part` — one of `text`, `claim_ledger`, `presentation_spec`, `rubric`, or `gap_policy`.
 
 Read the current source, current status, direction file, candidate file, and candidate metadata. Treat the metadata as helpful context, not as evidence that the candidate is correct.
+
+`candidate_metadata.candidate_source` may be `editor_loop` or `side_loaded`. Source affects provenance only. Side-loaded candidates must satisfy the same active-part, claim-preservation, presentation, rubric, gap-policy, direction, and acceptance checks as editor-loop candidates.
 
 ## Hard Rules
 
@@ -27,6 +29,7 @@ Read the current source, current status, direction file, candidate file, and can
 - Do not accept a `text` candidate that adds a new requirement.
 - Do not accept a candidate that hides the theory-to-requirement derivation.
 - For status-field candidates, decide whether the accepted status would require a follow-up text candidate.
+- Do not lower acceptance standards because a candidate was side-loaded.
 - Use `needs_human_review` for real tradeoffs, ambiguous warnings, or plausible status defects.
 
 ## Verification Tasks
@@ -85,6 +88,7 @@ verification:
   direction_file:
   candidate_file:
   metadata_file:
+  candidate_source:
 
   frozen_parts:
     result: pass
