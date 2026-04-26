@@ -8,10 +8,4 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-## Subdirectories
-
-- [private/](./private/dir-index.md)
-
-## Files
-
 - [Paper Candidates](./paper-candidates.md)
