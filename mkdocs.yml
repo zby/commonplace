@@ -16,6 +16,7 @@ plugins:
         'agent-memory-systems/landscape.md': 'agent-memory-systems/README.md'
         'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/README.md'
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
+        'notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
         'notes/document-classification.md': 'reference/available-types.md'

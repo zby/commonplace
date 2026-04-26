@@ -51,7 +51,7 @@ Relevant Notes:
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: Deutsch and Popper are allied — explanatory knowledge is the kind criticism can test; falsifier blocks operationalize one of the three tests
 - [computational-model](./computational-model-index.md) — exemplifies: Programming-language concepts reaching into KB design is explanatory reach in action
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
-- [a good agentic KB maximizes contextual competence](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — extends: places reach as the quality criterion within a full theory connecting learning operations to knowledge properties
+- [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — extends: reach affects the value of accumulated knowledge, but ingress still has to preserve how future agents should find, combine, and rely on it
 
 Distilled into:
 

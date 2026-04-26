@@ -67,7 +67,7 @@ A third operation, distinct from both constraining and distillation: positing a 
 
 ## Synthesis
 
-- [An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — accumulation as the basic operation plus three transformation operations (constraining, distillation, discovery) mapped to three knowledge properties (trustworthy, discoverable, composable) serving contextual competence under bounded context; reach as the quality dimension of what's accumulated
+- [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — accumulation preserves material, but ingress work is what gives remembered material handles, scope, relationships, provenance, trust signals, and lifecycle pressure
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve (dilution, compositional collapse), not the hard token limit; programmatic constructability is the genuine differentiator
 - [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — catalog of twelve traditions with transfer assessment: what's already working, what's plausible, and what blocks transfer (optimization target mismatch, feedback absence, different failure modes)
 
@@ -111,6 +111,8 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — o
 
 ## Other tagged notes <!-- generated -->
 
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) - Frames discoverable, composable, trusted remembered knowledge as the minimal artifact-quality basis for agent memory under bounded context.
+- [An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) - Retired note kept as a backlink target; its general memory-quality claim and KB-specific ingress claim now live in narrower successor notes.
 - [Apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) - When framework-owned tool loops recover from broken tools via agent workarounds, final success stops being a reliable signal that the underlying scripts and workflows are healthy
 - [Automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) - Generating synthesis candidates (cross-note connections, novel combinations) is easy — LLMs do it readily. The hard part is evaluating whether a candidate is genuine insight or noise.
 - [Brainstorming: how reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) - Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently

@@ -52,7 +52,7 @@ Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: bounded context makes co-loading capacity the scarce resource
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: discovery requires co-presence of multiple particulars
-- [a good agentic KB maximizes contextual competence](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — extends: composability as one of three properties; short notes compose better
+- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) — extends: composability as one of three memory properties; short notes compose better
 - [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
 - [evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: title-level scanning for breadth, full loading for depth

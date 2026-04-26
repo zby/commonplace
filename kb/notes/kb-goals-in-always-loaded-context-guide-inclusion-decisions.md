@@ -67,4 +67,4 @@ Relevant Notes:
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: adds domain scope as a new invariant (Layer 1) in the control-plane model
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: goals must be always-loaded because the inclusion question arises every session
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the structural sections of the fragment are generated; only goals require human input
-- [a good agentic KB maximizes contextual competence](./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — grounds: the reach criterion and quality theory that goals complement but don't replace
+- [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — grounds: goals complement artifact-quality and ingress constraints but do not replace them

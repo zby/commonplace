@@ -22,3 +22,5 @@ Agent memory notes treat memory as part of agent architecture, not just storage.
 
 ## Other tagged notes <!-- generated -->
 
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) - Frames discoverable, composable, trusted remembered knowledge as the minimal artifact-quality basis for agent memory under bounded context.
+- [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) - Accumulation preserves material, but usable agent memory requires ingress work that adds handles, scope, relationships, provenance, trust signals, and lifecycle pressure.
