@@ -8,13 +8,8 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-## Subdirectories
-
-- [experiment-01-memory-derivation/](./experiment-01-memory-derivation/dir-index.md)
-
-## Files
-
 - [Editor Prompt](./editor-prompt.md)
+- [Experiment Conclusion](./experiment-conclusion.md)
 - [Failure Log](./failure-log.md)
 - [Minimal Writing State Template](./state-template.md)
 - [Protocol](./protocol.md)

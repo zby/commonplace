@@ -9,7 +9,6 @@ index_source: directory
 ← [Parent](../dir-index.md)
 
 - [Activate Behavior-Changing Memory Before The Mistake](./activate-behavior-changing-memory.md) *(note)* - Behavior-changing memory must activate before relevant actions rather than waiting for explicit retrospective search
-- [The adaptation survey corroborates memory requirements but misses artifact-role governance](./adaptation-survey-corroborates-memory-requirements.md) *(note)* - The agentic-adaptation survey supports the memory requirements map by treating memory and skills as adaptive tools, but it needs artifact-role governance to become design guidance
 - [Create Memory Directly](./create-memory-directly.md) *(note)* - Direct memory creation preserves live understanding by writing useful artifacts before later trace extraction loses structure
 - [Evaluate Memory By Effects, Not By Existence](./evaluate-memory-by-effects.md) *(note)* - Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and source alignment
 - [Import External Knowledge Into Internal Form](./import-external-knowledge.md) *(note)* - Agent memory systems need import paths when authoritative project knowledge already exists outside the memory substrate
@@ -19,4 +18,5 @@ index_source: directory
 - [Promote Only When Future Value Exceeds Maintenance Cost](./promote-only-when-value-exceeds-cost.md) *(note)* - Candidate memory should become durable only when future retrieval or activation value exceeds review and maintenance cost
 - [Retire, Redact, Supersede, And Relax Memory](./retire-redact-supersede-relax.md) *(note)* - Memory systems need lifecycle operations for redaction, decay, supersession, retirement, relaxation, and temporal validity
 - [Serve Multiple Consumers, Not One Retrieval Interface](./serve-multiple-consumers.md) *(note)* - Memory systems need multiple surfaces because acting, scheduling, review, learning, governance, and active work consume memory differently
+- [The adaptation survey corroborates memory requirements but misses artifact-role governance](./adaptation-survey-corroborates-memory-requirements.md) *(note)* - The agentic-adaptation survey supports the memory requirements map by treating memory and skills as adaptive tools, but it needs artifact-role governance to become design guidance
 - [Use Trace-Derived Extraction As Meta-Learning](./use-trace-derived-extraction.md) *(note)* - Trace-derived extraction is an after-the-fact learning path that must respect signal quality, review, and artifact versus weight-learning boundaries

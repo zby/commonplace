@@ -13,11 +13,15 @@ Navigation: [directory index](./dir-index.md).
 
 **Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and optionally add a standard note under `source-only/` when the system needs a stable place in this collection. The [comparative review](./agentic-memory-systems-comparative-review.md) synthesises across both tiers. Database-backed memory systems (Mem0, Graphiti, Letta, A-MEM, AgeMem) currently have only lightweight coverage via ingest reports in `kb/sources/`.
 
+Coverage planning: [Adaptation survey review candidates](./adaptation-survey-review-candidates.md) maps the agentic-adaptation survey's memory and skill systems to existing reviews and likely additions.
+
 ## Systems
 
 - [ACE](./reviews/ace.md) — playbook-learning loop with generator, reflector, and curator roles; strongest nearby artifact-learning analogue to Autocontext, with bullet-level helpful/harmful counters but an append-heavy maintenance path
 - [Agent-R](./reviews/agent-r.md) — iterative self-training pipeline that mines MCTS search trees into corrected conversation traces and fine-tuning data; clearest search-to-weights learning system in this queue
 - [Agent Skills for Context Engineering](./reviews/agent-skills-for-context-engineering.md) — skill-based context engineering reference library loaded as agent guidance; strong on operational patterns, no learning theory
+- [Agent Workflow Memory](./reviews/agent-workflow-memory.md) — web-agent workflow induction system that distills annotated examples and successful task trajectories into reusable website-scoped prompt workflows; strong trace-to-procedure baseline, but evidence and lifecycle stay outside the workflow artifact
+- [AgentFly](./reviews/AgentFly.md) — Memento planner-executor research agent that turns judged benchmark runs into JSONL case memory and optional trained case-selector weights for planner prompt reuse
 - [AgeMem](./source-only/agemem.md) — source-only paper coverage of an RL-trained LTM/STM memory-management policy; trace-derived trajectory-to-weights case, but no local code-inspected review
 - [Archie](./reviews/archie.md) — Arch Linux config repo with Stow-managed multi-root deployment, Incus dev VMs, and agent-executable work-item docs; strong operational packaging, no real knowledge-learning loop
 - [Ars Contexta](./reviews/arscontexta.md) — Claude Code plugin that generates knowledge systems from conversation; ancestor of our KB, upstream source for link semantics and title-as-claim. Includes the "Agentic Note-Taking" article series (@molt_cornelius) — first-person agent testimony from inside the system
@@ -64,6 +68,7 @@ Navigation: [directory index](./dir-index.md).
 - [MentisDB](./reviews/mentisdb.md) — hash-chained semantic memory ledger with additive ranked retrieval, agent key registry, and immutable skill versioning; strongest reviewed example here of service-shaped durable memory plus a real skill-lifecycle layer
 - [Mem0](https://github.com/mem0ai/mem0) — two-phase add pipeline (extract facts + LLM-judged CRUD reconciliation); purest production example of automated accretion-without-synthesis in the surveyed systems *(lightweight coverage only — ingest report, no repo review)*
 - [Memori](./reviews/Memori.md) — Python/TypeScript SDK and hosted memory layer with LLM-client interception, entity/process/session scoping, BYODB storage, conversation/agent-trace augmentation into facts/triples/summaries, and compact prompt-time recall
+- [MemoryOS](./reviews/MemoryOS.md) — hierarchical conversational memory library plus MCP server that promotes user/assistant dialogue into short-term buffers, mid-term sessions, long-term profile and knowledge stores, with JSON/FAISS and ChromaDB variants
 - [MemPalace](./reviews/mempalace.md) — local-first memory system with verbatim Chroma drawers, wing/room retrieval priors, a sidecar SQLite fact graph, and optional AAAK compression; strongest reviewed reminder so far that raw storage plus good retrieval can outrun heavier extraction stories
 - [Meta-Harness](./reviews/meta-harness.md) — Stanford IRIS Lab outer loop for optimizing task-specific harness code from raw traces, with Claude-proposed memory/scaffold candidates, benchmark-gated promotion, and executable artifacts as the learned substrate
 - [MiroShark](./reviews/MiroShark.md) — document-to-social-simulation stack with Neo4j graph extraction, cross-platform round memory, heuristic belief drift, and ReACT reporting; strongest nearby reference for graph-grounded simulation loops
