@@ -68,7 +68,7 @@ A third operation, distinct from both constraining and distillation: positing a 
 ## Synthesis
 
 - [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — accumulation preserves material, but ingress work is what gives remembered material handles, scope, relationships, provenance, trust signals, and lifecycle pressure
-- [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve (dilution, compositional collapse), not the hard token limit; programmatic constructability is the genuine differentiator
+- [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve (dilution, compositional collapse, and relevance/interference), not the hard token limit; programmatic constructability is the genuine differentiator
 - [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — catalog of twelve traditions with transfer assessment: what's already working, what's plausible, and what blocks transfer (optimization target mismatch, feedback absence, different failure modes)
 
 ## Oracle & Verification
