@@ -1,0 +1,193 @@
+{
+  "source": "https://x.com/ashpreetbedi/status/2048817143974613089",
+  "captured": "2026-04-27T18:29:20.288781+00:00",
+  "family": "x-article",
+  "status_id": "2048817143974613089",
+  "conversation_id": "2048817143974613089",
+  "target_post": {
+    "edit_history_tweet_ids": [
+      "2048817143974613089"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/suj0MIw2Cm",
+          "expanded_url": "http://x.com/i/article/2048807958247542784",
+          "display_url": "x.com/i/article/2048\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2048807958247542784"
+        }
+      ]
+    },
+    "article": {
+      "entities": {
+        "code": [
+          {
+            "language": "python",
+            "code": "from agno.agent import Agent\nfrom agno.context.slack import SlackContextProvider\nfrom agno.context.gdrive import GDriveContextProvider\nfrom agno.context.database import DatabaseContextProvider\n\nslack = SlackContextProvider(id=\"slack\", token=...)\ndrive = GDriveContextProvider(id=\"drive\", service_account_file=...)\ncrm = DatabaseContextProvider(id=\"crm\", sql_engine=engine)\n\nagent = Agent(\n    model=...,\n    tools=[*slack.get_tools(), *drive.get_tools(), *crm.get_tools()],\n)",
+            "content": "```python\nfrom agno.agent import Agent\nfrom agno.context.slack import SlackContextProvider\nfrom agno.context.gdrive import GDriveContextProvider\nfrom agno.context.database import DatabaseContextProvider\n\nslack = SlackContextProvider(id=\"slack\", token=...)\ndrive = GDriveContextProvider(id=\"drive\", service_account_file=...)\ncrm = DatabaseContextProvider(id=\"crm\", sql_engine=engine)\n\nagent = Agent(\n    model=...,\n    tools=[*slack.get_tools(), *drive.get_tools(), *crm.get_tools()],\n)\n```"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/12_github.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/02_web_exa_mcp.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/05_slack.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/tree/main/cookbook/12_context"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/04_database_read_write.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/03_web_parallel.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/09_web_plus_slack.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/scout"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/07_google_drive.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/11_web_parallel_mcp.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/12_github.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/tree/main/cookbook/12_context"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/06_mcp_server.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/00_filesystem.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/01_web_exa.py"
+          },
+          {
+            "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/04_database_read_write.py"
+          }
+        ]
+      },
+      "plain_text": "If you've built an agent with a decent number of tools, you've hit the three walls:\nContext pollution from too many tools\nDegrading performance from overlapping scopes \nThe main agent forgets its job because its context is all tool instructions\nIf you disagree, try giving an agent access to Slack, Google Drive, and Notion at the same time. Let me know if search works.\nI've been testing a new protocol that fixes these issues, and the early results are good enough to share broadly.\nThe three walls\nContext pollution. Every tool takes up precious context. \n\nSchemas, descriptions, example usage, all of it lands in the system prompt. A Slack toolkit is 8 to 12 tools. Gmail is 6 to 10. Calendar another 6. Drive, GitHub, your CRM, the web. You're at 50 tools before adding anything custom. Past 20, models start hallucinating tools that don't exist or calling tools with the wrong shape.\nBlurry scopes don't compose. Two tools both take a workspace argument: one is Slack's, one is Google's. Search in one MCP collides with search in another. send_message could be Slack, email, or your CRM. \n\nThe agent picks wrong half the time, and no naming convention fixes it because the same word legitimately means different things in different sources. The minute you compose tools from sources you don't control (MCP servers, third-party SDKs, other teams), you get overlap, and the model has no reliable way to disambiguate.\nTool-use logic lives with the main agent. This is the deepest wall, and the one that causes the most issues. For an agent to use Slack well, the system prompt has to explain Slack: look up the user ID before you DM them, resolve a channel name to an ID before you post. That's hundreds of tokens of Slack-specific guidance. Now do that for Gmail. For Calendar. \n\nThe system prompt becomes the union of every API's quirks. Every turn carries every rule, even when the user just asked about Slack. The main agent is stuck reasoning about both the user's question and the mechanics of every API it might call. Adding a source means editing the prompt and praying nothing else regresses.\nThe missing layer\nToday the canonical agent shape is: Agent <- Tools\nor, with MCP: Agent <- MCP server <- Tools\nor, with Skills: Agent <- Skill instructions <- Tools\nIn all cases the agent sees the raw tool surface of every source. Every Slack tool, every Drive tool, every CRM tool. The agent's prompt has to contain how to use every one of them.\nThe shape I've been testing puts a thin layer in between:\nAgent <-> ContextProvider\nEach ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)\nTo the calling agent, it exposes exactly two tools:\nquery_<source>(question) for natural-language reads\nupdate_<source>(instruction) for natural-language writes\nThat's it. The main agent doesn't see Slack's twelve tools. It sees query_slack and update_slack. It doesn't see Drive's quirks. It sees query_drive. Add ten more sources and the agent's tool surface stays linear at max 2N.\nBehind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness. It runs in its own context, returns an answer, and the main agent gets a clean result.\n \nThe agent sees four tools: query_slack, query_drive, query_crm, update_crm. \nWhat about Skills?\nSkills are a great attempt at wall 3. A skill packages task-specific instructions (\"here's how to use Slack\") into a module that the model loads when relevant, instead of carrying it in the system prompt full-time.\nSkills move task knowledge out of the always-on prompt and into something more conditional. But the Slack tools will still land on the agent after the skill is invoked. Load 2 skills and search will still collide. In fact there's a higher chance of conflicting skills messing up your agent without you even realizing.\nContextProvider + skills work better together. \nA Slack ContextProvider's sub-agent can itself load a Slack skill, and that's where the skill does its best work, in the context of the thing actually executing against Slack, not in the main agent that just wanted an answer.\nThe split is roughly: skills compress how to do a task. ContextProvider hides that there's a task until the main agent decides to delegate one.\nExamples\nA full set of cookbooks live in cookbook/12_context. \nSources covered out of the box. \nFilesystem (00), database (04), Slack (05), Google Drive (07), GitHub (12), and web via Exa or Parallel, direct SDK or MCP endpoint (01, 02, 03, 11). Every provider follows the same query_<id> / update_<id> shape.\nRead/write split with real security. \n04_database_read_write.py spins up a SQLite DB and has the agent insert a contact, read it back, and verify with direct SQL. Read and write go through separate sub-agents with separate engines. 12_github.py does the same shape over a real repo: reads through a read-only sub-agent on a clone, writes through a sub-agent that operates on a per-session worktree on a <prefix>/<task> branch and ends in a PR. The agent cannot push to the main branch, but can read from it.\nCompositional multi-source. \n09_web_plus_slack.py is the shape flat tool layouts can't do without orchestration code. The agent pulls topics from a Slack channel, runs a per-topic web search, and returns a briefing tying each internal thread to an external reference. \nMCP wrapper. \n06_mcp_server.py wraps any MCP server (stdio or HTTP) as a single query_<id> tool. The sub-agent's instructions are built from the server's list_tools() response at connect time, so the calling agent never sees stale tool docs. This is the move that collapses a 50-tool MCP server to 1 tool from the main agent's view.\nSurprises and open questions\nA few interesting observations.\nSub-agents are cheaper than expected. I assumed the extra hops would dominate. They don't. The main agent's context is so much smaller that its calls are faster and better, and the sub-agent only fires on turns that touch its source. On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.\nThe main agent's prompt got significantly smaller. I expected to need a bit of orchestration logic, but nope. With a uniform surface, the routing rules collapse to \"pick the right query_<source>\". \n\ngpt-5.4 just works out of the box, and needs zero guidance on how to use a source. This is the kind of magic you need to see to really understand why i'm so excited about this pattern.\nComposition just works. Two providers can read each other in the same turn (query_slack for the discussion, query_drive for the doc) and the main agent writes the synthesis. Multiple sources work much better together.\nAdding a source is one line. Removing one is one line. Swapping a backend (Exa to Parallel for the web provider) stays inside the provider. The agent doesn't notice. And sources just work, because I don't need to update the agent's prompt on how to use them.\nA few things I'm still working through.\nHow thin can the main agent's prompt get? I've been hill-climbing this with evals and seeing how far I can push it. Is there a world where I give zero instructions at all?\nCaching across calls in a session. The same query_<source>(\"who's on the X channel\") shouldn't re-do the work two turns later.\nPer-user authentication that survives the hop. Partially solved (Scout passes user_id, session_id, metadata, and dependencies through to the sub-agent). More to do for OAuth-shaped sources.\nWhen to expose underlying tools instead. Some sources benefit from the agent driving the tool calls directly, usually when the source is small enough that the schema cost is low and the agent's reasoning is the limiting factor. The protocol has a mode for this. I'm still figuring out where the line sits.\nLinks:\nExamples\nScout",
+      "title": "Context providers: the missing layer between agents and tools",
+      "preview_text": "If you've built an agent with a decent number of tools, you've hit the three walls:\nContext pollution from too many tools\nDegrading performance from overlapping scopes \nThe main agent forgets its job",
+      "cover_media": "3_2048808031639777280"
+    },
+    "author_id": "10350082",
+    "created_at": "2026-04-27T17:30:46.000Z",
+    "text": "https://t.co/suj0MIw2Cm",
+    "id": "2048817143974613089",
+    "conversation_id": "2048817143974613089"
+  },
+  "posts": [
+    {
+      "created_at": "2026-04-27T17:30:46.000Z",
+      "article": {
+        "cover_media": "3_2048808031639777280",
+        "plain_text": "If you've built an agent with a decent number of tools, you've hit the three walls:\nContext pollution from too many tools\nDegrading performance from overlapping scopes \nThe main agent forgets its job because its context is all tool instructions\nIf you disagree, try giving an agent access to Slack, Google Drive, and Notion at the same time. Let me know if search works.\nI've been testing a new protocol that fixes these issues, and the early results are good enough to share broadly.\nThe three walls\nContext pollution. Every tool takes up precious context. \n\nSchemas, descriptions, example usage, all of it lands in the system prompt. A Slack toolkit is 8 to 12 tools. Gmail is 6 to 10. Calendar another 6. Drive, GitHub, your CRM, the web. You're at 50 tools before adding anything custom. Past 20, models start hallucinating tools that don't exist or calling tools with the wrong shape.\nBlurry scopes don't compose. Two tools both take a workspace argument: one is Slack's, one is Google's. Search in one MCP collides with search in another. send_message could be Slack, email, or your CRM. \n\nThe agent picks wrong half the time, and no naming convention fixes it because the same word legitimately means different things in different sources. The minute you compose tools from sources you don't control (MCP servers, third-party SDKs, other teams), you get overlap, and the model has no reliable way to disambiguate.\nTool-use logic lives with the main agent. This is the deepest wall, and the one that causes the most issues. For an agent to use Slack well, the system prompt has to explain Slack: look up the user ID before you DM them, resolve a channel name to an ID before you post. That's hundreds of tokens of Slack-specific guidance. Now do that for Gmail. For Calendar. \n\nThe system prompt becomes the union of every API's quirks. Every turn carries every rule, even when the user just asked about Slack. The main agent is stuck reasoning about both the user's question and the mechanics of every API it might call. Adding a source means editing the prompt and praying nothing else regresses.\nThe missing layer\nToday the canonical agent shape is: Agent <- Tools\nor, with MCP: Agent <- MCP server <- Tools\nor, with Skills: Agent <- Skill instructions <- Tools\nIn all cases the agent sees the raw tool surface of every source. Every Slack tool, every Drive tool, every CRM tool. The agent's prompt has to contain how to use every one of them.\nThe shape I've been testing puts a thin layer in between:\nAgent <-> ContextProvider\nEach ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)\nTo the calling agent, it exposes exactly two tools:\nquery_<source>(question) for natural-language reads\nupdate_<source>(instruction) for natural-language writes\nThat's it. The main agent doesn't see Slack's twelve tools. It sees query_slack and update_slack. It doesn't see Drive's quirks. It sees query_drive. Add ten more sources and the agent's tool surface stays linear at max 2N.\nBehind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness. It runs in its own context, returns an answer, and the main agent gets a clean result.\n \nThe agent sees four tools: query_slack, query_drive, query_crm, update_crm. \nWhat about Skills?\nSkills are a great attempt at wall 3. A skill packages task-specific instructions (\"here's how to use Slack\") into a module that the model loads when relevant, instead of carrying it in the system prompt full-time.\nSkills move task knowledge out of the always-on prompt and into something more conditional. But the Slack tools will still land on the agent after the skill is invoked. Load 2 skills and search will still collide. In fact there's a higher chance of conflicting skills messing up your agent without you even realizing.\nContextProvider + skills work better together. \nA Slack ContextProvider's sub-agent can itself load a Slack skill, and that's where the skill does its best work, in the context of the thing actually executing against Slack, not in the main agent that just wanted an answer.\nThe split is roughly: skills compress how to do a task. ContextProvider hides that there's a task until the main agent decides to delegate one.\nExamples\nA full set of cookbooks live in cookbook/12_context. \nSources covered out of the box. \nFilesystem (00), database (04), Slack (05), Google Drive (07), GitHub (12), and web via Exa or Parallel, direct SDK or MCP endpoint (01, 02, 03, 11). Every provider follows the same query_<id> / update_<id> shape.\nRead/write split with real security. \n04_database_read_write.py spins up a SQLite DB and has the agent insert a contact, read it back, and verify with direct SQL. Read and write go through separate sub-agents with separate engines. 12_github.py does the same shape over a real repo: reads through a read-only sub-agent on a clone, writes through a sub-agent that operates on a per-session worktree on a <prefix>/<task> branch and ends in a PR. The agent cannot push to the main branch, but can read from it.\nCompositional multi-source. \n09_web_plus_slack.py is the shape flat tool layouts can't do without orchestration code. The agent pulls topics from a Slack channel, runs a per-topic web search, and returns a briefing tying each internal thread to an external reference. \nMCP wrapper. \n06_mcp_server.py wraps any MCP server (stdio or HTTP) as a single query_<id> tool. The sub-agent's instructions are built from the server's list_tools() response at connect time, so the calling agent never sees stale tool docs. This is the move that collapses a 50-tool MCP server to 1 tool from the main agent's view.\nSurprises and open questions\nA few interesting observations.\nSub-agents are cheaper than expected. I assumed the extra hops would dominate. They don't. The main agent's context is so much smaller that its calls are faster and better, and the sub-agent only fires on turns that touch its source. On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.\nThe main agent's prompt got significantly smaller. I expected to need a bit of orchestration logic, but nope. With a uniform surface, the routing rules collapse to \"pick the right query_<source>\". \n\ngpt-5.4 just works out of the box, and needs zero guidance on how to use a source. This is the kind of magic you need to see to really understand why i'm so excited about this pattern.\nComposition just works. Two providers can read each other in the same turn (query_slack for the discussion, query_drive for the doc) and the main agent writes the synthesis. Multiple sources work much better together.\nAdding a source is one line. Removing one is one line. Swapping a backend (Exa to Parallel for the web provider) stays inside the provider. The agent doesn't notice. And sources just work, because I don't need to update the agent's prompt on how to use them.\nA few things I'm still working through.\nHow thin can the main agent's prompt get? I've been hill-climbing this with evals and seeing how far I can push it. Is there a world where I give zero instructions at all?\nCaching across calls in a session. The same query_<source>(\"who's on the X channel\") shouldn't re-do the work two turns later.\nPer-user authentication that survives the hop. Partially solved (Scout passes user_id, session_id, metadata, and dependencies through to the sub-agent). More to do for OAuth-shaped sources.\nWhen to expose underlying tools instead. Some sources benefit from the agent driving the tool calls directly, usually when the source is small enough that the schema cost is low and the agent's reasoning is the limiting factor. The protocol has a mode for this. I'm still figuring out where the line sits.\nLinks:\nExamples\nScout",
+        "title": "Context providers: the missing layer between agents and tools",
+        "preview_text": "If you've built an agent with a decent number of tools, you've hit the three walls:\nContext pollution from too many tools\nDegrading performance from overlapping scopes \nThe main agent forgets its job",
+        "entities": {
+          "code": [
+            {
+              "language": "python",
+              "code": "from agno.agent import Agent\nfrom agno.context.slack import SlackContextProvider\nfrom agno.context.gdrive import GDriveContextProvider\nfrom agno.context.database import DatabaseContextProvider\n\nslack = SlackContextProvider(id=\"slack\", token=...)\ndrive = GDriveContextProvider(id=\"drive\", service_account_file=...)\ncrm = DatabaseContextProvider(id=\"crm\", sql_engine=engine)\n\nagent = Agent(\n    model=...,\n    tools=[*slack.get_tools(), *drive.get_tools(), *crm.get_tools()],\n)",
+              "content": "```python\nfrom agno.agent import Agent\nfrom agno.context.slack import SlackContextProvider\nfrom agno.context.gdrive import GDriveContextProvider\nfrom agno.context.database import DatabaseContextProvider\n\nslack = SlackContextProvider(id=\"slack\", token=...)\ndrive = GDriveContextProvider(id=\"drive\", service_account_file=...)\ncrm = DatabaseContextProvider(id=\"crm\", sql_engine=engine)\n\nagent = Agent(\n    model=...,\n    tools=[*slack.get_tools(), *drive.get_tools(), *crm.get_tools()],\n)\n```"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/12_github.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/02_web_exa_mcp.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/05_slack.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/tree/main/cookbook/12_context"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/04_database_read_write.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/03_web_parallel.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/09_web_plus_slack.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/scout"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/07_google_drive.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/11_web_parallel_mcp.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/12_github.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/tree/main/cookbook/12_context"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/06_mcp_server.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/00_filesystem.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/01_web_exa.py"
+            },
+            {
+              "text": "https://github.com/agno-agi/agno/blob/main/cookbook/12_context/04_database_read_write.py"
+            }
+          ]
+        }
+      },
+      "id": "2048817143974613089",
+      "conversation_id": "2048817143974613089",
+      "author_id": "10350082",
+      "edit_history_tweet_ids": [
+        "2048817143974613089"
+      ],
+      "text": "https://t.co/suj0MIw2Cm",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/suj0MIw2Cm",
+            "expanded_url": "http://x.com/i/article/2048807958247542784",
+            "display_url": "x.com/i/article/2048\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2048807958247542784"
+          }
+        ]
+      }
+    }
+  ],
+  "users": {
+    "10350082": {
+      "id": "10350082",
+      "name": "Ashpreet Bedi",
+      "username": "ashpreetbedi"
+    }
+  },
+  "thread_fetch_error": null
+}

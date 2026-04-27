@@ -54,6 +54,8 @@ Real orchestrators routinely fan out parallel calls. Parallelism changes the sch
 
 In practice, `select` cannot usually compute `||P||` exactly. It uses heuristics: token counts, known prompt templates, empirical difficulty estimates, prior relevance labels, decomposition plans, or feasibility judgments returned by earlier LLM calls. When an LLM helps judge feasibility or produce a plan, that judgment is itself another bounded call whose result is incorporated into `K`; a later `select` step consumes it symbolically. Hierarchical decomposition is therefore not a separate mechanism, but a pattern of using the same loop recursively.
 
+The ContextProvider pattern is a concrete source-scoped instance of the loop. The parent agent keeps a small action alphabet such as `query_slack` or `update_github`; `select(K)` chooses the source boundary and frames the question or instruction; `call(P)` runs inside a provider sub-agent that owns the raw tools, source quirks, permissions, and optional skills. The article's token and latency claims are not reproducible evidence from the snapshot, but the architecture strongly validates the model's decomposition mechanism: tool complexity can move out of the parent context when a source boundary gives the bounded call a cleaner frame.
+
 ## What makes selection hard
 
 The `select` function is where the optimisation lives. The first problem is that selection is sequential, not static, so the task is already closer to a control problem than to a one-shot packing problem:
@@ -79,6 +81,7 @@ Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — scoped recursion with focused context as a clean-model implementation for compositional reasoning.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](https://arxiv.org/abs/2511.09030) — maximal decomposition (m=1) as extreme clean-model instantiation; O(s ln s) cost scaling.
 - @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — the Ralph Loop (prompt → execute → observe → decide) is a concrete instance of the select/call loop; the source's runtime components map to scheduler infrastructure.
+- Ashpreet Bedi (2026). [Context providers: the missing layer between agents and tools](../sources/context-providers-the-missing-layer-between-agents-and-tools-2048817143974613089.ingest.md) — source-scoped provider sub-agents instantiate `select/call` by hiding raw tool surfaces behind bounded query/update calls.
 
 Relevant Notes:
 
