@@ -23,6 +23,7 @@ Even before underspecified semantics enter, there are several objective terms:
 - peak prompt size
 - information loss from compression
 - preservation of cross-item interactions needed by later synthesis
+- cost of verifying or reviewing intermediate outputs
 
 This makes the problem different from ordinary knapsack-style context packing. The scheduler must trade off:
 
@@ -30,8 +31,9 @@ This makes the problem different from ordinary knapsack-style context packing. T
 - **aggressive summarisation** against the risk of destroying interactions needed for synthesis
 - **many narrow calls** against the overhead of orchestration
 - **loading raw state-derived material** against **saving task-shaped intermediate ones**
+- **context-fitting splits** against the cost of checking and merging their outputs
 
-The first two are about optionality — paying context now to keep options open later. The latter two are about cost structure — choosing between representations and decompositions with different efficiency profiles. Both kinds of trade-off are present in every scheduling decision.
+The first two are about optionality — paying context now to keep options open later. The latter three are about cost structure — choosing between representations and decompositions with different efficiency, verification, and merge profiles. Both kinds of trade-off are present in every scheduling decision.
 
 ## Working heuristics
 
@@ -44,6 +46,8 @@ These are proposed rules, not established principles. The first two have direct 
 **Save reusable intermediate items in scheduler state.** Relevance labels, extracted claims, and task-specific summaries are worth keeping when they are much cheaper to reuse than reconstructing the originals.
 
 **Delay expensive co-loading until interactions justify it.** Joint loading is valuable only when the task depends on relations between items rather than independent judgments about them.
+
+**Decompose toward verifiable boundaries.** Context fit is not the only objective. A decomposition can be necessary simply because the unsplit task exceeds effective context, even if the split does not improve verification. But when several decompositions fit, prefer boundaries whose outputs have cheaper completion checks, clearer contracts, or lower-cost review. Treat splits that improve fit while making verification harder as trade-offs, not free wins.
 
 **Commit low-degree-of-freedom choices first.** When one decision has only a narrow feasible set and another has many workable options, decide the constrained one first. This preserves optionality and avoids consuming scarce valid placements too early. Example: in a multi-source synthesis task, the output schema (few valid options) should be fixed before selecting which sources to foreground (many workable orderings).
 
@@ -61,6 +65,8 @@ MAKER ([Meyerson et al., 2025](https://arxiv.org/abs/2511.09030)) demonstrates t
 
 Both sources operate in the hard-oracle regime (mechanically verifiable sub-step correctness). Whether these heuristics hold equally for soft-oracle tasks — synthesis, creative work, ambiguous judgment — remains untested.
 
+The intelligent-delegation framework (Tomasev, Franklin, and Osindero, 2026) adds the verification side of the scheduling problem. Its contract-first decomposition rule says that subtasks that remain too subjective, costly, or complex to verify should be split further or routed with stronger oversight. That does not make verification the only reason to decompose; bounded context can force decomposition before verification improves. It does mean the scheduler should track checkability as a separate objective alongside fit.
+
 ## Open Questions
 
 - Which classes of lossy derived items preserve enough structure for later synthesis?
@@ -72,6 +78,7 @@ Both sources operate in the hard-oracle regime (mechanically verifiable sub-step
 Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — finer decomposition and focused context recover full performance from compositional collapse.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](https://arxiv.org/abs/2511.09030) — maximal decomposition achieves O(s ln s) cost scaling on million-step tasks.
+- Tomasev, Franklin, and Osindero (2026). [Intelligent AI delegation: Engineering frameworks for delegating decisions to machines](https://arxiv.org/abs/2604.00389) — contract-first decomposition treats verifiability as a separate constraint on task splitting and oversight.
 
 Relevant Notes:
 
@@ -81,3 +88,4 @@ Relevant Notes:
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: "exploit clean frames recursively" implements the topology → isolation step of a proposed causal chain
 - [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — certifies: heuristic-guided transformations stay within the model's program space
+- [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — frames: verification cost is a separate constraint from context fit, especially when decomposed work is delegated or automated
