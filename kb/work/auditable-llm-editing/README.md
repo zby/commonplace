@@ -45,6 +45,7 @@ The experiment is not to build a complete handcrafted ontology of writing. The s
 - [verifier-prompt](./verifier-prompt.md) — sub-agent prompt for independently checking candidates.
 - [state-template](./state-template.md) — minimal writing-state schema for trials.
 - [failure-log](./failure-log.md) — place to record drift, over-extraction, rubric failure, and presentation damage.
+- [experiment-conclusion](./experiment-conclusion.md) — current takeaway from the first two trials.
 
 ## Experiments
 
