@@ -41,4 +41,5 @@ The main failure is interface collapse: all memory becomes search, chat recall, 
 Relevant Notes:
 
 - [A functioning KB needs a workshop layer, not just a library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - grounds the active-work versus retrospective-memory distinction
+- [Agents navigate by deciding what to read next](../agents-navigate-by-deciding-what-to-read-next.md) - grounds progressive-disclosure pointers as a way to make load decisions cheaper
 - [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) - explains why retrieval alone is insufficient
