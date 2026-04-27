@@ -8,11 +8,13 @@ status: seedling
 
 # Decomposition heuristics for bounded-context scheduling
 
-These rules are motivated by the [symbolic scheduling model](./bounded-context-orchestration-model.md). Each heuristic is a transformation between programs — and since [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), applying a heuristic keeps you within the model's program space. The rules are preliminary — we expect to discover more as the model develops.
+Bounded-context scheduling is not just choosing what fits in a prompt. In the [symbolic scheduling model](./bounded-context-orchestration-model.md), the scheduler chooses what to expose to each LLM call, what to keep in symbolic state, and which intermediate products to preserve for later calls.
+
+The heuristics below are preliminary transformations within that program space. Since [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), applying a heuristic still leaves the system inside the same model. The question is which transformations improve the schedule.
 
 ## What is being optimised
 
-The scheduler has to choose a decomposition, a prompt-construction strategy, and a schedule of state transformations that improves the task result while keeping each LLM call inside its effective context budget.
+The scheduler chooses a decomposition, a prompt-construction strategy, and a sequence of state updates that improves the task result while keeping each LLM call inside its effective context budget.
 
 Even before underspecified semantics enter, there are several objective terms:
 
@@ -23,7 +25,7 @@ Even before underspecified semantics enter, there are several objective terms:
 - Preservation of cross-item interactions needed by later synthesis
 - Cost of verifying or reviewing intermediate outputs
 
-This makes the problem different from ordinary knapsack-style context packing. The scheduler must trade off:
+These terms make the problem different from ordinary knapsack-style context packing. The scheduler must trade off:
 
 - **Early filtering** against the risk of discarding something that matters later
 - **Aggressive summarisation** against the risk of destroying interactions needed for synthesis
@@ -35,7 +37,9 @@ The first two are about optionality — paying context now to keep options open 
 
 ## Working heuristics
 
-These are proposed rules, not established principles. Direct support exists for symbolic exactness, recursive clean frames, delaying co-loading at the zero-interaction extreme, and verifiability-aware boundaries; the remaining heuristics are conjectured from the model's structure and practice.
+These are proposed rules, not established principles. They cluster around three moves: keep exact work outside the LLM window, preserve the interfaces later synthesis needs, and split work where outputs are cheap to verify or merge.
+
+Direct support exists for symbolic exactness, recursive clean frames, delaying co-loading at the zero-interaction extreme, and verifiability-aware boundaries. The remaining heuristics are conjectured from the model's structure and practice.
 
 **Separate selection from joint reasoning.** First use cheap narrow calls to discover sparsity. Only then pay for wide calls that need multiple items together. When the relevant set is irreducibly dense — most items interact with most others — this separation has limited room to operate; the scheduler may need to fall back on hierarchical merging with explicit interface preservation rather than filtering.
 
@@ -57,13 +61,17 @@ These are proposed rules, not established principles. Direct support exists for 
 
 ## Empirical grounding
 
-ConvexBench, a benchmark for LLM recognition of convex symbolic expressions under deep composition ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)), supports two rules through distinct mechanisms. "Use symbolic operations wherever exactness is available" is confirmed by the design: expression structure is recovered via deterministic AST parsing rather than LLM calls. Separately, "exploit clean frames recursively" is supported by two results. Scoped recursion — pruning history to retain only direct dependencies — recovers F1=1.0 at all depths from F1≈0.2 under flat accumulation. Finer decomposition (10-character sub-functions) also consistently outperforms coarser decomposition. The F1 recovery comes from the focused-context scoping strategy (an LLM-call management technique), not from the symbolic parsing step; these are distinct interventions in the source. Both results hold despite trivial token counts (5,331 tokens at depth 100), confirming that the rules respond to compositional complexity, not volume.
+The evidence is narrow but useful because it isolates mechanisms. ConvexBench, a benchmark for LLM recognition of convex symbolic expressions under deep composition ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)), supports two rules through distinct mechanisms. Its design confirms "use symbolic operations wherever exactness is available": expression structure is recovered via deterministic AST parsing rather than LLM calls.
 
-MAKER, a maximal-decomposition agent system ([Meyerson et al., 2025](https://arxiv.org/abs/2511.09030)), demonstrates the extreme case: maximal decomposition to m=1 (one step per bounded call) achieves O(s ln s) cost scaling and solves a 1,048,575-step task with zero errors. Without decomposition, cost scales exponentially. This confirms "delay expensive co-loading until interactions justify it" at the zero-interaction extreme: each step depends only on the current disk configuration, so independent calls dominate joint reasoning. The O(s ln s) scaling comes from two parts. Decomposition supplies the s factor, while MAKER's voting-based error correction (first-to-ahead-by-k) supplies the ln s term; decomposition alone does not guarantee the bound. MAKER also illustrates the limit of "exploit clean frames recursively": when every sub-task is atomic, the recursive pattern degenerates to a flat sequence of maximally focused calls — though the source does not frame its architecture as recursive.
+ConvexBench also supports "exploit clean frames recursively." Scoped recursion — pruning history to retain only direct dependencies — recovers F1=1.0 at all depths from F1≈0.2 under flat accumulation. Finer decomposition (10-character sub-functions) also consistently outperforms coarser decomposition. The F1 recovery comes from the focused-context scoping strategy, not from symbolic parsing; these are distinct interventions in the source. Both results hold despite trivial token counts (5,331 tokens at depth 100), confirming that the rules respond to compositional complexity, not volume.
+
+MAKER, a maximal-decomposition agent system ([Meyerson et al., 2025](https://arxiv.org/abs/2511.09030)), demonstrates the zero-interaction extreme. Maximal decomposition to m=1 (one step per bounded call) achieves O(s ln s) cost scaling and solves a 1,048,575-step task with zero errors; without decomposition, cost scales exponentially. This supports "delay expensive co-loading until interactions justify it" at the boundary case where each step depends only on the current disk configuration, so independent calls dominate joint reasoning.
+
+The O(s ln s) scaling comes from two parts. Decomposition supplies the s factor, while MAKER's voting-based error correction (first-to-ahead-by-k) supplies the ln s term; decomposition alone does not guarantee the bound. MAKER also illustrates the limit of "exploit clean frames recursively": when every sub-task is atomic, the recursive pattern degenerates to a flat sequence of maximally focused calls — though the source does not frame its architecture as recursive.
 
 Both sources operate in the hard-oracle regime, where sub-step correctness is mechanically checkable. Whether these heuristics hold equally for soft-oracle tasks, where correctness depends on judgment or proxy scores — synthesis, creative work, ambiguous judgment — remains untested.
 
-The intelligent-delegation framework (Tomasev, Franklin, and Osindero, 2026) adds the verification side of the scheduling problem. Its contract-first decomposition rule says that subtasks that remain too subjective, costly, or complex to verify should be split further or routed with stronger oversight. That does not make verification the only reason to decompose; bounded context can force decomposition before verification improves. It does mean the scheduler should track checkability as a separate objective alongside fit.
+The intelligent-delegation framework (Tomasev, Franklin, and Osindero, 2026) adds the verification side of the scheduling problem. Its contract-first decomposition rule says that subtasks that remain too subjective, costly, or complex to verify should be split further or routed with stronger oversight. Verification is not the only reason to decompose; bounded context can force decomposition before verification improves. But the scheduler should still track checkability as a separate objective alongside fit.
 
 ## Open Questions
 
