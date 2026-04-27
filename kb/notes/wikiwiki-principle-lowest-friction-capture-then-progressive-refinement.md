@@ -14,7 +14,7 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 
 1. **The original wiki.** Cunningham's WikiWikiWeb (1995) was built around two properties: anyone can create a page instantly (lowest capture friction), and anyone can edit it later (progressive refinement). The name "wiki" comes from Hawaiian "wikiwiki" meaning "quick" — speed of capture was the core design value. Pages started rough and improved through repeated editing, not through a draft→review→publish pipeline.
 
-2. **Our type ladder mirrors this.** The [document classification](../reference/available-types.md) hierarchy follows the same pattern:
+2. **Our type ladder mirrors this.** The [available types](../reference/available-types.md) hierarchy follows the same pattern:
    - **`text`** — no frontmatter, just write. Zero friction, like creating a wiki page.
    - **`note`** — add frontmatter, claim title, connections. Now findable.
    - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md).
@@ -41,7 +41,7 @@ This connects to [codification](./definitions/codification.md): codification is 
 
 Relevant Notes:
 
-- [document-classification](../reference/available-types.md) — the type ladder this principle animates: text → note → structured-claim
+- [available types](../reference/available-types.md) — the type ladder this principle animates: text → note → structured-claim
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the structured-claim type that sits at the top of the refinement ladder
 - [codification](./definitions/codification.md) — the general pattern; the wiki principle is the UX requirement that makes codification practical
 - [constraining and distillation both trade generality for compound](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost

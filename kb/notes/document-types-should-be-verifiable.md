@@ -101,7 +101,7 @@ The practical test: an agent that ignores the type field entirely and reads ever
 
 Relevant Notes:
 
-- [document-classification](../reference/available-types.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
+- [available types](../reference/available-types.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
 - [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — grounds the underspecification argument: type assignment is itself a constraining decision, and the tolerance of misclassification mirrors the generator/verifier pattern
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it

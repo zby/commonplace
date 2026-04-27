@@ -9,4 +9,3 @@ index_source: directory
 ← [Parent](../dir-index.md)
 
 - [A toy model of archive readability](./a-toy-model-of-archive-readability.md)
-- [How a system built around prompt limitations would look](./how-a-system-built-around-prompt-limitations-would-look.md)

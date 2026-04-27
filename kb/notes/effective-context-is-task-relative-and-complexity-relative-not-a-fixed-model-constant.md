@@ -1,5 +1,5 @@
 ---
-description: Synthesizes Paulsen MECW, ConvexBench, and GSM-DC — usable context varies with task type, compositional complexity, and irrelevant context load, so nominal window size is a misleading abstraction
+description: Synthesizes Paulsen MECW, ConvexBench, GSM-DC, and the web-agent long-context benchmark — usable context varies with task type, compositional complexity, and irrelevant context load, so nominal window size is a misleading abstraction
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model, foundations]
@@ -10,13 +10,15 @@ status: seedling
 
 How much context an LLM can actually use is not a fixed property of the model. It depends on the task and on the prompt's effective difficulty for the model. A model may handle a large window for one task shape and fail at a much smaller window for another. Two prompts at similar token counts may consume very different amounts of effective budget — one compositionally shallow and cleanly framed, the other requiring deep structured reasoning or burying the relevant information in a harder-to-use presentation.
 
-Three independent sources converge on this:
+Four independent sources converge on this:
 
 **Volume varies by task type.** Paulsen ([2025](https://arxiv.org/pdf/2509.21361)) measures Maximum Effective Context Window (MECW) across 11 frontier models and finds it far smaller than advertised limits. Crucially, the threshold shifts by problem type. This rejects the common simplification that a model has one stable "usable context length."
 
 **Complexity can dominate volume.** ConvexBench ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)) shows performance collapsing with compositional depth at just 5,331 tokens — far below nominal limits — then recovering when recursive steps get focused local frames. Token count alone does not determine whether a prompt is usable.
 
 **Irrelevant context degrades effective capacity at fixed task difficulty.** GSM-DC ([Yang et al., 2025](https://arxiv.org/html/2505.18761v2)) constructs math problems as symbolic DAGs, then injects distractor nodes while holding the solution path fixed. Error scales as a power law with distractor count, and the exponent grows with reasoning depth (delta from 0.11 at depth 2 to 0.49 at depth 5). This is the clean empirical regime the first open question below asks for: volume (distractor count) varies independently of task difficulty (solution path unchanged), and the degradation is measurable. Critically, distractors degrade both reasoning path selection and arithmetic execution independently — two distinct channels through which irrelevant context reduces effective capacity.
+
+**The same pattern appears at the agent-workflow level.** Chung et al. ([2025](https://arxiv.org/html/2512.04307v1)) inject irrelevant task sequences into multi-session web-agent tasks and find success rates collapsing from 40-50% to under 10% as context grows to 150k tokens. The failure modes shift from arithmetic/path errors to loop entrapment and objective loss, but the architectural lesson is the same: nominally available context becomes unusable when irrelevant history competes with the active task. The paper's modest iRAG improvement is weak evidence that summarization alone does not replace scoping and selective loading.
 
 The synthesis is **effective context is relational**: model choice matters, task type matters, and prompt difficulty changes the effective cost of a prompt. This is weaker and cleaner than treating MECW as a single parameterized scalar `MECW(model, task_type, complexity)`. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), this note interprets that relationship more naturally as a task-shaped cost measure `||P||_t ≤ M` — the cost norm depends on what you're asking the model to do.
 
@@ -28,7 +30,7 @@ This sharpens the [context-efficiency](./context-efficiency-is-the-central-desig
 
 - ~~Is there a clean empirical regime where volume can be varied while task difficulty and compositional complexity stay mostly fixed?~~ Answered by GSM-DC: distractor count varies while the solution DAG is fixed. The regime is synthetic (math word problems), but the isolation is clean.
 - Can the task-shaped cost measure `||·||_t` be made concrete enough for useful prediction, or is it mainly explanatory?
-- Which natural-language tasks exhibit the same complexity-dominant collapse that ConvexBench shows in symbolic reasoning?
+- Which natural-language tasks exhibit the same complexity-dominant collapse that ConvexBench shows in symbolic reasoning? The web-agent benchmark is a partial answer at the workflow level: injected irrelevant task histories produce catastrophic objective loss, though it measures agentic context pollution rather than pure compositional depth.
 
 ---
 
@@ -36,6 +38,7 @@ Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — complexity can dominate context usability even at trivial token counts.
 - Paulsen (2025). [Context Is What You Need — The Maximum Effective Context Window](https://arxiv.org/pdf/2509.21361) — MECW is much smaller than MCW and varies by problem type.
 - Yang et al. (2025). [GSM-DC: How Is LLM Reasoning Distracted by Irrelevant Context?](https://arxiv.org/html/2505.18761v2) — irrelevant context degrades effective capacity at fixed task difficulty, with power-law error scaling and dual-channel degradation.
+- Chung et al. (2025). [Evaluating Long-Context Reasoning in LLM-Based WebAgents](https://arxiv.org/html/2512.04307v1) — injected irrelevant task histories degrade multi-session web-agent success and expose loop/objective-loss failure modes.
 
 Relevant Notes:
 

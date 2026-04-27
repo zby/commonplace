@@ -28,7 +28,7 @@ last-checked: "2026-02-25"
 
 ## Comparison with Our System
 
-Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [document classification](../../reference/available-types.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
+Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [available types](../../reference/available-types.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
 
 The comparison illuminates a design spectrum:
 
@@ -88,7 +88,7 @@ Relevant Notes:
 - [programming-practices-apply-to-prompting](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
 - [the verifiability gradient](../../notes/verifiability-gradient.md) — contrasts: Thalo has no verifiability gradient; their rules are fixed at design time, while the gradient explains why progressive formalization (prompt -> schema -> code) beats upfront commitment
 - [document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md) — converges: same goal (types with defined sections, checkable structure), different trajectory — they committed upfront via grammar, we discover through practice
-- [document-classification](../../reference/available-types.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages
+- [available types](../../reference/available-types.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages
 - [methodology-enforcement-is-constraining](../../notes/methodology-enforcement-is-constraining.md) — contrasts: Thalo jumped straight to deterministic scripts; we maintain a gradient (instruction -> skill -> hook -> script) because not all methodology should complete the trajectory
 - [009-link-relationship-semantics](../../reference/adr/009-link-relationship-semantics.md) — gap: Thalo's typed links have no relationship semantics; our link vocabulary provides the semantic layer their grammar omits
 - [Ars Contexta](./arscontexta.md) — sibling: both are compared against our theoretical position; arscontexta grounds in cognitive psychology where Thalo grounds in programming language theory, making them complementary reference points

@@ -83,7 +83,7 @@ Relevant Notes:
 
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — the operational space maps to the workshop layer; different metabolic rates for different memory types
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — acknowledges tasks as a parallel subsystem; the question is whether more temporal types invalidate the "small subsystem" justification
-- [document classification](../reference/available-types.md) — the library-oriented type hierarchy this note identifies as insufficient for workshop documents
+- [available types](../reference/available-types.md) — the library-oriented type hierarchy this note identifies as insufficient for workshop documents
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the extraction bridge (workshop → library) is a specific instance of the broader automation challenge
 - [the wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the refinement-in-place ladder (text → note → structured-claim) is specifically a library pattern; workshop documents don't refine toward permanence, they consume themselves
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — the action-oriented knowledge types this note identifies (preferences, procedures, precedents) are what workshop processes produce and consume; the workshop layer is where action-capacity learning happens

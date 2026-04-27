@@ -117,7 +117,7 @@ The other traits (`has-comparison`, `has-implementation`, `has-external-sources`
 
 - **Warrant is often implicit.** Toulmin acknowledges warrants are frequently unstated. Forcing authors to articulate them is the point — but it adds friction. The bet is that explicit warrants produce more trustworthy claims, worth the cost.
 - **Migration effort.** Retiring `has-claim` means updating 30 notes. Most just drop the trait; a few get promoted. This should be a gradual process, not a batch migration.
-- **New type in the enum.** `structured-claim` joins `note`, `spec`, `review`, `index`, `adr` in [document-classification](../reference/available-types.md). The validation skill and any scripts checking type enums need updating.
+- **New type in the enum.** `structured-claim` joins `note`, `spec`, `review`, `index`, `adr` in [available types](../reference/available-types.md). The validation skill and any scripts checking type enums need updating.
 - **In practice, without additional methodology (warrant extraction, claim sharpening, revision for flow after structuring), the Toulmin sections create flow problems.** Notes written with Evidence/Reasoning/Caveats sections tend to read as stiff academic scaffolding rather than flowing argument. In multiple cases, notes promoted to `structured-claim` had to be demoted back to `note` and the Toulmin sections dissolved to restore readability. The type is experimental — don't promote notes to `structured-claim` unless the argument genuinely fits the scaffold without forcing.
 
 ---
@@ -128,7 +128,7 @@ Relevant Notes:
 - [Thalo type comparison](../agent-memory-systems/thalo-type-comparison.md) — converges: Thalo's opinion entity (Claim/Reasoning/Caveats) is the same Toulmin shape; this note resolves the gap they flagged
 - [programming-language types mark affordances](../notes/instructions-are-typed-callables.md) — foundation: the `claim` affordance table lists Toulmin operations without naming them
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — enables: `structured-claim` has concrete structural requirements (sections), making it verifiable in the way `has-claim` as a trait was not
-- [document-classification](../reference/available-types.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr
+- [available types](../reference/available-types.md) — extends: `structured-claim` becomes a new base type alongside note, spec, review, index, adr
 - [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
 - [constraining](./definitions/constraining.md) — foundation: the note → structured-claim promotion path is the constraining pattern applied to the type system
 - [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — source: the canonical framework this note adapts

@@ -28,12 +28,12 @@ In [Synthesis is not error correction](./synthesis-is-not-error-correction.md), 
 
 These are not four names for one bug. They are manifestations of one failure schema — **uncoordinated composition** — but each requires a different primitive:
 
-| Composition mode | Missing primitive | Failure mode |
-|---|---|---|
-| Flat context accumulation | Scoping / isolation | Contamination |
-| Shared mutable memory | Consistency / ownership / visibility | Inconsistency |
-| Output aggregation | Adjudication / verification / voting | Amplification |
-| Delegation chain / authority transfer | Liability firebreaks / authority refresh | Accountability vacuum |
+| Composition mode | Missing primitive | Failure mode | Example |
+|---|---|---|---|
+| Flat context accumulation | Scoping / isolation | Contamination | Single-agent inherited context |
+| Shared mutable memory | Consistency / ownership / visibility | Inconsistency | Tracecraft's shared S3 JSON state |
+| Output aggregation | Adjudication / verification / voting | Amplification | Multi-agent synthesis without selection |
+| Delegation chain / authority transfer | Liability firebreaks / authority refresh | Accountability vacuum | Transitive delegation chains |
 
 The first three rows are failures over shared semantic substrates. The fourth is a governance failure over the authority/liability path: a chain can avoid all three semantic failures yet still lose a clearly attributable owner for downstream actions.
 

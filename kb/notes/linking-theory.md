@@ -51,6 +51,14 @@ Each practice instantiates this principle:
 
 - **"Related" is not a relationship** — it carries zero bits of decision-relevant information, the linking equivalent of a null description.
 
+### Content registers constrain link direction
+
+The decision-cost model needs one more axis: the content layer of the source and target. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) argues that theory, description, and prescription have different quality goals and maintenance directions. Those differences constrain which links are load-bearing.
+
+A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. Reversing those relationships changes the maintenance contract. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
+
+So relationship vocabulary is not enough by itself. A `grounds` or `rationale` edge has different consequences depending on whether it crosses theory, description, or prescription. Link review should check both the local relationship phrase and the register-crossing contract.
+
 ### What the theory predicts
 
 If link quality is decision-cost reduction, the theory predicts:

@@ -156,7 +156,7 @@ When we encounter:
 
 Relevant Notes:
 
-- [document-classification](../reference/available-types.md) — our type system being compared
+- [available types](../reference/available-types.md) — our type system being compared
 - [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) — the design principle both systems share
 - [claim-notes-should-use-toulmin-derived-sections](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
 - [codification](../notes/definitions/codification.md) — the validation split (script vs skill) is codification applied to the validation process itself

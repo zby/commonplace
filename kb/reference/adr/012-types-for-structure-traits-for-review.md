@@ -56,5 +56,5 @@ That made it unclear whether moving a file between directories changed its type 
 
 Relevant Notes:
 
-- [document-classification](../available-types.md) — extends: adds the type/trait boundary test
+- [available types](../available-types.md) — extends: adds the type/trait boundary test
 - [type-loading](../type-loading.md) — the shipped loading model that implements the structural side of this decision

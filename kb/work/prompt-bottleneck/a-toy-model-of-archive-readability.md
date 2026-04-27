@@ -221,6 +221,6 @@ Those are the first two costs to model.
 
 Related notes:
 
-- [how a system built around prompt limitations would look](./how-a-system-built-around-prompt-limitations-would-look.md)
+- [prompt-limited systems should assemble context rather than inherit transcripts](../../notes/prompt-limited-systems-should-assemble-context-rather-than-inherit-transcripts.md)
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md)
 - [context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)

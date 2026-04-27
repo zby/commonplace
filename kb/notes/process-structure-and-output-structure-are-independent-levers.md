@@ -1,5 +1,5 @@
 ---
-description: Constraining what reasoning steps must occur (process structure) is an independent lever from constraining what the result looks like (output structure) — the KB's structured-reasoning cluster conflates the two, but the agentic-code-reasoning evidence shows process constraints driving accuracy gains where output format alone would not
+description: Constraining what reasoning steps must occur (process structure) is an independent lever from constraining what the result looks like (output structure) — code-reasoning and GSM-DC evidence show process constraints and output metrics separating where output format alone would not
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]
@@ -19,6 +19,8 @@ The two dimensions are independent: you can have output structure without proces
 ## Empirical support
 
 [Ugare & Chandra (2026)](https://arxiv.org/html/2603.01896v2) provide the strongest available evidence. Their semi-formal reasoning templates require agents to construct explicit premises, trace execution paths, and derive formal conclusions — all process constraints. The templates yield 5-12pp accuracy gains on code verification. The paper does not ablate individual template components, so it cannot isolate how much of the gain comes from process constraints versus the incidental output formatting the templates also impose. But the templates' design makes the locus of effect visible: instructions like "must state premises" and "must trace paths" force specific reasoning work that a heading-only constraint would not.
+
+GSM-DC ([Yang et al., 2025](https://arxiv.org/html/2505.18761v2)) supplies a complementary metric split. Its Path Accuracy (PAcc) checks whether the model selected the right reasoning dependencies; Step Accuracy (SAcc) checks whether the arithmetic execution along those steps is correct. Irrelevant context degrades both, and the SAcc/PAcc gap shows execution errors can increase even when the reasoning path is selected correctly. That operationalizes the distinction this note needs: process quality and output/execution quality can degrade independently under the same noise.
 
 ## Two mechanisms, split two ways
 
@@ -45,3 +47,4 @@ Relevant Notes:
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — context: human writing genres bundle both process and output structure; the per-convention transfer evaluation should assess each dimension separately
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — speculative: process steps as structurally decorrelated checks could connect process structure to error-correction amplification
 - [Agentic Code Reasoning](https://arxiv.org/html/2603.01896v2) — grounds: semi-formal templates with process constraints (state premises, trace paths, derive conclusions) yield 5-12pp accuracy gains; template components not individually ablated
+- [GSM-DC](https://arxiv.org/html/2505.18761v2) — evidence: PAcc and SAcc separate path selection from step execution, showing irrelevant context can degrade both independently
