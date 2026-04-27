@@ -12,7 +12,7 @@ model: opus
 
 Find candidate connections for a single note and write them to a **discovery report** at `kb/reports/connect/<collection>/<note-name>.connect.md`. The skill never edits the source or any other library artifact — every section of the report describes *candidate* edges for a future writer (a human, a downstream skill, the ingest flow) to act on, not edges already encoded anywhere. This is by design: it lets connect run safely on immutable artifacts (snapshots) and on artifacts whose authoring surface is elsewhere (e.g. a snapshot's `.ingest.md`).
 
-Connect reports are gitignored; they are immediate downstream context and can be regenerated from the source artifact plus current KB state.
+Connect reports are gitignored; they are immediate downstream context and can be regenerated from the source artifact plus current KB state. The report is the only connection artifact the skill writes; the optional `kb/log.md` reflection at the end is a separate observation inbox for issues noticed during traversal.
 
 ## Input
 
@@ -93,7 +93,7 @@ The skill does **not** edit those source notes or write draft links from them. I
 
 Save the report to `kb/reports/connect/<source-collection>/<note-name>.connect.md`. Read `kb/reports/types/connect-report.md` for the report structure. Use file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
-Every section below describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any note — the report is the entire deliverable.
+Every section below describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any note — the report is the entire connection deliverable.
 
 - **Discovery Trace** — per-destination: indexes read, queries run, candidates evaluated, why kept or rejected.
 - **Connections Found** — candidate outbound edges from the source. For an authored source (e.g. an `.ingest.md`, a note, an ADR) these are the recommended links a future edit should add. For an immutable source (e.g. a snapshot under `kb/sources/`) they are recommended links for whichever artifact carries the source's authored surface (typically the matching `.ingest.md`).
@@ -112,7 +112,7 @@ Write `None` for empty sections.
 
 ## Constraints
 
-**Never** edit the target note, other notes, indexes, or any library artifact — the report is the *only* output the skill produces. Every section is a candidate signal for future authoring, not committed state.
+**Never** edit the target note, other notes, indexes, or any library artifact — the report is the *only* connection output the skill produces. Every section is a candidate signal for future authoring, not committed state. The only permitted non-report write is the Reflection append to `kb/log.md`, and only when traversal surfaced a concrete issue or abstraction opportunity worth preserving.
 
 **Never** add "related" connections without specific reasoning. **Never** force connections — if no genuine connections exist, say so honestly. **Never** propose a label outside the destination's authorised set; route those to Off-authorisation Candidates.
 
@@ -120,6 +120,6 @@ Write `None` for empty sections.
 
 ## Reflection
 
-If you noticed anything worth flagging during traversal — errors in notes, stale links, clear contradictions — append to `kb/log.md`. Format: `- path/to/note.md: what needs fixing`
+After saving the report, decide whether any traversal observation should survive beyond the gitignored connect report. If you noticed errors in notes, stale links, clear contradictions, or report `Synthesis Opportunities` / `Flags` that are durable enough for later promotion, append one line to `kb/log.md`. Format: `- path/to/note.md: what needs fixing`
 
-Abstraction opportunities (multiple notes sharing an unnamed mechanism) are worth logging only when the pattern is strong and specific. Skip reflection entirely if nothing stood out.
+Abstraction opportunities (multiple notes sharing an unnamed mechanism) are worth logging only when the pattern is strong and specific. Do not log routine candidate links or weak associations that belong only in the report. Skip reflection entirely if nothing stood out.
