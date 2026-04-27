@@ -12,7 +12,7 @@ An agent memory system should be designed from the effects memory must have, not
 
 This note is a requirements map rather than a layer architecture. It is meant to be read by agents and maintainers designing or evaluating memory systems: first it derives the pressure categories a realistic system must satisfy, then it points to a concrete requirements inventory. The inventory is not a build sequence; it is a checklist of capabilities and failure modes to account for if memory is going to change downstream capacity rather than merely persist information.
 
-Although the derivation starts from first principles, it was checked against the broad [Agent Memory Systems](../agent-memory-systems/README.md) review collection and revised where the reviewed systems exposed missing pressure: packaging, activation, authority, lifecycle, compiled-view drift, and effect-based evaluation.
+Although the derivation starts from first principles, it was checked against the broad [Agent Memory Systems](../agent-memory-systems/README.md) review collection and revised where the reviewed systems exposed missing pressure: packaging, activation, authority, lifecycle, compiled-view drift, and effect-based evaluation. [The adaptation survey corroborates memory requirements but misses artifact-role governance](./agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) adds an external taxonomy check: adaptation taxonomies are useful for asking where optimization happens, while this note asks what should drive the decision to govern a learned artifact as memory.
 
 The detailed requirement notes live in [Agent Memory Requirements](./agent-memory-requirements/README.md). This synthesis explains why those requirements belong together.
 
@@ -112,4 +112,5 @@ Relevant Notes:
 
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds the context-scarcity pressure behind selective loading and framing
 - [Agent memory requirements](./agent-memory-requirements/README.md) - expands the derived requirements into one loadable note per need
+- [The adaptation survey corroborates memory requirements but misses artifact-role governance](./agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) - compares this requirements map with an external agentic-adaptation taxonomy
 - [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) - surveys systems that mine traces into preferences, tips, rules, skills, playbooks, and policy updates
