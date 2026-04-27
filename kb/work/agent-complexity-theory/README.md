@@ -1,6 +1,6 @@
 # Agent complexity theory workshop
 
-Working out formal consequences of the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) and its [universality lemma](../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md). The model is a deliberately simple normal form — a symbolic scheduler over bounded LLM calls — and the lemma means results proved on it transfer to all clean bounded-call symbolic programs.
+Working out formal consequences of the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) and its [universality lemma](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md). The model is a deliberately simple normal form — a symbolic scheduler over bounded LLM calls — and the lemma means results proved on it transfer to all clean symbolic programs with LLM calls.
 
 The goal is theorem sketches and proof outlines suitable for academic collaboration, not KB design notes. Artifacts here are consumed when they mature into a paper or get pitched to collaborators.
 

@@ -10,7 +10,7 @@ status: seedling
 
 Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, there is reason to think that [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment. (The second argument is [conjectural](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md); the first is well-established.)
 
-Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls. This is not a restrictive design choice — [any symbolic program with bounded LLM calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md), so the model captures the full space of such architectures.
+Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls. This is not a restrictive design choice — [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), so the model captures the full space of such architectures.
 
 ## The model
 
@@ -91,7 +91,7 @@ Relevant Notes:
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make each loop iteration independent
-- [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — universality: the model's invariants hold by construction for all programs with symbolic orchestration and bounded LLM calls
+- [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — universality: the model's invariants hold by construction for all programs with symbolic orchestration and bounded LLM calls
 - [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: practical heuristics that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations

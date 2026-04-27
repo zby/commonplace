@@ -49,7 +49,7 @@ Matrix vocabulary for this edge: `because, contradicts, extends, qualifies, sinc
 | `evidence` | 4 | off-vocab | `kb/notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md` → `./llm-context-is-composed-without-scoping.md` |
 | `synthesizes` | 4 | off-vocab | `kb/notes/brainstorming-how-to-enrich-web-search.md` → `./link-following-and-search-impose-different-metadata-requirements.md` |
 | `background` | 3 | off-vocab | `kb/notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md` → `./definitions/codification.md` |
-| `boundary` | 3 | off-vocab | `kb/notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md` → `./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md` |
+| `boundary` | 3 | off-vocab | `kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md` → `./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md` |
 | `boundary-case` | 3 | off-vocab | `kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md` → `./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md` |
 | `co-equal-mechanism` | 3 | off-vocab | `kb/notes/definitions/constraining.md` → `./distillation.md` |
 | `component-view` | 3 | off-vocab | `kb/notes/bounded-context-orchestration-model.md` → `./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md` |
@@ -89,7 +89,7 @@ Matrix vocabulary for this edge: `because, contradicts, extends, qualifies, sinc
 | `belongs-to` | 1 | off-vocab | `kb/notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md` → `./observability-index.md` |
 | `boundary-condition` | 1 | off-vocab | `kb/notes/quality-signals-for-kb-evaluation.md` → `./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md` |
 | `broader-context` | 1 | off-vocab | `kb/notes/tool-loop-index.md` → `./agent-orchestration-occupies-a-multi-dimensional-design-space.md` |
-| `certifies` | 1 | off-vocab | `kb/notes/decomposition-heuristics-for-bounded-context-scheduling.md` → `./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md` |
+| `certifies` | 1 | off-vocab | `kb/notes/decomposition-heuristics-for-bounded-context-scheduling.md` → `./any-symbolic-program-with-llm-calls-is-a-select-call-program.md` |
 | `challenges` | 1 | off-vocab | `kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md` → `./memory-management-policy-is-learnable-but-oracle-dependent.md` |
 | `complement` | 1 | off-vocab | `kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md` → `./spec-mining-as-codification.md` |
 | `complementary-response` | 1 | off-vocab | `kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md` → `./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md` |
@@ -171,7 +171,7 @@ Matrix vocabulary for this edge: `because, contradicts, extends, qualifies, sinc
 | `target-form` | 1 | off-vocab | `kb/notes/maintenance-operations-catalogue-should-stage-distillation-into-instructions.md` → `./skills-are-instructions-plus-routing-and-execution-policy.md` |
 | `test` | 1 | off-vocab | `kb/notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md` → `./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md` |
 | `unifying-theory` | 1 | off-vocab | `kb/notes/foundations-index.md` → `./an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md` |
-| `universality` | 1 | off-vocab | `kb/notes/bounded-context-orchestration-model.md` → `./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md` |
+| `universality` | 1 | off-vocab | `kb/notes/bounded-context-orchestration-model.md` → `./any-symbolic-program-with-llm-calls-is-a-select-call-program.md` |
 | `verification` | 1 | off-vocab | `kb/notes/type-system-index.md` → `./document-types-should-be-verifiable.md` |
 
 ## workshop → workshop  (n = 546)
@@ -392,7 +392,7 @@ _No declared matrix vocabulary for this edge._
 | `clarifies` | 2 | off-vocab | `kb/work/agent-complexity-theory/adaptive-dependencies-force-width-reopening-or-sequential-rounds.md` → `../../notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md` |
 | `exemplifies` | 2 | adr-only | `kb/work/harness-taxonomy-convergence/runtime-structure-determines-the-control-surfaces-available-to-governance.md` → `../../notes/semantic-review-catches-content-errors-that-structural-validation-cannot.md` |
 | `instance` | 2 | off-vocab | `kb/work/agent-complexity-theory/exact-retrieval-over-semantically-opaque-items-requires-linear-inspection.md` → `../../notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md` |
-| `scope` | 2 | off-vocab | `kb/work/agent-complexity-theory/adaptive-dependencies-force-width-reopening-or-sequential-rounds.md` → `../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md` |
+| `scope` | 2 | off-vocab | `kb/work/agent-complexity-theory/adaptive-dependencies-force-width-reopening-or-sequential-rounds.md` → `../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md` |
 | `background` | 1 | off-vocab | `kb/work/tool-loop-control/a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by-externalizing-control-state.md` → `../../notes/bounded-context-orchestration-model.md` |
 | `context` | 1 | off-vocab | `kb/work/agent-complexity-theory/no-universal-distillation-preserves-all-task-relevant-structure.md` → `../../notes/bounded-context-orchestration-model.md` |
 | `contrasts` | 1 | off-vocab | `kb/work/tool-loop-control/anatomy-of-an-llm-application.md` → `../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md` |
@@ -634,4 +634,3 @@ _No declared matrix vocabulary for this edge._
 | Label | Count | Status | Example |
 |---|---|---|---|
 | `<unlabelled>` | 1 | off-vocab | `kb/work/system-documentation/framing.md` → `../../CLAUDE.md` |
-

@@ -409,7 +409,7 @@ Generated: 2026-04-20
 - `kb/notes/alexander-patterns-and-knowledge-system-design.md`
 - `kb/notes/always-loaded-context-mechanisms-in-agent-harnesses.md`
 - `kb/notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md`
-- `kb/notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md`
+- `kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md`
 - `kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md`
 - `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md`
 - `kb/notes/automated-synthesis-is-missing-good-oracles.md`
@@ -1001,7 +1001,7 @@ test/commonplace/cli/test_refresh_indexes.py:74:type: index
 test/commonplace/cli/test_refresh_indexes.py:85:type: index
 kb/notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md:3:type: note
 kb/notes/axes-of-substrate-analysis.md:3:type: note
-kb/notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md:3:type: note
+kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md:3:type: note
 kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md:3:type: note
 kb/reference/definitions/dir-index.md:3:type: index
 kb/notes/writing-styles-are-strategies-for-managing-underspecification.md:3:type: note

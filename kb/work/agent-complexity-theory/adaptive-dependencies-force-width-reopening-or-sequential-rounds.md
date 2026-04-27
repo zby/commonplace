@@ -45,7 +45,7 @@ For the task family `A_L`, every exact bounded-call orchestration algorithm requ
 
 #### Proof sketch
 
-Fix any program in the [select/call class](../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md). Suppose it solves `A_L` in fewer than `L-1` sequential rounds. Then there is some layer `t` at which the algorithm must behave correctly about the suffix of the chain without first learning the true successor out of `V_(t+1)`.
+Fix any program in the [select/call class](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md). Suppose it solves `A_L` in fewer than `L-1` sequential rounds. Then there is some layer `t` at which the algorithm must behave correctly about the suffix of the chain without first learning the true successor out of `V_(t+1)`.
 
 But by construction, before semantically reading `x_t`, the scheduler has no relevance-correlated symbolic feature that distinguishes the true successor from the decoys. So there exist two worlds that are identical on everything the algorithm has seen so far but differ in which node is `succ_t(x_t)`. Make the terminal payload bits differ in those two worlds. Since the algorithm has the same symbolic state and the same prior call results in both worlds, it must make the same downstream decisions in both. That yields the same final output in both worlds, even though exactness requires different outputs. Contradiction.
 
@@ -90,7 +90,7 @@ Together they explain why parallel fan-out is sometimes a real scaling strategy 
 Relevant Notes:
 
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — foundation: the lower bound is stated in the select/call architecture where new dependency facts enter only through bounded semantic calls
-- [any symbolic program with bounded calls is a select/call program](../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — scope: lifts the claim from one orchestration style to the full class of clean bounded-call symbolic programs
+- [any symbolic program with LLM calls is a select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — scope: lifts the claim from one orchestration style to the full class of clean symbolic programs with LLM calls
 - [exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear-inspection.md) — parallel lower bound: opacity blocks cheap pruning; the present note shows that hidden dependency structure also blocks cheap scheduling
 - [no universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md) — mechanism: dense interaction cannot be made to disappear by universally sufficient narrow summaries
 - [effective context is task-relative and complexity-relative not a fixed model constant](../../notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — clarifies: the width cost is driven by interaction complexity, not just by raw token count

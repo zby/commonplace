@@ -19,7 +19,7 @@ In the [bounded-context orchestration model](../../notes/bounded-context-orchest
 
 ## Reasoning
 
-Fix any algorithm in the [select/call class](../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md). Suppose it halts after semantically inspecting fewer than `N` items. Then there exists at least one uninspected item `x`.
+Fix any algorithm in the [select/call class](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md). Suppose it halts after semantically inspecting fewer than `N` items. Then there exists at least one uninspected item `x`.
 
 Because `x` is semantically opaque to symbolic code, the scheduler has no relevance-correlated information about `x` beyond its bare identity as an uninspected item. Therefore the algorithm's entire execution trace up to halt is compatible with at least two worlds:
 
@@ -46,7 +46,7 @@ The practical consequence is narrow but important. Orchestration can change **ho
 Relevant Notes:
 
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — foundation: the lower bound applies inside the select/call architecture because new relevance facts enter only through bounded semantic calls
-- [any symbolic program with bounded calls is a select/call program](../../notes/any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — scope: lifts the lower bound from one orchestration style to the full class of symbolic programs with bounded LLM calls
+- [any symbolic program with LLM calls is a select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — scope: lifts the lower bound from one orchestration style to the full class of symbolic programs with LLM calls
 - [pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — boundary: descriptions, abstracts, rerankers, and link phrases are exactly the pointer layer that invalidates semantic opacity
 - [two context boundaries govern collection operations](../../notes/two-context-boundaries-govern-collection-operations.md) — consequence: index-level operation only exists because titles and descriptions provide a cheaper pointer layer than full semantic reading
 - [context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — consequence: the result identifies one place where context cost is irreducible unless semantic work is prepaid into an index

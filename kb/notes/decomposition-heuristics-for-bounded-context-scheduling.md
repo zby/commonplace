@@ -8,7 +8,7 @@ status: seedling
 
 # Decomposition heuristics for bounded-context scheduling
 
-These rules follow from the [symbolic scheduling model](./bounded-context-orchestration-model.md). Each heuristic is a transformation between programs — and since [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md), applying a heuristic keeps you within the model's program space. The rules are preliminary — we expect to discover more as the model develops.
+These rules follow from the [symbolic scheduling model](./bounded-context-orchestration-model.md). Each heuristic is a transformation between programs — and since [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), applying a heuristic keeps you within the model's program space. The rules are preliminary — we expect to discover more as the model develops.
 
 ## What is being optimised
 
@@ -80,4 +80,4 @@ Relevant Notes:
 - [distillation](./definitions/distillation.md) — mechanism: saved intermediate items are often distillations shaped for later reuse
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: "exploit clean frames recursively" implements the topology → isolation step of a proposed causal chain
-- [any symbolic program with bounded calls is a select/call program](./any-symbolic-program-with-bounded-calls-is-a-select-call-program.md) — certifies: heuristic-guided transformations stay within the model's program space
+- [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — certifies: heuristic-guided transformations stay within the model's program space
