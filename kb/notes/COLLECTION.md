@@ -13,6 +13,12 @@ Tests for reach:
 
 Notes that only record "X works" are adaptive — useful but brittle. Explaining *why* X works gives reach. Reach is a direction, not a gate.
 
+Apply reach to claim formulation:
+- State the claim under the weakest assumptions the argument actually uses.
+- Treat qualifiers in the title, description, opening claim, and main proof as obligations. If a qualifier does not change the reasoning when removed, drop it from the claim or move it to an application, corollary, or scope note.
+- Keep real boundaries explicit. A boundary belongs in the claim when the argument depends on it; otherwise it belongs in `## Scope`, `## Caveats`, or a nearby narrower application note.
+- Prefer a general lemma plus narrower consequences over a narrow lemma whose extra assumptions are only needed by one downstream use.
+
 **Formulation constraint.** Title and opening argument must be statable in general terms, even when derived from a specific system.
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
