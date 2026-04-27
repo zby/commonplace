@@ -12,6 +12,8 @@ An agent memory system should be designed from the effects memory must have, not
 
 This note is a requirements map rather than a layer architecture. It is meant to be read by agents and maintainers designing or evaluating memory systems: first it derives the pressure categories a realistic system must satisfy, then it points to a concrete requirements inventory. The inventory is not a build sequence; it is a checklist of capabilities and failure modes to account for if memory is going to change downstream capacity rather than merely persist information.
 
+Although the derivation starts from first principles, it was checked against the broad [Agent Memory Systems](../agent-memory-systems/README.md) review collection and revised where the reviewed systems exposed missing pressure: packaging, activation, authority, lifecycle, compiled-view drift, and effect-based evaluation.
+
 The detailed requirement notes live in [Agent Memory Requirements](./agent-memory-requirements/README.md). This synthesis explains why those requirements belong together.
 
 ## Start With Consumers
