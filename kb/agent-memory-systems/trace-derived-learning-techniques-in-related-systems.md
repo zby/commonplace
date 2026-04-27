@@ -10,9 +10,9 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what substrate they promote into (opaque vs prose vs symbolic — a **substrate-class** choice), and what role the result plays (knowledge consumed as fact vs system-definition consumed as policy).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Gnosis, Voyager, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, ARIS, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, G-Memory, Gnosis, Voyager, OS-Copilot, Agent-R, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
-**What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
+**What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager, OS-Copilot) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
 ## The recurring stages
 
@@ -340,6 +340,20 @@ Trajectory-to-executable-code promotion gated by a critic.
 
 **Scope.** Single embodied domain with compositional skill accumulation. No cross-domain transfer.
 
+## OS-Copilot
+
+OS-task trajectory promotion into reusable Python tools.
+
+**Trigger.** During FRIDAY task execution, after a Python subtask completes and the judge assigns a sufficiently high generality score; in self-learning mode, a generated curriculum repeatedly creates lessons that drive more task attempts.
+
+**Source format.** Generated Python code, invocation logic, environment output, error text, working directory state, directory listing, downstream task requirements, LLM critique, repair attempts, and final judge score. The trace is task-local execution state rather than a full transcript.
+
+**Extraction.** The LLM judge classifies each attempt as `Complete`, `Amend`, or `Replan` and scores generality. Completed high-scoring Python subtasks are distilled into a tool name, code, and description; failed or insufficiently general attempts are repaired or replanned rather than promoted. The review notes a repair-path caveat: after a repaired attempt succeeds, the storage call still appears to receive the original code variable.
+
+**Promotion.** Symbolic executable artifacts: Python files, description text files, a JSON registry, and a Chroma vector index over descriptions. Retrieval later changes action capacity because FRIDAY can call the stored code rather than merely read advice.
+
+**Scope.** Local generated-tool repository for OS/software automation. It is the closest non-game analogue to Voyager's executable skill library, but without Voyager's explicit embodied curriculum state, skill composition discipline, or clean repair-to-promotion handoff.
+
 ## Agent-R
 
 Search-tree mining into corrected conversation traces for weight training.
@@ -398,11 +412,11 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; nao as a product assistant with narrow user-memory extraction; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
-**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Meta-Harness, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. Self-Training-LLM is an edge case: it learns from corpus-grounded generation traces rather than autonomous task trajectories, but it has the same staged trace-to-training-data shape. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
+**Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Meta-Harness, Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, Voyager, OS-Copilot, and Agent-R fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. Self-Training-LLM is an edge case: it learns from corpus-grounded generation traces rather than autonomous task trajectories, but it has the same staged trace-to-training-data shape. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
 ### Axis 2: promotion target / substrate class
 
-**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, or skill patches. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager extends the category to executable code artifacts — JavaScript skills promoted after critic-gated success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose substrate (verbal hints, scored rules, structured records, repo-local entries) to symbolic substrate (workflow instructions and executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
+**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, or skill patches. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, ACE, ExpeL, ReasoningBank, and G-Memory as trajectory-run artifact-learners. Voyager and OS-Copilot extend the category to executable code artifacts — JavaScript skills in Voyager, Python OS tools in OS-Copilot, both promoted after environment-grounded success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose substrate (verbal hints, scored rules, structured records, repo-local entries) to symbolic substrate (workflow instructions and executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
 
 **Weight learning.** Mine trajectories, next-state signals, or generation traces under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Agent-R, Self-Training-LLM, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data. Self-Training-LLM adds corpus-grounded answer-sample surgery: generated questions and sampled answers are scored, filtered, and paired before SFT/DPO.
 
@@ -417,9 +431,9 @@ Within the readable-artifact branch, the artifact-learning systems span a wide r
 - **Repo-local prose entries:** Gnosis (JSONL why-memory with topics, related IDs, and timestamps, extracted by live agent judgment).
 - **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces), nao (user instruction/profile rows with supersession).
 - **Workflow instruction patches:** ARIS (hook-log-derived diffs to markdown skills and workflow defaults).
-- **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval).
+- **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval), OS-Copilot (Python OS tools with generated descriptions and vector retrieval).
 
-The maintenance path also varies: append-only (Reflexion, ReasoningBank), rewrite-and-carry-forward (Dynamic Cheatsheet), counter-based (ACE), explicit CRUD verbs (ExpeL, G-Memory), and critic-gated promotion (Voyager). These differences matter more for real system design than the broader substrate-class distinction.
+The maintenance path also varies: append-only (Reflexion, ReasoningBank), rewrite-and-carry-forward (Dynamic Cheatsheet), counter-based (ACE), explicit CRUD verbs (ExpeL, G-Memory), and critic- or judge-gated promotion (Voyager, OS-Copilot). These differences matter more for real system design than the broader substrate-class distinction.
 
 ## Log formats matter more than the prompts
 
@@ -448,6 +462,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | G-Memory | Multi-agent benchmark trajectories with state-graph coordination structure |
 | Gnosis | Live coding-session context selected by the acting agent; no raw transcript mining |
 | Voyager | Embodied task trajectories: execution errors, inventory state, critic feedback |
+| OS-Copilot | OS subtask execution traces: generated code, invocation, environment output/errors, downstream needs, judge critique, repair attempts, generality score |
 | Agent-R | MCTS search trees: action-observation-reward nodes with backpropagated scores |
 | Self-Training-LLM | Generated Wikipedia QA traces: question records, gold/context answers, raw sampled answers, NLI/SelfCheck scores |
 | AgeMem | RL trajectories over memory operations + task/context rewards |
@@ -466,7 +481,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Explicit mutation verbs on learned artifacts.** ExpeL's `ADD`/`EDIT`/`REMOVE`/`AGREE` and G-Memory's matching operations give the maintenance loop a visible contract.
 - **Critic-gated promotion.** Voyager only promotes successful programs — a strong filter that prevents accumulation of failed attempts.
 - **Bidirectional extraction from successes and failures.** ReasoningBank uses separate prompts for successful and failed trajectories, yielding different kinds of insights.
-- **Executable code as promotion target.** Voyager shows that some trace-derived learnings should become callable programs, not just textual guidance.
+- **Executable code as promotion target.** Voyager and OS-Copilot show that some trace-derived learnings should become callable programs, not just textual guidance.
 - **Harness code as promotion target.** Meta-Harness pushes the executable-artifact point one level outward: the learned artifact can be the retrieval, memory, context, or tool-use harness around a model.
 - **Skill text as promotion target.** ARIS shows the softer promptware version of the same move: traces can propose changes to invocation procedures and workflow defaults, but weak oracles require reviewer and user gates.
 - **Dataset surgery between traces and training.** Agent-R's path-pairing and splice-correction is more informative than binary success/failure labels.
@@ -516,6 +531,7 @@ Relevant Notes:
 - [ReasoningBank](./reviews/reasoning-bank.md) — source-inspected instance: bidirectional extraction from successes and failures into append-only structured memory items with embedding retrieval
 - [G-Memory](./reviews/g-memory.md) — source-inspected instance: multi-agent trajectory capture with state-graph coordination, task-neighborhood retrieval, and scored insight maintenance
 - [Voyager](./reviews/voyager.md) — source-inspected instance: critic-gated promotion of successful embodied trajectories into executable JavaScript skills with vector retrieval
+- [OS-Copilot](./reviews/OS-Copilot.md) — source-inspected instance: judge-gated promotion of successful OS task executions into executable Python tools with vector retrieval
 - [Agent-R](./reviews/agent-r.md) — source-inspected instance: MCTS search-tree mining into corrected conversation traces and fine-tuning datasets for weight updates
 - [Self-Training-LLM](./reviews/Self-Training-LLM.md) — source-inspected instance: generated Wikipedia QA traces, NLI/SelfCheck filtering, and SFT/DPO promotion into model checkpoints
 - [the fundamental split in agent memory is not storage format but who decides what to remember](./agentic-memory-systems-comparative-review.md) — extends: the wider survey places AgeMem and other source-only systems in the broader agency and substrate design space
