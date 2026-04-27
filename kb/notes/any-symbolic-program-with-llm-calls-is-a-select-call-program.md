@@ -1,5 +1,5 @@
 ---
-description: Any program whose symbolic execution between LLM calls can be reified as explicit state can be mechanically converted into the select/call loop with the same LLM calls in the same order
+description: Any program whose non-LLM steps are symbolic computation over explicit machine state K can be mechanically converted into the select/call loop with the same LLM calls in the same order
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
@@ -18,21 +18,20 @@ status: seedling
 can be mechanically converted into the [base loop](./bounded-context-orchestration-model.md):
 
 ```
-while not satisfied(K):
-    P  = select(K)
+while (P := select(K)) is not None:
     r  = call(P)
     K  = K + r
 ```
 
-with `select` a symbolic function and the *same LLM calls in the same order*.
+with `select` a symbolic function that returns either the next prompt or `None`, and with the *same LLM calls in the same order*.
 
 Here `K` must contain the full symbolic machine state needed to resume execution: original inputs, prior call results, control location, loop counters, phase tags, pending work items, and any other symbolic locals the program consults between calls.
 
-**Why.** First define `satisfied(K)` to mean: starting from machine state `K`, symbolic execution reaches program halt before encountering another LLM call site.
+`K + r` means incorporating the call result into explicit symbolic state. In the simplest event-sourced case this is append-only: `K` stores the full trace, and later symbolic steps recompute derived views from it. Implementations may also cache derived state, but those caches are still explicit parts of `K`.
 
-Then, for any state with `not satisfied(K)`, define `select(K)` as: run the program's symbolic transition logic from the current machine state until the next LLM call site is reached, and emit that prompt `P`.
+**Why.** Define `select(K)` as: run the program's symbolic transition logic from the current machine state until either program halt or the next LLM call site is reached. If symbolic execution reaches halt first, return `None`. If it reaches an LLM call site first, emit that prompt `P`.
 
-Because all inter-call computation is symbolic, both checks are exact. On non-halting states, the next prompt is therefore a function of the current symbolic state alone. Iterating this construction reproduces the original program's call order and prompt contents, so the transformed loop makes the same LLM calls in the same order.
+Because all inter-call computation is symbolic, this check is exact. The halt-or-next-prompt decision is therefore a function of the current symbolic state alone. Iterating this construction reproduces the original program's call order and prompt contents, so the transformed loop makes the same LLM calls in the same order.
 
 This is not a special property of LLM programs. It is the standard move behind operational semantics and abstract machines: execution is represented as transitions over explicit configurations, and control state that was implicit in source structure is reified into data.
 

@@ -19,5 +19,5 @@ That simplicity pays off in framework design. If "agent" means "tool loop," then
 Relevant Notes:
 
 - [Tool loop](./tool-loop-index.md) — context: the index whose argument this convention grounds — sub-agents as sub-loops
-- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: each agent is one iteration of the `select/call/absorb` loop
+- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: each agent is one bounded call selected from explicit scheduler state
 - [Subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md) — motivates: sub-agents are needed precisely because children need different capability surfaces

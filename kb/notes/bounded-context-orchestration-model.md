@@ -8,7 +8,9 @@ status: seedling
 
 # Bounded-context orchestration model
 
-Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, there is reason to think that [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment. (The second argument is [conjectural](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md); the first is well-established.)
+This is a model of the **joint LLM-code system**, not a model of a standalone LLM. The system being modeled includes both the symbolic code that owns state and control flow and the bounded LLM calls that perform semantic judgment. The central question is how the code side should schedule, frame, and absorb those calls when no single LLM context window can hold all relevant state.
+
+Two observations motivate this model. First, [context is the scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) in agent systems — the finite window of tokens the agent can attend to, with both volume and complexity costs. Second, there is reason to think that [bookkeeping and semantic work have different error profiles](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic substrates eliminate all three sources of error for bookkeeping, while LLMs are needed only for semantic judgment. (The second argument is conjectural; the first is well-established.)
 
 Together these imply a natural architecture: a symbolic scheduler over bounded LLM calls. This is not a restrictive design choice — [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), so the model captures the full space of such architectures.
 
@@ -28,46 +30,41 @@ The model also accommodates architectures where the LLM emits a symbolic control
 Let:
 
 - `K` be the scheduler's full symbolic state — source artifacts plus everything prior calls have produced
-- `t` be the task type of the next call
+- `P` be one complete prompt, including both the requested operation and the material selected for that call
 - `M` be the maximum effective context budget for one call
-- `||P||_t` be the effective cost of prompt `P` for task type `t` — token count, compositional difficulty, or both
+- `||P||` be the effective cost of complete prompt `P` — token count, compositional difficulty, task framing, or all three
 
-`K` accumulates over the loop. Whether the scheduler recomputes views on the fly or caches them (indexes, rankings, dependency maps) is an implementation choice — the theory treats both as equivalent. Real orchestrators usually cache.
+The cost measure `||·||` is an idealized effective-cost measure over the whole prompt, not just a token count. The cost may depend on the kind of task that `P` describes: a synthesis prompt and a relevance-check prompt can have different effective costs even when they contain the same source material. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops the empirical case.
 
-The cost measure `||·||` is not a universal size metric — it depends on what the call is doing. A synthesis call over six notes is harder than six independent relevance checks at the same token count. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops the empirical case. Writing `||P||_t ≤ M` captures this: the cost measure absorbs task difficulty, while `M` stays fixed. When the task type is held constant, we drop the subscript and write `||P||`.
+The loop alternates between symbolic scheduling and bounded LLM calls. Symbolic scheduling happens outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication, state update, and cache maintenance. LLM calls are the bounded, stochastic steps that perform semantic judgment under focused prompts.
 
-The scheduler alternates between two kinds of step. **Symbolic steps** happen outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication. **Agent calls** are bounded LLM invocations under focused prompts.
+The `select` function either builds a prompt `P` from the current state `K`, subject to the feasibility constraint `||P|| ≤ M`, or returns `None` when the scheduler has no further LLM call to make. This is where the scheduling difficulty lives.
 
-The `select` function builds a prompt `P` from the current state `K`, subject to the feasibility constraint `||P||_t ≤ M`. This is where the scheduling difficulty lives: `select` must choose both *which* items from `K` to include and *how* to frame them, because the same material, framed differently, lets a bounded reader [extract different amounts of useful structure](./information-value-is-observer-relative.md).
-
-The result `r` is appended back into symbolic state. It need not be a direct answer — it may be a relevance label, claim list, cluster summary, contradiction table, partial synthesis, sub-goal set, or satisfaction signal.
+The result `r` is incorporated back into symbolic state as `K + r`. In the minimal event-sourced case this is append-only: `K` is the complete trace, and `select` recomputes any derived view from that trace. Implementations usually cache derived symbolic state, such as indexes, rankings, dependency maps, queues, phase tags, parsed fields, retry metadata, or satisfaction signals. The model treats those caches as part of explicit `K`, not as hidden conversation state.
 
 Operationally:
 
 ```
-while not satisfied(K):
-    P  = select(K)
+while (P := select(K)) is not None:
     r  = call(P)
     K  = K + r
 ```
 
-Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem (the scheduler must merge or arbitrate when parallel results interact), but not the core structure — `select` is still symbolic code assembling prompts from `K`.
+Real orchestrators routinely fan out parallel calls. Parallelism changes the scheduling problem (the scheduler must merge or arbitrate when parallel results interact), but not the core structure: prompts are still selected from `K`, calls still produce results, and results still return to explicit state.
 
-Note that `select` may *use* the results of a prior planning call — the LLM returned a plan into `K` in an earlier iteration, and `select` now reads that plan from symbolic state and proceeds deterministically. Hierarchical decomposition is therefore not a separate mechanism but a pattern of use.
+In practice, `select` cannot usually compute `||P||` exactly. It uses heuristics: token counts, known prompt templates, empirical difficulty estimates, prior relevance labels, decomposition plans, or feasibility judgments returned by earlier LLM calls. When an LLM helps judge feasibility or produce a plan, that judgment is itself another bounded call whose result is incorporated into `K`; a later `select` step consumes it symbolically. Hierarchical decomposition is therefore not a separate mechanism, but a pattern of using the same loop recursively.
 
 ## What makes selection hard
 
 The `select` function is where the optimisation lives. The first problem is that selection is sequential, not static, so the task is already closer to a control problem than to a one-shot packing problem:
 
-**Sequential dependence.** Each selection affects future state. A good first iteration might discover that the goal decomposes differently than expected, changing what subsequent iterations should select. This makes the problem sequential — closer to a Markov decision process than a knapsack.
+**Sequential dependence.** Each selection affects future state. A good first iteration might discover that the goal decomposes differently than expected, changing what later iterations should select. This makes the problem closer to a control problem than to one-shot packing.
 
-**Dual cost dimensions.** [Context cost](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) has two dimensions — volume (how many tokens) and complexity (how hard the tokens are to use). Selection must optimise both: include enough to be useful, but frame it so the sub-agent can actually use it.
-
-**Framing matters, not just selection.** The same knowledge, presented differently, has different value to a bounded observer. "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same tokens, different yield for a bounded reader. See [information value is observer-relative](./information-value-is-observer-relative.md).
+**Coupled selection and framing.** [Context cost](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) has two dimensions — volume (how many tokens) and complexity (how hard the tokens are to use). The same knowledge, presented differently, has different value to a bounded observer: "Here are six documents, synthesise them" is less useful than "documents A and B establish X, documents C and D contradict it, resolve the tension." Same tokens, different yield for a bounded reader. See [information value is observer-relative](./information-value-is-observer-relative.md).
 
 ## Scope and open questions
 
-The full global optimisation problem is probably too rich for clean strategy theorems: goals are [underspecified](./agentic-systems-interpret-underspecified-instructions.md), LLM calls are noisy, the `satisfied` check is itself a judgment call, and the value of including item X depends on the sub-agent's stochastic interpretation. There is no clean objective function. But the model supports **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another. The [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) catalogue specific transformations that the model shows move a system in the right direction.
+The full global optimisation problem is probably too rich for clean strategy theorems: goals are [underspecified](./agentic-systems-interpret-underspecified-instructions.md), LLM calls are noisy, the decision to halt or continue is itself a judgment call inside `select`, and the value of including item X depends on the sub-agent's stochastic interpretation. There is no clean objective function. But the model supports **local comparative results** — comparing two concrete strategies or justifying a transformation from one strategy to another. The [decomposition rules](./decomposition-heuristics-for-bounded-context-scheduling.md) catalogue specific transformations that the model shows move a system in the right direction.
 
 - Can the framing decisions within `select` be factored cleanly enough that their cost can be ignored in a first theory and reintroduced later?
 - How much selection judgment should the scheduler perform before constructing a bounded call, and how much should be delegated to the LLM inside that call?
@@ -96,8 +93,7 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
 - [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the satisfaction check, and the sub-agent's interpretation are all underspecified
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the halt/continue decision, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names the scheduler as one part of a larger runtime decomposition
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues that the select/call loop's decomposition is the first prerequisite in a dependency chain (topology → isolation → verification)
-- [paper outline v2](../work/paper-bounded-context-orchestration/outline-v2.md) — develops: presents this model for an academic audience
