@@ -68,6 +68,7 @@ Terms used in this KB with specific meanings. On first mention in a note, gloss 
 
 - **Never `git add -A`** — review `git status` and stage specific files.
 - **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
+- **If sandboxing blocks `git add` or `git commit`, retry the whole atomic command with escalation** — do not fall back to separate `git add` followed by a later `git commit`. Use explicit file paths in the atomic command, for example `git add path/one.md path/two.md && git commit -m "..."`.
 - **Check `git diff` before committing.**
 - **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
 
