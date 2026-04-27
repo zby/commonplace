@@ -10,7 +10,7 @@ status: seedling
 
 When an evaluation loop improves score without improving real behavior, the failure is often not weak search but an objective grounded too weakly in observed failure. Evaluation automation in practice follows a characteristic sequence: **comprehension first, specification second, generalization third**.
 
-Comprehension is the first gate because it supplies the observations that specification turns into verifiers. Before automation can improve output quality, someone must inspect real outputs, identify concrete failure modes, and translate those failures into discriminative judges.
+Comprehension is the first gate because it supplies the observations that specification turns into verifiers. Before automation can improve output quality, the system needs direct evidence of real failures, a way to identify concrete failure modes, and a route for turning those failures into discriminative judges.
 
 ## The three phases
 
@@ -26,9 +26,11 @@ Skipping comprehension leaves specification unconstrained by observed reality. S
 
 This is why "more automation" cannot reliably substitute for the early verifier-construction work in cold-start or subjective domains. Automation can help once failure patterns and judges exist, but it cannot safely assume them from zero context.
 
+Meta-Harness shows the important boundary condition. In hard-oracle domains, rich diagnostic access can automate part of comprehension: the proposer can inspect raw execution traces, prior harness code, and scores to infer why candidates failed before writing the next candidate. The phase gate is not "a human must always understand first." It is "optimization needs enough diagnostic access to form a causal failure model before it generalizes." Scores alone do not supply that model, and Meta-Harness's ablation suggests summaries may not preserve it either.
+
 ## Scope limits
 
-- In hard-oracle domains (compilers, strict schemas, deterministic tests), comprehension can be shorter because failure is already legible.
+- In hard-oracle domains (compilers, strict schemas, deterministic tests), comprehension can be shorter or partly automated when the proposer has rich diagnostic traces, not just scalar scores.
 - In soft-oracle domains (writing quality, strategic reasoning, product judgment), comprehension is load-bearing and usually human-led.
 - This claim applies to early and mid-stage system tuning. Mature systems may partially automate parts of comprehension, but only after prior manual cycles have stabilized the taxonomy.
 
@@ -52,3 +54,4 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — frames (provisional — target is speculative): the three phases can be read as a local oracle-hardening sequence before heavy automation
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: calibration ensures judges have discriminative signal before amplification
 - [Ingest: Improving AI Skills with autoresearch & evals-skills](https://x.com/nurijanian/status/2035257434365976671) — evidence: practitioner report where one team saw automation improve only after manual comprehension, taxonomy design, and judge calibration
+- [Ingest: Meta-Harness](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) — qualifies: rich raw traces let an automated proposer perform part of the comprehension phase in hard-oracle harness search

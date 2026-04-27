@@ -22,6 +22,8 @@ The KB's [first-principles methodology](./programming-patterns-get-a-fast-pass-b
 
 The [computational-model](./computational-model-index.md) area exemplifies reach. Programming-language concepts (scoping, partial evaluation, scheduling) were developed for compilers, but they *reach* into KB design because they capture structure that isn't programming-specific — they describe what happens when bounded processors compose text under constraints. [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) doesn't just analogize to dynamic scoping — it identifies the same mechanism producing the same pathologies, and predicts the same remedies (lexically scoped sub-frames).
 
+SuperARC gives an empirical version of the same test for algorithmic compression. The source reports that LLMs perform much better on integer sequences, where familiar mathematical patterns may match training-distribution cues, but score near zero on binary sequences that require genuine recursive compression. That gap is adaptive fit without explanatory reach: the behavior transfers while the surface remains familiar, then collapses when the benchmark strips the cues and asks for the underlying generative structure.
+
 ## The negative test
 
 Deutsch's distinction provides a quality check orthogonal to the KB's type system. A well-formed note can pass every structural check (good title, description, links, area) while being merely adaptive — recording a pattern without explaining the mechanism. The test:
@@ -52,6 +54,7 @@ Relevant Notes:
 - [computational-model](./computational-model-index.md) — exemplifies: Programming-language concepts reaching into KB design is explanatory reach in action
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
 - [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — extends: reach affects the value of accumulated knowledge, but ingress still has to preserve how future agents should find, combine, and rely on it
+- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — exemplifies: integer-vs-binary sequence performance separates training-distribution fit from recursive-compression reach
 
 Distilled into:
 
