@@ -120,6 +120,6 @@ Write `None` for empty sections.
 
 ## Reflection
 
-After saving the report, decide whether any traversal observation should survive beyond the gitignored connect report. If you noticed errors in notes, stale links, clear contradictions, or report `Synthesis Opportunities` / `Flags` that are durable enough for later promotion, append one line to `kb/log.md`. Format: `- path/to/note.md: what needs fixing`
+After saving the report, decide whether any traversal observation should survive beyond the gitignored connect report. If you noticed errors in notes, stale links, clear contradictions, duplicated or redundant claims, notes competing for the same owner role, or report `Synthesis Opportunities` / `Flags` that are durable enough for later promotion, append one line to `kb/log.md` using the format documented there.
 
-Abstraction opportunities (multiple notes sharing an unnamed mechanism) are worth logging only when the pattern is strong and specific. Do not log routine candidate links or weak associations that belong only in the report. Skip reflection entirely if nothing stood out.
+Abstraction opportunities (multiple notes sharing an unnamed mechanism) and duplication opportunities (multiple notes repeating the same claim, split ownership that should be merged, or redundant sections that should be folded) are worth logging only when the pattern is strong and specific. Do not log routine candidate links, ordinary topical overlap, or weak associations that belong only in the report. Skip reflection entirely if nothing stood out.
