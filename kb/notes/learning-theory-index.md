@@ -46,6 +46,17 @@ Constraining the interpretation space — from partial narrowing (conventions) t
 - [enforcement-without-structured-recovery-is-incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — the enforcement gradient covers detection and blocking but not recovery; maps ABC's corrective → fallback → escalation onto each enforcement layer, with oracle strength determining viable recovery strategies
 - [codify-versus-LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) — synthesis: four lenses on the codify-vs-LLM decision (spec completeness, oracle strength, interpretation space, pattern stability) with evidence they come apart at the edges
 
+## Codification Lifecycle
+
+Codification decisions split into three separable questions:
+
+- [Specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — when to commit: before execution, during execution, or after repeated observation.
+- [Codify-versus-LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) — what to commit: exact-spec subproblem, verifiable operation, stable pattern, or still-underspecified judgment.
+- [Unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — how to commit and reverse: keep neural and symbolic components behind the same callable interface.
+- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — why reversibility matters: codification is a bet that may need relaxing when scale shows the commitment was wrong.
+
+Leaving one question unanswered creates a predictable failure: phase errors without timing, wrong commitments without target heuristics, and big-bang rewrites without reversible interfaces.
+
 ## Distillation
 
 Targeted extraction from a larger body of reasoning into a focused artifact shaped by use case, context budget, or agent. Orthogonal to constraining — you can distil without constraining (extract a skill, still underspecified) or constrain without distilling (store an output, no extraction from reasoning).

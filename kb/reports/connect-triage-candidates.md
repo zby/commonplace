@@ -31,10 +31,6 @@ Status legend:
 
 ## Keep
 
-- `KEEP` - **Skill composition depth degrades by the same mechanism as flat-context dynamic scope.**
-  Source report: [Skill Graphs 2.0 connect](./connect/sources/a-new-way-to-think-about-composing-skills-to-increase-leverage-skill-g-2047124337191444844.connect.md).
-  Candidate action: keep as a possible later synthesis. [Context efficiency](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) now carries the Skill Graphs depth-degradation observation, but the stronger claim that hierarchical skill composition and hierarchical context scoping are the same move remains unproven.
-
 - `KEEP` - **Service-owned memory backends need a typed-role analysis.**
   Source report: [Stash connect](./connect/agent-memory-systems/stash.connect.md).
   Candidate action: the Stash review now covers typed operational objects and links to Hindsight, SAGE, REM, SignetAI, and OpenViking, so the raw material exists. Keep only if a future comparison needs an explicit service-owned-memory table by storage substrate, extraction schema, validation gate, activation mechanism, and typed operational objects.
