@@ -1,5 +1,5 @@
 ---
-description: "Seedling bridge note that names the memory-specific operational axes around artifact class, backend, and role: capture, derivation, activation, authority, lifecycle, and evaluation"
+description: "Memory design needs operational policy axes (capture, derivation, activation, authority, lifecycle, evaluation) on top of artifact class, backend, and role"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
@@ -22,7 +22,7 @@ This seedling note names those cross-cutting operational axes. Its job is not to
 | Backend | Where does the artifact live? | Repo file, SQL row, vector record, graph edge, service-owned memory object |
 | Role | How does the consumer read it? | Reference knowledge, behavior-shaping instruction, or both |
 
-These axes are necessary because memory discussions often conflate them. A vector store is a backend, not an artifact class. A prompt rule is usually prose-class but behavior-shaping in role. A markdown file can have knowledge role when read as reference and system-definition role when loaded as instruction.
+These axes are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows backend-first comparisons missing the more consequential axes. A vector store is a backend, not an artifact class. A prompt rule is usually prose-class but behavior-shaping in role. A markdown file can have knowledge role when read as reference and system-definition role when loaded as instruction.
 
 But artifact axes stop at the artifact boundary. They do not explain how retained material becomes future capacity.
 
@@ -39,7 +39,7 @@ Operational axes describe the policies that turn retained material into usable m
 | Lifecycle policy | How does memory change or leave? | Supersede, invalidate, decay, redact, delete, relax enforcement, regenerate compiled views |
 | Evaluation policy | What proves the memory helped? | Retrieval score, task outcome, behavior change, artifact quality, human review, ablation |
 
-These axes are not new requirements. They are a map over existing ones. Capture and derivation cover ingress and trace extraction. Activation covers behavior-changing memory. Authority covers write, promotion, activation, enforcement, revision, and retirement rights. Lifecycle covers redaction, decay, supersession, retirement, relaxation, and temporal validity. Evaluation covers downstream effects rather than storage volume.
+The framing is what's new, not the underlying design pressures. Each axis maps onto existing requirement notes: capture and derivation cover ingress and trace extraction; activation covers behavior-changing memory; authority covers write, promotion, enforcement, and revision rights; lifecycle covers how memory changes (decay, supersession, redaction, relaxation, temporal validity); evaluation covers downstream effects rather than storage volume. Authority and lifecycle meet at retirement: authority answers *who* may retire a memory, lifecycle answers *how* retirement happens.
 
 ## Why the split matters
 
@@ -62,9 +62,7 @@ Use this note as a router into the detailed requirement notes:
 
 ## Status
 
-This note is a seedling companion to [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md). The design note derives requirements from contextual competence; this note tests an operational-axis view over those requirements. If the axis list proves stable, it should probably fold into the design note rather than remain a separate claim.
-
-Until then, keep this as a routing note. It should point storage-first memory discussions toward the operational choices they still need to name.
+This note is a seedling companion to [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md). If the six-axis list proves stable across new memory-system reviews and design discussions, fold it into the design note rather than maintaining a separate claim.
 
 ---
 
