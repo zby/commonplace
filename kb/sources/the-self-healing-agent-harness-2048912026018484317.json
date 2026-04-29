@@ -1,0 +1,400 @@
+{
+  "source": "https://x.com/intuitiveml/status/2048912026018484317",
+  "captured": "2026-04-29T17:21:59.182403+00:00",
+  "family": "x-article",
+  "status_id": "2048912026018484317",
+  "conversation_id": "2048912026018484317",
+  "target_post": {
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/SFQ9zsi1nQ",
+          "expanded_url": "http://x.com/i/article/2048870169678909440",
+          "display_url": "x.com/i/article/2048\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2048870169678909440"
+        }
+      ]
+    },
+    "article": {
+      "cover_media": "3_2048870945704886272",
+      "title": "The Self-Healing Agent Harness ",
+      "preview_text": "Last month, I said 99% of our production code is written by AI.\nThat wasn\u2019t a small change. We had to rebuild the way we work, with agents at the center. Now we ship to production three to eight times",
+      "plain_text": "Last month, I said 99% of our production code is written by AI.\nThat wasn\u2019t a small change. We had to rebuild the way we work, with agents at the center. Now we ship to production three to eight times a day.\nSince then, the question I hear most from other founders is:\nWho tests it?\nThe answer is not \u201cmore QA.\u201d We don\u2019t have a QA team. We don\u2019t have a staging environment where people click around before a release. No one on the team is sitting there reading transcripts and scoring agent replies by hand.\nInstead, we built a system that catches failures and helps fix them. We call it the self-healing Agent Harness\nAfter running this in production, two lessons became obvious:\nGrade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer. Penalizing the path is not an efficient way to evaluate agent performance.\nA score with no ticket means nothing. A bad score that does not feed engineering is just a dashboard. A bug pipeline without grader signals is blind. Build both, or build neither.\nDon't get trapped chasing \"scientific correctness.\" I've seen plenty of people with research backgrounds get caught debating whether agent-based evaluation is methodologically rigorous enough. For a startup, that kind of debate is a luxury you can\u2019t afford. It misses the point. The purpose of an agent-based grader isn\u2019t to rank models against each other for a paper. It\u2019s to identify recurring issues in your product, fast. A good enough signal that triggers a fix today beats a perfectly defensible benchmark that ships next quarter.\nThat loop, grade, triage, fix, verify, and gate releases, is what we call the Agent Harness\nThe Thesis: Evaluation and QA Are the Same Loop\nIn a traditional SaaS company,  these usually live in different places:\nModel evaluation asks: is the model giving good answers on live traffic? ML or data science owns that. They make dashboards.\nQA asks: does the product work in production? Engineering owns that. They file tickets, fix bugs, and ship releases.\nFor an AI agent platform, those are the same question. A bad agent response is both a metric to chart and a bug to triage and fix. And that bug could come from almost anywhere:\nThe model reasoned poorly or hallucinated\nAn integration returned a 500, a stale token, or a malformed payload, and the agent repeated it back\nInfra flaked. Maybe Cloudflare timed out, maybe Postgres replica lag hit, maybe an ECS task ran out of memory mid-stream\nA tool contract drifted. A schema changed upstream and the agent's arguments silently stopped matching\nPrompt or context plumbing broke. A system prompt got truncated, RAG returned the wrong chunk, memory failed to load\nA deploy regression quietly degraded one of the dozens of small components behind a single user turn\nTo the user, all of these look the same: a bad answer. To the grader, they also look the same: a low score on messageId X. This is exactly why we built the Harness. We don\u2019t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.\nA failed tool call should show up as a quality drop, and that quality drop should block the next deployment. The eval pipeline doesn\u2019t sit off to the side. It feeds engineering directly. Every production failure goes through the same funnel.\nThat funnel is the Agent Harness.\nIt runs a self-healing loop on three components, and the rest of this post walks through each one.\nThe Grader. A tri-judge panel that scores every live agent response (Replaces human QA review and offline benchmark eval)\nThe Engineering Pipeline. Six daily jobs that turn low scores into Linear tickets, draft PRs, and verified fixes (Replaces manual bug triage, sprint planning, and regression testing)\nThe Bridge. AI-gated grey rollouts where the Grader's scores decide whether new code ships (Replaces staging environments and release approvals)\nWhen AI cuts build time from month to hours, every downstream stage becomes the bottleneck. Evaluation and QA, kept separate, are both that bottleneck. The only way to keep up with AI-speed implementation is to merge them.\nThe chart below shows the sampled evaluations and average scores collected on the CREAO platform over the past 7 days.\n \nComponent 1: The Grader, a Tri-Judge Panel on Live Traffic\nThe hardest part of grading an AI product isn\u2019t checking whether the code compiles. It\u2019s determining whether the agent gave a good, logical answer to the user.\nThat used to mean humans reading transcripts. We replaced that with an async grading endpoint that fires after every assistant turn, fully out of band. It never adds a millisecond to user-facing latency.\nThis is the Harness's eyes. Everything downstream depends on these scores being trustworthy.\nA note on intent.\nWe care a lot about accuracy and fairness, but we\u2019re not building a leaderboard or ranking models against each other. The Grader exists to surface issues in our agent system: bad prompts, broken tool contracts, drifted integrations, infra flakes, regressions from our own deployments. Per-model scores are just a debugging signal, not a benchmark. If two judges score a response \"poor\" on the same messageId, we don\u2019t learn that one model is better than another. We learn that something in our pipeline produced a bad answer, and we need to fix it.\nThe Trigger and Sampling\nEvery agent response triggers a POST to our internal grading endpoint with the messageId, threadId, and the model that served the response after fallback.\nSampling is per model, not flat:\n10% for our dominant production model (Sonnet 4.6). It handles about 24x more traffic than anything else on our platform, so a flat rate would drown out the rest\n100% for every minority or experimental model: Opus, GPT, Gemini, etc.\nThat\u2019s the only way minority models reach statistical significance fast enough to gate a rollout decision in hours instead of weeks.\nJob 0: The Categorical Router\n \nBefore the judges see the transcript, a lightweight classifier (Job 0) maps the interaction to one of our 12 core domains: coding, research, data analysis, task automation, agent building, artifact building, traditional app building, planning, writing, creative work, conversation, and error recovery.\nWe do this before scoring so each judge sees a category-conditioned rubric. A good coding answer and a good research answer get graded against different red flags.\nThree Judges, Three Personas\nWe run three judges from different model families in parallel: Anthropic, OpenAI, and Google. This helps reduce the self-preference bias that can show up when models grade their own work. We call all three concurrently through our AI Gateway, so a single slow or failed judge never drops the verdict. It just lowers the quorum size for that row.\nBut we don\u2019t trust the panel just because the panel agrees. We still sample a small share of verdicts back to humans for periodic calibration. If a persistent gap shows up between judge consensus and human review, we treat it as a bug in the rubric, not a tolerable error rate.\nEach judge has to return structured output through a schema-locked tool call (submit_evaluation). The tool requires five fields: reasoning (2 to 3 sentences of step-by-step rationale), category (the domain being graded), quality (excellent, good, acceptable, poor), issues (drawn from a 9-item taxonomy: incomplete, hallucination, tool_misuse, missed_context, and so on), and confidence (a 0 to 1 float).\nThe Categorical Rubric\n \nEach judge sees the same transcript but evaluates against category-specific constraints:\n \nMathematical Consensus\nWe map quality to a 1-4 scale and average across surviving judges instead of voting. That turns a blunt four-point scale into a continuous metric (3.33 vs 2.66) and makes per-model trends visible at much smaller sample sizes than a majority vote.\nIf Sonnet grades Sonnet, the score can inflate by ~0.3. However, when the OpenAI and Google judges, each running under different expert personas, flag the same issue, the bias gets washed out by the quorum. We persist each judge's verdict alongside the average (sonnet_quality, gpt_quality, gemini_quality, judge_count) so engineers can audit disagreement after the fact and re-weight if any single judge starts drifting.\nThe Grader's output is simple: a stream of category-tagged, judge-averaged scores tied to the exact messageId that produced them. That stream feeds everything that comes next.\nThe chart below illustrates the response quality of selected models available in our service.\n \nComponent 2: The Engineering Pipeline, Six Jobs from Score to Fix\nPlenty of papers prove autonomous bug fixing is possible. But academic benchmarks don\u2019t run in production. If AI hallucinates a fix on a static benchmark, you get a bad score. If it hallucinates a fix in your live codebase, you get an outage.\nThe Engineering Pipeline takes the Grader\u2019s scores and turns them into shipped code. A low score from Component 1 is a bug report. From there, six jobs take that bug report to a verified fix. This replaces manual QA: triage, investigation, fix, regression test, sign-off.\nThe daily workflow runs six sequential jobs:\n \nJob 1: Detect and Triage. An agent pulls poor-quality verdicts from the Grader and clusters them. It scores each cluster on a 9-dimensional severity engine: user impact, velocity, duration, alarm correlation, resource pressure, latency, 4xx rate, blast radius, business criticality. Anything above the urgency cutoff moves forward. The rest go into a log for trend tracking.\nJob 2: Investigate. For the top three clusters, an agent walks the stack traces through our monorepo, pulls CloudWatch logs, checks recent deployments, and queries the database replica. It assigns a root cause and routes the ticket to a human with a full evidence bundle.\nJob 3: Auto-Fix. For high-confidence, urgent issues, the system branches the code, writes the fix, validates it, and submits a draft PR on GitHub. Guardrails over ambition:\nMax three PRs per run. Reviewers have limits. Bot floods exhaust it.\nAny diff that touches .env, .github/, or IAM policies gets auto-closed.\nType errors block submission. Failing tests block submission.\nWe\u2019re not trying to fix deep architectural debt here. We\u2019re aiming to fix the obvious bugs quickly so humans can focus on deep work.\nJob 4: Verify. For tickets in In Review, the system queries CloudWatch for the prior six hours. Zero occurrences? It closes the ticket with telemetry evidence pasted into the comment. Still failing? It updates the ticket with the new error count and loops again. Objective proof that fixes work, with zero manual regression testing.\nJob 5: Re-grade. The Grader samples closed clusters at 100% for the next 24 hours. A regression reopens the ticket and reverts the fix.\nJob 6: Report. A nightly digest lands in Linear and the team channel: clusters detected, PRs shipped, PRs reverted, score changes per category, and per-model leaderboard. The dashboard isn\u2019t the goal, it\u2019s just a record of what already happened.\nComponent 3: The Bridge, AI-Gated Grey Rollouts\n \nThe first two components close the loop on bugs that already shipped. The third closes the loop on bugs about to ship.\nA self-healing pipeline handles papercuts well. What happens when you swap a foundational model, rewrite a core system prompt, or hand an agent vast new tool access? Behavioral risk goes vertical. You cannot push a major update to 100% of production and hope.\nThe Bridge is where the Grader and the Engineering Pipeline meet. We use the Grader's scores as one of the release gates (there are many others, but here we focus on grader\u2019s scores). No staging environment. No human approval. No \"looks good to me\" in a PR comment.\nWhen a major agent change merges, we route a small slice of real traffic, typically 10%, to the new variant. The Grader scores it head-to-head against the current production baseline in real time.\nThe promotion ladder runs automatically:\nFail. If the panel's average score drops by 0.15 or more against baseline (p < 0.05 over a minimum 200-interaction window), or our deterministic bug hunter detects a spike in novel error clusters in that 10% cohort, the pipeline aborts the rollout, flips traffic back to stable, and opens a Linear ticket with the regression cohort attached. That ticket enters Component 2 as Job 1 input. The loop closes.\nHold or improve. The cohort scales: 5% to 20% to 50% to 100%. Each step is gated by the same statistical test on a fresh window.\nThe models prove their own safety on real user traffic, with the blast radius capped by cohort size.\nThe Hard Truths About Running a Harness\nIf you\u2019re transitioning to an AI-first engineering workflow, write these down.\nGrade the outcome, not the trajectory. Early on, we penalized agents for making \"unnecessary\" tool calls. That didn\u2019t last long. We quickly learned what recent agentic research has proven: AI often discovers highly effective, non-linear solutions that look strange to humans but work extremely well. Grading what the agent produced is far more robust than micromanaging how it got there.\nSample by model, not by traffic. Flat sampling makes the dominant model look like the only model. You\u2019ll under-invest in the rest.\nA score with no ticket is a dashboard nobody looks at. The Grader is worthless without the Engineering Pipeline behind it. The Engineering Pipeline is worthless without the Grader feeding it. Build both, or build neither.\nThe New Standard\nA self-healing system isn't a single feature. It\u2019s a cycle: grade, triage, fix, verify. Every component runs on the model's own output.\nIn my last post, I wrote that the primary job of an engineering team is to enable agents to do useful work.\nThe Agent Harness is what that looks like in practice. The Grader replaces subjective human review. The Engineering Pipeline replaces manual bug triage and regression testing. The Bridge replaces the anxiety of the big-bang release.\nMost founders are still bolting tools like Copilot onto the same old workflow. They run standard CI/CD with standard manual QA. They write code in hours and test it in days. They\u2019re AI-assisted. They are not AI-first.\nThe competitive advantage goes to the teams that stop treating evaluation and QA as separate functions and build the harness that fuses them.\nWe build an agent platform. We test it with an AI jury, ship it on the jury's verdict, and let the jury reopen the case when something regresses.\nThe harness tightens day by day.",
+      "media_entities": [
+        "3_2048875020261433344",
+        "3_2048873722678030336",
+        "3_2048874496099328000",
+        "3_2048872175533514752",
+        "3_2048871530361409536",
+        "3_2048871798998269952",
+        "3_2048874819635314688"
+      ]
+    },
+    "conversation_id": "2048912026018484317",
+    "created_at": "2026-04-27T23:47:48.000Z",
+    "author_id": "1218452020119527425",
+    "text": "https://t.co/SFQ9zsi1nQ",
+    "id": "2048912026018484317",
+    "edit_history_tweet_ids": [
+      "2048912026018484317"
+    ]
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2048870945704886272",
+        "preview_text": "Last month, I said 99% of our production code is written by AI.\nThat wasn\u2019t a small change. We had to rebuild the way we work, with agents at the center. Now we ship to production three to eight times",
+        "plain_text": "Last month, I said 99% of our production code is written by AI.\nThat wasn\u2019t a small change. We had to rebuild the way we work, with agents at the center. Now we ship to production three to eight times a day.\nSince then, the question I hear most from other founders is:\nWho tests it?\nThe answer is not \u201cmore QA.\u201d We don\u2019t have a QA team. We don\u2019t have a staging environment where people click around before a release. No one on the team is sitting there reading transcripts and scoring agent replies by hand.\nInstead, we built a system that catches failures and helps fix them. We call it the self-healing Agent Harness\nAfter running this in production, two lessons became obvious:\nGrade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer. Penalizing the path is not an efficient way to evaluate agent performance.\nA score with no ticket means nothing. A bad score that does not feed engineering is just a dashboard. A bug pipeline without grader signals is blind. Build both, or build neither.\nDon't get trapped chasing \"scientific correctness.\" I've seen plenty of people with research backgrounds get caught debating whether agent-based evaluation is methodologically rigorous enough. For a startup, that kind of debate is a luxury you can\u2019t afford. It misses the point. The purpose of an agent-based grader isn\u2019t to rank models against each other for a paper. It\u2019s to identify recurring issues in your product, fast. A good enough signal that triggers a fix today beats a perfectly defensible benchmark that ships next quarter.\nThat loop, grade, triage, fix, verify, and gate releases, is what we call the Agent Harness\nThe Thesis: Evaluation and QA Are the Same Loop\nIn a traditional SaaS company,  these usually live in different places:\nModel evaluation asks: is the model giving good answers on live traffic? ML or data science owns that. They make dashboards.\nQA asks: does the product work in production? Engineering owns that. They file tickets, fix bugs, and ship releases.\nFor an AI agent platform, those are the same question. A bad agent response is both a metric to chart and a bug to triage and fix. And that bug could come from almost anywhere:\nThe model reasoned poorly or hallucinated\nAn integration returned a 500, a stale token, or a malformed payload, and the agent repeated it back\nInfra flaked. Maybe Cloudflare timed out, maybe Postgres replica lag hit, maybe an ECS task ran out of memory mid-stream\nA tool contract drifted. A schema changed upstream and the agent's arguments silently stopped matching\nPrompt or context plumbing broke. A system prompt got truncated, RAG returned the wrong chunk, memory failed to load\nA deploy regression quietly degraded one of the dozens of small components behind a single user turn\nTo the user, all of these look the same: a bad answer. To the grader, they also look the same: a low score on messageId X. This is exactly why we built the Harness. We don\u2019t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.\nA failed tool call should show up as a quality drop, and that quality drop should block the next deployment. The eval pipeline doesn\u2019t sit off to the side. It feeds engineering directly. Every production failure goes through the same funnel.\nThat funnel is the Agent Harness.\nIt runs a self-healing loop on three components, and the rest of this post walks through each one.\nThe Grader. A tri-judge panel that scores every live agent response (Replaces human QA review and offline benchmark eval)\nThe Engineering Pipeline. Six daily jobs that turn low scores into Linear tickets, draft PRs, and verified fixes (Replaces manual bug triage, sprint planning, and regression testing)\nThe Bridge. AI-gated grey rollouts where the Grader's scores decide whether new code ships (Replaces staging environments and release approvals)\nWhen AI cuts build time from month to hours, every downstream stage becomes the bottleneck. Evaluation and QA, kept separate, are both that bottleneck. The only way to keep up with AI-speed implementation is to merge them.\nThe chart below shows the sampled evaluations and average scores collected on the CREAO platform over the past 7 days.\n \nComponent 1: The Grader, a Tri-Judge Panel on Live Traffic\nThe hardest part of grading an AI product isn\u2019t checking whether the code compiles. It\u2019s determining whether the agent gave a good, logical answer to the user.\nThat used to mean humans reading transcripts. We replaced that with an async grading endpoint that fires after every assistant turn, fully out of band. It never adds a millisecond to user-facing latency.\nThis is the Harness's eyes. Everything downstream depends on these scores being trustworthy.\nA note on intent.\nWe care a lot about accuracy and fairness, but we\u2019re not building a leaderboard or ranking models against each other. The Grader exists to surface issues in our agent system: bad prompts, broken tool contracts, drifted integrations, infra flakes, regressions from our own deployments. Per-model scores are just a debugging signal, not a benchmark. If two judges score a response \"poor\" on the same messageId, we don\u2019t learn that one model is better than another. We learn that something in our pipeline produced a bad answer, and we need to fix it.\nThe Trigger and Sampling\nEvery agent response triggers a POST to our internal grading endpoint with the messageId, threadId, and the model that served the response after fallback.\nSampling is per model, not flat:\n10% for our dominant production model (Sonnet 4.6). It handles about 24x more traffic than anything else on our platform, so a flat rate would drown out the rest\n100% for every minority or experimental model: Opus, GPT, Gemini, etc.\nThat\u2019s the only way minority models reach statistical significance fast enough to gate a rollout decision in hours instead of weeks.\nJob 0: The Categorical Router\n \nBefore the judges see the transcript, a lightweight classifier (Job 0) maps the interaction to one of our 12 core domains: coding, research, data analysis, task automation, agent building, artifact building, traditional app building, planning, writing, creative work, conversation, and error recovery.\nWe do this before scoring so each judge sees a category-conditioned rubric. A good coding answer and a good research answer get graded against different red flags.\nThree Judges, Three Personas\nWe run three judges from different model families in parallel: Anthropic, OpenAI, and Google. This helps reduce the self-preference bias that can show up when models grade their own work. We call all three concurrently through our AI Gateway, so a single slow or failed judge never drops the verdict. It just lowers the quorum size for that row.\nBut we don\u2019t trust the panel just because the panel agrees. We still sample a small share of verdicts back to humans for periodic calibration. If a persistent gap shows up between judge consensus and human review, we treat it as a bug in the rubric, not a tolerable error rate.\nEach judge has to return structured output through a schema-locked tool call (submit_evaluation). The tool requires five fields: reasoning (2 to 3 sentences of step-by-step rationale), category (the domain being graded), quality (excellent, good, acceptable, poor), issues (drawn from a 9-item taxonomy: incomplete, hallucination, tool_misuse, missed_context, and so on), and confidence (a 0 to 1 float).\nThe Categorical Rubric\n \nEach judge sees the same transcript but evaluates against category-specific constraints:\n \nMathematical Consensus\nWe map quality to a 1-4 scale and average across surviving judges instead of voting. That turns a blunt four-point scale into a continuous metric (3.33 vs 2.66) and makes per-model trends visible at much smaller sample sizes than a majority vote.\nIf Sonnet grades Sonnet, the score can inflate by ~0.3. However, when the OpenAI and Google judges, each running under different expert personas, flag the same issue, the bias gets washed out by the quorum. We persist each judge's verdict alongside the average (sonnet_quality, gpt_quality, gemini_quality, judge_count) so engineers can audit disagreement after the fact and re-weight if any single judge starts drifting.\nThe Grader's output is simple: a stream of category-tagged, judge-averaged scores tied to the exact messageId that produced them. That stream feeds everything that comes next.\nThe chart below illustrates the response quality of selected models available in our service.\n \nComponent 2: The Engineering Pipeline, Six Jobs from Score to Fix\nPlenty of papers prove autonomous bug fixing is possible. But academic benchmarks don\u2019t run in production. If AI hallucinates a fix on a static benchmark, you get a bad score. If it hallucinates a fix in your live codebase, you get an outage.\nThe Engineering Pipeline takes the Grader\u2019s scores and turns them into shipped code. A low score from Component 1 is a bug report. From there, six jobs take that bug report to a verified fix. This replaces manual QA: triage, investigation, fix, regression test, sign-off.\nThe daily workflow runs six sequential jobs:\n \nJob 1: Detect and Triage. An agent pulls poor-quality verdicts from the Grader and clusters them. It scores each cluster on a 9-dimensional severity engine: user impact, velocity, duration, alarm correlation, resource pressure, latency, 4xx rate, blast radius, business criticality. Anything above the urgency cutoff moves forward. The rest go into a log for trend tracking.\nJob 2: Investigate. For the top three clusters, an agent walks the stack traces through our monorepo, pulls CloudWatch logs, checks recent deployments, and queries the database replica. It assigns a root cause and routes the ticket to a human with a full evidence bundle.\nJob 3: Auto-Fix. For high-confidence, urgent issues, the system branches the code, writes the fix, validates it, and submits a draft PR on GitHub. Guardrails over ambition:\nMax three PRs per run. Reviewers have limits. Bot floods exhaust it.\nAny diff that touches .env, .github/, or IAM policies gets auto-closed.\nType errors block submission. Failing tests block submission.\nWe\u2019re not trying to fix deep architectural debt here. We\u2019re aiming to fix the obvious bugs quickly so humans can focus on deep work.\nJob 4: Verify. For tickets in In Review, the system queries CloudWatch for the prior six hours. Zero occurrences? It closes the ticket with telemetry evidence pasted into the comment. Still failing? It updates the ticket with the new error count and loops again. Objective proof that fixes work, with zero manual regression testing.\nJob 5: Re-grade. The Grader samples closed clusters at 100% for the next 24 hours. A regression reopens the ticket and reverts the fix.\nJob 6: Report. A nightly digest lands in Linear and the team channel: clusters detected, PRs shipped, PRs reverted, score changes per category, and per-model leaderboard. The dashboard isn\u2019t the goal, it\u2019s just a record of what already happened.\nComponent 3: The Bridge, AI-Gated Grey Rollouts\n \nThe first two components close the loop on bugs that already shipped. The third closes the loop on bugs about to ship.\nA self-healing pipeline handles papercuts well. What happens when you swap a foundational model, rewrite a core system prompt, or hand an agent vast new tool access? Behavioral risk goes vertical. You cannot push a major update to 100% of production and hope.\nThe Bridge is where the Grader and the Engineering Pipeline meet. We use the Grader's scores as one of the release gates (there are many others, but here we focus on grader\u2019s scores). No staging environment. No human approval. No \"looks good to me\" in a PR comment.\nWhen a major agent change merges, we route a small slice of real traffic, typically 10%, to the new variant. The Grader scores it head-to-head against the current production baseline in real time.\nThe promotion ladder runs automatically:\nFail. If the panel's average score drops by 0.15 or more against baseline (p < 0.05 over a minimum 200-interaction window), or our deterministic bug hunter detects a spike in novel error clusters in that 10% cohort, the pipeline aborts the rollout, flips traffic back to stable, and opens a Linear ticket with the regression cohort attached. That ticket enters Component 2 as Job 1 input. The loop closes.\nHold or improve. The cohort scales: 5% to 20% to 50% to 100%. Each step is gated by the same statistical test on a fresh window.\nThe models prove their own safety on real user traffic, with the blast radius capped by cohort size.\nThe Hard Truths About Running a Harness\nIf you\u2019re transitioning to an AI-first engineering workflow, write these down.\nGrade the outcome, not the trajectory. Early on, we penalized agents for making \"unnecessary\" tool calls. That didn\u2019t last long. We quickly learned what recent agentic research has proven: AI often discovers highly effective, non-linear solutions that look strange to humans but work extremely well. Grading what the agent produced is far more robust than micromanaging how it got there.\nSample by model, not by traffic. Flat sampling makes the dominant model look like the only model. You\u2019ll under-invest in the rest.\nA score with no ticket is a dashboard nobody looks at. The Grader is worthless without the Engineering Pipeline behind it. The Engineering Pipeline is worthless without the Grader feeding it. Build both, or build neither.\nThe New Standard\nA self-healing system isn't a single feature. It\u2019s a cycle: grade, triage, fix, verify. Every component runs on the model's own output.\nIn my last post, I wrote that the primary job of an engineering team is to enable agents to do useful work.\nThe Agent Harness is what that looks like in practice. The Grader replaces subjective human review. The Engineering Pipeline replaces manual bug triage and regression testing. The Bridge replaces the anxiety of the big-bang release.\nMost founders are still bolting tools like Copilot onto the same old workflow. They run standard CI/CD with standard manual QA. They write code in hours and test it in days. They\u2019re AI-assisted. They are not AI-first.\nThe competitive advantage goes to the teams that stop treating evaluation and QA as separate functions and build the harness that fuses them.\nWe build an agent platform. We test it with an AI jury, ship it on the jury's verdict, and let the jury reopen the case when something regresses.\nThe harness tightens day by day.",
+        "media_entities": [
+          "3_2048875020261433344",
+          "3_2048873722678030336",
+          "3_2048874496099328000",
+          "3_2048872175533514752",
+          "3_2048871530361409536",
+          "3_2048871798998269952",
+          "3_2048874819635314688"
+        ],
+        "title": "The Self-Healing Agent Harness "
+      },
+      "id": "2048912026018484317",
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "text": "https://t.co/SFQ9zsi1nQ",
+      "edit_history_tweet_ids": [
+        "2048912026018484317"
+      ],
+      "created_at": "2026-04-27T23:47:48.000Z",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/SFQ9zsi1nQ",
+            "expanded_url": "http://x.com/i/article/2048870169678909440",
+            "display_url": "x.com/i/article/2048\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2048870169678909440"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2048912783685939648",
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "1218452020119527425",
+      "text": "The chart below shows the sampled evaluations and average scores collected on the CREAO platform over the past 7 days. https://t.co/EgGfBUd8Et",
+      "edit_history_tweet_ids": [
+        "2048912783685939648"
+      ],
+      "created_at": "2026-04-27T23:50:49.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2048912026018484317"
+        }
+      ],
+      "entities": {
+        "urls": [
+          {
+            "start": 119,
+            "end": 142,
+            "url": "https://t.co/EgGfBUd8Et",
+            "expanded_url": "https://x.com/intuitiveml/status/2048912783685939648/photo/1",
+            "display_url": "pic.x.com/EgGfBUd8Et",
+            "media_key": "3_2048912697694281728"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2048949548970815863",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "ethankongee",
+            "id": "2339313409"
+          }
+        ]
+      },
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "2339313409",
+      "text": "@ethankongee Agreed. Software engineering will not disappear, but it will continue to evolve, as will the role of the software engineer",
+      "edit_history_tweet_ids": [
+        "2048949548970815863"
+      ],
+      "created_at": "2026-04-28T02:16:54.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2048948919292534788"
+        }
+      ]
+    },
+    {
+      "id": "2048966272294269078",
+      "note_tweet": {
+        "text": "A note on intent.\n\nWe care a lot about accuracy and fairness, but we\u2019re not building a leaderboard or ranking models against each other. The Grader exists to surface issues in our agent system: bad prompts, broken tool contracts, drifted integrations, infra flakes, regressions from our own deployments. Per-model scores are just a debugging signal, not a benchmark. If two judges score a response \"poor\" on the same messageId, we don\u2019t learn that one model is better than another. We learn that something in our pipeline produced a bad answer, and we need to fix it."
+      },
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "1218452020119527425",
+      "text": "A note on intent.\n\nWe care a lot about accuracy and fairness, but we\u2019re not building a leaderboard or ranking models against each other. The Grader exists to surface issues in our agent system: bad prompts, broken tool contracts, drifted integrations, infra flakes, regressions https://t.co/r8VsVFmiRH",
+      "edit_history_tweet_ids": [
+        "2048966272294269078"
+      ],
+      "created_at": "2026-04-28T03:23:21.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2048912026018484317"
+        }
+      ],
+      "entities": {
+        "urls": [
+          {
+            "start": 278,
+            "end": 301,
+            "url": "https://t.co/r8VsVFmiRH",
+            "expanded_url": "https://x.com/intuitiveml/status/2048966272294269078/photo/1",
+            "display_url": "pic.x.com/r8VsVFmiRH",
+            "media_key": "3_2048966192392798208"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2049196247366725854",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "dittops92",
+            "id": "1670429741935894531"
+          }
+        ]
+      },
+      "note_tweet": {
+        "text": "You\u2019re absolutely right, and I should clarify further. Our grader does have full visibility into the entire tool-use history. However, we have a separate agent dedicated to optimizing that aspect, I\u2019ll share more details on that in a separate post. This system, on the other hand, is primarily designed to detect system issues and bugs, which is where the healing process is focused."
+      },
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "1670429741935894531",
+      "text": "@dittops92 You\u2019re absolutely right, and I should clarify further. Our grader does have full visibility into the entire tool-use history. However, we have a separate agent dedicated to optimizing that aspect, I\u2019ll share more details on that in a separate post. This system, on the other hand,",
+      "edit_history_tweet_ids": [
+        "2049196247366725854"
+      ],
+      "created_at": "2026-04-28T18:37:12.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2049192558266622272"
+        }
+      ]
+    },
+    {
+      "id": "2049197684964430275",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "Xmarlandoj",
+            "id": "2040103879270862848"
+          }
+        ]
+      },
+      "note_tweet": {
+        "text": "Yeah, you are right about human in the middle, we always have engineer to look through the ticket from triage system. Currently, only a small fraction of ticket is solved with no human in the loop. Majority of them still need engineer guidance. But it already saved majority of time to identify and triage the issue"
+      },
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "2040103879270862848",
+      "text": "@Xmarlandoj Yeah, you are right about human in the middle, we always have engineer to look through the ticket from triage system. Currently, only a small fraction of ticket is solved with no human in the loop. Majority of them still need engineer guidance. But it already saved majority of",
+      "edit_history_tweet_ids": [
+        "2049197684964430275"
+      ],
+      "created_at": "2026-04-28T18:42:55.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2049195136366809199"
+        }
+      ]
+    },
+    {
+      "id": "2049491738188759105",
+      "author_id": "1218452020119527425",
+      "conversation_id": "2048912026018484317",
+      "in_reply_to_user_id": "1218452020119527425",
+      "text": "small fix: had the colorbar legend reversed on the rubric chart, green now correctly maps to low poor%, red to high. same data, just the scale reading the right way around. https://t.co/6PXNY74RY2",
+      "edit_history_tweet_ids": [
+        "2049491738188759105"
+      ],
+      "created_at": "2026-04-29T14:11:22.000Z",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2048912026018484317"
+        }
+      ],
+      "entities": {
+        "urls": [
+          {
+            "start": 173,
+            "end": 196,
+            "url": "https://t.co/6PXNY74RY2",
+            "expanded_url": "https://x.com/intuitiveml/status/2049491738188759105/photo/1",
+            "display_url": "pic.x.com/6PXNY74RY2",
+            "media_key": "3_2049491727665528833"
+          }
+        ]
+      }
+    }
+  ],
+  "users": {
+    "1218452020119527425": {
+      "id": "1218452020119527425",
+      "name": "Peter Pang",
+      "username": "intuitiveml"
+    },
+    "1031670310884573184": {
+      "id": "1031670310884573184",
+      "name": "\u706b\u5c71\u54e5\ud83d\udd4a\ufe0f",
+      "username": "huoshan007"
+    },
+    "191833885": {
+      "id": "191833885",
+      "name": "Boran Cakir",
+      "username": "borancakir"
+    },
+    "1985754025455996928": {
+      "id": "1985754025455996928",
+      "name": "P.P.C",
+      "username": "ppc0x23"
+    },
+    "2040103879270862848": {
+      "id": "2040103879270862848",
+      "name": "Marlando",
+      "username": "Xmarlandoj"
+    },
+    "1308888968717426688": {
+      "id": "1308888968717426688",
+      "name": "jonathan rowden",
+      "username": "jonathan_rowden"
+    },
+    "1670429741935894531": {
+      "id": "1670429741935894531",
+      "name": "Ditto",
+      "username": "dittops92"
+    },
+    "1446179258863210497": {
+      "id": "1446179258863210497",
+      "name": "harshit girdhar",
+      "username": "harshitgirdhar7"
+    },
+    "1996939568520876033": {
+      "id": "1996939568520876033",
+      "name": "Nilay",
+      "username": "localm_tuts"
+    },
+    "1972727317064720384": {
+      "id": "1972727317064720384",
+      "name": "Dylan Milstein",
+      "username": "dylxnmyl"
+    },
+    "1045983811165704193": {
+      "id": "1045983811165704193",
+      "name": "FELIX",
+      "username": "FellMentKE"
+    },
+    "1784803503011209216": {
+      "id": "1784803503011209216",
+      "name": "dFusion AI Protocol",
+      "username": "dFusionAI"
+    },
+    "2999866476": {
+      "id": "2999866476",
+      "name": "Bach92",
+      "username": "bach__92"
+    },
+    "1491248934345400320": {
+      "id": "1491248934345400320",
+      "name": "Rockachopa",
+      "username": "rockachopa"
+    },
+    "2041588818847879168": {
+      "id": "2041588818847879168",
+      "name": "Supra-Wall | AI Agent Guardrails",
+      "username": "Supra_Wall"
+    },
+    "1804152429958590464": {
+      "id": "1804152429958590464",
+      "name": "DataMan",
+      "username": "DatamindTechFL"
+    },
+    "1517868253346947072": {
+      "id": "1517868253346947072",
+      "name": "Silverarrow",
+      "username": "ta_eis_eauton"
+    },
+    "285559495": {
+      "id": "285559495",
+      "name": "ivan herselman",
+      "username": "HerselmanI"
+    },
+    "1951198740469129216": {
+      "id": "1951198740469129216",
+      "name": "CODIFY",
+      "username": "codi_fyy"
+    },
+    "459573144": {
+      "id": "459573144",
+      "name": "Chris",
+      "username": "bieringch"
+    },
+    "1261901029894914054": {
+      "id": "1261901029894914054",
+      "name": "Agrim",
+      "username": "agrimchopra90"
+    },
+    "1914364276317544453": {
+      "id": "1914364276317544453",
+      "name": "Djah",
+      "username": "dandrews_ai"
+    },
+    "1723426647431602176": {
+      "id": "1723426647431602176",
+      "name": "Manish Kumar Shah",
+      "username": "manishkumar_dev"
+    },
+    "1771899223002505216": {
+      "id": "1771899223002505216",
+      "name": "Stometa",
+      "username": "stometaverse"
+    },
+    "70881295": {
+      "id": "70881295",
+      "name": "Ankur Kumar",
+      "username": "ankurkumarz"
+    },
+    "2339313409": {
+      "id": "2339313409",
+      "name": "Ethan",
+      "username": "ethankongee"
+    },
+    "2036976687221821440": {
+      "id": "2036976687221821440",
+      "name": "\u9c7c\u5c0f\u5708 YuLoop",
+      "username": "yyz81681981"
+    }
+  },
+  "thread_fetch_error": null
+}
