@@ -1,0 +1,433 @@
+{
+  "source": "https://x.com/aparnadhinak/status/2046980769747533830",
+  "captured": "2026-04-29T17:20:12.356351+00:00",
+  "family": "x-article",
+  "status_id": "2046980769747533830",
+  "conversation_id": "2046980769747533830",
+  "target_post": {
+    "article": {
+      "plain_text": "Someone asked me at a hacker event last week: \"Can anyone actually tell me what a harness really is?\" It was said with real skepticism. The kind of skepticism that says we all use the word \u201cHarness\u201d in the industry, but nobody actually knows what it is.\nFair question. Let me try.\nWhat a harness is not\nI respect @akshay_pachaar  immensely but I deeply disagree with his post. I think his post is really confusing to the industry, in that it calls LangGraph a harness.\nLangChain is not a harness. LangGraph is not a harness.\nThese are frameworks designed for humans to build agents. They give you abstractions, configuration options, and a lot of rope. You wire together chains, define state graphs, pick your retriever, and configure your memory. Dozens of knobs. Dozens of ways to get it wrong. \nThe fundamental assumption is that a human architect will configure these pieces correctly. \nAksay\u2019s Post: https://x.com/akshay_pachaar/status/2041146899319971922\nTo stoke the fire Akshay quotes the langchain team \"If you're not the model, you're the harness.\"\nWhat does that even mean?\nIt is a weak argument to cover the earlier 1.0 agent frameworks in the new harness terminology.\nWhat a harness is\nA harness starts from the opposite direction.\nThe modern harness was not designed top-down from abstractions. It was born bottom-up out of coding agents, solving real world problems with working agents. Cursor, Claude Code, Windsurf, and Codex are all harnesses. These products started with a concrete problem: make an LLM write and edit real code across real repositories. In solving that problem, they independently converged on remarkably similar architectures. A while loop that calls tools. A context manager that compresses history. A permission layer that keeps things safe. The same patterns, discovered separately, over and over again. We arrived at a number of similar architecture decisions building Alyx, our in-product agent for Arize Ax Observability and Evals platform, over the last two years (also coming to Arize Phoenix, our OSS). Different domain, same bones.\nThe abstractions that define these common architectures are what we call a harness.\n\nA harness is the current architecture, born out of general purpose agents, designed to solve a wide swath of problems out of the box.\n \nTwo things make a harness fundamentally different from a framework.\nFirst, a harness works out of the box. You don't configure a harness into existence. It ships as a working agent with a fixed architecture: the iteration loop, the context management, the tool registry, and the permission layer. All wired together, all already running. There is no assembly step.\nSecond, and this is the deeper shift: a harness is not designed for humans to build agents. A harness is designed for the agent to accomplish almost any task. The model reads instruction files and learns your project. It discovers available tools and composes them. It writes its own skills to extend what it can do. It spawns sub-agents when the task gets too big. The human provides the goal. The harness figures out the rest.\nThe components of a modern harness\nJust as computer architectures matured in the 80s we expect harness architectures to mature over the next couple years. Components for the harness 1.0 architecture fall into the following areas:\nOuter Iteration Loop\nContext Management & Context Compression\nSkills/Tools Management\nSubAgent Management\nBuilt in pre-packaged skills\nSession Persistence and Recovery\nSystem Prompt Assembly / Project Context Injection\nLife Cycle Hooks\nPermission & Safety Layer\nOuter Iteration Loop\nThe core architectural foundation of a modern harness is the while loop. The way it works is the model uses the system prompt and decides, based upon the data, what tools to call. It iterates on tools until it is finished. The while loop is the core foundation of the Harness 1.0 architecture.\n \nThe LLM based on the system prompt is pushed to find tools to use to finish its job. It will compose these tools together, tool after tool, execution after execution, until its job is done.\nThe main core architectural component of the harness, a loop over tools that attempts to accomplish any task, is not the core idea behind LangGraph. It is a human configured state graph.\nContext Management and Context Compression\nHow do you decide what to pull into context? How do you decide what to simplify in your context or compress, and how you decide how to represent large data in a simplified fashion are all about context management.\n \nOther challenges revolve around how to pass data to skill or tool calls, what data those skill or tool calls have access to, and how data is returned and used in context from those skill and tool calls.\nSkills/Tools Management\nSkills and tools management is a set of structures that allows teams to build skills, manage what skills are available, add new skills, and execute skills.\nEvery harness ships with a registry of built-in tools: read a file, edit a file, run a shell command, search code. These are the primitives. The harness needs to know what tools exist, what permissions each tool requires, and how to dispatch a tool call from the model to the right execution path. When the model says \"I want to run grep,\" the harness looks up that tool's spec, checks permissions, executes it, and feeds the result back into context.\nSkills are a layer on top of tools. The harness discovers these skill files from well-known directories, and the model can invoke them by name. This is where organizational knowledge gets encoded. Tools are universal. Skills are specific to your team and your workflow.\nSubAgent Management\nAt some point a task gets too big or too parallel for a single conversation thread. SubAgent management is how the harness spawns child agents that work in isolation and report results back.\n \nEach sub-agent gets its own conversation session, its own restricted set of tools, and a focused system prompt that says \"you are a background agent working on this specific task.\" The parent agent delegates, the sub-agent works, and results come back either in-memory or through on-disk manifests. The key architectural decision is isolation: a sub-agent should not be able to corrupt the parent's context or run tools the parent didn't authorize.\nToday most harnesses run sub-agents as threads with isolated sessions. Tomorrow we expect sub-agents to run in fully isolated sandboxes or even on separate machines. The pattern is the same either way: spawn, restrict, execute, collect results.\nBuilt-in Pre-packaged Skills\nEvery harness ships with a baseline set of capabilities that work out of the box. File operations (read, write, edit, search). Shell execution. Code navigation (grep, glob, semantic search). These are non-negotiable. If the agent cannot read and edit files, it is not a coding agent.\n \nBeyond the primitives, harnesses increasingly ship with higher-level built-in skills: how to make a git commit, how to create a pull request, how to run tests and interpret the output. These are the skills that the harness vendor has already figured out so teams do not have to. The quality of these built-in skills is a major differentiator between harnesses today.\nSession Persistence and Recovery\nA long-running agent session is stateful. If the process crashes, you lose everything unless the harness persists session state to disk. Modern harnesses write session data incrementally, typically as append-only JSONL files: each message, each tool result, each compaction event gets a line. This means you can resume a session exactly where you left off.\nSystem Prompt Assembly / Project Context Injection\nThe system prompt is how the harness tells the model who it is, what it can do, and what it is working on. This is not a static string. Modern harnesses assemble the system prompt dynamically from multiple sources.\n \nThe harness walks ancestor directories looking for instruction files (like CLAUDE.md or AGENTS.md), injects current git status and recent commits, adds environment metadata (OS, date, working directory), and appends the list of available tools and their permissions. All of this gets stitched together with character/token budgets so the system prompt does not blow out the context window before the conversation even starts.\nLife Cycle Hooks\nHooks are the extensibility seam of the harness. They let organizations inject custom logic before or after tool execution without forking the harness itself.\nA pre-tool hook fires before the agent runs a tool. It receives the tool name, the input, and can allow, deny, or modify the execution. A post-tool hook fires after and can inspect the result. Hooks communicate via a structured protocol: JSON on stdin, exit codes for allow/deny. This means hooks can be written in any language and can enforce arbitrary policy: \"never run rm -rf,\" \"log all file writes to our audit system,\" \"require approval for any bash command that touches production.\"\nHooks are how enterprises adopt harnesses. The harness vendor provides the architecture. Hooks let each organization layer their own safety, compliance, and workflow rules on top.\nPermission & Safety Layer\nThis is the component that makes the difference between a useful tool and a dangerous one. The permission layer defines what the agent is allowed to do and enforces those boundaries at every tool execution.\n \nModern harnesses define a hierarchy of permission modes: read-only, workspace-write, and full access. Each tool declares the minimum permission level it requires. The harness enforces this at dispatch time, before the tool ever runs. For tools like bash, the harness even classifies the command dynamically: \"ls\" is read-only, \"rm\" requires full access, and the harness can figure this out by parsing the command string.\nOn top of static permissions, the harness supports interactive approval. In prompt mode, the agent pauses and asks the human \"should I run this?\" before executing anything dangerous. Declarative allow/deny rules from configuration files let teams pre-authorize known-safe patterns and block known-dangerous ones. This is the layer that makes it possible to hand an LLM real tools and still sleep at night.\nConclusion\nThese nine components are not a wishlist. They are what every successful harness converged on independently. That convergence is the signal.\nThe deeper pattern is where the decisions live. Early harnesses hardcoded everything: fixed truncation limits, static permission rules, predetermined context budgets. The harnesses that are winning now push decisions to the model. Not sure what to keep in context? Let the LLM decide. Not sure which files matter? Let the LLM search. Not sure when to compact? Let the LLM manage its own memory.\nThe harness provides the feedback scaffolding to make intelligence work with a model. Without a harness a model is open loop, with a harness the model can act on feedback, take action and extend its skills. It is designed in a way that actually works where the original REACT loops did not.\nA model on its own is a one-shot text generator. It answers and stops. A model inside a harness can read a file, edit it, run the tests, see them fail, read the error, fix the code, and run the tests again. That closed loop\u2014act, observe, adjust\u2014is what turns a language model into an agent. The harness gives the model the ability to act on what it knows, see the consequences, and keep going until the problem is actually solved.\nThe next generation of tough technical problems in artificial intelligence are AI engineering systems problems. And we are solving them right now.\n\nWhat is an agent harness info graphic:\nhttps://arize.com/what-is-a-AI-harness.pdf",
+      "cover_media": "3_2046975698716528640",
+      "preview_text": "Someone asked me at a hacker event last week: \"Can anyone actually tell me what a harness really is?\" It was said with real skepticism. The kind of skepticism that says we all use the word \u201cHarness\u201d",
+      "title": "What is an Agent Harness",
+      "media_entities": [
+        "3_2046977673814278145",
+        "3_2046978391254167552",
+        "3_2046979759352266752",
+        "3_2046978883833266176",
+        "3_2046977959119196160",
+        "3_2046976842796781568",
+        "3_2046979569643917312"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 10,
+            "end": 25,
+            "username": "akshay_pachaar"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://x.com/akshay_pachaar/status/2041146899319971922"
+          },
+          {
+            "text": "https://arize.com/what-is-a-AI-harness.pdf"
+          },
+          {
+            "text": "https://arize.com/what-is-a-AI-harness.pdf"
+          },
+          {
+            "text": "https://x.com/akshay_pachaar/status/2041146899319971922"
+          }
+        ]
+      }
+    },
+    "created_at": "2026-04-22T15:53:41.000Z",
+    "id": "2046980769747533830",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/GR8wqBoETN",
+          "expanded_url": "http://x.com/i/article/2046970145747447808",
+          "display_url": "x.com/i/article/2046\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2046970145747447808"
+        }
+      ]
+    },
+    "edit_history_tweet_ids": [
+      "2046980769747533830"
+    ],
+    "text": "https://t.co/GR8wqBoETN",
+    "conversation_id": "2046980769747533830",
+    "author_id": "1202244246"
+  },
+  "posts": [
+    {
+      "article": {
+        "plain_text": "Someone asked me at a hacker event last week: \"Can anyone actually tell me what a harness really is?\" It was said with real skepticism. The kind of skepticism that says we all use the word \u201cHarness\u201d in the industry, but nobody actually knows what it is.\nFair question. Let me try.\nWhat a harness is not\nI respect @akshay_pachaar  immensely but I deeply disagree with his post. I think his post is really confusing to the industry, in that it calls LangGraph a harness.\nLangChain is not a harness. LangGraph is not a harness.\nThese are frameworks designed for humans to build agents. They give you abstractions, configuration options, and a lot of rope. You wire together chains, define state graphs, pick your retriever, and configure your memory. Dozens of knobs. Dozens of ways to get it wrong. \nThe fundamental assumption is that a human architect will configure these pieces correctly. \nAksay\u2019s Post: https://x.com/akshay_pachaar/status/2041146899319971922\nTo stoke the fire Akshay quotes the langchain team \"If you're not the model, you're the harness.\"\nWhat does that even mean?\nIt is a weak argument to cover the earlier 1.0 agent frameworks in the new harness terminology.\nWhat a harness is\nA harness starts from the opposite direction.\nThe modern harness was not designed top-down from abstractions. It was born bottom-up out of coding agents, solving real world problems with working agents. Cursor, Claude Code, Windsurf, and Codex are all harnesses. These products started with a concrete problem: make an LLM write and edit real code across real repositories. In solving that problem, they independently converged on remarkably similar architectures. A while loop that calls tools. A context manager that compresses history. A permission layer that keeps things safe. The same patterns, discovered separately, over and over again. We arrived at a number of similar architecture decisions building Alyx, our in-product agent for Arize Ax Observability and Evals platform, over the last two years (also coming to Arize Phoenix, our OSS). Different domain, same bones.\nThe abstractions that define these common architectures are what we call a harness.\n\nA harness is the current architecture, born out of general purpose agents, designed to solve a wide swath of problems out of the box.\n \nTwo things make a harness fundamentally different from a framework.\nFirst, a harness works out of the box. You don't configure a harness into existence. It ships as a working agent with a fixed architecture: the iteration loop, the context management, the tool registry, and the permission layer. All wired together, all already running. There is no assembly step.\nSecond, and this is the deeper shift: a harness is not designed for humans to build agents. A harness is designed for the agent to accomplish almost any task. The model reads instruction files and learns your project. It discovers available tools and composes them. It writes its own skills to extend what it can do. It spawns sub-agents when the task gets too big. The human provides the goal. The harness figures out the rest.\nThe components of a modern harness\nJust as computer architectures matured in the 80s we expect harness architectures to mature over the next couple years. Components for the harness 1.0 architecture fall into the following areas:\nOuter Iteration Loop\nContext Management & Context Compression\nSkills/Tools Management\nSubAgent Management\nBuilt in pre-packaged skills\nSession Persistence and Recovery\nSystem Prompt Assembly / Project Context Injection\nLife Cycle Hooks\nPermission & Safety Layer\nOuter Iteration Loop\nThe core architectural foundation of a modern harness is the while loop. The way it works is the model uses the system prompt and decides, based upon the data, what tools to call. It iterates on tools until it is finished. The while loop is the core foundation of the Harness 1.0 architecture.\n \nThe LLM based on the system prompt is pushed to find tools to use to finish its job. It will compose these tools together, tool after tool, execution after execution, until its job is done.\nThe main core architectural component of the harness, a loop over tools that attempts to accomplish any task, is not the core idea behind LangGraph. It is a human configured state graph.\nContext Management and Context Compression\nHow do you decide what to pull into context? How do you decide what to simplify in your context or compress, and how you decide how to represent large data in a simplified fashion are all about context management.\n \nOther challenges revolve around how to pass data to skill or tool calls, what data those skill or tool calls have access to, and how data is returned and used in context from those skill and tool calls.\nSkills/Tools Management\nSkills and tools management is a set of structures that allows teams to build skills, manage what skills are available, add new skills, and execute skills.\nEvery harness ships with a registry of built-in tools: read a file, edit a file, run a shell command, search code. These are the primitives. The harness needs to know what tools exist, what permissions each tool requires, and how to dispatch a tool call from the model to the right execution path. When the model says \"I want to run grep,\" the harness looks up that tool's spec, checks permissions, executes it, and feeds the result back into context.\nSkills are a layer on top of tools. The harness discovers these skill files from well-known directories, and the model can invoke them by name. This is where organizational knowledge gets encoded. Tools are universal. Skills are specific to your team and your workflow.\nSubAgent Management\nAt some point a task gets too big or too parallel for a single conversation thread. SubAgent management is how the harness spawns child agents that work in isolation and report results back.\n \nEach sub-agent gets its own conversation session, its own restricted set of tools, and a focused system prompt that says \"you are a background agent working on this specific task.\" The parent agent delegates, the sub-agent works, and results come back either in-memory or through on-disk manifests. The key architectural decision is isolation: a sub-agent should not be able to corrupt the parent's context or run tools the parent didn't authorize.\nToday most harnesses run sub-agents as threads with isolated sessions. Tomorrow we expect sub-agents to run in fully isolated sandboxes or even on separate machines. The pattern is the same either way: spawn, restrict, execute, collect results.\nBuilt-in Pre-packaged Skills\nEvery harness ships with a baseline set of capabilities that work out of the box. File operations (read, write, edit, search). Shell execution. Code navigation (grep, glob, semantic search). These are non-negotiable. If the agent cannot read and edit files, it is not a coding agent.\n \nBeyond the primitives, harnesses increasingly ship with higher-level built-in skills: how to make a git commit, how to create a pull request, how to run tests and interpret the output. These are the skills that the harness vendor has already figured out so teams do not have to. The quality of these built-in skills is a major differentiator between harnesses today.\nSession Persistence and Recovery\nA long-running agent session is stateful. If the process crashes, you lose everything unless the harness persists session state to disk. Modern harnesses write session data incrementally, typically as append-only JSONL files: each message, each tool result, each compaction event gets a line. This means you can resume a session exactly where you left off.\nSystem Prompt Assembly / Project Context Injection\nThe system prompt is how the harness tells the model who it is, what it can do, and what it is working on. This is not a static string. Modern harnesses assemble the system prompt dynamically from multiple sources.\n \nThe harness walks ancestor directories looking for instruction files (like CLAUDE.md or AGENTS.md), injects current git status and recent commits, adds environment metadata (OS, date, working directory), and appends the list of available tools and their permissions. All of this gets stitched together with character/token budgets so the system prompt does not blow out the context window before the conversation even starts.\nLife Cycle Hooks\nHooks are the extensibility seam of the harness. They let organizations inject custom logic before or after tool execution without forking the harness itself.\nA pre-tool hook fires before the agent runs a tool. It receives the tool name, the input, and can allow, deny, or modify the execution. A post-tool hook fires after and can inspect the result. Hooks communicate via a structured protocol: JSON on stdin, exit codes for allow/deny. This means hooks can be written in any language and can enforce arbitrary policy: \"never run rm -rf,\" \"log all file writes to our audit system,\" \"require approval for any bash command that touches production.\"\nHooks are how enterprises adopt harnesses. The harness vendor provides the architecture. Hooks let each organization layer their own safety, compliance, and workflow rules on top.\nPermission & Safety Layer\nThis is the component that makes the difference between a useful tool and a dangerous one. The permission layer defines what the agent is allowed to do and enforces those boundaries at every tool execution.\n \nModern harnesses define a hierarchy of permission modes: read-only, workspace-write, and full access. Each tool declares the minimum permission level it requires. The harness enforces this at dispatch time, before the tool ever runs. For tools like bash, the harness even classifies the command dynamically: \"ls\" is read-only, \"rm\" requires full access, and the harness can figure this out by parsing the command string.\nOn top of static permissions, the harness supports interactive approval. In prompt mode, the agent pauses and asks the human \"should I run this?\" before executing anything dangerous. Declarative allow/deny rules from configuration files let teams pre-authorize known-safe patterns and block known-dangerous ones. This is the layer that makes it possible to hand an LLM real tools and still sleep at night.\nConclusion\nThese nine components are not a wishlist. They are what every successful harness converged on independently. That convergence is the signal.\nThe deeper pattern is where the decisions live. Early harnesses hardcoded everything: fixed truncation limits, static permission rules, predetermined context budgets. The harnesses that are winning now push decisions to the model. Not sure what to keep in context? Let the LLM decide. Not sure which files matter? Let the LLM search. Not sure when to compact? Let the LLM manage its own memory.\nThe harness provides the feedback scaffolding to make intelligence work with a model. Without a harness a model is open loop, with a harness the model can act on feedback, take action and extend its skills. It is designed in a way that actually works where the original REACT loops did not.\nA model on its own is a one-shot text generator. It answers and stops. A model inside a harness can read a file, edit it, run the tests, see them fail, read the error, fix the code, and run the tests again. That closed loop\u2014act, observe, adjust\u2014is what turns a language model into an agent. The harness gives the model the ability to act on what it knows, see the consequences, and keep going until the problem is actually solved.\nThe next generation of tough technical problems in artificial intelligence are AI engineering systems problems. And we are solving them right now.\n\nWhat is an agent harness info graphic:\nhttps://arize.com/what-is-a-AI-harness.pdf",
+        "cover_media": "3_2046975698716528640",
+        "preview_text": "Someone asked me at a hacker event last week: \"Can anyone actually tell me what a harness really is?\" It was said with real skepticism. The kind of skepticism that says we all use the word \u201cHarness\u201d",
+        "title": "What is an Agent Harness",
+        "media_entities": [
+          "3_2046977673814278145",
+          "3_2046978391254167552",
+          "3_2046979759352266752",
+          "3_2046978883833266176",
+          "3_2046977959119196160",
+          "3_2046976842796781568",
+          "3_2046979569643917312"
+        ],
+        "entities": {
+          "mentions": [
+            {
+              "start": 10,
+              "end": 25,
+              "username": "akshay_pachaar"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://x.com/akshay_pachaar/status/2041146899319971922"
+            },
+            {
+              "text": "https://arize.com/what-is-a-AI-harness.pdf"
+            },
+            {
+              "text": "https://arize.com/what-is-a-AI-harness.pdf"
+            },
+            {
+              "text": "https://x.com/akshay_pachaar/status/2041146899319971922"
+            }
+          ]
+        }
+      },
+      "created_at": "2026-04-22T15:53:41.000Z",
+      "id": "2046980769747533830",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/GR8wqBoETN",
+            "expanded_url": "http://x.com/i/article/2046970145747447808",
+            "display_url": "x.com/i/article/2046\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2046970145747447808"
+          }
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2046980769747533830"
+      ],
+      "text": "https://t.co/GR8wqBoETN",
+      "conversation_id": "2046980769747533830",
+      "author_id": "1202244246"
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "ossaijaD",
+            "id": "2619210752"
+          },
+          {
+            "start": 149,
+            "end": 158,
+            "username": "Letta_AI",
+            "id": "1821252546469752832"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "2619210752",
+      "text": "@ossaijaD You could argue the harness is inside coding agent.\n\nThere are also frameworks that I would qualify as a 1st generation harnesses, such as @Letta_AI, I probably should have mentioned here, that are not coding agents.",
+      "created_at": "2026-04-23T06:31:04.000Z",
+      "id": "2047201570912424317",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047201570912424317"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047158826802012468"
+        }
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "prithivida",
+            "id": "380873104"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "380873104",
+      "text": "@prithivida Most of this \"narrowing down\" occurs in skill optimization today. You define the best practices to execute paths or run certain queries.\n\nIf you have some insights from the trajectories that would make them faster or cheaper, you can feedback to the skill",
+      "created_at": "2026-04-23T06:46:48.000Z",
+      "id": "2047205532851986781",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047205532851986781"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047174428610687456"
+        }
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "borancakir",
+            "id": "191833885"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "191833885",
+      "text": "@borancakir Agree. Common architectures are emerging in ways I didn't expect.",
+      "created_at": "2026-04-23T06:47:44.000Z",
+      "id": "2047205765585453347",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047205765585453347"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047077219835461636"
+        }
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "htahir111",
+            "id": "416403447"
+          }
+        ],
+        "urls": [
+          {
+            "start": 95,
+            "end": 118,
+            "url": "https://t.co/tIjmByF5fu",
+            "expanded_url": "https://www.anthropic.com/engineering/managed-agents",
+            "display_url": "anthropic.com/engineering/ma\u2026",
+            "images": [
+              {
+                "url": "https://pbs.twimg.com/news_img/2047207637209726976/c6YIZSnF?format=jpg&name=orig",
+                "width": 2000,
+                "height": 1050
+              },
+              {
+                "url": "https://pbs.twimg.com/news_img/2047207637209726976/c6YIZSnF?format=jpg&name=150x150",
+                "width": 150,
+                "height": 150
+              }
+            ],
+            "status": 200,
+            "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+            "description": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems.",
+            "unwound_url": "https://www.anthropic.com/engineering/managed-agents"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "416403447",
+      "text": "@htahir111 One of the best writeups on durable execution by breaking up harness and subsystem \nhttps://t.co/tIjmByF5fu\n\nMy overview was single thread execution, a number of challenges on top to make it \"resumable\"",
+      "created_at": "2026-04-23T06:54:53.000Z",
+      "id": "2047207564178583743",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047207564178583743"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047072491294625996"
+        }
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 15,
+            "username": "returncode0000",
+            "id": "1484937027799949312"
+          },
+          {
+            "start": 16,
+            "end": 32,
+            "username": "robertnishihara",
+            "id": "25191683"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "1484937027799949312",
+      "text": "@returncode0000 @robertnishihara Sorry LangGraph is not a harness. It is an agent framework, you manually create state graphs to create agents. Any random code around a model, is not a harness.\n\nLangGraph does not have the signature while loop through tools, iterate to solve.  It is why they created deepagents.",
+      "created_at": "2026-04-25T01:19:48.000Z",
+      "id": "2047848013952114890",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047848013952114890"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047219282681983072"
+        }
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "ashuutosshh",
+            "id": "131856496"
+          }
+        ]
+      },
+      "conversation_id": "2046980769747533830",
+      "in_reply_to_user_id": "131856496",
+      "text": "@ashuutosshh I'm making an argument that a model harness is something you put a model in, that creates a general purpose agent. That you will have iterate to solve loops. \n\nn8n for example would not be a model harness by that definition.",
+      "created_at": "2026-04-25T01:40:13.000Z",
+      "id": "2047853153979425024",
+      "author_id": "1202244246",
+      "edit_history_tweet_ids": [
+        "2047853153979425024"
+      ],
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2047283622110191871"
+        }
+      ]
+    }
+  ],
+  "users": {
+    "1202244246": {
+      "id": "1202244246",
+      "name": "Aparna Dhinakaran",
+      "username": "aparnadhinak"
+    },
+    "63108577": {
+      "id": "63108577",
+      "name": "Osamah Aldoaiss",
+      "username": "Saifadin"
+    },
+    "85600908": {
+      "id": "85600908",
+      "name": "Sam Collins",
+      "username": "smcllns"
+    },
+    "1932119659060367360": {
+      "id": "1932119659060367360",
+      "name": "Stephan Ralescu",
+      "username": "StephanRalescu"
+    },
+    "268082406": {
+      "id": "268082406",
+      "name": "Luong NGUYEN",
+      "username": "luongnv89"
+    },
+    "23966630": {
+      "id": "23966630",
+      "name": "Luke Jackson",
+      "username": "m31uk3"
+    },
+    "2001513091855716355": {
+      "id": "2001513091855716355",
+      "name": "Don Montegarza",
+      "username": "aiDidThisToo"
+    },
+    "28495695": {
+      "id": "28495695",
+      "name": "Matt",
+      "username": "Matt_M_M"
+    },
+    "2045955833146597376": {
+      "id": "2045955833146597376",
+      "name": "Alex Carmichael",
+      "username": "ai_carmichael"
+    },
+    "1546524036666388480": {
+      "id": "1546524036666388480",
+      "name": "Aditi Goyal",
+      "username": "AditiGo47916939"
+    },
+    "1484937027799949312": {
+      "id": "1484937027799949312",
+      "name": "Nothing",
+      "username": "returncode0000"
+    },
+    "2020646803826483200": {
+      "id": "2020646803826483200",
+      "name": "Leo Tavares",
+      "username": "LeoTava8"
+    },
+    "131856496": {
+      "id": "131856496",
+      "name": "Ashutosh Makwana",
+      "username": "ashuutosshh"
+    },
+    "380873104": {
+      "id": "380873104",
+      "name": "Prithivi Da",
+      "username": "prithivida"
+    },
+    "416403447": {
+      "id": "416403447",
+      "name": "Hamza Tahir",
+      "username": "htahir111"
+    },
+    "521243411": {
+      "id": "521243411",
+      "name": "Anup Singh",
+      "username": "anupsingh_ai"
+    },
+    "191833885": {
+      "id": "191833885",
+      "name": "Boran Cakir",
+      "username": "borancakir"
+    },
+    "2619210752": {
+      "id": "2619210752",
+      "name": "TG",
+      "username": "ossaijaD"
+    },
+    "37703": {
+      "id": "37703",
+      "name": "chaodoze",
+      "username": "chaodoze"
+    },
+    "1287784396481679360": {
+      "id": "1287784396481679360",
+      "name": "Sid - e/acc",
+      "username": "gcs319"
+    }
+  },
+  "thread_fetch_error": null
+}
