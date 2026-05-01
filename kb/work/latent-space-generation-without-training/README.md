@@ -19,6 +19,21 @@ The borrowable core is **embedding-guided search, not direct vector decoding**.
 
 Normal semantic-search embeddings are enough to map candidates, detect novelty, select diverse anchors, and choose search directions. The difficult step is turning a target vector or direction back into language. For a no-training workflow, that step should be handled by retrieval, contrastive prompting, exemplar bridges, and mutation prompts rather than by a learned projector.
 
+## Procedure
+
+1. **Generate anchors.** Ask an LLM for many candidate ideas, prompts, answers, note titles, or connection hypotheses. Vary source subsets, roles, constraints, and seed examples so the first candidate pool does not collapse into one cluster.
+2. **Embed the working set.** Use an ordinary semantic-search embedding model to embed anchors, relevant source snippets, existing notes, rejected candidates, and known high-quality examples.
+3. **Map the space.** Use similarity search, clustering, distance checks, and sparse-region detection to find dense clusters, stale regions, outliers, and cross-cluster bridges.
+4. **Choose target directions.** Explore between strong distant anchors, away from over-covered clusters, toward sparse relevant regions, across two source clusters, or near high-quality examples while staying far enough from duplicates.
+5. **Instantiate the direction in language.** Treat this as the lossy step. Use one of four no-training approximations:
+   - **Nearest-neighbor decode:** retrieve real texts closest to the target vector and ask the LLM to synthesize from them.
+   - **Contrastive prompting:** give positive anchors, negative anchors, and explicit constraints: "like A/B, unlike C/D, preserve X, change Y."
+   - **Exemplar bridge:** provide two distant examples and ask for a coherent bridge, hybrid, or missing intermediate.
+   - **Mutation prompt:** ask the LLM to perturb an anchor along a named axis, such as more causal, more operational, more adversarial, more minimal, more cross-domain, or more testable.
+6. **Score candidates.** Apply cheap filters before expensive judgment: semantic distance from existing items, similarity to the intended direction, duplicate detection, coherence checks, source-grounding checks, and task-specific utility if a hard or semi-hard oracle exists.
+7. **Iterate search.** Keep the best candidates, embed them, add them to the anchor set, and repeat. A Magellan-like variant makes this explicit with MCTS: branch, score, backpropagate value, and deepen promising paths.
+8. **Review before promotion.** Use human review, a stronger LLM judge, or domain tests before letting outputs become library notes, instructions, links, or source-ingest decisions.
+
 ## Source Status
 
 - The Geometry paper is already captured and ingested locally.
@@ -40,4 +55,3 @@ This workshop can close when one of these happens:
 - a tested no-training pipeline is documented as an instruction or skill candidate;
 - the idea is rejected as too noisy, with the failure mode documented;
 - the durable insight is extracted into a note about embedding-guided generation, novelty search, or oracle bottlenecks.
-
