@@ -26,10 +26,12 @@ Normal semantic-search embeddings are enough to map candidates, detect novelty, 
 3. **Map the space.** Use similarity search, clustering, distance checks, and sparse-region detection to find dense clusters, stale regions, outliers, and cross-cluster bridges.
 4. **Choose target directions.** Explore between strong distant anchors, away from over-covered clusters, toward sparse relevant regions, across two source clusters, or near high-quality examples while staying far enough from duplicates.
 5. **Instantiate the direction in language.** Treat this as the lossy step. Use one of four no-training approximations:
-   - **Nearest-neighbor decode:** retrieve real texts closest to the target vector and ask the LLM to synthesize from them.
-   - **Contrastive prompting:** give positive anchors, negative anchors, and explicit constraints: "like A/B, unlike C/D, preserve X, change Y."
-   - **Exemplar bridge:** provide two distant examples and ask for a coherent bridge, hybrid, or missing intermediate.
-   - **Mutation prompt:** ask the LLM to perturb an anchor along a named axis, such as more causal, more operational, more adversarial, more minimal, more cross-domain, or more testable.
+
+    - **Nearest-neighbor decode:** retrieve real texts closest to the target vector and ask the LLM to synthesize from them.
+    - **Contrastive prompting:** give positive anchors, negative anchors, and explicit constraints: "like A/B, unlike C/D, preserve X, change Y."
+    - **Exemplar bridge:** provide two distant examples and ask for a coherent bridge, hybrid, or missing intermediate.
+    - **Mutation prompt:** ask the LLM to perturb an anchor along a named axis, such as more causal, more operational, more adversarial, more minimal, more cross-domain, or more testable.
+
 6. **Score candidates.** Apply cheap filters before expensive judgment: semantic distance from existing items, similarity to the intended direction, duplicate detection, coherence checks, source-grounding checks, and task-specific utility if a hard or semi-hard oracle exists.
 7. **Iterate search.** Keep the best candidates, embed them, add them to the anchor set, and repeat. A Magellan-like variant makes this explicit with MCTS: branch, score, backpropagate value, and deepen promising paths.
 8. **Review before promotion.** Use human review, a stronger LLM judge, or domain tests before letting outputs become library notes, instructions, links, or source-ingest decisions.
