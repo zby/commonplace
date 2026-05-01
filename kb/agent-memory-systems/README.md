@@ -152,4 +152,7 @@ The divergences are more revealing:
 ## Other tagged notes <!-- generated -->
 
 - [Closure-SDK](./reviews/Closure-SDK.md) - Geometric S3 memory and integrity runtime where ordered carrier streams promote into quaternion genome state, not readable notes or model weights
+- [Incremental Self-Improvement](./source-only/incremental-self-improvement.md) - Source-only coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies
+- [MehmetGoekce/llm-wiki](./reviews/MehmetGoekce--llm-wiki.md) - Promptware LLM Wiki bootstrap kit for Claude Code with L1/L2 memory split, Logseq/Obsidian schemas, setup script, and OpenSpec requirements
+- [Pratiyush/llm-wiki](./reviews/Pratiyush--llm-wiki.md) - Multi-agent session-transcript compiler that turns Claude/Codex/Cursor/Gemini history into a redacted markdown wiki, static site, exports, MCP tools, and agent prompt workflows
 - [Tolaria](./reviews/tolaria.md) - Mac and Linux markdown-vault app with git-backed files, type lenses, saved views, agent context snapshots, MCP tools, and managed guidance

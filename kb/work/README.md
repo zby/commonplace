@@ -9,6 +9,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
+- [vocabulary-redesign](./vocabulary-redesign/README.md) — redesigning the always-loaded and library-level vocabulary so terms stay discriminating, teachable, and operationally useful
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
 - [research-wiki-integration](./research-wiki-integration/README.md) — evaluating whether ARIS Research Wiki should become a commonplace workshop subsystem, source workflow upgrade, or only a set of borrowed lifecycle patterns
 - [gate-refactor](./gate-refactor/README.md) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
@@ -20,6 +21,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [agent-complexity-theory](./agent-complexity-theory/README.md) — formal consequences of the bounded-context orchestration model; candidate theorem sketches for academic collaboration
 - [write-type-resolver](./write-type-resolver/README.md) — migrating `type:` from an enum-string to a path-valued pointer addressing a hand-authored instructions doc per type
 - [semantic-search-replacement](./semantic-search-replacement/README.md) — evaluating whether to replace qmd as the semantic-search layer, and with what
+- [latent-space-generation-without-training](./latent-space-generation-without-training/README.md) — exploring whether embedding-guided novelty-generation papers can become a practical no-large-training workflow
 - [review-revise-gated](./review-revise-gated/README.md) — finding review/revise arrangements that reliably produce the manual-edit quality bar, then codifying as reusable instructions
 - [auditable-llm-editing](./auditable-llm-editing/README.md) — testing whether sparse, anchored writing state prevents accidental claim drift across repeated LLM editing passes
 - [shipping-model](./shipping-model/README.md) — deciding how commonplace ships its content so user collections stay theirs while our library sits alongside as a read-only dependency

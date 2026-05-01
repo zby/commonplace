@@ -18,6 +18,7 @@ index_source: directory
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)
 - [information-measures/](./information-measures/dir-index.md)
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/dir-index.md)
+- [latent-space-generation-without-training/](./latent-space-generation-without-training/dir-index.md)
 - [obsidian-affordances/](./obsidian-affordances/dir-index.md)
 - [philosophy-borrowing/](./philosophy-borrowing/dir-index.md)
 - [positioning/](./positioning/dir-index.md)
@@ -32,9 +33,11 @@ index_source: directory
 - [skills-vs-instructions/](./skills-vs-instructions/dir-index.md)
 - [token-wiki-review/](./token-wiki-review/dir-index.md)
 - [tool-loop-control/](./tool-loop-control/dir-index.md)
+- [vocabulary-redesign/](./vocabulary-redesign/dir-index.md)
 - [write-type-resolver/](./write-type-resolver/dir-index.md)
 
 ## Files
 
 - [Discovery examples — working material](./discovery-examples.md)
+- [Log triage - 2026-04-27](./log-triage-2026-04-27.md)
 - [Writing conventions for kb/work/ (workshop layer)](./COLLECTION.md)
