@@ -33,7 +33,7 @@ Write authority is incomplete if the system cannot say who may read which memory
 
 - Does the architecture name authority for each memory operation?
 - Are read, write, promotion, activation, enforcement, revision, and retirement separately governed?
-- Does authority vary by risk and memory role?
+- Does authority vary by risk, representational form, and consumption path?
 - Are team-visible and canonical memories gated differently from private capture?
 - Is audit provenance available for shared or regulated use?
 

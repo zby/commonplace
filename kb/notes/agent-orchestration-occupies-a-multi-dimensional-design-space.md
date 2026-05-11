@@ -16,15 +16,15 @@ Agent orchestration architectures are often discussed as if they sit on a single
 
 ## Decomposition-policy artifact
 
-**What kind of [system-definition artifact](./axes-of-artifact-analysis.md) carries the policy for choosing decompositions.** This is separate from scheduler placement. The scheduler executes a decomposition; the policy selects which decomposition to run, when to split further, and what scaffold language counts as available.
+**What kind of system-definition artifact carries the policy for choosing decompositions.** This is separate from scheduler placement. The scheduler executes a decomposition; the policy selects which decomposition to run, when to split further, and what scaffold language counts as available.
 
-The policy can occupy different artifact classes and backends:
+The policy can occupy different [representational forms](./definitions/representational-form.md) (how it is encoded and consumed) and storage substrates:
 
 - **Prose** — human-authored heuristics in prompts, playbooks, notes, or skills.
 - **Symbolic** — executable schedulers, generated orchestrator code, task graphs, or routing programs.
-- **Opaque** — a learned policy in model weights, trained to choose decompositions inside a codified scaffold.
+- **Distributed-parametric** — a learned policy in model weights, adapters, or controller state, trained to choose decompositions inside a codified scaffold.
 
-RLM illustrates a mixed point: the model authors symbolic orchestrator code, but the result is ephemeral rather than a durable repo artifact. The Mismanaged Geniuses hypothesis points at another point: codify the decomposition language, then relax the policy that chooses within it into an opaque learned artifact. Artifact class, backend, and persistence can therefore vary independently even when the visible scheduler shape looks similar.
+RLM illustrates a mixed point: the model authors symbolic orchestrator code, but the result is ephemeral rather than a durable repo artifact. The Mismanaged Geniuses hypothesis points at another point: codify the decomposition language, then relax the policy that chooses within it into a distributed-parametric learned artifact. Representational form, storage substrate, and persistence can therefore vary independently even when the visible scheduler shape looks similar.
 
 ## Persistence horizon
 
@@ -68,7 +68,7 @@ Relevant Notes:
 - [tool loop](./tool-loop-index.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination forms vary independently of scheduler placement
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — vocabulary: decomposition policy is a system-definition role that can be carried by opaque, prose, or symbolic artifacts on different backends
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — vocabulary: decomposition policy is a system-definition authority path over an operative part that can be carried by distributed-parametric, prose, or symbolic forms on different substrates
 - [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
 - [The Mismanaged Geniuses Hypothesis](../sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md) — extends: argues for codifying a decomposition language while training the policy that chooses decompositions inside it
 - [What Survives in Multi-Agent Systems](https://x.com/voooooogel/status/2015976774128341421) — extends: forking is better treated as a coordination/scoping primitive than as another point on a single scheduler ladder

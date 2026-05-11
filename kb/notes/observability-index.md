@@ -27,7 +27,7 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Inspectable Artifact
 
-- [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — the artifact class determines whether failures and drift can be inspected, diffed, tested, and verified at all
+- [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — representational form determines whether failures and drift can be inspected, diffed, tested, and verified at all
 
 ## Related Tags
 

@@ -20,11 +20,11 @@ The system must not merely answer "what do we know?" It must sometimes answer an
 - On-situation loading through typed cues that match proposed actions, task domains, risk markers, or decision spaces.
 - Checklists, tests, scripts, lint rules, approval gates, or runtime guardrails when the lesson can be moved from prose toward symbolic enforcement.
 
-Typed cue indexes provide the on-situation loading form of this family. A cue can carry a trigger condition, lesson, source pointer, role, consequence weight, and placement target. Matching can use rules, embeddings, action classifiers, or LLM relevance judgments. The choice depends on consequence, false-positive tolerance, and cost.
+Typed cue indexes provide the on-situation loading form of this family. A cue can carry a trigger condition, lesson, source pointer, behavioral authority, consequence weight, and placement target. Matching can use rules, embeddings, action classifiers, or LLM relevance judgments. The choice depends on consequence, false-positive tolerance, and cost.
 
 ## Behavioral Faithfulness
 
-A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-priority system-definition material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
+A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-authority behavior-shaping material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
 [Synapptic](../../agent-memory-systems/reviews/synapptic.md) is the clearest reviewed system that treats activation as something to test rather than assume. It extracts behavioral guards from Claude Code sessions, runs WITH/WITHOUT ablations with an LLM judge, records per-model verdicts, and excludes guards marked redundant or harmful before compiling them into assistant-facing memory surfaces.
 

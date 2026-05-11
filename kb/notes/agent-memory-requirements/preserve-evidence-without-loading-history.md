@@ -10,7 +10,7 @@ status: current
 
 A memory system needs a capture substrate that keeps enough source material for later extraction, audit, debugging, and redistillation. But capture is not loading: the point is to preserve evidence without making history the acting agent's next context. Broad trace retention is useful because the future consumer is often unknown at capture time, while ordinary execution should still load only the material that earns its context budget.
 
-Text-heavy traces are often cheap to retain: prompts, model outputs, tool calls, file diffs, command output, and small structured artifacts. Large media, datasets, telemetry firehoses, regulated material, and multi-user streams change the calculation. Payload class controls per-session storage cost; user and authority scope control aggregate cost and governance.
+Text-heavy traces are often cheap to retain: prompts, model outputs, tool calls, file diffs, command output, and small structured artifacts. Large media, datasets, telemetry firehoses, regulated material, and multi-user streams change the calculation. Payload form and volume control per-session storage cost; user scope and behavioral authority control aggregate cost and governance.
 
 [Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) because persistence and loading are separate decisions. Store-everything is only a capture posture. Raw traces should usually remain outside the acting agent's ordinary context, loading only for provenance checks, dispute resolution, debugging, redistillation, or evaluation.
 
@@ -31,7 +31,7 @@ Session lifecycle is part of this requirement, not just an implementation detail
 
 - Does the system separate capture from activation?
 - Can retained evidence support audit, debugging, and later extraction?
-- Are payload class, privacy, user scope, and authority handled before broad retention becomes the default?
+- Are payload form, privacy, user scope, and behavioral authority handled before broad retention becomes the default?
 - Can a failed or interrupted session be resumed, retried, or inspected?
 
 ---

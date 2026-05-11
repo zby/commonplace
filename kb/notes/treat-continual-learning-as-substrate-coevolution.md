@@ -1,5 +1,5 @@
 ---
-description: Behaviour change spans three artifact classes — opaque (weights), prose (prompts, notes, specs), and symbolic (code, schemas, tests) — so the coevolution question is how their improvement loops relate, not which is the real locus of learning
+description: Behaviour change spans three representational forms — distributed-parametric, prose, and symbolic — so the coevolution question is how their improvement loops relate, not which is the real locus of learning
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory]
@@ -7,9 +7,9 @@ tags: [learning-theory]
 
 # Treat continual learning as substrate coevolution
 
-[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names two behaviour-change mechanisms: expensive weight updates and cheap readable system-definition artifacts. [Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) places the readable mechanism on the timing axis. Splitting the readable side by semantic regime gives three [artifact classes](./axes-of-artifact-analysis.md) — **opaque** (weights and other hidden state), **prose** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
+[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names two behaviour-change mechanisms: expensive weight updates and cheap readable system-definition artifacts. [Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) places the readable mechanism on the timing axis. Splitting retained behavior by [representational form](./definitions/representational-form.md) (how an operative part is encoded and consumed) gives three forms: **distributed-parametric** (weights, adapters, embeddings, learned controllers), **prose** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
 
-Prose and symbolic cluster as the **readable artifacts** — inspectable, editable, distinct from opaque in backend and update cost. The practical question of where to start building automated loops is [the readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). This note is about the generic coevolution frame.
+Prose and symbolic cluster as the **readable artifacts** - inspectable, editable, distinct from distributed-parametric state in inspection method and update cost. The practical question of where to start building automated loops is [the readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). This note is about the generic coevolution frame.
 
 ## The mainstream direction: scaling the opaque loop
 
@@ -31,9 +31,9 @@ Each is partial. Even unifying two classes — a joint optimizer over weights an
 
 ## Difficulties
 
-The three classes have very different dynamics:
+The three forms have very different dynamics:
 
-- **Opaque** updates via gradient descent. Needs differentiable signal and heavy training infrastructure; large updates cycle on days to weeks, though smaller add-on mechanisms can be faster.
+- **Distributed-parametric** updates via gradient descent or other numerical optimization. Needs differentiable or probe-derived signal and heavy training infrastructure; large updates cycle on days to weeks, though smaller add-on mechanisms can be faster.
 - **Symbolic** artifacts are mutated by LLMs or search, then evaluated by tests, execution, or formal checks.
 - **Prose** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./agentic-systems-interpret-underspecified-instructions.md), so verification is softer.
 
@@ -47,9 +47,9 @@ Coevolution is the right conceptual frame, but a three-way joint optimizer isn't
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: two behaviour-change mechanisms (weights, readable artifacts) — the premise that lets the readable pair count as a learning target at all
+- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: two behaviour-change mechanisms (distributed-parametric updates, readable artifacts) — the premise that lets the readable pair count as a learning target at all
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — foundation: places the readable mechanism on the timing axis
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the opaque/prose/symbolic split used throughout this note
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the prose/symbolic/distributed-parametric split used throughout this note
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the prose+symbolic pair is the tractable first slice
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and distill are artifact-side update operators

@@ -27,7 +27,7 @@ This promotion path is a [constraining](../definitions/constraining.md) gradient
 
 - Is the candidate cheaper and less authoritative than promoted memory?
 - Does promotion create an explicit maintenance obligation?
-- Does promotion strength depend on signal type, role, and consequence?
+- Does promotion strength depend on signal type, intended authority, and consequence?
 - Are compiled cues and prompt files render targets rather than accidental source artifacts?
 
 ---

@@ -27,7 +27,7 @@ Direct memory fails when it becomes generic capture rather than a role-specific 
 ## Evaluation Questions
 
 - Did the system preserve context, provenance, caveats, and intended use while understanding was live?
-- Did it route the material into the right artifact class and role?
+- Did it route the material into the right representational form and authority path?
 - Did validation or review catch malformed or low-quality memory before promotion?
 - Can a future agent find and apply the artifact without replaying the original session?
 
@@ -35,5 +35,5 @@ Direct memory fails when it becomes generic capture rather than a role-specific 
 
 Relevant Notes:
 
-- [Designing a Memory System for LLM-Based Agents](../designing-agent-memory-systems.md) - derives this requirement from contextual competence and artifact roles
-- [Axes of artifact analysis](../axes-of-artifact-analysis.md) - grounds the artifact class and role distinction
+- [Designing a Memory System for LLM-Based Agents](../designing-agent-memory-systems.md) - derives this requirement from contextual competence and artifact governance
+- [Axes of artifact analysis](../axes-of-artifact-analysis.md) - grounds the representational-form and behavioral-authority distinction

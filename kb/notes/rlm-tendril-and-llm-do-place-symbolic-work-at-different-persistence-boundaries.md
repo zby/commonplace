@@ -47,5 +47,5 @@ Relevant Notes:
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: explains the accumulation trade-off that separates RLM from Tendril
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — mechanism: explains why Tendril's online capability registration is a durable behavior-change loop
 - [The verifiability gradient](./verifiability-gradient.md) — mechanism: situates llm-do's movement between LLM-backed agents and Python functions
-- [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: this note fills in one local comparison across scheduler placement, persistence horizon, and artifact class
+- [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: this note fills in one local comparison across scheduler placement, persistence horizon, and representational form
 - [Ingest: Recursive Language Models - what finally gave me the 'aha' moment](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.ingest.md) — evidence: practitioner walkthrough of RLM's REPL mechanism and symbolic variable return

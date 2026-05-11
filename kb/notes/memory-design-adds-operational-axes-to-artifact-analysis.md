@@ -1,5 +1,5 @@
 ---
-description: "Memory design needs operational policy axes (capture, derivation, activation, authority, lifecycle, evaluation) on top of artifact class, backend, and role"
+description: "Memory design needs operational policy axes (capture, derivation, activation, authority assignment, lifecycle, evaluation) on top of substrate, form, lineage, and behavioral authority"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
@@ -8,23 +8,24 @@ status: seedling
 
 # Memory design adds operational axes to artifact analysis
 
-[Axes of artifact analysis](./axes-of-artifact-analysis.md) separates artifacts by class, backend, and role. That taxonomy prevents category mistakes like treating "files versus weights" as a single design choice. Agent memory needs those axes, but artifact identity is not enough. A memory system also needs to say how retained material is captured, transformed, activated, governed, evaluated, and retired over time.
+[Axes of artifact analysis](./axes-of-artifact-analysis.md) separates retained behavior-shaping artifacts by [storage substrate](./definitions/storage-substrate.md) (where state persists), [representational form](./definitions/representational-form.md) (how the operative part is encoded and consumed), [lineage](./definitions/lineage.md) (what source dependencies govern invalidation), and [behavioral authority](./definitions/behavioral-authority.md) (who consumes it, through which channel, with what force). That taxonomy prevents category mistakes like treating "files versus weights" as a single design choice. Agent memory needs those fields, but artifact identity is not enough. A memory system also needs to say how retained material is captured, transformed, activated, governed, evaluated, and retired over time.
 
-This seedling note names those cross-cutting operational axes. Its job is not to replace the detailed memory-requirements notes, but to make those requirements comparable when a memory discussion starts from storage format, artifact class, or backend.
+This seedling note names those cross-cutting operational axes. Its job is not to replace the detailed memory-requirements notes, but to make those requirements comparable when a memory discussion starts from storage format, representational form, or memory mechanism label.
 
-## Artifact axes
+## Artifact fields
 
-[Axes of artifact analysis](./axes-of-artifact-analysis.md) answers what kind of artifact exists and how a consumer reads it:
+[Axes of artifact analysis](./axes-of-artifact-analysis.md) answers what retained artifact exists and how a consumer can use it:
 
 | Axis | Question | Memory example |
 |---|---|---|
-| Class | How is the learned result represented? | Opaque policy in weights, prose memory entry, symbolic test or schema |
-| Backend | Where does the artifact live? | Repo file, SQL row, vector record, graph edge, service-owned memory object |
-| Role | How does the consumer read it? | Reference knowledge, behavior-shaping instruction, or both |
+| Storage substrate | Where does the artifact live? | Repo file, SQL row, vector record, graph edge, service-owned memory object |
+| Representational form | How is the operative part represented and consumed? | Distributed-parametric policy in weights, prose memory entry, symbolic test or schema |
+| Lineage | What source dependencies or derivations does it carry? | Trace-derived fact, generated cue, compiled prompt view, canonical workflow |
+| Behavioral authority | Who consumes it, through which channel, and with what force? | Reference advice, prompt instruction, validator enforcement, ranking influence, learning input |
 
-These axes are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows backend-first comparisons missing the more consequential axes. A vector store is a backend, not an artifact class. A prompt rule is usually prose-class but behavior-shaping in role. A markdown file can have knowledge role when read as reference and system-definition role when loaded as instruction.
+These fields are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows substrate-first comparisons missing the more consequential fields. A vector store is a substrate, not a representational form. A prompt rule is usually prose-form but behavior-shaping only through a specific authority path. A Markdown file can advise when read as reference and instruct when loaded as standing context.
 
-But artifact axes stop at the artifact boundary. They do not explain how retained material becomes future capacity.
+But artifact fields stop at the artifact boundary. They do not explain how retained material becomes future capacity.
 
 ## Operational memory axes
 
@@ -43,9 +44,9 @@ The framing is what's new, not the underlying design pressures. Each axis maps o
 
 ## Why the split matters
 
-The same artifact axes can produce different memory behavior. Two systems might store prose memory entries in files and use them as behavior-shaping instructions. One may write only human-approved entries; another may mine traces after every session. One may activate cues automatically before risky actions; another may wait for manual search. Artifact class, backend, and role match, but operational axes diverge.
+The same artifact fields can produce different memory behavior. Two systems might store prose memory entries in files and use them as behavior-shaping instructions. One may write only human-approved entries; another may mine traces after every session. One may activate cues automatically before risky actions; another may wait for manual search. Substrate, form, lineage, and authority can match while operational policies diverge.
 
-The [Rosebud LLM-memory essay](../sources/everything-you-need-to-know-about-llm-memory.md) makes this explicit as a practitioner design map. After choosing what gets stored, a system must still choose how material is derived, written, retrieved, processed after retrieval, curated, and forgotten. The source's strongest contribution is not a new backend taxonomy. It is the reminder that memory quality comes from the path through these operational choices.
+The [Rosebud LLM-memory essay](../sources/everything-you-need-to-know-about-llm-memory.md) makes this explicit as a practitioner design map. After choosing what gets stored, a system must still choose how material is derived, written, retrieved, processed after retrieval, curated, and forgotten. The source's strongest contribution is not a new substrate taxonomy. It is the reminder that memory quality comes from the path through these operational choices.
 
 This also explains why [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md). Storage belongs to the execution substrate. Activation belongs to the context engine. Learning and lifecycle decisions cut across both. The operational axes name the places where those components meet.
 
@@ -68,9 +69,9 @@ This note is a seedling companion to [Designing a Memory System for LLM-Based Ag
 
 Relevant Notes:
 
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) - extends: adds memory-specific operational policies around the base class, backend, and role taxonomy
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) - extends: adds memory-specific operational policies around the substrate, form, lineage, and authority taxonomy
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) - sharpens: this note names the operational axes behind the requirements map
 - [Agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - grounds: operational memory axes cross storage, context engineering, and learning rather than belonging to one subsystem
 - [Memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) - exemplifies: learned memory-management policy is one implementation of the operational axes when a domain supplies a clear oracle
-- [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) - evidence: reviewed systems vary most consequentially by curation agency and lifecycle choices, not only backend
+- [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) - evidence: reviewed systems vary most consequentially by curation agency and lifecycle choices, not only substrate
 - [Everything you need to know about LLM memory](../sources/everything-you-need-to-know-about-llm-memory.md) - evidence: practitioner map of raw and derived memory, write triggers, retrieval timing, curator identity, and forgetting propagation

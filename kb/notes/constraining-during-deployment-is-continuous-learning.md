@@ -25,7 +25,7 @@ Weight-based learning captures distributional knowledge (style, tone, world know
 Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: this note is one concrete readable-artifact behaviour-change loop under the broader claim
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other backends
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other storage substrates
 - [constraining](./definitions/constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
 - [constraining and distillation both trade generality for compound](constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — foundation: the trade-off that constraining operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim

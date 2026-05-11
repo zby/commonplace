@@ -17,9 +17,9 @@ Under this view, **heuristic system-definition artifacts are mostly crystallized
 
 The "heuristic" qualifier matters because not every policy-like artifact exists to save reasoning. Authority-bearing constraints — permissions, safety rules, scoping boundaries, interface contracts, coordination commitments — have force as explicit commitments, not as compressed reasoning. An unbounded model might know the facts behind them, but the artifact itself carries binding authority the facts don't. The crystallization claim is strongest for tips, playbooks, skills, and decision rules; weaker for authority-bearing constraints, which the thought experiment leaves untouched.
 
-## What this reframes about the role axis
+## What this reframes about behavioral authority
 
-[Axes of artifact analysis](./axes-of-artifact-analysis.md) distinguishes the **knowledge role** (consumed as fact) from the **system-definition role** (consumed as policy). The crystallization view sharpens what that distinction is about:
+[Axes of artifact analysis](./axes-of-artifact-analysis.md) distinguishes **knowledge use** from **system-definition use** as shorthand for different [behavioral authority](./definitions/behavioral-authority.md) paths (who consumes a retained artifact, through which channel, with what force). The crystallization view sharpens what that distinction is about:
 
 - **Knowledge reads** defer reasoning to a single read-time pass. Adding facts grows reach additively — no ahead-of-time conflicts to resolve.
 - **System-definition reads** *are* pre-committed: the policy is fixed at write-time, whether as crystallized reasoning or as explicit commitment. Two commitments made under different assumptions or by different authorities can collide. Writes are mutative.
@@ -51,7 +51,7 @@ What the diagnostic does show:
 
 Relevant Notes:
 
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the role axis this note reframes as write-time vs read-time reasoning
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the behavioral-authority field this note reframes as write-time vs read-time reasoning
 - [Distillation](./definitions/distillation.md) — operator: the compression step that produces crystallized reasoning
 - [Constraining](./definitions/constraining.md) — operator: narrows interpretation, trading generality for reliability/speed/cost/verifiability
 - [Codification](./definitions/codification.md) — phase transition: prose → symbolic, where crystallization changes computational regime

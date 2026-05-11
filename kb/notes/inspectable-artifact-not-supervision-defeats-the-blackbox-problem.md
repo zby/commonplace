@@ -16,7 +16,7 @@ He predicts classic ML failure modes will follow: overfitting to the spec, Cleve
 
 ## Where the framing breaks
 
-The blackbox analogy holds only if the output is an opaque artifact. Neural network weights are opaque to any inspector — human or LLM. But readable artifacts (prompts, schemas, evals, deterministic code) are inherently inspectable. They can be diffed, tested, reverted, and reviewed — by humans or by LLMs. The artifact class is what matters, not who reviews it.
+The blackbox analogy holds only if the output is practically opaque. Neural network weights are [distributed-parametric](./definitions/representational-form.md) (encoded across numerical parameters) and opaque to any ordinary inspector — human or LLM. But readable artifacts (prompts, schemas, evals, deterministic code) are inherently inspectable at useful scales. They can be diffed, tested, reverted, and reviewed — by humans or by LLMs. The artifact's representational form is what matters, not who reviews it.
 
 An LLM can review a diff and catch a Clever Hans shortcut in generated code. It can run evals and detect overfitting to the test suite. It can compare a codified function against its specification and flag edge cases. None of this is possible with weight updates — not because LLMs lack judgment, but because weights lack structure.
 

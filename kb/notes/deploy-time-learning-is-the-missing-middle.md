@@ -1,5 +1,5 @@
 ---
-description: Deploy-time learning fills the gap between training (slow, opaque) and in-context (ephemeral) — durable system-definition artifacts updated across sessions during deployment
+description: Deploy-time learning fills the gap between slow distributed-parametric training and ephemeral in-context adaptation — durable system-definition artifacts updated across sessions during deployment
 type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
@@ -15,11 +15,11 @@ Deployed systems adapt at three timescales, each with a different durable medium
 
 | Timescale | When | Medium | Properties |
 |-----------|------|--------|------------|
-| **Training** | Before deployment | Weights | Durable but opaque; heavy infrastructure; can't incorporate deployment-specific information |
+| **Training** | Before deployment | Distributed-parametric state | Durable but hard to inspect directly; heavy infrastructure; can't incorporate deployment-specific information |
 | **In-context** | Within a session | Context window | Inspectable but ephemeral; evaporates at session end |
 | **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (prose + symbolic) | Durable, inspectable, versionable |
 
-Medium and timing are orthogonal axes in principle. The combination the table leaves empty — weight updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example.
+Medium and timing are orthogonal axes in principle. The combination the table leaves empty — distributed-parametric updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example.
 
 Deploy-time learning is system-level adaptation: behaviour improves because *artifacts* improve — during deployment like in-context, durable like training, but inspectable and tool-compatible throughout.
 
@@ -43,16 +43,16 @@ The end state also differs. Agile treats natural-language specs as temporary —
 
 ## Boundary
 
-This note is the timing argument alone. How opaque, prose, and symbolic artifact classes should coevolve is [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md).
+This note is the timing argument alone. How distributed-parametric, prose, and symbolic [representational forms](./definitions/representational-form.md) should coevolve is [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md).
 
 ---
 
 Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: places system-definition artifacts on the timing axis
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how deploy-time prose/symbolic loops relate to opaque weight loops
+- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how deploy-time prose/symbolic loops relate to distributed-parametric loops
 - [The verifiability gradient](./verifiability-gradient.md) — extends: the ladder that deploy-time artifacts move along in both directions
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is commonplace's backend choice within the broader system-definition role
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is commonplace's storage substrate choice for many durable system-definition artifacts
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — lever: selective access patterns make the effective context far larger than the window, which is what lets stored-artifact behaviour change reach weight-update scale
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — extends: agile's "changing requirements" reframed through the interpretation-error lens

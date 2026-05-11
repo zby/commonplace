@@ -38,9 +38,9 @@ Flat logs have a real upside: implicit communication. When a user says "use a mo
 
 ## The architectural response
 
-The scoping problem is prose-specific. Symbolic artifacts (code, schemas, types) inherit scoping from their interpreter — see [axes of artifact analysis](./axes-of-artifact-analysis.md) — and opaque artifacts don't have the question at all. Prose has nothing to inherit: no modules, no lexical scope, no interpreter-enforced boundaries. Scope can only be imposed architecturally.
+The scoping problem is prose-specific. Symbolic artifacts (code, schemas, types) inherit scoping from their interpreter; distributed-parametric artifacts do not expose this kind of local prose scope question. Prose has nothing to inherit: no modules, no lexical scope, no interpreter-enforced boundaries. Scope can only be imposed architecturally.
 
-At invocation time this surfaces as a design choice — **flat (parent context)** or **bounded (sub-agent frame)** — same class, same backend, same role, different context-efficiency profile. Flat pays the full volume and complexity cost and risks contamination; bounded trades an interface cost for isolation.
+At invocation time this surfaces as a design choice — **flat (parent context)** or **bounded (sub-agent frame)** — same representational form, same substrate, same authority path, different context-efficiency profile. Flat pays the full volume and complexity cost and risks contamination; bounded trades an interface cost for isolation.
 
 **Sub-agents** are the canonical architectural move: code outside the LLM constructs a fresh flat context, the LLM sees only that, and the scope lives in the orchestration code rather than in the LLM itself.
 
@@ -66,5 +66,5 @@ Relevant Notes:
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: type signatures on skills are frame interfaces — declaring what bindings a sub-agent receives
 - [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — mechanism: automatic context injection constructs lexically scoped frames
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues that scope isolation is the second prerequisite in a dependency chain, manufacturing the atomic units that verification needs
-- [axes of artifact analysis](./axes-of-artifact-analysis.md) — refines: the flat/bounded invocation choice is a prose-class refinement of that note's class axis, orthogonal to class/backend/role but only applicable inside the prose class
+- [axes of artifact analysis](./axes-of-artifact-analysis.md) — refines: the flat/bounded invocation choice is a prose-form refinement, orthogonal to the substrate/form/lineage/authority record but only applicable inside prose
 - [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: scoping is bookkeeping, and bookkeeping belongs in the symbolic substrate — sub-agents are the canonical offload of prose-scoping to code

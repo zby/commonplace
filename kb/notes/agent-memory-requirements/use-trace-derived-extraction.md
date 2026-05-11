@@ -1,5 +1,5 @@
 ---
-description: "Trace-derived extraction is an after-the-fact learning path that must respect signal quality, review, and artifact versus weight-learning boundaries"
+description: "Trace-derived extraction is an after-the-fact learning path that must respect signal quality, review, and readable-artifact versus distributed-parametric learning boundaries"
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
@@ -14,9 +14,9 @@ Corrections are strongest because the log contains both a negative and positive 
 
 Without an explicit signal-quality distinction, automated or semi-automated extraction can give weak-signal discoveries, preferences, or syntheses the same apparent authority as corrected errors. That creates trust and lifecycle failures: low-confidence memories look durable, reviewers cannot tell which candidates need stronger evidence, and activation mechanisms may spend context on lessons that were never well grounded.
 
-## Artifact Learning And Weight Learning
+## Readable-Artifact And Distributed-Parametric Learning
 
-This requirement mainly describes readable and symbolic memory artifacts because they can be inspected, diffed, promoted, and rolled back. Systems such as [AgeMem](../../agent-memory-systems/source-only/agemem.md) show a different path: traces train a policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
+This requirement mainly describes readable memory artifacts because they can be inspected, diffed, promoted, and rolled back. Systems such as [AgeMem](../../agent-memory-systems/source-only/agemem.md) show a different path: traces train a distributed-parametric policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
 
 ## Memory Evolution
 
@@ -37,7 +37,7 @@ Extraction needs an evolution operation, not only creation. New memory may updat
 - Does extraction distinguish strong corrections from weak discoveries?
 - Are weak-oracle candidates prevented from gaining durable authority by default?
 - Can new evidence update nearby old memory rather than only appending new records?
-- Is weight or policy learning limited to domains with sufficiently strong feedback?
+- Is distributed-parametric or policy learning limited to domains with sufficiently strong feedback?
 
 ---
 

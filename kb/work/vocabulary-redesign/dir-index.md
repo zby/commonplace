@@ -12,3 +12,4 @@ index_source: directory
 - [Persistent Adaptive Artifacts in LLM Agents: A Future-Use Taxonomy for Memory and Adaptation](./persistent-adaptive-artifacts-focused-draft.md)
 - [Vocabulary Inventory](./inventory.md)
 - [Vocabulary Revision Plan](./revision-plan.md)
+- [Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems](./paper.md)

@@ -1,5 +1,5 @@
 ---
-description: "Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and source alignment"
+description: "Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and lineage alignment"
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
@@ -14,11 +14,11 @@ The system should not count "memory written" as learning. It should evaluate whe
 
 - Direct retrieval: can the system answer the question that motivated storage?
 - Navigability: can an agent or human follow links and provenance to understand why an answer is trustworthy?
-- Contract fitness: does the artifact satisfy the quality goal for its memory role?
+- Contract fitness: does the artifact satisfy the quality goal for its intended form and authority path?
 - Activation: does relevant policy fire before the action where it matters?
 - Behavioral uptake: does the fired memory change the downstream plan, tool use, or artifact in the intended direction?
 - Context efficiency: does the memory earn the tokens, latency, and attention it consumes?
-- Source alignment: do generated indexes, reminders, rules, and assistant-specific views match their authoritative sources?
+- Lineage alignment: do generated indexes, reminders, rules, and assistant-specific views match their authoritative sources and derivation rules?
 - Evidence sufficiency: does retrieval expose when coverage, confidence, diversity, or agreement is too weak to support the requested answer or action?
 - Temporal correctness: can the system distinguish what is current from what was true at a previous time when that distinction matters?
 - Work-surface fit: does the memory live where the acting agent or human will naturally encounter and maintain it?
@@ -31,7 +31,7 @@ These dimensions are separable. QA-style retrieval tests can pass while activati
 
 - Held-out retrieval tests for known questions.
 - WITH/WITHOUT activation comparisons for behavior-changing cues.
-- Source-alignment checks for compiled views.
+- Lineage-alignment checks for compiled views.
 - Link and provenance audits for navigability.
 - Lifecycle reviews for stale, duplicate, sensitive, or superseded memory.
 - Evidence-sufficiency gates that warn when retrieval is too thin to support action.
