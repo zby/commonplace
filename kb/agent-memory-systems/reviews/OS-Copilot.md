@@ -64,9 +64,9 @@ The main tradeoff is that OS-Copilot treats learning as tool accretion. This wor
 
 **Extraction.** The extraction oracle is mostly an LLM judge over execution feedback. `judge_tool(...)` classifies the task as `Complete`, `Amend`, or `Replan` and assigns a generality score; `repair_tool(...)` uses the critique and state to produce revised code; `store_tool(...)` extracts a tool description from the code it receives and writes it if the tool name is not already present. Because the current caller does not reassign the repaired code before storing, repaired-success traces have weaker promotion grounding than initial-success traces.
 
-**Substrate class.** The distilled substrate is symbolic: Python code, a natural-language description, a JSON registry entry, and an embedding index entry. It is not model-weight learning and not a prose knowledge base.
+**Representational form.** The distilled substrate is symbolic: Python code, a natural-language description, a JSON registry entry, and an embedding index entry. It is not model-weight learning and not a prose knowledge base.
 
-**Role.** The role is system-definition memory. A stored tool changes the agent's future action space because later planning and execution can retrieve and call that function. The course JSON is closer to work history or curriculum state; the tool repository is the real behavior-changing artifact.
+**Behavioral authority.** The stored tool is a system-definition artifact. It changes the agent's future action space because later planning and execution can retrieve and call that function. The course JSON is closer to work history or curriculum state; the tool repository is the real behavior-changing artifact.
 
 **Scope.** Scope is local to the configured generated-tool repository, defaulting to `oscopilot/tool_repository/generated_tools`. There is no per-project provenance model beyond choosing a repository path, and no cross-tool abstraction layer.
 

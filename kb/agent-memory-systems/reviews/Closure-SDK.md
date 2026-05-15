@@ -47,7 +47,7 @@ Where Closure-SDK is stronger: it has a precise treatment of ordered streams, in
 
 Where commonplace is stronger: the learned artifacts are inspectable, revisable, and meaningful to an agent without running the original program. A `GenomeEntry` can carry support, edges, salience, and coherence, but those fields do not explain themselves as portable knowledge. They are runtime state. Commonplace optimizes for durable interpretation; Closure-SDK optimizes for algebraic behavior.
 
-The deepest divergence is substrate class. Closure-SDK's `closure_ea` is neither readable artifact learning nor weight learning. It is opaque runtime-state learning: traces mutate a hand-designed symbolic/numeric memory structure whose interpretation depends on the runtime's geometry.
+The deepest divergence is representational form. Closure-SDK's `closure_ea` is neither readable artifact learning nor weight learning. It is opaque runtime-state learning: traces mutate a hand-designed symbolic/numeric memory structure whose interpretation depends on the runtime's geometry.
 
 ## Borrowable Ideas
 
@@ -67,9 +67,9 @@ The deepest divergence is substrate class. Closure-SDK's `closure_ea` is neither
 
 **Extraction.** No LLM extractor. The runtime computes prediction error, ZREAD/RESONATE hits, closure tags, eligibility, salience, and co-resonance directly from carrier geometry. Buffer entries with closure evidence promote through `Genome::ingest`; delayed prediction feedback routes through `evaluate_prediction` and `credit_response`.
 
-**Substrate class.** Opaque runtime state. The durable learned unit is a `GenomeEntry` with quaternion address/value plus metadata, or a higher-level promoted category in another genome level. It is symbolic in the broad sense that the runtime has typed fields and deterministic update rules, but it is not a readable artifact like a rule, note, or skill.
+**Representational form.** Opaque runtime state. The durable learned unit is a `GenomeEntry` with quaternion address/value plus metadata, or a higher-level promoted category in another genome level. It is symbolic in the broad sense that the runtime has typed fields and deterministic update rules, but it is not a readable artifact like a rule, note, or skill.
 
-**Role.** System-definition state. The genome is not merely factual recall; reading it through ZREAD/RESONATE changes the runtime's future predictions and updates. The artifact is part of the agent's disposition, but only inside the Closure runtime.
+**Behavioral authority.** System-definition state. The genome is not merely factual recall; reading it through ZREAD/RESONATE changes the runtime's future predictions and updates. The artifact is part of the agent's disposition, but only inside the Closure runtime.
 
 **Scope.** Per-runtime and per-curriculum. The code supports serializable brain state and deterministic curriculum traces, but there is no implemented cross-project knowledge curation layer, no natural-language explanation layer, and no model-weight export.
 
@@ -102,7 +102,7 @@ The deepest divergence is substrate class. Closure-SDK's `closure_ea` is neither
 Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: Closure-SDK adds an opaque runtime-state endpoint for trace-derived learning, distinct from readable artifacts and model weights
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - sharpens: Closure-SDK separates code inspectability from knowledge inspectability; the runtime is inspectable, but the learned substrate is not human-readable knowledge
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - sharpens: Closure-SDK separates code inspectability from knowledge inspectability; the runtime is inspectable, but the learned state is not human-readable knowledge
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) - contrasts: Closure DNA is a database-first local memory substrate with file-level persistence, but not a file-native KB
 - [The fundamental split in agent memory is not storage format but who decides what to remember](../agentic-memory-systems-comparative-review.md) - extends: Closure-SDK shows a third agency pattern where deterministic geometry and thresholds decide what persists
 - [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) - contrasts: Closure-SDK has learned runtime state, but its promotion oracle is geometric closure/feedback rather than an external task-success judge

@@ -1,5 +1,5 @@
 ---
-description: Trace-derived learning systems compared on ingestion pattern, promotion target, artifact structure, and evidence tier across repo reviews and source-only coverage
+description: Trace-derived learning systems compared on ingestion pattern, representational form, behavioral authority, artifact structure, and evidence tier across repo reviews and source-only coverage
 type: kb/types/note.md
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
@@ -8,7 +8,7 @@ status: seedling
 
 # Trace-derived learning techniques in related systems
 
-Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what substrate they promote into (opaque vs prose vs symbolic — a **substrate-class** choice), and what role the result plays (knowledge consumed as fact vs system-definition consumed as policy).
+Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, prose, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
 The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The source-only systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
@@ -26,7 +26,7 @@ We organize each system around five recurring stages:
 
 Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) sharpens the distinction: "service memory" is usually a backend choice within the readable substrate, not a third top-level substrate alongside readable artifacts and weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) sharpens the distinction: "service memory" is usually a storage-substrate choice, not a representational form alongside readable artifacts and weights.
 
 ## Napkin
 
@@ -100,7 +100,7 @@ A product analytics assistant that separates file-shaped project context from da
 
 ## MemoryOS
 
-A conversational memory library and MCP server that turns live user/assistant dialogue into hierarchical profile and knowledge memory.
+A conversational memory library and MCP server that turns live user/assistant dialogue into hierarchical profile state and retrievable knowledge artifacts.
 
 **Trigger.** `add_memory(...)` writes each user input / agent response pair into short-term memory. Short-term overflow triggers mid-term analysis; hot mid-term sessions trigger long-term extraction. `get_response(...)` also writes the generated answer back into memory, so normal deployment conversations feed the loop.
 
@@ -168,7 +168,7 @@ A local multi-agent office where trace-derived learning sits inside the broker/w
 
 **Extraction.** Artifact extraction prompts for entities and facts, resolves entities, computes deterministic fact IDs, and persists facts to both index state and JSONL logs. Playbook synthesis reads recent execution entries and updates only `## What we've learned`, preserving the authored procedure body.
 
-**Promotion.** Facts, entity briefs, wiki articles, playbooks, and compiled `SKILL.md` files in the git wiki, plus team skills in broker state. The learned substrate is readable or symbolic artifact state, not model weights.
+**Promotion.** Facts, entity briefs, wiki articles, playbooks, and compiled `SKILL.md` files in the git wiki, plus team skills in broker state. The learned forms are readable prose and symbolic artifact state, not model weights.
 
 **Scope.** Workspace/team-scoped multi-agent office. The strongest new subtype is the execution-log-to-playbook-skill loop: repeated procedure runs revise a bounded learned section, which then recompiles into the next invokable skill wrapper.
 
@@ -210,7 +210,7 @@ A code-inspected outer loop for optimizing the harness around a fixed base model
 
 **Extraction.** Claude Code reads those traces under task-specific skills and writes executable candidates plus `pending_eval.json` metadata. The text-classification path writes `MemorySystem` subclasses; the Terminal-Bench path writes Harbor-compatible `AgentHarness` subclasses.
 
-**Promotion.** Executable Python harness artifacts and run metadata. The frontier records winners, but the learned substrate is code. No weight promotion in the inspected repo; no durable prose playbook beyond run-local reports and summaries.
+**Promotion.** Executable Python harness artifacts and run metadata. The frontier records winners, but the learned form is code. No weight promotion in the inspected repo; no durable prose playbook beyond run-local reports and summaries.
 
 **Scope.** Per-domain, per-benchmark optimization. The onboarding prompt generalizes the setup, but transfer between domains is manual through a new domain spec and new harness interface.
 
@@ -252,7 +252,7 @@ Markdown workflow harness whose trace-derived loop targets the skill system itse
 
 **Extraction.** The `meta-optimize` skill asks the agent to compute frequency, failure, convergence, and human-intervention patterns, rank optimization opportunities, and generate concrete diffs against `SKILL.md` prompts, defaults, convergence rules, workflow ordering, or cautious artifact schemas. Proposed patches then go through cross-model review before recommendation.
 
-**Promotion.** Proposed markdown skill diffs plus a meta-optimization report. Application backs up the original skill and logs the optimization, but the inspected contract explicitly forbids auto-apply without user approval. The learned substrate is system-definition text, not a separate memory store.
+**Promotion.** Proposed markdown skill diffs plus a meta-optimization report. Application backs up the original skill and logs the optimization, but the inspected contract explicitly forbids auto-apply without user approval. The learned artifact is prose-form system-definition text, not a separate memory store.
 
 **Scope.** Per-project harness optimization with optional global trend accumulation. It is closest to Meta-Harness on "harness as learning target," but its promotion target is promptware/skillware rather than executable Python harness classes, and its oracle is weaker: log-derived evidence plus reviewer judgment rather than benchmark score frontiers.
 
@@ -518,7 +518,7 @@ Versioned computer-use agents where durable experience memory is strongest in ol
 
 **Extraction.** S1/S2 summarize trajectories through LLM prompts into narrative and episodic JSON records with embeddings. S3 reflection is online prompt-time feedback, not durable extraction. BBoN uses a behavior narrator to turn before/after screenshots plus executed actions into fact captions, then a comparative VLM judge selects among trajectories.
 
-**Promotion.** S1/S2 promote into local JSON experience memory plus pickled embeddings. S3 deployment mostly keeps working state in prompt context and logs. BBoN promotes into benchmark artifacts — screenshots, trajectory JSONL, fact-caption JSONL, judge JSON, and result summaries — whose role is selection/evaluation rather than next-task memory.
+**Promotion.** S1/S2 promote into local JSON experience memory plus pickled embeddings. S3 deployment mostly keeps working state in prompt context and logs. BBoN promotes into benchmark artifacts — screenshots, trajectory JSONL, fact-caption JSONL, judge JSON, and result summaries — whose authority is selection/evaluation rather than next-task memory.
 
 **Scope.** Computer-use tasks across OSWorld, WindowsAgentArena, AndroidWorld, and local CLI use. Agent-S is a split case: earlier versions are trajectory-to-prose-memory systems; the latest S3 runtime is closer to in-task control plus post-run trajectory evaluation.
 
@@ -564,17 +564,17 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Framework-integrated runtime memory.** Live inside the agent framework, consume task/run outputs and optional human feedback at the framework hook boundary, and promote into the same memory store that later prompt assembly uses. CrewAI Memory is the clear case here. It is not an external service, and it is not an offline trajectory learner; its distinctive feature is tight integration with agent execution.
 
-**Online capability creation.** Keep the runtime's bootstrap tool surface stable, but let the agent turn live task needs into durable callable artifacts during deployment. Tendril is the clean case: it lists workspace capabilities, registers a new Deno TypeScript tool when none fits, then executes future requests by capability name. This differs from trajectory-run systems because there is no offline consolidation phase; the write is immediate system-definition growth.
+**Online capability creation.** Keep the runtime's bootstrap tool surface stable, but let the agent turn live task needs into durable callable artifacts during deployment. Tendril is the clean case: it lists workspace capabilities, registers a new Deno TypeScript tool when none fits, then executes future requests by capability name. This differs from trajectory-run systems because there is no offline consolidation phase; the write immediately creates a system-definition artifact.
 
 **Service-owned trace backend.** Own the message or event schema, accept structured traffic over an API or proxy, separate archive from extraction from downstream processing, support many sessions feeding one backend. OpenViking fits as a memory service; nao and MemoryOS as product/conversation assistants with user-memory extraction; REM as a simpler episodic memory service with keyword-clustered consolidation; OpenClaw-RL as a policy-learning backend. ClawVault partially fits as a local vault-plus-observer rather than a shared multi-tenant service.
 
 **Trajectory-run pattern.** Learn from repeated runs rather than one live conversation, consume scored generations or completed-task traces, consolidate across many episodes before promotion. Autocontext, Meta-Harness, Agentic Harness Engineering, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, AgentFly, Voyager, OS-Copilot, SkillX, SkillWeaver, Amazon Science SAGE, Agent-R, and Agent-S fit here, along with source-only AgeMem and Trajectory-Informed Memory Generation. Self-Training-LLM is an edge case: it learns from corpus-grounded generation traces rather than autonomous task trajectories, but it has the same staged trace-to-training-data shape. G-Memory extends the pattern to multi-agent trajectories with within-run coordination structure. AriGraph sits next to this pattern rather than fully inside it: it learns online from an environment trajectory, but promotes into per-run operational graph state instead of consolidating across repeated episodes. Autocontext straddles this boundary — it owns its trace format (SQLite, competitor outputs, playbooks) like a service backend, but learns from repeated runs like a trajectory system; it is placed here because episode-level iteration is its primary learning mechanism.
 
-### Axis 2: promotion target / substrate class
+### Axis 2: promotion target / representational form
 
-**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, case rows, or skill patches. Keep learned results in a substrate humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, MemoryOS, Tendril, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, AgentFly, SkillX, Agent-S, and G-Memory as trajectory-run artifact-learners. AriGraph adds a temporary symbolic-state variant: traces become triplets, graph edges, embeddings, and episodic records that are inspectable in code/log terms but not promoted into a maintained library. Voyager, OS-Copilot, and SkillWeaver extend the category to executable code artifacts — JavaScript skills in Voyager, Python OS tools in OS-Copilot, Playwright browser APIs in SkillWeaver — all promoted after environment-grounded success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; Agentic Harness Engineering extends that harness-code branch with a broader component menu spanning promptware, tool descriptions, middleware, skills, sub-agents, and memory files; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose substrate (verbal hints, profile/fact strings, scored rules, structured records, repo-local entries) to symbolic substrate (workflow instructions and executable code); their backends differ further still, but they share the readable side of the substrate-class split with weight learning.
+**Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, case rows, or skill patches. Keep learned results in forms humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, MemoryOS, Tendril, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, AgentFly, SkillX, Agent-S, and G-Memory as trajectory-run artifact-learners. AriGraph adds a temporary symbolic-state variant: traces become triplets, graph edges, embeddings, and episodic records that are inspectable in code/log terms but not promoted into a maintained library. Voyager, OS-Copilot, and SkillWeaver extend the category to executable code artifacts — JavaScript skills in Voyager, Python OS tools in OS-Copilot, Playwright browser APIs in SkillWeaver — all promoted after environment-grounded success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; Agentic Harness Engineering extends that harness-code branch with a broader component menu spanning promptware, tool descriptions, middleware, skills, sub-agents, and memory files; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from prose form (verbal hints, profile/fact strings, scored rules, structured records, repo-local entries) to symbolic form (workflow instructions and executable code); their storage substrates differ further still, but they share the readable side of the representational-form split with weight learning.
 
-**Weight learning.** Mine trajectories, next-state signals, or generation traces under a sufficiently strong oracle, re-express as training signals, promote into model weights. AgeMem, OpenClaw-RL, Amazon Science SAGE, Agent-R, Self-Training-LLM, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Amazon Science SAGE adds a symbolic-to-opaque variant: generated functions are rollout-time skill scaffolds, but the durable promotion target is the policy checkpoint. AgentFly is a weaker adjacent case: the trained parameters select external cases, while the case bank remains the primary memory. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data. Self-Training-LLM adds corpus-grounded answer-sample surgery: generated questions and sampled answers are scored, filtered, and paired before SFT/DPO.
+**Distributed-parametric learning.** Mine trajectories, next-state signals, or generation traces under a sufficiently strong oracle, re-express them as training signals, and promote into model weights, adapters, learned rankers, or controllers. AgeMem, OpenClaw-RL, Amazon Science SAGE, Agent-R, Self-Training-LLM, and Autocontext fit here. Autocontext bridges both — symbolic artifacts first, then optionally weights. Amazon Science SAGE adds a symbolic-to-distributed-parametric variant: generated functions are rollout-time skill scaffolds, but the durable promotion target is the policy checkpoint. AgentFly is a weaker adjacent case: the trained parameters select external cases, while the case bank remains the primary memory. Agent-R adds dataset surgery between trace collection and training: MCTS paths are paired, corrected, and spliced into revision conversations before becoming fine-tuning data. Self-Training-LLM adds corpus-grounded answer-sample surgery: generated questions and sampled answers are scored, filtered, and paired before SFT/DPO.
 
 ### What the expanded survey reveals: artifact structure varies widely
 
@@ -595,7 +595,7 @@ Within the readable-artifact branch, the artifact-learning systems span a wide r
 - **Workflow instruction patches:** ARIS (hook-log-derived diffs to markdown skills and workflow defaults).
 - **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval), OS-Copilot (Python OS tools with generated descriptions and vector retrieval), Tendril (Deno TypeScript capabilities with trigger/suppression metadata), SkillWeaver (async Playwright APIs with docstrings, metadata, and static checks).
 
-The maintenance path also varies: append-only (Reflexion, ReasoningBank), rewrite-and-carry-forward (Dynamic Cheatsheet), workflow-file replacement (Agent Workflow Memory), counter-based (ACE), explicit CRUD verbs (ExpeL, G-Memory), and critic- or judge-gated promotion (Voyager, OS-Copilot). These differences matter more for real system design than the broader substrate-class distinction.
+The maintenance path also varies: append-only (Reflexion, ReasoningBank), rewrite-and-carry-forward (Dynamic Cheatsheet), workflow-file replacement (Agent Workflow Memory), counter-based (ACE), explicit CRUD verbs (ExpeL, G-Memory), and critic- or judge-gated promotion (Voyager, OS-Copilot). These differences matter more for real system design than the broader representational-form distinction.
 
 ## Log formats matter more than the prompts
 
@@ -649,7 +649,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Tool-result mining.** Both Pi Self-Learning and OpenViking mine beyond user/assistant prose — blocked commands, permission denials, tool statuses.
 - **Separate trigger from promotion.** Systems that keep extraction and ranking/promotion distinct are easier to reason about.
 - **Artifact-to-weight handoff.** Autocontext makes explicit what others leave implicit: mined artifacts can be intermediate, not terminal.
-- **Substrate choice as design decision.** The same input class can end as notes/observations/tips or as opaque weight updates.
+- **Representational-form choice as design decision.** The same input class can end as notes/observations/tips or as distributed-parametric updates.
 - **Explicit mutation verbs on learned artifacts.** ExpeL's `ADD`/`EDIT`/`REMOVE`/`AGREE` and G-Memory's matching operations give the maintenance loop a visible contract.
 - **Critic-gated promotion.** Voyager only promotes successful programs — a strong filter that prevents accumulation of failed attempts.
 - **Bidirectional extraction from successes and failures.** ReasoningBank uses separate prompts for successful and failed trajectories, yielding different kinds of insights.
@@ -684,8 +684,8 @@ The concrete update to [automating KB learning is an open problem](../notes/auto
 
 Relevant Notes:
 
-- [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via the readable system-definition mechanism; the weight-promotion cases take the expensive mechanism
-- [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates substrate class from backend and artifact form, clarifying that service memory is usually a backend within the readable substrate rather than a third substrate
+- [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via readable system-definition artifacts; the distributed-parametric cases take the expensive mechanism
+- [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates storage substrate, representational form, lineage, and behavioral authority, clarifying that service memory is usually a substrate choice rather than a form or authority family
 - [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
 - [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rationale: turns the survey's repeated techniques into a needs map for direct-authored and trace-derived memory, including capture, activation, promotion, lifecycle, and evaluation

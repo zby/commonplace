@@ -72,9 +72,9 @@ The deepest design split is between automatic continuity and deliberate distilla
 
 **Extraction.** The main extraction oracle is an LLM pass that emits structured facts and entity relations from raw memory content. A second LLM pass proposes add/update/delete/none decisions against existing memory candidates. Deterministic gates then decide what can be committed: confidence thresholds, dedupe hashes, write-gate surprisal, mutation flags, contradiction checks, scope/visibility, and transaction boundaries.
 
-**Substrate class.** The learned state is mixed symbolic/prose/opaque. Memory rows and graph attributes are symbolic database records; transcript and projection artifacts are prose/file records; embeddings and predictor training pairs are opaque or numeric runtime state.
+**Representational form.** The learned state is mixed symbolic/prose/opaque. Memory rows and graph attributes are symbolic database records; transcript and projection artifacts are prose/file records; embeddings and predictor training pairs are opaque or numeric runtime state.
 
-**Role.** Extracted memories mostly play a knowledge role: they are retrieved and injected as facts, preferences, decisions, and procedures. Skills-as-graph-nodes move closer to system-definition because retrieved skill content can change what the agent does. Predictor feedback and training pairs are system-definition candidates, but the inspected code treats the predictor as a sidecar/WIP path rather than the core memory mechanism.
+**Behavioral authority.** Extracted memories mostly play a knowledge-artifact use: they are retrieved and injected as facts, preferences, decisions, and procedures. Skills-as-graph-nodes move closer to system-definition because retrieved skill content can change what the agent does. Predictor feedback and training pairs are system-definition candidates, but the inspected code treats the predictor as a sidecar/WIP path rather than the core memory mechanism.
 
 **Scope.** Scope is per-agent, per-project, per-session, or shared/group depending on visibility and auth policy. It is not only per-task benchmark memory; the product target is persistent cross-harness user/workspace memory.
 

@@ -8,14 +8,14 @@ last-checked: "2026-04-20"
 
 # Self-Training-LLM
 
-[Self-Training-LLM](https://github.com/wj210/Self-Training-LLM) is a research codebase for factual self-training over Wikipedia. It generates or loads Wikipedia-grounded questions, asks a base or tuned model for answers, scores answer samples with NLI-style uncertainty and hallucination detectors, then turns filtered examples into SFT and DPO training data. It is useful for Commonplace as a trace-derived weight-learning contrast: the learned substrate is model weights, while the intermediate files are staging data rather than durable memory.
+[Self-Training-LLM](https://github.com/wj210/Self-Training-LLM) is a research codebase for factual self-training over Wikipedia. It generates or loads Wikipedia-grounded questions, asks a base or tuned model for answers, scores answer samples with NLI-style uncertainty and hallucination detectors, then turns filtered examples into SFT and DPO training data. It is useful for Commonplace as a trace-derived distributed-parametric learning contrast: the learned form is model weights, while the intermediate files are staging data rather than durable memory.
 
 **Repository:** https://github.com/wj210/Self-Training-LLM  
 **Reviewed commit:** https://github.com/wj210/Self-Training-LLM/commit/97839b29d0fd8bb474f5549fa3e9d6ca504732e0
 
 ## Core Ideas
 
-### The learned substrate is weights, not memory
+### The learned form is weights, not memory
 
 The README frames the project around dataset generation, SFT training, DPO training, response generation, and testing scripts rather than a deploy-time memory store ([README.md](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/README.md)). The training entrypoint loads answer pickles, filters examples, constructs SFT or DPO records, and delegates to TRL trainers ([uncertainty/train.py](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/uncertainty/train.py)). The training wrapper saves model checkpoints and optional merged adapters ([uncertainty/self_learning_training.py](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/uncertainty/self_learning_training.py)).
 

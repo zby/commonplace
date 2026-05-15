@@ -68,9 +68,9 @@ The key design difference is scope. AriGraph optimizes for online task performan
 
 **Extraction.** Extraction is LLM-mediated. Observation text is converted into triplets or theses; another prompt decides which prior facts are outdated; entity-selection prompts decide what to retrieve for the current plan; episodic retrieval is scored by embedding similarity and overlap with retrieved facts.
 
-**Substrate class.** The primary distilled substrate is symbolic plus vector-indexed state: natural-language triplets/theses, graph edges, entity names, observation episodes, and Contriever embeddings. It is not an opaque weight update and not a prose rulebook.
+**Representational form.** The primary distilled substrate is symbolic plus vector-indexed state: natural-language triplets/theses, graph edges, entity names, observation episodes, and Contriever embeddings. It is not an opaque weight update and not a prose rulebook.
 
-**Role.** The role is knowledge memory, with some action-affordance effects. Retrieved facts and episodes inform planning and action prompts, while spatial graph facts enable pathfinding and synthetic navigation commands. The memory does not rewrite the agent's policies or prompts as reusable system-definition artifacts.
+**Behavioral authority.** Most retained state has knowledge-artifact use, with some action-affordance effects. Retrieved facts and episodes inform planning and action prompts, while spatial graph facts enable pathfinding and synthetic navigation commands. The memory does not rewrite the agent's policies or prompts as reusable system-definition artifacts.
 
 **Scope.** Scope is per-task and per-run for games, and per-question for the QA script. The repository ships logs and environments, but the implemented graph state is not exported as a reusable cross-run memory library.
 

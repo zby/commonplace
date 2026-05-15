@@ -34,7 +34,7 @@ This scope limitation is also what enables the oracle. The value of a stored fac
 
 ## Storage split: facts in memory, policy in weights
 
-To close the learning loop, AgeMem accepts a split between advice-like knowledge use and high-authority system-definition use: facts go into a memory store (somewhat inspectable key-value pairs), but the policy for managing them goes into distributed-parametric model weights (hard to inspect directly, non-diffable as discrete decisions, only changeable through retraining).
+To close the learning loop, AgeMem accepts a split between [knowledge-artifact](./definitions/knowledge-artifact.md) use and high-authority [system-definition-artifact](./definitions/system-definition-artifact.md) use: facts go into a memory store (somewhat inspectable key-value pairs), but the policy for managing them goes into distributed-parametric model weights (hard to inspect directly, non-diffable as discrete decisions, only changeable through retraining).
 
 This makes AgeMem the clean distributed-parametric case in the KB's updated learning taxonomy. Per [continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md), behaviour change has two known mechanisms — distributed-parametric updates and readable system-definition artifacts. AgeMem takes the weight path: the learned policy persists and later behavior depends on it. The interesting question is therefore not whether AgeMem is really learning, but what weights buy and what they give up relative to durable symbolic artifacts.
 
@@ -82,7 +82,7 @@ Fofadiya & Tiwari's key empirical finding — that controlled forgetting *improv
 Relevant Notes:
 
 - [continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: AgeMem is the clean distributed-parametric behaviour-change case; the expensive mechanism that the readable-artifact regime is the cheaper alternative to
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: AgeMem's policy is a clean distributed-parametric-form case, and the split AgeMem makes is across behavioral authority — facts as knowledge advice in memory, policy as system-definition authority in weights
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: AgeMem's policy is a clean distributed-parametric-form case, and the split AgeMem makes is across behavioral authority — facts as knowledge artifacts in memory, policy as a system-definition artifact in weights
 - [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — grounds: memory operations are exact-spec artifacts, while the policy for composing them is a proxy theory
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: AgeMem confirms the evaluation gap is the real bottleneck — RL can learn memory policy, but only with a clear oracle, which KB learning lacks
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) — grounds: LTM Add value depends on discoverability; the three-property framework explains why weight-based memory policy cannot produce articulated relationships by itself

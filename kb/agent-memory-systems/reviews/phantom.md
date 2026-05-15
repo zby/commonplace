@@ -71,9 +71,9 @@ Phantom is a **two-stage trace-derived learning system** with one runtime stage 
 
 **Extraction.** Stage 1 runs no LLM: episodes are constructed from session metadata, and facts come from regex patterns over user messages. Stage 2 spawns a sandboxed SDK subprocess with the batch and the current `phantom-config/`, lets it propose edits to writeable files, and then runs deterministic invariant checks. The oracle for Stage 1 is the regex patterns; the oracle for Stage 2 is the invariant set, not a behavioral test.
 
-**Substrate class.** Mixed across stages. Stage 1 produces opaque vector embeddings plus structured rows in Qdrant (episodes, facts, procedures). Stage 2 produces prose patches against markdown files (persona, user-profile, domain-knowledge, strategies, corrections, principles). No weight updates anywhere.
+**Representational form.** Mixed across stages. Stage 1 produces opaque vector embeddings plus structured rows in Qdrant (episodes, facts, procedures). Stage 2 produces prose patches against markdown files (persona, user-profile, domain-knowledge, strategies, corrections, principles). No weight updates anywhere.
 
-**Role.** Stage 1 outputs are knowledge: episodes and facts are queried explicitly when the agent needs to recall something. Stage 2 outputs are system-definition: the edited files are loaded into the system prompt at the next session start, and reading them *is* part of the disposition. The procedural collection straddles both: it is queried like knowledge but its outcome counters are used to bias future task selection.
+**Behavioral authority.** Stage 1 outputs are knowledge: episodes and facts are queried explicitly when the agent needs to recall something. Stage 2 outputs are system-definition: the edited files are loaded into the system prompt at the next session start, and reading them *is* part of the disposition. The procedural collection straddles both: it is queried like knowledge but its outcome counters are used to bias future task selection.
 
 **Scope.** Per-Phantom-instance. Phantom has no cross-instance learning channel; one container's episodes, facts, and evolved config do not migrate to another. The invariant set, sandbox allowlist, and constitution are operator-managed and version-controlled in the repository, but they apply per running instance.
 

@@ -52,9 +52,9 @@ The systems also differ on activation. AWM activates by benchmark/site scope: pr
 
 **Extraction.** Extraction is LLM-mediated for abstract workflows and script-mediated for filtering. The scripts parse trajectory blocks, remove invalid or unhelpful actions, deduplicate by templates or abstract action sequences, and then either write concrete examples or ask an LLM to summarize common workflows. The oracle is benchmark-specific: ground-truth labels and candidate ranks for Mind2Web, ground-truth reward or an LLM auto-evaluator for WebArena.
 
-**Substrate class.** The distilled substrate is prose plus lightweight action syntax in plain text workflow files. There is also an optional FAISS index for retrieval over workflow names/docstrings, but the behavior-changing artifact is still prompt text, not vector state.
+**Representational form.** The distilled substrate is prose plus lightweight action syntax in plain text workflow files. There is also an optional FAISS index for retrieval over workflow names/docstrings, but the behavior-changing artifact is still prompt text, not vector state.
 
-**Role.** The workflows are system-definition artifacts rather than passive knowledge. Reading them changes the acting agent's policy for the next web task because they are injected into the system message or exemplar context before action selection.
+**Behavioral authority.** The workflows are system-definition artifacts rather than passive knowledge. Reading them changes the acting agent's policy for the next web task because they are injected into the system message or exemplar context before action selection.
 
 **Scope.** Scope is website or benchmark split local. The code expects the operator to match workflow paths to websites and does not implement cross-site promotion, workflow ownership metadata, or general-purpose memory governance.
 

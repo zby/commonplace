@@ -34,7 +34,7 @@ Operational axes describe the policies that turn retained material into usable m
 | Axis | Question | Common choices |
 |---|---|---|
 | Capture policy | What enters the memory system? | Write everything, heuristic trigger, LLM curator, user-marked item, post-session mining |
-| Derivation policy | How does raw material become usable? | Keep raw traces, summarize, extract facts, build graph edges, create cues, generate system-definition artifacts |
+| Derivation policy | How does raw material become usable? | Keep raw traces, summarize, extract facts, build graph edges, create cues, generate [system-definition artifacts](./definitions/system-definition-artifact.md) |
 | Activation policy | How does memory reach a future bounded context? | Always injected, hook-driven retrieval, tool-driven search, on-reference loading, on-situation cue |
 | Authority policy | Who decides and who can revise? | Harness, cheap model, main model, background model, user, reviewer, deterministic validator |
 | Lifecycle policy | How does memory change or leave? | Supersede, invalidate, decay, redact, delete, relax enforcement, regenerate compiled views |

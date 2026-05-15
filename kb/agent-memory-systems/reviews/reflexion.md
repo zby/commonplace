@@ -41,7 +41,7 @@ That slice is what the next reflection generator sees as "Plans from past attemp
 
 ## Comparison with Our System
 
-Reflexion is a foundational reference for the "feedback becomes text, text conditions the next attempt" idea, but it is much narrower than any workshop-memory system in our review set. The substrate is a per-task prompt-visible tail of up to three plan strings, while older entries remain only in the run log. The oracle is benchmark-task success. Commonplace maintains a typed, linked graph of notes curated by humans; the two systems share only the substrate class (inspectable text).
+Reflexion is a foundational reference for the "feedback becomes text, text conditions the next attempt" idea, but it is much narrower than any workshop-memory system in our review set. The retained form is a per-task prompt-visible tail of up to three plan strings, while older entries remain only in the run log. The oracle is benchmark-task success. Commonplace maintains a typed, linked graph of notes curated by humans; the two systems share only the broad readable-prose form.
 
 | Dimension | Reflexion | Commonplace |
 |---|---|---|

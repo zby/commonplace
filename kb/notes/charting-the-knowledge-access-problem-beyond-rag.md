@@ -1,5 +1,5 @@
 ---
-description: Brainstorming note that decomposes the "how should an agent find what it needs?" problem into substrate, pointers, navigation, synthesis, and maintenance beyond RAG-vs-filesystem debates
+description: Brainstorming note that decomposes the "how should an agent find what it needs?" problem into storage substrate, pointers, navigation, synthesis, and maintenance beyond RAG-vs-filesystem debates
 type: kb/types/note.md
 traits: []
 tags: [foundations]
@@ -20,7 +20,7 @@ That widens the evaluation target. An access strategy might be good at exact loo
 
 ## The parts of the problem
 
-**Substrate** — where knowledge lives and what operations are cheap. Files make hierarchical browsing and exact reads cheap. Databases make scored queries and derived indexes cheap. Graphs make typed traversal and neighborhood operations cheap. This is the execution-substrate question, not yet the navigation strategy. [Files beat a database for agent-operated knowledge bases](./files-not-database.md) is one answer at one stage of maturity, but it does not settle how an agent decides what to load next.
+**Storage substrate** — where knowledge lives and what operations are cheap. Files make hierarchical browsing and exact reads cheap. Databases make scored queries and derived indexes cheap. Graphs make typed traversal and neighborhood operations cheap. This is the [storage-substrate](./definitions/storage-substrate.md) question, not yet the navigation strategy. [Files beat a database for agent-operated knowledge bases](./files-not-database.md) is one answer at one stage of maturity, but it does not settle how an agent decides what to load next.
 
 **Pointers** — what the agent sees before it commits to reading. Titles, descriptions, table-of-contents entries, index blurbs, link phrases, path names, and graph edge labels are all pointers. Their job is not to answer the question directly, but to make the follow/skip decision cheap. This is the design space described by [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md).
 

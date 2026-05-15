@@ -62,7 +62,7 @@ The second divergence is the writer filter. Commonplace often wants agents to di
 
 **Extraction.** Extraction is agent-mediated judgment, not a separate model pipeline. The oracle is the doctrine's filter: prefer perishable human or empirical knowledge, avoid code-reconstructable analysis, and prefer a code comment when the knowledge has a precise code anchor.
 
-**Substrate class and role.** The substrate is prose in JSONL. The role is mostly knowledge, not system-definition: future agents search entries as facts and decision context. The AGENTS hook is system-definition, but entries themselves do not automatically rewrite guidance or policy.
+**Representational form and behavioral authority.** The retained form is prose in JSONL. The entries are mostly knowledge artifacts: future agents search them as facts and decision context. The AGENTS hook is system-definition, but entries themselves do not automatically rewrite guidance or policy.
 
 **Scope and timing.** Scope is per repository. Timing is online/manual during normal work, with a session-end review pass. It is lighter than ClawVault or Pi Self-Learning because there is no event hook or transcript miner, but stronger than an ordinary notes file because the CLI and AGENTS doctrine define a recurring capture loop.
 

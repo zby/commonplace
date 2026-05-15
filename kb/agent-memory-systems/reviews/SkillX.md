@@ -69,9 +69,9 @@ The sharpest difference is activation. SkillX is designed for automatic prompt-t
 
 **Extraction.** The extraction oracle is staged. Reward thresholding selects successful traces; `PlanExtractor` distills successful histories into step plans; `FunctionalSkillExtractor` turns plan steps plus successful trajectories into reusable skills; `AtomicSkillExtractor` extracts tool-centered skills and can use failed trajectories for contrast. DBSCAN and LLM merging consolidate similar skills, while LLM filters and optional tool schemas reject some low-quality skills.
 
-**Substrate class.** The distilled substrate is mixed prose and symbolic structure. Plans are natural-language step lists in JSON. Functional skills are code-like snippets plus documents and tool lists. Atomic skills are tool-centered usage documents and examples. The system does not update model weights.
+**Representational form.** The distilled substrate is mixed prose and symbolic structure. Plans are natural-language step lists in JSON. Functional skills are code-like snippets plus documents and tool lists. Atomic skills are tool-centered usage documents and examples. The system does not update model weights.
 
-**Role.** The intended role is system-definition memory: plans and skills are meant to be injected into future agents and alter how they plan or call tools. In the inspected code, that role is clearer in the artifact schema and shipped `skillx_db` than in the incomplete inference implementation.
+**Behavioral authority.** The intended authority is system-definition-artifact use: plans and skills are meant to be injected into future agents and alter how they plan or call tools. In the inspected code, that authority is clearer in the artifact schema and shipped `skillx_db` than in the incomplete inference implementation.
 
 **Scope.** Scope is benchmark and environment specific. The shipped database covers AppWorld iterations, and the code has benchmark-specific support for AppWorld, BFCL, and tau2-Bench. The artifacts are cross-task within a tool environment, not global conceptual knowledge.
 

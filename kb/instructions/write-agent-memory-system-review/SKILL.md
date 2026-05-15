@@ -80,7 +80,7 @@ If the system has no reachable source code, stop and write a source-only note in
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
-8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract. Its embedded comparison lens is the review-time distillation of the memory-system design; do not ask the worker to load the full design note during ordinary review writing.
+8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract. Its embedded comparison lens is the review-time distillation of the memory-system design; do not ask the worker to load the full design note during ordinary review writing. The worker should follow the type contract's current retained-artifact vocabulary, including knowledge-artifact and system-definition-artifact use as behavioral-authority families.
 
    Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Give the worker only the local skill handoff, the type contract path, the source directory, the target note path, and the source metadata listed below.
 

@@ -1,5 +1,5 @@
 ---
-description: Heuristic system-definition artifacts (tips, playbooks, rules) are mostly crystallized reasoning — pre-compiled shortcuts for what a capable LLM would derive if it had all facts and unlimited compute; under unbounded context heuristic prose collapses into knowledge plus read-time derivation, authority-bearing constraints persist regardless, and codification has a compound motivation that partly collapses (scale decomposition) and partly survives (constraining compound)
+description: Heuristic system-definition artifacts (tips, playbooks, rules) are mostly crystallized reasoning; under unbounded context heuristic prose collapses into knowledge artifacts plus read-time derivation, while authority-bearing constraints and symbolic codification persist for other reasons
 type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory]
@@ -9,7 +9,7 @@ tags: [learning-theory]
 
 ## Thought experiment: unbounded context
 
-Imagine unbounded context plus a capable LLM. All facts load at once, multi-hop reasoning runs in a loop until it converges, nothing gets truncated. How much of what we currently call **system-definition** — tips, playbooks, skills, decision rules, prompts — would still need to exist?
+Imagine unbounded context plus a capable LLM. All facts load at once, multi-hop reasoning runs in a loop until it converges, nothing gets truncated. How much of what we call [system-definition artifacts](./definitions/system-definition-artifact.md) — tips, playbooks, skills, decision rules, prompts — would still need to exist?
 
 Most of it wouldn't. Tips are compressed lessons from prior trajectories; the LLM could re-derive them from raw traces. Playbooks are abstractions over successful sequences; they'd get reconstructed case-by-case. Even the "what kind of agent" core melts: user preferences become facts — "the user prefers concise answers," "the user is a senior Go developer" — and get retrieved like any other datum. In practice there is no separate policy store for values; the values live as data about the user.
 
@@ -19,12 +19,12 @@ The "heuristic" qualifier matters because not every policy-like artifact exists 
 
 ## What this reframes about behavioral authority
 
-[Axes of artifact analysis](./axes-of-artifact-analysis.md) distinguishes **knowledge use** from **system-definition use** as shorthand for different [behavioral authority](./definitions/behavioral-authority.md) paths (who consumes a retained artifact, through which channel, with what force). The crystallization view sharpens what that distinction is about:
+[Axes of artifact analysis](./axes-of-artifact-analysis.md) treats [knowledge artifacts](./definitions/knowledge-artifact.md) and system-definition artifacts as shorthand for different [behavioral authority](./definitions/behavioral-authority.md) paths (who consumes a [retained artifact](./definitions/retained-artifact.md), through which channel, with what force). The crystallization view sharpens what that distinction is about:
 
-- **Knowledge reads** defer reasoning to a single read-time pass. Adding facts grows reach additively — no ahead-of-time conflicts to resolve.
-- **System-definition reads** *are* pre-committed: the policy is fixed at write-time, whether as crystallized reasoning or as explicit commitment. Two commitments made under different assumptions or by different authorities can collide. Writes are mutative.
+- **Knowledge-artifact reads** defer reasoning to a single read-time pass. Adding facts grows reach additively — no ahead-of-time conflicts to resolve.
+- **System-definition-artifact reads** *are* pre-committed: the operative guidance is fixed at write-time, whether as crystallized reasoning or as explicit commitment. Two commitments made under different assumptions or by different authorities can collide. Writes are mutative.
 
-The mutative-vs-additive asymmetry isn't a deep ontological fact about "policy vs data." It's a downstream consequence of *when* the content was fixed — write-time vs read-time. For crystallized reasoning, write-time fixing is driven by context scarcity; authority-bearing constraints fix at write-time for their own reasons, but share the same mutative consequence.
+The mutative-vs-additive asymmetry isn't a deep ontological fact about "policy vs data." It's a downstream consequence of *when* the [operative part](./definitions/operative-part.md) was fixed — write-time vs read-time. For crystallized reasoning, write-time fixing is driven by context scarcity; authority-bearing constraints fix at write-time for their own reasons, but share the same mutative consequence.
 
 ## Codification: partly scarcity patch, partly structural
 
@@ -42,20 +42,20 @@ The thought experiment is a **diagnostic**, not a prediction. It separates what 
 
 What the diagnostic does show:
 
-- **Heuristic prose system-definition** is almost entirely scarcity-driven. Its value is conditional on the binding constraint — so whether it thins in practice tracks whether that constraint relaxes, not anything intrinsic to prose.
-- **Authority-bearing prose system-definition** (permissions, safety rules, scoping, contracts, commitments) persists for reasons the thought experiment doesn't address — it binds even when facts are abundant and reasoning is free.
-- **Symbolic system-definition** has a compound motivation: scale decomposition (scarcity-driven, same dynamic as prose) plus the [constraining compound](./definitions/constraining.md) (structural, independent of context). Only the structural part would persist under genuine unbounded-context conditions, if those ever arrived.
+- **Heuristic prose guidance with behavioral authority** is almost entirely scarcity-driven. Its value is conditional on the binding constraint — so whether it thins in practice tracks whether that constraint relaxes, not anything intrinsic to prose.
+- **Authority-bearing prose constraints** (permissions, safety rules, scoping, contracts, commitments) persist for reasons the thought experiment doesn't address — they bind even when facts are abundant and reasoning is free.
+- **Symbolic behavior-shaping artifacts** have a compound motivation: scale decomposition (scarcity-driven, same dynamic as prose) plus the [constraining compound](./definitions/constraining.md) (structural, independent of context). Only the structural part would persist under genuine unbounded-context conditions, if those ever arrived.
 - The [readable-artifact loop](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) evolves asymmetrically across the prose/symbolic boundary for reasons partly downstream of this split — symbolic has a structural component that prose lacks, giving it a floor prose doesn't have — but the full asymmetry story involves iteration dynamics this note doesn't treat.
 
 ---
 
 Relevant Notes:
 
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the behavioral-authority field this note reframes as write-time vs read-time reasoning
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the behavioral-authority field this note reframes as write-time vs read-time fixation
 - [Distillation](./definitions/distillation.md) — operator: the compression step that produces crystallized reasoning
 - [Constraining](./definitions/constraining.md) — operator: narrows interpretation, trading generality for reliability/speed/cost/verifiability
 - [Codification](./definitions/codification.md) — phase transition: prose → symbolic, where crystallization changes computational regime
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — applies: the mutative/additive asymmetry falls out of write-time vs read-time reasoning
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: coevolution of prose and symbolic, which this note diagnoses as differently motivated (heuristic prose scarcity-driven, authority-bearing prose independent, symbolic compound)
+- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: coevolution of prose and symbolic forms, which this note diagnoses as differently motivated (heuristic prose scarcity-driven, authority-bearing prose independent, symbolic compound)
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — applies: the loop that evolves asymmetrically across prose and symbolic artifacts
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: the context is where knowledge and policy merge at read-time

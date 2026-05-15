@@ -23,9 +23,9 @@ Write authority is incomplete if the system cannot say who may read which memory
 - Automatic systems can capture traces and propose low-authority candidates.
 - Extractors can write observations with confidence, source pointers, and candidate status.
 - Context engines can activate low-risk cues under explicit budget and ranking rules.
-- Human or reviewed-agent workflows should approve durable knowledge artifacts when source interpretation matters.
+- Human or reviewed-agent workflows should approve durable [knowledge artifacts](../definitions/knowledge-artifact.md) when source interpretation matters.
 - Shared systems should distinguish private capture, team-visible candidates, approved canonical memory, and operational channel or session state.
-- High-priority system-definition surfaces, always-loaded instructions, checks, guardrails, and executable policies need the strongest review or behavioral evaluation.
+- High-priority [system-definition artifacts](../definitions/system-definition-artifact.md), always-loaded instructions, checks, guardrails, and executable policies need the strongest review or behavioral evaluation.
 - Access-controlled systems should record tenant, account, user, agent, permission, and audit provenance for memory reads and writes.
 - Retirement and relaxation should be scheduled work, not accidental decay.
 

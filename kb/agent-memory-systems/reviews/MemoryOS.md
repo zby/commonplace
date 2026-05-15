@@ -66,15 +66,15 @@ The core divergence is that MemoryOS treats memory as personalization state for 
 
 **Extraction.** The extraction stack has two stages. First, short-term overflow asks LLM prompts to detect continuity, write page meta-info, and produce topic summaries/keywords for mid-term sessions. Second, hot mid-term sessions trigger LLM profile rewriting and knowledge extraction into user-private facts and assistant-knowledge facts. The oracle is the configured OpenAI-compatible LLM plus threshold logic around short-term capacity and mid-term heat.
 
-**Substrate class.** The raw substrate is structured JSON dialogue pages. The distilled substrate is mostly prose plus vectors: session summaries, page meta-info, profile strings or profile JSON in the Chroma variant, knowledge-entry strings, timestamps, and embeddings. The Chroma path adds database collections, but the learned artifact is still natural-language memory rather than code, tests, or model weights.
+**Representational form.** The raw substrate is structured JSON dialogue pages. The distilled substrate is mostly prose plus vectors: session summaries, page meta-info, profile strings or profile JSON in the Chroma variant, knowledge-entry strings, timestamps, and embeddings. The Chroma path adds database collections, but the learned artifact is still natural-language memory rather than code, tests, or model weights.
 
-**Role.** The role is mixed. Retrieved pages and knowledge entries are knowledge memory: they give the generator facts to condition on. The user profile and assistant knowledge are closer to system-definition memory because they are injected into the prompt as persona and behavioral context, but MemoryOS does not promote them into explicit rules, skills, or validation checks.
+**Behavioral authority.** The authority is mixed. Retrieved pages and knowledge entries are knowledge artifacts: they give the generator facts to condition on. The user profile and assistant knowledge are closer to system-definition artifacts because they are injected into the prompt as persona and behavioral context, but MemoryOS does not promote them into explicit rules, skills, or validation checks.
 
 **Scope.** Scope is per configured user and assistant. The system has no cross-project or cross-agent governance layer; a memory store is selected by `user_id`, `assistant_id`, and data path.
 
 **Timing.** Learning is online during deployment. Short-term to mid-term promotion happens when the short-term buffer is full; mid-term to long-term promotion happens when the hottest session exceeds the configured heat threshold. `force_mid_term_analysis()` provides a manual testing/maintenance trigger.
 
-**Survey placement.** On the [trace-derived survey](../trace-derived-learning-techniques-in-related-systems.md), MemoryOS sits in the prose-memory branch: traces are distilled into prompt-visible profile, summaries, and facts. It strengthens the survey's distinction between knowledge memory and system-definition memory because the same dialogue trace produces both retrievable facts and profile/persona context, but it also shows the governance weakness of direct prose promotion without review or source-linked confidence.
+**Survey placement.** On the [trace-derived survey](../trace-derived-learning-techniques-in-related-systems.md), MemoryOS sits in the prose-memory branch: traces are distilled into prompt-visible profile, summaries, and facts. It strengthens the survey's distinction between knowledge-artifact use and system-definition-artifact use because the same dialogue trace produces both retrievable facts and profile/persona context, but it also shows the governance weakness of direct prose promotion without review or source-linked confidence.
 
 ## Curiosity Pass
 

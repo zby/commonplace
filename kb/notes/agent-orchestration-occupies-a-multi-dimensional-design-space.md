@@ -16,7 +16,7 @@ Agent orchestration architectures are often discussed as if they sit on a single
 
 ## Decomposition-policy artifact
 
-**What kind of system-definition artifact carries the policy for choosing decompositions.** This is separate from scheduler placement. The scheduler executes a decomposition; the policy selects which decomposition to run, when to split further, and what scaffold language counts as available.
+**What kind of [system-definition artifact](./definitions/system-definition-artifact.md) carries the policy for choosing decompositions.** This is separate from scheduler placement. The scheduler executes a decomposition; the policy selects which decomposition to run, when to split further, and what scaffold language counts as available.
 
 The policy can occupy different [representational forms](./definitions/representational-form.md) (how it is encoded and consumed) and storage substrates:
 

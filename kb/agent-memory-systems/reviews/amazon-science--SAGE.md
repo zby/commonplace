@@ -66,9 +66,9 @@ Commonplace is stronger for provenance, audit, and maintenance. SAGE is stronger
 
 **Extraction.** Extraction is mostly syntactic plus environment-gated. Python `FunctionDef` nodes are pulled from generated code, imports are preserved, duplicate names overwrite earlier bodies, retrieved functions are executed as a smoke test, and the second subtask counts skill use when generated code calls an existing function name without redefining it. SFT extraction takes successful rollout messages and normalizes the final code block.
 
-**Substrate class.** The intermediate substrate is symbolic executable code: Python functions embedded into prompts and executed in AppWorld. The final learned substrate is opaque model weights produced by SFT and GRPO. The system does not maintain a prose skill library as the primary artifact.
+**Representational form.** The intermediate form is symbolic executable code: Python functions embedded into prompts and executed in AppWorld. The final learned form is distributed-parametric model weights produced by SFT and GRPO. The system does not maintain a prose skill library as the primary artifact.
 
-**Role.** The function library is system-definition memory during rollout because it changes the agent's action surface and the prompt's expected behavior. The checkpoint is also system-definition memory, but opaque: after training, the learned disposition is inside the model rather than in inspectable KB artifacts.
+**Behavioral authority.** The function library is a system-definition artifact during rollout because it changes the agent's action surface and the prompt's expected behavior. The checkpoint is also system-definition-artifact use, but distributed-parametric: after training, the learned disposition is inside the model rather than in inspectable KB artifacts.
 
 **Scope.** Scope is AppWorld-specific and scenario-local during RL. Evaluation retrieval can use predefined libraries and optional embeddings, but the core SAGE training loop passes skills from one sampled subtask to another within the same rollout scenario.
 

@@ -69,9 +69,9 @@ ARIS qualifies as trace-derived learning through `/meta-optimize`, not through t
 
 **Extraction.** The `meta-optimize` skill analyzes usage frequency, repeated failures, convergence behavior, and human interventions, then asks the agent to produce concrete patch proposals against skills, reviewer prompts, defaults, convergence rules, workflow ordering, or cautious schema changes. Patch review is delegated to a different model before recommendation.
 
-**Substrate class.** Symbolic/readable artifacts. The learned output is a proposed diff to markdown skills or adjacent workflow definitions, plus reports and backup/log records if the user applies it. No model weights and no opaque memory store.
+**Representational form.** Symbolic/readable artifacts. The learned output is a proposed diff to markdown skills or adjacent workflow definitions, plus reports and backup/log records if the user applies it. No model weights and no opaque memory store.
 
-**Role.** System-definition, not fact memory. The target artifact changes future agent behavior because `SKILL.md` is executable procedure text.
+**Behavioral authority.** System-definition, not fact memory. The target artifact changes future agent behavior because `SKILL.md` is executable procedure text.
 
 **Scope.** Per-project and global trends are both logged, but the inspected loop requires enough local event data and explicit user approval. It is harness-local learning, not domain-knowledge learning.
 

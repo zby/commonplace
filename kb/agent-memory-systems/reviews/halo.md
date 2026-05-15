@@ -65,9 +65,9 @@ HALO qualifies, but the placement should be narrow. The implemented engine is a 
 
 **Extraction.** The engine extracts dataset rollups, filtered trace summaries, substring-localized spans, selected full spans, LLM syntheses, and optional sandbox-computed aggregate statistics. The oracle is the trace-analysis agent plus any downstream human/coding-agent verification; there is no implemented scorer that automatically accepts or rejects harness patches.
 
-**Substrate class.** Raw substrate is event traces. The first derived substrate is prose diagnostic output. The final behavior-changing substrate, when the loop succeeds, is symbolic system-definition material: harness prompts, tool descriptions, retry logic, configuration, or code edits.
+**Representational form.** Raw substrate is event traces. The first derived substrate is prose diagnostic output. The final behavior-changing substrate, when the loop succeeds, is symbolic system-definition material: harness prompts, tool descriptions, retry logic, configuration, or code edits.
 
-**Role.** The trace index is knowledge: it expands reach over traces but does not itself change future agent behavior. The promoted harness edits are system-definition artifacts: once deployed, reading or executing the changed prompt/tool/code alters the agent's disposition.
+**Behavioral authority.** The trace index is a knowledge artifact: it expands reach over traces but does not itself change future agent behavior. The promoted harness edits are system-definition artifacts: once deployed, reading or executing the changed prompt/tool/code alters the agent's disposition.
 
 **Scope.** Scope is per harness and per benchmark/deployment. The README's AppWorld example reports improvements on dev and test splits, but the mechanism is still harness-local rather than cross-project generalized learning.
 

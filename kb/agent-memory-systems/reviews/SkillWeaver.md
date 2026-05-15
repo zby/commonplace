@@ -70,9 +70,9 @@ The systems also differ on retrieval philosophy. SkillWeaver makes activation mo
 
 **Extraction.** The extraction oracle is staged. For successful test tasks that call the target function without exception or recovery attempts, SkillWeaver increments the function's test count. Otherwise, `check_success_simple(...)` asks an LLM to judge the trajectory and final screenshot. If successful, `KnowledgeBase.update(...)` prompts an LLM to synthesize or revise Python functions from the trajectory, then accepts only code that passes static and type checks.
 
-**Substrate class.** The distilled substrate is symbolic: async Python functions with docstrings, inferred JSON schemas, saved source files, optional metadata JSON, and optional semantic text. The system does not update model weights and does not primarily store prose lessons.
+**Representational form.** The distilled substrate is symbolic: async Python functions with docstrings, inferred JSON schemas, saved source files, optional metadata JSON, and optional semantic text. The system does not update model weights and does not primarily store prose lessons.
 
-**Role.** The role is system-definition memory. A retained function changes future agent behavior because it becomes available as a callable shortcut in native codegen prompts or as a Browser-Use controller action.
+**Behavioral authority.** The retained function is a system-definition artifact. It changes future agent behavior because it becomes available as a callable shortcut in native codegen prompts or as a Browser-Use controller action.
 
 **Scope.** Scope is website-specific and task-family-specific. The repo's shipped SkillNet covers WebArena-like domains such as CMS, GitLab, map, Reddit, and shopping, while each exploration run writes its own prefix-based KB artifacts.
 

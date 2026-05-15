@@ -28,12 +28,12 @@ Agent-R is a research codebase for training language-model agents to reflect on 
 
 ## Comparison with Our System
 
-Agent-R and Commonplace sit on opposite ends of the substrate-class axis. Agent-R treats inspectable traces as temporary supervision material and compiles the learned result into model weights. Commonplace keeps the learned result in inspectable artifacts — notes, links, instructions — and accepts a slower human-plus-agent loop as the cost.
+Agent-R and Commonplace sit on opposite ends of the representational-form axis. Agent-R treats inspectable traces as temporary supervision material and compiles the learned result into model weights. Commonplace keeps the learned result in inspectable artifacts — notes, links, instructions — and accepts a slower human-plus-agent loop as the cost.
 
 | Dimension | Agent-R | Commonplace |
 |---|---|---|
 | Trace source | Task-indexed MCTS trees with action, observation, env_score, disaster flags | Editing sessions, notes, links, workshop artifacts |
-| Learned substrate | Xtuner-ingested JSONL conversations, then model weights | Inspectable text artifacts only |
+| Learned form | Xtuner-ingested JSONL conversations, then model weights | Inspectable text artifacts only |
 | Promotion target | Model weights via external fine-tuning | Human-curated notes, indexes, and instructions |
 | Update style | Pair paths by value gap, splice corrections, rewrite, fine-tune | Manual curation, targeted file edits, review bundles |
 | Oracle strength | Strong environment reward plus step-sensitive verifier | Human judgment with local validation gates |

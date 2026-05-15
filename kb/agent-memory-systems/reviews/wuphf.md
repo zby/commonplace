@@ -70,9 +70,9 @@ The deepest convergence is the shared bet that agent memory should not be opaque
 
 **Extraction.** The artifact path uses an LLM extractor to produce entities and typed facts, then deterministic resolver/fact-ID/gate code writes index rows and append-only JSONL fact logs. The playbook path uses execution-count thresholds, feeds recent executions plus optional reinforced cross-entity clusters into an LLM, and commits only the learned trailing section after a preservation merge.
 
-**Substrate class.** Mixed readable and symbolic. Raw artifacts, notebooks, wiki articles, and synthesized briefs are prose files; fact logs, entity rows, triplets, graph edges, lint findings, and execution logs are symbolic records; derived indexes are rebuildable operational caches. No weight updates are present.
+**Representational form.** Mixed readable and symbolic. Raw artifacts, notebooks, wiki articles, and synthesized briefs are prose files; fact logs, entity rows, triplets, graph edges, lint findings, and execution logs are symbolic records; derived indexes are rebuildable operational caches. No weight updates are present.
 
-**Role.** Entity facts and briefs mostly play a knowledge role: agents query them for sourced answers. Compiled playbook skills and broker team skills play a system-definition role: reading or invoking them changes how an agent acts. Playbook synthesis is the clearest trace-to-policy loop because execution outcomes revise the future procedure wrapper.
+**Behavioral authority.** Entity facts and briefs are mostly knowledge artifacts: agents query them for sourced answers. Compiled playbook skills and broker team skills are system-definition artifacts: reading or invoking them changes how an agent acts. Playbook synthesis is the clearest trace-to-policy loop because execution outcomes revise the future procedure wrapper.
 
 **Scope.** Workspace/team-scoped. The system is not a benchmark learner; it is an office runtime where multiple role agents share one local wiki and broker state. Legacy Nex/GBrain backends can move memory outside the local wiki, but the inspected trace-derived mechanics are local.
 

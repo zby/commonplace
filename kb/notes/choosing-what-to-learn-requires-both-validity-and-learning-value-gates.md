@@ -8,7 +8,7 @@ status: current
 
 # Choosing what to learn requires both validity and learning-value gates
 
-Learning loops need two different checks before they promote a candidate into durable memory, weights, or knowledge artifacts. The candidate must be valid enough to learn from, and it must be worth learning for the current system.
+Learning loops need two different checks before they promote a candidate into durable memory, weights, or [knowledge artifacts](./definitions/knowledge-artifact.md). The candidate must be valid enough to learn from, and it must be worth learning for the current system.
 
 A **validity gate** asks whether the candidate is grounded, coherent, and trustworthy: whether an answer is source-supported, a proposed note is faithful to its evidence, or a link relationship is real rather than a keyword accident. Without this gate, the loop accumulates contamination.
 

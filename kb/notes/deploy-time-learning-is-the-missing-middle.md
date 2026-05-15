@@ -7,7 +7,7 @@ tags: [learning-theory]
 
 # Deploy-time learning is the missing middle
 
-[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names system-definition artifacts as the cheap behaviour-change mechanism alongside expensive weight updates. This note places that mechanism on the timing axis.
+[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names [system-definition artifacts](./definitions/system-definition-artifact.md) as the cheap behaviour-change mechanism alongside expensive weight updates. This note places that mechanism on the timing axis.
 
 ## Three timescales
 

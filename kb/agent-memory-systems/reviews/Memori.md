@@ -46,7 +46,7 @@ Memori is stronger on turnkey integration. Wrapping existing LLM clients and exp
 
 Commonplace is stronger on knowledge quality and inspectability. A Memori fact can be recalled, but it does not explain why it matters, how it relates to adjacent claims, or whether it has matured beyond extraction. A Commonplace note costs more to create, but it can carry evidence, counterclaims, link semantics, and review state.
 
-The systems also sit on different sides of the storage-substrate tradeoff. Memori's database/service shape is appropriate for high-throughput personalization memory. Commonplace's file shape is appropriate when the methodology itself must be inspectable and refactorable by agents. In the terms of [substrate class, backend, and artifact form](../../notes/axes-of-artifact-analysis.md), Memori still produces symbolic artifacts; the difference is that the backend is a service/database and the artifact form is fact/triple/summary records rather than markdown arguments.
+The systems also sit on different sides of the storage-substrate tradeoff. Memori's database/service shape is appropriate for high-throughput personalization memory. Commonplace's file shape is appropriate when the methodology itself must be inspectable and refactorable by agents. In the terms of [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), Memori still produces symbolic artifacts; the difference is that the storage substrate is a service/database and the artifact form is fact/triple/summary records rather than markdown arguments.
 
 Memori belongs in the trace-derived learning survey as a service-owned trace-to-symbolic-memory system. Its weakest trace-derived form is ordinary conversation mining; its stronger agent-facing form is the TypeScript integration path that can send `trace` and `summary` to an agent augmentation endpoint.
 
@@ -90,7 +90,7 @@ Memori belongs in the trace-derived learning survey as a service-owned trace-to-
 Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Memori is a service-owned conversation/agent-trace-to-symbolic-memory case that should be placed alongside other live-session trace-mining systems
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — sharpens: Memori's database/API backend does not make its learned state a separate substrate class; the learned outputs are still symbolic artifacts
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — sharpens: Memori's database/API backend does not make its learned state a separate representational form; the learned outputs are still symbolic artifacts
 - [Distillation](../../notes/definitions/distillation.md) — contrasts: Memori extracts compact facts/triples/summaries from conversations, but does not provide the stronger curation and synthesis discipline this KB expects from durable notes
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: Memori invests in prompt-footprint reduction by injecting selected facts and summaries instead of raw conversation history
 - [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: Memori exposes memory through SQL/API/dashboard surfaces, while Commonplace keeps the primary learned artifacts directly inspectable as files

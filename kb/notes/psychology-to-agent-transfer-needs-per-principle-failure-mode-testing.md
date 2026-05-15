@@ -82,7 +82,7 @@ This pattern — four decorative, one genuine but premature — may be typical o
 
 ## What this implies for the Tulving question
 
-The three-space note asks whether the Tulving mapping (semantic/episodic/procedural → knowledge/self/operational) is decorative. This methodology suggests: **test each space separation against its failure mode.** Does conflating knowledge and operational memory cause search pollution? (Probably yes — test it.) Does conflating self-knowledge and knowledge memory cause identity scattering? (Only if the agent has an identity to scatter.) Does the separation require Tulving, or does it reduce to "separate persistent from transient with different retention policies"?
+The three-space note asks whether the Tulving mapping (semantic/episodic/procedural -> knowledge/self/operational) is decorative. This methodology suggests: **test each space separation against its failure mode.** Does conflating knowledge and operational memory cause search pollution? (Probably yes - test it.) Does conflating self-knowledge and general [knowledge artifacts](./definitions/knowledge-artifact.md) cause identity scattering? (Only if the agent has an identity to scatter.) Does the separation require Tulving, or does it reduce to "separate persistent from transient with different retention policies"?
 
 The bet is that the separation is useful but the Tulving mapping is decorative — the same conclusion four of five Youssef principles reach.
 
