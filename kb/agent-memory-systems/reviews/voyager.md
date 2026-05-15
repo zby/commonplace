@@ -35,7 +35,7 @@ Voyager is a single-domain automatic codification loop; commonplace is a cross-d
 | Dimension | Voyager | Commonplace |
 |---|---|---|
 | Trace source | Minecraft event streams + execution errors, bounded per-task retries | Human and agent editing of notes, links, workshop artifacts |
-| Learned substrate | JavaScript functions + generated descriptions, QA cache | Typed notes with frontmatter and semantic links |
+| Learned form | JavaScript functions + generated descriptions, QA cache | Typed notes with frontmatter and semantic links |
 | Promotion trigger | Critic LLM judges success from world state | Human curation and validation commands |
 | Update style | Name-collision rewrite with version-stamped file archive | Status transitions (`seedling → current → superseded`), explicit link types |
 | Unit-to-unit relations | None — library is a flat `skills.json` dict | Typed links (`extends`, `grounds`, `contradicts`, `exemplifies`) |
@@ -44,7 +44,7 @@ Voyager is a single-domain automatic codification loop; commonplace is a cross-d
 | Oracle strength | LLM judge over world observations — soft but grounded in concrete state | Advisory validation, human judgment |
 | Scope | One embodied domain, transferable within Minecraft | Cross-domain |
 | Governance | Max iterations + max retries; no staleness, no supersession metadata | Explicit type instructions, review bundles, supersession status |
-| Substrate-class bet | Executable code, not notes | Inspectable text only |
+| Representational-form bet | Executable code, not notes | Inspectable text only |
 
 **Where Voyager is stronger.** Automatic promotion works. Voyager does not need a human to decide that a capability should enter the library — success under the critic plus a named program is enough. The split between retrieval handle (description) and reused artifact (code) is a small but effective design pattern commonplace has no direct equivalent for, because our notes are both the retrieval handle and the consumed content. And the artifact shape — executable JavaScript — is at the far end of [codification](../../notes/definitions/codification.md), something commonplace only approaches through shipped CLI commands, not through trace-derived learning.
 
@@ -64,6 +64,20 @@ Voyager is a single-domain automatic codification loop; commonplace is a cross-d
 
 **Treat some trace-derived learnings as codification candidates, not notes.** Voyager demonstrates that when behaviour is routine, correct, and verifiable, the right durable home is code. For commonplace the analogue is `commonplace-*` commands: when a pattern of manual note operations stabilises, it should migrate to a CLI command. *Ready as a framing — this is already our practice; Voyager sharpens the principle.*
 
+## Trace-derived learning placement
+
+**Trace source.** Voyager's trace source is per-task Minecraft event rollouts: typed events including `onChat`, `onError`, and `observe` (biome, blocks, entities, health, hunger, position, equipment, inventory, chests) recorded by `EventRecorder` and accumulated inside `voyager.step` during each attempt. Trigger boundaries are per-rollout for promotion (one successful reusable rollout = one skill addition, except explicitly non-reusable housekeeping tasks such as chest-deposit cleanup) and per-task for curriculum updates.
+
+**Extraction.** Extraction pulls out three distinct things: the JavaScript `program_code` and `program_name` returned by the action agent on success, a natural-language skill description generated post-hoc from the code by a cheaper model, and QA-cached world knowledge (Q/A pairs produced by the curriculum agent). The oracle deciding what is signal is the `CriticAgent` LLM judge reading world state — a soft oracle with strong grounding.
+
+**Storage substrate and representational form.** Voyager stores inspectable symbolic artifacts on disk: JavaScript files, a JSON manifest, and two Chroma collections. The generated descriptions and QA cache are prose retrieval handles; the behavior-changing artifact is the JavaScript skill body. No weights are trained, and there is no service-owned memory.
+
+**Lineage and behavioral authority.** The lineage path is successful rollout -> critic-approved program -> saved skill file, generated description, manifest entry, and embedding entry. Active skills have system-definition-artifact authority because future action prompts can retrieve and execute them. Descriptions and QA-cache entries have knowledge-artifact use: they guide retrieval and context assembly, but they are not the callable capability.
+
+**Scope and timing.** Scope is per-Minecraft-world in practice, with the README documenting directory-level transfer to new worlds as the cross-task generalisation path. Timing is online during deployment — promotion happens live inside the running `learn()` loop, one skill at a time, with no offline consolidation or replay.
+
+On the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md): axis 1 is trajectory-run ingestion (repeated bounded task attempts, not live conversations, not open-ended service event streams). Axis 2 is inspectable symbolic artifacts — squarely one-sided, not split like autocontext. Within axis 2's structure spectrum, Voyager occupies the extreme *executable-code* end, contrasting with ACE/ExpeL's flat-rule artifacts and Reflexion's minimal verbal hints. Voyager strengthens the survey's framing that artifact structure varies over orders of magnitude within one representational-form branch; it does not warrant a new subtype, but it remains the clearest reference case for trajectory-to-code promotion.
+
 ## Curiosity Pass
 
 **"Lifelong learning agent" markets more than the code delivers.** The repo is a research snapshot: the library grows monotonically within a run, skills are never retired or consolidated, and the critic is an LLM reading observations. What is genuinely "lifelong" is that the skill library directory can be carried to a new Minecraft world (`skill_library_dir` in the README) and provide callable competence there. What is not lifelong is self-correction: Voyager has no mechanism to notice that skill A and skill B overlap, that one supersedes another, or that a skill that worked in world X fails in world Y.
@@ -75,10 +89,6 @@ Voyager is a single-domain automatic codification loop; commonplace is a cross-d
 **The library's ceiling is domain breadth, not quality.** Voyager demonstrates that trace-derived-code-learning works in a single embodied domain with cheap bounded trials and a world-state judge. It does not demonstrate anything about domains that lack those properties. The repo's strength is the end-to-end pipeline; its generality claim is weaker than the pipeline itself.
 
 **Two LangChain imports are the whole vector layer.** `Chroma` (two collections) plus `OpenAIEmbeddings`. The review-worthy detail is not the technology but that the system treats retrieval as a trivial subsystem — the interesting work happens in the prompts, the role split, and the critic. That is a useful calibration: the vector store is not the thing, it is plumbing.
-
-**Trace-derived learning placement.** Voyager's *trace source* is per-task Minecraft event rollouts — typed events including `onChat`, `onError`, and `observe` (biome, blocks, entities, health, hunger, position, equipment, inventory, chests) recorded by `EventRecorder` and accumulated inside `voyager.step` during each attempt. Trigger boundaries are per-rollout for promotion (one successful reusable rollout = one skill addition, except explicitly non-reusable housekeeping tasks such as chest-deposit cleanup) and per-task for curriculum updates. *Extraction* pulls out three distinct things: the JavaScript `program_code` + `program_name` returned by the action agent on success, a natural-language skill description generated post-hoc from the code by a cheaper model, and QA-cached world knowledge (Q/A pairs produced by the curriculum agent). The *oracle* deciding what is signal is the `CriticAgent` LLM judge reading world state — a soft oracle with strong grounding. *Promotion target* is inspectable symbolic artifacts only: JavaScript files plus a JSON manifest plus two Chroma collections on disk. No weights are trained; no service-owned memory. *Scope* is per-Minecraft-world in practice, with the README documenting directory-level transfer to new worlds as the cross-task generalisation path. *Timing* is online during deployment — promotion happens live inside the running `learn()` loop, one skill at a time, with no offline consolidation or replay.
-
-On the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md): axis 1 is trajectory-run ingestion (repeated bounded task attempts, not live conversations, not open-ended service event streams). Axis 2 is inspectable symbolic artifacts — squarely one-sided, not split like autocontext. Within axis 2's structure spectrum, Voyager occupies the extreme *executable-code* end, contrasting with ACE/ExpeL's flat-rule artifacts and Reflexion's minimal verbal hints. Voyager strengthens the survey's framing that artifact structure varies over orders of magnitude within one representational-form branch; it does not warrant a new subtype, but it remains the clearest reference case for trajectory-to-code promotion.
 
 ## What to Watch
 

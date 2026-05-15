@@ -69,7 +69,7 @@ The interesting overlap is trace handling. Agent-S captures rich action traces, 
 
 **Extraction.** S1/S2 summarize trajectories into narrative and episodic JSON memory through LLM prompts, then retrieve by task-key embeddings. S3/BBoN uses `BehaviorNarrator` to caption before/after screenshot changes and a comparative judge to select the better rollout among multiple result directories. The extraction oracle is mixed: LLM summarization for S1/S2, environment reward/evaluate for benchmark scoring, and VLM judge selection for BBoN.
 
-**Representational form.** The durable S1/S2 substrate is prose JSON plus pickled embeddings. The BBoN substrate is benchmark artifacts: screenshot PNGs, JSONL trajectories, fact-caption JSONL, judge JSON, and result text. The S3 deployment substrate is mostly transient prompt state rather than durable memory.
+**Storage substrate, form, and lineage.** The durable S1/S2 retained state is prose JSON plus pickled embeddings. Its lineage is task or subtask trajectory -> LLM summary -> stored episodic memory. The BBoN retained state is benchmark artifacts: screenshot PNGs, JSONL trajectories, fact-caption JSONL, judge JSON, and result text. The S3 deployment state is mostly transient prompt state rather than durable memory.
 
 **Behavioral authority.** S1/S2 experience summaries are knowledge artifacts: they are retrieved as relevant prior experience for a future task or subtask. BBoN fact captions have evaluation authority: they improve selection among already generated rollouts, not the behavior of the next single Agent-S run. The S3 code-agent result is in-task working memory, not cross-task system-definition use.
 

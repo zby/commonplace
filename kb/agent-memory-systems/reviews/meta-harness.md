@@ -37,7 +37,7 @@ Meta-Harness is a Stanford IRIS Lab framework for optimizing model harnesses: th
 | Memory model | Domain-specific harness logic; text example exposes `MemorySystem` state, TB2 exposes scaffold code | Typed knowledge artifacts with links, descriptions, and validation |
 | Learning loop | Proposer writes code from traces; outer loop validates, benchmarks, and records | Human/agent curation, semantic review, deterministic validation, and manual synthesis |
 | Oracle | Benchmark accuracy/pass rate, smoke tests, import checks, cost/token/turn metrics | Structural validation plus semantic review; no global task reward |
-| Promotion target | Executable candidate harnesses and frontier records | Durable notes, instructions, indexes, and scripts |
+| Behavior-changing artifacts | Executable candidate harnesses and frontier records | Durable notes, instructions, indexes, and scripts |
 | Lifecycle boundary | Run-local experiment workspace | Library plus emerging workshop layer |
 
 Meta-Harness is stronger where commonplace is weakest: it closes a real optimization loop when a task has a measurable oracle. It defines a mutation surface, runs candidates, records outcomes, and lets the next proposer use the trace. That is the missing machinery behind many KB-learning ideas: not extraction, but repeated mutation under an evaluable target.
@@ -66,7 +66,7 @@ The useful contrast is not "benchmark loop versus knowledge base." It is boundar
 
 **Extraction.** Extraction is delegated to Claude Code under experiment-specific skills. The text skill requires three candidate memory systems per iteration, each with a hypothesis, mechanism, prototype, implementation, and `pending_eval.json` entry. The Terminal-Bench skill requires a trajectory-analysis pass, one candidate scaffold, an importable `AgentHarness`, and metadata for evaluation. The oracle is external: import checks and smoke tests catch broken candidates; benchmark accuracy/pass rate decides whether the candidate improves the frontier.
 
-**Promotion target.** The primary promotion target is executable symbolic artifacts: Python memory systems or agent harness subclasses under `agents/`. Secondary artifacts are `frontier_val.json`, `evolution_summary.jsonl`, result JSON, saved memory state, post-eval reports, and Claude session logs. The inspected repo does not promote into model weights. It also does not maintain a durable prose playbook except as run-local reports and proposer context.
+**Storage substrate, form, lineage, and authority.** The primary behavior-changing artifacts are executable symbolic files: Python memory systems or agent harness subclasses under `agents/`. Their lineage is run trajectory -> Claude-proposed candidate -> import/smoke/benchmark evaluation -> frontier update. Secondary retained state includes `frontier_val.json`, `evolution_summary.jsonl`, result JSON, saved memory state, post-eval reports, and Claude session logs; those are knowledge artifacts and audit state for later proposer runs. The inspected repo does not promote into model weights. It also does not maintain a durable prose playbook except as run-local reports and proposer context.
 
 **Scope.** Scope is per-domain and per-run. The onboarding prompt is general, but the implemented loops are specialized to text classification and Terminal-Bench 2. Within a domain, learning accumulates across iterations through candidate files and run artifacts. Cross-domain transfer is manual: a user must adapt the pattern and write a new domain spec.
 

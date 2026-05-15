@@ -41,7 +41,7 @@ SkillWeaver is an OSU NLP Group web-agent system for learning website-specific P
 | Memory atom | Website-specific Playwright API with docstring and optional test metadata | Typed knowledge artifact with frontmatter, links, validation, and status |
 | Retrieval | LLM selection over parsed function descriptions | `rg`, indexes, titles/descriptions, authored links, reports |
 | Verification | LLM success check, direct function test count, static code/type checks, benchmark evaluator | Structural validation, semantic review, source grounding, human/agent judgment |
-| Promotion target | More callable actions in future web tasks | Better context plus stronger KB artifacts such as notes, instructions, reviews, and scripts |
+| Behavior-changing artifact | More callable actions in future web tasks | Better context plus stronger KB artifacts such as notes, instructions, reviews, and scripts |
 | Lifecycle | Function replacement by name, version/test counters, saved per-iteration artifacts | Status, archival, replacement, generated indexes, review gates, explicit link contracts |
 
 SkillWeaver is stronger when the desired memory is a new action primitive. A learned function can immediately change the agent's action space: future prompts receive the function, can call it directly, and can use the Browser-Use controller variant as an external tool surface.
@@ -70,7 +70,7 @@ The systems also differ on retrieval philosophy. SkillWeaver makes activation mo
 
 **Extraction.** The extraction oracle is staged. For successful test tasks that call the target function without exception or recovery attempts, SkillWeaver increments the function's test count. Otherwise, `check_success_simple(...)` asks an LLM to judge the trajectory and final screenshot. If successful, `KnowledgeBase.update(...)` prompts an LLM to synthesize or revise Python functions from the trajectory, then accepts only code that passes static and type checks.
 
-**Representational form.** The distilled substrate is symbolic: async Python functions with docstrings, inferred JSON schemas, saved source files, optional metadata JSON, and optional semantic text. The system does not update model weights and does not primarily store prose lessons.
+**Storage substrate, form, and lineage.** The distilled retained state is symbolic: async Python functions with docstrings, inferred JSON schemas, saved source files, optional metadata JSON, and optional semantic text. Its lineage is browser trajectory -> LLM synthesis or revision -> static/type checks -> saved knowledge-base prefix. The system does not update model weights and does not primarily store prose lessons.
 
 **Behavioral authority.** The retained function is a system-definition artifact. It changes future agent behavior because it becomes available as a callable shortcut in native codegen prompts or as a Browser-Use controller action.
 

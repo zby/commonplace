@@ -34,6 +34,7 @@ index_source: directory
 - [Migrate semantics-preserving gate changes](./migrate-semantics-preserving-gate-changes.md) *(instruction)* - Change gate wording without invalidating accepted reviews — update stored accepted reviews, then append gate-migration acceptance events that preserve the accepted note baseline
 - [Prose Review](./prose-review.md) *(instruction)* - Prose review wrapper — keep the old entrypoint, but route execution through the gate bundle
 - [Re-Ingest](./re-ingest.md) *(instruction)* - Re-ingest a source whose .ingest.md report is stale — regenerate the analysis against current KB state, then update all notes that reference the old report.
+- [Refresh agent-memory review taxonomy](./refresh-agent-memory-review-taxonomy.md) *(instruction)* - Use when refreshing existing agent-memory-system reviews for the current artifact taxonomy without doing a full source re-review
 - [Review sweep](./review-sweep.md) *(instruction)* - Batch review sweep — run the selector, triage note-changed pairs, and execute direct-write review runs for the rest
 - [Review system](./REVIEW-SYSTEM.md)
 - [Review triage](./review-triage.md) *(instruction)* - Inspect diffs for note-changed review pairs and ack insignificant changes — run before a review sweep to reduce the review queue

@@ -36,7 +36,7 @@ Agentic Harness Engineering (AHE) is a Python outer loop for evolving the harnes
 | Dimension | AHE | Commonplace |
 |---|---|---|
 | Primary target | Improve a coding-agent harness against a benchmark | Maintain a durable agent-operated knowledge base |
-| Learned substrate | Prompt/tool/middleware/skill/sub-agent/memory files in an experiment workspace | Typed notes, source reviews, instructions, indexes, skills, scripts, and workshop artifacts |
+| Learned form | Prompt/tool/middleware/skill/sub-agent/memory files in an experiment workspace | Typed notes, source reviews, instructions, indexes, skills, scripts, and workshop artifacts |
 | Raw evidence | Harbor job directories, NexAU traces, verifier outputs, pass/fail flips | Source snapshots, note diffs, validation output, review findings, local task context |
 | Distillation path | Agent Debugger summaries plus evolve-agent edits into executable/prompt artifacts | Human/agent-authored notes and explicit promotion into instructions, skills, validation, and indexes |
 | Oracle | Benchmark rewards, pass@k, task flips, regression tracking | Deterministic validation plus semantic review; usually weaker task-level oracles |
@@ -67,7 +67,7 @@ The useful comparison is that AHE treats context engineering as an optimization 
 
 **Extraction.** Extraction is staged. Deterministic code computes task statistics, pass@k, flips, regressions, exception clusters, behavior counts, and change attribution. Agent Debugger then reads cleaned traces plus verifier output and produces per-task root-cause analyses. The evolve agent receives those summaries, optional raw-trace pointers, prior history, change attribution, and strategy constraints, then edits harness files and writes a manifest.
 
-**Representational form.** Raw traces are structured trace JSON plus benchmark result files. Distilled artifacts are mixed prose and symbolic: analysis markdown, evolution history, change manifests, prompt/tool/skill/memory markdown, YAML agent config, and Python tool or middleware code. There is no weight update in the inspected repo.
+**Storage substrate, form, and lineage.** Raw traces are structured trace JSON plus benchmark result files in experiment workspaces. Distilled artifacts are mixed prose and symbolic: analysis markdown, evolution history, change manifests, prompt/tool/skill/memory markdown, YAML agent config, and Python tool or middleware code. The lineage path is benchmark rollout -> trace conversion and root-cause analysis -> evolve-agent edit -> manifest and next evaluation cycle. There is no weight update in the inspected repo.
 
 **Behavioral authority.** The distilled artifacts are system-definition artifacts, not just knowledge artifacts. Reading or executing the changed prompt, tool description, middleware, skill, sub-agent, or memory file is part of the next agent's disposition. The analysis files are knowledge support; the workspace files are the behavior-changing layer.
 

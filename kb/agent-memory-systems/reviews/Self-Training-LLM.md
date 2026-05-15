@@ -56,7 +56,7 @@ Those rough edges do not invalidate the mechanism, but they matter for review in
 | Dimension | Self-Training-LLM | Commonplace implication |
 | --- | --- | --- |
 | Source signal | Generated Wikipedia questions, reference answers, sampled model answers, hallucination or consistency scores | Useful contrast for trace-derived learning from batch generation rather than human note work |
-| Learned substrate | SFT/DPO model checkpoints | Weight updates are not a substitute for inspectable KB artifacts |
+| Learned form | SFT/DPO model checkpoints | Weight updates are not a substitute for inspectable KB artifacts |
 | Oracle | NLI models, SelfCheck-style scoring, OpenAI-generated questions, GPT-4o pairwise judging | Promotion quality depends on oracle quality; weak oracles need reversible artifacts |
 | Scope | Factual QA over Wikipedia-style documents | Much narrower than methodology synthesis, linking, and abstraction maintenance |
 | Inspectability | Pickles, JSONL response files, caches, and checkpoints | Commonplace should prefer durable Markdown claims, links, and review trails |
@@ -74,7 +74,11 @@ The main design lesson is that "what should be learned?" is the hard part. Self-
 
 ## Trace-derived learning placement
 
-Self-Training-LLM is trace-derived learning, but not agent-memory learning. Its training traces are offline generation records: generated questions, context documents, reference answers, raw model answer samples, and NLI/self-check scores. Its extraction step filters and ranks those traces into SFT examples and DPO preference pairs. Pairwise judge outcomes are evaluation traces rather than training inputs. The promotion step updates model weights through SFT and DPO checkpoints.
+Self-Training-LLM is trace-derived learning, but not agent-memory learning.
+
+**Trace source and extraction.** Its training traces are offline generation records: generated questions, context documents, reference answers, raw model answer samples, and NLI/self-check scores. Its extraction step filters and ranks those traces into SFT examples and DPO preference pairs. Pairwise judge outcomes are evaluation traces rather than training inputs.
+
+**Storage substrate, form, lineage, and authority.** Raw and intermediate traces persist as pickles, JSONL files, response logs, and caches; the promoted behavior-changing artifact is a distributed-parametric model checkpoint produced by SFT and DPO. The lineage is corpus chunk -> generated QA opportunity -> model answer samples -> uncertainty/hallucination scores -> filtered SFT/DPO records -> checkpoint. The intermediate files have knowledge-artifact and audit use; the checkpoint has system-definition-artifact authority because future behavior is changed through model weights rather than retrieved context.
 
 This places it beside systems like Agent-R only at the broad "trace to model update" level. Agent-R learns from agent trajectories through MCTS and preference optimization. Self-Training-LLM learns from corpus-grounded QA generation traces. The difference matters because generated factual QA traces do not carry the same action, tool, and task-state structure as autonomous agent trajectories.
 

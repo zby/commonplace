@@ -65,7 +65,7 @@ HALO qualifies, but the placement should be narrow. The implemented engine is a 
 
 **Extraction.** The engine extracts dataset rollups, filtered trace summaries, substring-localized spans, selected full spans, LLM syntheses, and optional sandbox-computed aggregate statistics. The oracle is the trace-analysis agent plus any downstream human/coding-agent verification; there is no implemented scorer that automatically accepts or rejects harness patches.
 
-**Representational form.** Raw substrate is event traces. The first derived substrate is prose diagnostic output. The final behavior-changing substrate, when the loop succeeds, is symbolic system-definition material: harness prompts, tool descriptions, retry logic, configuration, or code edits.
+**Storage substrate, form, and lineage.** The raw retained state is event traces. The first derived artifact is prose diagnostic output. The final behavior-changing artifact, when the loop succeeds, is symbolic system-definition material: harness prompts, tool descriptions, retry logic, configuration, or code edits. The lineage is execution trace -> HALO analysis -> external human or coding-agent harness patch.
 
 **Behavioral authority.** The trace index is a knowledge artifact: it expands reach over traces but does not itself change future agent behavior. The promoted harness edits are system-definition artifacts: once deployed, reading or executing the changed prompt/tool/code alters the agent's disposition.
 

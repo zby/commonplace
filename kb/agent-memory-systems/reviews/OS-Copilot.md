@@ -37,7 +37,7 @@ OS-Copilot is the open-source codebase behind FRIDAY, a generalist computer-use 
 | Creation trigger | Successful high-scoring Python subtask | Deliberate authoring, ingest, review, or promotion |
 | Retrieval | Vector search over tool descriptions | `rg`, indexes, titles/descriptions, authored links |
 | Verification | LLM judge over execution state and generality score | Structural validation, semantic review, human/agent judgment |
-| Promotion target | More code available to future plans | Better context and stronger KB artifacts |
+| Behavior-changing artifact | More code available to future plans | Better context and stronger KB artifacts |
 | Lifecycle | Add, overwrite, delete by tool name | Status, archive, replacement, validation, indexes |
 
 OS-Copilot is stronger where memory should become direct action capacity. A stored tool is not advice about how to automate Excel; it is executable code that future tasks can retrieve and reuse. That is a more behavior-changing substrate than a prose note when the target domain is repetitive computer operation.
@@ -64,7 +64,7 @@ The main tradeoff is that OS-Copilot treats learning as tool accretion. This wor
 
 **Extraction.** The extraction oracle is mostly an LLM judge over execution feedback. `judge_tool(...)` classifies the task as `Complete`, `Amend`, or `Replan` and assigns a generality score; `repair_tool(...)` uses the critique and state to produce revised code; `store_tool(...)` extracts a tool description from the code it receives and writes it if the tool name is not already present. Because the current caller does not reassign the repaired code before storing, repaired-success traces have weaker promotion grounding than initial-success traces.
 
-**Representational form.** The distilled substrate is symbolic: Python code, a natural-language description, a JSON registry entry, and an embedding index entry. It is not model-weight learning and not a prose knowledge base.
+**Storage substrate, form, and lineage.** The distilled retained state is symbolic: Python code, a natural-language description, a JSON registry entry, and an embedding index entry. Its lineage is subtask execution trace -> LLM judge/repair loop -> stored generated tool. It is not model-weight learning and not a prose knowledge base.
 
 **Behavioral authority.** The stored tool is a system-definition artifact. It changes the agent's future action space because later planning and execution can retrieve and call that function. The course JSON is closer to work history or curriculum state; the tool repository is the real behavior-changing artifact.
 

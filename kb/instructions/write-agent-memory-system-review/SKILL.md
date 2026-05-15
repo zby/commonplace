@@ -102,7 +102,7 @@ If the system has no reachable source code, stop and write a source-only note in
    - `commit_url`
    - citation format for files and directories
 
-   The worker must not edit indexes, archived reviews, the trace-derived survey, checkout state, or unrelated files. The parent owns checkout, archive moves, curated index edits, semantic QA, validation, and final report.
+   The worker must not edit indexes, archived reviews, the trace-derived survey, checkout state, or unrelated files. The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, validation, and final report.
 
    If the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run. If the user authorizes that fallback, report `drafting was local, not delegated` as a workflow exception.
 
@@ -113,9 +113,20 @@ If the system has no reachable source code, stop and write a source-only note in
 
 10. **Update the trace-derived survey if needed.** If the review's trace-derived placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`.
 
-11. **Run semantic QA.** Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Do not force a rigid four-field section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
 
-12. **Validate.** Run:
+   Check:
+   - **Storage substrate:** does the review identify where retained state persists when storage is architecturally relevant?
+   - **Representational form:** does it classify behavior-shaping operative parts as prose, symbolic, distributed-parametric, or mixed when that affects the comparison?
+   - **Lineage:** does it explain source traces, derivation, invalidation, regeneration, or source-of-truth status for generated or distilled artifacts?
+   - **Behavioral authority:** does it distinguish knowledge-artifact use from system-definition-artifact use by naming the consumer, channel, and force?
+   - **Trace-derived split:** if the system learns from traces, does the review distinguish raw trace artifacts from distilled behavior-shaping artifacts?
+
+   If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
+
+12. **Run semantic QA.** Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+
+13. **Validate.** Run:
     ```bash
     commonplace-validate "{note_path}"
     ```
@@ -131,6 +142,7 @@ Report:
 - whether drafting was delegated
 - whether the curated index changed
 - whether `trace-derived-learning-techniques-in-related-systems.md` changed
+- taxonomy QA outcome
 - semantic gate bundle outcome
 - final `commonplace-validate` result
 
