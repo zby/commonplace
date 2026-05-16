@@ -34,24 +34,26 @@ Do not:
 
 2. **Read the current review.** Use only the active review file. Ignore archived `.replaced.*.md` files unless the user explicitly asks for historical comparison.
 
-3. **Classify each retained surface that matters.** For each memory, skill, rule, prompt, trace store, index, policy, dataset, or learned state that the review treats as architecturally important, ask:
+3. **Check review staleness.** Read `last-checked` from frontmatter. If it is missing or more than 30 days before today's date, record a staleness warning in the final report before editing. Continue only for vocabulary and taxonomy-clarity edits grounded in the existing review prose. Do not resolve ambiguity by adding new mechanism claims; recommend a source re-review instead.
+
+4. **Classify each retained surface that matters.** For each memory, skill, rule, prompt, trace store, index, policy, dataset, or learned state that the review treats as architecturally important, ask:
    - **Storage substrate:** where does it persist?
    - **Representational form:** is the operative part prose, symbolic, distributed-parametric, or mixed?
    - **Lineage:** what source material, derivation path, invalidation rule, or regeneration rule controls it?
    - **Behavioral authority:** is it consumed as evidence, reference, context, explanation, or advice, or with instruction, enforcement, routing, validation, configuration, evaluation, ranking, or learning force?
 
-4. **Patch only ambiguous prose.** Add wording when the old review leaves a taxonomy-relevant mechanism unclear. Prefer short replacements in existing paragraphs over new sections. Leave fields implicit when they are obvious and not central to the review's comparison.
+5. **Patch only ambiguous prose.** Add wording when the old review leaves a taxonomy-relevant mechanism unclear. Prefer short replacements in existing paragraphs over new sections. Leave fields implicit when they are obvious and not central to the review's comparison.
 
-5. **Handle trace-derived reviews carefully.** If the review has a trace-derived placement, ensure it distinguishes raw trace artifacts from distilled artifacts. Raw traces often have knowledge-artifact or evidence use; distilled rules, tools, prompts, validators, fine-tunes, or rankers often have system-definition-artifact use.
+6. **Handle trace-derived reviews carefully.** If the review has a trace-derived placement, ensure it distinguishes raw trace artifacts from distilled artifacts. Raw traces often have knowledge-artifact or evidence use; distilled rules, tools, prompts, validators, fine-tunes, or rankers often have system-definition-artifact use.
 
-6. **Update the trace-derived survey only when needed.** Edit `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
+7. **Update the trace-derived survey only when needed.** Edit `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
 
-7. **Refresh indexes.** Run:
+8. **Refresh indexes.** Run:
    ```bash
    commonplace-refresh-indexes
    ```
 
-8. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
+9. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
    ```bash
    commonplace-validate path/to/edited-file.md
    ```
@@ -63,6 +65,7 @@ Do not:
 ## Verify
 
 - No active review still uses old taxonomy shorthand where the current fields are meant.
+- Reviews whose `last-checked` date is older than 30 days are reported with a staleness warning.
 - `last-checked` dates are unchanged unless source was re-read.
 - Trace-derived reviews distinguish raw trace storage from distilled behavior-changing artifacts when both exist.
 - Validation reports no failures in the edited scope.

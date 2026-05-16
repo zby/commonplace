@@ -64,7 +64,9 @@ The second divergence is activation cost. Commonplace spends effort on descripti
 
 **Extraction.** Extraction is model-mediated. The model decides that no existing capability fits, writes a capability definition and TypeScript implementation, registers it, and retries after failure when needed. There is no separate judge, benchmark oracle, human approval gate, or automatic success test beyond the task outcome and Deno execution result.
 
-**Storage substrate, form, lineage, and authority.** The durable learned artifact is symbolic: TypeScript source plus JSON metadata on a filesystem backend. Its lineage is live request plus registry miss or execution failure -> model-written capability -> registered workspace artifact. Its authority is system-definition: a future Tendril session does not merely retrieve the artifact as a fact; it can execute the registered capability by name, so the durable write changes what the system can do.
+**Storage substrate, form, and lineage.** The durable learned artifact is symbolic: TypeScript source plus JSON metadata on a filesystem backend. Its lineage is live request plus registry miss or execution failure -> model-written capability -> registered workspace artifact.
+
+**Behavioral authority.** Its authority is system-definition: a future Tendril session does not merely retrieve the artifact as a fact; it can execute the registered capability by name, so the durable write changes what the system can do.
 
 **Scope and timing.** Scope is per workspace. Timing is online during deployment: each task can create or update a capability, and later sessions inherit it. The system does not generalize across workspaces, cluster similar tools, mine repeated trajectories, or train weights.
 

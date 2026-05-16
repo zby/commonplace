@@ -78,7 +78,9 @@ Self-Training-LLM is trace-derived learning, but not agent-memory learning.
 
 **Trace source and extraction.** Its training traces are offline generation records: generated questions, context documents, reference answers, raw model answer samples, and NLI/self-check scores. Its extraction step filters and ranks those traces into SFT examples and DPO preference pairs. Pairwise judge outcomes are evaluation traces rather than training inputs.
 
-**Storage substrate, form, lineage, and authority.** Raw and intermediate traces persist as pickles, JSONL files, response logs, and caches; the promoted behavior-changing artifact is a distributed-parametric model checkpoint produced by SFT and DPO. The lineage is corpus chunk -> generated QA opportunity -> model answer samples -> uncertainty/hallucination scores -> filtered SFT/DPO records -> checkpoint. The intermediate files have knowledge-artifact and audit use; the checkpoint has system-definition-artifact authority because future behavior is changed through model weights rather than retrieved context.
+**Storage substrate, form, and lineage.** Raw and intermediate traces persist as pickles, JSONL files, response logs, and caches; the promoted behavior-changing artifact is a distributed-parametric model checkpoint produced by SFT and DPO. The lineage is corpus chunk -> generated QA opportunity -> model answer samples -> uncertainty/hallucination scores -> filtered SFT/DPO records -> checkpoint.
+
+**Behavioral authority.** The intermediate files have knowledge-artifact and audit use; the checkpoint has system-definition-artifact authority because future behavior is changed through model weights rather than retrieved context.
 
 This places it beside systems like Agent-R only at the broad "trace to model update" level. Agent-R learns from agent trajectories through MCTS and preference optimization. Self-Training-LLM learns from corpus-grounded QA generation traces. The difference matters because generated factual QA traces do not carry the same action, tool, and task-state structure as autonomous agent trajectories.
 
