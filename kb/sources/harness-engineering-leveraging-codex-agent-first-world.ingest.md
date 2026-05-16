@@ -40,7 +40,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 6. **[instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md)** — exemplifies: 100-line AGENTS.md as "a map with pointers to deeper sources of truth" is independent convergence on "CLAUDE.md is a router, not a manual."
 
-7. **[agent-statelessness-means-the-context-engine-should-inject-context-automatically](../notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md)** — extends: Dynamic observability (DevTools Protocol wired into runtime) extends automatic context injection beyond documents to runtime state — a dimension the note does not yet cover.
+7. **[agent-statelessness-means-the-context-engine-should-inject-context-automatically](../notes/agent-statelessness-means-the-context-engine-should-inject-context.md)** — extends: Dynamic observability (DevTools Protocol wired into runtime) extends automatic context injection beyond documents to runtime state — a dimension the note does not yet cover.
 
 ### New connections from discovery
 
@@ -56,7 +56,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 13. **[human-llm-differences-are-load-bearing-for-knowledge-system-design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md)** — extends: "The codebase is optimized for Codex's legibility first" inverts the dual-audience assumption. When agents are the primary consumer, human legibility becomes secondary. This is an extreme point on the dual-audience spectrum.
 
-14. **[programming-practices-apply-to-prompting](../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md)** — exemplifies: Structural tests, linters, CI, dependency graphs — all transferred wholesale from programming to agent-first development. The most extreme available example: all standard programming practices applied to a codebase where no human writes code.
+14. **[programming-practices-apply-to-prompting](../notes/underspecification-and-indeterminism-complicate-programming-for.md)** — exemplifies: Structural tests, linters, CI, dependency graphs — all transferred wholesale from programming to agent-first development. The most extreme available example: all standard programming practices applied to a codebase where no human writes code.
 
 **Companion source**: [Harness Engineering Is Cybernetics (ingest)](harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — an X thread reframing harness engineering as cybernetics (sensors, actuators, feedback loops). Together the two sources provide practice (Lopopolo) and theory (cybernetics framing) for the same phenomenon.
 

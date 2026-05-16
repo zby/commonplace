@@ -146,14 +146,14 @@ Same string. Same entropy. Same Kolmogorov complexity. Four levels of extractabl
 
 Entropy measures randomness. Complexity measures shortest description. Neither tells you what a particular observer can *do* with the data. Epiplexity fills that gap: structure that is both present in the data and accessible to the observer within their budget.
 
-This is why the same note in a KB can have different value for different readers, why [context arrangement matters](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when the tokens are identical, and why [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md) — expanding text without adding extractable structure — is a real failure mode even when the expanded text is correct.
+This is why the same note in a KB can have different value for different readers, why [context arrangement matters](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when the tokens are identical, and why [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — expanding text without adding extractable structure — is a real failure mode even when the expanded text is correct.
 
 ---
 
 Relevant Notes:
 
 - [information value is observer-relative](../../notes/information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
-- [Epiplexity paper](../../sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
+- [Epiplexity paper](../../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
 - [distillation](../../notes/definitions/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
 - [context efficiency is the central design concern](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement
-- [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md) — extends: output that grows without raising extractable structure
+- [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — extends: output that grows without raising extractable structure

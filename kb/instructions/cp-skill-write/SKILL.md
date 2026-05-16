@@ -85,7 +85,7 @@ Position encodes commitment. **Inline** prose connectors (`since [X](./x.md)`, `
 
 The collection's `COLLECTION.md` authorises labels per destination and names the reader-need each label serves. Pick a label whose reader-need matches the link's purpose; write the context phrase to answer *"[source] connects to [target] because [specific reason]."* If no authorised label fits, the candidate is off-scope for this collection — drop the link or raise it to the collection author to extend the authorisation.
 
-**Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 100 chars.
+**Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 70 chars.
 
 **Distillation tracking**: when distilling from notes into a focused artifact, add `Distilled into:` in each source note's footer. The distilled artifact does not link back.
 

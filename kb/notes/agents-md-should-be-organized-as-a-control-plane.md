@@ -132,8 +132,8 @@ Relevant Notes:
 
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds why always-loaded routing is permanent infrastructure, not optional convenience
-- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — exemplifies exclusion: periodic operations should be external to routing docs
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operational extension: where externally triggered operations are staged before distillation
+- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — exemplifies exclusion: periodic operations should be external to routing docs
+- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into.md) — operational extension: where externally triggered operations are staged before distillation
 - [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — isolates the separate decision rule for where capabilities belong (skills vs instructions vs notes)
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — target form for mature procedures that do not need always-loaded routing
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement

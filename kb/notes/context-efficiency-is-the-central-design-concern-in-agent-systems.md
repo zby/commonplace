@@ -10,7 +10,7 @@ status: current
 
 In traditional systems, the scarce resources are compute, memory, storage, and bandwidth; algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context is not just another resource. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. A CPU has registers, cache, RAM, disk, and network as separate tiers. An LLM has one context window. Everything competes for the same space.
 
-Context is the lowest-degree-of-freedom resource in agent systems: unitary within each inference call, impossible to tier at the attention level (though system architecture can build tiers around it), and hard to expand without architectural change. This is an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — optimize the tightest constraint before others, or later choices will be forced into low-quality tradeoffs.
+Context is the lowest-degree-of-freedom resource in agent systems: unitary within each inference call, impossible to tier at the attention level (though system architecture can build tiers around it), and hard to expand without architectural change. This is an application of [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md) — optimize the tightest constraint before others, or later choices will be forced into low-quality tradeoffs.
 
 The binding constraint is soft degradation, not hard token limits — established in [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). Hard limits are visible but rarely binding; the model degrades before hitting them. This note operationalizes that premise as a cost model and set of architectural responses.
 
@@ -72,7 +72,7 @@ Sources:
 
 Relevant Notes:
 
-- [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — application: this note treats context as the lowest-degree-of-freedom resource and derives architecture priorities from that constraint
+- [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md) — application: this note treats context as the lowest-degree-of-freedom resource and derives architecture priorities from that constraint
 - [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — **grounds**: establishes the binding-constraint premise and two-dimensions decomposition this note operationalizes as architectural responses
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the most direct response to complexity-dimension context cost
 - [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — mechanism: the cost model that makes indirection expensive in context but free in code
@@ -81,7 +81,7 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — application: navigation design as volume-saving strategy
 - [directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — application: type system designed around context economy
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — application: build-time generation as frontloading applied to skill templates
-- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens: makes explicit why usable context cannot be treated as a single per-model number
+- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — sharpens: makes explicit why usable context cannot be treated as a single per-model number
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — intensifies: instructions and data compete as equal tokens with no priority mechanism
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — intensifies: extra context distorts interpretation, not just wastes space
 - [Minimum Viable Ontology / Domain Maps](https://x.com/melodyskim/status/2029332670115614799) — exemplifies: MVO is distillation under context-efficiency pressure — compress domain knowledge into the smallest vocabulary that fits the context window

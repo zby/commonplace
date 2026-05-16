@@ -53,7 +53,7 @@ Workers independently check context every 15 turns, deduplicating stale tool res
 
 Eight memory types (Fact, Preference, Decision, Identity, Event, Observation, Goal, Todo) with per-type default importance scores (Identity=1.0, Observation=0.3). Six edge types (RelatedTo, Updates, Contradicts, CausedBy, ResultOf, PartOf) stored in SQLite with a `UNIQUE(source, target, relation)` constraint. Retrieval uses Reciprocal Rank Fusion across three sources: vector similarity (LanceDB/HNSW), full-text search (Tantivy), and graph traversal (iterative BFS up to depth 3 from high-importance seed nodes).
 
-The memory is typed but unified — all eight types live in one store, searched through one API. This is a middle ground between flat accumulation (Mem0) and full structural separation. Whether the unified store produces the cross-contamination failures predicted by [three-space memory separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) is an open question; the graph edges (Updates, Contradicts) may partially mitigate search pollution by giving the retriever relationship-aware traversal paths.
+The memory is typed but unified — all eight types live in one store, searched through one API. This is a middle ground between flat accumulation (Mem0) and full structural separation. Whether the unified store produces the cross-contamination failures predicted by [three-space memory separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) is an open question; the graph edges (Updates, Contradicts) may partially mitigate search pollution by giving the retriever relationship-aware traversal paths.
 
 ### Secondary Mechanisms
 
@@ -100,7 +100,7 @@ Spacebot is a runtime agent framework; commonplace is a knowledge system with ag
 ## What to Watch
 
 - Whether the five fixed process types survive as stronger models emerge. The [multi-agent future prediction](https://x.com/voooooogel/status/2015976774128341421) suggests fixed roles dissolve, but Spacebot's types encode concurrency guarantees and tool-set isolation, not persona-style roles — structural constraints may prove more durable than role assignments.
-- Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
+- Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
 - Whether the cortex's signal buffer evolves beyond observability. The 100-item rolling window of process events is currently used for health checks and circuit breakers. If it starts informing adaptive scheduling (learning which branch configurations succeed), it becomes a deploy-time learning mechanism.
 
 ---
@@ -110,5 +110,5 @@ Relevant Notes:
 - [bounded-context-orchestration-model](../../notes/bounded-context-orchestration-model.md) — exemplifies: Spacebot's cortex is the cleanest production implementation of the clean scheduling model; channels and branches are bounded LLM calls, workers are deterministic tool executions
 - [llm-context-is-composed-without-scoping](../../notes/llm-context-is-composed-without-scoping.md) — exemplifies: branches inherit channel context (dynamic scope) but execute in independent frames (lexical scope), demonstrating a production scoping mechanism
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: addresses both context cost dimensions — compactor handles volume, branches provide complexity isolation
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — tests: typed-but-unified memory with 8 types in a single store is a middle ground between flat storage and full three-space separation
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — tests: typed-but-unified memory with 8 types in a single store is a middle ground between flat storage and full three-space separation
 - [agentic-memory-systems-comparative-review](../agentic-memory-systems-comparative-review.md) — extends: Spacebot adds a new position (Rust-level process separation, concurrent multi-user, graph-edged typed memory) not covered by existing entries

@@ -35,7 +35,7 @@ Retaining raw traces broadly preserves optionality for later redistillation, but
 
 Stronger grounding:
 
-This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
+This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
 
 Why it deserves a separate note:
 
@@ -61,10 +61,10 @@ Suggested links:
 
 - `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
 - `grounds`: [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md)
 - `grounds`: [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md)
 - `grounds`: [Distillation is transformation, not selection](../../notes/distillation-is-transformation-not-selection.md)
-- `contrasts`: [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md)
+- `contrasts`: [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md)
 
 ### System-definition cues need behavioral faithfulness tests
 
@@ -110,7 +110,7 @@ Suggested links:
 - `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - `mechanism`: [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md)
 - `mechanism`: [Unit testing LLM instructions requires mocking the tool boundary](../../notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md)
-- `evidence`: [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md)
+- `evidence`: [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self.ingest.md)
 
 ### Library-derived cues should be compiled views
 
@@ -124,7 +124,7 @@ When a cue index entry is generated from a library artifact, the library artifac
 
 Stronger grounding:
 
-The important addition from the grounding pass is role: a library-derived cue is not just a derived summary, it is a derived **system-definition** surface. That makes drift more dangerous than ordinary documentation drift because the cue can change behavior even when the explanatory source has changed. [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) grounds this role distinction; [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md) explains why those artifacts exist; [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) shows the broader family of behavior-shaping context surfaces that can drift from their sources.
+The important addition from the grounding pass is role: a library-derived cue is not just a derived summary, it is a derived **system-definition** surface. That makes drift more dangerous than ordinary documentation drift because the cue can change behavior even when the explanatory source has changed. [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) grounds this role distinction; [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) explains why those artifacts exist; [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) shows the broader family of behavior-shaping context surfaces that can drift from their sources.
 
 Why it deserves a separate note:
 
@@ -150,7 +150,7 @@ Suggested links:
 
 - `extends`: [Distilled artifacts need source tracking at the source](../../notes/distilled-artifacts-need-source-tracking-at-the-source.md)
 - `grounds`: [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md)
-- `grounds`: [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md)
+- `grounds`: [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md)
 - `grounds`: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
 - `evidence`: [Archie](../../agent-memory-systems/reviews/archie.md)
 
@@ -183,7 +183,7 @@ The note should not propose adding a fifth memory layer by default. It should cl
 Existing overlaps:
 
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) is the main premise.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) grounds the execution-substrate distinction between active work state and retrieved memory.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) grounds the execution-substrate distinction between active work state and retrieved memory.
 - [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) helps distinguish execution trace from compressed handoff.
 - [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) helps distinguish stored trace, handoff artifact, and next-call context.
 - This proposed note would bridge workshop theory to agent memory architecture.
@@ -191,7 +191,7 @@ Existing overlaps:
 Suggested links:
 
 - `extends`: [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md)
 - `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
 - `contrasts`: [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md)
 - `grounds`: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
@@ -285,7 +285,7 @@ The exact "typed cue index" mechanism may be too implementation-shaped for a the
 
 Added grounding:
 
-[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) already proposes "on reference" injection. [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) distinguishes always-loaded, on-demand, and capability-description surfaces. This proposed note would add a missing row to the loading hierarchy: always, on reference, on situation, on invoke, on demand.
+[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) already proposes "on reference" injection. [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) distinguishes always-loaded, on-demand, and capability-description surfaces. This proposed note would add a missing row to the loading hierarchy: always, on reference, on situation, on invoke, on demand.
 
 Quality risk:
 
@@ -293,7 +293,7 @@ The note should not overclaim that typed cues solve activation. It should stay a
 
 Suggested links:
 
-- `extends`: [Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md)
+- `extends`: [Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md)
 - `grounds`: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
 - `grounds`: [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)
 - `pairs-with`: `System-definition cues need behavioral faithfulness tests`
@@ -371,7 +371,7 @@ Do not extract first. Fold it into the store-everything/capture-posture note as 
 
 Added grounding:
 
-This is where [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) should enter if the claim is extracted later. The memory-design version is: low-reach observations are often only distinguishable from high-reach patterns after accumulation. [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md) can provide possible weak signals for when reach has become visible through links, recurrence, and neighborhood coherence.
+This is where [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) should enter if the claim is extracted later. The memory-design version is: low-reach observations are often only distinguishable from high-reach patterns after accumulation. [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md) can provide possible weak signals for when reach has become visible through links, recurrence, and neighborhood coherence.
 
 ### Silent failures should be extracted before final success normalizes them
 
@@ -387,7 +387,7 @@ Reason to hesitate:
 
 There are already strong observability notes:
 
-- [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md)
+- [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md)
 - [Silent disambiguation is the semantic analogue of tool fallback](../../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md)
 - [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)
 
@@ -399,7 +399,7 @@ The oracle-strength grounding makes this a stronger candidate than before. Silen
 
 Suggested links if extracted:
 
-- `grounds`: [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md)
+- `grounds`: [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md)
 - `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - `mechanism`: [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md)
 - `extends`: [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)

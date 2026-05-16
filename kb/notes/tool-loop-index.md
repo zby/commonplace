@@ -31,8 +31,8 @@ Many useful interventions can stay hidden inside this loop without changing its 
 
 Three cases where a single framework-owned loop becomes insufficient:
 
-- [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md) — decomposition creates children that need different capability surfaces; the parent must construct fresh calls with different tool sets, which a fixed loop cannot express
-- [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md) — some sub-goals require deterministic orchestration over smaller semantic judgments because the material doesn't fit in one bounded call
+- [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) — decomposition creates children that need different capability surfaces; the parent must construct fresh calls with different tool sets, which a fixed loop cannot express
+- [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — some sub-goals require deterministic orchestration over smaller semantic judgments because the material doesn't fit in one bounded call
 - [codified scheduling patterns can turn tools into hidden schedulers](./codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md) — as next-step policies stabilize into code, hiding them in tools collapses orchestration into covert runtime logic
 
 ## Resolution
@@ -42,9 +42,9 @@ The first and third cases call for **[sub-agents](./agent-is-a-tool-loop.md)** �
 ## Downstream consequences
 
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — sub-tasks should start with constructed prompts, not inherit the parent's full conversation
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — when the framework owns recovery, the parent cannot distinguish intended-path success from workaround success
+- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — when the framework owns recovery, the parent cannot distinguish intended-path success from workaround success
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — applies the fallback/recovery problem to memory extraction: successful runs can still teach the system about broken primary paths and degraded guarantees
-- [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — programmers expect broken infrastructure to fail loudly; semantic recovery violates that, creating false confidence
+- [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — programmers expect broken infrastructure to fail loudly; semantic recovery violates that, creating false confidence
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — the same observability problem for ambiguous specs rather than broken tools
 
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — once sub-agents exist, the parent must choose how results come back: trace preservation, compression, or context forking
@@ -64,4 +64,4 @@ Relevant Notes:
 
 ## Other tagged notes <!-- generated -->
 
-- [The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) - Chat history persists because appending messages preserves information and avoids interface design, but that convenience trades away selective loading under bounded context
+- [The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md) - Chat history persists because appending messages preserves information and avoids interface design, but that convenience trades away selective loading under bounded context

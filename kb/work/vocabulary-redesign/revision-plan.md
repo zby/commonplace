@@ -104,7 +104,7 @@ Purpose: update notes where the old vocabulary would now actively mislead.
 Likely targets:
 
 - `kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md`
-- `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md`
+- `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md`
 - `kb/notes/agent-memory-requirements/activate-behavior-changing-memory.md`
 - `kb/notes/agent-memory-requirements/keep-compiled-views-aligned.md`
 - `kb/notes/agent-memory-requirements/retire-redact-supersede-relax.md`

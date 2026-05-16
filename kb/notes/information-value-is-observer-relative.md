@@ -44,9 +44,9 @@ More broadly, [distillation](./definitions/distillation.md) creates value by res
 
 ### What observer-relativity doesn't help with
 
-**[Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) cost is observer-relative** but not easily optimized — the data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. [Naming](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md) is the partial solution: once a structure has a name, recognizing instances becomes cheap.
+**[Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) cost is observer-relative** but not easily optimized — the data from which a connection could be inferred is present before anyone sees it, but extracting the pattern requires computation that scales with abstraction depth. [Naming](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) is the partial solution: once a structure has a name, recognizing instances becomes cheap.
 
-**[Reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding-information.md) is the failure mode** — expanding text without adding extractable structure. More tokens, no more value for the reader.
+**[Reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md) is the failure mode** — expanding text without adding extractable structure. More tokens, no more value for the reader.
 
 ## Open Questions
 
@@ -60,8 +60,8 @@ Relevant Notes:
 
 - [distillation](./definitions/distillation.md) — instance: restructuring that makes structure accessible to bounded observers
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth
-- [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding-information.md) — instance: expansion that adds tokens without making more structure accessible
-- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer
+- [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — instance: expansion that adds tokens without making more structure accessible
+- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — related formalization: epiplexity captures the pattern-extraction aspect (learnable structure a bounded model extracts from sequential data) but does not cover fact-level observer-relativity
 - [epiplexity-eli5](../work/information-measures/epiplexity-eli5.md) — examples: encrypted messages, shuffled textbooks, and chess notation illustrating observer-relative structure

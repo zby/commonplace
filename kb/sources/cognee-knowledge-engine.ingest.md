@@ -43,13 +43,13 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [distillation](../notes/definitions/distillation.md) (exemplifies) — The cognify phase is automated distillation from unstructured documents to structured graph triplets, with Pydantic schemas shaping the extraction target. Distillation without medium change (stays machine-readable throughout).
 
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) (grounds) — Cognee partially maps to the three-space model (cognify produces semantic knowledge, temporal_cognify edges toward episodic) but has no structural separation between memory types.
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) (grounds) — Cognee partially maps to the three-space model (cognify produces semantic knowledge, temporal_cognify edges toward episodic) but has no structural separation between memory types.
 
-- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) (exemplifies) — Concrete system with no three-space separation, a candidate for observing predicted failure modes (search pollution, identity scatter) as data volume grows.
+- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) (exemplifies) — Concrete system with no three-space separation, a candidate for observing predicted failure modes (search pollution, identity scatter) as data volume grows.
 
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
 
-- [a-good-agentic-kb-maximizes-contextual-competence](../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
+- [a-good-agentic-kb-maximizes-contextual-competence](../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
 
 **Sibling sources (4 connections, all contradicts — different architectural bets):**
 
@@ -82,7 +82,7 @@ Based on the comparative review now being written, the focus is on what remains 
 
 - **Pipeline-first may be pipeline-only.** The architecture assumes batch document processing. There is no clear story for incremental, conversation-derived knowledge (the kind Letta and CrewAI Memory handle natively). The `temporal_cognify` mode is described but its maturity relative to the core pipeline is unclear.
 
-- **No failure mode data at scale.** The [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) note predicts search pollution and identity scatter for systems without memory type separation. Cognee has no structural separation, but the snapshot provides no evidence about whether these failure modes manifest in practice, or at what data volume they would emerge.
+- **No failure mode data at scale.** The [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) note predicts search pollution and identity scatter for systems without memory type separation. Cognee has no structural separation, but the snapshot provides no evidence about whether these failure modes manifest in practice, or at what data volume they would emerge.
 
 - **Schema rigidity cuts both ways.** Custom Pydantic schemas are presented as a strength (domain-specific extraction), but they require upfront ontology design. [sift-kg](../agent-memory-systems/reviews/sift-kg.md) demonstrates that schema discovery is a viable alternative that avoids the cold-start problem of "what entities and relationships should I define?" The snapshot does not address how users handle schema evolution as their domain understanding changes.
 

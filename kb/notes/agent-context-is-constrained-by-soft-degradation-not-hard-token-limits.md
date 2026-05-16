@@ -42,7 +42,7 @@ The hard limit is visible — exceed it and the API returns an error. The soft b
 
 **To the practitioner.** The model doesn't signal when it crosses the soft bound. Output remains well-formed; problems surface downstream. A CPU signals overflow. A human says "I'm confused." An LLM produces fluent output whether it reflects the supplied context or leaves large portions unused.
 
-**To the benchmarker.** The soft bound is not a single number. It shifts with task type, compositional depth, relevance mix, information arrangement, and prompt framing. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md). Model updates shift the degradation surface without notice.
+**To the benchmarker.** The soft bound is not a single number. It shifts with task type, compositional depth, relevance mix, information arrangement, and prompt framing. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md). Model updates shift the degradation surface without notice.
 
 **To the market.** Providers advertise hard token limits because those are clean, comparable numbers. They don't publish soft degradation surfaces — those are task-dependent and hard to characterize. The number on the box describes the bound that rarely binds; the bound that actually constrains work has no number.
 
@@ -59,7 +59,7 @@ The hard limit is visible — exceed it and the API returns an error. The soft b
 Relevant Notes:
 
 - [Context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — **extends**: takes this note's soft-bound claim and dimensions decomposition as premises and derives architectural responses
-- [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens: the soft bound is not a single number but a task-dependent degradation surface
+- [Effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — sharpens: the soft bound is not a single number but a task-dependent degradation surface
 - [Indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — mechanism: indirection cost is a soft-bound phenomenon — interpretation overhead degrades silently
 - [Information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity is what makes the soft bound task-dependent
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — complements: soft degradation supplies one mechanism for why relevant knowledge can stay stored but fail to activate when extra context dilutes or crowds out the right cues

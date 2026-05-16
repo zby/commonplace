@@ -85,9 +85,9 @@ Hindsight ([vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)) 
 
 ---
 
-Extends [three-space agent memory maps to Tulving taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — Hindsight's world/experience/observation taxonomy is the closest production implementation of the theoretical three-space separation, with benchmark evidence that the separation improves retrieval.
+Extends [three-space agent memory maps to Tulving taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — Hindsight's world/experience/observation taxonomy is the closest production implementation of the theoretical three-space separation, with benchmark evidence that the separation improves retrieval.
 
-Extends [three-space memory separation predicts measurable failure modes](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
+Extends [three-space memory separation predicts measurable failure modes](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — Hindsight's per-type HNSW partitioning and type-aware retrieval are a direct test: if flat memory predicted cross-contamination failures, Hindsight's type separation should avoid them.
 
 Grounds [distillation](../../notes/definitions/distillation.md) — Hindsight's consolidation engine (facts → observations → mental models) is a concrete implementation of automated distillation; trend tracking shows the temporal dynamics of distilled knowledge.
 
@@ -95,7 +95,7 @@ Contrasts [inspectable substrate not supervision defeats the blackbox problem](.
 
 Contrasts [ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) — Hindsight is maximally anti-ephemeral: every interaction triggers extraction, storage, linking, and consolidation. Nothing is discarded.
 
-Exemplifies [constraining and distillation both trade generality for reliability speed and cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the retain pipeline constrains (fact typing, entity canonicalisation) while consolidation distils (observations from facts); both trade the generality of raw text for structured, retrievable knowledge.
+Exemplifies [constraining and distillation both trade generality for reliability speed and cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability.md) — the retain pipeline constrains (fact typing, entity canonicalisation) while consolidation distils (observations from facts); both trade the generality of raw text for structured, retrievable knowledge.
 
 Extends [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — Hindsight's consolidation engine learns what to consolidate using task-completion oracles (LLM judgement); the same oracle-dependency limitation applies.
 

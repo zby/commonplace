@@ -29,13 +29,13 @@ Different knowledge domains need different document structures. [Directory-scope
 
 Types also help identify which content layer an artifact belongs to. The layer is not always encoded by the type name alone: a `note` in `kb/notes/` is theoretical, a `note` in `kb/reference/` is descriptive, and an `instruction` is prescriptive. But the `type:` field plus the collection-local type path gives tools and readers enough information to infer the relevant quality goal: reach for theory, fidelity and economy for description, executability and precision for prescription.
 
-This connects the type system to [theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md). Once the content layer is deducible from collection and type, validation and review can become layer-specific without adding a separate `register:` field everywhere.
+This connects the type system to [theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md). Once the content layer is deducible from collection and type, validation and review can become layer-specific without adding a separate `register:` field everywhere.
 
 ## Output quality
 
 Beyond organisation, types shape what gets written. When a `structured-claim` template requires Evidence, Reasoning, and Caveats sections, the writer must actually produce those things. With LLMs specifically, three independent arguments support this:
 
-- [Human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — LLMs exhibit human-like failures (conflating evidence with opinion, skipping qualifications), so structures that prevent those failures in humans prevent them in LLMs too.
+- [Human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — LLMs exhibit human-like failures (conflating evidence with opinion, skipping qualifications), so structures that prevent those failures in humans prevent them in LLMs too.
 - [Structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — structured templates steer autoregressive generation toward scientific papers and formal arguments rather than unstructured web text.
 - [Structured output is easier for humans to review](./structured-output-is-easier-for-humans-to-review.md) — separated sections let a reader check facts and logic independently, regardless of how the LLM produced them.
 
@@ -62,10 +62,10 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that shapes what types can be
 - [available types](../reference/available-types.md) — the taxonomy: base types table and migration history
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
-- [a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) — explains the content-layer role that type and collection jointly identify
+- [a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — explains the content-layer role that type and collection jointly identify
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — develops: the enforcement role that makes navigation reliable
-- [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — develops: the failure-mode transfer argument for output quality
+- [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — develops: the failure-mode transfer argument for output quality
 - [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — develops: the distribution-selection argument for output quality
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — develops: the readability argument for output quality
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions

@@ -33,7 +33,7 @@ Generated: 2026-04-20
 - `kb/reference/adr/007-reports-directory-for-generated-snapshots.md`
 - `kb/reference/adr/008-stdlib-only-core-scripts.md`
 - `kb/reference/adr/009-link-relationship-semantics.md`
-- `kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md`
+- `kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md`
 - `kb/reference/adr/011-notes-must-be-accessible-to-external-readers.md`
 - `kb/reference/adr/012-types-for-structure-traits-for-review.md`
 - `kb/reference/adr/013-skills-first-delivery-with-core-local-type-split.md`
@@ -239,10 +239,10 @@ Generated: 2026-04-20
 #### `ingest-report`
 - `kb/sources/a-mem-agentic-memory-for-llm-agents.ingest.md`
 - `kb/sources/adam-mastroianni-infinite-midwit.ingest.md`
-- `kb/sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.ingest.md`
+- `kb/sources/agent-behavioral-contracts-formal-specification-runtime.ingest.md`
 - `kb/sources/agentic-code-reasoning.ingest.md`
-- `kb/sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md`
-- `kb/sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.ingest.md`
+- `kb/sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md`
+- `kb/sources/agentic-note-taking-23-notes-without-reasons-202689418851669643.ingest.md`
 - `kb/sources/arrmlet-tracecraft.ingest.md`
 - `kb/sources/autoreason-self-refinement-that-knows-when-to-stop.ingest.md`
 - `kb/sources/coding-agents-are-effective-long-context-processors.ingest.md`
@@ -255,26 +255,26 @@ Generated: 2026-04-20
 - `kb/sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md`
 - `kb/sources/databricks-memory-scaling-ai-agents.ingest.md`
 - `kb/sources/eric-evans-ai-components-deterministic-system.ingest.md`
-- `kb/sources/esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming-languages.ingest.md`
-- `kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.ingest.md`
+- `kb/sources/esolang-bench-evaluating-genuine-reasoning-via-esoteric.ingest.md`
+- `kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy.ingest.md`
 - `kb/sources/everything-you-need-to-know-about-llm-memory.ingest.md`
 - `kb/sources/externalization-in-llm-agents-unified-review.ingest.md`
-- `kb/sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.ingest.md`
+- `kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md`
 - `kb/sources/graphiti-temporal-knowledge-graph.ingest.md`
 - `kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md`
 - `kb/sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md`
 - `kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md`
-- `kb/sources/improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.ingest.md`
+- `kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md`
 - `kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md`
 - `kb/sources/intelligent-ai-delegation-tomasev-franklin-osindero.ingest.md`
 - `kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md`
 - `kb/sources/karpathy-llm-wiki.ingest.md`
 - `kb/sources/koylanai-personal-brain-os.ingest.md`
-- `kb/sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.ingest.md`
-- `kb/sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md`
-- `kb/sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.ingest.md`
+- `kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md`
+- `kb/sources/large-language-model-agents-are-not-always-faithful-self.ingest.md`
+- `kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md`
 - `kb/sources/letta-memgpt-stateful-agents.ingest.md`
-- `kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful-recently-using-2039805659525644595.ingest.md`
+- `kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful.ingest.md`
 - `kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md`
 - `kb/sources/mem0-memory-layer.ingest.md`
 - `kb/sources/memory-intelligence-agent.ingest.md`
@@ -289,12 +289,12 @@ Generated: 2026-04-20
 - `kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md`
 - `kb/sources/professional-software-developers-dont-vibe-they-control.ingest.md`
 - `kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md`
-- `kb/sources/psychology-solves-ai-memory-identity-construction-2025307030651871631.ingest.md`
+- `kb/sources/psychology-solves-ai-memory-identity-construction-2025307030651.ingest.md`
 - `kb/sources/purdue-owl-toulmin-argument.ingest.md`
-- `kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.ingest.md`
+- `kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md`
 - `kb/sources/scaling-managed-agents-decoupling-brain-from-hands.ingest.md`
 - `kb/sources/simon-willison-karpathy-claws.ingest.md`
-- `kb/sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.ingest.md`
+- `kb/sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031.ingest.md`
 - `kb/sources/slate-moving-beyond-react-and-rlm.ingest.md`
 - `kb/sources/spacedriveapp-spacebot-ai-agent.ingest.md`
 - `kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md`
@@ -305,16 +305,16 @@ Generated: 2026-04-20
 - `kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md`
 - `kb/sources/the-price-of-meaning-why-every-semantic-memory-system-forgets.ingest.md`
 - `kb/sources/the-second-brain-trap-2041486539067154753.ingest.md`
-- `kb/sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development-2033303156340240481.ingest.md`
-- `kb/sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici-2036857868914483592.ingest.md`
-- `kb/sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.ingest.md`
+- `kb/sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development.ingest.md`
+- `kb/sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of.ingest.md`
+- `kb/sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology.ingest.md`
 - `kb/sources/towards-a-science-of-ai-agent-reliability.ingest.md`
 - `kb/sources/towards-a-science-of-scaling-agent-systems.ingest.md`
 - `kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md`
 - `kb/sources/types/ingest-report.template.md`
 - `kb/sources/voooooogel-multi-agent-future.ingest.md`
 - `kb/sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md`
-- `kb/sources/when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md`
+- `kb/sources/when-code-is-free-research-is-all-that-matters-2031072399731675.ingest.md`
 - `kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md`
 - `kb/sources/wikipedia-bitter-lesson.ingest.md`
 - `kb/sources/xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.ingest.md`
@@ -392,25 +392,25 @@ Generated: 2026-04-20
 - `kb/agent-memory-systems/thalo-type-comparison.md`
 - `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`
 - `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`
-- `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md`
+- `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md`
 - `kb/notes/a-knowledge-base-should-support-fluid-resolution-switching.md`
-- `kb/notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md`
+- `kb/notes/access-burden-and-transformation-burden-are-independent-query.md`
 - `kb/notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md`
 - `kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md`
 - `kb/notes/agent-is-a-tool-loop.md`
 - `kb/notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md`
-- `kb/notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md`
+- `kb/notes/agent-orchestration-needs-coordination-guarantees-not-just.md`
 - `kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md`
-- `kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md`
+- `kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`
 - `kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md`
 - `kb/notes/agentic-systems-interpret-underspecified-instructions.md`
 - `kb/notes/agents-md-should-be-organized-as-a-control-plane.md`
 - `kb/notes/agents-navigate-by-deciding-what-to-read-next.md`
 - `kb/notes/alexander-patterns-and-knowledge-system-design.md`
 - `kb/notes/always-loaded-context-mechanisms-in-agent-harnesses.md`
-- `kb/notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md`
+- `kb/notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md`
 - `kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md`
-- `kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md`
+- `kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md`
 - `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md`
 - `kb/notes/automated-synthesis-is-missing-good-oracles.md`
 - `kb/notes/automated-tests-for-text.md`
@@ -420,16 +420,16 @@ Generated: 2026-04-20
 - `kb/notes/bounded-context-orchestration-model.md`
 - `kb/notes/brainstorming-how-reach-informs-kb-design.md`
 - `kb/notes/brainstorming-how-to-enrich-web-search.md`
-- `kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md`
+- `kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md`
 - `kb/notes/capability-placement-should-follow-autonomy-readiness.md`
-- `kb/notes/changing-requirements-conflate-genuine-change-with-disambiguation-failure.md`
+- `kb/notes/changing-requirements-conflate-genuine-change-with-disambiguation.md`
 - `kb/notes/charting-the-knowledge-access-problem-beyond-rag.md`
 - `kb/notes/claw-learning-is-broader-than-retrieval.md`
 - `kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md`
 - `kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md`
 - `kb/notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md`
 - `kb/notes/codify-versus-llm-decision-heuristics.md`
-- `kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md`
+- `kb/notes/constraining-and-distillation-both-trade-generality-for-reliability.md`
 - `kb/notes/constraining-during-deployment-is-continuous-learning.md`
 - `kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md`
 - `kb/notes/continual-learning-open-problem-is-behaviour-not-knowledge.md`
@@ -443,26 +443,26 @@ Generated: 2026-04-20
 - `kb/notes/distillation-status-determines-directory-placement.md`
 - `kb/notes/distilled-artifacts-need-source-tracking-at-the-source.md`
 - `kb/notes/document-types-should-be-verifiable.md`
-- `kb/notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md`
+- `kb/notes/effective-context-is-task-relative-and-complexity-relative-not-a.md`
 - `kb/notes/elicitation-requires-maintained-question-generation-systems.md`
 - `kb/notes/enforcement-without-structured-recovery-is-incomplete.md`
 - `kb/notes/entropy-management-must-scale-with-generation-throughput.md`
 - `kb/notes/ephemeral-computation-prevents-accumulation.md`
-- `kb/notes/ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md`
+- `kb/notes/ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md`
 - `kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md`
 - `kb/notes/error-messages-that-teach-are-a-constraining-technique.md`
 - `kb/notes/evaluation-automation-is-phase-gated-by-comprehension.md`
-- `kb/notes/evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md`
+- `kb/notes/evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md`
 - `kb/notes/evolving-understanding-needs-re-distillation-not-composition.md`
 - `kb/notes/execution-indeterminism-is-a-property-of-the-sampling-process.md`
 - `kb/notes/files-not-database.md`
-- `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md`
+- `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md`
 - `kb/notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md`
-- `kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md`
+- `kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md`
 - `kb/notes/frontloading-spares-execution-context.md`
 - `kb/notes/generate-instructions-at-build-time.md`
 - `kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md`
-- `kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md`
+- `kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes.md`
 - `kb/notes/in-context-learning-presupposes-context-engineering.md`
 - `kb/notes/indirection-is-costly-in-llm-instructions.md`
 - `kb/notes/information-value-is-observer-relative.md`
@@ -484,19 +484,19 @@ Generated: 2026-04-20
 - `kb/notes/llm-debugging-starts-with-retry-versus-rewrite-triage.md`
 - `kb/notes/llm-learning-phases-fall-between-human-learning-modes.md`
 - `kb/notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md`
-- `kb/notes/maintenance-operations-catalogue-should-stage-distillation-into-instructions.md`
+- `kb/notes/maintenance-operations-catalogue-should-stage-distillation-into.md`
 - `kb/notes/mcp-bundles-stateless-tools-with-stateful-runtime.md`
 - `kb/notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md`
 - `kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md`
 - `kb/notes/methodology-enforcement-is-constraining.md`
-- `kb/notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md`
+- `kb/notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md`
 - `kb/notes/notes-need-quality-scores-to-scale-curation.md`
 - `kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md`
 - `kb/notes/oracle-strength-spectrum.md`
-- `kb/notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md`
+- `kb/notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md`
 - `kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md`
 - `kb/notes/process-structure-and-output-structure-are-independent-levers.md`
-- `kb/notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md`
+- `kb/notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md`
 - `kb/notes/progressive-constraining-commits-only-after-patterns-stabilize.md`
 - `kb/notes/prompt-ablation-converts-human-insight-to-deployable-framing.md`
 - `kb/notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md`
@@ -504,46 +504,46 @@ Generated: 2026-04-20
 - `kb/notes/readable-substrate-loop-is-the-tractable-unit-for-continual-learning.md`
 - `kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md`
 - `kb/notes/research/adaptation-agentic-ai-analysis.md`
-- `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md`
+- `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md`
 - `kb/notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md`
 - `kb/notes/scenario-decomposition-drives-architecture.md`
 - `kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md`
-- `kb/notes/selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits.md`
-- `kb/notes/semantic-review-catches-content-errors-that-structural-validation-cannot.md`
-- `kb/notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md`
+- `kb/notes/selector-loaded-review-gates-could-let-review-revise-learn-from.md`
+- `kb/notes/semantic-review-catches-content-errors-that-structural-validation.md`
+- `kb/notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md`
 - `kb/notes/session-history-should-not-be-the-default-next-context.md`
 - `kb/notes/short-composable-notes-maximize-combinatorial-discovery.md`
 - `kb/notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md`
 - `kb/notes/skills-are-instructions-plus-routing-and-execution-policy.md`
 - `kb/notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md`
-- `kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md`
+- `kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md`
 - `kb/notes/spec-mining-as-codification.md`
-- `kb/notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md`
+- `kb/notes/specification-level-separation-recovers-scoping-before-it-recovers.md`
 - `kb/notes/specification-strategy-should-follow-where-understanding-lives.md`
 - `kb/notes/stale-indexes-are-worse-than-no-indexes.md`
 - `kb/notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md`
 - `kb/notes/storing-llm-outputs-is-constraining.md`
 - `kb/notes/structure-activates-higher-quality-training-distributions.md`
 - `kb/notes/structured-output-is-easier-for-humans-to-review.md`
-- `kb/notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md`
+- `kb/notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md`
 - `kb/notes/synthesis-is-not-error-correction.md`
-- `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md`
-- `kb/notes/systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md`
+- `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md`
+- `kb/notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md`
 - `kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md`
 - `kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md`
-- `kb/notes/the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md`
-- `kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md`
+- `kb/notes/the-chat-history-model-trades-context-efficiency-for-implementation.md`
+- `kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md`
 - `kb/notes/title-as-claim-enables-traversal-as-reasoning.md`
 - `kb/notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md`
 - `kb/notes/title-as-claim-makes-overlap-between-notes-visible.md`
-- `kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md`
-- `kb/notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md`
-- `kb/notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md`
+- `kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md`
+- `kb/notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover.md`
+- `kb/notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md`
 - `kb/notes/treat-continual-learning-as-substrate-coevolution.md`
 - `kb/notes/two-context-boundaries-govern-collection-operations.md`
 - `kb/notes/type-system-enforces-metadata-that-navigation-depends-on.md`
 - `kb/notes/types-give-agents-structural-hints-before-opening-documents.md`
-- `kb/notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md`
+- `kb/notes/underspecification-and-indeterminism-complicate-programming-for.md`
 - `kb/notes/unified-calling-conventions-enable-bidirectional-refactoring.md`
 - `kb/notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md`
 - `kb/notes/verifiability-gradient.md`
@@ -610,7 +610,7 @@ Generated: 2026-04-20
 - `kb/types/note.template.md`
 - `kb/work/curiosity-prompts/decapod-claims-audit.md`
 - `kb/work/curiosity-prompts/decapod-original.md`
-- `kb/work/harness-taxonomy-convergence/runtime-structure-determines-the-control-surfaces-available-to-governance.md`
+- `kb/work/harness-taxonomy-convergence/runtime-structure-determines-governance-control-surfaces.md`
 - `kb/work/information-measures/epiplexity-eli5.md`
 - `kb/work/positioning/related-systems-as-showcase.md`
 - `kb/work/review-revise-gated/baseline.md`
@@ -618,7 +618,7 @@ Generated: 2026-04-20
 - `kb/work/review-revise-gated/run-08/revised-2.md`
 - `kb/work/review-revise-gated/run-08/revised.md`
 - `kb/work/review-revise-gated/target.md`
-- `kb/work/tool-loop-control/a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by-externalizing-control-state.md`
+- `kb/work/tool-loop-control/a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by.md`
 - `kb/work/tool-loop-control/anatomy-of-an-llm-application.md`
 - `kb/work/tool-loop-control/llm-frameworks-should-keep-the-tool-loop-optional.md`
 
@@ -627,7 +627,7 @@ Generated: 2026-04-20
 - `kb/sources/adam-mastroianni-infinite-midwit.md`
 - `kb/sources/agent-behavioral-contracts-formal-specification-runtime-enforcement.md`
 - `kb/sources/agentic-code-reasoning.md`
-- `kb/sources/agentic-memory-learning-unified-long-term-and-short-term-memory-management.md`
+- `kb/sources/agentic-memory-learning-unified-long-term-and-short-term-memory.md`
 - `kb/sources/agentic-note-taking-23-notes-without-reasons-2026894188516696435.md`
 - `kb/sources/arrmlet-tracecraft.md`
 - `kb/sources/autoreason-self-refinement-that-knows-when-to-stop.md`
@@ -641,11 +641,11 @@ Generated: 2026-04-20
 - `kb/sources/dario-amodei-we-are-near-the-end-of-the-exponential.md`
 - `kb/sources/databricks-memory-scaling-ai-agents.md`
 - `kb/sources/eric-evans-ai-components-deterministic-system.md`
-- `kb/sources/esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming-languages.md`
-- `kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for-scient-2035982137539559616.md`
+- `kb/sources/esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md`
+- `kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for.md`
 - `kb/sources/everything-you-need-to-know-about-llm-memory.md`
 - `kb/sources/externalization-in-llm-agents-unified-review.md`
-- `kb/sources/from-entropy-to-epiplexity-rethinking-information-computationally-bounded.md`
+- `kb/sources/from-entropy-to-epiplexity-rethinking-information-computationally.md`
 - `kb/sources/graphiti-temporal-knowledge-graph.md`
 - `kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.md`
 - `kb/sources/harness-engineering-is-cybernetics-2030416758138634583.md`
@@ -658,8 +658,8 @@ Generated: 2026-04-20
 - `kb/sources/koylanai-personal-brain-os.md`
 - `kb/sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.md`
 - `kb/sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md`
-- `kb/sources/lessons-from-building-ai-agents-for-financial-services-2015174818497437834.md`
-- `kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful-recently-using-2039805659525644595.md`
+- `kb/sources/lessons-from-building-ai-agents-for-financial-services-201517481849743.md`
+- `kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful-recently-using.md`
 - `kb/sources/llm-webagents-long-context-reasoning-benchmark.md`
 - `kb/sources/mem0-memory-layer.md`
 - `kb/sources/memory-intelligence-agent.md`
@@ -675,7 +675,7 @@ Generated: 2026-04-20
 - `kb/sources/professional-software-developers-dont-vibe-they-control.md`
 - `kb/sources/prompt-stability-code-llms-emotion-personality-variations.md`
 - `kb/sources/purdue-owl-toulmin-argument.md`
-- `kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment-2035040781074145412.md`
+- `kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.md`
 - `kb/sources/scaling-managed-agents-decoupling-brain-from-hands.md`
 - `kb/sources/simon-willison-karpathy-claws.md`
 - `kb/sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md`
@@ -689,9 +689,9 @@ Generated: 2026-04-20
 - `kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.md`
 - `kb/sources/the-price-of-meaning-why-every-semantic-memory-system-forgets.md`
 - `kb/sources/the-second-brain-trap-2041486539067154753.md`
-- `kb/sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development-2033303156340240481.md`
-- `kb/sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici-2036857868914483592.md`
-- `kb/sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li-2029332670115614799.md`
+- `kb/sources/the-spec-is-the-new-code-a-guide-to-spec-driven-development.md`
+- `kb/sources/the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici.md`
+- `kb/sources/this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li.md`
 - `kb/sources/towards-a-science-of-ai-agent-reliability.md`
 - `kb/sources/towards-a-science-of-scaling-agent-systems.md`
 - `kb/sources/trajectory-informed-memory-generation-self-improving-agents.md`
@@ -708,13 +708,13 @@ Generated: 2026-04-20
 - `kb/types/note.md`
 
 #### `structured-claim`
-- `kb/notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md`
-- `kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md`
+- `kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md`
+- `kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md`
 - `kb/notes/index-curation-adds-orientation-that-generation-cannot-produce.md`
 - `kb/notes/skills-derive-from-methodology-through-distillation.md`
 - `kb/notes/types/structured-claim.template.md`
 - `kb/work/agent-complexity-theory/adaptive-dependencies-force-width-reopening-or-sequential-rounds.md`
-- `kb/work/agent-complexity-theory/exact-retrieval-over-semantically-opaque-items-requires-linear-inspection.md`
+- `kb/work/agent-complexity-theory/exact-retrieval-over-semantically-opaque-items-requires-linear.md`
 - `kb/work/agent-complexity-theory/no-universal-distillation-preserves-all-task-relevant-structure.md`
 
 #### `text`
@@ -793,21 +793,21 @@ kb/notes/reliability-dimensions-map-to-oracle-hardening-stages.md:3:type: note
 kb/notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md:3:type: note
 test/connect/fixtures/codification-intact.md:3:type: note
 kb/reference/review-architecture.md:3:type: note
-kb/notes/agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md:3:type: note
+kb/notes/agent-orchestration-needs-coordination-guarantees-not-just.md:3:type: note
 kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md:3:type: note
 kb/reference/available-types.md:3:type: note
 kb/reference/available-types.md:21:| `note` | `note.md`, `note.template.md`, `note.schema.yaml`, `note-base.schema.yaml` | Base structured type. Requires a non-empty `description`; carries shared `status`, `traits`, `tags`. Every specialised type inherits its frontmatter shape from here. |
 kb/reference/available-types.md:22:| `instruction` | `instruction.template.md`, `instruction.instructions.md`, `instruction.schema.yaml` | Prescriptive procedure, promoted skill body, or review gate. Requires `description`; review gates additionally require gate metadata plus `Failure mode` and `Test` sections. |
 kb/reference/available-types.md:23:| `definition` | `definition.template.md`, `definition.instructions.md`, `definition.schema.yaml` | Vocabulary note with `Scope`, `Exclusions`, and `Misuse Cases` sections. |
 kb/reference/available-types.md:24:| `index` | `index.template.md`, `index.instructions.md`, `index.schema.yaml` | Navigation hub: directory listings or curated tag indexes with generated tails. |
-kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md:3:type: note
+kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md:3:type: note
 kb/reference/collections-and-types.md:3:type: note
 kb/notes/scenario-decomposition-drives-architecture.md:3:type: note
 test/connect/fixtures/frontloading-stripped.md:3:type: note
 kb/notes/frontloading-spares-execution-context.md:3:type: note
 kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md:3:type: note
 kb/work/philosophy-borrowing/dir-index.md:3:type: index
-kb/notes/maintenance-operations-catalogue-should-stage-distillation-into-instructions.md:3:type: note
+kb/notes/maintenance-operations-catalogue-should-stage-distillation-into.md:3:type: note
 kb/notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md:3:type: note
 kb/reference/commands.md:3:type: note
 src/commonplace/cli/validate_notes.py:16:from commonplace.lib.type_resolver import check_type_uniqueness
@@ -825,9 +825,9 @@ kb/reference/lib-modules.md:155:- `resolved_type: str` — type name
 kb/reference/lib-modules.md:156:- `definition_path: Path | None` — path to the `.schema.yaml` file (or `None` for `"text"`)
 kb/reference/lib-modules.md:181:**`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
 kb/notes/definitions/codification.md:3:type: definition
-kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md:3:type: note
+kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md:3:type: note
 kb/notes/tags-index.md:3:type: index
-kb/notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md:3:type: note
+kb/notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md:3:type: note
 kb/reference/dir-index.md:3:type: index
 kb/notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md:3:type: note
 kb/notes/instructions-are-typed-callables.md:3:type: note
@@ -836,9 +836,9 @@ kb/notes/spec-mining-as-codification.md:3:type: note
 kb/notes/prompt-ablation-converts-human-insight-to-deployable-framing.md:3:type: note
 kb/notes/prompt-ablation-converts-human-insight-to-deployable-framing.md:49:- The [Curiosity Pass](./types/related-system.template.md) in the related-system template — a systematic per-claim review step combining broad curiosity, cost/benefit, and the oracle-strength question
 kb/notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md:3:type: note
-kb/notes/systematic-prompt-variation-serves-verification-and-diagnosis-not-explanatory-reach-testing.md:3:type: note
+kb/notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md:3:type: note
 kb/notes/document-system-index.md:3:type: index
-kb/notes/access-burden-and-transformation-burden-are-independent-query-dimensions.md:3:type: note
+kb/notes/access-burden-and-transformation-burden-are-independent-query.md:3:type: note
 test/commonplace/cli/test_init_project.py:50:    assert (tmp_path / "kb" / "reference" / "types" / "adr.template.md").is_file()
 test/commonplace/cli/test_init_project.py:51:    assert (tmp_path / "kb" / "reference" / "types" / "adr.instructions.md").is_file()
 test/commonplace/cli/test_init_project.py:54:    assert (tmp_path / "kb" / "types" / "instruction.template.md").is_file()
@@ -878,7 +878,7 @@ kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md:3:ty
 kb/notes/llm-context-is-composed-without-scoping.md:3:type: note
 kb/reference/adr/005-quality-check-placement.md:3:type: adr
 kb/notes/structure-activates-higher-quality-training-distributions.md:3:type: note
-kb/notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md:3:type: note
+kb/notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md:3:type: note
 kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md:3:type: note
 kb/notes/evaluation-index.md:3:type: index
 kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md:3:type: note
@@ -891,10 +891,10 @@ kb/reference/adr/016-custom-types-use-template-instruction-pairs.md:50:- if the 
 kb/reference/adr/016-custom-types-use-template-instruction-pairs.md:51:- if present, also load `{type}.instructions.md`
 kb/reference/adr/016-custom-types-use-template-instruction-pairs.md:66:- Existing references, tests, and workflows had to migrate from `{type}.md` to `{type}.template.md` plus `{type}.instructions.md`.
 kb/notes/learning-theory-index.md:3:type: index
-kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md:3:type: note
+kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md:3:type: note
 kb/notes/synthesis-is-not-error-correction.md:3:type: note
 kb/reports/reviews/kb__notes__directory-scoped-types-are-cheaper-than-global-types/semantic__grounding-alignment.claude-opus-4-6.md:25:**document-classification.md** — The note says "The document classification spec defines seven global base types: text, note, structured-claim, spec, review, index, adr." The source lists exactly these 7 in its base types table and has `type: spec`. Accurate attribution. However, the source's current framing is softer than "seven global base types" — it says "The `type` field is a free-form string. The table below lists the common values." The note reads this as a more rigid taxonomy than the source currently presents.
-kb/notes/selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits.md:3:type: note
+kb/notes/selector-loaded-review-gates-could-let-review-revise-learn-from.md:3:type: note
 kb/reference/adr/002-inline-global-types-in-writing-guide.md:3:type: adr
 kb/reference/adr/002-inline-global-types-in-writing-guide.md:17:- Type templates in `kb/types/note.template.md` and `kb/notes/types/structured-claim.template.md`
 kb/notes/link-strength-is-encoded-in-position-and-prose.md:3:type: note
@@ -926,7 +926,7 @@ kb/notes/information-value-is-observer-relative.md:3:type: note
 kb/notes/elicitation-requires-maintained-question-generation-systems.md:3:type: note
 kb/notes/charting-the-knowledge-access-problem-beyond-rag.md:3:type: note
 kb/reference/adr/dir-index.md:3:type: index
-kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md:3:type: note
+kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md:3:type: note
 kb/notes/kb-maintenance-index.md:3:type: index
 kb/notes/agent-is-a-tool-loop.md:3:type: note
 kb/notes/session-history-should-not-be-the-default-next-context.md:3:type: note
@@ -934,14 +934,14 @@ kb/reference/adr/009-link-relationship-semantics.md:3:type: adr
 kb/notes/linking-theory.md:3:type: note
 kb/notes/knowledge-storage-does-not-imply-contextual-activation.md:3:type: note
 kb/notes/deploy-time-learning-is-the-missing-middle.md:3:type: note
-kb/notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md:3:type: note
+kb/notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md:3:type: note
 kb/notes/instruction-specificity-should-match-loading-frequency.md:3:type: note
 kb/notes/claw-learning-is-broader-than-retrieval.md:3:type: note
 kb/reference/adr/017-collection-md-is-the-register-convention-boundary.md:3:type: adr
 kb/reference/adr/017-collection-md-is-the-register-convention-boundary.md:57:- The same structural type can be reused across registers. `type: note` means "uses the note contract," not "is theoretical."
-kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md:3:type: note
+kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md:3:type: note
 kb/notes/specification-strategy-should-follow-where-understanding-lives.md:3:type: note
-kb/notes/ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md:3:type: note
+kb/notes/ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md:3:type: note
 src/commonplace/docs/mkdocs_hooks.py:46:        fm.get("type") == "index"
 src/commonplace/docs/mkdocs_hooks.py:80:    note_type = meta.get("type")
 src/commonplace/docs/mkdocs_hooks.py:82:    if not status and not note_type and not tags:
@@ -953,7 +953,7 @@ kb/notes/why-directories-despite-their-costs.md:3:type: note
 kb/notes/stale-indexes-are-worse-than-no-indexes.md:3:type: note
 kb/notes/execution-indeterminism-is-a-property-of-the-sampling-process.md:3:type: note
 kb/notes/agents-navigate-by-deciding-what-to-read-next.md:3:type: note
-kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md:3:type: adr
+kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md:3:type: adr
 kb/notes/links-index.md:3:type: index
 kb/notes/verifiability-gradient.md:3:type: note
 kb/work/skill-creator-distillation/sources/claude-code-skill-creator/scripts/run_eval.py:129:                    if event.get("type") == "stream_event":
@@ -974,17 +974,17 @@ kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md:3:type: note
 kb/notes/always-loaded-context-mechanisms-in-agent-harnesses.md:3:type: note
 kb/reference/adr/015-standardize-authored-type-definitions-on-json-schema.md:3:type: adr
 kb/reports/reviews/kb__reference__type-system/complexity__claim-to-section-ratio.claude-opus-4-6.md:14:**Pass.** This is a spec (`type: spec`) that serves as a reference document rather than an argument, so the claim-to-section ratio test applies differently here than to a note. The document has two sections (Base types, Migration from old flat types) and makes no novel claims — it is intentionally a lookup table for type definitions and migration mappings. As a spec, section count matching content categories is appropriate. The note itself defers the design rationale to `document-types-should-be-verifiable`, so the lack of argumentative sections is by design.
-kb/notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md:3:type: structured-claim
-kb/notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md:32:For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: definition`, which can:
+kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md:3:type: structured-claim
+kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md:32:For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: definition`, which can:
 kb/notes/backlinks.md:3:type: note
 kb/notes/llm-context-is-a-homoiconic-medium.md:3:type: note
 kb/reference/scenario-architecture.md:3:type: note
 kb/notes/notes-need-quality-scores-to-scale-curation.md:3:type: note
-kb/notes/semantic-review-catches-content-errors-that-structural-validation-cannot.md:3:type: note
-kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md:3:type: note
+kb/notes/semantic-review-catches-content-errors-that-structural-validation.md:3:type: note
+kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md:3:type: note
 kb/notes/tool-loop-index.md:3:type: index
 kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md:3:type: note
-kb/notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md:3:type: note
+kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md:3:type: note
 kb/reports/reviews/kb__reference__type-system/complexity__could-be-a-paragraph.claude-opus-4-6.md:14:**Pass.** The note is a reference spec, not an argument, and its tables are lookup tables rather than arguments in paragraph form. The base-types table (seven rows with structural tests and verifiability levels) and the migration table cannot be reduced to a paragraph without defeating the spec's purpose — an agent querying for what `type: adr` requires needs to find "has Context/Decision/Consequences" without parsing a paragraph. The spec is appropriately terse and its structure is functional rather than rhetorical.
 kb/notes/a-knowledge-base-should-support-fluid-resolution-switching.md:3:type: note
 kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md:3:type: note
@@ -999,10 +999,10 @@ test/commonplace/cli/test_refresh_indexes.py:40:type: note
 test/commonplace/cli/test_refresh_indexes.py:52:type: index
 test/commonplace/cli/test_refresh_indexes.py:74:type: index
 test/commonplace/cli/test_refresh_indexes.py:85:type: index
-kb/notes/specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md:3:type: note
+kb/notes/specification-level-separation-recovers-scoping-before-it-recovers.md:3:type: note
 kb/notes/axes-of-substrate-analysis.md:3:type: note
 kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md:3:type: note
-kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md:3:type: note
+kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes.md:3:type: note
 kb/reference/definitions/dir-index.md:3:type: index
 kb/notes/writing-styles-are-strategies-for-managing-underspecification.md:3:type: note
 kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md:3:type: note
@@ -1016,10 +1016,10 @@ kb/notes/convert-still-requires-semantic-description.md:3:The `/convert` skill w
 kb/notes/oracle-strength-spectrum.md:3:type: note
 kb/reference/control-plane-goals.md:3:type: note
 kb/notes/index-curation-adds-orientation-that-generation-cannot-produce.md:3:type: structured-claim
-kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md:3:type: note
+kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md:3:type: note
 kb/work/skill-creator-distillation/sources/codex-skill-creator/dir-index.md:3:type: index
-kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md:3:type: note
-kb/notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md:3:type: note
+kb/notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md:3:type: note
+kb/notes/underspecification-and-indeterminism-complicate-programming-for.md:3:type: note
 kb/notes/methodology-enforcement-is-constraining.md:3:type: note
 test/commonplace/cli/test_validate_notes.py:168:    assert results.note_type == "text"
 test/commonplace/cli/test_validate_notes.py:186:type: snapshot
@@ -1060,14 +1060,14 @@ kb/notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md:3:t
 kb/work/skill-creator-distillation/dir-index.md:3:type: index
 kb/agent-memory-systems/reviews/o-o.md:3:type: agent-memory-system-review
 kb/notes/codify-versus-llm-decision-heuristics.md:3:type: note
-kb/notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md:3:type: note
+kb/notes/constraining-and-distillation-both-trade-generality-for-reliability.md:3:type: note
 kb/agent-memory-systems/reviews/REM.md:3:type: agent-memory-system-review
 kb/notes/distillation-is-transformation-not-selection.md:3:type: note
 kb/agent-memory-systems/reviews/clawvault.replaced.2026-04-12.md:3:type: agent-memory-system-review
-kb/notes/the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md:3:type: note
+kb/notes/the-chat-history-model-trades-context-efficiency-for-implementation.md:3:type: note
 kb/agent-memory-systems/reviews/synapptic.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/docmason.replaced.2026-04-12.md:3:type: agent-memory-system-review
-kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md:3:type: note
+kb/notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md:3:type: note
 kb/notes/llm-interpretation-errors-index.md:3:type: index
 kb/agent-memory-systems/reviews/cocoindex.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/auto-harness.md:3:type: agent-memory-system-review
@@ -1095,8 +1095,8 @@ kb/notes/short-composable-notes-maximize-combinatorial-discovery.md:3:type: note
 kb/agent-memory-systems/reviews/arscontexta.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/OpenSage.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/atomic.md:3:type: agent-memory-system-review
-kb/notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md:3:type: note
-kb/notes/evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md:3:type: note
+kb/notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md:3:type: note
+kb/notes/evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md:3:type: note
 kb/agent-memory-systems/reviews/nao.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/expel.md:3:type: agent-memory-system-review
 kb/notes/evidence/dir-index.md:3:type: index
@@ -1113,7 +1113,7 @@ kb/agent-memory-systems/reviews/decapod.md:3:type: agent-memory-system-review
 kb/notes/directory-scoped-types-are-cheaper-than-global-types.md:3:type: note
 kb/notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md:3:type: note
 kb/agent-memory-systems/reviews/cognee.md:3:type: agent-memory-system-review
-kb/notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md:3:type: note
+kb/notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md:3:type: note
 kb/agent-memory-systems/reviews/pi-self-learning.md:3:type: agent-memory-system-review
 kb/notes/observability-index.md:3:type: index
 kb/agent-memory-systems/reviews/cass_memory_system.replaced.2026-04-12.md:3:type: agent-memory-system-review
@@ -1144,17 +1144,17 @@ test/commonplace/review/test_review_runs_direct_write.py:26:def make_note(path: 
 test/commonplace/review/test_review_runs_direct_write.py:31:type: {note_type}
 test/commonplace/review/test_review_runs_direct_write.py:134:    make_note(repo / "kb" / "notes" / "sample.md", "Sample", "\nBody.\n", note_type="definition")
 kb/agent-memory-systems/reviews/reflexion.md:3:type: agent-memory-system-review
-kb/work/tool-loop-control/a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by-externalizing-control-state.md:3:type: note
+kb/work/tool-loop-control/a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by.md:3:type: note
 kb/agent-memory-systems/reviews/binder.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/Zikkaron.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/cass_memory_system.md:3:type: agent-memory-system-review
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:3:type: structured-claim
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:46:A note with a claim title starts as `type: note`. When the argument matures — evidence accumulates, reasoning gets explicit — it gets promoted to `type: structured-claim`. The remaining notes keep `type: note` with their claim-ish titles, honest about their level of development. Of the current 30 `has-claim` notes, perhaps 5-10 are developed enough for `type: structured-claim` today.
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:56:## Section template for `type: structured-claim`
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:60:type: structured-claim
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:95:- `type: structured-claim` → file must contain `## Evidence` and `## Reasoning` headings
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:111:- **`type: structured-claim`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections (estimated 5-10 today)
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md:112:- **`type: note`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:3:type: structured-claim
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:46:A note with a claim title starts as `type: note`. When the argument matures — evidence accumulates, reasoning gets explicit — it gets promoted to `type: structured-claim`. The remaining notes keep `type: note` with their claim-ish titles, honest about their level of development. Of the current 30 `has-claim` notes, perhaps 5-10 are developed enough for `type: structured-claim` today.
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:56:## Section template for `type: structured-claim`
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:60:type: structured-claim
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:95:- `type: structured-claim` → file must contain `## Evidence` and `## Reasoning` headings
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:111:- **`type: structured-claim`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections (estimated 5-10 today)
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md:112:- **`type: note`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
 kb/work/tool-loop-control/dir-index.md:3:type: index
 kb/agent-memory-systems/reviews/xMemory.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/mempalace.replaced.2026-04-12.md:3:type: agent-memory-system-review
@@ -1176,7 +1176,7 @@ test/commonplace/review/test_ack_trivial_note_changes.py:406:type: note
 test/commonplace/review/test_ack_trivial_note_changes.py:452:type: note
 test/commonplace/review/test_ack_trivial_note_changes.py:493:type: note
 test/commonplace/review/test_ack_trivial_note_changes.py:586:type: note
-kb/notes/changing-requirements-conflate-genuine-change-with-disambiguation-failure.md:3:type: note
+kb/notes/changing-requirements-conflate-genuine-change-with-disambiguation.md:3:type: note
 kb/agent-memory-systems/reviews/tracecraft.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/browzy-ai.md:3:type: agent-memory-system-review
 kb/work/tool-loop-control/anatomy-of-an-llm-application.md:3:type: note
@@ -1189,7 +1189,7 @@ test/commonplace/review/test_run_gate_sweep.py:30:type: note
 kb/agent-memory-systems/reviews/pi-self-learning.replaced.2026-04-12.md:3:type: agent-memory-system-review
 kb/notes/brainstorming-how-reach-informs-kb-design.md:3:type: note
 kb/notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md:3:type: note
-kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles.md:3:type: note
+kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md:3:type: note
 kb/notes/llm-learning-phases-fall-between-human-learning-modes.md:3:type: note
 kb/agent-memory-systems/reviews/clawvault.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/REM.replaced.2026-04-12.md:3:type: agent-memory-system-review
@@ -1202,7 +1202,7 @@ kb/agent-memory-systems/reviews/sage.md:3:type: agent-memory-system-review
 kb/notes/treat-continual-learning-as-substrate-coevolution.md:3:type: note
 kb/agent-memory-systems/reviews/hindsight.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/expel.replaced.2026-04-12.md:3:type: agent-memory-system-review
-kb/notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md:3:type: note
+kb/notes/effective-context-is-task-relative-and-complexity-relative-not-a.md:3:type: note
 kb/agent-memory-systems/reviews/autocontext.replaced.2026-04-12.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/napkin.replaced.2026-04-12.md:3:type: agent-memory-system-review
 kb/notes/computational-model-index.md:3:type: index
@@ -1227,7 +1227,7 @@ kb/agent-memory-systems/reviews/voyager.replaced.2026-04-12.md:3:type: agent-mem
 kb/agent-memory-systems/reviews/exocomp.md:3:type: agent-memory-system-review
 kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md:3:type: note
 kb/agent-memory-systems/reviews/supermemory.md:3:type: agent-memory-system-review
-kb/notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md:3:type: note
+kb/notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md:3:type: note
 kb/agent-memory-systems/reviews/reasoning-bank.replaced.2026-04-12.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/sift-kg.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/skillnote.md:3:type: agent-memory-system-review
@@ -1235,7 +1235,7 @@ kb/notes/files-not-database.md:3:type: note
 kb/agent-memory-systems/reviews/reasoning-bank.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/byterover-cli.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/openviking.md:3:type: agent-memory-system-review
-kb/notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md:3:type: note
+kb/notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover.md:3:type: note
 kb/agent-memory-systems/reviews/MiroShark.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/semiont.md:3:type: agent-memory-system-review
 kb/agent-memory-systems/reviews/claude-context-guard.md:3:type: agent-memory-system-review
@@ -1250,7 +1250,7 @@ kb/notes/ephemeral-computation-prevents-accumulation.md:3:type: note
 kb/agent-memory-systems/reviews/equipa.md:3:type: agent-memory-system-review
 kb/notes/structured-output-is-easier-for-humans-to-review.md:3:type: note
 kb/agent-memory-systems/reviews/mentisdb.md:3:type: agent-memory-system-review
-kb/notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md:3:type: note
+kb/notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md:3:type: note
 kb/agent-memory-systems/reviews/reflexion.replaced.2026-04-12.md:3:type: agent-memory-system-review
 kb/notes/why-notes-have-types.md:3:type: note
 kb/agent-memory-systems/reviews/siftly.md:3:type: agent-memory-system-review

@@ -132,7 +132,7 @@ Relevant Notes:
 - [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — splits from this note: the debugging heuristic derived from the two-phenomena model
 - [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — applies: typing, testing, and version control transfer to prompting under this framework
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — applies: typing, testing, and version control transfer to prompting under this framework
 - [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — applies: keeping an LLM output resolves underspecification to a fixed interpretation
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions

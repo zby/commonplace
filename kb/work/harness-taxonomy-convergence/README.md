@@ -54,10 +54,10 @@ The operational vocabularies and commonplace's own systems populate a second axi
 
 ## Outcome paths
 
-- **If the claim stays structural:** fold the three-way convergence table into the convergence section of `agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md`. Mention commonplace as construct validity, not peer evidence.
+- **If the claim stays structural:** fold the three-way convergence table into the convergence section of `agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`. Mention commonplace as construct validity, not peer evidence.
 - **If the stronger claim emerges — runtime structure and runtime governance are separate axes:** that's a standalone note. The structural decomposition answers "what is the runtime made of?" The governance axis answers "how is the runtime monitored and corrected?" Both are needed; neither subsumes the other. The review/fix system documentation we just wrote is evidence that governance needed its own machinery.
 
 Current workshop artifacts for the stronger claim:
 
-- [Runtime structure determines the control surfaces available to governance](./runtime-structure-determines-the-control-surfaces-available-to-governance.md)
+- [Runtime structure determines the control surfaces available to governance](./runtime-structure-determines-governance-control-surfaces.md)
 - [Structure x governance matrix (commonplace)](./structure-governance-matrix.md)

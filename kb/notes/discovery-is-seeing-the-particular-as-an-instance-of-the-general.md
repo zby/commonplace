@@ -51,7 +51,7 @@ Relevant Notes:
 - [Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — extends: the adjacency-vs-connection distinction maps to recognition depth, not link kind
 - [constraining](./definitions/constraining.md) — suggestive parallel: constraining and discovery are both gradients where each step trades generality for power, though on different axes
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction
-- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem
+- [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem
 
 Distilled into:
 

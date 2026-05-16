@@ -135,6 +135,6 @@ Relevant Notes:
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — foundation: the `select/call` loop this note's inner loop instantiates
 - [tool loop](../../notes/tool-loop-index.md) — extends: argues for the framework design consequence of the dilemma identified here
 - [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) — extends: the message-list-as-state default this note surfaces becomes a constraint when the framework owns progression
-- [agent runtimes decompose into scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — extends: the three-component decomposition that emerges when the inner loop is factored properly
+- [agent runtimes decompose into scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — extends: the three-component decomposition that emerges when the inner loop is factored properly
 - [LLM-mediated schedulers are a degraded variant of the clean model](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: what happens when the inner loop's scheduler stays inside the conversation
 - [codification](../../notes/definitions/codification.md) — mechanism: crystallized scheduling patterns are codification candidates, but only scheduling-level patterns (not tool-level ones) require loop exposure

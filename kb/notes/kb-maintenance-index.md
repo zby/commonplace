@@ -13,23 +13,23 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 ## Dynamics
 
 - [entropy-management-must-scale-with-generation-throughput](./entropy-management-must-scale-with-generation-throughput.md) — cleanup throughput must match generation throughput; agents replicate patterns including bad ones, so without proportional maintenance quality degrades with volume
-- [traversal-improves-the-graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
+- [traversal-improves-the-graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 - [title-as-claim-exposes-commitments-enabling-popperian-maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — claim titles make maintenance cheap: scan the index, ask "do I still believe this?", open only the doubtful ones
 
 ## Detection
 
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — composite oracle from graph-topology, content-proxy, and LLM-hybrid signals; the evaluation layer the learning loop needs
 - [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — note quality scores (status, type, inbound links, recency) filter /connect candidates as the KB grows
-- [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading
+- [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading
 - [link-graph-plus-timestamps-enables-make-like-staleness-detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags staleness without new annotation
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search entirely; absence of an index degrades to search, presence of a stale index prevents it
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — successful runs can still conceal broken helpers and paths; maintenance needs log sweeps or other observability for hidden failures
+- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful runs can still conceal broken helpers and paths; maintenance needs log sweeps or other observability for hidden failures
 
 ## Operations
 
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — staging catalogue for periodic operations before they are distilled into reusable procedures
-- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
-- [selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits](./selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits.md) — proposes turning accepted edit diffs into atomic review gates stored in a registry and loaded under a bounded review budget rather than bundling every lesson into monolithic review prompts
+- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into.md) — staging catalogue for periodic operations before they are distilled into reusable procedures
+- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
+- [selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits](./selector-loaded-review-gates-could-let-review-revise-learn-from.md) — proposes turning accepted edit diffs into atomic review gates stored in a registry and loaded under a bounded review budget rather than bundling every lesson into monolithic review prompts
 
 ## Related Tags
 
@@ -41,6 +41,6 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 - [Brainstorming: how reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) - Brainstorming on Deutsch's "reach" concept applied to KB notes — reach is a maintenance risk signal (not a retrieval signal) because high-reach revisions break downstream reasoning silently
 - [Index curation adds orientation that generation cannot produce](./index-curation-adds-orientation-that-generation-cannot-produce.md) - Generated indexes guarantee completeness but not orientation — curation adds editorial grouping and context phrases that turn a listing into a navigable map
-- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md) - April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
+- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) - April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
 - [Title as claim makes overlap between notes visible](./title-as-claim-makes-overlap-between-notes-visible.md) - When note titles are claims, overlap between notes is visible at the index level — similar assertions are obvious without opening files; topical titles hide overlap behind different labels for the same territory
-- [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) - Programmers trained on traditional software expect broken infrastructure to fail loudly; semantic recovery in agent tool loops violates that expectation, so successful outcomes can create false confidence during debugging and maintenance
+- [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) - Programmers trained on traditional software expect broken infrastructure to fail loudly; semantic recovery in agent tool loops violates that expectation, so successful outcomes can create false confidence during debugging and maintenance

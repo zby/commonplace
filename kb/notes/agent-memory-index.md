@@ -23,7 +23,7 @@ Agent memory notes treat memory as part of agent architecture, not just storage.
 ## Other tagged notes <!-- generated -->
 
 - [Activate Behavior-Changing Memory Before The Mistake](./agent-memory-requirements/activate-behavior-changing-memory.md) - Behavior-changing memory must activate before relevant actions rather than waiting for explicit retrospective search
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) - Frames discoverable, composable, trusted remembered knowledge as the minimal artifact-quality basis for agent memory under bounded context.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - Frames discoverable, composable, trusted remembered knowledge as the minimal artifact-quality basis for agent memory under bounded context.
 - [Agent Memory Requirements](./agent-memory-requirements/README.md) - Navigation hub for concrete agent-memory requirements extracted from the memory-system design synthesis
 - [Create Memory Directly](./agent-memory-requirements/create-memory-directly.md) - Direct memory creation preserves live understanding by writing useful artifacts before later trace extraction loses structure
 - [Evaluate Memory By Effects, Not By Existence](./agent-memory-requirements/evaluate-memory-by-effects.md) - Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and lineage alignment

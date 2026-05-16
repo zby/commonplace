@@ -99,7 +99,7 @@ Extends [memory management policy is learnable but oracle-dependent](../../notes
 
 Extends [CLAW learning loops must improve action capacity not just retrieval](../../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- cludebot's action learning pipeline goes beyond retrieval into genuine action-capacity improvement: it generates procedural rules ("When X, do Y") from observed outcomes, not just retrieves better memories.
 
-Exemplifies [constraining and distillation both trade generality for reliability speed and cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) -- dream cycle consolidation distils (episodic → semantic insights), compaction distils (old episodic groups → summaries), and the concept ontology constrains (freeform text → structured labels); both arms are present.
+Exemplifies [constraining and distillation both trade generality for reliability speed and cost](../../notes/constraining-and-distillation-both-trade-generality-for-reliability.md) -- dream cycle consolidation distils (episodic → semantic insights), compaction distils (old episodic groups → summaries), and the concept ontology constrains (freeform text → structured labels); both arms are present.
 
 Contrasts [ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) -- cludebot is maximally anti-ephemeral: every interaction stores a memory, dreams generate more memories, and compaction creates summary memories; nothing is discarded, only decayed or compacted.
 

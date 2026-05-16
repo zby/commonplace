@@ -54,9 +54,9 @@ The fundamental difference: CrewAI Memory is **infrastructure** — a storage-an
 
 ### The Three-Space Problem
 
-CrewAI Memory stores everything in one flat vector space partitioned by scope paths. Our [three-space analysis](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) predicts this will produce specific failure modes: operational details (task outputs) pollute semantic search for domain knowledge; agent self-knowledge (preferences, learned strategies) has no natural home distinct from project facts. The scope tree partially mitigates this — `/agent/researcher` vs `/project/alpha` is a namespace separation — but it's convention rather than structure. Nothing prevents operational trivia from landing in `/project/alpha` alongside architectural decisions.
+CrewAI Memory stores everything in one flat vector space partitioned by scope paths. Our [three-space analysis](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) predicts this will produce specific failure modes: operational details (task outputs) pollute semantic search for domain knowledge; agent self-knowledge (preferences, learned strategies) has no natural home distinct from project facts. The scope tree partially mitigates this — `/agent/researcher` vs `/project/alpha` is a namespace separation — but it's convention rather than structure. Nothing prevents operational trivia from landing in `/project/alpha` alongside architectural decisions.
 
-The [predicted failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — search pollution, identity scatter, insight trapping — would be testable against CrewAI crews running real tasks over time.
+The [predicted failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — search pollution, identity scatter, insight trapping — would be testable against CrewAI crews running real tasks over time.
 
 ### Context Efficiency
 
@@ -107,8 +107,8 @@ This archived review predates the current review contract. See the replacement r
 ---
 
 Relevant Notes:
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — grounds: CrewAI's unified single-space design is the alternative to the three-space separation this note argues for
-- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — grounds: predicted failures (search pollution, identity scatter) are testable against CrewAI crews
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — grounds: CrewAI's unified single-space design is the alternative to the three-space separation this note argues for
+- [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — grounds: predicted failures (search pollution, identity scatter) are testable against CrewAI crews
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: CrewAI Memory has no context-efficiency model; full-content storage ignores the volume dimension
 - [distillation](../../notes/definitions/distillation.md) — extends: `extract_memories()` is one-shot distillation without refinement or reconnection
 - [constraining](../../notes/definitions/constraining.md) — contrasts: consolidation is a form of constraining (reducing redundancy) but without the interpretation-narrowing that characterises our definition

@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 MAX_NOTE_TITLE_LENGTH = 100
-MAX_NOTE_SLUG_LENGTH = 100
+MAX_NOTE_SLUG_LENGTH = 70
 _NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")
 
 

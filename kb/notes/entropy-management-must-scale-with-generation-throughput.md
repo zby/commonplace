@@ -20,7 +20,7 @@ The [stagnation finding](./methodology-enforcement-is-constraining.md) from the 
 
 ## Implications for this KB
 
-The KB already has the pieces — [maintenance operations](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) (what to clean), [external triggering](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing.md) (when to trigger), [staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) (how to detect). What it lacks is the scaling commitment: as note production increases (especially if [boiling cauldron mutations](./automating-kb-learning-is-an-open-problem.md) are automated), the maintenance operations must run at matching frequency. Orphan detection, connection quality checks, and staleness sweeps need to become continuous, not periodic.
+The KB already has the pieces — [maintenance operations](./maintenance-operations-catalogue-should-stage-distillation-into.md) (what to clean), [external triggering](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) (when to trigger), [staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) (how to detect). What it lacks is the scaling commitment: as note production increases (especially if [boiling cauldron mutations](./automating-kb-learning-is-an-open-problem.md) are automated), the maintenance operations must run at matching frequency. Orphan detection, connection quality checks, and staleness sweeps need to become continuous, not periodic.
 
 The pruning asymmetry makes this urgent: even in actively maintained systems, additions outnumber removals 6:1. Without deliberate pruning discipline, the KB grows noisier with every note added — and noisy links cause [credibility erosion](./quality-signals-for-kb-evaluation.md) that degrades the entire navigation infrastructure.
 
@@ -30,7 +30,7 @@ Relevant Notes:
 
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — connects: the stagnation evidence (50% write-once, 6:1 add-to-remove ratio) is what happens when maintenance throughput is zero
 - [spec mining as codification](./spec-mining-as-codification.md) — mechanism: the transition from manual cleanup to automated enforcement is spec mining applied to maintenance — observe drift, extract pattern, codify into check
-- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md) — operationalizes: the catalogue lists what needs scaling; this note argues it must scale proportionally with generation
+- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into.md) — operationalizes: the catalogue lists what needs scaling; this note argues it must scale proportionally with generation
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — constrains: if boiling cauldron mutations are automated, maintenance must be automated at matching throughput or quality degrades
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — detects: the credibility erosion failure mode is what happens when entropy management falls behind generation
 - [Harness Engineering](https://openai.com/index/harness-engineering/) — primary evidence: 1M LOC agent-generated codebase where background cleanup agents maintain quality at generation-matching throughput

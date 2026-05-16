@@ -18,7 +18,7 @@ Many systems self-identify as "memory systems" — Mem0, Graphiti, Letta, ClawVa
 
 **Learning from experience** — extraction, promotion, graduation of knowledge from session logs to durable artifacts — IS the [learning theory](./learning-theory-index.md) cluster. Extracting corrections from session logs is [accumulation](./learning-is-not-only-about-generality.md). Promoting a recurring preference to a CLAUDE.md entry is [constraining](./definitions/constraining.md). Compressing fifteen methodology sessions into one procedure is [distillation](./definitions/distillation.md). Recognizing that three unrelated failures share a common cause is [discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md). The [oracle problem](./automating-kb-learning-is-an-open-problem.md) — evaluating whether a memory operation improved the system — is the same oracle problem the KB's learning theory identifies as the bottleneck for automated knowledge improvement.
 
-And wrapping around all three: memory serves [action capacity](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md), not just retrieval. A memory system that only answers questions is solving a narrow slice. The full problem is making agent actions more competent across execution, classification, planning, communication, and pattern recognition, which requires [discoverable, composable, trusted remembered knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md).
+And wrapping around all three: memory serves [action capacity](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md), not just retrieval. A memory system that only answers questions is solving a narrow slice. The full problem is making agent actions more competent across execution, classification, planning, communication, and pattern recognition, which requires [discoverable, composable, trusted remembered knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md).
 
 ## The comparative review already shows this
 
@@ -36,7 +36,7 @@ No system solves all three well — which is the [agency trilemma](../agent-memo
 
 ## The runtime decomposition predicts this
 
-The [scheduler / context engine / execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) decomposition of agent runtimes predicts where memory's subproblems land:
+The [scheduler / context engine / execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) decomposition of agent runtimes predicts where memory's subproblems land:
 
 - Storage belongs to the **execution substrate** (persistent world outside the model)
 - Retrieval/activation belongs to the **context engine** (what enters each bounded call)
@@ -64,10 +64,10 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity is why retrieval/activation is the hard problem, not storage
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap is what makes memory a context engineering problem
 - [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: six dimensions span storage, retrieval, and learning; the agency trilemma exists because the subproblems trade off against each other
-- [agent runtimes decompose into scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — grounds: the runtime decomposition assigns memory's subproblems to different components, predicting that memory is crosscutting
+- [agent runtimes decompose into scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — grounds: the runtime decomposition assigns memory's subproblems to different components, predicting that memory is crosscutting
 - [learning theory index](./learning-theory-index.md) — grounds: extraction, promotion, and graduation are instances of accumulation, constraining, distillation, and discovery
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: memory serves contextual competence across five action modes, not just question-answering
-- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) — grounds: the three properties apply to remembered knowledge, not only authored KB notes
+- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — grounds: the three properties apply to remembered knowledge, not only authored KB notes
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — exemplifies: the "store more than you load" principle is the storage/retrieval split in action
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — grounds: the oracle problem for memory management is the same oracle problem as for KB learning
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem solves the learning subproblem (policy) while leaving retrieval mostly to base-model instruction following

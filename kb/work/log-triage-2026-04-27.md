@@ -17,8 +17,8 @@ Classification legend:
 - `PROMOTE` - indiscriminate context loading as a double failure: false salience from irrelevant material plus non-activation of relevant material. Existing activation and soft-degradation notes are adjacent but do not name the combined failure.
 - `FOLD` - `kb/notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md` should move some quantitative grounding from footer links into body prose.
 - `PROMOTE` - well-specified OOD benchmarks stripping shortcuts. SuperARC, EsoLang-Bench, Sudoku, and induction-bias sources converge on a mechanism not owned by one current note.
-- `FOLD` - `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md` should add the SuperARC print-statement example. The old log path was renamed.
-- `FOLD` - `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md` should add SuperARC's integer-vs-binary sequence gap.
+- `FOLD` - `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md` should add the SuperARC print-statement example. The old log path was renamed.
+- `FOLD` - `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md` should add SuperARC's integer-vs-binary sequence gap.
 - `PROMOTE` - diagnostic richness as an outer-loop search axis. The trace-derived survey now mentions it, but a standalone note could own the axis and Meta-Harness ablation.
 - `FOLD` - `kb/notes/evaluation-automation-is-phase-gated-by-comprehension.md` should account for Meta-Harness-style automated trace comprehension in hard-oracle domains.
 - `PROMOTE` - filesystem-native tool use as a distinct long-context strategy. The source ingest proposes this and the current notes only imply it.
@@ -29,9 +29,9 @@ Classification legend:
 ## Stale Or Resolved
 
 - Trajectory-to-improvement mechanisms by output substrate: resolved by `treat-continual-learning-as-substrate-coevolution.md`, `axes-of-artifact-analysis.md`, `memory-management-policy-is-learnable-but-oracle-dependent.md`, and the trace-derived learning survey.
-- Shared mutable state without coordination primitives: resolved by `agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md` and `topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md`.
+- Shared mutable state without coordination primitives: resolved by `agent-orchestration-needs-coordination-guarantees-not-just.md` and `topology-isolation-and-verification-form-a-causal-chain-for-reliable.md`.
 - Oracle-gated learning from interaction: stale as written because the KB no longer treats deploy-time learning as only artifact-side; substrate coevolution and axes notes cover weight/prose/symbolic classes.
-- GSM-DC quantitative cost surface: resolved by `effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md`, which deliberately keeps the claim qualitative rather than adopting a brittle formula.
+- GSM-DC quantitative cost surface: resolved by `effective-context-is-task-relative-and-complexity-relative-not-a.md`, which deliberately keeps the claim qualitative rather than adopting a brittle formula.
 - Memory forgetting/pruning policy as inspectability-learnability spectrum: resolved by the "inspectability-learnability spectrum" section in `memory-management-policy-is-learnable-but-oracle-dependent.md`.
 - Comparative review missing budget-constrained forgetting: superseded by the memory-management-policy note; the old path `kb/notes/related-systems/agentic-memory-systems-comparative-review.md` is also obsolete. Current path is `kb/agent-memory-systems/agentic-memory-systems-comparative-review.md`.
 - Psychology-to-agent transfer methodology: resolved by `kb/notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md`.

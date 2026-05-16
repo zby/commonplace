@@ -25,7 +25,7 @@ The goal is theorem sketches and proof outlines suitable for academic collaborat
 
 ## Current sketches
 
-- [Exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear-inspection.md)
+- [Exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md)
 - [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md)
 - [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md)
 - [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md)

@@ -43,5 +43,5 @@ For the live commonplace repo's current type inventory and migration summary, se
 
 ## Other tagged notes <!-- generated -->
 
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) - Three exhaustive registers — theory, description, prescription — with distinct quality goals; formulation constraint and maintenance asymmetry make the split real, distillation connects them; registers classify content orthogonally to operational roles, and in agent systems the prescription/implementation boundary collapses
+- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) - Three exhaustive registers — theory, description, prescription — with distinct quality goals; formulation constraint and maintenance asymmetry make the split real, distillation connects them; registers classify content orthogonally to operational roles, and in agent systems the prescription/implementation boundary collapses
 - [Register](./definitions/register.md) - Definition — a register is one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules

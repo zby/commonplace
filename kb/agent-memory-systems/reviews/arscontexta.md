@@ -59,7 +59,7 @@ This is interesting but the analogy operates across a vast scale difference. Neu
 
 The same question applies to elaborative encoding — the original research is about human memory formation through effortful connection. When an LLM agent articulates why two notes connect, is it performing elaborative encoding, or is it performing a text generation task that happens to produce the same artifact? The output (articulated connection) is the same, but the mechanism is different. The note itself acknowledges this tension as the "delegation shadow."
 
-Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md): we borrow from cognitive science but require first-principles support before adoption.
+Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md): we borrow from cognitive science but require first-principles support before adoption.
 
 ## Comparison with Our System
 
@@ -70,7 +70,7 @@ Arscontexta is the **ancestor** of our KB. We installed it, used its pipeline, a
 - Link relationship prose became our typed link semantics.
 - Curated links, not embeddings, became the primary organization mechanism.
 - The idea that traversal through reasoned links can itself be a reasoning act.
-- Three-space memory separation, which we [documented](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) and still treat as a hypothesis rather than a settled fact.
+- Three-space memory separation, which we [documented](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) and still treat as a hypothesis rather than a settled fact.
 
 These are not independent convergences — they're shared inheritance from wiki/Zettelkasten tradition, with arscontexta as the direct upstream source.
 
@@ -149,6 +149,6 @@ Relevant Notes:
 - [009-link-relationship-semantics](../../reference/adr/009-link-relationship-semantics.md) — our formalization of link relationship semantics
 - [quality-signals-for-kb-evaluation](../../notes/quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
 - [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — the scaling question connects here
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — our analysis of their article #19
-- [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — the cognitive science scale-mismatch concern connects to our adoption filter
+- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — our analysis of their article #19
+- [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — the cognitive science scale-mismatch concern connects to our adoption filter
 - [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)

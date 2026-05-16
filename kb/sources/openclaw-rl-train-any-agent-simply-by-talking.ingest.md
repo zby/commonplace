@@ -45,7 +45,7 @@ The `/connect` discovery identified 7 genuine connections and rejected 10 candid
 
 - [trajectory-informed-memory-generation](trajectory-informed-memory-generation-self-improving-agents.ingest.md) — **contrasts**: Same input (execution trajectories), same oracle type (task completion), different output substrate (weights vs inspectable text tips). Together they bracket the substrate choice for learning from trajectories. OpenClaw-RL's Hindsight-Guided OPD is mechanistically closer to tip extraction (both extract actionable guidance from trajectories) but encodes the result in weights rather than text.
 
-- [AgeMem ingest](agentic-memory-learning-unified-long-term-and-short-term-memory-management.ingest.md) — **extends**: OpenClaw-RL generalizes AgeMem's RL-from-interaction approach across five modalities. AgeMem trains policy over fixed memory operations; OpenClaw-RL trains policy over arbitrary agentic actions.
+- [AgeMem ingest](agentic-memory-learning-unified-long-term-and-short-term.ingest.md) — **extends**: OpenClaw-RL generalizes AgeMem's RL-from-interaction approach across five modalities. AgeMem trains policy over fixed memory operations; OpenClaw-RL trains policy over arbitrary agentic actions.
 
 **Synthesis opportunity flagged:** A substrate spectrum note mapping weights-only / weights+artifacts / artifacts-only continuous learning approaches, extending the deploy-time learning three-timescale model to account for systems like OpenClaw-RL that collapse training into deployment.
 

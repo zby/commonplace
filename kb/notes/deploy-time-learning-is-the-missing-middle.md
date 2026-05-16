@@ -55,7 +55,7 @@ Relevant Notes:
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is commonplace's storage substrate choice for many durable system-definition artifacts
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — lever: selective access patterns make the effective context far larger than the window, which is what lets stored-artifact behaviour change reach weight-update scale
-- [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — extends: agile's "changing requirements" reframed through the interpretation-error lens
+- [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — extends: agile's "changing requirements" reframed through the interpretation-error lens
 - [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: 466 OSS projects treat AI context files as maintained software artifacts
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — extends: behavioural contracts are verifiable repo artifacts that improve reliability without weight updates
 - [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: "good harnesses compound" in practitioner language

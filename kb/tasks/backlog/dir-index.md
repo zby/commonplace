@@ -8,4 +8,4 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [Thread process structure and content bias into structured reasoning notes](./thread-process-structure-and-content-bias-into-structured-reasoning-notes.md)
+- [Thread process structure and content bias into structured reasoning notes](./thread-process-structure-and-content-bias-into-structured-reasoning.md)

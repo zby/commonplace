@@ -100,6 +100,6 @@ HALO qualifies, but the placement should be narrow. The implemented engine is a 
 Relevant Notes:
 
 - [Distillation](../../notes/definitions/distillation.md) — rationale: HALO is directed compression from execution traces into diagnostic prose and, after promotion, harness changes.
-- [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context-scarcity.md) — extends: HALO's useful endpoint is not the report itself but the harness prompt/tool/code edit that changes future behavior.
+- [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) — extends: HALO's useful endpoint is not the report itself but the harness prompt/tool/code edit that changes future behavior.
 - [Memory design adds operational axes to artifact analysis](../../notes/memory-design-adds-operational-axes-to-artifact-analysis.md) — compares-with: HALO makes evaluation signal and promotion authority central, but keeps the durable artifact lifecycle outside the engine.
 - [Agentic Harness Engineering](./agentic-harness-engineering.md) — compares-with: both use trace-derived diagnosis to improve coding-agent harnesses, but HALO packages the trace-analysis runtime while Agentic Harness Engineering emphasizes the broader observability-to-promotion loop.

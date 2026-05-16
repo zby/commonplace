@@ -62,7 +62,7 @@ A procedural-memory system for AI coding agents that harvests sessions from mult
 
 **Where commonplace is stronger.** A cass-memory bullet is a one-liner with metadata; a commonplace note is a multi-paragraph argument with articulated links (`extends`, `contradicts`, `grounds`, …). [Link semantics](../../notes/links-index.md) let a reader follow *why* artifacts relate, not just *that* they are similar-looking. We can represent caveats, scope conditions, and counter-examples inside a note; cass's Jaccard-with-directive-markers check can only spot word-level contradiction. Most importantly, commonplace has an articulated theory of learning (`continual-learning-open-problem-is-behaviour-not-knowledge`, `axes-of-artifact-analysis`) — cass-memory has a working pipeline without the corresponding theory of when its automation is safe.
 
-**Deepest divergence.** Cass-memory optimizes for retrieval-speed-times-scoring on short rules. Commonplace optimizes for [contextual competence](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — the ability to reason about a domain. Different use-cases: cass is a procedural assistant ("do this, avoid that"); commonplace is a library of claims ("this is why this works and when it does not").
+**Deepest divergence.** Cass-memory optimizes for retrieval-speed-times-scoring on short rules. Commonplace optimizes for [contextual competence](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md) — the ability to reason about a domain. Different use-cases: cass is a procedural assistant ("do this, avoid that"); commonplace is a library of claims ("this is why this works and when it does not").
 
 ## Borrowable Ideas
 

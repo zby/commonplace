@@ -29,7 +29,7 @@ The [tool loop index](./tool-loop-index.md) describes the framework-level packag
 
 ## Why chat sessions and tool loops default to trace-preserving state
 
-[The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md). Raw history is the easiest way to preserve maximum information when the caller does not yet know what matters: no premature compression, no lost false starts, no need to design a return schema upfront, immediate usefulness for UI and debugging.
+[The chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md). Raw history is the easiest way to preserve maximum information when the caller does not yet know what matters: no premature compression, no lost false starts, no need to design a return schema upfront, immediate usefulness for UI and debugging.
 
 This makes transcript inheritance a sensible **exploratory default**. Early in a design, when the real interface between stages is still unknown, preserving the trace minimizes the risk of throwing away the wrong thing.
 
@@ -110,7 +110,7 @@ Relevant Notes:
 
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — foundation: frame boundaries only become real interfaces when the parent sees a return value rather than the internal conversation
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the scheduler's state can store more artifacts than any one prompt should load; the real control point is the selection function
-- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — grounds: explains why transcript inheritance is attractive early and why it becomes costly as architectures mature
+- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md) — grounds: explains why transcript inheritance is attractive early and why it becomes costly as architectures mature
 - [tool loop](./tool-loop-index.md) — foundation: the trace problem appears when calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — special case: conversation preserves trace, prompt refinement compresses it into a cleaner handoff artifact
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
@@ -119,4 +119,4 @@ Relevant Notes:
 
 Distilled into:
 
-- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — higher-level architectural tradeoff extracted from this mechanism-level note
+- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md) — higher-level architectural tradeoff extracted from this mechanism-level note

@@ -39,7 +39,7 @@ Recommended revision anchor:
 
 ### 2. Runtime Decomposition Locates Memory's Subproblems
 
-[Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) gives a better architectural home for the design than "memory system."
+[Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) gives a better architectural home for the design than "memory system."
 
 Mapping:
 
@@ -107,7 +107,7 @@ Recommended revision anchor:
 
 The design study reuses this decomposition well. Typed cue indexes are a concrete mechanism for cue match. Budgeted cue loading handles priority arbitration. Imperative framing, checkpoint insertion, and contradiction surfacing are commitment interventions.
 
-[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) gives a broader context-engine version of the same mechanism: the agent should not have to know what to load; the runtime should inject referenced or triggered context. Typed cues are one special case of automatic injection, keyed on action or situation rather than document reference.
+[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) gives a broader context-engine version of the same mechanism: the agent should not have to know what to load; the runtime should inject referenced or triggered context. Typed cues are one special case of automatic injection, keyed on action or situation rather than document reference.
 
 [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) adds a useful surface distinction. Some policy belongs in always-loaded files, some in capability descriptions, some in memory, and some in configuration injection. Cues should be placed according to read/write cadence and context cost, not all promoted to the same surface.
 
@@ -214,7 +214,7 @@ Quality-signals also contributes useful evaluation ideas for the memory design:
 Recommended revision anchor:
 
 - Add "evaluation dimensions" after the retrieval section: direct retrieval, navigability, activation/behavioral uptake, and lifecycle health.
-- Treat noisy observations as a link/search pollution risk, grounded by [Flat memory predicts specific cross-contamination failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md).
+- Treat noisy observations as a link/search pollution risk, grounded by [Flat memory predicts specific cross-contamination failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md).
 
 ### 10. Workshop Theory Grounds the Missing Active Layer
 
@@ -293,7 +293,7 @@ If a durable note or policy generates a cue, the cue is a compiled view. It shou
 High-value "Relevant Notes" additions:
 
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — primary foundation for context scarcity.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — locates storage, activation, and scheduling responsibilities.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — locates storage, activation, and scheduling responsibilities.
 - [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — strongest local summary of memory as storage + context engineering + learning.
 - [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — grounds summaries, descriptions, cue triggers, and episode pointers as progressive-disclosure artifacts.
 - [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — grounds prose and symbolic memory artifacts as the practical learning substrate.

@@ -4,7 +4,7 @@ The review system stores per-gate review state in a local SQLite database while 
 
 This system is experimental and opt-in. It is not part of the default note-writing flow, and reviews should not be treated as always-on checks.
 
-It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [ADR-010](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md): review state stopped behaving like authored library content and started behaving like local operational state.
+It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [ADR-010](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md): review state stopped behaving like authored library content and started behaving like local operational state.
 
 ## Concepts
 

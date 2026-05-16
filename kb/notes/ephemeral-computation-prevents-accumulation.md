@@ -44,7 +44,7 @@ Kirsch's [essay against the strong ephemeral-software claim](https://www.blackhc
 
 ## Ephemerality as anti-codification
 
-[Codification](./definitions/codification.md) converts stochastic LLM behavior into deterministic, testable artifacts — each step [trading generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Ephemeral computation is the deliberate refusal to codify. It stays permanently in the stochastic regime, re-deriving solutions each time.
+[Codification](./definitions/codification.md) converts stochastic LLM behavior into deterministic, testable artifacts — each step [trading generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability.md). Ephemeral computation is the deliberate refusal to codify. It stays permanently in the stochastic regime, re-deriving solutions each time.
 
 This positions ephemerality and codification as endpoints on a spectrum. Most practical systems sit somewhere between: some artifacts are persisted and hardened, others are generated fresh each time. The [codification-relaxing dynamic](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) is about where to place each component on this spectrum — and being willing to move components in either direction as understanding changes.
 
@@ -63,6 +63,6 @@ Relevant Notes:
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — the dynamic that moves components between ephemeral and codified
 - [The verifiability gradient](./verifiability-gradient.md) — the ladder codification sits at the far end of
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames the timescale at which these placements adapt
-- [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the trade-off codification enacts
-- [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md) — extends: adds reach as the criterion that determines when the ephemeral/accumulating fork matters
+- [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability.md) — the trade-off codification enacts
+- [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: adds reach as the criterion that determines when the ephemeral/accumulating fork matters
 - [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation

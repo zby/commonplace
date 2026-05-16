@@ -25,7 +25,7 @@ When the title carries the argument, the pointer itself becomes the hint — eve
 
 [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — when titles are claims, following links reads as a reasoning chain. "since [structure enables navigation]" composes grammatically; "since [navigation notes]" doesn't. The note graph becomes scannable arguments. Link semantics ("since", "because", "but") encode relationship types — Toulmin warrants connecting grounds to claims.
 
-[Claim notes should use Toulmin-derived sections for structured argument](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — title-as-claim is the Toulmin claim; "since"/"because" link semantics encode warrants. Not all claim-titled notes need the full Toulmin scaffold, but the scaffold reveals what claim titles are doing implicitly.
+[Claim notes should use Toulmin-derived sections for structured argument](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — title-as-claim is the Toulmin claim; "since"/"because" link semantics encode warrants. Not all claim-titled notes need the full Toulmin scaffold, but the scaffold reveals what claim titles are doing implicitly.
 
 [Link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — an inline "since [X]" that uses a note as a premise carries more weight than a footer entry. Position and prose encode commitment level, creating a weighted graph orthogonal to relationship type.
 
@@ -53,7 +53,7 @@ Each practice instantiates this principle:
 
 ### Content registers constrain link direction
 
-The decision-cost model needs one more axis: the content layer of the source and target. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) argues that theory, description, and prescription have different quality goals and maintenance directions. Those differences constrain which links are load-bearing.
+The decision-cost model needs one more axis: the content layer of the source and target. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) argues that theory, description, and prescription have different quality goals and maintenance directions. Those differences constrain which links are load-bearing.
 
 A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. Reversing those relationships changes the maintenance contract. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
 

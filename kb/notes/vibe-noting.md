@@ -18,9 +18,9 @@ A knowledge base adds exactly that missing layer: structured, linked, readable a
 
 ## The reverse-compression failure mode
 
-The common failure mode of vibe-noting is [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding-information.md): a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more [epiplexity](./information-value-is-observer-relative.md) than the original sentence. It reads like depth — paragraphs, structure, examples — but the LLM is just expanding a compact signal without adding extractable structure for the reader.
+The common failure mode of vibe-noting is [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md): a human offers one sentence, the agent expands it into a full article grounded in its training knowledge, but the article carries no more [epiplexity](./information-value-is-observer-relative.md) than the original sentence. It reads like depth — paragraphs, structure, examples — but the LLM is just expanding a compact signal without adding extractable structure for the reader.
 
-A KB that links notes to each other should resist this because each link can add information the original sentence didn't contain. The network, not the prose, is where epistemic complexity accumulates. But resistance is not automatic — see the [full analysis](./reverse-compression-is-when-llm-output-expands-without-adding-information.md) for why links must be load-bearing, not decorative.
+A KB that links notes to each other should resist this because each link can add information the original sentence didn't contain. The network, not the prose, is where epistemic complexity accumulates. But resistance is not automatic — see the [full analysis](./reverse-compression-is-when-llm-output-expands-without-adding.md) for why links must be load-bearing, not decorative.
 
 ## The tension with verification
 
@@ -67,8 +67,8 @@ The note itself is an example of what it describes: an ephemeral exchange captur
 Relevant Notes:
 
 - [the-boundary-of-automation-is-the-boundary-of-verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — tension: code automates because it's verifiable; a KB improves augmentation because it's inspectable; these are independent axes
-- [agent-statelessness-means-the-context-engine-should-inject-context-automatically](./agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — complements: that note solves orientation through context-engine injection; this note argues that artifact structure (inspectability) is the prerequisite that makes injection useful
+- [agent-statelessness-means-the-context-engine-should-inject-context-automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — complements: that note solves orientation through context-engine injection; this note argues that artifact structure (inspectability) is the prerequisite that makes injection useful
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — extends: vibe-noting is the augmentation path while full automation remains blocked on oracle construction
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: currently vibe-noting produces library artifacts directly because the KB is still being built; at steady state, vibe-noting shifts to workshops — rough captures that get consumed, refined, and promoted to library or discarded
-- [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low-reach.md) — extends: reach explains why inspectability matters for knowledge work (high-reach outputs need accumulation) while vibe coding works without it (low-reach outputs don't)
+- [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: reach explains why inspectability matters for knowledge work (high-reach outputs need accumulation) while vibe coding works without it (low-reach outputs don't)
 - [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — sharpens scope: distinguishes the real weak claim (cheap disposable coding) from the overreach that important systems become ephemeral

@@ -56,7 +56,7 @@ A quality check's placement depends on three properties:
 
 **Harder:**
 - The "lightweight version" of a check (WRITING.md) may drift from the "full version" (experimental review system/recurring task). Need to track which notes distill from which.
-- This ADR should now be read alongside [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md), which explains why review execution became a scoped DB-backed exception to the repo's files-first design.
+- This ADR should now be read alongside [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), which explains why review execution became a scoped DB-backed exception to the repo's files-first design.
 - Judgment calls remain on borderline checks — the routing criteria help but don't eliminate ambiguity.
 
 ---

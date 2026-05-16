@@ -20,7 +20,7 @@ Spec-first fits cases where the relevant understanding already exists before exe
 
 The gain is front-loaded constraint. If the problem is mainly that the agent lacks enough context to choose among plausible implementations, a good upfront spec removes degrees of freedom before the expensive work begins.
 
-Its failure mode is committing to projections that only execution could validate. The spec becomes a fossilized guess — it looks authoritative, but execution keeps forcing repairs. This is the pattern [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) identifies: what looks like "requirements changed" is often that the upfront spec committed too early to one reading.
+Its failure mode is committing to projections that only execution could validate. The spec becomes a fossilized guess — it looks authoritative, but execution keeps forcing repairs. This is the pattern [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) identifies: what looks like "requirements changed" is often that the upfront spec committed too early to one reading.
 
 ## Bidirectional spec is for ambiguity that is only exposed during execution
 
@@ -73,7 +73,7 @@ The three-step sequence above is a common maturation path, not a law. Some syste
 Relevant Notes:
 
 - [deploy-time-learning-is-the-missing-middle](./deploy-time-learning-is-the-missing-middle.md) — extends: splits "co-evolving prose and code" (the agile-style co-evolution that deploy-time learning adopts) into distinct lifecycle strategies depending on where the understanding sits
-- [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — grounds: late-discovered "requirement changes" often indicate that understanding was not actually available upfront
+- [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — grounds: late-discovered "requirement changes" often indicate that understanding was not actually available upfront
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — situates: this is the late-phase strategy for rules that only become visible after repeated execution
 - [The Spec Is the New Code — A Guide to Spec Driven Development](https://x.com/juliandeangeIis/status/2033303156340240481) — source: grounds the spec-first end of the strategy space and the maturity model from Spec-First to Spec-as-Source
 - [What spec-driven development gets wrong](https://x.com/augmentcode/status/2025993446633492725) — source: grounds the bidirectional-spec critique that upfront specs decay unless execution keeps updating them

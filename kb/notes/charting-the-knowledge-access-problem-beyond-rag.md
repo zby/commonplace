@@ -14,7 +14,7 @@ This is a brainstorming note, not a settled position. The goal is to chart the s
 
 ## What success should be measured against
 
-The goal is not retrieval accuracy in isolation. A knowledge system for an agent should improve [contextual competence through discoverable, composable, trusted remembered knowledge](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md): not just answering a question, but helping the agent classify, plan, explain, and act appropriately under bounded context.
+The goal is not retrieval accuracy in isolation. A knowledge system for an agent should improve [contextual competence through discoverable, composable, trusted remembered knowledge](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md): not just answering a question, but helping the agent classify, plan, explain, and act appropriately under bounded context.
 
 That widens the evaluation target. An access strategy might be good at exact lookup but poor at orientation. Good at landing on a page but poor at surfacing contradictions. Good at retrieving chunks but poor at helping the agent compose them into an argument. Once the target is contextual competence rather than search accuracy, "best retrieval system" stops being a single-axis question.
 
@@ -34,7 +34,7 @@ That widens the evaluation target. An access strategy might be good at exact loo
 
 Search, hierarchy browsing, link-following, grep, and indexes support different mixes of these tasks. [Link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) names one important split, but there are probably more than two modes.
 
-These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md). The same token count can be easy for one task shape and unusable for another.
+These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md). The same token count can be easy for one task shape and unusable for another.
 
 **Transformation burden** — queries also differ in how much work remains after the relevant inputs have been found. This seems independent from navigation mode. Some questions are mostly lookup: "Who is the HR head?" Some are derivation or aggregation: "What were last year's expenses?" if the answer requires selecting records and summing them. Some are synthesis: "Why did expenses increase?" Some are conjectural or creative: "How should we reorganize HR next year?"
 
@@ -115,13 +115,13 @@ What seems new in agent systems is not the existence of these layers but the har
 
 Relevant Notes:
 
-- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) — broadens the success criterion from answer-finding to contextual competence
+- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — broadens the success criterion from answer-finding to contextual competence
 - [context engineering](./definitions/context-engineering.md) — frames the umbrella problem as routing, loading, scoping, and maintenance under bounded context
 - [distillation](./definitions/distillation.md) — treats TOCs, abstracts, and synthesized overviews as task-targeted compressions rather than generic summaries
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pointer-design part of the problem
 - [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — names one navigation split this note broadens into a larger task taxonomy
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends the navigation question from retrieval accuracy to movement between abstraction levels
-- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — sharpens why access strategies should be compared per task shape rather than globally
+- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — sharpens why access strategies should be compared per task shape rather than globally
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds the claim that access architecture must manage degradation rather than only fit under a hard limit
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds the symbolic/semantic split as symbolic scheduling and bounded semantic calls rather than treating all post-retrieval work as one kind
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — adds the case where answers are mechanically derived on demand rather than retrieved verbatim or persisted as durable knowledge
@@ -129,4 +129,4 @@ Relevant Notes:
 - [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — extends the library analogy into a broader family of bounded-processor traditions
 - [evolving understanding needs re-distillation, not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — grounds the claim that some questions are synthesis problems, not page-selection problems
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — narrows one layer of the design space to substrate choice rather than treating it as the whole architecture
-- [access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query-dimensions.md) — extracted: develops the two-axis decomposition and the symbolic/semantic corollary into a standalone claim
+- [access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query.md) — extracted: develops the two-axis decomposition and the symbolic/semantic corollary into a standalone claim

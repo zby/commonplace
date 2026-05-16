@@ -100,6 +100,6 @@ Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: MemoryOS is an online prose-memory system that distills conversation traces into profile and knowledge prompt context.
 - [knowledge-storage-does-not-imply-contextual-activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: MemoryOS couples storage with an activation path into response prompts.
-- [agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md) - contrasts: MemoryOS improves conversational recall but has thin trust and governance surfaces.
+- [agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - contrasts: MemoryOS improves conversational recall but has thin trust and governance surfaces.
 - [distillation](../../notes/definitions/distillation.md) - grounds: MemoryOS compresses raw dialogue into summaries, profile text, and concise facts for future generation.
 - [files-not-database](../../notes/files-not-database.md) - contrasts: the PyPI path is file-backed, while the ChromaDB path moves retrieval state into a database-backed substrate.

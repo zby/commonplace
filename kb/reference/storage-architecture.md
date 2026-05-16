@@ -55,10 +55,10 @@ Review state is the one subsystem that is not file-backed. The review database s
 
 Acceptance is keyed by `(note_path, gate_id, model_id)`. Current acceptance for any key is the latest `acceptance_events` row, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate SHAs from files and compares them against accepted SHAs from the database.
 
-Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) for the rationale.
+Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) for the rationale.
 
 ## See also
 
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
-- [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — decision: SQLite for review state
+- [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — decision: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — decision: `kb/reports/` for generated operational artifacts

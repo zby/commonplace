@@ -23,7 +23,7 @@ Herbert Simon's definition grounds this: "learning is any change in a system tha
 | Discover a design principle | All future decisions in that area | "Types and directories are orthogonal" applies broadly |
 | Improve methodology | All future KB operations | The verifiability gradient changes how everything constrains |
 
-The scope axis contains a qualitative distinction, not just a quantitative one. **Accumulation** — adding knowledge to the store — is itself a learning operation, and the most basic one. But what you accumulate varies in [reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). At the narrow end are **facts** — "the key is on the table," a specific claim, a particular observation. At the broad end are **rules and theories** — "types and directories are orthogonal," a design principle, an abstraction. Both are genuine learning through accumulation. Reach is the property that distinguishes them: facts are adaptive knowledge (useful for the immediate context but don't transfer), while theories are explanatory knowledge (they apply in contexts they weren't designed for, because they capture structure rather than circumstance).
+The scope axis contains a qualitative distinction, not just a quantitative one. **Accumulation** — adding knowledge to the store — is itself a learning operation, and the most basic one. But what you accumulate varies in [reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md). At the narrow end are **facts** — "the key is on the table," a specific claim, a particular observation. At the broad end are **rules and theories** — "types and directories are orthogonal," a design principle, an abstraction. Both are genuine learning through accumulation. Reach is the property that distinguishes them: facts are adaptive knowledge (useful for the immediate context but don't transfer), while theories are explanatory knowledge (they apply in contexts they weren't designed for, because they capture structure rather than circumstance).
 
 Fact accumulation is real and valuable — [AgeMem's](./memory-management-policy-is-learnable-but-oracle-dependent.md) 23-49% improvement on task completion comes entirely from storing and retrieving the right facts. But facts alone don't compound into deeper understanding. [Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — positing an abstraction and recognizing particulars as instances of it — is the operation that produces theories, and theories are the highest-reach items accumulation can store.
 
@@ -33,7 +33,7 @@ Argyris's [single-loop vs double-loop learning](https://infed.org/dir/welcome/ch
 
 Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, distilled skills reduce cost.
 
-The generality-vs-compound trade-off is the primary dynamic: [constraining and distillation both trade generality for compound gains](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md)).
+The generality-vs-compound trade-off is the primary dynamic: [constraining and distillation both trade generality for compound gains](./constraining-and-distillation-both-trade-generality-for-reliability.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md)).
 
 ## Other dimensions
 
@@ -49,12 +49,12 @@ Generality and the compound don't exhaust what matters. A verified claim is more
 
 Relevant Notes:
 
-- [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
+- [constraining and distillation both trade generality for compound](./constraining-and-distillation-both-trade-generality-for-reliability.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
 - [constraining](./definitions/constraining.md) — one mechanism: constrains the interpretation space, trading generality for compound
 - [distillation](./definitions/distillation.md) — the other mechanism: targeted extraction from reasoning under context budget constraints
 - [codification](./definitions/codification.md) — the far end of constraining where the compound gain is largest
 - [the verifiability gradient](./verifiability-gradient.md) — structures the compound dimension
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — frames where the gradient-moving happens on the system-adaptation timescale
-- [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — grounds: Deutsch's reach criterion distinguishes facts (adaptive, no reach) from rules (explanatory, reach)
+- [first-principles reasoning selects for reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: Deutsch's reach criterion distinguishes facts (adaptive, no reach) from rules (explanatory, reach)
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the operation that converts facts into rules by positing abstractions
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem learns a policy for managing facts (when to store, retrieve, summarize) but operates entirely on facts, never producing rules or reach

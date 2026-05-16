@@ -63,11 +63,11 @@ The imperative style means refactoring between neural and symbolic uses the same
 
 Relevant Notes:
 
-- Distilled into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence-boundaries.md)
+- Distilled into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md)
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
 - [constraining](./definitions/constraining.md) — the mechanism that unified calling makes frictionless
 - [codification](./definitions/codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites
 - [instructions-are-typed-callables](./instructions-are-typed-callables.md) — the type-theoretic view that llm-do operationalises
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — extends: extract-function and inline refactoring transfer directly when calling conventions are unified
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: relaxing signals answer "when should you relax?" — unified calling makes the relaxing refactoring cheap once the signal fires

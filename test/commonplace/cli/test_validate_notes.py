@@ -15,6 +15,7 @@ import pytest  # noqa: E402
 
 from commonplace.cli import validate_notes  # noqa: E402
 from commonplace.lib import project_paths, validation  # noqa: E402
+from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH  # noqa: E402
 
 
 FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
@@ -447,7 +448,7 @@ status: current
 
 def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
-    overlong_slug = "a" * 101
+    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
     note = write(
         notes_root / f"{overlong_slug}.md",
         """---
@@ -463,7 +464,10 @@ status: current
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "filename slug: 101 chars exceeds limit of 100" in results.fails
+    assert (
+        f"filename slug: {MAX_NOTE_SLUG_LENGTH + 1} chars exceeds limit of "
+        f"{MAX_NOTE_SLUG_LENGTH}"
+    ) in results.fails
 
 
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:

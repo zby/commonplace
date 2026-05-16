@@ -33,7 +33,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 - [agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md) — **grounds**: The entire SDD argument rests on the underspecification framework. The dark mode example ("found an existing theme context provider") is an interpretation choice being surfaced rather than silently committed. The bidirectional spec is a mechanism for making projections visible.
 
-- [changing-requirements-conflate-genuine-change-with-disambiguation-failure](../notes/changing-requirements-conflate-genuine-change-with-disambiguation-failure.md) — **exemplifies**: The dark mode example is a disambiguation failure surfacing mid-execution. The human's spec assumed a new store; the agent found an existing context provider. The bidirectional spec catches disambiguation failures in real time rather than at iteration boundaries.
+- [changing-requirements-conflate-genuine-change-with-disambiguation-failure](../notes/changing-requirements-conflate-genuine-change-with-disambiguation.md) — **exemplifies**: The dark mode example is a disambiguation failure surfacing mid-execution. The human's spec assumed a new store; the agent found an existing context provider. The bidirectional spec catches disambiguation failures in real time rather than at iteration boundaries.
 
 - [deploy-time-learning-is-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **exemplifies**: Augment independently arrives at the same co-evolution loop — prose spec and code co-evolve, with the spec updating as agents discover reality. The spec isn't temporary backlog waiting to become code; it's a persistent co-maintained artifact.
 

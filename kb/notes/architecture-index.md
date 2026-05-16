@@ -17,7 +17,7 @@ For current-state subsystem documentation and ADR navigation, start at [../refer
 - [reference overview](../reference/README.md) — entry point for current-state docs and architecture decisions
 - [commonplace-architecture](../reference/architecture.md) — the commonplace repo structure: KB collections, packaged runtime, shipped skills, and operational surfaces
 - [006-two-tree-installation-layout](../reference/adr/006-two-tree-installation-layout.md) — how commonplace installs into projects: two-tree layout, copy-vs-reference boundary, design rationale
-- [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and-accumulate-operational-metadata.md) — review storage crosses the files-first boundary once reviews are gitignored operational state keyed by `(note, gate, model)`
+- [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — review storage crosses the files-first boundary once reviews are gitignored operational state keyed by `(note, gate, model)`
 - [kb-goals-in-always-loaded-context-guide-inclusion-decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — installed KBs need explicit domain goals in the control-plane file
 - [control-plane-goals](../reference/control-plane-goals.md) — current-state: how commonplace realises KB goals in `AGENTS.md`, the scaffold template, and the install-time fill-in flow
 - [files-not-database](./files-not-database.md) — files with git beat a database: universal interface, free versioning, zero infrastructure
@@ -31,5 +31,5 @@ For current-state subsystem documentation and ADR navigation, start at [../refer
 
 ## Other tagged notes <!-- generated -->
 
-- [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) - Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation
+- [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) - Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation
 - [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) - Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are

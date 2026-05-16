@@ -36,7 +36,7 @@ RLM illustrates a mixed point: the model authors symbolic orchestrator code, but
 
 ## Coordination guarantee
 
-**What failure mode the architecture prevents when coordination happens.** The form of coordination does not tell you whether the architecture is safe — a shared substrate can exist with or without the guarantee matched to its composition mode. [Agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) develops this in detail. The three main guarantee families:
+**What failure mode the architecture prevents when coordination happens.** The form of coordination does not tell you whether the architecture is safe — a shared substrate can exist with or without the guarantee matched to its composition mode. [Agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just.md) develops this in detail. The three main guarantee families:
 
 - **Isolation / scoping** — prevents contamination
 - **Consistency / ownership / visibility** — prevents inconsistency in shared state
@@ -67,7 +67,7 @@ Relevant Notes:
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — boundary case: model-authored external scheduler with ephemeral persistence
 - [tool loop](./tool-loop-index.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination forms vary independently of scheduler placement
-- [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
+- [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — vocabulary: decomposition policy is a system-definition authority path over an operative part that can be carried by distributed-parametric, prose, or symbolic forms on different substrates
 - [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — extends: episodes and thread-weaving add combinations the one-axis framing cannot represent cleanly
 - [The Mismanaged Geniuses Hypothesis](../sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md) — extends: argues for codifying a decomposition language while training the policy that chooses decompositions inside it

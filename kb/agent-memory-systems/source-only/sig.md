@@ -53,6 +53,6 @@ Do not create `kb/agent-memory-systems/reviews/sig-releases.md` unless public ap
 Relevant Notes:
 
 - [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — aligns: Sig's public story makes plain files the integration boundary for AI tools
-- [agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context-automatically.md) — motivates: Sig addresses the "new chat starts from nothing" problem by making work context loadable
+- [agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) — motivates: Sig addresses the "new chat starts from nothing" problem by making work context loadable
 - [Napkin](../reviews/napkin.md) — compares: both adapt a local file substrate into an agent-facing memory interface, but Napkin is code-inspected and vault-oriented while Sig is source-only and workplace-capture oriented
 - [engraph](../reviews/engraph.md) — compares: both treat local human-authored notes as agent-accessible memory; engraph exposes the indexing and MCP/HTTP layer, while Sig's implementation is not visible

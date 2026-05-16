@@ -8,13 +8,13 @@ status: seedling
 
 # Psychology-to-agent transfer needs per-principle failure-mode testing
 
-The KB has a recurring tension: cognitive science analogies keep appearing in agent memory discourse (Tulving's taxonomy, Conway's self-memory system, Damasio's somatic markers), but it's unclear whether they transfer mechanistically or just provide vocabulary. The [three-space memory note](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) leaves this open explicitly: "whether the cognitive science analogy adds explanatory power beyond [simpler advice] remains to be seen."
+The KB has a recurring tension: cognitive science analogies keep appearing in agent memory discourse (Tulving's taxonomy, Conway's self-memory system, Damasio's somatic markers), but it's unclear whether they transfer mechanistically or just provide vocabulary. The [three-space memory note](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) leaves this open explicitly: "whether the cognitive science analogy adds explanatory power beyond [simpler advice] remains to be seen."
 
 Three existing KB notes contain the components of a methodology for testing this. This note assembles them and runs the test against [Youssef's five psychology principles for AI memory](https://x.com/rryssf_/status/2025307030651871631).
 
 ## The methodology
 
-**Component 1: Per-convention failure-mode matching.** From [human writing structures transfer because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md): don't assume wholesale transfer. For each proposed principle, ask: "what specific failure does this address in humans, and does the agent exhibit that failure?" The Lampinen results show this must be done per-convention — some transfer, some don't, and you can't tell without checking.
+**Component 1: Per-convention failure-mode matching.** From [human writing structures transfer because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md): don't assume wholesale transfer. For each proposed principle, ask: "what specific failure does this address in humans, and does the agent exhibit that failure?" The Lampinen results show this must be done per-convention — some transfer, some don't, and you can't tell without checking.
 
 **Component 2: Intermediate-position warning.** From [LLM learning phases fall between human modes](./llm-learning-phases-fall-between-human-learning-modes.md): LLM phases don't map 1:1 to human cognition. Pre-training conflates evolution and learning; in-context conflates learning and retrieval. Analogies that assume a clean mapping will systematically mispredict what helps.
 
@@ -26,7 +26,7 @@ Three existing KB notes contain the components of a methodology for testing this
 
 *Human failure addressed:* Memories become harder to access as they age and multiply; temporal hierarchy (lifetime periods → general events → specific episodes) provides retrieval structure.
 
-*Does the agent exhibit this failure?* Yes — flat memory stores without temporal indexing do degrade retrieval as they grow. The [flat-memory predictions note](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) documents this: operational debris pollutes search.
+*Does the agent exhibit this failure?* Yes — flat memory stores without temporal indexing do degrade retrieval as they grow. The [flat-memory predictions note](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) documents this: operational debris pollutes search.
 
 *Simpler mechanism:* Temporal indexing with decay weighting. This is standard information retrieval — you don't need Conway's Self-Memory System to justify organizing memories by time. The hierarchical structure (lifetime periods → general events → episodes) doesn't have a clear agent analogue; agents don't have "lifetime periods."
 
@@ -96,9 +96,9 @@ The bet is that the separation is useful but the Tulving mapping is decorative �
 
 Relevant Notes:
 
-- [human writing structures transfer because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes-overlap.md) — foundation: provides the per-convention failure-mode matching methodology this note generalizes
+- [human writing structures transfer because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — foundation: provides the per-convention failure-mode matching methodology this note generalizes
 - [LLM learning phases fall between human modes](./llm-learning-phases-fall-between-human-learning-modes.md) — foundation: the intermediate-position warning that prevents 1:1 human-to-LLM mapping
-- [three-space agent memory echoes Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy-may-be-decorative.md) — extends: this note's methodology directly addresses the "decorative?" question left open there
+- [three-space agent memory echoes Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — extends: this note's methodology directly addresses the "decorative?" question left open there
 - [Youssef: psychology principles for AI memory](https://x.com/rryssf_/status/2025307030651871631) — source: the five principles used as worked examples
-- [flat memory predicts specific cross-contamination failures](./flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md) — evidence: documents the search pollution failure mode that principles 1 and 2 address
+- [flat memory predicts specific cross-contamination failures](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — evidence: documents the search pollution failure mode that principles 1 and 2 address
 - [deepfates LLM memory critique](https://x.com/deepfates/status/2036857868914483592) — contradicts source: same diagnosis, opposite solution — weight updates vs architecture

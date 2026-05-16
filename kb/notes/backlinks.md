@@ -37,7 +37,7 @@ When a note acquires a "contradicts" link from another note, the tension is only
 ## Non-use-cases
 
 - **Creating new notes** — finding relevant existing notes to link to is a search/discovery problem, not a backlink problem.
-- **Orphan detection** — a batch maintenance task already handled by [grep-based checks](./maintenance-operations-catalogue-should-stage-distillation-into-instructions.md). Both orphan detection and hub identification use inbound link counts, but they differ in threshold (zero vs. high) and purpose (batch cleanup vs. read-time orientation). Orphan detection doesn't need read-time visibility — it's a periodic sweep, not a navigation aid.
+- **Orphan detection** — a batch maintenance task already handled by [grep-based checks](./maintenance-operations-catalogue-should-stage-distillation-into.md). Both orphan detection and hub identification use inbound link counts, but they differ in threshold (zero vs. high) and purpose (batch cleanup vs. read-time orientation). Orphan detection doesn't need read-time visibility — it's a periodic sweep, not a navigation aid.
 - **Index maintenance** — indexes are curated navigation, not mechanical link lists. Backlinks don't replace the judgment needed to decide what belongs in an index.
 
 ## Design options

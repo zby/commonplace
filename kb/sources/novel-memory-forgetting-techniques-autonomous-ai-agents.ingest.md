@@ -31,7 +31,7 @@ The connection report identified 9 genuine connections, with the strongest being
 
 2. **[agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md)** — extends: fills the "curation frontier" gap — none of the eleven reviewed systems implement bounded forgetting as a first-class operation. This paper adds a new position on the agency model dimension: developer-designed relevance formula (neither agent-self-managed nor RL-trained).
 
-3. **[flat-memory-predicts-specific-cross-contamination-failures](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable.md)** — extends with empirical evidence: the paper's finding that uncontrolled memory accumulation causes "false memory propagation" is direct evidence for predicted failure mode #1 (operational debris pollutes search).
+3. **[flat-memory-predicts-specific-cross-contamination-failures](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md)** — extends with empirical evidence: the paper's finding that uncontrolled memory accumulation causes "false memory propagation" is direct evidence for predicted failure mode #1 (operational debris pollutes search).
 
 4. **[notes-need-quality-scores-to-scale-curation](../notes/notes-need-quality-scores-to-scale-curation.md)** — enables: the paper's relevance scoring formula (recency + frequency + semantic alignment) is a tested implementation of note quality scoring for curation at scale.
 
@@ -69,7 +69,7 @@ A synthesis opportunity was identified: an inspectability-learnability spectrum 
 
 **Conversational-agent-specific benchmarks only.** LOCOMO, LOCCO, and MultiWOZ are all conversational dialogue benchmarks. The paper's claims about "autonomous AI agents" are broader than what the evaluation supports. Whether constrained forgetting helps for task-oriented agents (ALFWorld, WebArena), knowledge-management agents, or multi-agent systems is untested. The reach of the results is lower than the framing implies.
 
-**Fixed budget assumption.** The framework assumes a fixed memory budget. The KB's [effective context is task-relative](../notes/effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) note argues that context budgets vary by task complexity. A fixed-budget forgetting framework may be over-pruning for simple tasks and under-pruning for complex ones. The paper does not address adaptive budget sizing.
+**Fixed budget assumption.** The framework assumes a fixed memory budget. The KB's [effective context is task-relative](../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) note argues that context budgets vary by task complexity. A fixed-budget forgetting framework may be over-pruning for simple tasks and under-pruning for complex ones. The paper does not address adaptive budget sizing.
 
 **Snapshot quality limits detailed assessment.** The arxiv HTML snapshot captures the paper's structure and key claims but may lose some quantitative detail (exact F1 scores, ablation tables, statistical significance tests). Our assessment of the empirical strength is based on the framework description and qualitative results summary rather than full numerical analysis.
 

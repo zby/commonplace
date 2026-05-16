@@ -17,7 +17,7 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 2. **Our type ladder mirrors this.** The [available types](../reference/available-types.md) hierarchy follows the same pattern:
    - **`text`** — no frontmatter, just write. Zero friction, like creating a wiki page.
    - **`note`** — add frontmatter, claim title, connections. Now findable.
-   - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md).
+   - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 
    Each step adds structure only when the thought has earned it. The file never moves or gets copied — it grows structure in place.
 
@@ -42,9 +42,9 @@ This connects to [codification](./definitions/codification.md): codification is 
 Relevant Notes:
 
 - [available types](../reference/available-types.md) — the type ladder this principle animates: text → note → structured-claim
-- [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — the structured-claim type that sits at the top of the refinement ladder
+- [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — the structured-claim type that sits at the top of the refinement ladder
 - [codification](./definitions/codification.md) — the general pattern; the wiki principle is the UX requirement that makes codification practical
-- [constraining and distillation both trade generality for compound](../notes/constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
+- [constraining and distillation both trade generality for compound](../notes/constraining-and-distillation-both-trade-generality-for-reliability.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
 - [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — enables: Toulmin's argumentation model provides the Evidence/Reasoning/Caveats sections that define the top rung of the refinement ladder

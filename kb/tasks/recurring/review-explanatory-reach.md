@@ -1,6 +1,6 @@
 # Review: Explanatory Reach
 
-Audit KB notes against the explanatory reach test from [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Identify notes that are merely adaptive (record what works without explaining why) and flag them for deepening.
+Audit KB notes against the explanatory reach test from [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md). Identify notes that are merely adaptive (record what works without explaining why) and flag them for deepening.
 
 This file is a stable runbook. Do not edit it per run; only change it when scope or process changes.
 

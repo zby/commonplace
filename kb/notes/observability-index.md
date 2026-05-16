@@ -14,16 +14,16 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 - [tool loop](./tool-loop-index.md) — inspectable orchestration is a precondition for seeing how a run actually progressed rather than inferring from the final artifact
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — bridges observability to memory: hidden fallback paths and degraded execution become extraction targets for maintenance and repair
-- [Apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — successful outcomes can hide broken helpers and degraded execution paths, so final success alone is not a trustworthy operational signal
+- [Apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful outcomes can hide broken helpers and degraded execution paths, so final success alone is not a trustworthy operational signal
 - [Silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends the same observability problem to underspecified specs: a useful artifact can hide that the contract did not determine the path and the runtime repaired it locally
-- [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — explains why programmers over-trust successful outcomes when semantic recovery hides the broken mechanism
+- [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — explains why programmers over-trust successful outcomes when semantic recovery hides the broken mechanism
 
 ## Detection & Signals
 
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — catalog of weak signals that can make hidden quality changes visible enough to drive maintenance or learning loops
 - [Notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — compresses many weak signals into ranked note quality so curation effort goes where it matters
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — dependency-aware staleness detection turns silent drift into an explicit review queue
-- [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation-cannot.md) — adversarial reading supplies visibility into content failures that deterministic validation never surfaces
+- [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation.md) — adversarial reading supplies visibility into content failures that deterministic validation never surfaces
 
 ## Inspectable Artifact
 
@@ -38,4 +38,4 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Other tagged notes <!-- generated -->
 
-- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially-after-cache-aware-weighting.md) - April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor
+- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) - April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor

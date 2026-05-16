@@ -28,7 +28,7 @@ last-checked: "2026-02-25"
 
 ## Comparison with Our System
 
-Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [available types](../../reference/available-types.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
+Thalo is the system closest to our theoretical position. They explicitly argue that knowledge should be treated like code — with schemas, types, validation, version control. This is [programming practices applied to knowledge management](../../notes/underspecification-and-indeterminism-complicate-programming-for.md) taken to its logical conclusion — where we apply typing, testing, and progressive compilation through conventions, they built an actual compiler. Their entity/entry system is our [available types](../../reference/available-types.md) with types and traits, but expressed as a formal grammar instead of YAML conventions.
 
 The comparison illuminates a design spectrum:
 
@@ -45,7 +45,7 @@ The comparison illuminates a design spectrum:
 
 **They built a language; we stayed in markdown.** The trade-off is clear: a custom grammar gives you compiler-grade validation, LSP, incremental parsing. But it also means a new syntax to learn, tooling to maintain, and knowledge locked into a format that only thalo tools can process. Our markdown approach is lower-ceremony, works with every tool that reads text, but validation is softer.
 
-**Same destination, different trajectory.** Our type systems aim at the same thing — types with defined sections, checkable structure. The difference is timing: they committed to their types upfront via a formal grammar; we [discovered ours through practice](../../notes/document-types-should-be-verifiable.md). Several types have now codified — [`structured-claim`](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) with Evidence/Reasoning/Caveats sections (partly inspired by this comparison flagging the gap), `adr` with Context/Decision/Consequences, `related-system` with Core Ideas/Comparison/Borrowable Ideas. These live as directory-scoped templates in `types/` subdirectories, validated by convention rather than grammar. Their grammar gives them deterministic validation; our approach discovered the right shapes before formalising, and deterministic validation is [the next step](../../notes/deterministic-validation-should-be-a-script.md).
+**Same destination, different trajectory.** Our type systems aim at the same thing — types with defined sections, checkable structure. The difference is timing: they committed to their types upfront via a formal grammar; we [discovered ours through practice](../../notes/document-types-should-be-verifiable.md). Several types have now codified — [`structured-claim`](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) with Evidence/Reasoning/Caveats sections (partly inspired by this comparison flagging the gap), `adr` with Context/Decision/Consequences, `related-system` with Core Ideas/Comparison/Borrowable Ideas. These live as directory-scoped templates in `types/` subdirectories, validated by convention rather than grammar. Their grammar gives them deterministic validation; our approach discovered the right shapes before formalising, and deterministic validation is [the next step](../../notes/deterministic-validation-should-be-a-script.md).
 
 **They don't have a learning theory.** Thalo has validation (is this entry well-formed?) but no framework for deciding *when* to formalise something vs. leave it stochastic. No [verifiability gradient](../../notes/verifiability-gradient.md), no constrain/relax boundary. Their 27 rules are all fixed at design time — equivalent to jumping straight to the "script" level of the [methodology enforcement gradient](../../notes/methodology-enforcement-is-constraining.md), skipping the instruction and skill phases where practices prove out before hardening.
 
@@ -55,7 +55,7 @@ The comparison illuminates a design spectrum:
 
 ### What We've Borrowed
 
-- **Argument sections.** Their opinion entity (Claim/Reasoning/Caveats) was one of three threads that converged on [`structured-claim`](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) with Toulmin-derived Evidence/Reasoning/Caveats sections. See the [type comparison](../thalo-type-comparison.md) for details.
+- **Argument sections.** Their opinion entity (Claim/Reasoning/Caveats) was one of three threads that converged on [`structured-claim`](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) with Toulmin-derived Evidence/Reasoning/Caveats sections. See the [type comparison](../thalo-type-comparison.md) for details.
 
 ### What We Could Still Borrow
 
@@ -85,7 +85,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](../../notes/oracle-strength-spectrum.md) — foundation: Thalo's 27 rules are hard oracles manufactured for knowledge quality; the comparison illuminates what "oracle hardening" looks like when pursued to full formalization
 - [instructions-are-typed-callables](../../notes/instructions-are-typed-callables.md) — foundation: Thalo's entity system is this principle taken to a full compiler; our YAML conventions occupy a different point on the same spectrum
-- [programming-practices-apply-to-prompting](../../notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
+- [programming-practices-apply-to-prompting](../../notes/underspecification-and-indeterminism-complicate-programming-for.md) — synthesizes: Thalo is the most extreme example of programming practices (typing, testing, compilation) applied to knowledge management — they built an actual compiler where we use conventions
 - [the verifiability gradient](../../notes/verifiability-gradient.md) — contrasts: Thalo has no verifiability gradient; their rules are fixed at design time, while the gradient explains why progressive formalization (prompt -> schema -> code) beats upfront commitment
 - [document-types-should-be-verifiable](../../notes/document-types-should-be-verifiable.md) — converges: same goal (types with defined sections, checkable structure), different trajectory — they committed upfront via grammar, we discover through practice
 - [available types](../../reference/available-types.md) — converges: our base types + traits model and Thalo's entity definitions aim at the same thing — structural contracts on knowledge — at different maturity stages

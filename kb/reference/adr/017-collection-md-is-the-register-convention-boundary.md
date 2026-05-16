@@ -72,7 +72,7 @@ This keeps responsibilities separate:
 Relevant Notes:
 
 - [Register](../../notes/definitions/register.md) - defines register as a content mode and notes that collection-level encoding is a design choice, not a theoretical necessity
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) - foundation: the three-register theory and the argument for per-register conventions
+- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) - foundation: the three-register theory and the argument for per-register conventions
 - [Type loading](../type-loading.md) - describes how authoring and validation resolve structural type contracts after the collection convention boundary is selected
 - [ADR-012: types for structure, traits for review](./012-types-for-structure-traits-for-review.md) - foundation: keeps structural type identity separate from semantic review and placement conventions
 - [ADR-016: custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) - preserved for specialized type packaging, but its `WRITING.md` loading assumption is superseded here

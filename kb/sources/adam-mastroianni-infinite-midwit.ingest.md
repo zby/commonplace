@@ -34,7 +34,7 @@ Mastroianni argues that recent AI progress has increased his confidence, not his
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — **grounds**: the source gives a vivid prose-level case where local competence still lacks per-instance judgment
 - [automated-synthesis-is-missing-good-oracles](../notes/automated-synthesis-is-missing-good-oracles.md) — **extends**: "boringness" is a concrete name for the otherwise abstract synthesis-evaluation bottleneck
 - [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md) — **extends**: the essay sharpens the value of knowing what not to do, not just how to execute more cheaply
-- [when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest](./when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest.md) — **extends**: same claim from a different rhetorical angle, with labor economics and research taste instead of objective/subjective intelligence
+- [when-code-is-free-research-is-all-that-matters-2031072399731675269.ingest](./when-code-is-free-research-is-all-that-matters-2031072399731675.ingest.md) — **extends**: same claim from a different rhetorical angle, with labor economics and research taste instead of objective/subjective intelligence
 
 The key fit is that the source does not primarily add a new automation-boundary claim; it adds a more intuitive, human-facing vocabulary for why the existing oracle-boundary notes feel true in writing and research practice.
 
@@ -64,4 +64,4 @@ The permanence claim is under-argued. The essay insists that the central hole "s
 
 ## Recommended Next Action
 
-Write a note titled `Research taste is no-oracle reach judgment` connecting to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md), [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), and [first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — it would argue that what practitioners call "taste" is the ability to select high-reach directions where no cheap verifier exists.
+Write a note titled `Research taste is no-oracle reach judgment` connecting to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md), [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), and [first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — it would argue that what practitioners call "taste" is the ability to select high-reach directions where no cheap verifier exists.

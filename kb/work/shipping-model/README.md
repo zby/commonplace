@@ -33,7 +33,7 @@ This interacts with several systems and cannot be done as a one-line path change
 
 - [kb/reference/README.md](../../reference/README.md) — current shipped-system documentation surface
 - [kb/reference/adr/](../../reference/adr/) — prior architecture decisions
-- [Agent-operated KB maximizes contextual competence through discoverable, composable, trusted knowledge](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md) — why the library/user boundary matters for trust
+- [Agent-operated KB maximizes contextual competence through discoverable, composable, trusted knowledge](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md) — why the library/user boundary matters for trust
 - [Distillation status determines directory placement](../../notes/distillation-status-determines-directory-placement.md) — existing theory for why structural placement carries meaning
 - [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — framing for why this is a workshop
 

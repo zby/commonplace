@@ -17,10 +17,10 @@ This workshop keeps that adoption bar. It considers only the three most promisin
 
 ## Current grounding
 
-- [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support.md) — adoption filter for borrowing outside programming
+- [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — adoption filter for borrowing outside programming
 - [Mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — existing Popperian borrowing
-- [First-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md) — existing Deutsch borrowing
-- [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md) — existing Toulmin borrowing
+- [First-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — existing Deutsch borrowing
+- [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — existing Toulmin borrowing
 - [Constraining](../../notes/definitions/constraining.md) — current home of the Carnap explication reference
 - [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — type semantics the speech-act candidate may sharpen
 - [Brainstorming: how reach informs KB design](../../notes/brainstorming-how-reach-informs-kb-design.md) — maintenance risk from high-reach revisions, relevant to Quine

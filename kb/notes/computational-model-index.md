@@ -14,9 +14,9 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — core framing: LLM instructions are distinguished by underspecified semantics and execution indeterminism; also foundational to [learning-theory](./learning-theory-index.md)
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — why context is the scarce resource; cost has two dimensions (volume and complexity) that drive the mechanisms below
-- [effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — usable context varies with task type and prompt complexity, so raw window size is too coarse
+- [effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — usable context varies with task type and prompt complexity, so raw window size is too coarse
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop with explicit state update
-- [agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — runtime taxonomy connecting scheduler, context engine, and inspectable external state
+- [agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — runtime taxonomy connecting scheduler, context engine, and inspectable external state
 - [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation (natural language tokens), enabling extensibility but removing structural guardrails; precedents in Lisp, Emacs, Smalltalk
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one mechanism for isolation
 
@@ -25,10 +25,10 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 ### Design space & decomposition
 
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — scheduler placement, persistence, coordination form, guarantee, and return artifacts vary independently
-- [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just-coordination-channels.md) — contamination, inconsistency, and amplification arise from different missing guarantees
+- [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just.md) — contamination, inconsistency, and amplification arise from different missing guarantees
 - [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — practical rules: separate selection from joint reasoning, choose representations not subsets, save reusable intermediates
-- [semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems.md) — goals too large for one call require symbolic partitioning and staged aggregation
-- [solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs.md) — sequencing heuristic: commit least-flexible decisions first
+- [semantic-sub-goals-that-exceed-one-context-window-become-scheduling-problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — goals too large for one call require symbolic partitioning and staged aggregation
+- [solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking-better-designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md) — sequencing heuristic: commit least-flexible decisions first
 
 ### Scheduler implementation
 
@@ -37,27 +37,27 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 ### Session history & handoff
 
-- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation-simplicity.md) — chat became the default because transcript carry-forward is cheap to build and preserves information
+- [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md) — chat became the default because transcript carry-forward is cheap to build and preserves information
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — stored history and next-context loading are separate decisions; `select` should decide what to load
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — conversation preserves trace, prompt refinement compresses it, context cloning forks a prefix
 
 ### Tool loop & hidden scheduling
 
 - [tool loop](./tool-loop-index.md) — tool calls are not enough unless frameworks keep state progression and recursion exposed
-- [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent-frameworks.md) — the decisive boundary: child tasks need fresh tool surfaces, not one fixed loop
+- [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) — the decisive boundary: child tasks need fresh tool surfaces, not one fixed loop
 - [stateful tools recover control by becoming hidden schedulers](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) — hidden loops can recover substantial control by relocating the scheduler into tools
 - [codified scheduling patterns can turn tools into hidden schedulers](./codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md) — once next-step policy stabilizes into code, hiding it collapses orchestration into covert runtime logic
 
 ### Observability & error masking
 
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned-tool-loops.md) — agent workarounds hide broken tools, so final success stops being evidence of healthy scripts
+- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — agent workarounds hide broken tools, so final success stops being evidence of healthy scripts
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — the same hidden-recovery problem for semantic rather than operational missing pieces
-- [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover-semantically.md) — semantic recovery hides where debugging effort should go
+- [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — semantic recovery hides where debugging effort should go
 
 ## Instruction Properties
 
 - [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — the five empirically observed context-file writing styles correspond to different strategies for narrowing the agent's interpretation space
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md) — typing, testing, version control transfer to prompting with modified cost models
+- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — typing, testing, version control transfer to prompting with modified cost models
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
 
 ## Related notes in other areas
@@ -70,7 +70,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-index.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
 
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
-- [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers-error-correction.md) — identifies an intermediate regime where OpenProse-like DSLs recover frame isolation without yet gaining hard-oracle bookkeeping
+- [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — identifies an intermediate regime where OpenProse-like DSLs recover frame isolation without yet gaining hard-oracle bookkeeping
 - [synthesis-is-not-error-correction](./synthesis-is-not-error-correction.md) (llm-interpretation-errors) — merging agent outputs propagates errors; voting discards minorities and corrects them; the aggregation operation must match the decomposition structure
 
 ## Tensions
@@ -91,7 +91,7 @@ Agent Notes:
 ## Other tagged notes <!-- generated -->
 
 - ["Agent" is a useful technical convention, not a definition](./agent-is-a-tool-loop.md) - A lightweight technical convention — an agent is a tool loop (prompt, capability surface, stop condition) — sidestepping the definitional debate in favor of a unit that organizes code
-- [Access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query-dimensions.md) - Queries have two independent difficulty axes — finding inputs (access) and producing the answer (transformation) — conflating them misroutes symbolic transformations through semantic processing
+- [Access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query.md) - Queries have two independent difficulty axes — finding inputs (access) and producing the answer (transformation) — conflating them misroutes symbolic transformations through semantic processing
 - [Agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - Memory decomposes into storage (solved), retrieval/activation (context engineering), and learning (learning theory) — treating it as a standalone category hides that the hard problems are at the intersections
 - [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) - Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are
 - [Any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) - Any program whose non-LLM steps are symbolic computation over explicit machine state K can be mechanically converted into the select/call loop with the same LLM calls in the same order
@@ -100,5 +100,5 @@ Agent Notes:
 - [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) - At each LLM↔code transition both semantic underspecification and execution indeterminism collapse simultaneously, making these boundaries natural places to anchor debugging, testing, and refactoring
 - [Pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) - Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) - Constraining via LLM code generation freezes a single projection of the spec in one shot, but progressive constraining observes behavior across many runs and commits only the interpretations that consistently emerge
-- [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence-boundaries.md) - Compares RLM, Tendril, and llm-do as three placements for symbolic work and interfaces: ephemeral REPL code, workspace-local generated tools, and durable unified callables
-- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) - Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two
+- [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) - Compares RLM, Tendril, and llm-do as three placements for symbolic work and interfaces: ephemeral REPL code, workspace-local generated tools, and durable unified callables
+- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) - Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two

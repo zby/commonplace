@@ -51,7 +51,7 @@ Only the per-installation rows require human input. The universal rows are shipp
 
 ## Relation to reach
 
-The KB Goals section is not a replacement for the [reach criterion](./first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md). Reach is a quality criterion — knowledge with explanatory depth that transfers to new situations. Goals are the domain filter — *which* situations this KB cares about transferring to. A note can have high reach but be out of scope (a brilliant insight about compiler optimization in a KB about payment architecture), or low reach but in scope (a specific failure case that the team needs to remember).
+The KB Goals section is not a replacement for the [reach criterion](./first-principles-reasoning-selects-for-explanatory-reach-over.md). Reach is a quality criterion — knowledge with explanatory depth that transfers to new situations. Goals are the domain filter — *which* situations this KB cares about transferring to. A note can have high reach but be out of scope (a brilliant insight about compiler optimization in a KB about payment architecture), or low reach but in scope (a specific failure case that the team needs to remember).
 
 Both filters apply. Goals first (is this in scope?), then reach (is this worth the context it costs?).
 

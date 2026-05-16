@@ -31,6 +31,6 @@ Cross-register links use a shared, smaller vocabulary (rationale, evidence, proc
 
 Relevant Notes:
 
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking.md) — foundation: the full argument for three exhaustive registers with formulation constraint and maintenance asymmetry
+- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — foundation: the full argument for three exhaustive registers with formulation constraint and maintenance asymmetry
 - [distillation](./distillation.md) — enables: distillation connects registers through the theory → prescription → implementation → description chain
 - [constraining](./constraining.md) — co-equal mechanism: orthogonal to registers but interacts — prescriptions are more constrained than theories

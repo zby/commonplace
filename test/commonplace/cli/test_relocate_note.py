@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib import relocation
-from commonplace.lib.naming import slugify_note_filename
+from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
 from commonplace.review import review_db
 from commonplace.review.relocation_hook import ReviewRelocationHook
 
@@ -94,8 +94,13 @@ nav:
 
 
 def test_slugify_rejects_overlong_note_slug() -> None:
-    with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
-        slugify_note_filename("a" * 101)
+    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
+    message = (
+        f"note filename slug exceeds {MAX_NOTE_SLUG_LENGTH} characters: "
+        f"{MAX_NOTE_SLUG_LENGTH + 1}"
+    )
+    with pytest.raises(ValueError, match=message):
+        slugify_note_filename(overlong_slug)
 
 
 def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path) -> None:
@@ -103,8 +108,12 @@ def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path)
     notes_root = repo_root / "kb" / "notes"
     source = write(notes_root / "old-note.md", "# Old note\n")
 
-    overlong_slug = "a" * 101
-    with pytest.raises(ValueError, match="note filename slug exceeds 100 characters: 101"):
+    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
+    message = (
+        f"note filename slug exceeds {MAX_NOTE_SLUG_LENGTH} characters: "
+        f"{MAX_NOTE_SLUG_LENGTH + 1}"
+    )
+    with pytest.raises(ValueError, match=message):
         relocation.resolve_destination_path(
             source,
             None,

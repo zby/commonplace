@@ -119,7 +119,7 @@ List 3-7 items, each as a one-liner with enough context to evaluate.
 Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
 [just-a-reference].
 
-**Cross-cutting: assess [reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit.md).** Regardless of source type, ask: does this insight transfer beyond the specific context (benchmark, system, team, domain) the source describes? High-reach findings — those that explain *why* something works, not just *that* it works — go first. Context-bound observations ("X worked for us on benchmark Y") are still worth noting but should be flagged as low-reach.
+**Cross-cutting: assess [reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).** Regardless of source type, ask: does this insight transfer beyond the specific context (benchmark, system, team, domain) the source describes? High-reach findings — those that explain *why* something works, not just *that* it works — go first. Context-bound observations ("X worked for us on benchmark Y") are still worth noting but should be flagged as low-reach.
 
 ### 3.5 Curiosity Gate
 

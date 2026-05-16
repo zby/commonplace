@@ -34,7 +34,7 @@ Let:
 - `M` be the maximum effective context budget for one call
 - `||P||` be the effective cost of complete prompt `P` — token count, compositional difficulty, task framing, or all three
 
-The cost measure `||·||` is an idealized effective-cost measure over the whole prompt, not just a token count. The cost may depend on the kind of task that `P` describes: a synthesis prompt and a relevance-check prompt can have different effective costs even when they contain the same source material. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) develops the empirical case.
+The cost measure `||·||` is an idealized effective-cost measure over the whole prompt, not just a token count. The cost may depend on the kind of task that `P` describes: a synthesis prompt and a relevance-check prompt can have different effective costs even when they contain the same source material. [Effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) develops the empirical case.
 
 The loop alternates between symbolic scheduling and bounded LLM calls. Symbolic scheduling happens outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication, state update, and cache maintenance. LLM calls are the bounded, stochastic steps that perform semantic judgment under focused prompts.
 
@@ -81,12 +81,12 @@ Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — scoped recursion with focused context as a clean-model implementation for compositional reasoning.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](https://arxiv.org/abs/2511.09030) — maximal decomposition (m=1) as extreme clean-model instantiation; O(s ln s) cost scaling.
 - @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — the Ralph Loop (prompt → execute → observe → decide) is a concrete instance of the select/call loop; the source's runtime components map to scheduler infrastructure.
-- Ashpreet Bedi (2026). [Context providers: the missing layer between agents and tools](../sources/context-providers-the-missing-layer-between-agents-and-tools-2048817143974613089.ingest.md) — source-scoped provider sub-agents instantiate `select/call` by hiding raw tool surfaces behind bounded query/update calls.
+- Ashpreet Bedi (2026). [Context providers: the missing layer between agents and tools](../sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md) — source-scoped provider sub-agents instantiate `select/call` by hiding raw tool surfaces behind bounded query/update calls.
 
 Relevant Notes:
 
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: context is the scarce resource with volume and complexity dimensions
-- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a-fixed-model-constant.md) — clarifies: explains why usable context should be modeled relationally rather than as a single per-model capacity
+- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — clarifies: explains why usable context should be modeled relationally rather than as a single per-model capacity
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — foundation: bookkeeping and semantic work have different error profiles across all three phenomena
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
@@ -98,5 +98,5 @@ Relevant Notes:
 - [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the halt/continue decision, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
-- [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate.md) — component view: names the scheduler as one part of a larger runtime decomposition
-- [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable-agent-scaling.md) — extends: argues that the select/call loop's decomposition is the first prerequisite in a dependency chain (topology → isolation → verification)
+- [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — component view: names the scheduler as one part of a larger runtime decomposition
+- [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: argues that the select/call loop's decomposition is the first prerequisite in a dependency chain (topology → isolation → verification)
