@@ -17,7 +17,7 @@ The **channel** may be retrieval, prompt assembly, execution, configuration, val
 
 The **force** may be advice, instruction, enforcement, selection or ranking influence, audit trigger, or learning input. Audit records do not have force by themselves; they matter when a consumer acts on them.
 
-Use behavioral authority to make the older knowledge/system-definition distinction precise. A [knowledge artifact](./knowledge-artifact.md) is consumed as evidence, reference, context, explanation, or advice. A [system-definition artifact](./system-definition-artifact.md) is consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force. These are authority-path families, not intrinsic artifact classes; the field is more precise because it names the actual consumer, channel, and force.
+Use the term behavioral authority to make the older knowledge/system-definition distinction precise. A [knowledge artifact](./knowledge-artifact.md) is consumed as evidence, reference, context, explanation, or advice. A [system-definition artifact](./system-definition-artifact.md) is consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force. These are authority-path families, not intrinsic artifact classes; the field is more precise because it names the actual consumer, channel, and force.
 
 ## Exclusions
 

@@ -25,7 +25,7 @@ Two properties make the distinction real: the **formulation constraint** (theori
 
 ## Scope
 
-Use register when the question is what mode of knowledge an artifact is written in: theoretical, descriptive, or prescriptive. In this KB, register determines a collection's quality goal, title conventions, and default linking grammar.
+Use the term register when the question is what mode of knowledge an artifact is written in: theoretical, descriptive, or prescriptive. In this KB, register determines a collection's quality goal, title conventions, and default linking grammar.
 
 Register is collection-facing vocabulary. `kb/notes/`, `kb/reference/`, and `kb/instructions/` use different registers so agents can infer the right writing goal before drafting or revising.
 

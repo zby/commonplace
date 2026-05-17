@@ -1,5 +1,5 @@
 ---
-description: Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, maintenance, and observability for each bounded call
+description: Definition — context engineering is the discipline of designing systems around bounded-context constraints; its operational core is routing, loading, scoping, and maintenance for each bounded call
 type: kb/types/definition.md
 tags: [computational-model]
 status: seedling
@@ -7,45 +7,59 @@ status: seedling
 
 # Context engineering
 
-Context engineering is the architectural discipline of designing systems around bounded-context computation. The immediate problem is getting the right knowledge into a bounded context at the right time, but the scope is wider than prompt assembly. If context is the governing constraint, the structures that determine what can be loaded, when, and what survives across boundaries also belong to context engineering.
+Context engineering is the architectural discipline of designing systems around bounded-context computation. It asks how the right knowledge reaches the right bounded call at the right time, and how knowledge survives, changes, or stays out across call boundaries.
 
-Anthropic defines it as "strategies for curating and maintaining the optimal set of tokens during LLM inference" ([Anthropic, 2025](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). This KB's treatment is consistent with that operational view but broader in architectural scope, because [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md): when bounded context is the scarce resource, whole-system structure must be designed around it.
+The immediate problem is prompt assembly, but the scope is wider: storage shape, routing surfaces, loading rules, scoping boundaries, compaction, and workshop/library lifecycle all determine what can become live context.
 
-The operational core decomposes into five components within a single bounded call:
+## Scope
 
-**Routing** — deciding what knowledge is relevant before loading it. The [instruction-specificity/loading-frequency match](../instruction-specificity-should-match-loading-frequency.md) (always-loaded → on-reference → on-invoke → on-demand) is routing. [CLAUDE.md as a router](../agents-md-should-be-organized-as-a-control-plane.md) is routing. [Retrieval-oriented descriptions](../agents-navigate-by-deciding-what-to-read-next.md) that let agents decide "don't follow this" without loading the target are routing.
+Use the term context engineering when the design question is about routing, loading, scoping, or maintaining knowledge under bounded context. This includes single-call prompt construction and upstream structures that make useful loading possible.
 
-**Loading** — assembling the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given the scheduler's accumulated state and a token budget, build a prompt that fits within the budget. Loading includes both what to include and how to frame it — the same knowledge under different framing has different [extractable value](../information-value-is-observer-relative.md).
+The operational core decomposes into four components within a single bounded call:
 
-**Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is scoping. The flat context has no scoping; architecture must impose it.
+**Routing** — deciding what knowledge is relevant before loading it. Examples include the [instruction-specificity/loading-frequency match](../instruction-specificity-should-match-loading-frequency.md), [CLAUDE.md as a router](../agents-md-should-be-organized-as-a-control-plane.md), and [retrieval-oriented descriptions](../agents-navigate-by-deciding-what-to-read-next.md) that let agents reject a target without loading it.
 
-**Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline are maintenance. Without maintenance, context accumulates debris that [degrades reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when token counts are low.
+**Loading** — assembling and framing the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given state and a token budget, build a prompt that fits. Framing matters because the same knowledge can have different [extractable value](../information-value-is-observer-relative.md) under different presentations.
 
-**Observability** — attribution of where tokens went and why, as a prerequisite for tuning the other four components. Per-source accounting — tool results vs. tool requests vs. assistant output vs. system prompt vs. attachments — reveals what actually dominates context. Intuition about token usage is almost always wrong: developers routinely assume model output is the biggest cost, while in agentic coding sessions tool *results* commonly dominate instead. Useful signals include duplicate-read detection (the model re-reading files it already saw is a direct symptom that flat history is failing as a working set) and query-source tracking (which agent or subsystem initiated each call). The other four components all have tuning surfaces, but none of those surfaces are usable without attribution to anchor them.
+**Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is the main local example: flat context has no scope, so architecture must impose it.
 
-[Distillation](./distillation.md) — compressing knowledge for a specific task under a context budget — is the main operation the first four components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery: the `solve` loop where a symbolic scheduler drives routing, loading, and scoping decisions for each bounded LLM call.
+**Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+
+[Distillation](./distillation.md) — reshaping recorded knowledge for a specific task and context budget — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
 
 ## Architectural scope beyond a single call
 
-The operational core succeeds or fails based on decisions made before and after prompt assembly:
+The operational core depends on decisions made before and after prompt assembly:
 
-**Storage format** — knowledge stored in forms that are cheap to retrieve selectively. Notes, descriptions, and indexes are context-engineering structures because they determine whether routing can happen before full loading.
+**Storage format** — knowledge stored in forms that are cheap to retrieve selectively. Notes, descriptions, and indexes determine whether routing can happen before full loading.
 
-**Knowledge lifecycle** — how raw interaction becomes reusable knowledge and how that knowledge is curated over time. A KB that only accumulates transcripts has already failed the context problem upstream.
+**Knowledge lifecycle** — how raw interaction becomes reusable knowledge and how that knowledge is curated. A KB that only accumulates transcripts has already failed the context problem upstream.
 
-**Session boundaries** — a system can inherit transcript history by default or treat each call as a fresh assembly problem. [Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) is context engineering at the boundary level, not just the prompt level.
+**Session boundaries** — whether a system inherits transcript history by default or treats each call as a fresh assembly problem. [Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) is context engineering at the boundary level.
 
 **Inter-agent communication** — when sub-agents return compressed artifacts instead of full transcripts, the boundary itself becomes a context-engineering primitive. Execution boundaries are natural sites for [distillation](./distillation.md).
 
-**Tool and interface design** — tool descriptions, instruction surfaces, and generated interfaces consume context budget too. [Frontloading](../frontloading-spares-execution-context.md) and build-time generation shift interpretive cost out of the live context window.
+**Tool and interface design** — tool descriptions, instruction surfaces, and generated interfaces consume context budget too. [Frontloading](../frontloading-spares-execution-context.md) shifts interpretive cost out of the live context window.
 
 A system with poor storage shape, transcript-oriented boundaries, or verbose tool surfaces cannot be rescued by a clever selector alone.
+
+## Exclusions
+
+Context engineering is not changing the model itself. Fine-tuning, RL, embedding-model improvement, and model architecture changes alter model behavior or representations, not the bounded context assembled for a call.
+
+Context engineering is not the task work itself. Domain reasoning, feature implementation, command execution, and content authoring are outside the term unless they change what knowledge enters context, how it is framed, or which consumer sees it.
+
+Context engineering is not observability. Observability can inform context-engineering changes, but it is a feedback surface, not a context operation.
+
+## Misuse Cases
+
+- Reducing context engineering to one mechanism, such as prompt writing, retrieval, or a larger context window. The term names the architecture around bounded context, not any single tactic.
 
 ---
 
 Relevant Notes:
 
-- [distillation](./distillation.md) — the main operation context engineering performs: compressing knowledge for a task under a budget
+- [distillation](./distillation.md) — the main operation context engineering performs: targeted transformation of recorded material for a bounded consumer
 - [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: if bounded context is the governing cost model, context engineering must be architectural rather than local to prompt assembly
 - [bounded-context orchestration model](../bounded-context-orchestration-model.md) — formalisation: the select/call loop that structures context engineering decisions
 - [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — mechanism: the routing hierarchy (always-loaded → on-demand)

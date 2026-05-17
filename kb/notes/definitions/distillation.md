@@ -1,5 +1,5 @@
 ---
-description: Definition — distillation is compression viewed as learning; in KB methodology, directed context compression for a bounded consumer; co-equal learning mechanism alongside constraining
+description: Definition — distillation is targeted transformation of recorded material into a use-shaped artifact for a particular downstream consumer; in KB practice this is usually directed context compression
 type: kb/types/definition.md
 tags: [learning-theory]
 status: current
@@ -7,37 +7,27 @@ status: current
 
 # Distillation
 
-Distillation is **compression viewed as learning** — goal-oriented compression whose purpose is the capacity change it produces in the consumer. The source is already-recorded material — a teacher model's outputs, methodology, accumulated reasoning, logged observations — re-compressed for a specific downstream consumer. This distinguishes distillation from general training, which compresses data without a particular consumer in mind. It sits in the task-oriented region of classical compression theory (rate-distortion, information bottleneck, MDL). By Simon's definition of learning — a permanent change in a system's capacity for adaptation — that capacity change *is* the operation's point, not an incidental side effect. In deployed agentic systems, distillation is one of two co-equal learning mechanisms alongside [constraining](./constraining.md); the same structure shows up in distinct media (see below).
+Distillation is targeted transformation of already-recorded material into an artifact shaped for a particular downstream consumer. The target artifact preserves what the consumer needs from the source in a form the consumer can use.
 
-In KB methodology, distillation is **directed context compression** — compressing knowledge so that a specific consumer can act on it within bounded context. "Directed" because different operational contexts need different extractions from the same source; "context" because the budget is a hard constraint, not a soft guideline. Without distillation, the source material often exceeds the consumer's [effective context](../effective-context-is-task-relative-and-complexity-relative-not-a.md) for the task — making the operation infeasible, not merely slow. Even when source material would technically fit, undistilled methodology crowds out the actual work — consuming tokens and adding navigational complexity. The source can be any already-recorded material — raw observations, methodology, prior reasoning, accumulated understanding — and the target is always an artifact that equips a consumer (agent, collaborator) to perform a task.
+In KB practice, distillation is usually directed context compression, because agents, maintainers, collaborators, and artifacts operate under bounded context. Compression is the common pressure, not the definition: a distillate may also reorganize, reframe, change register, make implicit structure explicit, or expand a key point while still being shaped for one use.
 
-[Context engineering](./context-engineering.md) is the architecture — the loading strategy, routing, the `select` function in the [scheduling model](../bounded-context-orchestration-model.md). Distillation is the main operation that architecture performs, though not the only one (routing, scoping, and maintenance are also context engineering operations). Most KB learning is distillation in practice: explore messily, notice patterns, extract insight, write a note.
+## Scope
 
-## Prior work
+Use the term distillation when recorded material has been reshaped into an artifact for a particular downstream consumer. The source can be methodology, raw observations, prior reasoning, traces, research, a teacher model's outputs, or accumulated understanding. The resulting distillate can be a note, skill, instruction, prompt, review lens, design principle, summary, or model update.
 
-Distillation draws from two traditions.
+Common KB instances:
 
-**Purposeful compression** — classical information theory already has variants that relax strict message preservation in favor of goal-oriented preservation:
+- methodology notes → skill body for an agent executing a workflow;
+- workshop material → durable note for future reasoning;
+- source article → claim summary for ingestion;
+- caller context → refined prompt for a sub-agent;
+- repeated review failures → gate instruction or validation rule.
 
-- **Rate-distortion theory** (Shannon, 1959) — lossy compression minimizes rate subject to a bounded distortion function; the distortion function is where the "goal" lives (JPEG's is perceptual, a theory's is "fails to answer queries correctly").
-- **Information bottleneck** (Tishby et al., 1999) — compress X into T to maximize I(T;Y) under bounded I(X;T); directed compression for a specific downstream task variable Y.
-- **Minimum description length / Kolmogorov complexity** — the shortest program that agrees with observations *is* a theory; theory-building is compression in the formal sense.
-- **Simon's definition of learning** — "any change in a system that produces a more or less permanent change in its capacity for adapting to its environment." The compression-viewed-as-learning framing follows: any operative compression changes capacity, so compression ⊆ learning; distillation is the region where that capacity change is the operation's point.
-
-**Audience-aware communication** — applied fields that practice goal-oriented compression on text:
-
-- **Technical writing** — the discipline is built on audience analysis and purpose-driven restructuring. Progressive disclosure is distillation applied to documentation.
-- **Pedagogical adaptation** — scaffolding (Vygotsky), curriculum design, and Bloom's taxonomy all address reshaping knowledge for learners at different levels.
-- **Library science / abstracting** — professional abstracting and indexing is distillation optimized for retrieval decisions.
-- **Knowledge management** — Nonaka & Takeuchi's externalization (tacit → explicit knowledge) describes a similar transformation, though without the context-budget framing.
-
-Three things are specific to the agent context: the context budget is a hard constraint (rate-distortion with a specific rate cap); the query class the consumer will face is open-ended rather than a fixed distribution; and the consumer is itself a reasoner that can fill gaps rather than a passive decoder.
-
-**TODO:** This survey is from the agent's training data, not systematic. Revisit with deep search — technical writing and pedagogy literatures likely have results about what makes distillation effective.
+Most KB learning has a distillation phase: explore messily, notice patterns, then write an artifact that future agents can actually use.
 
 ## How distillation works
 
-Content is selected and compressed to fit the consumer's task and context budget. The rhetorical mode may shift if the task demands it — argumentative → procedural when the task is execution, exploratory → assertive when the task is deciding. In the KB application the medium stays constant: unlike [codification](./codification.md), distillation typically stays in natural language consumed by an LLM. Other instances target different media (see below).
+Distillation changes shape. Content may be selected, reorganized, reframed, compressed, expanded, or moved into another register to fit the consumer's task and context budget. Argumentative material can become procedural guidance; exploratory notes can become an assertive claim; a broad workshop can become a narrow note.
 
 | Source → Distillate | Target |
 |---|---|
@@ -49,34 +39,44 @@ Content is selected and compressed to fit the consumer's task and context budget
 | Domain artifacts (logs, patches, docs) → Detection/analysis skill | Agent diagnosing or investigating a class of problems |
 | Many observations → Summary | Agent that can't fit them all in context |
 
-Targeting is information loss — which is why the source persists. Reading only the `/connect` skill, you can connect notes but can't adapt the procedure to a novel situation; the methodology notes handle that.
+Targeting usually loses information, so a distillate does not replace its source for every purpose. A skill may preserve the steps needed to run a workflow while omitting the rationale, alternatives, and failed approaches needed to adapt that workflow to a novel situation.
 
 A distillate can also look adequate while quietly losing behavioral influence: compressed experience is often less active than the raw traces it replaced ([Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v2)).
 
+## Exclusions
+
+Distillation is not retrieval. Retrieval selects existing material; distillation rewrites or re-encodes material for use.
+
+Distillation is not all training. General training may produce capacity change without a particular downstream consumer in view; distillation targets a consumer or use.
+
+Distillation is not [constraining](./constraining.md), though the same artifact may be both distilled and constrained.
+
 ## Relationship to constraining
 
-[Constraining](./constraining.md) and distillation are orthogonal — they operate on different dimensions of the same artifacts:
+[Constraining](./constraining.md) and distillation operate on different dimensions of the same artifacts:
 
 | | Not distilled | Distilled |
 |---|---|---|
-| **Not constrained** | Raw capture (text file, session notes) | Extracted but loose (draft skill, rough note) |
-| **Constrained** | Committed but not extracted (stored output, frozen config) | Extracted AND hardened (validated skill, codified script) |
+| **Not constrained** | Raw capture (text file, session notes) | Use-shaped but semantically loose (draft skill, rough note) |
+| **Constrained** | Committed but not transformed from a source (stored output, frozen config) | Use-shaped and semantically focused (validated skill, codified script) |
 
-Constraining asks: *how constrained is this artifact?* Distillation asks: *was this artifact extracted from something larger?*
+Constraining asks: *how constrained is this artifact?* Distillation asks: *was this artifact transformed from recorded source material for a particular consumer?*
 
-You can distill without constraining (extract a skill — still natural language, still underspecified), and you can constrain without distilling (store an LLM output — no extraction from reasoning involved). The full compound gain comes when both apply.
+You can distill without constraining (write a task-shaped skill that remains natural language and underspecified), and you can constrain without distilling (store an LLM output, committing to one interpretation without transforming recorded source material). Strong artifacts often combine both.
 
-The orthogonality is at the artifact level, not the decision level. The choice to impose a given constraint is often itself a distillate of observed looseness — a rate limit of "100 req/s" encodes different provenance depending on whether it came from measurement or prediction. Evidence-driven constraining carries distilled understanding into the rule without leaving a visible trace in the rule itself; predictive constraining does not. Same artifact, different epistemic status.
+The distinction is at the artifact level, not the decision level. The choice to impose a constraint can itself be a distillate of observed looseness: the same rate limit has different epistemic status depending on whether it came from measurement or prediction.
 
 ## Instances
 
-The general definition — goal-oriented compression whose purpose is capacity change in a bounded consumer — is realized in distinct media:
+The same pattern appears in different media.
 
-**KB distillation** (the focus of this note) — source: methodology, raw observations, prior reasoning, accumulated understanding. Target: text artifact. Consumer: a reasoning agent or collaborator. Capacity budget: the consumer's effective context for the task. Extraction mechanism: human or LLM judgment about what to preserve.
+**KB distillation** is the focus of this note. A workshop, source, trace, or body of methodology is reshaped into a note, skill, instruction, prompt, or review lens for a future agent or collaborator. The consumer's effective context is the main budget, so the result is usually shorter than the source, but the important change is use-shaping: the artifact is written in the form the consumer can act on.
 
-**ML knowledge distillation** (Hinton et al., 2015) — source: a large teacher model's output distribution (contrast general training, whose source is raw data). Target: a smaller student model's weights. Consumer: the student itself, deployed where the teacher won't fit. Capacity budget: parameter count. Extraction mechanism: gradient descent on a distillation loss.
+**ML knowledge distillation** (Hinton et al., 2015) has the same structure in a different substrate. A large teacher model's output distribution is transformed into a smaller student model's weights. The consumer is the student model, and the budget is parameter count or deployment cost rather than prompt context.
 
-Both satisfy the general definition. They differ in medium and extraction mechanism, not in categorical structure. General ML training is the parent category — also compression producing capacity change, but without a specific downstream consumer; distillation is the subregion where compression targets a particular consumer that can't handle the source directly. Other instances are possible (task-oriented lossy codecs, human teaching) and would decompose along the same five dimensions.
+Both cases transform a source the consumer cannot use directly into a target the consumer can use. They differ in medium and mechanism, not in the role the transformation plays.
+
+[Context engineering](./context-engineering.md) is the architecture that routes, loads, scopes, and maintains knowledge under bounded context. Distillation is the main operation that architecture performs, though not the only one.
 
 ---
 
@@ -85,7 +85,7 @@ Relevant Notes:
 - [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: the bounded context that makes distillation a feasibility requirement, not just an optimization
 - [effective context is task-relative](../effective-context-is-task-relative-and-complexity-relative-not-a.md) — foundation: effective context depends on task complexity, so the same source may be feasible for one task and infeasible for another
 - [constraining](./constraining.md) — co-equal mechanism: constraining the interpretation space, orthogonal to distillation
-- [codification](./codification.md) — the far end of constraining; sometimes follows distillation (extract a procedure, then codify it to code)
+- [codification](./codification.md) — the far end of constraining; sometimes follows distillation (reshape a procedure for use, then commit it to a symbolic artifact)
 - [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
 - [agent statelessness makes routing architectural](../agent-statelessness-makes-routing-architectural-not-learned.md) — driver: each session starts fresh, so reasoning must be distilled rather than remembered
 - [deploy-time learning](../deploy-time-learning-is-the-missing-middle.md) — timing frame for durable artifact updates that distillation can produce

@@ -11,7 +11,7 @@ An operative part is the content, structure, parameterization, or behavior-affec
 
 ## Scope
 
-Use the term when the stored-object boundary is too coarse for architectural review. Operative parts may be prose, symbolic, distributed-parametric, or mixed. They matter because review evidence, invalidation triggers, rollback paths, and security risks attach to the part that actually shapes behavior.
+Use the term operative part when the stored-object boundary is too coarse for architectural review. Operative parts may be prose, symbolic, distributed-parametric, or mixed. They matter because review evidence, invalidation triggers, rollback paths, and security risks attach to the part that actually shapes behavior.
 
 ## Exclusions
 

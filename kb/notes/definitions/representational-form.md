@@ -7,7 +7,7 @@ status: current
 
 # Representational form
 
-Representational form classifies how a retained artifact's [operative part](./operative-part.md) is encoded and consumed. This KB uses three coarse forms: **prose**, **symbolic**, and **distributed-parametric**. Mixed artifacts should be split by operative part or consumption path when the parts have different review evidence, invalidation needs, or rollback paths.
+Representational form classifies how a retained artifact's [operative part](./operative-part.md) is encoded and consumed. This KB uses three coarse forms: **prose**, **symbolic**, and **distributed-parametric**. Mixed artifacts are split by operative part or consumption path when the parts have different review evidence, invalidation needs, or rollback paths.
 
 ## Scope
 

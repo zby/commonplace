@@ -11,7 +11,7 @@ Lineage records a retained artifact's review-relevant source dependencies and de
 
 ## Scope
 
-Use lineage when retained behavior can drift from its sources. Generated directory indexes, prompt summaries, skill bundles, compiled validators, route entries, retrieval indexes, and learned updates all need lineage because their behavioral effect can survive after the apparent source has changed.
+Use the term lineage when retained behavior can drift from its sources. Generated directory indexes, prompt summaries, skill bundles, compiled validators, route entries, retrieval indexes, and learned updates all have lineage concerns because their behavioral effect can survive after the apparent source has changed.
 
 Lineage is deliberately narrower than full provenance. It records the dependency information needed for review, invalidation, regeneration, retirement, and rollback.
 
