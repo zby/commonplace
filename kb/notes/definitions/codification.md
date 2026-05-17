@@ -11,6 +11,12 @@ The far end of the [constraining](./constraining.md) spectrum — the point wher
 
 Codification is not a separate mechanism from constraining; it's what constraining looks like when it goes all the way. Everything below codification on the constraining spectrum (conventions, structured sections, better descriptions) constrains the interpretation space while staying in natural language. Codification leaves natural language for a symbolic medium entirely.
 
+## Scope
+
+Use codification when a recurring operation or rule has been committed to a symbolic consumer: code, scripts, schemas, validators, tests, parsers, route tables, or other artifacts whose consequences are assigned by an interpreter or runtime rather than reinterpreted by an LLM each time.
+
+Codification may follow distillation, but it does not have to. When accumulated methodology is extracted into a script, the operation is both distillation and codification. When a one-off spec is directly translated into code, it is codification without much distillation.
+
 ## When to codify
 
 Codify when a pattern has emerged across enough runs that you can confidently commit to one interpretation in code. Premature codification locks in brittle assumptions. The [constrain/relax cycle](./constraining.md) is the safety valve: if new requirements reveal the wrong commitment, relax back to an underspecified spec and let the LLM handle it until a better pattern emerges.
@@ -23,7 +29,17 @@ Codification can also be [distillation](./distillation.md) — when it draws on 
 
 Examples: replacing an LLM slug generator with `python-slugify`; moving CSV statistics from LLM arithmetic to Python's `statistics` module; extracting mechanical frontmatter checks from a validation skill into a Python script. In each case, the operation had a single correct interpretation that was being re-discovered by the LLM on every run.
 
-Not codification: writing a convention (constraining within natural language); extracting a skill from methodology notes (distillation, stays in natural language).
+## Exclusions
+
+Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the LLM or human as the interpreter. Extracting a skill from methodology notes is not codification when the skill remains prose instructions; it is distillation that stays in natural language.
+
+Structured Markdown, YAML, or JSON is not automatically codification. It becomes codification only where a consumer assigns defined consequences to fields, values, sections, or operations.
+
+## Misuse Cases
+
+- Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting prose.
+- Treating codification as always good. Premature codification freezes a proxy theory and may need relaxing when new cases appear.
+- Calling a distilled skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the operative guidance can still be prose.
 
 ---
 
