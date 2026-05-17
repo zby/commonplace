@@ -11,6 +11,8 @@ schema: kb/types/definition.schema.yaml
 
 Use `definition` for KB vocabulary that needs a stable, operational meaning. A definition note is an explication: it replaces a vague, overloaded, or imported term with a sharper term that serves this KB's work.
 
+Definition notes are constraining artifacts for language. They narrow future interpretation, state what a term does and does not cover, and give later notes a stable link target instead of forcing each author to redefine the term locally.
+
 ## Explication Frame
 
 Use Carnap's explication criteria pragmatically:
