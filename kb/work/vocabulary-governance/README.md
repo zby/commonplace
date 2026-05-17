@@ -75,7 +75,7 @@ Close this workshop when we have a concrete policy proposal that answers:
 
 ## Grounding
 
-- [Vocabulary redesign](../vocabulary-redesign/README.md) — adjacent workshop redesigning the actual terms in this repo.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — landed artifact-analysis vocabulary that this governance workshop treats as an example vocabulary library.
 - [AGENTS.md](../../../AGENTS.md) — current always-loaded vocabulary surface.
 - [Writing conventions for kb/notes](../../notes/COLLECTION.md) — current collection-level definition/linking policy.
 - [Definition type](../../types/definition.md) — current durable artifact shape for operational vocabulary.
