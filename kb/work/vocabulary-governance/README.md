@@ -2,6 +2,18 @@
 
 Workshop for deciding how shipped commonplace KBs should handle vocabulary: which definitions are global, which belong to collections, which are required by artifact types, and how write paths should discover and enforce those policies.
 
+## Current Status
+
+Part of the workshop has landed:
+
+- **Active vocabulary** is now the KB-global term list declared in `AGENTS.md`.
+- **Definition notes** are backing documentation for active vocabulary and other sharpened terms.
+- **First-mention behavior** belongs in the write path: authors should gloss and link active vocabulary terms when the reader may not know the term.
+- **Definition type guidance** now distinguishes term-boundary guidance from technique guidance: definition notes answer when to use the word, not when or how to perform the operation the word names.
+- **Audience** is still assumed KB-global by default; no collection-local audience policy has been introduced.
+
+The unresolved part is collection and type scope: how a KB should declare collection-local vocabulary, type-specific terminology, imports, collisions, and validation expectations without hardcoding this repo's terms into framework skills.
+
 ## Question
 
 How should commonplace support both a shared baseline vocabulary and user- or collection-specific vocabularies without hardcoding this repo's terms into the shipped write machinery?
@@ -10,11 +22,11 @@ This repo currently wants the same basic vocabulary across most surfaces: contex
 
 ## Current Tension
 
-- Collections already govern two language-facing surfaces: register and linking. Vocabulary would add a third surface, but it has different scoping needs because some terms are KB-global while others are collection-local.
+- Collections already govern two language-facing surfaces: register and linking. Vocabulary may add a third surface, but the global case is now handled separately through `AGENTS.md` active vocabulary.
 - Linking is both intra-collection and inter-collection. Vocabulary policy has the same shape: a collection may define local terms, import global terms, and use shared relationship labels to connect outward.
 - Audience is related but probably belongs at KB scope by default. Collections can change register, link permissions, and vocabulary imports without changing who the KB is written for.
 - Always-loaded context can teach agents the local vocabulary, but shipped projects should not inherit this repo's exact terms as universal defaults.
-- Definition notes give vocabulary durable homes, but writers still need to know when a term must be glossed, linked, or treated as structurally required.
+- Definition notes give vocabulary durable homes, but writers still need to know which vocabulary sources are active for the artifact they are writing.
 - Collection conventions are the likely home for vocabulary scope, but some vocabularies may be global across all collections.
 - Type specs may require terms that are not collection-wide, such as artifact-analysis fields in agent-memory-system reviews.
 - Users need room to build their own vocabularies without fighting the framework's methodology vocabulary.
@@ -56,22 +68,22 @@ Audience should likely be a KB-level contract rather than a collection-level con
 
 ## Possible Outputs
 
-- A vocabulary-policy section template for `COLLECTION.md`.
+- A vocabulary-policy section template for `COLLECTION.md` if collection-local vocabulary is introduced.
 - A reference note explaining global, collection-local, and type-specific vocabulary scopes.
-- A small update to `cp-skill-write` telling it to load vocabulary policy without naming terms.
-- Revisions to `kb/types/definition.md` if definition notes need scope metadata.
-- A migration note for this repo's current vocabulary redesign.
+- A small update to `cp-skill-write` telling it to load collection/type vocabulary policy without naming terms.
+- Optional revisions to type specs if type-specific vocabulary requirements become real.
+- A migration note for consuming projects if active vocabulary becomes part of `commonplace-init`.
 
 ## Closure
 
 Close this workshop when we have a concrete policy proposal that answers:
 
-- where global vocabulary is declared;
+- where global vocabulary is declared; **answered for this repo: `AGENTS.md` active vocabulary**
 - how collections import or override vocabulary;
 - how type specs add required terminology;
 - what the generic write path must read;
 - what shipped user KBs can customize without editing framework code.
-- whether audience is KB-global by default, and what counts as a valid collection-level exception.
+- whether audience is KB-global by default, and what counts as a valid collection-level exception; **current default: KB-global unless explicitly exceptional**
 
 ## Grounding
 
@@ -79,5 +91,6 @@ Close this workshop when we have a concrete policy proposal that answers:
 - [AGENTS.md](../../../AGENTS.md) — current always-loaded vocabulary surface.
 - [Writing conventions for kb/notes](../../notes/COLLECTION.md) — current collection-level definition/linking policy.
 - [Definition type](../../types/definition.md) — current durable artifact shape for operational vocabulary.
+- [ADR-022: active vocabulary and write-path first mentions](../../reference/adr/022-active-vocabulary-and-write-path-first-mentions.md) — landed decision for KB-global active vocabulary in `AGENTS.md`.
 - [Writing skill](../../instructions/cp-skill-write/SKILL.md) — current generic write path.
 - [Link vocabulary](../../reference/link-vocabulary.md) — current relationship-label catalogue, including `defined-in`.

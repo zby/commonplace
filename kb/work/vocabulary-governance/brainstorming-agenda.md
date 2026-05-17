@@ -2,6 +2,16 @@
 
 Use this file to structure the longer session. The goal is not to decide immediately; it is to surface the design space cleanly enough that a later note or ADR can be extracted.
 
+## Status
+
+Some decisions have already been extracted:
+
+- `AGENTS.md` declares this repo's KB-global active vocabulary.
+- `kb/types/definition.md` now frames definition notes as term-boundary artifacts, not technique manuals.
+- First-mention glossing/linking is a write-path behavior for active vocabulary.
+
+Use the remaining agenda for unresolved collection-local and type-specific vocabulary questions.
+
 ## 1. Inventory Current Surfaces
 
 - Always-loaded vocabulary in `AGENTS.md`.
