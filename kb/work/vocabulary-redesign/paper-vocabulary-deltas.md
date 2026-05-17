@@ -2,6 +2,19 @@
 
 Initial comparison between `persistent-adaptive-artifacts-focused-draft.md` and the current commonplace vocabulary. This is a workshop note, not a migration proposal.
 
+## Status
+
+Historical. The durable KB vocabulary has since landed with different internal terms:
+
+- `persistent adaptive artifact` -> `retained artifact`
+- artifact/future-use split -> `retained artifact`, `operative part`, and `behavioral authority`
+- `future system use` / `control path` / `role` -> `behavioral authority`
+- `source relation` -> `lineage`
+- `artifact class` / prose-symbolic-opaque shorthand -> `representational form`
+- backend/storage class -> `storage substrate`
+
+Use this file as rationale history for why the vocabulary changed, not as the current proposal.
+
 ## Main Shift
 
 The paper moves the center of gravity from **memory** and **context engineering** toward:

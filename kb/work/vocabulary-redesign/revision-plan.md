@@ -1,159 +1,154 @@
 # Vocabulary Revision Plan
 
-Plan for revising the KB vocabulary in response to `persistent-adaptive-artifacts-focused-draft.md`. This plan deliberately separates workshop analysis from durable edits.
+Plan for propagating the landed KB vocabulary after the artifact-analysis redesign. This replaces the earlier proposal to adopt `artifact-use pairing` and related paper terms.
 
-## Goal
+## Current State
 
-Adopt the useful part of the paper vocabulary without turning `AGENTS.md` into a paper abstract.
+The useful part of the paper vocabulary has been translated into the KB's internal vocabulary:
 
-The likely shape is:
+- `retained artifact`
+- `operative part`
+- `storage substrate`
+- `representational form`
+- `lineage`
+- `behavioral authority`
+- `knowledge artifact`
+- `system-definition artifact`
 
-- keep the current operator vocabulary (`distillation`, `constraining`, `codification`) as the KB's update-mechanism language;
-- add a small deployment/accounting vocabulary around retained artifacts and their future uses;
-- revise memory and system-definition prose so role is not treated as intrinsic to an artifact when the use binding is what matters.
+The current goal is not to choose the vocabulary from scratch. It is to propagate the landed terms through high-traffic notes and write paths, while keeping paper-facing terms in paper/workshop artifacts where they are useful.
 
 ## Non-Goals
 
 - Do not rewrite every note in one pass.
-- Do not replace the existing definition-note system with a new ontology.
-- Do not add schema or validator changes until the vocabulary is stable.
-- Do not import the full paper terminology into always-loaded context.
+- Do not replace the definition-note system with a new ontology.
+- Do not add schema or validator changes until the vocabulary has survived more use.
+- Do not treat paper terms as internal hot-path terms unless a later decision reverses the current landing.
 
-## Proposed First-Pass Decisions
+## Adopted Decisions
 
-| Term | Decision | Rationale |
+| Old or candidate term | Current term | Notes |
 |---|---|---|
-| Context engineering | Keep always-loaded | Still names the domain and explains routing/loading/scoping work |
-| Distillation | Keep always-loaded | Still the main compression/update operator for KB artifacts |
-| Constraining | Keep always-loaded | Still names narrowing interpretation space across prose, schemas, validators, and code |
-| Codification | Keep always-loaded | Still names the prose-to-symbolic transition |
-| Register | Tentatively demote from always-loaded | Important for collection authors, but probably collection-loaded rather than globally loaded |
-| Workshop | Keep, but pair with library | Operational boundary is important; the current gloss should make the library contrast explicit |
-| Artifact-use pairing | Add, likely always-loaded | One compact term resolves memory/tool/skill/policy ambiguity by naming retained artifact plus future use |
-| Future system use | Add to definition note / migration note, not necessarily `AGENTS.md` | Useful but slightly heavy for always-loaded vocabulary |
-| Control path | Add to definition note / memory requirements | Strong concept for how retained material reaches behavior |
-| Eligibility | Add to lifecycle discussion | Separates artifact existence/status from use-specific activation permission |
-| Source relation | Add to compiled-view / lifecycle discussion | Clarifies canonical source, derived view, drift, regeneration |
-| Persistent adaptive artifact | Use in paper-facing notes; maybe shorten internally to adaptive artifact | Conceptually broad, but too heavy for hot context unless shortened |
+| Persistent adaptive artifact | Retained artifact | Internal term; paper-facing term can remain in paper drafts |
+| Artifact-use pairing | Retained artifact + operative part + behavioral authority | Pairing was useful as a bridge but too bundled for durable use |
+| Future system use | Behavioral authority / consumption path | Authority records consumer, channel, and force |
+| Control path | Behavioral authority | Use "channel" or "consumption path" where route is specifically meant |
+| Source relation | Lineage | Lineage covers source dependencies and derivation status needed for invalidation/regeneration |
+| Backend / storage class | Storage substrate | Storage is one field, not the taxonomy |
+| Artifact class | Representational form | Form classifies how operative parts are encoded and consumed |
+| Opaque artifact | Distributed-parametric form, plus opacity as scale/property | Opaque is now an inspectability threshold, not a form name |
+| Knowledge role | Knowledge artifact | Authority-path family, not intrinsic object type |
+| System-definition role/use | System-definition artifact | Authority-path family, not form or substrate |
+| Eligibility | Lifecycle/authority metadata | Useful, but not one of the four core artifact-analysis fields |
 
-## Phase 1: Vocabulary Audit
+## Phase 1: Confirm Hot Paths
 
-Purpose: identify where the paper vocabulary changes existing claims rather than merely renaming them.
+Purpose: make sure the current write and read paths teach the landed vocabulary consistently.
 
 Tasks:
 
-1. Search current notes for `system-definition`, `artifact role`, `activation`, `compiled view`, `status`, `memory`, `authority`, and `lifecycle`.
-2. Mark each hit as one of:
-   - already compatible with artifact-use pairing;
-   - should be revised from intrinsic-artifact language to use-specific language;
-   - unrelated ordinary usage.
-3. Identify the smallest set of high-traffic notes that need revision first.
+1. Check `AGENTS.md` Vocabulary for all adopted terms and links.
+2. Check `kb/notes/definitions/dir-index.md` and curated indexes for discoverability.
+3. Check `kb/notes/axes-of-artifact-analysis.md` as the main conceptual router.
+4. Check `kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md` as the memory-design companion.
+5. Check agent-memory review type specs and skill instructions for the new terms.
 
 Expected output:
 
-- `audit-results.md` in this workshop with path-level findings and recommended edit order.
+- A short audit note or checklist in this workshop if gaps remain.
 
-## Phase 2: Definition Drafts
+## Phase 2: Replace Stale Shorthand
 
-Purpose: draft vocabulary changes before editing durable docs.
+Purpose: update high-traffic notes where old terms would now mislead.
 
-Draft in workshop first:
+Search targets:
 
-1. A definition note for `artifact-use pairing`.
-2. A short vocabulary migration note mapping:
-   - artifact role -> artifact-use pairing;
-   - system-definition artifact -> system-definition use, where precision matters;
-   - activation -> control path, where broader than context loading;
-   - status -> artifact-level state vs use-specific eligibility;
-   - compiled view -> derived view / source relation, where source alignment is the issue.
-3. A proposed `AGENTS.md` Vocabulary replacement block.
+- `artifact-use pairing`
+- `future system use`
+- `control path`
+- `source relation`
+- `artifact role`
+- `knowledge role`
+- `system-definition role`
+- `artifact class`
+- `backend`
+- `opaque artifact`
 
-Expected output:
+Edit rule:
 
-- `definition-drafts.md`
-- `agents-vocabulary-proposal.md`
+- Preserve historical or paper-facing usage in workshop/paper files.
+- In durable notes, prefer local clarifying edits over broad rewrites.
+- Keep ordinary words like "backend", "role", or "class" when they are not standing in for the artifact-analysis fields.
 
-## Phase 3: Durable Minimal Edit
+Likely durable targets:
 
-Purpose: land the smallest durable vocabulary change that improves future work.
-
-Candidate first durable edits:
-
-1. Add a definition note:
-   - `kb/notes/definitions/artifact-use-pairing.md`
-2. Revise `AGENTS.md` Vocabulary:
-   - add `Artifact-use pairing`;
-   - keep `Context engineering`, `Distillation`, `Constraining`, `Codification`, `Workshop`;
-   - either demote `Register` or shorten it and note it is collection-authoring vocabulary.
-3. Update `kb/notes/definitions/dir-index.md` via `commonplace-refresh-indexes`.
-
-Hold point:
-
-- Do not touch broad memory-design notes until this minimal edit reads cleanly in context.
-
-Validation:
-
-- `commonplace-validate AGENTS.md` if supported as text.
-- `commonplace-validate kb/notes/definitions/artifact-use-pairing.md`
-- `commonplace-validate kb/notes/definitions/dir-index.md`
-
-## Phase 4: Targeted Propagation
-
-Purpose: update notes where the old vocabulary would now actively mislead.
-
-Likely targets:
-
-- `kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md`
 - `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md`
 - `kb/notes/agent-memory-requirements/activate-behavior-changing-memory.md`
 - `kb/notes/agent-memory-requirements/keep-compiled-views-aligned.md`
 - `kb/notes/agent-memory-requirements/retire-redact-supersede-relax.md`
 - `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`
+- agent-memory review files that still use role/backend/class shorthand as taxonomy
 
-Edit rule:
+## Phase 3: Align Write Paths
 
-- Prefer local clarifying paragraphs over global rewrites.
-- Keep old terms where they still work, but add the use-specific distinction where it changes design decisions.
+Purpose: make new writing use the landed vocabulary without hardcoding every term in the generic write skill.
 
-Validation:
+Tasks:
 
-- Validate each touched note.
-- Run a semantic review bundle only on notes where the central claim changes.
+1. Keep `cp-skill-write` generic: it should load collection and type policies, not know the vocabulary list.
+2. Put general vocabulary usage rules in collection conventions or the emerging vocabulary-governance design.
+3. Keep type-specific requirements in type specs, especially `agent-memory-system-review`.
+4. Avoid forcing artifact-analysis vocabulary into notes where it does not change the design decision.
 
-## Phase 5: Optional Codification
+Related workshop:
 
-Purpose: only after the vocabulary proves stable, decide whether any distinction can become a check.
+- [Vocabulary governance](../vocabulary-governance/README.md) handles global vs collection-local vs type-specific vocabulary policy.
+
+## Phase 4: Review And Validation Candidates
+
+Purpose: only after propagation, decide what can become a check.
 
 Candidate checks:
 
-- Review gate: warns when a note calls something "memory" but does not specify future use / control path.
-- Review gate: warns when a high-authority derived view lacks source relation / refresh story.
-- Authoring checklist: artifact-use record for validators, skills, generated prompt views, and learned policies.
+- Review warning when a note uses "memory" as a design answer without naming storage substrate, representational form, lineage, or behavioral authority where those fields matter.
+- Review warning when a derived high-authority artifact lacks lineage or refresh story.
+- Review warning when a note treats `knowledge artifact` or `system-definition artifact` as intrinsic form/substrate rather than authority-path family.
+- Advisory undefined-term check for active vocabulary terms without first-mention gloss/link.
 
-Do not implement these until at least one durable note successfully uses the vocabulary.
+Do not implement these until the vocabulary has stabilized in enough notes to avoid noisy gates.
 
 ## Proposed `AGENTS.md` Shape
 
-Draft direction, not final text:
+Already landed in current form. Future edits should test whether this cluster is too large for always-loaded context:
 
-```markdown
-- **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, maintenance, and observability.
-- **Distillation** — goal-oriented compression whose purpose is the capacity change it produces in a bounded consumer; in this KB, directed context compression.
-- **Constraining** — narrowing the interpretation space of an artifact or use, trading generality for reliability, speed, cost, and verifiability.
-- **Codification** — constraining that crosses from natural language into a symbolic medium such as code, schema, tests, or validators.
-- **Artifact-use pairing** — a retained artifact plus the specific future use through which it can affect behavior. The same artifact can be advice, instruction, executable tool, validator, route input, derived view, or audit evidence depending on its control path, authority, scope, and eligibility.
-- **Workshop** — a named temporal workspace for work-in-flight artifacts; contrast with the library layer where value accumulates.
-```
+- `Context engineering`
+- `Distillation`
+- `Constraining`
+- `Codification`
+- `Retained artifact`
+- `Operative part`
+- `Storage substrate`
+- `Representational form`
+- `Lineage`
+- `Behavioral authority`
+- `Knowledge artifact`
+- `System-definition artifact`
+- `Register`
+- `Workshop`
 
-Open question: whether `Register` remains here, moves to collection docs only, or stays as a shorter collection-authoring term.
+Open questions:
+
+- Does `register` remain always-loaded or move to collection-authoring context?
+- Does `operative part` need more examples to be teachable in hot context?
+- Should `knowledge artifact` and `system-definition artifact` remain always-loaded, or be loaded only when artifact analysis is in play?
+- Should `eligibility` eventually become a definition note, or remain memory-lifecycle vocabulary?
 
 ## Commit Strategy
 
 Commit in small units:
 
-1. Workshop plan and audit artifacts.
-2. Definition draft promoted to `kb/notes/definitions/`.
-3. `AGENTS.md` vocabulary change plus generated definition index.
-4. Targeted note migrations in separate commits by theme.
+1. Workshop updates that mark the new vocabulary as landed.
+2. Hot-path documentation fixes.
+3. Targeted note migrations by theme.
+4. Optional review-gate or validation changes only after the language proves stable.
 
-Keep workshop files uncommitted or committed according to operator preference; durable KB edits should not depend on untracked workshop state.
+When adding or revising artifacts, prefer atomic artifact commits over temporary README/index consistency.

@@ -20,7 +20,7 @@ Exceptions — do not flag:
 - Standard technical vocabulary (LLM, context window, prompt, token, API).
 - Terms whose opacity is already covered by the notation-opacity gate (e.g., "external symbolic state" when the real access barrier is the `K` notation it labels). Do not double-flag the English phrase alongside a notation-opacity finding for the same concept.
 
-KB vocabulary terms (`kb/notes/definitions/` — currently: distillation, constraining, codification, context engineering) are NOT exempt. Authors know these terms from CLAUDE.md, but external readers do not. On first mention, provide both an inline gloss and a link to the definition note. The gloss lets the reader keep reading; the link lets them go deep.
+KB vocabulary terms under `kb/notes/definitions/` are NOT exempt. Authors may know these terms from `AGENTS.md` or collection context, but external readers do not. On first meaningful mention, provide both an inline gloss and a link to the definition note. The gloss lets the reader keep reading; the link lets them go deep.
 
 ## Example (fail)
 
