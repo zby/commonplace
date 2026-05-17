@@ -1,104 +1,128 @@
 ---
-description: "OS-Copilot/FRIDAY review: OS task agent with self-refining code execution, vector-retrieved generated tools, and course-driven tool-library accumulation"
+description: "OS-Copilot review: FRIDAY plans OS tasks, generates and repairs executable tools, scores them, and stores reusable Python tools in a vector-retrieved repository"
 type: ../types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-04-27"
+last-checked: "2026-05-16"
 ---
 
 # OS-Copilot
 
-OS-Copilot is the open-source codebase behind FRIDAY, a generalist computer-use agent for Linux and macOS from the OS-Copilot project. The reviewed implementation is less a broad knowledge base than a task agent with an accumulated executable tool library: it decomposes OS tasks, retrieves existing tools, generates and repairs code, judges completed subtasks, and stores high-scoring Python tools for later vector retrieval.
+OS-Copilot is an open-source framework for generalist computer agents on operating-system tasks. The inspected repository implements FRIDAY, a single-round task agent that decomposes a user task into typed subtasks, retrieves existing tools, generates Python/Shell/AppleScript or API code, executes it in an environment, uses an LLM judge to decide whether to amend, replan, or complete, and stores high-scoring generated Python tools for later retrieval. Its memory system is therefore centered on reusable executable tools, not conversational recall.
 
 **Repository:** https://github.com/OS-Copilot/OS-Copilot
 
-**Reviewed commit:** https://github.com/OS-Copilot/OS-Copilot/commit/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e
+**Reviewed commit:** [f720af8807e49a92dda64572d2c6bc6c0ac7ee7e](https://github.com/OS-Copilot/OS-Copilot/commit/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e)
+
+**Last checked:** 2026-05-16
 
 ## Core Ideas
 
-**The memory object is a generated tool, not a note.** The durable store is `oscopilot/tool_repository/generated_tools/`: `generated_tools.json`, per-tool code files, per-tool description files, and a Chroma vector database. `ToolManager.add_new_tool(...)` writes all four surfaces and persists the vector index; retrieval returns tool names by embedding similarity over tool descriptions, then fetches descriptions or code from the JSON-backed map ([tool_manager.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/manager/tool_manager.py), [generated_tools.json](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/generated_tools/generated_tools.json)).
+**FRIDAY treats tool use as the retained unit of improvement.** The README describes OS-Copilot as a library for agents that operate web, terminal, files, multimedia, and third-party applications, and notes that FRIDAY currently supports single-round conversation ([README.md](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/README.md)). In code, `FridayAgent` wires a planner, retriever, executor, and tool manager; each run resets the plan, decomposes the task, executes subtasks, judges or repairs failed tool executions, and may store a successful Python subtask as a reusable tool ([oscopilot/agents/friday_agent.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/friday_agent.py)).
 
-**Planning is a typed DAG over OS actions.** `FridayPlanner.decompose_task(...)` prompts the LLM to produce JSON subtasks with `description`, `dependencies`, and `type`, then builds an `ActionNode` graph and topologically sorts unfinished nodes. The types are execution modes rather than knowledge types: `Python`, `Shell`, `AppleScript`, `API`, and `QA` ([friday_planner.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/planner/friday_planner.py), [friday_pt.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/prompts/friday_pt.py)).
+**The planner builds an action graph, not a memory graph.** `FridayPlanner` asks the LLM to decompose the user task into subtasks with `description`, `dependencies`, and `type`, then builds a DAG of `ActionNode`s and executes a topological sort over incomplete nodes ([oscopilot/modules/planner/friday_planner.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/planner/friday_planner.py), [oscopilot/tool_repository/manager/action_node.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/manager/action_node.py)). The plan is transient execution state. It can carry prerequisite return values and relevant code into later subtasks, but it is not persisted as a reusable lesson.
 
-**Execution uses the operating system as the feedback surface.** `FridayExecutor.generate_tool(...)` asks the LLM for code and invocation logic, `execute_tool(...)` runs it through the unified `Env`, and `judge_tool(...)` sends the code, output, error, working directory, directory listing, and downstream task needs back to the LLM for a `Complete` / `Amend` / `Replan` judgment plus a 1-10 generality score ([friday_executor.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/executor/friday_executor.py), [env.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/environments/env.py)).
+**Tool retrieval is vector search over descriptions plus direct lookup of code.** `FridayRetriever` asks the tool manager for related tool names, descriptions, and code, then feeds relevant code snippets into the executor when generating a Python tool ([oscopilot/modules/retriever/vector_retriever.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/retriever/vector_retriever.py)). `ToolManager` stores tool metadata in `generated_tools.json`, code files under `tool_code/`, description files under `tool_description/`, and a persistent Chroma collection under `vectordb/` using OpenAI or Ollama embeddings ([oscopilot/tool_repository/manager/tool_manager.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/manager/tool_manager.py), [oscopilot/tool_repository/generated_tools](https://github.com/OS-Copilot/OS-Copilot/tree/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/generated_tools)).
 
-**Self-refinement is local repair plus optional replanning, with a promotion-path bug.** `FridayAgent.self_refining(...)` interprets the judge status. `Amend` enters a bounded repair loop, regenerating code from the critique and execution state. `Replan` retrieves relevant tools from the critique, asks the planner to add new tasks, and re-sorts the graph. A Python subtask is stored only when it completes and its generality score meets `config.score`, default 8, but the inspected code passes the pre-repair `code` variable to `store_tool(...)` even after `repairing(...)` returns revised code. That means initial-success paths promote the successful code, while repair-success paths appear able to promote the original failed version ([friday_agent.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/friday_agent.py), [config.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/config.py)).
+**Execution, judgment, repair, and replanning form the improvement loop.** `FridayExecutor` generates code and an invocation, executes it through the configured environment, asks an LLM judge to classify the outcome as `Complete`, `Amend`, or `Replan`, and can repair code using the previous code, error, output, current directory, working directory, file listing, critique, and prerequisite information ([oscopilot/modules/executor/friday_executor.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/executor/friday_executor.py)). `FridayAgent.self_refining(...)` uses those results to replan, amend, mark completion, and store high-scoring Python tools when `score >= config.score` ([oscopilot/agents/friday_agent.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/friday_agent.py), [oscopilot/utils/config.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/config.py)).
 
-**The explicit self-learning loop is curriculum-driven.** `SelfLearning` designs lessons for a software/package pair, optionally using demo-file content and up to 50 prior lessons, then runs each lesson through FRIDAY. The release notes call out saved historical learning courses, but the durable behavior in code is narrow: courses are JSON files under `courses/`, and the reusable behavior comes from each lesson's successful Python subtasks being promoted into the tool repository ([self_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/self_learning.py), [self_learner.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/learner/self_learner.py), [course_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/course_learning.py), [release.md](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/docs/release.md)).
+**Self-learning turns generated lessons into tool-acquisition tasks.** `SelfLearner` designs a JSON course from a software name, package name, demo file content, and prior course; `SelfLearning` stores course JSON under `courses/`, then runs each lesson through the same FRIDAY agent ([oscopilot/modules/learner/self_learner.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/learner/self_learner.py), [oscopilot/agents/self_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/self_learning.py), [course_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/course_learning.py)). The self-learning tutorial frames this as enabling Excel/openpyxl operations after FRIDAY initially fails SheetCopilot tasks ([docs/source/tutorials/self_learning.rst](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/docs/source/tutorials/self_learning.rst)).
 
-**The shipped repository starts with an empty learned-tool library.** The checked-in `generated_tools.json` is `{}`. The system's memory value is therefore produced by running it, not by a curated library shipped with the repo. `quick_start.py` runs a single task through FRIDAY, while `course_learning.py` runs continuous learning by repeatedly designing lessons and executing them ([quick_start.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/quick_start.py), [course_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/course_learning.py)).
+**The repository ships an empty generated-tool memory by default.** At the inspected commit, `generated_tools.json` is `{}` and the `tool_code/` and `tool_description/` directories contain only package scaffolding ([oscopilot/tool_repository/generated_tools/generated_tools.json](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/generated_tools/generated_tools.json), [oscopilot/tool_repository/generated_tools](https://github.com/OS-Copilot/OS-Copilot/tree/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/generated_tools)). The memory mechanism is implemented, but the checked-in repository does not include a populated public library of learned tools.
 
 ## Comparison with Our System
 
 | Dimension | OS-Copilot / FRIDAY | Commonplace |
 |---|---|---|
-| Primary substrate | Python functions, descriptions, JSON, Chroma vectors | Markdown notes, source reviews, ADRs, indexes, instructions |
-| Memory atom | Reusable executable subtask tool | Typed knowledge artifact with frontmatter and links |
-| Creation trigger | Successful high-scoring Python subtask | Deliberate authoring, ingest, review, or promotion |
-| Retrieval | Vector search over tool descriptions | `rg`, indexes, titles/descriptions, authored links |
-| Verification | LLM judge over execution state and generality score | Structural validation, semantic review, human/agent judgment |
-| Behavior-changing artifact | More code available to future plans | Better context and stronger KB artifacts |
-| Lifecycle | Add, overwrite, delete by tool name | Status, archive, replacement, validation, indexes |
+| Primary purpose | OS automation through generated and retrieved executable tools | Durable methodology KB for agent-operated knowledge systems |
+| Main retained artifact | Reusable generated Python tools plus prose descriptions and vector embeddings | Typed Markdown notes, source snapshots, reviews, instructions, ADRs, indexes, and validation outputs |
+| Storage substrate | Filesystem tool repository, `generated_tools.json`, Chroma vector store, course JSON, logs | Git-tracked Markdown, schemas, source snapshots, generated indexes, review outputs, scripts |
+| Representational form | Symbolic executable code, prose descriptions/prompts/lessons, distributed-parametric embeddings | Typed prose and frontmatter, symbolic links/schemas/commands, generated indexes, validation code |
+| Lineage | Execution state and judge critique feed repair and storage, but stored tools lack mandatory source trace IDs or review records | Source-pinned notes and reviews, authored citations, archive/replacement lifecycle, validation and review gates |
+| Activation | Vector retrieval of tool descriptions injects tool names/descriptions/code into planning and generation | `rg`, indexes, descriptions, authored links, skills, instructions, validation and review workflows |
+| Behavioral authority | Retrieved code can be reused or executed; stored tools become high-authority system-definition artifacts | Knowledge artifacts and system-definition artifacts are separated by type, instruction surface, validation, and review status |
 
-OS-Copilot is stronger where memory should become direct action capacity. A stored tool is not advice about how to automate Excel; it is executable code that future tasks can retrieve and reuse. That is a more behavior-changing substrate than a prose note when the target domain is repetitive computer operation.
+OS-Copilot and commonplace agree that memory matters when it changes future work. FRIDAY's strongest contribution is a tight activation path: if a task resembles a stored tool description, Chroma retrieval can bring back the tool name, prose description, and executable code before code generation. That is stronger than passive storage.
 
-Commonplace is stronger where memory should remain inspectable, evidential, and compositional. OS-Copilot stores code and a short description, but not provenance, source traces, confidence history, citations, or typed relationships between tools. The vector index improves recall, but it does not explain why a tool should be trusted beyond the fact that the LLM judge once scored it highly.
+The major difference is artifact governance. A FRIDAY tool combines several operative parts: a prose description used for retrieval, symbolic Python code used for execution, and a distributed-parametric embedding used for ranking. Once retrieved, the code has system-definition-artifact authority because it can be copied, adapted, or executed in the environment. Commonplace would require clearer source lineage, review state, tests, scope, and retirement policy before a generated artifact received that much authority.
 
-The main tradeoff is that OS-Copilot treats learning as tool accretion. This works for narrow procedural competence and gives the agent a concrete reuse surface. It is weak for conceptual knowledge, decision history, or methodology because there is no path from a repeated observation to a note, rule, test, index, or policy artifact.
-
-## Borrowable Ideas
-
-**Promote only after execution plus generality judgment.** Ready to borrow as a guardrail pattern for generated scripts. The exact threshold is arbitrary, but "ran successfully" and "looks reusable" are separable checks; OS-Copilot makes both explicit before adding a tool.
-
-**Store executable memory beside a retrieval description.** Ready for a future workshop/tool cache. A generated script alone is hard to retrieve; a natural-language description alone cannot act. Keeping both and indexing the description is a practical pairing.
-
-**Use downstream dependency needs during judging.** Worth borrowing if Commonplace ever validates generated helpers. FRIDAY's judge prompt includes the next task, so a subtask can fail if it did not return information needed later, even if it looked locally successful.
-
-**Course-driven exploration for tool discovery.** Needs a narrow use case. The curriculum loop is a useful way to force coverage of a software package: design progressively harder tasks, execute them, and keep reusable functions. For Commonplace, the analogue would be benchmark-like workshop exercises that deliberately produce reusable scripts or instructions.
-
-**Treat replanning separately from code repair.** Ready as an execution-agent design pattern. `Amend` means the generated code should change; `Replan` means the environment needs another operation. That distinction keeps repair from trying to solve missing-package or missing-file problems by code editing alone.
+FRIDAY's self-learning course files are also different from commonplace library notes. A course lesson is a generated task prompt that drives the agent to practice and possibly create tools; it is a system-definition artifact for the learning loop. It is not a stable knowledge artifact about the package unless separately reviewed, cited, and maintained.
 
 ## Trace-derived learning placement
 
-**Trace source.** OS-Copilot qualifies as trace-derived learning. The raw trace is a subtask execution trajectory: generated code, invocation, environment output, error text, current working directory, directory listing, downstream task requirements, LLM critique, repair attempts, and final judge score. In self-learning mode, those traces are produced from curriculum lessons generated for a software/package pair.
+**Trace source.** OS-Copilot qualifies as trace-derived learning. The qualifying trace is not a conversation transcript; it is the task execution trajectory around generated tools: task description, generated code, invocation, execution output, errors, current directory, file listing, prerequisite returns, LLM judge critique, repair attempts, replan reasoning, and final score. Some of this is transient in `ExecutionState`; some is logged through Python logging, but the implemented learning path consumes the live state and critique rather than later mining raw log files ([oscopilot/agents/friday_agent.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/friday_agent.py), [oscopilot/modules/executor/friday_executor.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/executor/friday_executor.py), [oscopilot/utils/schema.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/schema.py)).
 
-**Extraction.** The extraction oracle is mostly an LLM judge over execution feedback. `judge_tool(...)` classifies the task as `Complete`, `Amend`, or `Replan` and assigns a generality score; `repair_tool(...)` uses the critique and state to produce revised code; `store_tool(...)` extracts a tool description from the code it receives and writes it if the tool name is not already present. Because the current caller does not reassign the repaired code before storing, repaired-success traces have weaker promotion grounding than initial-success traces.
+**Extraction.** Extraction has two paths. During ordinary task execution, the LLM judge decides whether a generated tool is complete, amendable, or needs replanning, and assigns a generality score. If a Python tool completes and its score meets the configured threshold, FRIDAY extracts a description from the code docstring and stores the tool. During self-learning, an LLM first designs course lessons from package/software context, then FRIDAY runs those lessons; successful high-scoring Python lesson solutions can become tools ([oscopilot/modules/executor/friday_executor.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/executor/friday_executor.py), [oscopilot/modules/learner/self_learner.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/learner/self_learner.py), [oscopilot/agents/self_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/self_learning.py)).
 
-**Storage substrate, form, and lineage.** The distilled retained state is symbolic: Python code, a natural-language description, a JSON registry entry, and an embedding index entry. Its lineage is subtask execution trace -> LLM judge/repair loop -> stored generated tool. It is not model-weight learning and not a prose knowledge base.
+**Storage substrate.** Raw execution traces mostly live in runtime objects and optional log files configured by `setup_config`; they are not a first-class replayable trace database. Distilled tools persist in the filesystem under `generated_tools.json`, `tool_code/`, `tool_description/`, and Chroma `vectordb/`. Course and lesson artifacts persist as JSON under `courses/`, with the continuous-learning loop updating in-memory course state and writing newly designed course JSON ([oscopilot/utils/config.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/config.py), [oscopilot/tool_repository/manager/tool_manager.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/manager/tool_manager.py), [oscopilot/agents/self_learning.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/self_learning.py)).
 
-**Behavioral authority.** The stored tool is a system-definition artifact. It changes the agent's future action space because later planning and execution can retrieve and call that function. The course JSON is closer to work history or curriculum state; the tool repository is the real behavior-changing artifact.
+**Representational form.** Raw task descriptions, critiques, course lessons, and tool descriptions are prose. Action graphs, JSON tool metadata, Python code, shell code, API paths, thresholds, and environment commands are symbolic. Chroma embeddings are distributed-parametric retrieval state. The behavior-shaping artifact is mixed: prose descriptions are embedded and ranked, symbolic code is retrieved and executed, and JSON maps keep names, descriptions, and code synchronized.
 
-**Scope.** Scope is local to the configured generated-tool repository, defaulting to `oscopilot/tool_repository/generated_tools`. There is no per-project provenance model beyond choosing a repository path, and no cross-tool abstraction layer.
+**Lineage.** Lineage is strong inside one execution loop because the current code, output, error, critique, and prerequisite state are passed into repair and judgment prompts. It becomes weak after promotion: a stored tool has code and description, but not mandatory links to the originating task, execution output, judge reasoning, score, repair attempts, course lesson, package docs, prompt version, or environment snapshot. Course JSON records lesson text, but it is not a durable provenance record for any later stored tool.
 
-**Timing.** The loop is online during task execution and staged during curriculum learning. Each task can promote a successful Python subtask immediately; continuous learning repeats course design, lesson execution, and tool accumulation.
+**Behavioral authority.** Raw execution state is a knowledge artifact while it advises judge, repair, and replan decisions. Judge prompts and score thresholds have evaluation and promotion authority. Stored tools are system-definition artifacts once retrieved because their code can directly shape or perform later OS actions. Tool descriptions and embeddings have routing/ranking authority because they decide which tools become active for a task. Course lessons are system-definition artifacts for the self-learning loop because they instruct the agent what to practice.
 
-**Survey placement.** On the [trace-derived survey](../trace-derived-learning-techniques-in-related-systems.md), OS-Copilot sits in the executable-skill-library branch: traces are not condensed into lessons or rules but into callable tools. It strengthens the survey's symbolic-artifact claim and adds a useful contrast to prose-memory systems: the artifact is harder to audit semantically, but more directly behavior-changing.
+**Scope.** The scope is project/local-agent level. A generated tool repository lives under the configured `generated_tool_repo_path`, and Chroma retrieval is local to that repository. It is not a shared, reviewed, cross-project package registry by default.
+
+**Timing.** Tool generation, execution, repair, judging, and storage happen online during task runs. Course design can happen before or during continuous self-learning cycles, then lessons are executed online through the same agent. Retrieval happens at planning time and again before Python tool generation.
+
+**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), OS-Copilot belongs on the trace-to-tool and trace-to-executable-artifact axis. It strengthens the survey distinction between raw traces and distilled artifacts: raw execution state is temporary evidence, while the durable behavior-changing artifact is a generated Python tool plus description plus embedding. It also splits "memory" into course artifacts, raw execution traces, vector retrieval state, and executable tool authority.
+
+## Borrowable Ideas
+
+**Use executable tools as promoted memory only after a score gate.** Worth borrowing for narrow workshop contexts. FRIDAY does not store every generated code snippet; it stores completed Python tools only when the judge's generality score clears a threshold. Commonplace could adapt this as a candidate-to-skill promotion gate, but would need tests and source lineage in addition to an LLM score.
+
+**Retrieve code by description before generating new code.** Ready as an activation pattern. FRIDAY's tool repository makes reusable code visible at the point of generation rather than waiting for the agent to remember it. Commonplace skills and scripts could benefit from similarly explicit retrieval cues.
+
+**Separate lesson generation from artifact promotion.** Useful for workshops. OS-Copilot's course lessons create practice tasks; successful practice can yield tools. Commonplace should keep that distinction: a generated exercise is not itself a library claim, but it can produce evidence for a later artifact.
+
+**Do not borrow executable authority without governance.** FRIDAY's stored tools can become powerful quickly because retrieved code is executable. A commonplace analogue would need scoped permissions, tests, provenance, deprecation, and review before promoted code became an instruction-level surface.
+
+## Takeaways
+
+**OS-Copilot's memory is mostly a tool repository.** The durable behavior-changing substrate is generated Python code, descriptions, JSON metadata, and vector retrieval state.
+
+**Trace-derived learning applies, but the trace is operational.** The system learns from generated-code execution, errors, repair critiques, completion judgments, and generality scores, not mainly from long conversational histories.
+
+**Raw traces, courses, vectors, and tools have different authority.** Logs and execution state are evidence; course lessons instruct practice; embeddings rank tools; stored Python code can act directly in the environment.
+
+**Activation is stronger than governance.** FRIDAY has a practical route from stored tools to future task execution, but it does not preserve enough lineage or validation metadata to make stored tools trustworthy outside the local run context.
+
+**The checked-in memory starts empty.** The design supports self-improving tool accumulation, but the reviewed repository does not ship a populated library of learned tools.
 
 ## Curiosity Pass
 
-The headline phrase "self-improvement" is accurate only in a constrained sense. FRIDAY does not improve its model, prompts, planner, or retrieval policy. It improves by accumulating generated Python functions that future tasks can retrieve. That is still learning, but it is tool-library growth rather than agent-wide adaptation.
+The most interesting mechanism is the score threshold on generated code. It turns an LLM judge from a pass/fail critic into a promotion oracle for retained executable artifacts. That is also the riskiest part: the same model family that generated or repaired the code may be deciding whether it is general enough to persist.
 
-The code/course boundary is also weaker than the release note suggests. The self-learning loop can read prior course JSON and ask for advanced non-duplicate lessons, but the implementation saves the new course object after each run rather than maintaining a rich course history with outcomes. The stronger trace-derived mechanism is not course persistence; it is successful subtask promotion into the tool repository.
+The simpler alternative would be a normal vector store of task notes. OS-Copilot chooses a stronger form: reusable code. That can improve future action more directly, but it raises the review bar because wrong code can mutate files, call APIs, or change system state.
 
-The verification story depends heavily on the same LLM family that generated the code. Environment output gives the judge real evidence, but the repo does not add independent tests, sandbox policy, provenance records, or human review before storing a tool. The repair-path variable bug makes this sharper: the judge can approve revised code while the storage call still receives the original code. For filesystem and application automation, that is a meaningful trust gap.
+The course-learning loop is less "memory" than curriculum synthesis. It becomes memory only when lessons produce durable tools or when prior course JSON changes future lesson design. Treating every generated lesson as learned knowledge would overstate the implementation.
 
-A simpler alternative would be a scripts directory with docstrings plus a grep index. OS-Copilot's vector retrieval is helpful once the tool library grows, but the important design move is the promoted executable artifact, not Chroma itself.
+## Open Questions
+
+- Should stored tools carry the originating task, execution output, score, judge reasoning, and repair history?
+- How reliable is the LLM generality score as a promotion oracle compared with tests over parameterized examples?
+- Can executable tools be sandboxed, permissioned, and retired when generated for OS-level operations?
+- Does continuous self-learning preserve enough course history across restarts, or does writing only the latest designed course lose useful lineage?
+- Should Chroma retrieval use tool descriptions alone, or should code, tests, and failure modes also influence ranking?
+- How does the system prevent duplicate or near-duplicate tools as the generated repository grows?
 
 ## What to Watch
 
-- Whether generated tools gain provenance: original task, execution trace, score, repaired versions, and last successful use.
-- Whether the roadmap's multi-round dialogue support changes memory scope from per-task tool reuse to session-level working memory ([roadmap.md](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/docs/roadmap.md)).
-- Whether tool promotion gets stronger verification, such as generated tests or replay before reuse, and whether the repair-success path stores the repaired code rather than the original attempt.
-- Whether the curriculum loop starts saving outcomes and failures, not just designed lessons.
-- Whether vision-enabled FRIDAY keeps the same executable-skill-library substrate or introduces a separate visual trace memory.
+- Whether OS-Copilot adds provenance fields to `generated_tools.json`.
+- Whether stored tools gain generated tests, benchmark results, or execution replay records.
+- Whether the tool repository becomes populated and curated rather than purely local and empty by default.
+- Whether self-learning adds explicit promotion, retirement, and deduplication policies for generated tools.
+- Whether FRIDAY's vision/frontend paths reuse the same tool-memory architecture or introduce new retained artifacts.
 
----
+## Bottom Line
+
+OS-Copilot is best read as an OS automation agent whose memory is reusable executable tooling. FRIDAY turns task executions into candidate code, repairs and scores that code, and promotes high-scoring Python tools into a Chroma-retrieved local repository. Commonplace should borrow the activation pattern and the distinction between exercises, traces, and promoted tools, but not the authority boundary: executable retained artifacts need stronger lineage, tests, review, scope, and retirement before they can safely become durable system-definition artifacts.
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: OS-Copilot is an executable-skill-library case where traces promote to callable code rather than prose rules
-- [Voyager](./voyager.md) — compares: both accumulate executable skills, but OS-Copilot applies the pattern to general OS/software tasks rather than Minecraft
-- [ExpeL](./expel.md) — contrasts: both learn from trajectories, but ExpeL promotes prompt-visible rules while OS-Copilot promotes callable Python tools
-- [Pi Self-Learning](./pi-self-learning.md) — contrasts: Pi distills session mistakes into injected text; OS-Copilot distills successful execution into retrievable code
-- [Deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) — sharpens: OS-Copilot is deploy-time symbolic learning with an executable promotion target
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — grounds: OS-Copilot separates artifact substrate from retrieval substrate, with code/description/JSON/vector entries serving different roles
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: OS-Copilot distills execution traces and judge feedback into reusable executable tools.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: OS-Copilot bundles prose descriptions, symbolic code, JSON metadata, and embeddings in one tool-memory path.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: raw execution state and logs advise repair, judging, and replanning.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: stored tools, score thresholds, retrieval rankings, and course lessons can instruct, route, evaluate, or execute future behavior.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: OS-Copilot couples stored tools to planning-time and generation-time retrieval.

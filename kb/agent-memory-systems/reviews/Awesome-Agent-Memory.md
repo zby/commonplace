@@ -1,90 +1,105 @@
 ---
-description: "Curated Awesome-list for agent memory papers, products, benchmarks, and surveys; useful as a discovery map but not an implemented memory system"
+description: "Review of Awesome Agent Memory as a curated README bibliography of memory products, benchmarks, papers, and articles rather than an implemented memory runtime"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: "2026-04-12"
+last-checked: "2026-05-16"
 ---
 
 # Awesome Agent Memory
 
-Awesome Agent Memory is a TeleAI-UAGI curated bibliography for memory mechanisms in LLM and multimodal agents. The checked-out repository is not an agent memory runtime: it contains a single large `README.md`, a license, and `.gitignore`. Its value is coverage and categorization across products, tutorials, surveys, benchmarks, nonparametric memory, parametric memory, agent evolution, cognitive-science papers, articles, and workshops.
+Awesome Agent Memory is TeleAI-UAGI's curated bibliography for LLM and multimodal agent memory. At the reviewed commit, the checkout contains only `.gitignore`, `LICENSE`, and a single README, so the operative system is not a memory runtime; it is a Markdown catalogue that organizes products, tutorials, surveys, benchmarks, papers, articles, and workshops for human or agent discovery.
 
 **Repository:** https://github.com/TeleAI-UAGI/Awesome-Agent-Memory
-**Reviewed commit:** https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/tree/6dabfbc407c8ae057d2a3db5fb78846ce80b6627
+
+**Reviewed commit:** [6c666530c44049c0b3aa3eb8d865e67782a98d17](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/commit/6c666530c44049c0b3aa3eb8d865e67782a98d17)
+
+**Source shape:** README bibliography plus Apache-2.0 license; no package manifest, runtime code, data pipeline, retrieval index, agent API, or benchmark runner was present in the checkout.
 
 ## Core Ideas
 
-**Field map rather than system implementation.** The repo is an Awesome-list style index. There is no storage engine, retrieval implementation, learning loop, validation layer, package manifest, or source code beyond the README.
+**The repository is a memory-landscape index, not a memory system.** The README describes itself as a curated collection of systems, benchmarks, papers, and related resources for memory mechanisms in LLMs and MLLMs. Its behavioral effect is navigational: it can help a reader find candidate systems or papers, but it does not store user memories, retrieve context for an agent, update profiles, run evaluations, or execute memory policies ([README.md](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/blob/6c666530c44049c0b3aa3eb8d865e67782a98d17/README.md)).
 
-**Memory is scoped broadly.** The list treats "agent memory" as an umbrella over long-context benchmarks, vector/graph memory products, multimodal video memory, parametric memory, context engineering, self-evolving agents, cognitive-science papers, and industry articles. That breadth is useful for discovery, but it also confirms that memory is a crosscutting concern rather than one coherent subsystem.
+**The storage substrate is one Git-tracked Markdown file.** The durable retained artifact is the repository README. Its representational form is mostly prose, Markdown links, inline HTML, badges, and manually maintained headings. There is no database, vector store, graph store, model-artifact store, or generated index committed alongside it ([README.md](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/blob/6c666530c44049c0b3aa3eb8d865e67782a98d17/README.md)).
 
-**Taxonomy is optimized for scanning.** The main structural split is products / tutorials / surveys / benchmarks / papers / articles / workshops. Papers are then subdivided by mechanism class: nonparametric memory, parametric memory, memory for agent evolution, and cognitive science. This gives a fast first pass over the field without claiming that the categories are rigorous.
+**The taxonomy separates market, research, evaluation, and cognitive references.** The top-level structure distinguishes products, tutorials, surveys, benchmarks, nonparametric-memory papers, parametric-memory papers, agent-evolution papers, cognitive-science papers, articles, and workshops. That is a useful cross-field map because "memory" spans retrieval systems, long-context benchmarks, graph stores, multimodal memory, model-editing or parametric memory, continual learning, and harness/context engineering ([README.md](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/blob/6c666530c44049c0b3aa3eb8d865e67782a98d17/README.md)).
 
-**Recency and reproducibility are the primary curation signals.** Most research sections are grouped by year. The README says open-source resources are bolded and ranked higher, and product entries use GitHub star badges. This makes the list good for finding current, reproducible leads, but it should not be read as an evidence-weighted ranking.
+**The curation policy gives preference to open reproducible resources.** The README says open-source resources, especially papers with reproducible GitHub code, are bolded and ranked higher. Product entries also include star badges and code/docs/paper/blog links where available. This is not evidence validation, but it is an explicit ranking signal for discoverability ([README.md](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/blob/6c666530c44049c0b3aa3eb8d865e67782a98d17/README.md)).
 
-**The list mixes artifacts at different trust levels.** Peer-reviewed papers, arXiv/preprint links, product websites, blogs, X posts, videos, workshop pages, and "debunked" archival entries all sit in one file. The archival section is useful because it preserves negative cases, but the main list leaves quality assessment to the reader.
+**The lineage model is repository history, not per-entry provenance.** The latest commit adds an Akephalos product entry and resolves a pull request, and the README invites issues and pull requests for additions and categorization changes. That gives the collection Git-level lineage for edits, but individual entries do not carry review status, source-check dates, inclusion rationale, confidence, duplicate handling, or retirement metadata ([README.md](https://github.com/TeleAI-UAGI/Awesome-Agent-Memory/blob/6c666530c44049c0b3aa3eb8d865e67782a98d17/README.md)).
 
-**The maintainers' own system gets prominent placement.** TeleMem appears as a highlighted nested product under Mem0 with a "drop-in replacement" framing. That is relevant context for interpreting the list as both a field map and a project-adjacent showcase.
+**Behavioral authority is advisory.** Awesome Agent Memory is best classified as a knowledge artifact: it supplies references, evidence leads, and a coarse map of the field. It is not a system-definition artifact for an acting agent because no consumer channel enforces its categories, no runtime loads it into an agent's context automatically, and no rule, validator, retriever, ranker, or learning loop consumes the README as authoritative configuration.
 
 ## Comparison with Our System
 
 | Dimension | Awesome Agent Memory | Commonplace |
 |---|---|---|
-| Artifact type | Curated bibliography in one README | Typed markdown KB with notes, reviews, sources, indexes, and instructions |
-| Knowledge unit | Link entry with occasional one-line annotation | Frontmatter-described note/review with prose analysis and explicit links |
-| Evidence depth | Broad but shallow; mostly points to external artifacts | Narrower but code-grounded review of each system |
-| Retrieval model | Human/agent scans headings, dates, bolding, and link text | Search, descriptions, curated indexes, and semantic link phrases |
-| Curation signal | Recency, open-source availability, stars, category placement | Structural validation, semantic review, and relationship annotations |
-| Lifecycle model | Living list updated by commits and contributions | Library/workshop split, note status, review freshness, and validation |
+| Primary artifact | Single README bibliography | Typed Markdown notes, sources, reviews, instructions, ADRs, and indexes |
+| Storage substrate | GitHub repository with Markdown | Git repository with collection-local type contracts and validation |
+| Representational form | Prose/link list with headings and badges | Prose plus structured frontmatter, links, generated indexes, scripts, and validation rules |
+| Lineage | Git history for README edits | Source snapshots, reviewed commits, frontmatter status, links, review files, and validation history |
+| Behavioral authority | Knowledge artifact for discovery and comparison | Knowledge artifacts plus system-definition artifacts such as instructions, skills, type specs, commands, and validation gates |
+| Activation | Manual browsing or search | `rg`, indexes, descriptions, authored links, skills, and command workflows |
 
-Awesome Agent Memory is useful upstream of our related-systems workflow. It helps discover candidate systems, benchmarks, and surveys; it does not replace code-grounded reviews. Its broad taxonomy catches more of the landscape than our curated index, especially parametric-memory and multimodal-memory work that we usually ignore unless it affects agent-operated KB design.
+Awesome Agent Memory and commonplace share the belief that agent-memory work benefits from inspectable files and explicit organization. Both can be read by humans and agents without a service dependency, and both use repository history as a basic accountability layer.
 
-The tradeoff is that the list compresses by omission rather than by explanation. A product entry can show code, paper, blog, and popularity signals, but it does not say which memory subproblem the system solves, whether the implementation matches the claim, or what should be borrowed. Commonplace spends more per system to answer those questions.
+The main difference is artifact contract. Awesome Agent Memory is intentionally broad and lightweight: one file collects links across the landscape. Commonplace turns each reviewed system into a typed retained artifact with freshness metadata, source-grounded claims, comparison sections, and links into the rest of the KB.
+
+Awesome Agent Memory is stronger as a horizon scanner. Its categories include products and papers that commonplace may not have reviewed yet, and its news-like top section captures the current discourse around agent memory. Commonplace is stronger when a future agent must rely on a claim without reopening every source: reviews preserve specific commits, mechanism summaries, limitations, and local implications.
+
+The taxonomy is useful but lower-authority than a validated KB structure. In commonplace terms, the README's categories are knowledge-artifact labels, not system-definition-artifact routing rules. They may guide what to inspect next, but they do not bind downstream behavior or guarantee that entries satisfy a stable inclusion contract.
 
 ## Borrowable Ideas
 
-**Use Awesome Agent Memory as a source-discovery seed (ready now).** When the related-systems queue needs new candidates, this repo is a compact way to scan products, benchmarks, surveys, and recent papers. It is especially useful for finding systems outside the files-first and code-agent neighborhoods we already over-sample.
+**Keep a cheap horizon-scanning layer beside expensive reviews.** Ready now as a collection pattern. A broad bibliography can catch products, papers, benchmarks, and discourse before any one item deserves a source-grounded review.
 
-**Mark reproducible resources explicitly (ready now).** The list's convention of visually distinguishing open-source/code-backed entries is worth borrowing into discovery reports. For our purposes the marker should mean "has inspectable code or data," not "better system."
+**Use coarse categories to reveal the field shape.** Ready as a navigation aid, not as a strict taxonomy. The README's separation between products, benchmarks, nonparametric memory, parametric memory, agent evolution, context engineering, and cognitive science helps agents ask "which kind of memory claim is this?" before reading deeply.
 
-**Keep negative or debunked systems visible (ready now).** The archival section preserves MemPalace and Memvid as debunked cases rather than deleting them. Our related-systems index already keeps outdated reviews; a more explicit "negative cases" subsection could help future reviewers avoid redoing the same investigation.
+**Mark inspectability early.** The open-source preference is a useful first-pass signal for reviewability. In commonplace this should become explicit metadata such as source availability, reviewed commit, and last checked, rather than boldface alone.
 
-**Separate discovery taxonomy from review taxonomy (ready now).** Awesome Agent Memory's categories are useful for finding leads, while our review dimensions are useful for explaining mechanisms. We should not force one taxonomy to do both jobs.
+**Treat link catalogues as intake, not authority.** The README is a good candidate-source queue. Commonplace should borrow the intake function while preserving the promotion boundary: a catalogue entry is not yet a trusted note, instruction, or review.
 
-**Add benchmark and survey leads to review packets (needs a use case).** The repo's benchmark sections could feed future comparative review work when we need evaluation references. That is different from adding every benchmark to the related-systems index; most belong in a source-discovery or workshop packet until they shape a KB design decision.
+## Takeaways
 
-**Avoid star-based ranking as an evaluation proxy (do not borrow).** Stars and badges help users find popular products, but they are weak evidence for architecture. They would be actively misleading in our curated index, where the question is mechanism quality and relevance to commonplace.
+**A lightweight landscape index is worth having beside deep reviews.** Commonplace's reviews are expensive because they read code and summarize mechanisms. Awesome Agent Memory shows the complementary value of a broad intake surface where new systems, benchmarks, and papers can be noticed before they justify a full review.
+
+**Openness is a useful first-pass filter but not a trust model.** Marking open-source resources and ranking them higher helps readers find inspectable systems. A KB still needs per-entry lineage, status, source dates, and review notes before treating those resources as reliable evidence.
+
+**Memory taxonomies need room for adjacent substrates.** The README puts products, nonparametric memory, parametric memory, agent evolution, context engineering, multimodal memory, benchmarks, and cognitive science in one field map. That breadth is useful because agent memory is not one storage technology; it is a family of behavior-changing retained artifacts.
+
+**The collection reinforces the source-only/review split.** A link catalogue can tell us what exists, while a code-grounded review tells us what a system actually does. Keeping those roles separate prevents a bibliography entry from inheriting the authority of an implementation review.
 
 ## Curiosity Pass
 
-**"Awesome list" value comes from routing, not transformation.** The README does not transform source knowledge into claims, comparisons, or design guidance. Even if maintained perfectly, it gives discovery coverage and weak prioritization, not memory-system insight by itself.
+**The repository title can mislead if read as an implementation claim.** "Awesome Agent Memory" names the field, not a shipped memory component. The checkout does not contain a memory API, schema, retriever, benchmark harness, or agent integration.
 
-**The taxonomy is useful because it is loose.** Nonparametric memory, parametric memory, agent evolution, context engineering, multimodal understanding, and cognitive science overlap heavily. A stricter ontology would probably break. As a discovery map, loose buckets are acceptable because the next step is still source inspection.
+**The taxonomy mixes different senses of memory.** Product memory, benchmark memory, retrieval memory, parametric memory, cognitive memory, and context engineering are adjacent but not interchangeable. That breadth is valuable for discovery and risky for inference unless each entry is later reviewed in its own terms.
 
-**Open-source emphasis is the strongest curation signal.** Marking code-backed papers higher is a good reproducibility heuristic. But "has code" does not mean the code implements the paper's central claim, so it cannot replace our code-grounded review pass.
+**The README is manually rich but mechanically thin.** A single curated file is easy to browse and contribute to. It also means downstream agents cannot reliably query entries by license, implementation status, modality, storage substrate, evaluation type, or behavioral authority without parsing inconsistent prose.
 
-**Recency dominates more than evidence.** Year grouping and latest-news placement make the list good for monitoring the field, but they also bias attention toward new claims before maintenance, ablations, and independent replication arrive.
+## Open Questions
 
-**The self-promotional TeleMem placement is not disqualifying, but it is load-bearing context.** A curated list maintained by a team building its own memory product can still be useful. It should be read as an interested map, not a neutral survey.
-
-**The repo broadens the comparison frame.** Our related-systems reviews mostly inspect implementable systems. This list reminds us that agent memory research also includes benchmarks, parametric-memory mechanisms, multimodal temporal memory, and cognitive-science framing. Those are not all "systems" in our sense, but they can still change design decisions.
+- How does TeleAI-UAGI decide whether an entry belongs in products, nonparametric memory, parametric memory, agent evolution, or context engineering when a system spans categories?
+- Will entries gain per-resource metadata such as last checked, implementation availability, benchmark status, source type, license, or known caveats?
+- Can the README remain maintainable as the field grows, or will it need generated indexes, structured data, or multiple topic files?
+- How much of the ranking is meant to be objective, such as GitHub stars and open-source availability, versus editorial judgment?
+- Will TeleAI-UAGI connect this catalogue to its own systems such as TeleMem, TeleEgo, or related benchmarks as a maintained evaluation map?
 
 ## What to Watch
 
-- Whether the README gains per-entry summaries, evaluation notes, or mechanism tags that make it more useful for agent-side source selection.
-- Whether TeleAI splits the list into machine-readable data, which would make it easier to diff, filter, and ingest without parsing one large README.
-- Whether the taxonomy stabilizes around the 2026 survey categories or keeps growing as a loose "everything memory-adjacent" map.
-- Whether newly added products in the open-source section become worth code-grounded review in our queue, especially TeleMem, MemOS, MIRIX, Memov, and OMEGA.
-- Whether benchmark coverage produces a clearer evaluation taxonomy for memory systems than the product/paper landscape currently provides.
+- Whether the repository grows beyond one README into structured data, generated indexes, or per-entry metadata.
+- Whether entries begin recording freshness, implementation evidence, licenses, evaluation status, or known caveats.
+- Whether TeleAI-UAGI uses the catalogue to route readers into maintained benchmarks or its own memory implementations.
+- Whether contribution activity keeps pace with the rapidly expanding 2026 memory-system landscape.
 
----
+## Bottom Line
+
+Awesome Agent Memory is useful as a source-discovery knowledge artifact, not as an implemented agent-memory runtime. Its borrowable lesson for commonplace is the broad intake taxonomy: keep a cheap horizon-scanning layer for products, papers, benchmarks, and articles, then promote only the entries that matter into source-grounded reviews or stronger system-definition artifacts. It should not be marked `trace-derived` because the repository does not implement learning from traces or produce durable behavior-shaping artifacts from agent trajectories.
 
 Relevant Notes:
 
-- [agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — exemplifies: the Awesome-list scope spans storage, retrieval, learning, context engineering, and action capacity rather than a single memory subsystem
-- [agentic memory systems comparative review](../agentic-memory-systems-comparative-review.md) — contrasts: the comparative review explains mechanisms along architectural dimensions, while Awesome Agent Memory is a broad source-discovery map
-- [link-following and search impose different metadata requirements](../../notes/link-following-and-search-impose-different-metadata-requirements.md) — extends: a one-file bibliography relies on headings and link text as scan-time metadata, which is weaker than review descriptions and relationship phrases
-- [two context boundaries govern collection operations](../../notes/two-context-boundaries-govern-collection-operations.md) — exemplifies: a large README stays useful at index resolution but cannot support full comparative reading without follow-up passes
-- [automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md) — contrasts: the list accumulates leads but does not automate promotion into trusted KB claims
+- [agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - contrasts: Awesome Agent Memory improves discovery, but it does not provide trust, composability, or activation for individual claims.
+- [knowledge-storage-does-not-imply-contextual-activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: storing a large link list does not by itself make the right memory available to an acting agent at the right time.
+- [files not database](../../notes/files-not-database.md) - qualifies: Awesome Agent Memory benefits from a file substrate, but lacks the typed contracts and validation that make files operational in commonplace.
+- [retained artifact](../../notes/definitions/retained-artifact.md) - grounds: the README is retained state with potential behavioral consequence for later research and review decisions.
+- [behavioral authority](../../notes/definitions/behavioral-authority.md) - grounds: the review classifies the README as advisory knowledge rather than instruction, enforcement, routing, validation, or learning force.

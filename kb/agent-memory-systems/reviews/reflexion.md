@@ -1,105 +1,107 @@
 ---
-description: NeurIPS 2023 research scaffolding where failed task attempts become short natural-language reflections that are appended to the next prompt; per-task rolling memory tail of three, no cross-task consolidation, no weight updates
+description: "Reflexion review: benchmark trace-to-reflection loops that reinject failed-attempt plans into retries"
 type: ../types/agent-memory-system-review.md
 tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-04-12"
+last-checked: "2026-05-16"
 ---
 
 # Reflexion
 
-Reflexion is a research repo for language agents that improve by verbally reflecting on their own failures. It holds the experimental code for the NeurIPS 2023 paper by Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. The repo contains four task-specific scaffolds — decision-making on ALFWorld, web navigation on WebShop, reasoning on HotPotQA, and programming on HumanEval/LeetCode/MBPP — each implementing a variant of the same loop: attempt a task, detect failure, prompt the same LLM to produce a short plan or self-reflection about what went wrong, prepend that reflection to the next attempt. The head of `main` hasn't moved substantively since January 2025; this remains a frozen research artifact rather than an evolving system.
+Reflexion is Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao's NeurIPS 2023 research implementation of "Language Agents with Verbal Reinforcement Learning." The repository is not a general-purpose memory service; it is a set of benchmark loops where failed task trajectories are turned into natural-language reflections and injected into later attempts on the same task.
 
 **Repository:** https://github.com/noahshinn/reflexion
 
+**Reviewed commit:** [218cf0ef1df84b05ce379dd4a8e47f17766733a0](https://github.com/noahshinn/reflexion/commit/218cf0ef1df84b05ce379dd4a8e47f17766733a0)
+
+**Last checked:** 2026-05-16
+
 ## Core Ideas
 
-**A reflection is a short plan-shaped string tied to a single task instance.** In `alfworld_runs/generate_reflections.py`, `_generate_reflection_query` feeds the failed log and prior memory into a prompt that asks for "a concise, new plan of action that accounts for your mistake with reference to specific actions that you should have taken" and emits text after a "New plan:" marker. `webshop_runs/generate_reflections.py` uses the same shape with an "Instruction:" scenario split. The unit of memory is one such string per failed trial for one environment; nothing gets cross-indexed, typed, or linked.
+**The memory object is a rolling list of reflection strings.** In ALFWorld and WebShop, each environment config starts with `memory: []`; after a trial, `update_memory(...)` reads the trial log, generates a reflection only for unsolved environments, and appends it to that environment's memory list ([alfworld_runs/main.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/main.py), [alfworld_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/generate_reflections.py), [webshop_runs/main.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/main.py)). Runtime prompt construction keeps only the last three reflections when memory grows past three entries ([alfworld_runs/alfworld_trial.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/alfworld_trial.py), [webshop_runs/webshop_trial.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/webshop_trial.py)). That rolling window is the lifecycle policy.
 
-**The persistent state is an in-memory list per task, checkpointed to JSON.** `alfworld_runs/main.py` initializes `env_configs` as a list of dicts `{'name', 'memory': [], 'is_success': False, 'skip': False}` and, after each trial, writes `env_results_trial_{n}.json` alongside a `world.log`. Between trials it calls `update_memory(...)` which mutates `env_configs[i]['memory']` in place. There is no database, no embedding store, no cross-env aggregation — reflections stay pinned to the env index that produced them.
+**Failure is the reflection trigger.** ALFWorld and WebShop call the reflection generator after each trial only when `is_success` is false; solved environments are skipped in future trials and do not accumulate new reflections ([alfworld_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/generate_reflections.py), [webshop_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/generate_reflections.py)). In HotPotQA, `ReactReflectAgent.run(...)` and `CoTAgent.run(...)` reflect when a previous attempt finished, halted, or answered incorrectly, subject to the selected `ReflexionStrategy` ([hotpotqa_runs/agents.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py)). In programming runs, unit-test failure triggers self-reflection, and the next implementation prompt receives the previous code, test feedback, and reflection ([programming_runs/reflexion.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/reflexion.py), [programming_runs/generators/generator_utils.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/generators/generator_utils.py)).
 
-**Memory is a rolling tail of the last three reflections.** The crucial clamp sits in `update_memory`:
+**Reflection prompts ask for a corrective plan, not a summary.** The ALFWorld and WebShop reflection prompts explicitly tell the model not to summarize the environment, but to diagnose the failed path and produce a concise new plan for the same task ([alfworld_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/generate_reflections.py), [webshop_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/generate_reflections.py)). HotPotQA's prompts frame reflections as plans to avoid the same failure in answering the question ([hotpotqa_runs/prompts.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/prompts.py)). Programming prompts ask for a few sentences explaining why the implementation is wrong, then pass that explanation as a hint for the next implementation ([programming_runs/generators/py_generate.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/generators/py_generate.py)).
 
-```python
-if len(env['memory']) > 3:
-    memory: List[str] = env['memory'][-3:]
-else:
-    memory: List[str] = env['memory']
-```
+**Prompt reinjection is the behavior-changing surface.** In ALFWorld and WebShop, `EnvironmentHistory` inserts memory under "Your memory for the task below" before the task text ([alfworld_runs/env_history.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/env_history.py), [webshop_runs/env_history.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/env_history.py)). HotPotQA formats either previous attempts, reflections, or both through `ReflexionStrategy.NONE`, `LAST_ATTEMPT`, `REFLEXION`, and `LAST_ATTEMPT_AND_REFLEXION` ([hotpotqa_runs/agents.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py)). Programming reinjects reflection inside the next code-generation prompt together with the failing implementation and test feedback ([programming_runs/generators/generator_utils.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/generators/generator_utils.py)).
 
-That slice is what the next reflection generator sees as "Plans from past attempts" and what `EnvironmentHistory._get_base_query` renders into the next trial's prompt header as numbered `Trial i:` blocks. Older memory is never deleted from the JSON record, but the prompt only ever sees the trailing three. This is memory as a bounded hint buffer, not a growing corpus.
-
-**The oracle is binary task success from the benchmark harness.** `alfworld_runs/main.py` only generates a new reflection if `not env['is_success'] and not env['skip']`. In `programming_runs/reflexion.py`, the loop runs per-item and gates on `exe.execute(cur_func_impl, tests_i)` returning a passing state; `self_reflection` is called only after a failed unit-test run, and the outer break also requires passing the held-out `exe.evaluate(... item["test"] ...)`. There is no human judge, no LLM judge, no cross-sample aggregation — success or failure on the benchmark test determines whether a reflection is emitted.
-
-**Programming runs do not persist reflections across tasks.** Unlike ALFWorld, `programming_runs/reflexion.py` re-initializes `reflections = []`, `implementations = []`, `test_feedback = []` for every dataset item and the inner `while cur_iter < max_iters` loop is the only scope where reflections influence generation. The reflection is used once to condition the next implementation attempt within the same item's pass-at-k budget, then discarded. The `reflections` list is written to the output jsonl record purely as a log, not as reusable state. Cross-task generalization simply does not happen in the programming variant.
-
-**Reinjection is a prompt-time concat, not a retrieval step.** In ALFWorld and WebShop, `EnvironmentHistory._get_base_query` prepends a `Your memory for the task below:\nTrial 0:\n...\nTrial 1:\n...` block to the task prompt. In HotPotQA, `hotpotqa_runs/agents.py` sets `self.reflections_str` via `format_reflections(self.reflections, ...)` and the agent prompt template substitutes it in. No similarity search, no selection policy — the whole (clamped) list goes into every prompt for that env.
-
-**Four `ReflexionStrategy` modes codify what gets carried forward.** `hotpotqa_runs/agents.py` defines `NONE`, `LAST_ATTEMPT`, `REFLEXION`, `LAST_ATTEMPT_AND_REFLEXION`. The middle two isolate a clean experimental question — is the value in feeding forward the raw reasoning trace, the distilled self-reflection, or both? The `CoTAgent` applies the strategy inside `run(...)` only when `self.step_n > 0 and not self.is_correct()`, so the reflection path is triggered the same way as ALFWorld's: one shot per failed attempt.
-
-**Implementation is per-task scaffolding, not a library.** `alfworld_runs/`, `webshop_runs/`, `hotpotqa_runs/`, and `programming_runs/` each re-implement their own `EnvironmentHistory`, `generate_reflections.py`, or equivalent. There is no shared `reflexion` package; the loop is copy-pasted with task-specific seams. The repo is essentially four experiments that share a paper, not a reusable framework.
+**Persistence is benchmark-local files and serialized run outputs.** ALFWorld and WebShop write `trial_<n>.log`, `world.log`, and `env_results_trial_<n>.json`, with reflection strings embedded in each environment's JSON config ([alfworld_runs/main.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/main.py), [webshop_runs/main.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/main.py)). Programming runs append JSONL records containing `reflections`, `implementations`, `test_feedback`, `solution`, and `is_solved` ([programming_runs/reflexion.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/reflexion.py), [programming_runs/utils.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/utils.py)). HotPotQA includes joblib and text result artifacts under the experiment root, but the core runtime object is still the agent's in-memory `reflections` list and formatted prompt string ([hotpotqa_runs/util.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/util.py), [hotpotqa_runs/agents.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py)).
 
 ## Comparison with Our System
 
-Reflexion is a foundational reference for the "feedback becomes text, text conditions the next attempt" idea, but it is much narrower than any workshop-memory system in our review set. The retained form is a per-task prompt-visible tail of up to three plan strings, while older entries remain only in the run log. The oracle is benchmark-task success. Commonplace maintains a typed, linked graph of notes curated by humans; the two systems share only the broad readable-prose form.
-
 | Dimension | Reflexion | Commonplace |
 |---|---|---|
-| Trace source | Failed-trial logs from one benchmark task (ALFWorld/WebShop/HotPotQA) or failed unit-test output (programming) | Human+agent editing, notes, links, workshop artifacts |
-| Learned substrate | Per-env prompt-visible tail of up to three plan strings; prompt-only in programming | Typed notes, links, instructions, ADRs, indexes |
-| Addressable unit | None — prompt-visible memory is `env_configs[i]['memory']`, sliced `[-3:]`; older entries remain in the JSON run record | Individual markdown files with frontmatter |
-| Update style | Append reflection, clamp tail at three, feed forward | Manual curation with validation and review bundles |
-| Oracle | Binary benchmark success / unit-test pass | Weak human judgment plus local validators |
-| Scope | One env or one programming item — never cross-task | Cross-domain methodology KB |
-| Persistence | JSON per trial, log files per env, discarded after run | Git-tracked markdown across the project lifetime |
-| Retrieval | No retrieval; whole (clamped) list injected | Agent-driven navigation over linked markdown |
+| Primary purpose | Improve repeated benchmark attempts on the same task | Maintain an agent-operated methodology KB |
+| Raw substrate | Failed trajectories, trial logs, scratchpads, unit-test feedback | Git-tracked notes, sources, instructions, reviews, indexes |
+| Distilled artifact | Natural-language reflection strings | Typed notes, ADRs, instructions, schemas, commands, review artifacts |
+| Activation | Prompt reinjection on the next retry | Navigation, links, indexes, skills, validation, review gates |
+| Lineage | Run files contain source traces; reflection strings do not cite exact source spans | Source links, reviewed revisions, archives, validation, authored links |
+| Behavioral authority | Reflection strings instruct or strongly guide same-task retries | Knowledge artifacts advise; system-definition artifacts instruct, validate, route, or enforce |
+| Lifecycle | Append reflections, use last three, stop once solved | Status fields, replacement archives, validation, curated indexes, review lifecycle |
 
-**Where Reflexion is stronger.** The loop is minimal and legible: four source files per task implement the full learning cycle, and the data flow is traceable in an afternoon. The strong oracle (benchmark pass/fail) means the system doesn't need any metadata machinery to decide when to reflect. The three-slot prompt-visible tail is a useful demonstration that bounded memory can still produce measurable improvement, which is something our larger artifact stores cannot take for granted.
+Reflexion is much narrower than commonplace. It does not try to build a reusable knowledge library, a retrieval layer, a type system, or a promotion pipeline. It takes one failed attempt, asks for a verbal corrective policy, and puts that policy back into the next attempt's prompt.
 
-**Where commonplace is stronger.** Separately addressable artifacts, typed frontmatter, link semantics, and workshop-vs-library layering. Reflexion has none of these — a reflection is a free-text plan with a trial index and nothing else. It also has no notion of an artifact maturing, being superseded, or being cross-referenced; each reflection is born, lives for up to three trials at the prompt front, and is overwritten by newer ones.
+That narrowness is the design strength. Reflexion's artifact contract is easy to understand: raw trace first, reflection second, retry with reflection third. The system therefore has an unusually crisp distinction between source trace and behavior-shaping artifact. The weakness is that the reflection object itself has almost no durable metadata. It carries no explicit source citation, confidence, expiry condition, cross-task scope, review status, or invalidation rule beyond being attached to a benchmark environment or result row.
 
-**Trace-derived learning placement.** Trace source: per-trial logs of failed attempts at a single benchmark task, with the trigger boundary at one full task attempt (for ALFWorld/WebShop/HotPotQA) or one failed unit-test run (for programming). Extraction: a second LLM call reads the failed trajectory plus the last three prior plans and emits a fresh plan or self-reflection string; the oracle is binary benchmark success, and `update_memory` is the gate. Promotion target: prompt-visible text only — `env_configs[i]['memory']` is the active store for the next prompt, while the JSON trial record keeps the older history for resume and logging. Scope: per-task and per-benchmark only; programming runs discard reflections across items, ALFWorld/WebShop keep them per env index. Timing: online within a multi-trial run, sequential, one reflection per failed trial. On the [survey's](../trace-derived-learning-techniques-in-related-systems.md) axis 1, Reflexion fits the **trajectory-run pattern** — repeated bounded attempts at the same task rather than a single live session or an event stream. On axis 2, it is squarely **artifact-learning** at its lowest structure — a list of free-text plans clamped at three, with no CRUD verbs, no counters, no typed fields. Reflexion is adjacent to deploy-time artifact learning: it mutates prompt-visible text during a run without weight updates, but it lacks the cross-session durability that the deploy-time-learning note treats as central. No new subtype is warranted.
+The behavioral-authority split is important. Failed trajectories, logs, previous attempts, and test feedback are knowledge artifacts when used as evidence for reflection. The generated reflection becomes a system-definition artifact when inserted under prompt text that tells the agent to use it to improve the next attempt. The artifact is still prose, but its authority comes from the retry prompt channel.
 
 ## Borrowable Ideas
 
-**Fail-then-plan as a minimum reflection unit.** Ready now as a workshop pattern. The ALFWorld loop is as small as a reflection skill can get — failed trajectory in, one concise plan out, next attempt conditioned on that plan. Anywhere we want an agent to improve a workshop artifact between iterations, the "only reflect on failure, emit a plan, cap the memory" shape is a useful floor.
+**Use failure as a clean promotion trigger.** Ready now for narrow workflows. Reflexion does not mine every trace; it asks for reflection when an oracle says the attempt failed. Commonplace could use the same trigger discipline for review warnings, validation failures, or repeated operator mistakes, while keeping human or validation gates for durable promotion.
 
-**Bounded memory tail.** Ready now as a constraint. The `[-3:]` clamp is a pragmatic reminder that not every artifact-learning loop should accumulate indefinitely. For commonplace, the analogue is limiting how many prior workshop reflections get injected into a new task — a clamp is cheaper than summarization and often sufficient.
+**Separate raw trace capture from corrective prose.** Ready now as a workshop-layer pattern. Trial logs should remain evidence; candidate reflections should be separate artifacts whose authority depends on where they are injected.
 
-**Strategy enum as an experimental seam.** Ready as a framing. `ReflexionStrategy` separates the question "what do we carry forward?" (raw trace, distilled reflection, both, nothing) from the rest of the agent. If we ever automate workshop-to-library handoff, an explicit enum for injection modes — `NONE`, `LAST_TRAJECTORY`, `DISTILLATION_ONLY`, `BOTH` — would make experiments legible without changing the rest of the loop.
+**Keep reflection windows small at activation time.** Useful but scope-bound. Reflexion's last-three rule is crude, but it recognizes that prompt memory must be bounded. Commonplace should prefer authored selection and typed relevance over a fixed rolling window, but bounded activation is the right instinct.
 
-**Treat per-task memory and cross-task memory as different substrates.** Needs a use case first. Reflexion's programming variant cannot generalize across items because it never stores reflections across them; the paper's descendants (ExpeL, ReasoningBank) earn their complexity precisely by adding that missing store. For commonplace, the lesson is architectural: the workshop already has per-task memory; any cross-task promotion path needs a distinct store, not a deeper version of the workshop buffer.
+**Borrow the same-task retry loop, not the whole memory model.** Reflexion is ideal for short-horizon repair: answer again, navigate again, implement again. It is not enough for long-lived methodology claims, where retained artifacts need provenance, status, and composable links.
+
+**Treat prompt headers as authority controls.** Ready now. Reflexion's reflections matter because the prompt says to use them. Commonplace should continue to distinguish notes that advise from instructions, validators, and skills that bind or enforce behavior.
+
+## Trace-derived learning placement
+
+**Trace source.** Reflexion qualifies as trace-derived learning. Its source traces are failed task trajectories: ALFWorld and WebShop action/observation logs, HotPotQA scratchpads and previous attempts, and programming implementations with unit-test feedback. Trigger boundaries are per environment trial, per QA retry, or per programming iteration.
+
+**Extraction.** Extraction is LLM-generated self-reflection. The oracle is benchmark success/failure, exact-match answer correctness, halted/truncated reasoning, reward completion, or unit-test failure depending on the loop. The model receives the failed trace and produces a concise plan or diagnosis intended for the next attempt.
+
+**Storage substrate.** Raw traces persist in local logs, result text files, joblib artifacts, and JSONL run records. Reflection strings persist in ALFWorld/WebShop `env_results_trial_<n>.json`, in HotPotQA agent state or serialized experiment artifacts, and in programming JSONL result rows. There is no database, vector store, graph, prompt registry, or model-artifact store.
+
+**Representational form.** Raw traces are mixed prose and symbolic event records: thoughts, actions, observations, tests, feedback, booleans, rewards, and status fields. Reflections are prose. Programming loops also carry symbolic code and test results, but the behavior-shaping retained artifact is the natural-language reflection string; no learned weights or embeddings are produced.
+
+**Lineage.** Lineage is run-local rather than artifact-local. A JSON or JSONL record can show the task, feedback, implementation history, and reflections for that run, but a reflection string does not itself carry a source pointer, derivation metadata, confidence, or regeneration rule. ALFWorld and WebShop preserve stronger per-environment continuity because the memory list stays with the environment config across trials.
+
+**Behavioral authority.** Failed logs, scratchpads, previous attempts, and test feedback are knowledge artifacts when consumed as evidence for reflection generation. Reflection strings become system-definition artifacts when prompt headers instruct the acting agent to use them as plans, hints, or memory for the next attempt. The strategy enum in HotPotQA is a runtime system-definition surface because it configures whether no memory, last attempt, reflection, or both are injected.
+
+**Scope.** Scope is task-local and benchmark-local. ALFWorld and WebShop memories are tied to a specific environment task; HotPotQA reflections attach to the same question; programming reflections guide the next implementation of the same problem. The code does not implement cross-task consolidation into reusable rules.
+
+**Timing.** Reflexion is online within an evaluation episode or staged trial loop: attempt, fail, reflect, retry. It is not an offline corpus-mining system, though the repository also includes saved logs from paper runs.
+
+**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), Reflexion sits in the trace-to-prose-reflection branch with prompt reinjection and task-local scope. It strengthens the survey's distinction between raw trace artifacts and distilled behavior-shaping artifacts, and it weakens any assumption that trace-derived learning requires long-term retrieval infrastructure.
 
 ## Curiosity Pass
 
-**What property does the reflection loop claim to produce?** A next-attempt prompt that is better conditioned than the previous attempt's prompt — where "better" means containing a short plan that names the earlier mistake. On ALFWorld and WebShop, the claim is that enough such plans, injected across trials, push task success rates up.
+The name "verbal reinforcement learning" can sound more durable than the implementation is. The code does not update a policy, train a model, or maintain a general memory index. It writes or holds short prose reflections and gives them prompt authority on retries.
 
-**Does the mechanism transform the data, or just relocate it?** It transforms. A failed trajectory plus old plans go in, a new plan string comes out — the new plan is not a slice of the trajectory, it is an LLM-produced distillation conditioned on it. But the transformation is opaque; no code inspects the result. The only quality signal is whether the next trial succeeds, which comes from the benchmark environment, not from the reflection module.
+The strongest design move is the clean source/artifact split: failed trace in, reflection out, reflection back into the prompt. The weakest part is lifecycle. Reflections accumulate until success or until the rolling prompt window excludes older ones; they are not reviewed, merged, retired by evidence, or promoted into higher-authority rules.
 
-**What is the simpler alternative?** The repo itself ships one: `LAST_ATTEMPT` carries forward the raw reasoning trace instead of a reflection, and `NONE` carries forward nothing. These strategies are the direct ablations, and whether `REFLEXION` beats `LAST_ATTEMPT` on each benchmark is the genuine experimental question rather than a marketing claim. Outside the repo, an even simpler alternative — "append the failed log and let the model re-read it" — is one prompt concat away.
-
-**What could this mechanism achieve even if it worked perfectly?** A prompt prefix that encodes the lessons of the last three failed trials on this exact task. It cannot: generalize across tasks, compose lessons into a reusable playbook, detect when a stored plan is misleading (nothing retracts plans — they just roll off the tail), or survive the run beyond whatever JSON happens to be checkpointed.
-
-**The programming variant is almost a different system.** A close re-read of `programming_runs/reflexion.py` shows that reflections there never cross dataset items. That makes the programming loop structurally closer to a within-sample retry with scratchpad than to "learning from experience" — which the paper name suggests but the code does not support at the inter-item level. Descendants like ExpeL had to add an explicit cross-task consolidation pass to bridge that gap; Reflexion itself does not.
-
-**The "N trials, memory tail of three" design is fragile to benchmark design.** The loop relies on the same env being replayed across trials, so the reflection for env_7 only ever helps env_7. If trials were shuffled or env identities were not stable, the whole memory indexing scheme would break. The simplicity is real, but it depends on benchmark assumptions that a production memory system cannot make.
+The HotPotQA strategy enum is useful because it makes the ablation surface explicit. `LAST_ATTEMPT` tests trace replay, `REFLEXION` tests distilled prose, and `LAST_ATTEMPT_AND_REFLEXION` tests both. That is a clearer authority experiment than systems where every retained object is simply called memory.
 
 ## What to Watch
 
-- Whether later descendants retain the "fail-only reflection" gate or start reflecting on successes (ExpeL already does compare-successes-vs-failures; ReasoningBank formalizes it further).
-- Whether the per-env fixed-index memory store shows up anywhere outside benchmark scaffolds, or is abandoned once systems need cross-task generalization.
-- Whether the programming-variant pattern (reflections live only within a single item's retry budget) reappears as "per-turn scratchpad" in agentic systems, distinct from cross-run memory.
-- Whether verbal-only reinforcement continues to be a competitive baseline as weight-update paths (GRPO, reward modeling on traces) mature.
-- Whether the frozen 2025-01 state of this repo means the reference implementation drifts out of date relative to how people now describe "Reflexion" in papers that cite it.
+- Whether descendants add per-reflection provenance without losing Reflexion's simple retry loop.
+- Whether task-local reflections can be consolidated into cross-task rules without becoming brittle benchmark lore.
+- Whether explicit strategy controls remain visible in newer implementations or disappear into prompt templates.
+- Whether reflection strings help because they diagnose failure, because they change sampling, or because they simply add more task-specific context.
+- Whether programming variants keep reflections separate from unit-test feedback and code history when logs are resumed or post-processed.
 
----
+## Bottom Line
+
+Reflexion is a precise trace-to-reflection system: failed trajectories produce short natural-language corrective plans, and those plans are reinjected into same-task retries. Its lesson for commonplace is not a storage architecture, but an authority pattern: keep raw traces as evidence, make distilled reflections separate, and be explicit about the prompt channel that turns advice into instruction.
 
 Relevant Notes:
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Reflexion is the historical anchor for trajectory-run artifact learning and the structural floor against which ExpeL, Dynamic Cheatsheet, and ACE add maintenance machinery
-- [ExpeL](./expel.md) — sharpens: ExpeL embeds the Reflexion retry loop but adds a cross-task consolidation pass with CRUD-verb rule maintenance; Reflexion itself never consolidates across tasks
-- [Dynamic Cheatsheet](./dynamic-cheatsheet.md) — contrasts: both keep a prompt-visible text artifact without weight updates, but Dynamic Cheatsheet carries forward one evolving document across an ordered benchmark pass, while Reflexion keeps per-env lists clamped at three
-- [ClawVault](./clawvault.md) — contrasts: both preserve inspectable text, but ClawVault runs a richer typed artifact lifecycle while Reflexion clamps to a rolling three-slot buffer
-- [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: Reflexion depends on a strong binary task-success oracle, and its memory policy (append on failure, clamp tail at three) would degrade under weaker signals
-- [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) — sharpens: Reflexion sits squarely in deploy-time artifact-update space, where learning happens by mutating prompt-visible text rather than training weights
-- [a functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: Reflexion's memory is pure workshop — no library, no promotion path, no cross-task accumulation
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Reflexion anchors task-local trace-to-prose reflection with prompt reinjection.
+- [ExpeL](./expel.md) - compares-with: ExpeL builds on Reflexion-style trajectories but adds cross-task rule extraction and rule maintenance.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: Reflexion's failed traces and logs advise as source evidence.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: Reflexion's prompt-injected reflections carry retry guidance authority.
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - clarifies: Reflexion's memory effect comes from the consumer channel, not from the storage label.

@@ -1,0 +1,94 @@
+---
+description: Beta Python CLI that mines Claude Code JSONL sessions into a weighted nine-dimension profile, runs WITH/WITHOUT guard ablations with LLM-as-judge scoring, and compiles guards into nine assistant-specific memory surfaces with per-model filtering
+type: ../types/agent-memory-system-review.md
+traits: [has-comparison, has-implementation]
+tags: []
+status: outdated
+last-checked: "2026-04-12"
+---
+
+# Synapptic
+
+> Replaced 2026-05-16. See [Synapptic](./synapptic.md) for the current review.
+
+Synapptic is a Python CLI by appcuarium that watches Claude Code session JSONL files, compresses them via a pure-Python correction/preference filter, extracts observations across nine dimensions with an LLM, merges them into weighted per-project and global profiles, synthesizes a three-section archetype (`User Archetype` / `Guards` / `Known Weaknesses`), runs per-guard WITH/WITHOUT ablations judged by an LLM, and writes the result out to nine different assistant memory surfaces (Claude Code, Cursor, Copilot, Gemini, Codex, Windsurf, Cline, Aider, Continue.dev). It also ships a separate `relay`/`index`/`run` subsystem that proxies AI tool launches through a local FastAPI server with a SQLite-backed session browser. MIT licensed, beta-stage, with ~340 tests across 14 files.
+
+**Repository:** https://github.com/appcuarium/synapptic (head commit `bcde026`, 2026-03-25, v0.1.0b5)
+
+## Core Ideas
+
+**Pure-Python preprocessing stage with boosted-turn priority.** `src/synapptic/filter.py` stream-parses session JSONL, discards progress/system/tool/thinking/last-prompt/file-history-snapshot records, extracts `text` blocks from user and assistant messages, then scores user turns on three keyword lists (`CORRECTION_SIGNALS`, `PREFERENCE_SIGNALS`, `STRONG_REACTION_SIGNALS`) plus a short-reply-after-long-response heuristic (`len < 60` after `len > 500`). Truncation is two-phase: first keep every boosted turn plus the preceding assistant turn, then fill remaining char budget from the tail. If boosted turns alone exceed budget, each gets a proportional share with sentence-boundary truncation. Before the LLM ever sees the transcript, `scrub.py` redacts API keys, tokens, PEM keys, URL credentials, and high-entropy strings.
+
+**Weighted nine-dimension profile with multiplicative + time-based decay.** The durable state lives in YAML under `~/.synapptic/global/profile.yaml` and `~/.synapptic/projects/<slug>/profile.yaml`, not in the generated archetype. `profile.py` implements a single `merge_observations()` pass: (a) multiply every existing weight by `DEFAULT_DECAY_FACTOR=0.98`, (b) apply time-based half-life decay (`0.5 ** (days / 90)`) to every preference's `last_seen`, (c) SequenceMatcher-match each new observation against existing ones at threshold 0.7, (d) reinforce matches by blending `old_weight * 0.7 + confidence * 0.3` and appending the session/project to its source list (capped at 10), (e) drop below `MIN_WEIGHT_THRESHOLD=0.1`. `config.py` splits the nine dimensions into GLOBAL (`communication, values, workflow, expertise`), PROJECT (`code_style`), and MIXED (`expectations, triggers, ai_failures, guards`). `promote_to_global()` walks all project profiles, groups MIXED observations by SequenceMatcher ≥ 0.6, and promotes any candidate seen in ≥ 2 projects to the global profile.
+
+**Per-guard WITH/WITHOUT ablation with an LLM judge that writes verdicts back into the profile.** `benchmark.py` is the strongest mechanism in the repo. For each selected guard it generates an adversarial test, runs both conditions (WITH = archetype containing the guard, WITHOUT = archetype with it removed, or the additive inverse if the guard isn't in the archetype yet), judges each response with structured `COMPLY`/`VIOLATE` verdicts, runs `--runs 3` (default) with majority vote, computes Wilson 95% CIs, and runs two control tests (`COMPLY_CONTROL`, `VIOLATE_CONTROL`) to detect judge bias. Guards are classified as effective, redundant, backfire, ineffective, untestable, or unclear. The loop closes at two points: `record_model_verdicts()` writes per-model classifications into each guard's `model_verdicts` dict inside `profile.yaml`, and `exclude_guards()` appends to an `excluded_guards` list that `synthesize.py` honors when regenerating. A separate `--judge-model` is recommended to avoid self-evaluation; judge prompts wrap archetype + response in a per-run `===BEGIN_PROFILE_{nonce}===` envelope with a 16-char hex nonce to block in-content boundary forgery.
+
+**One profile, nine render targets with per-model guard filtering.** `outputs.py` defines a `WRITERS` table keyed by target name, each with a `model_family` (`claude`, `gpt`, `gemini`, or `None`). `integrate.py` resolves a target model from `model_verdicts` per output, calls `filter_for_narrative(profile, target_model=...)` to drop guards marked redundant or backfire for that family, and writes atomically to nine destinations: `~/.claude/projects/*/memory/user_archetype.md` (plus a reference inserted near the top of `MEMORY.md` to stay inside Claude Code's 200-line cutoff), `.cursor/rules/synapptic.mdc`, `.github/copilot-instructions.md`, `.gemini/styleguide.md`, `AGENTS.md`, `.windsurfrules`, `.clinerules`, `CONVENTIONS.md`, `.continuerules`. All writes go through `_atomic_write()` (write + fsync + rename).
+
+**SessionEnd hook plus a separate relay/indexer sidecar.** `synapptic install` drops a SessionEnd hook that only fires on `reason=prompt_input_exit|clear|logout`, derives the project slug from `transcript_path` in the hook JSON, uses a PID-file guard (pgrep previously false-matched bash wrapper strings), and synthesizes only the affected project plus global. The optional `synapptic[relay]` extra adds a FastAPI server (`relay/app.py` with routers under `relay/routers/`), a SQLite session index (`relay.db`), WebSocket live streaming, compaction banners, and per-session token/cost readouts pulled from JSONL `usage` fields. The relay is implemented and functional but is a separate product vector from the learning loop.
+
+## Comparison with Our System
+
+| Dimension | Synapptic | Commonplace |
+|---|---|---|
+| Trigger | SessionEnd hook, manual `ingest`, or `extract -s <UUID>` | Human-authored notes and explicit review/sweep workflows |
+| Raw source | Claude Code JSONL session transcripts only | Notes, sources, workshop artifacts, human judgment |
+| Durable substrate | Weighted YAML profiles with multiplicative + time-based decay | Markdown notes with manual `status` lifecycle |
+| Promotion target | Prompt-policy files (archetype, guards) compiled into nine assistant surfaces | Curated notes for navigation and recombination |
+| Evaluation | Per-guard WITH/WITHOUT ablation, LLM-as-judge, Wilson CIs, control tests, per-model verdicts | Semantic review bundles, deterministic validators, human curation |
+| Scope of learning | User preferences + AI failure patterns + behavioral guards | Methodology, theory, design decisions |
+| Integration surface | Nine writers with per-model filtering | Repo-native KB plus agent navigation conventions |
+
+**Where Synapptic is stronger.** Automatic behavioral adaptation with zero friction, and an unusually concrete answer to "does this extracted rule earn prompt budget?" The per-guard ablation mechanism is sharper than most trace-mining systems, which typically extract rules and stop there. The compile-one-profile-to-nine-targets architecture with per-model guard filtering is more mature than our current always-loaded-context story.
+
+**Where Commonplace is stronger.** Knowledge depth, argument construction, evidence chains, and cross-domain connection. Synapptic compresses interaction traces into deploy-time policy — it does not build theory, separate naming from explanation, or support composable reasoning. Its benchmark is a useful pruning heuristic but still an LLM-judge over generated scenarios, not a hard oracle. Our value accumulates in the library; its value accrues in the scored YAML profile and is deployed through compiled archetypes.
+
+**The fundamental split is what gets promoted.** We promote traces and sources into inspectable library artifacts meant to be recombined. Synapptic promotes traces into deploy-time behavior policy meant to shape the next session immediately. It sits close to Pi Self-Learning on that axis, but adds explicit curation (ablation + exclusion) and explicit compilation (nine render targets with per-family filters).
+
+## Borrowable Ideas
+
+**Per-guard ablation before promoting a rule into always-loaded context.** If we ever emit candidate rules from traces, the WITH/WITHOUT structural test is the clearest pruning mechanism in this space: generate an adversarial scenario where the default response should fail, judge responses with and without the rule, exclude any rule marked redundant or backfire for the target model. *Ready to borrow once we have a candidate-rule generation path.*
+
+**Per-model verdicts on policy artifacts.** Synapptic stores `model_verdicts[model] = classification` directly on each guard, and filters writes per target. The mechanism generalizes: any durable rule we promote for agent consumption could carry a per-model applicability record. *Needs a use case — only worth it when we run the same artifact across multiple model families.*
+
+**One canonical representation compiled to many always-loaded surfaces.** Keep one internal policy object and emit Claude memory, Cursor rules, Copilot instructions, or `AGENTS.md` as render targets with target-specific formatting. This fits directly with [always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md). *Ready to borrow if we ever generate memory artifacts.*
+
+**Cross-project recurrence as the global-promotion threshold.** `promote_to_global()` with `GLOBAL_PROMOTION_MIN_PROJECTS=2` is a concrete answer to "when does project-local experience become portable?" for live-session learning. *Needs a use case — not applicable until we mine project-local operational signal.*
+
+**Cheap correction/preference filtering before expensive LLM interpretation.** The pre-filter is simple, inspectable, and aggressively targeted: three keyword lists + a short-reply heuristic + context-aware truncation, plus sensitive-data scrubbing before any LLM call. If we ever mine agent transcripts, this is a better starting point than shipping raw JSONL to a model. *Needs a use case.*
+
+**Nonce-envelope and REFERENCE-ONLY tag wrapping to block prompt injection from user content.** The benchmark's `===BEGIN_PROFILE_{nonce}===` envelope and the `<transcript>`/`<profile_yaml>` wrapping with REFERENCE-ONLY instructions are a small, inspectable defensive pattern. Any future pipeline that concatenates user-controlled text into a prompt can adopt this verbatim. *Ready to borrow whenever we build such a pipeline.*
+
+## Curiosity Pass
+
+**The archetype document is a rendered view; the real state is the YAML profile plus `model_verdicts` plus `excluded_guards`.** The README emphasizes the narrative archetype, but `synthesize.py` runs `filter_for_narrative()` over the existing profile with target-model filtering — the scoring, decay, and exclusion logic already happened before synthesis. The prose is mostly a friendlier rephrasing for prompt injection. This matters because it sets correct expectations: the living substrate is a scored store, and "living profile" is a compilation story more than a synthesis story.
+
+**The benchmark does real work but is bounded by the judge quality.** The WITH/WITHOUT shape genuinely transforms inputs: it produces a per-guard classification that directly drives inclusion/exclusion. But the oracle is still an LLM reading generated adversarial scenarios. The two-directional control tests (COMPLY + VIOLATE) detect bias in either direction, which is better than most benchmark loops in this space, but the ceiling is still "this guard seems to change behavior on these scenarios," not "this guard is universally correct." The repo is honest about this — the README warns that same-model judging is biased and provides `--judge-model`.
+
+**Multiplicative decay (0.98 per merge) plus 90-day half-life plus similarity reinforcement is three knobs doing overlapping work.** Each mechanism has a defense (dedup vs prune vs age-out), but the interaction is not benchmarked in the repo, and small changes to any one of them shift which observations survive. The simpler alternative — weight = evidence count, threshold on count — would be less nuanced but more inspectable. The current design favors smoothness over predictability.
+
+**Even if everything works perfectly, the ceiling is deploy-time behavior shaping.** Synapptic can compress repeated mistakes into guards, tune per-model applicability, and push the result into many assistant surfaces. It cannot derive conceptual knowledge, improve the base model, or transfer learning from Cursor/Copilot sessions — the input is still Claude Code JSONL only. The claim is output-universal; the input is not.
+
+**The relay/browser is a distinct product.** `synapptic index`, `synapptic relay start`, `synapptic run claude` implement a local dashboard, SQLite FTS5 search, WebSocket streaming, token metrics, and compaction visibility. These are real, maintained features, but they are orthogonal to the trace-to-policy loop — the repo increasingly looks like two products under one package: session observability and session-derived policy compilation. Each would make sense without the other.
+
+**Trace-derived learning placement.** Synapptic qualifies as trace-derived and sits in the same cluster as Pi Self-Learning and ClawVault, with a sharper curation loop than either. *Trace source:* Claude Code JSONL files under `~/.claude/projects/*/*.jsonl`, consumed per-session with the SessionEnd hook (`reason=prompt_input_exit|clear|logout`) or in bulk via `ingest --limit N`. *Extraction:* an LLM prompt over filtered transcripts produces observations in nine dimensions (`expertise`, `communication`, `workflow`, `code_style`, `expectations`, `triggers`, `values`, `ai_failures`, `guards`) scored by LLM-assigned confidence. The oracle for which observations survive is a combination of similarity reinforcement, multiplicative decay, time-based half-life, and — for guards only — a per-guard WITH/WITHOUT ablation judged by a (preferably separate) LLM model with control tests. *Promotion target:* symbolic artifacts only, no weights. Durable state is YAML profiles under `~/.synapptic/`; the rendered archetypes are compiled into nine assistant-specific files. No service-managed memory; user-local filesystem. *Scope:* per-project profiles with automatic cross-project promotion in MIXED dimensions when a pattern recurs across ≥ 2 projects. *Timing:* online during deployment via the SessionEnd hook (detached background processing), plus offline bulk ingest and on-demand benchmark cycles. On the survey's axes: axis 1 (ingestion pattern) — live session mining with event-driven triggers; axis 2 (artifact vs weights) — symbolic artifacts only. Synapptic *strengthens* the survey's claim that evaluation is the open problem: it offers the most concrete curation loop among the live-session-mining systems (per-guard ablation with exclusion feedback), but the oracle is still LLM-as-judge over generated scenarios rather than a hard signal. It probably warrants a subtype distinction: *scored-store-plus-ablation-curated* systems, separating it from Pi Self-Learning's frequency-scored-then-rendered model and ClawVault's recurrence-or-supersession model.
+
+## What to Watch
+
+- **Does input catch up with output?** Nine assistant surfaces can be written to, but only Claude Code transcripts are read. The universal-output / single-input asymmetry weakens only if Cursor/Copilot/Codex parsers land.
+- **Do per-model verdicts stay stable enough to trust?** If a guard's classification flips across provider, model version, or benchmark reruns, the per-model filtering story becomes brittle. The repo acknowledges this (CIs, control tests, separate judge) but does not claim it is solved.
+- **Does the archetype stay lean as the profile grows?** The YAML store scales better than the generated prose. If the narrative becomes repetitive or bloated, the synthesis step may turn into prompt sludge over a good underlying store.
+- **Does the relay absorb the product?** If users adopt Synapptic mainly for session observability (browser, token metrics, resumption), the learning loop may end up as a sidecar to its own sidecar.
+- **Does the guard-benchmark oracle harden?** Moving from LLM-as-judge toward deterministic verification (command execution, test suites, canonical-output comparison) would sharply strengthen the pruning mechanism.
+
+---
+
+Relevant Notes:
+
+- [Pi Self-Learning](./pi-self-learning.md) — closest sibling on the live-session-mining axis; Synapptic adds explicit per-guard ablation and multi-target compilation that Pi does not
+- [ClawVault](./clawvault.md) — another trace-to-artifact system, but centered on typed observation ledgers and bitemporal facts rather than compiled prompt policy
+- [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md) — Synapptic's WITH/WITHOUT benchmark is the clearest production-shaped ablation loop among reviewed systems, an adjacent deployment-oriented variant without the linked note's hard human-oracle guarantee
+- [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — Synapptic is the strongest current example of compiling one learned policy into many always-loaded surfaces, now across nine targets
+- [Constraining during deployment is continuous learning](../../notes/constraining-during-deployment-is-continuous-learning.md) — Synapptic is a concrete example of deploy-time traces becoming durable symbolic behavior constraints
+- [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) — Synapptic's filter/extract/merge/synthesize path is a practical alternative to raw transcript inheritance
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — Synapptic fits in the live-session-mining cluster and may warrant a scored-store-plus-ablation-curated subtype

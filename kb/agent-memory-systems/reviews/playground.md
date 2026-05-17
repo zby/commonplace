@@ -1,102 +1,111 @@
 ---
-description: Shell-first TribleSpace agent runtime with branch-separated cognition/archive/memory, chat-log importers, and budget-adaptive temporal memory built from an append-only event graph
+description: "Review of Playground, a TribleSpace-backed Rust agent runtime with shell-first turns, branch-separated traces, archive imports, and prompt-time memory covers"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-implementation, has-external-sources]
-tags: [related-systems]
+tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-04-05"
+last-checked: "2026-05-16"
 ---
 
 # Playground
 
-Playground is a Rust agent runtime built around a TribleSpace pile rather than a markdown repository. Its central loop is intentionally small: model output becomes a shell command request, an executor writes the command result back into the graph, and the next prompt is assembled from that recorded history. Around that loop it adds a growing set of "faculties" for memory, archive import, wiki fragments, relations, diagnostics, Teams, and web search. The repo's rhetoric frames this as a persistent digital being, but the implemented mechanism is more concrete and more interesting: an append-only, queryable event store that projects past execution and imported conversation traces into the next model context.
+Playground is TribleSpace's Rust experiment in a shell-first agent runtime. It stores cognition, model calls, shell execution, imported chat archives, configuration, and memory summaries in an append-oriented TribleSpace pile, then rebuilds each model prompt from branch-local state instead of treating chat history as the only source of context.
 
 **Repository:** https://github.com/triblespace/playground
 
+**Reviewed commit:** [462c4aca532d1c0b9de6ae70bf029e6c2fc60e52](https://github.com/triblespace/playground/commit/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52)
+
 ## Core Ideas
 
-**Shell-first causality is the system's hard constraint.** Playground treats the shell as the model's physical world. The main loop stores a sequence of thought, model request, model result, command request, and command result entities, and the prompt tells the model to emit exactly one raw shell command per turn. This is a real constraint, not just framing language: the loop is built so every observation is command output and every next action is another command.
+**The runtime is a shell-first loop over an append-only pile.** The design document defines the core as "LLM result -> exec request -> exec result -> new prompt", and the code follows that shape: `run_loop` waits for model results, interprets the model's `output_text` as one shell command, appends a command request, waits for a command result, and then appends the next thought/request pair ([design.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/design.md), [src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs)). The execution worker runs `sh -lc`, records stdout/stderr bytes, UTF-8 projections, exit code, duration, timeout errors, and process-tree termination into `playground_exec` result entities ([src/exec_worker.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/exec_worker.rs)). The behavioral authority of this trace is mostly evidential: command results are knowledge artifacts for the next prompt, while the loop and system prompt are system-definition artifacts because they route the model into one side-effecting shell action per turn.
 
-**One append-only pile holds several distinct branches of experience.** The repo keeps cognition, memory, archive, config, wiki, and other faculties in the same TribleSpace substrate but under separate schemas and branch identities. That gives it a single auditable store without collapsing all artifacts into one least-common-denominator record type. The result is closer to an event-sourced operating substrate than to a note collection.
+**Branches separate raw execution, imported archives, memory summaries, and configuration.** The memory architecture doc names independent `memory`, `cognition`, and `archive` branches, and the config loader uses a separate `config` branch for runtime settings ([docs/playground_memory_architecture.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_memory_architecture.md), [src/config.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/config.rs)). In code, the cognition branch holds thoughts, model requests/results, command requests/results, and moment boundaries; the `memory` branch is pulled separately before prompt assembly; and diagnostics can inspect configured role branches such as config, exec, compass, local messages, relations, teams, and wiki ([src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs), [src/diagnostics.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/diagnostics.rs)). The storage substrate is one pile, but branch identity gives different retained artifacts different ownership and consumption paths.
 
-**Long-term context is projected as synthetic memory turns, not retrieved piecemeal by the model.** Memory chunks carry summaries, time intervals, child edges, and optional provenance to exec results or imported archive messages. At prompt-build time, Playground selects root chunks, drops old roots if needed, then adaptively splits the widest parents whose children fit the remaining budget. The selected chunks are rendered as synthetic `memory <range>` shell turns, followed by a fixed breath boundary and then recent raw command turns.
+**Prompt context is a budget-adaptive memory cover plus recent moment.** `playground_context::kind_chunk` stores a summary blob, start/end TAI intervals, child links, and optional provenance links to exec results or archive messages ([src/context_schema.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/context_schema.rs)). At prompt-build time, Playground loads memory chunks, starts from root chunks, drops oldest roots if the summaries exceed budget, then greedily splits the widest parent whose children fit; it inserts a fixed `breath` / `present moment begins.` boundary and fills the remaining budget with recent raw shell turns ([src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs), [docs/playground_memory_architecture.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_memory_architecture.md)). The memory summaries are prose knowledge artifacts when read as recalled context; the selection algorithm, context budget fields, and breath boundary are symbolic system-definition artifacts because they decide what reaches the model.
 
-**Archive import is a real normalization pipeline with raw provenance preserved.** Separate importers for ChatGPT, Codex, Copilot, Gemini, and Claude Code ingest source-specific exports, store the raw source tree, then project them into a unified archive message graph with stable identities, authors, attachments, reply edges, source-format metadata, and conversation groupings. This is not learning by itself, but it creates a durable substrate for later trace mining.
+**Imported archives preserve raw provenance before memory promotion.** The importer files cover ChatGPT, Claude Code, Codex, Copilot, and Gemini exports, importing raw JSON trees and projecting conversations/messages with `source_format`, source conversation/message IDs, source roles, timestamps, authors, content, and raw roots ([importers](https://github.com/triblespace/playground/tree/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/importers), [src/archive_schema.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/archive_schema.rs)). These imported archive artifacts are retained knowledge artifacts: queryable evidence and source material, not instructions. They become behavior-shaping prompt memory only when summarized into `playground_context::kind_chunk` entities that the memory cover consumes.
 
-**The repo currently implements simpler memory mechanics than some docs suggest.** The active memory architecture and code center on explicit chunk creation, temporal ranges, and read-time adaptive splitting. Historical docs and parts of the README still mention lenses, compaction requests, and automation paths more aggressively than the current `memory` faculty implements. The important mechanism today is selective summarization plus prompt assembly, not an autonomous multi-lens memory compiler.
+**Provider artifacts are retained without becoming the canonical dialogue.** The model worker builds OpenAI-compatible or Anthropic payloads, retries transient failures, stores request payloads, response raw JSON, output text, reasoning text, response IDs, token usage, cache usage, and imported response JSON roots ([src/model_worker.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/model_worker.rs)). That gives the system a detailed audit trail while keeping the canonical turn chain as thought -> request -> result -> command request -> command result. The raw provider response is evidence; the extracted output text has stronger authority because the core treats it as the next shell command.
+
+**Diagnostics are a real runtime surface, not just logging.** The optional diagnostics feature uses `eframe`, `GORBIE`, and `egui_plot` to inspect pile branches, timelines, archive messages, config, and context chunks, including child relationships and leaf origins ([Cargo.toml](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/Cargo.toml), [src/diagnostics.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/diagnostics.rs)). This matters because Playground's memory system is otherwise hard to inspect from flat files: diagnostics are the human-facing projection over the append-only pile.
 
 ## Comparison with Our System
 
-Playground overlaps with commonplace on one axis and diverges on another. Both systems care about persistent knowledge under bounded context, provenance, and agent-facing inspectability. But commonplace is a library-first knowledge base made of human-readable notes linked by explicit semantics, while Playground is a runtime-first operating substrate made of typed events, summaries, and tool faculties inside one append-only graph.
-
 | Dimension | Playground | Commonplace |
 |---|---|---|
-| Primary substrate | TribleSpace pile with typed event/entity schemas | Markdown notes and instructions in git |
-| Main unit of knowledge | Events, memory chunks, wiki versions, faculty artifacts | Notes, instructions, ADRs, tasks, workshop artifacts |
-| Context delivery | Preassembled prompt: memory cover -> breath -> recent moment turns | Progressive disclosure: descriptions first, full notes on demand |
-| Retrieval model | Query and projection over one append-only graph | Search, links, and explicit reader choice |
-| Trace ingestion | Built-in importers for external chat logs plus native exec history | Manual/source-driven capture, snapshots, workshop artifacts |
-| Validation/governance | Strong audit trail and diagnostics, weak semantic structure | Stronger semantic structure and deterministic note validation |
-| Integration surface | Faculties, exec worker, model worker, VM-backed shell | Instructions, skills, scripts, repo workflows |
+| Primary substrate | TribleSpace pile with branches and blob handles | Git-tracked Markdown files plus generated indexes |
+| Raw traces | Cognition/model/exec entities and imported archive projections | Shell history is mostly outside the KB unless snapshotted or written into notes |
+| Durable memory | Time-ranged prose chunks with child/provenance edges | Typed notes, references, instructions, reviews, source snapshots, and generated reports |
+| Prompt assembly | Runtime algorithm selects memory cover and recent moment under a token budget | Agents navigate indexes and load files by task; no central prompt builder |
+| Provenance | Chunk links to exec result/archive message IDs; raw provider JSON roots retained | Source URLs, frontmatter, git history, validation/review reports |
+| Governance | System prompt, faculties, config, branch conventions, diagnostics | Collection/type contracts, validation, review gates, skills, indexes |
 
-**Where Playground is stronger.** It has a more explicit runtime substrate than commonplace. Every turn, request, result, rationale, and imported chat message can live in one auditable graph with stable provenance edges. The shell-first causality rule is also genuinely constraining in a useful way: it keeps the model's world grounded in concrete effects rather than abstract tool call narratives. The memory cover builder is another real contribution. It does not just dump old summaries into context; it chooses a budget-fitting antichain of time ranges and refines the widest summaries first.
+The strongest alignment is that both systems distinguish raw retained evidence from behavior-shaping summaries. Playground's raw cognition branch, provider JSON, shell outputs, and archive imports are not themselves the memory that guides future action; memory chunks are the distilled surface selected into the prompt. Commonplace makes a similar split through source snapshots, reviews, notes, instructions, and generated indexes, but uses readable files and validation rather than a graph pile and runtime prompt assembler.
 
-**Where commonplace is stronger.** Our artifacts are more composable as knowledge. Playground's memory chunks are temporal summaries addressed by range, not stable conceptual units connected by explicit semantic relationships. Its wiki faculty adds versioned fragments and links, but the center of gravity is still event history plus runtime projection. Commonplace makes relationship semantics first-class, which matters when knowledge needs to travel across tasks and survive beyond one agent runtime. Playground is better at preserving lived traces; commonplace is better at turning ideas into reusable arguments and procedures.
+Playground is much stronger than commonplace on live context assembly. Its budget model reserves output and safety tokens, computes body characters, gives memory priority, uses recent moment for unsummarized turns, and warns the model about context fill ([src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs), [docs/playground_event_model.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_event_model.md)). Commonplace relies on progressive disclosure and agent discipline; it has no equivalent central scheduler deciding the prompt cover.
 
-**Trace-derived placement.** Playground clearly belongs in the broader trace-derived set, but as a weaker artifact-learning case than ACE, ExpeL, or ClawVault. Here "weaker" means the promotion boundary is still mostly explicit curation over a rich trace substrate, rather than automated extraction with lifecycle mutation. In this note, "artifact-learning" means traces are promoted into durable, queryable artifacts that can shape later context, even if the promotion step is explicit or human-gated. Semi-automated systems sit between those extremes: stronger than Playground's mostly manual chunk promotion, weaker than loops that automatically extract and maintain rules or playbooks. Playground imports and normalizes agent/session traces, and it can promote specific time ranges into durable memory chunks. But the reviewed repo does not implement a strong automatic extraction loop that continuously learns rules or policies from those traces.
+Commonplace is stronger on artifact contracts and maintainability. A commonplace note can be opened, reviewed, linked, validated, retired, and diffed with ordinary repo tools. Playground's pile gives precise provenance and append discipline, but most semantic structure is visible through Rust schemas, diagnostics, and faculties rather than through directly editable source artifacts.
+
+The docs slightly overclaim current mechanics. The README advertises `memory estimate` and `memory build`, but the checked-in `CommandMode` enum at this commit exposes `run`, `core`, `exec`, `model`, `diagnostics`, and `config`, not `memory` subcommands ([README.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/README.md), [src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs)). The memory architecture doc is explicit that automatic compaction and lenses were dropped; current promotion is explicit via a memory faculty, not an in-core automatic compactor ([docs/memory_temporal_redesign.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/memory_temporal_redesign.md), [docs/playground_memory_architecture.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_memory_architecture.md)).
 
 ## Borrowable Ideas
 
-**A stable memory/moment seam for cache-aware prompting.** Ready with prerequisite. The fixed breath boundary plus one-turn delay when the memory cover changes is a concrete runtime trick, not just a prompt flourish. If we ever run a persistent shell loop around commonplace, this is an immediately borrowable pattern for keeping the stable prefix cacheable.
+**Separate raw trace branches from prompt memory.** Commonplace should keep treating raw logs and source snapshots as evidence rather than as immediately loaded memory. Playground's branch split is a useful design analogue for making raw execution/chat traces, imported archives, summaries, and runtime config visibly different artifacts. Ready to borrow as vocabulary and documentation, not as a pile dependency.
 
-**Unified trace normalization with source-specific importers and shared projection.** Needs a use case first. The archive importers keep raw provenance while mapping different export formats into one queryable message graph. That is a strong pattern for any future commonplace trace-ingestion layer, but it only pays off once we truly need cross-source conversational trace analysis.
+**Use a memory cover rather than a flat summary.** The n-ary time-range chunk tree is a practical answer to "which summary should fit?" In commonplace this would look like generated session/workshop digests with child summaries and a budget-aware loader, not a wholesale replacement for notes. Needs a concrete long-session use case first.
 
-**Budget-adaptive refinement of coarse summaries.** Needs a use case first. The memory cover algorithm does something specific and useful: it starts with coarse roots and spends remaining budget on splitting the widest parents. That is a stronger mechanism than "include summaries until full." It could matter for workshop compaction or long source-review histories if we decide to project temporal summaries into agent context.
+**Put context pressure in the agent's lived prompt.** Playground appends context fill percentage to the latest user message so the model can decide when to consolidate or become concise. Commonplace could expose a cheaper version in long-running skills: report loaded-token pressure and recommend promotion/compaction before the session fails.
 
-**Reason notes as a separate first-class event stream.** Ready now in some workflows. The `reason` faculty records rationale without forcing it into the main command channel. Commonplace already distinguishes between durable notes and transient workshop traces; this suggests a cleaner shape for lightweight rationale capture tied to specific actions.
+**Keep provenance edges on summaries.** `about_exec_result` and `about_archive_message` are exactly the right lineage shape for trace-derived summaries: the summary is compact, but the raw event remains inspectable. Commonplace already has source links and review reports; the borrowable idea is tighter machine-readable links from summaries to raw execution or import records.
+
+**Use diagnostics as a first-class memory interface.** A graph/pile substrate needs a dashboard that shows branches, chunks, origins, and timelines. Commonplace's equivalent is not a GUI, but richer review reports and generated indexes that make derived memory surfaces inspectable without reading implementation code.
+
+## Trace-derived learning placement
+
+Playground qualifies as trace-derived learning, but not as automatic trace mining inside the core loop. The qualifying pattern is staged: raw cognition turns and imported chat archives are retained as evidence, then explicit memory chunks derived from those traces can become durable prompt memory consumed by later model calls.
+
+**Trace source.** Playground records live agent traces as thoughts, model requests/results, command requests/results, reasoning text, provider raw JSON, stdout/stderr, exit codes, and timestamps in the cognition branch ([src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs), [src/model_worker.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/model_worker.rs), [src/exec_worker.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/exec_worker.rs)). It also imports prior ChatGPT, Claude Code, Codex, Copilot, and Gemini conversations into a unified archive projection while keeping raw JSON roots ([importers](https://github.com/triblespace/playground/tree/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/importers)).
+
+**Extraction.** The core repository defines and consumes memory chunks, and the docs say the `memory create [<from>..<to>] <summary>` faculty creates summaries, parses child links, and links leaf chunks to in-range cognition/archive events when no children are supplied ([docs/playground_memory_architecture.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_memory_architecture.md)). That extraction oracle is the user or model operating the faculty, not an automatic in-core compaction worker at this commit.
+
+**Storage substrate.** Raw and distilled artifacts live in the same TribleSpace pile but on different branches. Raw execution/chat traces live on cognition and archive branches; distilled memory chunks live on the memory branch; config/headspace state lives on config-like branch surfaces; diagnostics are projections over the pile rather than canonical memory.
+
+**Representational form.** Raw trace entities are mixed: symbolic schemas and IDs wrap prose command text, outputs, summaries, and provider JSON/blob payloads. Memory chunks are prose summaries with symbolic time intervals, child links, and provenance IDs. The prompt cover is a derived mixed representation: assistant/user chat turns synthesized from memory chunk summaries and raw shell moments.
+
+**Lineage.** The strongest lineage path is from memory chunk to `about_exec_result` or `about_archive_message`, plus child edges for consolidated chunks. Raw archive importers also retain source format, source IDs, timestamps, and raw JSON roots. Invalidation and regeneration are weaker: append-only history is preserved, but the current repo does not show a review state, confidence score, stale marker, or automatic rebuild rule for memory chunks.
+
+**Behavioral authority.** Raw command results, model results, archive messages, and provider JSON are knowledge artifacts: they can inform later prompts and diagnostics as evidence. Memory chunks are knowledge artifacts when read as recalled context, but they acquire stronger behavior-shaping force because the prompt builder selects them into the model context before current moment turns. The system prompt, branch/config settings, faculties, and prompt assembly code are system-definition artifacts because they instruct, route, configure, and prioritize behavior.
+
+**Scope and timing.** The scope is per-pile/persona and cross-session. Extraction is staged and explicit, while consumption is online: every new thought can receive a budget-adaptive memory cover before the recent moment.
+
+**Survey placement.** Playground strengthens the survey axis separating raw trace retention from distilled behavior-shaping artifacts. It is not a "chat transcript as memory" system; it is a trace/archive substrate plus explicit summary promotion plus runtime prompt-cover selection.
 
 ## Curiosity Pass
 
-The repo's most important distinction is between rhetoric and mechanism. The system prompt talks about identity, embodiment, and a digital being with memory. The code that matters is narrower: a model worker sends provider requests, an exec worker runs commands, a memory branch stores summaries, and prompt assembly projects those artifacts into the next turn. The anthropomorphic layer may be useful as agent guidance, but it is not the architectural contribution.
+**The most interesting memory code is consumption, not creation.** The core binary contains robust prompt-cover selection and trace storage, but not the advertised `memory build` CLI path. That makes Playground more compelling as a runtime context assembler than as a fully closed memory-consolidation loop at this commit.
 
-**Shell-first causality.**
-1. *Property claimed:* grounded, reproducible action.
-2. *Transform or relocate?* Genuine constraint. The model's freeform text is reduced to one command line and the world answers through command output.
-3. *Simpler alternative:* generic tool calls with arbitrary JSON arguments. That would still ground actions, but it would lose the strong "same medium for every act" discipline.
-4. *Ceiling:* this can only ground what the shell can safely mediate. It does not solve planning quality or semantic correctness by itself.
+**Append-only does not automatically mean authoritative.** A pile preserves event history and provenance, but the system still needs policies for which summary to trust, when to replace stale chunks, and when a memory should become instruction. Playground has storage lineage; commonplace has stronger curation contracts.
 
-**Append-only graph with branch-separated schemas.**
-1. *Property claimed:* auditability plus heterogeneity without schema collapse.
-2. *Transform or relocate?* Mostly relocation and normalization. It moves many artifact types into one substrate with explicit tags and edges.
-3. *Simpler alternative:* separate SQLite tables or plain files per subsystem.
-4. *Ceiling:* a better substrate does not automatically produce better knowledge. Without stronger curation rules, the graph can become an excellent log of mediocre memory.
+**The shell-first loop is both elegant and narrow.** Treating the shell as the model's physical reality makes every action observable and replayable, but it also turns non-shell actions into faculties or command wrappers. The architecture works best when tool surfaces can be reduced to commands.
 
-**Budget-adaptive memory cover.**
-1. *Property claimed:* preserve long-term context under a bounded window.
-2. *Transform or relocate?* Genuine transformation at prompt-build time. The system chooses an antichain of summaries and refines it by splitting parents into children where budget permits.
-3. *Simpler alternative:* truncate oldest summaries until the prompt fits.
-4. *Ceiling:* the selection logic can only work with summaries that already exist. If chunk creation is sparse or low quality, adaptive splitting just rearranges thin material.
+**Diagnostics compensate for an opaque substrate.** The pile is richer than files, but harder to inspect with ordinary tools. The diagnostics dashboard is therefore part of the memory architecture, not a convenience feature.
 
-**Archive import pipeline.**
-1. *Property claimed:* make heterogeneous external traces queryable in one model.
-2. *Transform or relocate?* Both. It preserves raw source trees, but it also transforms vendor-specific exports into a common message graph with stable conversation/message identities.
-3. *Simpler alternative:* keep raw JSON and search it ad hoc.
-4. *Ceiling:* normalized traces are still traces. They only become learning if another loop distills them into durable, decision-shaping artifacts.
-
-The main thing this pass updates is the memory story. README examples still gesture toward richer automation, but the implemented current system is more conservative and therefore easier to trust: explicit chunking, explicit provenance, adaptive read-time selection. That narrower mechanism is still interesting. It just means Playground is best read as an event substrate with curated temporal memory, not as an already-solved autonomous memory compiler.
+**Docs and code are in active negotiation.** `memory_temporal_redesign.md` is unusually useful because it says what was dropped: lenses, automatic compaction, merge arity, and archive reification. That prevents reviewers from mistaking design history for shipped behavior.
 
 ## What to Watch
 
-- Whether the repo resolves the current documentation drift by either reviving automated memory-build paths or removing the lens/compaction residue from user-facing docs
-- Whether the wiki and memory branches converge into a stronger long-term knowledge lifecycle, or remain separate facilities sharing only a substrate
-- Whether archive import grows into explicit trace-to-rule or trace-to-playbook promotion, which would make Playground a much stronger trace-derived learning reference
-- Whether the shell-first loop remains the center of gravity as more communication faculties accumulate, or gets diluted into a generic agent platform
+- Whether memory chunk creation and backfill move into the checked-in core binary or remain in external faculties.
+- Whether memory chunks gain lifecycle fields such as confidence, reviewer, stale/superseded state, or regeneration policy.
+- Whether archive importers become part of a packaged CLI surface rather than source files under `importers/`.
+- Whether diagnostics evolves from inspection into repair, review, or promotion workflow.
+- Whether wiki and cognition faculties produce durable system-definition artifacts, not only knowledge-artifact summaries.
 
 ---
 
 Relevant Notes:
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — comparison frame: this review uses that note's ingestion/promotion axes to place Playground as a trace-normalization and manual-summary case
-- [files-not-database](../../notes/files-not-database.md) — contrast lens: Playground gets many of the inspectability benefits we want from files, but it reaches them through a typed append-only graph rather than a human-readable repository
-- [agents-navigate-by-deciding-what-to-read-next](../../notes/agents-navigate-by-deciding-what-to-read-next.md) — contrast lens: Playground preassembles memory and moment into one prompt, while commonplace makes the reader decide what to load next
-- [oracle-strength-spectrum](../../notes/oracle-strength-spectrum.md) — analogy: Playground's trace substrate is strong, but its memory promotion still looks more like weak-oracle curation than hard-verified learning
+- [knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw traces, archive messages, provider JSON, and memory summaries mostly advise future behavior as evidence or context
+- [system-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: the prompt builder, config, system prompt, and faculties carry routing/instruction/configuration force
+- [behavioral authority](../../notes/definitions/behavioral-authority.md) - explains: Playground's same pile holds evidence artifacts and stronger runtime-control artifacts
+- [lineage](../../notes/definitions/lineage.md) - frames: chunk provenance links preserve source trace dependencies
+- [retained artifact](../../notes/definitions/retained-artifact.md) - grounds: raw turns, imported archives, chunks, configs, and prompts are retained only when they can shape later behavior
+- [context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - exemplifies: prompt covers adapt detail to a bounded context budget

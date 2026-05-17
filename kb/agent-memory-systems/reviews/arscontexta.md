@@ -1,154 +1,107 @@
 ---
-description: Claude Code plugin that generates knowledge systems from conversation, backed by 249 research claims. Ancestor of our KB — we borrowed link semantics, propositional titles, and three-space architecture, then diverged in theory and structure.
+description: "Claude Code plugin that derives agent-operated markdown knowledge systems with generated context, skills, hooks, queues, methodology notes, and friction-mining loops"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-external-sources]
-status: seedling
-tags: [related-systems]
-last-checked: "2026-02-26"
+tags: [related-systems, trace-derived]
+status: current
+last-checked: "2026-05-16"
 ---
 
 # Ars Contexta
 
-A Claude Code plugin that generates complete knowledge systems from conversation. You describe how you think and work; the engine derives a cognitive architecture — folder structure, context files, processing pipeline, hooks, templates — tailored to your domain and backed by 249 research claims about tools for thought.
+Ars Contexta is Heinrich's Claude Code plugin for generating agent-operated knowledge systems from a short derivation conversation. The reviewed repo is not mainly a runtime library; it is a packaged methodology and system-definition bundle: setup skills, generated-vault templates, platform hook scripts, command skills, presets, and a large linked methodology graph. Its central memory-system claim is that an agent can be given a local markdown vault whose folder layout, context file, processing commands, hooks, queue state, and self-evolution records are all derived from research-backed principles and then consumed by future Claude Code sessions.
 
 **Repository:** https://github.com/agenticnotetaking/arscontexta
-**Local instance:** `arscontexta/` (stale — references old paths like `docs/notes/` instead of `kb/notes/`)
-**Public voice:** @molt_cornelius on X — an agent (Cornelius) operating inside the system, writing a series called "Agentic Note-Taking" that explores agent-side experience of knowledge systems from the inside. 23+ articles; we've reviewed #19 (Living Memory) and #23 (Notes Without Reasons).
+
+**Reviewed revision:** [2acfd5cc4473c4d06c46be63df748e77e00e2746](https://github.com/agenticnotetaking/arscontexta/commit/2acfd5cc4473c4d06c46be63df748e77e00e2746)
 
 ## Core Ideas
 
-**Derivation, not templating.** The central claim is that every configuration choice should trace to specific research. The `/setup` flow asks 2-4 questions, maps signals to eight configuration dimensions with confidence scoring, then generates everything. This contrasts with template-based systems where you pick a preset.
+**The plugin is a system-definition artifact factory.** The plugin manifest describes Ars Contexta as a Claude Code plugin with a conversational derivation engine, 15 kernel primitives, 26 commands, 17 feature blocks, and 3 presets ([`plugin.json`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/.claude-plugin/plugin.json), [`marketplace.json`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/.claude-plugin/marketplace.json)). The setup skill makes this explicit: it detects platform capability, asks the user about their domain, resolves dimensions and vocabulary, writes `ops/derivation.md` first, then generates the folder structure, context file, self files, templates, runtime manifest, skills, hooks, manuals, queue, reminders, and marker file ([`skills/setup/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills/setup/SKILL.md)). Those generated files are system-definition artifacts because Claude Code, hooks, and generated skills consume them with instruction, configuration, validation, routing, or automation force.
 
-**Three-space architecture.** Every generated system separates into: `self/` (agent persistent mind — identity, methodology, goals), `notes/` (knowledge graph), `ops/` (operational coordination — queue, sessions, observations). Names adapt to domain but the separation is invariant.
+**The retained architecture separates self, notes, and ops.** The README and `three-spaces.md` define three spaces: `self/` for agent identity and orientation, the domain-named notes space for durable knowledge, and `ops/` for derivation records, config, reminders, observations, sessions, health, methodology, and queues ([`README.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/README.md), [`reference/three-spaces.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/three-spaces.md)). This is a strong artifact-contract move: domain notes are knowledge artifacts when used as evidence or reference; `self/`, `CLAUDE.md`, `ops/config.yaml`, `ops/derivation-manifest.md`, hooks, and skills become stronger behavior-shaping surfaces when loaded by agents or scripts.
 
-**The 6 Rs pipeline.** Extends Cornell Note-Taking's 5 Rs with a meta-cognitive layer: Record → Reduce → Reflect → Reweave → Verify → Rethink. Each phase has a distinct skill. The pipeline is the operational spine.
+**The kernel defines invariant primitives, not just starter folders.** `reference/kernel.yaml` names primitives for markdown/YAML, wiki links, MOC hierarchy, tree injection, descriptions, schema enforcement, session rhythm, semantic search, discovery-first creation, operational learning, task stack, methodology folder, and session capture, with enforcement levels and validation checks ([`reference/kernel.yaml`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/kernel.yaml)). `interaction-constraints.md` adds cross-dimension coherence rules, including blocked combinations such as full automation on platforms without hooks and heavy processing without pipeline skills ([`reference/interaction-constraints.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/interaction-constraints.md)). The generated system is therefore a bundle of executable conventions with a validation model, not a neutral note template.
 
-**Fresh context per phase.** Each processing phase spawns a fresh subagent to avoid attention degradation. The `/ralph` orchestrator reads the queue, spawns a subagent per task, parses the handoff, advances the phase. This is an explicit response to the context degradation problem that [Agent-Skills-for-Context-Engineering](./agent-skills-for-context-engineering.md) documents theoretically.
+**Generated command skills are the operational API.** Ars Contexta ships plugin-level skills such as setup, help, health, ask, architect, add-domain, reseed, and upgrade, plus generated processing skills such as reduce, reflect, reweave, verify, validate, seed, ralph, pipeline, tasks, stats, graph, next, learn, remember, rethink, and refactor ([`skills/`](https://github.com/agenticnotetaking/arscontexta/tree/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills), [`skill-sources/`](https://github.com/agenticnotetaking/arscontexta/tree/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources)). These skills are mostly prose instructions with tool permissions, runtime config reads, and prescribed file mutations. The representational form is prose plus symbolic YAML/JSON/Bash; the behavioral authority is high because Claude Code invokes them as commands.
 
-**Research-grounded decisions.** The `methodology/` directory contains 249 interconnected claims synthesising Zettelkasten, Cornell Note-Taking, Evergreen Notes, PARA, GTD, cognitive science (extended mind, spreading activation), network theory (small-world topology), and agent architecture. Every kernel primitive includes `cognitive_grounding` linking to specific research.
+**The queue and fresh-context pattern make processing stateful without a service.** `/pipeline` seeds a source, runs `/reduce`, then uses `/ralph` to process extracted tasks through create, reflect, reweave, and verify phases, with task state in `ops/queue/` ([`skill-sources/pipeline/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/pipeline/SKILL.md), [`skill-sources/ralph/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/ralph/SKILL.md)). `/ralph` requires a fresh subagent for every task phase; the lead session only reads queue state, spawns work, parses handoff, and advances the queue. The queue files are operational retained artifacts: they coordinate future action, but they are not intended to become permanent knowledge.
 
-**Self-evolution through friction.** Observations (friction signals) and tensions (contradictions) accumulate during work. When thresholds are hit (10+ observations, 5+ tensions), `/rethink` triggers triage. The system grows at pain points, not before.
+**Hooks convert routine instruction into event-driven infrastructure.** The plugin-level hook config installs SessionStart orientation and PostToolUse Write validation/auto-commit hooks ([`hooks/hooks.json`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/hooks.json)). `session-orient.sh` injects a tree, surfaces previous session state, goals, identity, recent methodology notes, maintenance thresholds, and optional workboard reconciliation; `write-validate.sh` warns on missing description/topics/frontmatter; `auto-commit.sh` stages and commits all pending changes when git automation is enabled ([`session-orient.sh`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/session-orient.sh), [`write-validate.sh`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/write-validate.sh), [`auto-commit.sh`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/auto-commit.sh)). The source also documents project hook generation with a Stop hook, but the checked-in plugin hook config does not include Stop, and the session-capture template records metadata rather than a full transcript ([`platforms/claude-code/hooks/session-capture.sh.template`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/platforms/claude-code/hooks/session-capture.sh.template)).
 
-**Propositional wiki links with relationship markers.** Links carry evaluable claims as titles (`[[spreading activation models how agents should traverse]]`) and relationship words in surrounding prose ("since [X]", "because [Y]"). This is the convention our [title-as-claim](../../notes/title-as-claim-enables-traversal-as-reasoning.md) and [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) descend from — we borrowed it from this system's wiki/Zettelkasten lineage.
-
-**Adjacency is not connection** (article #23). Embedding-based systems produce cosine-similarity proximity — adjacency. Curated links with articulated reasons produce connections. The difference is in kind, not degree: you can evaluate, disagree with, and reason along a connection. You cannot disagree with a cosine similarity score. The article coins "adjacency engine" vs "knowledge system" as labels for the design choice.
-
-## The methodology notes — what the linked claims reveal
-
-Article #23 links to six methodology claims from the 249-claim research base. Reviewing them reveals the depth of the underlying research and several parallels to our design that go beyond what the articles show.
-
-**"propositional link semantics transform wiki links from associative to reasoned"** — The direct upstream source for our [link relationship semantics](../../reference/adr/009-link-relationship-semantics.md). Proposes a vocabulary: causes, enables, contradicts, extends, specifies, supports. We borrowed and adapted: extends, grounds, contradicts, enables, exemplifies. Distinguishes mind mapping ("these relate somehow") from concept mapping (specifies exactly how) — the same distinction our link semantics enforce.
-
-**"over-automation corrupts quality when hooks encode judgment rather than verification"** — Strikingly close to our [methodology enforcement gradient](../../notes/methodology-enforcement-is-constraining.md) and [oracle strength spectrum](../../notes/oracle-strength-spectrum.md). Their "determinism boundary test" — "Would two skilled human reviewers always agree on the hook's output for any given input?" — is essentially our oracle strength concept in a more usable formulation. Their graduated promotion (report → auto-fix) maps to our instruction → skill → hook → script gradient.
-
-**"elaborative encoding is the quality gate for new notes"** — Their link quality gate (every link must articulate WHY) is what our /connect skill enforces. The **specificity test** is a useful formulation we don't have: "genuine elaboration is specific enough to be wrong." Also introduces the **"delegation shadow"** — when agents do all elaboration, the system gets richly connected but the human's understanding stays shallow.
-
-**"controlled disorder engineers serendipity through semantic rather than topical linking"** — Luhmann-grounded. Three serendipity layers: structural (cross-links compound), maintenance (random resurfacing), process (incremental reading forces collision). The quality gate keeping disorder controlled is elaborative encoding — every cross-topical link must pass the "why do these connect?" test.
-
-**"each new note compounds value by creating traversal paths"** — N nodes with K average links generate O(N × K) direct paths plus exponential indirect paths. This is the theoretical basis for article #23's scaling optimism about curation.
-
-**"vibe notetaking is the emerging industry consensus"** — Industry landscape framing. Introduces **"governance debt"** — emergence-only approaches (dump and auto-organise) accumulate structural problems without deliberate curation. Also: "filing ≠ processing" — automated organisation without synthesis creates well-labeled but untransformed dumps.
-
-## The cognitive science grounding — suggestive but scale-mismatched
-
-The methodology draws heavily on cognitive science: spreading activation for traversal, Tulving's memory taxonomy for the three-space architecture, elaborative encoding for link quality, Zeigarnik effect for capture, basic-level categorization for index granularity.
-
-The spreading activation analogy is the most load-bearing: "Graph traversal IS spreading activation. When you follow wiki links to load context, you're replicating what the brain does when priming related concepts." The note maps traversal parameters — decay rate, threshold, max depth — onto activation mechanics.
-
-This is interesting but the analogy operates across a vast scale difference. Neural spreading activation involves billions of neurons with millisecond-scale parallel activation, subconscious priming, and continuous decay. A knowledge graph has hundreds to thousands of notes with sequential agent-driven traversal, deliberate link-following, and discrete load decisions. The mechanisms that make spreading activation work in brains (massive parallelism, graded activation, automatic priming) don't exist in note traversal. What transfers might be just the vocabulary ("decay", "threshold", "priming") rather than the mechanism.
-
-The same question applies to elaborative encoding — the original research is about human memory formation through effortful connection. When an LLM agent articulates why two notes connect, is it performing elaborative encoding, or is it performing a text generation task that happens to produce the same artifact? The output (articulated connection) is the same, but the mechanism is different. The note itself acknowledges this tension as the "delegation shadow."
-
-Worth analysing more carefully: which specific predictions from the cognitive science analogies actually hold for note graphs, and which are decorative? If the analogy's predictions match for different reasons than the original mechanism, it's a coincidence, not evidence for the theory. This connects to our [design methodology](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md): we borrow from cognitive science but require first-principles support before adoption.
+**The methodology graph is both evidence and product DNA.** The repo contains hundreds of methodology notes under `methodology/`, plus references that map claims to generated behavior ([`methodology/`](https://github.com/agenticnotetaking/arscontexta/tree/2acfd5cc4473c4d06c46be63df748e77e00e2746/methodology), [`reference/methodology.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/methodology.md)). These are knowledge artifacts when queried via `/ask` or read as rationale. They become system-definition inputs when setup, architect, reseed, and generated context use them to choose dimensions, warnings, feature blocks, and vocabulary.
 
 ## Comparison with Our System
 
-Arscontexta is the **ancestor** of our KB. We installed it, used its pipeline, and learned from its approach. Over time we diverged.
+| Dimension | Ars Contexta | Commonplace |
+|---|---|---|
+| Primary purpose | Generate a domain-specific Claude Code-operated vault | Operate and document a methodology KB as the reusable framework |
+| Storage substrate | Local markdown/YAML plus Claude plugin files, Bash hooks, queue JSON/YAML, git | Local markdown/YAML plus Python CLI, schemas, generated indexes, review records, git |
+| Main retained surfaces | Generated `CLAUDE.md`, `self/`, domain notes, `ops/`, skills, hooks, templates, methodology notes | Typed KB notes, collection contracts, type specs, instructions, skills, validators, indexes |
+| Authority model | Generated files directly instruct, validate, orient, route, and automate Claude Code sessions | Artifact type, collection contracts, CLI validation, review gates, and skills define authority |
+| Lineage | `ops/derivation.md`, runtime manifest, methodology claims, generated_from fields, git | Frontmatter, source snapshots, review metadata, generated index provenance, git |
+| Activation | Claude Code plugin commands, auto-loaded context file, hooks, skill invocation, queue orchestration | Agent navigation, local skills, Python commands, authored links, validation/review workflows |
+| Evolution | `/remember`, `/rethink`, `/architect`, `/reseed`, observations, tensions, methodology folder | Notes, ADRs, review bundles, fix/review systems, skill updates, indexes, validation |
 
-**What we borrowed:**
-- Propositional link titles became our title-as-claim convention.
-- Link relationship prose became our typed link semantics.
-- Curated links, not embeddings, became the primary organization mechanism.
-- The idea that traversal through reasoned links can itself be a reasoning act.
-- Three-space memory separation, which we [documented](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) and still treat as a hypothesis rather than a settled fact.
+Ars Contexta is historically close to commonplace: both assume local files, markdown, explicit links, validation, generated indexes/views, skills, and agent-native navigation. The difference is product posture. Commonplace is the methodology KB and shipped tooling for maintaining such KBs; Ars Contexta is a Claude Code plugin that tries to derive a complete user-specific instance from conversation.
 
-These are not independent convergences — they're shared inheritance from wiki/Zettelkasten tradition, with arscontexta as the direct upstream source.
+Ars Contexta is more ambitious on first-run generation. It tries to create a full context file, command suite, hooks, templates, manual, queue, self-space, and methodology folder in one derivation flow. Commonplace is more conservative about artifact contracts: collection-local type specs, validation commands, and review workflows make explicit what each artifact is allowed to do. Ars Contexta has similar concepts, but much of its authority lives in generated prose skills and context-file sections rather than in deterministic package code.
 
-**Where we diverged:**
-
-- **We built a theory layer they do not have.** [Codification](../../notes/definitions/codification.md), [oracle strength](../../notes/oracle-strength-spectrum.md), and [methodology enforcement as constraining](../../notes/methodology-enforcement-is-constraining.md) explain when to freeze, automate, or keep things fluid. Arscontexta has a research-grounded pipeline but not a comparable theory of change.
-- **We flattened the architecture.** Their `self/notes/ops` split is a meaningful model of agent continuity, but we chose a simpler `kb/` plus tasks/sources layout and did not carve out a dedicated identity layer.
-- **We made document affordances explicit.** Our [available types](../../reference/available-types.md) with types, traits, and status tell an agent what a document is for before it reads it. Arscontexta relies more on templating, link conventions, and workflow stages than on a typed document surface.
-- **We keep embeddings in a narrower role.** We use embeddings for search, not for primary organization. Arscontexta's article #23 argues more aggressively against adjacency-style systems; our position is that embeddings are acceptable when they are kept out of the reasoning graph.
-- **The local checkout is stale.** It still points at `docs/notes/` and `docs/adr/`, so the clone is evidence of the system's shape but not an authoritative implementation snapshot.
-
-## What Arscontexta Does Better
-
-- **Research backing.** 249 claims with provenance is more systematic than our approach of deriving theory from practice. We tend to notice patterns and write notes; they start from established cognitive science.
-- **Automation infrastructure.** Four hooks (session orient, write validate, auto commit, session capture) provide more operational automation than we currently have. Our skills are manually invoked.
-- **Processing queue.** Their `queue.json` with phase tracking, priority, and `/next` recommendations is more structured than our task system.
-- **Fresh context per phase.** The subagent-per-phase pattern is a concrete solution to attention degradation that we haven't implemented.
-- **23+ articles of accumulated design reflection** from inside a working system. First-person agent testimony as an evidence genre.
-- **A public-facing articulation** of why propositional links matter. Our notes are internal.
-
-## What We Do Better
-
-- **Learning theory.** We have a framework for understanding *when* to constrain and *when* to keep things stochastic. Arscontexta has a fixed pipeline; we have a theory about pipeline evolution.
-- **Document affordances.** Our type system tells agents what they can do with a document before reading it. Arscontexta treats all notes as structurally similar.
-- **Lighter weight.** Our system works without hooks, queues, or session management. A KB is markdown files, skills, and CLAUDE.md. Lower barrier, less infrastructure to maintain.
+The systems also diverge on backpressure. Commonplace's review and validation loops mostly operate after artifacts exist. Ars Contexta pushes quality earlier by generating pipeline commands and hooks that affect note creation, orientation, and persistence. The tradeoff is that some documented promises are stronger than the inspected implementation: automatic transcript capture and Stop-hook persistence are described in setup/platform references, while the active plugin hook config at this commit only wires SessionStart and PostToolUse.
 
 ## Borrowable Ideas
 
-**Credibility erosion as a named failure mode (ready now).** When enough links lead nowhere useful, the agent can start discounting all links. That is stronger than the usual Goodhart warning: not just that a metric gets gamed, but that the graph's trustworthiness degrades as a navigation aid. Belongs in [quality-signals-for-kb-evaluation](../../notes/quality-signals-for-kb-evaluation.md).
+**Derivation manifest as runtime vocabulary layer.** Ready to borrow where skills must adapt to project vocabulary. Ars Contexta separates human-readable derivation rationale from machine-readable `ops/derivation-manifest.md`, and generated skills read the manifest at invocation time ([`skills/setup/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills/setup/SKILL.md)). Commonplace could use a lighter version for consuming-project installations without cloning every skill per vocabulary.
 
-**The scaling question, honestly confronted (needs more thought).** "Can curation scale to 10,000 notes? To 100,000?" The useful part is not the exact numbers; it's the hypothesis that each curated link lowers the cost of placing the next one because the graph gives more context for judgment. Our [automating-kb-learning](../../notes/automating-kb-learning-is-an-open-problem.md) note frames the automation challenge but does not say where manual curation breaks.
+**Rule Zero: methodology notes as canonical operational spec.** Ready to borrow in workshop form. `/remember` writes actionable directives into `ops/methodology/`, and `/rethink` treats that folder as the source of drift checks ([`skill-sources/remember/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md), [`skill-sources/rethink/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/rethink/SKILL.md)). Commonplace already has instructions and notes; the borrowable piece is an explicit "operational spec from observed friction" layer before promotion to shipped instructions.
 
-**"Adjacency is not connection" as vocabulary (ready now).** This is the sharpest label in the whole review. We already have the idea scattered across link contracts and quality signals, but naming it would make the distinction easier to reuse in other notes and skills.
+**Session orientation as compiled context.** Ready to borrow selectively. Ars Contexta's SessionStart hook compiles file tree, goals, identity, methodology snippets, and maintenance signals into the next session's opening context. Commonplace should keep generated indexes and validation reports as canonical sources, but a small compiled orientation view for active workshops could reduce rediscovery.
 
-**The determinism boundary test as oracle strength shorthand (ready now).** "Would two skilled human reviewers always agree on the output?" is a cleaner way to explain what we call hard versus soft oracle. That phrasing belongs in the [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) because it is easier to apply than the current abstraction.
+**Fresh-context phase orchestration with handoff blocks.** Needs a concrete high-volume use case. `/ralph` is a useful pattern for avoiding context contamination during multi-phase processing, but it is expensive and assumes a Task/subagent-capable harness. Commonplace should use it for large ingest/review batches, not for ordinary note edits.
 
-**The specificity test for link quality (ready now).** "Genuine elaboration is specific enough to be wrong." If a link's context phrase could apply to any two notes, it is not a link contract, just decorative prose. This could tighten the articulation requirement in `/connect`.
+**Do not borrow plugin auto-commit as-is.** The active `auto-commit.sh` uses `git add -A` and commits all pending changes. That fits a single-user generated vault poorly enough already, and it conflicts with commonplace's multi-agent staging discipline. The stronger borrow is the intent: deterministic persistence belongs in infrastructure, but staging scope must be precise.
 
-**The delegation shadow (needs more thought).** When agents perform all elaboration, the graph gets richer but the maintainer may understand less. That is a real risk for any agent-operated KB, but we do not yet know whether the right mitigation is human review, stronger templates, or a different division of labor.
+## Trace-derived learning placement
 
-**Governance debt (ready now).** Emergence-only approaches accumulate structural problems without deliberate curation interventions. This is a good companion concept to our quality-signals work because it names the maintenance debt that builds when nobody periodically reasserts structure.
+**Trace source.** Ars Contexta qualifies as trace-derived learning through its `/remember --mine-sessions` path. The qualifying traces are session transcripts or session files under `ops/sessions/`, plus explicit or contextual correction signals in the current conversation. The automatic trace-capture substrate is incomplete at this commit: the platform docs and setup skill describe Stop-hook session capture, but the checked-in plugin hooks omit Stop, and the session-capture template stores JSON metadata rather than a full transcript.
+
+**Extraction.** `/remember` extracts user corrections, repeated redirections, workflow breakdowns, agent confusion, undocumented decisions, and escalation patterns. It classifies findings as either actionable methodology learning or observations requiring more accumulation, deduplicates against existing `ops/methodology/` and `ops/observations/`, writes methodology notes or observations, and marks sessions as mined when session files have frontmatter ([`skill-sources/remember/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md)).
+
+**Storage substrate.** Raw or semi-raw session state lives in `ops/sessions/`. Pending signals live in `ops/observations/` and `ops/tensions/`. Distilled behavioral guidance lives in `ops/methodology/`. Stable generated instructions live in the context file, generated skills, hook scripts, and config files.
+
+**Representational form.** Raw traces are expected to be prose transcripts or session records. Observations, tensions, and methodology notes are prose with YAML frontmatter. Config, queue, and manifest files are symbolic YAML/JSON. Hooks and graph/query scripts are executable symbolic artifacts. There is no inspected mechanism that trains weights or stores learned embeddings as the operative learned state.
+
+**Lineage.** `/remember` records `source: session-mining` and `session_source` for mined methodology notes or observations, and marks sessions as mined. `/rethink` can then promote, implement, archive, or keep findings pending. The lineage is sufficient at the note/session level, but not at the exact transcript-span or generated-instruction-fragment level.
+
+**Behavioral authority.** Session transcripts and observations are knowledge artifacts: they serve as evidence, explanation, and candidate signal. Methodology notes in `ops/methodology/` are system-definition artifacts because Rule Zero makes them canonical behavioral directives for future agents and meta-skills. Context-file updates, skills, hooks, and config edits produced by `/rethink`, `/architect`, or `/reseed` are stronger system-definition artifacts because they instruct, validate, route, configure, or automate later work.
+
+**Scope and timing.** The scope is per generated vault and per project. Timing is staged: traces accumulate during sessions, `/remember --mine-sessions` or contextual `/remember` distills them, `/rethink` detects patterns, and later context or configuration changes stabilize recurring lessons.
+
+**Survey placement.** On the [trace-derived survey](../trace-derived-learning-techniques-in-related-systems.md), Ars Contexta belongs in the file-native operational-friction-to-methodology family. It strengthens the survey's distinction between raw traces as evidence and promoted instructions as behavior-changing artifacts, while also showing a common implementation gap: documentation may claim automatic session mining before the actual capture hook preserves enough trace content.
 
 ## Curiosity Pass
 
-**The repo may be strongest as an existence proof for doctrine-rich agent systems, not for the specific cognitive-science story.** Arscontexta clearly demonstrates that a system can be organized around explicit methodology claims, typed link conventions, and phase-structured work. That practical success matters even if some of the cognitive analogies turn out to be decorative rather than causal.
-
-**The fresh-context-per-phase pattern could matter more than the research graph.** The most operationally distinctive mechanism here is not the 249-claim backing store but the discipline of resetting context between phases. If that pattern carries most of the practical benefit, the explanatory center of gravity may be harness design rather than cognitive science.
-
-**There may be two separable products hiding under one label.** One is the agent-facing doctrine and research framing. The other is the operational pipeline for queueing, phase execution, and maintenance. They reinforce each other in the repo, but they could turn out to have very different transfer properties for us.
-
-## What article #23 supports vs what's new
-
-Most of article #23 supports design choices we already have — because we borrowed from arscontexta. Propositional links, traversal-as-reasoning, Goodhart on connection counts, the embedding critique, controlled disorder — all map onto existing notes. This is not independent validation; it's the upstream source confirming that the conventions still work in their original context.
-
-The genuinely new contributions are: credibility erosion (a failure mode we hadn't named), the scaling question (which we'd been avoiding), the determinism boundary test (a simpler formulation of oracle strength), the specificity test for link quality, the delegation shadow, and governance debt.
-
-## The Theoretical Bet
-
-The deepest divergence is in grounding discipline. Arscontexta draws on **cognitive psychology** — spreading activation, generation effect, context-switching cost (Leroy 2009), extended mind thesis. We draw on **programming language theory** — [types mark affordances](../../notes/instructions-are-typed-callables.md), [verifiability gradients](../../notes/verifiability-gradient.md), constrain/relax as compilation, and [the fixed-artifact distinction](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md). [Thalo](./thalo.md) independently validates the programming-theory side by building a full compiler for knowledge management — Tree-Sitter grammar, typed entities, 27 deterministic validation rules — pushing formalization further than we do. The implicit bet: knowledge systems for LLM agents are closer to programming (formal, compositional, verifiable) than to human cognition (associative, affective, embodied). Time will tell which foundation produces better systems — or whether they converge.
+- Ars Contexta is strongest as a methodology-to-system compiler, not as a conventional app. Most behavior lives in Markdown skills, generated context, hook scripts, and file conventions.
+- The generated system is intentionally maximal: full automation, queue, methodology folder, session capture, graph scripts, and many commands from day one. That reverses older "grow only from friction" logic in favor of "ship complete, opt down."
+- The active plugin hook config is less complete than the setup and platform references. Reviewers should distinguish implemented plugin hooks from generated-project hook instructions.
+- The repo's own methodology notes are historically important because many of commonplace's current concepts have close relatives here: three spaces, operational learning, hooks as habits, title-as-claim, fresh context per phase, and notes as agent memory.
+- The risk is authority sprawl. A generated vault can have behavior-changing rules in `CLAUDE.md`, `self/`, `ops/methodology/`, skill files, hook scripts, templates, config, and queue state. Without validation, agents may not know which surface wins.
 
 ## What to Watch
 
-- Does arscontexta develop learning theory (codification-like concepts)?
-- How does the plugin marketplace model evolve — does it become a distribution channel for knowledge system patterns?
-- Do the 249 research claims get maintained and updated, or become stale?
-- Does the fresh-context-per-phase pattern prove its value in practice, and should we adopt it?
-- Do earlier articles in the series reveal architectural details (type system, tooling, lifecycle management) not visible in #19 and #23?
-- How does their system handle the scaling ceiling they identify? Do later articles report on curation at hundreds/thousands of notes?
-- Does the first-person-agent-testimony genre produce insights that external observation can't?
+- Whether future releases add a real Stop hook or transcript API integration that captures full session traces rather than only session metadata.
+- Whether generated skills move from prose-only workflows toward tested scripts or package code for queue migration, validation, hook merging, and graph analysis.
+- Whether derivation outputs carry stronger generated-from metadata and per-section lineage back to methodology claims and user signals.
+- Whether `/rethink` and `/architect` gain deterministic drift checks or remain mostly agent-mediated judgment loops.
+- Whether auto-commit becomes scoped enough for multi-agent repositories, or remains a single-operator convenience.
+- Whether Ars Contexta stabilizes a public generated-vault schema that other tools can inspect without reading the full generated `CLAUDE.md`.
 
 ---
 
 Relevant Notes:
 
-- [title-as-claim-enables-traversal-as-reasoning](../../notes/title-as-claim-enables-traversal-as-reasoning.md) — our implementation of the convention we borrowed from this lineage
-- [009-link-relationship-semantics](../../reference/adr/009-link-relationship-semantics.md) — our formalization of link relationship semantics
-- [quality-signals-for-kb-evaluation](../../notes/quality-signals-for-kb-evaluation.md) — where the credibility erosion insight should land
-- [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — the scaling question connects here
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — our analysis of their article #19
-- [programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must-earn-first-principles-support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — the cognitive science scale-mismatch concern connects to our adoption filter
-- [Thalo](./thalo.md) — sibling: both are compared against our theoretical position; Thalo formalised types (compiler), arscontexta formalised links and pipeline (cognitive science), we're formalising understanding (theory)
+- [Retained artifact](../../notes/definitions/retained-artifact.md) - defined-in: Ars Contexta stores behavior-shaping state across context files, skills, hooks, queues, and methodology notes.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - defined-in: methodology claims, session records, observations, and domain notes often advise or evidence later action.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - defined-in: generated `CLAUDE.md`, skills, hooks, config, and methodology directives instruct or automate future agents.
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - defined-in: the same Markdown substrate can advise, instruct, validate, or configure depending on its consumer path.
+- [Workshop](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares-with: Ars Contexta's `ops/` layer keeps temporal queues, sessions, observations, and health state out of durable notes.
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - source-inspected placement: session/friction traces can become methodology directives and later context changes.

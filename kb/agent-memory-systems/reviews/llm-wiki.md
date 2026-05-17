@@ -1,91 +1,113 @@
 ---
-description: Claude Code plugin and portable AGENTS protocol for topic-isolated compiled markdown wikis, packaging ingest/research/query workflows as prompt artifacts rather than executable software
+description: "LLM Wiki review: promptware knowledge-base protocol with topic-isolated markdown wikis, raw-to-compiled workflows, multi-runtime plugins, and local lint validation"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-implementation, has-external-sources]
-tags: [related-systems]
+tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-04-06"
+last-checked: "2026-05-16"
 ---
 
 # LLM Wiki
 
-LLM Wiki is a Claude Code plugin plus a portable `AGENTS.md` "idea file" for building topic-isolated markdown wikis. The repo defines a wiki layout (`~/wiki/topics/<name>/` or `.wiki/`), a command surface for ingest/compile/query/research/thesis/assess/lint/output, and reference docs for indexing, ingestion, compilation, and linting. The notable architectural fact is that the repo is almost entirely promptware: the wiki system is described in markdown instructions and plugin metadata rather than implemented as an executable runtime with scripts, tests, or deterministic enforcement. That makes it a useful reference for packaging a knowledge-system protocol, but a weaker reference for hard guarantees about knowledge quality or workflow execution. The hub-plus-topic model is clearly the repo's center of gravity, but the project-local `.wiki/` mode matters as a smaller-scale topology variant rather than a mere footnote.
+LLM Wiki is nvk's agent-operated wiki protocol for building topic-isolated, markdown knowledge bases. It ships primarily as a Claude Code plugin, mirrors into Codex and OpenCode/Pi packaging, and also exposes a portable `AGENTS.md` idea file for any file-editing agent. The system is mostly promptware: commands, skills, references, and conventions tell the agent how to ingest raw sources, compile wiki articles, run research/thesis/audit workflows, maintain indexes, and optionally validate structure with a local Python helper.
 
 **Repository:** https://github.com/nvk/llm-wiki
 
+**Reviewed commit:** [505b56c50ff75bbf61eedd236b44d192c0e0674c](https://github.com/nvk/llm-wiki/commit/505b56c50ff75bbf61eedd236b44d192c0e0674c)
+
+**Last checked:** 2026-05-16
+
 ## Core Ideas
 
-**The repo ships a protocol, not a runtime.** The implementation is `AGENTS.md`, Claude plugin command files, one skill, and reference docs. That is still real implementation in the sense that a harness can load and follow it, but the behavior depends on agent compliance rather than on checked-in code that performs the operations directly.
+**The behavior layer is a protocol, not an app server.** `claude-plugin/skills/wiki-manager/SKILL.md` is the main behavior contract: it resolves a wiki hub, routes ambient/wiki commands, defines principles, and points workflows to reference files for ingestion, compilation, linting, audit, archive, inventory, datasets, and project handling ([SKILL.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/skills/wiki-manager/SKILL.md)). Claude command files add concrete entry points such as research, ingest, compile, query, audit, librarian, lessons learned, assess, and output ([commands](https://github.com/nvk/llm-wiki/tree/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/commands)). These prompt artifacts are system-definition artifacts because they instruct and route the agent runtime.
 
-**Topic-isolated sub-wikis are the main structural bet.** The hub at `~/wiki/` is only a registry plus log; all actual content lives in per-topic sub-wikis with separate `raw/`, `wiki/`, `output/`, `config.md`, `_index.md`, and `log.md`. A project-local `.wiki/` variant exists for single-repo use, but the design's default strong form is explicitly anti-monolith: one subject, one wiki, with sibling-peek only at the index level. In our terms, these topic wikis look a lot like long-lived research workshops: bounded sandboxes with raw intake, compiled intermediates, generated outputs, and an activity log rather than a mature shared library.
+**The storage substrate is ordinary markdown with topic isolation.** The hub contains only registry/navigation state, while each topic wiki owns `raw/`, `wiki/`, `inventory/`, `datasets/`, `output/`, indexes, config, and logs ([wiki-structure.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/skills/wiki-manager/references/wiki-structure.md)). This keeps unrelated subjects from sharing retrieval context. Raw sources are immutable knowledge artifacts; compiled wiki articles are synthesized knowledge artifacts; indexes are derived navigation surfaces; config, command prompts, lint rules, and plugin manifests carry stronger system-definition authority.
 
-**`_index.md` is treated as the primary navigation substrate.** Every directory gets an index, and the references codify a three-hop strategy: master index, category index, then matched articles. This is the strongest mechanistic idea in the repo because it turns progressive disclosure into a repeatable file contract rather than leaving navigation entirely implicit. The payoff is clearest once the wiki is large or noisy enough that direct read/search loops stop being cheap; in a tiny local `.wiki/`, the extra hop can become mostly ceremony.
+**Raw-to-compiled transformation is the central memory operation.** The compilation protocol reads `raw/_index.md`, maps new sources to existing articles, classifies new articles as concepts/topics/references, writes synthesized pages with source links and confidence, then updates category, wiki, and master indexes ([compilation.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/skills/wiki-manager/references/compilation.md)). Lineage is frontmatter-and-link based: articles list source paths, sources retain ingestion metadata, and indexes cache summaries rather than becoming canonical. The representational form is prose plus YAML frontmatter and markdown links.
 
-**Compilation is an agent-authored transformation over immutable raw sources.** Ingested material goes into `raw/` and is supposed to remain unchanged. The `compile` protocol tells the agent to synthesize cross-linked wiki articles with frontmatter, summaries, confidence scores, `See Also` links, and source backlinks. The transformation is real at the artifact level, even though the compiler is a prompted agent rather than a deterministic program.
+**Research and thesis workflows use agent orchestration as the compiler front end.** `/wiki:research` can create a topic, decompose questions, launch parallel research agents, ingest sources, compile articles, and keep multi-round session state in `.research-session.json`, `.session-events.jsonl`, and `.session-checkpoint.json` ([research.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/commands/research.md)). Thesis mode constrains search around a claim, splits evidence-for/evidence-against work, and renders a verdict; the old `/wiki:thesis` command is now a shim into `/wiki:research --mode thesis` ([thesis.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/commands/thesis.md)). These workflows create knowledge artifacts, not executable validators, unless their outputs are later promoted into instructions or code.
 
-**Research, thesis, and repo assessment are packaged as workflow templates.** The repo's most ambitious commands are not CRUD but multi-step inquiry loops: topic research with 5-10 parallel agents, thesis-driven evidence gathering with explicit pro/con roles, and repo-vs-wiki-vs-market assessment. These are strong workflow designs, but they remain prompt-level orchestration plans rather than scheduler-owned machinery.
+**Indexes are both navigation convention and validation target.** The protocol says agents should read indexes first, stale-check them, and rebuild them as derived caches. The local `scripts/llm-wiki` helper implements deterministic lint rules for structure, frontmatter, canonical placement, unknown files, index consistency, link integrity, source provenance, inventory, datasets, archives, and fixable repairs ([scripts/llm-wiki](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/scripts/llm-wiki), [linting.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/skills/wiki-manager/references/linting.md)). Tests exercise both shell-level fixture assertions and the local lint helper ([test-structure.sh](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/tests/test-structure.sh), [test-local-cli-lint.sh](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/tests/test-local-cli-lint.sh)).
 
-**Obsidian compatibility is handled by duplicated link syntax rather than by a deeper shared substrate.** Cross-links are written in dual form: `[[wikilink]]` for Obsidian plus standard markdown for agents and GitHub. This is a pragmatic interoperability choice. It keeps one set of wiki articles readable across tools, but it also doubles part of the maintenance burden.
+**Multi-runtime packaging keeps one source of truth with generated mirrors.** The README and development guide identify `claude-plugin/skills/wiki-manager/` as the behavioral source of truth, with generated Codex packaging under `plugins/llm-wiki/`, OpenCode/Pi packaging under `plugins/llm-wiki-opencode/`, and portable `AGENTS.md` for non-plugin agents ([README.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/README.md), [CLAUDE.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/CLAUDE.md)). Sync scripts regenerate the mirrors and tests fail if generated plugin copies drift ([sync-codex-plugin.sh](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/scripts/sync-codex-plugin.sh), [sync-opencode-plugin.sh](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/scripts/sync-opencode-plugin.sh)).
 
 ## Comparison with Our System
 
 | Dimension | LLM Wiki | Commonplace |
 |---|---|---|
-| Primary shape | Prompt-packaged knowledge-system protocol: plugin commands, skill docs, and portable `AGENTS.md` | Repo-native knowledge base with notes, instructions, skills, scripts, and review workflows |
-| Main content boundary | Separate topic sub-wikis outside the repo root, each with `raw/`, compiled `wiki/`, and `output/` | One repo with library artifacts (`kb/notes/`, `kb/instructions/`) plus workshop areas for in-flight work |
-| Navigation model | Mandatory `_index.md` at every directory and explicit three-hop index traversal | Titles, descriptions, curated indexes, semantic link phrases, and search working together |
-| Knowledge transformation | Agent compiles raw sources into synthesized wiki articles | Human and agent author notes directly; distillation is explicit but not framed mainly as raw -> compiled wiki |
-| Governance | Prompt-defined lint rules, confidence labels, and "structural guardian" reminders | Deterministic validation, semantic review bundles, explicit note types, and stronger maintenance conventions |
-| Link model | Dual-links for Obsidian plus markdown; navigational, not semantically typed | Standard markdown links with explicit relationship semantics |
-| Portability story | Strong: Claude plugin for native use plus one-file `AGENTS.md` for other harnesses | Strong within agent repos, but less aggressively packaged as a portable single-file protocol |
-| Research surface | First-class workflows for research, thesis investigation, and repo assessment | Stronger on curation and theory; research workflows exist but are less central to the day-to-day interface |
+| Primary aim | Help an agent build topic wikis from sources and research sessions | Maintain methodology for agent-operated KBs |
+| Storage substrate | Markdown topic wikis under a hub or project-local `.wiki/` | Git-tracked typed Markdown collections |
+| Type system | Frontmatter conventions for raw/wiki/inventory/datasets/output | Explicit type specs, schemas, collection contracts, validators |
+| Runtime surface | Claude commands, skill references, Codex/OpenCode mirrors, portable `AGENTS.md` | Skills, `AGENTS.md`, `commonplace-*` commands, review/fix workflows |
+| Derived views | `_index.md` files, reports, outputs, session checkpoints | Directory indexes, review reports, validation outputs, connect reports |
+| Validation | Local deterministic `llm-wiki lint`, shell fixture tests, Promptfoo routing evals | `commonplace-validate`, semantic review bundles, typed schemas |
+| Authority model | Mostly prompt instruction plus local structural lint | Typed artifact contracts plus deterministic validation and review gates |
 
-LLM Wiki is stronger where the task is "bootstrap a topic-specific research corpus quickly and keep the workflow legible to the agent." Commonplace is stronger where knowledge needs to be semantically linked, compositional, and checked by hard or at least harder oracles. The sharpest difference is that LLM Wiki concentrates intelligence in the prompt pack, while commonplace pushes more of the contract into durable artifacts and scripts. The topic wiki is therefore closer to one of our workshop packets than to one of our mature note collections: it is scoped, operational, and allowed to accumulate temporary structure in service of a research loop.
+LLM Wiki and commonplace share the same broad intuition: durable agent memory should be made of inspectable files, source-backed synthesis, indexes, and operational workflows rather than hidden chat state. LLM Wiki is more adoption-oriented: it fits Claude Code, Codex, OpenCode, Pi, Obsidian, GitHub markdown, and a copyable `AGENTS.md` file with minimal runtime dependencies.
+
+Commonplace is stricter about artifact contracts. LLM Wiki has good file placement, frontmatter, and lint rules, but the semantics of a compiled article, thesis verdict, audit report, or lesson remain mostly prompt-defined. Commonplace makes collection register, type specs, link vocabulary, validation, review lifecycle, and artifact authority more explicit.
+
+The most important contrast is authority. In LLM Wiki, the agent reads prompt instructions and writes wiki files; deterministic code checks whether the resulting wiki is structurally coherent. In commonplace, instructions, type specs, validators, generated indexes, and semantic review reports are themselves part of a more formal system-definition layer.
 
 ## Borrowable Ideas
 
-**Ship a portable single-file protocol alongside harness-specific packaging.** LLM Wiki's `AGENTS.md` gives the system a clean export format independent of Claude plugin support. This is ready to borrow now as a distribution pattern for any stable methodology we want to share outside this repo.
+**One portable protocol file as an adoption bridge.** LLM Wiki's `AGENTS.md` compresses the whole system into a single file for agents that do not support plugins ([AGENTS.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/AGENTS.md)). Commonplace already has repo instructions, but a deliberately portable "minimum viable KB protocol" could lower adoption cost for projects that cannot install the full command package.
 
-**Borrow the research skill design, not just the command names.** `research`, `thesis`, and `assess` are genuinely different workflows: topic mode uses angle-based swarms, question mode decomposes into sub-questions, thesis mode assigns explicit support/opposition/mechanistic/meta roles, and `--min-time` turns the whole thing into a multi-round loop. That is stronger than a single generic "do deep research" prompt. Ready to borrow now for workshop-scale investigations and survey packets.
+**Generated runtime mirrors with drift tests.** The Claude-first source plus Codex/OpenCode generated mirrors is a clean packaging pattern. Commonplace could use the same strategy if it needs thinner runtime-specific skill bundles while keeping the behavior contract centralized.
 
-**Treat repo assessment as a first-class downstream operation of a knowledge base.** The `assess` command is a concrete pattern: compare an implementation against accumulated research and the market, then file the result back into the KB. Ready to borrow now for comparative analysis tasks and workshop packets.
+**Topic isolation as a default user-facing shape.** LLM Wiki's hub/topic split is useful for consumer projects where users have multiple unrelated research areas. Commonplace's own methodology KB should stay integrated, but consuming projects could offer topic sub-wikis when cross-topic noise would hurt retrieval.
 
-**Use topic-isolated sub-wikis when research corpora would otherwise contaminate each other.** The hub-plus-topics layout is a serious answer to cross-topic noise, and the closest analogue on our side is a workshop rather than a library area. We should not adopt it broadly inside commonplace's main library, but it is a credible pattern for temporary survey corpora or long-lived domain sandboxes. The awkward middle case is overlapping domains: the repo mostly chooses separation plus sibling-index peeks rather than richer cross-wiki synthesis. Needs a concrete use case first.
+**Obsidian-compatible dual-linking.** The dual wikilink plus markdown-link convention is a practical bridge for human graph viewing and agent path following. Commonplace has a more controlled link vocabulary, so this is borrowable only where Obsidian compatibility is a first-class requirement.
 
-**Make the navigation contract explicit in reference docs, not just in habit.** LLM Wiki's indexing reference spells out the three-hop read strategy and when indexes must be updated. We already rely on similar ideas, but packaging the navigation discipline as a named protocol is itself borrowable. Ready to borrow now where a workflow depends heavily on derived navigational artifacts.
+**Local lint as migration.** The linting reference treats schema evolution as idempotent structural repair rather than one-off migrations. That principle fits commonplace for some mechanical path/frontmatter repairs, while semantic migrations should still go through review.
+
+## Trace-derived learning placement
+
+LLM Wiki qualifies for trace-derived status, but only through a narrow workflow. The ordinary ingest/compile path is source-derived knowledge synthesis, not trace-derived learning. The qualifying loop is `/wiki:ll`: it scans the current session for error-fix patterns, user corrections, discoveries, configuration changes, and gotchas, then writes a durable `raw/notes/YYYY-MM-DD-ll-<slug>.md` lesson artifact and may append rules to relevant wiki articles or suggest AGENTS/CLAUDE rule additions ([ll.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/claude-plugin/commands/ll.md)).
+
+**Trace source.** The source trace is the agent's current session context: failures, fixes, corrections, touched files, and discovered patterns. Multi-round research also records `.session-events.jsonl` and `.session-checkpoint.json`, but those are mostly provenance/resume traces unless a later workflow converts them into lessons.
+
+**Extraction.** Extraction is prompt-governed. The command tells the agent to identify lesson-worthy events, deduplicate, generalize each into a rule, write a structured raw note, optionally update matching articles, and optionally suggest instruction-file rules. There is no separate executable judge for lesson quality.
+
+**Storage substrate.** Raw lessons persist as markdown under the target wiki's `raw/notes/`. Article updates persist under `wiki/`. Suggested AGENTS/CLAUDE rules are advisory unless a human or later agent applies them.
+
+**Representational form.** Lessons are prose with YAML frontmatter. Article updates are prose knowledge artifacts. Proposed rule additions are prose system-definition candidates; they become system-definition artifacts only after promotion into an instruction file.
+
+**Lineage.** Lineage is weak-to-moderate. The lesson note records that it came from a session and includes concrete symptoms/fixes, but the reviewed code does not enforce transcript IDs, source excerpts, hashes, or outcome metrics. Research session JSONL/checkpoint files provide better event provenance for research workflows, but they are not automatically tied to `/wiki:ll` lesson derivation.
+
+**Behavioral authority.** Raw lessons are knowledge artifacts when later compiled or queried. Wiki article updates advise future answers. Suggested AGENTS/CLAUDE rule additions have no force until promoted. Once promoted into `AGENTS.md`, `CLAUDE.md`, command prompts, lint rules, or code, they become system-definition artifacts.
+
+**Scope and timing.** The loop is per wiki or local project and runs after a session, not online during every action. It is cross-session memory, not cross-project model learning.
+
+**Survey placement.** LLM Wiki strengthens the trace-derived survey's distinction between trace capture and artifact promotion: it has a promptware session-to-lesson loop, but its durable behavior change depends on later compilation or explicit instruction promotion.
 
 ## Curiosity Pass
 
-**The prompt-packaged-protocol claim produces portability, not strong enforcement.** The mechanism is real: a plugin loader or agent can ingest these markdown instructions and act on them. But the simpler alternative is a single README or ad hoc prompt collection. What LLM Wiki adds is structured packaging and role-separated command surfaces, not runtime guarantees. Even if the system works perfectly, its ceiling is bounded by agent obedience and prompt clarity rather than by executable invariants.
+LLM Wiki looks simple because it is file-first, but much of its complexity lives in prompt contracts. That makes it easy to inspect and install, but harder to guarantee across agent runtimes than an API-backed system.
 
-**Topic isolation is genuine constraining, not just naming.** The property is reduced cross-topic interference. The mechanism really does change the shape of the artifact space: separate directories, separate logs, separate indexes, sibling-peek only at `_index.md`. The simpler alternative is one big wiki with tags. LLM Wiki earns the added structure if the topics are broad enough, but it likely becomes overhead for smaller or highly overlapping corpora.
+The local lint helper is more real than the "zero dependencies" framing might suggest. It gives the protocol an executable spine for structure, placement, indexes, and link checks, while leaving synthesis, research quality, and audit truth-seeking to the agent.
 
-**The index-first strategy is real distillation with an obvious failure mode.** `_index.md` transforms a directory into a cheap decision surface by extracting summaries, tags, and categories. That is genuine representation change, not relocation. But the simpler alternative is `rg` plus filenames, and the ceiling is maintenance quality: once the index is stale, the whole navigation model becomes misleading. The repo names index maintenance repeatedly, which suggests this risk is central even in the protocol's own self-conception.
+The raw/compiled split is strong; the compiled article contract is less strong. Confidence, sources, volatility, and dual-links help, but there is no type-specific semantic validator for whether a thesis verdict or article synthesis faithfully follows its sources.
 
-**"Compiler" is partly the right metaphor and partly flattering rhetoric.** Raw sources becoming synthesized wiki articles is a true transformation. But a compiler usually implies a stable executable procedure with deterministic syntax/semantic checks. Here the "compiler" is a prompted agent following prose rules. The simpler alternative is retrieval-time answer synthesis directly from raw sources. LLM Wiki's compile step earns itself by producing reusable intermediate artifacts, but it does not yet have compiler-like guarantees.
+The plugin mirrors are generated, which is good, but runtime behavior can still diverge because Claude, Codex, OpenCode, Pi, and generic agents expose different context windows, tool permissions, command affordances, and plugin activation rules.
 
-**Confidence scores and the structural guardian mostly relocate judgment into frontmatter and reminders.** The property claimed is trust and self-maintenance. Mechanistically, the repo gives criteria for `high|medium|low` confidence and a checklist for automatic cleanup, but there is no checked-in code that enforces those criteria or even verifies that they were applied consistently. The simpler alternative is to omit the labels and be explicit in prose. As shipped, these mechanisms provide posture more than reliable epistemic control.
-
-**The multi-agent research counts are workflow designs, not software capabilities.** Five, eight, or ten agents can exist if the host harness supports subagents and the invoking model follows the command file faithfully. That is not nothing, but it means the repo's most impressive claims are contingent on external runtime features. The practical question is whether those workflows produce consistently better wikis than a smaller, tighter loop would. The current repo does not contain evidence either way.
+Trace-derived learning is present but not central. The repository is primarily a source-ingestion and compilation system. The lessons-learned command is a memory loop, but its oracle is the current agent's judgment unless paired with human review or deterministic checks.
 
 ## What to Watch
 
-- Whether the repo grows executable helpers, tests, or deterministic validators that harden the current prompt contracts into software guarantees
-- Whether `_index.md` maintenance remains tractable as real topic wikis accumulate hundreds of sources and articles
-- Whether confidence scoring and structural-guardian claims stay mostly rhetorical or become backed by stronger checks
-- Whether the portable `AGENTS.md` version remains genuinely cross-harness, or drifts toward Claude-specific assumptions despite the portability pitch
-- Whether thesis and research modes produce durable compiled knowledge or mostly generate fast-moving wiki sprawl
+- Whether `/wiki:ll` gains stronger provenance: transcript pointers, source excerpts, confidence, and promotion status.
+- Whether compiled articles gain executable semantic checks beyond structural lint and Promptfoo routing evals.
+- Whether audit reports and thesis verdicts become typed artifacts with enforceable evidence tables.
+- Whether generated Codex/OpenCode mirrors remain behaviorally equivalent as runtimes evolve.
+- Whether topic wikis accumulate enough cross-topic overlap to need explicit federation rules beyond sibling index peeks.
 
----
+## Bottom Line
+
+LLM Wiki is best understood as a portable promptware/protocol system for agent-maintained markdown wikis. It separates raw sources, compiled wiki artifacts, derived indexes, command prompts, local lint code, and runtime packaging reasonably well. Its durable memory is mostly knowledge artifacts; its system-definition artifacts are the command prompts, skill references, local lint rules, sync scripts, and plugin manifests that shape agent behavior.
 
 Relevant Notes:
 
-- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — exemplifies: LLM Wiki ships both a portable instruction artifact (`AGENTS.md`) and a harness-specific command/skill package
-- [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — extends: the Claude plugin packaging especially uses the same layered pattern of slim always-loaded metadata plus on-demand detailed procedures
-- [Agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md) — exemplifies: the `_index.md` first-hop contract is a direct implementation of pointer-first navigation
-- [Stale indexes are worse than no indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) — warns: LLM Wiki's index-first navigation inherits exactly this failure mode if `_index.md` stops being exhaustive
-- [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — aligns: LLM Wiki keeps the knowledge interface in readable files and treats structure as a convention layered on top
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: LLM Wiki's topic sub-wikis behave more like bounded research workshops with their own raw intake, outputs, and logs than like mature shared library collections
-- [Napkin](./napkin.md) — compares: both are Obsidian-aware markdown systems, but Napkin ships executable CLI mechanics where LLM Wiki mostly ships protocol and prompt packaging
-- [browzy.ai](./browzy-ai.md) — compares: both compile raw sources into a wiki, but browzy includes a real runtime and derived SQLite retrieval layer
-- [OpenViking](./openviking.md) — contrasts: both formalize progressive disclosure, but OpenViking bakes it into a storage service while LLM Wiki expresses it as file conventions and agent instructions
+- [knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, compiled articles, lessons, reports, and query answers when consumed as evidence or context
+- [system-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: command prompts, skill files, lint rules, plugin manifests, and promoted AGENTS/CLAUDE rules
+- [behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: LLM Wiki's distinction between advisory wiki content and instruction/enforcement surfaces
+- [lineage](../../notes/definitions/lineage.md) - explains: source references, session checkpoints, and lint-regenerated indexes as derivation support
+- [register](../../notes/definitions/register.md) - compares-with: LLM Wiki's topic articles are mostly descriptive knowledge artifacts, while command files are prescriptive system-definition artifacts

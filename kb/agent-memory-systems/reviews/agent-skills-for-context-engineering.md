@@ -1,72 +1,87 @@
 ---
-description: Skill-based context engineering framework — 14 instructional modules covering attention mechanics, multi-agent patterns, memory, evaluation. Strong on operational patterns, weaker on learning theory.
+description: "Static Agent Skills collection for context engineering: plugin-packaged instructional artifacts with progressive disclosure, activation triggers, examples, and no runtime memory learner"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-external-sources]
-status: current
 tags: [related-systems]
-last-checked: "2026-02-25"
+status: current
+last-checked: "2026-05-16"
 ---
 
 # Agent Skills for Context Engineering
 
-A collection of reusable instructional modules ("skills") for building production-grade AI agent systems, focused on **context engineering** — managing what enters the model's attention budget. Skills are designed to be loaded into an agent's context as operational guidance (via Claude Code plugin or similar), not just read as documentation. Each skill has activation triggers ("use when designing tools", "use when debugging context problems") that shape how the agent approaches work. However, skills contain no tools, scripts, or hooks — they influence agent reasoning, they don't execute actions.
+Agent Skills for Context Engineering is Muratcan Koylan's open repository of Claude Code/Open Plugins skills for context engineering, multi-agent architecture, memory-system design, tool design, evaluation, hosted agents, and related agent-building practices. It is best understood as a library of instructional artifacts: when a compatible agent loads a skill, that skill acts as a system-definition artifact with advisory/instructional force; when a human or agent reads the same files as background documentation, they are ordinary knowledge artifacts. The repository does not implement an automated memory substrate or trace-derived skill learner.
 
 **Repository:** https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
 
+**Reviewed revision:** [7a95d94c364e25c869a86896a45791dfda6db8bf](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/commit/7a95d94c364e25c869a86896a45791dfda6db8bf)
+
 ## Core Ideas
 
-**Context as finite resource, not token bucket.** The central argument is that context windows are constrained by attention mechanics, not raw capacity. Lost-in-the-middle effects, context poisoning (errors compound through references), and context distraction (irrelevant info overwhelms relevant) are the real failure modes. Practical implication: optimise for signal quality, not quantity.
+**Skills are the retained behavior-shaping unit.** The repository's durable artifacts are `SKILL.md` files with YAML frontmatter names and descriptions, plus optional references and scripts. The root skill describes a collection-level skill map and activation scope, while the marketplace manifest packages fourteen skill directories into one Claude Code plugin. The storage substrate is a git repository; the representational form is mostly prose with small symbolic manifests and example scripts; the behavioral authority depends on consumption path: instruction when loaded by an agent, reference when browsed as documentation. See the root [`SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/SKILL.md) and [Claude plugin manifest](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/.claude-plugin/marketplace.json).
 
-**Progressive disclosure architecture.** Load names/descriptions at startup, full content on activation. This independently converges with our [instruction specificity matching loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md).
+**Progressive disclosure is both content and distribution architecture.** The README and root skill say agents should load names and descriptions first, full skill bodies on activation, and references only when needed. The context-fundamentals skill repeats this as a three-level design rule: skill selection, document loading, and tool-result retention. The same pattern appears in the digital-brain example, which demonstrates SKILL metadata, module instructions, and data files as separate loading layers. This is the repository's clearest memory-adjacent contribution: it treats durable instructions as externally stored context that becomes behavior-changing only when activated. See the [README](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/README.md), [context-fundamentals skill](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/context-fundamentals/SKILL.md), and [digital-brain skill](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/examples/digital-brain-skill/SKILL.md).
 
-**Architectural reduction.** Fewer, more general tools outperform many specialised ones. Key evidence: Vercel's d0 went from 17 specialised tools to 2 primitives (bash + SQL), improving success from 80% to 100%. Aligns with our YAGNI stance and supports the claim that [proxy-theory artifacts](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) should remain easy to revise or replace.
+**Activation triggers are explicit routing metadata, not learned retrieval.** Each skill frontmatter description names when it should be used, and the README includes a trigger table mapping phrases such as "compress context", "build knowledge graph", or "evaluate agent performance" to specific skills. That makes activation inspectable and portable across skill-aware hosts, but it is static metadata. There is no local router, embedding index, ranker, or feedback loop in this repo that tunes trigger precision from outcomes. See the README's [skill trigger table](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/README.md) and example skill frontmatter in [`memory-systems/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/memory-systems/SKILL.md).
 
-**Multi-agent for context isolation, not roles.** Sub-agents exist to get fresh context, not to anthropomorphise organisational charts. Token cost is ~15x single-agent but enables parallel work. Key finding: 80% of performance variance comes from token usage, only 5% from model choice.
+**The context-management claims are practical teaching claims.** The skills repeatedly frame context as a limited attention budget, recommend just-in-time file loading, warn about lost-in-middle and context poisoning, and advise compaction before the window is exhausted. The filesystem-context skill is especially close to commonplace's domain: it recommends scratch files, plan persistence, sub-agent workspaces, dynamic skill loading, and selective `ls`/`glob`/`grep`/read access. These are prescriptive patterns rather than an implemented runtime. See [`context-degradation/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/context-degradation/SKILL.md), [`context-optimization/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/context-optimization/SKILL.md), and [`filesystem-context/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/filesystem-context/SKILL.md).
 
-**Filesystem beats specialised memory tools.** Letta's filesystem memory (74% LoCoMo) outperforms Mem0's vector+graph tools (68.5%). Standard Unix utilities outperform custom exploration tools. Directly validates our markdown-files-as-source-of-truth approach.
+**Evaluation guidance is instruction-first, with demonstration code as support.** The evaluation and advanced-evaluation skills recommend outcome-focused evaluation, multidimensional rubrics, LLM-as-judge pipelines, bias mitigation, human review, complexity-stratified test sets, and continuous monitoring. Some skills include scripts, but the code is mostly illustrative or scaffold-like: for example, the compression evaluator says LLM judge calls are stubbed and token estimation uses simplified heuristics. The repository teaches evaluation and offers examples; it does not run a repository-level benchmark or gate skill changes with automated evals. See [`evaluation/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/evaluation/SKILL.md), [`advanced-evaluation/SKILL.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/advanced-evaluation/SKILL.md), and [`compression_evaluator.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/skills/context-compression/scripts/compression_evaluator.py).
 
-## Borrowable Ideas
-
-**Chain-of-thought before scoring (ready now).** In our system this is a good default for any soft-oracle evaluation: review, compare, or rank only after writing down the reasoning that led to the score. That would make [quality signals work](../../notes/quality-signals-for-kb-evaluation.md) less brittle when the judgment is not deterministic.
-
-**Position-bias mitigation (ready now for pairwise comparisons).** When we compare two prompts, two context packages, or two candidate notes, we should swap order and check whether the conclusion changes. That is a cheap guard against false confidence in any future evaluation harness.
-
-**Degradation testing (needs a use case).** Running the same task at multiple context sizes is useful if we are trying to find cliffs in a retrieval or session pipeline. It is not a generic note-writing rule, but it would matter if we build a repeatable context-budget experiment.
-
-**Tokens-per-task, not tokens-per-request (ready now).** This is the clearest transfer: our workshop and review processes should be designed around end-to-end task cost, not isolated call size. It is a better lens than "keep each prompt short" because it accounts for multi-step work.
-
-**Anchored iterative summaries (needs a use case).** The Intent / Files Modified / Decisions / State / Next Steps format looks useful for workshop handoffs, but only once we have a stable session artifact to summarize. Right now it is a good candidate for future workshop design, not a universal KB convention.
-
-## Other Notable Concepts
-
-- **Tokens-per-task, not tokens-per-request** — optimise total task cost, not individual request size. Useful framing for codification decisions.
-- **Observation masking** — tool outputs consume 80%+ of tokens; replace verbose outputs with references. Relevant when we build session infrastructure.
-- **Anchored iterative summarization** — structured session summaries (Intent / Files Modified / Decisions / State / Next Steps). Also relevant for future session work.
-- **Telephone game problem** — supervisors paraphrasing sub-agent outputs lose fidelity. Fix: direct pass-through or file-based communication.
+**Examples show applied designs rather than shared runtime machinery.** The digital-brain example is the most concrete memory-like artifact: it uses module isolation, JSONL logs, YAML configs, markdown narrative files, append-only history, and helper scripts for reviews and content ideas. But it is an example skill package, not a service that the main repository operates. The same is true of the TypeScript LLM-as-judge example: it has its own `package.json`, tests, and build scripts under `examples/`, separate from any top-level runtime. See the [digital-brain file tree](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/tree/7a95d94c364e25c869a86896a45791dfda6db8bf/examples/digital-brain-skill), [digital-brain skills mapping](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/examples/digital-brain-skill/SKILLS-MAPPING.md), and [`examples/llm-as-judge-skills/package.json`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/7a95d94c364e25c869a86896a45791dfda6db8bf/examples/llm-as-judge-skills/package.json).
 
 ## Comparison with Our System
 
-**Strong alignment:** They independently converge with our progressive disclosure, filesystem-first knowledge, and tool consolidation. Their skills are loaded by name first and expanded on demand, which is the same general loading strategy we use in the KB.
+| Dimension | Agent Skills for Context Engineering | Commonplace |
+|---|---|---|
+| Primary artifact | Agent Skills: prose instructions with frontmatter and optional references/scripts | Typed KB notes, instructions, reviews, indexes, and validation rules |
+| Storage substrate | Git repository distributed as Claude/Open Plugins skill package | Git repository as both methodology KB and shipped framework source |
+| Behavioral authority | Skills instruct agents when activated; docs/examples advise when read | Instructions/skills guide agents; notes provide conceptual evidence; validators enforce contracts |
+| Activation | Static descriptions and trigger phrases, host-mediated loading | `rg`, indexes, descriptions, authored links, and skill trigger descriptions |
+| Memory mechanism | Teaches memory and filesystem patterns; does not provide a live memory runtime | Maintains a file-backed KB with type contracts, generated indexes, review workflows, and validation |
+| Learning loop | Manual authoring and examples; no trace-derived skill evolution in the inspected code | Manual and agent-assisted distillation into notes, instructions, skills, scripts, and reviews |
+| Evaluation | Evaluation skills and demo code, mostly prescriptive | Validation commands, review system, and semantic review workflows around KB artifacts |
 
-**We go deeper:** Our [verifiability gradient](../../notes/verifiability-gradient.md) and [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explain when a pattern should become a rule, a script, or stay a judgment call. Their material has operational tactics, but not a comparable theory for when to harden a practice.
+The strongest alignment is the shared belief that agent memory is context engineering, not just storage. Both systems value progressive disclosure, inspectable files, skill-like procedural artifacts, and evaluation by downstream behavior. The difference is where the machinery lives. This repo packages context-engineering methodology as a set of static, loadable instructions. Commonplace turns methodology into a typed knowledge base with collection contracts, directory indexes, validation, review gates, and explicit source/link semantics.
 
-**They go deeper:** Attention mechanics, degradation data, and evaluation procedure. They give concrete evidence about model behavior under context pressure, while our notes are still mostly the theory and architecture layer around that problem.
+The biggest divergence is authority and lifecycle. Agent Skills for Context Engineering has clear instructions but weak lifecycle machinery: there is no canonical promotion path from observation to durable note to skill to validator, no repository-level review state, and no automated regeneration/invalidation path for derived views. Commonplace is heavier because it treats artifact lifecycle as part of the system, not just authoring hygiene.
 
-**Tradeoff:** Their system is stronger as an operator's playbook; ours is stronger as a knowledge architecture. Their value is "what to do"; ours is "how to structure and verify the durable artifacts those behaviors produce."
+This review should therefore not classify the repository as an automated memory learner. It is a useful library about context engineering and memory systems, plus a distribution vehicle for those instructions. Its retained artifacts can change future agent behavior when loaded, but the repo does not itself observe agent traces, extract lessons, rewrite skills, or rank memories from usage.
+
+## Borrowable Ideas
+
+**Collection-level skill packaging.** The marketplace manifest bundles related skills as one plugin while keeping individual skill directories separate. Commonplace could use the same packaging idea for installable topical bundles, especially where one conceptual area spans several skills. Ready to borrow when distribution becomes a product concern.
+
+**Trigger tables as human-auditable routing specs.** The README's skill-trigger matrix is simple, but it makes activation expectations visible. Commonplace skills could maintain compact should-load phrase sets beside descriptions, not as a learned router but as reviewable intent. Ready to borrow now for skills whose activation boundaries are fuzzy.
+
+**Examples that map design decisions back to skills.** The digital-brain example's `SKILLS-MAPPING.md` is a useful lineage surface: it says which source skill justified each architectural choice. Commonplace could apply this pattern when examples or templates embody methodology from several notes. Ready to borrow for richer examples.
+
+**Evaluation advice packaged as agent-operable instruction.** The evaluation skills are not a runtime gate, but they are good examples of turning evaluation methodology into a loadable instruction surface. Commonplace already has validation and review workflows; the borrowable part is making evaluation design itself available as a skill when agents build new evals. Ready to borrow selectively.
+
+**Keep skill bodies compact and move depth behind references.** The repository's authoring rules in `CLAUDE.md` require skill bodies to stay under 500 lines and move detail into references. That is a concrete version of progressive disclosure. Commonplace already follows this in places; the explicit line-budget heuristic is worth considering for skill authoring guidance.
 
 ## Curiosity Pass
 
-- **The main contribution may be reduction of attention burden, not the skill abstraction itself.** The repo is strong evidence that smaller loading surfaces and simpler tool surfaces help. The open question is whether the "skill" abstraction adds much beyond a convenient packaging layer for those reductions.
-- **The filesystem win may be pragmatic rather than ontological.** The Letta-versus-Mem0 result could reflect fewer moving parts, better integration with standard Unix tools, or better benchmark fit. It is evidence for files in this setting, not proof that files are universally the right memory substrate.
-- **The evaluation claims need replication outside this harness.** The degradation numbers and token-variance claim are interesting, but they should be treated as context-sensitive until we see them hold across other tasks and models. The simpler alternative explanation is that these are benchmark-specific effects.
+**The repository's claims are stronger than its machinery.** Many skills talk about production-grade systems, continuous evaluation, memory consolidation, and self-modification safeguards. The repository mostly supplies prose guidance and demonstration scripts, not the production substrate those skills describe. That is fine for an instructional library, but reviews should not confuse described architecture with implemented architecture.
+
+**Static skills are still real retained behavior.** The absence of automated learning does not make the repo irrelevant to agent memory. A loaded skill is retained state that can alter future action through instruction. The correct classification is static system-definition artifacts, not "not memory at all."
+
+**Skill activation is only as good as the host.** The repo declares descriptions and trigger phrases, but actual discovery is delegated to Claude Code, Cursor/Open Plugins, or whatever compatible host loads the plugin. There is no local fallback if the host fails to activate the right skill or activates too many adjacent skills.
+
+**The examples may be more operationally valuable than the core skills.** The digital-brain example makes progressive disclosure, file-backed memory, append-only logs, and module isolation concrete. For commonplace, that example is a better comparison point for applied file-backed context design than the general memory-systems skill, which is mostly a framework survey and decision guide.
 
 ## What to Watch
 
-- Do they develop learning theory (moving from operational patterns toward a codification-like framework)?
-- Does the skill specification evolve toward something like our document classification?
-- How does the evaluation methodology mature — could it become a reusable component?
-- Do they stay platform-agnostic or drift toward Claude Code specifics?
+- Whether the repository adds a real skill-improvement loop: captured task traces, labeled failures, skill diffs, holdout tests, and promotion rules.
+- Whether activation moves beyond static descriptions into evaluated should-trigger/should-not-trigger sets.
+- Whether example scripts graduate from demonstrations into tested reusable tools with versioned interfaces.
+- Whether the Open Plugins/Claude marketplace packaging remains the main distribution surface or the skills become portable across more agent hosts.
+- Whether the memory-systems skill gains code-grounded examples that clarify what the repository itself endorses versus what it merely surveys.
+
+---
 
 Relevant Notes:
 
-- [getsentry/skills](./getsentry-skills.md) — contrasts: that review covers a production implementation with a skill-writer meta-skill and the Agent Skills spec; this review covers a reference/teaching library. Same progressive disclosure architecture, very different operational maturity
+- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - foundation: the repository's skills repeatedly treat attention budget and signal density as the core design constraint
+- [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) - exemplifies: skill descriptions stay cheap and always visible while full procedures load only on activation
+- [Skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) - exemplifies: the repository packages context-engineering methodology as loadable skills
+- [System-definition artifacts are crystallized reasoning under context](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) - clarifies: these skills have behavior-shaping authority when an agent consumes them as instructions
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) and [system-definition artifact](../../notes/definitions/system-definition-artifact.md) - vocabulary: the same file can advise as reference or instruct as a loaded skill depending on the consumption channel

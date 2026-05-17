@@ -1,88 +1,102 @@
 ---
-description: Polyglot HTML/bash living-document system where each file carries its own update contract, agent dispatch, rendering, and source cache — the file is the app, with no server, database, or build step
+description: "o-o review: polyglot HTML/bash living documents with embedded research contracts, source caches, freshness gates, index management, and Claude-only update dispatch"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-implementation, has-external-sources]
 tags: [related-systems]
 status: current
-last-checked: "2026-04-05"
+last-checked: "2026-05-16"
 ---
 
 # o-o
 
-o-o ("looky-looky") is a self-updating living document system by jahala. Each `.o-o.html` file is a polyglot — valid HTML and valid bash. Open it in a browser to read a formatted article with TOC, citations, and embedded images. Run it with `bash` to dispatch a Claude Code agent that researches the web and edits the article in-place. No build step, no server, no database. The file is the entire application: rendering, update contract, source cache, changelog, and agent dispatch shell code all live in one artifact.
+o-o is Jahala's file-native living-document system: each `.o-o.html` file is both a browser-readable article and a bash-executable updater. The file stores article content, manifest metadata, an embedded update contract, a source cache, a changelog, shared CSS/JS, and the shell runtime that can dispatch an LLM research agent to edit the document in place. It is less a memory database than a self-contained knowledge artifact with local system-definition machinery wrapped around it.
 
 **Repository:** https://github.com/jahala/o-o
 
+**Reviewed commit:** [b0d5063e37b4eafdbc23c1899a31f1836168b989](https://github.com/jahala/o-o/commit/b0d5063e37b4eafdbc23c1899a31f1836168b989)
+
+**Last checked:** 2026-05-16
+
 ## Core Ideas
 
-**Each file is a self-contained polyglot artifact.** The `.o-o.html` file format uses a bash heredoc (`: << 'OO_HTML'`) to hide the HTML from bash while letting browsers render it normally. The file structure has four zones: (1) browser-visible HTML/CSS/JS above `window.stop()`, (2) a JSON update contract, (3) a machine-readable zone with source cache and changelog, and (4) the shell code that parses arguments and dispatches the agent. Every file carries the complete toolset — CSS, JS, and shell code are replicated across all files and synchronized with `--sync`.
+**The file format is the system boundary.** The README describes every `.o-o.html` file as a polyglot: browser users see the article, table of contents, citations, images, manifest-backed version badge, and client-side index/search behavior; bash skips the HTML through a heredoc and runs the shell block at the bottom ([README.md](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/README.md), [example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). The storage substrate is the HTML file itself. Article prose, citations, embedded images, source-cache facts, and changelog entries are knowledge artifacts when consumed as evidence or reference. The contract JSON, manifest update cadence, shell functions, shared CSS/JS markers, and CLI prompts become system-definition artifacts because they configure, route, constrain, or execute future updates.
 
-**The update contract is an embedded declarative specification.** Each document contains a JSON block (`id="oo-contract"`) that specifies the agent's identity, research intents, required sections, source policy, budget cap, and image instructions. The agent reads this contract from the file itself — the prompt tells it "read this file, find the contract, follow the instructions." This means the document controls its own update behavior: what to research, how much to spend, what sections to produce.
+**The update contract is embedded beside the content it governs.** Each article carries an `oo-contract` JSON block with role, procedure, identity, research intents, required sections, source policy, budget, image policy, and output constraints. The default procedure tells the agent to read the whole file, use the manifest `as_of` date, build on `oo-source-cache`, search the web, rewrite only the `<article>` and machine-readable metadata, preserve stable paragraph IDs, cite sources, and append the changelog ([example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). That contract has direct behavioral authority over the updater, but the authority is prompt-mediated rather than validated by a parser or schema.
 
-**Agent dispatch is minimal and deliberate.** The shell code (`dispatch_update`) constructs a short prompt that tells the agent to read the file and follow the embedded contract. It passes `--allowed-tools "Bash,Read,Edit,WebSearch,WebFetch"` and `--max-budget-usd` from the contract. The agent never receives the whole file as prompt context — it reads the file through tool use and edits it surgically. This is a clean separation: the shell handles orchestration (freshness check, flag parsing, budget extraction, agent invocation), the embedded contract handles intent, and the agent handles judgment. The CLI surface looks backend-pluggable (`--agent NAME`), but the current implementation only accepts `claude`; that abstraction is prepared for expansion, not realized yet.
+**Source cache and changelog are local lineage aids, not raw trace memory.** Below `window.stop()`, article files embed `oo-source-cache` and `oo-changelog` JSON blocks. The source cache records prior URLs, titles, tiers, access dates, and extracted fact strings; the changelog records versioned summaries of update work ([example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). These blocks separate raw web-source evidence from article content, but they are still ordinary JSON inside the same file. They support continuity and audit at article level; they do not preserve full fetched pages, tool traces, model outputs, confidence scores, or source-to-paragraph provenance.
 
-**Freshness gating prevents unnecessary updates.** The manifest JSON tracks `update_every_days` and `as_of` (last update date). The shell code checks whether the document is stale before dispatching the agent. If still fresh, it exits without spending money. `--force` overrides.
+**The shell runtime is copied into every document.** `generate_oo_file` builds new documents by copying CSS, JavaScript, and shell sections from the current file, then writing a stub article plus manifest, contract, source cache, and changelog. `sync_section` propagates marked CSS, JS, shell, or all shared sections to sibling `.o-o.html` files and can inject a local `oo.css` customization block during CSS sync ([example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). This makes every document self-hosting and portable, but shared-code propagation is whole-section replacement with marker matching, not package versioning.
 
-**Index files manage document collections.** Any file named `index*.o-o.html` acts as a library manager: it scans sibling `.o-o.html` files, extracts manifest metadata, and rebuilds a card grid and sortable table in its own HTML. It also supports `--new` (create a new document from a template and immediately run its first update) and `--update-all` (update all stale documents). The index is rebuilt from file metadata, not from a database.
+**Freshness gating prevents accidental spending.** The manifest stores `update_every_days`, `version`, and `as_of`; `check_freshness` parses those fields with portable shell tools and skips update dispatch while the document is still inside its freshness window unless `--force` is supplied ([README.md](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/README.md), [example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). Index files reuse the same logic to decide which sibling documents should be updated by `--update-all`. Freshness is a coarse scheduling gate over the article's last update date, not evidence-level invalidation.
 
-**Shared code propagation via `--sync`.** CSS, JS, and shell code are wrapped in `OO:` markers (for example `<!-- OO:CSS:START -->` / `<!-- OO:CSS:END -->`). The `--sync` command extracts the canonical section from one file and replaces the corresponding section in all sibling `.o-o.html` files. This is the system's answer to code reuse without external dependencies: every file is self-contained, but shared sections can be updated in one place and propagated.
+**Index files are library managers.** Any filename beginning with `index` gets a different command role. With no action it rebuilds the card grid and table by scanning sibling `.o-o.html` files, extracting manifest fields, file size, first article paragraph, and stale/fresh status. It also exposes `--new` to create and immediately populate a new article, and `--update-all` to run stale siblings ([README.md](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/README.md), [example/index.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/index.o-o.html)). The index is a generated view and management surface over colocated living documents; it is not the canonical store.
+
+**Backend abstraction exists in flags but not yet in implementation breadth.** The CLI accepts `--agent NAME` and `--model NAME`, and `dispatch_update` switches on the agent name, but the only implemented backend is `claude`. It checks for the `claude` command and invokes `claude -p` with allowed tools `Bash,Read,Edit,WebSearch,WebFetch`, a budget from the contract, and an optional model override ([example/ai-model-landscape.o-o.html](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/example/ai-model-landscape.o-o.html)). The README's backend language should therefore be read as a CLI affordance with one concrete dispatcher at this commit ([README.md](https://github.com/jahala/o-o/blob/b0d5063e37b4eafdbc23c1899a31f1836168b989/README.md)).
+
+**Quality control is instruction-shaped.** The checked-in examples include large, current-affairs articles, source lists, fact caches, and changelogs, but the repository has no tests, package manifest, schema validation, source verifier, citation checker, or CI workflow beyond funding metadata ([example](https://github.com/jahala/o-o/tree/b0d5063e37b4eafdbc23c1899a31f1836168b989/example), [.github](https://github.com/jahala/o-o/tree/b0d5063e37b4eafdbc23c1899a31f1836168b989/.github)). The system leans on the update contract, Claude Code's editing behavior, browser rendering, and human inspection. That is coherent for lightweight living documents, but weak for high-stakes or adversarial knowledge maintenance.
 
 ## Comparison with Our System
 
 | Dimension | o-o | Commonplace |
 |---|---|---|
-| Primary purpose | Self-updating research articles | Agent-operated knowledge base |
-| Storage model | Single polyglot HTML/bash files | Markdown files in a git repo |
-| Knowledge structure | Flat article collections with index | Typed notes, indexes, instructions, sources, workshops |
-| Agent role | Web researcher that edits articles on a schedule | Author, reviewer, maintainer, traverser |
-| Agent specification | Embedded JSON contract per document | Routing table, skills, instructions, type templates |
-| Learning model | No inter-document learning; each article is independent | Cross-note linking, distillation, codification, promotion |
-| Update model | Periodic web research, freshness-gated | Human-triggered or task-triggered; no scheduled auto-update |
-| Validation | None — the agent's output is the final product | Deterministic validation script, semantic review gates |
-| Link model | None between documents except index -> article | Explicit link semantics between notes |
-| Build dependencies | Bash 3.2+ and Claude Code CLI only; `--agent` is not truly generic yet | uv, Python, git, many scripts |
+| Canonical substrate | One polyglot `.o-o.html` file per document | Git-tracked `kb/` collections with typed markdown artifacts |
+| Primary retained content | HTML article, manifest, source cache, changelog | Notes, reviews, sources, instructions, indexes, reports |
+| System-definition surfaces | Embedded contract JSON, shell functions, manifest cadence, CLI prompt, index commands | Type specs, collection rules, validation scripts, skills, review gates, generated indexes |
+| Update model | Prompted web refresh by Claude Code editing the same file | Human/agent edits with validation, review, indexing, and explicit artifact lifecycles |
+| Lineage | Source-cache URLs/facts and changelog summaries in the same file | Source snapshots, frontmatter, links, generated reports, git history, review state |
+| Activation | Run `bash file.o-o.html`; index can create or update siblings | Agent navigation, `rg`, skills, validators, curated/generated indexes |
+| Trace-derived learning | Not supported as a code-grounded finding; scheduled web refresh is not trace distillation | Treated as a separate reviewed mechanism requiring source traces and durable behavior-shaping outputs |
 
-The systems occupy different niches. o-o is a publishing tool: it produces readable articles that stay current. Commonplace is a knowledge system: it produces interconnected notes that support reasoning. o-o's strength is radical self-containment: one file, no infrastructure. Commonplace's strength is knowledge structure — types, links, validation, and a theory of how knowledge matures.
+The strongest alignment is the file-first adoption stance. o-o keeps the article, metadata, update instructions, and runtime in an inspectable artifact that works without a server, database, build step, Python package, or Node toolchain. Commonplace similarly prefers retained artifacts that agents and humans can inspect with ordinary repo tools.
 
-The most interesting contrast is in how each system specifies agent behavior. o-o embeds a declarative contract in the artifact itself: the document literally tells the agent what to research, what sections to write, and how much to spend. Commonplace distributes agent specification across routing tables, skills, instructions, and type templates. o-o's approach is more portable (the contract travels with the file), while commonplace's is more composable (the specification can reference other notes and adapt to context).
+The main divergence is artifact separation. o-o deliberately collapses storage substrate, content, source cache, update contract, UI, and shell runtime into one portable file. Commonplace splits those surfaces across notes, sources, type specs, scripts, reports, and generated indexes so authority and lifecycle can differ by artifact type. o-o's monolith reduces installation cost; commonplace's separation makes review, validation, replacement, and partial retirement easier.
+
+o-o is also more aggressive about self-updating content. A document can carry a budget, decide whether it is stale, launch a web-enabled agent, and ask that agent to change the article and metadata in place. Commonplace has stronger conventions for source snapshots and validation, but it does not make every note executable or self-refreshing.
+
+The quality tradeoff is clear. o-o's instructions tell the agent to preserve structure and update specific zones, but there is no deterministic check that citations are current, that cached facts still support paragraphs, that source tiers are meaningful, or that shell/HTML edits preserved the polyglot contract. Commonplace would treat those as validation and review problems before granting strong behavioral authority.
 
 ## Borrowable Ideas
 
-**Embed update contracts in artifacts.** o-o's per-document JSON contract is a clean pattern: the artifact carries its own update specification. In commonplace, this could apply to notes or sources that need periodic refresh — a `refresh` frontmatter block specifying what to check, when, and at what cost. Not ready to borrow yet; we have no scheduled update use case, but the pattern is sound if one emerges.
+**Embed update intent with the artifact.** Ready to borrow in weaker form. Commonplace notes should not become executable bash documents by default, but high-churn source briefs could carry a compact refresh contract: subject, scope, source policy, freshness window, and update budget.
 
-**Freshness gating as a cost control.** The `update_every_days` + `as_of` check is simple and effective: don't spend money if the document is still fresh. If commonplace ever adds automated maintenance passes (for example periodic review sweeps), this pattern prevents runaway costs. Ready to borrow as a principle; implementation would differ.
+**Separate visible content from machine-readable continuity state.** Ready to borrow. o-o's article/source-cache/changelog split is useful even though it lives in one file. Commonplace already has source snapshots and review reports; a lightweight per-artifact freshness summary could help agents decide whether to refresh before relying on a note.
 
-**File-as-app via polyglot formats.** The idea that a file can be simultaneously readable (HTML in browser) and executable (bash in terminal) is clever. In commonplace, we've kept rendering and execution separate (markdown + scripts + MkDocs). The polyglot approach sacrifices separation of concerns for radical portability. Not borrowable for our architecture, but it's a useful reference for when portability matters more than modularity.
+**Use freshness gates before expensive research.** Ready as an operational pattern. `update_every_days` is crude, but it prevents accidental spend and makes staleness visible. Commonplace could use similar gates for source snapshots, volatile market/product reviews, or recurring landscape notes.
 
-**`--sync` for shared code across self-contained files.** The marker-delimited section sync is a practical solution to the "self-contained but DRY" tension. Our instruction/skill architecture already solves this differently (shared definitions referenced, not replicated), but the marker-based sync could be useful for template-heavy workshop scaffolds where each file needs to be self-contained. Needs a use case.
+**Make generated indexes actionable.** Ready to borrow selectively. o-o's index is not just navigation; it can create new documents and update stale siblings. Commonplace indexes should remain generated or curated according to their contracts, but adjacent commands can use index metadata to drive scoped maintenance actions.
+
+**Treat shared-code propagation as a warning, not a model.** Needs stronger governance before borrowing. Marker-based `--sync all` is effective for a directory of portable documents, but commonplace should prefer package code, skills, or generated templates when behavior must be reviewed and versioned across many artifacts.
+
+**Keep backend flags honest.** Ready as a review heuristic. o-o exposes a backend abstraction but implements only `claude`. Commonplace reviews should continue distinguishing interface shape from implemented backend breadth.
 
 ## Curiosity Pass
 
-**The polyglot format is genuinely novel but has a ceiling.** The property it produces is radical self-containment: one file, zero dependencies beyond bash and the Claude CLI. The mechanism is real — the heredoc trick actually works, and the file genuinely functions as both HTML and bash. The simpler alternative is separate HTML + shell script + JSON config. o-o's approach wins on distribution (email one file, it just works) but loses on maintainability (every file carries about 1300 lines of shell code, CSS, and JS, synchronized by string replacement). Even if the polyglot approach works perfectly, it cannot scale beyond flat document collections — there is no mechanism for cross-document knowledge structure, and the sync approach breaks down as shared code grows.
+**The system is a living document tool more than an agent memory system.** It stores knowledge and source continuity in a way that can change future reading and future updates, but it does not provide retrieval across arbitrary memories, promotion workflows, or learned policies.
 
-**The update contract is specification, not distillation.** The property it claims is agent control — the document tells the agent what to do. The mechanism transforms a configuration (JSON fields) into a prompt context (the agent reads the contract and follows it). This is real constraining: the contract narrows what the agent will research and produce. But the contract is static — it does not learn from previous updates. The source cache can accumulate prior extracted facts, but there is no mechanism to refine the contract based on what worked. The simpler alternative is a prompt template with variables. o-o's embedded approach is better because it travels with the file, but the contract itself does not evolve.
+**The self-contained file is both the best idea and the main risk.** Portability is excellent: one file can render, update, clone its template, and propagate shared code. The cost is that a malformed edit can damage content, metadata, UI, and runtime together.
 
-**Source cache accumulation is a document-local reuse loop, not a knowledge system.** The `oo-source-cache` JSON block records prior `sources` and extracted `facts`, and the contract instructs the agent to "build on prior research, do not start from scratch." That is a real lightweight distillation step inside one document's maintenance loop: prior web research becomes a smaller reusable cache for the next run. But the loop stays local to the file. There is no contradiction resolution, no cross-document synthesis, no promotion of recurring facts into a separate shared layer, and no mechanism for one article's learning to improve another. This is enough for keeping one article current, but it is not a broader learning system.
+**The source cache is a memory aid, not an evidence archive.** It helps the next updater avoid starting from scratch, but cached URL/title/fact strings are too thin to replace retained source snapshots when factual fidelity matters.
 
-**The index file is a genuine derived artifact, not just a listing.** The `rebuild_index` function scans sibling files, extracts metadata via grep, formats cards and tables, and writes the result back into the index file's own HTML. This is a real derivation step: structured metadata extracted from source files, transformed into a browsable index. The simpler alternative is a static list maintained by hand. o-o's approach correctly treats the index as derived state that should be regenerated from source data.
+**`window.stop()` is a practical but subtle boundary.** Browser users do not see the machine zone, while the agent is told to read it. That is a clever dual-surface design, but it relies on agents respecting hidden instructions and on browsers/tools handling the document consistently.
 
-**The backend abstraction is thinner than the CLI suggests.** The property implied by `--agent NAME` is backend flexibility. The implemented mechanism is narrower: the dispatcher has one concrete branch, `claude`, and any other value errors out. The simpler alternative is to hardcode Claude and omit the flag entirely. Keeping the flag is reasonable if more backends are imminent, but today it is interface preallocation rather than a delivered capability.
+**The examples show ambitious current-affairs use cases.** Several example articles make time-sensitive claims about AI models, companies, politics, and markets. Those domains are exactly where freshness, source verification, and hallucination controls matter most, so the absence of deterministic checks is not incidental.
+
+**Trace-derived status is not supported.** o-o preserves changelogs and source-cache facts from prior update runs, but the qualifying loop for trace-derived learning is absent. It refreshes web-grounded article content on a schedule; it does not mine agent session traces, tool trajectories, or feedback logs into durable rules, skills, validators, rankers, or other behavior-shaping artifacts.
 
 ## What to Watch
 
-- Does o-o gain cross-document linking or any form of inter-article knowledge structure, or does it remain a flat collection of independent articles?
-- Does the update contract evolve to include feedback from previous runs (for example "this search intent consistently returns low-quality results, deprioritize it")?
-- Does the `--sync` mechanism hold up as the shared code grows, or does it become a maintenance burden that pushes toward external shared files?
-- Does `--agent` become a real backend abstraction, or remain a Claude-only interface surface?
-- Does the system add verification or quality gates (factual accuracy checks, source credibility scoring), or does it remain trust-the-agent?
-- Does the roadmap item for GitHub Actions auto-update materialize, creating a fully autonomous document maintenance pipeline?
+- Whether additional backends beyond `claude` are implemented, and whether backend-specific tool permissions and cost controls remain explicit.
+- Whether source caches gain source snapshots, per-paragraph support links, confidence, or invalidation metadata.
+- Whether the project adds validation for JSON zones, citation references, image size constraints, freshness fields, and polyglot shell integrity.
+- Whether GitHub Actions or cron support moves from roadmap to implementation, making unattended updates and commit/PR workflows reviewable.
+- Whether shared CSS/JS/shell sync gains version markers, compatibility checks, or rollback guidance.
+- Whether index files evolve into multi-directory libraries or remain sibling-directory managers.
 
 ---
 
 Relevant Notes:
 
-- [Constraining](../../notes/definitions/constraining.md) — exemplifies: the embedded update contract constrains agent behavior by narrowing research scope, budget, and output structure — a deployment-time constraining mechanism
-- [Files, not database](../../notes/files-not-database.md) — converges: o-o takes filesystem-first design to an extreme by collapsing renderer, updater, cache, and article into one readable file
-- [Inspectable artifact, not supervision, defeats the blackbox problem](../../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — foundation: o-o keeps everything in one readable file — contract, source cache, changelog, article — making the agent's inputs and outputs fully inspectable
-- [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) — contrasts: o-o avoids ephemeral computation by persisting source cache and changelog in the file itself, but the accumulation is raw rather than synthesized
-- [Distillation](../../notes/definitions/distillation.md) — contrasts: o-o does lightweight document-local distillation into `sources` and `facts`, but it stops short of reusable cross-document knowledge artifacts
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - defined-in: o-o article content, source-cache entries, and changelog summaries are consumed as evidence, context, or reference.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - defined-in: update contracts, shell dispatch, freshness gates, index commands, and shared runtime sections configure or route future behavior.
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - defined-in: o-o is useful because different zones in one file carry different force over future readers and updater agents.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: o-o activates knowledge by making the file executable, but activation is update-oriented rather than retrieval-oriented.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts: o-o scheduled web refresh does not qualify as trace-derived learning without a trace-to-durable-behavior artifact loop.

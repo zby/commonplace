@@ -1,114 +1,107 @@
 ---
-description: Rust concurrent agent framework whose process-type architecture (channels, branches, workers, cortex) is the cleanest production implementation of code-level scheduling over bounded LLM calls among reviewed systems
+description: "Rust concurrent agent framework with process-isolated channels, branches, workers, cortex synthesis, typed graph memory, and trace-derived persistence"
 type: ../types/agent-memory-system-review.md
-traits: [has-comparison, has-external-sources]
-tags: [related-systems]
+tags: [related-systems, trace-derived]
 status: current
-last-checked: "2026-03-09"
+last-checked: "2026-05-16"
 ---
 
 # Spacebot
 
-A concurrent AI agent framework in Rust for multi-user chat (Discord, Slack, Telegram), built by the Spacedrive team. The distinguishing choice is a typed process architecture — five process kinds with distinct tool sets and lifecycle guarantees, supervised by a Rust-level cortex that never delegates scheduling to an LLM. Among reviewed systems, this is the cleanest production implementation of the [clean scheduling model](../../notes/bounded-context-orchestration-model.md).
+Spacebot is a Rust agent runtime whose memory design is tied to its process model. The system separates channels, branches, workers, a compactor, and cortex into distinct process types, gives each process type different tools and context, and stores durable memory as typed SQLite records with graph edges and a LanceDB vector/FTS sidecar. Its strongest memory-system lesson is not just the store: it is the way runtime traces are filtered into several artifact layers with different behavioral authority.
 
-**Repository:** https://github.com/spacedriveapp/spacebot
+**Repository:** <https://github.com/spacedriveapp/spacebot>  
+**Reviewed commit:** [ac52277404d3813045aa053b78c95810ab85e7c5](https://github.com/spacedriveapp/spacebot/commit/ac52277404d3813045aa053b78c95810ab85e7c5)  
+**Last checked:** 2026-05-16
 
 ## Core Ideas
 
-### Five Process Types
+**Process types are first-class runtime objects, not just prompt roles.** Spacebot defines five process types, `Channel`, `Branch`, `Worker`, `Compactor`, and `Cortex`, and routes events, LLM profiles, and tools around that enum ([`src/lib.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/lib.rs), [`README.md`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/README.md)). Channels own the conversation loop and dispatch branches and workers through explicit spawn paths with concurrency checks, task reservation, and readiness warmup ([`src/agent/channel_dispatch.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel_dispatch.rs)). Branches fork channel history into isolated reasoning runs ([`src/agent/branch.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/branch.rs)). Workers execute longer tasks with their own tool server, injected context, segment limits, transient retry policy, and wall-clock timeout ([`src/agent/worker.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/worker.rs)).
 
-The system splits agent functionality across five typed process kinds, each with its own tool set and concurrency rules:
+**Tool and runtime boundaries encode behavioral authority.** The tool topology gives channels user-facing response and delegation tools, branches memory and recall tools, workers file/shell/browser/task tools, and cortex memory-save tools ([`src/tools.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools.rs)). That topology is a system-definition artifact: it enforces which process can speak, mutate memory, run tools, or spawn other work. Direct mode can deliberately widen channel authority, but the default design keeps user conversation, memory extraction, and execution in separate capability surfaces.
 
-- **Channels** handle user-facing conversation. They never block and carry the running context for a chat session.
-- **Branches** fork a channel's context for independent reasoning. A branch deep-clones the channel's history at fork time, runs up to `max_turns` (default 5) in isolation, and returns only a scrubbed conclusion. Branches can think and save memories but cannot reply to users or spawn workers.
-- **Workers** execute deterministic tasks (shell, file I/O, browser, web search) in a fresh context with no inherited conversation history.
-- **Compactor** monitors context usage and triggers summarisation at graduated thresholds (see below).
-- **Cortex** supervises everything else: health monitoring, circuit breakers, memory bulletins, signal aggregation.
+**Context isolation is enforced by forking, compaction, and scoped history.** Branches receive a cloned channel history and run without sending user-visible output, while workers do not inherit the full channel transcript unless a dispatch path explicitly injects context ([`src/agent/branch.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/branch.rs), [`src/agent/worker.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/worker.rs)). The compactor is a monitor and summarization mechanism, not a free-running agent: it estimates token pressure, runs LLM compaction for background/aggressive thresholds, and performs emergency truncation when necessary ([`src/agent/compactor.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/compactor.rs)). The thresholds and working-memory budgets are configuration artifacts ([`src/config/types.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/config/types.rs)).
 
-Tool-set isolation enforces the separation. Branches get memory tools but no reply tool; workers get execution tools but no branching. The boundaries are in the type system, not in prompt instructions.
+**Durable memory is a typed graph plus a derived retrieval index.** Canonical memory records live in SQLite with `MemoryType` values for facts, preferences, decisions, identity, events, observations, goals, and todos; associations use edge labels such as `updates`, `contradicts`, `caused_by`, and `part_of` ([`src/memory/types.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/types.rs), [`migrations/20260211000001_memories.sql`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/migrations/20260211000001_memories.sql)). The store handles CRUD, access counts, soft forgetting, association rewiring, and atomic merges ([`src/memory/store.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/store.rs)). LanceDB holds embeddings and FTS rows as a derived search index that can be rebuilt from SQLite ([`src/memory/lance.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/lance.rs)). Hybrid search fuses FTS, vector, and graph-neighborhood signals ([`src/memory/search.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/search.rs)).
 
-### Cortex as Symbolic Scheduler
+**Trace-derived memory is implemented, but skill learning is not.** A silent memory-persistence branch can be triggered by message count, time, or event density; it receives channel history, recalls existing memory first, calls `memory_save`, and must finish through a contract tool that verifies the saved memory IDs and optional working-memory events ([`src/agent/channel.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel.rs), [`src/agent/channel_dispatch.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel_dispatch.rs), [`prompts/en/memory_persistence.md.j2`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/prompts/en/memory_persistence.md.j2), [`src/tools/memory_persistence_complete.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/memory_persistence_complete.rs)). Spacebot also loads and installs skills, and workers can read them, but the current codebase has no implemented path for the agent to write a new skill from experience; the design document calls that gap out explicitly ([`src/skills.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/skills.rs), [`src/tools/read_skill.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/read_skill.rs), [`src/tools/install_skill.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/install_skill.rs), [`docs/design-docs/skill-authoring.md`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/docs/design-docs/skill-authoring.md)).
 
-The cortex is pure Rust — no LLM calls for scheduling decisions. It tracks process health via a 100-item rolling signal buffer (`BranchStarted`, `WorkerCompleted`, `ToolStarted`, etc.), enforces per-process-type timeouts, and trips circuit breakers after 3 consecutive failures (60s cooldown, exponential backoff to 30min). The scheduling policy lives in code, not in a prompt.
+**Cortex turns runtime activity into layered context.** Cortex maps process events into signals, supervises branch and worker timeouts, opens circuit breakers after repeated failures, refreshes memory bulletins, runs memory maintenance, synthesizes working-memory batches, and regenerates knowledge synthesis when memory changes ([`src/agent/cortex.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/cortex.rs)). Working memory stores process-level events and synthesized day summaries in SQLite; the migration comments explicitly separate these events from raw user messages or agent responses ([`src/memory/working.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/working.rs), [`migrations/20260319000001_working_memory.sql`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/migrations/20260319000001_working_memory.sql)). The cortex bulletin and knowledge synthesis are behavior-shaping knowledge artifacts because they are injected as context, but they are not the canonical memory store.
 
-This maps directly onto the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md): the cortex is the symbolic scheduler, channels and branches are bounded LLM calls, and workers are deterministic tool executions outside any context window.
+**Scheduling and circuit breakers are part of the memory architecture.** Cron jobs are durable scheduling artifacts with prompts, cron or interval timing, delivery targets, active hours, timeouts, execution records, and consecutive failure counts; after three failures the scheduler disables the job ([`src/cron/scheduler.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/cron/scheduler.rs), [`src/cron/store.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/cron/store.rs)). Cortex has its own circuit breakers for bulletin refresh and maintenance failures ([`src/agent/cortex.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/cortex.rs)). These are system-definition artifacts because they decide when future agent loops run or stop running.
 
-### Branches as a Scoping Mechanism
+**Multi-user message coalescing is a channel-level context control.** Channels buffer fast multi-user input, apply debounce and maximum wait windows, persist each incoming message separately, then present a formatted batch as one user turn with a coalescing hint ([`src/agent/channel.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel.rs), [`src/agent/channel_history.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel_history.rs), [`prompts/en/fragments/coalesce_hint.md.j2`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/prompts/en/fragments/coalesce_hint.md.j2)). This keeps raw conversation records available while shaping the live context differently from the storage substrate.
 
-Branches are the most architecturally interesting process type. LLM context is normally [composed without scoping](../../notes/llm-context-is-composed-without-scoping.md) — everything in the conversation is globally visible, and there is no mechanism for a sub-computation to limit what it inherits or to prevent its output from polluting the parent. Branches provide exactly that mechanism: the branch inherits the parent's context at fork time (dynamic scope) but executes in an independent frame that cannot write back to the parent (lexical scope). If context is already at 70% capacity before the first turn, the branch proactively compacts 50%.
-
-This is the closest production analogue to lexical scoping in an agent system we have reviewed. The fork-think-return pattern — inherit context, reason independently, return only the conclusion — is the mechanism the scoping note identifies as missing from most agent architectures.
-
-### Three-Tier Context Overflow Recovery
-
-The compactor monitors token usage (chars/4 heuristic, intentionally overestimates) and acts at three thresholds:
-
-- **80%** — background compaction: summarise oldest 30% via a worker.
-- **85%** — aggressive compaction: summarise 50%.
-- **95%** — emergency synchronous truncation: drop oldest 50% immediately, no LLM call.
-
-Workers independently check context every 15 turns, deduplicating stale tool results on overflow before force-compacting 75%. The key design insight is that background compaction and emergency truncation are different operations requiring different strategies — graceful summarisation when there is time, hard truncation when there is not.
-
-### Memory
-
-Eight memory types (Fact, Preference, Decision, Identity, Event, Observation, Goal, Todo) with per-type default importance scores (Identity=1.0, Observation=0.3). Six edge types (RelatedTo, Updates, Contradicts, CausedBy, ResultOf, PartOf) stored in SQLite with a `UNIQUE(source, target, relation)` constraint. Retrieval uses Reciprocal Rank Fusion across three sources: vector similarity (LanceDB/HNSW), full-text search (Tantivy), and graph traversal (iterative BFS up to depth 3 from high-importance seed nodes).
-
-The memory is typed but unified — all eight types live in one store, searched through one API. This is a middle ground between flat accumulation (Mem0) and full structural separation. Whether the unified store produces the cross-contamination failures predicted by [three-space memory separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) is an open question; the graph edges (Updates, Contradicts) may partially mitigate search pollution by giving the retriever relationship-aware traversal paths.
-
-### Secondary Mechanisms
-
-**Message coalescing.** In multi-user channels, messages arriving within a configurable debounce window (default 1.5s, hard cap 5s) are batched into a single LLM turn with sender attribution and relative timestamps. The LLM sees `[alice] (+0ms): hey can you refactor auth? [bob] (+300ms): also add tests` and responds once. DMs, system messages, and slash commands bypass coalescing.
-
-**Memory bulletin.** The cortex periodically generates a structured briefing (goals, recent activity, key facts) and injects it into every channel's system prompt. A readiness contract (warm state + embedding model ready + fresh bulletin) gates dispatch, and a circuit breaker prevents bulletin generation from cascading on failure. This is push-based context priming — an alternative to on-demand retrieval.
-
-**Four-level model routing.** Process-type defaults (sonnet for channels, haiku for workers) -> task-type overrides (coding tasks get sonnet) -> sub-millisecond keyword-based complexity scoring -> fallback chains on 429/502 with rate-limit cooldown. All deterministic Rust.
+**Model routing is process-aware.** The LLM routing layer chooses models by process type, allows task overrides for workers and branches, carries fallback chains, and stores per-process thinking effort ([`src/llm/routing.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/llm/routing.rs)). This makes model selection another system-definition artifact rather than an implementation detail hidden inside calls.
 
 ## Comparison with Our System
 
-Spacebot is a runtime agent framework; commonplace is a knowledge system with agent-operated methodology. The meaningful comparison is in shared architectural concerns.
+| Lens | Spacebot | Commonplace relevance |
+| --- | --- | --- |
+| Process model | Runtime process types with isolated tools, histories, channels, and supervisors. | Strong reference for making agent roles operational rather than rhetorical. |
+| Memory substrate | SQLite canonical records, graph edges, working-memory tables, LanceDB vector/FTS sidecar, runtime bulletins. | Useful separation of canonical knowledge artifacts from derived search indexes and prompt-time summaries. |
+| Trace use | Channel history and process events are mined into durable memory records and working-memory summaries. | Directly relevant to [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md). |
+| Behavioral authority | Tool topology, prompts, routing config, cron jobs, and circuit breakers enforce what future loops may do. | Good example for applying [behavioral authority](../../notes/definitions/behavioral-authority.md) beyond "memory" as storage. |
+| Lineage | Memories have type, source, channel, timestamps, and associations; summaries have event counts and windows. | Better than opaque summaries, but LLM synthesis still has weak citation-level lineage. |
+| Codification | Many policies are Rust code and SQL schema; prompts remain high-authority prose. | Similar split to Commonplace's code-backed validation plus prose conventions. |
 
-| Dimension | Spacebot | Commonplace |
-|---|---|---|
-| Scheduling | Rust cortex (code-level symbolic scheduler) | Agent loads instructions per task (instruction-routed) |
-| Context isolation | Branches: deep-cloned, independently compacted | Sub-agents with fresh context per skill invocation |
-| Memory | Typed records in SQLite + LanceDB, graph edges, hybrid search | Typed markdown files in git, area indexes, link semantics |
-| Knowledge evolution | Soft delete (forgotten flag), Updates/Contradicts edges | Status field, type transitions (text -> seedling -> note) |
-| Overflow | Compactor with 3 thresholds, LLM summarisation | Progressive disclosure (description first, full content on demand) |
-| Multi-user | First-class: message coalescing, per-channel state, concurrent processes | Single-user (agent per session) |
-
-**Where Spacebot is stronger.** Process-type separation gives channels, branches, and workers distinct tool sets and lifecycle guarantees enforced by the type system. The three-tier overflow recovery is more robust than anything in our system — we have no runtime safety net for context exhaustion. Message coalescing is a genuine multi-user concurrency pattern we have no equivalent for.
-
-**Where commonplace is stronger.** Knowledge has a lifecycle — notes mature through status transitions, link semantics articulate relationships, descriptions serve as retrieval filters. Spacebot's memory is accumulate-and-search with no maturation path. Our progressive disclosure (load descriptions first, full content on demand) addresses [context efficiency](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) proactively rather than reactively compacting after overflow.
+Spacebot is closer to a live autonomous runtime than to a repository knowledge base. Commonplace accumulates reviewed artifacts for later agents; Spacebot maintains online conversation, task, and autonomy state for a running assistant. The overlap is in the artifact taxonomy: both systems need to distinguish a knowledge artifact that informs an agent from a system-definition artifact that constrains or schedules it.
 
 ## Borrowable Ideas
 
-**Branches as scoping primitive.** The fork-think-return pattern maps directly onto what our system needs for sub-agent isolation. In commonplace this would be a sub-agent that inherits specific context files (not the full conversation) and returns a structured result. The deep-clone-and-isolate model is immediately applicable. *Ready to borrow.*
+- Use process-specific tool servers as explicit authority boundaries. Spacebot's channel/branch/worker/cortex split is clearer than a single omnibus tool menu.
+- Treat automatic memory extraction as a contract-bearing background process. The `memory_persistence_complete` tool prevents a branch from vaguely claiming it saved memories when it did not.
+- Keep canonical memory and retrieval indexes separate. SQLite remains the source of truth while LanceDB is a rebuildable vector/FTS sidecar.
+- Preserve raw traces and synthesized traces as different artifact layers. Conversation messages, working-memory events, intraday syntheses, daily summaries, and cortex bulletins have different review and invalidation needs.
+- Coalesce multi-user bursts before model invocation while still storing each raw message separately.
+- Record absence carefully. The repo advertises learning skills from experience, but at this commit skill writing is not implemented; that should not be collapsed into the implemented memory system.
 
-**Graduated overflow recovery.** Our system relies on progressive disclosure to prevent overflow. For long sessions, a safety net with separated thresholds — background compaction at one level, emergency truncation at another — would prevent hard failures without requiring the full three-tier implementation. *Needs a use case first — our sessions rarely hit overflow.*
+## Trace-derived learning placement
 
-**Memory bulletin as session priming.** Injecting a structured briefing at session start is a push-based alternative to on-demand retrieval. For commonplace, this would mean generating a summary of recent KB changes and active areas when a session begins. *Needs a use case first — CLAUDE.md already serves a similar routing function, though not a recency-aware one.*
+Spacebot belongs in the trace-derived category because current code can mine live channel traces into durable memories and process traces into working-memory syntheses. This is artifact learning, not model-weight learning.
 
-**Coalescing for batch operations.** The principle — debounce rapid input, batch into a single turn with metadata — could apply to bulk operations where multiple file changes should be processed as one unit rather than individually. Not directly applicable to single-user sessions.
+**Trace sources.** The relevant traces are channel histories, user messages, branch and worker completions, task updates, cron executions, memory-save events, errors, decisions, and other `ProcessEvent` or working-memory event records ([`src/lib.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/lib.rs), [`src/memory/working.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/working.rs)). Runtime cortex signals are mostly transient control inputs; only selected events become durable working-memory rows.
+
+**Extraction path.** A memory-persistence branch reads recent channel context, recalls existing memories, saves selected facts or preferences through `memory_save`, and reports completion through a validating terminal tool ([`src/tools/memory_save.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/memory_save.rs), [`src/tools/memory_recall.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/memory_recall.rs), [`src/tools/memory_persistence_complete.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/memory_persistence_complete.rs)). Cortex separately synthesizes intraday and daily working-memory summaries, regenerates knowledge synthesis after memory changes, and refreshes a memory bulletin used for warm context ([`src/agent/cortex.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/cortex.rs)).
+
+**Storage substrate.** Durable state spans SQLite memory, association, conversation, cron, task, and working-memory tables; LanceDB vector and FTS tables; prompt templates on disk; installed skill files; and runtime `ArcSwap` strings for bulletin and synthesis state. Event buses and cortex signal buffers are runtime substrate, not durable memory.
+
+**Representational form.** Memory content, summaries, bulletins, and prompts are prose. Memory types, edges, tool schemas, schedules, process enums, and SQL schemas are symbolic. Embeddings in LanceDB are distributed-parametric retrieval artifacts, but they do not constitute learned policy.
+
+**Lineage.** Individual memories carry source, channel, timestamps, access metadata, type, importance, and graph associations. Working-memory events carry day/type/detail fields, and summaries carry time windows and counts. The weak point is LLM synthesis lineage: a daily summary or knowledge synthesis may be behavior-shaping without preserving fine-grained citations back to every originating event.
+
+**Behavioral authority.** Raw logs, conversation records, memory rows, working-memory events, and summaries are knowledge artifacts. Prompt templates, routing config, tool topology, cron jobs, task records, skill files, and circuit breakers are system-definition artifacts. Memory bulletins and knowledge synthesis sit in the middle: their content is a knowledge artifact, but the injection machinery that places them into future contexts has system-definition authority.
+
+**Non-evidence.** The current code does not show model fine-tuning, policy-gradient learning, or implemented agent-written skill capture. The trace-derived claim rests on memory persistence and working-memory synthesis, not on the README's broader skill-learning language.
 
 ## Curiosity Pass
 
-- Spacebot's "five process types" look like roles, but the code makes them more structural than persona labels: `ProcessType` drives routing, hooks, tool surfaces, compaction behavior, and cortex observation. That makes the abstraction more durable than ordinary prompt-role decomposition.
-- The cortex is not purely non-LLM anymore in every respect. Health checks and signal buffering are programmatic, but the current README and `agent/cortex.rs` also describe bulletin, profile, and knowledge synthesis tasks that call a cortex model. The accurate claim is narrower: scheduling and supervision are code-owned; some synthesis products are LLM-owned.
-- Branch isolation is strong for context pollution, but not for epistemic authority. A branch returns a short conclusion to the channel, and the channel still has to decide how much to trust it. The mechanism scopes computation; it does not validate the result.
-- The memory graph traversal remains intentionally shallow and heuristic. Graph expansion starts from high-importance memories that keyword-match the query, then weights relation types. That is useful retrieval plumbing, not a general reasoning graph.
+The interesting design move is that Spacebot refuses to make "memory" one layer. It has raw conversation logs, process events, durable typed memories, graph edges, vector rows, working-memory syntheses, memory bulletins, knowledge synthesis, prompt templates, skills, cron jobs, and circuit breakers. Those artifacts all shape behavior differently. A review that calls them all "memory" would miss the main architecture.
+
+The risk is quality control. Memory persistence is LLM-mediated, and the save tool verifies structure, embeddings, and associations but not semantic truth. Cortex summaries are useful context artifacts, yet their lineage is weaker than the underlying event rows. Memory maintenance can decay, prune, and merge records algorithmically ([`src/memory/maintenance.rs`](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/maintenance.rs)); that is valuable for keeping the store small, but it also means future behavior depends on heuristic retention policy.
+
+Spacebot is especially useful for Commonplace because it makes behavioral authority visible. The tool server answers "who may mutate what?" The router answers "which model acts?" The scheduler answers "when does an agent run?" The cortex loop answers "which traces become active context?" Those are the same questions behind [knowledge artifact](../../notes/definitions/knowledge-artifact.md), [system-definition artifact](../../notes/definitions/system-definition-artifact.md), and [behavioral authority](../../notes/definitions/behavioral-authority.md).
 
 ## What to Watch
 
-- Whether the five fixed process types survive as stronger models emerge. The [multi-agent future prediction](https://x.com/voooooogel/status/2015976774128341421) suggests fixed roles dissolve, but Spacebot's types encode concurrency guarantees and tool-set isolation, not persona-style roles — structural constraints may prove more durable than role assignments.
-- Whether the typed-but-unified memory produces the search pollution and identity scatter predicted by [three-space separation](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md). The graph edges may mitigate these, making this a natural test case for the three-space claim.
-- Whether the cortex's signal buffer evolves beyond observability. The 100-item rolling window of process events is currently used for health checks and circuit breakers. If it starts informing adaptive scheduling (learning which branch configurations succeed), it becomes a deploy-time learning mechanism.
+- Whether a real `write_skill` or experience-to-skill path is implemented after this commit.
+- Whether memory-persistence branches gain stronger evidence citation or review hooks.
+- Whether cortex knowledge synthesis becomes canonical state or remains a derived prompt-time artifact.
+- Whether graph associations become LLM-generated beyond memory-save calls and merge rewiring.
+- How dormant cortex mode, wake signals, and bulletin refresh behave in long-running deployments.
+- Whether direct mode is used often enough to weaken the clean channel/branch/worker boundary.
 
----
+## Bottom Line
 
-Relevant Notes:
+Spacebot is a strong related-system reference for concurrent agent memory because it connects memory to process isolation, scheduling, tool authority, and context synthesis. It should be classified as trace-derived: channel traces and process traces can become durable memory records and synthesized working-memory artifacts. The classification should not rely on the unimplemented skill-learning claim; the implemented evidence is memory persistence, working-memory synthesis, and cortex-driven prompt activation.
 
-- [bounded-context-orchestration-model](../../notes/bounded-context-orchestration-model.md) — exemplifies: Spacebot's cortex is the cleanest production implementation of the clean scheduling model; channels and branches are bounded LLM calls, workers are deterministic tool executions
-- [llm-context-is-composed-without-scoping](../../notes/llm-context-is-composed-without-scoping.md) — exemplifies: branches inherit channel context (dynamic scope) but execute in independent frames (lexical scope), demonstrating a production scoping mechanism
-- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — exemplifies: addresses both context cost dimensions — compactor handles volume, branches provide complexity isolation
-- [three-space-agent-memory-maps-to-tulving-taxonomy](../../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — tests: typed-but-unified memory with 8 types in a single store is a middle ground between flat storage and full three-space separation
-- [agentic-memory-systems-comparative-review](../agentic-memory-systems-comparative-review.md) — extends: Spacebot adds a new position (Rust-level process separation, concurrent multi-user, graph-edged typed memory) not covered by existing entries
+## Relevant Notes
+
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md)
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md)
+- [Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md)
+- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md)
+- [GBrain](./gbrain.md)
+- [WUPHF](./wuphf.md)
+- [Playground](./playground.md)
+- [SignetAI](./signetai.md)
