@@ -151,8 +151,8 @@ The divergences are more revealing:
 
 ## Other tagged notes <!-- generated -->
 
-- [Closure-SDK](./reviews/Closure-SDK.md) - Geometric S3 memory and integrity runtime where ordered carrier streams promote into quaternion genome state, not readable notes or model weights
+- [Closure-SDK](./reviews/Closure-SDK.md) - Closure-SDK review: geometric integrity SDK plus Closure DNA and a runtime brain whose genome learns from ordered experience and feedback traces
 - [Incremental Self-Improvement](./source-only/incremental-self-improvement.md) - Source-only coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies
-- [MehmetGoekce/llm-wiki](./reviews/MehmetGoekce--llm-wiki.md) - Promptware LLM Wiki bootstrap kit for Claude Code with L1/L2 memory split, Logseq/Obsidian schemas, setup script, and OpenSpec requirements
-- [Pratiyush/llm-wiki](./reviews/Pratiyush--llm-wiki.md) - Multi-agent session-transcript compiler that turns Claude/Codex/Cursor/Gemini history into a redacted markdown wiki, static site, exports, MCP tools, and agent prompt workflows
-- [Tolaria](./reviews/tolaria.md) - Mac and Linux markdown-vault app with git-backed files, type lenses, saved views, agent context snapshots, MCP tools, and managed guidance
+- [MehmetGoekce/llm-wiki](./reviews/MehmetGoekce--llm-wiki.md) - Claude Code promptware scaffold for an L1/L2 Logseq or Obsidian wiki, with setup templates, slash-command workflows, schema, lint, and OpenSpec contracts
+- [Pratiyush/llm-wiki](./reviews/Pratiyush--llm-wiki.md) - Trace-derived local wiki builder that converts coding-agent session logs into raw markdown, synthesized wiki pages, static exports, MCP tools, and agent workflows
+- [Tolaria](./reviews/tolaria.md) - Tolaria review: Tauri desktop markdown/git vault with typed lenses, saved views, managed agent guidance, AI context snapshots, CLI-agent launchers, and MCP tools

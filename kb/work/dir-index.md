@@ -21,9 +21,9 @@ index_source: directory
 - [latent-space-generation-without-training/](./latent-space-generation-without-training/dir-index.md)
 - [obsidian-affordances/](./obsidian-affordances/dir-index.md)
 - [philosophy-borrowing/](./philosophy-borrowing/dir-index.md)
+- [pi-agent-zerostack-comparison/](./pi-agent-zerostack-comparison/dir-index.md)
 - [positioning/](./positioning/dir-index.md)
 - [prompt-bottleneck/](./prompt-bottleneck/dir-index.md)
-- [research-wiki-integration/](./research-wiki-integration/dir-index.md)
 - [review-revise-gated/](./review-revise-gated/dir-index.md)
 - [review-run-lifecycle/](./review-run-lifecycle/dir-index.md)
 - [review-system-rewrite/](./review-system-rewrite/dir-index.md)
@@ -33,7 +33,7 @@ index_source: directory
 - [skills-vs-instructions/](./skills-vs-instructions/dir-index.md)
 - [token-wiki-review/](./token-wiki-review/dir-index.md)
 - [tool-loop-control/](./tool-loop-control/dir-index.md)
-- [vocabulary-redesign/](./vocabulary-redesign/dir-index.md)
+- [vocabulary-governance/](./vocabulary-governance/dir-index.md)
 - [write-type-resolver/](./write-type-resolver/dir-index.md)
 
 ## Files
