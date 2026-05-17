@@ -79,6 +79,8 @@ These apply to all typed artifacts regardless of collection.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
+**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not churn untouched passages only to add vocabulary links.
+
 **Links.** Use relative markdown paths from the source file. Every link must point to a real file.
 
 Position encodes commitment. **Inline** prose connectors (`since [X](./x.md)`, `because [X](./x.md)`, `but [X](./x.md)`) are strongest — the target is a premise of the current argument. **Footer** links carry an explicit label and context phrase: `- [title](./path.md) — label: context phrase`.

@@ -49,6 +49,18 @@ This complements each COLLECTION.md's universal criteria with domain-specific st
 Example: "A design decision is worth a note when it affects more than one endpoint. Single-endpoint implementation details belong in code comments. Observations about failure patterns are worth a log entry on first occurrence and a note on third."
 -->
 
+## Vocabulary
+
+This section declares the active vocabulary: terms with specific meanings throughout this KB.
+
+<!--
+Add project-specific terms only when the KB needs a stable operational meaning.
+Prefer backing definition notes under kb/notes/definitions/ when a short gloss is not enough.
+
+Example:
+- **Service boundary** — the interface where one service's ownership ends and another begins. See `kb/notes/definitions/service-boundary.md`.
+-->
+
 ## Using the KB
 
 The knowledge base lives in `kb/`. Search it when the user asks about decisions, reasoning, design rationale, or project knowledge.

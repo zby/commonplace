@@ -20,13 +20,13 @@ Exceptions — do not flag:
 - Standard technical vocabulary (LLM, context window, prompt, token, API).
 - Terms whose opacity is already covered by the notation-opacity gate (e.g., "external symbolic state" when the real access barrier is the `K` notation it labels). Do not double-flag the English phrase alongside a notation-opacity finding for the same concept.
 
-KB vocabulary terms under `kb/notes/definitions/` are NOT exempt. Authors may know these terms from `AGENTS.md` or collection context, but external readers do not. On first meaningful mention, provide both an inline gloss and a link to the definition note. The gloss lets the reader keep reading; the link lets them go deep.
+Active vocabulary terms declared in `AGENTS.md` are NOT exempt. Authors may know these terms from loaded context, but external readers do not. On first meaningful mention in authored prose, provide both an inline gloss and a link to the definition note. The gloss lets the reader keep reading; the link lets them go deep.
 
 ## Example (fail)
 
 "An execution boundary usually creates two different questions"
 
-## Example (fail — KB vocabulary without gloss)
+## Example (fail — active vocabulary without gloss)
 
 "The skill is produced by distillation from the methodology notes."
 
@@ -34,6 +34,6 @@ KB vocabulary terms under `kb/notes/definitions/` are NOT exempt. Authors may kn
 
 "An execution boundary — any point where one LLM call ends and another begins — creates two distinct decisions"
 
-## Example (pass — KB vocabulary with gloss and link)
+## Example (pass — active vocabulary with gloss and link)
 
 `"The skill is produced by [distillation](./definitions/distillation.md) (directed context compression) from the methodology notes."`

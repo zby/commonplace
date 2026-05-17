@@ -48,7 +48,7 @@ A design insight is worth a note when it changes how someone would build or oper
 
 ## Vocabulary
 
-Terms used in this KB with specific meanings. On first mention in a note, gloss and link: `[distillation](./definitions/distillation.md) (directed context compression)`.
+This section declares the active vocabulary: terms with specific meanings throughout this KB.
 
 - **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/definitions/context-engineering.md`.
 - **Distillation** — compression viewed as learning: goal-oriented compression whose purpose is the capacity change it produces in the consumer. KB application is directed context compression — the main operation context engineering performs. ML knowledge distillation (Hinton) is a sibling instance in a different substrate. See `kb/notes/definitions/distillation.md`.
