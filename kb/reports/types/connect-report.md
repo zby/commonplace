@@ -9,7 +9,7 @@ schema: kb/reports/types/connect-report.schema.yaml
 
 ## Authoring Instructions
 
-Use `connect-report` for discovery-only connection work. **Every section of a connect report describes candidate edges for a future writer to act on, not edges already encoded anywhere.** The connect skill never edits the source artifact or any other library note — the report is the entire deliverable. Readers of the report should treat its contents as suggestions to evaluate, not as state already in the KB.
+Use `connect-report` for discovery-only connection work. **Every connection section describes candidate edges for a future writer to act on, not edges already encoded anywhere.** The connect skill never edits the source artifact or any other library artifact — the report is the entire deliverable and the only direct write. Readers of the report should treat its contents as suggestions to evaluate, not as state already in the KB.
 
 A connect report records evidence for future KB authoring; it is not itself a durable knowledge claim.
 
@@ -28,12 +28,12 @@ A connect report records evidence for future KB authoring; it is not itself a du
 
 ## Connection Standards
 
-- Every item in `Connections Found` must pass the articulation test: you can say specifically why the source connects to the target.
+- Every item in `Connections Found` must pass the articulation test: `[source] connects to [target] because [specific reason].`
 - Pick relationship labels from the **authorised set declared in the source collection's `COLLECTION.md`** for the source→destination pair. Each authorised label carries a reader-need; use the label whose reader-need matches the connection's purpose. Do not propose labels outside the authorised set.
 - If a candidate passes the articulation test but no authorised label fits, route it to `Off-authorisation Candidates` — do not invent a label or downgrade to `see-also` to make it fit.
 - Reject candidates that are merely "related", keyword-only matches, too obvious to help traversal, or likely to confuse an agent following the link.
-- Ask what an agent gains by following the link. Keep links that provide reasoning foundation, implementation pattern, trade-off awareness, or a concrete example.
-- If a target note has `status: seedling` or `status: speculative`, flag load-bearing labels such as `grounds`, `mechanism`, or `derived-from`. Additive labels such as `extends`, `exemplifies`, and `enables` are fine.
+- Keep a candidate only if an agent, or another intended KB consumer named by the collection contract, gains something concrete by following the link.
+- If a target artifact has `status: seedling` or `status: speculative`, flag load-bearing labels such as `grounds`, `mechanism`, or `derived-from`. Additive labels such as `extends`, `exemplifies`, and `enables` are fine.
 
 ## Sections
 
@@ -48,7 +48,24 @@ All sections list **candidates** — recommended edges, not committed ones. Whoe
 - Use `Index Membership` for indexes where the source might belong (a future writer would add the entry; connect does not).
 - Use `Synthesis Opportunities` only for higher-order claims implied by multiple notes; do not create the synthesis note during connect.
 - Use `Flags` for split candidates, unresolved tensions, no-connections findings, or other follow-up work.
+- Use `Maintenance Observations` for report-local observations discovered during traversal that are not connection candidates.
 - If a section has no content, write `None` rather than deleting the section.
+
+## Maintenance Observations
+
+Use this section only for durable issues or follow-up signals:
+
+- stale or broken links
+- clear contradictions
+- duplicated or redundant artifacts
+- competing ownership between artifacts
+- repeated unnamed mechanisms or abstractions
+- collection-contract gaps, such as useful candidates with no authorised label
+- synthesis opportunities durable enough for later promotion
+
+Do not include routine candidate links, ordinary topical overlap, weak associations, or anything already captured in the connection sections.
+
+Downstream connection consumers may ignore this section. A later explicit maintenance or triage step may promote entries from this section into `kb/log.md`, notes, reference docs, instructions, ADRs, collection rules, or other local artifacts.
 
 ## Edge Cases
 
@@ -62,7 +79,7 @@ All sections list **candidates** — recommended edges, not committed ones. Whoe
 - Verify every candidate path exists before including it as a connection.
 - Remove any connection that cannot complete the sentence: "[A] connects to [B] because [specific reason]."
 - Do not propose regular note connections to raw text files; route them to `Raw Text Candidates`.
-- Do not create synthesis notes, edit indexes, or mutate library notes from a connect report.
+- Do not create synthesis notes, edit indexes, mutate library artifacts, or write side files from a connect report.
 
 ## Template
 
@@ -125,6 +142,10 @@ depth: standard
 ## Synthesis Opportunities
 
 {Two or more notes that together imply a higher-order claim not yet captured, or "None"}
+
+## Maintenance Observations
+
+{Report-local traversal observations that are not connection candidates, or "None"}
 
 ## Flags
 

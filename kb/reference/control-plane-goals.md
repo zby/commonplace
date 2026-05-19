@@ -19,7 +19,7 @@ The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedic
 - **Exclude** — types of knowledge that don't belong despite seeming relevant
 - **Quality bar** — domain-specific "good enough" standards
 
-This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, git conventions, and other invariants the agent needs from turn one.
+This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, git conventions, and other invariants the agent needs from turn one.
 
 ## What varies per installation vs. what ships with the framework
 

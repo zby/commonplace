@@ -51,4 +51,6 @@ allOf:
           - contains:
               const: "## Synthesis Opportunities"
           - contains:
+              const: "## Maintenance Observations"
+          - contains:
               const: "## Flags"

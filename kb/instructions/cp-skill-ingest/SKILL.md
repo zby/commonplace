@@ -13,14 +13,17 @@ argument-hint: "[url-or-file] — URL (https://...) or path to .md file in kb/so
 
 **Target: $ARGUMENTS**
 
+The skill owns execution. The type owns the report contract.
+Use this skill for routing, setup, tool use, delegated skill calls, and file writes.
+Use the loaded type spec for section meanings, quality standards, and the template.
+If the skill and type both mention the same report-content rule, prefer the type.
+
+Interpret "our" through the installed KB's goals and local collection contracts. In this repository, "our" means agent-operated KB methodology. In another installed KB, it means that project's declared system, work, codebase, policy, product, or domain.
+
 Parse the target to determine what to do:
 
 1. **No target** — list `kb/sources/` recent `.md` files (excluding .json, .ingest.md), then ask which to ingest.
-
-2. **URL** (starts with `http://` or `https://`) — invoke the `cp-skill-snapshot-web` skill to capture it. The `cp-skill-snapshot-web` skill handles all URL types (web pages, PDFs, GitHub, X/Twitter).
-
-   Parse the "Snapshot saved:" line from the output to get the file path. That becomes the input for Step 1.
-
+2. **URL** (starts with `http://` or `https://`) — invoke the `cp-skill-snapshot-web` skill to capture it. The `cp-skill-snapshot-web` skill handles all URL types (web pages, PDFs, GitHub, X/Twitter). Parse the "Snapshot saved:" line from the output to get the file path. That becomes the input for Step 1.
 3. **File path** — proceed to Step 1.
 
 **START NOW.**
@@ -31,21 +34,17 @@ Parse the target to determine what to do:
 
 Once you have the snapshot file path (from URL resolution or direct input), run discovery-only connection finding with the `cp-skill-connect` skill on that path.
 
-This saves the connection report at `kb/reports/connect/<snapshot-name>.connect.md`.
+This saves the connection report at `kb/reports/connect/<source-collection>/<snapshot-name>.connect.md`. For source snapshots, read `kb/reports/connect/sources/<snapshot-name>.connect.md`.
 
-The report contains:
-- Discovery trace (what was searched, what matched)
-- Connections found with relationship types and reasons
-- Rejected candidates
-- Index membership recommendations
-- Synthesis opportunities and flags
+The report contains candidate connection context for the ingest analysis. Treat its `Maintenance Observations` section as non-actionable context: you may mention durable signals in the ingest report when relevant, but do not act on or promote them.
 
 Wait for the `cp-skill-connect` skill to complete before proceeding.
 
 ## Step 2: Read Connection Report
 
-Read the connection report from `kb/reports/connect/<snapshot-name>.connect.md`. Note:
-- Which `kb/notes/` files were identified as connections
+Read the connection report from `kb/reports/connect/sources/<snapshot-name>.connect.md`. Note:
+
+- Which existing artifacts were identified as connections
 - What relationship types were found
 - Any synthesis opportunities or tensions flagged
 
@@ -56,118 +55,8 @@ This is your connection context for the analysis below.
 Write the analysis as an `ingest-report`, informed by the connections found in Steps 1-2. Before writing the report, read:
 
 - `kb/sources/types/ingest-report.md`
-- `kb/sources/types/ingest-report.md`
 
-### 3.1 Classification
-
-**Source type** — pick one and briefly justify:
-- **scientific-paper**: Peer-reviewed or preprint with methodology, data, citations
-- **practitioner-report**: Someone built something and describes what worked/failed
-- **conceptual-essay**: Argues a framing, analogy, or theoretical position
-- **design-proposal**: RFC, API design, architecture proposal for a specific system
-- **tool-announcement**: New tool, library, or framework release
-- **github-issue**: Bug report, feature request, or PR from a specific repo
-- **conversation-thread**: Discussion without a single authorial thesis
-
-**Domain tags**: 2-4 topic areas
-
-**Author signal**: One sentence — who is this person, why attend to their
-experience? ("unknown" is fine)
-
-### 3.2 Summary
-
-One paragraph. What is the source about? What is the author's main thesis or
-contribution? Write for someone deciding whether to read the full source.
-
-### 3.3 Connections Found
-
-Summarise what the `cp-skill-connect` skill discovered. Which existing notes does this source
-connect to, and how? Include the relationship types and the key insight about
-how this source fits (or doesn't) into our existing knowledge graph.
-
-### 3.4 Extractable Value
-
-Based on the source type AND the connections found, look for the RIGHT kind
-of value. The connections tell you what's already captured — focus on what's NEW.
-
-**From scientific papers** — look for:
-- Empirical findings that support or challenge our theory
-- Methods or experimental designs we could adapt
-- Data points worth citing (with caveats about context)
-
-**From practitioner reports** — look for:
-- Concrete practices: specific things they built/did, with enough detail to replicate
-- Lessons learned: what failed and why (often more valuable than what worked)
-- Design patterns: recurring structures that transfer beyond their specific system
-
-**From conceptual essays** — look for:
-- Framings: new ways to think about something we already do
-- Analogies: connections to other domains that illuminate our work
-- Provocations: questions or tensions that push our thinking
-- Vocabulary: terms or distinctions that name something we've noticed but haven't articulated
-
-**From design proposals / tools** — look for:
-- Impact on our stack: does this change how we build?
-- Patterns worth borrowing: API design, architecture choices
-- Gaps exposed: does this solve something we struggle with?
-
-**From github issues / conversations** — look for:
-- Direct relevance to our codebase
-- Signals about upstream direction
-
-List 3-7 items, each as a one-liner with enough context to evaluate.
-Mark each with a rough effort tag: [quick-win], [experiment], [deep-dive],
-[just-a-reference].
-
-**Cross-cutting: assess [reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).** Regardless of source type, ask: does this insight transfer beyond the specific context (benchmark, system, team, domain) the source describes? High-reach findings — those that explain *why* something works, not just *that* it works — go first. Context-bound observations ("X worked for us on benchmark Y") are still worth noting but should be flagged as low-reach.
-
-### 3.5 Curiosity Gate
-
-Before writing Limitations, pause and re-read the source:
-
-1. **What is most surprising?** What claim, finding, or design choice is unexpected given what you know? Follow the surprise — it may reveal something the structured extraction missed.
-2. **What's the simpler account?** For the source's 1-2 strongest claims, ask: what's the simplest mechanism, explanation, or framing that produces the same outcome? If a simpler account works, the claimed sophistication is inflated.
-3. **Is the central claim hard to vary?** Could you swap the evidence and keep the conclusion? If the same conclusion follows from different premises, the argument may be unfalsifiable or over-fitted to a narrative. Hard-to-vary claims — where changing any component breaks the whole thing — are the ones worth extracting.
-
-Fold findings into Extractable Value or Limitations as appropriate.
-
-### 3.6 Limitations (our opinion)
-
-Assess where the source should NOT be trusted. This is editorial judgment —
-label the section "(our opinion)". The checks differ by source type:
-
-**Scientific papers** — what was not tested:
-- Missing experimental configurations (naive baselines only, limited benchmarks)
-- Strategies known in the literature or discussed in this KB that were not tried
-- Claims that don't generalize beyond the tested configurations
-
-**Practitioner reports** — what is not visible:
-- Survivorship bias: they report what worked, not the failed attempts
-- Sample size of one: would this transfer to a different team, codebase, domain?
-- Context-specific factors they don't acknowledge (team size, model budget, existing infrastructure)
-
-**Conceptual essays / conversation threads** — what is not argued:
-- Reasoning by analogy without testing whether the analogy holds
-- Cherry-picked examples that support the thesis while ignoring counterexamples
-- Conflating naming something with explaining it
-- Unfalsifiable framings — is there any evidence that could disprove the claim?
-
-**Tool announcements / design proposals** — what is not shown:
-- Vendor bias: benchmarks chosen to flatter, no independent evaluation
-- Missing failure modes or scaling limits
-- Gaps between the announced design and what users actually experience
-
-Be specific — name what's missing, cite the KB note that discusses it if one
-exists, and state what this means for the source's conclusions.
-
-### 3.7 Recommended Next Action
-
-Pick ONE and be specific:
-
-- "Write a note titled 'X' connecting to Y.md and Z.md — it would argue [thesis]"
-- "Update existing-note.md: add a section about X because [reason]"
-- "Brainstorm session: this source raises questions about [topic] — explore with [specific questions]"
-- "File as reference — interesting but doesn't change our thinking or practices"
+Use the type spec's source-type list, extraction standards, limitations guidance, recommended-action guidance, and template. The report should classify the source, summarize it, explain its connections, extract goal-relative value, state limitations, and recommend one advisory next action.
 
 ## Step 4: Save the Report
 
@@ -176,61 +65,26 @@ Save the `ingest-report` next to the snapshot as `.ingest.md`:
 - Input:  `kb/sources/some-article.md`
 - Output: `kb/sources/some-article.ingest.md`
 
-After creating or replacing a source/ingest pair, regenerate the affected source index rather than hand-editing it. Updating `kb/sources/dir-index.md` is expected because it is generated; avoid or revert unrelated generated-index churn from broad refresh commands.
+Ingest's own direct write is only the `.ingest.md` report. Delegated steps may write their own artifacts: snapshot capture may write a snapshot, and connect may write a connect report. Do not directly modify notes, reference docs, instructions, runbooks, policies, ADRs, indexes, collection files, or logs. Promotion belongs to a later explicit step.
 
 ## Output Format
 
-The saved `.ingest.md` file should contain:
-
-```
----
-description: {one-line retrieval filter — what makes this source distinctive, not a generic summary}
-source_snapshot: {input filename}
-ingested: "{current UTC date}"
-type: kb/sources/types/ingest-report.md
-source_type: {source-type}
-domains: [{tag1}, {tag2}, {tag3}]
----
-
-# Ingest: {source title}
-
-Source: {filename}
-Captured: {date from frontmatter}
-From: {source URL from frontmatter}
-
-## Classification
-Type: {source-type} — {brief justification}
-Domains: {tag1}, {tag2}, {tag3}
-Author: {credibility signal}
-
-## Summary
-{one paragraph}
-
-## Connections Found
-{summary of connect discovery — which notes, what relationships}
-
-## Extractable Value
-{numbered list of 3-7 items with effort tags}
-
-## Limitations (our opinion)
-{where should this source not be trusted — type-specific checks}
-
-## Recommended Next Action
-{one specific action}
-```
+Use the template from `kb/sources/types/ingest-report.md`.
 
 Tell the user where the report was saved and what the recommended action is.
 
 ## Critical Constraints
 
 **never:**
+
 - Extract atomic claims — this is ingestion, not decomposition
-- Write any files other than `.ingest.md`
-- Modify any files in kb/notes/ — that happens in later steps if the human decides to proceed
+- Write any files directly other than `.ingest.md`
+- Modify notes, reference docs, instructions, runbooks, policies, ADRs, indexes, collection files, or logs
 - Hallucinate connections — if the source isn't relevant, say so
 - Skip running the `cp-skill-connect` skill — the connections are the foundation of the analysis
 
 **always:**
+
 - Run the `cp-skill-connect` skill before doing classification or value extraction
 - Base extractable value on what's NEW relative to connections found
 - Be specific in the recommended action
