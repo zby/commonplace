@@ -81,7 +81,7 @@ domains: [{tag1}, {tag2}, {tag3}]
 
 Note: `source_snapshot` points to the working copy, which is typically gitignored and ephemeral. The Pin line below (commit hash) is the canonical identifier for reproducibility.
 
-**Enum gap.** `source_type: code-repository` is not in the current `kb/sources/types/ingest-report.schema.yaml` enum. Extend the enum (add `code-repository` to the list) as a companion change; otherwise validation will fail. If the directory is not a code repo (e.g. paper + supplements), pick the closest existing value or extend the enum for that case too.
+If the directory is not a code repo (e.g. paper + supplements), pick the closest existing `source_type` or extend `kb/sources/types/ingest-report.schema.yaml` as a companion change.
 
 Draft body:
 
