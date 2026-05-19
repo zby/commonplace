@@ -1,6 +1,8 @@
 # Writing Directed Reading Instructions
 
-How to write an instructions note that a sub-agent can execute with clean context. Directed reading — "read document X through the lens of goal Y" — is the first case, but the principles apply to any delegatable work.
+How to write an instructions note that a sub-agent can execute with clean context. Directed reading means "read material X through lens Y and write the lens-shaped result."
+
+There are two cases. Specialized directed-reading contracts such as `/ingest`, `/connect`, the `agent-memory-system-review` type, and generated note-review prompts have stable lenses and output contracts. They do not need handwritten instruction notes for ordinary runs because the skill, type spec, or prompt generator already frontloads the reusable procedure. This note covers the general case: task-specific directed reading where the caller frontloads the lens, inputs, relevant context, and output contract into an instruction note.
 
 ## Core principle: frontload everything
 

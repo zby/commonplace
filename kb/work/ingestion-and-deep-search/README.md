@@ -8,7 +8,16 @@ What happens when agent work is mediated by self-contained instruction notes?
 
 Started from a narrower question: how to decouple source analysis from downloading. The `/ingest` skill couples snapshot + analysis with a fixed template, but different tasks need different things from the same source.
 
-The first insight was **directed reading** — any document + any goal → a purpose-shaped report. But trying to generalize it (multiple documents, goal as a note) revealed a deeper pattern:
+The first insight was **directed reading** — read selected material through an explicit lens and write the lens-shaped result. That now splits into two cases:
+
+- **Specialized directed-reading contracts** have stable lenses and output contracts. Some are skills: `/ingest` reads through the KB-assimilation lens and writes a typed ingest report; `/connect` reads through the graph-integration lens and writes a connect report. Some are type specs: `agent-memory-system-review` embeds the review lens and required sections in the type contract, so a worker can draft the review without a generated instruction note. Some are generated prompts: the note-review system turns gate definitions, target notes, pre-resolved links, and sentinel output contracts into run-specific reviewer instructions.
+- **General directed reading** uses a frontloaded instruction note when the lens, inputs, or output contract are task-specific. This is the right shape for ad hoc source analysis, multi-document synthesis, literature review, and deep search iterations.
+
+The skill boundary should be directed reading, not frontloading. Frontloading is the method: prepare the paths, lens, project goals, relevant context, freshness assumptions, and output contract before the LLM call that does the semantic reading. Directed reading is the user-facing task: read specified material through a lens and produce a bounded artifact. A generic "frontloading" skill would mostly restate the stable rule "prepare what the next call needs," and that risks the infinite-regress problem this workshop now treats as a boundary condition.
+
+The proposed general skill is therefore `cp-skill-directed-reading`. Its normal mode executes a directed-reading task when the caller has already supplied the sources, lens, goal, and output target. Its preparation mode writes a self-contained directed-reading instruction note when the task is broad, multi-source, ambiguous, delegated to a sub-agent, or expensive enough that source selection and framing should not be rediscovered. In that mode, the skill frontloads the caller's judgment; it does not make frontloading itself the top-level task.
+
+Trying to generalize beyond the specialized contracts (multiple documents, goal as a note, custom report shape) revealed a deeper pattern:
 
 **Instructions notes** — self-contained work packets that a sub-agent can execute with clean context.
 
@@ -17,23 +26,61 @@ An instructions note contains:
 - **Goal** — what to do with them (inline or by reference to another note)
 - **Output spec** — where to put results, what form they should take
 
-The key property: a sub-agent can pick up an instructions note cold and execute it, without the conversation history that produced it. This is a **clean context boundary** — the gathering phase explores broadly, then codifys into a compact handoff.
+The key property: a sub-agent can pick up an instructions note cold and execute it, without the conversation history that produced it. This is a **clean context boundary** — the gathering phase explores broadly, then codifies into a compact handoff. In the terminology of [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md), the caller pre-computes selection, relevance, paths, goals, and output shape so the callee spends its bounded context on the semantic work that remains.
 
-Directed reading is one case: "read these documents through this lens, produce a report." But instructions could also say "extract claims," "compare these designs," "update this index."
+Directed reading is one case: "read these documents through this lens, produce a report." Specialized skills and type specs cover repeated cases where the lens and output are stable; instruction notes cover one-off or higher-variance cases. Instructions could also say "extract claims," "compare these designs," "update this index."
+
+This gives a stopping rule for the skill itself:
+
+- Use a specialized contract (`cp-skill-ingest`, `cp-skill-connect`, a type spec, or a generated review prompt) when the lens and output contract are stable.
+- Use `cp-skill-directed-reading` directly when the caller has already provided a task-specific lens and output target.
+- Use `cp-skill-directed-reading` to write an instruction note only when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call.
+- Do not create a frontloaded instruction note when it would merely repeat a stable skill contract already loaded by the callee.
+
+## Revival: connect and ingest as directed reading
+
+The workshop is reopened for a narrower implementation-facing question: how should `cp-skill-connect` become a general installed-KB tool?
+
+Ingest and connect are both concrete directed-reading passes. Ingest reads a source through the KB-assimilation lens: classify it, summarize it, place it against existing knowledge, identify extractable value, and recommend what to do next. Connect reads an artifact through the graph-integration lens: extract candidate relationships, reject weak matches, and write a report for a later writer. The current connect skill is effective in this repository, but its prose still carries assumptions from the commonplace methodology KB: examples from `kb/agent-memory-systems/`, `learning-theory-index.md`, snapshots, ingest reports, `kb/log.md`, and a reader-value frame centered on what an agent gains by traversing links.
+
+This makes ingest, connect, type-driven reviews, and generated review prompts specialized frontloading artifacts in the same family as instruction notes. Ingest spends source-reading and classification effort early, producing a compact source-facing artifact. Connect spends search and judgment effort early, records candidate relationship context in a report, and gives the later writer or instruction note something explicit to load instead of rediscovering the graph from scratch. The memory-system-review type similarly frontloads the comparison lens, required source checks, and output sections into the type spec itself. The note-review system frontloads gate text, link resolution, reading boundaries, and exact output parsing rules into a prompt generated for one review run.
+
+The frontloading test also constrains the redesign: project goals and collection contracts are known before a connect run and should be loaded as the frame; target interpretation and candidate judgment are dynamic and still belong inside the run. The report is the frontloaded artifact for the next stage.
+
+The workshop should also guard against infinite frontloading regress: generate a special connect instruction only when it removes real repeated discovery or ambiguity, not when it merely restates the stable `cp-skill-connect` contract.
+
+For installed KBs, the split should be:
+
+- `AGENTS.md ## KB Goals` supplies the standing goal frame: what belongs, who the KB serves, and what kind of value is worth surfacing.
+- `COLLECTION.md` supplies the source-collection contract: destinations, authorised labels, search guidance, exclusions, and posture.
+- The connect report remains the output contract: candidate edges and follow-up signals, not committed KB state.
+
+The first pass should keep the one-target workflow, keep `COLLECTION.md` as a hard requirement, and keep the existing report sections. The immediate work is to remove repo-specific examples, make the project goal frame explicit, and analyse whether the articulation test should become "what does the intended KB consumer gain by following this link under this project's goals?"
+
+Working notes:
+
+- [connect-generalization](./connect-generalization.md)
+- [directed-reading-inventory](./directed-reading-inventory.md)
+- [ingest-generalization](./ingest-generalization.md)
 
 ## What this enables
 
-- **Source ingestion** — gather phase writes instructions, sub-agent executes directed reading
-- **Note synthesis** — instructions note links two notes + says how to combine them
-- **Literature review** — one instructions note, many input documents, one goal
-- **Deep search** — a loop: each iteration writes instructions for the next sub-agent
-- **Any delegatable work** — the pattern is general: research → write instructions → spawn clean sub-agent
+- **Source ingestion** — specialized directed reading through the KB-assimilation lens
+- **Connection discovery** — specialized directed reading through the graph-integration lens
+- **Code-grounded reviews** — specialized directed reading through a type spec such as `agent-memory-system-review`
+- **Gate reviews** — generated directed reading where review gates define the evaluative lens and the prompt supplies note text, link tables, and an output contract
+- **Note synthesis** — general directed reading where an instruction note links two notes and says how to combine them
+- **Literature review** — general directed reading with one instruction note, many input documents, and one synthesis goal
+- **Deep search** — a loop where each iteration writes instructions for the next sub-agent
+- **Any delegatable work** — the general pattern is research → write instructions → spawn clean sub-agent
+- **General directed-reading skill** — a reusable skill that either executes a supplied lens-shaped reading task or writes the instruction note that frontloads a later delegated reading task
 
 ## What we want to discover
 
 - What does an instructions note actually look like? Enough structure to be unambiguous, loose enough to be general.
-- Does the ingestion workflow become "research → write instructions → spawn sub-agent"?
-- Is `directed-reading.md` a skill that instructions reference, or is it inlined into the instructions?
+- When is the standard ingest lens enough, and when should source work become "research → write instructions → spawn sub-agent"?
+- What should `cp-skill-directed-reading` load from `directed-reading.md`, and what should a generated instruction note inline so the callee can execute cold?
+- Which trigger phrases should route to direct execution versus instruction-note preparation?
 - What other workflows naturally produce instructions notes?
 - Where do instructions notes live — in `kb/work/`? Next to the goal? Ephemeral or persistent?
 
@@ -48,7 +95,7 @@ Directed reading is one case: "read these documents through this lens, produce a
 **What happened:**
 - Procedure worked end-to-end: copy → connect → read with purpose → save → cleanup
 - `/connect` found connections on the working copy without touching the original (cleanup step was missing from procedure, now added)
-- The goal shaped the report structure naturally — came out as an operation inventory + gap analysis, not the generic summary that `/ingest` would have produced
+- The goal shaped the report structure naturally — came out as an operation inventory + gap analysis, not the standard KB-assimilation summary that `/ingest` would have produced
 - Inline goal worked fine for a focused question like this
 
 **Observations:**
@@ -91,7 +138,7 @@ Directed reading is one case: "read these documents through this lens, produce a
 
 ### Experiment 3: Literature review — web search → ingest → instructions → sub-agent (2026-03-05)
 
-**Instructions note:** `kb/work/ingestion-and-deep-search/instructions-memory-systems-review.md`
+**Instructions note:** retired. The generated `instructions-memory-systems-review.md` was an experiment artifact; its reusable review-writing contract has since been distilled into [agent-memory-system-review](../../agent-memory-systems/types/agent-memory-system-review.md).
 **Documents:** 5 ingest reports (Mem0, Graphiti, Cognee, Letta, A-MEM) + 4 existing related-system notes + related-systems-index
 **Goal:** Comparative review of agentic memory systems — identify architectural dimensions, place each system, surface design trade-offs
 **Report:** `kb/sources/agentic-memory-systems-comparative-review.md`
@@ -124,3 +171,4 @@ Directed reading is one case: "read these documents through this lens, produce a
 - Instructions notes scale well to 10 inputs. The sub-agent read everything and produced a coherent synthesis. The constraint is the sub-agent's context window, not the instructions format.
 - The caller's research (reading source code, writing informed snapshots) is what makes the review valuable. A shallower discovery phase (just README summaries) would have produced a shallower review. Instruction quality reflects caller effort.
 - This experiment answers one of the workshop's original questions: "What other workflows naturally produce instructions notes?" Literature review is a natural fit — the discovery phase produces the knowledge needed to write good instructions.
+- The memory-system-review instruction should not remain as a separate workshop procedure. The stable contract belongs with the review type, where future workers will actually load it.

@@ -9,5 +9,8 @@ index_source: directory
 ← [Parent](../dir-index.md)
 
 - [Instructions: A-MEM automation-quality trade-off](./instructions-amem-automation-quality.md)
-- [Instructions: Comparative Review of Agentic Memory Systems](./instructions-memory-systems-review.md)
+- [Connect generalization for installed KBs](./connect-generalization.md)
+- [Plan: universalize connect and ingest](./connect-ingest-universalization-plan.md)
+- [Directed-reading contract inventory](./directed-reading-inventory.md)
+- [Ingest generalization for installed KBs](./ingest-generalization.md)
 - [Writing Directed Reading Instructions](./directed-reading.md)
