@@ -12,7 +12,7 @@ When instructing LLMs, any part of the instructions whose inputs are known befor
 
 ## The context saving
 
-[Context is the central scarce resource in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Frontloading addresses the complexity dimension of that scarcity: executing a procedure inside a bounded call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
+[Context is the central scarce resource in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Frontloading addresses the complexity dimension of that scarcity: executing a procedure inside an LLM call costs more context than inserting its result. The procedure text itself may be small — "search for X in `kb/notes/`" is a single line — but execution generates artifacts that persist in the context window: tool calls, search results, reasoning traces, interpretation. All of that competes with the work that actually needs the LLM's judgment. A pre-computed listing costs only the bytes of the listing itself; the same listing produced at runtime costs the instruction, the tool call, the full output, and the LLM's interpretation of it — on every invocation.
 
 The saving extends beyond procedure execution to **discovery avoidance**. When values like paths, endpoints, or configuration are pre-resolved, the agent never spends tokens determining them at runtime — no searching, no trial-and-error, no asking the user. The resolution can happen entirely outside the agent: at installation time, build time, or session start. This is the most basic form of frontloading — replacing what the agent would have to figure out with what is already known.
 
@@ -28,9 +28,25 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 Anything that depends on the user's current request, the conversation state, or the evolving task is dynamic and not frontloadable. The boundary isn't always sharp — some sub-procedures depend partially on known and partially on runtime information. In those cases, frontload the known parts and leave the runtime-dependent parts as instructions.
 
+A frontloaded artifact also needs a validity window. File listings, search results, resolved paths, and configuration are safe to insert only when their inputs remain stable for the consuming LLM call, or when the artifact carries enough [lineage](./definitions/lineage.md), timestamp, or regeneration instruction for a scheduler or callee to refresh it.
+
+That test says when frontloading is possible. It does not by itself mean another frontloaded artifact is worth creating.
+
+## Frontloading needs a stopping rule
+
+Without a stopping rule, frontloading can regress indefinitely. An ad hoc instruction artifact — a one-off prompt or markdown work packet prepared for a later LLM call — can itself be prepared by another ad hoc instruction artifact, and so on. A system can spend its context budget planning how to prepare the next LLM call instead of doing the semantic work the boundary was meant to protect.
+
+The practical rule:
+
+> Frontload when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call. Do not frontload when the pre-step merely restates a stable skill contract already loaded by the callee.
+
+This distinguishes frontloaded handoff from procedural duplication. If the next agent would otherwise need to search, resolve paths, choose relevant documents, infer the task lens, or disambiguate the goal, an ad hoc instruction artifact can save context and reduce error. If the generated artifact only says "run the existing skill according to its normal procedure," it adds another artifact without removing meaningful runtime work.
+
+The same boundary applies to reusable skills. Stable, repeated procedure belongs in the skill or collection contract. Target-specific selection and framing may belong in an ad hoc instruction artifact. A one-off instruction to invoke a stable skill is justified only when it carries extra judgment the skill cannot infer from its normal inputs.
+
 ## Frontloading vs codification
 
-[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. In those cases the pre-computed result happens to be deterministic, so frontloading and [codification](./definitions/codification.md) (committing to a single deterministic output) apply simultaneously. But frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
+[Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. They can also be [constraining](./definitions/constraining.md) when they narrow the interpretations available to a later consumer. They become [codification](./definitions/codification.md) only when the pre-computed result is consumed by a symbolic artifact with formal semantics or assigned consequences, such as a schema, route table, validator input, or executable function. Deterministic prose generation by itself is frontloading and possibly constraining, but not automatically codification. Frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
 
 ## The mechanism: partial evaluation or divide-and-conquer?
 
@@ -63,20 +79,21 @@ Standard PE assumes precise denotational semantics, exact equivalence, and time 
 - Replacing a procedure with its result is only approximately equivalent
 - The gain is context and reliability, not runtime speed
 
-Those differences matter for theory, but not for the practical benefit. Frontloading saves context by removing procedures from the bounded LLM call. The homoiconicity of the medium is what makes the PE framing precise rather than merely metaphorical — without it, "pre-compute and insert" would be just divide-and-conquer.
+Those differences matter for theory, but not for the practical benefit. Frontloading saves context by removing procedures from the LLM call. The homoiconicity of the medium makes the PE framing structurally useful rather than a loose metaphor: it is precise about medium-preserving substitution, while semantic equivalence remains approximate. Without that shared text medium, "pre-compute and insert" would be just divide-and-conquer.
 
 ## Relationship to the scheduling model
 
-The [symbolic scheduling model](./bounded-context-orchestration-model.md) models frontloading as the single-step case of its separation between symbolic computation and bounded LLM calls: pre-compute what can be known, reserve the bounded call for what requires judgment.
+The [symbolic scheduling model](./bounded-context-orchestration-model.md) models frontloading as the single-step case of its separation between symbolic computation and LLM calls: pre-compute what can be known, reserve the LLM call for what requires judgment.
 
 ---
 
 Relevant Notes:
 
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is both frontloading (spares context) and [codification](./definitions/codification.md) (replaces underspecified template with deterministic literal)
-- [generate instructions at build time](./generate-instructions-at-build-time.md) — overlaps: template expansion is both frontloading and codification; the notes already link to constraining for the semantic-commitment aspect
-- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
-- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
-- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity is what makes frontloading partial evaluation rather than just divide-and-conquer — the pre-computed result re-enters the instruction stream without format conversion
-- [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and bounded LLM calls
+- [Indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is frontloading and constraining; it becomes codification only when a formal mechanism consumes the resolved value
+- [Generate KB skills at build time, don't parameterise them](./generate-instructions-at-build-time.md) — overlaps: template expansion frontloads setup work and may codify generated fields when downstream tooling assigns them consequences
+- [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
+- [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — application: ad hoc instruction artifacts frontload caller judgment at a clean context boundary, but should not merely duplicate stable skill contracts
+- [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
+- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
+- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity supports the partial-evaluation framing because the pre-computed result re-enters the instruction stream without format conversion
+- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and LLM calls
