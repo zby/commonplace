@@ -18,9 +18,9 @@ The saving extends beyond procedure execution to **discovery avoidance**. When v
 
 ## The constitutive case
 
-Frontloading is fundamentally **constitutive**: it shapes what fits in a consuming call's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md). Without it, operations that would otherwise overflow the bound don't happen — most starkly when a parent agent hands work to a sub-agent with no access to the parent's conversation, but also whenever discovery at runtime would cost more context than the consumer can spare for it.
+The most important argument for frontloading is **constitutive**: it shapes what fits in a consuming call's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md). Without it, operations that would otherwise overflow the bound don't happen — most starkly when a parent agent hands work to a sub-agent with no access to the parent's conversation, but also whenever discovery at runtime would cost more context than the consumer can spare for it.
 
-The **economic** aspect is secondary: when frontloading happens once at build-time, install-time, or session-start, the savings accumulate across many runtime calls that would otherwise redo the work. Broad scope improves the economic case, but the constitutive reason — making bounded-context computation possible — is the more important argument at every scope.
+In some cases, frontloading also has **economic** results: when the pre-computation happens once at build-time, install-time, or session-start, the savings accumulate across many runtime calls that would otherwise redo the work. Broad scope amplifies this economic benefit when it applies, but the constitutive case is the load-bearing reason for the operation.
 
 ## What qualifies for frontloading
 
