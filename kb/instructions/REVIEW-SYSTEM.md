@@ -24,23 +24,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 ## Authoring a gate
 
-Gate files live at `kb/instructions/review-gates/{lens}/{name}.md`. Each is typed `kb/types/instruction.md` with gate-specific frontmatter and body sections that `kb/types/instruction.schema.yaml` enforces conditionally on `gate_id`.
-
-**Frontmatter**
-
-- `gate_id: {lens}/{name}` — matches the file path under `review-gates/`.
-- `name: {Human-Readable Name}` — used in rendered reviews.
-- `lens: {bundle}` — the bundle this gate belongs to (`accessibility`, `semantic`, etc.).
-- `watches: [body | frontmatter | ...]` — which parts of the target the gate inspects.
-- `staleness: changed | always | ...` — when an accepted review becomes stale.
-- `description` — the trigger condition, as for any instruction.
-- `requires_trait` or `requires-type` — when the gate applies only to a narrower target set.
-
-**Body**
-
-- `## Failure mode` — the failure the reviewer is looking for, stated as the concrete pattern that should not appear.
-- `## Test` — the procedure for deciding PASS, WARN, or INFO. Name exceptions explicitly so the reviewer does not double-flag adjacent gates.
-- Optional `## Example (pass)` and `## Example (fail)` blocks make the test concrete. Existing gates under `kb/instructions/review-gates/` carry at least one of each — copy their shape rather than reinventing it.
+Gates are typed `kb/types/review-gate.md`. See [that type spec](../types/review-gate.md) for the frontmatter and body contract, and `kb/instructions/review-gates/` for examples. This document covers runtime concepts (bundles, freshness, acceptance, write paths); the type owns the authored shape.
 
 ## Storage model
 

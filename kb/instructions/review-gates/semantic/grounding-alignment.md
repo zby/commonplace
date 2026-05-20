@@ -2,7 +2,7 @@
 gate_id: semantic/grounding-alignment
 name: Grounding alignment
 description: 'The note cites sources or linked notes as if they ground a claim more directly or more broadly than they actually do.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed

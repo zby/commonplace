@@ -2,7 +2,7 @@
 gate_id: prose/anthropomorphic-framing
 name: Anthropomorphic framing
 description: 'The note attributes human-like mental properties to models where more precise technical language would be more accurate.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: prose
 watches: [body]
 staleness: changed

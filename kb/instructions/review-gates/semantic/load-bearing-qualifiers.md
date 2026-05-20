@@ -2,7 +2,7 @@
 gate_id: semantic/load-bearing-qualifiers
 name: Load-bearing qualifiers
 description: 'A claim is narrower than its argument requires because a qualifier, precondition, or scope restriction appears in the title, description, or proof without doing work in the reasoning.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: semantic
 watches: [title, description, body]
 staleness: changed

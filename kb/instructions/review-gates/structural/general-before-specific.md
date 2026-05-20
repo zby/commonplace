@@ -2,7 +2,7 @@
 gate_id: structural/general-before-specific
 name: General before specific
 description: 'A section about a specific case, exception, or tension appears before the section that states the general pattern it exemplifies.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: structural
 watches: [body]
 staleness: changed

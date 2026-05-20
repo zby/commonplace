@@ -14,7 +14,8 @@ The shipped commonplace scaffold installs global type specs under `kb/types/` an
 | Type | Path | Use |
 |---|---|---|
 | `note` | `kb/types/note.md` | Base structured note with description, status, traits, and tags. |
-| `instruction` | `kb/types/instruction.md` | Procedures, promoted skill bodies, wrapper prompts, and review gates. |
+| `instruction` | `kb/types/instruction.md` | Procedures, promoted skill bodies, wrapper prompts, work packets handed to sub-agents. |
+| `review-gate` | `kb/types/review-gate.md` | A single quality check the review system applies to KB artifacts. |
 | `definition` | `kb/types/definition.md` | Operational vocabulary definitions. |
 | `index` | `kb/types/index.md` | Navigation hubs and generated directory or tag indexes. |
 | `type-spec` | `kb/types/type-spec.md` | Metadata contract for type-spec docs themselves. |

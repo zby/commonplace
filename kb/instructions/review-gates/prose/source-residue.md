@@ -2,7 +2,7 @@
 gate_id: prose/source-residue
 name: Source residue
 description: 'The note was generalized from a narrower source, but domain-specific framing leaked through and now overcommits the note to that source domain.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: prose
 watches: [body]
 staleness: changed

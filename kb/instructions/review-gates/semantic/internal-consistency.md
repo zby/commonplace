@@ -2,7 +2,7 @@
 gate_id: semantic/internal-consistency
 name: Internal consistency
 description: 'Different parts of the note contradict each other, shift definitions, or compress tensions away in the summary.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed

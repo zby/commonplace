@@ -2,7 +2,7 @@
 gate_id: semantic/explanatory-reach
 name: Explanatory reach
 description: 'The note records a pattern or outcome without explaining why it holds. The claim is easy to vary — you could swap the evidence or change a premise and the conclusion would still sound plausible, because nothing in the argument constrains it.'
-type: kb/types/instruction.md
+type: kb/types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed
