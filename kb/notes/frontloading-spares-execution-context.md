@@ -44,11 +44,7 @@ Frontloading can also be [constraining](./definitions/constraining.md) when it n
 
 ## Mechanism
 
-The substitution is more precisely partial evaluation than divide-and-conquer because LLM context is a homoiconic medium — the pre-computed result re-enters the instruction stream as a residual program in the same medium. See [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) for the developed argument, the PE concept table, and where the analogy stretches.
-
-## Relationship to the scheduling model
-
-The [symbolic scheduling model](./bounded-context-orchestration-model.md) models frontloading as the single-step case of its separation between symbolic computation and LLM calls: pre-compute what can be known, reserve the LLM call for what requires judgment.
+The most common realization is inlining — the pre-computed result substituted directly into the instruction stream. See [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) for why this is more precisely partial evaluation than divide-and-conquer in a homoiconic medium. At the architecture level, the [symbolic scheduling model](./bounded-context-orchestration-model.md) treats frontloading as the single-step case of its separation between symbolic computation and LLM calls: pre-compute what can be known, reserve the LLM call for what requires judgment.
 
 ---
 
