@@ -38,8 +38,6 @@ Without a stopping rule, frontloading regresses: an ad hoc instruction can itsel
 
 > Frontload when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call. Do not frontload when the pre-step merely restates a stable skill contract already loaded by the callee.
 
-The same boundary applies to reusable skills: stable repeated procedure belongs in the skill contract; an ad hoc instruction is justified only when it carries judgment the skill cannot infer from its normal inputs.
-
 ## Frontloading vs codification
 
 [Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. They can also be [constraining](./definitions/constraining.md) when they narrow the interpretations available to a later consumer. They become [codification](./definitions/codification.md) only when the pre-computed result is consumed by a symbolic artifact with formal semantics or assigned consequences, such as a schema, route table, validator input, or executable function. Deterministic prose generation by itself is frontloading and possibly constraining, but not automatically codification. Frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
