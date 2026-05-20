@@ -15,6 +15,12 @@ Definition notes are constraining artifacts for language. They narrow future int
 
 A definition note is not an operating manual for the technique the term names. It may include brief practical context when that context explains the boundary of the term, but detailed advice about when, whether, or how to perform the technique belongs in an instruction, ADR, workshop, or ordinary note linked from the definition.
 
+## When To Create One
+
+Create a definition note when the KB needs a low-cost canonical gloss that also narrows interpretation. The economic test is context cost: if the best existing target is too long, too argumentative, or too multi-purpose to load just to understand the term, split out a definition and link the developed artifact for the argument, mechanism, or procedure.
+
+A separate definition is especially justified when the term appears across multiple workflows or notes, when misuse is plausible, or when nearby concepts need a stable boundary. Do not create one merely because the term is important; ordinary notes can serve as glossary targets while they remain cheap and focused enough for that job.
+
 ## Explication Frame
 
 Use Carnap's explication criteria pragmatically:
@@ -40,7 +46,7 @@ A good definition note should answer:
 ## Writing Constraints
 
 - Do not write a philosophical survey unless the survey changes how agents should use the term.
-- Do not define ordinary terms that are already unambiguous in context.
+- Do not define ordinary terms that are already unambiguous in context or already have a cheap, focused glossary target.
 - Prefer short operational contrasts over exhaustive taxonomies.
 - Link to related definition notes when the boundary matters.
 - Use examples only when they sharpen future usage.
