@@ -16,9 +16,11 @@ When instructing LLMs, parts of the instructions whose inputs are known before t
 
 The saving extends beyond procedure execution to **discovery avoidance**. When values like paths, endpoints, or configuration are pre-resolved, the agent never spends tokens determining them at runtime — no searching, no trial-and-error, no asking the user. The resolution can happen entirely outside the agent: at installation time, build time, or session start. This is the most basic form of frontloading — replacing what the agent would have to figure out with what is already known.
 
-## Economic vs constitutive
+## The constitutive case
 
-The motivation for frontloading shifts along the scope gradient. Broad-scope frontloading (build-time, install-time, session-start) is **economic** — the same work would otherwise repeat across many runtime calls, and frontloading saves the repetition. Narrow-scope frontloading (a parent agent computing instructions for a sub-agent it spawns) is often **constitutive** rather than economic: without it, the sub-agent's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md) wouldn't fit the operation. The narrow-scope case is not an optimisation; it's what makes the bounded handoff possible at all.
+Frontloading is fundamentally **constitutive**: it shapes what fits in a consuming call's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md). Without it, operations that would otherwise overflow the bound don't happen — most starkly when a parent agent hands work to a sub-agent with no access to the parent's conversation, but also whenever discovery at runtime would cost more context than the consumer can spare for it.
+
+The **economic** aspect is secondary: when frontloading happens once at build-time, install-time, or session-start, the savings accumulate across many runtime calls that would otherwise redo the work. Broad scope improves the economic case, but the constitutive reason — making bounded-context computation possible — is the more important argument at every scope.
 
 ## What qualifies for frontloading
 
