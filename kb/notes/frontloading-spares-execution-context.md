@@ -1,5 +1,5 @@
 ---
-description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs; the mechanism is partial evaluation applied to instructions with underspecified semantics
+description: Pre-computing static parts of LLM instructions and inserting results spares execution context — the primary bottleneck in instructing LLMs
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: []
@@ -48,38 +48,9 @@ The same boundary applies to reusable skills. Stable, repeated procedure belongs
 
 [Indirection elimination](./indirection-is-costly-in-llm-instructions.md) and [build-time generation](./generate-instructions-at-build-time.md) are common cases of frontloading. They can also be [constraining](./definitions/constraining.md) when they narrow the interpretations available to a later consumer. They become [codification](./definitions/codification.md) only when the pre-computed result is consumed by a symbolic artifact with formal semantics or assigned consequences, such as a schema, route table, validator input, or executable function. Deterministic prose generation by itself is frontloading and possibly constraining, but not automatically codification. Frontloading does not require determinism — the context saving comes from replacing derivation with insertion, whether the result is deterministic or still underspecified.
 
-## The mechanism: partial evaluation or divide-and-conquer?
+## Mechanism
 
-Frontloading looks like divide-and-conquer: solve a subproblem, pass the result to the next stage. Any system does this. But in LLM instruction systems, frontloading can also be viewed through the lens of partial evaluation.
-
-The key: LLM context is a [homoiconic medium](./llm-context-is-a-homoiconic-medium.md). Instructions and data are both natural language tokens. When you pre-compute a file listing and insert it into an instruction, the result is still a valid instruction — you've specialised a program with respect to known inputs, producing a residual program in the same medium. That's partial evaluation, not just preprocessing. In a non-homoiconic system, the pre-computed result would need a format conversion to re-enter the instruction stream; here it flows in directly because everything is text.
-
-Standard PE specialises a program P with respect to known **static** inputs s, producing a **residual program** Ps that needs only the remaining **dynamic** inputs d:
-
-```
-[[Ps]](d) = [[P]](s, d)
-```
-
-| PE concept | Frontloading equivalent |
-|---|---|
-| Program P | The instruction set (CLAUDE.md, skills, prompts) |
-| Static inputs s | Everything known before the LLM runs (paths, file listings, config, search results over stable content) |
-| Dynamic inputs d | The user's request, conversation state, evolving task |
-| Residual program Ps | The frontloaded instructions — static sub-procedures replaced with their results |
-| Binding-time analysis | The author's judgment about what depends on runtime context vs what doesn't |
-| Specialisation | The build-time/setup-time step that produces concrete instructions |
-
-Template variable expansion is textbook PE. The [generate-at-build-time](./generate-instructions-at-build-time.md) note describes a specialiser for skill templates.
-
-### Where the PE analogy stretches
-
-Standard PE assumes precise denotational semantics, exact equivalence, and time as the optimisation target. LLM instructions differ on all three points:
-
-- The "program" has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md), so there is no exact `[[P]]`
-- Replacing a procedure with its result is only approximately equivalent
-- The gain is context and reliability, not runtime speed
-
-Those differences matter for theory, but not for the practical benefit. Frontloading saves context by removing procedures from the LLM call. The homoiconicity of the medium makes the PE framing structurally useful rather than a loose metaphor: it is precise about medium-preserving substitution, while semantic equivalence remains approximate. Without that shared text medium, "pre-compute and insert" would be just divide-and-conquer.
+The substitution is more precisely partial evaluation than divide-and-conquer because LLM context is a homoiconic medium — the pre-computed result re-enters the instruction stream as a residual program in the same medium. See [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) for the developed argument, the PE concept table, and where the analogy stretches.
 
 ## Relationship to the scheduling model
 
@@ -94,6 +65,5 @@ Relevant Notes:
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
 - [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — application: ad hoc instruction artifacts frontload caller judgment at a clean context boundary, but should not merely duplicate stable skill contracts
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — context: the underspecified semantics of LLM instructions is the domain PE operates in here
-- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — enables: homoiconicity supports the partial-evaluation framing because the pre-computed result re-enters the instruction stream without format conversion
+- [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) — mechanism: the theoretical framing for why pre-compute-and-insert is precise, not metaphorical, in a homoiconic medium
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and LLM calls
