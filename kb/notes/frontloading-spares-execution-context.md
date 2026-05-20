@@ -16,6 +16,10 @@ When instructing LLMs, parts of the instructions whose inputs are known before t
 
 The saving extends beyond procedure execution to **discovery avoidance**. When values like paths, endpoints, or configuration are pre-resolved, the agent never spends tokens determining them at runtime — no searching, no trial-and-error, no asking the user. The resolution can happen entirely outside the agent: at installation time, build time, or session start. This is the most basic form of frontloading — replacing what the agent would have to figure out with what is already known.
 
+## Economic vs constitutive
+
+The motivation for frontloading shifts along the scope gradient. Broad-scope frontloading (build-time, install-time, session-start) is **economic** — the same work would otherwise repeat across many runtime calls, and frontloading saves the repetition. Narrow-scope frontloading (a parent agent computing instructions for a sub-agent it spawns) is often **constitutive** rather than economic: without it, the sub-agent's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md) wouldn't fit the operation. The narrow-scope case is not an optimisation; it's what makes the bounded handoff possible at all.
+
 ## What qualifies for frontloading
 
 The test: can this be computed without the LLM's runtime state (the conversation, the user's query, the evolving task)?
@@ -26,7 +30,7 @@ The test: can this be computed without the LLM's runtime state (the conversation
 - Aggregations — counts, summaries of known datasets, pre-computed indexes
 - Template expansion — [build-time generation](./generate-instructions-at-build-time.md) of skills and instructions
 
-Anything that depends on the consuming call's runtime state — the user's current request, the conversation state, the evolving task — is dynamic relative to that call and not frontloadable into it. But static and dynamic are relative to the consumer, not absolute, and frontloading happens along a gradient of scopes. At broader scopes (build-time, install-time, session-start), pre-computed results frontload economically — the same work would otherwise be repeated across many calls. At narrower scopes — a parent agent computing instructions for a sub-agent it spawns — the parent's judgment is dynamic for itself but static for the sub-agent, and frontloading it is often constitutive rather than economic: without it, the sub-agent's [effective context](./effective-context-is-task-relative-and-complexity-relative-not-a.md) wouldn't fit the operation at all. Hybrid sub-procedures are common; frontload the known parts and leave the runtime-dependent parts as instructions.
+Anything that depends on the consuming call's runtime state — the user's current request, the conversation state, the evolving task — is dynamic relative to that call and not frontloadable into it. Static and dynamic are relative to the consumer, not absolute: state that is dynamic for a parent agent's LLM can be static for a sub-agent it spawns, since the parent can package its judgment as a self-contained instruction. Hybrid sub-procedures are common; frontload the known parts and leave the runtime-dependent parts as instructions.
 
 A frontloaded artifact also needs a validity window. File listings, search results, resolved paths, and configuration are safe to insert only when their inputs remain stable for the consuming LLM call, or when the artifact carries enough [lineage](./definitions/lineage.md), timestamp, or regeneration instruction for a scheduler or callee to refresh it.
 
