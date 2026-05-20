@@ -8,7 +8,7 @@ status: seedling
 
 # Frontloading spares execution context
 
-When instructing LLMs, parts of the instructions whose inputs are known before the LLM runs can be computed beforehand and the result inserted directly. This spares execution context — the primary bottleneck in LLM-based systems — when the pre-step removes work the LLM would otherwise repeat. The stopping rule below distinguishes the cases worth frontloading from candidates that look frontloadable but shouldn't be.
+When instructing LLMs, parts of the instructions whose inputs are known before the LLM runs can be computed beforehand and the result inserted directly. This spares execution context (the prompt-and-reasoning budget inside a single call) — a primary bottleneck in LLM-based systems — when the pre-step removes work the LLM would otherwise repeat. The stopping rule below distinguishes the cases worth frontloading from candidates that look frontloadable but shouldn't be.
 
 ## The context saving
 
@@ -34,7 +34,7 @@ The test: can this be computed without the LLM's runtime state (the conversation
 
 Anything that depends on the consuming call's runtime state — the user's current request, the conversation state, the evolving task — is dynamic relative to that call and not frontloadable into it. Static and dynamic are relative to the consumer, not absolute: state that is dynamic for a parent agent's LLM can be static for a sub-agent it spawns, since the parent can package its judgment as a self-contained instruction. Hybrid sub-procedures are common; frontload the known parts and leave the runtime-dependent parts as instructions.
 
-A frontloaded artifact also needs a validity window. File listings, search results, resolved paths, and configuration are safe to insert only when their inputs remain stable for the consuming LLM call, or when the artifact carries enough [lineage](./definitions/lineage.md), timestamp, or regeneration instruction for a scheduler or callee to refresh it.
+A frontloaded artifact also needs a validity window — the span during which its pre-computed inputs remain accurate. File listings, search results, resolved paths, and configuration are safe to insert only when their inputs remain stable for the consuming LLM call. When they aren't, the artifact must carry enough [lineage](./definitions/lineage.md) (what it depends on, and when it must be regenerated), timestamp, or regeneration instruction for a scheduler or callee to refresh it.
 
 That test says when frontloading is possible. It does not by itself mean another frontloaded artifact is worth creating.
 
@@ -58,9 +58,7 @@ Relevant Notes:
 
 - [Indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is frontloading and constraining; it becomes codification only when a formal mechanism consumes the resolved value
 - [Generate KB skills at build time, don't parameterise them](./generate-instructions-at-build-time.md) — overlaps: template expansion frontloads setup work and may codify generated fields when downstream tooling assigns them consequences
-- [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: frontloading addresses the complexity dimension of context scarcity
 - [Effective context is task-relative and complexity-relative](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — grounds: at narrow scopes, frontloading is constitutive rather than economic because effective context, not raw context window, is the binding constraint
 - [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — application: ad hoc instruction artifacts frontload caller judgment at a clean context boundary, but should not merely duplicate stable skill contracts
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) — mechanism: the theoretical framing for why pre-compute-and-insert is precise, not metaphorical, in a homoiconic medium
-- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — models: frontloading is the single-step case of the scheduling model's separation between symbolic computation and LLM calls
