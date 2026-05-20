@@ -24,7 +24,7 @@ In some cases, frontloading also has an **economic** benefit: when the pre-compu
 
 ## What qualifies
 
-The test: can this be computed without the LLM's runtime state (the conversation, the user's query, the evolving task)?
+The test: can this be computed without the consuming call's runtime state (the conversation, the user's query, the evolving task)?
 
 **Static (frontloadable):**
 - Variable resolution — paths, project names, configuration values known at setup time (the [indirection elimination](./indirection-is-costly-in-llm-instructions.md) case)
@@ -32,7 +32,7 @@ The test: can this be computed without the LLM's runtime state (the conversation
 - Aggregations — counts, summaries of known datasets, pre-computed indexes
 - Template expansion — [build-time generation](./generate-instructions-at-build-time.md) of skills and instructions
 
-Anything that depends on the consuming call's runtime state is dynamic relative to that call. But static and dynamic are relative to the consumer, not absolute: state that is dynamic for a parent agent's LLM can be static for a sub-agent it spawns, since the parent can package its judgment as a self-contained instruction. Hybrid sub-procedures are common — frontload the known parts, instruct the rest.
+What counts as runtime state depends on the consumer. State that is dynamic for a parent agent's LLM can be static for a sub-agent it spawns, since the parent can package its judgment as a self-contained instruction. Hybrid sub-procedures are common — frontload the known parts, instruct the rest.
 
 A frontloaded artifact also needs a validity window — the span during which its pre-computed inputs remain accurate. When the inputs may change before the consuming call, the artifact must carry enough [lineage](./definitions/lineage.md) (what it depends on, and when it must be regenerated), timestamp, or regeneration instruction for a scheduler or callee to refresh it.
 
