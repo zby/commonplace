@@ -37,25 +37,20 @@ This gives a stopping rule for the skill itself:
 - Use `cp-skill-directed-reading` to write an instruction note only when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call.
 - Do not create a frontloaded instruction note when it would merely repeat a stable skill contract already loaded by the callee.
 
-## Revival: connect and ingest as directed reading
+## Implemented: connect and ingest as installed-KB contracts
 
-The workshop is reopened for a narrower implementation-facing question: how should `cp-skill-connect` become a general installed-KB tool?
+The implementation-facing revival has been completed. `cp-skill-connect` and `cp-skill-ingest` were generalized so they work as installed-KB skills instead of quietly assuming this repository's methodology-KB shape.
 
-Ingest and connect are both concrete directed-reading passes. Ingest reads a source through the KB-assimilation lens: classify it, summarize it, place it against existing knowledge, identify extractable value, and recommend what to do next. Connect reads an artifact through the graph-integration lens: extract candidate relationships, reject weak matches, and write a report for a later writer. The current connect skill is effective in this repository, but its prose still carries assumptions from the commonplace methodology KB: examples from `kb/agent-memory-systems/`, `learning-theory-index.md`, snapshots, ingest reports, `kb/log.md`, and a reader-value frame centered on what an agent gains by traversing links.
+The shipped contracts now use this split:
 
-This makes ingest, connect, type-driven reviews, and generated review prompts specialized frontloading artifacts in the same family as instruction notes. Ingest spends source-reading and classification effort early, producing a compact source-facing artifact. Connect spends search and judgment effort early, records candidate relationship context in a report, and gives the later writer or instruction note something explicit to load instead of rediscovering the graph from scratch. The memory-system-review type similarly frontloads the comparison lens, required source checks, and output sections into the type spec itself. The note-review system frontloads gate text, link resolution, reading boundaries, and exact output parsing rules into a prompt generated for one review run.
+- `AGENTS.md ## KB Goals` supplies the standing goal frame, including in forked skill contexts.
+- `COLLECTION.md` supplies collection-local destinations, authorised labels, search guidance, exclusions, and posture.
+- The skill owns execution: routing, setup, tool use, delegated skill calls, and file writes.
+- The type owns the report contract: section meanings, quality standards, and templates.
+- `connect` writes only a gitignored connect report; maintenance signals stay in `Maintenance Observations`.
+- `ingest` writes only the `.ingest.md` report; promotion into notes, reference docs, instructions, ADRs, logs, or indexes is a later explicit step.
 
-The frontloading test also constrains the redesign: project goals and collection contracts are known before a connect run and should be loaded as the frame; target interpretation and candidate judgment are dynamic and still belong inside the run. The report is the frontloaded artifact for the next stage.
-
-The workshop should also guard against infinite frontloading regress: generate a special connect instruction only when it removes real repeated discovery or ambiguity, not when it merely restates the stable `cp-skill-connect` contract.
-
-For installed KBs, the split should be:
-
-- `AGENTS.md ## KB Goals` supplies the standing goal frame: what belongs, who the KB serves, and what kind of value is worth surfacing.
-- `COLLECTION.md` supplies the source-collection contract: destinations, authorised labels, search guidance, exclusions, and posture.
-- The connect report remains the output contract: candidate edges and follow-up signals, not committed KB state.
-
-The first pass should keep the one-target workflow, keep `COLLECTION.md` as a hard requirement, and keep the existing report sections. The immediate work is to remove repo-specific examples, make the project goal frame explicit, and analyse whether the articulation test should become "what does the intended KB consumer gain by following this link under this project's goals?"
+The retained design lesson is that ingest and connect are specialized reading contracts with stable lenses and output contracts. They should not require generated instruction notes during ordinary runs; a one-off instruction note is only justified when it removes real repeated discovery, runtime indirection, or task-specific ambiguity.
 
 Working notes:
 
