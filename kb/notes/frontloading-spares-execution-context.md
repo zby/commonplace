@@ -8,7 +8,7 @@ status: seedling
 
 # Frontloading spares execution context
 
-When instructing LLMs, any part of the instructions whose inputs are known before the LLM runs should be computed beforehand and the result inserted directly. This spares execution context — the primary bottleneck in LLM-based systems.
+When instructing LLMs, parts of the instructions whose inputs are known before the LLM runs can be computed beforehand and the result inserted directly. This spares execution context — the primary bottleneck in LLM-based systems — when the pre-step removes work the LLM would otherwise repeat. The stopping rule below distinguishes the cases worth frontloading from candidates that look frontloadable but shouldn't be.
 
 ## The context saving
 
