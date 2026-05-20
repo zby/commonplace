@@ -34,15 +34,11 @@ That test says when frontloading is possible. It does not by itself mean another
 
 ## Frontloading needs a stopping rule
 
-Without a stopping rule, frontloading can regress indefinitely. An ad hoc instruction artifact — a one-off prompt or markdown work packet prepared for a later LLM call — can itself be prepared by another ad hoc instruction artifact, and so on. A system can spend its context budget planning how to prepare the next LLM call instead of doing the semantic work the boundary was meant to protect.
-
-The practical rule:
+Without a stopping rule, frontloading regresses: an ad hoc instruction can itself be prepared by another, until the system spends its context budget planning how to prepare the next LLM call instead of doing the semantic work. The practical rule:
 
 > Frontload when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call. Do not frontload when the pre-step merely restates a stable skill contract already loaded by the callee.
 
-This distinguishes frontloaded handoff from procedural duplication. If the next agent would otherwise need to search, resolve paths, choose relevant documents, infer the task lens, or disambiguate the goal, an ad hoc instruction artifact can save context and reduce error. If the generated artifact only says "run the existing skill according to its normal procedure," it adds another artifact without removing meaningful runtime work.
-
-The same boundary applies to reusable skills. Stable, repeated procedure belongs in the skill or collection contract. Target-specific selection and framing may belong in an ad hoc instruction artifact. A one-off instruction to invoke a stable skill is justified only when it carries extra judgment the skill cannot infer from its normal inputs.
+The same boundary applies to reusable skills: stable repeated procedure belongs in the skill contract; an ad hoc instruction is justified only when it carries judgment the skill cannot infer from its normal inputs.
 
 ## Frontloading vs codification
 
