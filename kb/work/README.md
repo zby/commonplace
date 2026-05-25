@@ -27,4 +27,5 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [review-revise-gated](./review-revise-gated/README.md) — finding review/revise arrangements that reliably produce the manual-edit quality bar, then codifying as reusable instructions
 - [auditable-llm-editing](./auditable-llm-editing/README.md) — testing whether sparse, anchored writing state prevents accidental claim drift across repeated LLM editing passes
 - [shipping-model](./shipping-model/README.md) — deciding how commonplace ships its content so user collections stay theirs while our library sits alongside as a read-only dependency
+- [distributing-built-kbs](./distributing-built-kbs/README.md) — the downstream counterpart to shipping-model: most hassle-free way to distribute a domain KB someone built, by separating the lightweight consumer path from the authoring machinery
 - [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/notes/designing-agent-memory-systems.md`
