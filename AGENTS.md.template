@@ -82,7 +82,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/commonplace/` | namespace, not a collection | Locating shipped library collections; do not treat the namespace itself as governed content. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used by both user and shipped collections. |
 
-Nested `COLLECTION.md` files inside a collection are outside the current model; nested collection semantics are reserved until deliberately designed.
+Resolve an artifact's collection by walking up to the nearest ancestor `COLLECTION.md`. A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; introduce a `COLLECTION.md` inside another collection only deliberately.
 
 ```bash
 # Find notes by description

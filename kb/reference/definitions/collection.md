@@ -13,7 +13,11 @@ The contract usually defines the collection's purpose, register or content mode,
 
 Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs in `kb/types/` and local type specs in the collection's own `types/` directory; see [type-loading](../type-loading.md) for the resolution mechanics.
 
-Descendant directories are normally areas inside the collection and inherit its contract. A descendant directory that also carries `COLLECTION.md` is outside the current collection model; nested collection semantics are reserved until deliberately designed.
+To find the contract governing an artifact, walk up from its path to the nearest ancestor directory containing `COLLECTION.md`; that directory is the artifact's collection. A descendant directory with no `COLLECTION.md` of its own is an area of the enclosing collection and inherits its contract, such as `kb/notes/definitions/`.
+
+A `COLLECTION.md` inside a non-collection namespace, such as `kb/commonplace/notes/` under `kb/commonplace/`, is an ordinary collection rather than a nested collection. A `COLLECTION.md` inside another collection is the arrangement Commonplace does not currently author; the resolver would still bind paths to the nearest ancestor `COLLECTION.md`, so introduce collection-in-collection nesting only deliberately.
+
+The collection is also the unit for context-budget and boundary decisions such as validation scope, connect discovery, area splits, and generated indexes. This operational role is clearest in note collections, where full-text and index boundaries are load-bearing, but the same boundary reasoning applies to other collections with different budgets.
 
 The current source-repo collections include `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/agent-memory-systems/`, `kb/sources/`, and `kb/work/`. Installed projects expose selected shipped source collections under the `kb/commonplace/` namespace, such as `kb/commonplace/notes/`.
 

@@ -3,9 +3,11 @@
 This `kb/` tree is organized by filesystem contracts.
 
 A directory under `kb/` is a collection when it contains a local `COLLECTION.md`.
-Subdirectories inside a collection are normally areas. A subdirectory inside a
-collection that also carries `COLLECTION.md` is outside the current collection
-model; nested collection semantics are reserved until deliberately designed.
+To find the collection for an artifact, walk up to the nearest ancestor
+`COLLECTION.md`. Subdirectories inside a collection are normally areas. A
+`COLLECTION.md` inside a non-collection namespace is an ordinary collection; a
+`COLLECTION.md` inside another collection is a nesting pattern to introduce only
+deliberately.
 
 In this source repository, common collection roots include:
 

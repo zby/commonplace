@@ -94,6 +94,7 @@ A design insight is worth a note when it changes how someone would build or oper
 
 This section declares the active vocabulary: terms with specific meanings throughout this KB.
 
+- **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
 - **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/definitions/context-engineering.md`.
 - **Distillation** — targeted transformation of recorded material into a use-shaped artifact for a particular downstream consumer. In KB practice this is usually directed context compression, because agents and maintainers work under bounded context. ML knowledge distillation (Hinton) is a sibling instance in a different substrate. See `kb/notes/definitions/distillation.md`.
 - **Constraining** — making semantics more focused by narrowing the space of valid interpretations a text or symbolic artifact admits. Reliability, speed, cost control, and reviewability may follow, but they are consequences rather than the definition. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
@@ -132,7 +133,7 @@ The knowledge base lives in `kb/`. Search it when working on methodology, design
 
 ### Collection Routing
 
-Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
+Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
 
 | Path | Role | Use when |
 |---|---|---|
@@ -144,7 +145,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
 
-Nested `COLLECTION.md` files inside a collection are outside the current model; nested collection semantics are reserved until deliberately designed.
+Resolve an artifact's collection by walking up to the nearest ancestor `COLLECTION.md`. A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; introduce a `COLLECTION.md` inside another collection only deliberately.
 
 For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in directory/curated indexes before opening full files, and follow authored links when local context makes the relationship useful.
 
