@@ -8,5 +8,5 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [Instructions: A-MEM automation-quality trade-off](./instructions-amem-automation-quality.md)
 - [Directed-reading contract inventory](./directed-reading-inventory.md)
+- [Instructions: A-MEM automation-quality trade-off](./instructions-amem-automation-quality.md)

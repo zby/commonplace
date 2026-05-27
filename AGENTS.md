@@ -130,7 +130,21 @@ This section declares the active vocabulary: terms with specific meanings throug
 
 The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
 
-`kb/notes/` holds transferable claims and theory. `kb/reference/` holds shipped-system documentation and decision history for commonplace. `kb/instructions/` holds imperative procedures and how-to guidance.
+### Collection Routing
+
+Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
+
+| Path | Role | Use when |
+|---|---|---|
+| `kb/notes/` | theoretical register | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
+| `kb/reference/` | descriptive register | Describing the shipped commonplace system, architecture, type system, commands, and ADRs. |
+| `kb/instructions/` | prescriptive register | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
+| `kb/agent-memory-systems/` | descriptive external-system coverage | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
+| `kb/sources/` | captured source material | Storing external snapshots, ingests, and source reviews. |
+| `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
+| `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
+
+Nested `COLLECTION.md` files inside a collection are outside the current model; nested collection semantics are reserved until deliberately designed.
 
 For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in directory/curated indexes before opening full files, and follow authored links when local context makes the relationship useful.
 
@@ -163,4 +177,4 @@ The `llm-commonplace` package provides `commonplace-*` CLI commands for validati
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
 
-For writing conventions, each collection has a `COLLECTION.md` at its root: `kb/notes/COLLECTION.md` (theoretical register), `kb/reference/COLLECTION.md` (descriptive register), `kb/instructions/COLLECTION.md` (prescriptive register).
+For writing conventions, read the target collection's `COLLECTION.md`; it is the local authoring and routing contract for that collection.

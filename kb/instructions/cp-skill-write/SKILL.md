@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic] — a note path for editing, 
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection**: a top-level directory under `kb/` such as `kb/notes/`, `kb/reference/`, or `kb/instructions/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions. Nested `COLLECTION.md` files inside an existing collection are outside the current collection model.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 
@@ -23,13 +23,13 @@ Documents with frontmatter carry a path-valued `type:` that points to a type-spe
 
 **New-write mode**: everything else. Extract collection, type, and topic from the arguments. Defaults: collection `notes`, type `kb/types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
 
-For new writes, read the target collection's `## Types` section in `kb/<collection>/COLLECTION.md`. Pick one listed type path. If the requested type is not listed and the user did not give an explicit path, stop and list the available types. If the user gives an explicit `kb/.../*.md` type path, open that file and verify it is a type-spec doc before using it.
+For new writes, resolve the target collection to a directory under `kb/` with a local `COLLECTION.md`; shorthand names such as `notes` mean `kb/notes/`. Read that collection's `## Types` section and pick one listed type path. If the requested type is not listed and the user did not give an explicit path, stop and list the available types. If the user gives an explicit `kb/.../*.md` type path, open that file and verify it is a type-spec doc before using it.
 
 ### Step 2 - Load Collection Conventions
 
-Read `kb/<collection>/COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which destination collections this source may link to, which destinations are excluded, which labels are authorised for which source→destination pairs, and the reader-need each label serves. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
+Read the target collection's `COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which destination collections this source may link to, which destinations are excluded, which labels are authorised for which source->destination pairs, and the reader-need each label serves. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
 
-**Hard fail** if `kb/<collection>/COLLECTION.md` does not exist. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
+**Hard fail** if the target collection has no `COLLECTION.md`. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 
 ### Step 3 - Load The Type Spec
 

@@ -8,4 +8,4 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [Collection](./collection.md) *(definition)* - Top-level kb/ subdirectory that groups authored artifacts sharing a domain, owns or inherits a type contract, and is the unit at which operational context-budgeting decisions (validation, areas, boundary reasoning) are made
+- [Collection](./collection.md) *(definition)* - COLLECTION.md-bearing subtree under kb/ whose local authoring and routing contract tells agents how to write, connect, validate, and maintain artifacts in that subtree

@@ -18,7 +18,7 @@ Read this document to get the model. For the type catalog see [available-types](
 
 ## Collections
 
-A **collection** is a `kb/` directory with a local `COLLECTION.md` that groups artifacts sharing a domain, owns or inherits a type contract, and is the unit at which context-budget decisions (validation scope, connect discovery, area splits) are made. Subdirectories inside a collection are *areas* — they share the collection's type contract and budget rather than defining their own.
+A **collection** is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the local authoring and routing contract for artifacts in the subtree: purpose, register or mode, quality goal, placement boundaries, title and description conventions, type guidance, outbound-link policy, labels, search guidance, and lifecycle rules. Subdirectories inside a collection are normally *areas* under the same contract. A subdirectory inside a collection that also carries `COLLECTION.md` is outside the current collection model; nested collection semantics are reserved until deliberately designed.
 
 The shipped collections:
 
@@ -33,7 +33,7 @@ The shipped collections:
 
 Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions.
 
-`kb/types/` sits at the top level under `kb/` but is not a collection in this sense — it is the global type layer. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts, register conventions, and type contracts. See the [collection definition](./definitions/collection.md) for the full exclusion list.
+`kb/types/` sits at the top level under `kb/` but is not a collection in this sense — it is the global type layer. Namespace directories such as installed `kb/commonplace/` are likewise not collections unless they carry their own `COLLECTION.md`; their descendant `COLLECTION.md`-bearing directories are the collections. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts and local authoring/routing contracts. See the [collection definition](./definitions/collection.md) for the full boundary.
 
 ## Types
 
