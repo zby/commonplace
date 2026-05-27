@@ -747,3 +747,26 @@ status: current
         validate_notes.resolve_targets("kb/reports", repo_root=tmp_path)
 
     assert validate_notes.batch_scope("kb/reports", repo_root=tmp_path) is None
+
+
+def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write(tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "# Definitions\n")
+
+    failures = validate_notes.validate_collection_structure(
+        tmp_path / "kb" / "notes",
+        repo_root=tmp_path,
+    )
+
+    assert failures == [
+        "nested COLLECTION.md: kb/notes/definitions/COLLECTION.md is inside collection kb/notes"
+    ]
+
+
+def test_validate_collection_structure_allows_namespace_collections(tmp_path: Path) -> None:
+    collection = tmp_path / "kb" / "commonplace" / "notes"
+    write(collection / "COLLECTION.md", "# Shipped notes\n")
+
+    failures = validate_notes.validate_collection_structure(collection, repo_root=tmp_path)
+
+    assert failures == []

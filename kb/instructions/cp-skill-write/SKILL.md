@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic] — a note path for editing, 
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions. Resolve an artifact's collection by walking up to the nearest ancestor `COLLECTION.md`; introduce a `COLLECTION.md` inside another collection only deliberately.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions. Do not create a `COLLECTION.md` inside another collection; validation treats it as invalid.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 

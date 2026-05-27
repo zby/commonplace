@@ -145,7 +145,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
 
-Resolve an artifact's collection by walking up to the nearest ancestor `COLLECTION.md`. A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; introduce a `COLLECTION.md` inside another collection only deliberately.
+A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; a `COLLECTION.md` inside another collection is invalid and reported by validation.
 
 For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in directory/curated indexes before opening full files, and follow authored links when local context makes the relationship useful.
 

@@ -18,7 +18,7 @@ Read this document to get the model. For the type catalog see [available-types](
 
 ## Collections
 
-A **collection** is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the local authoring and routing contract for artifacts in the subtree: purpose, register or mode, quality goal, placement boundaries, title and description conventions, type guidance, outbound-link policy, labels, search guidance, and lifecycle rules. To find the collection for an artifact, walk up to the nearest ancestor `COLLECTION.md`. Subdirectories inside a collection are normally *areas* under the same contract. A `COLLECTION.md` inside a non-collection namespace, such as installed `kb/commonplace/notes/`, is an ordinary collection; a `COLLECTION.md` inside another collection is a nesting pattern that should be introduced only deliberately.
+A **collection** is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the local authoring and routing contract for artifacts in the subtree: purpose, register or mode, quality goal, placement boundaries, title and description conventions, type guidance, outbound-link policy, labels, search guidance, and lifecycle rules. Subdirectories inside a collection are normally *areas* under the same contract. A `COLLECTION.md` inside a non-collection namespace, such as installed `kb/commonplace/notes/`, is an ordinary collection; a `COLLECTION.md` inside another collection is invalid.
 
 The shipped collections:
 

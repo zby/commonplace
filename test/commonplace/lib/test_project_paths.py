@@ -32,6 +32,16 @@ def test_collection_dirs_returns_content_collections_only(tmp_path: Path) -> Non
     ]
 
 
+def test_collection_dirs_allows_collections_inside_namespace(tmp_path: Path) -> None:
+    collection(tmp_path / "kb" / "commonplace" / "notes")
+    collection(tmp_path / "kb" / "commonplace" / "reference")
+
+    assert project_paths.collection_dirs(tmp_path) == [
+        tmp_path / "kb" / "commonplace" / "notes",
+        tmp_path / "kb" / "commonplace" / "reference",
+    ]
+
+
 def test_collection_dirs_raises_when_kb_root_is_missing(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError, match="KB root does not exist"):
         project_paths.collection_dirs(tmp_path)

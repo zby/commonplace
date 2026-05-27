@@ -9,6 +9,9 @@ from pathlib import Path
 
 from commonplace.lib.project_paths import (
     is_collection_dir,
+    is_nested_git_repo,
+    is_type_definition_content,
+    iter_unignored_markdown_files,
     kb_root,
     list_collection_note_paths,
     list_kb_note_paths,
@@ -111,6 +114,26 @@ def batch_scope(arg: str, *, repo_root: Path) -> str | None:
     return None
 
 
+def validate_collection_structure(collection: Path, *, repo_root: Path) -> list[str]:
+    """Return collection-level structural failures for a validation scope."""
+    collection = collection.resolve()
+    repo_root = repo_root.resolve()
+    if not is_collection_dir(collection):
+        return []
+
+    failures: list[str] = []
+    for path in iter_unignored_markdown_files(collection, ignore_root=repo_root):
+        if path.name != "COLLECTION.md" or path.parent == collection:
+            continue
+        if is_nested_git_repo(path, collection) or is_type_definition_content(path, collection):
+            continue
+        failures.append(
+            "nested COLLECTION.md: "
+            f"{path.relative_to(repo_root)} is inside collection {collection.relative_to(repo_root)}"
+        )
+    return failures
+
+
 def format_block(path: Path, results: CheckResults) -> str:
     lines = [f"=== VALIDATION: {path.name} ===", "", f"Type: {results.note_type}", ""]
 
@@ -189,6 +212,9 @@ def main(argv: list[str] | None = None) -> int:
         type_failures = validate_type_specs(repo_root)
         if type_failures:
             had_failures = True
+        structure_failures = validate_collection_structure(repo_root / scope, repo_root=repo_root)
+        if structure_failures:
+            had_failures = True
 
         print("\n=== BATCH INFO ===\n")
         print(f"Files analysed: {len(paths)}")
@@ -201,6 +227,12 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"- FAIL: {failure}")
         else:
             print("- PASS: all type-spec docs are valid")
+        print("\nCollection structure:")
+        if structure_failures:
+            for failure in structure_failures:
+                print(f"- FAIL: {failure}")
+        else:
+            print("- PASS: no nested COLLECTION.md files")
         print("\nWarnings:")
         if warning_items:
             for path, warning in warning_items:
