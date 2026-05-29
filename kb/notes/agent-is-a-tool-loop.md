@@ -12,7 +12,7 @@ The word "agent" carries too much philosophical weight to define cleanly. But as
 
 The convention is deliberately minimal — it says nothing about autonomy, planning, or goals. It names the unit of execution that a programmer spawns. A sub-agent is a child loop with its own prompt and capability surface. A multi-agent system is a tree of loops coordinated by code. Two loops with different tool surfaces but the same model are different agents; the same prompt run twice is two invocations. The convention tracks code structure, not character.
 
-That simplicity pays off in framework design. If "agent" means "tool loop," then spawning a sub-agent is spawning a sub-loop — and the question of whether frameworks should [expose the loop](./tool-loop-index.md) becomes the question of whether they support sub-agents as a first-class operation.
+That simplicity pays off in framework design. If "agent" means "tool loop," then spawning a sub-agent is spawning a sub-loop — and the question of whether frameworks should [keep the loop optional](./tool-loop-index.md) becomes the question of whether they support sub-agents as a first-class operation.
 
 ---
 

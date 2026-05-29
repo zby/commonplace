@@ -8,7 +8,7 @@ status: seedling
 
 # Stateful tools recover control by becoming hidden schedulers
 
-A naive version of the "expose the loop" argument claims that a framework-owned tool loop cannot express what application-owned orchestration requires. That version is false. If we allow a sufficiently stateful tool — a singleton runtime behind the tool boundary — a hidden loop can recover substantial control.
+A naive version of the "keep the loop optional" argument claims that a framework-owned tool loop cannot express what application-owned orchestration requires. That version is false. If we allow a sufficiently stateful tool — a singleton runtime behind the tool boundary — a hidden loop can recover substantial control.
 
 The recovery is genuine. Such a runtime can hold retries, checkpoints, branch records, and recursion state — enough orchestration logic that the model never has to invoke a visible scheduler. From the model's perspective nothing has changed; from the application's perspective, the tool is quietly running the show.
 

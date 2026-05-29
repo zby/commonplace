@@ -19,11 +19,13 @@ The main framing change is deliberate: start from the normal application archite
 - `kb/notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md` — codified next-step policy as hidden scheduling
 - `kb/notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md` — supporting concession note showing what the strongest stateful-tool recovery actually buys
 
-## Workshop scaffolding
+### Host-language scheduler trio (promoted 2026-05-29)
 
-- `llm-frameworks-should-keep-the-tool-loop-optional.md` — broad framing draft for the eventual top-level replacement note
-- `the-practical-scheduler-is-the-host-language.md` — the bridge note: the simplest practical library demotes the tool loop to a returning, per-call-parameterized function and lets host-language code play `select`/`K`; minimal surface is one primitive plus one hook
-- `orchestration-strategies-and-run-state-have-opposite-persistence.md` — follow-on: `K` (run-state) stays ephemeral, but recurring `select`-strategies are the high-value promotion target; reframes "RLM + a tested orchestrator library" as a test-gated cache that makes the host-language scheduler self-populating
+- `kb/notes/llm-frameworks-should-keep-the-tool-loop-optional.md` — the design case: keep the framework-owned tool loop (a frozen `select`) optional; the top-level argument `tool-loop-index` now leads with
+- `kb/notes/the-practical-scheduler-is-the-host-language.md` — the mechanism: demote the loop to a returning, per-call-parameterized `agent()`; host-language control flow plays `select`/`K`, reified only on lifetime/capacity limits; one primitive plus one hook
+- `kb/notes/orchestration-strategies-and-run-state-have-opposite-persistence.md` — the follow-on: `K` stays ephemeral, recurring `select`-strategies are the promotion target; a test-gated orchestrator cache makes the host-language scheduler self-populating
+
+On promotion the published family was reframed from "expose the loop" to "keep the tool loop optional": the `tool-loop-index` Resolution now leads with this trio, and `stateful-tools`, `agent-is-a-tool-loop`, and `subtasks-...` were updated to the new vocabulary ("expose the loop" kept as the earlier name).
 
 ## Retired scaffolding (distilled, deleted 2026-05-29)
 
@@ -42,6 +44,6 @@ Folded into `llm-frameworks-should-keep-the-tool-loop-optional.md` ahead of prom
 
 Decision (2026-05-29): develop this workshop independently of, and ahead of, the `harness-fundamentals` brainstorm. The drafts no longer link out to `harness-boundary.md`; the frozen-`select` argument stands on its own, grounded in the bounded-context model note and the agent-harness survey / iii sources. The wider "what is the harness" candidate set — including Candidate D (harness = `select`), the general case of this workshop's frozen-`select` argument — stays in `kb/work/harness-fundamentals/` and is not a dependency here. Any argument once carried by the cross-workshop link is inlined in the drafts and cited to its underlying source.
 
-## Open decisions
+## Resolved decisions
 
-- Whether the promoted note should keep the old title family (`...expose the loop`) or use the sharper formulation here (`...keep the tool loop optional`)
+- Title family — **resolved**: the family uses "keep the tool loop optional"; "expose the loop" is retained as the earlier name, noted in `tool-loop-index` and `stateful-tools`. The trio is promoted; the workshop now holds only this README and `promotion-plan.md`.

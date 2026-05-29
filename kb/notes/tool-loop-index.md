@@ -23,7 +23,7 @@ while not done(state):
         state = absorb(state, turn.output)
 ```
 
-Frameworks own this loop because the mechanics are repetitive protocol work — parsing tool requests, dispatching to handlers, serializing results, feeding them back, handling streaming and retries. Abstracting that away is good engineering, just as abstracting HTTP parsing is.
+Frameworks own this loop because the mechanics are repetitive protocol work — parsing tool requests, dispatching to handlers, serializing results, feeding them back, handling streaming and retries. Abstracting that away is good engineering, just as abstracting HTTP parsing is. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md) this loop is `select` frozen to a single policy — append the result, re-ask with the same tools — owned by the framework rather than the application. [Keeping that loop optional](./llm-frameworks-should-keep-the-tool-loop-optional.md) is the design stance these notes argue for.
 
 Many useful interventions can stay hidden inside this loop without changing its structure: logging, approvals, budget checks, checkpoints, deterministic transforms on tool results. A [stateful singleton runtime](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) behind the tool boundary can go further, holding recursion state and branch records. The recovery is genuine — but the question is not whether the loop can absorb bookkeeping. It is who gets to decide what the next step *can do*.
 
@@ -37,7 +37,9 @@ Three cases where a single framework-owned loop becomes insufficient:
 
 ## Resolution
 
-The first and third cases call for **[sub-agents](./agent-is-a-tool-loop.md)** — fresh tool loops with their own prompt, capability surface, and stop condition. The second calls for something more: **symbolic composition** of agents — code-controlled iteration, filtering, and aggregation over multiple agent invocations. Sub-agents are the atomic unit; symbolic orchestration is what the application does with them. "Exposing the loop" means the framework supports both: spawning child loops and composing them in application code.
+The first and third cases call for **[sub-agents](./agent-is-a-tool-loop.md)** — fresh tool loops with their own prompt, capability surface, and stop condition. The second calls for something more: **symbolic composition** of agents — code-controlled iteration, filtering, and aggregation over multiple agent invocations. Sub-agents are the atomic unit; symbolic orchestration is what the application does with them.
+
+The framework's job is therefore to [**keep the tool loop optional**](./llm-frameworks-should-keep-the-tool-loop-optional.md): run the frozen loop for the common case, but expose the bounded call beneath it so application code can spawn child loops and compose them. The mechanism is small — [the practical scheduler is the host language](./the-practical-scheduler-is-the-host-language.md): demote the loop to a returning, per-call-parameterized `agent()` call (plus one tool-execution hook), and ordinary host-language control flow becomes `select` while its variables hold `K`. ("Expose the loop" was the earlier name for this same move.) A further question, once orchestrators are written this way, is what to retain across runs: [run-state stays ephemeral while recurring strategies are the promotion target](./orchestration-strategies-and-run-state-have-opposite-persistence.md).
 
 ## Downstream consequences
 
