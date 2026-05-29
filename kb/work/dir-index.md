@@ -15,6 +15,7 @@ index_source: directory
 - [auditable-llm-editing/](./auditable-llm-editing/dir-index.md)
 - [curiosity-prompts/](./curiosity-prompts/dir-index.md)
 - [gate-refactor/](./gate-refactor/dir-index.md)
+- [harness-fundamentals/](./harness-fundamentals/dir-index.md)
 - [harness-taxonomy-convergence/](./harness-taxonomy-convergence/dir-index.md)
 - [information-measures/](./information-measures/dir-index.md)
 - [ingestion-and-deep-search/](./ingestion-and-deep-search/dir-index.md)

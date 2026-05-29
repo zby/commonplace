@@ -8,4 +8,4 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [Collection](./collection.md) *(definition)* - COLLECTION.md-bearing subtree under kb/ whose local authoring and routing contract tells agents how to write, connect, validate, and maintain artifacts in that subtree
+- [Collection](./collection.md) *(definition)* - COLLECTION.md-bearing subtree under kb/ whose local authoring contract governs artifacts in that subtree
