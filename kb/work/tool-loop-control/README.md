@@ -22,8 +22,25 @@ The main framing change is deliberate: start from the normal application archite
 ## Workshop scaffolding
 
 - `llm-frameworks-should-keep-the-tool-loop-optional.md` — broad framing draft for the eventual top-level replacement note
-- `anatomy-of-an-llm-application.md` — tool-loop-first decomposition of the normal LLM application shape
-- `a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by.md` — detailed constructive counterexample showing how stacks, branching, and recursive decomposition could be encoded inside a framework-owned loop
+- `the-practical-scheduler-is-the-host-language.md` — the bridge note: the simplest practical library demotes the tool loop to a returning, per-call-parameterized function and lets host-language code play `select`/`K`; minimal surface is one primitive plus one hook
+- `orchestration-strategies-and-run-state-have-opposite-persistence.md` — follow-on: `K` (run-state) stays ephemeral, but recurring `select`-strategies are the high-value promotion target; reframes "RLM + a tested orchestrator library" as a test-gated cache that makes the host-language scheduler self-populating
+
+## Retired scaffolding (distilled, deleted 2026-05-29)
+
+Two early drafts were spent — every durable claim now lives in a published note or in the framing draft above, with no library links depending on them, so they were deleted (recoverable via git):
+
+- `anatomy-of-an-llm-application.md` — tool-loop-first decomposition. Distilled into: `llm-frameworks-should-keep-the-tool-loop-optional.md` (convenience case + programmer's dilemma), the promoted `subtasks-that-need-different-tools...` (capability-surface boundary, now more complete), and the promoted `codified-scheduling-patterns...` (temporal codification).
+- `a-framework-owned-tool-loop-can-simulate-explicit-orchestration-by.md` — constructive counterexample (singleton-runtime recovery). Distilled into the promoted `stateful-tools-recover-control-by-becoming-hidden-schedulers.md` (the concession claim) and the promoted `subtasks-that-need-different-tools...` (where the construction strains). The remaining `ControlRuntime` code was illustrative scratch, not preserved.
+
+## New inputs (2026-05-29 session)
+
+Folded into `llm-frameworks-should-keep-the-tool-loop-optional.md` ahead of promotion:
+
+- **Frozen-`select` framing** — the framework-owned tool loop is the [bounded-context](../../notes/bounded-context-orchestration-model.md) `select` hardcoded to "append result, re-ask with same tools." "Keep the loop optional" = let the application own `select`. This is the one substantive new *idea* (vs. grounding), grounded in the bounded-context model note.
+- **Lifecycle hooks convergence** — the [agent-harness survey](../../sources/agent-harness-large-language-model-agents-survey.md) independently makes lifecycle hooks first-class, corroborating the proposed middle layer.
+- **iii production evidence** — [iii](../../sources/how-to-build-your-own-agent-harness-2060069083878408689.md) ships the loop as one swappable layer on a bus; "slider not a fork" reframes the programmer's dilemma. (Cite the replaceability/layering half only — independent versioning is a deployment property, not a tool-loop property.)
+
+Decision (2026-05-29): develop this workshop independently of, and ahead of, the `harness-fundamentals` brainstorm. The drafts no longer link out to `harness-boundary.md`; the frozen-`select` argument stands on its own, grounded in the bounded-context model note and the agent-harness survey / iii sources. The wider "what is the harness" candidate set — including Candidate D (harness = `select`), the general case of this workshop's frozen-`select` argument — stays in `kb/work/harness-fundamentals/` and is not a dependency here. Any argument once carried by the cross-workshop link is inlined in the drafts and cited to its underlying source.
 
 ## Open decisions
 
