@@ -27,7 +27,7 @@ Check the reviewed system against these needs selectively:
 - **Evidence and trust:** Does the system preserve enough source material, metadata, review state, validation, or confidence information for a future agent to rely on the memory without redoing the original work?
 - **Artifact contracts:** Does it distinguish retained surfaces by storage substrate, representational form, lineage, and behavioral authority, including knowledge-artifact and system-definition-artifact use?
 - **Consumer surfaces:** Does it serve different consumers differently: acting agents, humans, context schedulers, reviewers, learning loops, governance, and active work surfaces?
-- **Activation:** Can relevant behavior-changing memory load before the agent repeats a mistake, or is the system limited to question-answer retrieval?
+- **Read-back (activation):** How does stored memory re-enter a future agent action — by **pull** (the agent's own deliberate lookup) or **push** (unsolicited arrival: always-load, hook, situation match, or a user event), judged from the agent's perspective? Can relevant behavior-changing memory load before the agent repeats a mistake, or is the system pull-only (limited to question-answer retrieval the agent must think to call)? See the Read-back Placement section for the full axis treatment.
 - **Promotion and codification:** Is there a path from candidate observations toward notes, instructions, skills, tests, scripts, guardrails, or other stronger behavior-changing surfaces when evidence and authority justify the cost?
 - **Compiled views and lifecycle:** Are generated reminders, indexes, rules, assistant files, and other derived surfaces tied back to sources of truth, with retirement, redaction, supersession, regeneration, and relaxation paths?
 - **Authority and evaluation:** Who or what can write, promote, activate, enforce, revise, and retire memory, and does the system evaluate memory by downstream effects rather than by storage volume?
@@ -88,12 +88,14 @@ Focus on:
 - representational form of the behavior-shaping operative parts
 - lineage, derivation, invalidation, and regeneration paths
 - retrieval/navigation model
+- read-back model: how stored memory re-enters a future agent action — direction (pull vs push, from the agent's perspective), what trips it, timing relative to the action, scope, and authority at consumption
 - learning/distillation/promotion model if any
 - validation/governance model if any
 - behavioral authority: whether retained artifacts advise, instruct, enforce, route, validate, evaluate, rank, or feed learning
 - integration surface (CLI, MCP, API, editor plugin, etc.)
 - what is genuinely implemented versus only proposed
 - whether the system qualifies as trace-derived learning; if it does not, leave the placement section out and do not add the `trace-derived` tag
+- whether the system has a non-trivial push/activation path; if it is pull-only or unconditional always-load, give a one-line direction verdict and add neither a full Read-back placement section nor the `push-activation` tag
 
 ## Write the Review
 
@@ -105,6 +107,7 @@ Write from the code outward:
 - **Comparison with Our System:** concrete alignments, divergences, and tradeoffs vs commonplace.
 - **Borrowable Ideas:** for each idea, say what it would look like in commonplace and whether it is ready now or needs a use case first.
 - **Trace-derived learning placement:** include this section only when the code-grounded review finds a qualifying trace-derived learning mechanism; if included, also add `trace-derived` to `tags`.
+- **Read-back placement:** give every review a one-line direction verdict (pull / push / both, from the agent's perspective). Include the full section only when the activation path is relevance-gated or otherwise engineered; if included, also add `push-activation` to `tags`.
 - **Curiosity Pass:** second-pass review. Re-read the draft and look for surprising claims, simpler alternatives, and mechanisms that sound more powerful than they really are.
 - **What to Watch:** future changes in the reviewed system that might affect our design.
 
@@ -116,7 +119,7 @@ Use:
 
 - `description` — discriminating retrieval filter (50-200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
-- `tags: [trace-derived]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces; the finding drives both the tag and the placement section. Otherwise omit `tags`. Collection membership is defined by location in `kb/agent-memory-systems/`, not by a tag.
+- `tags` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces, and `push-activation` only if it finds a non-trivial push/activation path (relevance-gated or engineered read-back, not pull-only or unconditional always-load). Each finding drives both its tag and its placement section. A review may carry neither, either, or both. Otherwise omit `tags`. Collection membership is defined by location in `kb/agent-memory-systems/`, not by a tag.
 - `status: current` unless clearly stale/outdated
 - `last-checked: "{today}"`
 
@@ -137,6 +140,29 @@ If the system qualifies, include a `## Trace-derived learning placement` section
 7. **Scope** — per-task, per-benchmark, per-project, or cross-task generalizable.
 8. **Timing** — online during deployment, offline from collected traces, or staged in cycles.
 9. **Survey placement** — position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and state whether it strengthens, weakens, or splits any survey claim.
+
+## Read-back Placement
+
+The read-back path is how stored memory re-enters a future agent action. The trace-derived section captures how memory is *made*; this section captures how it *acts*, and the two are independent — a system can have an elaborate learning loop and a trivial read-back path, or the reverse. Specify it as deliberately as the learning loop rather than collapsing it into "can the system retrieve?".
+
+Every memory system reads memory back somehow, so unlike trace-derived learning this is near-universal. Give **every** review a one-line **direction verdict**: does memory reach the agent's context by **pull** (the agent's own deliberate lookup — a query/search tool call, a chosen read), by **push** (memory arrives unsolicited — always-load, a hook on an agent action, a situation/relevance match, or any user-initiated event), or both? Push/pull is judged **from the agent's perspective**: user-initiated retrieval uses pull machinery but is push to the agent, because the agent did not ask. The single most discriminating finding is whether the system has any push path at all or is **pull-only** (a retrieval tool the agent must think to call) — pull-only is the large, under-tested class.
+
+Include a full `## Read-back placement` section and add `push-activation` to `tags` **only when the activation path is relevance-gated or otherwise engineered**: a matcher (embedding, action-classifier, LLM-judge, or typed cue), a selection/scope budget, a before-action hook, or a faithfulness test. Pure pull-only RAG and unconditional always-load get only the one-line direction verdict (name always-load as a deliberate push choice, not the absence of one) and no tag.
+
+Two cautions on what code can show:
+
+- **Structural vs quality layer.** Report the observable *mechanism* per axis and explicitly mark precision/recall, context dilution, and effective authority as *not verified from code* — the same discipline the trace-derived section lives under (you can see the extraction mechanism, not whether the lessons are good).
+- **Capability vs deployed behavior.** For end-to-end agents, report what the loop actually wires. For libraries/SDKs the push wiring often lives in the host harness, not the reviewed repo: report the **API surface** as capability (`search(query)` cannot push; `on_action(context) → memories` affords push) rather than asserting the system pushes or has no activation.
+
+If a full section is warranted, address:
+
+1. **Direction** — pull, push, or both, from the agent's perspective. Pull = the agent's own deliberate lookup; push = unsolicited arrival, whatever the trigger. Note "push riding on the pull interface" when a query *also* injects unsolicited behavior-shaping material; documented related-record expansion on a query is still pull (the agent solicited the query contract), and how much expands is a scope question. In multi-agent setups, an orchestrator's or sub-agent's pull is push for the receiving agent.
+2. **Trigger and relevance signal** — what trips the read-back and how it matches: unconditional, event-keyed, embedding, action-classifier, LLM-judge, or typed cue. Mechanism is code-grounded; precision/recall is runtime.
+3. **Timing relative to action** — where in the loop the read sits. A pre-action hook fires before the action and can change the next move; a reflection or summary step fires after and can only explain or audit.
+4. **Selection and scope** — top-k, token budget, and task/project/session scoping. The policy is code-grounded; actual context dilution (soft degradation) is runtime.
+5. **Authority at consumption** — how the surfaced memory is wired: advisory context, system instruction, hard gate (enforcement), router input, or audit trigger. The same stored memory can be read back as a soft reminder or a hard gate; this is set on the read path, not at write time. Nominal authority is code-grounded; effective authority needs a faithfulness check.
+6. **Faithfulness** — whether the system *itself* tests that fired read-back changes behavior (WITH/WITHOUT ablation, perturbation, post-action trace audit) rather than assuming context presence equals use. [Synapptic](../reviews/synapptic.md) is the reviewed example.
+7. **Other consumers** — the axes above describe read-back to the agent, the primary consumer. Note when the same memory is also consumed directly by the human user, or by schedulers, reviewers, or governance (the Consumer-surfaces lens). This is a consumer dimension, not a push/pull value.
 
 ## Citations
 
@@ -193,6 +219,10 @@ last-checked: "YYYY-MM-DD"
 ## Trace-derived learning placement
 
 {Optional. Include only when the code-grounded review finds a qualifying trace-derived learning mechanism; otherwise delete this section. When included, also add `trace-derived` to `tags`. Cover trace source, extraction, storage substrate, representational form, lineage, behavioral authority, scope, timing, survey-axis placement, and whether the system strengthens, weakens, or splits any survey claim.}
+
+## Read-back placement
+
+{State the one-line direction verdict (pull / push / both, from the agent's perspective) somewhere in the review even without this section. Include this full section only when the activation path is relevance-gated or engineered; otherwise delete it. When included, also add `push-activation` to `tags`. Cover direction, trigger/relevance signal, timing relative to action, selection/scope, authority at consumption, faithfulness, and other consumers. Mark precision/dilution/effective-authority as not verified from code, and report library API surface as capability rather than deployed behavior.}
 
 ## Curiosity Pass
 

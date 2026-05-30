@@ -17,7 +17,7 @@ allOf:
             format: date
         additionalProperties: true
       headings:
-        description: "Required review headings. ## Trace-derived learning placement is optional and used only when the review finds a qualifying trace-derived learning mechanism."
+        description: "Required review headings. ## Trace-derived learning placement and ## Read-back placement are optional, each used only when the review finds the corresponding qualifying mechanism (trace-derived learning / a non-trivial push-activation path)."
         type: array
         allOf:
           - contains:
@@ -43,3 +43,16 @@ allOf:
       properties:
         body:
           pattern: "Trace-derived learning placement"
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - tags
+          properties:
+            tags:
+              contains:
+                const: push-activation
+    then:
+      properties:
+        body:
+          pattern: "Read-back placement"
