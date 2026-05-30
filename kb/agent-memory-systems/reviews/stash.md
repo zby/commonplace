@@ -1,7 +1,7 @@
 ---
 description: "Stash review: self-hosted Postgres/pgvector MCP memory backend that consolidates agent-written episodes into facts, relationships, goals, failures, hypotheses, and decay state"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

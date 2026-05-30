@@ -1,7 +1,6 @@
 ---
 description: "Review of Awesome Agent Memory as a curated README bibliography of memory products, benchmarks, papers, and articles rather than an implemented memory runtime"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---
@@ -67,7 +66,7 @@ The taxonomy is useful but lower-authority than a validated KB structure. In com
 
 **Memory taxonomies need room for adjacent substrates.** The README puts products, nonparametric memory, parametric memory, agent evolution, context engineering, multimodal memory, benchmarks, and cognitive science in one field map. That breadth is useful because agent memory is not one storage technology; it is a family of behavior-changing retained artifacts.
 
-**The collection reinforces the source-only/review split.** A link catalogue can tell us what exists, while a code-grounded review tells us what a system actually does. Keeping those roles separate prevents a bibliography entry from inheriting the authority of an implementation review.
+**The collection reinforces the lightweight/review split.** A link catalogue can tell us what exists, while a code-grounded review tells us what a system actually does. Keeping those roles separate prevents a bibliography entry from inheriting the authority of an implementation review.
 
 ## Curiosity Pass
 

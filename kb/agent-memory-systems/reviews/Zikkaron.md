@@ -1,7 +1,7 @@
 ---
 description: "Zikkaron review: Claude Code MCP memory server with SQLite, hooks, trace capture, hybrid retrieval, lifecycle compression, and generated instructions"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

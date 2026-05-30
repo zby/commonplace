@@ -1,7 +1,6 @@
 ---
 description: "SAGE review: governed agent memory infrastructure with CometBFT writes, validator votes, RBAC, encryption, and MCP/REST recall surfaces"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,6 @@
 ---
 description: "Thalo review: custom plain-text knowledge DSL with Tree-sitter grammar, entity schemas, semantic indexes, validation rules, LSP, Prettier, and synthesis actualization"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

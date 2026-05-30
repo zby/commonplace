@@ -1,7 +1,7 @@
 ---
 description: "Benchmark trace-to-memory system that extracts reasoning items from WebArena and SWE-Bench trajectories, retrieves by task-query embeddings, and reinjects selected items into prompts"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

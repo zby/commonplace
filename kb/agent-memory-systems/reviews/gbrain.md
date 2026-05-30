@@ -1,7 +1,7 @@
 ---
 description: "Personal-brain CLI and MCP runtime with markdown-canonical pages, Postgres/PGLite indexes, trace-derived synthesis, skills, recipes, and maintenance cycles"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,6 @@
 ---
 description: "o-o review: polyglot HTML/bash living documents with embedded research contracts, source caches, freshness gates, index management, and Claude-only update dispatch"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

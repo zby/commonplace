@@ -1,7 +1,7 @@
 ---
 description: "Claude Context Guard review: Claude Code safeguard files, slash-command recovery workflows, hooks, archives, and manual trace-to-ledger continuity"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

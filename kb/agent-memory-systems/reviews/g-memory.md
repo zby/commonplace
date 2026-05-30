@@ -1,7 +1,7 @@
 ---
 description: "G-Memory review: multi-agent trace capture, Chroma task recall, task-neighborhood retrieval, and scored insight rules with role-projected prompt use"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Synapptic review: Claude Code trace compiler into weighted user profiles, behavioral guards, assistant memory files, benchmarks, and local relay index"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

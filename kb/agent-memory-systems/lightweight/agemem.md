@@ -1,14 +1,14 @@
 ---
-description: "Source-only coverage note for AgeMem, an RL-trained LTM/STM memory-management policy covered through paper ingest rather than local code review"
+description: "Lightweight coverage note for AgeMem, an RL-trained LTM/STM memory-management policy covered through paper ingest rather than local code review"
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 ---
 
 # AgeMem
 
-AgeMem is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [AgeMem ingest](https://arxiv.org/html/2601.01885v1) and the analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). There is no local repo-backed review for this system.
+AgeMem is tracked here as lightweight related-system coverage, not as an `agent-memory-system-review`. The KB coverage comes from the [AgeMem ingest](https://arxiv.org/html/2601.01885v1) and the analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md). There is no local repo-backed review for this system.
 
 ## Trace-derived placement
 

@@ -1,7 +1,7 @@
 ---
 description: "Hindsight review: production memory backend with trace-to-fact retain, PostgreSQL/vector indexes, observations, directives, reflect tools, tenancy, and embedded mode"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

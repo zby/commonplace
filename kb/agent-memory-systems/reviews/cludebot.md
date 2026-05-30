@@ -1,7 +1,7 @@
 ---
 description: "Cognitive memory SDK and Cludebot service with typed memories, hybrid retrieval, dream consolidation, action-outcome learning, graph links, MCP tools, and hosted/self-hosted/local modes"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

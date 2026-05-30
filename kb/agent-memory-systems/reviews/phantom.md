@@ -1,7 +1,7 @@
 ---
 description: "Phantom review: AI co-worker runtime with prompt-block assembly, Qdrant memory, file-backed evolved identity, scheduler, MCP/UI surfaces, and invariant-checked reflection"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Rust concurrent agent framework with process-isolated channels, branches, workers, cortex synthesis, typed graph memory, and trace-derived persistence"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

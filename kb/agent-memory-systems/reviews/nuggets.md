@@ -1,7 +1,7 @@
 ---
 description: "Pi personal assistant with local HRR nugget files, prompt-time memory injection, chat scheduling, and partial promotion into Claude Code memory"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

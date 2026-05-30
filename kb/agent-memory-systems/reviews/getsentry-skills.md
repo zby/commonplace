@@ -1,7 +1,6 @@
 ---
 description: "Sentry's Agent Skills marketplace: a file-backed skill library with provenance contracts, progressive disclosure, validators, and meta-skills for writing and scanning skills"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

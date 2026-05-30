@@ -1,7 +1,6 @@
 ---
 description: "Letta's prose constitution for memory-native agents, defining token-space learning policy, context ownership, MemFS affordances, and agent self-governance"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

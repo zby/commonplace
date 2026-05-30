@@ -1,7 +1,6 @@
 ---
 description: "KBLaM review: Microsoft Research model fork that projects key-value KB rows into learned attention key/value tensors rather than a retrievable agent KB"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

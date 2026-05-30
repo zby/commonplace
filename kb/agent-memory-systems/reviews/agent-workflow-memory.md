@@ -1,7 +1,7 @@
 ---
 description: "Workflow-memory system for web agents that distills WebArena and Mind2Web trajectories into website-scoped prompt files with weak lineage and lifecycle controls"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

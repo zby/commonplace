@@ -1,7 +1,7 @@
 ---
 description: "Claude Code plugin that derives agent-operated markdown knowledge systems with generated context, skills, hooks, queues, methodology notes, and friction-mining loops"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

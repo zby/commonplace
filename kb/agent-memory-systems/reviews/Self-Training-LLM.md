@@ -1,7 +1,7 @@
 ---
 description: "Self-Training-LLM review: offline Wikipedia QA self-training pipeline that turns model answer rollouts and uncertainty scores into SFT/DPO datasets and checkpoints"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

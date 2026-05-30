@@ -1,7 +1,7 @@
 ---
 description: "TextWorld graph-memory agent that converts observations into an in-run triplet graph plus episodic store for planning, retrieval, exploration, and navigation"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

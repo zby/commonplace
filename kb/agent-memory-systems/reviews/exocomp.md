@@ -1,7 +1,6 @@
 ---
 description: "Local Go coding-agent harness with role prompts, subprocess agents, tool allowlists, sandbox path checks, coordination JSON, and loadable skills"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

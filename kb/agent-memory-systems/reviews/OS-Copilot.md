@@ -1,7 +1,7 @@
 ---
 description: "OS-Copilot review: FRIDAY plans OS tasks, generates and repairs executable tools, scores them, and stores reusable Python tools in a vector-retrieved repository"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "OpenSage review: ADK agent framework with dynamic subagents, generated Skills, file memory, Neo4j graph memory, trace logging, plugins, and RL adapters"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

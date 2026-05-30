@@ -1,7 +1,6 @@
 ---
 description: "SkillNote review: self-hosted SKILL.md registry with Postgres-backed content, semver bundle releases, MCP/tool projection, agent sync plugins, and ratings without trace-derived learning"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

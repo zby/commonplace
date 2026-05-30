@@ -1,7 +1,6 @@
 ---
 description: "Supermemory review: hosted memory platform with open MCP, SDK middleware, graph UI contracts, and opaque hosted extraction/profile/ranking APIs"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

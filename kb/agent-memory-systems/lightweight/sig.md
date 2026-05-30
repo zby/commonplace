@@ -1,14 +1,13 @@
 ---
-description: "Source-only coverage note for Sig, a private-beta macOS work-memory app that stores meeting and decision context as local files for AI tools"
+description: "Lightweight coverage note for Sig, a private-beta macOS work-memory app that stores meeting and decision context as local files for AI tools"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources]
-tags: [related-systems]
 status: current
 ---
 
 # Sig
 
-Sig is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The public `adamjramirez/sig-releases` repository has a [README](https://github.com/adamjramirez/sig-releases/blob/b703fdc2b64ed9164a75ad000103f108fc515b83/README.md) and screenshots, but no inspectable application source, package manifest, [public binary release](https://github.com/adamjramirez/sig-releases/releases), architecture document, or file-format spec as of 2026-04-24. The repo-backed review type requires code access, so this note records the visible system shape without treating the product claims as verified implementation.
+Sig is tracked here as lightweight related-system coverage, not as an `agent-memory-system-review`. The public `adamjramirez/sig-releases` repository has a [README](https://github.com/adamjramirez/sig-releases/blob/b703fdc2b64ed9164a75ad000103f108fc515b83/README.md) and screenshots, but no inspectable application source, package manifest, [public binary release](https://github.com/adamjramirez/sig-releases/releases), architecture document, or file-format spec as of 2026-04-24. The repo-backed review type requires code access, so this note records the visible system shape without treating the product claims as verified implementation.
 
 Sig is a private-beta macOS app for turning work history into AI-readable local memory. Its public claim is simple: after meetings, the user spends a few minutes recording decisions, commitments, and their own interpretation of what happened; Sig stores that material as plain files on the user's machine; AI tools that can read files then use the resulting knowledge base instead of starting from scratch each chat. The [screenshot](https://github.com/adamjramirez/sig-releases/blob/b703fdc2b64ed9164a75ad000103f108fc515b83/screenshots/03-chat.png) reinforces the file-backed workflow by showing the assistant reading `bailey-drake.md`, `this_week.md`, and `kb-rollout.md`, writing to three files, updating an individual file, and adding a decision to a team KB.
 
@@ -54,5 +53,5 @@ Relevant Notes:
 
 - [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — aligns: Sig's public story makes plain files the integration boundary for AI tools
 - [agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) — motivates: Sig addresses the "new chat starts from nothing" problem by making work context loadable
-- [Napkin](../reviews/napkin.md) — compares: both adapt a local file substrate into an agent-facing memory interface, but Napkin is code-inspected and vault-oriented while Sig is source-only and workplace-capture oriented
+- [Napkin](../reviews/napkin.md) — compares: both adapt a local file substrate into an agent-facing memory interface, but Napkin is code-inspected and vault-oriented while Sig is lightweight and workplace-capture oriented
 - [engraph](../reviews/engraph.md) — compares: both treat local human-authored notes as agent-accessible memory; engraph exposes the indexing and MCP/HTTP layer, while Sig's implementation is not visible

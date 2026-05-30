@@ -1,7 +1,7 @@
 ---
 description: "ExpeL review: staged trajectory gathering, rule mutation, and prompt-time trajectory retrieval for benchmark agent learning"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

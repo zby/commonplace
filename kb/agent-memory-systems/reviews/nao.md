@@ -1,7 +1,7 @@
 ---
 description: "nao review: analytics-agent framework with file-system project context, SQL/runtime tools, skills, stories, evals, and chat-derived user memories"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

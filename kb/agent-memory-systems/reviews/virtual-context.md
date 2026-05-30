@@ -1,7 +1,7 @@
 ---
 description: "Virtual Context review: proxy-owned context virtualization with durable conversation traces, compaction, facts, tag summaries, paging tools, and inspectable runtime surfaces"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

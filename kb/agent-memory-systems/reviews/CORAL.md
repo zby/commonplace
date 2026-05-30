@@ -1,7 +1,7 @@
 ---
 description: "CORAL review: multi-agent coding harness with shared attempts, notes, skills, heartbeat prompts, and score-driven trace-to-artifact learning"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

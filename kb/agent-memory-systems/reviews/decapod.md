@@ -1,7 +1,7 @@
 ---
 description: "Repo-native coding-agent governance kernel with embedded constitution, .decapod state, proof gates, context capsules, typed memory, and governed trace-derived promotion"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

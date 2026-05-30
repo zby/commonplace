@@ -1,7 +1,7 @@
 ---
 description: "Deprecated OpenClaw-era markdown memory system with session ledgers, scored observations, fact stores, context profiles, hooks, and maintenance workers"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

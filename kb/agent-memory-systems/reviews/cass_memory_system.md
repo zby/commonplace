@@ -1,7 +1,7 @@
 ---
 description: "Coding-agent procedural memory CLI that mines cass session history into diary JSON, scored YAML playbook rules, outcomes, trauma guards, and MCP/CLI context surfaces"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

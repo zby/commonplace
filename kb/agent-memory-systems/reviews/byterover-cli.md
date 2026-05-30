@@ -1,7 +1,7 @@
 ---
 description: "ByteRover CLI review: file-backed context tree with curate/query agents, BM25 retrieval, summaries, manifests, VC, review gates, MCP, and trace-derived runtime ranking"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Memori review: SDK and cloud/BYODB memory layer that captures LLM turns, distills facts/triples/summaries, and injects recalled context"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

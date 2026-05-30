@@ -1,7 +1,7 @@
 ---
 description: "Agno personal knowledge agent with file/wiki compilation, PgVector routing metadata, Agno learnings, SQL facts, scheduled maintenance, and tool routing"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

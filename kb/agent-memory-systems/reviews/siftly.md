@@ -1,7 +1,6 @@
 ---
 description: "Self-hosted X bookmark ingestion system that stores raw tweet/media evidence in SQLite, derives AI tags/categories, and serves hybrid search plus mindmap exploration"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

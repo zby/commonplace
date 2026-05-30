@@ -1,7 +1,7 @@
 ---
 description: "HALO review: trace-analysis engine over OTel JSONL with sidecar indexes, bounded trace tools, sandboxed analysis, subagents, and external harness-patch promotion"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Terminal TypeScript personal KB that compiles raw sources into a markdown wiki, serves Q&A through SQLite FTS and section retrieval, and writes thin session-derived digests and insight drafts"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

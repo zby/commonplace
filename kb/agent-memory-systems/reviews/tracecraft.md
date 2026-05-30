@@ -1,7 +1,6 @@
 ---
 description: "Tracecraft review: S3/HuggingFace-backed CLI coordination layer with shared JSON state, messages, claims, barriers, and artifacts"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

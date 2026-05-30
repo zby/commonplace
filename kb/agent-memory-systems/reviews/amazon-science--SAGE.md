@@ -1,7 +1,7 @@
 ---
 description: "Amazon Science SAGE review: AppWorld traces, generated Python skills, skill-integrated rewards, SFT data, and GRPO checkpoints as distinct memory artifacts"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

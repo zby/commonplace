@@ -1,7 +1,7 @@
 ---
 description: "HyperAgents review: self-editing agent harness where benchmark traces and scores select executable git-diff patches rather than prose memories"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

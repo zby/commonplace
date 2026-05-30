@@ -1,7 +1,6 @@
 ---
 description: "Tolaria review: Tauri desktop markdown/git vault with typed lenses, saved views, managed agent guidance, AI context snapshots, CLI-agent launchers, and MCP tools"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

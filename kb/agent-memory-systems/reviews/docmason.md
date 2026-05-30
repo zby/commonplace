@@ -1,7 +1,7 @@
 ---
 description: "Repo-native document research app with file-only KB publication, canonical ask ownership, provenance traces, admissibility gates, and promoted interaction memories"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

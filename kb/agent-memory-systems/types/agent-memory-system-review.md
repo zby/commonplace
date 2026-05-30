@@ -11,7 +11,7 @@ schema: ./agent-memory-system-review.schema.yaml
 
 Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
 
-**A local source directory with readable code is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a source-only note instead. Abandoned code is acceptable if the directory is still readable.
+**A local source directory with readable code is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a lightweight note instead. Abandoned code is acceptable if the directory is still readable.
 
 This type spec is also the worker contract for delegated drafting from the local `write-agent-memory-system-review` skill. The parent skill owns source preparation, archive moves, index edits, semantic QA, validation, and reporting; the worker owns only code inspection and review-note drafting from the inputs below.
 
@@ -116,7 +116,7 @@ Use:
 
 - `description` — discriminating retrieval filter (50-200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
-- `tags: [related-systems]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces. The finding drives both the tag and the placement section; the tag is not the reason to include the section.
+- `tags: [trace-derived]` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces; the finding drives both the tag and the placement section. Otherwise omit `tags`. Collection membership is defined by location in `kb/agent-memory-systems/`, not by a tag.
 - `status: current` unless clearly stale/outdated
 - `last-checked: "{today}"`
 
@@ -166,7 +166,6 @@ If no citation format is provided, cite source files in prose with source-relati
 ---
 description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "YYYY-MM-DD"
 ---

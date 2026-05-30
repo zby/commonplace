@@ -1,7 +1,6 @@
 ---
 description: "LLM document-to-knowledge-graph pipeline with schema discovery, cached extractions, confidence/provenance fields, human review queues, narrative reports, graph viewers, and agent-facing query surfaces"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

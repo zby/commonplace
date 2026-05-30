@@ -1,7 +1,6 @@
 ---
 description: "Napkin review: TypeScript/Bun markdown-vault CLI and SDK with progressive disclosure, Obsidian parity, BM25 cache, pi integration docs, and benchmark-only session mining"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

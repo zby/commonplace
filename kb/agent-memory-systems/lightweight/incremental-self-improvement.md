@@ -1,14 +1,14 @@
 ---
-description: "Source-only coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies"
+description: "Lightweight coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources]
-tags: [related-systems, learning-theory]
+tags: [learning-theory]
 status: current
 ---
 
 # Incremental Self-Improvement
 
-Incremental Self-Improvement is tracked here as source-only related-system coverage, not as an `agent-memory-system-review`. The coverage comes from Jürgen Schmidhuber's [1995 revised FKI-198-94 technical report](../../sources/on-learning-how-to-learn-learning-strategies.md), which presents a paradigm and concrete toy implementation but no reachable repository to inspect. It belongs outside `../reviews/` until there is code-grounded evidence.
+Incremental Self-Improvement is tracked here as lightweight related-system coverage, not as an `agent-memory-system-review`. The coverage comes from Jürgen Schmidhuber's [1995 revised FKI-198-94 technical report](../../sources/on-learning-how-to-learn-learning-strategies.md), which presents a paradigm and concrete toy implementation but no reachable repository to inspect. It belongs outside `../reviews/` until there is code-grounded evidence.
 
 The system is not an agent memory system in the current KB sense. It is relevant because it is an early, explicit architecture for a lifelong agent that changes the mechanism by which it learns. The persistent learned state is not notes, memories, or retrieved artifacts; it is the context-dependent probability distribution over future instruction sequences, including future self-modification programs.
 
@@ -52,7 +52,7 @@ Do not create `kb/agent-memory-systems/reviews/incremental-self-improvement.md` 
 
 Relevant Notes:
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — compares nearby systems that learn from trajectories, sessions, or next-state feedback; this paper is useful lineage but lower-confidence as source-only theory
+- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — compares nearby systems that learn from trajectories, sessions, or next-state feedback; this paper is useful lineage but lower-confidence as lightweight theory
 - [Ingest: On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md) — source coverage: classifies the report and extracts the payoff-per-time, reversible-promotion, and oracle-dependence lessons
 - [Self-Training-LLM](../reviews/Self-Training-LLM.md) — compares: both promote experience into model-side behavior rather than a readable KB artifact, but Self-Training-LLM is repo-inspected and dataset-driven
 - [Meta-Harness](../reviews/meta-harness.md) — compares: a modern code-inspected system where benchmark-scored runs select improved harness variants rather than self-modifying instruction probabilities

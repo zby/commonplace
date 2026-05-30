@@ -3,7 +3,6 @@ description: Reference for borrowing recurring note shapes from Thalo — their 
 type: kb/types/note.md
 traits: [has-comparison]
 status: seedling
-tags: [related-systems]
 ---
 
 # Thalo entity types compared to commonplace document types

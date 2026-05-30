@@ -1,7 +1,7 @@
 ---
 description: "Multi-agent coding orchestrator with SQLite run memory, worktree isolation, trace-derived lessons/rules, prompt/config mutation loops, and optional training export"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Mozilla.ai shared agent knowledge commons with SQLite local/private stores, MCP query/propose/confirm/flag tools, review gates, and prompt-mediated session reflection"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

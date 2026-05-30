@@ -1,7 +1,6 @@
 ---
 description: "HippoRAG review: graph-augmented RAG library that turns corpus documents into OpenIE triples, embeddings, igraph state, and PPR retrieval activation"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

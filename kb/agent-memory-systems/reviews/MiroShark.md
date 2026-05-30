@@ -1,7 +1,7 @@
 ---
 description: "Document-to-social-simulation stack with Neo4j graph extraction, cross-platform round memory, belief drift, and ReACT report traces"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

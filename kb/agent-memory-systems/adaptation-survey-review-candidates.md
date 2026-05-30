@@ -2,7 +2,7 @@
 description: "Coverage-planning note mapping the Adaptation of Agentic AI survey's memory and skill systems to existing KB reviews and candidate additions"
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [related-systems, agent-memory, trace-derived]
+tags: [agent-memory, trace-derived]
 status: seedling
 ---
 
@@ -14,7 +14,7 @@ status: seedling
 
 The survey's central examples overlap substantially with existing coverage. [Reflexion](./reviews/reflexion.md), [ExpeL](./reviews/expel.md), [Voyager](./reviews/voyager.md), [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md), and [ReasoningBank](./reviews/reasoning-bank.md) already cover the reflective, executable-skill, and test-time-artifact-learning branch. [AgentFly](./reviews/AgentFly.md) covers Memento/AgentFly's case-memory and trained selector path. [OS-Copilot](./reviews/OS-Copilot.md) covers FRIDAY's generated executable tool library. [Agent Workflow Memory](./reviews/agent-workflow-memory.md) covers AWM directly. [HippoRAG](./reviews/HippoRAG.md) covers the graph-retrieval baseline.
 
-The database-backed memory cluster has lightweight or adjacent coverage: [Letta/MemGPT](./README.md), [Mem0](./README.md), [Graphiti/Zep](./README.md), [A-MEM](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md), and [AgeMem](./source-only/agemem.md) are already visible in the index or source-only layer. [Cognee](./reviews/cognee.md), [CrewAI Memory](./reviews/crewai-memory.md), [Memori](./reviews/Memori.md), [Hindsight](./reviews/hindsight.md), and [xMemory](./reviews/xMemory.md) cover nearby production or research-code implementations even when they are not the survey's headline examples.
+The database-backed memory cluster has lightweight or adjacent coverage: [Letta/MemGPT](./README.md), [Mem0](./README.md), [Graphiti/Zep](./README.md), [A-MEM](../sources/a-mem-agentic-memory-for-llm-agents.ingest.md), and [AgeMem](./lightweight/agemem.md) are already visible in the index or lightweight layer. [Cognee](./reviews/cognee.md), [CrewAI Memory](./reviews/crewai-memory.md), [Memori](./reviews/Memori.md), [Hindsight](./reviews/hindsight.md), and [xMemory](./reviews/xMemory.md) cover nearby production or research-code implementations even when they are not the survey's headline examples.
 
 ## Deduped Review Queue
 
@@ -38,9 +38,9 @@ The database-backed memory cluster has lightweight or adjacent coverage: [Letta/
 
 **PAE**, **LATM**, and **ADAS** are adjacent rather than first-order memory-system reviews. PAE is mostly policy/RL skill acquisition; LATM is tool making; ADAS is agent-architecture search. They belong in this collection only if the scope expands from memory systems to broader adaptation/tooling systems.
 
-## Lower-Priority Or Source-Only
+## Lower-Priority Or Lightweight
 
-Generative Agents, MemoryBank, ReadAgent, and MemoChat are useful historical baselines but lower review priority unless we need lineage coverage. Several structured-memory examples in the survey, such as AriGraph, ChatDB, SHIMI, and tree-memory systems, may deserve source-only notes if no current, inspectable repository is available. Zep itself should be handled through Graphiti/Zep coverage rather than creating a separate thin note unless the commercial architecture changes the memory model in a way Graphiti does not expose.
+Generative Agents, MemoryBank, ReadAgent, and MemoChat are useful historical baselines but lower review priority unless we need lineage coverage. Several structured-memory examples in the survey, such as AriGraph, ChatDB, SHIMI, and tree-memory systems, may deserve lightweight notes if no current, inspectable repository is available. Zep itself should be handled through Graphiti/Zep coverage rather than creating a separate thin note unless the commercial architecture changes the memory model in a way Graphiti does not expose.
 
 The survey also names **SAGE** as an RL-based skill-library system, but this should not be treated as covered by the existing [SAGE](./reviews/sage.md) review. That review covers a different BFT-branded memory system. If the survey's SAGE becomes relevant, use a disambiguated title.
 

@@ -1,7 +1,6 @@
 ---
 description: "Local-first SQLite knowledge graph whose markdown files are editable projections over typed entities, transactions, schemas, views, LSP, CLI, HTTP, and MCP"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

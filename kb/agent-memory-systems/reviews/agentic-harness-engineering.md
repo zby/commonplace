@@ -1,7 +1,7 @@
 ---
 description: "Observability-driven coding-agent harness evolution loop that turns benchmark traces and debugger analyses into evaluated prompt, tool, middleware, skill, and memory edits"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

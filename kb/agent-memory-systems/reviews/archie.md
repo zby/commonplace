@@ -1,7 +1,6 @@
 ---
 description: "Arch Linux workstation configuration repo with Stow deployment, agent-readable work items, and session-log documentation but no automated memory-learning loop"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

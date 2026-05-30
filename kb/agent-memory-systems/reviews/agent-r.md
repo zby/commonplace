@@ -1,7 +1,7 @@
 ---
 description: "MCTS self-training pipeline that mines environment rollouts into verifier-spliced revision conversations, then documents external fine-tuning as the behavior-learning step"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

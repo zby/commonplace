@@ -1,7 +1,7 @@
 ---
 description: "Review of Gnosis, a repo-local CLI memory system where agents search and write JSONL decision entries through doctrine-mediated workflow"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

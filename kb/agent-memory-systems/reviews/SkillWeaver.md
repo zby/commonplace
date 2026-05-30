@@ -1,7 +1,7 @@
 ---
 description: "SkillWeaver review: website-specific browser trajectories distilled into Playwright API skills, metadata counters, retrieval prompts, and executable tool authority"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

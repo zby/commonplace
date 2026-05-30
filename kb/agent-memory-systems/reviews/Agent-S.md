@@ -1,7 +1,7 @@
 ---
 description: "Agent-S review: Simular GUI-agent stack with S1/S2 JSON experience memory, S2.5/S3 prompt-time reflection, code-agent delegation, and BBoN trace judging"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

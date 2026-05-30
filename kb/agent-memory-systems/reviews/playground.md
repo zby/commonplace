@@ -1,7 +1,7 @@
 ---
 description: "Review of Playground, a TribleSpace-backed Rust agent runtime with shell-first turns, branch-separated traces, archive imports, and prompt-time memory covers"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

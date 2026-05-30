@@ -1,7 +1,7 @@
 ---
 description: "Pi extension that mines task-end session traces into mistake/fix reflections, scored core learnings, git-backed memory files, and prompt-time context"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

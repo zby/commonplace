@@ -1,7 +1,6 @@
 ---
 description: "Database-backed markdown atom KB with derived chunks, embeddings, tags, semantic edges, generated wiki articles, chat, and MCP tools"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Obsidian vault server with canonical markdown files, SQLite FTS/vector/graph indexes, hybrid ranking, MCP/HTTP write tools, health diagnostics, and narrow placement-feedback learning"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

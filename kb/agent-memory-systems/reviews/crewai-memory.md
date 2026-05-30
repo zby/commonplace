@@ -1,7 +1,7 @@
 ---
 description: "CrewAI review: unified in-framework memory with scoped vector records, task-output extraction, prompt injection, agent memory tools, and HITL lesson learning"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

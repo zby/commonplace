@@ -1,7 +1,6 @@
 ---
 description: "Hyalo review: Rust CLI control plane for markdown/Obsidian vaults with scanning, indexes, link repair, saved views, hints, schemas, and Claude skills"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

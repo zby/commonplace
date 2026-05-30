@@ -1,7 +1,6 @@
 ---
 description: "Voiden review: Git-native API workspace with executable .void documents, linked request-block reuse, local sidecars, request history, extensions, and agent skills"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,6 @@
 ---
 description: "Claude Code promptware scaffold for an L1/L2 Logseq or Obsidian wiki, with setup templates, slash-command workflows, schema, lint, and OpenSpec contracts"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

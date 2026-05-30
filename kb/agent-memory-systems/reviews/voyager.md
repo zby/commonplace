@@ -1,7 +1,7 @@
 ---
 description: "Embodied Minecraft agent that promotes critic-approved rollouts into retrievable JavaScript skills, with checkpointed traces, curriculum memory, QA cache, and Chroma indexes"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

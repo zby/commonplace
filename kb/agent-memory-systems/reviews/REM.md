@@ -1,7 +1,7 @@
 ---
 description: "REM review: database-backed episodic memory service that parses agent traces, retrieves prompt context, and partially wires LLM semantic consolidation"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

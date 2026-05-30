@@ -1,7 +1,6 @@
 ---
 description: "Static Agent Skills collection for context engineering: plugin-packaged instructional artifacts with progressive disclosure, activation triggers, examples, and no runtime memory learner"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

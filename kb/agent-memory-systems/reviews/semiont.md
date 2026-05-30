@@ -1,7 +1,6 @@
 ---
 description: "Document-grounded annotation platform with W3C annotations, working-tree resources, git-staged event logs, shared human/agent write paths, and derived graph/vector projections"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems]
 status: current
 last-checked: "2026-05-16"
 ---

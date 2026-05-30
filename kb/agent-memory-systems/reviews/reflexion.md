@@ -1,7 +1,7 @@
 ---
 description: "Reflexion review: benchmark trace-to-reflection loops that reinject failed-attempt plans into retries"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

@@ -1,7 +1,7 @@
 ---
 description: "Test-time learning benchmark that carries a curator-rewritten cheatsheet across ordered problem attempts and can retrieve prior examples by embedding similarity"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

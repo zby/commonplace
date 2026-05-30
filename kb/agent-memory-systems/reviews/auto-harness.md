@@ -1,7 +1,7 @@
 ---
 description: "Minimal benchmark-driven coding-agent improvement loop with trace reading, mutable agent code, regression-suite promotion, result lineage, and learnings logs"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

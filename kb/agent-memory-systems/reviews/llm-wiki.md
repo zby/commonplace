@@ -1,7 +1,7 @@
 ---
 description: "LLM Wiki review: promptware knowledge-base protocol with topic-isolated markdown wikis, raw-to-compiled workflows, multi-runtime plugins, and local lint validation"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---

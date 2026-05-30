@@ -1,7 +1,7 @@
 ---
 description: "Operational Ontology Framework review: public files-first artifact model for Pin/Spec/Facts/Handoff/Skills governance, with no published runner implementation"
 type: ../types/agent-memory-system-review.md
-tags: [related-systems, trace-derived]
+tags: [trace-derived]
 status: current
 last-checked: "2026-05-16"
 ---
