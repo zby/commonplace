@@ -91,7 +91,8 @@ type: kb/types/instruction.md
 | type | file | use for |
 |---|---|---|
 | `instruction` | `kb/types/instruction.md` | procedures, skills, wrapper prompts, review gates |
-| `index` | `kb/types/index.md` | generated directory indexes and instruction navigation hubs |
+| `dir-index` | `kb/types/dir-index.md` | generated per-directory listings |
+| `curated-index` | `kb/types/curated-index.md` | curated instruction navigation hubs |
 
 ## What does NOT belong here
 

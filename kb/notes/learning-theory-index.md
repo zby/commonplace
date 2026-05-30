@@ -1,6 +1,6 @@
 ---
 description: Index of notes about how systems learn, verify, and improve — accumulation, reach, constraining, distillation, discovery, oracle theory, and memory architecture
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: learning-theory
 status: current

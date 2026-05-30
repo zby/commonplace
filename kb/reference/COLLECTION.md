@@ -48,7 +48,8 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `note` | `kb/types/note.md` | general shipped-system reference documents |
 | `adr` | `./types/adr.md` | architecture decision records |
 | `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
-| `index` | `kb/types/index.md` | reference navigation hubs and generated directory indexes |
+| `dir-index` | `kb/types/dir-index.md` | generated per-directory listings |
+| `curated-index` | `kb/types/curated-index.md` | curated reference navigation hubs |
 
 ## What does NOT belong here
 

@@ -7,7 +7,7 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 
-INDEX_TYPE = "kb/types/index.md"
+INDEX_TYPE = "kb/types/curated-index.md"
 
 
 def on_config(config):

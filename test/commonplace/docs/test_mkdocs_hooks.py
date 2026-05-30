@@ -17,7 +17,7 @@ def tag_index(collection: Path, tag: str) -> Path:
         collection / f"{tag}-index.md",
         f"""---
 description: Index for {tag}
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: {tag}
 ---

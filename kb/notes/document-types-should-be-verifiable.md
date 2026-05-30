@@ -54,7 +54,7 @@ traits: [has-comparison, has-external-sources]
 | `kb/types/note.md` | Default — read it to find out what you can do with it |
 | `spec` | You can implement from this; it has enough detail to build against |
 | `review` | This examines specific code; expect findings and a date |
-| `kb/types/index.md` | This is a navigation hub; follow its links to find related notes |
+| `kb/types/curated-index.md` | This is a navigation hub; follow its links to find related notes |
 
 **Traits** are independently checkable properties — like interfaces or protocols that a value can satisfy in any combination:
 

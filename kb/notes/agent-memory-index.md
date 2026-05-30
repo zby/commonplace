@@ -1,6 +1,6 @@
 ---
 description: Index for agent-memory notes about memory as a crosscutting concern in agent architecture
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: agent-memory
 status: current

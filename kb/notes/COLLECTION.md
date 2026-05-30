@@ -67,7 +67,8 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `note` | `kb/types/note.md` | transferable theoretical notes |
 | `structured-claim` | `./types/structured-claim.md` | developed arguments with explicit evidence and reasoning sections |
 | `definition` | `kb/types/definition.md` | KB vocabulary under `kb/notes/definitions/` |
-| `index` | `kb/types/index.md` | curated or generated navigation hubs |
+| `dir-index` | `kb/types/dir-index.md` | generated per-directory listings |
+| `curated-index` | `kb/types/curated-index.md` | curated navigation hubs (tag indexes) |
 
 ## What does NOT belong here
 

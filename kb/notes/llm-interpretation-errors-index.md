@@ -1,6 +1,6 @@
 ---
 description: Three sources of deviation between intended and actual LLM output — prompt underspecification, execution indeterminism, and interpreter failure — plus oracle theory, error correction, and architectural responses for managing each
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: llm-interpretation-errors
 status: current

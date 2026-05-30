@@ -20,7 +20,7 @@ from commonplace.lib.project_paths import (
 
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
-INDEX_TYPE = "kb/types/index.md"
+INDEX_TYPE = "kb/types/curated-index.md"
 GENERATED_HEADING_BY_SOURCE = {
     "tag": "## Other tagged notes",
     "tag-indexes": "## Other tag indexes",

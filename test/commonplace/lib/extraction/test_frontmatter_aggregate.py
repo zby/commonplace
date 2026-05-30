@@ -20,13 +20,13 @@ def write(path: Path, content: str) -> Path:
 def test_groups_files_by_field_value(tmp_path: Path) -> None:
     write(tmp_path / "a.md", "---\ntype: kb/types/note.md\n---\n# A\n")
     write(tmp_path / "b.md", "---\ntype: kb/types/note.md\n---\n# B\n")
-    write(tmp_path / "c.md", "---\ntype: kb/types/index.md\n---\n# C\n")
+    write(tmp_path / "c.md", "---\ntype: kb/types/dir-index.md\n---\n# C\n")
 
     result = frontmatter_aggregate.aggregate_field("type", roots=[tmp_path])
 
-    assert set(result.keys()) == {"kb/types/note.md", "kb/types/index.md"}
+    assert set(result.keys()) == {"kb/types/note.md", "kb/types/dir-index.md"}
     assert len(result["kb/types/note.md"]) == 2
-    assert len(result["kb/types/index.md"]) == 1
+    assert len(result["kb/types/dir-index.md"]) == 1
 
 
 def test_skips_files_without_frontmatter(tmp_path: Path) -> None:

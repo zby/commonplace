@@ -1,6 +1,6 @@
 ---
 description: Index of notes about making hidden state, hidden failure, and quality drift visible — runtime inspectability, degraded-execution signals, and maintenance-oriented detection mechanisms
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: observability
 status: current

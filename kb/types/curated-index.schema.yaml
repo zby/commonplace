@@ -1,0 +1,36 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - index_source
+        properties:
+          type:
+            const: kb/types/curated-index.md
+          index_source:
+            enum:
+              - tag
+              - tag-indexes
+          index_key:
+            type: string
+            minLength: 1
+        additionalProperties: true
+      links:
+        type: array
+        minItems: 3
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            index_source:
+              const: tag
+    then:
+      properties:
+        frontmatter:
+          required:
+            - index_key

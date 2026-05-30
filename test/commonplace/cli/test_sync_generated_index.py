@@ -19,7 +19,7 @@ def test_sync_generated_index_main_dry_run_reports_changes(tmp_path: Path, capsy
         notes_root / "kb-design-index.md",
         """---
 description: Index page for kb-design notes with a generated section maintained by the sync script
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: kb-design
 traits: []
@@ -64,7 +64,7 @@ def test_find_index_files_only_returns_tag_indexes(
         notes_root / "index.md",
         """---
 description: Directory index
-type: kb/types/index.md
+type: kb/types/dir-index.md
 index_source: directory
 ---
 
@@ -75,7 +75,7 @@ index_source: directory
         notes_root / "kb-design-index.md",
         """---
 description: KB design tag index
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: kb-design
 ---
@@ -89,7 +89,7 @@ index_key: kb-design
         notes_root / "tags-index.md",
         """---
 description: Tags index
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag-indexes
 ---
 
@@ -102,7 +102,7 @@ index_source: tag-indexes
         notes_root / "types" / "index.template.md",
         """---
 description: Template
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: template
 ---
@@ -160,7 +160,7 @@ def test_sync_generated_index_supports_tag_index_directory(
         notes_root / "tags-index.md",
         """---
 description: Tag directory
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag-indexes
 ---
 
@@ -176,7 +176,7 @@ index_source: tag-indexes
         notes_root / "kb-design-index.md",
         """---
 description: KB design
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: kb-design
 ---
@@ -188,7 +188,7 @@ index_key: kb-design
         notes_root / "tool-loop-index.md",
         """---
 description: Tool loop
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: tool-loop
 ---

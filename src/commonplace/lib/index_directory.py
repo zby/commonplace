@@ -14,7 +14,7 @@ from commonplace.lib.project_paths import is_git_ignored, iter_unignored_markdow
 
 
 SKIP_DIR_NAMES = {"types"}
-INDEX_TYPE = "kb/types/index.md"
+INDEX_TYPE = "kb/types/dir-index.md"
 
 
 def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:

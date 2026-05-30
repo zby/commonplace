@@ -1,6 +1,6 @@
 ---
 description: Index of notes about document types, writing conventions, validation, and structural quality — how notes are classified, structured, and checked
-type: kb/types/index.md
+type: kb/types/curated-index.md
 index_source: tag
 index_key: document-system
 status: seedling
