@@ -118,4 +118,4 @@ Relevant Notes:
 - [automating-kb-learning-is-an-open-problem](../../notes/automating-kb-learning-is-an-open-problem.md) — supports: Signet's gates show how much machinery is needed before autonomous memory writes become plausible
 - [Memori](./Memori.md) — compares: both intercept live agent interactions and mine them into structured service memory, but Signet exposes more local daemon/storage/control-plane code
 - [Hindsight](./hindsight.md) — compares: both use database-backed extracted facts, graph/temporal retrieval, and consolidation-like loops, but Signet emphasizes cross-harness local ownership
-- [Sig](../source-only/sig.md) — updates landscape: the earlier source-only Sig coverage made a files-first workplace-memory claim; SignetAI now provides inspectable code for a related but daemon/database-centered context layer
+- [Sig](../lightweight/sig.md) — updates landscape: the earlier source-only Sig coverage made a files-first workplace-memory claim; SignetAI now provides inspectable code for a related but daemon/database-centered context layer

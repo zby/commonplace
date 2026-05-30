@@ -29,7 +29,7 @@ project/
           *.md
         agent-memory-systems/      ← reviews of external systems cited from notes
           reviews/
-          source-only/
+          lightweight/
           *.md
       types/                       ← shared global types (`text`, `note`, `instruction`, ...)
       notes/                       ← user's own notes; starts with a COLLECTION.md template

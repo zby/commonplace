@@ -10,7 +10,7 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **`reviews/`** — individual system reviews, one file per system, typed as `../types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
-**`source-only/`** — lightweight `type: kb/types/note.md` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These entries keep source-only systems visible without using the repo-required review type.
+**`lightweight/`** — lightweight `type: kb/types/note.md` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These entries keep lightweight systems visible without using the repo-required review type.
 
 **Collection root** — navigation (index, README), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
 
@@ -98,7 +98,7 @@ Outbound rules are organised by destination collection. Each block declares when
 - `agent-memory-system-review` -> `./types/agent-memory-system-review.md`
   Use for code-grounded reviews of external agent memory or context-engineering systems.
 - `note` -> `kb/types/note.md`
-  Use for source-only coverage and cross-system descriptive analyses.
+  Use for lightweight coverage and cross-system descriptive analyses.
 - `index` -> `kb/types/index.md`
   Use for navigation hubs and generated directory indexes.
 

@@ -16,7 +16,7 @@ Without an explicit signal-quality distinction, automated or semi-automated extr
 
 ## Readable-Artifact And Distributed-Parametric Learning
 
-This requirement mainly describes readable memory artifacts because they can be inspected, diffed, promoted, and rolled back. Systems such as [AgeMem](../../agent-memory-systems/source-only/agemem.md) show a different path: traces train a distributed-parametric policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
+This requirement mainly describes readable memory artifacts because they can be inspected, diffed, promoted, and rolled back. Systems such as [AgeMem](../../agent-memory-systems/lightweight/agemem.md) show a different path: traces train a distributed-parametric policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
 
 ## Memory Evolution
 
