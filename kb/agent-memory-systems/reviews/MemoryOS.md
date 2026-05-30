@@ -47,6 +47,8 @@ The key difference is governance. MemoryOS promotes dialogue traces into profile
 
 The strongest borrowable design axis is tiering by timescale and update cost. MemoryOS distinguishes fresh turns, condensed sessions, durable profile, durable user knowledge, durable assistant knowledge, and vector retrieval state. Commonplace uses a different substrate, but the same artifact-analysis vocabulary applies: raw dialogue traces, summaries, knowledge entries, embeddings, retrieved context, and injected prompt blocks should not all be called "memory" without naming storage substrate, representational form, lineage, and behavioral authority.
 
+**Read-back:** both — generation retrieves and injects memory before responding, while MCP tools expose explicit retrieval.
+
 ## Borrowable Ideas
 
 **Use heat as a distillation trigger.** Worth borrowing for workshops or review queues. MemoryOS does not distill every turn into durable profile state; it waits until session heat combines visits, interaction length, and recency. A commonplace analogue could prioritize which logs, work notes, or repeated warnings deserve promotion review.

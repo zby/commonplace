@@ -51,6 +51,8 @@ Commonplace is stronger on explicit artifact semantics. cass-memory stores sourc
 
 The systems also disagree about where structure belongs. cass-memory centralizes structure in code and schemas: Zod schemas, YAML playbooks, JSONL logs, scoring functions, command outputs, and MCP endpoints. Commonplace centralizes more structure in the markdown artifact contract and validates that prose layer. The borrowable point is not "replace notes with scores"; it is "behavior-changing instructions need an activation/evaluation loop once they start steering agents."
 
+**Read-back:** both — agents can call `cm context` or MCP search, and exported agent files can load playbook rules without lookup.
+
 ## Borrowable Ideas
 
 **Use feedback-weighted activation for instruction-like artifacts.** Ready to borrow as a design target, not as a full implementation. Commonplace instructions and skills could eventually gain lightweight use/outcome events, especially for high-risk operational procedures. The cass-memory distinction between topical relevance and effective score is the useful part.

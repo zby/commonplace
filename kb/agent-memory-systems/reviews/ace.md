@@ -49,6 +49,8 @@ ACE is one of the closest reviewed systems to commonplace's interest in retained
 
 **The closest design question is authority.** ACE's playbook looks like a knowledge artifact in storage - prose distilled from prior task attempts. At consumption time it acts as a system-definition artifact: the generator prompt tells the model to read the playbook, apply relevant strategies, avoid listed mistakes, and report bullet IDs. The same text therefore crosses an authority boundary when injected. Commonplace usually separates these surfaces more explicitly: a note can advise, while an instruction or validator carries stronger force.
 
+**Read-back:** push — the current playbook is injected into every generator prompt before the model answers.
+
 ## Borrowable Ideas
 
 **Stable bullet IDs inside a prompt artifact.** Ready to borrow for workshop-scale artifacts. A temporary playbook could use stable IDs for reflection, review comments, or score counters without promoting every item into a full note.

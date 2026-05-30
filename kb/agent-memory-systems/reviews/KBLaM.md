@@ -48,6 +48,8 @@ KBLaM is much closer to model augmentation than to agent memory. It has no autho
 
 The model-fork boundary is important. KBLaM does not package a generic memory service that any agent can query; it modifies specific Llama and Phi-3 implementations. That gives the KB tensors high activation authority when the forked model is used, but weak adoption affordances for ordinary coding-agent workflows where memory should remain inspectable, editable, and portable across model providers.
 
+**Read-back:** push — supplied KB tensors enter model attention directly, with optional top-k sparsification inside the forward pass.
+
 ## Borrowable Ideas
 
 **Separate source rows, learned adapters, runtime tensors, and attention effects.** Ready to borrow as analysis vocabulary. KBLaM is a clean reminder that one "memory" feature may contain knowledge artifacts, system-definition artifacts, distributed-parametric checkpoints, and transient activation state with different governance needs.

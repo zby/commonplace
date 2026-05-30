@@ -49,6 +49,8 @@ The main divergence is authority precision. In LLM Wiki, many behavior-shaping r
 
 LLM Wiki is also much more source-ingestion oriented. Its durable artifacts are mostly derived from outside publications, releases, advisories, and feeds. That makes it closer to an automated local research desk than to an agent memory system that learns from its own task traces. The metrics and prompt optimizer point toward self-improvement, but the inspected implementation has not crossed the boundary into reliable outcome-to-behavior learning.
 
+**Read-back:** pull — agents query wiki pages through BM25, UI, or API search; monitors update the wiki but do not inject pages into context.
+
 ## Borrowable Ideas
 
 **Keep raw, normalized, extracted, and integrated layers separate.** Ready to borrow for high-volume source ingestion. Commonplace already snapshots sources, but LLM Wiki's explicit raw/normalized/JSON/wiki split is a useful staging pattern when sources arrive continuously and need replayable processing.

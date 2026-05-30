@@ -46,6 +46,8 @@ The cost is inspectability and artifact-level governance. A commonplace note can
 
 Atomic also separates "knowledge artifact" and "system-definition artifact" less explicitly. In code, the separation is real: atom prose, wiki prose, embeddings, tag rows, edge rows, tool descriptions, and chat citations all have different consumers and force. In the product model, they are mostly presented as one knowledge graph. Commonplace's vocabulary is useful here because the same stored object can advise a reader, route a retriever, or instruct an MCP client depending on the consumption path.
 
+**Read-back:** pull — chat and MCP clients deliberately invoke search/read tools; no proactive injection path is described.
+
 ## Borrowable Ideas
 
 **Generated wiki articles with citation-backed lineage.** Ready to borrow as a pattern, not as-is. Atomic's wiki layer is a concrete example of a derived synthesis surface that remains tied to source chunks and can be proposed before acceptance. In commonplace, this would look like generated topic briefs or survey drafts under `kb/work/`, with citations and a promotion path into notes only after review.

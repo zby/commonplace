@@ -45,6 +45,8 @@ Using [behavioral authority](../../notes/definitions/behavioral-authority.md) (w
 
 Compared with commonplace, SAGE is stronger when the domain supplies many repeatable scored tasks. It can turn successful interaction traces into training signal without asking a maintainer to write a durable note. It is weaker on governance: a generated skill can affect training rewards or evaluation behavior without a review status, provenance bundle, expiration rule, or human-readable contract beyond its Python body and task ID.
 
+**Read-back:** both — evaluation can retrieve skill functions, and trained checkpoints affect generation without lookup.
+
 ## Borrowable Ideas
 
 **Treat executable skills as a temporary authority surface.** SAGE's rollout library is useful because it exists only long enough to test whether generated functions help a neighboring subtask. A commonplace analogue would be workshop-local scripts or candidate skills that must prove value before promotion to durable instructions.

@@ -59,6 +59,8 @@ The key artifact split is:
 
 The behavioral-authority boundary moves with the channel. A stored memory is a knowledge artifact when retrieved as context, evidence, or advice. A clearance rule, validator-set proposal, challenge transition, vault lock, or MCP tool schema is a system-definition artifact because it enforces, validates, routes, configures, or instructs behavior. Retrieved memories can temporarily gain stronger authority when `sage_inception`, `sage_turn`, or boot instructions tell the agent how to use them, but SAGE does not distinguish reviewed rules from ordinary recollections as sharply as commonplace does.
 
+**Read-back:** both — agents can pull memories through MCP and REST recall, while hooks, boot instructions, and turn surfaces activate memory into runtime context.
+
 ## Borrowable Ideas
 
 **Separate commit authority from query storage.** Worth borrowing as an operational pattern if commonplace ever adds a database-backed workshop layer. SAGE's flush-before-height-save rule is a concrete design for avoiding divergence between source-of-truth state and derived query indexes.

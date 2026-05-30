@@ -52,6 +52,8 @@ Commonplace is stronger on retained-artifact discipline. ReasoningBank separates
 
 The main design divergence is activation. ReasoningBank activates memory automatically before every benchmark task with a fixed top-1 retrieval policy. Commonplace usually relies on agent navigation, authored links, and explicit skill/instruction loading. ReasoningBank's activation is cheap and timely, but brittle: if the embedding cache is incomplete, stale, or polluted by current-query side effects, relevant memory will not load; if an irrelevant item wins top-1, it still lands in the system channel.
 
+**Read-back:** push — task-query retrieval selects a prior memory item and injects it into the acting agent's system prompt before each benchmark run.
+
 ## Borrowable Ideas
 
 **Mine failures as first-class source traces.** Ready to borrow as a workflow shape. ReasoningBank's separate failed-trajectory prompt captures preventative lessons, not just success recipes. Commonplace could use failed validation runs or abandoned workshop attempts as evidence for candidate instructions, but promotion should remain reviewed.

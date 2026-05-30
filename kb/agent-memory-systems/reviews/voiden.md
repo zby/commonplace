@@ -54,6 +54,8 @@ The main divergence is authority discipline. Voiden's block schemas are implicit
 
 Voiden also has a sharper source/sidecar split for runtime data. Source `.void` documents belong in Git. Request histories, runtime variables, private env, app state, installed extensions, autosaves, and logs live in ignored local directories. Commonplace can borrow that clarity: a file-backed system still needs local operational state, but the behavioral authority of that state must be named separately from the canonical library.
 
+**Read-back:** both — agents can search and read executable `.void` files, while composed Claude/Codex skills load enabled-extension guidance into agent runtimes.
+
 ## Borrowable Ideas
 
 **Executable document blocks.** Commonplace should keep resisting hidden databases for canonical knowledge, but Voiden shows a strong middle path: store structured executable blocks as readable YAML inside Markdown. Ready as a pattern for future workflow/workshop artifacts, not for ordinary notes.

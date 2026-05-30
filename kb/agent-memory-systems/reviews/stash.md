@@ -55,6 +55,8 @@ Stash's lineage is useful but not sufficient for epistemic review. `fact_sources
 
 The governance gap is therefore not storage seriousness; the database model is substantial. The gap is authority management. Any MCP client that can reach the service appears able to call memory-changing tools; the checked-in HTTP surface has no memory API, and the MCP surface has no authentication, approval queue, namespace ACL, audit review, redaction, retention policy, or trust-tier distinction beyond soft deletes, purge commands, contradiction resolution, and namespace organization.
 
+**Read-back:** pull — agents deliberately call MCP or CLI recall/query tools, which return facts first and raw episodes as fallback context.
+
 ## Borrowable Ideas
 
 **Facts-first fallback to raw episodes.** Ready as a retrieval pattern. Commonplace already distinguishes notes from sources; a future search surface could prefer reviewed claims and fall back to raw snapshots or logs only when the reviewed layer is sparse.

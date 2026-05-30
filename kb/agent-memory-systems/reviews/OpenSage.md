@@ -49,6 +49,8 @@ Commonplace is more conservative about authority and lifecycle. A note, instruct
 
 The closest overlap is the distinction between working memory and library memory. OpenSage's `/mem/<agent>/planning.md`, `session_<id>.json`, topology, and message boards are useful workshop-like state: they keep a session coordinated and resumable. Its Neo4j memory and generated Skills are closer to library candidates, but the source does not show a promotion boundary with citations, human or semantic review, contradiction handling, retirement, or explicit authority escalation.
 
+**Read-back:** both — Skills and file-memory guidance are prompt-injected, while graph/history memory is available through search tools.
+
 ## Borrowable Ideas
 
 **Treat generated agents as retained artifacts with explicit contracts.** OpenSage makes subagent definitions durable enough to list, search, call, and optionally persist. A commonplace analogue would require frontmatter, source trace links, review status, allowed tools, and expiration before a generated worker can become reusable infrastructure.

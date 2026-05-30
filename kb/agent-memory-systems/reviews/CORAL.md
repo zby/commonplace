@@ -49,6 +49,8 @@ CORAL is stronger as an active workshop substrate. It has built-in multi-agent s
 
 The retained-artifact split is important. A CORAL attempt JSON is a trace-derived knowledge artifact when read as evidence about prior work. A note or synthesis is a higher-level knowledge artifact. A shared skill, generated instruction file, heartbeat config, or grader configuration is a system-definition artifact because it instructs, routes, evaluates, or constrains later agents.
 
+**Read-back:** both — agents can inspect shared files via CLI, and startup plus heartbeat prompts push retained state into context.
+
 ## Trace-derived learning placement
 
 **Trace source.** CORAL qualifies as trace-derived learning, but the learning is mediated through agent-authored artifacts rather than an autonomous model update. Raw traces include commits, eval messages, scores, grader feedback, attempt metadata, logs, eval artifacts, shared-state checkpoint hashes, focus notes, and identity histories. The strongest implemented trace source is `.coral/public/attempts/*.json`, written by `submit_eval()` and finalized by the grader daemon ([coral/hooks/post_commit.py](https://github.com/Human-Agent-Society/CORAL/blob/ddfd2097aa42b6feb670a5d0c35c0df2f176fd89/coral/hooks/post_commit.py), [coral/grader/daemon.py](https://github.com/Human-Agent-Society/CORAL/blob/ddfd2097aa42b6feb670a5d0c35c0df2f176fd89/coral/grader/daemon.py), [coral/types.py](https://github.com/Human-Agent-Society/CORAL/blob/ddfd2097aa42b6feb670a5d0c35c0df2f176fd89/coral/types.py)).

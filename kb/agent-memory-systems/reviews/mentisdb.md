@@ -56,6 +56,8 @@ MentisDB also has a different stance on provenance. It preserves append order, h
 
 Trace-derived status is not supported for this review. The code supports manual memories, retrospective writes, summaries, LLM-extracted candidate `ThoughtInput`s, interaction logs, and exported/imported memory markdown. Those are useful sources and surfaces, but at this commit there is no implemented loop that consumes agent traces or outcomes and automatically promotes them into durable behavior-shaping artifacts such as reviewed rules, skills, tests, validators, rankers trained from outcomes, or prompt patches. Agents can manually store lessons from traces, and they can upload skills after learning, but that is an operator-mediated write path rather than trace-derived learning.
 
+**Read-back:** both — agents query thought chains through MCP or REST tools, while bootstrap instructions and core skills can load behavior rules before retrieval.
+
 ## Borrowable Ideas
 
 **Treat append-only memories and behavior instructions as separate products.** Ready to borrow as vocabulary. MentisDB's ordinary thought chain and skill registry have different authority, lifecycle, and trust requirements. Commonplace already separates notes from instructions, but MentisDB is a useful external example of why runtime memory and executable guidance should not be collapsed.

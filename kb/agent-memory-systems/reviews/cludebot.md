@@ -53,6 +53,8 @@ Commonplace is stronger where memory must remain auditable, composed, and mainta
 
 The most important design divergence is behavioral authority. In commonplace, an instruction file, a type spec, a validator, and a review note have different authority channels. In Cludebot, those distinctions collapse into memory type plus prompt formatting: episodic and semantic memories advise; procedural memories become instructions when formatted; graph edges and embeddings rank; MCP tool descriptions instruct the consuming agent when to call tools. The mechanism is pragmatic, but the authority boundary is softer.
 
+**Read-back:** pull — the agent or host calls recall/MCP tools; no proactive injection path is described.
+
 ## Borrowable Ideas
 
 **Treat memory type as a decay and authority parameter, not just metadata.** Ready as a framing. Cludebot uses type to shape decay, recall diversity, display grouping, and prompt wording. Commonplace already has type specs; we could be more explicit about which types are merely evidential and which are instruction-bearing.

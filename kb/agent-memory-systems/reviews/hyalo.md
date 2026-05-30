@@ -52,6 +52,8 @@ The most important architectural split in Hyalo is clean: source markdown and `.
 
 Hyalo is weaker as an agent-memory system in the narrow sense because it does not implement automatic distillation, evaluation of retained memories by downstream task effects, or promotion from traces into durable rules. Its learning happens through human/agent dogfooding artifacts and ordinary software iteration. That is still valuable: it shows how much agent memory infrastructure can be achieved by constraining how agents search, mutate, validate, and maintain ordinary markdown.
 
+**Read-back:** both — agents query vaults through Hyalo commands, while generated Claude rules and managed instructions can steer later sessions without a query.
+
 ## Borrowable Ideas
 
 **A reusable markdown-vault control plane.** Ready to borrow as a design reference, not necessarily as code. Commonplace already has domain-specific commands; Hyalo shows what a generic frontmatter/link/task/schema CLI looks like when tuned for agent use.

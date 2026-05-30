@@ -47,6 +47,8 @@ Commonplace is stronger where the memory artifact needs explicit argumentative s
 
 The most useful comparison is authority. In Semiont, source documents and persisted events are authoritative records; graph/vector/search surfaces advise later actions as knowledge artifacts; protocol definitions, schemas, prompts, and worker code instruct or enforce behavior as system-definition artifacts. In commonplace, the human-readable retained artifact usually carries both meaning and lifecycle authority directly.
 
+**Read-back:** pull — agents deliberately browse, match, gather, and inspect annotations or graph/vector projections through MCP, CLI, SDK, or UI workflows.
+
 ## Borrowable Ideas
 
 **Annotation layer before note synthesis.** For dense source corpora, Semiont's W3C annotation model is a cleaner intermediate layer than ad hoc excerpts. Commonplace could borrow this only when a project needs passage-scale review or source markup before writing notes.

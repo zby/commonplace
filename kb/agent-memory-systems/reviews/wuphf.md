@@ -68,6 +68,8 @@ The behavioral authority split is sharper in WUPHF than in many related systems.
 
 WUPHF is less mature than commonplace on static type contracts for prose artifacts. The wiki schema is explicit and implementation-aware, but many wiki article shapes are enforced by prompts, path checks, and runtime handlers rather than by a deterministic repository validator comparable to `commonplace-validate`. Conversely, WUPHF is stronger on live feedback loops: channel events, SSE, auto-extraction, synthesis thresholds, playbook recompilation, skill invocation logging, and contradiction mutation all happen inside the running office.
 
+**Read-back:** both — broker notifications inject bounded context into fresh sessions while agents can query wiki, notebooks, lookup, and skills.
+
 ## Borrowable Ideas
 
 **A workshop runtime can keep fresh sessions cheap without losing continuity.** WUPHF's fresh-turn runner model is a useful complement to commonplace's workshop layer: continuity comes from broker state, scoped memory lookup, task packets, notebooks, wiki facts, and skills rather than from unbounded chat resume.

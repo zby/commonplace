@@ -47,6 +47,8 @@ The major divergence is scope. `getsentry/skills` is a deployable skill marketpl
 
 Commonplace is stronger on lifecycle visibility across artifacts. Sentry skills have good local contracts in `SPEC.md` and `SOURCES.md`, but there is no collection-level index of relationships, source snapshots, validation history, or retired/superseded authority surfaces beyond Git and changelog prose. That is acceptable for a plugin repo; it is weaker for an agent memory system where future agents need to compare and retire behavior-shaping artifacts systematically.
 
+**Read-back:** push — skill/plugin activation loads selected `SKILL.md` instructions into agent context without agent lookup.
+
 ## Borrowable Ideas
 
 **Make runtime files routers by default.** Ready to borrow. The `skill-writer` structure is a good default for complex commonplace skills: `SKILL.md` should name the branch table and output contract, while references answer specific lookup needs.

@@ -46,6 +46,8 @@ Using the artifact-analysis vocabulary, Agent-R separates [storage substrate](..
 
 The design is stronger than commonplace where a task domain supplies cheap rollouts and scores. It can automatically produce many revision examples without asking a maintainer to write lessons. It is weaker where knowledge must remain inspectable, linkable, and governable. Once revision conversations become weights, the learned behavior is hard to inspect, retire, or cite back to the exact task pair that caused it unless the training pipeline preserves that lineage externally.
 
+**Read-back:** push — downstream fine-tuned weights would affect generation automatically; the repo has no runtime retrieval path.
+
 ## Borrowable Ideas
 
 **Keep raw search trees separate from distilled training material.** Ready as a framing. Agent-R's split between `mcts_result` trees and JSONL revision conversations is clean: raw evidence stays replayable, while the consumed artifact is a curated derivative.

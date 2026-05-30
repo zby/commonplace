@@ -56,6 +56,8 @@ The strongest design difference is that Tolaria treats types and views as flexib
 
 The AI integration is also more product-shaped than commonplace. Tolaria builds a concrete context snapshot from the currently visible UI, injects bundled product docs, launches a selected local CLI agent, and gives that agent MCP read/orientation tools plus native file-edit authority according to Safe or Power User mode. Commonplace currently depends more on repository navigation and skills. Tolaria shows a practical activation layer for "what the user is looking at right now."
 
+**Read-back:** both — agents can pull vault notes through MCP search/read tools, while AI-panel snapshots inject active UI context into launched agents.
+
 ## Borrowable Ideas
 
 **Root guidance as a managed vault artifact.** Commonplace already has `AGENTS.md`, but Tolaria's state model for managed, missing, broken, and custom guidance files is useful. A future commonplace command could detect whether agent guidance is canonical, custom, or stale before offering repair.

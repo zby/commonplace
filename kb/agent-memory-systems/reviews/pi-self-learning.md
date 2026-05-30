@@ -54,6 +54,8 @@ Pi Self-Learning is also much narrower than a KB. It is excellent at "avoid repe
 
 The runtime/tool surface is tighter than commonplace's command set. Pi users get slash commands and transparent hook behavior inside one agent runtime. Commonplace is more portable across shells and agents, but the pi extension has better timing: it can inject memory at `before_agent_start` and reflect at `agent_end` without asking the agent to remember a separate procedure.
 
+**Read-back:** both — agents can pull memory through slash commands and files, while `before_agent_start` injects ranked core, daily, and monthly context.
+
 ## Borrowable Ideas
 
 **Treat interruptions as feedback, not errors.** Commonplace trace workflows should preserve blocked commands, permission denials, user aborts, and skipped tools as first-class learning signals. This is ready now for review and warning workflows where user interruption often means "your plan crossed a boundary."

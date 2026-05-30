@@ -52,6 +52,8 @@ Napkin's progressive disclosure is also more product-shaped. The agent learns th
 
 The distillation boundary is important. If the external pi distill extension writes conversation-derived notes into a Napkin vault, those distilled notes would be durable knowledge artifacts and possibly system-definition artifacts when templates or `NAPKIN.md` make them guide future behavior. But this review cannot assign that authority to Napkin core from the checked-in package alone. The implementation evidence here supports "markdown vault retrieval system with benchmark session loaders," not "shipped trace-derived learning system."
 
+**Read-back:** pull — agents deliberately run overview, search, and read over the vault; checked-in core does not inject notes automatically.
+
 ## Borrowable Ideas
 
 **Make progressive disclosure executable.** Commonplace already has navigation guidance, but Napkin's CLI makes the path operational: overview output points to search, search output points to read and outline. A commonplace analogue could expose task-specific `commonplace-overview`, `commonplace-search`, or bundle commands whose outputs instruct the next cheapest expansion step. Ready as a command-output design pattern.

@@ -46,6 +46,8 @@ The main divergence is implementation depth. Commonplace has shipped commands, t
 
 The authority gradient is cleaner than many larger systems. Pin is explicitly stronger than Facts: the Facts template says facts are not rules and Pin wins on conflict. Skills reference Pin constraints but should not duplicate them. Spec completed tasks are immutable history, with defects represented as new corrective tasks. Those are small rules, but they express real lifecycle discipline in a way many "memory" systems blur.
 
+**Read-back:** pull — agents or external runners must deliberately load Pin, Spec, Facts, Handoff, and Skills; no public runner injects them.
+
 ## Borrowable Ideas
 
 **A five-file cold-start bundle.** Commonplace could borrow the Pin/Spec/Facts/Handoff/Skills bundle as a workshop bootstrap shape for projects that do not need the full KB type system. Ready as a workshop convention, not as a framework-level replacement for notes/reference/instructions.

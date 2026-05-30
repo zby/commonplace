@@ -52,6 +52,8 @@ The deepest design difference is source-of-truth placement. In commonplace, the 
 
 MemPalace also makes behavioral authority more automatic. The protocol tells agents to query before answering, diary after sessions, and invalidate changed facts. Hooks can force capture before compaction. Those are useful system-definition artifacts, but they also raise the trust bar for noisy drawers and extracted KG facts: a weak or stale fact can influence behavior earlier than it would in commonplace, where notes usually advise until promoted into instructions, schemas, or code.
 
+**Read-back:** both — agents search drawers and KG through tools, while wake-up layers and hooks can inject memory context or force capture.
+
 ## Borrowable Ideas
 
 **Hook-triggered trace capture before context loss.** Ready to borrow as a workshop pattern. Commonplace should not copy MemPalace's database substrate wholesale, but the stop/precompact trigger boundary is exactly where agents lose behavior-relevant evidence. A workshop-level trace capture command could preserve raw evidence before asking for curated note promotion.

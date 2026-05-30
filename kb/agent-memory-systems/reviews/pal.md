@@ -51,6 +51,8 @@ The closest overlap is the raw-to-compiled split. Pal's `raw/` to `wiki/` pipeli
 
 The largest difference is behavioral authority. Pal gives many instructions directly to runtime agents and schedulers. If the leader says "everything else must be delegated," that is an active routing rule. If Navigator says "read wiki index first," that is an activation policy. Commonplace usually records comparable rules in type specs, skills, AGENTS instructions, and validation commands; Pal packages them inside an always-on personal assistant runtime.
 
+**Read-back:** both — agents pull files, wiki, SQL, and routing metadata through tools, while Agno learnings and team instructions enter runtime context.
+
 ## Borrowable Ideas
 
 **Keep routing metadata separate from canonical content.** Ready to borrow. Pal's `pal_knowledge` boundary is crisp: metadata points to files, schemas, source capabilities, and discoveries; content remains in native stores. Commonplace already does this with indexes and search, but Pal's `Discovery:` entries suggest a lightweight way to cache cross-source routing discoveries without pretending they are source evidence.

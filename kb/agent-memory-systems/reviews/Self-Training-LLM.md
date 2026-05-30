@@ -51,6 +51,8 @@ This also explains why Self-Training-LLM should not be treated as deploy-time ag
 
 The useful comparison for commonplace is therefore not "should we add this as a memory backend?" but "what does this show about trace-derived promotion into stronger authority?" Self-Training-LLM demonstrates an extreme promotion path: source corpus and rollouts become training data, and training data becomes weights. That is powerful, but the lineage and invalidation costs are much higher than promoting an observation into a note, instruction, test, or validator.
 
+**Read-back:** push — learned checkpoint state affects generation automatically; there is no agent-facing retrieval step.
+
 ## Borrowable Ideas
 
 **Separate evidence generation from uncertainty filtering.** Ready to borrow as a design principle. The pipeline distinguishes document-grounded question/answer generation from no-context sampled answers, making it possible to identify where a model lacks reliable internal knowledge.

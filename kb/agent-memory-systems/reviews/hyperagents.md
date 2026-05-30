@@ -45,6 +45,8 @@ Commonplace is stronger at artifact typing and long-lived interpretability. Hype
 
 The deepest contrast is prose memory versus executable heredity. Commonplace usually tries to make future agents better by giving them better inspectable knowledge and stronger operating rules. HyperAgents makes future agents better by replaying code diffs selected by benchmark pressure. That is memory in the retained-artifact sense, but its operative part is executable code, not a note.
 
+**Read-back:** both — meta agents inspect prior eval artifacts, while selected patch lineages are replayed into future agents.
+
 ## Borrowable Ideas
 
 **Treat patch replay as a first-class retained artifact.** Ready to borrow for eval-backed tool or skill loops. A patch file with parent metadata, benchmark score, and replay procedure is a system-definition artifact, not just an experiment artifact.

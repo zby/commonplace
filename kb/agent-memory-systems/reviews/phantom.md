@@ -53,6 +53,8 @@ The most interesting comparison is authority management. Phantom has a real auth
 
 The docs still carry traces of an older, heavier evolution story: `docs/security.md` describes five gates and LLM judge voting, while the implementation says the six-judge pipeline was deleted and replaced with a reflection subprocess plus deterministic invariant checks ([security.md](https://github.com/ghostwright/phantom/blob/f8c7ab42d885936ee54abc785528000260f4acc5/docs/security.md), [engine.ts](https://github.com/ghostwright/phantom/blob/f8c7ab42d885936ee54abc785528000260f4acc5/src/evolution/engine.ts), [invariant-check.ts](https://github.com/ghostwright/phantom/blob/f8c7ab42d885936ee54abc785528000260f4acc5/src/evolution/invariant-check.ts)). The code-grounded review should follow the implementation.
 
+**Read-back:** both — agents can pull memories through MCP, UI, and file reads, while prompt assembly injects working memory, Qdrant context, and evolved config.
+
 ## Borrowable Ideas
 
 **Authority bands over one file tree.** Ready to borrow as vocabulary pressure on commonplace. Phantom's `phantom-config` tree demonstrates operator-locked files, evolution-managed files, agent-owned notes, read-only trace context, meta logs, and prompt-injected sections living near each other without equal authority. Commonplace can make this distinction sharper in workshop design and review reports.

@@ -51,6 +51,8 @@ Autocontext and commonplace share the premise that retained artifacts should cha
 
 **The behavioral-authority split is clearer in Autocontext than in many reviewed systems.** Raw traces, score trajectories, analyst reports, weakness reports, and session reports are knowledge artifacts when consumed as evidence or context. Playbooks, active lessons, context policies, tool instructions, completion checks, generated harness validators, runtime policies, and checkpoints are system-definition artifacts because they instruct, enforce, validate, configure, rank, or learn. The system's main risk is not ambiguity about authority; it is that many authority-bearing artifacts are assembled into prompts by default, so context selection can become broad concatenation rather than targeted navigation.
 
+**Read-back:** push — runtime context assembly injects scenario knowledge and active harness mutations into role prompts without agent lookup.
+
 ## Borrowable Ideas
 
 **Artifact authority labels in the runtime context layer.** Autocontext's runtime context contract names owner, persistence, budget behavior, and child-task behavior for each layer ([runtime context](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/session/runtime_context.py)). Commonplace could borrow the table shape for `AGENTS.md`, skills, indexes, workshop state, and review outputs. Ready now as documentation; implementation can wait.

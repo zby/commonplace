@@ -49,6 +49,8 @@ Commonplace is stronger on authority, lineage, and lifecycle. Tendril collapses 
 
 The deeper difference is oracle strength. Tendril has no external judge that a generated capability is generally correct; the live user task and Deno execution result are the only immediate feedback. That makes the loop useful for personal automation and exploration, but risky as a shared capability library. Its best fit is a local, inspectable, low-friction sandbox where the user can browse and edit generated tools.
 
+**Read-back:** pull — agents deliberately list registered capability summaries and execute selected capabilities by name.
+
 ## Borrowable Ideas
 
 **Name-gated execution after registration.** `execute` accepts a capability name, not code. A commonplace analogue would be stronger separation between "propose a script/check" and "run an approved named command." Ready to borrow as a safety pattern for any future generated-command workflow.

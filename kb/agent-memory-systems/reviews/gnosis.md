@@ -46,6 +46,8 @@ The most important alignment is that both systems treat repo-local, inspectable 
 
 Gnosis also draws a sharper line between canonical storage and runtime acceleration than many memory systems. The SQLite index is disposable, keyed outside the repo, and rebuilt from JSONL. Commonplace's generated indexes follow a similar principle, but commonplace makes more derived surfaces visible in the repository because they are part of navigation and review.
 
+**Read-back:** pull — doctrine tells agents to run `gn search`; entries are not injected automatically.
+
 ## Borrowable Ideas
 
 **Adopt through native agent instructions.** The two-line AGENTS.md adoption path is immediately borrowable as a packaging lesson. Commonplace skills and commands are more powerful, but each promoted workflow should have an equally small "how an agent starts using this" contract.

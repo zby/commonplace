@@ -46,6 +46,8 @@ The tradeoff is authority transparency. In commonplace, the note file is usually
 
 Binder also exposes a sharper distinction between knowledge artifacts and system-definition artifacts than many database-backed KBs. A `Task`, `Decision`, `Note`, or `Concept` record is a knowledge artifact when consumed as context or evidence. A `Field`, `Type`, `Navigation`, `View`, LSP validator, MCP tool schema, or transaction processor is a system-definition artifact because it routes, validates, renders, constrains, or mutates later behavior.
 
+**Read-back:** pull — the agent must query/search/transact or choose to read projected files.
+
 ## Borrowable Ideas
 
 **Database-backed projected files.** Useful as a comparison pattern, not ready to adopt wholesale. Binder shows how to keep files ergonomic while making a database canonical. Commonplace should remain files-first for methodology notes, but a scoped database for high-volume derived state, snapshots, or review telemetry would be more defensible after seeing Binder's projection machinery.

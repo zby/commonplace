@@ -45,6 +45,8 @@ Commonplace has a richer artifact contract. auto-harness distinguishes practical
 
 The largest design contrast is library versus workshop. auto-harness is mostly a workshop: ignored runtime state, evolving code, temporary traces, and score rows around one benchmark. The only durable public methodology is the scaffold itself. Commonplace tries to accumulate reusable claims and procedures across tasks; auto-harness accumulates benchmark pressure into one mutable agent file.
 
+**Read-back:** push — the next benchmark run imports the evolved agent and gate suite without an agent lookup.
+
 ## Borrowable Ideas
 
 **Treat regression-suite promotion as memory promotion.** Ready to borrow where commonplace has executable checks. A fixed task that enters `suite.json` becomes durable memory with enforcement authority. For KB work, the analogue is promoting a discovered failure mode into a validator, review check, or small eval rather than only writing a lesson.

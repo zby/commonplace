@@ -48,6 +48,8 @@ HippoRAG has stronger automatic associative retrieval over a document corpus. It
 
 HippoRAG does not qualify as trace-derived learning in the current review sense. Its durable state is derived from indexed corpus documents, LLM extraction calls, embeddings, and graph construction. The code does not show learning from agent sessions, tool traces, repeated task trajectories, or feedback loops into durable lessons, instructions, policies, or rankers.
 
+**Read-back:** pull — callers invoke query-time retrieval over the graph and stores; push integration is left to the host.
+
 ## Borrowable Ideas
 
 **Treat query activation as a first-class artifact boundary.** Ready to borrow conceptually. HippoRAG cleanly separates retained corpus state from transient query-time activation: query embeddings, selected facts, node weights, and PPR scores matter because they decide which retained artifacts reach the answer prompt.

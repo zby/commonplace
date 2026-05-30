@@ -43,6 +43,8 @@ The implementation also shows why commonplace separates artifact contracts. Dyna
 
 Compared with commonplace, Dynamic Cheatsheet is better at zero-friction online adaptation inside a benchmark. Commonplace is better when the retained state must be governed, cited, reviewed, retired, or promoted into stronger artifacts. Dynamic Cheatsheet's representational form is almost entirely prose, with symbolic JSON wrappers and embedding-based retrieval. Commonplace's comparable promotion path would not stop at a growing prompt note; it would split reusable lessons into reviewed notes, instructions, tests, or skills when evidence justifies stronger behavioral authority.
 
+**Read-back:** push — the benchmark wrapper injects the carried cheatsheet and retrieved examples into generator prompts.
+
 ## Borrowable Ideas
 
 **Treat a carried prompt as a compiled view with weak authority.** Ready as vocabulary. A commonplace run could carry a temporary cheatsheet for a workshop or review batch, but it should be labeled as a derived view, not a canonical source.

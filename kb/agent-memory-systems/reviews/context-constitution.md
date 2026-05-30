@@ -45,6 +45,8 @@ The main difference is artifact contract. Commonplace turns its methodology into
 
 The second difference is source-of-truth status. Commonplace usually treats repository files as the canonical retained artifacts. Context Constitution's affordances describe a projected memory filesystem where local files are editable views and underlying memory blocks are the true memory state. That makes git useful for review and propagation, but the architecture is not simply "files are the database."
 
+**Read-back:** push (always-loaded) — the constitution shapes behavior when loaded as prompt or training policy, not by agent lookup.
+
 ## Borrowable Ideas
 
 **Write a constitution for memory agents.** Commonplace already has AGENTS.md, collection contracts, type specs, and skills, but Context Constitution shows the value of a single high-level document that states why memory exists, what continuity means, and what context-management tradeoffs agents should make. Ready as a documentation pattern if kept subordinate to concrete contracts.

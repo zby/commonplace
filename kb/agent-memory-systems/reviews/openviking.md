@@ -54,6 +54,8 @@ The most important comparison is authority. In OpenViking, a generated `.abstrac
 
 The second distinction is the filesystem metaphor. OpenViking borrows filesystem operations to organize context, and the Rust RAGFS trait really implements create, read, write, list, rename, remove, stat, chmod, truncate, and grep-style operations ([crates/ragfs/src/core/filesystem.rs](https://github.com/volcengine/OpenViking/blob/af4c54ff8f011611d3c60c4936a84a784f042e3f/crates/ragfs/src/core/filesystem.rs)). But `viking://` is still a mediated namespace whose canonical behavior depends on server identity, AGFS backend, vector sync, semantic queues, and API policy. Commonplace's files are less dynamic but easier to audit with ordinary editor, shell, and git tools.
 
+**Read-back:** both — agents can search and read through MCP or HTTP tools, while plugins can auto-recall and inject memories before later turns.
+
 ## Borrowable Ideas
 
 **L0/L1/L2 sidecars as a directory contract.** Ready to borrow where commonplace eventually stores large source trees, traces, or workshops. The useful idea is not the exact filenames; it is the consistent split between cheap abstract, navigational overview, and original detail, with clear lineage back to the source directory.

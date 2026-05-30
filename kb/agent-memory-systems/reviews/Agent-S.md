@@ -48,6 +48,8 @@ Commonplace is stronger on provenance and lifecycle. Agent-S's S1/S2 summaries c
 
 The most important design drift is that Agent-S moved away from durable experience memory in the default path. S2 advertises a continually updated KB, while S3's current runtime emphasizes reflection, local code execution, and BBoN rollout selection. That makes Agent-S less like a persistent knowledge base than earlier versions suggest.
 
+**Read-back:** push — runtime code retrieves embedding-nearest experience summaries and injects them into planner or worker prompts.
+
 ## Borrowable Ideas
 
 **Split task-level and subtask-level experience.** Ready to borrow conceptually. Agent-S's narrative/episodic split is crude but useful: whole-task plans and subtask action recipes have different retrieval keys and consumers. Commonplace already has different artifact types; a workshop layer could still benefit from making task and subtask learning surfaces explicit.

@@ -48,6 +48,8 @@ The major difference is artifact governance. A FRIDAY tool combines several oper
 
 FRIDAY's self-learning course files are also different from commonplace library notes. A course lesson is a generated task prompt that drives the agent to practice and possibly create tools; it is a system-definition artifact for the learning loop. It is not a stable knowledge artifact about the package unless separately reviewed, cited, and maintained.
 
+**Read-back:** push — FRIDAY retrieves matching tools and injects descriptions and code during planning and generation.
+
 ## Trace-derived learning placement
 
 **Trace source.** OS-Copilot qualifies as trace-derived learning. The qualifying trace is not a conversation transcript; it is the task execution trajectory around generated tools: task description, generated code, invocation, execution output, errors, current directory, file listing, prerequisite returns, LLM judge critique, repair attempts, replan reasoning, and final score. Some of this is transient in `ExecutionState`; some is logged through Python logging, but the implemented learning path consumes the live state and critique rather than later mining raw log files ([oscopilot/agents/friday_agent.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/agents/friday_agent.py), [oscopilot/modules/executor/friday_executor.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/modules/executor/friday_executor.py), [oscopilot/utils/schema.py](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/schema.py)).

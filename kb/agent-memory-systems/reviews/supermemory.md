@@ -56,6 +56,8 @@ The systems also assign authority differently. Supermemory's most important beha
 
 Supermemory should not be marked trace-derived from this source checkout. The local code demonstrably forwards conversations, chat messages, documents, and user actions into hosted APIs, and it retrieves profiles and memories derived somewhere downstream. The derivation step that turns traces into durable memories or profile entries is not inspectable locally. Code-grounded status is therefore "hosted opaque trace intake," not an open trace-derived learning implementation.
 
+**Read-back:** both — agents can call MCP recall, while SDK middleware injects hosted profile and search context into prompts before generation.
+
 ## Borrowable Ideas
 
 **A tiny cross-framework memory contract.** `containerTag`, `customId`, `mode`, and `addMemory` are enough to make memory adapters feel consistent across TypeScript, Python, UI, voice, and MCP. Commonplace tools should keep similarly stable option names if they expose repo memory to multiple runtimes. Ready as API ergonomics.

@@ -47,6 +47,8 @@ EQUIPA is much more operational than commonplace. It has a live runtime, hard fe
 
 The clearest design divergence is authority placement. In commonplace, stronger authority usually means promotion into an inspectable system-definition artifact: instruction, skill, validator, ADR, type spec, or command. In EQUIPA, stronger authority often means a row is active, injected, selected by a feature flag, scored by q-value, or written into prompt/config files by an optimizer. That gives faster closed-loop adaptation but makes review harder: the same `lessons_learned` table can hold generic ForgeSmith lessons, SIMBA rules, reviewer-derived warnings, embeddings, counters, and active/inactive lifecycle state.
 
+**Read-back:** both — prompt construction injects selected lessons and episodes, and agents can query lessons/logs through MCP or CLI.
+
 ## Borrowable Ideas
 
 **Artifact split for operational traces.** Ready to borrow conceptually. EQUIPA usefully separates run summaries, tool actions, resumability state, inter-agent messages, lessons, episodes, mutation logs, and config snapshots. Commonplace should keep that split if it ever adds richer workshop telemetry: raw trace, compact episode, distilled lesson, system-definition mutation, benchmark result, and export artifact should not collapse into one "memory" bucket.

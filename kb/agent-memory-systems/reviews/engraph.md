@@ -46,6 +46,8 @@ engraph is the stronger reference for "make an existing human markdown vault imm
 
 The main tradeoff is authority location. In engraph, ranking policy, graph expansion, folder placement, and write workflows live in executable Rust and SQLite state. In commonplace, much of the authority lives in inspectable prose contracts and type-specific documents, with scripts as enforcement or maintenance aids. engraph can serve and mutate a user's vault more ergonomically; commonplace can explain why a note means what it means and how an agent should use it.
 
+**Read-back:** pull — agents call search/read/context tools over the derived vault index; no proactive injection path is described.
+
 ## Borrowable Ideas
 
 **Read/write API permission split for agent tools.** Ready to borrow if commonplace ever exposes an HTTP/MCP layer. engraph's read/write key distinction is simple but exactly the right first governance line for a local KB API.

@@ -54,6 +54,8 @@ The artifact-authority split is the key comparison. In Virtual Context, raw cano
 
 The tradeoff is inspectability. Virtual Context has better runtime observability than most systems here: schemas, request inspectors, saved contexts, tool-call history, test coverage, progress snapshots, and admin backfills. But its canonical operational state is still service-owned. A generated fact can affect future prompts without becoming a reviewed claim in a collection. Commonplace gives up automatic prompt-time continuity to make durable claims easier to read, diff, cite, supersede, and govern.
 
+**Read-back:** both — the proxy injects retrieved summaries, facts, and tool handles automatically, while agents can page memory through VC and MCP tools.
+
 ## Borrowable Ideas
 
 **Use proxy-level context ownership for live agents.** Commonplace should not become a provider proxy, but consumer projects that run long coding or assistant sessions could use a thin proxy/hook layer to activate KB context before the model repeats work. Ready as a deployment pattern where the proxy remains transparent and reversible.

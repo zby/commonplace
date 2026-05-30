@@ -47,6 +47,8 @@ Commonplace is stronger on artifact contracts and maintainability. A commonplace
 
 The docs slightly overclaim current mechanics. The README advertises `memory estimate` and `memory build`, but the checked-in `CommandMode` enum at this commit exposes `run`, `core`, `exec`, `model`, `diagnostics`, and `config`, not `memory` subcommands ([README.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/README.md), [src/main.rs](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/src/main.rs)). The memory architecture doc is explicit that automatic compaction and lenses were dropped; current promotion is explicit via a memory faculty, not an in-core automatic compactor ([docs/memory_temporal_redesign.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/memory_temporal_redesign.md), [docs/playground_memory_architecture.md](https://github.com/triblespace/playground/blob/462c4aca532d1c0b9de6ae70bf029e6c2fc60e52/docs/playground_memory_architecture.md)).
 
+**Read-back:** push — the runtime selects memory chunks and recent shell turns into a budgeted prompt cover before each model call.
+
 ## Borrowable Ideas
 
 **Separate raw trace branches from prompt memory.** Commonplace should keep treating raw logs and source snapshots as evidence rather than as immediately loaded memory. Playground's branch split is a useful design analogue for making raw execution/chat traces, imported archives, summaries, and runtime config visibly different artifacts. Ready to borrow as vocabulary and documentation, not as a pile dependency.

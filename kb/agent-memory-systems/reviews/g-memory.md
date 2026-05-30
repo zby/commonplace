@@ -48,6 +48,8 @@ Commonplace is stronger as a durable knowledge system. G-Memory's highest-author
 
 The important design split is that G-Memory uses several retained-artifact families at once. Raw trajectories and state chains are knowledge artifacts when reused as examples or evidence. Retrieved successful trajectories remain knowledge artifacts in the prompt. Distilled insights become system-definition artifacts because the task prompt tells agents to use them during execution. Chroma embeddings, the task graph, and insight scores are runtime/index surfaces with ranking or selection authority, not the canonical learned content.
 
+**Read-back:** push — retrieved successes and scored insights are selected and injected into task prompts before execution.
+
 ## Borrowable Ideas
 
 **Store raw multi-agent topology alongside task traces.** Ready as an evaluation pattern. G-Memory's state chain captures which agent output depended on which upstream output. A commonplace analogue would be useful for review bundles or multi-agent writing workflows where later diagnosis needs the coordination trace, not only the final text.

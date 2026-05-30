@@ -45,6 +45,8 @@ AWM is stronger than commonplace on the narrow trace-to-procedure path. It demon
 
 Commonplace is stronger on governance. AWM's workflow files are readable and cheap to patch, but they are not addressable below the file level, not source-linked, not validated, and not retired by policy. That is fine for benchmark iteration where the file is a transient learned prompt. It is much weaker for a durable KB where an agent needs to know why a retained procedure exists, when it stopped applying, and who is allowed to change its authority.
 
+**Read-back:** push — the configured workflow file is injected into the acting prompt before web action selection.
+
 ## Borrowable Ideas
 
 **Mine procedures, not just facts, from traces.** Ready to borrow as a target shape. AWM's workflow prompt files are evidence that trace-derived extraction can produce procedural context, not only reflections or task summaries. In commonplace this would look like workshop traces producing candidate instructions or skills, with review before promotion.

@@ -46,6 +46,8 @@ The main tradeoff is operational immediacy versus inspectable lineage. Exocomp c
 
 Exocomp does not qualify as trace-derived learning in the inspected implementation. It records live session messages and parent-side summaries, and agents can manually write requirements, bugs, changelog entries, or skills, but there is no durable extraction pipeline that consumes conversation/tool traces and promotes distilled lessons into retained behavior-changing artifacts.
 
+**Read-back:** both — role prompts are injected at session construction, and agents can load skills or read coordination files through tools.
+
 ## Borrowable Ideas
 
 **Use role allowlists as part of the artifact contract.** Ready to borrow for agentic KB operations. Commonplace already has skills and commands, but Exocomp's constructors make the operational boundary easy to audit: a planner can hire, an architect can define requirements, a coder can write and run Go, a tester can write tests and report bugs. A commonplace workshop could express worker ownership with the same explicit tool/program matrix.

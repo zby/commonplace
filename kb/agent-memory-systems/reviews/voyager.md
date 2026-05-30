@@ -48,6 +48,8 @@ The authority split is the central design lesson. Raw events, chat logs, world o
 
 Voyager also shows a risk commonplace mostly avoids: executable memory can compound capability quickly, but a weak critic can promote brittle or lucky code into future behavior. The critic reads final observations and returns JSON success/critique; it is not a deterministic verifier, replay suite, or human review gate ([voyager/agents/critic.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/critic.py), [voyager/prompts/critic.txt](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/prompts/critic.txt)). That oracle is usable because Minecraft tasks often leave observable inventory or world-state evidence, but it remains soft.
 
+**Read-back:** push — description embeddings retrieve approved JavaScript skills and inject them into the action prompt and Mineflayer execution context.
+
 ## Borrowable Ideas
 
 **Executable promotion target.** Ready as a design pattern, not as a default KB feature. Repeated successful behavior can graduate from prose notes into scripts, validators, commands, or agent skills when the action boundary and oracle are clear.

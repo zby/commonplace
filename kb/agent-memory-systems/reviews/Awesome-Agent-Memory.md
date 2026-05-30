@@ -48,6 +48,8 @@ Awesome Agent Memory is stronger as a horizon scanner. Its categories include pr
 
 The taxonomy is useful but lower-authority than a validated KB structure. In commonplace terms, the README's categories are knowledge-artifact labels, not system-definition-artifact routing rules. They may guide what to inspect next, but they do not bind downstream behavior or guarantee that entries satisfy a stable inclusion contract.
 
+**Read-back:** pull — an agent must deliberately browse or search the README catalogue; no proactive injection is described.
+
 ## Borrowable Ideas
 
 **Keep a cheap horizon-scanning layer beside expensive reviews.** Ready now as a collection pattern. A broad bibliography can catch products, papers, benchmarks, and discourse before any one item deserves a source-grounded review.

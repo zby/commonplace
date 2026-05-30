@@ -47,6 +47,8 @@ The main divergence is where authority lives. In commonplace, the behavior-shapi
 
 ByteRover is also more productized. It has the adoption affordances commonplace deliberately avoids: OAuth, provider switching, cloud space sync, web dashboard, TUI, MCP, connectors, and an internal context-tree VC. Commonplace is thinner operationally but more explicit methodologically: it explains why note types, link labels, review flows, and workshop/library boundaries matter. ByteRover is a rich implementation of an agent-facing memory product; commonplace is a framework for designing and reviewing such systems.
 
+**Read-back:** both — agents can call `brv-query`, and query/connector services inject ranked context-tree results into prompts.
+
 ## Borrowable Ideas
 
 **Separate canonical prose from runtime ranking signals.** ByteRover moved importance, recency, maturity, access count, and update count out of markdown into a sidecar so ordinary query use does not dirty shared files. Commonplace should borrow the principle if it ever adds usage-derived ranking: keep canonical note prose reviewable under git, and keep volatile usage telemetry in a separate, explicitly lower-authority substrate. Ready as a design principle; needs a concrete search/ranking use case before implementation.

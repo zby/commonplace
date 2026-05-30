@@ -52,6 +52,8 @@ Commonplace is stronger as a governed knowledge system. xMemory's generated fact
 
 The important artifact split is behavioral authority. Raw dialogue messages and episode summaries are knowledge artifacts when consumed as evidence or context. Semantic facts and theme summaries are also knowledge artifacts as stored content, but the adaptive retriever gives them ranking and routing authority over what reaches the answer prompt. The threshold constants, config files, prompts, retrieval scripts, and entropy gates are system-definition artifacts: they configure extraction, boundary detection, clustering, selection, and expansion behavior. Chroma embeddings, kNN files, and vector arrays are derived ranking substrates rather than canonical knowledge.
 
+**Read-back:** both — callers can search memory, and the adaptive QA harness injects selected themes, facts, episodes, and raw messages into the answer prompt.
+
 ## Borrowable Ideas
 
 **Use high-level representatives before low-level expansion.** Ready as an evaluation pattern. xMemory's theme -> semantic -> episode path is a good testbed for commonplace search: start from compact summaries or claim clusters, then expand only when a downstream uncertainty or coverage signal justifies it.

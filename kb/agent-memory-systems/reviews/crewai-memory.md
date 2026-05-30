@@ -47,6 +47,8 @@ Commonplace is stronger as an auditable knowledge substrate. A CrewAI memory rec
 
 The important artifact split is between raw traces, `MemoryRecord` rows, embeddings/storage backends, recall ranking, prompt injection, memory tools, and framework settings. Raw task/HITL material is source evidence. The record content is a knowledge artifact when recalled as context. Embeddings, scope filters, composite scores, read-only flags, source/private filters, tool descriptions, prompt-injection templates, and HITL pre-review prompts are system-definition artifacts because they route, rank, constrain, or instruct later behavior.
 
+**Read-back:** both — automatic recall injects memory into task prompts, and agents can use explicit memory search tools.
+
 ## Borrowable Ideas
 
 **Read barrier for async memory writes.** Ready to borrow if commonplace ever adds background capture. CrewAI's `remember_many()` returns immediately, but `recall()`, crew kickoff finalization, and flow finalization wait for pending writes. That is the right minimal contract for "fast write, no stale next read."

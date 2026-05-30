@@ -44,6 +44,8 @@ browzy.ai is stronger as a consumer application: it gives a user a terminal inte
 
 The closest commonplace analogue to browzy's compiled wiki is a workshop layer that has been made queryable: raw intake, compiled intermediate articles, generated indexes, and outputs all live together. That is useful for personal research, but it can blur the line between accumulated library knowledge and derived work-in-flight material unless lifecycle boundaries are made explicit.
 
+**Read-back:** push — app-side FTS ranking and section extraction inject retrieved wiki context into answer prompts.
+
 ## Borrowable Ideas
 
 **Use a derived FTS index while keeping files canonical.** Ready to borrow when the KB needs faster or section-aware retrieval. browzy is a good example of a database as an operational accelerator, not a rival source of truth.

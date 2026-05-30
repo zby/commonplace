@@ -49,6 +49,8 @@ Commonplace is stronger as a general methodology library. Its notes, type specs,
 
 The most interesting divergence is promotion. Commonplace usually promotes from workshop experience into notes or instructions through human/agent review. DocMason has a concrete trace-to-memory pipeline: host conversation traces become pending runtime overlays, then published interaction memories that retrieval can rank and answer-time policy can consider. The tradeoff is that DocMason's promoted interaction memories are still evidence/context surfaces, not validated instructions or skills.
 
+**Read-back:** push — canonical `ask` retrieves evidence and interaction memories into the governed answer path.
+
 ## Borrowable Ideas
 
 **Treat original, staging, and current as explicit authority states.** Ready to borrow. Commonplace already separates sources, notes, generated indexes, and work areas; DocMason's strict "staging is not reader-facing truth" language would sharpen sync and review workflows that produce temporary generated artifacts.

@@ -37,6 +37,8 @@ Archie's planning layer is closer to a workshop than to a library. Epics and wor
 
 Archie is also a useful negative example for trace-derived classification. It retains session-log format knowledge and allows an agent to consult local Codex sessions during work, but it does not implement automatic extraction or promotion from those traces. The memory effect is manual: a later agent can read docs, work items, and perhaps session logs, then update durable artifacts by judgment.
 
+**Read-back:** both — prompt-loaded agent rules can enter context automatically, while docs and work items are read deliberately.
+
 ## Borrowable Ideas
 
 **Canonical-guide plus derived-helper lineage.** Archie states that quickstart docs and installer behavior are derived from the canonical guide, then gives an agent brief for keeping them synchronized. Commonplace already has generated indexes and copied operational artifacts; a similar brief format would help for any derived behavior-facing view whose source cannot yet be checked mechanically. Ready now for narrow generated surfaces.

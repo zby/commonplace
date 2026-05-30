@@ -48,6 +48,8 @@ Commonplace is more disciplined as a transferable knowledge medium. A commonplac
 
 The deepest design divergence is where each system places trust. GBrain trusts automation enough to let scheduled cycles and subagents synthesize transcripts into pages, extract facts from writes, and promote repeated facts into takes. It compensates with allow-lists, caches, lint, fences, logs, source scopes, privacy stripping, and rebuildable indexes. Commonplace keeps more behavior in explicit notes, instructions, reviews, validation, and human-readable diffs before promotion.
 
+**Read-back:** both — agents can query/search through CLI or MCP operations, and loaded skills/resolver guidance can shape behavior without lookup.
+
 ## Borrowable Ideas
 
 **Compiled truth plus append-only timeline.** Ready to borrow where notes need a current synthesis plus evidence trail. Commonplace already distinguishes source snapshots from derived notes, but entity/project/workshop artifacts could benefit from making "current synthesis" and "evidence log" an explicit page-local contract.

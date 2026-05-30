@@ -50,6 +50,8 @@ The strongest alignment is authority analysis. Both systems need to separate a d
 
 The main divergence is inspectability versus operational density. Commonplace keeps most canonical state as directly reviewed Markdown. Decapod uses SQLite and generated JSON artifacts for concurrent, multi-agent, and gate-heavy workflows. That buys stronger runtime coordination but increases the need for deterministic rebuilds, event logs, derived-view freshness gates, and CLI-mediated mutation.
 
+**Read-back:** both — agent entrypoints load governance rules, and agents call `decapod` for context capsules and governed state.
+
 ## Borrowable Ideas
 
 **Treat proof plans as first-class memory.** Ready to borrow where commonplace workflows already have validation gates. A proof plan plus proof results is retained state with direct validation authority, not just a note that "tests passed."

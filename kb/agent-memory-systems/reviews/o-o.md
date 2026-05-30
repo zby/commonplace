@@ -53,6 +53,8 @@ o-o is also more aggressive about self-updating content. A document can carry a 
 
 The quality tradeoff is clear. o-o's instructions tell the agent to preserve structure and update specific zones, but there is no deterministic check that citations are current, that cached facts still support paragraphs, that source tiers are meaningful, or that shell/HTML edits preserved the polyglot contract. Commonplace would treat those as validation and review problems before granting strong behavioral authority.
 
+**Read-back:** both — running the file loads its update contract, while updater agents read article and source-cache content during refresh.
+
 ## Borrowable Ideas
 
 **Embed update intent with the artifact.** Ready to borrow in weaker form. Commonplace notes should not become executable bash documents by default, but high-churn source briefs could carry a compact refresh contract: subject, scope, source policy, freshness window, and update budget.

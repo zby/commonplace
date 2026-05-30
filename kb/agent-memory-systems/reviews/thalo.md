@@ -48,6 +48,8 @@ The main divergence is lifecycle breadth. Thalo validates local structure well, 
 
 Trace-derived status should not be assigned. The reviewed code supports agents and humans writing entries, validates those entries, tracks changed source files through git/timestamps, and can automate synthesis updates. It does not mine assistant conversations, tool traces, session logs, rollouts, or action trajectories into durable notes, rules, schemas, weights, rankings, or policies. If a user manually converts a conversation into `.thalo` entries, those entries are ordinary source knowledge artifacts; the repository does not implement the trace-to-artifact extraction loop.
 
+**Read-back:** pull — agents deliberately query, validate, navigate, or actualize `.thalo` source entries through the CLI, LSP, or action.
+
 ## Borrowable Ideas
 
 **Saved query + prompt + checkpoint as a first-class artifact.** A commonplace analogue could define repeatable syntheses over reviews, source notes, or working sets, then generate prompts only for changed inputs. This is promising, but should wait for a concrete recurring synthesis workflow so we do not add a DSL-shaped feature prematurely.

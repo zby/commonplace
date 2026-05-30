@@ -50,6 +50,8 @@ ARIS is stronger as an operational workshop. It has concrete queues, watchdogs, 
 
 The retained-artifact vocabulary helps avoid overclaiming ARIS. A `SKILL.md` file is a system-definition artifact with prose and symbolic operative parts. A research-wiki paper page is usually a knowledge artifact. `query_pack.md` is a derived knowledge artifact with prompt-time activation authority. `.aris/meta/events.jsonl` is raw trace evidence. A meta-optimize patch proposal is advice until accepted; once applied to a skill, it becomes a revised system-definition artifact.
 
+**Read-back:** push — slash-command workflows and recovery protocols load skills, project state, and compiled query packs into context.
+
 ## Trace-derived learning placement
 
 **Trace source.** ARIS qualifies as trace-derived learning. The strongest implemented source trace is `.aris/meta/events.jsonl`, produced from Claude Code hook payloads by `tools/meta_opt/log_event.sh`. It records skill invocations, tool failures, Codex reviewer calls, slash commands, user prompts, and session boundaries. Review tracing adds richer prompt/response traces under `.aris/traces/`, while workflow logs such as `AUTO_REVIEW.md`, `EXPERIMENT_LOG.md`, `findings.md`, `queue_state.json`, and watchdog status files preserve task-specific traces.

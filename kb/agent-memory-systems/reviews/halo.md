@@ -48,6 +48,8 @@ Commonplace is stronger at durable artifact authority. A HALO report is a knowle
 
 The key comparison is that HALO separates raw traces, derived indexes, runtime tools, and reports well, but keeps the final codification step out of process. That is reasonable for a harness optimizer aimed at existing agent deployments. It also means HALO should not be described as a self-contained memory system: the memory-like value is in reusable diagnostic reports and externally applied harness changes, not in a persistent store that automatically conditions future HALO runs.
 
+**Read-back:** pull — analyst root agents and subagents deliberately call overview, query, search, view, and code-analysis tools over trace files and sidecar indexes.
+
 ## Borrowable Ideas
 
 **Byte-offset sidecar indexes for large retained evidence.** Ready for any future commonplace trace/workshop substrate. HALO's sidecar rows preserve raw-file canonicality while making trace summaries and span seeks cheap. If commonplace starts keeping large review traces or agent-run logs, a derived sidecar should point into raw evidence rather than replacing it.

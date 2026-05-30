@@ -53,6 +53,8 @@ The closest alignment is the source/derived split. LACP keeps many raw operation
 
 The biggest divergence is authority. LACP often uses local commands as enforcement surfaces: a hook blocks, a route denies, a manifest fails, a harness task is blocked, a budget gate refuses execution. Commonplace mostly shapes behavior through instructions, type contracts, validation, and review, with fewer hard runtime gates.
 
+**Read-back:** both — agents can call memory and report commands, while Claude hooks inject selected context, SMS, handoffs, and gates into sessions.
+
 ## Borrowable Ideas
 
 **Treat run receipts as a first-class artifact family.** LACP's sandbox and harness receipts are ready to borrow conceptually: capture command, route, contracts, exit code, verification, and lineage in one durable JSON object. Commonplace could use a similar receipt for review bundles or validation sweeps where provenance matters more than prose.

@@ -47,6 +47,8 @@ Commonplace is stronger at explanation, lineage, and durable knowledge structure
 
 The cleanest vocabulary split is behavioral authority. A cq unit stored in SQLite is a knowledge artifact by default: evidence or advice a future agent may consider. The cq skill, command prompts, and MCP tool policy are system-definition artifacts: they instruct when to query, when to trust cautiously, when to confirm, when to flag, and when to propose. cq's strongest design move is packaging those two surfaces together without pretending the database alone changes behavior.
 
+**Read-back:** pull — the loaded skill tells agents when to call `query`; knowledge units are not proactively injected.
+
 ## Borrowable Ideas
 
 **Local-first capture with drain-on-reconnect.** Ready to borrow if commonplace ever gets a shared operational-memory service. cq's remote fallback and startup drain keep capture available under bad network/auth conditions without silently dropping candidate knowledge.

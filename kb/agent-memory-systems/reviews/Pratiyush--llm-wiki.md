@@ -49,6 +49,8 @@ The artifact-authority split is less explicit in `llm-wiki` than in commonplace.
 
 Lineage is the place where commonplace's stricter habits matter. `llm-wiki` preserves raw transcripts and frontmatter, uses state files to avoid repeated conversion/synthesis, and makes generated site artifacts disposable. But synthesized wiki claims do not carry source-span citations, review decisions, invalidation rules, or stable pointers from each distilled claim back to transcript turns. A later agent can inspect the raw session, but it may need to redo the evidence audit.
 
+**Read-back:** pull — agents query or read wiki pages through search, MCP, CLI, exports, commands, or skills.
+
 ## Borrowable Ideas
 
 **Adapter-first trace intake.** Ready to borrow for workshop layers. The adapter pattern cleanly separates session-store discovery from shared parsing, redaction, rendering, and state tracking.

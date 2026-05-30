@@ -46,6 +46,8 @@ That narrowness is the design strength. Reflexion's artifact contract is easy to
 
 The behavioral-authority split is important. Failed trajectories, logs, previous attempts, and test feedback are knowledge artifacts when used as evidence for reflection. The generated reflection becomes a system-definition artifact when inserted under prompt text that tells the agent to use it to improve the next attempt. The artifact is still prose, but its authority comes from the retry prompt channel.
 
+**Read-back:** push — retry loops inject the latest task-local reflections into prompts after failure-triggered reflection.
+
 ## Borrowable Ideas
 
 **Use failure as a clean promotion trigger.** Ready now for narrow workflows. Reflexion does not mine every trace; it asks for reflection when an oracle says the attempt failed. Commonplace could use the same trigger discipline for review warnings, validation failures, or repeated operator mistakes, while keeping human or validation gates for durable promotion.

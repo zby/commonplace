@@ -45,6 +45,8 @@ Commonplace is stronger where the retained artifact itself needs reviewable mean
 
 The most important boundary is source-of-truth status. In CocoIndex, source artifacts and flow definitions are authoritative, LMDB tracking state is operational authority, and target stores are derived projections. In commonplace, the note or instruction is usually the canonical retained artifact, while generated indexes are secondary views.
 
+**Read-back:** pull — agents query downstream maintained targets; CocoIndex itself does not proactively inject context.
+
 ## Borrowable Ideas
 
 **Compiled retrieval targets with explicit source authority.** Commonplace could eventually use a CocoIndex-like pipeline to maintain vector or graph projections from notes and sources, while keeping markdown and snapshots canonical. Useful later; not needed until retrieval scale or latency makes current navigation insufficient.

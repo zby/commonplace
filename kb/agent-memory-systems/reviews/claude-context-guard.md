@@ -51,6 +51,8 @@ The authority boundary also differs. In Context Guard, a user comment copied int
 
 Context Guard's strongest design axis is not persistence alone but mandatory activation. `/start` requires the agent to reload the current state, detect missing work, and cross-reference plans before starting. That directly addresses the failure mode where a project has documentation but the next agent never reads it.
 
+**Read-back:** push — slash-command recovery routines, `CLAUDE.md`, and hooks load continuity state without agent-originated search.
+
 ## Trace-derived learning placement
 
 **Trace source.** Claude Context Guard qualifies as trace-derived learning, but in a manual, command-mediated form. The raw traces are the current conversation, user comments, task progress, plan files, git state, commit history, audit findings, code edits, and session activity observed by the acting Claude Code agent. The repository does not implement a general automatic transcript ingester; instead, slash commands require the agent to extract relevant material from the live session into durable files.

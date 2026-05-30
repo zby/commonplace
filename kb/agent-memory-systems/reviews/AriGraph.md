@@ -45,6 +45,8 @@ Commonplace is stronger as a durable knowledge system. AriGraph's graph entries 
 
 The deepest divergence is authority. AriGraph's retained artifacts become high-authority prompt material because the planner and action selector are told to pay attention to memory, yet the write path is automatic and weakly governed. Commonplace spends more design effort distinguishing knowledge artifacts from system-definition artifacts, so an artifact's storage substrate, representational form, lineage, and behavioral authority can be reviewed before it changes future behavior.
 
+**Read-back:** push — current observation and plan cues retrieve graph and episodic memory that is injected before planning and action.
+
 ## Borrowable Ideas
 
 **Action affordances derived from memory.** Ready as a design reference. AriGraph does not only retrieve text; it turns spatial graph state into `go to` actions. A commonplace analogue would be generated maintenance commands or navigation shortcuts whose availability is computed from validated KB state, not simply suggested by prose.

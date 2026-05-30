@@ -49,6 +49,8 @@ Lineage is the main weakness for commonplace's purposes. Memori keeps raw conver
 
 Memori also treats prompt injection as a relevance policy, not as a governed promotion step. The injected context says to use the material only if relevant to the user's query, and the SDK filters by rank score threshold before injection ([memori/llm/pipelines/recall_injection.py](https://github.com/MemoriLabs/Memori/blob/57217f06be44abce87dfdb71b15c5f37fb741707/memori/llm/pipelines/recall_injection.py)). There is no visible code-grounded review loop that promotes facts into stronger rules, demotes stale memories, resolves contradictions, or audits whether injected memories improved downstream behavior.
 
+**Read-back:** push — registered wrappers and hooks retrieve relevant facts before LLM calls and inject them into prompt context.
+
 ## Borrowable Ideas
 
 **Use runtime wrappers as activation surfaces.** Worth borrowing for bounded workflows. Commonplace should not make every note auto-inject, but a task-specific wrapper could load a small, typed context bundle before a repeated workflow begins.

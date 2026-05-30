@@ -53,6 +53,8 @@ SkillNote's authority model is pragmatic but implicit. A registry row's `descrip
 
 The feedback loop should be read narrowly. SkillNote records traces and gives agents prompts to rate skills after use. Those traces become dashboard evidence and weak ranking signals in `context-bundle`; they do not become new skills, revised skill bodies, validation gates, or policy updates without a human or agent manually invoking `skill-push`. This review therefore does not classify SkillNote as trace-derived learning.
 
+**Read-back:** both — agents can pull skills through MCP tools or mirrored files, while synced collections and sidecars load skill discovery and usage instructions.
+
 ## Borrowable Ideas
 
 **Separate live content versions from distributable release bundles.** Ready to borrow if commonplace grows a skill publishing surface. The split between editable content snapshots and checksummed semver ZIP releases is cleaner than overloading one version number for both authoring history and installable artifacts.

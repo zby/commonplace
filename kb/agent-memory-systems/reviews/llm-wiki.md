@@ -48,6 +48,8 @@ Commonplace is stricter about artifact contracts. LLM Wiki has good file placeme
 
 The most important contrast is authority. In LLM Wiki, the agent reads prompt instructions and writes wiki files; deterministic code checks whether the resulting wiki is structurally coherent. In commonplace, instructions, type specs, validators, generated indexes, and semantic review reports are themselves part of a more formal system-definition layer.
 
+**Read-back:** both — agents query wiki indexes and articles, while plugin skills and portable instructions can load behavior rules without a wiki query.
+
 ## Borrowable Ideas
 
 **One portable protocol file as an adoption bridge.** LLM Wiki's `AGENTS.md` compresses the whole system into a single file for agents that do not support plugins ([AGENTS.md](https://github.com/nvk/llm-wiki/blob/505b56c50ff75bbf61eedd236b44d192c0e0674c/AGENTS.md)). Commonplace already has repo instructions, but a deliberately portable "minimum viable KB protocol" could lower adoption cost for projects that cannot install the full command package.

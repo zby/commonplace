@@ -47,6 +47,8 @@ Spacebot is a Rust agent runtime whose memory design is tied to its process mode
 
 Spacebot is closer to a live autonomous runtime than to a repository knowledge base. Commonplace accumulates reviewed artifacts for later agents; Spacebot maintains online conversation, task, and autonomy state for a running assistant. The overlap is in the artifact taxonomy: both systems need to distinguish a knowledge artifact that informs an agent from a system-definition artifact that constrains or schedules it.
 
+**Read-back:** both — agents can call memory recall, while cortex bulletins and knowledge synthesis are injected as warm runtime context.
+
 ## Borrowable Ideas
 
 - Use process-specific tool servers as explicit authority boundaries. Spacebot's channel/branch/worker/cortex split is clearer than a single omnibus tool menu.

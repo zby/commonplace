@@ -54,6 +54,8 @@ The main divergence is inspectability and governance. Hindsight has good operati
 
 Hindsight also demonstrates a real hierarchy that commonplace mostly describes in methodology: raw facts, observations, mental models, and directives are distinct runtime surfaces with different activation timing and authority. That is valuable evidence for the claim that "memory" must be decomposed by storage substrate, representational form, lineage, and behavioral authority.
 
+**Read-back:** both — agents can recall or reflect through memory tools, while OpenClaw recall and active directives can be inserted during prompt construction.
+
 ## Borrowable Ideas
 
 **Observation as a first-class derived fact type.** Commonplace could borrow the explicit distinction between raw retained facts and consolidated observations for workshop logs or review outputs. The borrowable part is not the database schema; it is the lifecycle label: an observation should carry source ids, proof count or support count, tags/scope, and history. Ready as vocabulary; implementation needs a concrete trace-derived workflow.

@@ -55,6 +55,8 @@ The most important artifact split is that Siftly stores source material and deri
 
 Siftly does not learn from traces in the agent-memory sense. It persists import/sync state and derived annotations from bookmarks, and it can create AI-suggested categories from the bookmark corpus. I did not find code that mines prior search sessions, user corrections, pipeline failures, or repeated task traces into durable behavior-changing rules, prompts, rankers, validators, or model weights. User-created categories and settings shape later behavior, but they are direct operator configuration rather than trace-derived learning.
 
+**Read-back:** pull — users or agents deliberately search, browse, filter, export, or inspect the mindmap to consume enriched bookmark context.
+
 ## Borrowable Ideas
 
 **Keep raw source payloads next to normalized fields.** Ready to borrow for high-variance web sources. Siftly keeps `rawJson` while also normalizing common fields, which lets later extractors recover more structure without re-importing.

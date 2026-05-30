@@ -49,6 +49,8 @@ Closure-SDK is stronger on continuous runtime memory. It has mechanisms commonpl
 
 The knowledge-artifact/system-definition-artifact split is unusual here. Many Closure artifacts are neither readable knowledge artifacts nor textual instructions. They are system-definition artifacts because the runtime consumes them with prediction, correction, verification, search, or consolidation authority. The readable knowledge artifacts are mostly docs, database rows, retained raw records, table histories, curriculum reports, and saved event logs; the decisive learned artifacts are numeric state inside the runtime.
 
+**Read-back:** both — SDK query and resonance APIs afford pull, while restored brain/genome state directly shapes runtime behavior.
+
 ## Trace-derived learning placement
 
 **Trace source.** Closure-SDK qualifies as trace-derived learning through `closure_ea`, not through the byte-stream integrity SDK alone. Raw traces are ordered carrier windows, input/target curriculum examples, staged predictions, prediction feedback, eligibility sets, self-difference histories, closure events, and database/table histories. `CurriculumTrace` is explicitly a deterministic sequence of experience windows replayed through a brain, and `teach()` stages a prediction then evaluates it against a target ([closure_ea/src/teach.rs](https://github.com/faltz009/Closure-SDK/blob/dbb6fc337560336220d424aa06382fe3e4e76daf/closure_ea/src/teach.rs), [closure_ea/src/three_cell.rs](https://github.com/faltz009/Closure-SDK/blob/dbb6fc337560336220d424aa06382fe3e4e76daf/closure_ea/src/three_cell.rs)).

@@ -40,6 +40,8 @@ Behavioral authority also differs. The stored case row is a knowledge artifact w
 
 Where AgentFly is stronger is the closed benchmark loop. It can run many tasks, judge outcomes, append memory, and immediately reuse the enlarged case bank. Commonplace is stronger at durable curation: typed notes, link semantics, validation, archive status, and human-readable lifecycle controls. AgentFly is learning-oriented but thin on maintainability; commonplace is maintainable but does not yet have a comparable automated benchmark-to-memory ingestion loop.
 
+**Read-back:** push — runtime retrieves similar case rows for the current question and injects them into the planner prompt.
+
 ## Borrowable Ideas
 
 **Case rows as a workshop substrate.** Ready as a framing. A commonplace workshop could keep a JSONL or markdown table of task, attempted plan, outcome, and judge signal before deciding whether anything deserves promotion into a note or instruction.

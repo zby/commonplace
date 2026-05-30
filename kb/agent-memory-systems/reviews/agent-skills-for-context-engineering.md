@@ -45,6 +45,8 @@ The biggest divergence is authority and lifecycle. Agent Skills for Context Engi
 
 This review should therefore not classify the repository as an automated memory learner. It is a useful library about context engineering and memory systems, plus a distribution vehicle for those instructions. Its retained artifacts can change future agent behavior when loaded, but the repo does not itself observe agent traces, extract lessons, rewrite skills, or rank memories from usage.
 
+**Read-back:** push — host trigger metadata loads relevant skill instructions into the agent's context.
+
 ## Borrowable Ideas
 
 **Collection-level skill packaging.** The marketplace manifest bundles related skills as one plugin while keeping individual skill directories separate. Commonplace could use the same packaging idea for installable topical bundles, especially where one conceptual area spans several skills. Ready to borrow when distribution becomes a product concern.

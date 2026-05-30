@@ -50,6 +50,8 @@ Commonplace is stronger on inspectability and lifecycle. SkillWeaver keeps enoug
 
 The authority split is useful. Raw trajectories and success checks are knowledge artifacts: evidence for why a skill should exist. Generated functions are system-definition artifacts: once retrieved, they become callable actions in the agent's execution environment. Retrieval prompts sit between the two as a ranking and activation layer.
 
+**Read-back:** push — relevant generated functions are selected and injected into the agent prompt before action generation.
+
 ## Borrowable Ideas
 
 **Executable skills as a promotion target.** SkillWeaver gives a concrete pattern for promoting repeated trace lessons beyond prose: when a behavior is stable and valuable enough, it can become a callable API with parameters, validation, and retrieval metadata.

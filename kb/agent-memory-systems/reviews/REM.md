@@ -47,6 +47,8 @@ The sharpest difference is authority discipline. REM collapses storage, retrieva
 
 The other difference is implementation maturity. REM's schema and worker design point toward trace-to-semantic learning, including source episode IDs and lifecycle fields. But the inspected API currently makes episodic write/retrieve more reliable than semantic consolidation: the worker's store and mark-consolidated calls target routes that are not registered in the Go router. Commonplace has less online memory automation, but its shipped validation and review flows are tighter around the artifacts it does claim to operate.
 
+**Read-back:** both — clients can call retrieval directly, and framework integrations inject assembled memory before generation.
+
 ## Trace-derived learning placement
 
 **Trace source.** REM qualifies as trace-derived learning. The qualifying source traces are agent episodes: SDK calls after tasks, LangChain conversation input/output pairs, AutoGen turns, and direct `/api/v1/episodes` writes. Each episode stores raw content and parsed metadata, and the write path indexes it in Postgres, Qdrant, and Neo4j ([sdk/python/rem_memory/integrations/langchain.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/integrations/langchain.py), [sdk/python/rem_memory/integrations/autogen.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/integrations/autogen.py), [go-api/internal/services/write_service.go](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/go-api/internal/services/write_service.go)).

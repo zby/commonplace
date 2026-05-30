@@ -49,6 +49,8 @@ Commonplace is stronger on artifact contract and library stability. AHE's most b
 
 The systems also differ in authority direction. Commonplace tries to make knowledge consumable by future agents and maintainers across many tasks. AHE makes a narrower but sharper bet: use benchmark rollouts to improve one coding-agent harness. That narrow scope lets it apply hard outcome feedback, but it also makes transfer depend on whether benchmark-induced harness edits generalize.
 
+**Read-back:** push — the next run loads the evolved workspace, so harness edits shape behavior without agent lookup.
+
 ## Borrowable Ideas
 
 **Treat traces as evidence, analyses as compressed evidence, and edits as behavior.** Ready to borrow. Commonplace should preserve this separation when mining agent work: raw transcripts and logs are knowledge artifacts, derived analyses are still evidence, and only promoted instructions, skills, validators, routing rules, or code become system-definition artifacts.

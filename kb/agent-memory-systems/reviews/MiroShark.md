@@ -49,6 +49,8 @@ MiroShark is stronger on live activation. Agents do not have to remember to sear
 
 The graph store is also a counterexample to filesystem-first assumptions. For high-volume simulation state, Neo4j plus vector/fulltext indexes make sense: multi-hop graph retrieval, temporal filters, epistemic-kind filters, contradiction invalidation, and report-trace traversal are operational queries, not authoring surfaces. The cost is that the retained knowledge is no longer easy for a coding agent to inspect, diff, review, or repair with ordinary file tools.
 
+**Read-back:** both — simulation rounds inject belief and round memory, while report/search tools query graph and trace state.
+
 ## Borrowable Ideas
 
 **Separate source-derived graph facts from trace-derived simulation beliefs.** Ready to borrow as vocabulary discipline. MiroShark's `kind` and `source_type` fields show a compact way to mark whether an edge came from a document, an agent belief, or an observation, though commonplace would need stronger citation and review metadata before promoting such edges into library notes.

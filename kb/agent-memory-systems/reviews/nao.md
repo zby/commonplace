@@ -51,6 +51,8 @@ The divergence is authority and lifecycle. In commonplace, a note, instruction, 
 
 nao's strongest design move is activation. It does not merely store analytics context; it routes it into the next model call through explicit prompt construction, mentions, tools, and UI/MCP workflows. Commonplace is stronger where retained artifacts need long-term governance, semantic review, and fine-grained lineage.
 
+**Read-back:** both — agents pull project context through tools and mentions, while prompt assembly injects rules, memories, skills, and selected context.
+
 ## Borrowable Ideas
 
 **Treat analytics context as a project folder first.** Ready to borrow as a deployment pattern. nao's `databases/type=.../database=.../schema=.../table=...` convention gives agents a cheap lexical navigation layer before they query live data.

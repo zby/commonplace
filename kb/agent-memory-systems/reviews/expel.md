@@ -48,6 +48,8 @@ Commonplace is stronger on durable provenance and compositionality. ExpeL's lear
 
 The key authority distinction is that ExpeL has two future-behavior channels. Retrieved trajectories are knowledge artifacts: they act as examples and evidence in the prompt. The distilled numbered rules are system-definition artifacts in the eval path: the prompt says to use or follow them, and they are maintained by a rule-update protocol.
 
+**Read-back:** push — evaluation injects distilled rules and retrieved trajectory examples into the task prompt.
+
 ## Borrowable Ideas
 
 **Separate trace gathering from consolidation.** Ready now as a workflow pattern. ExpeL makes raw runs first-class, then mines them later. Commonplace's workshop layer should preserve that separation: capture work traces cheaply, then promote only after a separate consolidation pass.

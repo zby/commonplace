@@ -51,6 +51,8 @@ The systems also disagree about what "memory" should feel like to an agent. Cogn
 
 The most important split is source-of-truth status. In Cognee, raw documents, session traces, and feedback are sources; DataPoints, graph edges, embeddings, summaries, graph-context snapshots, and triplet embeddings are derived projections; pipelines and retrievers decide how they behave. In commonplace, the note or instruction is often the canonical retained artifact, while generated indexes and reports are secondary views.
 
+**Read-back:** both — agents can call recall/search tools, and `@agent_memory` fetches graph memory before agent functions run.
+
 ## Borrowable Ideas
 
 **Separate raw ingestion state from behavior-shaping projections.** Ready to borrow as vocabulary, not architecture. Cognee's `Data` rows, `DataPoint` fields, graph edges, vector collections, and search payloads make it hard to pretend that all retained state has one authority level.

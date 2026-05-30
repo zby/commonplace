@@ -57,6 +57,8 @@ The divergence is substrate and review culture. Signet's canonical operational s
 
 The behavioral-authority split is unusually clear. Raw transcripts, session summaries, dashboard views, memory rows, and graph facts are knowledge artifacts when they inform the agent. Hook prompts, connector configs, skills, write gates, recall rankers, feedback weighting, auth scopes, and ontology mutation proposals are system-definition artifacts because they instruct, route, enforce, rank, or govern future behavior.
 
+**Read-back:** both — agents can pull memory through MCP, CLI, SDK, and daemon recall, while connector hooks inject recall snippets and memory-use instructions.
+
 ## Borrowable Ideas
 
 **Cross-harness lifecycle hooks as the activation surface.** Commonplace mostly assumes the agent chooses to search the KB. Signet shows a stronger packaging pattern: install small harness-native hooks that inject reminders, recall snippets, and memory tools before the model repeats work. Borrowable for consumer projects, but only where hook installation can remain transparent and reversible.

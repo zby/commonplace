@@ -48,6 +48,8 @@ The most useful vocabulary split is knowledge artifact versus system-definition 
 
 The system does not qualify as trace-derived learning at this commit. It can ingest URLs, files, inline text, or chat transcripts as sources, and the specs discuss promoting repeated gotchas from L2 to L1. But there is no implemented mechanism that mines agent session traces, tool trajectories, repeated task histories, or feedback logs into durable learned rules. The learning loop is an instructed human/Claude workflow, not a source-grounded trace-derived mechanism.
 
+**Read-back:** both — L1 memory is always loaded, while L2 wiki pages are pulled through `/wiki query`.
+
 ## Borrowable Ideas
 
 **Consequence-based hot/cold routing.** Ready to borrow as framing. The question "what happens if the agent does not know this before acting?" is a practical way to decide whether a retained artifact should be always-loaded instruction or on-demand context.

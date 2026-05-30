@@ -53,6 +53,8 @@ The strongest overlap is artifact separation. Nuggets has raw chat/session signa
 
 Nuggets is weaker on lineage and governance. It can remember a preference, a path, or a task summary, but the resulting fact does not record which message, tool call, file version, or extraction rule produced it. `MEMORY.md` promotion increases behavioral authority but does not add review, contradiction handling, retirement, or provenance. For a personal assistant this may be acceptable; for a methodological KB it would be too much authority for an unreviewed extracted fact.
 
+**Read-back:** both — Pi can recall nugget facts explicitly, while hooks and the gateway inject remembered facts or scheduled prompts into later turns.
+
 ## Borrowable Ideas
 
 **Use tiny file-backed facts as a scratch layer.** Ready to borrow for workshop-local convenience, not for library claims. A commonplace analogue would be a small, inspectable fact cache for active work: file paths, commands, current task labels, and user preferences that help a later agent resume cheaply.

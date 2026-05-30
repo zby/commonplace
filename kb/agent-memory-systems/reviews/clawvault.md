@@ -50,6 +50,8 @@ The biggest conceptual alignment is the workshop/library split. ClawVault's raw 
 
 The biggest divergence is governance. ClawVault has many automatic writes and prompt hooks, but its quality gates are heuristic confidence, importance, dedup, category routing, and optional LLM judgment. Commonplace is slower and more manual because it treats artifact type and semantic review as the trust boundary. ClawVault is better at not losing signal; commonplace is better at saying what a retained artifact is allowed to mean.
 
+**Read-back:** both — agents can call `memory_search`, and OpenClaw hooks inject recall/context before prompt build.
+
 ## Borrowable Ideas
 
 **Session lifecycle as a command family.** Ready to borrow in spirit. `wake`, `checkpoint`, and `sleep` make continuity concrete and user-visible. In commonplace this should map to workshop state and handoff reports, not necessarily a new permanent note type.

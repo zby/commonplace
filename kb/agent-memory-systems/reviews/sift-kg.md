@@ -49,6 +49,8 @@ Commonplace is stronger at artifact contracts. In sift-kg, a relation with evide
 
 The biggest design difference is where trust enters. sift-kg starts with LLM extraction and later adds review gates, confidence aggregation, and provenance fields. Commonplace starts with constrained artifact types and review procedures, then uses search and indexes to activate those artifacts. sift-kg's approach scales ingestion; commonplace's approach scales maintainability and interpretability.
 
+**Read-back:** pull — agents deliberately query, search, inspect topology, or follow the bundled skill to consume the generated graph as advisory context.
+
 ## Borrowable Ideas
 
 **Schema discovery as a temporary workshop accelerator.** Worth borrowing for ingestion workshops, not for promoted library notes. A commonplace source-ingest workflow could ask an LLM to propose temporary entity/relation categories for a corpus, use them to navigate source evidence, and discard or rewrite them before promotion into durable notes.

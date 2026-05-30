@@ -50,6 +50,8 @@ The largest design divergence is behavioral authority. SkillX artifacts are desi
 
 The second divergence is lifecycle. SkillX can add, modify, keep, cluster, merge, filter, and overwrite skills, but the final artifact does not explain why a merge happened, which traces were invalidated, or when a skill should retire. Commonplace's status and link model is heavier, but it is better suited to long-lived review and maintenance.
 
+**Read-back:** push — retrieved plans and skills are formatted into the acting agent's prompt before task execution.
+
 ## Borrowable Ideas
 
 **Plan, functional, and atomic levels as separate artifact contracts.** Ready to borrow for tool-agent KBs. A task workflow, reusable multi-step procedure, and one-tool caution have different retrieval and authority needs; forcing them into one note type loses useful structure.

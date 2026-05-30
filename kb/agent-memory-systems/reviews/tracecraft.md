@@ -52,6 +52,8 @@ The behavioral authority split is also different. Tracecraft's JSON records most
 
 This is coordination, not durable knowledge learning. Tracecraft can preserve traces of coordination because its objects remain in the bucket, but the code does not mine messages, claims, artifacts, or runs into later behavior-changing memories. There is no extractor, judge, summarizer, retriever, ranking layer, promotion workflow, or compiled instruction update. For the trace-derived survey vocabulary, Tracecraft is a source of raw coordination records and shared knowledge artifacts, not a trace-derived learning system.
 
+**Read-back:** pull — agents deliberately call CLI commands to read shared memory, inboxes, step status, handoffs, and artifacts.
+
 ## Borrowable Ideas
 
 **Use object storage as a low-friction multi-agent rendezvous point.** Useful for ephemeral workshops where agents do not share a filesystem. A commonplace workshop could use an S3 prefix for cross-machine messages or artifacts, but it should treat that prefix as work-in-flight state, not as the durable library.

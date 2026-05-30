@@ -48,6 +48,8 @@ Ars Contexta is more ambitious on first-run generation. It tries to create a ful
 
 The systems also diverge on backpressure. Commonplace's review and validation loops mostly operate after artifacts exist. Ars Contexta pushes quality earlier by generating pipeline commands and hooks that affect note creation, orientation, and persistence. The tradeoff is that some documented promises are stronger than the inspected implementation: automatic transcript capture and Stop-hook persistence are described in setup/platform references, while the active plugin hook config at this commit only wires SessionStart and PostToolUse.
 
+**Read-back:** both — agents can invoke query/processing skills, and context files plus hooks inject orientation automatically.
+
 ## Borrowable Ideas
 
 **Derivation manifest as runtime vocabulary layer.** Ready to borrow where skills must adapt to project vocabulary. Ars Contexta separates human-readable derivation rationale from machine-readable `ops/derivation-manifest.md`, and generated skills read the manifest at invocation time ([`skills/setup/SKILL.md`](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills/setup/SKILL.md)). Commonplace could use a lighter version for consuming-project installations without cloning every skill per vocabulary.

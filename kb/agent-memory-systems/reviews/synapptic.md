@@ -60,6 +60,8 @@ Compared with commonplace, Synapptic has a stronger automated trace-derived extr
 
 Synapptic also exposes a useful distinction between profile memory and observability memory. The profile compiler changes future agent behavior. The relay/indexer makes sessions searchable, streams active sessions, and tracks token usage, but it does not by itself change assistant behavior unless its evidence later flows through extraction or manual review.
 
+**Read-back:** push — compiled archetypes and guard files enter assistant memory, startup, or rule channels for future sessions.
+
 ## Borrowable Ideas
 
 **Treat personal guardrails as compiled artifacts.** Commonplace should keep separating evidence notes from instructions, but Synapptic's trace-to-guard pipeline is a good model for workshops where repeated agent failures should become candidate rules. Ready as a workshop pattern; not ready as automatic methodology promotion without review.

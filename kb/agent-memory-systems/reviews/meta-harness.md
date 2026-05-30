@@ -45,6 +45,8 @@ Commonplace has the richer artifact contract. Meta-Harness distinguishes surface
 
 The key design contrast is "framework as pattern" versus "framework as knowledge base." Commonplace accumulates reusable methodology in a stable library. Meta-Harness accumulates pressure inside a run directory and promotes executable candidate files. It is most reusable when copied and adapted to a benchmarked domain, not when queried as a general memory store.
 
+**Read-back:** both — proposer agents read trace and frontier artifacts, while selected candidate files activate through later imports and evaluations.
+
 ## Borrowable Ideas
 
 **Use onboarding to define the oracle before the optimizer exists.** Ready to borrow. Commonplace trace-mining or skill-improvement loops should force the same fields before automation: mutable surface, fixed surface, evaluation unit, search set, held-out set, leakage risks, budget, and raw/derived artifact locations.
