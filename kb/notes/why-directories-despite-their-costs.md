@@ -24,7 +24,7 @@ Types assert structural properties of individual documents — what sections are
 
 A task in `tasks/active/` has `type: task` defining its structure (Goal, Tasks checklist, Current State). The `active/` directory tells you its lifecycle stage. Moving it to `completed/` changes the lifecycle signal without changing its type or structure.
 
-A `structured-claim` works identically whether it lives in `notes/`, `notes/related-systems/`, or `claw-design/`. The directory carries provenance or topic grouping; the type carries structural expectations.
+A `structured-claim` works identically whether it lives in `notes/`, `notes/definitions/`, or `claw-design/`. The directory carries provenance or topic grouping; the type carries structural expectations.
 
 If types depended on directories, you'd need to redefine types whenever someone creates a new subdirectory. If directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. The [available types](../reference/available-types.md) system should work across any directory structure. Validation, search, and linking operate on individual documents via frontmatter, not on directory conventions.
 
@@ -49,7 +49,7 @@ The registration tax is real but manageable at the current scale (~6 top-level d
 
 Mitigations to consider if directory count grows:
 - A single registry file that skills and config derive from (instead of N hardcoded lists)
-- Convention that subdirectories within a collection (like `notes/related-systems/`) don't need registration — only top-level collections do
+- Convention that subdirectories within a collection (like `notes/definitions/`) don't need registration — only top-level collections do
 - Tooling to validate that all collections are consistently registered
 
 For now, the right default is: be reluctant to create new top-level directories. Subdirectories within existing collections are cheap. New collections are expensive.

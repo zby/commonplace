@@ -64,7 +64,7 @@ Keep the current bundle names as stable invocation targets by resolving each one
 
 New script: `scripts/review_target_selector.py`. This replaces `notes_selector.py` + `selector_engine.py` for gate-based review.
 
-**Reviewable note scope:** top-level `*.md` files in `kb/notes/` that have YAML frontmatter and are not indexes (same rule as `review_state.list_reviewable_notes`). Subdirectory notes (e.g. `kb/notes/related-systems/`, `kb/notes/definitions/`) are excluded for now. If the scope needs to expand later, change it in one place.
+**Reviewable note scope:** top-level `*.md` files in `kb/notes/` that have YAML frontmatter and are not indexes (same rule as `review_state.list_reviewable_notes`). Subdirectory notes (e.g. `kb/notes/agent-memory-requirements/`, `kb/notes/definitions/`) are excluded for now. If the scope needs to expand later, change it in one place.
 
 Inputs: a bundle name (or `--all-gates`), optional note path filter.
 

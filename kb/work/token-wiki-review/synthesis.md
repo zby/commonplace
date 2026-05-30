@@ -307,7 +307,7 @@ human review.
    for [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
    that the KB currently has access to.
 
-3. **Token-wiki as a related-system review** (`kb/notes/related-systems/token-wiki.md`). Follows
+3. **Token-wiki as a related-system review** (`kb/agent-memory-systems/reviews/token-wiki.md`). Follows
    the shape of the existing `llm-wiki.md` and `virtual-context.md` reviews. Captures:
    convergent 5-layer architecture, strongest borrowable patterns, comparison with commonplace
    (which is not a runtime, so borrowing is at the theoretical/convergence-signal level rather

@@ -16,7 +16,7 @@ four production LLM harnesses: Claude Code, Cline, Codex, OpenCode) against comm
 
 **Recommended next actions** (from `synthesis.md` §5):
 
-1. Promote to a `kb/notes/related-systems/token-wiki.md` review (highest immediate value).
+1. Promote to a `kb/agent-memory-systems/reviews/token-wiki.md` review (highest immediate value).
 2. Write new note: *Prompt caching is a second scarce resource that constrains context
    management mechanisms.*
 3. Add observability as a fifth operational component in the context-engineering definition.

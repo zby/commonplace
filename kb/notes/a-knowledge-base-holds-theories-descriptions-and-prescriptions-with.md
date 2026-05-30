@@ -91,11 +91,11 @@ Commonplace's existing collections instantiate this pattern:
 - `kb/notes/` → theoretical register (transferable claims, [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md), optimized for reach)
 - `kb/reference/` → descriptive register (how the shipped system works, topical titles, optimized for fidelity)
 - `kb/instructions/` → prescriptive register (procedures and conventions, imperative titles, optimized for executability)
-- `kb/notes/related-systems/` → a second descriptive collection (external landscape), candidate for promotion to `kb/related-systems/`
+- `kb/agent-memory-systems/` → a second descriptive collection (external landscape), promoted out of `kb/notes/` into its own top-level collection
 
 The separation was not designed from the three-register theory — it emerged from practical pressure. `kb/reference/` was created because system documentation didn't fit the theory-optimized conventions of `kb/notes/`. The theory names what practice already discovered.
 
-The maintenance asymmetry is already visible in the link graph. A link audit found substantial inbound linking from theory notes into `kb/notes/related-systems/` — theories citing related systems as evidence and illustrations. The theories are stated in general terms; the related-system descriptions serve as supporting observations.
+The maintenance asymmetry is already visible in the link graph. A link audit found substantial inbound linking from theory notes into `kb/agent-memory-systems/` — theories citing related systems as evidence and illustrations. The theories are stated in general terms; the related-system descriptions serve as supporting observations.
 
 The [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention already carves out multi-claim specs and definitional notes from claim-title requirements — exactly the documents written in the descriptive register. That carve-out recognizes that descriptions play a different role in traversal than theories.
 
