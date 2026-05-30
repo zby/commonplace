@@ -47,3 +47,4 @@ Decision (2026-05-29): develop this workshop independently of, and ahead of, the
 ## Resolved decisions
 
 - Title family — **resolved**: the family uses "keep the tool loop optional"; "expose the loop" is retained as the earlier name, noted in `tool-loop-index` and `stateful-tools`. The trio is promoted; the workshop now holds only this README and `promotion-plan.md`.
+- Index fate (D1) — **done (2026-05-30)**: `tool-loop-index` stripped to a thin navigation hub (intro + grouped curated links + related indexes + generated tag tail). The essay's claims live in the promoted notes; the hub maps them. This workshop's work is complete and can be retired.

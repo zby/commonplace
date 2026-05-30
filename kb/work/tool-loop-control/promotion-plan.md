@@ -72,3 +72,18 @@ Assuming D1=hub-rewrite, D2=targeted, D3=(b) keep title, D4=add tag:
 One commit ("Promote tool-loop host-language trio; reframe expose-the-loop →
 keep-optional") vs two (moves first, reframe second). Recommendation: **one** —
 the reframe is what makes the promotion coherent.
+
+## Step 2 done (2026-05-30): strip the index to a thin hub
+
+`tool-loop-index` no longer carries the essay. The forcing-case, mechanism, and
+persistence claims live in their promoted notes, and the design stance lives in
+`llm-frameworks-should-keep-the-tool-loop-optional`, so the index's argued prose
+was duplicative. The index is now a navigation hub: a short framing intro plus
+grouped curated links (model / design stance / forcing cases / mechanism /
+downstream consequences / related approaches / broader context), related
+indexes, and the generated tag tail (now just `the-chat-history-model`). This
+brings it into line with the index type spec. `Downstream consequences` and
+`Related approaches` stayed as curated link groups rather than moving into the
+promoted note, since they map sibling notes rather than develop the stance.
+
+This workshop's work is complete and can be retired.

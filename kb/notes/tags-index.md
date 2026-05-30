@@ -42,4 +42,4 @@ For current-state documentation about the live commonplace system rather than tr
 - [Agent memory](./agent-memory-index.md) - Index for agent-memory notes about memory as a crosscutting concern in agent architecture
 - [Context engineering](./context-engineering-index.md) - Index for context-engineering notes about selecting, scoping, and maintaining task-relevant knowledge under bounded context
 - [Failure modes](./failure-modes-index.md) - Index for failure-modes notes about characteristic ways knowledge can exist without changing agent behavior
-- [Tool loop](./tool-loop-index.md) - Index for the tool-loop argument — the framework-owned tool loop is useful but should yield control when tasks need different tool surfaces, exceed one context window, or codify scheduling
+- [Tool loop](./tool-loop-index.md) - Navigation hub for tool-loop notes — the LLM-in-a-loop execution model, when one framework-owned loop is insufficient, how to keep it optional, and the downstream consequences
