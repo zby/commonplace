@@ -8,6 +8,7 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
+- [A-MEM](./a-mem.md) *(agent-memory-system-review)* - A-MEM review: Zettelkasten-inspired Chroma memory notes with LLM evolution, fixed operations, pull retrieval, and weak metadata-generation wiring
 - [ACE](./ace.md) *(agent-memory-system-review)* - Playbook-learning loop that turns benchmark attempts and reflections into prompt-injected bullets with counters, append-only curation, and optional duplicate merging
 - [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) *(agent-memory-system-review)* - Static Agent Skills collection for context engineering: plugin-packaged instructional artifacts with progressive disclosure, activation triggers, examples, and no runtime memory learner
 - [Agent Workflow Memory](./agent-workflow-memory.md) *(agent-memory-system-review)* - Workflow-memory system for web agents that distills WebArena and Mind2Web trajectories into website-scoped prompt files with weak lineage and lifecycle controls
@@ -49,6 +50,7 @@ index_source: directory
 - [GBrain](./gbrain.md) *(agent-memory-system-review)* - Personal-brain CLI and MCP runtime with markdown-canonical pages, Postgres/PGLite indexes, trace-derived synthesis, skills, recipes, and maintenance cycles
 - [getsentry/skills](./getsentry-skills.md) *(agent-memory-system-review)* - Sentry's Agent Skills marketplace: a file-backed skill library with provenance contracts, progressive disclosure, validators, and meta-skills for writing and scanning skills
 - [Gnosis](./gnosis.md) *(agent-memory-system-review)* - Review of Gnosis, a repo-local CLI memory system where agents search and write JSONL decision entries through doctrine-mediated workflow
+- [Graphiti](./graphiti.md) *(agent-memory-system-review)* - Graphiti review: temporal context graph with episode provenance, LLM extraction, bi-temporal fact edges, graph backends, and pull-only retrieval
 - [HALO](./halo.md) *(agent-memory-system-review)* - HALO review: trace-analysis engine over OTel JSONL with sidecar indexes, bounded trace tools, sandboxed analysis, subagents, and external harness-patch promotion
 - [Hindsight](./hindsight.md) *(agent-memory-system-review)* - Hindsight review: production memory backend with trace-to-fact retain, PostgreSQL/vector indexes, observations, directives, reflect tools, tenancy, and embedded mode
 - [HippoRAG](./HippoRAG.md) *(agent-memory-system-review)* - HippoRAG review: graph-augmented RAG library that turns corpus documents into OpenIE triples, embeddings, igraph state, and PPR retrieval activation
@@ -56,9 +58,11 @@ index_source: directory
 - [HyperAgents](./hyperagents.md) *(agent-memory-system-review)* - HyperAgents review: self-editing agent harness where benchmark traces and scores select executable git-diff patches rather than prose memories
 - [KBLaM](./KBLaM.md) *(agent-memory-system-review)* - KBLaM review: Microsoft Research model fork that projects key-value KB rows into learned attention key/value tensors rather than a retrievable agent KB
 - [LACP](./lacp.md) *(agent-memory-system-review)* - Local agent control plane with routed execution, Claude hooks, Obsidian memory automation, receipts, provenance, and operational gates
+- [Letta](./letta.md) *(agent-memory-system-review)* - Letta review: agent-self-managed memory with core blocks, archival passages, recall search, compaction summaries, sleeptime editing, and git-backed block history
 - [LLM Wiki](./llm-wiki.md) *(agent-memory-system-review)* - LLM Wiki review: promptware knowledge-base protocol with topic-isolated markdown wikis, raw-to-compiled workflows, multi-runtime plugins, and local lint validation
 - [LLM Wiki (kenhuangus)](./kenhuangus--llm-wiki.md) *(agent-memory-system-review)* - Executable LLM Wiki review: source monitors, local LLM extraction, markdown wiki storage, BM25 search, linting, UI/API, metrics, and incomplete prompt optimization
 - [MehmetGoekce/llm-wiki](./MehmetGoekce--llm-wiki.md) *(agent-memory-system-review)* - Claude Code promptware scaffold for an L1/L2 Logseq or Obsidian wiki, with setup templates, slash-command workflows, schema, lint, and OpenSpec contracts
+- [Mem0](./mem0.md) *(agent-memory-system-review)* - Mem0 review: V3 ADD-only trace extraction into vector memories, entity-link retrieval boosts, plugin hooks, and legacy CRUD prompt remnants
 - [Memori](./Memori.md) *(agent-memory-system-review)* - Memori review: SDK and cloud/BYODB memory layer that captures LLM turns, distills facts/triples/summaries, and injects recalled context
 - [MemoryOS](./MemoryOS.md) *(agent-memory-system-review)* - MemoryOS review: hierarchical conversational memory that stores dialogue traces, condenses sessions, extracts profile and knowledge records, and injects retrieved context
 - [MemPalace](./mempalace.md) *(agent-memory-system-review)* - MemPalace review: local Chroma drawer memory with conversation mining, hooks, MCP tools, diaries, temporal SQLite KG, and retrieval-first activation

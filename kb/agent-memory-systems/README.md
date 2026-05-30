@@ -16,8 +16,6 @@ Browse the roster:
 - [Collection directory index](./dir-index.md) — top-level files in this collection (the cross-cutting notes below), with links into the two subdirectories above
   
 
-**Review backlog.** Some systems have public repos but only an ingest report in `kb/sources/` so far — they belong in `reviews/` eventually, they just haven't been reviewed yet. The database-backed memory systems are the main cases: [Mem0](https://github.com/mem0ai/mem0), [Graphiti](https://github.com/getzep/graphiti), [Letta](https://github.com/letta-ai/letta), and A-MEM. They are tracked as candidates in [adaptation survey review candidates](./adaptation-survey-review-candidates.md).
-
 Cross-cutting reads:
 
 - [Comparative review](./agentic-memory-systems-comparative-review.md) — synthesises across both tiers
