@@ -21,7 +21,7 @@ This is a local commonplace-repo workflow, not a promoted `cp-skill-*` framework
 - The repository is reachable.
 - The checkout lives under `related-systems/`, outside `kb/`.
 
-If the system has no reachable source code, stop and write a source-only note instead.
+If the system has no reachable source code, stop and write a lightweight note instead.
 
 ## Steps
 
@@ -76,7 +76,7 @@ If the system has no reachable source code, stop and write a source-only note in
    ```
    Then mark the archived file:
    - Set `status: outdated` in frontmatter.
-   - Change `tags: [related-systems, trace-derived]` to `tags: []`.
+   - Set `tags: []` (clearing any `trace-derived` tag).
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
@@ -106,9 +106,9 @@ If the system has no reachable source code, stop and write a source-only note in
 
    If the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run. If the user authorizes that fallback, report `drafting was local, not delegated` as a workflow exception.
 
-9. **Update the curated index.** If this is a new review, update `kb/agent-memory-systems/README.md`:
-   - add the system to the `## Systems` list
-   - update `## Patterns Across Systems` only if this repo adds a genuinely new cross-system pattern
+9. **Refresh indexes; update the README only if needed.** A new review appears automatically in `reviews/dir-index.md` after `commonplace-refresh-indexes`, so the README no longer carries a per-system list. Only edit `kb/agent-memory-systems/README.md` when:
+   - the system was named in the `## Coverage` "Review backlog" callout — remove it there, or
+   - the repo adds a genuinely new cross-system pattern worth a line in `## Patterns Across Systems`.
    Keep the edit minimal and specific.
 
 10. **Update the trace-derived survey if needed.** If the review's trace-derived placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`.
