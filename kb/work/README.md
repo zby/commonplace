@@ -9,6 +9,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
+- [read-back-placement](./read-back-placement/README.md) — establishing vocabulary, theory, and review methodology so the read-back/activation path gets a placement section parallel to the write/learn side in the agent-memory-system review type
 - [ingestion-and-deep-search](./ingestion-and-deep-search/README.md) — revisiting directed reading through `cp-skill-connect`, especially how connect should use installed-KB goals without carrying commonplace-specific assumptions
 - [pi-agent-zerostack-comparison](./pi-agent-zerostack-comparison/README.md) — preparing a code-grounded comparison instruction for the two Rust coding-agent CLIs cloned under `related-systems/`
 - [vocabulary-governance](./vocabulary-governance/README.md) — deciding how global, collection-local, and type-specific vocabularies should be declared and used by shipped KBs
