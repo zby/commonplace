@@ -1,109 +1,115 @@
 ---
-description: "MCTS self-training pipeline that mines environment rollouts into verifier-spliced revision conversations, then documents external fine-tuning as the behavior-learning step"
+description: "Agent-R review: MCTS trajectory collection and self-training pipeline that distills failed and successful agent rollouts into revision training data"
 type: ../types/agent-memory-system-review.md
 tags: [trace-derived]
 status: current
-last-checked: "2026-05-16"
+last-checked: "2026-06-01"
 ---
 
 # Agent-R
 
-Agent-R is ByteDance Seed's research code for "Training Language Model Agents to Reflect via Iterative Self-Training." The repository does not implement a persistent runtime memory for deployed agents; it implements an offline data-construction pipeline that runs agents through AgentGym environments, saves Monte Carlo Tree Search rollouts, converts high/low path pairs into revision conversations, and documents Xtuner fine-tuning as the downstream step that can compile those conversations into model weights.
+Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is a research pipeline for training language-model agents to revise mistakes. The implementation does not provide a persistent runtime memory store. Instead, it collects task rollouts with Monte Carlo Tree Search, converts paired good and bad paths into supervised revision conversations, and expects those examples to be used for model fine-tuning. The behavior-shaping retained artifact is ultimately a trained model, with JSON and JSONL trajectory artifacts as the inspectable intermediate memory.
 
 **Repository:** https://github.com/ByteDance-Seed/Agent-R
 
-**Reviewed revision:** [82fcc1ca7873b460949ed49022146dd988c32e31](https://github.com/ByteDance-Seed/Agent-R/commit/82fcc1ca7873b460949ed49022146dd988c32e31)
+**Reviewed commit:** [82fcc1ca7873b460949ed49022146dd988c32e31](https://github.com/ByteDance-Seed/Agent-R/commit/82fcc1ca7873b460949ed49022146dd988c32e31)
+
+**Last checked:** 2026-06-01
 
 ## Core Ideas
 
-**MCTS is the trace generator, not the learned memory.** [`mcts_collection.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_collection.py) selects WebShop, SciWorld, or TextCraft adapters from `TASK`, starts an environment conversation, runs `ExtendedMCTS.search(...)`, and writes one `mcts_result/{Task}/{model_name}/search_results_{idx}.json` file per task. The task-specific MCTS classes in [`mcts_utils/webshop/mcts_ws.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/webshop/mcts_ws.py), [`mcts_utils/sciworld/mcts_sci.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/sciworld/mcts_sci.py), and [`mcts_utils/textcraft/mcts_tc.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/textcraft/mcts_tc.py) store `state`, `recent_actions`, `action`, `obs`, `env_score`, `disaster`, visits, values, and children. Those search trees are raw trajectory evidence.
+**The retained learning signal starts as search trees, not notes.** `mcts_collection.py` selects a task environment from `TASK`, runs an `ExtendedMCTS` search for each training item, and saves each root under `mcts_result/{Task}/{model_name}/search_results_{idx}.json` ([mcts_collection.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_collection.py)). The saved nodes include conversation state, LLM response, action, observation, recent actions, environment score, visit/value statistics, terminal state, and children ([mcts_utils/webshop/mcts_ws.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/webshop/mcts_ws.py), [mcts_utils/mcts_raw.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/mcts_raw.py)).
 
-**The operative distillation step pairs better and worse leaves.** [`path_collection.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/path_collection.py) loads an `ExtendedMCTS` root, finds terminal leaf paths, sorts them by average node value, and pairs paths whose terminal-value gap exceeds `BETA`. A high path must also pass the `ALPHA` lower bound. This means the durable training signal is not "all successful traces"; it is a selected contrast between a high-value path and a lower-value sibling path from one search tree.
+**MCTS expands action trajectories against external task environments.** The WebShop, SciWorld, and TextCraft wrappers all reset an AgentGym environment, replay recent actions, sample candidate LLM actions, step the environment, mark negative rewards as disasters, deduplicate sampled responses, and backpropagate terminal rewards ([mcts_utils/webshop/mcts_ws.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/webshop/mcts_ws.py), [mcts_utils/sciworld/mcts_sci.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/sciworld/mcts_sci.py), [mcts_utils/textcraft/mcts_tc.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/textcraft/mcts_tc.py)). This is trace construction for later training, not runtime recall.
 
-**Revision conversations splice an error prefix to a better continuation.** `revise_worst_path(...)` walks the bad path step by step and asks a verifier model whether each current action is good, bad, or uncertain. `conversation_generation(...)` keeps the bad prefix until the first judged bad step, inserts a synthetic reflection thought plus `Action: wait`, then appends the unmatched part of the good path as supervised assistant turns. The output JSONL entry includes `revise_log`, `high_log`, `low_log`, `task_description`, `revise`, and `revise_feedback`; the JSONL writer is in [`mcts_utils/llm_server.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/llm_server.py).
+**Training data is made by contrasting high-value and low-value paths.** `path_collection.py` loads a saved MCTS root, finds terminal leaf paths, sorts them by average node value, pairs paths whose value gap exceeds `BETA`, and keeps only high paths above `ALPHA` ([path_collection.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/path_collection.py)). It then emits JSONL entries containing `revise_log`, `high_log`, `low_log`, task description, and optional verifier feedback. This turns a tree of exploratory action traces into a smaller supervised-learning artifact.
 
-**The verifier is model-guided, not an environment oracle.** The verifier prompt in `llm_server.py` asks a model to judge a current action from preceding action-observation text and return `Judgement: <Good or Bad or Uncertain>`. Environment reward still ranks leaves and marks disaster nodes during MCTS, but the precise cut point for revision data is an LLM judgement over trace text.
+**Revision is represented inside the conversation target.** For bad-to-good examples, `conversation_generation` preserves the shared prefix, marks bad assistant turns with `loss: False`, inserts a synthetic reflection thought plus `Action: wait` with `loss: True`, and then appends the corrected good-path assistant turns as trainable outputs ([path_collection.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/path_collection.py)). The lesson is not a prose rule or retrieval document; it is encoded as target behavior in the training sequence.
 
-**The repository writes data, not weights.** The README's training section instructs users to configure Xtuner and run `xtuner train ...`, but the checked-in repository has no `xtuner_config/` directory and no training script. The implemented retained artifacts stop at MCTS JSON and JSONL revision data. Weight learning is a documented downstream consumer, not code this repo can perform by itself.
+**A verifier model can choose the first bad step.** With `--revise 1`, `revise_worst_path` asks an LLM verifier to judge each action in the bad path as good, bad, or uncertain, using accumulated action-observation context and the task description ([path_collection.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/path_collection.py), [mcts_utils/llm_server.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/llm_server.py)). The first judged-bad action becomes the splice point into the adjacent good path. That verifier output is a trace-derived curation signal, but the code does not attach durable prompt/model provenance to each accepted correction.
 
-**Evaluation is ordinary rollout, separate from data construction.** [`eval.py`](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/eval.py) runs `perform_test(...)` from `llm_server.py`, steps the selected environment until done or `max_steps`, and writes `test_result/{Task}/{model_name}_{MODEL_TYPE}/search_results_{idx}.json`. It evaluates a model against tasks; it does not retrieve the constructed conversations at runtime.
+**Evaluation is a plain rollout of the current model.** `eval.py` initializes the same environment family and calls `perform_test`, which repeatedly sends the current conversation to the model, parses the next `Action:`, steps the environment, truncates old messages when the prompt exceeds `MAX_TOKEN_LENGTH`, and saves final result JSON under `test_result/` ([eval.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/eval.py), [mcts_utils/llm_server.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/llm_server.py)). There is no retrieval index, memory query API, MCP server, or hook that injects stored trajectories at runtime.
+
+## Artifact analysis
+
+**MCTS result trees.** Storage substrate: JSON files written under `mcts_result/{Task}/{model_name}/` through `ExtendedMCTS.save`, using `mmengine.dump` on the root node. Representational form: mixed symbolic and prose traces: tree topology, visits, values, rewards, actions, observations, full conversation messages, terminal flags, and disaster flags. Lineage: derived from sampled model actions, environment observations/rewards, task data, MCTS parameters from environment variables, and task-specific action cleanup. Behavioral authority: knowledge artifacts while inspected as search evidence; system-definition artifacts on the offline learning path because `path_collection.py` loads them to select which trajectories become trainable examples.
+
+**Revision-training JSONL entries.** Storage substrate: append-only JSONL files at the configured `--output_dir`, defaulting to `mcts_training_data/{task}_{data_type}.jsonl`. Representational form: mixed conversation prose plus symbolic fields such as `loss`, `revise`, `task_num`, `high_log`, `low_log`, and `revise_feedback`. Lineage: derived from paired MCTS leaf paths, `ALPHA`/`BETA` thresholds, optional verifier judgments, and the splice logic in `conversation_generation`. Behavioral authority: system-definition artifacts for fine-tuning because they decide which tokens are supervised and which mistakes are masked out.
+
+**Verifier prompt, revision thoughts, and splice policy.** Storage substrate: Python constants and functions in `path_collection.py` and `mcts_utils/llm_server.py`. Representational form: prose prompt instructions, fixed revision-thought strings, and symbolic control flow. Lineage: authored framework code, not learned from traces. Behavioral authority: system-definition artifacts because they interpret bad-path traces, choose a correction boundary, and shape the exact training target. Effective verifier quality is not established by the code.
+
+**Fine-tuned agent model.** Storage substrate: external model checkpoint directory supplied through `MODEL_DIR` and trained through the README's Xtuner workflow, not through a complete training script in this checkout ([README.md](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/README.md), [mcts_utils/llm_server.py](https://github.com/ByteDance-Seed/Agent-R/blob/82fcc1ca7873b460949ed49022146dd988c32e31/mcts_utils/llm_server.py)). Representational form: distributed-parametric weights. Lineage: intended to be derived from the revision JSONL plus the base model and external training configuration. Behavioral authority: system-definition artifact with always-on generation influence during later evaluation; the checkpoint is the promoted form of the trace-derived lessons.
+
+**Evaluation outputs.** Storage substrate: JSON files under `test_result/{Task}/{model_name}_{model_type}/` and `revise_result/{Task}/{model_name}_{model_type}/`. Representational form: symbolic metrics and replayable message traces. Lineage: derived from a model checkpoint, environment server, task ids, and rollout policy. Behavioral authority: knowledge artifacts for audit and comparison; they do not feed back into the training loop in this code.
+
+The promotion path is unusually explicit: environment trace -> saved MCTS tree -> paired revision JSONL -> external fine-tuned model. It crosses from prose/symbolic traces into distributed-parametric behavior. The weak point is governance rather than mechanics: accepted correction examples do not carry durable source-node ids, verifier prompt/model versions, or review state through to the final training corpus.
 
 ## Comparison with Our System
 
-Agent-R is an offline trace-to-training-data system. Commonplace is a files-first knowledge base where agents and maintainers read, validate, link, and revise durable artifacts directly. The overlap is trace-derived learning; the difference is what becomes behavior-shaping.
-
 | Dimension | Agent-R | Commonplace |
 |---|---|---|
-| Trace source | MCTS rollouts over AgentGym environments | Agent and human work over notes, reviews, indexes, and commands |
-| Raw substrate | JSON search trees under `mcts_result/...` | Markdown, generated indexes, review reports, git history |
-| Distilled artifact | JSONL revision conversations | Typed notes, instructions, ADRs, commands |
-| Oracle mix | Environment reward for path value; LLM verifier for first-error judgement | Validation scripts, review gates, human judgement |
-| Runtime activation | None in repo; fine-tuned weights are the intended downstream path | Agents load inspectable files and execute CLI commands |
-| Lifecycle | Regenerate files from rollouts; no index, status, supersession, or retirement | Frontmatter status, links, indexes, review/validation procedures |
-| Representational bet | Conversation-form supervision, optionally compiled into weights | Inspectable prose and symbolic tooling |
+| Primary purpose | Train agents to revise task mistakes through self-training | Maintain a typed methodology KB for future agents and maintainers |
+| Raw evidence | MCTS rollouts, environment observations, rewards, and verifier judgments | Source snapshots, notes, reviews, work artifacts, validation and review reports |
+| Canonical retained unit | Training examples and ultimately model weights | Git-tracked markdown artifacts with frontmatter, type specs, links, and status |
+| Learning loop | Offline trace selection and fine-tuning | Source-grounded writing, review, validation, and workshop-to-library promotion |
+| Read-back | Always-on model parameters after training; no runtime retrieval | Pull through search/indexes/links, plus explicit instructions and generated context where configured |
+| Governance | Numeric thresholds, reward scores, verifier prompt, and external evaluation | Collection contracts, schemas, deterministic validation, semantic review, git history |
 
-Using the artifact-analysis vocabulary, Agent-R separates [storage substrate](../../notes/definitions/storage-substrate.md) (where retained state persists), [representational form](../../notes/definitions/representational-form.md) (how the operative part is encoded), [lineage](../../notes/definitions/lineage.md) (source dependencies and derivation), and [behavioral authority](../../notes/definitions/behavioral-authority.md) (how the retained artifact can affect behavior) more sharply than many runtime memory systems. Raw search trees are file-backed mixed artifacts: symbolic tree structure plus prose conversation states. Revision JSONL is file-backed prose/mixed supervision. If passed to Xtuner, the behavioral authority moves into distributed-parametric weights, but that move is outside the implemented repo.
+Agent-R is close to Commonplace only at the broad "retained artifacts change later agent behavior" level. It does not keep inspectable advice, notes, playbooks, link graphs, or contextual snippets. Its central bet is that reflection behavior should be distilled into model weights from curated rollouts, while Commonplace keeps behavior-shaping knowledge in readable artifacts unless a symbolic gate or generated index is justified.
 
-The design is stronger than commonplace where a task domain supplies cheap rollouts and scores. It can automatically produce many revision examples without asking a maintainer to write lessons. It is weaker where knowledge must remain inspectable, linkable, and governable. Once revision conversations become weights, the learned behavior is hard to inspect, retire, or cite back to the exact task pair that caused it unless the training pipeline preserves that lineage externally.
+The strongest contrast is reviewability. Commonplace can inspect the exact rule, note, link, or validation schema that changed future behavior. Agent-R can inspect the intermediate traces and training examples, but after fine-tuning the operative lesson is distributed across parameters. That is powerful when the desired behavior is low-level action correction, but it makes source-level invalidation and semantic review much harder.
 
-**Read-back:** push — downstream fine-tuned weights would affect generation automatically; the repo has no runtime retrieval path.
+The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout generation, path pairing, verifier calls, and training. At runtime it does not load past trajectories, so it avoids prompt bloat. Commonplace pays a smaller ongoing retrieval/navigation cost and keeps the loaded material explainable.
 
-## Borrowable Ideas
+**Read-back:** push by unconditional parameterization after fine-tuning; the code does not implement pull retrieval or relevance-gated push activation over stored trajectories.
 
-**Keep raw search trees separate from distilled training material.** Ready as a framing. Agent-R's split between `mcts_result` trees and JSONL revision conversations is clean: raw evidence stays replayable, while the consumed artifact is a curated derivative.
+### Borrowable Ideas
 
-**Use paired good/bad paths rather than isolated successes.** Needs a use case first. For commonplace, a review or workflow failure could be paired with the successful later path before writing an instruction. The value is contrast: the artifact says not just what worked, but where the previous path went wrong.
+**Promote repeated failures into supervised correction candidates.** A Commonplace analogue would collect repeated validation or review failures into a workshop artifact containing bad attempt, splice point, corrected answer, and evidence. Ready as a report format; not ready for automatic instruction promotion.
 
-**Treat first-error localization as its own artifact.** Ready as a design idea, not a current need. `revise_feedback` is worth preserving because it records why a prefix was cut. A commonplace analogue would be a review finding that marks the earliest bad assumption in a failed agent run before promoting a fix.
+**Keep the raw search tree before extracting the lesson.** Agent-R preserves enough tree structure to audit alternatives before generating the smaller training corpus. Commonplace could borrow this for review or planning runs by retaining compact decision trees before promoting a final note or rule. Needs a concrete high-cost workflow where alternatives matter.
 
-**Do not blur data generation and weight learning.** Ready now as a caution. Agent-R's README narrates self-training, but the source tree's implemented boundary is data construction. Commonplace should keep the same discipline when reviewing systems: distinguish raw traces, distilled artifacts, and any separate learner that consumes them.
+**Represent correction boundaries explicitly.** The verifier's first-bad-step judgment is a useful primitive. In Commonplace, a failed agent run could mark the first invalid assumption or first unsupported source use before proposing a fix. Ready for review tooling if paired with source citations and human/semantic gate review.
 
-**Environment reward plus model verifier is a useful oracle stack.** Needs a domain with repeated scored tasks. The environment score ranks candidate paths, while the LLM verifier chooses the local correction point. That two-oracle split is more discriminating than asking an LLM to generate a lesson from a failed run with no hard signal.
+**Separate trace construction from behavior promotion.** Agent-R's MCTS collection, path conversion, and model training are distinct stages. Commonplace should preserve the same separation for trace-derived methodology: collect evidence first, distill candidates second, promote only after review. Ready as a design constraint.
+
+**Use loss masks as authority markers.** The `loss: False` and `loss: True` flags distinguish context to condition on from tokens to train. A prose-artifact analogue would mark evidence, proposed rule text, and non-authoritative commentary distinctly. Needs a use case in generated training or evaluation corpora.
 
 ## Trace-derived learning placement
 
-**Trace source.** Agent-R consumes agent-environment rollouts from WebShop, SciWorld, and TextCraft. Trigger boundaries are per task index for MCTS collection and per saved search-tree file for path processing. The raw trace includes prompts, assistant actions, observations, environment scores, terminal flags, disaster flags, and child links in the MCTS tree.
+**Trace source.** Agent-R qualifies as trace-derived learning. The raw traces are task rollouts produced by MCTS over WebShop, SciWorld, and TextCraft environments: conversation state, sampled model responses, parsed actions, observations, environment rewards, terminal flags, and tree statistics. Optional verifier calls add action-level judgments over bad paths.
 
-**Extraction.** Extraction has three stages. First, MCTS expands action candidates and uses environment rewards to set node values. Second, `path_collection.py` selects high/low leaf-path pairs by `ALPHA` and `BETA`. Third, `revise_worst_path(...)` asks a verifier model to judge actions along the low path, then `conversation_generation(...)` rewrites the pair into one supervised revision conversation.
+**Extraction.** Extraction is staged. MCTS first builds an exploratory tree and saves it. `path_collection.py` then finds leaf paths, scores them by average value, pairs high and low paths with a configured value gap, optionally asks a verifier to find the first bad action, and writes revision conversations. The final intended extraction step is external fine-tuning, where those JSONL examples become changed model behavior.
 
-**Storage substrate.** Raw MCTS state persists as JSON files under `mcts_result/{Task}/{model_name}`. Distilled revision data persists as JSONL from `path_collection.py`'s `output_dir`, defaulting to `mcts_training_data`. `revise_feedback`, `high_log`, and `low_log` are stored beside `revise_log` in each JSONL entry. The README's Xtuner step would place later learned behavior in model-artifact storage, but that storage is not implemented in this repository.
+**Scope and timing.** Scope is benchmark/task-family oriented rather than project memory. The loop is offline and staged: generate trajectories, derive training data, fine-tune, then evaluate the resulting model. Evaluation rollouts are saved, but I did not find code that automatically mines evaluation failures back into the next training-data cycle.
 
-**Representational form.** Raw search trees are mixed: symbolic tree structure, scalar visit/value fields, and prose conversation messages. Paired paths are symbolic selections over that tree. Verifier judgements are prose labels with explanation text. Revision JSONL is prose conversation supervision with `"loss": true/false` markers on assistant turns. Downstream fine-tuned weights, if produced, would be distributed-parametric.
-
-**Lineage.** The lineage chain is environment task -> MCTS tree JSON -> high/low terminal path pair -> verifier-judged bad prefix -> spliced revision conversation -> optional external fine-tuning run. The repo preserves enough fields in each JSONL row to inspect the high path, low path, task description, and verifier feedback, but it does not add a stable source-tree file ID, commit hash, training run manifest, or invalidation rule to the JSONL output.
-
-**Behavioral authority.** Raw trees and paired paths are [knowledge artifacts](../../notes/definitions/knowledge-artifact.md): they act as evidence for data construction. Verifier judgements have local evaluation authority inside the converter because they choose the cut point. Revision JSONL is a [system-definition artifact](../../notes/definitions/system-definition-artifact.md) when consumed by a trainer: it supplies learning input that can alter future model behavior. The final authority story, if Xtuner is run, is weight-level learning rather than prompt-time retrieval or file loading.
-
-**Scope and timing.** Scope is benchmark/task-family specific, tied to AgentGym's WebShop, SciWorld, and TextCraft environments. Timing is offline or staged: collect trees, generate revision data, then train/evaluate a model. There is no online deployment memory loop.
-
-**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), Agent-R is a trajectory-run ingestion system whose distinctive output is paired-path revision supervision. It splits the survey's "symbolic artifact" branch: the repo itself produces inspectable JSON/JSONL artifacts, while the intended downstream effect is distributed-parametric behavior after external fine-tuning. It strengthens the survey claim that trace-derived learning often has multiple retained artifacts with different authority, and it should not be collapsed into a single "memory" label.
+**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), Agent-R belongs in the trace-to-weights family. It strengthens the survey distinction between inspectable trace-derived artifacts and behavior-shaping artifacts: the MCTS trees and JSONL examples are inspectable, while the promoted capability is distributed-parametric and harder to audit directly.
 
 ## Curiosity Pass
 
-**The first-error story is stronger than the implementation boundary.** The README highlights timely revision from the first erroneous step. The code does implement verifier-guided first-error localization, but only as JSONL construction. The actual behavioral update depends on an external training setup absent from the repo.
+**The system title says reflection, but the implemented memory is training data.** Runtime agents are not given a reflective notebook or retrieved memories. They are expected to internalize the correction behavior through fine-tuning.
 
-**The "adjacent correct path" is operationally a paired high-value path, not a semantic sibling proof.** `pair_leaf_paths(...)` pairs any two leaf paths whose terminal average-value gap exceeds `BETA`. They share the same MCTS root, and may share a prefix, but the code does not explicitly require a same-parent divergence at the first error point. The verifier and splicing logic supply the local repair story after pair selection.
+**The repository has the data-generation path, not a complete shipped training harness.** The README describes Xtuner training and a config path, but the inspected top-level checkout does not include a full training configuration directory. That makes the retained-artifact chain partly code-grounded and partly operationally external.
 
-**The verifier can preserve uncertain actions.** `revise_worst_path(...)` treats both "good" and "uncertain" as keep-going labels. That makes sense for avoiding premature cuts, but it also means weak verifier confidence can leave questionable prefix steps in the supervised example until the first explicit "bad".
+**Verifier feedback is saved but not deeply governed.** `revise_feedback` records the LLM judgment response, yet there is no durable schema for verifier identity, prompt version, accepted/rejected status, or later audit.
 
-**The data writer preserves more audit material than the training format needs.** `revise_log` is the likely training payload, but each output row also retains `high_log`, `low_log`, and `revise_feedback`. That is a useful lineage affordance, even though there is no formal schema or manifest around it.
+**Prompt truncation protects runtime context size by deleting old messages.** Both MCTS generation and evaluation trim conversation history when it exceeds `MAX_TOKEN_LENGTH`. That keeps action prompts bounded, but it can also remove earlier evidence from long tasks.
 
-**The repository is small and research-script shaped.** Environment variables configure most behavior; imports select task-specific modules at import time from `TASK`; output directories are conventions rather than declared artifacts. That is acceptable for a paper release, but it limits direct borrowability as infrastructure.
+**The MCTS implementation is task-wrapper duplicated.** WebShop, SciWorld, and TextCraft share nearly identical `ExtendedMCTS` code with small action/observation differences. That makes the mechanism easy to inspect but raises the chance of task-specific drift.
 
 ## What to Watch
 
-- Whether a future release includes the missing Xtuner config and records training-run lineage from JSONL rows into model artifacts.
-- Whether pair selection is tightened to explicitly identify same-parent high/low branches at the first recoverable error.
-- Whether verifier judgements are calibrated against environment replay, human labels, or a stronger evaluator.
-- Whether generated revision data remains useful across model iterations, or whether each actor model requires fresh MCTS trees because its failure modes shift.
-- Whether descendants keep the raw-tree / selected-pair / verifier-feedback / training-conversation split, which is the most reusable design element here.
-
----
+- Whether the repository adds the actual fine-tuning configs and scripts referenced by the README; that would make the trace-to-weights promotion path fully inspectable.
+- Whether training examples gain stronger lineage fields, such as source tree file, high/low path node ids, verifier model, prompt version, and threshold values; that would make correction candidates easier to audit.
+- Whether evaluation failures are automatically routed back into a new MCTS/path-collection cycle; that would turn the current staged pipeline into a more complete iterative self-training loop.
+- Whether the task-specific MCTS wrappers are unified behind one tested abstraction; that would reduce hidden differences between task families.
+- Whether any runtime retrieval or reflection interface appears; that would change Agent-R from parameterized self-training into a hybrid memory/read-back system.
 
 Relevant Notes:
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Agent-R adds a paired-path revision-supervision case where inspectable JSONL is intended to become weight-level behavior through external fine-tuning
-- [distillation](../../notes/definitions/distillation.md) — exemplifies: MCTS traces are compressed into goal-directed revision conversations for a learning consumer
-- [representational form](../../notes/definitions/representational-form.md) — exemplifies: one pipeline moves from mixed trace trees to prose/symbolic supervision and potentially distributed-parametric weights
-- [lineage](../../notes/definitions/lineage.md) — sharpens: Agent-R preserves high/low logs and verifier feedback but lacks a formal run manifest or invalidation rule
-- [behavioral authority](../../notes/definitions/behavioral-authority.md) — exemplifies: the same trace family shifts from evidence to evaluation input to training input across the pipeline
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - compares: Agent-R distills MCTS rollouts into training examples and ultimately model weights.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: Agent-R requires separating MCTS trees, JSONL training data, verifier prompts, model weights, and evaluation logs by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: saved trees, verifier feedback, and evaluation logs are mostly evidence until consumed by extraction or audit.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: training examples, splice policy, verifier prompt, and fine-tuned weights configure or directly shape later behavior.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Agent-R turns execution traces into reusable correction behavior rather than storing raw trajectories for runtime lookup.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Agent-R stores many trajectories, but later behavior changes only after extraction and model training.
