@@ -17,15 +17,13 @@ allOf:
             format: date
         additionalProperties: true
       headings:
-        description: "Required review headings. ## Trace-derived learning placement and ## Read-back placement are optional, each used only when the review finds the corresponding qualifying mechanism (trace-derived learning / a non-trivial push-activation path)."
+        description: "Required review headings. Borrowable Ideas now nests as a ### subsection under ## Comparison with Our System, so it is not a required top-level heading. ## Trace-derived learning placement and ## Read-back placement are optional, each used only when the review finds the corresponding qualifying mechanism (trace-derived learning / a non-trivial push-activation path)."
         type: array
         allOf:
           - contains:
               const: "## Core Ideas"
           - contains:
               const: "## Comparison with Our System"
-          - contains:
-              const: "## Borrowable Ideas"
           - contains:
               const: "## Curiosity Pass"
           - contains:

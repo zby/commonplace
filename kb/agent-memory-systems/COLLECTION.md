@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — how each one is built, what it does, how it compares with commonplace.
+This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — how each one is built and what it does, read through our retained-artifact vocabulary (storage substrate, representational form, lineage, behavioral authority). Each review characterizes the system on its own terms and closes with what it means for Commonplace; broad cross-system comparison lives in the root-level analyses.
 
 The quality goal is **fidelity + economy**: faithful to what the code actually does, in minimum tokens. A review that misrepresents the reviewed system is worse than none — it pollutes the landscape.
 
@@ -35,7 +35,7 @@ Outbound rules are organised by destination collection. Each block declares when
 
 ### → `kb/agent-memory-systems/` (within this collection)
 
-**Search:** when a review describes a component of a larger reviewed system, realizes an abstract contract named in another review, or can be compared to another system on a specific design axis (the comparative work is the collection's core).
+**Search:** when a review describes a component of a larger reviewed system, realizes an abstract contract named in another review, or can be compared to another system on a specific design axis (cross-system comparison is the collection's core synthesis work).
 
 **Labels:**
 
@@ -50,13 +50,13 @@ Outbound rules are organised by destination collection. Each block declares when
 
 ### → `kb/reference/`
 
-**Search:** uncommon but worth a scan — commonplace and external systems are mostly described independently, but thematic analogues turn up. Search when a review's design element has a direct analogue in the commonplace system, or when the topic area overlaps a commonplace subsystem. Let the agent filter.
+**Search:** uncommon but worth a scan — Commonplace and external systems are mostly described independently, but thematic analogues turn up. Search when a review's design element has a direct analogue in the Commonplace system, or when the topic area overlaps a Commonplace subsystem. Let the agent filter.
 
 **Labels:**
 
 | label | reader-need |
 |---|---|
-| `see-also` | the commonplace component is an instructive adjacent reference |
+| `see-also` | the Commonplace component is an instructive adjacent reference |
 
 ### → `kb/notes/`
 
@@ -85,7 +85,7 @@ Outbound rules are organised by destination collection. Each block declares when
 
 ### → `kb/instructions/`
 
-**Search:** uncommon. Reviews don't typically cite commonplace procedures, but scan when a review describes an operational workflow that has a commonplace counterpart.
+**Search:** uncommon. Reviews don't typically cite Commonplace procedures, but scan when a review describes an operational workflow that has a Commonplace counterpart.
 
 **Labels:**
 
@@ -106,6 +106,6 @@ Outbound rules are organised by destination collection. Each block declares when
 
 - Transferable claims about KB methodology → `kb/notes/`
 - Procedures and how-to guidance → `kb/instructions/`
-- Descriptions of the commonplace system itself → `kb/reference/`
+- Descriptions of the Commonplace system itself → `kb/reference/`
 - Raw snapshots of external sources → `kb/sources/`
 - Work in progress → `kb/work/`

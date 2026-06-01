@@ -7,184 +7,122 @@ schema: ./agent-memory-system-review.schema.yaml
 
 # Agent memory system review
 
-## Authoring Instructions
+A **code-grounded** review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims.
 
-Use this type for a **code-grounded** review of an external agent memory, knowledge, or context-engineering system, comparing it against commonplace.
+These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful, code-grounded account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, the placement sections) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**A local source directory with readable code is required.** This type captures what the reviewed system actually does, not what it claims. If the system is only documented via a paper, README, or blog post without accessible source code, use a lightweight note instead. Abandoned code is acceptable if the directory is still readable.
+**Requires readable local source.** A system documented only by paper, README, or blog — with no accessible code — gets a lightweight note instead, not this type. Abandoned-but-readable code is fine.
 
-This type spec is also the worker contract for delegated drafting from the local `write-agent-memory-system-review` skill. The parent skill owns source preparation, archive moves, index edits, semantic QA, validation, and reporting; the worker owns only code inspection and review-note drafting from the inputs below.
+This spec is also the **worker contract** for the `write-agent-memory-system-review` skill. The parent skill owns source preparation, archiving, index edits, QA, validation, and reporting. The worker owns only code inspection and drafting from the inputs below.
 
-## Comparison Lens
+The section specs below distill [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) and its requirements inventory into a review-time contract — don't load that note during ordinary review writing.
 
-Use this embedded lens when comparing the reviewed system with commonplace. Do not load a separate memory-system design note during ordinary review writing; this distillation is the review-time contract. It is a comparison aid, not a required section template. Mention only the axes where the reviewed system has a distinctive mechanism, absence, or tradeoff.
+## Inputs
 
-Agent memory is a context-engineering problem: it improves future agent action by making prior work discoverable, composable, trustworthy, activatable, and maintainable under bounded context. The important question is not "does the system store memories?" but "what future answer, action, artifact, or rule can change because of the remembered material?"
+The caller provides:
 
-Check the reviewed system against these needs selectively:
+- `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
+- `note_path` — target path under `kb/agent-memory-systems/reviews/`
+- `reviewed_revision` and any source identity / citation format — caller-supplied context, used for metadata and citations
 
-- **Creation and import:** Can useful memory be authored directly, imported from existing artifacts, or extracted from traces without losing provenance or structure?
-- **Evidence and trust:** Does the system preserve enough source material, metadata, review state, validation, or confidence information for a future agent to rely on the memory without redoing the original work?
-- **Artifact contracts:** Does it distinguish retained surfaces by storage substrate, representational form, lineage, and behavioral authority, including knowledge-artifact and system-definition-artifact use?
-- **Consumer surfaces:** Does it serve different consumers differently: acting agents, humans, context schedulers, reviewers, learning loops, governance, and active work surfaces?
-- **Read-back (activation):** How does stored memory re-enter a future agent action — by **pull** (the agent's own deliberate lookup) or **push** (unsolicited arrival: always-load, hook, situation match, or a user event), judged from the agent's perspective? Can relevant behavior-changing memory load before the agent repeats a mistake, or is the system pull-only (limited to question-answer retrieval the agent must think to call)? See the Read-back Placement section for the full axis treatment.
-- **Promotion and codification:** Is there a path from candidate observations toward notes, instructions, skills, tests, scripts, guardrails, or other stronger behavior-changing surfaces when evidence and authority justify the cost?
-- **Compiled views and lifecycle:** Are generated reminders, indexes, rules, assistant files, and other derived surfaces tied back to sources of truth, with retirement, redaction, supersession, regeneration, and relaxation paths?
-- **Authority and evaluation:** Who or what can write, promote, activate, enforce, revise, and retire memory, and does the system evaluate memory by downstream effects rather than by storage volume?
-- **Adoption affordances:** Does the system fit the agent's native work environment, reuse existing editor/terminal/git workflows, avoid unnecessary metered API surfaces, or degrade gracefully into inspectable files and scripts?
+If any required input is missing, stop and report which. Verify `source_dir` is readable (e.g. `test -d`) and do not mutate it; if it isn't, stop and report. Never update `last-checked` without actually reading `source_dir`.
 
-## Required Inputs
+## Workflow
 
-Before writing, you must have:
+1. **Read for style.** Read 1–2 current reviews in `kb/agent-memory-systems/reviews/` and `kb/agent-memory-systems/README.md` to match local style and depth.
+2. **Read for mechanism.** Ground the review in primary sources — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims. Do not trust the README where the implementation clarifies or contradicts it. Read out the material for **Artifact analysis** (the four fields) and the placement sections, plus the retrieval/navigation and read-back model, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed.
+3. **Write the review**, from the code outward — see Sections.
 
-- `source_dir` — local directory containing the source code to inspect
-- `note_path` — target review path under `kb/agent-memory-systems/reviews/`
+## Sections
 
-The caller may also provide source identity or a citation format. Treat that as caller-supplied context, not as part of this type's required contract.
+Write from the code outward. Required sections are enforced by the schema; the two placement sections are optional and governed by their own trigger rules below.
 
-If any required input is missing, stop and report exactly which one is missing. Do not infer source state from a different directory.
+- **Opening paragraph** — what the system is, what it is for, who built it. Include caller-supplied source identity.
+- **Source metadata** — source identity and reviewed revision, before the section headings, using the caller's labels.
+- **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. Frame them by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
+- **Artifact analysis** — the four-field record for the central retained artifacts. Required; see Artifact analysis.
+- **Comparison with Our System** — concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, what it would look like in Commonplace, and whether it is ready now or needs a use case first.
+- **Trace-derived learning placement** — *optional; see rule below.*
+- **Read-back placement** — *optional; see rule below.* Every review states a one-line direction verdict somewhere even without the full section.
+- **Curiosity Pass** — second pass: surprising claims, simpler alternatives, mechanisms that sound more powerful than they are.
+- **What to Watch** — *specific* pending changes, each tied to a consequence for our design or a tracked decision. Cut generic maturity ("they add features / get more robust"); an honestly-short section beats filler.
 
-## Establish Source State
+Every review ends with explicit `Relevant Notes:` links into the KB.
 
-Before reading or writing, establish the source state from `source_dir`.
+## Artifact analysis
 
-Verify the directory exists and is readable:
+Classify the reviewed system's central retained behavior-shaping artifacts using the four-field record. This is the architectural vocabulary applied to the reviewed system — it is what makes reviews comparable across systems, and what the position paper is grounded in. **Required in every review.**
 
-```bash
-test -d "{source_dir}"
-```
+Identify the artifacts that actually shape the agent's later behavior — not every file. Split a bundled object into **operative parts or consumption paths** when it carries several behavior-shaping parts under different forms or authorities (a skill package = prose guidance + symbolic manifest + tests). Classify each by:
 
-If the command fails, stop and report that the source directory could not be established.
+- **Storage substrate** — where the retained state persists (files, repo, database, vector/graph store, prompt registry, model-artifact store, service object). Locates access, deletion, versioning, rollback.
+- **Representational form** — prose, symbolic, or distributed-parametric (or mixed). Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric.
+- **Lineage** — where it came from (authored, imported, or trace-extracted) and its derivation status (source material vs derived view, index, compiled, assembled, learned); what source change invalidates or regenerates it.
+- **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
-If `source_dir` is a git repository, derive `reviewed_revision`:
+Note any **promotion path**: whether the system can move a candidate toward a stronger representational form or behavioral authority (prose advice → symbolic validator → enforced gate). That trajectory crosses form, lineage, and authority at once, and is often the most design-relevant question.
 
-```bash
-git -C "{source_dir}" rev-parse HEAD
-```
+Mark effective authority and quality (does the prose carry forward, is the retrieval precise) as *not verified from code* where it cannot be read off the source — the same discipline as Read-back placement.
 
-If the command fails because the directory is not a git repository, continue without a revision but say so in the final report. Do not refresh, fetch, pull, or otherwise mutate `source_dir`; source preparation belongs to the caller.
+For systems that learn from agent traces, the Trace-derived learning placement section deepens this with the raw → distilled two-stage treatment; this section still records the system's standing retained surfaces.
 
-Use `reviewed_revision` and any caller-supplied source metadata for review metadata and citations. Do not update `last-checked` without actually reading `source_dir`.
+## Trace-derived learning placement
 
-## Read for Style
+This section is the trace-learning deepening of **Artifact analysis**: where that section classifies the system's standing retained surfaces, this one classifies the raw → distilled loop that produces them.
 
-Read 1-2 existing reviews in `kb/agent-memory-systems/reviews/` to match local style and comparison depth. Also read `kb/agent-memory-systems/README.md`.
+**Trigger:** include the `## Trace-derived learning placement` section **and** add `trace-derived` to `tags` only when the code-grounded read finds a qualifying mechanism. Otherwise omit both.
 
-## Read for Mechanism
+A system qualifies when it derives durable retained artifacts from agent traces. Qualifying **traces:** session logs, transcripts, tool/action traces, event streams, repeated trajectories, rollouts. Qualifying **outputs:** prose (notes, rules, playbooks, lessons), symbolic units (schemas, scripts, tools), or distributed-parametric state (weights, embeddings, adapters, rankers, controllers).
 
-Ground the review in primary source files:
+Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts (logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, validators, route entries, fine-tunes). Document both stages; the distillation step's trigger, oracle, and curation policy is often the most discriminating part. Address:
 
-- `README.md`
-- architecture/design docs
-- `CLAUDE.md` / `AGENTS.md` if present
-- package manifests and build metadata
-- core source files implementing the system's central claims
-
-Do not rely only on the README if the implementation clarifies or contradicts it.
-
-Focus on:
-
-- storage model
-- representational form of the behavior-shaping operative parts
-- lineage, derivation, invalidation, and regeneration paths
-- retrieval/navigation model
-- read-back model: how stored memory re-enters a future agent action — direction (pull vs push, from the agent's perspective), what trips it, timing relative to the action, scope, and authority at consumption
-- learning/distillation/promotion model if any
-- validation/governance model if any
-- behavioral authority: whether retained artifacts advise, instruct, enforce, route, validate, evaluate, rank, or feed learning
-- integration surface (CLI, MCP, API, editor plugin, etc.)
-- what is genuinely implemented versus only proposed
-- whether the system qualifies as trace-derived learning; if it does not, leave the placement section out and do not add the `trace-derived` tag
-- whether the system has a non-trivial push/activation path; if it is pull-only or unconditional always-load, give a one-line direction verdict and add neither a full Read-back placement section nor the `push-activation` tag
-
-## Write the Review
-
-Write from the code outward:
-
-- **Opening paragraph:** what the system is, what it is for, who built it. Include caller-supplied source identity when available.
-- **Source metadata:** before the section headings, include source identity and reviewed revision when available. Use labels that match the source metadata the caller provided.
-- **Core Ideas:** 3-6 mechanisms and design choices, not feature lists. Use bolded lead phrases for scanning.
-- **Comparison with Our System:** concrete alignments, divergences, and tradeoffs vs commonplace.
-- **Borrowable Ideas:** for each idea, say what it would look like in commonplace and whether it is ready now or needs a use case first.
-- **Trace-derived learning placement:** include this section only when the code-grounded review finds a qualifying trace-derived learning mechanism; if included, also add `trace-derived` to `tags`.
-- **Read-back placement:** give every review a one-line direction verdict (pull / push / both, from the agent's perspective). Include the full section only when the activation path is relevance-gated or otherwise engineered; if included, also add `push-activation` to `tags`.
-- **Curiosity Pass:** second-pass review. Re-read the draft and look for surprising claims, simpler alternatives, and mechanisms that sound more powerful than they really are.
-- **What to Watch:** future changes in the reviewed system that might affect our design.
-
-Every review should end with explicit `Relevant Notes:` links into the KB.
-
-## Frontmatter
-
-Use:
-
-- `description` — discriminating retrieval filter (50-200 chars, double-quoted)
-- `type: ../types/agent-memory-system-review.md`
-- `tags` — add `trace-derived` only if the code-grounded review finds that the system learns from agent traces, and `push-activation` only if it finds a non-trivial push/activation path (relevance-gated or engineered read-back, not pull-only or unconditional always-load). Each finding drives both its tag and its placement section. A review may carry neither, either, or both. Otherwise omit `tags`. Collection membership is defined by location in `kb/agent-memory-systems/`, not by a tag.
-- `status: current` unless clearly stale/outdated
-- `last-checked: "{today}"`
-
-## Trace-Derived Learning Placement
-
-Decide whether the reviewed system learns from traces during the mechanism read. Qualifying source traces: agent/assistant session logs, conversation transcripts, tool/action traces, event streams, repeated task trajectories, rollouts. Qualifying outputs are durable retained artifacts derived from those traces: natural-language notes/rules/playbooks/lessons/memories (prose representational form), formal-semantic units like schemas/scripts/tools (symbolic representational form), or learned numerical state such as weights, embeddings, adapters, rankers, or controllers (distributed-parametric representational form).
-
-Many systems have a two-stage loop: raw traces accumulate as source evidence or knowledge artifacts (session logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, playbooks, validators, route entries, fine-tunes). When this pattern is present, document both stages using the artifact-analysis fields: storage substrate, representational form, lineage, and behavioral authority at "raw" and at "distilled". The trigger, oracle, and curation policy of the distillation step is often the most discriminating part of the system.
-
-If the system qualifies, include a `## Trace-derived learning placement` section and add `trace-derived` to the frontmatter `tags`. The section should address:
-
-1. **Trace source** — what raw signal is consumed, and with what trigger boundaries.
+1. **Trace source** — what raw signal is consumed, with what trigger boundaries.
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
-3. **Storage substrate** — where the raw and distilled retained state lives: files, database, vector store, graph store, prompt registry, model-artifact store, service object, etc.
-4. **Representational form** — prose, symbolic, distributed-parametric, or mixed; classify operative parts separately when one stored object bundles several forms.
-5. **Lineage** — source traces, derivation chain, regeneration/invalidation rule, and whether the distilled artifact is canonical source or derived view.
-6. **Behavioral authority** — knowledge artifact when consumed as evidence, reference, context, explanation, or advice; system-definition artifact when consumed with instruction, enforcement, routing, validation, configuration, evaluation, ranking, or learning force.
-7. **Scope** — per-task, per-benchmark, per-project, or cross-task generalizable.
-8. **Timing** — online during deployment, offline from collected traces, or staged in cycles.
-9. **Survey placement** — position the system on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and state whether it strengthens, weakens, or splits any survey claim.
+3. **Four fields** — record storage substrate, representational form, lineage, and behavioral authority for the raw and distilled stages in **Artifact analysis** rather than repeating them here.
+4. **Scope and timing** — per-task / per-benchmark / per-project / cross-task, and online / offline / staged in cycles.
+5. **Survey placement** — position on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and whether the system strengthens, weakens, or splits any survey claim.
 
-## Read-back Placement
+## Read-back placement
 
-The read-back path is how stored memory re-enters a future agent action. The trace-derived section captures how memory is *made*; this section captures how it *acts*, and the two are independent — a system can have an elaborate learning loop and a trivial read-back path, or the reverse. Specify it as deliberately as the learning loop rather than collapsing it into "can the system retrieve?".
+The read-back path is how stored memory re-enters a future action. The trace-derived section captures how memory is *made*; this captures how it *acts* — independent axes (a system can have an elaborate learning loop and a trivial read-back, or the reverse).
 
-Every memory system reads memory back somehow, so unlike trace-derived learning this is near-universal. Give **every** review a one-line **direction verdict**: does memory reach the agent's context by **pull** (the agent's own deliberate lookup — a query/search tool call, a chosen read), by **push** (memory arrives unsolicited — always-load, a hook on an agent action, a situation/relevance match, or any user-initiated event), or both? Push/pull is judged **from the agent's perspective**: user-initiated retrieval uses pull machinery but is push to the agent, because the agent did not ask. The single most discriminating finding is whether the system has any push path at all or is **pull-only** (a retrieval tool the agent must think to call) — pull-only is the large, under-tested class.
+**Every review** states a one-line **direction verdict**: does memory reach the agent's context by **pull** (the agent's own deliberate lookup), **push** (unsolicited arrival — always-load, hook, situation match, or user event), or both? Judge from the agent's perspective: user-initiated retrieval uses pull machinery but is push to the agent. The most discriminating finding is whether there is *any* push path or the system is **pull-only** — the large, under-tested class. Name always-load as a deliberate push choice, not the absence of one.
 
-Include a full `## Read-back placement` section and add `push-activation` to `tags` **only when the activation path is relevance-gated or otherwise engineered**: a matcher (embedding, action-classifier, LLM-judge, or typed cue), a selection/scope budget, a before-action hook, or a faithfulness test. Pure pull-only RAG and unconditional always-load get only the one-line direction verdict (name always-load as a deliberate push choice, not the absence of one) and no tag.
+**Trigger:** include the full `## Read-back placement` section **and** add `push-activation` to `tags` only when the activation path is relevance-gated or otherwise engineered — a matcher (embedding, action-classifier, LLM-judge, typed cue), a selection/scope budget, a before-action hook, or a faithfulness test. Pure pull-only RAG and unconditional always-load get only the verdict, no section, no tag.
 
 Two cautions on what code can show:
 
-- **Structural vs quality layer.** Report the observable *mechanism* per axis and explicitly mark precision/recall, context dilution, and effective authority as *not verified from code* — the same discipline the trace-derived section lives under (you can see the extraction mechanism, not whether the lessons are good).
-- **Capability vs deployed behavior.** For end-to-end agents, report what the loop actually wires. For libraries/SDKs the push wiring often lives in the host harness, not the reviewed repo: report the **API surface** as capability (`search(query)` cannot push; `on_action(context) → memories` affords push) rather than asserting the system pushes or has no activation.
+- **Structural vs quality layer.** Report the observable mechanism per axis; mark precision/recall, context dilution, and effective authority as *not verified from code*.
+- **Capability vs deployed behavior.** For end-to-end agents, report what the loop wires. For libraries/SDKs the push wiring often lives in the host harness — report the **API surface** as capability (`search(query)` cannot push; `on_action(context) → memories` affords push) rather than asserting deployed behavior.
 
-If a full section is warranted, address:
+When a full section is warranted, address:
 
-1. **Direction** — pull, push, or both, from the agent's perspective. Pull = the agent's own deliberate lookup; push = unsolicited arrival, whatever the trigger. Note "push riding on the pull interface" when a query *also* injects unsolicited behavior-shaping material; documented related-record expansion on a query is still pull (the agent solicited the query contract), and how much expands is a scope question. In multi-agent setups, an orchestrator's or sub-agent's pull is push for the receiving agent.
-2. **Trigger and relevance signal** — what trips the read-back and how it matches: unconditional, event-keyed, embedding, action-classifier, LLM-judge, or typed cue. Mechanism is code-grounded; precision/recall is runtime.
-3. **Timing relative to action** — where in the loop the read sits. A pre-action hook fires before the action and can change the next move; a reflection or summary step fires after and can only explain or audit.
-4. **Selection and scope** — top-k, token budget, and task/project/session scoping. The policy is code-grounded; actual context dilution (soft degradation) is runtime.
-5. **Authority at consumption** — how the surfaced memory is wired: advisory context, system instruction, hard gate (enforcement), router input, or audit trigger. The same stored memory can be read back as a soft reminder or a hard gate; this is set on the read path, not at write time. Nominal authority is code-grounded; effective authority needs a faithfulness check.
-6. **Faithfulness** — whether the system *itself* tests that fired read-back changes behavior (WITH/WITHOUT ablation, perturbation, post-action trace audit) rather than assuming context presence equals use. [Synapptic](../reviews/synapptic.md) is the reviewed example.
-7. **Other consumers** — the axes above describe read-back to the agent, the primary consumer. Note when the same memory is also consumed directly by the human user, or by schedulers, reviewers, or governance (the Consumer-surfaces lens). This is a consumer dimension, not a push/pull value.
+1. **Direction** — pull, push, or both, from the agent's perspective. Note "push riding on the pull interface" when a query *also* injects unsolicited behavior-shaping material; documented related-record expansion on a query is still pull (how much expands is a scope question). In multi-agent setups, an orchestrator's or sub-agent's pull is push for the receiving agent.
+2. **Trigger and relevance signal** — what trips the read-back and how it matches: unconditional, event-keyed, embedding, action-classifier, LLM-judge, typed cue. Mechanism is code-grounded; precision/recall is runtime.
+3. **Timing relative to action** — a pre-action hook fires before the action and can change the next move; a reflection or summary step fires after and can only explain or audit.
+4. **Selection and scope** — top-k, token budget, task/project/session scoping. Policy is code-grounded; actual context dilution is runtime.
+5. **Authority at consumption** — advisory context, system instruction, hard gate, router input, or audit trigger. The same memory can be read back as a soft reminder or a hard gate; this is set on the read path, not at write time. Effective authority needs a faithfulness check.
+6. **Faithfulness** — whether the system *itself* tests that fired read-back changes behavior (WITH/WITHOUT ablation, perturbation, post-action audit) rather than assuming context presence equals use. [Synapptic](../reviews/synapptic.md) is the reviewed example.
+7. **Other consumers** — note when the same memory is also consumed by the human user, schedulers, reviewers, or governance (the Consumer-surfaces lens). A consumer dimension, not a push/pull value.
+
+## Frontmatter
+
+- `description` — discriminating retrieval filter (50–200 chars, double-quoted)
+- `type: ../types/agent-memory-system-review.md`
+- `status: current` unless clearly stale
+- `last-checked: "{today}"`
+- `tags` — add `trace-derived` and/or `push-activation` only per the placement rules above. A review may carry neither, either, or both; otherwise omit `tags`. Collection membership comes from location, not a tag.
 
 ## Citations
 
-Use the caller-supplied citation format when one is provided.
-
-If no citation format is provided, cite source files in prose with source-relative paths in code spans, not as markdown links into the local directory. Local source paths are fine for inspection notes or final reports, but review notes must remain readable without access to the local directory.
+Use the caller-supplied citation format when provided. Otherwise cite source files in prose with **source-relative paths in code spans** — not markdown links into the local directory. Review notes must remain readable without access to the local source.
 
 ## Constraints
 
-**Always:**
-
-- write the review into `kb/agent-memory-systems/reviews/`
-- ground claims in source code/docs, not just project marketing
-- cite source evidence using the caller-supplied citation format when available, otherwise use readable source-relative path references in prose
-- treat trace-derived status as a code-grounded review finding
-
-**Never:**
-
-- put the source directory under `kb/agent-memory-systems/reviews/`
-- write Markdown links from review notes into `../../../related-systems/...` or other local source paths
-- treat proposed docs as implemented behavior without checking the code
-- update `last-checked` without actually re-reading the system
+- Don't put the source directory under `kb/agent-memory-systems/reviews/`.
+- Don't write markdown links from a review into local source paths (`../../../related-systems/...`).
+- Don't treat proposed docs as implemented behavior without checking the code.
+- Don't update `last-checked` without actually re-reading the system.
 
 ## Template
 
@@ -208,21 +146,25 @@ last-checked: "YYYY-MM-DD"
 
 {Core ideas}
 
+## Artifact analysis
+
+{Four-field record (storage substrate, representational form, lineage, behavioral authority) for the central retained artifacts, at the operative-part level. See Artifact analysis.}
+
 ## Comparison with Our System
 
-{Comparison}
+{Alignments, divergences, tradeoffs vs Commonplace.}
 
-## Borrowable Ideas
+### Borrowable Ideas
 
-{Borrowable ideas}
+{For each idea: what it would look like in Commonplace; ready now or needs a use case first.}
 
 ## Trace-derived learning placement
 
-{Optional. Include only when the code-grounded review finds a qualifying trace-derived learning mechanism; otherwise delete this section. When included, also add `trace-derived` to `tags`. Cover trace source, extraction, storage substrate, representational form, lineage, behavioral authority, scope, timing, survey-axis placement, and whether the system strengthens, weakens, or splits any survey claim.}
+{Optional — qualifying trace-learning only; delete otherwise, and add `trace-derived` to `tags` when kept. Deepens Artifact analysis with the raw → distilled loop. See Trace-derived learning placement.}
 
 ## Read-back placement
 
-{State the one-line direction verdict (pull / push / both, from the agent's perspective) somewhere in the review even without this section. Include this full section only when the activation path is relevance-gated or engineered; otherwise delete it. When included, also add `push-activation` to `tags`. Cover direction, trigger/relevance signal, timing relative to action, selection/scope, authority at consumption, faithfulness, and other consumers. Mark precision/dilution/effective-authority as not verified from code, and report library API surface as capability rather than deployed behavior.}
+{State the one-line direction verdict (pull / push / both) somewhere regardless. Full section only when relevance-gated/engineered; delete otherwise, and add `push-activation` to `tags` when kept. See Read-back placement.}
 
 ## Curiosity Pass
 
@@ -232,6 +174,6 @@ last-checked: "YYYY-MM-DD"
 
 ## What to Watch
 
-- {What might change that affects our design?}
-- {What experiments are worth tracking?}
+- {A *specific* pending change + its consequence for our design or a tracked decision.}
+- {Cut generic "they get more robust" filler — an honestly-short section beats it.}
 ```

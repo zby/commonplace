@@ -1,7 +1,7 @@
 # Agent Memory Systems
 A survey of external **agent memory systems** — how AI agents store, retrieve, and maintain knowledge across sessions and tasks. We track knowledge bases, context-engineering layers, structured note-taking tools, and trajectory-learning loops, reading their source code wherever it is available.
 
-**Choosing or designing one?** Start with the [comparative review](./agentic-memory-systems-comparative-review.md), which places the landscape across six architectural dimensions, then browse the [repo-backed reviews](./reviews/dir-index.md) — each one reads the actual code and reports what a system _does_, not what its README claims.
+**Choosing or designing one?** Start with the [comparative review](./agentic-memory-systems-comparative-review.md), which places the landscape across six architectural dimensions, then browse the [repo-backed reviews](./reviews/dir-index.md) — each one reads the actual code and reports what a system _does_, not what its README claims. Every review classifies the system's retained artifacts in a shared vocabulary — storage substrate, representational form, lineage, behavioral authority — so independent systems can be set side by side on the same terms.
 
 We track these systems not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
 ## Coverage
@@ -24,7 +24,7 @@ Cross-cutting reads:
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
-- [Thalo type comparison](./thalo-type-comparison.md) — detailed type mapping against the commonplace document types
+- [Thalo type comparison](./thalo-type-comparison.md) — detailed type mapping against the Commonplace document types
   
 ## Patterns Across Systems
 Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independently converge on:
@@ -48,9 +48,9 @@ The divergences are more revealing:
   
 - **Packaging unit** — most systems distribute concerns across multiple files (notes, configs, scripts, indexes), but o-o pushes the opposite extreme: each document is a self-contained polyglot file carrying rendering, update contract, shell dispatch, source cache, and changelog. That maximizes portability and local inspectability at the cost of modularity and inter-document structure
   
-- **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (commonplace, thalo) vs empirical operational patterns (Agent-Skills)
+- **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (Commonplace, thalo) vs empirical operational patterns (Agent-Skills)
   
-- **Formalization level** — custom DSL (thalo) vs YAML conventions (commonplace) vs prose instructions (Agent-Skills)
+- **Formalization level** — custom DSL (thalo) vs YAML conventions (Commonplace) vs prose instructions (Agent-Skills)
   
 - **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan); SAGE enforces with cryptographic gates (signed transactions, validator quorum, RBAC clearance levels) — two very different enforcement models, both structurally enforced rather than instructed
   
