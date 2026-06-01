@@ -1,5 +1,5 @@
 ---
-description: How collections and types compose in commonplace - collections own register conventions and per-destination outbound linking rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface and the live per-destination model the write and connect skills consume
+description: How collections and types compose in Commonplace - collections own register conventions and per-destination outbound linking rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface and the live per-destination model the write and connect skills consume
 type: kb/types/note.md
 tags: []
 status: current
@@ -7,7 +7,7 @@ status: current
 
 # Collections and types
 
-Every authored artifact in commonplace makes two independent decisions:
+Every authored artifact in Commonplace makes two independent decisions:
 
 - **Which collection it lives in** — picks the *register* (theoretical, descriptive, prescriptive), the writing conventions, and the rules for how it links to artifacts in other collections.
 - **Which type it instantiates** — picks the *structural contract*: what frontmatter the artifact carries and what required sections the body must contain.

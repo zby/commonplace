@@ -73,7 +73,7 @@ User provides a URL or document to capture and analyse. The agent uses the /inge
 - **Source:** `commonplace/kb/notes/` (search results)
 - **Hops:** 1 (search) + 1-2 (read results)
 - **Fixed/Variable:** variable
-- **Notes:** The agent searches commonplace for notes about document classification, source types, or extraction methodology.
+- **Notes:** The agent searches Commonplace for notes about document classification, source types, or extraction methodology.
 
 ## Variants
 

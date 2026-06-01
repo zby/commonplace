@@ -1,5 +1,5 @@
 ---
-description: Where commonplace stores data — authored markdown under kb/, derived indexes rebuilt from those files, and the review subsystem's local SQLite database
+description: Where Commonplace stores data — authored markdown under kb/, derived indexes rebuilt from those files, and the review subsystem's local SQLite database
 type: kb/types/note.md
 tags: []
 status: current

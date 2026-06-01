@@ -52,7 +52,7 @@ User asks something the KB should know. The agent must search for relevant notes
 - **Source:** `commonplace/kb/notes/` (search results)
 - **Hops:** 1 (search) + 1-2 (read results)
 - **Fixed/Variable:** variable
-- **Notes:** When the user asks "what types of notes can I create?" or "how does the connect skill work?", the answer lives in commonplace methodology, not in the project's KB. The CLAUDE.md fragment must distinguish: "for your content, search `kb/`; for how the system works, search `commonplace/kb/`."
+- **Notes:** When the user asks "what types of notes can I create?" or "how does the connect skill work?", the answer lives in Commonplace methodology, not in the project's KB. The CLAUDE.md fragment must distinguish: "for your content, search `kb/`; for how the system works, search `commonplace/kb/`."
 
 ## Variants
 

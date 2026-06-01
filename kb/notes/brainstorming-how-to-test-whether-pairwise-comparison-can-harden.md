@@ -134,7 +134,7 @@ If most of these happen, the right conclusion is probably not "pairwise can hard
 
 ## The easiest high-value experiment for this KB
 
-Inside commonplace, the most practical first experiment is probably candidate selection for short analytical outputs.
+Inside Commonplace, the most practical first experiment is probably candidate selection for short analytical outputs.
 
 One concrete design:
 - Sample 20-30 prompts asking for a short explanation, critique, or synthesis

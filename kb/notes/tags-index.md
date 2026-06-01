@@ -9,12 +9,12 @@ status: current
 
 Browse the KB by tag. Each tag page has a curated editorial section and an auto-generated listing of all notes with that tag.
 
-For current-state documentation about the live commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
+For current-state documentation about the live Commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
 
 ## Tag Indexes
 
 - [Foundations](./foundations-index.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
-- [Architecture](./architecture-index.md) — how commonplace is structured and installed: repo layout, control-plane design, file-based storage
+- [Architecture](./architecture-index.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-index.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-index.md) — constraining, distillation, verification, and memory theory used to reason about system improvement
 - [Document system](./document-system-index.md) — document types, writing conventions, and validation rules for structured notes

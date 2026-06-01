@@ -1,7 +1,7 @@
 """Experimental KB extraction utilities.
 
 Reusable building blocks for extracting structured information from a
-commonplace KB tree:
+Commonplace KB tree:
 
 - ``frontmatter_aggregate.aggregate_field(field, roots)`` →
   ``{value: [files]}`` distribution of a frontmatter field across files.

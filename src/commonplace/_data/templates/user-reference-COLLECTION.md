@@ -1,7 +1,7 @@
 # Writing conventions for kb/reference/
 
 <!--
-This is your project's reference collection. The shipped commonplace
+This is your project's reference collection. The shipped Commonplace
 library has its own conventions at kb/commonplace/reference/COLLECTION.md
 for a worked example. Replace these placeholders with your own decisions.
 -->

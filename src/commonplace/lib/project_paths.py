@@ -1,4 +1,4 @@
-"""Shared path conventions for a commonplace project."""
+"""Shared path conventions for a Commonplace project."""
 
 from __future__ import annotations
 
@@ -155,7 +155,7 @@ def is_git_ignored(path: Path, root: Path | None = None) -> bool:
 
     Git is the source of truth because .gitignore syntax is richer than the
     small subset this package should own. Outside a Git worktree, paths are
-    treated as visible so commonplace can still operate in plain directories.
+    treated as visible so Commonplace can still operate in plain directories.
     """
     check_root = (root or path.parent).resolve()
     try:

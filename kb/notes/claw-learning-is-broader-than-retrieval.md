@@ -10,7 +10,7 @@ status: seedling
 
 ## The narrow framing
 
-The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) frames the KB's value as "question-answering capacity" — a note is valuable if it helps answer a question. This works as a model for a reference knowledge base, but commonplace is a [Claw](https://simonwillison.net/2026/Feb/21/claws/): an AI-assisted system that accumulates context and evolves with use. The KB is its most developed subsystem, but the system's purpose is broader than lookup.
+The [KB learning loop note](./automating-kb-learning-is-an-open-problem.md) frames the KB's value as "question-answering capacity" — a note is valuable if it helps answer a question. This works as a model for a reference knowledge base, but Commonplace is a [Claw](https://simonwillison.net/2026/Feb/21/claws/): an AI-assisted system that accumulates context and evolves with use. The KB is its most developed subsystem, but the system's purpose is broader than lookup.
 
 ## What a Claw actually does
 

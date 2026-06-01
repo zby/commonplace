@@ -7,7 +7,7 @@ status: current
 
 # Scenario architecture
 
-How commonplace instantiates scenario-derived architecture in the shipped system. This note describes the installed KB surface (library and user collections under one `kb/` root), the command-and-skill split that supports it, and the measurable scenario decomposition that explains those choices.
+How Commonplace instantiates scenario-derived architecture in the shipped system. This note describes the installed KB surface (library and user collections under one `kb/` root), the command-and-skill split that supports it, and the measurable scenario decomposition that explains those choices.
 
 ## The shipped operating context
 

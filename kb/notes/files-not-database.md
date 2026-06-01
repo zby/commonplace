@@ -51,7 +51,7 @@ A second kind of boundary shows up inside a mostly files-first system: a specifi
 
 Relevant Notes:
 
-- [storage-architecture](../reference/storage-architecture.md) — current-state: how commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
+- [storage-architecture](../reference/storage-architecture.md) — current-state: how Commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
 - [cludebot](../agent-memory-systems/reviews/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
 - [Koylanai Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) — independent practitioner report validating the same architectural choice at 80+ file scale
 - [Fintool: Lessons from Financial Services](https://x.com/nicbstme/status/2015174818497437834) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes

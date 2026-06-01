@@ -1,5 +1,5 @@
 ---
-description: Catalog of the types shipped by commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
+description: Catalog of the types shipped by Commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
 type: kb/types/note.md
 tags: []
 status: current
@@ -7,7 +7,7 @@ status: current
 
 # Available types
 
-The shipped commonplace scaffold installs global type specs under `kb/types/` and a small set of collection-local type specs for generated or specialized artifacts. Artifacts store the path to the selected type spec in `type:`.
+The shipped Commonplace scaffold installs global type specs under `kb/types/` and a small set of collection-local type specs for generated or specialized artifacts. Artifacts store the path to the selected type spec in `type:`.
 
 ## Global Types
 

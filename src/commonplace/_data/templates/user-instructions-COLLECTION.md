@@ -1,7 +1,7 @@
 # Writing conventions for kb/instructions/
 
 <!--
-This is your project's instructions collection. The shipped commonplace
+This is your project's instructions collection. The shipped Commonplace
 library has its own conventions at kb/commonplace/instructions/COLLECTION.md
 for a worked example. Replace these placeholders with your own decisions.
 -->

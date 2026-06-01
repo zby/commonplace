@@ -63,7 +63,7 @@ Goals are set at installation time but domains evolve. When a KB's scope shifts 
 
 Relevant Notes:
 
-- [control-plane-goals](../reference/control-plane-goals.md) — current-state: how commonplace realises this argument today through `AGENTS.md`, the scaffold template, and the install-time fill-in flow
+- [control-plane-goals](../reference/control-plane-goals.md) — current-state: how Commonplace realises this argument today through `AGENTS.md`, the scaffold template, and the install-time fill-in flow
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: adds domain scope as a new invariant (Layer 1) in the control-plane model
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: goals must be always-loaded because the inclusion question arises every session
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the structural sections of the fragment are generated; only goals require human input

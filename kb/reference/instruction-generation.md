@@ -7,11 +7,11 @@ status: current
 
 # Instruction generation
 
-How commonplace instantiates build-time generation over runtime parameterisation in the shipped system. This note describes the scaffold, template substitution, and install entry point.
+How Commonplace instantiates build-time generation over runtime parameterisation in the shipped system. This note describes the scaffold, template substitution, and install entry point.
 
 ## The entry point
 
-`commonplace-init` is the single build/install step. It creates the project directory structure, copies scaffold trees verbatim, and resolves a small set of templates with per-project values. Everything a new commonplace project needs is produced by this one command.
+`commonplace-init` is the single build/install step. It creates the project directory structure, copies scaffold trees verbatim, and resolves a small set of templates with per-project values. Everything a new Commonplace project needs is produced by this one command.
 
 There are no runtime variables in the generated artifacts. `AGENTS.md`, skill definitions, and configuration files contain literal paths and names by the time an agent sees them.
 
@@ -82,7 +82,7 @@ Each promotion is a **symlink** pointing at `kb/commonplace/instructions/cp-skil
 - **Different from scaffold** — preserved without overwriting, reported as "preserved existing files differing from current scaffold output" so the operator can decide whether to diff and update manually
 - **Missing** — created fresh
 
-The rule is "never clobber a practitioner edit." Updating an installed project to a newer commonplace release is a manual diff-and-merge step, not a re-run.
+The rule is "never clobber a practitioner edit." Updating an installed project to a newer Commonplace release is a manual diff-and-merge step, not a re-run.
 
 ## What's not generated
 

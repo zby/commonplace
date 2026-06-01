@@ -73,7 +73,7 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 - **Source:** `commonplace/kb/notes/` (search results)
 - **Hops:** 1 (search) + 1-2 (read results)
 - **Fixed/Variable:** variable
-- **Notes:** The agent searches the commonplace repo's notes for the reasoning behind whatever convention it's struggling with.
+- **Notes:** The agent searches the Commonplace repo's notes for the reasoning behind whatever convention it's struggling with.
 
 ### E3. Read source reasoning
 - **Context needed:** The specific methodology note
@@ -93,7 +93,7 @@ User asks the agent to capture an insight, design observation, or analysis as a 
 
 **Commonplace repo:** Escalation steps E1-E4 don't exist. The methodology notes ARE the content the agent searches in step 2. When writing a note about, say, title conventions, the agent naturally encounters the full reasoning because it lives in the same `kb/notes/` directory.
 
-**Installed project (common path):** Steps 1-7 are identical — the copied operational artifacts (`COLLECTION.md` files, `kb/types/`) ensure the paths are the same. The agent doesn't know or care whether it's in commonplace or an installed project.
+**Installed project (common path):** Steps 1-7 are identical — the copied operational artifacts (`COLLECTION.md` files, `kb/types/`) ensure the paths are the same. The agent doesn't know or care whether it's in Commonplace or an installed project.
 
 **Installed project (escalation):** Adds 2-3 hops to a different tree. Estimated to occur ~10% of the time — most writes don't hit edge cases requiring full methodology reasoning.
 

@@ -32,7 +32,7 @@ A framework-owned tool loop is optimized for task completion inside one conversa
 
 This is one reason [tool loop](./tool-loop-index.md) argues for keeping orchestration visible. When orchestration is hidden, failure handling is hidden with it. The application cannot easily separate "the user got an acceptable result" from "the intended execution path succeeded." The framework has implicitly made that policy decision on the user's behalf.
 
-## Practical consequences for commonplace
+## Practical consequences for Commonplace
 
 The real requirement is **observability**, not necessarily inline interruption. If Claude Code or Codex can route around a broken helper, missing binary, or bad relative path, the defect persists until someone inspects logs. There are two ways to recover the missing signal:
 

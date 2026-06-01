@@ -26,7 +26,7 @@ All three registers face context budget pressure but respond differently. Any re
 
 Two properties distinguish the registers from mere labels.
 
-**Formulation constraint.** Descriptions are observations, so theories legitimately cite them as evidence. But a theory must be statable in general terms — its claim should stand without referencing any particular system. A theory can link to descriptions as evidence ("we observed X in system Y, which led us to theorize Z"), but its claim — title and opening argument — must hold independently. If you can't state it without saying "in commonplace, ..." it's still a description, not yet a theory.
+**Formulation constraint.** Descriptions are observations, so theories legitimately cite them as evidence. But a theory must be statable in general terms — its claim should stand without referencing any particular system. A theory can link to descriptions as evidence ("we observed X in system Y, which led us to theorize Z"), but its claim — title and opening argument — must hold independently. If you can't state it without saying "in Commonplace, ..." it's still a description, not yet a theory.
 
 **Maintenance asymmetry.** When a description changes (the system is redesigned), the theory's evidence base shifts — re-evaluate, but the theory may still hold from other evidence. A theory with one supporting observation is fragile; one with several is robust. When a theory changes, all downstream artifacts — descriptions citing it as rationale, prescriptions derived from it — may need revision. The theory is upstream; impact flows down.
 

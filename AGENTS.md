@@ -48,7 +48,7 @@ Use `roughdraft help` and `roughdraft help criticmarkup` for local command and s
 
 A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.
 
-The commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
+The Commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
 ## KB Goals
 
@@ -86,7 +86,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/dir-index.md` — auto-generated directory listing (rebuild with `commonplace-refresh-indexes`)
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
-- `kb/reference/adr/` — architecture decision records for the shipped commonplace system
+- `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 - `kb/sources/dir-index.md` — auto-generated source listing
 
@@ -110,6 +110,7 @@ This section declares the active vocabulary: terms with specific meanings throug
 - **System-definition artifact** — retained artifact consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force. This is an authority-path family, not a form or substrate. See `kb/notes/definitions/system-definition-artifact.md`.
 - **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
 - **Workshop** — a named workspace for temporal, work-in-flight documents. Lives in `kb/work/<workshop-name>/`. Value is consumed rather than accumulated — workshop artifacts have lifecycles and expiration; they produce library artifacts (notes, ADRs) when done. Contrast with the library layer (notes, indexes) where value accumulates over time. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
+- **Commonplace** — the name of this KB and framework. Capitalize it in prose; keep lowercase only for literal identifiers such as `commonplace-*`, `llm-commonplace`, `src/commonplace/`, and `kb/commonplace/`.
 
 ## Development
 
@@ -138,7 +139,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | Path | Role | Use when |
 |---|---|---|
 | `kb/notes/` | theoretical register | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
-| `kb/reference/` | descriptive register | Describing the shipped commonplace system, architecture, type system, commands, and ADRs. |
+| `kb/reference/` | descriptive register | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
 | `kb/instructions/` | prescriptive register | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
 | `kb/agent-memory-systems/` | descriptive external-system coverage | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
 | `kb/sources/` | captured source material | Storing external snapshots, ingests, and source reviews. |

@@ -1,7 +1,7 @@
 # Writing conventions for kb/notes/
 
 <!--
-This is your project's notes collection. The shipped commonplace library
+This is your project's notes collection. The shipped Commonplace library
 has its own conventions at kb/commonplace/notes/COLLECTION.md — read
 that for a worked example. Replace these placeholders with your own
 decisions.

@@ -60,7 +60,7 @@ These represent different trust models for who curates always-loaded state. The 
 
 ## Configuration injection
 
-**Platform names:** build-time generation (commonplace install scripts), settings merge (Pi's three-level settings), environment variables.
+**Platform names:** build-time generation (Commonplace install scripts), settings merge (Pi's three-level settings), environment variables.
 
 Some always-loaded values are static within one installation but variable across installations: sibling repo paths, local tool paths, environment-specific endpoints. These are resolved before the agent sees them, either at build time or at session start.
 

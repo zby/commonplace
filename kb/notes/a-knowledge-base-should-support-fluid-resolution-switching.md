@@ -10,7 +10,7 @@ status: seedling
 
 Good thinking is not staying at one level of abstraction — it is constantly moving between levels. Start broad to see the landscape, narrow in when something is interesting, zoom back out to check bearings, dive deep into the load-bearing detail, then abstract up to see the pattern. A knowledge base that supports good thinking must support this motion fluidly.
 
-The commonplace KB already has several mechanisms that serve resolution-switching, but they aren't usually described under that framing:
+The Commonplace KB already has several mechanisms that serve resolution-switching, but they aren't usually described under that framing:
 
 **Titles vs bodies are a resolution pair.** Claim titles give the zoomed-out view — the principle, the assertion. The note body gives the zoomed-in view — the mechanism, the evidence, the specifics. Scanning a list of titles is surveying the landscape; opening a note is examining the territory. Since [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), following links between claim titles reads as a chain of reasoning at the abstract level — without requiring the reader to descend into any specific note.
 

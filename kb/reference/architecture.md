@@ -1,5 +1,5 @@
 ---
-description: Shipped commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, empty user collections, promoted skills, and the library/user boundary
+description: Shipped Commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, empty user collections, promoted skills, and the library/user boundary
 type: kb/types/note.md
 traits: []
 tags: []
@@ -8,7 +8,7 @@ status: current
 
 # Commonplace architecture
 
-This note describes the architecture commonplace ships into projects: the installed `kb/` tree, the package-provided command surface, and the runtime skill-discovery layer.
+This note describes the architecture Commonplace ships into projects: the installed `kb/` tree, the package-provided command surface, and the runtime skill-discovery layer.
 
 ## Installed project layout
 

@@ -1,6 +1,6 @@
 # Reference
 
-Reference documentation for the commonplace system — how to operate it and how it works.
+Reference documentation for the Commonplace system — how to operate it and how it works.
 
 Navigation: [directory index](./dir-index.md).
 
@@ -9,7 +9,7 @@ This collection answers two kinds of question:
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
 - **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-Use this collection when the question is specifically about the shipped commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
+Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
 
 ## Mental model
 
@@ -19,7 +19,7 @@ The agent reads the shipped skills (`.claude/skills/cp-skill-*/SKILL.md` or `.ag
 
 The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
 
-This guide assumes you have a running agent session (Claude Code, Codex, etc.) with commonplace's skills in its discovery path. If `commonplace-init` has run and `.claude/skills/` or `.agents/skills/` exists, you're ready.
+This guide assumes you have a running agent session (Claude Code, Codex, etc.) with Commonplace's skills in its discovery path. If `commonplace-init` has run and `.claude/skills/` or `.agents/skills/` exists, you're ready.
 
 ## How to
 
@@ -181,7 +181,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
-- [control-plane-goals.md](./control-plane-goals.md) — how commonplace ships KB goals in always-loaded context via `AGENTS.md`
+- [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
 - [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
@@ -221,4 +221,4 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - Use `kb/reference/` for shipped-system documentation, operator guidance, and decision history.
 - Use `kb/instructions/` for imperative procedures and operator-facing process details.
 
-Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the commonplace source repository or methodology library.
+Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the Commonplace source repository or methodology library.

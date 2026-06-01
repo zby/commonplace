@@ -1,7 +1,7 @@
 ---
 type: kb/types/type-spec.md
 name: review-gate
-description: A single quality check the commonplace review system applies to KB artifacts
+description: A single quality check the Commonplace review system applies to KB artifacts
 schema: kb/types/review-gate.schema.yaml
 ---
 

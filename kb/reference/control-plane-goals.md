@@ -1,5 +1,5 @@
 ---
-description: How commonplace ships KB goals in always-loaded context — the AGENTS.md layout, the scaffolded AGENTS.md.template, and the install-time fill-in contract
+description: How Commonplace ships KB goals in always-loaded context — the AGENTS.md layout, the scaffolded AGENTS.md.template, and the install-time fill-in contract
 type: kb/types/note.md
 tags: []
 status: current
@@ -35,7 +35,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
 | Link semantics | Framework | `kb/notes/links-index.md` and related guidance in `kb/instructions/` |
 
-Only the per-installation rows require human input. Framework rows are shipped from commonplace and can be updated mechanically on upgrade.
+Only the per-installation rows require human input. Framework rows are shipped from Commonplace and can be updated mechanically on upgrade.
 
 ## The scaffold contract
 
@@ -43,7 +43,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 
 - A placeholder `## KB Goals` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
-- A stock Skills and Commands section listing the commonplace-provided skills
+- A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
 
 The five-subsection layout in the template matches the structure the generated file expects, so the scaffold is self-demonstrating: the placeholder text shows the exact shape the practitioner is editing toward.
@@ -60,7 +60,7 @@ Concretely, the install sequence is:
 
 The agent has no fallback if goals are left unfilled — an empty `## KB Goals` section is a silent failure mode, which is why the installation guidance treats the fill-in step as a first-run requirement rather than optional polish.
 
-## Relationship to other commonplace invariants
+## Relationship to other Commonplace invariants
 
 - The routing table (`## Using the KB` and `## Key Indexes`) is generated from the framework and does not vary per installation.
 - A vocabulary section is optional and project-specific; many installations will not need one.

@@ -34,7 +34,7 @@ For recurring tasks this is especially clean. The task template is a stable runb
 
 Relevant Notes:
 
-- [instruction-generation](../reference/instruction-generation.md) — current-state: how commonplace instantiates this argument today through `commonplace-init`, scaffold trees, and the specific substitution points
+- [instruction-generation](../reference/instruction-generation.md) — current-state: how Commonplace instantiates this argument today through `commonplace-init`, scaffold trees, and the specific substitution points
 - [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — foundation: the general principle this applies; in code indirection is free, in LLM instructions it costs context and interpretation on every read
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — template generation is a point on the constraining gradient
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity

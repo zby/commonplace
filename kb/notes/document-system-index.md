@@ -10,7 +10,7 @@ status: seedling
 
 How documents are classified, structured, and quality-checked. These notes define the type system, writing conventions, and testing framework that make [knowledge artifacts](./definitions/knowledge-artifact.md) machine-verifiable and human-readable.
 
-For the live commonplace repo's current type inventory and migration summary, see [../reference/available-types.md](../reference/available-types.md).
+For the live Commonplace repo's current type inventory and migration summary, see [../reference/available-types.md](../reference/available-types.md).
 
 ## Foundations
 

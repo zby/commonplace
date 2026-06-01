@@ -12,7 +12,7 @@ status: superseded
 
 ## Context
 
-When a project adopts commonplace, the agent needs access to two kinds of material:
+When a project adopts Commonplace, the agent needs access to two kinds of material:
 
 1. **Operational artifacts** (types, WRITING.md, skills) — read on almost every write. These are the hot path.
 2. **Methodology notes** — consulted when a skill or instruction doesn't cover an edge case. These are fallback.

@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-Commonplace scripts are invoked by agents via skill instructions (e.g., `uv run scripts/notes_selector.py`). When commonplace is installed into another project, the scripts need to be callable from that project's working directory. A Python venv tied to the commonplace directory creates friction: every skill invocation would need to `cd` to the commonplace root or use `uv run --directory`, and the user must run `uv sync` as a setup step.
+Commonplace scripts are invoked by agents via skill instructions (e.g., `uv run scripts/notes_selector.py`). When Commonplace is installed into another project, the scripts need to be callable from that project's working directory. A Python venv tied to the Commonplace directory creates friction: every skill invocation would need to `cd` to the Commonplace root or use `uv run --directory`, and the user must run `uv sync` as a setup step.
 
 Several scripts imported PyYAML to parse frontmatter. But a survey of all frontmatter across the KB showed that only a tiny subset of YAML is actually used: top-level scalar fields and inline lists (`[a, b, c]`). No nesting, no block-style lists, no multi-line scalars, no anchors.
 

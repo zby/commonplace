@@ -102,7 +102,7 @@ If you use `direnv`, run `direnv allow` once after entering the repo. The `.envr
 Skills are installed into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
-- You want to explore or contribute to the commonplace methodology itself
+- You want to explore or contribute to the Commonplace methodology itself
 - You want a standalone knowledge base without attaching it to another project
 - You're evaluating the system before installing it elsewhere
 

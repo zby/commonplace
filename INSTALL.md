@@ -31,7 +31,7 @@ Commonplace installs into a project-local venv rather than globally, so each pro
 
 > **Note:** `llm-commonplace` is not yet published to PyPI. For now, install from a local checkout of this repository. The PyPI-based instructions below are kept as a preview of how it will work once published.
 
-From your project root, install from a local checkout (also works if you're inside the commonplace repo itself):
+From your project root, install from a local checkout (also works if you're inside the Commonplace repo itself):
 
 ```bash
 uv venv
@@ -131,7 +131,7 @@ rg "^description:" kb/notes kb/reference kb/instructions --glob "*.md"
 rg "your search terms" kb/ --glob "*.md"
 ```
 
-## 6. Pre-approve commonplace CLI commands in Claude Code (optional)
+## 6. Pre-approve Commonplace CLI commands in Claude Code (optional)
 
 If you use Claude Code, you can skip the permission prompt for each `commonplace-*` command by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry for each `[project.scripts]` entry in `pyproject.toml`, e.g.:
 
@@ -175,7 +175,7 @@ my-project/
 
 ## Updating
 
-Until `llm-commonplace` is on PyPI, update by pulling the latest commonplace checkout — an editable install (`uv pip install -e`) picks up the changes automatically. Once published, you'll be able to upgrade with:
+Until `llm-commonplace` is on PyPI, update by pulling the latest Commonplace checkout — an editable install (`uv pip install -e`) picks up the changes automatically. Once published, you'll be able to upgrade with:
 
 ```bash
 uv pip install --upgrade llm-commonplace
