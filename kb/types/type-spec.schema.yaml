@@ -27,7 +27,7 @@ properties:
         anyOf:
           - type: "null"
           - type: string
-            pattern: '^kb/.+\.schema\.yaml$'
+            pattern: '^(kb/|\.\.?/).+\.schema\.yaml$'
     additionalProperties: true
   body:
     type: string

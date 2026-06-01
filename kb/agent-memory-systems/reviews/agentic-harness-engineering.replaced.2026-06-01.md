@@ -1,0 +1,120 @@
+---
+description: "Observability-driven coding-agent harness evolution loop that turns benchmark traces and debugger analyses into evaluated prompt, tool, middleware, skill, and memory edits"
+type: ../types/agent-memory-system-review.md
+status: outdated
+tags: []
+last-checked: "2026-05-16"
+---
+
+# Agentic Harness Engineering
+
+> Replaced 2026-06-01. See [agentic-harness-engineering](./agentic-harness-engineering.md) for the current review.
+
+Agentic Harness Engineering (AHE) is china-qijizhifeng's open implementation of an observability-driven outer loop for improving a coding-agent harness while holding the base model fixed. The reviewed repo packages a simple NexAU coding agent, a Harbor evaluation loop, a partially open Agent Debugger CLI, and a NexAU evolve agent that can edit prompts, tool descriptions, tool implementations, middleware, skills, sub-agents, and memory files under an experiment workspace. The important memory-system claim is not that AHE stores user facts. It learns from benchmark experience by turning rollout traces and derived analyses into behavior-changing harness files that are evaluated in the next iteration.
+
+**Repository:** https://github.com/china-qijizhifeng/agentic-harness-engineering
+
+**Reviewed revision:** [388ac247444dc6d9e6654f176af017a024beeb9f](https://github.com/china-qijizhifeng/agentic-harness-engineering/commit/388ac247444dc6d9e6654f176af017a024beeb9f)
+
+## Core Ideas
+
+**The retained behavior lives in a copied workspace, not in the benchmark logs.** `evolve.py` copies `source_config_dir` into `experiments/{run}/workspace`, initializes that directory as a git repo, and evaluates that workspace with Harbor by passing the workspace agent config path into `harbor run` ([`evolve.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/evolve.py), [`configs/base.yaml`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/configs/base.yaml)). The checked-in baseline agent is deliberately small: `agents/code_agent_simple/code_agent.yaml` registers only `run_shell_command`, with `systemprompt.md`, `LongTermMEMORY.md`, `ShortTermMEMORY.md`, `tool_descriptions/`, `tools/`, and later workspace-added components as the editable harness surface ([`agents/code_agent_simple/`](https://github.com/china-qijizhifeng/agentic-harness-engineering/tree/388ac247444dc6d9e6654f176af017a024beeb9f/agents/code_agent_simple)).
+
+**Raw rollouts are evidence artifacts.** Harbor writes benchmark results under `runs/iteration_NNN/input/benchmark/`, including per-task `result.json`, verifier reward files, runtime logs, and NexAU in-memory traces. The README names `agent/nexau_in_memory_tracer.cleaned.json`, `agent/nexau.txt`, and `verifier/reward.txt` as the core evaluation output, and `evolve.py` computes pass/fail, exception, timeout, pass@k, cross-iteration flips, and task histories from those directories ([`README.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/README.md), [`trace_converter.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/trace_converter.py), [`evolve.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/evolve.py)). These traces are knowledge artifacts when read as evidence: they explain what happened, but they do not by themselves instruct the next code agent.
+
+**Debugger analyses are a distilled evidence layer.** The loop runs `adb ask` over cleaned traces and writes `input/analysis/overview.md` plus `input/analysis/detail/{task}.md`. Each detail file records trace paths, pass/fail labels, QA analysis, and verifier output; the evolution query tells the meta-agent to read the overview first and use raw traces only when the analysis is insufficient ([`evolve.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/evolve.py), [`agents/evolve_agent/skills/agent-debugger-cli/SKILL.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/skills/agent-debugger-cli/SKILL.md), [`agents/evolve_agent/skills/agent-debugger-cli/_source/agent_debugger_core/cli/adb.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/skills/agent-debugger-cli/_source/agent_debugger_core/cli/adb.py)). This is a useful middle layer: the raw trace remains available for audit, while the evolve agent normally consumes a compressed, source-pointing diagnosis.
+
+**The evolve agent has system-definition authority over the next harness.** `evolve_prompt.md` restricts the meta-agent to `workspace/`, requires evidence, root cause, targeted fix, and predicted impact before changes, and defines component types with different authority levels: prompt guidance, tool descriptions, tool implementations, middleware hooks, skills, sub-agents, and long-term memory ([`agents/evolve_agent/evolve_prompt.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/evolve_prompt.md)). When those edited files are copied into the next evaluated workspace, they are system-definition artifacts: they instruct, configure, intercept, validate, or route future agent behavior rather than merely documenting what happened.
+
+**Change manifests make predictions falsifiable.** The evolve prompt requires a `change_manifest.json` with change IDs, affected files, failure pattern, predicted fixes, risk tasks, constraint level, and component rationale. `evolve.py` later loads the manifest, compares predicted fixes and risks against actual fail-to-pass and pass-to-fail transitions, writes `input/change_evaluation.json`, and includes that attribution report in the next evolution query ([`agents/evolve_agent/evolve_prompt.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/evolve_prompt.md), [`evolve.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/evolve.py)). The manifest is therefore a bridge artifact: it starts as the meta-agent's rationale and becomes evaluation input for deciding whether retained behavior should be kept, redesigned, or rolled back.
+
+**Git and variants provide lineage over executable memory.** The main workspace is committed and tagged after each iteration, while Best-of-N mode creates git worktrees for variants, evaluates them in parallel, saves each variant's evolved workspace, stores variant selection data for the next iteration, merges the winner branch, and tags losing branches before deletion ([`evolve.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/evolve.py), [`configs/base.yaml`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/configs/base.yaml)). This is stronger lineage than a flat memory file: an operator can inspect which harness generation was evaluated, which variant won, and which diffs entered the next generation. The repo itself does not ship completed `experiments/` or `runs/` directories at this commit, so this is implemented machinery rather than included historical data.
+
+**Prompt-level and code-level memory are both available, but unequally wired.** The baseline workspace includes `LongTermMEMORY.md` and `ShortTermMEMORY.md`, and the evolve prompt says long-term memory is modifiable while short-term memory is runtime-managed ([`agents/code_agent_simple/LongTermMEMORY.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/code_agent_simple/LongTermMEMORY.md), [`agents/code_agent_simple/ShortTermMEMORY.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/code_agent_simple/ShortTermMEMORY.md), [`agents/evolve_agent/evolve_prompt.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/evolve_prompt.md)). A `save_memory` tool implementation and YAML description exist under the evolve agent, and the evolution guide lists it as an addable tool, but the shipped `evolve_agent.yaml` does not register it by default ([`agents/evolve_agent/tools/session_tools/save_memory.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/tools/session_tools/save_memory.py), [`agents/evolve_agent/evolve_agent.yaml`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/evolve_agent.yaml), [`agents/evolve_agent/skills/nexau-evolution-guide/SKILL.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/evolve_agent/skills/nexau-evolution-guide/SKILL.md)). In practice, durable learning is more likely to land as direct file edits to prompts, tools, middleware, skills, and memory files than through a dedicated memory-write API.
+
+## Comparison with Our System
+
+| Dimension | Agentic Harness Engineering | Commonplace |
+|---|---|---|
+| Primary retained state | Git-backed experiment workspace plus runs, analyses, manifests, scores, and traces | Typed markdown library, source snapshots, generated indexes, review records, instructions, and workshop artifacts |
+| Source signal | Benchmark rollouts, verifier outcomes, task traces, debugger QA, variant comparisons | Human and agent-authored notes, source snapshots, review bundles, validation output, work traces |
+| Distilled artifacts | Debugger reports, evolution queries, change manifests, evolved harness files | Notes, reviews, instructions, indexes, validation reports, skills, commands |
+| Behavior-changing form | Mixed: prose prompts/memory/skills, YAML configs/tool descriptions, Python tools/middleware, git commits | Mostly prose markdown with symbolic frontmatter, schemas, commands, validation scripts, and generated views |
+| Behavioral authority | Evolve agent can modify next-run harness components; Harbor and change attribution judge outcomes | Artifact type and instructions define advice, reference, validation, routing, and operational authority |
+| Lineage | Iteration directories, trace paths, git commits/tags, manifests, variant selection | Git history, frontmatter, source links, generated index provenance, review/gate records |
+| Activation | Next benchmark run loads the evolved workspace | Agent navigation, skill loading, authored links, operator instructions, validation gates |
+| Lifecycle | Iterative evaluation, rollback-by-snapshot, best-ever tracking, variant winner adoption | Review, validation, relocation, indexing, archival replacement, explicit note status |
+
+AHE is stronger than commonplace on closed-loop empirical pressure. Its retained artifacts are tested by the next benchmark iteration, and the manifest/attribution machinery makes the meta-agent say what it expects to fix before those expectations are falsified. Commonplace has validation and review, but most KB improvements are not automatically connected to a downstream task distribution with pass/fail attribution.
+
+Commonplace is stronger on artifact contract and library stability. AHE's most behavior-changing artifacts are ordinary prompt, YAML, and Python files in a mutable workspace. That is exactly right for harness evolution, but it means there is no durable typed record saying which prompt paragraph, middleware branch, or skill section came from which trace diagnosis. The lineage exists at the workspace and change-manifest level, not as embedded provenance inside every retained operative part.
+
+The systems also differ in authority direction. Commonplace tries to make knowledge consumable by future agents and maintainers across many tasks. AHE makes a narrower but sharper bet: use benchmark rollouts to improve one coding-agent harness. That narrow scope lets it apply hard outcome feedback, but it also makes transfer depend on whether benchmark-induced harness edits generalize.
+
+**Read-back:** push — the next run loads the evolved workspace, so harness edits shape behavior without agent lookup.
+
+## Borrowable Ideas
+
+**Treat traces as evidence, analyses as compressed evidence, and edits as behavior.** Ready to borrow. Commonplace should preserve this separation when mining agent work: raw transcripts and logs are knowledge artifacts, derived analyses are still evidence, and only promoted instructions, skills, validators, routing rules, or code become system-definition artifacts.
+
+**Require predicted impact before promotion.** Ready to borrow for review and trace-mining workflows. AHE's `change_manifest.json` shape is a compact contract: what changed, why, which tasks should improve, which tasks are at risk, and which component level carries the change. Commonplace could use a similar manifest for proposed instructions or skills before promoting them out of a workshop.
+
+**Use git commits as executable-memory lineage.** Ready to borrow where artifacts are code or configuration. AHE's workspace commits and iteration tags make a behavior-changing harness generation inspectable and reversible. Commonplace already has git history, but review workflows could do more to tie generated instructions or tools to the exact source traces and evaluation claims that produced them.
+
+**Run variant branches when the component level is uncertain.** Needs a concrete use case. AHE's Best-of-N mode is useful because two component-level strategies can be evaluated against the same benchmark. Commonplace should not add variant orchestration generally, but trace-derived instruction mining could benefit from competing candidate instructions judged against a small task suite.
+
+**Do not borrow benchmark-first evolution as a general KB maintenance model.** AHE works because Harbor supplies a task distribution and reward signal. Commonplace's knowledge artifacts often shape judgment indirectly, where false precision from weak benchmarks would be worse than slower human review.
+
+**Keep the source-exploration skill pattern.** Ready to borrow selectively. AHE can run an explore agent in parallel with the first benchmark evaluation to generate skills about NexAU internals and coding-agent SOTA before the evolve agent starts ([`agents/explore_agent/run.py`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/explore_agent/run.py), [`agents/explore_agent/source_agent/prompt.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/explore_agent/source_agent/prompt.md), [`agents/explore_agent/web_agent/prompt.md`](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/388ac247444dc6d9e6654f176af017a024beeb9f/agents/explore_agent/web_agent/prompt.md)). For commonplace, this is analogous to creating a project-local instruction or reference artifact before asking an agent to modify a system it does not understand.
+
+## Trace-derived learning placement
+
+**Trace source.** AHE qualifies as trace-derived learning. The source traces are Harbor/NexAU coding-agent rollouts, including model calls, tool calls, runtime logs, verifier rewards, exceptions, timeouts, and per-task benchmark outputs under `runs/iteration_NNN/input/benchmark/`. In Best-of-N mode, the source signal also includes parallel variant rollouts and variant labels.
+
+**Extraction.** Extraction has several stages. `trace_converter.py` normalizes NexAU in-memory spans into message-style traces with assistant turns, tool calls, tool definitions, sub-agent traces, and token/cost summaries. `adb ask` then distills selected traces into per-task debugger reports. `evolve.py` compiles those reports, pass/fail statistics, stability analysis, change attribution, and variant comparison into an evolution query. The final extraction oracle is mixed: verifier rewards provide hard task outcomes, Agent Debugger provides LLM judgment over traces, and the evolve agent proposes edits that the next evaluation later accepts, weakens, or falsifies.
+
+**Storage substrate.** Raw trace and benchmark state lives in experiment-run directories as JSON, text logs, verifier outputs, and snapshots. Distilled debugger reports live as markdown under `input/analysis/`. Change manifests and attribution reports live as JSON. Evolved behavior lives in the git-backed `workspace/` as prompt markdown, YAML configs, tool descriptions, Python tools/middleware, skills, sub-agents, and memory files. Variant lineages additionally live in git worktrees, copied variant workspaces, `variant_selection.json`, and tags.
+
+**Representational form.** The raw traces are mixed evidence: JSON spans, natural-language messages, tool invocations, code output, runtime logs, and scalar rewards. Debugger reports and evolution summaries are prose. Change manifests and YAML configs are symbolic. Tool and middleware edits are executable symbolic artifacts. Prompt, skill, and memory edits are prose artifacts with system-definition force. There is no inspected path that trains model weights or stores learned embeddings as the operative learned state.
+
+**Lineage.** AHE preserves lineage at the iteration, workspace, manifest, and git level. The evaluation directory identifies the tested workspace snapshot; debugger details list trace paths; change manifests connect edits to predicted task effects; change evaluation compares those predictions to later flips; commits and tags preserve workspace generations. The weaker point is sub-file provenance: once a prompt paragraph, skill section, or middleware branch has been edited, the file itself does not carry stable source-trace IDs or per-block invalidation metadata.
+
+**Behavioral authority.** Raw benchmark rollouts and debugger analyses are knowledge artifacts: they are evidence, context, and explanation for the evolve agent. The evolution query is an instruction artifact for the meta-agent's current run. Changed prompts, tool descriptions, tools, middleware, skills, sub-agents, memory files, and agent YAML are system-definition artifacts because the next coding agent consumes them as instruction, configuration, executable control, routing, validation, or available capability. Change manifests become evaluation artifacts when the next iteration uses them to judge whether a retained behavior should be kept or redesigned.
+
+**Scope and timing.** Scope is initially per-experiment and per-harness, with claimed transfer evaluated after evolution. Timing is staged offline: run benchmark rollouts, distill evidence, edit the workspace, evaluate the next generation. It is not online self-modification during a single task trajectory.
+
+**Survey placement.** On the [trace-derived survey](../trace-derived-learning-techniques-in-related-systems.md), AHE belongs with outer-loop artifact-learning systems rather than conversational fact-memory systems. It strengthens the survey's claim that trace-derived learning often becomes most operationally powerful when the distilled output is not a "memory record" but a stronger behavior-changing surface: prompts, tools, middleware, skills, configs, or executable harness code. It also splits the lineage axis: AHE has strong generation-level lineage through experiments and git, but weak per-fragment lineage inside the promoted artifacts.
+
+## Curiosity Pass
+
+**The reviewable implementation is the loop, not the reported 77.0% result.** The README reports a Terminal-Bench 2 improvement and transfer results, but the checked-out repo does not include the full run artifacts needed to independently inspect those exact generations. The code-grounded claim is that the loop can create and evaluate such artifacts, not that this checkout itself proves the benchmark curve.
+
+**Agent Debugger is central but only partially open.** The repository vendors an `agent_debugger_core` package and CLI, and the README explicitly notes the current release is partial. For comparison purposes, AHE should be treated as an open harness-evolution framework with a partially open trace-analysis component, not as a fully inspectable debugger research artifact.
+
+**Long-term memory is a component option, not the main learning channel.** The most important durable changes in AHE are likely prompts, YAML, tools, middleware, and skills. `LongTermMEMORY.md` exists, but the baseline file is empty, and the default evolve agent can already alter stronger system-definition surfaces directly.
+
+**The rollback story is generation-level.** Resume and rollback machinery can restore workspace snapshots and truncate metadata. That is useful operational control, but it does not answer finer questions like "which individual sentence in this skill came from a now-invalid trace diagnosis?"
+
+**The component taxonomy is a practical authority gradient.** AHE makes the meta-agent consider prompt, tool description, tool implementation, middleware, skill, sub-agent, and long-term memory as distinct intervention levels. That is a useful operational version of commonplace's behavioral-authority vocabulary.
+
+## What to Watch
+
+- Whether future releases include real experiment artifacts, not only code for generating them.
+- Whether Agent Debugger becomes fully open and inspectable enough to compare its QA loop directly.
+- Whether evolved prompt, skill, and memory edits start carrying source trace IDs, evaluator metadata, confidence, or retirement rules.
+- Whether Best-of-N becomes a default evolution path and whether variant comparison produces reusable design knowledge rather than only selecting a winner.
+- Whether AHE adds training-data export or model-weight updates, which would move it from readable/executable artifact learning toward mixed artifact and weight learning.
+- Whether the workspace component boundary stabilizes around a reusable agent-harness package outside Terminal-Bench style evaluation.
+
+---
+
+Relevant Notes:
+
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - source-inspected instance: AHE turns benchmark traces and debugger analyses into evaluated harness edits
+- [Designing agent memory systems](../../notes/designing-agent-memory-systems.md) - exemplifies: remembered material matters when it changes a later action or artifact
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - supports: AHE uses traces as meta-learning signal for future harness behavior
+- [Activate behavior-changing memory](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies: the learned artifact is activated by loading the next workspace, not by ad hoc retrieval
+- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares-with: AHE's experiment runs are a workshop layer that produces promoted harness artifacts
+- [auto-harness](./auto-harness.md) - compares-with: both use benchmark feedback to improve coding-agent harness behavior, but AHE adds richer trace analysis and component surfaces
+- [HALO](./halo.md) - compares-with: both use trace analysis to drive coding-agent-mediated harness edits
+- [Meta-Harness](./meta-harness.md) - compares-with: both are outer-loop systems for optimizing agent harness code from traces

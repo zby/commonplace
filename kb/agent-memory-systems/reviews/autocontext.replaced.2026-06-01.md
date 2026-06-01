@@ -1,0 +1,118 @@
+---
+description: "Multi-role iterative control plane that turns scenario runs, runtime sessions, and production traces into playbooks, lessons, gates, harness mutations, datasets, and optional local model checkpoints"
+type: ../types/agent-memory-system-review.md
+tags: []
+status: outdated
+last-checked: "2026-05-16"
+---
+
+# Autocontext
+
+> Replaced 2026-06-01. See [autocontext](./autocontext.md) for the current review.
+
+Autocontext is Greyhaven AI's Python and TypeScript control plane for iterative agent improvement. It takes a plain-language goal or saved scenario, runs repeated generations through role-specific agents and evaluators, persists traces and scores, and carries forward selected knowledge as playbooks, hints, lessons, harness validators, prompt/tool mutations, exported skills, datasets, and optional local model artifacts. The package surface is split across the Python `autocontext` CLI/package, the TypeScript `autoctx` package, and a Pi extension; the current manifests report version 0.5.1 for Python and TypeScript, with Pi integration packaged separately ([Python manifest](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/pyproject.toml), [TypeScript manifest](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/ts/package.json), [Pi manifest](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/pi/package.json)).
+
+**Repository:** https://github.com/greyhaven-ai/autocontext
+
+**Reviewed revision:** [5b21d66d20f0d180cd27847760962d6e4f403df0](https://github.com/greyhaven-ai/autocontext/commit/5b21d66d20f0d180cd27847760962d6e4f403df0)
+
+## Core Ideas
+
+**The central object is an iterative control plane, not a memory store.** The canonical model separates user-facing `Scenario`, `Task`, `Mission`, and `Campaign` from runtime `Run`, `Step`, `Verifier`, `Artifact`, `Knowledge`, `Budget`, and `Policy` ([concept model](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/docs/concept-model.md)). The README's "what you get back" layout is accurate: runs produce `trace.jsonl`, per-generation strategy/analysis/score artifacts, reports, and scenario-scoped `knowledge/<scenario>/` files such as `playbook.md`, `hints.md`, and generated tools ([README](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/README.md)).
+
+**Generation is multi-role and partially data-driven.** The default Python orchestrator runs competitor, translator, analyst, coach, and architect roles, with coach and architect parallelized after analyst; optional curator and skeptic stages add quality gates around playbook persistence ([orchestrator](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/agents/orchestrator.py), [persistence stages](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/loop/stages.py)). A `RoleDAG` and architect-emitted `DAG_CHANGES` markers exist, but the inspected default path still has a mostly fixed role sequence; the DAG mechanism is real infrastructure, not yet the whole execution story ([RoleDAG](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/harness/orchestration/dag.py), [architect parser](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/agents/architect.py)).
+
+**Run traces, scores, and verifier outputs are separate retained artifacts.** SQLite owns runs, generations, matches, scores, gate decisions, role outputs, role metrics, staged validation results, recovery markers, and knowledge snapshots ([SQLite store](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/storage/sqlite_store.py)). A separate `RunTrace` model stores ordered events with actors, resources, causal edges, evidence ids, outcomes, and metadata ([run trace model](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/analytics/run_trace.py)). Runtime-session logs are another artifact family: append-only SQLite logs of prompt submissions, assistant messages, shell commands, tool calls, child tasks, and compactions, mirrored in Python and TypeScript ([Python runtime events](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/session/runtime_events.py), [TypeScript runtime events](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/ts/src/session/runtime-events.ts)).
+
+**Knowledge artifacts are scenario-scoped and heterogeneous.** The runtime context loader reads playbooks, tools, skills/lessons, recent analysis, analyst and coach feedback, credit attribution, weakness/progress reports, session reports, dead ends, score trajectories, strategy registries, protocol/tuning files, notebooks, evidence manifests, and active harness mutations before assembling role prompts ([knowledge setup](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/loop/stages.py)). Storage is mixed: versioned markdown playbooks, `hints.md` plus `hint_state.json`, `lessons.json`, `dead_ends.md`, generated Python tools, harness validators, mutation JSON, reports, and snapshots live under the knowledge root, while operational telemetry stays in SQLite ([artifact store](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/storage/artifacts.py)).
+
+**Lessons have lifecycle metadata, while playbooks remain prose.** `LessonStore` persists typed JSON lessons with creation generation, best score, schema version, upstream signature, operation type, supersession pointer, and `last_validated_gen`; it can filter stale/superseded lessons and invalidate them on schema change ([lessons](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/knowledge/lessons.py)). By contrast, the playbook is a versioned markdown system-definition artifact: coach output, possibly curator-accepted or merged, is injected into future runs as behavior-shaping instruction ([curator gate and persistence](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/loop/stages.py)).
+
+**Harness mutations are explicit system-definition artifacts.** The architect can emit delimited JSON mutations of type `prompt_fragment`, `context_policy`, `completion_check`, or `tool_instruction`; Autocontext parses, gates, deduplicates, versions, and replays active mutations into later prompt bundles ([mutation spec](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/harness/mutations/spec.py), [mutation parser](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/harness/mutations/parser.py), [mutation wiring](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/loop/stage_helpers/harness_mutations.py)). Generated Python tools and harness validators are AST-checked before persistence, with archives for replaced files ([artifact store](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/storage/artifacts.py)).
+
+**Model distillation is optional and staged after artifact learning.** Strategy-level exports stream generation records from SQLite with playbook, hints, score trajectory, and optional match records, then `autoctx train` runs an autoresearch-style local training loop over JSONL data and publishes checkpoint bundles through a model registry ([training export](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/training/export.py), [training runner](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/training/runner.py), [MLX docs](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/docs/mlx-training.md)). TypeScript adds dataset construction and promotion-state workflows for production traces, including clustering, selection gates, contrastive pairs, redaction, train/eval/holdout splits, manifests, and candidate promotion decisions ([dataset pipeline](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/ts/src/production-traces/dataset/pipeline.ts), [training promotion](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/ts/src/training/training-promotion-workflow.ts)).
+
+## Comparison with Our System
+
+Autocontext and commonplace share the premise that retained artifacts should change future agent behavior, but they optimize opposite sides of the problem. Autocontext is a closed loop for improving behavior on measurable scenarios. Commonplace is a library/workshop system for making cross-domain knowledge inspectable, navigable, and reusable.
+
+| Dimension | Autocontext | Commonplace |
+|---|---|---|
+| Primary unit | Scenario/task run with score feedback | Typed note, reference doc, ADR, instruction, or workshop artifact |
+| Main oracle | Tournament scores, LLM judges, staged validators, skeptic/curator gates, held-out promotion metrics | Human/agent review, type validation, semantic review bundles, link integrity |
+| Raw traces | SQLite run/generation/match rows, `RunTrace`, runtime-session event logs, production trace JSONL | Git history, note bodies, review reports, snapshots, workshop logs |
+| Knowledge artifacts | Playbooks, hints, lessons, reports, dead ends, trajectories | Notes, indexes, definitions, ADRs, instructions, reviews |
+| System-definition artifacts | Harness mutations, prompt fragments, completion checks, tools, validators, policies, training checkpoints | `AGENTS.md`, skills, type specs, validation scripts, instructions, indexes |
+| Scope | Mostly scenario-local; production traces can become datasets | Cross-domain methodology KB with explicit semantic links |
+| Activation | Runtime assembles many context components into role prompts | Agents navigate progressively through indexes, descriptions, links, and `rg` |
+| Weight learning | Optional JSONL-to-checkpoint path | Out of scope; commonplace stays in inspectable symbolic artifacts |
+
+**Where Autocontext is stronger.** It has a much stronger feedback loop for bounded tasks. A proposed strategy can be scored, gate-accepted, rolled back, written into a playbook, converted into lessons, mutated into harness policy, exported into datasets, or eventually promoted into a local model. Commonplace has validation and review, but it lacks a hard scenario loop where behavioral changes are repeatedly measured before promotion.
+
+**Where commonplace is stronger.** Autocontext's learned artifacts are rich but siloed. Scenario knowledge is selected for the next run, not decomposed into cross-domain claims with typed links and authored retrieval semantics. A `Lesson` can be stale or superseded, but it is not a composable note with relationships like `foundation`, `extends`, or `contrasts`. Commonplace has weaker automation but stronger long-term navigability and interpretability.
+
+**The behavioral-authority split is clearer in Autocontext than in many reviewed systems.** Raw traces, score trajectories, analyst reports, weakness reports, and session reports are knowledge artifacts when consumed as evidence or context. Playbooks, active lessons, context policies, tool instructions, completion checks, generated harness validators, runtime policies, and checkpoints are system-definition artifacts because they instruct, enforce, validate, configure, rank, or learn. The system's main risk is not ambiguity about authority; it is that many authority-bearing artifacts are assembled into prompts by default, so context selection can become broad concatenation rather than targeted navigation.
+
+**Read-back:** push — runtime context assembly injects scenario knowledge and active harness mutations into role prompts without agent lookup.
+
+## Borrowable Ideas
+
+**Artifact authority labels in the runtime context layer.** Autocontext's runtime context contract names owner, persistence, budget behavior, and child-task behavior for each layer ([runtime context](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/session/runtime_context.py)). Commonplace could borrow the table shape for `AGENTS.md`, skills, indexes, workshop state, and review outputs. Ready now as documentation; implementation can wait.
+
+**Harness mutation as a typed artifact.** `prompt_fragment`, `context_policy`, `completion_check`, and `tool_instruction` are a useful vocabulary for changes that alter an agent harness without becoming code. Commonplace could use a similar typed proposal format for review-bundle findings that want to become instructions or validation checks. Ready to borrow, but only for workflows with enough repeated evidence to justify stronger authority.
+
+**Staleness and supersession metadata for operational lessons.** `last_validated_gen`, `superseded_by`, and schema-version invalidation are concrete lifecycle controls. Commonplace notes already have status and review gates, but instructions and skills could benefit from explicit last-validated evidence fields. Ready to try on a narrow instruction family.
+
+**Separate diagnostic traces from promoted knowledge.** Autocontext keeps run traces, runtime-session logs, playbooks, lessons, dead ends, and datasets separate. This is worth copying as a discipline: traces are evidence, summaries are derived knowledge, and prompts/tools/checkpoints are stronger authority surfaces. Ready now as review vocabulary.
+
+**Dataset manifests as lineage-bearing derived views.** The production-trace dataset builder writes manifests, split hashes, cluster stats, copied rubrics, and redaction policy hashes. If commonplace ever exports review corpora or note-derived eval sets, this is the right lineage pattern. Needs a real export use case first.
+
+## Trace-derived learning placement
+
+**Trace source.** Autocontext consumes three trace families. First, repeated scenario generations produce competitor outputs, role outputs, role metrics, tournament matches, scores, gates, replay JSON, and generation metrics in SQLite. Second, runtime-session logs record provider turns, shell/tool activity, child-task lineage, and compaction events. Third, production traces capture live LLM interactions as JSONL under `.autocontext/production-traces/incoming/...` through Python and TypeScript emit SDKs ([emit SDK](https://github.com/greyhaven-ai/autocontext/blob/5b21d66d20f0d180cd27847760962d6e4f403df0/autocontext/src/autocontext/production_traces/emit.py)).
+
+**Extraction.** The scenario loop extracts coach playbooks, coach hints, typed lessons, analysis, dead ends, progress/weakness/session reports, generated tools, harness validators, and harness mutations. The production-trace path extracts datasets through clustering, selection rules, rubrics, redaction, splits, and manifests. The training path re-expresses kept generations and matches as training records. Oracles vary by surface: scenario evaluators and tournament scores for strategy acceptance, validity gates for syntactic/semantic checks, skeptic and curator agents for meta-review, selection rules and rubrics for production traces, and held-out/incident metrics for checkpoint promotion.
+
+**Storage substrate.** Raw operational state is split across SQLite, run artifact directories, runtime-session tables, JSON trace files, production-trace JSONL, and knowledge directories. Distilled artifacts persist as markdown playbooks/reports, JSON lessons/hints/mutations, Python tools/validators, dataset directories, model registry records, and checkpoint bundles. This mixed substrate is deliberate: database rows for queryable telemetry, files for inspectable knowledge and generated code, model-artifact storage for distributed-parametric promotion.
+
+**Representational form.** Raw traces are mixed structured data and prose. Distilled artifacts split across prose (`playbook.md`, reports, hints), symbolic artifacts (`lessons.json`, `mutations.json`, Python tools, harness validators, selection rules, manifests), and distributed-parametric artifacts (MLX/CUDA checkpoints or adapters). Autocontext is therefore a split trace-derived system, not just a playbook learner.
+
+**Lineage.** Lineage is strongest around generated datasets and model promotion: dataset ids derive from config and input trace hashes, manifests carry split hashes, and training registries record checkpoint state. Scenario knowledge lineage is partial: lessons carry generation and score metadata, playbooks are versioned, mutations are archived, and snapshots copy playbooks/hints/skills/harness files, but a playbook paragraph does not retain a precise dependency graph back to each trace or analyst claim.
+
+**Behavioral authority.** Raw traces, run inspections, score trajectories, reports, and production trace rows are knowledge artifacts when used as evidence or context. Playbooks, active lessons, context policies, prompt fragments, tool instructions, completion checks, validators, budget/policy settings, dataset selection rules, and model checkpoints are system-definition artifacts because they instruct the next run, validate outputs, shape retrieval/context, configure execution, gate promotion, or feed learning.
+
+**Scope and timing.** Scenario learning is online during repeated runs and mostly scenario-local. Production-trace dataset construction is offline or staged from captured service traffic. Model training is offline, with promotion gated after the dataset/checkpoint step. Cross-scenario synthesis remains weak compared with the amount of per-scenario machinery.
+
+**Survey placement.** On the [trace-derived survey axes](../trace-derived-learning-techniques-in-related-systems.md), Autocontext remains the clearest source-inspected split case: trajectory-run artifact learning plus optional distributed-parametric promotion. The current code strengthens the survey's artifact-structure axis because the promoted symbolic side now includes typed lessons, runtime-session logs, harness mutations, generated validators, dataset manifests, and promotion registries. It does not require a new subtype; it sharpens the existing "artifact-to-weight handoff" pattern.
+
+## Curiosity Pass
+
+**The README's promise is real, but broader than the default path.** Autocontext does implement traces, playbooks, gates, harness mutation, datasets, and optional training. The current source also shows many partial or parallel surfaces: Python and TypeScript have overlapping but not identical capabilities, `Mission` and `Campaign` are more TypeScript-forward, and the DAG infrastructure does not replace the default fixed role path. The right reading is "ambitious control plane with many implemented slices," not "one minimal memory algorithm."
+
+**Context assembly is still mostly selection and concatenation.** The runtime context layer model is thoughtful, and the prompt builder includes budget-aware context handling, freshness filters, and component selection. But the operative act for most runs is still to gather many known components and place them into role prompts. That is powerful enough for scenario loops, but it is not the same as commonplace-style progressive navigation or a learned context scheduler.
+
+**Lesson lifecycle is stronger than playbook lineage.** `lessons.json` knows generation, score, staleness, and supersession. `playbook.md` is easier for an agent to read, but weaker as a provenance object. If the playbook becomes the dominant authority surface, Autocontext may lose the very lineage discipline the typed lesson system introduced.
+
+**Harness mutation is the most distinctive artifact-learning mechanism.** Playbooks and lessons are common among trace-derived systems. Mutating prompt fragments, context policies, completion checks, and tool instructions as durable artifacts is more unusual because the learned object is the harness itself. That is the part to watch for commonplace, because it sits between prose advice and executable code.
+
+**The weight path is real but not the everyday memory path.** The training code, dataset builder, and promotion registry exist, but the daily loop still appears to learn first through inspectable artifacts. That is a good architecture: weights are a later promotion target when evidence and cost justify it, not the default storage surface for every observation.
+
+## What to Watch
+
+- Whether role-DAG changes become active first-class orchestration rather than mostly a parser and pipeline-engine capability beside the default role sequence.
+- Whether playbook paragraphs gain stronger provenance back to traces, scores, analyst claims, and curator decisions.
+- Whether scenario-local knowledge gets a cross-scenario promotion path, or whether Autocontext intentionally remains a per-scenario optimizer.
+- Whether production-trace datasets and runtime-session logs converge into one lineage model or stay as adjacent trace families.
+- Whether generated harness mutations get ablation evidence showing which prompt/tool/check mutations actually improved later runs.
+- Whether the optional checkpoint path becomes routine enough that model artifacts need the same review, retirement, and rollback lifecycle as playbooks and lessons.
+
+---
+
+Relevant Notes:
+
+- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — extends: Autocontext is the strongest split artifact-and-weight promotion case in the reviewed landscape
+- [distillation](../../notes/definitions/distillation.md) — exemplifies: Autocontext performs directed compression from traces into playbooks, lessons, validators, datasets, and sometimes checkpoints
+- [system-definition artifact](../../notes/definitions/system-definition-artifact.md) — exemplifies: harness mutations, validators, completion checks, and model checkpoints are retained artifacts consumed with instruction, validation, configuration, or learning force
+- [knowledge artifact](../../notes/definitions/knowledge-artifact.md) — distinguishes: runtime traces, reports, score trajectories, and production trace rows remain evidence until promoted into authority-bearing surfaces
+- [agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md) — contrasts: Autocontext mostly assembles role context up front, while commonplace preserves agent-directed progressive navigation
+- [files-not-database](../../notes/files-not-database.md) — complicates: Autocontext uses SQLite for operational telemetry and files for inspectable knowledge, suggesting substrate should vary by artifact authority and query need
