@@ -2,7 +2,7 @@
 
 ## Register
 
-This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — how each one is built and what it does, read through our retained-artifact vocabulary (storage substrate, representational form, lineage, behavioral authority). Each review characterizes the system on its own terms and closes with what it means for Commonplace; broad cross-system comparison lives in the root-level analyses.
+This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — what each is built from and does, grounded in the code. Broad cross-system comparison lives in the root-level analyses.
 
 The quality goal is **fidelity + economy**: faithful to what the code actually does, in minimum tokens. A review that misrepresents the reviewed system is worse than none — it pollutes the landscape.
 
@@ -23,75 +23,17 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 - **Surveys and overviews** — use a topical title naming the subject (e.g., `agentic-memory-systems-comparative-review.md`).
 - **Argumentative analyses** — analyses asserting a specific claim — use a claim-shaped title and add the `title-as-claim` trait, following the same conventions as `kb/notes/` (see `kb/notes/COLLECTION.md`).
 
-## Fidelity discipline
-
-Read code, not marketing. Ground every review in primary sources — README, architecture docs, package manifests, core source files. Do not rely on the README if the implementation clarifies or contradicts it.
-
-When the system's docs say X but the code does Y, the review says Y and notes the divergence.
-
 ## Outbound linking conventions
 
-Outbound rules are organised by destination collection. Each block declares when to search the destination for link targets and which labels writers may use.
+Organised per destination: when to prospect for links, and the authorised labels (semantics in [link-vocabulary.md](../reference/link-vocabulary.md)).
 
-### → `kb/agent-memory-systems/` (within this collection)
+- **→ `kb/agent-memory-systems/`** (within collection) — search when a review touches a component of a larger reviewed system, realizes a contract named in another review, or shares a design axis with another system (the core cross-system work). Labels: `part-of` / `contains`, `implements` / `implemented-by`, `compares-with`, `see-also`.
+- **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from; code-grounded reviews cite the repo directly. Labels: `derived-from`, `evidence`, `see-also`.
+- **→ `kb/notes/`** — search when a system's design rests on a theoretical claim. Links usually run inverse (theory links in via `evidence` / `derived-from`), so promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rationale`, `evidence` (rare), `defined-in`, `see-also`.
+- **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
+- **→ `kb/instructions/`** — scan when a review describes a workflow with a Commonplace counterpart. Labels: `see-also`.
 
-**Search:** when a review describes a component of a larger reviewed system, realizes an abstract contract named in another review, or can be compared to another system on a specific design axis (cross-system comparison is the collection's core synthesis work).
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `part-of` / `contains` | wants to situate this in the larger system |
-| `implements` / `implemented-by` | wants the concrete realization or the abstract contract |
-| `compares-with` | wants a specific design-axis comparison with another system (collection extension) |
-| `see-also` | might benefit but no specific need; use sparingly |
-
-**`compares-with` vs `contrasts`.** `contrasts` (theoretical) names a difference in *claims*; `compares-with` names a difference in *systems* on a design axis. Use `compares-with` here; reserve `contrasts` for theoretical notes.
-
-### → `kb/reference/`
-
-**Search:** uncommon but worth a scan — Commonplace and external systems are mostly described independently, but thematic analogues turn up. Search when a review's design element has a direct analogue in the Commonplace system, or when the topic area overlaps a Commonplace subsystem. Let the agent filter.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `see-also` | the Commonplace component is an instructive adjacent reference |
-
-### → `kb/notes/`
-
-**Search:** when a reviewed system's design rests on a theoretical claim. Note the asymmetry: theoretical notes more often link *into* this collection via `evidence` / `derived-from`; a review promoting a novel claim should promote it to `kb/notes/` and let the theory link back, rather than authoring a new theoretical claim from within the review.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `rationale` | this system's design rests on this claim |
-| `evidence` | rare; this system corroborates the claim |
-| `defined-in` | reader may not know a term; target is under `kb/notes/definitions/` |
-| `see-also` | might benefit but no specific need; use sparingly |
-
-### → `kb/sources/`
-
-**Search:** common for reviews. Most reviews are grounded in snapshots — the reviewed system's README, paper, or repository capture lives in `kb/sources/`. Link back to the snapshot the review was derived from.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `derived-from` | this review was abstracted from this snapshot |
-| `evidence` | this snapshot corroborates a claim in the review |
-| `see-also` | adjacent source captured in the KB |
-
-### → `kb/instructions/`
-
-**Search:** uncommon. Reviews don't typically cite Commonplace procedures, but scan when a review describes an operational workflow that has a Commonplace counterpart.
-
-**Labels:**
-
-| label | reader-need |
-|---|---|
-| `see-also` | directly relevant adjacent reference |
+`compares-with` (a difference in *systems* on a design axis) is distinct from theoretical `contrasts` (a difference in *claims*); use `compares-with` here.
 
 ## Types
 

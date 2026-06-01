@@ -30,7 +30,7 @@ If any required input is missing, stop and report which. Verify `source_dir` is 
 ## Workflow
 
 1. **Read for style.** Read 1–2 current reviews in `kb/agent-memory-systems/reviews/` and `kb/agent-memory-systems/README.md` to match local style and depth.
-2. **Read for mechanism.** Ground the review in primary sources — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims. Do not trust the README where the implementation clarifies or contradicts it. Read out the material for **Artifact analysis** (the four fields) and the placement sections, plus the retrieval/navigation and read-back model, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed.
+2. **Read for mechanism.** Ground the review in primary sources — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Read out the material for **Artifact analysis** (the four fields) and the placement sections, plus the retrieval/navigation and read-back model, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed.
 3. **Write the review**, from the code outward — see Sections.
 
 ## Sections
