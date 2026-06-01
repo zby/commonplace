@@ -39,7 +39,7 @@ Write from the code outward. Required sections are enforced by the schema; the t
 
 - **Opening paragraph** — what the system is, what it is for, who built it. Include caller-supplied source identity.
 - **Source metadata** — source identity and reviewed revision, before the section headings, using the caller's labels.
-- **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. A memory system is a context-engineering tool, so frame the ideas by what future action the remembered material can change *and at what context cost* — whether it bounds the **volume and complexity** reaching the agent (progressive disclosure, selection budgets, navigation, compaction, sub-agent isolation). Surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
+- **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle. Also frame the ideas by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
 - **Artifact analysis** — the four-field record for the central retained artifacts. Required; see Artifact analysis.
 - **Comparison with Our System** — concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, what it would look like in Commonplace, and whether it is ready now or needs a use case first.
 - **Trace-derived learning placement** — *optional; see rule below.*
@@ -116,6 +116,26 @@ When a full section is warranted, address:
 ## Citations
 
 Use the caller-supplied citation format when provided. Otherwise cite source files in prose with **source-relative paths in code spans** — not markdown links into the local directory. Review notes must remain readable without access to the local source.
+
+### Quote-anchored citations
+
+For a **load-bearing claim** — one a reader could reasonably dispute, or that the system's own docs contradict — anchor it to the exact source text instead of a bare file reference. Write the supporting passage as a blockquote whose final line is a `---` attribution naming the source location pinned to the reviewed revision:
+
+```markdown
+> the verbatim line(s) the claim rests on, copied exactly from the source
+> --- `src/memory/store.py` @ `abc123`
+```
+
+For GitHub-backed sources the attribution may instead be a commit-pinned blob URL, consistent with the caller's citation format:
+
+```markdown
+> the verbatim line(s) the claim rests on, copied exactly from the source
+> --- [src/memory/store.py](https://github.com/org/repo/blob/abc123/src/memory/store.py)
+```
+
+The quoted text is the anchor; the attribution pins where it came from. Do not record byte offsets, character spans, or ids — the quote is self-relocating (it can be re-found by search) and the pinned commit is immutable, so nothing else is needed to verify it.
+
+This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — see [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
 
 ## Constraints
 

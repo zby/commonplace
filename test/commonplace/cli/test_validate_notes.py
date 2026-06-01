@@ -347,6 +347,51 @@ Watch.
     assert "frontmatter: 'last-checked' is a required property" in results.warns
 
 
+def test_quote_citation_shape_passes_when_well_formed() -> None:
+    results = validation.CheckResults(note_type="agent-memory-system-review")
+    content = (
+        "Retrieval latency dominates at scale.\n\n"
+        "> p95 retrieval latency was 340ms, 6x the generation step\n"
+        "> --- `src/memory/store.py` @ `abc123`\n"
+    )
+
+    validation.validate_quote_citations(results, content)
+
+    assert any("quote-anchored citations: 1 well-formed" in item for item in results.passes)
+    assert results.warns == []
+
+
+def test_quote_citation_shape_accepts_commit_pinned_blob_url() -> None:
+    results = validation.CheckResults(note_type="agent-memory-system-review")
+    content = (
+        "> p95 retrieval latency was 340ms\n"
+        "> --- [src/memory/store.py](https://github.com/org/repo/blob/abc123/src/memory/store.py)\n"
+    )
+
+    validation.validate_quote_citations(results, content)
+
+    assert any("1 well-formed" in item for item in results.passes)
+    assert results.warns == []
+
+
+def test_quote_citation_shape_warns_when_attribution_names_no_source() -> None:
+    results = validation.CheckResults(note_type="agent-memory-system-review")
+    content = "> p95 retrieval latency was 340ms\n> --- the documentation\n"
+
+    validation.validate_quote_citations(results, content)
+
+    assert any("names no source" in item for item in results.warns)
+
+
+def test_quote_citation_shape_warns_when_no_quote_above_attribution() -> None:
+    results = validation.CheckResults(note_type="agent-memory-system-review")
+    content = "Some prose.\n\n> --- `src/memory/store.py`\n"
+
+    validation.validate_quote_citations(results, content)
+
+    assert any("no quoted text above" in item for item in results.warns)
+
+
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     install_schema_tree(tmp_path, "adr")

@@ -22,6 +22,12 @@ _FAIL_PATHS: frozenset[tuple[str, ...]] = frozenset({
 
 _REQUIRED_PROPERTY_RE = re.compile(r"'([^']+)' is a required property")
 
+# A quote-anchored citation's attribution line: a blockquote line of the form `> --- ...`.
+# The trailing group is the attribution (source path or link).
+_QUOTE_CITE_ATTR_RE = re.compile(r"^\s*>\s*---\s*(.*\S)?\s*$")
+# A source reference inside an attribution: a markdown link or a code span.
+_SOURCE_REF_RE = re.compile(r"\[[^\]]+\]\([^)]+\)|`[^`]+`")
+
 
 @dataclass
 class CheckResults:
@@ -105,6 +111,37 @@ def validate_links_from_document(results: CheckResults, path: Path, links: tuple
         results.passes.append("link health: all local relative links resolve")
 
 
+def validate_quote_citations(results: CheckResults, content: str) -> None:
+    """Shape-check quote-anchored citations (a blockquote + `> ---` attribution).
+
+    Resolving the quote against the reviewed source is a write-time concern handled
+    by verify-review-quote-grounding; the source is not retained in the KB, so here
+    we only confirm each citation is well-formed and names a source.
+    """
+    lines = content.splitlines()
+    found = 0
+    flagged = 0
+    for index, line in enumerate(lines):
+        match = _QUOTE_CITE_ATTR_RE.match(line)
+        if not match:
+            continue
+        found += 1
+        problems: list[str] = []
+        attribution = (match.group(1) or "").strip()
+        if not _SOURCE_REF_RE.search(attribution):
+            problems.append("names no source (expected a code-span path or link)")
+        previous = lines[index - 1] if index > 0 else ""
+        if not previous.lstrip().startswith(">") or _QUOTE_CITE_ATTR_RE.match(previous):
+            problems.append("no quoted text above the attribution")
+        if problems:
+            flagged += 1
+            results.warns.append(
+                "quote-anchored citation: " + "; ".join(problems) + f": {line.strip()}"
+            )
+    if found and not flagged:
+        results.passes.append(f"quote-anchored citations: {found} well-formed")
+
+
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:
     path = tuple(str(part) for part in error.absolute_path)
 
@@ -168,6 +205,8 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
     validate_title_and_slug(results, parsed.path, parsed.document)
     validate_links_from_document(results, parsed.path, parsed.document.links)
+    if parsed.note_type == "agent-memory-system-review":
+        validate_quote_citations(results, parsed.content)
     apply_schema_validation(results, parsed)
     return results
 
