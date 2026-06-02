@@ -1,12 +1,14 @@
 ---
 description: "Graphiti review: temporal context graph with episode provenance, LLM extraction, bi-temporal fact edges, graph backends, and pull-only retrieval"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
-status: current
+tags: []
+status: outdated
 last-checked: "2026-05-30"
 ---
 
 # Graphiti
+
+> Replaced 2026-06-02. See [graphiti](./graphiti.md) for the current review.
 
 Graphiti, from Zep, is an open-source Python engine for building temporal context graphs for AI agents. Its central bet is that evolving agent memory should be stored as graph state: raw episodes become entity nodes, fact edges, temporal validity windows, provenance links, optional communities, embeddings, and search indexes. Compared with commonplace, it is the strongest database-backed counterexample in this review set because its useful properties depend on graph-native storage and queries rather than on reviewed, file-native artifacts.
 

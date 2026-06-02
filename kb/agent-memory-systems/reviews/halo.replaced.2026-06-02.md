@@ -1,12 +1,14 @@
 ---
 description: "HALO review: trace-analysis engine over OTel JSONL with sidecar indexes, bounded trace tools, sandboxed analysis, subagents, and external harness-patch promotion"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
-status: current
+tags: []
+status: outdated
 last-checked: "2026-05-16"
 ---
 
 # HALO
+
+> Replaced 2026-06-02. See [halo](./halo.md) for the current review.
 
 HALO is Context Labs' "Hierarchical Agent Loop Optimization" engine for improving agent harnesses from execution traces. It ingests OpenTelemetry-shaped JSONL spans, builds a sidecar trace index, gives a root agent and optional subagents bounded tools for trace inspection and sandboxed analysis, and emits a diagnostic report that a coding agent or human can turn into harness changes. The implemented behavior-changing loop is therefore two-stage: HALO produces trace-derived diagnostic knowledge; the actual harness behavior changes only when an external patch is promoted into the target harness.
 

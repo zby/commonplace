@@ -1,12 +1,14 @@
 ---
 description: "Hindsight review: production memory backend with trace-to-fact retain, PostgreSQL/vector indexes, observations, directives, reflect tools, tenancy, and embedded mode"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
-status: current
+tags: []
+status: outdated
 last-checked: "2026-05-16"
 ---
 
 # Hindsight
+
+> Replaced 2026-06-02. See [hindsight](./hindsight.md) for the current review.
 
 Hindsight, from Vectorize, is a production agent memory backend for retaining agent/user traces, extracting structured facts, retrieving across semantic, lexical, graph, and temporal paths, and reflecting over raw facts, consolidated observations, mental models, and directives. The inspected repository is not just an SDK wrapper: it contains the FastAPI service, MCP tools, PostgreSQL/Oracle database layer, background worker, generated clients, OpenClaw and framework integrations, local embedded packages, documentation, benchmarks, and monitoring assets.
 

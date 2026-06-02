@@ -1,12 +1,14 @@
 ---
 description: "Review of Gnosis, a repo-local CLI memory system where agents search and write JSONL decision entries through doctrine-mediated workflow"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
-status: current
+tags: []
+status: outdated
 last-checked: "2026-05-16"
 ---
 
 # Gnosis
+
+> Replaced 2026-06-01. See [gnosis](./gnosis.md) for the current review.
 
 Gnosis is a small Go CLI for repo-local agent memory by Stavros Korokithakis. It asks coding agents to search project memory before work, write decisions while context is fresh, and review the session afterward; the durable memory is a `.gnosis/entries.jsonl` file in the repository, with a disposable SQLite FTS5 index in a per-repo cache directory.
 

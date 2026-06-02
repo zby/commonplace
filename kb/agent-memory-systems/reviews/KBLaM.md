@@ -1,109 +1,110 @@
 ---
-description: "KBLaM review: Microsoft Research model fork that projects key-value KB rows into learned attention key/value tensors rather than a retrievable agent KB"
+description: "KBLaM review: research model architecture that encodes KB triples into learned key/value tensors attended by modified Llama/Phi layers"
 type: ../types/agent-memory-system-review.md
 status: current
-last-checked: "2026-05-16"
+last-checked: "2026-06-02"
 ---
 
 # KBLaM
 
-KBLaM, from Microsoft Research, is a research implementation of Knowledge Base Augmented Language Models for Llama 3 and Phi-3. It does not maintain an agent memory store. Instead, it turns flat key/value KB rows into projected key and value tensors, modifies transformer attention so selected layers can attend to those tensors, and trains the projection adapter plus optional query heads on synthetic or Enron-derived grounded QA tasks.
+KBLaM, from Microsoft, is the official implementation of the ICLR 2025 "Knowledge Base Augmented Language Models" method. It is not an agent memory service or a file-backed KB operator. It is a research architecture that converts external knowledge-base entries into learned key/value tensors, inserts those tensors into modified transformer attention layers, and trains only the knowledge adapters and optional query heads while keeping the base LLM frozen.
 
 **Repository:** https://github.com/microsoft/KBLaM
 
 **Reviewed commit:** [4db377fa4dad2134a38fbc06f80938e66b9b5897](https://github.com/microsoft/KBLaM/commit/4db377fa4dad2134a38fbc06f80938e66b9b5897)
 
-**Last checked:** 2026-05-16
+**Last checked:** 2026-06-02
 
 ## Core Ideas
 
-**The source KB is a flat key/value table.** The code expects rows with `name`, `description_type`, `description`, `Q`, `A`, and `key_string`; dataset cards describe the synthetic KB as GPT-4-generated triples and the Enron KB as triples extracted from Enron email with downstream entity linking ([datasets/datasetcard_synthetic.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/datasets/datasetcard_synthetic.md), [datasets/datasetcard_enron.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/datasets/datasetcard_enron.md), [src/kblam/utils/data_utils.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/utils/data_utils.py)). These rows are prose-plus-symbolic knowledge artifacts: they provide evidence and answer content, but they are not themselves the runtime mechanism that ranks or activates knowledge.
+**KB entries become model-side key/value tensors.** The retained knowledge unit used by the code is a pair such as `key_string` and `description`; `KBEncoder` embeds keys and values with OpenAI or SentenceTransformer embeddings, then projects them through separate key/value projectors into the hidden dimension expected by the modified LLM layers ([kb_encoder.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/kb_encoder.py), [train_utils.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/utils/train_utils.py)). The encoder can also consume precomputed base embeddings from `.npy` files rather than recomputing them during training or evaluation ([generate_kb_embeddings.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/dataset_generation/generate_kb_embeddings.py)).
 
-**The KB encoder maps rows into attention-shaped tensors.** `KBEncoder` wraps either OpenAI embeddings or a SentenceTransformer, freezes the base embedding model by default, then trains separate key and value projectors plus a small special-token embedding table. `encode()` and `encode_base_embeddings()` output stacked key/value tensors whose dimensionality is sized for the target model hidden size and selected KB-attention layers ([src/kblam/kb_encoder.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/kb_encoder.py), [src/kblam/models/kblam_processor.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/kblam_processor.py)). The learned adapter state is distributed-parametric retained state; its storage substrate is model checkpoints such as `encoder.pt`, not readable notes or database records.
+**The base model is frozen; adapters carry the learned bridge.** The training script freezes the Hugging Face Llama or Phi model parameters, constructs a `KBEncoder`, and trains that encoder plus optional query-head parameters ([train.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/experiments/train.py)). Checkpoints save the wrapped model, an `encoder.pt` state dict, and an explicit KB config JSON, making the durable learned artifacts adapter weights and configuration rather than new text memories.
 
-**The model forks put KB tensors directly into self-attention.** KBLaM copies Hugging Face Llama and Phi-3 model code, adds `kb_kvs` and `KBLaMConfig`, reshapes the provided KB tensors per layer, prepends them to the attention keys and values at layers matching `kb_layer_frequency`, and extends the attention mask so text tokens can attend over KB entries ([src/kblam/models/llama3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/llama3_model.py), [src/kblam/models/phi3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/phi3_model.py), [src/kblam/models/kblam_config.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/kblam_config.py)). The symbolic system-definition artifact is the model fork; the behavior-changing runtime artifact is the transient KB key/value tensor block inside attention.
+**Knowledge read-back is attention, not external retrieval.** The modified Llama and Phi attention modules accept `kb_kvs`, reshape the KB tensors per KB-enabled layer, concatenate KB keys and values in front of ordinary token key/value states, extend the attention mask, and let the model attend to those extra positions during generation ([llama3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/llama3_model.py), [phi3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/phi3_model.py)). `KBLaMProcessor` exposes this as a Hugging Face processor that returns tokenized text plus `kb_kvs` ([kblam_processor.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/kblam_processor.py)).
 
-**Attention is the activation and authority surface.** For Llama, `dynamic_sparsify` can prune runtime KB keys/values to top-k entries by a separate query projection; `sep_query_head` can replace the KB-attention scores with scores from `q_proj_new`; `kb_scale_factor` can rescale KB attention logits before softmax ([src/kblam/models/llama3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/llama3_model.py), [src/kblam/models/kblam_config.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/kblam_config.py)). The behavioral authority is not advice or instruction; it is ranking and activation force inside the model's attention computation.
+**Context efficiency is shifted from prompt tokens to attention-side state.** The README frames KBLaM as avoiding an external retrieval module and avoiding in-context learning's quadratic overhead, with linear overhead in KB size ([README.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/README.md)). In code, the KB tensors are not serialized into natural-language prompt context. Llama support adds an optional `dynamic_sparsify` path: a separate query projection scores KB keys and keeps top-k KB tensors at test time before concatenation ([llama3_model.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/llama3_model.py), [kblam_config.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/models/kblam_config.py)). Phi support at this commit concatenates the supplied KB tensors but does not implement the same dynamic sparsification branch.
 
-**Training learns projection and optional query-head state, not a maintained KB.** The training script freezes the base LLM, builds a `KBEncoder`, samples true rows plus random context rows, feeds their encoded tensors through the model, and optimizes cross-entropy on generated answers. It saves the model checkpoint, `encoder.pt`, and a JSON KB config; if `sep_query_head` is enabled, selected query-head parameters are also trainable ([experiments/train.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/experiments/train.py), [src/kblam/utils/train_utils.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/utils/train_utils.py)). The lineage runs from dataset rows and precomputed `.npy` base embeddings into adapter/checkpoint state, but the resulting weights do not preserve row-level provenance in a reviewable form.
+**Evaluation is benchmark-oriented.** The repository includes synthetic and Enron-derived JSON datasets, scripts for synthetic data and base embedding generation, and evaluation loops for KBLaM, in-context learning, and zero-shot modes ([datasetcard_synthetic.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/datasets/datasetcard_synthetic.md), [datasetcard_enron.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/datasets/datasetcard_enron.md), [eval.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/experiments/eval.py)). The behavioral question is whether model outputs match KB answers or correctly refuse, not whether an agent maintained or promoted durable memories over time.
 
-**Evaluation treats KBLaM as an alternative to retrieval and in-context baselines.** Evaluation loads a checkpointed model, encoder state, and KB config, encodes a sampled KB subset, then measures generation, refusal, attention accuracy, ROUGE, BERTScore, and memory cost against `kb`, `icl`, and `zeroshot` modes ([experiments/eval.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/experiments/eval.py), [src/kblam/utils/eval_utils.py](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/src/kblam/utils/eval_utils.py)). Optional attention-weight dumps are diagnostic artifacts, not a memory lifecycle.
+**The integration surface is a Python research package.** `pyproject.toml` packages `kblam` and depends on PyTorch, Transformers, SentenceTransformers, OpenAI, Azure ML, and evaluation libraries ([pyproject.toml](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/pyproject.toml)). There is no CLI, MCP server, editor extension, planner loop, file watcher, or agent hook in the inspected source.
+
+## Artifact analysis
+
+**Knowledge-base rows.** Storage substrate: JSON datasets in the repository or user-supplied dataset files, optionally split into train/test outputs. Representational form: symbolic JSON records with prose fields such as `name`, `description_type`, `description`, generated `Q`/`A`, and `key_string`. Lineage: synthetic rows are GPT-4-generated according to the dataset card; Enron rows are extracted from the Enron email dataset by a separate automated extraction/linking pipeline, then converted into triples. Behavioral authority: knowledge artifacts during training and evaluation, because they provide factual supervision and answer targets; they become stronger model-conditioning material only after encoding into KB tensors.
+
+**Base embedding arrays.** Storage substrate: `.npy` files generated outside or alongside training, with separate key and value arrays. Representational form: distributed-parametric vectors from OpenAI embeddings or SentenceTransformer models. Lineage: derived from `key_string` and `description` fields by `generate_kb_embeddings.py`, invalidated when the source dataset, embedding model, or embedding endpoint changes. Behavioral authority: system-definition/ranking substrate only indirectly: these vectors determine the inputs to the learned key/value projectors and optional cached training path.
+
+**`KBEncoder` projector weights and special-token embeddings.** Storage substrate: PyTorch module state dicts, saved as `encoder.pt` in training checkpoints. Representational form: distributed-parametric weights plus small symbolic choices such as projector type and special token names. Lineage: learned from supervised QA training over selected KB rows, optional outlier rows, augmented questions, dynamic KB sizes, and cached or online base embeddings. Behavioral authority: learning and conditioning authority. These weights decide how external KB rows are transformed into model-readable key/value tensors.
+
+**Modified Llama/Phi attention code and `KBLaMConfig`.** Storage substrate: repository Python modules and saved Hugging Face config JSON. Representational form: symbolic code/config plus learned model/query-head weights where enabled. Lineage: authored modifications of upstream Transformers model implementations; runtime behavior changes when `kb_layer_frequency`, `kb_scale_factor`, `top_k_kb`, `dynamic_sparsify`, or `sep_query_head` changes. Behavioral authority: system-definition artifact with architectural force, because it decides which layers consume KB tensors, whether a separate query head scores KB keys, and how attention masks expose KB positions.
+
+**Attention-weight dumps and evaluation outputs.** Storage substrate: `.npy` files and text/result dictionaries produced by evaluation options. Representational form: distributed-parametric attention matrices plus prose/model-output logs and scalar metrics. Lineage: derived from inference runs over chosen questions, KB subsets, model checkpoints, and configs. Behavioral authority: evaluation evidence for researchers; the inspected code does not feed these traces back into durable rules, new adapters, or future retrieval policies.
+
+The main promotion path is model-training promotion: authored or generated KB rows become base embeddings, then learned key/value projections, then attention-accessible model state at inference. It is not a governance ladder from evidence to reviewed instruction. Nothing in the inspected implementation promotes a discovered lesson into a rule, validator, skill, or agent policy.
 
 ## Comparison with Our System
 
 | Dimension | KBLaM | Commonplace |
 |---|---|---|
-| Primary purpose | Research architecture for grounding LLM answers in flat KB rows without an external retriever | Agent-operated methodology KB with durable notes, sources, instructions, reviews, ADRs, and validation |
-| Storage substrate | JSON datasets, `.npy` base embeddings, PyTorch/Hugging Face checkpoints, `encoder.pt`, config JSON, runtime tensors | Git-tracked Markdown, schemas, scripts, source snapshots, generated indexes, review outputs |
-| Representational form | Mixed symbolic rows/config/code plus distributed-parametric embeddings, adapter weights, query heads, and attention activations | Mostly prose and structured frontmatter, with symbolic links, schemas, commands, and validation code |
-| Lineage | Dataset-to-embedding-to-checkpoint lineage exists operationally, but adapter weights and attention effects are not row-auditable artifacts | Source-pinned notes, authored citations, replacement archives, status fields, validation, and review gates |
-| Activation | Model-internal attention over projected KB keys/values, optional top-k sparsification and attention dumps | `rg`, indexes, descriptions, authored links, skills, instructions, validation and review workflows |
-| Behavioral authority | Ranking and activation authority inside transformer attention | Advice, instruction, routing, validation, review, and governance authority in inspectable artifacts |
+| Primary purpose | Research architecture for conditioning frozen LLMs on external KB tensors | Git-native methodology KB for agent operation, review, validation, and navigation |
+| Canonical retained artifact | KB rows, base embeddings, learned encoder/query-head weights, KB config | Typed Markdown notes, source snapshots, instructions, reviews, generated indexes, reports |
+| Storage substrate | JSON datasets, `.npy` embeddings, PyTorch checkpoints, Python model code | Repository files, schemas, scripts, review reports, git history |
+| Representational form | Mixed prose/symbolic rows plus distributed-parametric embeddings and weights | Mostly prose and symbolic metadata, with deterministic scripts and validation |
+| Lineage | Dataset cards, generated embedding files, training checkpoints, configs | Source citations, archived replacements, collection contracts, review gates |
+| Activation | Supplied KB tensors are concatenated into model attention layers during generation | Agents deliberately pull files/indexes/reports, with instructions and validators shaping behavior |
+| Authority | Architectural attention pathway and learned adapter weights condition token generation | Collection/type contracts, skills, instructions, validation, semantic review, and human-readable evidence |
 
-KBLaM and commonplace agree that knowledge storage alone is insufficient. A row matters only when it can change a later answer. KBLaM achieves that by moving KB rows into the model's attention substrate; commonplace achieves it by making human- and agent-readable artifacts discoverable before a worker acts.
+KBLaM is valuable evidence for a different class of memory system: one where retained knowledge is compiled into tensor state and consumed directly by a model's attention mechanism. Commonplace deliberately keeps most behavioral authority in inspectable prose, schemas, commands, and review artifacts. KBLaM gains runtime efficiency and avoids prompt-token bloat, but pays with lower inspectability, harder rollback at the individual fact level, and weaker source-level governance.
 
-The main divergence is inspectability. In KBLaM, the decisive system-definition artifacts are source code forks, adapter weights, query-head weights, config settings, and transient attention tensors. The original KB rows remain knowledge artifacts, but the behavior-changing route from row to answer passes through distributed-parametric state and softmax attention. In commonplace, stronger behavioral authority is intentionally assigned to inspectable notes, type specs, instructions, schemas, and commands.
+The context-efficiency contrast is sharp. Commonplace uses lexical search, indexes, type contracts, and skills so an agent can choose a small amount of text to load and explain why. KBLaM moves the KB outside the text prompt and into extra attention keys/values. That can be efficient for model inference, but the complexity of many KB tensors is hidden inside attention rather than exposed as a readable context bundle.
 
-KBLaM is much closer to model augmentation than to agent memory. It has no authored link graph, review status, contradiction handling, retirement lifecycle, source snapshot discipline, or promotion path from evidence to notes or instructions. It also does not qualify as trace-derived learning under this review vocabulary: the implemented learning loop trains over datasets of KB rows and QA pairs, not over agent sessions, tool traces, conversations, rollouts, or repeated task trajectories.
+Read-back: model-internal push over caller-supplied KB tensors at inference, with optional Llama top-k sparsification, but no agent-level relevance-gated memory/context push path in this review taxonomy.
 
-The model-fork boundary is important. KBLaM does not package a generic memory service that any agent can query; it modifies specific Llama and Phi-3 implementations. That gives the KB tensors high activation authority when the forked model is used, but weak adoption affordances for ordinary coding-agent workflows where memory should remain inspectable, editable, and portable across model providers.
+The governance contrast is also sharp. KBLaM evaluates answer accuracy, refusal, precision, recall, ROUGE, and BERTScore; it does not keep a source snapshot, citation, reviewer decision, or replacement history for each durable fact. Commonplace would treat those missing surfaces as central if a fact can later shape agent behavior.
 
-**Read-back:** push — supplied KB tensors enter model attention directly, with optional top-k sparsification inside the forward pass.
+I did not find qualifying trace-derived learning. The repository uses synthetic and Enron-derived datasets, cached embeddings, supervised training, and evaluation outputs. Those are not agent/session/tool traces, and the evaluation traces are not distilled into durable behavior-shaping artifacts by the inspected code.
 
-## Borrowable Ideas
+### Borrowable Ideas
 
-**Separate source rows, learned adapters, runtime tensors, and attention effects.** Ready to borrow as analysis vocabulary. KBLaM is a clean reminder that one "memory" feature may contain knowledge artifacts, system-definition artifacts, distributed-parametric checkpoints, and transient activation state with different governance needs.
+**Separate memory representation from prompt representation.** Worth borrowing conceptually, not directly. Commonplace can keep prose as the authoritative artifact while generating compact derived views for runtime selection. KBLaM is a reminder that "what the model consumes" need not equal "what humans review."
 
-**Treat attention-facing memory as an activation layer, not a library.** Useful conceptually. Commonplace should not make its durable knowledge opaque, but it could still study compiled activation aids that help a model focus on relevant notes after source-grounded retrieval has already selected candidates.
+**Make compiled memory explicitly invalidatable.** Ready as a design rule. If Commonplace grows embeddings, rankers, or compiled prompt packs, each compiled artifact should record the source notes, model/version/config, and regeneration command. KBLaM's cached embeddings and encoder checkpoints show the need, but not a full governance answer.
 
-**Use refusal/outlier training as a benchmark axis.** Worth borrowing for eval design, not architecture. KBLaM's training and evaluation include questions whose answer is absent from the KB, which directly tests whether the system overclaims from available retained state.
+**Treat dynamic sparsification as a context budget primitive.** Needs a concrete search layer first. KBLaM's top-k KB pruning is attention-side selection; Commonplace's analogue would be a query-time cap over candidate notes or facts, paired with readable justifications.
 
-**Do not borrow model-specific forks as the primary memory interface.** The implementation shows why: changing each supported model architecture is expensive, provider-specific, hard to audit, and distant from agent-native file and terminal workflows.
+**Keep the base model unchanged where possible.** Ready as an architectural bias for tools, not as model training. KBLaM preserves baseline behavior when no KB is supplied; Commonplace should likewise make generated indexes, reports, and optional search layers additive rather than changing the meaning of canonical notes.
 
-## Takeaways
-
-**KBLaM is an attention-integration experiment, not a maintainable agent KB.** Its contribution is showing how flat KB rows can become attention keys and values. It does not solve authoring, review, source trust, lifecycle, or cross-agent use.
-
-**The artifact stack is unusually explicit.** Source KB rows, precomputed base embeddings, learned projector weights, optional query-head weights, model forks, config values, runtime KB tensors, and attention dumps each need separate substrate, form, lineage, and authority labels.
-
-**Behavioral authority sits inside softmax.** The projected KB tensors influence generation because the model attends to them. That authority is strong but hard to inspect after training, especially when adapter weights and query heads mediate the original row content.
-
-**Lineage weakens as soon as rows become weights.** Dataset cards and embedding generation scripts describe the upstream sources; checkpoint directories preserve training outputs. But individual facts do not carry durable review status or row-level provenance through the learned adapter.
-
-**No trace-derived tag.** Ordinary supervised training over generated or extracted KB datasets is not trace-derived learning in the current survey sense. There is no implemented path from agent behavior traces into durable lessons, instructions, rankers, or model state.
+**Do not borrow tensorized facts as authoritative KB entries.** A learned adapter can improve answers, but it is a poor canonical store for methodology knowledge. Commonplace should keep high-authority claims in reviewable artifacts and use distributed-parametric state only as a derived aid.
 
 ## Curiosity Pass
 
-The surprising part is how direct the mechanism is. KBLaM does not retrieve passages, construct a graph, or write prompts containing the KB. It reshapes encoded KB rows into the same key/value space that attention already consumes, then lets the model's attention select among them.
+**It is "memory" only after you accept model attention as the read path.** There is no agent store/retrieve loop, no persistent user memory API, and no context assembly service. The memory act is supplying KB tensors to `generate()`.
 
-The system's limitation follows from the same choice. Once the KB becomes tensors and learned projections, ordinary KB governance disappears. A maintainer can inspect rows, scripts, and checkpoints, but cannot read the behavior-shaping adapter state as claims.
+**Dynamic sparsification is implemented asymmetrically.** Llama attention has a `dynamic_sparsify` top-k pruning path; the Phi attention code reviewed here concatenates KB tensors but does not mirror that branch.
 
-The code is research-shaped. It supports specific model forks, experiment scripts, cached embeddings, and diagnostics; it is not a production substrate for evolving knowledge. The README also states the project is intended for research and warns that out-of-distribution KBs can produce incomplete or incorrect answers ([README.md](https://github.com/microsoft/KBLaM/blob/4db377fa4dad2134a38fbc06f80938e66b9b5897/README.md)).
+**The learned artifact is hard to inspect at fact granularity.** You can inspect source rows and embeddings, and you can dump attention weights, but a trained projector does not tell a maintainer which source fact was accepted, rejected, or distorted in a human-reviewable way.
 
-## Open Questions
+**The README's "no retrieval module" claim is mostly true, but not "no selection."** KBLaM removes a separate retriever service. The Llama dynamic sparsification path still performs query-dependent top-k selection inside attention preparation.
 
-- How stable is the row-to-attention mapping when the KB distribution differs from synthetic and Enron-style training data?
-- Can attention dumps be turned into useful provenance explanations for which KB row affected a generated answer?
-- Would a stronger checkpoint format preserve row-set identity, embedding model version, dataset card, and train/eval split metadata alongside `encoder.pt`?
-- How much of the gain comes from learned key/value projection versus the optional separate query head?
-- Can a model-internal KB layer coexist with a source-auditable KB lifecycle, or does the opacity of weights make it a separate product category?
-- What happens when KB rows conflict, supersede each other, or require retirement after checkpoint training?
+**Dataset cards are better lineage than many model-memory repos provide.** They do not make generated/extracted facts reliable, but they clearly state synthetic generation, Enron extraction, and intended research/evaluation use.
 
 ## What to Watch
 
-- Whether KBLaM adds first-class provenance metadata for checkpoints and encoded KB tensors.
-- Whether future versions support model families without source-level model forks.
-- Whether attention explanations become user-facing enough to audit row influence.
-- Whether updates to KB rows require full adapter retraining, partial regeneration, or only runtime tensor recomputation.
-- Whether future work trains from interaction traces or correction feedback; that would change the trace-derived classification.
+- Whether KBLaM adds source-span or row-level provenance through the encoding path, so an answer can be traced back to a specific KB row after tensor attention.
+- Whether dynamic sparsification becomes a shared, evaluated path across supported model families rather than a Llama-specific branch.
+- Whether checkpoints begin saving enough metadata to regenerate exact base embeddings, encoder weights, KB config, training data slice, and query-head state from source.
+- Whether attention-weight dumps become a feedback loop that trains better pruning or fact selection. That would reopen the trace-derived decision if evaluation traces produce durable behavior-shaping artifacts.
+- Whether downstream users wrap KBLaM in an agent harness that automatically selects, scopes, and supplies KB tensors before actions. That would be an integration review, not evidence present in this repository alone.
 
 ## Bottom Line
 
-KBLaM is best read as a model-architecture experiment that moves knowledge activation from external retrieval into transformer attention. Its source KB rows are knowledge artifacts, but the behavior-changing machinery is a stack of learned adapters, optional query heads, model forks, runtime key/value tensors, and attention scores. The borrowable lesson for commonplace is the artifact split, not the architecture: keep durable knowledge inspectable, and be explicit when compiled or learned activation layers gain authority over what the model sees.
+KBLaM is a serious model-architecture reference for tensorized external knowledge, not a governed agent memory system. It shows one way to keep KB content out of text prompts and inside attention-side key/value state, with optional query-dependent sparsification. For Commonplace, the main lesson is to keep compiled memory views clearly derived from inspectable sources, because the more behavior moves into tensors, the more explicit lineage and regeneration contracts matter.
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: KBLaM requires separating source rows, embeddings, adapter checkpoints, model forks, runtime tensors, and attention weights by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: KB rows and dataset cards serve as evidence and answer content before projection.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: model forks, adapter weights, query heads, and config values carry ranking and activation authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - illustrates: KBLaM's stored rows matter only after they are transformed into attention-facing tensors.
+- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - contrasts: KBLaM reduces prompt-token pressure by moving KB entries into attention-side tensors.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: KBLaM requires separating source rows, base embeddings, learned projectors, configs, and evaluation outputs by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: KB rows and dataset cards are evidence/reference material before model encoding.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: model code, configs, learned projectors, and query heads condition future token generation.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - clarifies: KBLaM stores and compiles knowledge, but activation happens only when a caller supplies `kb_kvs` to the model.

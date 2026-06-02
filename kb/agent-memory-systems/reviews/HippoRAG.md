@@ -1,111 +1,104 @@
 ---
-description: "HippoRAG review: graph-augmented RAG library that turns corpus documents into OpenIE triples, embeddings, igraph state, and PPR retrieval activation"
+description: "HippoRAG review: graph-based RAG over corpus documents with OpenIE triples, parquet embedding stores, igraph PageRank retrieval, and pull-only QA"
 type: ../types/agent-memory-system-review.md
 status: current
-last-checked: "2026-05-16"
+last-checked: "2026-06-02"
 ---
 
 # HippoRAG
 
-HippoRAG, from OSU-NLP-Group, is a Python graph-augmented RAG and "memory" library for LLM question answering. The implemented system indexes source documents into hashed passages, LLM-extracted entities and RDF-style triples, entity/fact/passage embeddings, an `igraph` graph, and cached model calls; query time activates this retained corpus-derived state through fact retrieval, LLM fact filtering, dense passage scoring, and personalized PageRank. It is memory in the non-parametric retrieval sense, not an agent-work trace or self-improving instruction system.
+HippoRAG is the OSU NLP Group's Python framework for graph-based retrieval-augmented generation. The reviewed codebase implements HippoRAG 2: it indexes supplied corpus documents into passage, entity, and fact stores, builds an entity/passage graph, uses query-time fact filtering plus personalized PageRank to rank passages, and optionally feeds the selected passages into an LLM QA prompt. Although the README uses long-term-memory language, the implementation is a corpus indexing and retrieval system, not an agent-session memory learner.
 
 **Repository:** https://github.com/OSU-NLP-Group/HippoRAG
 
 **Reviewed commit:** [d437bfb1805278b81e20c82357ed3f7d90f14901](https://github.com/OSU-NLP-Group/HippoRAG/commit/d437bfb1805278b81e20c82357ed3f7d90f14901)
 
-**Last checked:** 2026-05-16
+**Last checked:** 2026-06-02
 
 ## Core Ideas
 
-**The persistent memory boundary is the model-pair working directory.** A `HippoRAG` instance derives `working_dir` from `save_dir`, LLM name, and embedding model name, then places graph and vector-store state under that directory while OpenIE results and LLM caches live under the broader `save_dir` ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py), [src/hipporag/utils/config_utils.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/utils/config_utils.py)). The storage substrate is therefore local files: JSON OpenIE results, parquet embedding stores, `graph.pickle`, SQLite LLM caches, and in-memory retrieval objects rebuilt from those files.
+**The central retained substrate is an indexed document corpus.** `HippoRAG.index(docs)` inserts the input strings into a chunk embedding store, runs OpenIE for missing chunks, embeds extracted entities and facts, builds graph edges, and saves the graph for later retrieval ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)). The quick start shows the same lifecycle: create a `HippoRAG` object, call `index(docs=docs)`, then call `retrieve` or `rag_qa` on explicit queries ([README.md](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/README.md)).
 
-**Source documents become several derived retained artifacts.** `index()` first inserts input documents into a chunk embedding store, computes missing OpenIE rows, merges NER entities and extracted triples into a JSON file, embeds entity nodes and fact strings, and constructs graph edges from facts, passage-to-entity links, and synonymy KNN results ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py), [src/hipporag/embedding_store.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/embedding_store.py), [src/hipporag/utils/misc_utils.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/utils/misc_utils.py)). The lineage is mechanically recoverable at chunk hash level: passage text hashes to `chunk-*`, entity text hashes to `entity-*`, fact content hashes into the fact store, and OpenIE rows retain the source passage.
+**OpenIE turns passages into graph candidates, not reviewed knowledge.** The online OpenIE path first prompts for named entities, then prompts for RDF-like triples conditioned on those entities, parses JSON-ish responses, filters malformed triples, and stores passage-level extraction metadata ([src/hipporag/information_extraction/openie_openai.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/information_extraction/openie_openai.py), [src/hipporag/prompts/templates/ner.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/prompts/templates/ner.py), [src/hipporag/prompts/templates/triple_extraction.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/prompts/templates/triple_extraction.py)). These triples are behavior-shaping because they seed retrieval, but their authority is ranking support, not asserted KB truth.
 
-**OpenIE is the symbolic bridge between prose documents and graph retrieval.** The OpenIE implementation runs NER, then conditions triple extraction on the named-entity list, expecting JSON outputs that are filtered into triples ([src/hipporag/information_extraction/openie_openai.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/information_extraction/openie_openai.py), [src/hipporag/prompts/templates/triple_extraction.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/prompts/templates/triple_extraction.py)). Representational form is mixed: source passages are prose knowledge artifacts, OpenIE rows and triples are symbolic derived knowledge artifacts, and embeddings are distributed-parametric indexes over passages, entities, and facts.
+**The storage layout is local files under `save_dir`.** Each LLM/embedding pair gets a working directory, and the `EmbeddingStore` persists chunk, entity, and fact records as `vdb_<namespace>.parquet` files with hash IDs, content, and embeddings ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py), [src/hipporag/embedding_store.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/embedding_store.py)). OpenIE results are saved as JSON under `save_dir`, the graph is saved as `graph.pickle` in the model-specific working directory, and LLM calls can be cached in SQLite ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py), [src/hipporag/llm/openai_gpt.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/llm/openai_gpt.py)).
 
-**The graph is a derived activation surface, not the source of truth.** `initialize_graph()` loads `graph.pickle` when present; `save_igraph()` persists the constructed `igraph`; `prepare_retrieval_objects()` reloads stores, checks graph node counts, rebuilds missing nodes, reloads OpenIE results, and reconstructs entity-to-chunk mappings when needed ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)). The graph has ranking authority at query time, but its lineage points back to documents, extracted triples, embeddings, and configuration thresholds rather than to human-reviewed claims.
+**Retrieval combines fact recognition, dense passage scores, and graph propagation.** `retrieve` encodes each query twice, once for fact matching and once for passage matching, scores fact embeddings, asks the reranker to keep relevant candidate triples, and then either runs graph search or falls back to dense passage retrieval when no facts survive ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)). Graph search turns selected fact entities and dense passage scores into reset weights, runs igraph personalized PageRank, and returns top passage texts. This is a strong retrieval policy, but it is still activated by an explicit query.
 
-**Query-time retrieval combines recognition, dense retrieval, and graph diffusion.** `retrieve()` embeds the query for fact and passage matching, scores stored facts by dot product, asks `DSPyFilter` to filter candidate facts with the LLM, assigns weights to fact entities and dense passage hits, then runs personalized PageRank over the graph to rank passages ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py), [src/hipporag/rerank.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/rerank.py), [src/hipporag/prompts/linking.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/prompts/linking.py)). The behavior-shaping artifact at this stage is transient activation state: query embeddings, selected facts, node weights, and PPR scores.
+**The LLM reranker is a query-time system-definition artifact.** `DSPyFilter` loads a saved or default few-shot prompt, asks the LLM to select relevant facts from candidate triples, parses the `fact_after_filter` field, and maps generated selections back to candidate facts ([src/hipporag/rerank.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/rerank.py), [src/hipporag/prompts/filter_default_prompt.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/prompts/filter_default_prompt.py)). The retained prompt demos and instructions have ranking authority; the LLM output itself is not retained as a new memory artifact.
 
-**Incremental update and deletion are implemented, but governance is corpus-local.** The tests exercise indexing, graph loading, incremental indexing, and document deletion ([README.md](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/README.md), [tests_openai.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/tests_openai.py)). `delete()` removes selected chunks, drops triples/entities only when they no longer appear in remaining chunks, rewrites OpenIE JSON, updates embedding stores, deletes graph vertices, and saves the graph ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)). There is no review status, claim-level invalidation, or promotion path into instructions.
+**Context efficiency is top-k retrieval plus QA truncation, not progressive disclosure.** The main controls are `linking_top_k`, `retrieval_top_k`, `passage_node_weight`, `damping`, and `qa_top_k` in `BaseConfig` ([src/hipporag/utils/config_utils.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/utils/config_utils.py)). `qa` feeds only `query_solution.docs[:qa_top_k]` into the answer prompt, while retrieval can rank up to hundreds of passages before that final narrowing ([src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)). This manages volume, but complexity is hidden inside scores, graph propagation, and reranker behavior rather than exposed as navigable intermediate context.
+
+## Artifact analysis
+
+**Corpus chunks.** The storage substrate is local parquet in `chunk_embeddings/vdb_chunk.parquet`, keyed by MD5-derived chunk IDs. The representational form is mixed: prose passage text plus distributed-parametric embeddings and symbolic hash IDs. Lineage is imported from caller-supplied `docs`; duplicate detection is content-hash based, and regeneration follows `force_index_from_scratch` or changed input text. Behavioral authority is knowledge-artifact authority when chunks are read as evidence, and ranking authority when their embeddings participate in retrieval.
+
+**OpenIE entities and triples.** Entities and facts persist as parquet embedding stores, while the extraction record persists as JSON under `save_dir` when `save_openie` is true. Their representational form is mixed: prose-like extracted strings/triples, symbolic IDs and JSON fields, and embeddings. Lineage is derived from corpus chunks through NER and triple-extraction prompts; a changed passage, extraction prompt, LLM, or force flag invalidates them. Behavioral authority is system-definition artifact authority for retrieval because these extracted facts select graph entry points and PageRank reset weights. They are not promoted into reviewed claims.
+
+**The igraph retrieval graph.** The graph is stored as `graph.pickle` in the model-specific working directory. Its representational form is symbolic weighted graph structure over passage and entity nodes, with weights derived from extracted triples, passage-entity links, and embedding-based synonymy edges. Lineage is compiled from chunk hashes, entity/fact stores, OpenIE output, and graph-construction parameters. Behavioral authority is ranking and routing: it decides which passages are likely to reach the QA context, but it does not by itself instruct the model what to believe.
+
+**Prompt and configuration policy.** Prompt templates, the default DSPy rerank prompt, query embedding instructions, and `BaseConfig` parameters live in source files and optional saved prompt JSON. Their representational form is prose plus symbolic parameters. Lineage is authored code or caller configuration. Behavioral authority is system-definition artifact authority: these artifacts control extraction, fact filtering, graph weighting, retrieval breadth, and QA context size.
+
+**Caches and evaluation outputs.** LLM responses are cached in SQLite, and dataset runs produce outputs under `outputs/` and reproduction directories. These are derived accelerators or experiment artifacts, not canonical memory. They have storage substrate value for reproducibility and cost control, but their behavioral authority is indirect unless a run reuses them for future indexing or inference.
+
+There is no implemented promotion path from retrieved passages or extracted triples into stronger governed artifacts such as validated rules, instructions, schemas, or reviewable notes. The system can add or delete documents through API calls, but that mutates the retrieval substrate rather than promoting learned behavior.
 
 ## Comparison with Our System
 
 | Dimension | HippoRAG | Commonplace |
 |---|---|---|
-| Primary purpose | Non-parametric corpus memory for retrieval and QA | Agent-operated methodology KB for durable knowledge and procedures |
-| Storage substrate | JSON OpenIE results, parquet embedding stores, `igraph` pickle, SQLite LLM caches, runtime arrays | Git-tracked Markdown notes, sources, instructions, reviews, ADRs, schemas, generated indexes |
-| Representational form | Mixed prose passages, symbolic triples/config/code, embeddings, graph topology, PPR scores | Mostly prose with structured frontmatter, links, schemas, scripts, and validation code |
-| Lineage | Strong chunk/passages-to-derived-store lineage; weak semantic provenance for extracted triples beyond source passage and model cache | Source snapshots, commit-pinned reviews, authored links, frontmatter status, archive/replacement lifecycle |
-| Activation | Query embeddings, LLM fact filtering, dense retrieval, graph node weighting, PPR ranking | `rg`, indexes, descriptions, authored links, skills, validation and review workflows |
-| Behavioral authority | Ranking and answer-context authority for QA | Advice, instruction, validation, review, routing, and methodology governance authority |
+| Primary retained artifact | Corpus chunks, OpenIE triples/entities, embeddings, graph pickle, prompts, config | Typed Markdown artifacts, source snapshots, instructions, indexes, schemas, review outputs |
+| Storage substrate | Local `outputs/` files: parquet stores, JSON OpenIE results, igraph pickle, SQLite LLM cache | Git-tracked files plus generated indexes and validation/review reports |
+| Representational form | Mixed prose, symbolic graph/config, and distributed-parametric embeddings | Mostly prose and symbolic metadata, with validators and generated indexes |
+| Lineage | Content hashes, force-rebuild flags, prompt/model/config choices, evaluation scripts | Source citations, frontmatter, collection contracts, git history, replacement archives |
+| Read-back | Explicit query-driven retrieval and QA | Agent/user pull through `rg`, indexes, links, skills, and review workflows |
+| Authority | Ranking, context selection, and QA prompt assembly | Knowledge artifacts plus stronger system-definition artifacts: instructions, schemas, validators, gates |
 
-HippoRAG and commonplace share the idea that memory is useful only when it activates later behavior. HippoRAG's activation is algorithmic: a question touches fact embeddings, entity nodes, passage nodes, and graph diffusion before it shapes the QA prompt. Commonplace's activation is agentic and textual: a later worker reads notes, instructions, indexes, and reviews before deciding what to do.
+HippoRAG is stronger than Commonplace at algorithmic multi-hop retrieval over a large unreviewed corpus. Its graph and PageRank machinery can surface passages whose usefulness depends on entity bridges rather than lexical proximity alone. Commonplace is stronger at governed retention: artifacts carry type, status, source, review, validation, and link semantics, so a future agent can inspect why an artifact has authority and when it should be revised.
 
-The most important difference is artifact authority. HippoRAG's source documents and OpenIE outputs are knowledge artifacts when inspected as evidence, but the decisive system-definition artifacts are embeddings, graph edges, reranker prompts, configuration thresholds, and PPR weights because they rank what context the LLM sees. Commonplace puts more authority in reviewable prose and symbolic contracts: notes, type specs, skills, validation scripts, and instruction files.
+The key divergence is what "memory" means. HippoRAG uses memory in the RAG sense: non-parametric retained corpus structure that helps the model answer later questions. Commonplace uses memory as retained artifacts with explicit behavioral authority and lifecycle. HippoRAG's graph can improve recall, but it does not decide that a new method note, instruction, or validator should exist.
 
-HippoRAG has stronger automatic associative retrieval over a document corpus. It can turn unstructured passages into a graph and use entity/fact links to recover multi-hop context without a maintainer authoring links. Commonplace has stronger governance: links are intentional, claims are reviewable, source citations are explicit, and lifecycle states can mark artifacts current, outdated, replaced, or invalid.
+HippoRAG's context engineering is efficient but opaque. The system keeps only top-ranked facts and passages moving toward the QA prompt, then truncates to `qa_top_k`. That avoids loading the full corpus, but the agent does not get a progressive map, source-quality state, or authored navigation trail. The ranking stack is useful for retrieval, less useful for an agent that must justify why a remembered artifact should guide a workflow.
 
-HippoRAG does not qualify as trace-derived learning in the current review sense. Its durable state is derived from indexed corpus documents, LLM extraction calls, embeddings, and graph construction. The code does not show learning from agent sessions, tool traces, repeated task trajectories, or feedback loops into durable lessons, instructions, policies, or rankers.
+Read-back: pull-only - a caller invokes `retrieve`, `retrieve_dpr`, `rag_qa`, or `rag_qa_dpr`; the reviewed repository does not implement a relevance-gated host hook that pushes memories into an agent before action.
 
-**Read-back:** pull — callers invoke query-time retrieval over the graph and stores; push integration is left to the host.
+### Borrowable Ideas
 
-## Borrowable Ideas
+**Graph propagation as a generated retrieval layer.** Worth borrowing only if Commonplace grows a search layer over notes and sources. The analogue would be a generated graph or embedding index tied back to canonical artifacts, with clear invalidation and no claim of source-of-truth authority.
 
-**Treat query activation as a first-class artifact boundary.** Ready to borrow conceptually. HippoRAG cleanly separates retained corpus state from transient query-time activation: query embeddings, selected facts, node weights, and PPR scores matter because they decide which retained artifacts reach the answer prompt.
+**Keep extracted facts below authored claims.** Ready as a design rule. HippoRAG's triples are useful for finding passages but too weak to stand as reviewed knowledge. Commonplace should preserve that split for any OpenIE or LLM-extracted relation layer: extraction can route attention before it can govern behavior.
 
-**Use derived graph state as an index, not as the canonical memory.** Ready now as a design rule. The graph can be regenerated from documents, OpenIE rows, embeddings, and config, so it should be governed as a compiled view rather than as primary evidence.
+**Expose retrieval budgets as policy, not magic defaults.** HippoRAG's `linking_top_k`, `retrieval_top_k`, and `qa_top_k` make context volume explicit. Commonplace search and review commands should continue making selection budgets visible, especially when generated indexes mediate what an agent sees.
 
-**Preserve source passages beside extracted structure.** Ready now. HippoRAG keeps original passage text in chunk stores and OpenIE rows, which is the minimum needed to audit extracted triples when they look suspicious.
+**Use a baseline path beside the graph path.** HippoRAG keeps dense passage retrieval as both a standard RAG baseline and a fallback when fact reranking yields no usable facts. A Commonplace search layer should likewise retain cheap lexical or direct retrieval when graph/ranker signals fail.
 
-**Borrow automatic link suggestion only with provenance.** Worth exploring for commonplace indexes. Entity/fact extraction and synonymy KNN could suggest candidate links, but promotion into authored KB links would need source evidence, confidence, and review status.
-
-**Do not borrow opaque ranking as governance.** HippoRAG's ranking pipeline is appropriate for retrieval, but commonplace should not let embedding similarity or graph diffusion silently promote claims into durable authority.
-
-## Takeaways
-
-**HippoRAG is a strong corpus-memory system, not an agent-memory governance system.** It stores and activates indexed knowledge so a model can answer better, but it does not manage the lifecycle of agent lessons, instructions, or operational rules.
-
-**The artifact stack is a useful decomposition.** Source documents, OpenIE JSON, embeddings, graph pickle, model caches, and query activation each have different substrates, forms, lineage, and authority. Calling all of them "memory" hides the important design choices.
-
-**Lineage is practical but not epistemic.** Hash IDs and stored passages make it possible to trace a triple back to a chunk, but the system does not attach review judgments, extraction confidence beyond model metadata, contradiction handling, or retirement rules for individual facts.
-
-**The graph is behaviorally authoritative even when it is derived.** At query time, graph topology and weights decide what context the LLM sees. That makes the graph a system-definition artifact despite being regenerated from knowledge artifacts.
-
-**Continual indexing is different from trace-derived learning.** Incrementally adding and deleting documents changes the retained corpus memory, but it is not the same as distilling agent experience into reusable behavior-changing artifacts.
+**Do not borrow opaque PageRank authority into governance.** PageRank is useful ranking machinery, but it is not a validator, reviewer, or promotion oracle. Commonplace can use such scores to order candidates, but stronger behavioral authority still needs reviewable artifacts and checks.
 
 ## Curiosity Pass
 
-The strongest mechanism is the separation between fact recognition and graph diffusion. HippoRAG does not simply retrieve top passages; it first identifies candidate facts, lets an LLM filter them, maps their entities into the graph, blends dense passage scores, and then diffuses attention through PPR.
+**The "memory" label is aspirational from a KB-governance perspective.** The implementation remembers indexed documents and graph structure, but it does not learn from agent sessions, produce durable lessons, or promote retrieval results into system-definition artifacts.
 
-The implementation's weakest point for KB comparison is not retrieval quality; it is governance. Extracted triples can have large downstream ranking effects, but they are not typed claims with explicit source citations, review status, or invalidation rules.
+**OpenIE output is both powerful and fragile.** A single extraction error can affect fact embeddings, entity nodes, graph edges, and PageRank seeds. The code filters malformed triples but does not validate extracted claims against source spans or contradiction checks.
 
-The system's "memory" framing is accurate for non-parametric corpus retention, but it should not be conflated with agent memory. No inspected path turns prior agent actions or feedback into stronger future instructions.
+**`StandardRAG` contains a debugging breakpoint.** The baseline class imports `ipdb` and calls `ipdb.set_trace()` during initialization, which makes it look unsuitable as a production baseline without patching ([src/hipporag/StandardRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/StandardRAG.py)). The main HippoRAG path does not depend on that class for the quick-start API.
 
-## Open Questions
+**The graph is local and inspectable only at the implementation level.** The pickle, parquet stores, and JSON OpenIE results are files, which is good for reproducibility. But the user-facing API returns ranked documents, not a navigable explanation of the path from query facts through graph nodes to passages.
 
-- How often do OpenIE extraction errors create high-authority graph paths that retrieve misleading passages?
-- Should OpenIE rows store richer extraction metadata, confidence, prompt/model version, and source offsets for fact-level audit?
-- Can incremental deletion leave stale synonymy or edge effects in long-lived graphs, especially when only some triples/entities are removed?
-- Would a generated explanation of the PPR path help users audit why a passage was retrieved?
-- Can the graph construction support document versioning, contradiction handling, and stale-fact retirement without rebuilding from scratch?
-- Is LLM fact filtering stable enough to serve as a recognition-memory gate across model versions?
+**Incremental updates are content-hash driven.** Tests exercise indexing, reload, incremental additions, and deletion ([tests_openai.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/tests_openai.py)). The deletion path removes chunks and some orphaned entities/facts, but the review did not verify graph correctness after complex repeated updates from code alone.
 
 ## What to Watch
 
-- Whether HippoRAG adds provenance and confidence fields for individual extracted triples.
-- Whether graph updates gain stronger invalidation and rebuild semantics for changed corpora.
-- Whether retrieval explanations expose selected facts, linked entities, dense passage weights, and PPR contribution.
-- Whether future versions learn rankers or extraction policies from user/agent feedback; that would change the trace-derived classification.
-- Whether the package separates canonical corpus state from compiled graph/vector views more explicitly.
-
-## Bottom Line
-
-HippoRAG is best read as a graph-augmented non-parametric memory layer for RAG: corpus documents become extracted triples, embeddings, graph state, and query-time activation that decide which passages reach the LLM. Its lesson for commonplace is the value of separating source evidence, derived symbolic structure, distributed-parametric indexes, compiled graph views, and transient activation; its limitation is that these artifacts rank context without the review, lifecycle, and authority controls expected from a durable agent-operated KB.
+- Whether future HippoRAG releases expose source-span provenance for triples, because that would make extracted graph facts more reviewable without changing their ranking role.
+- Whether retrieval explanations become first-class outputs, especially paths from selected facts to PageRank-weighted passages.
+- Whether the project adds agent/session trace ingestion; that would change the trace-derived tag decision only if it produces durable behavior-shaping artifacts from those traces.
+- Whether host integrations add pre-action, relevance-gated memory injection; that would change the push-activation decision only if the push path is implemented, not just documented.
+- Whether incremental deletion and rebuild logic gets deterministic tests for graph edge cleanup, since stale graph edges would silently affect ranking authority.
+- Whether `StandardRAG` is cleaned up as a usable baseline, because baseline quality affects how strongly HippoRAG's graph improvements can be interpreted.
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: HippoRAG requires separating source passages, OpenIE triples, embeddings, graph pickle state, and query-time PPR activation by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: indexed passages and OpenIE rows serve as evidence and answer context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: embeddings, graph topology, reranker prompts, thresholds, and PPR weights carry ranking and context-selection authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - illustrates: HippoRAG's value comes from activation mechanisms over retained corpus state, not storage alone.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: HippoRAG stores a rich graph and embedding substrate, but future action still depends on explicit query-time retrieval.
+- [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md) - contrasts: HippoRAG automates extraction and ranking, not governed synthesis, promotion, or durable instruction learning.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved passages and corpus chunks advise later answers as evidence or context.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: extraction prompts, rerank prompts, graph construction, embeddings, and retrieval budgets route and rank later behavior.
+- [Context engineering](../../notes/definitions/context-engineering.md) - relates: HippoRAG is a context-selection system over an indexed corpus, with top-k and PageRank policies controlling what reaches the QA prompt.
