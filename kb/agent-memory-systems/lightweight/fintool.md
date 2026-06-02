@@ -1,61 +1,72 @@
 ---
-description: "Lightweight coverage note for Fintool, a production AI agent for professional investors whose practitioner report documents an S3-first filesystem architecture, markdown skills with copy-on-write shadowing, and oracle-hardened evaluation"
-type: kb/types/note.md
+description: "Lightweight doc-grounded coverage of Fintool — a production finance agent whose founder reports S3-backed files, markdown skills, always-loaded user memories, and eval gates"
+type: ../types/lightweight-review.md
 traits: [has-comparison, has-external-sources]
 status: current
+last-checked: "2026-06-02"
 ---
 
 # Fintool
 
-Fintool is tracked here as lightweight related-system coverage, not as an `agent-memory-system-review`. The coverage comes from a [practitioner report ingest](../../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md) of a [public write-up by @nicbstme](https://x.com/nicbstme/status/2015174818497437834), the product's founder. There is no inspectable application source, so this note records the reported architecture without treating its claims as code-grounded findings. The review type requires accessible source code, so Fintool stays in `lightweight/` until that exists and is inspected.
+Fintool is an AI agent product for professional investors, covered here from a founder-authored practitioner report rather than inspectable application source. The report presents Fintool as a high-stakes finance agent built around normalized financial context, filesystem tools, markdown skills, S3-backed user data, sandboxed execution, and domain-specific evaluation. Because no reachable source was inspected, every mechanism below is **doc-grounded and reported**, not code-grounded.
 
-Fintool is an AI agent for professional investors, built over two years in a domain with near-zero tolerance for factual error. Its founder's central thesis is that "the model is not the product — the experience around the model is the product," and the report distils eleven production lessons. The system is the strongest production-scale, commercial evidence in this collection for the filesystem-first bet, drawn from paying customers rather than a research benchmark.
+**Source:** [snapshot of @nicbstme's public practitioner report](../../sources/lessons-from-building-ai-agents-for-financial-services-201517481849743.md) and its [local ingest report](../../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md).
 
-## Source-visible design
+**Reviewed version:** X article created 2026-01-24; local snapshot captured 2026-03-03 and ingest dated 2026-03-09.
 
-**S3-first with a derived PostgreSQL index.** S3 is the source of truth; a Lambda function syncs writes into PostgreSQL as a derived index, so lists read from the DB while freshness reads come from S3. Two Lambdas run the sync — a real-time SNS-triggered path plus a 3-hour reconciliation sweep. This is production-grade [files-not-database](../../notes/files-not-database.md): files as durable, auditable source of truth with a query index layered on top, claimed at 11-nines durability.
+## Core Ideas
 
-**Markdown skills as the product surface, with copy-on-write shadowing.** Skills are markdown-with-frontmatter, discovered via SQL metadata queries and loaded fully only on activation (progressive disclosure at the infrastructure level). A private > shared > public priority chain lets a user drop their own `SKILL.md` at the same path to override the shared one without forking — a per-user customization mechanism this KB does not currently have.
+- **Filesystem-first product architecture.** The report says Fintool retired an embedding/RAG pipeline and moved to agentic filesystem search after adopting Claude Code's filesystem-first approach. S3 is reported as the source of truth for user data, with PostgreSQL serving as a derived index for fast list and metadata queries.
+- **Markdown skills as the procedural surface.** Skills are reported as markdown files with YAML frontmatter and optional supporting references. Analysts and customers can author them directly, and a private > shared > public priority chain lets a user override a default skill by placing a replacement at the same path.
+- **Context efficiency through normalization and progressive disclosure.** Fintool's reported context strategy has two layers: financial data is normalized into markdown, CSV/tables, and JSON metadata so retrieval returns cleaner context; skill discovery loads metadata first and full documentation only when a skill is activated, avoiding token waste from mounting every skill.
+- **User memory as direct markdown injection.** The report describes `/private/memories/UserMemories.md` as a user-editable markdown file loaded on every conversation and injected as context, carrying preferences such as investment focus or comparison policy.
+- **Evaluation as deployment control.** The report says Fintool maintains roughly 2,000 finance-specific test cases, 50 adversarial grounding cases, companion evals for every skill, and a pull-request gate when eval score drops more than 5%. These are reported process claims, not inspected tests.
+- **Scaffolding is designed for deletion.** The founder argues that models will absorb many basic skills, so markdown is preferred over code because it is easier to update, shorten, or remove. Fiscal-period normalization remains the counterexample: the report frames it as a deterministic company-calendar problem, not something to leave to model intuition.
 
-**User memories as injectable markdown.** A `UserMemories.md` the user edits directly is injected as context on every conversation ("I focus on small-cap value stocks"). This is user-facing constraining: the user narrows the agent's interpretation space by writing preferences in the same medium the agent reads.
+## Artifact analysis
 
-**Agentic search over RAG.** The team retired its embedding/RAG pipeline in favor of agentic filesystem search, explicitly following Claude Code's filesystem-first approach — reportedly against contemporary consensus ("people thought we were crazy").
+Claim-level (no code inspected):
 
-**Oracle-hardened evaluation as a deployment gate.** ~2,000 domain-specific test cases, with PRs blocked if the eval score drops more than 5%. Adversarial grounding (planting false numbers in context and checking the model cites the real source, ~50 cases) hardens against hallucination. Fiscal-period normalization across 10,000+ company calendars is handled deterministically — a clean calculator-regime case where the spec *is* the problem and the model will not absorb it.
-
-**"The model will eat your scaffolding."** An explicit design principle: prefer markdown over code because it is easy to update and delete, write skills for current leverage, and delete them as models improve. The author distinguishes scaffolding that gets absorbed (vision-feature regime) from scaffolding that persists (the fiscal-calendar calculator regime), though the report conflates the two more than the [bitter-lesson boundary](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) framing would.
+- **Storage substrate:** `files` — the central retained artifacts are reported as YAML/markdown files in S3, with PostgreSQL as a derived metadata/query index rather than the source of truth.
+- **Representational form:** `mixed` — skills and user memories are prose/markdown; metadata, watchlists, fiscal calendars, confidence scores, and eval records are symbolic. The source does not expose enough implementation detail to split every sub-artifact cleanly.
+- **Lineage** — mixed authored/imported/derived: skills are reportedly authored by analysts or customers, user memories by users, financial context by imported source data normalized through a parsing pipeline, PostgreSQL rows by S3 sync, and eval outcomes by test execution. The report does not document a durable agent-trace-to-memory distillation loop.
+- **Behavioral authority** — skills act as **system-definition artifacts** because they instruct task execution; user memories and normalized financial documents act as **knowledge artifacts** injected or retrieved as context; eval suites act as system-definition artifacts at deployment time by blocking regressions. Effective runtime obedience is not verified.
 
 ## Comparison with Our System
 
-Fintool and commonplace make the same substrate bet: agent-readable files as the source of truth, with derived indexes for what files alone can't answer. The difference is governance versus throughput. Commonplace wraps its files in typed markdown, validation, link semantics, and indexes so the corpus stays reviewable; Fintool's reported emphasis is operational — durability, sync, and low-friction customization for paying users in a single high-stakes domain.
+Fintool and Commonplace make the same substrate bet: behavior-shaping knowledge should remain inspectable and agent-readable, while derived indexes provide query capabilities files alone do not. Commonplace turns that bet into typed markdown, link semantics, validation, and generated indexes for an agent-operated methodology KB. Fintool's reported version is a commercial product architecture: S3 durability, access-controlled prefixes, SQL discovery, sandbox tools, and low-friction user or analyst customization in one finance domain.
 
-The most useful divergence is audience and evidence tier. Commonplace is an agent-operated methodology KB maintained by technical users and scripts; Fintool is a commercial product whose architecture we know only from a self-reported write-up. That makes Fintool strong *convergence* evidence for filesystem-first at commercial scale, but weak as reviewed architecture — the failed alternatives, the real skill-authoring adoption data, and the test-case internals are not visible.
+The useful divergence is governance. Commonplace emphasizes reviewable accumulated knowledge; Fintool emphasizes operational context delivery to paying users under high accuracy pressure. That makes Fintool strong convergence evidence for filesystem-first context engineering at product scale, but a weak architecture source until implementation docs, source, or test internals are inspectable.
 
-## Borrowable Ideas
+### Borrowable Ideas
 
-**Copy-on-write skill shadowing (private > shared > public).** The one genuinely new pattern here. A priority chain that lets per-installation overrides win without forking, working precisely because skills are files in a homoiconic medium. The recommended follow-up is a note on how this bridges methodology-distilled skills and expert-authored skills.
+- **Copy-on-write skill shadowing.** Ready to borrow conceptually. A private > shared > public resolution chain would let Commonplace installations override skills without forking the shared methodology, provided validation can show which version won.
+- **Adversarial grounding tests.** Ready as an evaluation pattern. Plant false material beside real source material, then require the model to cite the real source; this maps cleanly to the [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md).
+- **User-editable memory file.** Needs a concrete user-preference layer first. A single markdown file injected into every session is a simple constraining surface, but Commonplace would need ownership, privacy, and scope rules before adopting it.
+- **S3 source of truth plus derived query index.** Useful as production evidence rather than an immediate migration target. Commonplace's repo substrate already supplies versioning and inspection; the Fintool pattern matters when a consuming product needs multi-user storage, access control, and fast metadata queries.
 
-**Adversarial grounding as an evaluation technique.** Inject fake data alongside real data and verify the model cites the real source — a concrete, replicable way to harden a hallucination oracle, relevant to the [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md).
+## Read-back placement
 
-**User-editable injected memory file.** A single `UserMemories.md` loaded every conversation is a minimal, schema-free constraining surface worth borrowing if commonplace grows a user-preference layer.
+**Read-back:** `push` — the report says user memories are loaded and injected on every conversation, which is unsolicited from the agent's perspective. This is unconditional always-load, not a relevance-gated activation path, so it does not warrant `push-activation`.
 
-## Review boundary
+## Curiosity Pass
 
-Do not create `kb/agent-memory-systems/reviews/fintool.md` unless inspectable application source or implementation documentation becomes available. The current evidence is a founder's practitioner report; storage model, sync internals, skill-shadowing implementation, and evaluation harness are all self-reported claims, not code-grounded findings.
+- The strongest reported novelty is not "files instead of databases" by itself; it is the layered combination of S3 as source of truth, PostgreSQL as derived index, SQL skill selection, and copy-on-write override.
+- The report treats analyst/customer-authored skills as easy to maintain, but does not expose adoption data, review policy, or failure handling when a user skill is wrong.
+- The "model will eat your scaffolding" thesis is plausible for proxy-theory skills, but the source itself provides calculator-regime counterexamples such as fiscal-period normalization and ticker history.
+- Simpler alternative worth checking: whether a repo-backed or local-file implementation can get most of the skill-shadowing benefit before needing S3, Lambda, and PostgreSQL.
 
 ## What to Watch
 
-- Whether any Fintool source, SDK, or architecture documentation becomes publicly inspectable
-- Whether the copy-on-write skill-shadowing mechanism is documented in enough detail to borrow concretely
-- Whether the "model eats scaffolding" prediction is borne out — which skills actually become one-liners versus which persist
-- Whether the S3-first pattern is reported to hold under workloads with complex relational or transactional access
+- Public source, SDK, architecture docs, or test artifacts. If inspectable implementation appears and is read, this should promote from lightweight coverage to `agent-memory-system-review`.
+- More detail on skill shadowing: conflict resolution, validation, auditability, and how often customer-authored skills are actually used.
+- Whether always-loaded user memories remain a small preference file or grow into a context-dilution problem requiring relevance-gated read-back.
+- Whether the S3-first pattern continues to hold for workloads needing complex relational queries, transactions, or stronger consistency than the report's file/list/read split.
 
----
+## Relevant Notes
 
-Relevant Notes:
-
-- [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — exemplifies at production scale: S3 source of truth, PostgreSQL derived index, user data as YAML/markdown
-- [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md) — exemplifies: ~2,000 test cases and adversarial grounding manufacture and amplify hard oracles, with a 5%-regression deployment gate
-- [fixed artifacts split into exact specs and proxy theories](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — "the model will eat your scaffolding" is the bitter-lesson boundary applied to agent infrastructure; fiscal-period normalization is the calculator-regime counterexample
-- [Agent Skills for Context Engineering](../reviews/agent-skills-for-context-engineering.md) — compares: independent convergence on markdown-with-frontmatter skills, progressive disclosure, and SQL-driven lazy loading
-- [Sig](./sig.md) — compares: both are lightweight, repo-less product coverage betting on files-first agent memory, Fintool at commercial finance scale and Sig at personal workplace scale
+- [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — evidence: Fintool reports S3 as source of truth with PostgreSQL as a derived index for fast queries
+- [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md) — evidence: the reported eval suite and adversarial grounding tests are a production example of oracle hardening
+- [fixed artifacts split into exact specs and proxy theories](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — rationale: "model eats scaffolding" applies unevenly across proxy-theory skills and exact-spec modules
+- [Agent Skills for Context Engineering](../reviews/agent-skills-for-context-engineering.md) — compares-with: both use markdown skill packages, frontmatter discovery, and progressive disclosure, but Fintool is doc-grounded product coverage
+- [Sig](./sig.md) — compares-with: both are lightweight product reports for file-backed agent memory, with Fintool at commercial finance scale and Sig at personal/workplace capture scale

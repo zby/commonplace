@@ -1,60 +1,82 @@
 ---
-description: "Lightweight coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies"
-type: kb/types/note.md
+description: "Lightweight doc-grounded coverage of Schmidhuber's incremental self-improvement paradigm, a reward-gated policy self-modification system"
+type: ../types/lightweight-review.md
 traits: [has-comparison, has-external-sources]
-tags: [learning-theory]
+tags: [trace-derived]
 status: current
+last-checked: "2026-06-02"
 ---
 
 # Incremental Self-Improvement
 
-Incremental Self-Improvement is tracked here as lightweight related-system coverage, not as an `agent-memory-system-review`. The coverage comes from Jürgen Schmidhuber's [1995 revised FKI-198-94 technical report](../../sources/on-learning-how-to-learn-learning-strategies.md), which presents a paradigm and concrete toy implementation but no reachable repository to inspect. It belongs outside `../reviews/` until there is code-grounded evidence.
+Incremental Self-Improvement is Jürgen Schmidhuber's 1995 paradigm for a lifelong reinforcement-learning system that changes how it learns by executing self-modification programs. Coverage here is **doc-grounded**: the cited technical report describes a concrete toy implementation and experiments, but no reachable repository has been inspected, so the mechanisms below are reported from the paper and local ingest rather than code-grounded findings.
 
-The system is not an agent memory system in the current KB sense. It is relevant because it is an early, explicit architecture for a lifelong agent that changes the mechanism by which it learns. The persistent learned state is not notes, memories, or retrieved artifacts; it is the context-dependent probability distribution over future instruction sequences, including future self-modification programs.
+**Source:** [On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.md), revised FKI-198-94 technical report snapshot captured 2026-04-29 from `https://people.idsia.ch/~juergen/fki198-94.pdf`.
 
-## Source-visible design
+**Reviewed version:** revised January 31, 1995 technical report; local ingest [Ingest: On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md), ingested 2026-04-29.
 
-**Self-modification as ordinary action.** The system runs a Turing-equivalent, assembler-like language. Some action subsequences interact with the environment; others are self-delimiting self-modification programs. Those programs can modify probabilities for future action subsequences, including the probabilities of future self-modification programs. The architecture intentionally removes the hard boundary between learning, meta-learning, and ordinary computation.
+## Core Ideas
 
-**Whole-life reward accounting.** The paper rejects resettable training episodes as the default abstraction. System life is treated as a one-way sequence, and utility is measured as payoff per time since startup or since a self-modification program began. Learning time, evaluation time, and management overhead are part of the accounting rather than hidden outside the objective.
+- **Self-modification is ordinary action.** The reported system runs an assembler-like Turing-equivalent language where action subsequences can either interact with the environment or modify the probability distribution over future instruction sequences, including future self-modification programs.
+- **The learned state is a policy distribution.** The durable behavior-shaping object is not a note, memory record, or retrieved document; it is the context-dependent probability distribution over future program-cell contents and arguments.
+- **Reward-gated retention replaces manual promotion.** A fixed top-level credit-assignment strategy keeps probability changes made by self-modification programs only while their payoff-per-time exceeds the system baseline or the preceding useful self-modification; otherwise old distributions are restored from a stack.
+- **Whole-life accounting charges learning to action.** The paper treats system life as one non-resettable sequence and includes learning, evaluation, and rollback overhead in payoff-per-time, so a learning strategy must earn back the time it consumes.
+- **Context efficiency is policy-side, not prompt-side.** There is no LLM context window or retrieval budget. The closest reported analogue is that future behavior is influenced through compact probability values rather than loading accumulated traces, but this buys economy by making the retained state opaque and non-citable.
 
-**Reward-gated retention.** A fixed top-level credit-assignment strategy keeps only probability changes made by self-modification programs that improve payoff intake relative to the system or to earlier useful self-modification programs. When a modification stops qualifying, the top level restores older probability distributions from a stack. The resulting memory-management analogue is conservative: new learning must pay for itself in observed reward rate or it is rolled back.
+## Artifact analysis
 
-**Low-level implementation.** The concrete implementation stores integer work cells and program cells. Each program cell has probabilities over possible instruction or argument values. Self-referential primitives read and adjust those probabilities, while an `EndSelfMod`-style boundary hands control back to the top-level retention policy.
+Claim-level (no code inspected):
+
+- **Storage substrate:** `in-memory` — the reported implementation stores work cells, program cells, probability distributions, and a rollback stack inside finite runtime storage for the system's life; no external persistent repository, database, or file-backed memory is described.
+- **Representational form:** `parametric` — the central retained artifact is a numeric probability distribution over instruction and argument values. The paper also describes symbolic primitives and an unmodifiable top-level policy, but the learned operative part is parametric.
+- **Lineage** — **trace-extracted**: probability changes are produced by self-modification programs during system life and retained or rolled back based on subsequent action/reward/time history. The primitive set and payoff function are authored prior bias; the retained policy distribution is derived from lived trajectories under that bias.
+- **Behavioral authority** — the probability distribution is a **system-definition artifact**: it directly changes future action sampling and therefore the agent's behavior. Stack entries have rollback/audit authority over that policy state, not knowledge-reference authority.
+
+The reported promotion path is reward-gated rather than review-gated: candidate self-modifications become retained policy state when they improve measured payoff-per-time, and they can later be demoted by restoring older distributions. This is a strong promotion mechanism only where the reward oracle is strong enough to carry both validity and value.
 
 ## Comparison with Our System
 
-Commonplace promotes knowledge into inspectable artifacts and uses validation, review, links, and indexes to control when those artifacts become reliable context. Incremental Self-Improvement promotes changes into the agent's policy distribution, with reward/time as the retention gate. That makes it closer to weight or policy learning than to an agent-operated knowledge base.
+Commonplace promotes knowledge into inspectable files, links, type specs, and validation rules; Incremental Self-Improvement promotes policy changes into a runtime distribution. Commonplace's retained artifacts can be searched, cited, reviewed, and retired by provenance. Schmidhuber's retained state can steer behavior continuously, but the learned distribution is not readable knowledge and does not explain itself.
 
-The useful comparison is therefore not storage substrate but promotion discipline. Commonplace mostly relies on human or semantic-review judgment for whether a note should persist. Schmidhuber's system assumes a numeric payoff signal strong enough to decide whether a self-modification increased lifetime reward rate. That is attractive when the oracle is hard and cheap, but it does not solve the KB case where "better future reasoning" is delayed, ambiguous, and hard to measure.
+The useful comparison is promotion discipline. Schmidhuber collapses "is this true/useful?" into payoff-per-time: if a self-modification improves reward rate enough, it stays. Commonplace separates those questions because KB artifacts often have delayed, ambiguous payoff: a claim may be valid but low-value, promising but under-grounded, or useful only for a narrow future task.
 
-This is the same pressure described by [choosing what to learn requires both validity and learning value gates](../../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md). In the report, payoff per time tries to collapse both questions into one scalar: did the modification work, and was it worth retaining? For KB methodology those gates come apart. A claim can be valid but low-value, or promising but insufficiently grounded, so automatic promotion needs more than a single reward-rate analogue.
+### Borrowable Ideas
 
-## Borrowable Ideas
+- **Charge learning to the same budget as acting.** Ready to borrow as a design principle. Review, distillation, connection, and validation workflows should account for the time and context they consume, not only the apparent quality of the produced artifact.
+- **Make promotion reversible.** Ready to borrow conceptually. The rollback stack is a useful analogue for preserving enough prior state and lineage to retire or supersede a bad rule without pretending it was never learned.
+- **Treat primitives and payoff as prior bias.** Useful as framing, not an implementation task. In Commonplace, type specs, validators, link labels, and skills are the primitive set that makes some learning trajectories cheap and others unlikely.
+- **Do not borrow scalar promotion without the oracle.** Needs a strong use case. Payoff-per-time works cleanly only when reward is timely and meaningful; KB promotion needs separate source-fidelity, reasoning-value, and maintenance-cost gates.
 
-**Charge learning to the same budget as acting.** Ready to borrow conceptually. Review and distillation workflows should account for their cost, not only the apparent quality of the produced artifact.
+## Trace-derived learning placement
 
-**Make promotion reversible.** The stack-backed restoration mechanism is a useful analogue for KB changes: durable promotion should preserve enough previous state to retire or replace a bad rule without pretending the system never learned it.
+The paper warrants `trace-derived` placement because it reports durable policy updates derived from system-life action/reward history.
 
-**Treat primitive choice as prior bias.** The paper is explicit that prior knowledge enters through the primitive operations and payoff function. For KB methodology, this maps to type specs, validation rules, and available skills: the substrate constrains what agents can easily learn.
+- **Trace source** — a lifelong sequence of instructions, self-modification programs, environmental interactions, reward events, and elapsed time.
+- **Extraction** — self-modification programs propose probability changes; the unmodifiable top-level strategy uses payoff-per-time as the retention oracle and restores old distributions when a modification stops qualifying.
+- **Scope and timing** — online, within a single system life; no resettable episode boundary is assumed, and the reported experiments use toy environments to illustrate operation rather than broad empirical scaling.
+- **Survey placement** — a historical trajectory-to-policy case for the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), lower-confidence for modern agent-memory comparison because the evidence is a paper snapshot, not inspectable source.
 
-## Review boundary
+## Read-back placement
 
-Do not create `kb/agent-memory-systems/reviews/incremental-self-improvement.md` unless a reachable implementation is found and inspected. The current evidence is a technical report with a described implementation and toy experiments, not a repository-backed system. The note should be used as conceptual lineage for self-improving agents, trace-derived policy learning, and promotion-gate design, not as implementation evidence for modern agent memory infrastructure.
+**Read-back:** `push` — retained probability changes automatically shape future instruction sampling whenever the system acts; no agent-initiated lookup is required. This is not an engineered relevance-gated activation path in the Commonplace sense, so there is no `push-activation` tag.
+
+## Curiosity Pass
+
+- The design is explicit that apparent usefulness may be a fluke; the top-level gate preserves modifications by observed payoff history, not by proving causal responsibility.
+- The paper's most transferable mechanism may be the rollback discipline, not the self-modifying language.
+- A simpler modern analogue would be validation-gated skill or harness editing: retain behavior changes only when they beat the incumbent under a strong evaluator, but keep the edited artifact readable.
 
 ## What to Watch
 
-- Whether later open implementations of Schmidhuber-style self-referential learners expose an inspectable memory or policy substrate
-- Whether Gödel-machine or self-referential meta-learning systems make the reward-gated promotion policy operational in modern agents
-- Whether agent-memory systems can approximate payoff-per-time accounting with weaker semantic or task-completion oracles
+- A reachable implementation of this specific paradigm. If one appears and is inspected, this should promote to `agent-memory-system-review` and the four-field claims should be verified against code.
+- Modern Gödel-machine or self-improving harness systems that make reward-gated promotion operational for inspectable agent artifacts; that would test whether the rollback/promotion idea transfers beyond parametric policy state.
+- Any attempt to replace payoff-per-time with weaker semantic review or task-completion proxies, because that boundary determines whether the mechanism can inform KB promotion rather than only benchmarked agents.
 
----
+## Relevant Notes
 
-Relevant Notes:
-
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — compares nearby systems that learn from trajectories, sessions, or next-state feedback; this paper is useful lineage but lower-confidence as lightweight theory
-- [Ingest: On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md) — source coverage: classifies the report and extracts the payoff-per-time, reversible-promotion, and oracle-dependence lessons
-- [Self-Training-LLM](../reviews/Self-Training-LLM.md) — compares: both promote experience into model-side behavior rather than a readable KB artifact, but Self-Training-LLM is repo-inspected and dataset-driven
-- [Meta-Harness](../reviews/meta-harness.md) — compares: a modern code-inspected system where benchmark-scored runs select improved harness variants rather than self-modifying instruction probabilities
-- [choosing what to learn requires both validity and learning value gates](../../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — refines: explains why KB promotion cannot collapse correctness and value into one payoff-per-time gate
+- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — compares-with: places this paper as a lower-confidence historical trajectory-to-policy case
+- [Self-Training-LLM](../reviews/Self-Training-LLM.md) — compares-with: both promote experience into model-side behavior rather than a readable KB artifact, but Self-Training-LLM is repo-inspected and dataset-driven
+- [Meta-Harness](../reviews/meta-harness.md) — compares-with: a modern code-inspected system where benchmark-scored runs select improved harness variants rather than self-modifying instruction probabilities
+- [choosing what to learn requires both validity and learning value gates](../../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — rationale: explains why KB promotion cannot collapse correctness and value into one payoff-per-time gate
 - [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — rationale: reward-gated self-modification only works cleanly where the evaluation signal can carry the promotion decision
+- [Ingest: On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md) — evidence: local ingest classifies the report and extracts the payoff-per-time, reversible-promotion, and oracle-dependence lessons

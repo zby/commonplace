@@ -10,7 +10,7 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **`reviews/`** — individual system reviews, one file per system, typed as `../types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
-**`lightweight/`** — lightweight `type: kb/types/note.md` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These entries keep lightweight systems visible without using the repo-required review type.
+**`lightweight/`** — `type: ../types/lightweight-review.md` coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. Lightweight reviews carry the **same comparison elements** as code-grounded reviews (four-field record, read-back direction, borrowable ideas) but at a lower evidence tier — claim-level and doc-grounded. The "lightweight" mark is about authority, not scope. Promote to `agent-memory-system-review` if inspectable source later appears. Section rules live in `types/lightweight-review.md`.
 
 **Collection root** — navigation (index, README), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
 
@@ -39,8 +39,10 @@ Organised per destination: when to prospect for links, and the authorised labels
 
 - `agent-memory-system-review` -> `./types/agent-memory-system-review.md`
   Use for code-grounded reviews of external agent memory or context-engineering systems.
+- `lightweight-review` -> `./types/lightweight-review.md`
+  Use for doc-grounded coverage (paper/README/article) when no source is reachable — same comparison elements as the code-grounded review, lower evidence tier.
 - `note` -> `kb/types/note.md`
-  Use for lightweight coverage and cross-system descriptive analyses.
+  Use for cross-system descriptive analyses and comparative reviews.
 - `index` -> `kb/types/index.md`
   Use for navigation hubs and generated directory indexes.
 

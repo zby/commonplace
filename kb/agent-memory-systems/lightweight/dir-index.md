@@ -8,8 +8,8 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [AgeMem](./agemem.md) *(note)* - Lightweight coverage note for AgeMem, an RL-trained LTM/STM memory-management policy covered through paper ingest rather than local code review
-- [Fintool](./fintool.md) *(note)* - Lightweight coverage note for Fintool, a production AI agent for professional investors whose practitioner report documents an S3-first filesystem architecture, markdown skills with copy-on-write shadowing, and oracle-hardened evaluation
-- [Incremental Self-Improvement](./incremental-self-improvement.md) *(note)* - Lightweight coverage note for Schmidhuber's incremental self-improvement paradigm, a reward-gated self-modification system for learning learning strategies
-- [Sig](./sig.md) *(note)* - Lightweight coverage note for Sig, a private-beta macOS work-memory app that stores meeting and decision context as local files for AI tools
-- [Trajectory-Informed Memory Generation](./trajectory-informed-memory-generation.md) *(note)* - Lightweight coverage note for Trajectory-Informed Memory Generation, a trajectory-to-tip learning pipeline without local code-inspected review coverage
+- [AgeMem](./agemem.md) *(lightweight-review)* - Lightweight doc-grounded coverage of AgeMem — an RL-trained LTM/STM memory-management policy known from its paper, not from inspected code
+- [Fintool](./fintool.md) *(lightweight-review)* - Lightweight doc-grounded coverage of Fintool — a production finance agent whose founder reports S3-backed files, markdown skills, always-loaded user memories, and eval gates
+- [Incremental Self-Improvement](./incremental-self-improvement.md) *(lightweight-review)* - Lightweight doc-grounded coverage of Schmidhuber's incremental self-improvement paradigm, a reward-gated policy self-modification system
+- [Sig](./sig.md) *(lightweight-review)* - Lightweight doc-grounded coverage of Sig, a release-doc-backed desktop app that reports local markdown work memory, reviewed sharing, git-backed team sync, and AI-tool context reuse
+- [Trajectory-Informed Memory Generation](./trajectory-informed-memory-generation.md) *(lightweight-review)* - Lightweight doc-grounded coverage of Trajectory-Informed Memory Generation — an IBM trajectory-to-tip pipeline known from its paper, not inspected code
