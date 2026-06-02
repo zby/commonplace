@@ -36,6 +36,9 @@ Tolaria is RefactoringHQ's local-first desktop app for managing markdown knowled
 
 ## Artifact analysis
 
+- **Storage substrate:** `repo` — User-owned vault files on disk, usually in a git repository
+- **Representational form:** `mixed` — Markdown prose with YAML frontmatter, wikilinks, editable text files, and binary assets
+
 **Vault notes and assets.** Storage substrate: user-owned vault files on disk, usually in a git repository. Representational form: markdown prose with YAML frontmatter, wikilinks, editable text files, and binary assets. Lineage: authored by humans, agents, import flows, or app save operations; filesystem content is source-of-truth, while cache and UI state are derived. Behavioral authority: knowledge artifacts when read as evidence/context/reference; soft system-definition artifacts when a note is consumed as a procedure, template, or instruction by an agent or UI path.
 
 **Type documents.** Storage substrate: markdown files, commonly `type/*.md` or root type notes depending on the vault. Representational form: mixed prose and symbolic frontmatter metadata. Lineage: authored or Tolaria-seeded, then parsed into `VaultEntry` metadata and UI configuration. Behavioral authority: system-definition artifacts for grouping, labeling, sorting, defaulting, templates, and display behavior; knowledge artifacts when read as category descriptions. Promotion path is weak: a type can become more behavior-shaping by adding metadata, but Tolaria does not promote it into a schema validator.
@@ -69,7 +72,7 @@ Tolaria is closest to Commonplace in its files-first instinct: retained artifact
 
 The strongest Commonplace-relevant contribution is the activation layer around local files. Tolaria does not just say "agents can read markdown"; it gives them a managed `AGENTS.md`, a context snapshot from what the user is viewing, MCP read/orientation tools, and CLI launch settings that scope the agent to active vaults.
 
-Read-back: both. Tolaria exposes pull paths through MCP search/read/context tools and ordinary file/git access, and it implements engineered push activation for built-in AI sessions by injecting a bounded UI-derived context snapshot plus vault instructions before the receiving agent acts.
+**Read-back:** `both` — Tolaria exposes pull paths through MCP search/read/context tools and ordinary file/git access, and it implements engineered push activation for built-in AI sessions by injecting a bounded UI-derived context snapshot plus vault instructions before the receiving agent acts
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ AriGraph, from AIRI Institute, is an external memory architecture for LLM agents
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — Python process memory: lists and dictionaries on `TripletGraph` / `ContrieverGraph`, with no implemented save/load path for graph state in the main pipeline
+- **Representational form:** `mixed` — Mixed: symbolic triplets and navigation edges, prose triplet strings, and distributed-parametric embeddings for triplets and entities
+
 **In-run triplet graph.** The storage substrate is Python process memory: lists and dictionaries on `TripletGraph` / `ContrieverGraph`, with no implemented save/load path for graph state in the main pipeline. The representational form is mixed: symbolic triplets and navigation edges, prose triplet strings, and distributed-parametric embeddings for triplets and entities. Lineage is observation-derived and action-derived inside one attempt: LLM extraction turns observations into triplets; movement actions add navigation edges; a refinement prompt removes predicted outdated facts. Behavioral authority is both knowledge-artifact and system-definition-artifact authority: retrieved facts advise planner/action prompts, and navigation edges are used as routing state for `go to` actions.
 
 **Episodic observation store.** The storage substrate is also in-process memory: `obs_episodic`, `obs_episodic_list`, and `top_episodic_dict_list` on `ContrieverGraph`. The representational form is mixed prose plus embeddings: each stored observation is the textual game observation paired with extracted triplet strings and an embedding. Lineage is raw-ish observation text plus derived graph facts from the same step; it is retained only for later steps in the same run. Behavioral authority is knowledge-artifact authority when inserted as "most relevant episodic memories" into the planner/action prompts.
@@ -71,7 +74,7 @@ AriGraph is stronger than Commonplace as a low-latency task memory inside an emb
 
 The most important distinction is durability. AriGraph learns from observations, but the learned graph and episodic store are instantiated fresh per attempt in `pipeline_arigraph.py`. That makes the active memory a run-local context-engineering mechanism, not a durable knowledge base. The durable logs preserve traces, but the code does not consume those logs to seed future behavior.
 
-Read-back: push. From the planner/action agent's perspective, the orchestration layer relevance-selects graph facts and episodic memories and inserts them into prompts before each decision; the selected memory is not requested by the planner/action agent through a tool call.
+**Read-back:** `push` — From the planner/action agent's perspective, the orchestration layer relevance-selects graph facts and episodic memories and inserts them into prompts before each decision; the selected memory is not requested by the planner/action agent through a tool call
 
 ## Read-back placement
 

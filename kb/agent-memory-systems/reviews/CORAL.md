@@ -32,6 +32,9 @@ CORAL, from Human-Agent-Society, is an orchestration system for autonomous codin
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — `.coral/public/attempts/<commit>.json` files, written atomically
+- **Representational form:** `mixed` — Symbolic JSON wrapping prose titles and grader feedback
+
 **Attempt JSON records.** Storage substrate: `.coral/public/attempts/<commit>.json` files, written atomically. Representational form: symbolic JSON wrapping prose titles and grader feedback. Lineage: generated from `coral eval`, a git commit, a parent commit, optional shared-state checkpoint hashes, grader output, and budget metadata. Behavioral authority: knowledge artifacts when agents or humans inspect leaderboard history; system-definition artifacts when the manager uses score, status, budget class, timestamp, and eval count to trigger heartbeat prompts, plateau pressure, stall exemptions, and CLI filtering.
 
 **Shared notes and synthesis files.** Storage substrate: Markdown files under `.coral/public/notes/`, symlinked into each runtime's shared directory. Representational form: prose with lightweight YAML frontmatter. Lineage: agent-authored from research, eval results, teammate attempts, and heartbeat-directed reflection/consolidation; invalidation is manual unless a later note or attempt supersedes it. Behavioral authority: knowledge artifacts when read as evidence, context, advice, or coordination state. They become weak system-definition artifacts only when a prompt instructs agents to treat them as planning inputs.
@@ -63,7 +66,7 @@ CORAL and Commonplace both bet on inspectable files as the operational memory su
 
 CORAL is stronger as a scheduler around trace-derived learning. It has a real feedback loop: attempts are scored, attempts trigger prompts, prompts force reflection or consolidation, and agents can distill what they learned into shared artifacts. Commonplace has richer artifact governance but weaker built-in experimental pressure; most of its learning loop is mediated by explicit review workflows rather than a continuous grader.
 
-Read-back: both. CORAL uses pull for notes, skills, logs, attempts, and diffs through CLI/file browsing; it uses engineered push when the manager injects generated instructions, eval feedback, and heartbeat prompts into agent sessions.
+**Read-back:** `both` — CORAL uses pull for notes, skills, logs, attempts, and diffs through CLI/file browsing; it uses engineered push when the manager injects generated instructions, eval feedback, and heartbeat prompts into agent sessions
 
 ### Borrowable Ideas
 

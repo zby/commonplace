@@ -32,6 +32,9 @@ Hindsight is Vectorize.io's agent memory system: a server, embedded package, cli
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — `documents`, `chunks`, and `memory_units` tables in the Hindsight API database, plus host transcript files before retain in integrations such as Claude Code
+- **Representational form:** `mixed` — Prose or JSON-shaped conversation/tool traces, with symbolic metadata, tags, document ids, timestamps, and update modes
+
 **Raw retained documents and transcript windows.** Storage substrate: `documents`, `chunks`, and `memory_units` tables in the Hindsight API database, plus host transcript files before retain in integrations such as Claude Code. Representational form: prose or JSON-shaped conversation/tool traces, with symbolic metadata, tags, document ids, timestamps, and update modes. Lineage: imported from client calls, files, or host transcripts; document ids, content hashes, metadata, and source tags preserve coarse lineage, while exact source offsets are not the main retained unit. Behavioral authority: knowledge artifacts as evidence for extraction, recall, reflect, and audit; they gain ranking influence through embeddings, text indexes, entity links, and graph links.
 
 **Extracted world/experience memory units, entities, and links.** Storage substrate: database rows in `memory_units`, `entities`, `unit_entities`, `memory_links`, `entity_cooccurrences`, vector indexes, and text-search indexes. Representational form: mixed prose and symbolic structure: fact text, fact type, entity associations, dates, causal/semantic/entity links, embeddings, BM25 vectors, and graph materialization. Lineage: LLM-extracted or chunk-stored from retained documents, with document id and metadata back to the retain request; embeddings and indexes regenerate from text/config. Behavioral authority: knowledge artifacts when read as remembered facts, and system-definition artifacts when used as ranking, filtering, graph traversal, or validation state.
@@ -63,7 +66,7 @@ The strongest overlap is the retained-artifact ladder. Hindsight's raw document 
 
 The biggest divergence is reviewability. Hindsight has more automatic adaptation, but a reader cannot review a memory change as a normal repo diff unless the deployment exports it. Commonplace has weaker automatic recall but stronger artifact audit: source-pinned citations, replacement archives, explicit type contracts, and deterministic validation.
 
-**Read-back:** both — ordinary API/MCP/client usage is pull, while Claude Code and similar hook integrations push relevance-gated recall into the agent's pre-action context.
+**Read-back:** `both` — Ordinary API/MCP/client usage is pull, while Claude Code and similar hook integrations push relevance-gated recall into the agent's pre-action context
 
 ### Borrowable Ideas
 

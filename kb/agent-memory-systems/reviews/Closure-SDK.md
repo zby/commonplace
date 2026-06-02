@@ -31,6 +31,9 @@ Closure-SDK, by Walter Henrique Alves da Silva, is a monorepo for composing orde
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — In-process Rust/Python objects, with `Seer` retaining only the current stream monitor state and `Oracle` retaining raw records plus a geometric path
+- **Representational form:** `symbolic` — Symbolic/distributed-geometric numeric state, especially 4-float S3 elements
+
 **SDK running products and closure states.** Storage substrate: in-process Rust/Python objects, with `Seer` retaining only the current stream monitor state and `Oracle` retaining raw records plus a geometric path. Representational form: symbolic/distributed-geometric numeric state, especially 4-float S3 elements. Lineage: derived deterministically from ordered byte records through hashing and quaternion composition. Behavioral authority: system-definition artifact authority for detection, comparison, and localization decisions; knowledge artifact authority when the returned `ClosureState`, `CompareResult`, or `LocalizationResult` is inspected as evidence. The promotion path is summary to escalation: a cheap state can trigger use of retained records and detailed incident reports.
 
 **Retention windows and incident reports.** Storage substrate: in-memory deques of `RetainedBlock`s during monitoring, plus optional CLI JSON reports written by `identity`, `observer`, or `seeker`. Representational form: raw byte-record evidence plus symbolic incident fields such as `incident_type`, source/target positions, payload, checks, drift, channels, and axis. Lineage: raw stream/file records are buffered directly; incident reports are derived by `gilgamesh`, `Enkidu`, and Hopf/valence decomposition. Behavioral authority: knowledge artifacts for forensic evidence and operator review; system-definition artifacts when a CLI exit code, monitor escalation, or downstream automation treats drift or incident type as an operational gate.
@@ -62,7 +65,7 @@ The strongest alignment is escalation discipline. A `Seer` keeps a tiny running 
 
 The main divergence is semantic authority. In Commonplace, a note, instruction, or type spec can be read and challenged as natural-language behavior guidance. In Closure-SDK, retrieval returns a row, carrier, incident, or genome value. That may be a powerful substrate for a future agent, but the repository itself does not include the policy layer that translates a retrieved geometric object into prompt advice, instruction, or a validator.
 
-Read-back: pull-only for agents. Closure-SDK exposes CLI/API/database/geometric retrieval that a caller deliberately invokes; `closure_ea` performs query-gated internal reads during ingest, but the repo does not implement relevance-gated push of memory into an LLM agent context.
+**Read-back:** `pull` — For agents. Closure-SDK exposes CLI/API/database/geometric retrieval that a caller deliberately invokes; `closure_ea` performs query-gated internal reads during ingest, but the repo does not implement relevance-gated push of memory into an LLM agent context
 
 ### Borrowable Ideas
 

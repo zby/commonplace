@@ -31,6 +31,9 @@ sift-kg, by Juan Ceresa, is a local document-to-knowledge-graph CLI and Python l
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — `output/extractions/*.json` on the local filesystem
+- **Representational form:** `mixed` — Symbolic JSON with prose fields for entity context quotes and relation evidence
+
 **Per-document extraction files.** Storage substrate: `output/extractions/*.json` on the local filesystem. Representational form: symbolic JSON with prose fields for entity context quotes and relation evidence. Lineage: derived from source documents through text extraction, chunking, optional schema discovery, document-context generation, and LLM JSON extraction; stale when model, domain, or chunk size changes. Behavioral authority: knowledge artifact as source evidence for graph construction; system-definition input to `sift build` because it determines nodes and edges.
 
 **Discovered or authored domain schemas.** Storage substrate: bundled domain files, user domain YAML, `sift.yaml`, and generated `output/discovered_domain.yaml`. Representational form: symbolic YAML plus prose descriptions and extraction hints. Lineage: authored for fixed domains or LLM-derived from document samples for schema-free runs. Behavioral authority: system-definition artifact: it constrains extraction prompts, type normalization, relation endpoint direction, canonical vocabularies, and review-required relation types.
@@ -51,7 +54,7 @@ Commonplace and sift-kg both prefer inspectable local artifacts over an opaque h
 
 The systems also differ in where they spend governance. Commonplace reviews and validates artifacts before they enter higher-authority positions. sift-kg lets LLM extraction create the initial graph, then focuses human attention on entity merges and suspect relations. That is a pragmatic fit for high-volume document mapping, but it makes the graph's unflagged extracted relations more trusted than Commonplace would normally allow for methodological claims.
 
-Read-back: pull-only. The graph reaches the agent through deliberate `info`, `topology`, `query`, `search`, viewer, export, or skill-guided lookup. I did not find an implemented host hook that automatically matches the user's current situation and injects graph memory into the agent context before action.
+**Read-back:** `pull` — The graph reaches the agent through deliberate `info`, `topology`, `query`, `search`, viewer, export, or skill-guided lookup. I did not find an implemented host hook that automatically matches the user's current situation and injects graph memory into the agent context before action
 
 The most relevant alignment is progressive disclosure. sift-kg's agent-facing topology command is a compact structural overview: communities, bridges, isolated nodes, and inter-community connections. Commonplace has indexes, descriptions, tags, links, and connect reports, but less explicit graph-topology output for "where are the knowledge islands?" style orientation.
 

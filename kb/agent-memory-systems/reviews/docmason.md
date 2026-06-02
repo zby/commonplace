@@ -34,6 +34,9 @@ DocMason, from JetXu-LLM's `DocMason` repository, is a repo-native local applica
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — The workspace filesystem under `original_doc/`, with sample public fixtures separately held under `sample_corpus/` and copied only for demo use (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/docs/product/distribution-and-benchmarks.md)
+- **Representational form:** `mixed` — Mixed: binary Office/PDF, text, email, markdown, and lightweight structured text
+
 **Private source corpus.** The storage substrate is the workspace filesystem under `original_doc/`, with sample public fixtures separately held under `sample_corpus/` and copied only for demo use (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/docs/product/distribution-and-benchmarks.md). The representational form is mixed: binary Office/PDF, text, email, markdown, and lightweight structured text. Lineage is source-of-truth input lineage, tracked through source manifests, fingerprints, path history, first/last seen metadata, and source IDs during sync. Behavioral authority is knowledge artifact authority: source files are evidence and reference, not direct instructions to the agent until compiled and retrieved.
 
 **Published knowledge base.** The storage substrate is `knowledge_base/current/`, produced from staging and versioning paths under `knowledge_base/` (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/project.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/versioning.py). The representational form is mixed prose plus symbolic JSON: `source_manifest.json`, `evidence_manifest.json`, `knowledge.json`, `summary.md`, extracted unit text, structure assets, render assets, artifact indexes, graph edges, retrieval records, trace records, affordances, and optional semantic overlays. Lineage is derived and partially regenerable from active sources plus sync state; validation checks required keys, citations, unit references, renders, summaries, related-source IDs, and placeholder content before retrieval/trace artifacts are rebuilt. Behavioral authority is primarily knowledge artifact authority at read time, with some system-definition authority in ranking, validation, provenance, and evidence-channel constraints.
@@ -65,7 +68,7 @@ The main divergence is that DocMason gives the runtime more power. Canonical ask
 
 DocMason's context strategy is also more engineered than ordinary markdown-vault lookup. It compiles multiple retrieval surfaces, hides heavy nested payloads behind compact projections, tracks evidence channels, recommends render escalation only when needed, and can include previous answer evidence pointers or interaction-derived memory based on question profile. Commonplace's current default navigation is cheaper and more transparent, but less directly optimized for host-agent context budgets.
 
-Read-back: both, with engineered push through canonical ask/warm-start/pending-interaction routing and pull through explicit `retrieve` and `trace`.
+**Read-back:** `both` — With engineered push through canonical ask/warm-start/pending-interaction routing and pull through explicit `retrieve` and `trace`
 
 ### Borrowable Ideas
 

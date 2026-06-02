@@ -34,6 +34,9 @@ Pal, from Agno's `agno-agi/pal` repository, is a personal knowledge agent built 
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — PostgreSQL PgVector tables plus Agno contents tables, created by `create_knowledge("Pal Knowledge", "pal_knowledge")` ([db/session.py](https://github.com/agno-agi/pal/blob/6516b8ede0c085e48f39f3bd04cb85b475a855dc/db/session.py))
+- **Representational form:** `mixed` — Mixed prose metadata and vector/keyword index state
+
 **`pal_knowledge` routing map.** Storage substrate: PostgreSQL PgVector tables plus Agno contents tables, created by `create_knowledge("Pal Knowledge", "pal_knowledge")` ([db/session.py](https://github.com/agno-agi/pal/blob/6516b8ede0c085e48f39f3bd04cb85b475a855dc/db/session.py)). Representational form: mixed prose metadata and vector/keyword index state. Lineage: authored and agent-written `File:`, `Schema:`, `Source:`, `Discovery:`, `Wiki:`, and `Raw:` entries, with bootstrap entries derived from the `context/` file tree by `context/load_context.py`. Behavioral authority: routing system-definition artifact. It decides what source an agent should inspect next, but the implementation and instructions warn that it is metadata, not raw content.
 
 **`pal_learnings` operational memory.** Storage substrate: PostgreSQL PgVector knowledge store named `pal_learnings`. Representational form: prose entries with title prefixes such as `Retrieval:`, `Pattern:`, and `Correction:`. Lineage: agent-authored through Agno `LearningMachine` behavior and through instruction-driven `save_learning` calls; local Pal code does not expose the extraction algorithm. Behavioral authority: advisory-to-instructional runtime context. Corrections are instructed to win over conflicts, and the leader explicitly adds learnings to context, so these records can shape future actions before the user asks for them.
@@ -71,7 +74,7 @@ The strongest alignment is progressive disclosure. Pal's `pal_knowledge` and wik
 
 Pal's specialist team also highlights a design tradeoff. Splitting Navigator, Researcher, Compiler, Linter, and Syncer reduces per-agent tool complexity, and it makes scheduled maintenance natural. But the semantics of a successful action are spread across instructions, tools, framework behavior, database state, and schedule prompts. Commonplace keeps more of its methodology in explicit artifacts that can be validated independently.
 
-Read-back: both pull and push. Pull paths include explicit tool calls such as wiki index reads, file reads, SQL queries, and knowledge searches. Push paths include Agno-added learnings, past-session/history context, and scheduled maintenance prompts before the agent's next action.
+**Read-back:** `both` — Pull paths include explicit tool calls such as wiki index reads, file reads, SQL queries, and knowledge searches. Push paths include Agno-added learnings, past-session/history context, and scheduled maintenance prompts before the agent's next action
 
 ### Borrowable Ideas
 

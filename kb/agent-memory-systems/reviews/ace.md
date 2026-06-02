@@ -32,6 +32,9 @@ ACE, from the `ace-agent/ace` repository, is an agentic context-engineering fram
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — An in-memory Python string during a run, with durable snapshots as `final_playbook.txt`, `best_playbook.txt`, and intermediate `*_playbook.txt` files under the configured results directory
+- **Representational form:** `mixed` — Mixed prose plus symbolic structure: section headers, bullet ids, helpful/harmful counters, and free-text advice
+
 **Playbook text and saved playbook files.** Storage substrate: an in-memory Python string during a run, with durable snapshots as `final_playbook.txt`, `best_playbook.txt`, and intermediate `*_playbook.txt` files under the configured results directory. Representational form: mixed prose plus symbolic structure: section headers, bullet ids, helpful/harmful counters, and free-text advice. Lineage: initialized from the default empty template or an imported `--initial_playbook_path`, then derived from task attempts, reflections, curator operations, optional deduplication, and validation selection. Behavioral authority: the playbook is a system-definition artifact when embedded in Generator prompts because it instructs future answers; it is also a knowledge artifact when inspected as accumulated task advice.
 
 **Generator, Reflector, and Curator prompt templates.** Storage substrate: Python constants in `ace/prompts/`. Representational form: prose instructions with symbolic JSON output schemas. Lineage: authored framework code, not learned from traces. Behavioral authority: these are system-definition artifacts that define how attempts are made, how traces are interpreted, and which playbook mutations are admissible. The prompts give high authority to LLM outputs, but their effective quality is not verifiable from code alone.
@@ -61,7 +64,7 @@ ACE also has a narrower context model. It does not browse a library, retrieve re
 
 The useful contrast is ACE's willingness to operationalize small learning cycles. A failed task attempt can become a reflection, a new bullet, a counter update, a validation-selected best playbook, and then instruction context for later attempts in the same run. Commonplace has stronger artifact governance, but less automatic conversion from local agent failures into candidate system-definition artifacts.
 
-**Read-back:** push by unconditional always-load; every Generator call receives the playbook in prompt context, but this commit does not implement relevance-gated push activation.
+**Read-back:** `push` — By unconditional always-load; every Generator call receives the playbook in prompt context, but this commit does not implement relevance-gated push activation
 
 ### Borrowable Ideas
 

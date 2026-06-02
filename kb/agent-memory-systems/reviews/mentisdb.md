@@ -35,6 +35,9 @@ MentisDB, from CloudLLM-ai, is a Rust durable memory engine and versioned skill 
 
 ## Artifact analysis
 
+- **Storage substrate:** `model-weights` — Local chain files through `StorageAdapter`, with binary `.tcbin` as the supported new-chain storage, plus per-chain agent/entity registries
+- **Representational form:** `mixed` — Mixed prose content, symbolic typed metadata, hashes, relations, timestamps, scopes, and optional signatures
+
 **Committed thought chains.** Storage substrate: local chain files through `StorageAdapter`, with binary `.tcbin` as the supported new-chain storage, plus per-chain agent/entity registries. Representational form: mixed prose content, symbolic typed metadata, hashes, relations, timestamps, scopes, and optional signatures. Lineage: authored/manual, API-imported, or caller-approved candidate memories; `source_episode` can record an origin label, and hash chaining records append-order integrity, but exact source spans or model/prompt versions are not inherent to a thought. Behavioral authority: knowledge artifacts when searched or read as evidence/context; relation validity, dedup/supersession, scopes, and query filters have system-definition authority over what is eligible and current.
 
 **Search indexes, vector sidecars, implicit edges, and context bundles.** Storage substrate: in-memory lexical/query indexes, persisted vector sidecar JSON files, persisted auto-edge overlays, and ephemeral bundle results. Representational form: symbolic indexes and scores plus distributed-parametric vectors. Lineage: derived from committed thoughts, embedding provider metadata, chain head hash, and graph relations; sidecar freshness and integrity metadata determine when to rebuild. Behavioral authority: ranking, selection, expansion, and grouping authority over read-back, not canonical memory authority.
@@ -66,7 +69,7 @@ The largest design difference is artifact authority. In MentisDB, most thoughts 
 
 MentisDB's hash-chain and sidecar design is a useful contrast to Commonplace's plain-file approach. MentisDB gives append-order integrity, rebuildable search sidecars, and transport-ready service state. Commonplace gives line-diffable prose and simpler review of semantic claims. The right borrow is not "replace Markdown with thought chains"; it is "treat derived search state as disposable and trace it back to canonical artifacts."
 
-Read-back: mostly pull, with unconditional or host-mediated context loading in some integrations. Agents or hosts call MCP/REST/CLI/dashboard/Python/LangChain search/read APIs, and the MCP bootstrap pushes instructions to load the core skill; I did not find a code-grounded relevance-gated pre-action memory-content injection path that warrants `push-activation`.
+**Read-back:** `both` — Mostly pull, with unconditional or host-mediated context loading in some integrations. Agents or hosts call MCP/REST/CLI/dashboard/Python/LangChain search/read APIs, and the MCP bootstrap pushes instructions to load the core skill; I did not find a code-grounded relevance-gated pre-action memory-content injection path that warrants `push-activation`
 
 ### Borrowable Ideas
 

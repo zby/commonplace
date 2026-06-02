@@ -31,6 +31,9 @@ last-checked: "2026-06-01"
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Repository files under `.claude-plugin/`
+- **Representational form:** `symbolic` — Symbolic JSON metadata
+
 **Plugin and marketplace manifests.** The storage substrate is repository files under `.claude-plugin/`. The representational form is symbolic JSON metadata. Lineage is authored repository configuration. Behavioral authority is system-definition authority at install time: it identifies the plugin package and makes root-level skills and agents installable through Claude Code's marketplace flow. It does not perform runtime selection itself.
 
 **Claude settings allowlist.** The storage substrate is `.claude/settings.json`. The representational form is symbolic permission and capability configuration. Lineage is authored and must be manually updated when new canonical skills are added. Behavioral authority is system-definition authority over which tools, WebFetch domains, MCP servers, and skill identifiers the host may use. The file broadens the available action surface, but relevance and invocation are host-mediated.
@@ -62,7 +65,7 @@ The closest Commonplace analogue is not the note library; it is `kb/instructions
 
 `getsentry/skills` is stronger on adoption packaging. Claude plugin manifests, README installation commands, a settings allowlist, and a root `skills/` tree make the system easier to install as a team-wide instruction distribution channel. Commonplace is stronger on artifact taxonomy and durable review. It makes the distinction between knowledge artifact, instruction, source, review, and generated index explicit, while `getsentry/skills` leaves many authority distinctions implicit inside skill prose and optional specs.
 
-Read-back: pull plus host-mediated static activation. Skills can be manually invoked or selected by the host from descriptions, and Warden can run `skill-scanner` on PR events, but I did not find repository code implementing relevance-gated memory injection into an agent's context.
+**Read-back:** `both` — Plus host-mediated static activation. Skills can be manually invoked or selected by the host from descriptions, and Warden can run `skill-scanner` on PR events, but I did not find repository code implementing relevance-gated memory injection into an agent's context
 
 ### Borrowable Ideas
 

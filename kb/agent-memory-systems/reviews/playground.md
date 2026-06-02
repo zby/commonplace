@@ -34,6 +34,9 @@ Playground, from TribleSpace's `triblespace/playground` repository, is a Rust ru
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — A local TribleSpace pile file, with named branches such as config, cognition, memory, archive, and auxiliary branches used by faculties or diagnostics
+- **Representational form:** `symbolic` — Symbolic graph facts plus blob handles for long strings, unknown blobs, raw JSON, and simple archives
+
 **TribleSpace pile and branches.** Storage substrate: a local TribleSpace pile file, with named branches such as config, cognition, memory, archive, and auxiliary branches used by faculties or diagnostics. Representational form: symbolic graph facts plus blob handles for long strings, unknown blobs, raw JSON, and simple archives. Lineage: authored by the runtime, workers, importers, config commands, and external faculty commands; invalidation is branch/head and blob-handle based rather than file-path based. Behavioral authority: system-definition artifact when branch state drives model requests, command execution, config, routing, prompt assembly, and diagnostics; knowledge artifact when inspected as history.
 
 **Cognition/model/exec turn chain.** Storage substrate: the cognition branch in the pile. Representational form: symbolic lifecycle entities plus prose/blob payloads for contexts, model outputs, reasoning text, commands, stdout, stderr, and raw provider responses. Lineage: generated online by the core loop, model worker, and exec worker. Each turn links thought to model request/result and command request/result, with provider raw JSON imported where possible. Behavioral authority: system-definition artifact because the latest result determines the next prompt and next command; knowledge artifact when later read for audit, provenance, or diagnostics.
@@ -69,7 +72,7 @@ The most useful Commonplace comparison is the split between retained evidence an
 
 Playground also treats context caching as a first-class design constraint. Commonplace usually optimizes retrieval and reviewability; Playground optimizes continuity under a live model loop, including prefix-cache survival across memory-cover changes. That is a distinct form of context engineering worth borrowing, but only for runtime packs where repeated model calls consume a stable history prefix.
 
-Read-back: both, with engineered push. The model can run memory/archive/orient faculties as pull commands, but the implemented core also pushes a selected memory cover before each model action. The push is time/hierarchy/budget gated, not semantic relevance gated.
+**Read-back:** `both` — With engineered push. The model can run memory/archive/orient faculties as pull commands, but the implemented core also pushes a selected memory cover before each model action. The push is time/hierarchy/budget gated, not semantic relevance gated
 
 ### Borrowable Ideas
 

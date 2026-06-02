@@ -30,6 +30,9 @@ ARIS, from wanshuiyin's `Auto-claude-code-research-in-sleep`, is a research work
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — The repository filesystem under `skills/`, mirrored into target projects as symlinked `.claude/skills/` entries by `install_aris.sh`
+- **Representational form:** `mixed` — Mixed: prose procedures, symbolic frontmatter, shell snippets, and resolver contracts
+
 **Skill corpus.** Storage substrate is the repository filesystem under `skills/`, mirrored into target projects as symlinked `.claude/skills/` entries by `install_aris.sh`. Representational form is mixed: prose procedures, symbolic frontmatter, shell snippets, and resolver contracts. Lineage is authored, with helper drift checks and install manifests but not a generated build graph for every skill. Behavioral authority is system-definition authority: skills instruct the agent, route tools, define gates, name outputs, and constrain what counts as completion.
 
 **Research Wiki.** Storage substrate is project-local files under `research-wiki/`. Representational form is mixed: Markdown pages, YAML-ish frontmatter, JSONL graph edges, append-only logs, and compiled Markdown `query_pack.md`. Lineage is partly authored and partly imported or derived: arXiv metadata, manually supplied theses, generated slugs, deterministic indexes, deterministic query-pack slices, and edges added by skills. Behavioral authority varies by consumption path. Paper pages and logs are knowledge artifacts when read as evidence; `graph/edges.jsonl`, failed-idea entries, claim statuses, and `query_pack.md` become system-definition artifacts when `/idea-creator` uses them to ban repetition, seed search, or condition candidate generation.
@@ -76,7 +79,7 @@ The main divergence is register and product pressure. ARIS is prescriptive and o
 
 ARIS also pushes harder on cross-model governance. Commonplace has semantic review bundles and validation, but ARIS makes "executor cannot acquit itself" a repeated runtime contract: result-to-claim, auto-review-loop, run-state acceptance, and meta-apply all preserve some form of external verdict handle. That is a strong pattern for any system that lets agents produce downstream behavior-shaping artifacts.
 
-**Read-back:** both — agents deliberately invoke skills and read files, while query packs, recovery hooks, readiness hooks, monitors, queues, and run-state resume paths can proactively surface selected context before the next action.
+**Read-back:** `both` — Agents deliberately invoke skills and read files, while query packs, recovery hooks, readiness hooks, monitors, queues, and run-state resume paths can proactively surface selected context before the next action
 
 ## Trace-derived learning placement
 

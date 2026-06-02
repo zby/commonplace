@@ -31,6 +31,9 @@ Voiden, from VoidenHQ, is an offline, Git-native API workspace for building, tes
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Ordinary project files, intended to be edited, searched, diffed, and committed with Git
+- **Representational form:** `mixed` — Mixed Markdown prose, YAML frontmatter, symbolic `void` block nodes, UIDs, attrs, tables, links, variables, and script/assertion blocks
+
 **`.void` workspace files.** Storage substrate: ordinary project files, intended to be edited, searched, diffed, and committed with Git. Representational form: mixed Markdown prose, YAML frontmatter, symbolic `void` block nodes, UIDs, attrs, tables, links, variables, and script/assertion blocks. Lineage: authored in the editor, created from sample projects, imported from Postman/OpenAPI, exported from history, or edited by humans/agents; parser/serializer and plugin node schemas determine how file changes regenerate editor state. Behavioral authority: knowledge artifacts as API documentation and examples; system-definition artifacts when request blocks, environment references, scripts, assertions, and stitch config drive request execution.
 
 **Project metadata, environments, and runtime variables.** Storage substrate: `.voiden/.voiden-projects`, `.voiden/env-public.yaml`, `.voiden/env-private.yaml`, profile-specific env YAML files, legacy `.env*` files, and `.voiden/.process.env.json` ([projectUtils.ts](https://github.com/VoidenHQ/voiden/blob/c0776cb399ab452dc942b606c7b34f80b95c4412/apps/electron/src/main/projectUtils.ts), [env.ts](https://github.com/VoidenHQ/voiden/blob/c0776cb399ab452dc942b606c7b34f80b95c4412/apps/electron/src/main/env.ts), [variables.ts](https://github.com/VoidenHQ/voiden/blob/c0776cb399ab452dc942b606c7b34f80b95c4412/apps/electron/src/main/variables.ts)). Representational form: symbolic JSON/YAML/key-value state. Lineage: authored or runtime-written configuration, with public/private split and profile inheritance. Behavioral authority: routing/configuration authority over which project, env profile, and variables requests consume; not memory advice by itself.
@@ -58,7 +61,7 @@ Voiden and Commonplace share the strongest file-first instinct: important work s
 
 The biggest divergence is authority. In Voiden, symbolic request blocks have execution authority, but documentation and skill text are only as authoritative as the host agent makes them. In Commonplace, the KB is explicitly designed around behavior-shaping retained artifacts, so instructions, validators, reviews, notes, and indexes are classified by authority and lifecycle.
 
-Read-back: pull. Voiden stores and exposes readable workspace artifacts, search results, git status, history, and static installed skills, but I did not find a code-grounded relevance-gated pre-action push path that injects selected project memory into an agent context.
+**Read-back:** `pull` — Voiden stores and exposes readable workspace artifacts, search results, git status, history, and static installed skills, but I did not find a code-grounded relevance-gated pre-action push path that injects selected project memory into an agent context
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ Ars Contexta is `agenticnotetaking/arscontexta`, a Claude Code plugin for genera
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Plain markdown files in the generated domain notes directory, connected by wiki links and YAML frontmatter
+- **Representational form:** `mixed` — Prose with symbolic metadata; optional qmd embeddings are a derived retrieval index, not the authoritative memory
+
 **Generated vault notes and MOCs.** Storage substrate: plain markdown files in the generated domain notes directory, connected by wiki links and YAML frontmatter. Representational form: prose with symbolic metadata; optional qmd embeddings are a derived retrieval index, not the authoritative memory. Lineage: derived from user-provided sources, inbox items, research runs, and processing skills; MOC placement and links are generated or updated by `/reflect` and `/reweave`. Behavioral authority: knowledge artifacts when read as evidence or context, and weak system-definition artifacts when `CLAUDE.md` or skills treat descriptions, topics, and MOC membership as required gates.
 
 **Generated `CLAUDE.md` and feature blocks.** Storage substrate: a context file generated from `generators/claude-md.md` and `generators/features/*.md`. Representational form: instructional prose with embedded routing tables and examples. Lineage: assembled from plugin templates, selected feature blocks, user conversation signals, `ops/derivation.md`, and vocabulary transformation rules. Behavioral authority: system-definition artifact with prompt-instruction force; it shapes session orientation, note creation, routing, pipeline compliance, maintenance, and self-improvement.
@@ -67,7 +70,7 @@ The closest Commonplace analogue is the split between library and workshop. Ars 
 
 The main caution is that Ars Contexta sometimes describes stronger automation than this checkout fully wires. The README names a `Stop` session-capture hook that persists session state, and setup documentation describes generating a `session-capture.sh`; the checked-in `hooks/hooks.json` only registers `SessionStart` and `PostToolUse`, and the checked-in session hook records session JSON rather than full transcripts ([README.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/README.md), [hooks/hooks.json](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/hooks.json), [hooks/scripts/session-orient.sh](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/session-orient.sh), [skills/setup/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills/setup/SKILL.md)). The session-mining skill is a real retained procedure, but automatic transcript capture appears partially ahead of the installed hook surface at this revision.
 
-**Read-back:** both. Agents can pull notes, MOCs, research claims, and skills deliberately, while SessionStart and PostToolUse hooks push orientation, maintenance signals, validation warnings, and persistence behavior into the agent's path.
+**Read-back:** `both` — Agents can pull notes, MOCs, research claims, and skills deliberately, while SessionStart and PostToolUse hooks push orientation, maintenance signals, validation warnings, and persistence behavior into the agent's path
 
 ### Borrowable Ideas
 

@@ -31,6 +31,9 @@ Exocomp, from Cookie Engineer's `cookiengineer/exocomp` repository, is a self-ho
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Go-embedded YAML under `source/agents/`, with an extension hook that reads `agents/*.yaml` from the playground at tool boot
+- **Representational form:** `mixed` — Mixed prose and symbolic permissions: role prompts, model defaults, temperature, allowed tools, and allowed programs
+
 **Embedded and playground-provided role definitions.** The storage substrate is Go-embedded YAML under `source/agents/`, with an extension hook that reads `agents/*.yaml` from the playground at tool boot. The representational form is mixed prose and symbolic permissions: role prompts, model defaults, temperature, allowed tools, and allowed programs. Lineage is authored configuration, either shipped in the repository or supplied by the local playground. Behavioral authority is system-definition artifact authority: the role package defines the initial system prompt and the executable surface available to the agent.
 
 **Session message history and recovery files.** The storage substrate is in-memory `Session.Agent.Messages` during a run and `.exocomp/session.json` plus `.exocomp/agents/*.json` for TTY/web recovery. The representational form is structured JSON containing prose chat messages, tool-call records, role metadata, and context-usage counters. Lineage is raw runtime interaction: user messages, assistant outputs, tool results, child-agent message streams, and restored prior state. Behavioral authority is continuity context when restored or retained in the current request; it is a knowledge artifact and soft instruction context, not curated durable guidance.
@@ -62,7 +65,7 @@ Exocomp is stronger on live agent orchestration. The planner can spawn role-boun
 
 Commonplace is stronger on artifact governance. Exocomp's JSON ledgers are easy for agents to read and write, but they have thin schemas, no citation discipline, no validation lifecycle beyond tool-level parsing, and no semantic review before a recorded requirement or bug influences later action. That is appropriate for a local coding workbench but too weak for durable methodology claims.
 
-Read-back: both, but not relevance-gated. Role prompts and restored sessions are pushed unconditionally into the agent's context; requirements, bugs, changelogs, work reports, file contents, and skills enter through explicit tool calls or manual skill loading.
+**Read-back:** `both` — But not relevance-gated. Role prompts and restored sessions are pushed unconditionally into the agent's context; requirements, bugs, changelogs, work reports, file contents, and skills enter through explicit tool calls or manual skill loading
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ SkillX, from `zjunlp/SkillX`, is a framework for constructing reusable skill kno
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — JSON or JSONL files loaded by `TrajectoryLoader`, plus in-memory dictionaries during pipeline execution
+- **Representational form:** `mixed` — Symbolic/prose interaction histories with roles, tool calls, user task, reward, task id, and metadata
+
 **Trajectory records.** Storage substrate: JSON or JSONL files loaded by `TrajectoryLoader`, plus in-memory dictionaries during pipeline execution. Representational form: symbolic/prose interaction histories with roles, tool calls, user task, reward, task id, and metadata. Lineage: imported benchmark or exploration traces; long tool responses may be summarized into derived trace views before extraction. Behavioral authority: knowledge artifacts during construction, because they provide evidence for extraction; evaluation authority comes from reward filtering. They are not the prompt artifact consumed by future agents unless a host separately loads them.
 
 **Planning skills.** Storage substrate: `SkillLibrary.planning`, checkpoint JSON under `output/checkpoints/`, and exported plan JSON when requested. Representational form: concise prose plans with symbolic `# step` markers. Lineage: LLM-distilled from successful trajectories, optionally combined across multiple plans for the same task. Behavioral authority: advisory system-definition artifacts when retrieved and inserted into an agent prompt as a reference plan; knowledge artifacts when inspected as examples of prior task structure.
@@ -62,7 +65,7 @@ SkillX is a clean example of trace-derived artifact learning: it does not ask th
 
 The important divergence is the quality oracle. SkillX uses benchmark reward and LLM judges to decide what to extract, keep, merge, or filter. Commonplace normally treats semantic quality as reviewable and source-grounded, not only benchmark-success-derived. That difference matters because a task-successful trajectory can still produce overfit, stale, or misleading advice.
 
-Read-back: both - the retrieval service is pull machinery internally, but from the receiving agent's perspective selected plans and skills are pushed into the system prompt before action through `SkillUsageService.prepare_prompt()`.
+**Read-back:** `both` — The retrieval service is pull machinery internally, but from the receiving agent's perspective selected plans and skills are pushed into the system prompt before action through `SkillUsageService.prepare_prompt()`
 
 ### Borrowable Ideas
 

@@ -33,6 +33,9 @@ napkin, from Michaelliv's `Michaelliv/napkin` repository, is a local-first TypeS
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Project filesystem under the vault content root, excluding hidden/system directories such as `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, and `node_modules` during listing ([src/utils/files.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/utils/files.ts))
+- **Representational form:** `mixed` — Prose Markdown with optional YAML frontmatter, headings, tasks, tags, wikilinks, and Obsidian-compatible structures
+
 **Vault Markdown notes.** Storage substrate: project filesystem under the vault content root, excluding hidden/system directories such as `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, and `node_modules` during listing ([src/utils/files.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/utils/files.ts)). Representational form: prose Markdown with optional YAML frontmatter, headings, tasks, tags, wikilinks, and Obsidian-compatible structures. Lineage: authored or imported by users and agents through file edits, CLI CRUD commands, templates, daily-note commands, or external Obsidian editing; Napkin itself preserves files rather than canonicalizing them into another store. Behavioral authority: knowledge artifacts when searched/read as evidence or context; weak system-definition artifacts when a host treats a note as instruction.
 
 **`NAPKIN.md`.** Storage substrate: a top-level Markdown file created as an empty file for bare vaults or from template skeletons during scaffold/init ([src/utils/vault.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/utils/vault.ts), [src/core/init.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/core/init.ts)). Representational form: prose. Lineage: authored by the user/agent or seeded by a template; invalidated by ordinary file edits. Behavioral authority: from Napkin's implementation it is context returned by `overview`; from a host agent's perspective it can become always-loaded advisory instruction if the host injects the overview or file. Napkin core does not itself run an agent or force that load.
@@ -66,7 +69,7 @@ The main divergence is authority and lifecycle. Napkin optimizes for capture and
 
 Napkin's read path also keeps activation deliberately manual. The system can make knowledge discoverable and cheap to inspect, but it does not decide that a given memory is relevant before an action or inject it into an agent loop. That makes Napkin easy to trust operationally, but it preserves the classic second-brain problem: stored knowledge affects behavior only when the agent asks the right thing or the host separately injects context.
 
-Read-back: pull-only. In the implemented core, memory reaches the agent through explicit CLI/SDK calls such as `overview`, `search`, `read`, links, tasks, tags, properties, bases, and file commands; `NAPKIN.md` is included when overview is called, not automatically pushed by Napkin itself.
+**Read-back:** `pull` — In the implemented core, memory reaches the agent through explicit CLI/SDK calls such as `overview`, `search`, `read`, links, tasks, tags, properties, bases, and file commands; `NAPKIN.md` is included when overview is called, not automatically pushed by Napkin itself
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ ReasoningBank, from Google Research's `google-research/reasoning-bank` repositor
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — WebArena writes website- and mode-scoped JSONL files such as `memories_reasoningbank/{website}.jsonl`, `memories_awm/{website}.jsonl`, `memories_synapse/{website}.jsonl`, and `memories_scaling/{website}.jsonl`; SWE-Bench writes `./memory/{model}.jsonl` under the mini-SWE-agent working tree
+- **Representational form:** `mixed` — Mixed symbolic JSON wrapper plus prose or Markdown memory items; WebArena records also preserve query, task id, template id, status, and sometimes raw `think_list` and `action_list`
+
 **Reasoning memory JSONL records.** Storage substrate: WebArena writes website- and mode-scoped JSONL files such as `memories_reasoningbank/{website}.jsonl`, `memories_awm/{website}.jsonl`, `memories_synapse/{website}.jsonl`, and `memories_scaling/{website}.jsonl`; SWE-Bench writes `./memory/{model}.jsonl` under the mini-SWE-agent working tree. Representational form: mixed symbolic JSON wrapper plus prose or Markdown memory items; WebArena records also preserve query, task id, template id, status, and sometimes raw `think_list` and `action_list`. Lineage: trace-derived from benchmark result directories, step pickle files or trajectory JSON, task configs, auto-evaluation or LLM judge outcomes, and an LLM extraction prompt; the JSONL line is a distilled view, not the raw trace. Behavioral authority: knowledge artifact when inspected as evidence of prior experience; system-definition artifact when retrieved and injected into a later agent's system context as advice that can change the next action.
 
 **Embedding cache JSONL.** Storage substrate: JSONL files such as `memories_reasoningbank/{website}_embeddings.jsonl` and `./memory/{model}_embeddings.jsonl`. Representational form: symbolic ids and text fields plus distributed-parametric embedding vectors. Lineage: generated online from task queries or problem statements by Gemini or Qwen embedding calls; each retrieval appends the current task embedding after loading the existing cache. Behavioral authority: ranking system-definition artifact because it decides which memory record is selected for read-back. The cache is not a canonical explanatory source; it is a derived selection index that can drift from the memory bank if ids are missing, duplicated, or stale.
@@ -61,7 +64,7 @@ The useful divergence is authority speed. ReasoningBank is optimized for benchma
 
 ReasoningBank also makes the read-back boundary unusually explicit. The selected memory is not just returned to a caller; the harness writes it into the agent's system context. That makes it a clear case where a knowledge-looking artifact becomes system-definition context at consumption time.
 
-**Read-back:** both. Operators configure or omit the memory path, but from the receiving agent's perspective the implemented memory path is embedding-gated push: one selected prior memory is inserted into the system context before the next WebArena or SWE-Bench action loop.
+**Read-back:** `both` — Operators configure or omit the memory path, but from the receiving agent's perspective the implemented memory path is embedding-gated push: one selected prior memory is inserted into the system context before the next WebArena or SWE-Bench action loop
 
 ### Borrowable Ideas
 

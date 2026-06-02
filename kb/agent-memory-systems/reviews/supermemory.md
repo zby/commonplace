@@ -32,6 +32,9 @@ Supermemory, from `supermemoryai/supermemory`, is an open-source monorepo around
 
 ## Artifact analysis
 
+- **Storage substrate:** `service-object` — Supermemory's hosted API and data stores, reached through `/v3/documents`, `/v4/search`, `/v4/profile`, `/v4/conversations`, and SDK wrappers; the exact database/vector/graph substrates are not implemented in this checkout
+- **Representational form:** `mixed` — Mixed raw text/HTML/Markdown, structured conversation messages, metadata, memory strings, lifecycle/version fields, and API-side embeddings/search state
+
 **Hosted documents and memory entries.** Storage substrate: Supermemory's hosted API and data stores, reached through `/v3/documents`, `/v4/search`, `/v4/profile`, `/v4/conversations`, and SDK wrappers; the exact database/vector/graph substrates are not implemented in this checkout. Representational form: mixed raw text/HTML/Markdown, structured conversation messages, metadata, memory strings, lifecycle/version fields, and API-side embeddings/search state. Lineage: imported from user saves, URLs, browser-captured pages, prompt captures, agent conversation traces, and connector sources; API-side chunking, extraction, embedding, update/forget logic, and graph inference are described in docs but not locally auditable. Behavioral authority: knowledge artifact when returned as memories/search results/documents; ranking and filtering authority when the hosted service orders results, marks latest/forgotten state, or builds profile arrays.
 
 **Profile response.** Storage substrate: hosted `/v4/profile` response consumed by MCP, SDKs, middleware, and examples. Representational form: symbolic JSON containing `profile.static`, `profile.dynamic`, and optional `searchResults`, then prose Markdown when formatted for prompts. Lineage: API-side derived view over stored documents/memories and optional query; invalidation is opaque from local code except that new documents/conversations and forget operations can change future responses. Behavioral authority: advisory context when manually fetched; system-definition authority in integrations that insert it into a system prompt or framework input processor before generation.
@@ -61,7 +64,7 @@ Supermemory is stronger than Commonplace as an adoption and activation layer. A 
 
 The main tradeoff is opacity versus ergonomics. Supermemory's hosted API returns useful high-level surfaces like static/dynamic profile and search results, but the reviewed repo does not let us audit the extraction oracle, contradiction handling, embedding model, graph construction, or profile cache. Commonplace exposes the artifact and validator machinery but asks agents to navigate and compose context more deliberately.
 
-Read-back: both, with engineered push activation. MCP `recall`, API search, and SDK tools are pull surfaces, while OpenAI/Vercel/Mastra/Python middleware and MCP `context` prompt paths can fetch profile/search context before generation and inject it into system or prompt context; the browser extension can also append related memories into the prompt field before submission.
+**Read-back:** `both` — With engineered push activation. MCP `recall`, API search, and SDK tools are pull surfaces, while OpenAI/Vercel/Mastra/Python middleware and MCP `context` prompt paths can fetch profile/search context before generation and inject it into system or prompt context; the browser extension can also append related memories into the prompt field before submission
 
 ### Borrowable Ideas
 

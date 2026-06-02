@@ -32,6 +32,9 @@ OS-Copilot is the OS-Copilot team's open-source framework for building generalis
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — `oscopilot/tool_repository/generated_tools/generated_tools.json`, `tool_code/*.py`, `tool_description/*.txt`, and the Chroma database under `generated_tools/vectordb`
+- **Representational form:** `mixed` — Mixed symbolic/prose/code state: Python source code, JSON metadata, prose descriptions, and distributed-parametric embeddings over descriptions
+
 **Generated tools.** Storage substrate: `oscopilot/tool_repository/generated_tools/generated_tools.json`, `tool_code/*.py`, `tool_description/*.txt`, and the Chroma database under `generated_tools/vectordb`. Representational form: mixed symbolic/prose/code state: Python source code, JSON metadata, prose descriptions, and distributed-parametric embeddings over descriptions. Lineage: trace-derived from an executed Python subtask after LLM generation, environment execution, LLM judging, optional repair, and a score threshold; manual imports can also add tools through `tool_manager.py --add`. Behavioral authority: system-definition artifact when retrieved descriptions enter planning and retrieved code enters future generation prompts; knowledge artifact when merely listed or inspected as a library entry.
 
 **Tool-description embeddings and Chroma retrieval index.** Storage substrate: local Chroma persistent directory. Representational form: distributed-parametric vectors plus metadata ids. Lineage: derived view over tool descriptions; regenerated or updated when `ToolManager.add_new_tool()` or deletion changes the tool set. Behavioral authority: ranking and routing authority, because similarity search selects which tool names, descriptions, and code can influence later planning and execution. The code asserts that Chroma's collection count matches `generated_tools.json`, but it does not audit semantic quality.
@@ -62,7 +65,7 @@ FRIDAY is more operationally aggressive. It lets a successful task trace become 
 
 The design tradeoff is authority without review. A generated Python tool can affect future task decomposition and code generation after one LLM judgment and a score threshold. That is powerful for learning APIs like `openpyxl`; it is risky for durable system behavior because the source does not preserve the full lesson, execution trace, judge rationale, repair history, or reviewer decision alongside the stored code.
 
-Read-back: both, with engineered push activation. Tool descriptions are automatically retrieved from task text before planning, and tool code is automatically retrieved from Python subtask descriptions before code generation; there are also manual add/delete commands for tool repository management.
+**Read-back:** `both` — With engineered push activation. Tool descriptions are automatically retrieved from task text before planning, and tool code is automatically retrieved from Python subtask descriptions before code generation; there are also manual add/delete commands for tool repository management
 
 ### Borrowable Ideas
 

@@ -31,6 +31,9 @@ HippoRAG is the OSU NLP Group's Python framework for graph-based retrieval-augme
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Local parquet in `chunk_embeddings/vdb_chunk.parquet`, keyed by MD5-derived chunk IDs
+- **Representational form:** `mixed` — Mixed: prose passage text plus distributed-parametric embeddings and symbolic hash IDs
+
 **Corpus chunks.** The storage substrate is local parquet in `chunk_embeddings/vdb_chunk.parquet`, keyed by MD5-derived chunk IDs. The representational form is mixed: prose passage text plus distributed-parametric embeddings and symbolic hash IDs. Lineage is imported from caller-supplied `docs`; duplicate detection is content-hash based, and regeneration follows `force_index_from_scratch` or changed input text. Behavioral authority is knowledge-artifact authority when chunks are read as evidence, and ranking authority when their embeddings participate in retrieval.
 
 **OpenIE entities and triples.** Entities and facts persist as parquet embedding stores, while the extraction record persists as JSON under `save_dir` when `save_openie` is true. Their representational form is mixed: prose-like extracted strings/triples, symbolic IDs and JSON fields, and embeddings. Lineage is derived from corpus chunks through NER and triple-extraction prompts; a changed passage, extraction prompt, LLM, or force flag invalidates them. Behavioral authority is system-definition artifact authority for retrieval because these extracted facts select graph entry points and PageRank reset weights. They are not promoted into reviewed claims.
@@ -60,7 +63,7 @@ The key divergence is what "memory" means. HippoRAG uses memory in the RAG sense
 
 HippoRAG's context engineering is efficient but opaque. The system keeps only top-ranked facts and passages moving toward the QA prompt, then truncates to `qa_top_k`. That avoids loading the full corpus, but the agent does not get a progressive map, source-quality state, or authored navigation trail. The ranking stack is useful for retrieval, less useful for an agent that must justify why a remembered artifact should guide a workflow.
 
-Read-back: pull-only - a caller invokes `retrieve`, `retrieve_dpr`, `rag_qa`, or `rag_qa_dpr`; the reviewed repository does not implement a relevance-gated host hook that pushes memories into an agent before action.
+**Read-back:** `pull` — A caller invokes `retrieve`, `retrieve_dpr`, `rag_qa`, or `rag_qa_dpr`; the reviewed repository does not implement a relevance-gated host hook that pushes memories into an agent before action
 
 ### Borrowable Ideas
 

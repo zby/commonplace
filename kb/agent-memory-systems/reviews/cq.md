@@ -36,6 +36,9 @@ cq is Mozilla AI's shared agent knowledge commons: a plugin, CLI/MCP server, SDK
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — Local SQLite in the Go SDK and server-side SQL through the FastAPI backend, with remote node discovery and API-key auth when configured
+- **Representational form:** `mixed` — Mixed: prose `summary`, `detail`, and `action` plus symbolic domains, context, tier, confidence, flags, status, and ids
+
 **Knowledge units.** Storage substrate is local SQLite in the Go SDK and server-side SQL through the FastAPI backend, with remote node discovery and API-key auth when configured. Representational form is mixed: prose `summary`, `detail`, and `action` plus symbolic domains, context, tier, confidence, flags, status, and ids. Lineage is authored or trace-derived depending on whether a human/agent proposed it directly or generated it through `/cq:reflect`; stored lineage is limited to timestamps, creator on the remote, confidence/flag history, and review status, not source transcript offsets. Behavioral authority is advisory knowledge-artifact authority when returned by `query`; it becomes stronger only because the cq skill instructs the agent to verify, apply, confirm, or flag it.
 
 **Skill, slash commands, plugin manifest, and bootstrapper.** Storage substrate is the plugin filesystem bundle. Representational form is prose plus JSON manifest and Python launcher code. Lineage is authored package content, versioned with the repository and release bundle. Behavioral authority is system-definition: the skill instructs when to query/propose/confirm/flag, slash commands shape retrospective review, the manifest wires MCP tools into the host, and the bootstrapper controls which executable actually handles tool calls.
@@ -65,7 +68,7 @@ The strongest divergence is artifact granularity. A cq KU is intentionally atomi
 
 The authority split is also different. cq's stored KUs are mostly knowledge artifacts: evidence, hints, or advice returned through a tool. The skill and server policies are the system-definition artifacts that give those KUs operational force. In Commonplace, many retained artifacts are themselves system-definition artifacts: instructions, type specs, validators, ADRs, review gates, and collection contracts can directly constrain future work.
 
-Read-back: pull — stored cq knowledge reaches an agent when the agent or skill-guided workflow deliberately calls `query`; this commit does not implement relevance-gated KU injection into the agent context.
+**Read-back:** `pull` — Stored cq knowledge reaches an agent when the agent or skill-guided workflow deliberately calls `query`; this commit does not implement relevance-gated KU injection into the agent context
 
 ### Borrowable Ideas
 

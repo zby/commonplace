@@ -34,6 +34,9 @@ SAGE, from `amazon-science/SAGE`, is a research implementation of Skill Augmente
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories
+- **Representational form:** `mixed` — Symbolic JSON records carrying prose task ids and executable Python function text
+
 **Predefined skill-library JSONL.** Storage substrate: filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories. Representational form: symbolic JSON records carrying prose task ids and executable Python function text. Lineage: extracted from successful or accepted agent trajectories by AST parsing generated code; imported predefined libraries have weaker visible provenance in this repo. Behavioral authority: system-definition artifact at read-back time because selected functions are inserted into the prompt and executed in the AppWorld environment before the next task.
 
 **Skill and query embedding files.** Storage substrate: PyTorch `.pt` files such as `skill_embeddings.pt` and `query_embeddings.pt`, with `query_list.jsonl` for task ids and instructions. Representational form: distributed-parametric embeddings plus symbolic query/task metadata. Lineage: derived from extracted skill function text or AppWorld task instructions through a SentenceTransformer model. Behavioral authority: ranking system-definition artifact because embedding similarity determines which skills enter the agent context under the embedding retrieval modes.
@@ -62,7 +65,7 @@ SAGE is a useful contrast case because it treats "memory" as reusable executable
 
 The biggest divergence is authority. In SAGE, retained skill code crosses into the environment and model weights quickly. Once a skill is pushed into context or learned into the policy, it can change behavior without a prose review layer. Commonplace intentionally keeps most retained knowledge as readable evidence or typed guidance until validation or instruction machinery gives it stronger force.
 
-**Read-back:** push with engineered selection. From the acting AppWorld agent's perspective, skill functions arrive in the initial prompt before it asks for them; selection may be same-scenario, embedding-based, query-based, n-gram-based, or staged from the first subtask to the second.
+**Read-back:** `push` — With engineered selection. From the acting AppWorld agent's perspective, skill functions arrive in the initial prompt before it asks for them; selection may be same-scenario, embedding-based, query-based, n-gram-based, or staged from the first subtask to the second
 
 ### Borrowable Ideas
 

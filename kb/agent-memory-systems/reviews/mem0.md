@@ -34,6 +34,9 @@ Mem0, from mem0ai, is an open-source long-term memory layer for AI assistants an
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — Pluggable vector stores, including local and hosted backends configured through `VectorStoreFactory`; the payload carries `data`, hash, timestamps, session identifiers, actor/role fields, lemmatized text, and arbitrary metadata
+- **Representational form:** `mixed` — Prose facts plus symbolic metadata and distributed-parametric embeddings
+
 **Extracted memory records.** Storage substrate: pluggable vector stores, including local and hosted backends configured through `VectorStoreFactory`; the payload carries `data`, hash, timestamps, session identifiers, actor/role fields, lemmatized text, and arbitrary metadata. Representational form: prose facts plus symbolic metadata and distributed-parametric embeddings. Lineage: trace-extracted from new messages with context from recent messages and existing memories; hash dedup and extraction prompts are part of the derivation policy, while exact source spans and prompt/model versions are not retained per memory. Behavioral authority: knowledge artifact when returned by search or listed through APIs; advisory context when injected by a host; ranking authority belongs to embeddings, BM25 text, filters, entity boosts, and optional rerankers.
 
 **Raw message and history tables.** Storage substrate: SQLite by default at `~/.mem0/history.db` or configured path. Representational form: structured rows with prose message content, roles, session scopes, event names, old/new memory text, deletion flags, actor ids, and timestamps. Lineage: raw message traces and memory mutation history recorded by the SDK; invalidated by retention, reset, or database deletion rather than by source-file changes. Behavioral authority: mostly knowledge/audit artifacts; recent messages are also system-definition inputs to the next extraction prompt, because they shape what the LLM extracts from new messages.
@@ -63,7 +66,7 @@ Mem0 is stronger than Commonplace as an application-facing memory service. It pr
 
 The largest design difference is where authority lives. In Mem0, a memory record is usually an advisory knowledge artifact until a wrapper, hook, proxy, or agent chooses to read it back. In Commonplace, many artifacts are authored directly as system-definition artifacts: collection contracts, skills, type specs, validation scripts, and review gates are meant to constrain later agents. Mem0 makes activation easy; Commonplace makes authority easier to audit.
 
-Read-back: both. Core SDK/API/MCP search is pull, but the proxy wrapper and OpenClaw/plugin hooks implement engineered pre-action push paths that search or select memory and inject it into the receiving prompt/context.
+**Read-back:** `both` — Core SDK/API/MCP search is pull, but the proxy wrapper and OpenClaw/plugin hooks implement engineered pre-action push paths that search or select memory and inject it into the receiving prompt/context
 
 ### Borrowable Ideas
 

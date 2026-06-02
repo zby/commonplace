@@ -34,6 +34,9 @@ Cognee, from topoteretes, is an open-source Python "memory control plane" for ag
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — Relational database records plus configured file/object storage behind `add()` and dataset APIs
+- **Representational form:** `symbolic` — Symbolic metadata and source text/files
+
 **Ingested datasets and raw data records.** Storage substrate: relational database records plus configured file/object storage behind `add()` and dataset APIs. Representational form: symbolic metadata and source text/files. Lineage: imported by user/API/MCP calls, then consumed by `cognify()` pipelines; source deletion and `forget()` can remove data, memory, or all user-owned state ([forget.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/forget/forget.py)). Behavioral authority: knowledge artifact source material until processed; dataset permissions and node sets add routing and access-control authority.
 
 **Extracted graph nodes, edges, summaries, and embeddings.** Storage substrate: graph database, vector database, and relational metadata. Representational form: mixed symbolic graph records, prose summaries, and distributed-parametric embeddings. Lineage: derived from imported documents by classification, chunking, LLM extraction, summarization, and `add_data_points`; invalidated or rebuilt by re-cognify, memory-only forget, adapter migrations, or custom graph model changes. Behavioral authority: knowledge artifact authority when retrieved as evidence/context; ranking authority when vector distances, triplet importance, feedback weights, and graph projection decide what reaches an answer.
@@ -67,7 +70,7 @@ Cognee is stronger on runtime activation and adaptive feedback. It can pull grap
 
 Cognee's graph/vector substrate is useful for scale and multi-hop retrieval, but it also hides some authority inside ranking, embeddings, and service state. A retrieved graph edge may have a source trail in the underlying data pipeline, but the review surface is not the same as a source-pinned Markdown claim. For Commonplace, Cognee is a good example of runtime memory infrastructure and a weaker model for durable methodology claims unless paired with explicit review/promotion.
 
-Read-back: both. Cognee has ordinary pull through `search`, `recall`, MCP tools, and `memory_search`; it also has engineered push when `agent_memory` retrieves relevant memory from method inputs/session state and `LLMGateway` injects it into the next LLM call.
+**Read-back:** `both` — Cognee has ordinary pull through `search`, `recall`, MCP tools, and `memory_search`; it also has engineered push when `agent_memory` retrieves relevant memory from method inputs/session state and `LLMGateway` injects it into the next LLM call
 
 ### Borrowable Ideas
 

@@ -34,6 +34,9 @@ Nuggets, from `NeoVertex1/nuggets`, is a local TypeScript memory and messaging a
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Local JSON files under `~/.nuggets/`, one per nugget or kind
+- **Representational form:** `symbolic` — Symbolic JSON records containing fact key, value, hit count, last-hit session, dimensions, bank count, and HRR configuration
+
 **`.nugget.json` fact files.** Storage substrate: local JSON files under `~/.nuggets/`, one per nugget or kind. Representational form: symbolic JSON records containing fact key, value, hit count, last-hit session, dimensions, bank count, and HRR configuration. Lineage: authored by the agent/user through the `nuggets` tool or derived from Pi events such as preference input, file-tool results, and compaction summaries. Behavioral authority: knowledge artifacts when recalled explicitly; system-definition-adjacent context when the Pi extension injects them before an agent turn.
 
 **HRR runtime vectors and key maps.** Storage substrate: in-memory TypeScript objects rebuilt from JSON facts, not serialized as the durable source. Representational form: distributed numeric complex vectors plus symbolic maps from tags to positions. Lineage: compiled deterministically from the nugget name, stored facts, dimension, bank count, and hyperparameters. Behavioral authority: ranking/selection influence during recall because the vector decode and token/key matching decide which value is returned.
@@ -63,7 +66,7 @@ Nuggets and Commonplace both reject "raw transcript as memory" as the main durab
 
 The central tradeoff is authority without governance. Nuggets can inject remembered facts before every Pi turn, which gives small facts immediate behavioral force. But the fact record has no source pointer, author/reviewer, expiration, confidence, or semantic type beyond the key and inferred kind. Commonplace moves more slowly because durable artifacts carry more contract.
 
-Read-back: both - explicit `nuggets` tool recall is pull, while Pi `before_agent_start` injection pushes current remembered facts into the agent before action; gateway heartbeats and cron jobs also push prompts that can cause Pi to consult memory, though the gateway itself does not select memories.
+**Read-back:** `both` — Explicit `nuggets` tool recall is pull, while Pi `before_agent_start` injection pushes current remembered facts into the agent before action; gateway heartbeats and cron jobs also push prompts that can cause Pi to consult memory, though the gateway itself does not select memories
 
 ### Borrowable Ideas
 

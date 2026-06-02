@@ -30,6 +30,9 @@ Browzy is a TypeScript terminal personal knowledge base published as the `browzy
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — The local filesystem under `raw/`, with `_manifest.json` and source files produced by ingest processors; source metadata is also mirrored into SQLite `sources` rows ([filesystem.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/filesystem.ts), [sqlite.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/sqlite.ts))
+- **Representational form:** `mixed` — Prose content with symbolic frontmatter and manifest fields
+
 **Raw sources and manifest.** The storage substrate is the local filesystem under `raw/`, with `_manifest.json` and source files produced by ingest processors; source metadata is also mirrored into SQLite `sources` rows ([filesystem.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/filesystem.ts), [sqlite.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/sqlite.ts)). The representational form is prose content with symbolic frontmatter and manifest fields. Lineage is imported source identity, type, origin, path, content hash for file sources, first/updated ingest timestamps, and stable source IDs; re-ingest preserves the original ID when updating an existing source ([ingest/index.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/ingest/index.ts), [deduplicator.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/retrieval/deduplicator.ts)). Behavioral authority is knowledge-artifact authority: raw sources are evidence and source material for compilation, not direct instructions to the answering model.
 
 **Compiled wiki articles.** The storage substrate is `wiki/*.md` plus `_index.json`, with SQLite `articles` and `articles_fts` as a derived retrieval index ([filesystem.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/filesystem.ts), [sqlite.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/sqlite.ts), [migrations.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/migrations.ts)). The representational form is mixed: Markdown prose with symbolic frontmatter, wiki links, source IDs, tags, backlinks, and FTS rows. Lineage is derived from source IDs in article frontmatter and from compilation time; there is no retained per-claim source offset, compiler model, prompt version, or review status. Behavioral authority is knowledge-artifact authority at rest, then advisory context when selected into a query prompt.
@@ -59,7 +62,7 @@ The strongest alignment is the source-of-truth split. Both systems keep human-in
 
 The main divergence is behavioral authority. Browzy's compiled articles are knowledge artifacts until a query selects them; the retrieval stack then grants them advisory prompt context. Commonplace intentionally has more system-definition artifacts: instructions, skills, type specs, validation commands, and review gates can route, enforce, or block behavior, not merely advise.
 
-**Read-back:** push — from the answering LLM's perspective, Browzy injects relevance-selected wiki context into the prompt in response to the user's query.
+**Read-back:** `push` — From the answering LLM's perspective, Browzy injects relevance-selected wiki context into the prompt in response to the user's query
 
 ### Borrowable Ideas
 

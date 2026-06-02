@@ -32,6 +32,9 @@ Agent-S, from Simular AI's `simular-ai/Agent-S` repository, is a GUI-agent frame
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Platform-scoped JSON files under the user-selected local KB directory, notably `narrative_memory.json` and `episodic_memory.json`
+- **Representational form:** `prose` — Prose summaries keyed by task/search-query text or subtask trajectory preambles
+
 **S2 narrative and episodic memory JSON.** Storage substrate: platform-scoped JSON files under the user-selected local KB directory, notably `narrative_memory.json` and `episodic_memory.json`. Representational form: prose summaries keyed by task/search-query text or subtask trajectory preambles. Lineage: derived from planner/executor trajectories, reflections, subtask status transitions, and LMM summarization prompts; default seed KBs can also be downloaded from GitHub release assets. Behavioral authority: system-definition artifacts when embedding-retrieved and inserted into planner or worker prompts as advice for future actions; knowledge artifacts when inspected as remembered experience. The promotion path is raw trajectory to summarized prose to retrieved prompt advice, without a deterministic validator between summary and reuse.
 
 **S2 embeddings and retrieval caches.** Storage substrate: `embeddings.pkl`, `formulate_query.json`, and `{search_engine}_rag_knowledge.json` under the same platform KB path. Representational form: distributed-parametric embeddings plus symbolic JSON caches. Lineage: embeddings are derived from task instructions and stored memory keys; query and RAG caches are derived from LLM query formulation, LLM internal search, or Perplexica calls. Behavioral authority: ranking and routing system-definition artifacts because they decide which memory is pushed into planner/worker context. Precision, recall, and whether the injected memory improves action quality are not verified by the code.
@@ -60,7 +63,7 @@ The largest divergence is authority. In Commonplace, a note, instruction, index,
 
 S3 is useful as a contrast because it intentionally cuts durable memory out of the main path. It pushes recent reflection, text-buffer notes, and code-agent results into the next action, then bounds context by image/turn flushing. That keeps runtime context manageable and reduces the operational burden of maintaining a KB, but loses S2's cross-task learning surface.
 
-**Read-back:** both. S2 uses pull machinery internally, but from the planner/worker perspective embedding-selected narrative and episodic experience are pushed into prompts before action; S3 mainly uses always-loaded transient episode context.
+**Read-back:** `both` — S2 uses pull machinery internally, but from the planner/worker perspective embedding-selected narrative and episodic experience are pushed into prompts before action; S3 mainly uses always-loaded transient episode context
 
 ### Borrowable Ideas
 

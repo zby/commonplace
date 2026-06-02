@@ -30,6 +30,9 @@ Agent Skills for Context Engineering, from Muratcan Koylan's `muratcankoylan/Age
 
 ## Artifact analysis
 
+- **Storage substrate:** `repo` — Git-tracked directories under `skills/`, each centered on a `SKILL.md` file with optional `references/` files
+- **Representational form:** `mixed` — Mixed prose and symbolic metadata; frontmatter names/descriptions are routing handles, while the body is instructional prose with examples and references
+
 **Skill packages.** Storage substrate: Git-tracked directories under `skills/`, each centered on a `SKILL.md` file with optional `references/` files. Representational form: mixed prose and symbolic metadata; frontmatter names/descriptions are routing handles, while the body is instructional prose with examples and references. Lineage: mostly authored and manually revised; some skill mechanisms cite external sources and internal claims through the researcher corpus. Behavioral authority: system-definition artifacts when a host agent loads the skill as instructions; knowledge artifacts when a maintainer reads them as reference material. The promotion path is from idea or research source to mechanism record to skill prose to validated manifest entry.
 
 **Plugin and root collection manifests.** Storage substrate: `.claude-plugin/marketplace.json`, `.plugin/plugin.json`, root `SKILL.md`, and README tables. Representational form: symbolic JSON manifests plus prose overview. Lineage: authored packaging metadata, synchronized with the skill directory and repository version. Behavioral authority: routing and installation authority because these files decide which skill directories become available to host platforms. They do not themselves execute the skill; they expose the retained instruction artifacts to the platform router.
@@ -58,7 +61,7 @@ Agent Skills is more portable and platform-facing. A user can install the plugin
 
 The researcher subsystem is the strongest convergence. It resembles a smaller Commonplace-like operating layer: rubrics are locked surfaces, mechanism ledgers preserve accepted and rejected design deltas, run directories externalize state, and deterministic validators protect the corpus before model judgment. The difference is scope: the researcher OS exists to maintain one skill library, while Commonplace generalizes the method into a KB framework.
 
-**Read-back:** both. Skill bodies are pulled by humans or agents from files, but installed plugin skills are pushed into the agent's working context by a relevance router supplied by the host platform; this repo engineers the routing handles and tests, not the host router itself.
+**Read-back:** `both` — Skill bodies are pulled by humans or agents from files, but installed plugin skills are pushed into the agent's working context by a relevance router supplied by the host platform; this repo engineers the routing handles and tests, not the host router itself
 
 ### Borrowable Ideas
 

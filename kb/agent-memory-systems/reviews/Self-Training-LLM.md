@@ -32,6 +32,9 @@ Self-Training-LLM, from `wj210/Self-Training-LLM`, is a research codebase for fa
 
 ## Artifact analysis
 
+- **Storage substrate:** `model-weights` — Local `data/wiki/` JSONL and pickle files, plus intermediate `data/embeddings/accepted_topic_doc.pkl` and topic split pickles
+- **Representational form:** `parametric` — Prose documents and questions wrapped in symbolic JSON/Python objects
+
 **Wikipedia source documents and generated questions.** Storage substrate: local `data/wiki/` JSONL and pickle files, plus intermediate `data/embeddings/accepted_topic_doc.pkl` and topic split pickles. Representational form: prose documents and questions wrapped in symbolic JSON/Python objects. Lineage: imported from the Hugging Face Wikimedia dataset, filtered by length and predefined topic categories, then chunked and transformed into questions. Behavioral authority: knowledge artifacts for corpus evidence during generation; system-definition artifacts only when the scripts use them to decide training/test splits and prompts.
 
 **Generated answer and score pickles.** Storage substrate: `data/wiki/answer/*_sft_*.pkl`, `*_dpo_*.pkl`, `questions.jsonl`, `context_answer.jsonl`, and `data/wiki/test.jsonl` paths configured per model ([model configs](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/configs/model/tinyllama.yaml)). Representational form: mixed symbolic records containing prompt fields, documents, generated answers, sampled answers, NLI/self-check scores, and category/topic metadata. Lineage: derived from Wikipedia documents, GPT question generation, model/TGI generations, and NLI or self-reflection scorers. Behavioral authority: knowledge artifacts while stored as traces; system-definition artifacts when `train.py` filters them into SFT or DPO training examples.
@@ -61,7 +64,7 @@ Self-Training-LLM is useful to Commonplace mainly as the opposite design pole. I
 
 The strongest alignment is the trace-derived split. Both systems distinguish raw evidence from promoted behavior-shaping artifacts. In Self-Training-LLM, the raw layer is generated questions, sampled answers, scores, and result rows; the promoted layer is SFT/DPO weights. In Commonplace, the raw layer is source/work/review evidence, while the promoted layer is a typed note, instruction, schema, or index. The tradeoff is auditability: Commonplace can inspect a promoted artifact directly, while a checkpoint must be evaluated behaviorally.
 
-Read-back: push by checkpoint selection/always-load rather than retrieval. Once the caller loads an SFT or DPO checkpoint, the learned behavior is always active in generation; this commit does not implement relevance-gated memory/context injection, so `push-activation` is not warranted.
+**Read-back:** `push` — By checkpoint selection/always-load rather than retrieval. Once the caller loads an SFT or DPO checkpoint, the learned behavior is always active in generation; this commit does not implement relevance-gated memory/context injection, so `push-activation` is not warranted
 
 ### Borrowable Ideas
 

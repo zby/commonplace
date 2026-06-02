@@ -32,6 +32,9 @@ LLM Wiki, by nvk, is a multi-runtime agent-operated wiki protocol and plugin pac
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Markdown files in a hub or project-local `.wiki/`, organized under `raw/`, `wiki/`, `inventory/`, `datasets/`, `output/`, `.audit/`, `.librarian/`, and logs
+- **Representational form:** `mixed` — Prose plus symbolic YAML frontmatter, path conventions, directory placement, and dual links
+
 **Topic wiki files.** Storage substrate: Markdown files in a hub or project-local `.wiki/`, organized under `raw/`, `wiki/`, `inventory/`, `datasets/`, `output/`, `.audit/`, `.librarian/`, and logs. Representational form: prose plus symbolic YAML frontmatter, path conventions, directory placement, and dual links. Lineage: raw files are imported or session-derived source records; compiled articles are derived from raw sources; outputs, audit reports, and librarian reports are generated artifacts; indexes are regenerated views over file frontmatter. Behavioral authority: raw sources are knowledge artifacts; compiled articles advise future agents during query/plan/output workflows; indexes and frontmatter carry routing/ranking authority; command instructions and lint rules are system-definition artifacts.
 
 **Plugin instructions and command specs.** Storage substrate: repository Markdown under `claude-plugin/commands/`, `claude-plugin/skills/wiki-manager/`, generated plugin mirrors, and portable `AGENTS.md`. Representational form: prescriptive prose with YAML frontmatter, command arguments, allowed tools, and workflow stages. Lineage: authored in the Claude source tree, mirrored into Codex/OpenCode by sync scripts, and checked by sync/validate tests. Behavioral authority: system-definition artifacts with instruction and routing force for agents that install or load the plugin.
@@ -61,7 +64,7 @@ LLM Wiki is closer to Commonplace than many memory systems because its retained 
 
 The multi-runtime packaging is a useful contrast. LLM Wiki keeps a Claude-first behavior layer and regenerates Codex/OpenCode mirrors with runtime-specific text patches. Commonplace currently installs skills and commands into consuming projects but does not have the same explicit generated-plugin mirror discipline.
 
-Read-back: pull-dominant and query/command-mediated; indexes, articles, and lessons re-enter action when an agent invokes or auto-activates the wiki skill and reads selected files, but the source does not implement an engineered relevance-gated memory push into an already-running receiving agent's context.
+**Read-back:** `pull` — Dominant and query/command-mediated; indexes, articles, and lessons re-enter action when an agent invokes or auto-activates the wiki skill and reads selected files, but the source does not implement an engineered relevance-gated memory push into an already-running receiving agent's context
 
 The trace-derived path is real but deliberately file-mediated. Lessons learned are not hidden vector memories; they are raw notes and optional article/rule updates. That makes them reviewable, but also means quality depends on agent judgment and later compilation or human approval.
 

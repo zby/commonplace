@@ -32,6 +32,9 @@ Virtual Context, from the `virtual-context/virtual-context` repository, is a Pyt
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — SQLite or PostgreSQL rows, with filesystem and graph-adjacent stores also present behind the store protocols
+- **Representational form:** `symbolic` — Symbolic records carrying raw user/assistant content, raw provider blocks, normalized hashes, tags, fact signals, code refs, session dates, source batches, and compaction markers
+
 **Canonical turns.** Storage substrate: SQLite or PostgreSQL rows, with filesystem and graph-adjacent stores also present behind the store protocols. Representational form: symbolic records carrying raw user/assistant content, raw provider blocks, normalized hashes, tags, fact signals, code refs, session dates, source batches, and compaction markers. Lineage: trace-derived from live proxy payloads, SDK calls, MCP compaction inputs, and import adapters; canonical rows are source material for later compaction. Behavioral authority: knowledge artifacts as evidence and replay material, plus system-definition authority for lifecycle state because compaction and recovery read their turn ids, hashes, and `compacted_at` status.
 
 **Segments and tag summaries.** Storage substrate: store tables/files for segments, segment tags, tag summaries, tag-summary embeddings, and FTS indexes. Representational form: mixed prose summaries plus symbolic metadata and distributed-parametric embeddings. Lineage: LLM-derived from canonical turns through the segmenter and compactor, with source turn numbers, segment refs, canonical-turn ids, and cover-through metadata. Behavioral authority: advisory knowledge artifacts when injected into prompts; ranking and routing artifacts when their tags, embeddings, and summaries drive future retrieval. The promotion path is raw turn trace to segment summary to tag rollup to prompt-injected memory.
@@ -59,7 +62,7 @@ Virtual Context is closer to an operating layer for a live conversation than to 
 
 The tradeoff is governance. Virtual Context has rich operational lineage and regression coverage, but the central learned artifacts are LLM-derived summaries and facts whose semantic faithfulness is mostly assumed from prompts, tests, and runtime behavior. Commonplace is slower and less automatic, but its artifacts can carry citations, explicit type contracts, review comments, and human-readable argument structure.
 
-Read-back: both - automatic relevance-scored proxy injection pushes selected summaries/facts into the model request, while MCP tools, VC commands, SDK calls, and paging tools provide deliberate pull paths.
+**Read-back:** `both` — Automatic relevance-scored proxy injection pushes selected summaries/facts into the model request, while MCP tools, VC commands, SDK calls, and paging tools provide deliberate pull paths
 
 ### Borrowable Ideas
 

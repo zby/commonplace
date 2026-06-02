@@ -31,6 +31,9 @@ TraceCraft, from Arrmlet's `tracecraft` repository, is a CLI-first coordination 
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Project-scoped bucket objects under `memory/<key path>.json`
+- **Representational form:** `mixed` — Symbolic JSON carrying a prose scalar value plus `set_by` and `set_at` metadata
+
 **Shared memory entries.** Storage substrate: project-scoped bucket objects under `memory/<key path>.json`. Representational form: symbolic JSON carrying a prose scalar value plus `set_by` and `set_at` metadata. Lineage: authored directly by an agent or script through `tracecraft memory set`; listing and dotted-path conversion are derived views, not separate durable artifacts. Behavioral authority: knowledge artifact authority. A later agent can use the value as shared context or evidence, but TraceCraft does not promote it into an instruction, validator, or automatic prompt input.
 
 **Messages and broadcasts.** Storage substrate: bucket objects under `messages/<recipient>/<timestamp>_<sender>.json` and `messages/_broadcast/...`. Representational form: symbolic envelope plus prose message. Lineage: authored by the sending agent with second-resolution timestamp naming. Behavioral authority: advisory communication for the recipient; `inbox --delete` can remove read messages, but there is no durable acknowledgement protocol beyond deletion.
@@ -60,7 +63,7 @@ Promotion path: TraceCraft has a promotion path from a task claim to coordinatio
 
 TraceCraft and Commonplace both prefer inspectable retained artifacts over hidden platform memory. The important difference is authority. TraceCraft is an operational coordination substrate: it helps several agents avoid duplicated work, pass handoffs, share files, and inspect transcripts. Commonplace is a knowledge-methodology substrate: it makes retained claims and procedures reviewable, typed, searchable, and validatable.
 
-Read-back: pull-only. Stored memory, messages, artifacts, step state, and session transcripts reach the agent only when the agent or harness explicitly calls the CLI; the code does not implement relevance-gated push activation, automatic prompt injection, or memory faithfulness tests.
+**Read-back:** `pull` — Stored memory, messages, artifacts, step state, and session transcripts reach the agent only when the agent or harness explicitly calls the CLI; the code does not implement relevance-gated push activation, automatic prompt injection, or memory faithfulness tests
 
 The design is attractive where coordination failure is the main risk. Atomic claim writes are a stronger primitive than prose "I am working on X" notes, and bucket storage makes the coordination surface work across hosts without requiring all agents to share a local process. It is weaker as a knowledge system: values are scalar, lineage is coarse, no schema validates memory keys, and session traces remain raw audit material rather than reviewed knowledge artifacts.
 

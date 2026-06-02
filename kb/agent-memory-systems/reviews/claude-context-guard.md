@@ -32,6 +32,9 @@ Claude Context Guard, from `atreiou/claude-context-guard`, is a Claude Code proj
 
 ## Artifact analysis
 
+- **Storage substrate:** `repo` — Project filesystem and, when the project uses git, the project repository
+- **Representational form:** `mixed` — Mixed prose and symbolic structure. `SESSION_LOG.md`, `TASK_REGISTRY.md`, `DECISIONS.md`, `COMMENTS.md`, `LEARNED_BEHAVIOUR.md`, and `RESUME_STATE.md` are mostly prose with table or field conventions; `FEATURE_LIST.json` is symbolic JSON; archive pages and audit reports are prose-derived records
+
 **Safeguard files.** Storage substrate: project filesystem and, when the project uses git, the project repository. Representational form: mixed prose and symbolic structure. `SESSION_LOG.md`, `TASK_REGISTRY.md`, `DECISIONS.md`, `COMMENTS.md`, `LEARNED_BEHAVIOUR.md`, and `RESUME_STATE.md` are mostly prose with table or field conventions; `FEATURE_LIST.json` is symbolic JSON; archive pages and audit reports are prose-derived records. Lineage: initialized from templates, then updated from session traces, user comments, task outcomes, decisions, feature verification, and save/end/audit passes. Behavioral authority: knowledge artifacts when read as evidence or history; system-definition artifacts when `/start`, `/save`, `/end`, or `/audit` requires the acting agent to obey task status, decisions, comments, feature verification semantics, and resume-state handoff.
 
 **`CLAUDE.md` control-plane template.** Storage substrate: installed project file generated from `templates/CLAUDE.md`. Representational form: prose instructions with symbolic toggles and conventions, including version-control mode, itemisation mode, task status vocabulary, and sidecar maintenance rules. Lineage: authored scaffold content with project placeholders expanded during first run or installation. Behavioral authority: high-authority system-definition artifact because Claude Code auto-reads it and the slash commands treat it as the source of project rules, custom context declarations, git behavior, and itemisation policy.
@@ -60,7 +63,7 @@ The main difference is artifact typing. Context Guard uses file names, command c
 
 The other difference is lifecycle posture. Context Guard treats the active session as the center: save, resume, audit, paginate, and avoid dropped work. Commonplace treats promoted knowledge as the center: source material and workshop state matter, but library artifacts accumulate only after routing, drafting, review, and validation. Context Guard is stronger as an operational continuity harness; Commonplace is stronger as a durable knowledge system.
 
-**Read-back:** pull plus always-load. `/start`, `/audit`, `/save`, `/end`, and `/itemise` are deliberate command surfaces from the agent's perspective, while `CLAUDE.md` is unconditional project context; the hooks are event-keyed reminders/backups, not qualifying relevance-gated memory read-back.
+**Read-back:** `both` — Plus always-load. `/start`, `/audit`, `/save`, `/end`, and `/itemise` are deliberate command surfaces from the agent's perspective, while `CLAUDE.md` is unconditional project context; the hooks are event-keyed reminders/backups, not qualifying relevance-gated memory read-back
 
 ### Borrowable Ideas
 

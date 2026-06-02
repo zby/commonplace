@@ -33,6 +33,9 @@ Context Constitution, from Letta, is a documentation repository for an agent-fac
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — GitHub-hosted Markdown in `constitution/CONSTITUTION.md`
+- **Representational form:** `prose` — Prose
+
 **Constitution prose.** The storage substrate is GitHub-hosted Markdown in `constitution/CONSTITUTION.md`. Its representational form is prose. Its lineage is authored public policy, not generated output, trace-extracted memory, or compiled configuration. As a public document it is a knowledge artifact: readers can use it as reference and rationale for Letta's context-management philosophy. When Letta inserts the same or derived text into an agent prompt or training corpus, it becomes a system-definition artifact with instruction or learning authority, but that consumption path is asserted in the README rather than implemented in this repository.
 
 **Affordances prose.** The storage substrate is GitHub-hosted Markdown in `constitution/AFFORDANCES.md`. The representational form is mostly prose with some path and layout conventions, such as `/system`, `/skills`, skill metadata, external memory metadata, message history, and named subagents. Its lineage is authored descriptive guidance about a host harness. Its behavioral authority is split: inside this repo it is a knowledge artifact describing available affordances; in a running Letta system, the described MemFS layout, metadata injection, compaction, and subagent affordances would be system-definition artifacts implemented by the harness.
@@ -60,7 +63,7 @@ The Letta framing is more agent-autonomy-forward: the agent owns its context, mo
 
 The biggest comparison risk is over-reading the source. The documents describe a rich harness with MemFS, message search, compaction, multi-conversation memory, and subagents. This repository does not implement those pieces, so the review can credit the design vocabulary and policy shape but not the runtime behavior.
 
-Read-back: push-like when the constitution or derived policy is always loaded into a Letta agent's prompt; pull for external memory files and message history the agent chooses to inspect; no implemented relevance-gated push activation is present in this repo.
+**Read-back:** `push` — Like when the constitution or derived policy is always loaded into a Letta agent's prompt; pull for external memory files and message history the agent chooses to inspect; no implemented relevance-gated push activation is present in this repo
 
 ### Borrowable Ideas
 

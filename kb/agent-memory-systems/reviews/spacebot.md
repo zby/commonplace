@@ -32,6 +32,9 @@ Spacebot, by Spacedrive, is a Rust agent harness for team and community agents. 
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — SQLite `memories` and `associations` tables plus LanceDB embeddings/FTS rows
+- **Representational form:** `mixed` — Mixed symbolic/prose/distributed-parametric: typed rows and graph edges carry symbolic structure, memory `content` is prose, and LanceDB vectors/FTS indexes are derived retrieval state
+
 **Graph memories and associations.** Storage substrate: SQLite `memories` and `associations` tables plus LanceDB embeddings/FTS rows. Representational form: mixed symbolic/prose/distributed-parametric: typed rows and graph edges carry symbolic structure, memory `content` is prose, and LanceDB vectors/FTS indexes are derived retrieval state. Lineage: authored or trace-extracted through `memory_save`, ingestion, compaction-adjacent persistence, branch/cortex tools, or API calls; embeddings and indexes are derived and invalidated by memory content or embedding model changes. Behavioral authority: knowledge artifact when recalled as evidence/context; ranking authority when importance, access counters, graph relations, RRF scores, and type filters decide what is shown.
 
 **Working-memory events, intra-day syntheses, and daily summaries.** Storage substrate: SQLite `working_memory_events`, `working_memory_intraday_syntheses`, and `working_memory_daily_summaries`. Representational form: symbolic event type/channel/user/importance metadata plus prose summaries. Lineage: raw events are emitted from branch completions, worker lifecycle, cron execution, memory saves, decisions extracted from replies, and persistence-branch extractions; syntheses and summaries are derived by cortex or rendering routines. Behavioral authority: prompt-time advisory context for channels and cortex, with stronger selection authority under token pressure because rendering budgets decide which events survive into context.
@@ -59,7 +62,7 @@ Spacebot is stronger as a live runtime. It solves problems Commonplace mostly si
 
 Commonplace is stronger as a durable knowledge system. Spacebot memories have types, importance, source, channel, and associations, but they do not carry review state, explicit source spans, semantic link labels, collection-local writing contracts, replacement archives, or validation gates. Spacebot optimizes for agent continuity and responsiveness; Commonplace optimizes for inspectable claims and long-term methodological structure.
 
-Read-back: both - agents can pull through memory/wiki/task/channel tools, while channels and workers receive engineered prompt-time push from memory bulletins, knowledge synthesis, working memory, channel maps, participant context, skills listings, project context, status blocks, and adapter prompts.
+**Read-back:** `both` — Agents can pull through memory/wiki/task/channel tools, while channels and workers receive engineered prompt-time push from memory bulletins, knowledge synthesis, working memory, channel maps, participant context, skills listings, project context, status blocks, and adapter prompts
 
 The context-efficiency contrast is useful. Commonplace keeps canonical artifacts human-readable and asks the acting agent to choose what to load. Spacebot centralizes more runtime choice in renderers, budgets, and the cortex synthesis loop. That reduces per-turn agent burden, but it also makes trust depend on prompt assembly code and synthesis freshness rather than on explicit human-readable navigation choices.
 

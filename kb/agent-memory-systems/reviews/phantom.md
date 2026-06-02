@@ -32,6 +32,9 @@ Phantom, from `ghostwright/phantom`, is a Bun/TypeScript agent runtime for an AI
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — Qdrant collection named by `config/memory.yaml`, default `episodes`
+- **Representational form:** `mixed` — Mixed distributed-vector and symbolic payload state, with `summary`, `detail`, and sparse `text_bm25` vectors plus payload fields for session id, user id, tools, files, outcome, importance, access count, timestamps, and lessons
+
 **Qdrant episodic memories.** Storage substrate: Qdrant collection named by `config/memory.yaml`, default `episodes`. Representational form: mixed distributed-vector and symbolic payload state, with `summary`, `detail`, and sparse `text_bm25` vectors plus payload fields for session id, user id, tools, files, outcome, importance, access count, timestamps, and lessons. Lineage: trace-extracted from completed channel sessions by `consolidateSession()`, which summarizes the first user message and records tool/file/outcome metadata. Behavioral authority: knowledge-artifact context when recalled into the prompt, and ranking system-definition authority through importance, recency, access reinforcement, and decay.
 
 **Qdrant semantic facts.** Storage substrate: Qdrant collection `semantic_facts`. Representational form: mixed vector, sparse, and symbolic triples/fact payloads. Lineage: currently extracted heuristically from user messages that match correction or preference patterns, linked to source episode ids; contradiction handling can mark earlier facts invalid by setting `valid_until` when a newer high-confidence fact conflicts (https://github.com/ghostwright/phantom/blob/f8c7ab42d885936ee54abc785528000260f4acc5/src/memory/consolidation.ts, https://github.com/ghostwright/phantom/blob/f8c7ab42d885936ee54abc785528000260f4acc5/src/memory/semantic.ts). Behavioral authority: advisory context in the prompt's `Known Facts` section, plus selection authority because valid facts are preferentially recalled before episodes.
@@ -69,7 +72,7 @@ The strongest design divergence is authority placement. Commonplace keeps durabl
 
 Phantom's context story is operationally better for a chat agent. A user message automatically retrieves relevant memories and attaches evolved state before the agent acts. Commonplace is more inspectable and cheaper in prompt terms, but it depends on the acting agent remembering to search, follow indexes, and load the right notes. Phantom proves that a stateful agent benefits from an engineered read-back path, not just a place to store memories.
 
-Read-back: both. Phantom has pull surfaces through MCP, UI, and reflective tools, plus push from relevance-gated per-query Qdrant memory injection and always-loaded evolved/working-memory prompt blocks. The `push-activation` tag is justified by the relevance-gated pre-action memory context, not by static config or ordinary memory-search tools.
+**Read-back:** `both` — Phantom has pull surfaces through MCP, UI, and reflective tools, plus push from relevance-gated per-query Qdrant memory injection and always-loaded evolved/working-memory prompt blocks. The `push-activation` tag is justified by the relevance-gated pre-action memory context, not by static config or ordinary memory-search tools
 
 ### Borrowable Ideas
 

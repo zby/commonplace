@@ -32,6 +32,9 @@ Signet AI, from the `Signet-AI/signetai` repository, is a local-first portable c
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — Local SQLite under the Signet workspace, especially `memories`, `memories_fts`, `embeddings`, optional `vec_embeddings`, access counters, source fields, scope/project/agent fields, and history tables (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/001-baseline.ts)
+- **Representational form:** `mixed` — Mixed: prose memory content plus symbolic metadata, FTS rows, hashes, and distributed-vector embeddings
+
 **Memory rows, embeddings, FTS, and vector state.** Storage substrate is local SQLite under the Signet workspace, especially `memories`, `memories_fts`, `embeddings`, optional `vec_embeddings`, access counters, source fields, scope/project/agent fields, and history tables (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/001-baseline.ts). Representational form is mixed: prose memory content plus symbolic metadata, FTS rows, hashes, and distributed-vector embeddings. Lineage is authored, imported, explicitly remembered, extracted from session summaries, or pipeline-derived from source memories; content hashes and source IDs provide dedupe and provenance. Behavioral authority is mostly knowledge artifact authority when recalled as context or evidence, but embeddings, FTS, access counters, and ranking metadata have system-definition authority over what later agents see.
 
 **Raw transcripts, prompt snapshots, compaction summaries, and temporal heads.** Storage substrate is `session_transcripts`, summary jobs, `session_summaries`, generated memory/artifact files, and canonical transcript artifacts (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/040-session-transcripts.ts, https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/044-memory-md-temporal-head.ts, https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/hooks.ts). Representational form is mixed JSONL/markdown/prose plus symbolic session metadata. Lineage is trace-derived from prompt-submit snapshots, live session appends, session-end transcripts, and compaction events; summaries and temporal heads are derived views. Behavioral authority starts as evidence and fallback context, then strengthens when summaries, MEMORY.md synthesis, or session facts are injected or indexed for future recall.
@@ -59,7 +62,7 @@ Signet is stronger as a live operational substrate. It already wires many harnes
 
 Commonplace is stronger as a durable argument and method library. Signet's behavior-shaping state is distributed across daemon code, config, SQLite rows, hook installers, embeddings, graph state, and generated artifacts. Commonplace keeps its strongest artifacts in reviewable prose and schemas where a later agent can inspect every claim and cite the source. The tradeoff is speed: Signet promotes operational traces quickly; Commonplace promotes slowly but with stronger textual accountability.
 
-Read-back: both. Agents can explicitly pull through CLI/API/MCP recall and search surfaces, while session-start and entity-gated prompt-submit hooks push selected memory/context into the receiving agent's prompt path before action.
+**Read-back:** `both` — Agents can explicitly pull through CLI/API/MCP recall and search surfaces, while session-start and entity-gated prompt-submit hooks push selected memory/context into the receiving agent's prompt path before action
 
 ### Borrowable Ideas
 

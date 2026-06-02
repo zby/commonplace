@@ -32,6 +32,9 @@ Gnosis is Stavros Korokithakis's small Go CLI for project-local agent memory. It
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Ordinary files under `.gnosis/`, intended to ship with code and be visible to git
+- **Representational form:** `mixed` — Mixed: prose body text plus symbolic metadata for ID, topics, related IDs, and timestamps
+
 **Entries.** The central retained artifacts are `.gnosis/entries.jsonl` entries in the project repo. Their storage substrate is ordinary files under `.gnosis/`, intended to ship with code and be visible to git. Their representational form is mixed: prose body text plus symbolic metadata for ID, topics, related IDs, and timestamps. Their lineage is authored live by an agent or human through `gn write` or rewritten through `gn edit`; when produced by the planning/review doctrine, they are distilled from the agent's current work session rather than regenerated from source files or retained raw logs. Their behavioral authority is mostly knowledge-artifact authority: future agents consume entries as evidence, reference, context, or advice. They become stronger only when an agent accepts a retrieved decision as constraining the next plan.
 
 **Doctrine.** `internal/doctrine/*.txt`, exposed through `gn help`, is a prose system-definition artifact. Its storage substrate is embedded text in the Go binary, sourced from repo files at build time. Its representational form is prose instruction. Its lineage is authored product doctrine, with `docs/PRODUCT_STRATEGY.md` documenting the signal-to-noise decision behind "record what the human knows." Its behavioral authority is instruction and routing: when `AGENTS.md` tells an agent to run `gn help plan` or `gn help review`, the doctrine tells the agent when to search, what counts as worth recording, and when to avoid writing noise.
@@ -61,7 +64,7 @@ The biggest divergence is authority and reviewability. Commonplace gives durable
 
 The second divergence is the writer filter. Commonplace often wants agents to distill transferable mechanisms from source material. Gnosis explicitly discourages recording what a future competent agent could rederive from code and docs. That is a good fit for repo-local institutional memory, but it would be too restrictive for a methodology KB whose job is to accumulate abstractions.
 
-**Read-back:** pull - agents deliberately run `gn search`, `gn latest`, `gn topics`, or `gn show`; host `AGENTS.md` can make that pull habitual, but gnosis does not implement relevance-gated push activation.
+**Read-back:** `pull` — Agents deliberately run `gn search`, `gn latest`, `gn topics`, or `gn show`; host `AGENTS.md` can make that pull habitual, but gnosis does not implement relevance-gated push activation
 
 ### Borrowable Ideas
 

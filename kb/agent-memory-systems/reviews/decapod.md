@@ -32,6 +32,9 @@ Decapod, from DecapodLabs, is a Rust CLI governance kernel for AI coding agents.
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Repository files such as `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `.decapod/config.toml`, and `.decapod/generated/specs/*`
+- **Representational form:** `mixed` — Prose plus symbolic TOML/manifest metadata
+
 **Entrypoint contracts and generated project specs.** Storage substrate: repository files such as `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `.decapod/config.toml`, and `.decapod/generated/specs/*`. Representational form: prose plus symbolic TOML/manifest metadata. Lineage: generated or preserved by init/scaffold from inferred repo context, user-provided seeds, embedded templates, and local overrides. Behavioral authority: system-definition artifacts with instruction and routing force for agents, plus knowledge-artifact context when agents read specs as project facts.
 
 **Embedded constitution/docs fragments and deterministic context capsules.** Storage substrate: embedded assets merged with repo-local docs and optional `.decapod/generated/context/*.json` capsule files. Representational form: prose snippets with symbolic source refs, policy binding, task/workunit ids, and a SHA-256 capsule hash. Lineage: assembled from embedded constitution/docs and local project specs at query time; regenerated when source docs, policy, repo revision, topic, scope, or limit changes. Behavioral authority: knowledge artifact when returned as context; routing and scoping system-definition artifact when capsule policy controls scopes, limits, and write permission.
@@ -65,7 +68,7 @@ Decapod's most useful contrast is that it treats agent memory as part of governa
 
 Decapod's weaker point for Commonplace purposes is that many retained facts live in SQLite rows or generated JSON rather than reviewable prose artifacts. Its provenance and event logs are good, but a lesson or federation node is not the same as a source-pinned review note unless a promotion path makes it inspectable, curated, and semantically checked.
 
-Read-back: both, but mostly pull. Decapod has unconditional entrypoint/config push when an agent workbench loads `AGENTS.md`; its distinctive context, memory, proof, and governance content reaches the agent through explicit CLI/RPC calls, so it does not qualify for `push-activation` under the stricter relevance-gated rule.
+**Read-back:** `both` — But mostly pull. Decapod has unconditional entrypoint/config push when an agent workbench loads `AGENTS.md`; its distinctive context, memory, proof, and governance content reaches the agent through explicit CLI/RPC calls, so it does not qualify for `push-activation` under the stricter relevance-gated rule
 
 ### Borrowable Ideas
 

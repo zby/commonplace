@@ -32,6 +32,9 @@ Dynamic Cheatsheet, from Mirac Suzgun's `dynamic-cheatsheet` repository, is a li
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — An in-memory string during `advanced_generate`, with durable snapshots in benchmark result JSONL records as `final_cheatsheet` and optional seed/resume paths through `--initialize_cheatsheet_path` and `--continue_from_last_run_path` (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/tree/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/results)
+- **Representational form:** `prose` — Prose with light XML-like tags, section headings, examples, and usage-count conventions
+
 **Cumulative cheatsheet.** The storage substrate is an in-memory string during `advanced_generate`, with durable snapshots in benchmark result JSONL records as `final_cheatsheet` and optional seed/resume paths through `--initialize_cheatsheet_path` and `--continue_from_last_run_path` (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/tree/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/results). The representational form is prose with light XML-like tags, section headings, examples, and usage-count conventions. Lineage is trace-derived: current question, generator output, previous cheatsheet, and sometimes prior answers are transformed by an LLM curator into a replacement cheatsheet. Behavioral authority is system-definition artifact authority at read-back because the generator prompt instructs the solver to analyze and apply the cheatsheet; it is also a knowledge artifact because its entries act as evidence, examples, and advice rather than enforced rules.
 
 **Retrieved previous-solution packet.** The storage substrate is the current Python process plus saved result JSONL files containing prior `final_output` values, with precomputed embedding CSVs under `embeddings/` for task inputs (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/tree/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/embeddings). The representational form is mixed: distributed-vector similarity for selection, symbolic top-k ordering and similarity scores, then prose previous-input and previous-output blocks in the prompt. Lineage is assembled from benchmark dataset inputs, static embeddings, and prior solver traces. Behavioral authority is advisory knowledge-artifact context for the solver, with ranking influence from the similarity calculation.
@@ -61,7 +64,7 @@ The strongest alignment is the explicit separation between raw trace and distill
 
 The main divergence is trust. The curator prompt asks the model to include "tested and proven" strategies, but the implementation does not pass correctness results into the curator as a hard oracle, does not attach source-level provenance to each cheatsheet item, and does not validate retained claims before reuse. The result can learn useful tactics quickly, but it can also preserve wrong or overfit strategies with high prompt authority.
 
-Read-back: push, with unconditional cheatsheet injection in cumulative mode and engineered embedding-gated push in retrieval modes; no independent agent pull path is implemented.
+**Read-back:** `push` — With unconditional cheatsheet injection in cumulative mode and engineered embedding-gated push in retrieval modes; no independent agent pull path is implemented
 
 ### Borrowable Ideas
 

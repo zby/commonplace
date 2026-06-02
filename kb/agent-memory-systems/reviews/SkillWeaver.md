@@ -32,6 +32,9 @@ SkillWeaver, from OSU-NLP-Group's `SkillWeaver` repository, is a research framew
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Per-iteration output directories under the caller's `out_dir`, including `choose_task_meta.json`, state/action JSON files, `trajectory_pretty.txt`, `success_check.json`, `kb_update_diagnostics.json`, `trace.zip`, videos, and performance logs
+- **Representational form:** `mixed` — Mixed symbolic JSON, prose trajectory strings, screenshots/videos, and Playwright trace archives
+
 **Exploration traces.** Storage substrate: per-iteration output directories under the caller's `out_dir`, including `choose_task_meta.json`, state/action JSON files, `trajectory_pretty.txt`, `success_check.json`, `kb_update_diagnostics.json`, `trace.zip`, videos, and performance logs. Representational form: mixed symbolic JSON, prose trajectory strings, screenshots/videos, and Playwright trace archives. Lineage: generated from a specific website state, proposed task, browser trajectory, success check, and model calls. Behavioral authority: knowledge artifact authority during the run; traces are evidence for whether a skill should be distilled, not themselves the normal read-back surface for future tasks.
 
 **Generated skill code.** Storage substrate: saved `*_code.py` files from `KnowledgeBase.save()` and checked-in `skillnet/*/*_kb_post_code.py` libraries. Representational form: symbolic executable Python plus prose docstrings. Lineage: LLM-distilled from successful trajectories or later recovery/test feedback, merged by function name through `KnowledgeBase._apply()`, and formatted as Python source. Behavioral authority: system-definition artifact. Once selected, a skill expands the agent's action space and can directly execute browser operations.
@@ -63,7 +66,7 @@ SkillWeaver is stronger where the task domain has a tight simulator and an exter
 
 SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records iteration references and update/test events, but the generated function body and docstring do not carry fine-grained citations to the exact trajectory steps, screenshots, or success evidence that justified each behavior. Commonplace's source-grounded reviews are slower, but they preserve citation and review context more directly.
 
-Read-back: both. The agent can pull from the skill library through explicit retrieval machinery, but task attempts also run relevance-gated pre-action selection that pushes chosen functions into the acting prompt before code generation.
+**Read-back:** `both` — The agent can pull from the skill library through explicit retrieval machinery, but task attempts also run relevance-gated pre-action selection that pushes chosen functions into the acting prompt before code generation
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ Zikkaron, from amanhij, is a local Python MCP server and hook package for Claude
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — SQLite tables plus `sqlite-vec` virtual tables and FTS5
+- **Representational form:** `mixed` — Mixed prose memory content, symbolic metadata and scores, distributed-parametric embeddings/HDC vectors, and FTS tokens
+
 **Memory rows and vector/FTS indexes.** Storage substrate: SQLite tables plus `sqlite-vec` virtual tables and FTS5. Representational form: mixed prose memory content, symbolic metadata and scores, distributed-parametric embeddings/HDC vectors, and FTS tokens. Lineage: authored via `remember`, generated from seed scans, derived from action logs, or abstracted by consolidation; file changes, model changes, compression, curation, and consolidation can invalidate or regenerate derived views. Behavioral authority: knowledge artifact when returned by recall; ranking artifact through heat, embeddings, graph signals, rules, rerankers, and metacognitive trimming; advisory context when hooks or tools print memories into Claude context.
 
 **Action logs, checkpoints, and anchors.** Storage substrate: SQLite `action_log`, `checkpoints`, and protected memory rows. Representational form: symbolic event summaries plus prose checkpoint/anchor content. Lineage: `PostToolUse`, `PreCompact`, explicit `checkpoint`, `anchor`, and micro-checkpoint triggers. Behavioral authority: action logs begin as raw trace knowledge artifacts, then become summarized memories during consolidation; checkpoints and anchors have stronger advisory authority because restore/session-start paths explicitly select them for injection.
@@ -59,7 +62,7 @@ Zikkaron is stronger than Commonplace as an always-on runtime memory layer. It c
 
 Commonplace is stronger as a governed knowledge substrate. Its retained artifacts are inspectable Markdown files with collection contracts, type specs, citations, validation, semantic review, and git history. Zikkaron has many local control signals, but memories can become injected advisory context without the kind of explicit source review and authority promotion Commonplace requires.
 
-Read-back: both, with engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts.
+**Read-back:** `both` — With engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts
 
 ### Borrowable Ideas
 

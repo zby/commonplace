@@ -34,6 +34,9 @@ Graphiti, from getzep, is an open-source temporal context graph engine for AI-ag
 
 ## Artifact analysis
 
+- **Storage substrate:** `graph` — Graph database nodes under provider-specific graph storage
+- **Representational form:** `mixed` — Mixed structured metadata plus prose or JSON content
+
 **Episode nodes.** Storage substrate: graph database nodes under provider-specific graph storage. Representational form: mixed structured metadata plus prose or JSON content. Lineage: authored/imported trace records supplied through `add_episode()`, `/messages`, or the MCP `add_memory` tool; if `store_raw_episode_content` is disabled, the source content is intentionally dropped after extraction. Behavioral authority: knowledge artifacts as evidence and provenance; they shape behavior only when retrieved or used as extraction context.
 
 **Entity nodes and summaries.** Storage substrate: graph database nodes with labels, attributes, summaries, and name embeddings. Representational form: mixed prose summaries, symbolic labels/attributes, and distributed-parametric embeddings. Lineage: LLM-extracted or deduplicated from episodes, optionally constrained by developer-provided entity type schemas. Behavioral authority: knowledge artifacts during read-back; schema labels and embeddings also have ranking/routing authority in search.
@@ -64,7 +67,7 @@ The most important divergence is source-of-truth shape. Graphiti turns traces in
 
 Graphiti's context model is also runtime-first. It assumes a host application will call search, choose a recipe, decide how many graph objects to load, and assemble them into prompt context. Commonplace uses pre-authored navigation and deterministic validation so agents can inspect and justify why a particular note, instruction, or review is loaded.
 
-Read-back: pull. Graphiti's implemented memory reaches agents through explicit library/API/MCP search calls or host-written instructions to search; I did not find a code-grounded relevance-gated pre-action push path in the reviewed source.
+**Read-back:** `pull` — Graphiti's implemented memory reaches agents through explicit library/API/MCP search calls or host-written instructions to search; I did not find a code-grounded relevance-gated pre-action push path in the reviewed source
 
 ### Borrowable Ideas
 

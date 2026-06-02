@@ -34,6 +34,9 @@ Autocontext, from Grey Haven AI's `greyhaven-ai/autocontext` repository, is an a
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — SQLite tables plus per-run filesystem directories under `runs/`
+- **Representational form:** `symbolic` — Symbolic rows and JSON/markdown artifacts containing strategies, scores, validation results, agent outputs, replays, reports, context-selection decisions, and compaction ledgers
+
 **Run, generation, match, and agent-output records.** Storage substrate: SQLite tables plus per-run filesystem directories under `runs/`. Representational form: symbolic rows and JSON/markdown artifacts containing strategies, scores, validation results, agent outputs, replays, reports, context-selection decisions, and compaction ledgers. Lineage: generated from scenario execution, provider calls, verifier results, and prompt assembly during a concrete run. Behavioral authority: knowledge artifacts when inspected as evidence; system-definition artifacts when later export, training, analysis, context selection, or promotion workflows consume them to shape future prompts or models.
 
 **Scenario knowledge files.** Storage substrate: files under `knowledge/<scenario>/`, including `playbook.md`, `hints.md`, `hint_state.json`, `lessons.json`, `dead_ends.md`, `research_protocol.md`, `progress.json`, `mutation_log.jsonl`, generated tools, generated harness validators, and version archives. Representational form: mixed prose markdown, JSON metadata, Python code, and append-only JSONL. Lineage: authored seeds plus coach, analyst, architect, evaluator, and run-output derivations; playbooks and mutations are versioned, while lessons carry generation, score, schema, upstream signature, operation type, supersession, and validation metadata. Behavioral authority: system-definition artifacts when inserted into role prompts, used as validators, or loaded as generated tools; knowledge artifacts when used as audit evidence.
@@ -78,7 +81,7 @@ Autocontext is closer to an experimental control plane than to a library-style K
 
 The two systems converge on an important design claim: retained state matters only when its consumption path is explicit. Autocontext makes this concrete by tracking context layers, context budgets, selected components, and prompt mutation application. Commonplace is more conservative: notes can be excellent knowledge artifacts while remaining pull-only until an agent searches, follows links, or receives an instruction to load them.
 
-**Read-back:** both, with engineered push. The acting role receives scenario-scoped playbooks, hints, lessons, dead ends, reports, active harness mutations, runtime skills, and session history through prompt/context assembly; operators and agents can also pull run status, playbooks, runtime sessions, datasets, and knowledge through CLI, HTTP, MCP, and SDK surfaces.
+**Read-back:** `both` — With engineered push. The acting role receives scenario-scoped playbooks, hints, lessons, dead ends, reports, active harness mutations, runtime skills, and session history through prompt/context assembly; operators and agents can also pull run status, playbooks, runtime sessions, datasets, and knowledge through CLI, HTTP, MCP, and SDK surfaces
 
 ## Trace-derived learning placement
 

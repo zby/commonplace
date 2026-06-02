@@ -34,6 +34,9 @@ Halo, from Context Labs' `context-labs/halo` repository, is a Python package and
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — The caller's filesystem path, usually `traces.jsonl` or `HALO_TRACES_PATH` from the integration module
+- **Representational form:** `mixed` — Mixed symbolic/prose: OTLP-like JSON envelopes with structured span ids, timing, status, resource fields, and attributes, plus natural-language LLM messages, tool inputs, and tool outputs
+
 **Raw trace JSONL.** Storage substrate is the caller's filesystem path, usually `traces.jsonl` or `HALO_TRACES_PATH` from the integration module. Representational form is mixed symbolic/prose: OTLP-like JSON envelopes with structured span ids, timing, status, resource fields, and attributes, plus natural-language LLM messages, tool inputs, and tool outputs. Lineage comes from the instrumented harness and the exporter; source changes are new span lines or edits to the JSONL. Behavioral authority is knowledge artifact authority when Halo reads traces as evidence about harness behavior.
 
 **Trace index and meta sidecars.** Storage substrate is the sidecar files beside the trace path: `.engine-index.jsonl` and `.engine-index.meta.json`. Representational form is symbolic Pydantic JSONL rows plus a JSON meta fingerprint. Lineage is deterministically derived from the raw trace file, schema version, source size, and mtime; stale fingerprints regenerate the index. Behavioral authority is system-definition artifact authority for routing and ranking: the index controls cheap counts, query results, sample trace ids, byte ranges, filtering, and which trace material the agent can safely request next.
@@ -63,7 +66,7 @@ The main divergence is authority. Halo's core artifacts are strongest during an 
 
 Halo is also more operationally focused. It is built for deployed agent harnesses with many traces and recurring failure modes, not for accumulating durable conceptual knowledge. That makes its trace index, query tools, and subagent split useful for high-volume diagnostic work, but weak as a long-term memory governance system unless the generated reports are captured, reviewed, and promoted elsewhere.
 
-**Read-back:** pull - a user or caller supplies a trace file and prompt, then Halo's root and subagents deliberately pull trace evidence through tools; the engine does not push stored memory into future host-agent contexts.
+**Read-back:** `pull` — A user or caller supplies a trace file and prompt, then Halo's root and subagents deliberately pull trace evidence through tools; the engine does not push stored memory into future host-agent contexts
 
 ### Borrowable Ideas
 

@@ -34,6 +34,9 @@ Meta-Harness, from Stanford IRIS Lab, is a framework for optimizing the code aro
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Repo files, with `ONBOARDING.md` shipped and `domain_spec.md` expected as a generated project-local file
+- **Representational form:** `prose` — Prose instructions plus a structured Markdown template
+
 **Onboarding and domain specs.** Storage substrate: repo files, with `ONBOARDING.md` shipped and `domain_spec.md` expected as a generated project-local file. Representational form: prose instructions plus a structured Markdown template. Lineage: authored onboarding prompt, then user/assistant elicitation fills a derived domain spec; unresolved fields are explicitly marked `unknown`. Behavioral authority: system-definition artifact for setup, because it constrains what a later implementation pass may assume and defines the task/harness/evaluation boundary.
 
 **Proposer skills.** Storage substrate: `.claude/skills/.../SKILL.md` inside each reference example. Representational form: prose instructions with symbolic output contracts for `pending_eval.json`, candidate file paths, import paths, and validation commands. Lineage: authored prior for the proposer, sometimes consuming prior run summaries and trajectory logs. Behavioral authority: system-definition artifact loaded into Claude Code's system prompt by `claude_wrapper.run`; it instructs candidate generation, allowed workflow, anti-overfitting policy, and output shape.
@@ -65,7 +68,7 @@ The strongest overlap is the separation between workshop and durable authority. 
 
 The biggest divergence is what "learning" produces. In Meta-Harness, successful learning can produce arbitrary Python code with direct behavioral authority. In Commonplace, trace-derived learning should usually first produce candidate notes, reports, or review comments; stronger authority, such as skills or validators, needs an explicit promotion step.
 
-Read-back: pull-only. The durable state is read by the proposer or harness through explicit file paths, skills, logs, frontiers, and evaluation scripts; I did not find relevance-gated pre-action memory injection into the acting solver.
+**Read-back:** `pull` — The durable state is read by the proposer or harness through explicit file paths, skills, logs, frontiers, and evaluation scripts; I did not find relevance-gated pre-action memory injection into the acting solver
 
 ### Borrowable Ideas
 

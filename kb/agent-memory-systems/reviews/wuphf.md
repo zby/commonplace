@@ -32,6 +32,9 @@ WUPHF, from `nex-crm/wuphf`, is a local multi-agent "office" for running AI team
 
 ## Artifact analysis
 
+- **Storage substrate:** `repo` — Local git repository under `~/.wuphf/wiki/team/`, with backup mirror and generated `index/all.md`
+- **Representational form:** `mixed` — Prose Markdown with symbolic paths, wikilinks, categories, authorship, and git commits
+
 **Team wiki articles.** Storage substrate: local git repository under `~/.wuphf/wiki/team/`, with backup mirror and generated `index/all.md`. Representational form: prose Markdown with symbolic paths, wikilinks, categories, authorship, and git commits. Lineage: authored by agents or humans, migrated from legacy backends, promoted from notebooks, generated from decision packets, or edited through the web/wiki APIs. Behavioral authority: knowledge artifacts when read or searched; system-definition artifacts when a wiki article is a playbook, decision, process, or source that later tools compile, search, or cite.
 
 **Per-agent notebooks.** Storage substrate: Markdown files under `agents/{slug}/notebook/` in the same wiki repo. Representational form: prose working notes plus symbolic path ownership. Lineage: agent-authored scratch or captured task context; the retained auto-notebook writer type exists but the code comment says production no longer wires it to message/task hooks. Behavioral authority: primarily private or cross-agent knowledge artifacts; they gain stronger authority only through promotion review or when a `context_lookup` / notebook search result is deliberately used in a task.
@@ -64,7 +67,7 @@ The strongest alignment is that both systems treat a file-backed knowledge base 
 
 The main divergence is runtime ambition. WUPHF is an office runtime first, so it accepts a broad mix of broker state, tool manifests, per-turn prompt assembly, wiki files, fact logs, generated briefs, playbook compilers, and UI surfaces. Commonplace is slower and more inspectable: it usually keeps durable methodology claims in Markdown with explicit status and validation before making them behavior-shaping.
 
-**Read-back:** both. WUPHF has pull through MCP/wiki/notebook/context tools and engineered push through broker-woken agent turns that append scoped private/shared memory briefs before the next provider action.
+**Read-back:** `both` — WUPHF has pull through MCP/wiki/notebook/context tools and engineered push through broker-woken agent turns that append scoped private/shared memory briefs before the next provider action
 
 ### Borrowable Ideas
 

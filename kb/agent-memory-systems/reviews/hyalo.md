@@ -31,6 +31,9 @@ hyalo, from `ractive/hyalo`, is a Rust CLI for operating Markdown knowledge base
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — User-owned filesystem/repository files under the configured vault directory
+- **Representational form:** `mixed` — Mostly prose plus symbolic YAML frontmatter, tags, links, headings, and task checkboxes
+
 **Markdown knowledgebase files.** Storage substrate: user-owned filesystem/repository files under the configured vault directory. Representational form: mostly prose plus symbolic YAML frontmatter, tags, links, headings, and task checkboxes. Lineage: authored or imported by humans and agents; hyalo can scaffold, mutate metadata, rewrite links, and lint them, but it does not claim source authority for the prose. Behavioral authority: knowledge artifacts when read as evidence/reference/context; system-definition artifacts when frontmatter, tags, task state, or links drive command selection, validation, routing, or future agent instructions.
 
 **`.hyalo.toml` configuration.** Storage substrate: a TOML file at the project root or active command directory. Representational form: symbolic configuration. Lineage: authored by the user, created/updated by `hyalo init`, and mutated by commands such as `views`, `types`, and `lint-rules`. Behavioral authority: system-definition artifact with configuration force: it sets vault scope, output defaults, link-resolution policy, schemas, saved views, and lint-rule overrides.
@@ -64,7 +67,7 @@ The useful comparison is not "which has more memory," but where authority sits. 
 
 hyalo's context-efficiency story is strong for tool loops: it returns filtered, field-shaped, machine-readable results and can reuse a snapshot index. It does not perform semantic context assembly, multi-hop reasoning, or LLM summarization. That restraint is a design advantage when the goal is predictable agent tooling over a human-readable KB.
 
-Read-back: pull-only for hyalo's implemented retrieval and mutation machinery. Generated Claude rules/skills and managed instructions add always-loaded or ordinary host-skill instruction surfaces, but I did not find engineered relevance-gated push activation in hyalo's own code, so this review does not carry `push-activation`.
+**Read-back:** `pull` — For hyalo's implemented retrieval and mutation machinery. Generated Claude rules/skills and managed instructions add always-loaded or ordinary host-skill instruction surfaces, but I did not find engineered relevance-gated push activation in hyalo's own code, so this review does not carry `push-activation`
 
 I also did not find qualifying trace-derived learning. The tidy skill can ask Claude to inspect git history, recent KB changes, and optional Claude memory files, and the repository contains dogfood reports; those are manual workflow/report artifacts unless an external agent follows the skill. The inspected implementation does not derive durable behavior-shaping artifacts from session/tool traces, so this review does not carry `trace-derived`.
 

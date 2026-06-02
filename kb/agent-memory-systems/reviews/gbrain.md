@@ -32,6 +32,9 @@ GBrain, from Garry Tan's `gbrain` repository, is a Bun/TypeScript personal and c
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — Postgres or PGLite `pages` plus optional filesystem markdown under the configured `sync.repo_path`
+- **Representational form:** `mixed` — Mixed: prose markdown, YAML frontmatter, typed page metadata, timestamps, source IDs, and generated DB columns
+
 **Brain pages and synchronized markdown.** The storage substrate is Postgres or PGLite `pages` plus optional filesystem markdown under the configured `sync.repo_path`. The representational form is mixed: prose markdown, YAML frontmatter, typed page metadata, timestamps, source IDs, and generated DB columns. Lineage is authored, imported, captured, synced, or synthesized; `writePageThrough` renders markdown from the saved DB row, while `sync` and import paths can rebuild DB rows from files. Behavioral authority is mainly knowledge artifact authority: pages are evidence, reference, context, and source material. They gain system-definition authority only when their content is consumed as a skill, schema, policy, or prompt fragment.
 
 **Chunks, embeddings, graph, timeline, and query cache.** The storage substrate is relational tables: `content_chunks`, vector columns, weighted FTS vectors, `links`, `timeline_entries`, code-edge tables, query cache, page generation counters, and derived search metadata. The representational form is symbolic plus distributed-vector state. Lineage is derived from page content, code parsing, frontmatter, wiki/markdown links, auto-link extraction, embeddings, query cache generation, and runtime retrieval telemetry. Behavioral authority is ranking, routing, filtering, and context-selection authority. These artifacts decide what the agent sees before it reasons.
@@ -65,7 +68,7 @@ Commonplace is stronger on library-level auditability. GBrain has provenance fie
 
 The main tradeoff is authority speed. GBrain quickly turns runtime traces into memory surfaces and prompt-time context, which is valuable for personal assistants. Commonplace deliberately slows promotion so methodology claims and instructions can be reviewed, linked, validated, and cited.
 
-Read-back: both. GBrain supports pull through search/query/think/recall and engineered push through MCP `_meta.brain_hot_memory` plus the OpenClaw context engine's per-assemble prompt injection.
+**Read-back:** `both` — GBrain supports pull through search/query/think/recall and engineered push through MCP `_meta.brain_hot_memory` plus the OpenClaw context engine's per-assemble prompt injection
 
 ### Borrowable Ideas
 

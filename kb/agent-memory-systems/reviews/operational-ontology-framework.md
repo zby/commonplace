@@ -31,6 +31,9 @@ Operational Ontology Framework is FSTech Digital's public reference for structur
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Markdown files in the public GitHub repository under `README.md` and `docs/`
+- **Representational form:** `symbolic` — Prose, with small tables for concepts and failure modes
+
 **Framework docs.** Storage substrate: Markdown files in the public GitHub repository under `README.md` and `docs/`. Representational form: prose, with small tables for concepts and failure modes. Lineage: authored public reference material, not generated from operational traces in the inspected checkout. Behavioral authority: system-definition artifact for adopters at design time; it instructs architects and agents to model Data, Logic, Action, write-back, and guardrails explicitly, but has no direct runtime authority unless copied into a host system's instructions or process.
 
 **Templates.** Storage substrate: Markdown files under `templates/`. Representational form: mixed prose and symbolic section structure. Lineage: authored generic templates for artifact instances; filling them in would create project-specific retained artifacts outside this repository. Behavioral authority varies by template. Pin is intended as a system-definition artifact because its invariants, rules, decision routes, boundaries, escalation rules, and automations are supposed to constrain future agent action. Spec is a system-definition artifact for current execution state and acceptance criteria. Handoff and Facts are mostly knowledge artifacts when consumed as continuity, evidence, observations, preferences, decisions, and patterns. Skills are prose system-definition artifacts when a future agent follows them as procedures. Effective authority is not verified from code because the public repo does not wire any agent loader or enforcement path.
@@ -58,7 +61,7 @@ The biggest divergence is implementation status. Commonplace ships executable co
 
 The second divergence is reviewability versus commercial redaction. Commonplace keeps methodology, examples, commands, and operational rules in the same repository so a reviewer can inspect the whole path from source text to behavior-shaping artifact. Operational Ontology Framework documents the shape of such systems while leaving real prompts, agents, adapters, deployments, dashboards, and client implementations outside the public checkout.
 
-Read-back: pull-only from the inspected repository. A human or agent can deliberately read the docs/templates, but I found no relevance-gated or state/scoped pre-action push activation, no always-loaded agent config, and no runtime loader.
+**Read-back:** `pull` — From the inspected repository. A human or agent can deliberately read the docs/templates, but I found no relevance-gated or state/scoped pre-action push activation, no always-loaded agent config, and no runtime loader
 
 ### Borrowable Ideas
 

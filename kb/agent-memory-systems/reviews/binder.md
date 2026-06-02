@@ -29,6 +29,9 @@ Binder, from Marek Pazik's `mpazik/binder` repository, is a local-first knowledg
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — `.binder/data/binder.db`, opened through `@binder/repo/local` with SQLite/Drizzle migrations and WAL-oriented pragmas ([packages/repo/src/local/constants.ts](https://github.com/mpazik/binder/blob/da86cb6166e207099a205076107cf626da16ba56/packages/repo/src/local/constants.ts), [packages/repo/src/db.ts](https://github.com/mpazik/binder/blob/da86cb6166e207099a205076107cf626da16ba56/packages/repo/src/db.ts))
+- **Representational form:** `symbolic` — Symbolic tables containing JSON field blobs for records, configs, and transactions
+
 **Workspace graph state.** Storage substrate: `.binder/data/binder.db`, opened through `@binder/repo/local` with SQLite/Drizzle migrations and WAL-oriented pragmas ([packages/repo/src/local/constants.ts](https://github.com/mpazik/binder/blob/da86cb6166e207099a205076107cf626da16ba56/packages/repo/src/local/constants.ts), [packages/repo/src/db.ts](https://github.com/mpazik/binder/blob/da86cb6166e207099a205076107cf626da16ba56/packages/repo/src/db.ts)). Representational form: symbolic tables containing JSON field blobs for records, configs, and transactions. Lineage: authored or tool-applied transaction inputs become normalized transactions, applied changesets, and current record/config state. Behavioral authority: system-definition artifact for future reads and writes, because the graph is the authoritative substrate for schema, records, relations, and versioned rollback.
 
 **Schema configuration entities.** Storage substrate: config namespace rows in SQLite, plus YAML file projections such as `.binder/types.yaml`, `.binder/fields.yaml`, and `.binder/navigation.yaml` in this repository's own Binder workspace. Representational form: symbolic YAML/JSON fieldsets. Lineage: authored through files, transaction imports, CLI/MCP writes, or init blueprints, then loaded into the runtime schema. Behavioral authority: system-definition artifact with validation, routing, and rendering force. The schema decides what a valid record can be, which relations are allowed, and where entities appear on disk.
@@ -74,7 +77,7 @@ The main divergence is the source of authority. Binder's authority sits in a liv
 
 Binder is more operational for small apps and agent-accessible state. It gives agents a schema tool, search tool, and transaction tool over a typed store. Commonplace is stronger as a durable methodology library: citations, review sections, cross-note links, and prose argument structure matter more than low-latency CRUD.
 
-Read-back: pull-only for agent memory in the reviewed implementation. Agents can deliberately call MCP/CLI/search/read tools or use installed skill guidance, but I did not find a Binder-owned relevance-gated push mechanism that injects memories before action.
+**Read-back:** `pull` — For agent memory in the reviewed implementation. Agents can deliberately call MCP/CLI/search/read tools or use installed skill guidance, but I did not find a Binder-owned relevance-gated push mechanism that injects memories before action
 
 ## Curiosity Pass
 

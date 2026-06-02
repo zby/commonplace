@@ -32,6 +32,9 @@ AgentFly, from the `Agent-on-the-Fly/AgentFly` repository, is published in the R
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`
+- **Representational form:** `mixed` — Symbolic JSON records containing prose questions, serialized planner JSON, and positive/negative labels or rewards
+
 **Case-bank JSONL.** Storage substrate: filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`. Representational form: symbolic JSON records containing prose questions, serialized planner JSON, and positive/negative labels or rewards. Lineage: seeded examples plus trace-derived rows appended after judged benchmark runs. Behavioral authority: knowledge artifacts when inspected as examples; system-definition artifacts at read-back time because selected rows are transformed into planner context that biases the next decomposition.
 
 **Result and trace records.** Storage substrate: JSONL result files written under `../result/` by the CBR clients. Representational form: mixed symbolic/prose records containing query, model output, plan JSON, meta-planner trace, executor trace, tool history, judge rationale, and reward or correctness. Lineage: generated from benchmark questions, planner/executor calls, MCP tool results, and an LLM judge over ground truth. Behavioral authority: knowledge artifacts as audit/evaluation evidence; system-definition artifacts only when compressed into memory rows or pairwise training rows.
@@ -62,7 +65,7 @@ The strongest alignment is the separation between raw evidence and loaded contex
 
 The tradeoff is auditability versus immediacy. AgentFly can improve the next run by appending a few JSONL rows, but the row itself carries little support for source review or invalidation. Commonplace makes promotion slower because the artifact must explain itself, but that friction is what lets future agents inspect why a rule or note should still have authority.
 
-**Read-back:** push with relevance-gated selection. From the acting planner's perspective, retrieved cases arrive before it asks for them; non-parametric CBR gates by embedding similarity, and parametric CBR gates by a trained query-case classifier.
+**Read-back:** `push` — With relevance-gated selection. From the acting planner's perspective, retrieved cases arrive before it asks for them; non-parametric CBR gates by embedding similarity, and parametric CBR gates by a trained query-case classifier
 
 ### Borrowable Ideas
 

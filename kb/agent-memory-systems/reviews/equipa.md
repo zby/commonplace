@@ -32,6 +32,9 @@ EQUIPA, from sbknana's `equipa` repository, is a Python multi-agent software-dev
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — The local SQLite database identified by `THEFORGE_DB` and managed from `schema.sql` through `equipa/db.py` (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/schema.sql, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/db.py)
+- **Representational form:** `mixed` — Mixed: symbolic tables and fields, prose task/session/lesson/reflection text, JSON blobs, and optional embedding vectors serialized as JSON
+
 **TheForge SQLite database.** The storage substrate is the local SQLite database identified by `THEFORGE_DB` and managed from `schema.sql` through `equipa/db.py` (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/schema.sql, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/db.py). The representational form is mixed: symbolic tables and fields, prose task/session/lesson/reflection text, JSON blobs, and optional embedding vectors serialized as JSON. Lineage is runtime operational state: user-created tasks, agent outputs, orchestrator telemetry, reviewer findings, generated lessons, and derived self-improvement records. Behavioral authority ranges from knowledge artifact authority for project context and logs to system-definition authority for active lessons, prompt-version selection, graph/ranking state, session resume context, and dispatch decisions.
 
 **Lessons learned.** The storage substrate is `lessons_learned` rows with role, error type, source, active flag, counters, effectiveness score, and optional embedding (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/schema.sql). The representational form is prose plus symbolic metadata and optional distributed-vector state. Lineage is trace-derived or review-derived: ForgeSmith generates lessons from repeated `agent_runs` error summaries, code/security review findings can be upserted as developer lessons, and SIMBA can synthesize rules from contrasted episodes (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/forgesmith.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/loops.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/scripts/forgesmith_simba.py). Behavioral authority becomes system-definition artifact authority when `format_lessons_for_injection` puts active lessons into an agent's prompt; the lesson text is also a knowledge artifact when queried through MCP or read by a human.
@@ -65,7 +68,7 @@ Commonplace is stronger on library governance and provenance. EQUIPA can trace a
 
 The deepest design difference is authority assignment. Commonplace tends to keep knowledge artifacts advisory until an agent or maintainer promotes them through an explicit type, instruction, validator, or workflow. EQUIPA gives extracted lessons and selected episodes prompt authority immediately when their feature flag is on. That makes it more adaptive, but also raises the risk that a misleading reflection, bad reviewer finding, or overfit SIMBA rule becomes a repeated behavioral constraint.
 
-Read-back: push, with engineered relevance-gated activation for lessons and episodes during prompt construction; MCP lesson/log/context queries also provide a pull path for hosts and humans.
+**Read-back:** `push` — With engineered relevance-gated activation for lessons and episodes during prompt construction; MCP lesson/log/context queries also provide a pull path for hosts and humans
 
 ### Borrowable Ideas
 

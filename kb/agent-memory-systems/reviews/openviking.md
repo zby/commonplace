@@ -32,6 +32,9 @@ The system is built as a service with operational boundaries, not just a local l
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — AGFS/RAGFS under account-scoped local paths, while their public identity is the URI
+- **Representational form:** `mixed` — Prose, code, structured data, or mixed files
+
 OpenViking's source content artifacts are `viking://` files and directories. Their storage substrate is AGFS/RAGFS under account-scoped local paths, while their public identity is the URI. Their representational form can be prose, code, structured data, or mixed files. Their lineage usually comes from manual writes, uploaded resources, watched resources, or session-derived memory writes. Their behavioral authority is mostly knowledge-artifact authority when retrieved or read, but a file under an agent skill or experience memory path can become system-definition material when an integration injects it as action guidance.
 
 The generated semantic artifacts are `.abstract.md`, `.overview.md`, `.relations.json`, and vector-index rows. They are mixed artifacts: prose summaries, symbolic relation files, scalar metadata, and distributed-parametric embeddings. Their lineage is explicitly derived from source content through semantic queue processing, memory summarization, or relation writes. Their authority is retrieval and routing authority: they decide which source artifacts are found, how much context can be loaded, which level of detail is exposed, and which related artifacts are traversed. They should not be treated as source truth.
@@ -60,7 +63,7 @@ OpenViking's L0/L1/L2 sidecar model is a concrete implementation of frontloaded 
 
 OpenViking also demonstrates that "memory" is not one thing. The implementation separates resources, user memories, agent memories, skills, session archives, relations, vector rows, and integration hooks. That matches Commonplace's artifact-authority vocabulary better than simpler vector-store memory systems do.
 
-Read-back: both - OpenViking supports pull read-back through MCP/HTTP/CLI/search/read/list tools, and it supports push read-back when hooks or LangChain middleware relevance-rank memories and inject selected context before a model acts.
+**Read-back:** `both` — OpenViking supports pull read-back through MCP/HTTP/CLI/search/read/list tools, and it supports push read-back when hooks or LangChain middleware relevance-rank memories and inject selected context before a model acts
 
 ### Borrowable Ideas
 

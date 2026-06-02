@@ -34,6 +34,9 @@ pi-self-learning, by Matteo Collina, is a Pi coding-agent extension that adds se
 
 ## Artifact analysis
 
+- **Storage substrate:** `service-object` — Pi session branch entries at runtime, not pi-self-learning's durable store
+- **Representational form:** `mixed` — Mixed message objects, tool result text, assistant stop reasons, and serialized conversation prose
+
 **Branch conversation and interruption signals.** Storage substrate: Pi session branch entries at runtime, not pi-self-learning's durable store. Representational form: mixed message objects, tool result text, assistant stop reasons, and serialized conversation prose. Lineage: captured from the current branch shortly before reflection; the extension samples only recent messages and scans a wider recent window for interruption signals. Behavioral authority: knowledge artifacts during reflection, because they are evidence for the LLM extraction oracle; they do not directly instruct future agents until distilled.
 
 **Daily reflection files.** Storage substrate: markdown files under `daily/YYYY-MM-DD.md` inside the configured memory root. Representational form: prose sections for "What went wrong" and "How it was fixed", organized by UTC task time. Lineage: trace-derived from recent branch messages plus interruption signals through an LLM JSON reflection and markdown renderer. Behavioral authority: knowledge artifacts as historical evidence; they can become prompt context only when `includeLastNDaily` is configured or when a user/agent explicitly opens them.
@@ -63,7 +66,7 @@ pi-self-learning is smaller and more directly behavioral than Commonplace. It is
 
 The main divergence is authority control. Commonplace makes promotion explicit: a source can become a note, an instruction, a type spec, or a validator only through a visible artifact boundary. pi-self-learning promotes automatically after every task when enabled. That is useful for rapid adaptation, but it gives LLM-reflected prose a short path into future prompt context with no deterministic validation beyond JSON parse/repair and no semantic review gate.
 
-Read-back: both. Manual commands such as `/learning-now`, `/learning-daily`, `/learning-status`, `/learning-month`, and `/learning-redistill` are pull surfaces. The `before_agent_start` hook pushes recent runtime notes, configured memory files, and memory policy into the receiving agent's context, but this review does not assign `push-activation`: the inspected read-back is configured always-load prompt context with file inclusion flags and truncation, not relevance-gated or state-scoped activation.
+**Read-back:** `both` — Manual commands such as `/learning-now`, `/learning-daily`, `/learning-status`, `/learning-month`, and `/learning-redistill` are pull surfaces. The `before_agent_start` hook pushes recent runtime notes, configured memory files, and memory policy into the receiving agent's context, but this review does not assign `push-activation`: the inspected read-back is configured always-load prompt context with file inclusion flags and truncation, not relevance-gated or state-scoped activation
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ SkillNote, by luna-prompts, is a self-hosted registry and distribution system fo
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — PostgreSQL tables `skills` and `skill_content_versions`
+- **Representational form:** `mixed` — Mixed prose and symbolic state: `description` and `content_md` are prose instruction bodies, while slug, collections, current version, extra frontmatter, import fields, source hashes, and latest-version flags are symbolic control metadata
+
 **Registry skill rows and content versions.** Storage substrate: PostgreSQL tables `skills` and `skill_content_versions`. Representational form: mixed prose and symbolic state: `description` and `content_md` are prose instruction bodies, while slug, collections, current version, extra frontmatter, import fields, source hashes, and latest-version flags are symbolic control metadata. Lineage: authored in the web/API, imported from GitHub scans, restored from previous versions, or published from ZIP bundles; create/update/restore snapshots preserve previous content state, but ordinary versions do not embed evidence that the instruction is true. Behavioral authority: system-definition artifacts when rendered as local `SKILL.md` files, MCP tools, or OpenClaw bundle entries; knowledge artifacts when humans browse or compare history.
 
 **Synced local skill files.** Storage substrate: project-local `.claude/skills/skillnote-*/SKILL.md` for Claude Code and `~/.openclaw/skills/sn-*/SKILL.md` for OpenClaw. Representational form: mixed YAML frontmatter and Markdown instructions. Lineage: generated from database rows by sync scripts, with URL placeholder substitution and collection prefixes; stale files are removed according to manifest ownership. Behavioral authority: system-definition artifacts consumed by the host agent's native skill loader, with trigger authority carried mainly by `description` and operative authority carried by the full body.
@@ -63,7 +66,7 @@ SkillNote and Commonplace share the premise that behavior-shaping knowledge shou
 
 The main tradeoff is operational reach versus epistemic control. SkillNote can get a team's skills into many agent sessions quickly, and its hook surfaces help prevent skills from being forgotten. But that reach makes authority diffuse: a future action can be affected by collection picks, sync manifests, hook context, MCP tool descriptions, OpenClaw sidecars, ratings, comments, and registry rows. Commonplace keeps fewer activation paths and stronger review semantics, but that makes activation more manual.
 
-**Read-back:** both. Skills are pull when an agent deliberately invokes an MCP tool or reads a selected local skill; they are push when startup/session hooks sync selected collections, native skill descriptions are made visible to the host agent, OpenClaw sidecar instructions tell the agent to check skills before work, and prompt hooks inject additional context.
+**Read-back:** `both` — Skills are pull when an agent deliberately invokes an MCP tool or reads a selected local skill; they are push when startup/session hooks sync selected collections, native skill descriptions are made visible to the host agent, OpenClaw sidecar instructions tell the agent to check skills before work, and prompt hooks inject additional context
 
 ### Borrowable Ideas
 

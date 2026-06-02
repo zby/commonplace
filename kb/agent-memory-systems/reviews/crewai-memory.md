@@ -34,6 +34,9 @@ CrewAI Memory is the memory layer inside crewAIInc's Python multi-agent framewor
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — LanceDB rows by default, or Qdrant Edge points when `storage="qdrant-edge"` is configured
+- **Representational form:** `mixed` — Mixed symbolic/prose/distributed-parametric records: prose content, symbolic scope/categories/metadata/importance/timestamps/source/private fields, and embeddings
+
 **Memory records.** Storage substrate: LanceDB rows by default, or Qdrant Edge points when `storage="qdrant-edge"` is configured. Representational form: mixed symbolic/prose/distributed-parametric records: prose content, symbolic scope/categories/metadata/importance/timestamps/source/private fields, and embeddings. Lineage: authored directly through `remember`, trace-extracted through agent and LiteAgent outputs, flow-authored through `Flow.remember`, or updated/deleted by consolidation and explicit operations. Behavioral authority: knowledge artifact when read as evidence/context; ranking influence when embedding similarity, recency, importance, scopes, categories, and privacy filters decide what reaches the agent; advisory system-definition material when injected into prompts or returned by the memory tool.
 
 **Encoding analyses and consolidation plans.** Storage substrate: transient flow state, with durable effects applied to memory storage. Representational form: symbolic LLM outputs constrained by Pydantic schemas: suggested scope, categories, importance, extracted metadata, and keep/update/delete/insert decisions. Lineage: derived from new content, existing scopes/categories, and similar memory records. Behavioral authority: learning and mutation authority, because these decisions determine where memories are stored, whether old memories are updated or deleted, and which metadata will later steer retrieval. They are not retained as auditable review artifacts.
@@ -65,7 +68,7 @@ The strongest overlap is the artifact split. CrewAI's memory records, scopes, em
 
 CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve and inject memories before a response, and its ordinary agent loop exposes memory as tools without the developer writing those tools manually. Commonplace is ahead on retained lineage: a review or note keeps source URLs, status, and git diff history, while CrewAI's derived memories do not retain the extraction prompt version, exact source excerpt, consolidation rationale, or review state as durable first-class fields.
 
-Read-back: both. CrewAI has pull read-back through `Search memory`, `Memory.recall`, scopes, flows, and knowledge queries; it has engineered push activation in LiteAgent, where the last user message triggers relevance-ranked recall and prompt injection before the LLM call.
+**Read-back:** `both` — CrewAI has pull read-back through `Search memory`, `Memory.recall`, scopes, flows, and knowledge queries; it has engineered push activation in LiteAgent, where the last user message triggers relevance-ranked recall and prompt injection before the LLM call
 
 ### Borrowable Ideas
 

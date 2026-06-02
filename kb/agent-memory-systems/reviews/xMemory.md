@@ -32,6 +32,9 @@ xMemory, by HU-xiaobai, is the code release for "Beyond RAG for Agent Memory: Re
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — Per-user JSONL files under `storage_path/episodes/`, Chroma episode collections, BM25 indexes, caches, and optional graph nodes
+- **Representational form:** `mixed` — Mixed prose trace narrative, symbolic metadata, original-message JSON, timestamps, and distributed-parametric embeddings
+
 **Episode records.** Storage substrate: per-user JSONL files under `storage_path/episodes/`, Chroma episode collections, BM25 indexes, caches, and optional graph nodes. Representational form: mixed prose trace narrative, symbolic metadata, original-message JSON, timestamps, and distributed-parametric embeddings. Lineage: trace-derived from conversation messages, transformed by LLM boundary detection and episode generation; invalidated by changes to prompts, message timestamps, boundary configuration, model behavior, or source conversations. Behavioral authority: knowledge artifact when retrieved as evidence or context; ranking artifact through BM25/vector indexes; weak audit artifact because original messages are preserved but not independently validated.
 
 **Semantic memory records.** Storage substrate: per-user `semantic/*.jsonl`, Chroma semantic collections, semantic embedding caches, and `semantic_knn/*.json`. Representational form: prose facts plus symbolic type, confidence, source episode ids, revision count, and embeddings. Lineage: trace-derived from episodes and original messages through either prediction-correction or per-episode extraction prompts; source episode ids preserve a useful but coarse evidence link. Behavioral authority: knowledge artifact when read as facts; ranking and neighborhood artifact through vector similarity, semantic kNN, duplicate checks, and retrieval scoring.
@@ -59,7 +62,7 @@ xMemory is stronger than Commonplace on one narrow axis: high-volume dialogue me
 
 The architectural lesson is not "use themes instead of notes." xMemory's themes are retrieval-control summaries over many small semantic facts, not durable explanatory notes. In Commonplace terms they look more like generated indexes or search-side clusters than library artifacts. Treating them as notes would overstate their lineage and authority.
 
-Read-back: both - the `xMemory.search()` facade is an explicit pull interface, while the LoCoMo `adaptive_hier` answer loop performs relevance- and entropy-gated retrieval before `answer()` assembles memory context for the LLM.
+**Read-back:** `both` — The `xMemory.search()` facade is an explicit pull interface, while the LoCoMo `adaptive_hier` answer loop performs relevance- and entropy-gated retrieval before `answer()` assembles memory context for the LLM
 
 ### Borrowable Ideas
 

@@ -31,9 +31,12 @@ Reflexion, from `noahshinn/reflexion`, is a research codebase for "Language Agen
 
 **Read-back is pushed by the benchmark harness.** The acting agent does not decide to search a memory store. The runner conditionally includes reflections in the prompt before the next attempt: HotPotQA formats them into `{reflections}`, AlfWorld and WebShop prepend "Your memory for the task below", and programming prompts include `[reflection on previous impl]` before asking for an improved implementation ([hotpotqa_runs/agents.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py), [alfworld_runs/env_history.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/env_history.py), [webshop_runs/env_history.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/env_history.py), [programming_runs/generators/generator_utils.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/generators/generator_utils.py)).
 
-Read-back: push-only for the acting agent. Reflections are automatically placed in later prompts by task runners; the agent has no implemented retrieval tool or deliberate memory query path.
+**Read-back:** `push` — For the acting agent. Reflections are automatically placed in later prompts by task runners; the agent has no implemented retrieval tool or deliberate memory query path
 
 ## Artifact analysis
+
+- **Storage substrate:** `in-memory` — Python object fields `self.reflections` and `self.reflections_str` inside `CoTAgent` and `ReactReflectAgent`
+- **Representational form:** `prose` — Prose reflection strings plus formatted prompt text
 
 **In-process HotPotQA reflections.** Storage substrate: Python object fields `self.reflections` and `self.reflections_str` inside `CoTAgent` and `ReactReflectAgent`. Representational form: prose reflection strings plus formatted prompt text. Lineage: trace-derived from the prior scratchpad when the previous attempt was incorrect, halted, or finished wrong; `LAST_ATTEMPT` can also reuse the whole truncated previous trace as context. Behavioral authority: system-definition-adjacent prompt advice for the next run on the same question, because the reflection header explicitly instructs the model to use the plans to avoid the previous failure. This path is not durable beyond the agent object unless notebooks or logs preserve it.
 

@@ -32,6 +32,9 @@ ExpeL, from LeapLabTHU's `ExpeL` repository, is the official implementation of t
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Local files under `logs/<benchmark>/expel/`: `.txt` logs, `_true.txt` full logs, and `.pkl` lists of serializable agent dictionaries (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py)
+- **Representational form:** `mixed` — Mixed: prose trajectories in logs, symbolic Python dictionaries in pickle, and embedded prose fields for task histories and reflections
+
 **Training logs and pickled checkpoints.** The storage substrate is local files under `logs/<benchmark>/expel/`: `.txt` logs, `_true.txt` full logs, and `.pkl` lists of serializable agent dictionaries (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py). The representational form is mixed: prose trajectories in logs, symbolic Python dictionaries in pickle, and embedded prose fields for task histories and reflections. Lineage is raw or lightly structured runtime trace capture from training tasks. Behavioral authority is mostly knowledge artifact authority until later scripts reload the checkpoint; once loaded by insight extraction or evaluation, the same records become learning input and retrieval substrate.
 
 **`Trajectory` objects and in-agent histories.** The storage substrate is in-memory `succeeded_trial_history`, `failed_trial_history`, `past_reflections`, and checkpointed agent dictionaries (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py). The representational form is mixed prose and symbolic parsing: full trajectory text plus parsed thoughts, actions, observations, steps, and optional reflections (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/memory/episode.py). Lineage is direct task execution trace, split by success or failure. Behavioral authority is learning input for rule extraction and ranking input for few-shot retrieval; it is not itself a curated durable rule.
@@ -61,7 +64,7 @@ Commonplace is stronger on provenance, reviewability, and durable authority boun
 
 ExpeL is stronger on pre-action activation. It does not rely on the agent deciding to search memory: rules are inserted before the task prompt, and retrieved few-shots are selected and swapped into the prompt before LLM calls. That is exactly the storage-to-context step Commonplace often delegates to agent discipline.
 
-Read-back: both, with static rule push and relevance-gated push activation for retrieved few-shot trajectories; script-level checkpoint loading is a non-agent pull path.
+**Read-back:** `both` — With static rule push and relevance-gated push activation for retrieved few-shot trajectories; script-level checkpoint loading is a non-agent pull path
 
 ### Borrowable Ideas
 

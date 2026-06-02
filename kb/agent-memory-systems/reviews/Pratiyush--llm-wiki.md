@@ -32,6 +32,9 @@ llm-wiki, from Pratiyush's `Pratiyush/llm-wiki` repository, is a local-first Pyt
 
 ## Artifact analysis
 
+- **Storage substrate:** `model-weights` — Python modules under `llmwiki/adapters/` and `llmwiki/convert.py`, plus user config and state files such as `examples/sessions_config.json` and `.llmwiki-state.json`
+- **Representational form:** `mixed` — Symbolic code/config, with prose comments and docs
+
 **Adapter registry and conversion rules.** Storage substrate: Python modules under `llmwiki/adapters/` and `llmwiki/convert.py`, plus user config and state files such as `examples/sessions_config.json` and `.llmwiki-state.json`. Representational form: symbolic code/config, with prose comments and docs. Lineage: authored implementation plus adapter-specific schema assumptions; state entries derive from source file mtimes and adapter names. Behavioral authority: system-definition artifacts for routing which traces enter the raw layer, how project slugs are assigned, which records are filtered, what is redacted, and whether a source is treated as AI-session material or opt-in user content.
 
 **Raw session Markdown.** Storage substrate: filesystem files under `raw/sessions/`, optionally under a vault overlay path when `--vault` is used. Representational form: prose Markdown with symbolic YAML frontmatter for project, slug, time, model, tools, counts, sub-agent status, and source path. Lineage: trace-extracted from local JSONL/session/export files through an adapter and converter; source file mtime state determines idempotency; existing raw files are not overwritten without `--force`. Behavioral authority: knowledge artifacts as preserved evidence for later ingest, query, build, exports, and audit. Raw files are intentionally not trusted as the final distilled wiki layer.
@@ -65,7 +68,7 @@ The main divergence is type authority. Commonplace makes the artifact type, coll
 
 The other divergence is activation. llm-wiki is excellent at making historical work searchable and exportable, but the implemented core does not decide that a memory is relevant before an agent acts. The README and plugin metadata mention SessionStart automation, pending queues, and hook installation, yet the code I found mainly converts/queues/syncs or exposes pull tools. I did not find a relevance-gated `UserPromptSubmit`-style path that injects selected memory into the agent's next prompt.
 
-Read-back: pull-only in the implemented core. Agents and users call `/wiki-query`, read files, use MCP `wiki_query`/`wiki_search`/`wiki_read_page`, browse static exports, or run sync/build commands; no current code path pushes relevance-matched memory into a receiving agent before action.
+**Read-back:** `pull` — In the implemented core. Agents and users call `/wiki-query`, read files, use MCP `wiki_query`/`wiki_search`/`wiki_read_page`, browse static exports, or run sync/build commands; no current code path pushes relevance-matched memory into a receiving agent before action
 
 ### Borrowable Ideas
 

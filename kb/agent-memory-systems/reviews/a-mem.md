@@ -31,6 +31,9 @@ A-mem, from AGI Research's `agiresearch/A-mem` repository, is a Python library f
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — Python `MemoryNote` objects in `AgenticMemorySystem.memories`, with serialized copies of their fields stored as Chroma metadata in the active collection
+- **Representational form:** `mixed` — Mixed prose and symbolic metadata; content/context are prose, while ids, timestamps, tags, keywords, links, category, retrieval count, and history are symbolic fields
+
 **Memory notes.** Storage substrate: Python `MemoryNote` objects in `AgenticMemorySystem.memories`, with serialized copies of their fields stored as Chroma metadata in the active collection. Representational form: mixed prose and symbolic metadata; content/context are prose, while ids, timestamps, tags, keywords, links, category, retrieval count, and history are symbolic fields. Lineage: notes are authored or host-supplied at `add_note` time; semantic metadata may be caller-supplied or LLM-derived; link/context/tag changes may be derived from neighbor retrieval and the LLM evolution prompt. Behavioral authority: notes are knowledge artifacts when returned to a caller as evidence or context; links, tags, keywords, and context also have ranking and routing influence because search and evolution consume them.
 
 **Chroma collection and embeddings.** Storage substrate: an in-memory Chroma client in the default retriever, or a Chroma persistent directory when a caller directly uses `PersistentChromaRetriever`. Representational form: distributed-parametric embeddings plus symbolic metadata. Lineage: embeddings and query results are derived from note content through the configured sentence-transformer embedding function; metadata is serialized from each `MemoryNote` at add/update time and reconstituted on search. Behavioral authority: the collection is a system-definition artifact on the read path because it ranks which notes become available to the caller; it is not the canonical explanatory source when the note object and metadata are available.
@@ -58,7 +61,7 @@ The system is also more retrieval-component than knowledge base. It does not def
 
 The LLM evolution loop is the distinctive contrast. Commonplace tends to ask agents to write explicit notes or reviews from sources; A-mem asks an LLM to maintain part of the local topology and metadata of a note graph after neighbor retrieval. That is useful for low-friction organization, but it weakens lineage: after a context or tag is changed, the code does not retain the provider, prompt version, source-neighbor ids in a durable audit trail, or a reviewer decision.
 
-**Read-back:** pull — callers explicitly invoke `read`, `search`, `search_agentic`, or `find_related_memories`; the repository does not wire a relevance-gated push path into an agent loop.
+**Read-back:** `pull` — Callers explicitly invoke `read`, `search`, `search_agentic`, or `find_related_memories`; the repository does not wire a relevance-gated push path into an agent loop
 
 ### Borrowable Ideas
 

@@ -36,6 +36,9 @@ Letta, formerly MemGPT, is Letta AI's open-source stateful-agent server and SDK 
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — `block` table rows, agent/block pivot rows, optional block tags and history pointers, and optionally git-backed Markdown files when git memory is enabled
+- **Representational form:** `mixed` — Prose values plus symbolic labels, descriptions, limits, read-only flags, metadata, tags, and path-like labels
+
 **Core memory blocks.** Storage substrate: `block` table rows, agent/block pivot rows, optional block tags and history pointers, and optionally git-backed Markdown files when git memory is enabled. Representational form: prose values plus symbolic labels, descriptions, limits, read-only flags, metadata, tags, and path-like labels. Lineage: authored at agent creation, edited through API/tool calls, or trace-derived through sleeptime/background agents; git mode can preserve commit history, while ordinary database mode preserves less diff-oriented lineage. Behavioral authority: system-definition artifact when compiled into the system prompt, because block content and metadata directly shape the next model call; knowledge artifact when shown to users or edited as remembered facts.
 
 **Compiled system prompt / in-context message list.** Storage substrate: persisted system `Message` plus the agent's `message_ids` context window. Representational form: assembled prose and XML-like symbolic prompt sections. Lineage: derived from the system prompt, current memory blocks, tool rules, source/file state, previous message count, archival memory count, archive tags, and timestamps. Behavioral authority: high-authority system instruction and pre-action context for the receiving model; regenerated when core memory or system prompt changes.
@@ -67,7 +70,7 @@ Letta is much stronger than Commonplace as an online agent runtime. It owns agen
 
 The closest overlap is git-backed memory. Letta's memory repo path acknowledges the same design pressure as Commonplace: durable behavior-shaping prose should be inspectable, versioned, and recoverable. The difference is that Letta still treats git as a backing store behind server APIs, whereas Commonplace treats the repo itself as the operating surface.
 
-Read-back: both. Core memory blocks, source/file windows, and compiled memory metadata are pushed into the receiving model's system context before action; archival and conversation search are pull tools the agent or host must call explicitly.
+**Read-back:** `both` — Core memory blocks, source/file windows, and compiled memory metadata are pushed into the receiving model's system context before action; archival and conversation search are pull tools the agent or host must call explicitly
 
 ### Borrowable Ideas
 

@@ -32,6 +32,9 @@ Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is a researc
 
 ## Artifact analysis
 
+- **Storage substrate:** `model-weights` — JSON files written under `mcts_result/{Task}/{model_name}/` through `ExtendedMCTS.save`, using `mmengine.dump` on the root node
+- **Representational form:** `parametric` — Mixed symbolic and prose traces: tree topology, visits, values, rewards, actions, observations, full conversation messages, terminal flags, and disaster flags
+
 **MCTS result trees.** Storage substrate: JSON files written under `mcts_result/{Task}/{model_name}/` through `ExtendedMCTS.save`, using `mmengine.dump` on the root node. Representational form: mixed symbolic and prose traces: tree topology, visits, values, rewards, actions, observations, full conversation messages, terminal flags, and disaster flags. Lineage: derived from sampled model actions, environment observations/rewards, task data, MCTS parameters from environment variables, and task-specific action cleanup. Behavioral authority: knowledge artifacts while inspected as search evidence; system-definition artifacts on the offline learning path because `path_collection.py` loads them to select which trajectories become trainable examples.
 
 **Revision-training JSONL entries.** Storage substrate: append-only JSONL files at the configured `--output_dir`, defaulting to `mcts_training_data/{task}_{data_type}.jsonl`. Representational form: mixed conversation prose plus symbolic fields such as `loss`, `revise`, `task_num`, `high_log`, `low_log`, and `revise_feedback`. Lineage: derived from paired MCTS leaf paths, `ALPHA`/`BETA` thresholds, optional verifier judgments, and the splice logic in `conversation_generation`. Behavioral authority: system-definition artifacts for fine-tuning because they decide which tokens are supervised and which mistakes are masked out.
@@ -61,7 +64,7 @@ The strongest contrast is reviewability. Commonplace can inspect the exact rule,
 
 The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout generation, path pairing, verifier calls, and training. At runtime it does not load past trajectories, so it avoids prompt bloat. Commonplace pays a smaller ongoing retrieval/navigation cost and keeps the loaded material explainable.
 
-**Read-back:** push by unconditional parameterization after fine-tuning; the code does not implement pull retrieval or relevance-gated push activation over stored trajectories.
+**Read-back:** `push` — By unconditional parameterization after fine-tuning; the code does not implement pull retrieval or relevance-gated push activation over stored trajectories
 
 ### Borrowable Ideas
 

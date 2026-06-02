@@ -33,6 +33,9 @@ Siftly, from viperrcrypto's `viperrcrypto/Siftly` repository, is a self-hosted N
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — The local SQLite database configured by Prisma, with `Bookmark`, `MediaItem`, `BookmarkCategory`, `Category`, `Setting`, and `ImportJob` tables
+- **Representational form:** `mixed` — Mixed symbolic/prose: tweet ids, authors, timestamps, source labels, category links, settings, and media URLs are symbolic fields, while tweet text and raw JSON carry prose and platform payloads
+
 **Bookmark and media rows.** The storage substrate is the local SQLite database configured by Prisma, with `Bookmark`, `MediaItem`, `BookmarkCategory`, `Category`, `Setting`, and `ImportJob` tables. The representational form is mixed symbolic/prose: tweet ids, authors, timestamps, source labels, category links, settings, and media URLs are symbolic fields, while tweet text and raw JSON carry prose and platform payloads. Lineage comes from uploaded X bookmark JSON and import-time parsing; duplicate tweet ids are skipped rather than merged. Behavioral authority is knowledge artifact authority: rows provide evidence, reference material, and retrievable context for user-facing views and tools.
 
 **Deterministic entity extraction.** The storage substrate is the bookmark `entities` JSON field. The representational form is symbolic JSON with hashtags, URLs, mentions, detected tool names, tweet type, and media flags. Lineage is derived from stored `rawJson` by authored TypeScript rules and the `KNOWN_TOOL_DOMAINS` table; changes to either raw JSON or those rules invalidate the extraction. Behavioral authority is search and categorization influence: entities are used as signals in enrichment prompts, category prompts, FTS rows, and AI-search entries.
@@ -66,7 +69,7 @@ The main difference is authority. Siftly's retained artifacts mostly shape user-
 
 Siftly is stronger as an ergonomic capture and enrichment front end. It has import tools, media understanding, semantic tags, category confidence, mindmap exploration, and export. Commonplace is stronger as a governed knowledge substrate: it keeps artifact form, lineage, validation, review state, and behavior-shaping authority explicit.
 
-Read-back: pull-only - users or external agents deliberately search, browse, inspect, run CLI commands, or read exported markdown; the code does not implement relevance-gated pre-action injection into a receiving agent's context.
+**Read-back:** `pull` — Users or external agents deliberately search, browse, inspect, run CLI commands, or read exported markdown; the code does not implement relevance-gated pre-action injection into a receiving agent's context
 
 ### Borrowable Ideas
 

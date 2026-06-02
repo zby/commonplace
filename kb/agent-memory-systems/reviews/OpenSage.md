@@ -32,6 +32,9 @@ OpenSage, by opensage-agent/OpenSage, is a Python agent framework on top of Goog
 
 ## Artifact analysis
 
+- **Storage substrate:** `in-memory` — JSON files under `agent_storage_path`, defaulting to `~/.local/opensage/dynamic_agents`, plus in-memory `_agents` and `_metadata` maps during a session
+- **Representational form:** `symbolic` — Symbolic JSON metadata for name, status, creator, model string, tool names, `enabled_skills`, parent/children ids, and timestamps
+
 **Dynamic subagent metadata.** Storage substrate: JSON files under `agent_storage_path`, defaulting to `~/.local/opensage/dynamic_agents`, plus in-memory `_agents` and `_metadata` maps during a session. Representational form: symbolic JSON metadata for name, status, creator, model string, tool names, `enabled_skills`, parent/children ids, and timestamps. Lineage: created by `create_subagent` from the caller agent's tool context and model/tool selections. Behavioral authority: system-definition artifact authority while loaded, because metadata configures a future runnable agent; effective cross-session authority is weaker because automatic reload is not fully active in the inspected code.
 
 **Generated and built-in Skills.** Storage substrate: `src/opensage/bash_tools/`, `~/.local/opensage/bash_tools/`, and sandbox-mounted `/bash_tools`, with generated tools constrained to `bash_tools/new_tools/`. Representational form: mixed prose and symbolic metadata in `SKILL.md`, plus executable scripts and optional reference/assets. Lineage: built-in authored tool packages or agent/user-scaffolded packages from `new_tool_creator`; generated templates start with TODO placeholders and require later completion. Behavioral authority: system-definition artifacts. They define available operations, dependency sandboxes, execution location, and prompt-visible usage policy.
@@ -65,7 +68,7 @@ The strongest alignment is that both systems treat retained artifacts as operati
 
 OpenSage is stronger where the memory must sit inside an active agent framework. It has before/after tool callbacks, child-agent sessions, sandbox mounts, web-session resume, output compaction, and training adapters. Commonplace is stronger where durable knowledge must be inspectable, source-grounded, validated, and comparable across time. OpenSage's trace-derived graph memory can be useful, but the default lineage from a tool result to an extracted entity is weaker than Commonplace's source-pinned review/snapshot practice.
 
-Read-back: both, but no `push-activation` tag. Long-term memory is pulled through `search_memory` and related history/file tools; Skills and file-memory guidance are unconditionally injected into prompts when configured, and plugin callbacks can add warnings or summaries around tool use, but this review did not find relevance-gated or state-scoped pre-action injection of matching memories.
+**Read-back:** `both` — But no `push-activation` tag. Long-term memory is pulled through `search_memory` and related history/file tools; Skills and file-memory guidance are unconditionally injected into prompts when configured, and plugin callbacks can add warnings or summaries around tool use, but this review did not find relevance-gated or state-scoped pre-action injection of matching memories
 
 ### Borrowable Ideas
 

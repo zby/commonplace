@@ -32,6 +32,9 @@ REM, from satyammistari, is an open-source "Recursive Episodic Memory" service f
 
 ## Artifact analysis
 
+- **Storage substrate:** `graph` — Postgres `episodes` rows, Qdrant `episodes` vectors, Neo4j `Episode` nodes, and Redis-published consolidation jobs
+- **Representational form:** `mixed` — Mixed raw prose trace, symbolic metadata, and distributed-parametric embeddings
+
 **Episode records.** Storage substrate: Postgres `episodes` rows, Qdrant `episodes` vectors, Neo4j `Episode` nodes, and Redis-published consolidation jobs. Representational form: mixed raw prose trace, symbolic metadata, and distributed-parametric embeddings. Lineage: imported from an agent or integration after a task, enriched by LLM parsing and embedding, linked to prior episodes by insertion order, and later marked consolidated when the intended consolidation path succeeds. Behavioral authority: knowledge artifact when listed, retrieved, or used as source evidence; ranking artifact through vector similarity, recency, retrieval count, graph adjacency, and consolidation state.
 
 **Semantic memory records.** Storage substrate: Postgres `semantic_memories`, Qdrant `semantic_memories`, and intended Neo4j `SemanticMemory` nodes. Representational form: prose fact plus symbolic fact type, confidence, evidence count, domain, source episode ids, active/superseded flags, and embedding. Lineage: LLM-distilled from clusters of unconsolidated episodes, with source episode ids as evidence pointers; invalidation is intended through active/superseded/contradicted fields, but I did not find implemented mutation routes for those states. Behavioral authority: knowledge artifact when returned by retrieval; advisory context when included in the injection prompt; ranking authority through semantic vector scores and filters.
@@ -59,7 +62,7 @@ REM is stronger than Commonplace as a service-shaped runtime substrate. It has A
 
 The largest design difference is the authority boundary. REM can put memory back into a model call quickly, especially through LangChain memory variables. Commonplace makes behavioral authority more explicit: instructions, collection contracts, validators, and review gates are intentionally authored or promoted system-definition artifacts. REM's extracted semantic memories are useful advisory context, but the code does not show a review step that decides when a distilled fact should become a rule or enforcement mechanism.
 
-Read-back: both. The API and SDK are pull surfaces, while LangChain `REMMemory.load_memory_variables()` is a relevance-gated pre-invoke push path from the receiving chain's perspective.
+**Read-back:** `both` — The API and SDK are pull surfaces, while LangChain `REMMemory.load_memory_variables()` is a relevance-gated pre-invoke push path from the receiving chain's perspective
 
 ### Borrowable Ideas
 

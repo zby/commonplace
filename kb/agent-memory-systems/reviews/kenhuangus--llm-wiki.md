@@ -32,6 +32,9 @@ Ken Huang's LLM Wiki is a local-first knowledge compilation system for agentic A
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Filesystem directories under `raw/auto_ingest/`, `raw/normalized/`, and related source queues
+- **Representational form:** `mixed` — Prose markdown with frontmatter and source metadata
+
 **Raw sources and normalized markdown.** Storage substrate: filesystem directories under `raw/auto_ingest/`, `raw/normalized/`, and related source queues. Representational form: prose markdown with frontmatter and source metadata. Lineage: imported from monitors, manual files, arXiv, CVE/NVD, GitHub, RSS, or curated feeds; normalized files are derived from raw sources and should be regenerated when source parsing or domain routing changes. Behavioral authority: knowledge artifacts. They provide evidence and context for extraction, integration, validation, and later human/agent review.
 
 **Extracted JSON and integrated wiki pages.** Storage substrate: JSON sidecars beside normalized sources and markdown files under `wiki/`. Representational form: mixed symbolic/prose: JSON entities/claims/relationships, YAML frontmatter, Obsidian links, and markdown claim bodies. Lineage: extracted by local/cloud LLM calls configured in `tools/common.py`, then merged by `tools/integrate.py`; invalidated by source changes, prompt changes, model changes, or merge-policy changes. Behavioral authority: wiki pages are knowledge artifacts when queried or synthesized, but their frontmatter status/confidence and conflict markers also have light routing/evaluation force for validators and research agents.
@@ -59,7 +62,7 @@ LLM Wiki and Commonplace share a file-first premise: durable knowledge should be
 
 The strongest divergence is governance of learned behavior. LLM Wiki lets operational traces affect confidence scores, statuses, hypotheses, reports, and prompt-experiment logs, but much of that is mediated by an LLM and logged after the fact. Commonplace would want source-retained review artifacts, stronger invalidation, and an explicit promotion boundary before a prompt experiment or validation adjustment becomes authoritative.
 
-Read-back: pull-only for agents over BM25/index/wiki files; daemon queues and scheduled jobs push work through the pipeline, but the source does not implement engineered relevance-gated memory/context push into a receiving agent or model context.
+**Read-back:** `pull` — For agents over BM25/index/wiki files; daemon queues and scheduled jobs push work through the pipeline, but the source does not implement engineered relevance-gated memory/context push into a receiving agent or model context
 
 The context-efficiency story is mixed. Query is deliberately small because it returns top-five BM25 matches, and source monitors process bounded batches. Research and paper agents, however, gather wiki pages by filesystem scans and truncate snippets ad hoc, so complexity is controlled by simple caps rather than a typed context budget or provenance-aware selector.
 

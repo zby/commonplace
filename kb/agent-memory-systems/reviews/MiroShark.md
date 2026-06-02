@@ -34,6 +34,9 @@ MiroShark, from Aaron Mars's `aaronjmars/MiroShark` repository, is a web applica
 
 ## Artifact analysis
 
+- **Storage substrate:** `graph` — Neo4j plus on-disk upload/project state
+- **Representational form:** `mixed` — Mixed symbolic/prose/vector, with entity nodes, relation edges, ontology JSON, raw episode text, embeddings, temporal fields, and epistemic kind fields
+
 **Source graph.** Storage substrate: Neo4j plus on-disk upload/project state. Representational form: mixed symbolic/prose/vector, with entity nodes, relation edges, ontology JSON, raw episode text, embeddings, temporal fields, and epistemic kind fields. Lineage: authored or imported source text is chunked into NER-derived entities and relation facts; entity resolution and contradiction detection derive a current graph view while retaining invalidated edges for point-in-time queries. Behavioral authority: mostly knowledge artifact for simulation setup, report evidence, graph search, MCP retrieval, and frontend display; it gains ranking authority when vector/BM25/traversal/rerank decide what facts enter a report or assistant response.
 
 **Simulation runtime state.** Storage substrate: simulation directories under the backend upload area, per-platform SQLite databases, `actions.jsonl`, `run_state.json`, `state.json`, platform trajectory files, merged `trajectory.json`, and belief-state JSON. Representational form: symbolic JSON/SQLite records plus prose action content. Lineage: trace-derived from agent actions, database rows, engagement, market events, and heuristic belief updates. Behavioral authority: both knowledge artifact and system-definition artifact. It is evidence for exports, reports, watch pages, and charts, but belief summaries and round memory are injected into active agents before later actions, giving them advisory system-definition force inside the simulation.
@@ -69,7 +72,7 @@ Compared with Commonplace, MiroShark has richer activation machinery. It injects
 
 The report reasoning trace is a strong analogue to Commonplace review reports. Both preserve why an output happened, not only the output. The difference is substrate and lifecycle. MiroShark stores traces in Neo4j and report folders for later inspection; Commonplace stores review artifacts in the repo with status, validation, and replacement conventions.
 
-**Read-back:** both — external graph/report/MCP queries are pull, while simulation round memory, belief state, director events, market/media context, and per-agent MCP results are pushed into active agents before later actions.
+**Read-back:** `both` — External graph/report/MCP queries are pull, while simulation round memory, belief state, director events, market/media context, and per-agent MCP results are pushed into active agents before later actions
 
 ### Borrowable Ideas
 

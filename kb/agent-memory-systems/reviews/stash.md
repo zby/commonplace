@@ -32,6 +32,9 @@ Stash, from alash3al, is a self-hosted Go memory server for MCP-compatible agent
 
 ## Artifact analysis
 
+- **Storage substrate:** `rdbms` — PostgreSQL `episodes` rows with pgvector embeddings and namespace foreign keys
+- **Representational form:** `mixed` — Prose observation plus symbolic timestamps, namespace ids, embedding model metadata, and distributed-parametric vectors
+
 **Episode rows.** Storage substrate: PostgreSQL `episodes` rows with pgvector embeddings and namespace foreign keys. Representational form: prose observation plus symbolic timestamps, namespace ids, embedding model metadata, and distributed-parametric vectors. Lineage: agent- or caller-submitted observations from a session, project, user preference, decision, failure, or summary; Stash records the submitted text and timestamp, but not the full surrounding transcript, exact source span, or acceptance review. Behavioral authority: knowledge artifacts when recalled as evidence or context; ranking artifacts through embedding similarity.
 
 **Consolidated facts and fact sources.** Storage substrate: PostgreSQL `facts` and `fact_sources`, with embeddings, confidence, optional structured fields, validity windows, and source episode links. Representational form: mixed prose fact, symbolic entity/property/value metadata, confidence, validity, source ids, and vectors. Lineage: LLM-derived from clustered episodes through `ReasonStructured()`, deduplicated by vector similarity, and linked back to source episode ids. Behavioral authority: knowledge artifacts when queried or recalled; system-definition authority appears in validity windows, confidence decay, contradiction resolution, and the fact-before-episode recall policy.
@@ -62,7 +65,7 @@ Stash is stronger as a runtime memory appliance. It packages database migrations
 
 The largest design difference is admission and authority. Stash makes it cheap for an agent to remember and consolidate session observations, but the accepting agent decides what to store and the LLM reasoner decides what to extract. Commonplace is slower and heavier because durable methodology claims are authored, cited, validated, and reviewed before gaining authority.
 
-Read-back: pull - agents or users call MCP/CLI tools such as `recall`, `query_facts`, `query_relationships`, `get_context`, `list_goals`, `list_failures`, and `list_hypotheses`; the MCP prompt strongly instructs agents to call those tools before history-sensitive answers, but I did not find a code-grounded relevance-gated pre-action injection path for stored memory content, so `push-activation` is not warranted.
+**Read-back:** `pull` — Agents or users call MCP/CLI tools such as `recall`, `query_facts`, `query_relationships`, `get_context`, `list_goals`, `list_failures`, and `list_hypotheses`; the MCP prompt strongly instructs agents to call those tools before history-sensitive answers, but I did not find a code-grounded relevance-gated pre-action injection path for stored memory content, so `push-activation` is not warranted
 
 ### Borrowable Ideas
 

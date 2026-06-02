@@ -32,6 +32,9 @@ last-checked: "2026-06-01"
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — External agent session files indexed by the separate `cass` binary, with local and optional SSH remote searches
+- **Representational form:** `mixed` — Mixed structured/prose transcripts, normalized into `CassSearchHit` objects and exported markdown/text
+
 **Raw sessions and `cass` hits.** Storage substrate: external agent session files indexed by the separate `cass` binary, with local and optional SSH remote searches. Representational form: mixed structured/prose transcripts, normalized into `CassSearchHit` objects and exported markdown/text. Lineage: source evidence from Claude, Codex, Cursor, Aider, PI, and similar agent sessions; `cm` does not own the canonical session store. Behavioral authority: knowledge artifacts when returned as context snippets or used as reflection evidence; ranking authority lives in `cass` search results and `cm` query construction rather than in the raw traces themselves.
 
 **Diary entries.** Storage substrate: JSON files under `config.diaryDir`, defaulting to `~/.cass-memory/diary`. Representational form: symbolic JSON with prose arrays for accomplishments, decisions, challenges, preferences, and key learnings. Lineage: derived from sanitized session exports by either LLM extraction or deterministic fast extraction; diary ids are content-derived, but generated entries do not retain a full prompt/version provenance bundle. Behavioral authority: knowledge artifacts for `why`, reflection, and related-session enrichment; they become part of system-definition lineage only when reflection consumes them to propose playbook deltas.
@@ -65,7 +68,7 @@ The strongest alignment is the retained-artifact split. cass-memory distinguishe
 
 The main divergence is source preservation and auditability. cass-memory keeps source session paths and can show `why`, but playbook bullets do not carry a complete derivation record: reflector prompt version, validator result, exact diary excerpt, curation decision, embedding model, and outcome feedback path are scattered. Commonplace's artifact model is slower but better suited to inspectable lineage.
 
-**Read-back:** both. Ordinary playbook and history memory reach the agent by explicit pull through `cm context`, `cm_context`, `memory_search`, or similar calls; trauma entries can reach and block the agent by pre-action hooks without a deliberate memory query.
+**Read-back:** `both` — Ordinary playbook and history memory reach the agent by explicit pull through `cm context`, `cm_context`, `memory_search`, or similar calls; trauma entries can reach and block the agent by pre-action hooks without a deliberate memory query
 
 ### Borrowable Ideas
 

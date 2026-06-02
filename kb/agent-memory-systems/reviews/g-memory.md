@@ -32,6 +32,9 @@ G-Memory, from bingreeky's `GMemory` repository, is the official implementation 
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — A LangChain Chroma store under the run-specific `.db` working directory
+- **Representational form:** `mixed` — Mixed: page content is the task main text, metadata serializes task description, trajectory prose, Boolean outcome label, JSON extra fields, and a JSON-serialized NetworkX state chain (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py)
+
 **Chroma task memory.** The storage substrate is a LangChain Chroma store under the run-specific `.db` working directory. The representational form is mixed: page content is the task main text, metadata serializes task description, trajectory prose, Boolean outcome label, JSON extra fields, and a JSON-serialized NetworkX state chain (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py). Lineage is direct runtime trace capture from completed benchmark tasks, lightly transformed by `_extract_mas_message`. Behavioral authority is knowledge artifact authority while stored as evidence and examples; it gains ranking and prompt-example authority when selected by retrieval.
 
 **State chains and agent-message graphs.** The storage substrate is in-memory `MASMessage.current_task_context` during a task and serialized metadata inside Chroma after `save_task_context`. The representational form is symbolic graph structure plus prose agent messages, actions, observations, and system/user instructions (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py). Lineage is the multi-agent execution trace, including spatial dependencies in DyLAN and MacNet workflows. Behavioral authority is mostly audit and learning-input knowledge artifact authority; after successful retrieval, selected trajectories become examples in a high-authority prompt channel.
@@ -63,7 +66,7 @@ Commonplace is stronger on durable provenance and reviewable authority. G-Memory
 
 The systems also differ in their tolerance for opaque storage. Chroma and pickle are acceptable in a benchmark harness where runs are reproducible experiments, but they are weak as a long-lived knowledge library substrate. Commonplace's Markdown and git model makes artifacts slower to promote but easier to inspect, diff, review, invalidate, and retire.
 
-Read-back: push, with engineered relevance-gated activation through task-graph expansion, vector similarity, thresholds, LLM reranking, top-k limits, and prompt assembly before agent action.
+**Read-back:** `push` — With engineered relevance-gated activation through task-graph expansion, vector similarity, thresholds, LLM reranking, top-k limits, and prompt assembly before agent action
 
 ### Borrowable Ideas
 

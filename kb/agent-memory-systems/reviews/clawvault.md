@@ -34,6 +34,9 @@ ClawVault, by Versatly, is a TypeScript CLI and OpenClaw memory plugin for local
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — Local filesystem folders under the vault root
+- **Representational form:** `mixed` — Markdown prose plus YAML frontmatter and wiki-links
+
 **Markdown vault memory files.** Storage substrate: local filesystem folders under the vault root. Representational form: Markdown prose plus YAML frontmatter and wiki-links. Lineage: authored through CLI commands, live-capture candidates, routed observations, inbox maintenance, or direct human editing; frontmatter records dates and some source metadata, but source offsets are usually not preserved. Behavioral authority: knowledge artifact authority when searched, read, or cited as context; system-definition authority when files under `rules`, `preferences`, `decisions`, or injected rule paths are placed into a future prompt as instructions or policy-like context.
 
 **Observation ledger and raw transcript capture.** Storage substrate: `ledger/raw/<source>/<YYYY>/<MM>/<DD>.jsonl` and `ledger/observations/<YYYY>/<MM>/<DD>.md`, with older observations archived under `ledger/archive/observations` by reflection/archive passes ([src/lib/ledger.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/lib/ledger.ts), [src/observer/observer.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/observer/observer.ts), [src/observer/reflection-service.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/observer/reflection-service.ts)). Representational form: raw JSONL message records and scored Markdown observations with typed tags, confidence, and importance. Lineage: trace-extracted from OpenClaw, Claude, ChatGPT, or opencode session material, with source/session/transcript metadata on raw records and date-level citations in reflections. Behavioral authority: raw records are knowledge artifacts for evidence and audit; observations become higher-authority context when `wake` and `context` read them, and they become source material for category routing, tasks, facts, and reflections.
@@ -68,7 +71,7 @@ The largest divergence is authority management. ClawVault optimizes for operatio
 
 ClawVault is also more productized around host-agent activation. The OpenClaw plugin can place recall policy and retrieved snippets directly into a pre-action system context, and can intervene before outbound messages. Commonplace has skills and instructions, but the normal KB read path remains agent-initiated search and navigation unless a workflow explicitly invokes a skill.
 
-Read-back: both - the CLI supports pull retrieval through search/recall/context, while OpenClaw hooks push recall mandates, session recap, prompt-matched snippets, recovery notices, and communication protocol text into agent context before or during action.
+**Read-back:** `both` — The CLI supports pull retrieval through search/recall/context, while OpenClaw hooks push recall mandates, session recap, prompt-matched snippets, recovery notices, and communication protocol text into agent context before or during action
 
 ### Borrowable Ideas
 

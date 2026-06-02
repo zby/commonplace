@@ -31,6 +31,9 @@ KBLaM, from Microsoft, is the official implementation of the ICLR 2025 "Knowledg
 
 ## Artifact analysis
 
+- **Storage substrate:** `model-weights` — JSON datasets in the repository or user-supplied dataset files, optionally split into train/test outputs
+- **Representational form:** `parametric` — Symbolic JSON records with prose fields such as `name`, `description_type`, `description`, generated `Q`/`A`, and `key_string`
+
 **Knowledge-base rows.** Storage substrate: JSON datasets in the repository or user-supplied dataset files, optionally split into train/test outputs. Representational form: symbolic JSON records with prose fields such as `name`, `description_type`, `description`, generated `Q`/`A`, and `key_string`. Lineage: synthetic rows are GPT-4-generated according to the dataset card; Enron rows are extracted from the Enron email dataset by a separate automated extraction/linking pipeline, then converted into triples. Behavioral authority: knowledge artifacts during training and evaluation, because they provide factual supervision and answer targets; they become stronger model-conditioning material only after encoding into KB tensors.
 
 **Base embedding arrays.** Storage substrate: `.npy` files generated outside or alongside training, with separate key and value arrays. Representational form: distributed-parametric vectors from OpenAI embeddings or SentenceTransformer models. Lineage: derived from `key_string` and `description` fields by `generate_kb_embeddings.py`, invalidated when the source dataset, embedding model, or embedding endpoint changes. Behavioral authority: system-definition/ranking substrate only indirectly: these vectors determine the inputs to the learned key/value projectors and optional cached training path.
@@ -59,7 +62,7 @@ KBLaM is valuable evidence for a different class of memory system: one where ret
 
 The context-efficiency contrast is sharp. Commonplace uses lexical search, indexes, type contracts, and skills so an agent can choose a small amount of text to load and explain why. KBLaM moves the KB outside the text prompt and into extra attention keys/values. That can be efficient for model inference, but the complexity of many KB tensors is hidden inside attention rather than exposed as a readable context bundle.
 
-Read-back: model-internal push over caller-supplied KB tensors at inference, with optional Llama top-k sparsification, but no agent-level relevance-gated memory/context push path in this review taxonomy.
+**Read-back:** `push` — Over caller-supplied KB tensors at inference, with optional Llama top-k sparsification, but no agent-level relevance-gated memory/context push path in this review taxonomy
 
 The governance contrast is also sharp. KBLaM evaluates answer accuracy, refusal, precision, recall, ROUGE, and BERTScore; it does not keep a source snapshot, citation, reviewer decision, or replacement history for each durable fact. Commonplace would treat those missing surfaces as central if a fact can later shape agent behavior.
 

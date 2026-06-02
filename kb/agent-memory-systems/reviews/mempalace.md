@@ -32,6 +32,9 @@ MemPalace, by `milla-jovovich`, is a local-first Python memory system for coding
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — ChromaDB persistent collections under the configured palace path, accessed through the backend contract
+- **Representational form:** `mixed` — Mixed prose/source text plus symbolic metadata such as wing, room, source file, chunk index, extraction mode, entities, and timestamps
+
 **Drawer documents.** Storage substrate: ChromaDB persistent collections under the configured palace path, accessed through the backend contract. Representational form: mixed prose/source text plus symbolic metadata such as wing, room, source file, chunk index, extraction mode, entities, and timestamps. Lineage: imported or trace-captured from project files, transcripts, daily diaries, manual MCP writes, or hooks; source changes invalidate by file hash/metadata, re-mine rules, or manual update/delete. Behavioral authority: knowledge artifacts when retrieved as evidence, context, or advice; they do not enforce behavior unless a host agent obeys the returned text.
 
 **Closets, hallways, tunnels, and palace graph records.** Storage substrate: a separate ChromaDB closet collection plus JSON files under `~/.mempalace` for hallway/tunnel-like navigation records. Representational form: symbolic pointer lines and graph records with embedded prose previews and entity/topic labels. Lineage: derived from drawer content, metadata, co-occurrence counts, or explicit MCP/tool writes; stale drawers or changed entity extraction require rebuild or cache invalidation. Behavioral authority: ranking, routing, and navigation system-definition artifacts. They influence which drawers are found or followed, but search code keeps drawers as the floor rather than letting closets become a hard gate.
@@ -61,7 +64,7 @@ The main divergence is the source-of-truth layer. MemPalace keeps source words i
 
 The second divergence is activation. MemPalace has hooks that push write-back obligations into an agent's workflow and can auto-mine transcripts in the background ([hooks README](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/hooks/README.md), [hooks_cli.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/hooks_cli.py)). Read-back is still explicit: wake-up, status, search, KG query, diary read, drawer fetch, graph traversal. I did not find an implemented matcher that observes the next task and injects relevant memories before action.
 
-Read-back: pull. Agents or users deliberately call wake-up/search/status/KG/diary/drawer tools; hooks push capture and save checkpoints, not relevance-gated retrieved memory.
+**Read-back:** `pull` — Agents or users deliberately call wake-up/search/status/KG/diary/drawer tools; hooks push capture and save checkpoints, not relevance-gated retrieved memory
 
 ### Borrowable Ideas
 

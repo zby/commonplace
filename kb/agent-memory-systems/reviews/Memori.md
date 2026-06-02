@@ -34,6 +34,9 @@ Memori, from Memori Labs, is an LLM- and datastore-agnostic memory SDK, cloud se
 
 ## Artifact analysis
 
+- **Storage substrate:** `service-object` — Cloud conversation endpoints or BYODB `memori_conversation` and `memori_conversation_message` rows
+- **Representational form:** `prose` — Structured rows carrying prose user/assistant text, roles, message types, session ids, timestamps, and optional summaries
+
 **Conversation and message traces.** Storage substrate: Cloud conversation endpoints or BYODB `memori_conversation` and `memori_conversation_message` rows. Representational form: structured rows carrying prose user/assistant text, roles, message types, session ids, timestamps, and optional summaries. Lineage: raw interaction traces captured from wrapped LLM calls, provider responses, OpenClaw events, Hermes/Claude Code helpers, or direct agent APIs. Behavioral authority: knowledge/audit artifacts by default; in registered SDK mode, stored conversation history can be replayed into later requests, giving it advisory pre-action context authority.
 
 **Entity facts and embeddings.** Storage substrate: Cloud recall service or BYODB `memori_entity_fact` rows with embeddings and mention links back to conversations. Representational form: mixed prose facts, symbolic ids/counts/timestamps/uniqueness keys, and distributed-parametric embeddings. Lineage: distilled from conversation and agent traces by advanced augmentation, or inserted through fallback/manual fact paths; fact-mention links retain coarse conversation lineage but not exact source spans or reviewer acceptance state. Behavioral authority: knowledge artifact when returned by recall; ranking artifact through embedding/BM25 scores, thresholds, and summaries; advisory context when injected before a model call.
@@ -63,7 +66,7 @@ Memori is stronger than Commonplace as a production integration surface. It meet
 
 The key design difference is authority. Memori's extracted facts are usually knowledge artifacts until a recall/injection path places them into an LLM request. Commonplace artifacts often start as explicit system-definition artifacts: type specs, collection contracts, skills, validation scripts, and review gates are intended to constrain future agents. Memori makes activation convenient; Commonplace makes promotion and accountability explicit.
 
-Read-back: both. Registered Python/TypeScript SDK clients implement engineered pre-call push activation by querying relevant facts, threshold-filtering them, and injecting `<memori_context>` or history into the receiving request; OpenClaw and Claude Code integrations mostly expose memory as explicit pull tools plus instructions to use them.
+**Read-back:** `both` — Registered Python/TypeScript SDK clients implement engineered pre-call push activation by querying relevant facts, threshold-filtering them, and injecting `<memori_context>` or history into the receiving request; OpenClaw and Claude Code integrations mostly expose memory as explicit pull tools plus instructions to use them
 
 ### Borrowable Ideas
 

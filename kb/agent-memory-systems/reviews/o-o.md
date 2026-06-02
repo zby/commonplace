@@ -33,6 +33,9 @@ o-o, from Jahala's `jahala/o-o` repository, is a living-document format rather t
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — The `.o-o.html` file in the user's filesystem or repository
+- **Representational form:** `prose` — Prose HTML with citations, images, paragraph ids, and references
+
 **Visible article HTML.** Storage substrate is the `.o-o.html` file in the user's filesystem or repository. Representational form is prose HTML with citations, images, paragraph ids, and references. Lineage is LLM-edited research output derived from web sources, prior article content, the embedded contract, and prior source-cache entries. Behavioral authority is mostly knowledge-artifact authority for human readers and for the future update agent when it re-reads the article as context.
 
 **Manifest, source cache, and changelog.** Storage substrate is JSON script blocks inside the same file. Representational form is symbolic JSON with embedded prose facts and summaries. Lineage is generated or edited during each update: manifest freshness depends on `as_of` and `update_every_days`; source cache depends on the sources the agent claims it used; changelog depends on the agent's summary of the edit. Behavioral authority is mixed: the manifest has system-definition authority for freshness, versioning, and cost-saving skip behavior; source cache and changelog are knowledge artifacts that advise later updates and human inspection.
@@ -65,7 +68,7 @@ The strongest divergence is modularity versus portability. o-o's single-file sha
 
 The second divergence is lineage quality. o-o has a useful source cache and changelog, but the implementation trusts the update agent to maintain them. Commonplace treats source capture, citations, validation, review, and replacement archives as separate surfaces that can be checked or regenerated outside the author's prose.
 
-Read-back: pull - a user, index command, cron job, or other external runner invokes a document, then the update agent reads the embedded contract/cache/changelog; I did not find a code-grounded relevance-gated pre-action push path, so the `push-activation` tag is not warranted.
+**Read-back:** `pull` — A user, index command, cron job, or other external runner invokes a document, then the update agent reads the embedded contract/cache/changelog; I did not find a code-grounded relevance-gated pre-action push path, so the `push-activation` tag is not warranted
 
 ### Borrowable Ideas
 

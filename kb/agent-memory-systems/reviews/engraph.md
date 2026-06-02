@@ -31,6 +31,9 @@ Engraph, from devwhodevs' `engraph` repository, is a Rust CLI and local server t
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — The user's local vault directory
+- **Representational form:** `mixed` — Prose markdown with YAML frontmatter, tags, Obsidian wikilinks, headings, tasks, and date-bearing filenames or frontmatter
+
 **Markdown vault.** The storage substrate is the user's local vault directory. The representational form is prose markdown with YAML frontmatter, tags, Obsidian wikilinks, headings, tasks, and date-bearing filenames or frontmatter. Lineage is authored or externally edited source material; Engraph treats these files as the source of truth and rebuilds derived index state from file content, hashes, mtimes, and path changes. Behavioral authority is mostly knowledge artifact authority: notes become evidence, context, and editable material for agents, but a note does not by itself instruct the agent until a tool reads it into context.
 
 **SQLite index and retrieval state.** The storage substrate is `~/.engraph/engraph.db`. The schema stores files, chunks, FTS rows, sqlite-vec embeddings, wikilink/mention edges, tag registry, folder centroids, placement corrections, unresolved links, migration logs, identity facts, CLI events, and cached LLM orchestration results (https://github.com/devwhodevs/engraph/blob/f9a95bc96accc792c02ee384d9e6bf768a88c8c8/src/store.rs). The representational form is mixed symbolic and distributed-vector state. Lineage is derived from vault files, local config, model outputs, write operations, and watcher events; reindexing, file changes, model dimension changes, and moves can invalidate or regenerate parts of it. Behavioral authority is system-definition authority for ranking, routing, identity-context assembly, health diagnostics, folder placement, migration rollback, and file resolution.
@@ -62,7 +65,7 @@ Engraph is stronger on immediate context assembly. Its search lanes, context bun
 
 Engraph is weaker on durable artifact governance. It has health checks, mtime conflict detection, API auth, read-only mode, and migration preview/undo, but it does not attach type contracts, review status, semantic validation, or source-level citation requirements to the notes it reads and writes. That is reasonable for a personal Obsidian gateway; it is a poor substitute for Commonplace's library-layer discipline.
 
-Read-back: pull-only from the agent's perspective. Memory enters context when the agent, user, or host explicitly calls search, read, context, identity, MCP, HTTP, or CLI tools; I did not find relevance-gated pre-action injection beyond ordinary tool calls and server instructions.
+**Read-back:** `pull` — From the agent's perspective. Memory enters context when the agent, user, or host explicitly calls search, read, context, identity, MCP, HTTP, or CLI tools; I did not find relevance-gated pre-action injection beyond ordinary tool calls and server instructions
 
 ### Borrowable Ideas
 

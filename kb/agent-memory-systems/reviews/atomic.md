@@ -32,6 +32,9 @@ Atomic, from Ken Fortney's `kenforthewin/atomic` repository, is a personal knowl
 
 ## Artifact analysis
 
+- **Storage substrate:** `sqlite` — Per-database SQLite or Postgres tables for atoms, atom-tag joins, source metadata, status fields, and hierarchical tags; a registry database stores global settings and tokens for multi-database deployments ([crates/atomic-core/src/db.rs](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/crates/atomic-core/src/db.rs), [docs/manual/guides/multi-database.md](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/docs/manual/guides/multi-database.md))
+- **Representational form:** `mixed` — Mixed prose Markdown plus symbolic metadata
+
 **Atoms and tags.** Storage substrate: per-database SQLite or Postgres tables for atoms, atom-tag joins, source metadata, status fields, and hierarchical tags; a registry database stores global settings and tokens for multi-database deployments ([crates/atomic-core/src/db.rs](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/crates/atomic-core/src/db.rs), [docs/manual/guides/multi-database.md](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/docs/manual/guides/multi-database.md)). Representational form: mixed prose Markdown plus symbolic metadata. Lineage: user-authored, imported, clipped, synced, or agent-written atom content; tag lineage may be user-authored or LLM-extracted. Behavioral authority: atoms and tags are knowledge artifacts when searched, read, synthesized, or displayed; tags also have routing and scoping authority for search, wiki, chat, reports, and auto-tagging.
 
 **Chunk embeddings, semantic edges, tag centroids, and canvas projections.** Storage substrate: `atom_chunks`, sqlite-vec `vec_chunks` or Postgres vector columns, `semantic_edges`, `tag_embeddings`, cached canvas data, and atom positions. Representational form: distributed-parametric vectors plus symbolic edge/cache records. Lineage: derived from atom content, configured embedding model, tag assignments, and graph-maintenance runs; changing source content or model invalidates embeddings and downstream graph state. Behavioral authority: ranking and navigation influence. They decide which atoms are retrieved, visually clustered, or selected for wiki/report context, but they are not themselves user-facing claims.
@@ -64,7 +67,7 @@ Atomic is much stronger as an end-user memory product. It has desktop/server/mob
 
 The most interesting convergence is reports. Atomic's scheduled reports look like a productized version of a Commonplace workshop-to-library loop: define a research prompt and source scope, run an agent over a bounded corpus, produce a cited finding, and keep provenance. The tradeoff is that Atomic writes generated findings directly into the same atom substrate, while Commonplace usually prefers human-readable review and promotion gates before generated synthesis becomes durable library knowledge.
 
-**Read-back:** both. Ordinary search, chat, MCP, wiki browsing, and canvas use are pull. Scheduled reports are engineered push: a cron/report trigger selects source atoms by tag, kind, time window, and token budget, then injects them into a report agent before it writes a finding.
+**Read-back:** `both` — Ordinary search, chat, MCP, wiki browsing, and canvas use are pull. Scheduled reports are engineered push: a cron/report trigger selects source atoms by tag, kind, time window, and token budget, then injects them into a report agent before it writes a finding
 
 ### Borrowable Ideas
 

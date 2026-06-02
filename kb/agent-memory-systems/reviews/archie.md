@@ -31,9 +31,12 @@ Archie is Gabriel Chamon's repo-backed Arch Linux desktop configuration and main
 
 **Context posture is progressive disclosure.** A small always-loaded `AGENTS.md` routes; manuals, work items, ADRs, and bug notes load only on explicit lookup — bounding an agent session to a router plus pulled specifics.
 
-**Read-back:** both - root agent instructions and deployed configs are push by always-loaded location or runtime consumption; manuals, work items, ADRs, and bug notes are mostly pull by explicit lookup. There is no relevance-gated push activation layer in the inspected code.
+**Read-back:** `both` — Root agent instructions and deployed configs are push by always-loaded location or runtime consumption; manuals, work items, ADRs, and bug notes are mostly pull by explicit lookup. There is no relevance-gated push activation layer in the inspected code
 
 ## Artifact analysis
+
+- **Storage substrate:** `repo` — The Git repository, with live deployment as symlinks or copied files under home, XDG config, `/etc`, and `/usr/share/xkeyboard-config-2`
+- **Representational form:** `mixed` — Mostly symbolic/procedural configuration with some prose comments
 
 **Deployment packages and copied system files.** The storage substrate is the Git repository, with live deployment as symlinks or copied files under home, XDG config, `/etc`, and `/usr/share/xkeyboard-config-2`. The representational form is mostly symbolic/procedural configuration with some prose comments. Lineage is authored and guide-backed, with Stow packages derived from the desired runtime layout and `copy-deployed-files/` reserved for consumers such as `systemd-logind` that cannot follow home-directory symlinks ([copy-deployed-files README](https://github.com/gchamon/archie/blob/698900ee209f471698987adb595df72b4a4a5961/copy-deployed-files/README.md)). Behavioral authority is system-definition authority over the desktop session and system services once deployed.
 

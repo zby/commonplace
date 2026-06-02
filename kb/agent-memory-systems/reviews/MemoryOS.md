@@ -32,6 +32,9 @@ MemoryOS, from BAI-LAB, is an open-source memory layer for personalized AI agent
 
 ## Artifact analysis
 
+- **Storage substrate:** `vector` — JSON files in `users/<user_id>/short_term.json`, or Chroma variant metadata
+- **Representational form:** `prose` — Structured rows with prose `user_input`, `agent_response`, and timestamps
+
 **Short-term QA pairs.** Storage substrate: JSON files in `users/<user_id>/short_term.json`, or Chroma variant metadata. Representational form: structured rows with prose `user_input`, `agent_response`, and timestamps. Lineage: raw interaction traces inserted by `add_memory()` or through the MCP `add_memory` tool; invalidated by deque capacity, migration to mid-term, or storage deletion. Behavioral authority: advisory context when `get_response()` includes the whole short-term history in the next prompt; source material for later mid-term summaries.
 
 **Mid-term sessions and pages.** Storage substrate: JSON `mid_term.json` with session dictionaries and page records, or Chroma mid-term collections plus metadata backups. Representational form: mixed prose summaries/pages, symbolic ids, page links, heat/visit/LFU/recency counters, keywords, and distributed-parametric embeddings. Lineage: derived from evicted short-term traces by LLM continuity checks, meta-summary generation, multi-topic summarization, embedding, and similarity-based session insertion. Behavioral authority: knowledge artifacts when retrieved as historical pages; ranking/routing artifacts through embeddings, thresholds, heat, and access counters; source material for long-term profile and knowledge extraction.
@@ -61,7 +64,7 @@ MemoryOS is closer to an application memory subsystem than to a governed knowled
 
 The most important difference is that MemoryOS collapses memory maintenance into runtime heuristics. Capacity pressure, heat, embedding similarity, LLM extraction prompts, and prompt assembly decide what is retained and reused. Commonplace keeps those decisions visible as files, type specs, validation runs, review artifacts, and diffs. MemoryOS makes personalization cheap; Commonplace makes memory authority reviewable.
 
-Read-back: both. MCP tools are pull, but `get_response()` implements engineered push from the receiving model's perspective by retrieving relevant memory before the model call and inserting it into the generated system/user prompt.
+**Read-back:** `both` — MCP tools are pull, but `get_response()` implements engineered push from the receiving model's perspective by retrieving relevant memory before the model call and inserting it into the generated system/user prompt
 
 ### Borrowable Ideas
 

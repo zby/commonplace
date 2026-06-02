@@ -29,6 +29,9 @@ Awesome Agent Memory, hosted under TeleAI-UAGI and credited in the README to Blo
 
 ## Artifact analysis
 
+- **Storage substrate:** `files` — A single Markdown file in a GitHub repository
+- **Representational form:** `mixed` — Authored prose and Markdown/HTML lists with symbolic section headings, links, badges, emphasis, and date groupings
+
 **README catalogue.** Storage substrate: a single Markdown file in a GitHub repository. Representational form: authored prose and Markdown/HTML lists with symbolic section headings, links, badges, emphasis, and date groupings. Lineage: manually curated/imported bibliography entries; the README records links to upstream products, papers, code, articles, and workshops, but the repository does not expose a structured source-ingest log, validation report, deduplication rule, or regeneration path. Behavioral authority: knowledge artifact for humans and agents using it as reference, evidence, or a discovery list. It is not a system-definition artifact for an agent loop because it does not instruct, route, rank, validate, or inject context by itself.
 
 **Section taxonomy and ordering rules.** Storage substrate: headings, table-of-contents anchors, and list order inside `README.md`. Representational form: symbolic-enough Markdown structure backed by prose labels. Lineage: authored taxonomy; the README's visible rule is that open-source resources are emphasized and ranked higher, while product ordering also uses GitHub-star badges in the open-source product list. Behavioral authority: weak ranking influence for readers deciding what to inspect first, but only as catalogue advice. It does not become an enforced route table or retrieval policy.
@@ -54,7 +57,7 @@ Awesome Agent Memory and Commonplace share the plain-file advantage: the central
 
 The useful comparison is therefore not "catalogue versus KB" in general. It is a warning about bibliography gravity. A broad README is cheap to extend and easy to browse, but as the field grows it accumulates heterogeneous claims without enough local semantics to support precise routing, invalidation, or downstream behavior. Commonplace pays more authoring cost so that artifacts can carry status, type, lineage, links, and review state.
 
-Read-back: Awesome Agent Memory is pull-only. A human or agent must deliberately browse, search, or follow the README links; the repository has no engineered push activation, relevance gate, before-action hook, or selection budget.
+**Read-back:** `pull` — Awesome Agent Memory is pull-only. A human or agent must deliberately browse, search, or follow the README links; the repository has no engineered push activation, relevance gate, before-action hook, or selection budget
 
 ### Borrowable Ideas
 
