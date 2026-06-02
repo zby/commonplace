@@ -60,6 +60,11 @@ Identify the artifacts that actually shape the agent's later behavior — not ev
 - **Lineage** — where it came from (authored, imported, or trace-extracted) and its derivation status (source material vs derived view, index, compiled, assembled, learned); what source change invalidates or regenerates it.
 - **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
+**Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the storage-substrate and representational-form findings with a backticked controlled-value token, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …` and `**Representational form:** \`prose\` — …`. The token is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
+
+- storage substrate ∈ `files` · `repo` · `sqlite` · `rdbms` · `vector` · `graph` · `kv` · `in-memory` · `prompt-registry` · `model-weights` · `service-object`
+- representational form ∈ `prose` · `symbolic` · `parametric` · `mixed` (use `mixed` only when no single form dominates the central artifact; the prose then says which part is which)
+
 Note any **promotion path**: whether the system can move a candidate toward a stronger representational form or behavioral authority (prose advice → symbolic validator → enforced gate). That trajectory crosses form, lineage, and authority at once, and is often the most design-relevant question.
 
 Mark effective authority and quality (does the prose carry forward, is the retrieval precise) as *not verified from code* where it cannot be read off the source — the same discipline as Read-back placement.
@@ -87,6 +92,8 @@ Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts 
 The read-back path is how stored memory re-enters a future action. The trace-derived section captures how memory is *made*; this captures how it *acts* — independent axes (a system can have an elaborate learning loop and a trivial read-back, or the reverse).
 
 **Every review** states a one-line **direction verdict**: does memory reach the agent's context by **pull** (the agent's own deliberate lookup), **push** (unsolicited arrival — always-load, hook, situation match, or user event), or both? Judge from the agent's perspective: user-initiated retrieval uses pull machinery but is push to the agent. The most discriminating finding is whether there is *any* push path or the system is **pull-only** — the large, under-tested class. Name always-load as a deliberate push choice, not the absence of one.
+
+Write the verdict as a backticked controlled-value lead token, the same extractable convention as the Artifact analysis lead tokens: `**Read-back:** \`pull\` — …` with value ∈ `pull` · `push` · `both`. This line is required even when the full section below is omitted.
 
 **Trigger:** include the full `## Read-back placement` section **and** add `push-activation` to `tags` only when the activation path is relevance-gated or otherwise engineered — a matcher (embedding, action-classifier, LLM-judge, typed cue), a selection/scope budget, a before-action hook, or a faithfulness test. Pure pull-only RAG and unconditional always-load get only the verdict, no section, no tag.
 
@@ -168,7 +175,12 @@ last-checked: "YYYY-MM-DD"
 
 ## Artifact analysis
 
-{Four-field record (storage substrate, representational form, lineage, behavioral authority) for the central retained artifacts, at the operative-part level. See Artifact analysis.}
+{Four-field record for the central retained artifacts, at the operative-part level. See Artifact analysis. Lead the first two with extractable controlled-value tokens:}
+
+- **Storage substrate:** `{files|repo|sqlite|rdbms|vector|graph|kv|in-memory|prompt-registry|model-weights|service-object}` — {justification}
+- **Representational form:** `{prose|symbolic|parametric|mixed}` — {justification}
+- **Lineage** — {authored/imported/trace-extracted + derivation status}
+- **Behavioral authority** — {knowledge-artifact vs system-definition; consumer, channel, force}
 
 ## Comparison with Our System
 
@@ -184,7 +196,9 @@ last-checked: "YYYY-MM-DD"
 
 ## Read-back placement
 
-{State the one-line direction verdict (pull / push / both) somewhere regardless. Full section only when relevance-gated/engineered; delete otherwise, and add `push-activation` to `tags` when kept. See Read-back placement.}
+**Read-back:** `{pull|push|both}` — {one-line justification; required regardless}
+
+{Full section only when relevance-gated/engineered; delete the rest otherwise, and add `push-activation` to `tags` when kept. See Read-back placement.}
 
 ## Curiosity Pass
 
