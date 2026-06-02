@@ -20,7 +20,7 @@ The mature anchor format for "point at a span in a source that may drift" is set
 - **Structural grounding** — the quoted text actually appears in the cited source.
 - **Semantic faithfulness** — the source actually supports the claim.
 
-Only the first is mechanizable cheaply; the second remains a judgment call (the existing `semantic/grounding-alignment` review gate already covers it). This ADR addresses the first.
+Only the first is mechanizable cheaply. The second is not left to ad-hoc judgment either: it is operationalized as the `semantic/grounding-alignment` review gate, which reads the cited source and checks attribution accuracy, scope overreach, and whether the conclusion follows from the evidence. This ADR addresses the structural half; the gate is its semantic complement, and the two are designed to compose — quote-anchoring narrows the structural question to a deterministic check so the gate's LLM judgment can spend itself on faithfulness rather than re-confirming the quote exists.
 
 One constraint is specific to this collection and shapes the whole design: **the reviewed source is not retained in the KB.** ADR-011 and the review type require reviews to remain readable without the source; the type's constraints forbid storing the source tree under `reviews/`; the checkout (`source_dir`) is transient, prepared by the parent skill at review time and gone afterward. So a later, repo-local validator cannot resolve a quote against the source — the bytes are not there. But review citations pin an **immutable commit**, so "does this quote resolve?" is a one-time question answered at authoring time, not a drift question that recurs.
 
@@ -62,7 +62,7 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 ### Not changing
 
 - Document-level citations remain valid for ordinary claims; quote-anchoring is opt-in for load-bearing ones.
-- Semantic faithfulness stays a judgment call under the `semantic/grounding-alignment` gate; no validator check claims to cover it.
+- Semantic faithfulness remains the `semantic/grounding-alignment` gate's job; no validator check claims to cover it. This ADR only hands that gate a firmer structural floor to stand on.
 - The reviewed source stays out of the KB (ADR-011 and the type constraints stand).
 
 ## Relevant Notes
@@ -71,3 +71,4 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 - [ADR-019: collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — boundary: why a source citation is a type-spec concern, not a COLLECTION outbound-linking rule
 - [agent-memory-system-review type spec](../../agent-memory-systems/types/agent-memory-system-review.md) — where the convention is defined
 - [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — the write-time resolution procedure
+- [grounding-alignment review gate](../../instructions/review-gates/semantic/grounding-alignment.md) — see-also: the semantic complement — this ADR's structural check narrows the question the gate's judgment then answers
