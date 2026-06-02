@@ -41,7 +41,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
 4. **Check main repo state.** Run `git status --short` in the main repo before cloning or writing so you know whether unrelated changes already exist.
 
-5. **Clone or refresh.** Run checkout-local git commands from `checkout_dir` using the Bash working directory or `cd` first. Do not spell checkout-local commands as `git -C "{checkout_dir}" ...`; permission rules match command prefixes such as `git fetch`, and `git -C ... fetch` can unnecessarily trigger approval prompts.
+5. **Clone or refresh.** Run checkout-local git commands from `checkout_dir` using the Bash working directory, a subshell, or `cd` first. Do not spell checkout-local commands as `git -C "{checkout_dir}" ...`; permission rules match command prefixes such as `git fetch`, and `git -C ... fetch` can unnecessarily trigger approval prompts. After checkout git operations, return to the Commonplace root before metadata capture, archive moves, index refresh, QA, or validation.
 
    If `checkout_dir` does not exist:
    ```bash
@@ -49,11 +49,15 @@ If the system has no reachable source code, stop and write a lightweight note in
    ```
    If `checkout_dir` exists:
    ```bash
-   cd "{checkout_dir}"
-   git fetch --all --prune
-   git status --short
-   git merge --ff-only @{upstream}
+   (
+     cd "{checkout_dir}"
+     git fetch --all --prune
+     git status --short
+     git merge --ff-only @{upstream}
+   )
    ```
+   If using `cd` in the current shell instead of a subshell, save the Commonplace root first and `cd` back to it immediately after the checkout git commands.
+
    Use `git fetch` rather than `git pull` so the refresh uses the agent-approved fetch permission path. If the merge cannot fast-forward because of local commits or conflicts, stop and report the state. Do not force, delete, or overwrite an existing checkout.
 
 6. **Capture source metadata.** Record the top-level listing, most recent commit, README, and package/manifest files for the writer's context. The parent establishes GitHub-specific metadata before delegation:
@@ -67,9 +71,11 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    Write the refresh marker immediately after a successful clone or fetch-and-fast-forward:
    ```bash
-   cd "{checkout_dir}"
-   git_dir="$(git rev-parse --absolute-git-dir)"
-   date -Iseconds > "$git_dir/commonplace-checkout-refreshed-at"
+   (
+     cd "{checkout_dir}"
+     git_dir="$(git rev-parse --absolute-git-dir)"
+     date -Iseconds > "$git_dir/commonplace-checkout-refreshed-at"
+   )
    ```
    If the marker is more than 1 hour old by the time drafting starts, carry a checkout freshness warning into the final report. If it is more than 24 hours old, refresh again before drafting.
 
