@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import csv
 import math
-import sys
 from collections import Counter
 from pathlib import Path
 
@@ -27,7 +26,7 @@ SYSTEMS_CSV = REPO_ROOT / "kb" / "agent-memory-systems" / "systems.csv"
 
 # Identity/free-text columns are not analytic axes; skip them in the variance pass.
 SKIP = {"system_name", "review_file", "public_repo", "clone_path", "one_line",
-        "read_back_notes", "source_tier"}
+        "representational_form", "read_back_notes", "source_tier"}
 
 # Below this fill share a column can't carry the human table yet.
 FILL_FLOOR = 0.60
@@ -59,7 +58,9 @@ def mutual_info_norm(a: list[str], b: list[str]) -> float:
         return 0.0
     ca, cb, cab = Counter(), Counter(), Counter()
     for x, y in pairs:
-        ca[x] += 1; cb[y] += 1; cab[(x, y)] += 1
+        ca[x] += 1
+        cb[y] += 1
+        cab[(x, y)] += 1
     mi = 0.0
     for (x, y), nxy in cab.items():
         pxy = nxy / n
@@ -71,21 +72,12 @@ def mutual_info_norm(a: list[str], b: list[str]) -> float:
 
 
 def main() -> int:
-    include_lightweight = "--all" in sys.argv
     cols, all_rows = load()
-    # The human comparison table is for choosing a memory system, so lightweight
-    # (doc-only, low-authority) reviews don't belong in it. Analyse the
-    # code-based population by default; pass --all to include lightweight.
-    if include_lightweight:
-        rows = all_rows
-    else:
-        rows = [r for r in all_rows if r.get("source_tier") == "repo-reviewed"]
-    excluded = len(all_rows) - len(rows)
+    rows = [r for r in all_rows if r.get("source_tier") == "repo-reviewed"]
     n = len(rows)
     analytic = [c for c in cols if c not in SKIP]
 
-    scope = "all reviews" if include_lightweight else "code-based reviews only"
-    print(f"rows: {n}  ({scope}" + (f"; {excluded} lightweight excluded)" if excluded else ")") + "\n")
+    print(f"rows: {n}  (code-backed reviews only)\n")
     print(f"{'column':24} {'fill':>6} {'vals':>5} {'entropy':>8}  top-value (share)")
     print("-" * 72)
     keep, low_fill, low_var = [], [], []
@@ -125,4 +117,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

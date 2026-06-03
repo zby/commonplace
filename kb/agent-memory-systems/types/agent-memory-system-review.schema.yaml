@@ -28,6 +28,10 @@ allOf:
               const: "## Curiosity Pass"
           - contains:
               const: "## What to Watch"
+  - properties:
+      body:
+        not:
+          pattern: "\\*\\*Representational form:\\*\\*[^\\n]*`mixed`"
   - if:
       properties:
         frontmatter:

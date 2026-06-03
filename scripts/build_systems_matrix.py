@@ -1,23 +1,14 @@
 #!/usr/bin/env python3
 """Generate the wide comparison matrix (systems.csv) by parsing the reviews.
 
-One row per review file in kb/agent-memory-systems/reviews/ (source_tier
-`repo-reviewed`) and kb/agent-memory-systems/lightweight/ (source_tier
-`lightweight`), keyed by `review_file`. Columns are every candidate axis from
-comparison-feature-dictionary.md.
-
-Parsed from each review:
-  - system_name            <- the H1 title
-  - storage_substrate      <- body lead token  **Storage substrate:** `...`
-  - representational_form  <- body lead token  **Representational form:** `...`
-  - read_back_direction    <- body lead token  **Read-back:** `...`
-  - read_back_notes        <- the justification trailing the read-back token
-  - trace_derived          <- `trace-derived` frontmatter tag (yes/no)
-  - push_engineered        <- `push-activation` frontmatter tag (yes/no)
-Joined from the legacy inventory (public_repo / clone_path) by normalised name
-or repo/clone-path segment. Hand-classified columns (lineage, behavioral
-authority, the trace-derived sub-axes, etc.) are preserved across runs by
-review_file. Off-vocabulary tokens and missing tokens are reported, not guessed.
+One row per code-backed review file in kb/agent-memory-systems/reviews/
+(source_tier `repo-reviewed`), keyed by `review_file`. Lightweight doc-grounded
+notes are intentionally excluded from this code-based matrix. The parsing logic
+lives in the package library `commonplace.lib.systems_matrix` (text-in, row-out,
+unit-tested); this runner owns file discovery, the legacy identity join
+(public_repo / clone_path), and CSV writing. Hand-classified columns are
+preserved across runs by review_file. Off-vocabulary and missing lead tokens are
+reported, not guessed.
 
 Output: kb/agent-memory-systems/systems.csv. Run:  python3 scripts/build_systems_matrix.py
 """
@@ -28,94 +19,19 @@ import re
 import sys
 from pathlib import Path
 
+from commonplace.lib.systems_matrix import (
+    COLUMNS, JOINED, PARSED, norm, parse_review_text,
+)
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AMS = REPO_ROOT / "kb" / "agent-memory-systems"
 REVIEWS_DIR = AMS / "reviews"
-LIGHTWEIGHT_DIR = AMS / "lightweight"
 SYSTEMS_CSV = AMS / "systems.csv"
-
-COLUMNS = [
-    "system_name", "review_file", "public_repo", "clone_path",
-    "one_line", "source_tier", "maturity", "integration_surface",
-    "storage_substrate", "representational_form", "lineage_origin",
-    "lineage_status", "behavioral_authority",
-    "trace_derived", "trace_source", "extraction_trigger",
-    "distillation_oracle", "distilled_form", "learning_scope", "learning_timing",
-    "read_back_direction", "push_engineered", "read_back_trigger",
-    "read_back_timing", "read_back_authority", "faithfulness_tested", "read_back_notes",
-    "link_model", "access_mode",
-    "temporal_model", "curation_ops",
-    "context_strategy",
-    "env_fit", "api_lock_in", "degrades_to_files",
-    "agency_model",
-]
-
-# Columns the parser owns (recomputed from the review every run). Everything
-# else is hand-classified and preserved across runs.
-PARSED = {
-    "system_name", "review_file", "source_tier",
-    "storage_substrate", "representational_form",
-    "read_back_direction", "read_back_notes",
-    "trace_derived", "push_engineered",
-}
-JOINED = {"public_repo", "clone_path"}
-
-VOCAB = {
-    "storage_substrate": {"files", "repo", "sqlite", "rdbms", "vector", "graph",
-                          "kv", "in-memory", "prompt-registry", "model-weights",
-                          "service-object"},
-    "representational_form": {"prose", "symbolic", "parametric", "mixed"},
-    "read_back_direction": {"pull", "push", "both"},
-}
-
-_H1 = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
-_TAGS = re.compile(r"^tags:\s*\[([^\]]*)\]", re.MULTILINE)
-
-
-def norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", s.lower())
-
-
-def _token(label: str, text: str) -> str:
-    m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*`([^`]+)`", text)
-    return m.group(1).strip() if m else ""
 
 
 def parse_review(path: Path, source_tier: str) -> tuple[dict[str, str], list[str]]:
-    """Extract the parsed fields from one review file. Returns (row, flags)."""
-    text = path.read_text(encoding="utf-8")
-    flags: list[str] = []
-    row = {c: "" for c in COLUMNS}
-    row["review_file"] = str(path.relative_to(REPO_ROOT))
-    row["source_tier"] = source_tier
-
-    h1 = _H1.search(text)
-    row["system_name"] = h1.group(1).strip() if h1 else path.stem
-
-    tags = set()
-    mt = _TAGS.search(text)
-    if mt:
-        tags = {t.strip() for t in mt.group(1).split(",") if t.strip()}
-    row["trace_derived"] = "yes" if "trace-derived" in tags else "no"
-    row["push_engineered"] = "yes" if "push-activation" in tags else "no"
-
-    row["storage_substrate"] = _token("Storage substrate", text)
-    row["representational_form"] = _token("Representational form", text)
-    row["read_back_direction"] = _token("Read-back", text)
-
-    # read-back justification: text after the token up to end of line
-    mrb = re.search(r"\*\*Read-back:\*\*\s*`[^`]+`\s*[—-]+\s*(.+)", text)
-    if mrb:
-        row["read_back_notes"] = mrb.group(1).strip()
-
-    # validate / flag
-    for col in ("storage_substrate", "representational_form", "read_back_direction"):
-        v = row[col]
-        if not v:
-            flags.append(f"{col}: missing")
-        elif v not in VOCAB[col]:
-            flags.append(f"{col}: off-vocab `{v}`")
-    return row, flags
+    review_file = str(path.relative_to(REPO_ROOT))
+    return parse_review_text(path.read_text(encoding="utf-8"), review_file, source_tier)
 
 
 def load_inventory() -> list[dict[str, str]]:
@@ -151,13 +67,10 @@ def main() -> int:
     prior = {r["review_file"]: r for r in inventory if r.get("review_file")}
 
     review_files = []
-    for d, tier in ((REVIEWS_DIR, "repo-reviewed"), (LIGHTWEIGHT_DIR, "lightweight")):
-        if not d.is_dir():
+    for p in sorted(REVIEWS_DIR.glob("*.md")):
+        if ".replaced." in p.name or p.name in ("dir-index.md", "README.md"):
             continue
-        for p in sorted(d.glob("*.md")):
-            if ".replaced." in p.name or p.name in ("dir-index.md", "README.md"):
-                continue
-            review_files.append((p, tier))
+        review_files.append((p, "repo-reviewed"))
 
     rows: list[dict[str, str]] = []
     all_flags: list[tuple[str, str]] = []

@@ -56,14 +56,18 @@ Classify the reviewed system's central retained behavior-shaping artifacts using
 Identify the artifacts that actually shape the agent's later behavior — not every file. Split a bundled object into **operative parts or consumption paths** when it carries several behavior-shaping parts under different forms or authorities (a skill package = prose guidance + symbolic manifest + tests). Classify each by:
 
 - **Storage substrate** — where the retained state persists (files, repo, database, vector/graph store, prompt registry, model-artifact store, service object). Locates access, deletion, versioning, rollback.
-- **Representational form** — prose, symbolic, or distributed-parametric (or mixed). Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric.
+- **Representational form** — prose, symbolic, and/or distributed-parametric. Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric. When several forms apply, list each component token; do not use a `mixed` token.
 - **Lineage** — where it came from (authored, imported, or trace-extracted) and its derivation status (source material vs derived view, index, compiled, assembled, learned); what source change invalidates or regenerates it.
 - **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
-**Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the storage-substrate and representational-form findings with a backticked controlled-value token, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …` and `**Representational form:** \`prose\` — …`. The token is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
+**Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the artifact-analysis findings with backticked controlled-value tokens, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …`, `**Representational form:** \`prose\` \`symbolic\` — …`, `**Lineage:** \`authored\` — …`, and `**Behavioral authority:** \`knowledge\` \`routing\` — …`. Each token line is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
 
 - storage substrate ∈ `files` · `repo` · `sqlite` · `rdbms` · `vector` · `graph` · `kv` · `in-memory` · `prompt-registry` · `model-weights` · `service-object`
-- representational form ∈ `prose` · `symbolic` · `parametric` · `mixed` (use `mixed` only when no single form dominates the central artifact; the prose then says which part is which)
+- representational form ∈ `prose` · `symbolic` · `parametric` (list all that apply; legacy `mixed` must be decomposed)
+- lineage ∈ `authored` · `imported` · `trace-extracted`
+- behavioral authority ∈ `knowledge` · `instruction` · `enforcement` · `routing` · `validation` · `ranking` · `learning`
+
+For applicable multi-valued axes where the review truly does not contain enough evidence to classify the value, write the lead token as `not-determinable` with a one-line reason, e.g. `**Read-back signal:** \`not-determinable\` — …`. Do not omit the lead line for an applicable axis; omission means the retrofit is incomplete. Do not mix `not-determinable` with controlled values on the same line.
 
 Note any **promotion path**: whether the system can move a candidate toward a stronger representational form or behavioral authority (prose advice → symbolic validator → enforced gate). That trajectory crosses form, lineage, and authority at once, and is often the most design-relevant question.
 
@@ -81,10 +85,10 @@ A system qualifies when it derives durable retained artifacts from agent traces.
 
 Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts (logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, validators, route entries, fine-tunes). Document both stages; the distillation step's trigger, oracle, and curation policy is often the most discriminating part. Address:
 
-1. **Trace source** — what raw signal is consumed, with what trigger boundaries.
+1. **Trace source** — what raw signal is consumed, with what trigger boundaries. Lead token values: `session-logs`, `tool-traces`, `event-streams`, `trajectories`.
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
 3. **Four fields** — record storage substrate, representational form, lineage, and behavioral authority for the raw and distilled stages in **Artifact analysis** rather than repeating them here.
-4. **Scope and timing** — per-task / per-benchmark / per-project / cross-task, and online / offline / staged in cycles.
+4. **Scope and timing** — per-task / per-project / cross-task, and online / offline / staged in cycles. Lead token values: `**Learning scope:**` `per-task` · `per-project` · `cross-task`; `**Learning timing:**` `online` · `offline` · `staged`; `**Distilled form:**` `prose` · `symbolic` · `parametric`.
 5. **Survey placement** — position on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and whether the system strengthens, weakens, or splits any survey claim.
 
 ## Read-back placement
@@ -96,6 +100,8 @@ The read-back path is how stored memory re-enters a future action. The trace-der
 **Every review** states a one-line **direction verdict over memory read-back only**: does retained memory reach the agent's context by **pull** (the agent's own deliberate lookup), **push** (unsolicited arrival — always-load of memory, hook, situation match, or user event), or both? Judge from the agent's perspective: user-initiated retrieval uses pull machinery but is push to the agent. **Pushing static baseline documentation does not count** — it never upgrades a system from `pull` to `both`. The most discriminating finding is whether there is *any* push of memory or the system is **pull-only** — the large, under-tested class.
 
 Write the verdict as a backticked controlled-value lead token, the same extractable convention as the Artifact analysis lead tokens: `**Read-back:** \`pull\` — …` with value ∈ `pull` · `push` · `both`. This line is required even when the full section below is omitted.
+
+When the verdict is `push` or `both`, also write **read-back signal**, **read-back timing**, and **faithfulness tested** lead tokens. Read-back signal is the *set* of targeting/signal kinds the push fires on, since a system can do several at once (always-load coarse recall *and* an identifier match *and* an inferred query). List one backticked token per kind: `**Read-back signal:** \`coarse\` \`identifier\` \`inferred / embedding\` — …` with each token ∈ `coarse` · `identifier` · `inferred / lexical` · `inferred / embedding` · `inferred / judgment` (the same vocabulary as **Targeting and signal** below). Read-back timing values are `pre-action` and `post-action`. Faithfulness tested is a single `yes` or `no` token, or `not-determinable` when the review does not contain enough evidence. The matrix parser one-hots whatever tokens appear into indicator columns; these authored lines take precedence over mining the section prose. Omit for pull-only systems (their push-only axes are recorded as all-absent).
 
 **Trigger:** include the full `## Read-back placement` section **and** add `push-activation` to `tags` only when the memory read-back is **instance-targeted** or otherwise engineered — an `identifier` or `inferred` signal (below), a selection/scope budget, a before-action hook, or a faithfulness test. Pull-only RAG, coarse always-load, and documentation-only injection get only the verdict, no section, no tag.
 
@@ -180,12 +186,12 @@ last-checked: "YYYY-MM-DD"
 
 ## Artifact analysis
 
-{Four-field record for the central retained artifacts, at the operative-part level. See Artifact analysis. Lead the first two with extractable controlled-value tokens:}
+{Four-field record for the central retained artifacts, at the operative-part level. See Artifact analysis. Lead each field with extractable controlled-value tokens:}
 
 - **Storage substrate:** `{files|repo|sqlite|rdbms|vector|graph|kv|in-memory|prompt-registry|model-weights|service-object}` — {justification}
-- **Representational form:** `{prose|symbolic|parametric|mixed}` — {justification}
-- **Lineage** — {authored/imported/trace-extracted + derivation status}
-- **Behavioral authority** — {knowledge-artifact vs system-definition; consumer, channel, force}
+- **Representational form:** `{prose|symbolic|parametric}` `{...}` — {justification; list all that apply}
+- **Lineage:** `{authored|imported|trace-extracted}` `{...}` — {derivation status}
+- **Behavioral authority:** `{knowledge|instruction|enforcement|routing|validation|ranking|learning}` `{...}` — {consumer, channel, force}
 
 ## Comparison with Our System
 

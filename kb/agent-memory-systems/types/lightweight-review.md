@@ -9,7 +9,7 @@ schema: ./lightweight-review.schema.yaml
 
 A **doc-grounded** review of an external agent memory, knowledge, or context-engineering system whose source code is **not reachable** — coverage comes from a paper, README, article, practitioner report, or ingest, not from inspecting code.
 
-It carries the **same comparison elements** as [agent-memory-system-review](./agent-memory-system-review.md) so it populates the cross-system comparison uniformly. The "lightweight" label is about **authority, not scope**: capture whatever the sources document — mechanisms, the four-field record, the read-back direction, borrowable ideas — but never present a reported claim as a code-grounded finding.
+It carries the **same comparison elements** as [agent-memory-system-review](./agent-memory-system-review.md) for qualitative comparison, but it does not populate the code-backed comparison matrix. The "lightweight" label is about **authority, not scope**: capture whatever the sources document — mechanisms, the four-field record, the read-back direction, borrowable ideas — but never present a reported claim as a code-grounded finding.
 
 **Use this type when** there is no reachable, inspectable source (paper-only system, closed product, practitioner write-up) *and* the sources document enough mechanism to fill the elements below. If inspectable source later appears and is read, **promote to `agent-memory-system-review`**.
 
@@ -20,7 +20,7 @@ Same sections, same four-field and read-back vocabulary. **Read [agent-memory-sy
 - **Evidence stance is claim-level by default.** The code review marks individual items "not verified from code"; here the *entire* review is doc-derived, so state mechanisms as *reported*, and do not assert deployed behavior the sources don't support. Where sources conflict or go quiet, say so rather than filling the gap.
 - **Source metadata names documents, not a repo.** Record the paper / README / article / ingest and its version or date, in the body's source lines — not a repository and commit.
 - **Citations point at the sources** (URLs, and `kb/sources/` ingest or snapshot links), never at source files. Keep the review readable without the original documents.
-- **Depth follows the sources.** An honestly-thin section beats invented detail. A field that the sources simply don't address is left absent with a one-line note, not guessed.
+- **Depth follows the sources.** An honestly-thin section beats invented detail. A field that the sources simply don't address gets a `not-determinable` lead token with a one-line note, not a guessed value.
 
 `last-checked` records when the coverage was last reconciled against its sources (the same freshness discipline as the code review's source re-read).
 
@@ -79,12 +79,12 @@ last-checked: "YYYY-MM-DD"
 
 ## Artifact analysis
 
-{Four-field record, claim-level. See agent-memory-system-review. Lead the first two with the same extractable controlled-value tokens:}
+{Four-field record, claim-level. See agent-memory-system-review. Lead the fields with the same extractable controlled-value tokens:}
 
 - **Storage substrate:** `{files|repo|sqlite|rdbms|vector|graph|kv|in-memory|prompt-registry|model-weights|service-object}` — {reported justification}
-- **Representational form:** `{prose|symbolic|parametric|mixed}` — {reported justification}
-- **Lineage** — {authored/imported/trace-extracted + derivation status}
-- **Behavioral authority** — {knowledge-artifact vs system-definition}
+- **Representational form:** `{prose|symbolic|parametric}` `{...}` — {reported justification; list all that apply}
+- **Lineage:** `{authored|imported|trace-extracted}` `{...}` — {reported derivation status}
+- **Behavioral authority:** `{knowledge|instruction|enforcement|routing|validation|ranking|learning}` `{...}` — {reported consumer, channel, force}
 
 ## Comparison with Our System
 
