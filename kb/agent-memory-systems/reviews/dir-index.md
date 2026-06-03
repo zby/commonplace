@@ -34,6 +34,7 @@ index_source: directory
 - [Clude](./cludebot.md) *(agent-memory-system-review)* - Clude review: cognitive memory SDK, MCP server, hosted chat, dream-cycle trace learning, local/Supabase storage, and prompt-time read-back
 - [CocoIndex](./cocoindex.md) *(agent-memory-system-review)* - CocoIndex review: incremental Python dataflow framework for keeping vector, graph, file, and database targets fresh for agent context
 - [Cognee](./cognee.md) *(agent-memory-system-review)* - Cognee review: Python memory control plane with graph/vector retrieval, session traces, feedback weighting, MCP tools, and agent memory injection
+- [compound-engineering-plugin](./compound-engineering-plugin.md) *(agent-memory-system-review)* - EveryInc compound-engineering-plugin review: multi-host CE skills, project-local learning docs, session-history recall, and converter governance
 - [Context Constitution](./context-constitution.md) *(agent-memory-system-review)* - Letta Context Constitution review: authored prose policy for token-space learning, context hierarchy, MemFS affordances, and agent self-management
 - [CORAL](./CORAL.md) *(agent-memory-system-review)* - CORAL review: multi-agent coding runs with shared .coral state, eval traces, agent-written notes/skills, checkpointed public memory, and heartbeat push prompts
 - [cq](./cq.md) *(agent-memory-system-review)* - cq review: Mozilla AI plugin, MCP server, SQLite/remote knowledge units, review-gated sharing, and agent-led session reflection

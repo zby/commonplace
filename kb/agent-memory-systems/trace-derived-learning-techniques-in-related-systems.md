@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, prose, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager, OS-Copilot) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -157,6 +157,20 @@ The only inspected system that makes cross-agent session mining a first-class fe
 **Reinjection.** `cm context "<task>"` retrieves relevant bullets by keyword matching, effective score, and optional embedding similarity, returning ranked rules, anti-patterns, related session history, and warnings about deprecated patterns. Cross-agent enrichment happens during diary generation: `enrichWithRelatedSessions()` queries the `cass` search engine for sessions from *other* agents that match the current diary's challenges and learnings, with access logged to `privacy-audit.jsonl`.
 
 **Scope.** Cross-agent, multi-session. Reflects over sessions from Claude Code, Cursor, Codex, Aider, and Pi within a configurable lookback window (default 7 days, up to N sessions). A single shared playbook accumulates rules from all agents, with optional per-repo overlays. `ProcessedLog` in `tracking.ts` tracks which sessions have been reflected on to enable incremental processing.
+
+## Compound Engineering
+
+A multi-host engineering workflow plugin where trace-derived learning is optional and project-local rather than a daemonized memory service.
+
+**Trigger.** `ce-sessions` is invoked directly by the user or synchronously from `ce-compound` when an interactive Full run opts into session history. Lightweight and headless `ce-compound` runs skip session history.
+
+**Source format.** Host-managed Claude Code, Codex, and Cursor session files. Discovery and metadata extraction filter by repo, branch/cwd, timestamps, and keywords; skeleton extraction avoids whole-transcript loading by writing filtered user/assistant text and collapsed tool summaries to scratch files.
+
+**Extraction.** A synthesis-only historian agent reads the scratch skeletons and returns sections such as prior attempts, failed approaches, decisions, and related context. `ce-compound` can then label session-sourced content and fold it into a structured `docs/solutions/` learning.
+
+**Promotion.** Two-stage prose promotion. Raw session JSONL and scratch skeletons remain knowledge artifacts; durable behavior-shaping material appears only when a workflow distills findings into project-local Markdown such as `docs/solutions/`. There is no scored playbook, embedding store, or automatic promotion loop.
+
+**Scope.** Per-repo and time-windowed. The design is closest to cass-memory on cross-harness session recall, but weaker as autonomous learning and stronger as explicit workflow curation: session traces become maintainable only when a human-invoked skill promotes them into the repository's learning docs.
 
 ## WUPHF
 
