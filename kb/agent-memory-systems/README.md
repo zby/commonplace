@@ -1,7 +1,7 @@
 # Agent Memory Systems
 A survey of external **agent memory systems** — how AI agents store, retrieve, and maintain knowledge across sessions and tasks. We track knowledge bases, context-engineering layers, structured note-taking tools, and trajectory-learning loops, reading their source code wherever it is available.
 
-**Choosing or designing one?** Start with the [comparative review](./agentic-memory-systems-comparative-review.md), which places the landscape across six architectural dimensions, then browse the [repo-backed reviews](./reviews/dir-index.md) — each one reads the actual code and reports what a system _does_, not what its README claims. Every review classifies the system's retained artifacts in a shared vocabulary — storage substrate, representational form, lineage, behavioral authority — so independent systems can be set side by side on the same terms.
+**Choosing or designing one?** Start with [Choosing an agent memory framework starts with activation, not storage](./choosing-an-agent-memory-framework.md), which uses the current matrix fields as a first-pass chooser lens. Then read the [comparative review](./agentic-memory-systems-comparative-review.md), which places the landscape across six architectural dimensions, and browse the [repo-backed reviews](./reviews/dir-index.md) — each one reads the actual code and reports what a system _does_, not what its README claims. Every review classifies the system's retained artifacts in a shared vocabulary — storage substrate, representational form, lineage, behavioral authority — so independent systems can be set side by side on the same terms.
 
 We track these systems not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
 ## Coverage
@@ -18,6 +18,8 @@ Browse the roster:
 
 Cross-cutting reads:
 
+- [Choosing an agent memory framework](./choosing-an-agent-memory-framework.md) — chooser-oriented guide using activation model, substrate, trace-derived learning, and governance tradeoffs as first-pass filters
+  
 - [Comparative review](./agentic-memory-systems-comparative-review.md) — synthesises across both tiers
   
 - [Adaptation survey review candidates](./adaptation-survey-review-candidates.md) — maps the agentic-adaptation survey's memory and skill systems to existing reviews and likely additions
@@ -41,6 +43,8 @@ Cross-cutting reads:
 Remaining columns are hand-classified candidates the script lists but leaves empty; the analyzer flags them as too-sparse until filled. When populating a compound axis (e.g. the trace-derived sub-fields), record the raw observed value first and normalise it into a harness-agnostic vocabulary — the normalisation step is itself the test of whether the category generalises across systems.
 
 **Consumption rule:** a human comparison table is for *choosing* a system, so it covers **code-based reviews only**. Lightweight reviews (doc-only, lower authority) stay in the matrix as segmented backing data (`source_tier=lightweight`) for landscape/survey questions, but are excluded from the consumption table — `analyze_matrix.py` filters to code-based by default (`--all` includes lightweight).
+
+Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_derived`, `read_back_direction`, and `push_engineered`. The read-back fields need one extra interpretive cut: pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
 
 ## Patterns Across Systems
 Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independently converge on:
