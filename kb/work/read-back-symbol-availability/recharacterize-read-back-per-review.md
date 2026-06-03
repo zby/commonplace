@@ -22,7 +22,9 @@
 
 **Inputs:** `review_path` (a non-archived file under `kb/agent-memory-systems/reviews/`) and `source_dir` (the system's cloned repo under `related-systems/`). Verify the review's `type` resolves to `agent-memory-system-review` and `source_dir` is readable (`test -d`); if either is missing, stop and report. Do not mutate `source_dir`.
 
-### The model (the contract)
+**Read first:** `kb/notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md` — the model and the reasoning behind it (the three routes by which a symbol becomes available, design-time vs runtime anticipation, why classification goes by what a signal keys on, the symbolic/semantic compose). The digest below is an operative summary for classifying and editing; treat the note as the source of truth where anything is unclear.
+
+### The model (operative digest)
 
 **Scope cut — read-back is the return of *retained memory* only.** Retained = content the system *accumulated from use*, whether **authored** (a user's note, a project decision, a maintained artifact) or **trace-learned**. Runtime injection of **shipped/static baseline documentation** — tool specs, repo docs, installed skills, system manuals — is **not read-back**; it is a baseline context surface. Boundary test: *does the content accumulate from use of this system, or arrive with the system?* The direction verdict (`pull`/`push`/`both`) counts memory read-back only — pushing static documentation does **not** make a system `push`/`both`.
 
@@ -58,4 +60,4 @@ Discriminator: classify by **what it keys on**, not the mechanism — keyword ke
 
 ---
 
-Source of the model: [workshop README](./README.md) and the review type's [Read-back placement](../../agent-memory-systems/types/agent-memory-system-review.md) section, resting on [symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md). (Meta-reader links; the task above is self-contained.)
+The model rests on [symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) (the required read above) and is applied by the review type's [Read-back placement](../../agent-memory-systems/types/agent-memory-system-review.md) section; the [workshop README](./README.md) carries the same model. The digest above is operative — read the note for the reasoning.
