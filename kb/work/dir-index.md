@@ -25,6 +25,7 @@ index_source: directory
 - [pi-agent-zerostack-comparison/](./pi-agent-zerostack-comparison/dir-index.md)
 - [positioning/](./positioning/dir-index.md)
 - [prompt-bottleneck/](./prompt-bottleneck/dir-index.md)
+- [read-back-symbol-availability/](./read-back-symbol-availability/dir-index.md)
 - [review-revise-gated/](./review-revise-gated/dir-index.md)
 - [review-run-lifecycle/](./review-run-lifecycle/dir-index.md)
 - [review-system-rewrite/](./review-system-rewrite/dir-index.md)
@@ -39,6 +40,7 @@ index_source: directory
 
 ## Files
 
+- [Agent Memory Review Candidates from Karpathy LLM Wiki Comments](./karpathy-gist-agent-memory-review-candidates.md)
 - [Discovery examples — working material](./discovery-examples.md)
 - [Log triage - 2026-04-27](./log-triage-2026-04-27.md)
 - [Writing conventions for kb/work/ (workshop layer)](./COLLECTION.md)

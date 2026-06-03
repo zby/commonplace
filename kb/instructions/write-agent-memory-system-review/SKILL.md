@@ -15,6 +15,8 @@ Use this local skill to write or update `type: kb/agent-memory-systems/types/age
 
 This is a local commonplace-repo workflow, not a promoted `cp-skill-*` framework skill. The parent agent owns GitHub handling, local source directory setup, artifact lifecycle, QA, validation, indexes, and the final report. Delegate the code-grounded review drafting to a fresh worker context whenever the harness has a sub-agent mechanism.
 
+Delegation means a harness-provided sub-agent/worker tool only. Never start a nested agent by running `codex`, `codex exec`, `claude`, or any other agent CLI from the shell. If the current agent cannot access the required harness sub-agent tool or an agent slot is unavailable, stop or wait and report the blocking condition; do not work around the limit with a command-line agent process.
+
 ## Prerequisites
 
 - The topic is a GitHub repository reference: `owner/repo` or `https://github.com/owner/repo`.
@@ -91,7 +93,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
 8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract. Its embedded comparison lens is the review-time distillation of the memory-system design; do not ask the worker to load the full design note during ordinary review writing. The worker should follow the type contract's current retained-artifact vocabulary, including knowledge-artifact and system-definition-artifact use as behavioral-authority families.
 
-   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Give the worker only the local skill handoff, the type contract path, the source directory, the target note path, and the source metadata listed below.
+   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Give the worker only the local skill handoff, the type contract path, the source directory, the target note path, and the source metadata listed below. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash.
 
    The worker has only this ownership:
    - read `kb/agent-memory-systems/COLLECTION.md`
@@ -111,7 +113,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    - `commit_url`
    - citation format for files and directories
 
-   The worker must not edit indexes, archived reviews, the trace-derived survey, checkout state, or unrelated files. The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, validation, and final report.
+   The worker must not edit indexes, archived reviews, the trace-derived survey, checkout state, or unrelated files. The worker must not spawn further agents unless the harness exposes a proper sub-agent tool in that worker context; if it needs a nested worker and no slot/tool is available, it must pause and report the wait/blocker. It must never use `codex`, `codex exec`, `claude`, or similar shell commands as a substitute. The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, validation, and final report.
 
    If the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run. If the user authorizes that fallback, report `drafting was local, not delegated` as a workflow exception.
 
@@ -133,7 +135,9 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 
-12. **Run semantic QA.** Run the procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle: create the run and prompt with `commonplace-create-review-run --with-prompt`, follow the prompt in the current harness, then ingest the sentinel-bracketed output with `commonplace-ingest-bundle-output`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+
+   Do not use `commonplace-run-review-bundle` for this skill workflow unless the user explicitly authorizes subprocess runner execution, because that command invokes `claude` or `codex exec` internally. If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
 
 13. **Validate.** Run:
     ```bash
@@ -170,4 +174,6 @@ Report:
 - put checked-out repos under `kb/`
 - overwrite or repurpose an existing checkout whose remote points to a different owner/repo
 - force-pull, delete, or reset a checkout to handle conflicts
+- run `codex`, `codex exec`, `claude`, or another agent CLI from the shell to bypass delegation or worker limits
+- use `commonplace-run-review-bundle` in this workflow without explicit authorization for its subprocess runner
 - leave the review unvalidated
