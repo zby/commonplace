@@ -22,7 +22,11 @@
 
 **Inputs:** `review_path` (a non-archived file under `kb/agent-memory-systems/reviews/`) and `source_dir` (the system's cloned repo under `related-systems/`). Verify the review's `type` resolves to `agent-memory-system-review` and `source_dir` is readable (`test -d`); if either is missing, stop and report. Do not mutate `source_dir`.
 
-**Read first:** `kb/notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md` — the model and the reasoning behind it (the three routes by which a symbol becomes available, design-time vs runtime anticipation, why classification goes by what a signal keys on, the symbolic/semantic compose). The digest below is an operative summary for classifying and editing; treat the note as the source of truth where anything is unclear.
+**Read first:**
+
+- `kb/notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md` — the model and its reasoning (the three routes by which a symbol becomes available, design-time vs runtime anticipation, why classification goes by what a signal keys on, the symbolic/semantic compose). The digest below is an operative summary; treat the note as the source of truth where anything is unclear.
+- The `## Read-back placement` section of `kb/agent-memory-systems/types/agent-memory-system-review.md` — the section contract you are editing toward. Beyond the targeting/signal digest below it carries the direction nuances (push riding on the pull interface; an orchestrator's or sub-agent's pull is push for the receiving agent), the other axes (timing, selection/scope, authority-at-consumption, faithfulness, other-consumers), and the two cautions (structural-vs-quality; capability-vs-deployed for SDK/library push wiring that lives in the host harness). Conform the review's section to it.
+- Recommended grounding: `kb/notes/knowledge-storage-does-not-imply-contextual-activation.md` — storage ≠ context ≠ behavior; clarifies what counts as read-back at all, and what the faithfulness axis actually tests.
 
 ### The model (operative digest)
 
@@ -60,4 +64,4 @@ Discriminator: classify by **what it keys on**, not the mechanism — keyword ke
 
 ---
 
-The model rests on [symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) (the required read above) and is applied by the review type's [Read-back placement](../../agent-memory-systems/types/agent-memory-system-review.md) section; the [workshop README](./README.md) carries the same model. The digest above is operative — read the note for the reasoning.
+The required reads are listed under **Read first** above. The [workshop README](./README.md) carries the same model; the digest in this task is operative, but the note and the type-spec section are the source of truth for the reasoning and the section contract.
