@@ -1,6 +1,6 @@
 # Re-characterize read-back — orchestrated pass
 
-**For an orchestrator agent.** Input: `kb/agent-memory-systems/systems.csv`. You drive a re-characterization of read-back under the symbol-availability model by selecting target reviews from the matrix and fanning out one sub-agent per review. You are working in the `commonplace` repo at its root.
+**For an orchestrator agent.** Input: `kb/agent-memory-systems/systems.csv`. You drive a re-characterization of read-back under the symbol-availability model by selecting target reviews from the matrix and fanning out one sub-agent per eligible review. You are working in the `commonplace` repo at its root.
 
 ## Input
 
@@ -8,11 +8,12 @@
 
 ## Orchestrator procedure
 
-1. **Select targets.** Rows where `read_back_direction` ∈ `push` | `both`, **or** `push_engineered = yes` — the systems the old flat trigger list may have mislabeled. Pull-only rows rarely change; skip them.
-2. **Resolve inputs per target.** `review_path` = `review_file`; `source_dir` = `clone_path`. If a target row lacks a `review_file` or a clone path, skip it and report it — this pass needs both the review and its source.
-3. **Fan out**, one sub-agent per target, each given its `review_path` + `source_dir` and the **per-review task** below (verbatim). Sub-agents edit different files and write nothing shared, so they run in parallel safely.
-4. **Watch progress** via each sub-agent's returned one-line summary — ephemeral, for your visibility only; do not save it.
-5. **When all finish, regenerate the matrix:** `python3 scripts/build_systems_matrix.py`, then `python3 scripts/analyze_matrix.py` to see the new read-back distribution. The parser reads the updated `**Read-back:**` tokens and `push-activation` tags from the edited reviews; the targeting/signal detail stays in prose until tokenized (workshop Thread 3).
+1. **Select candidate rows.** Rows where `read_back_direction` ∈ `push` | `both`, **or** `push_engineered = yes` — the systems the old flat trigger list may have mislabeled. Pull-only rows rarely change; skip them.
+2. **Filter to eligible current reviews.** Keep only rows whose `review_file` is a non-archived path under `kb/agent-memory-systems/reviews/` and whose `clone_path` is non-empty. Skip lightweight notes, `.replaced.` reviews, missing review paths, and missing clone paths; report the skipped rows by reason before fanout.
+3. **Resolve inputs per eligible target.** `review_path` = `review_file`; `source_dir` = `clone_path`. If `source_dir` is not readable, skip it and report it — this pass needs both the review and its source.
+4. **Fan out in bounded batches**, one sub-agent per eligible target, each given its `review_path` + `source_dir` and the **per-review task** below (verbatim). Use a concurrency cap of 8–12 workers at a time. Sub-agents edit different files and write nothing shared, so the files are parallel-safe; the cap keeps source reads and validation runs manageable.
+5. **Watch progress** via each sub-agent's returned one-line summary — ephemeral, for your visibility only; do not save it.
+6. **When all batches finish, regenerate the matrix:** `python3 scripts/build_systems_matrix.py`, then `python3 scripts/analyze_matrix.py` to see the new read-back distribution. The parser reads the updated `**Read-back:**` tokens and `push-activation` tags from the edited reviews; the targeting/signal detail stays in prose until tokenized (workshop Thread 3).
 
 ---
 
@@ -58,7 +59,7 @@ Discriminator: classify by **what it keys on**, not the mechanism — keyword ke
 
 ### Validate & output
 
-- Run `uv run commonplace-validate <review_path>`; fix any `push-activation`-tag ↔ `## Read-back placement`-section inconsistency; if it newly fails for a reason you can't resolve, revert your change and flag it.
+- Run `commonplace-validate <review_path>`; fix any `push-activation`-tag ↔ `## Read-back placement`-section inconsistency; if it newly fails for a reason you can't resolve, revert your change and flag it. If the direct command is genuinely unavailable, report that rather than switching command wrappers silently.
 - **Edit the review only** — do not modify `systems.csv` or write any ledger.
 - **Return a one-line summary** (`old → new` direction, targeting/signal, push-activation change, any flag) for the orchestrator's progress visibility only — it is not saved. The single durable output is the edited review.
 
