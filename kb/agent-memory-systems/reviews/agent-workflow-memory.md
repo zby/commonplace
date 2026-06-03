@@ -63,7 +63,7 @@ AWM is close to Commonplace in representational form: both systems deliberately 
 
 The main design tradeoff is context efficiency versus reviewability. AWM compresses many traces into a short workflow file and pushes it into the agent's prompt, avoiding raw trajectory replay. But because workflows are free-form text and sometimes concrete traces, the agent still pays recurring prompt cost, and there is no deterministic check that a workflow remains valid for the current website state.
 
-**Read-back:** `push` — With scoped selection. From the acting agent's perspective, workflow memory is placed into the prompt by the harness before action; Mind2Web adds website/domain filtering and top-k/context-budget exemplar selection, WebArena chooses a website-specific workflow file, and the optional Mind2Web retriever can preselect workflows semantically
+**Read-back:** `push` — Retained workflow memory is placed into the acting agent's prompt by the harness before action. The deployed Mind2Web/WebArena paths are instance-targeted by identifier signals: configured workflow paths, website-specific files, and Mind2Web domain/subdomain/website specifiers, with top-k and context-budget controls. The optional Mind2Web retriever can add embedding-based preprocessing over workflow names/docstrings, but it is not the central action-loop selector.
 
 ### Borrowable Ideas
 
@@ -89,9 +89,9 @@ The main design tradeoff is context efficiency versus reviewability. AWM compres
 
 ## Read-back placement
 
-**Direction.** Agent Workflow Memory uses push from the acting agent's perspective. The agent does not ask for memory; the harness reads a workflow file or exemplar set and inserts it into the next prompt before generation.
+**Direction.** Agent Workflow Memory uses push from the acting agent's perspective. The agent does not ask for memory; the harness reads a retained workflow file or exemplar set and inserts it into the next prompt before generation.
 
-**Trigger and relevance signal.** WebArena's trigger is the configured `workflow_path`, usually chosen by website in the pipeline. Mind2Web's main trigger is also `workflow_path`, with exemplar filtering by website, subdomain, and domain plus `retrieve_top_k` sampling. The optional Mind2Web retrieval utility adds embedding similarity over workflow names/docstrings, but it is a preprocessing tool rather than the central loop.
+**Targeting and signal.** Targeting is `instance` in the deployed benchmark loops. WebArena's signal is `identifier`: the pipeline chooses a website-specific `workflow/{website}.txt`, passes it as `workflow_path`, and the agent appends that file to the system prompt. Mind2Web also uses `identifier` signals: the configured `workflow_path` and exemplar `specifier` fields matching website, subdomain, and domain, followed by `retrieve_top_k` sampling. The optional Mind2Web retrieval utility adds an `inferred / embedding` preprocessing path over workflow names/docstrings, but it writes a selected workflow file ahead of the main loop rather than selecting inside each action call.
 
 **Timing relative to action.** Read-back happens before action generation. Mind2Web inserts the selected demonstrations before each step's current observation query. WebArena appends the workflow file to the system prompt before the agent produces the next `<think>` and action.
 

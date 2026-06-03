@@ -72,7 +72,7 @@ The most useful Commonplace comparison is the split between retained evidence an
 
 Playground also treats context caching as a first-class design constraint. Commonplace usually optimizes retrieval and reviewability; Playground optimizes continuity under a live model loop, including prefix-cache survival across memory-cover changes. That is a distinct form of context engineering worth borrowing, but only for runtime packs where repeated model calls consume a stable history prefix.
 
-**Read-back:** `both` — With engineered push. The model can run memory/archive/orient faculties as pull commands, but the implemented core also pushes a selected memory cover before each model action. The push is time/hierarchy/budget gated, not semantic relevance gated
+**Read-back:** `both` — With engineered push. The model can run memory/archive/orient faculties as pull commands, but the implemented core also pushes a selected memory cover before each model action. Targeting is `coarse`: every model request receives a continuity cover selected by time, hierarchy, and budget, not by an instance identifier or inferred task relevance.
 
 ### Borrowable Ideas
 
@@ -92,7 +92,7 @@ Playground also treats context caching as a first-class design constraint. Commo
 
 **Direction.** Both. Pull exists through command/faculty affordances described in the system prompt and docs. Push exists in the implemented core: `create_thought_and_request` loads the memory branch, builds context messages, stores the context blob, and creates the model request before the model acts.
 
-**Trigger and relevance signal.** The push trigger is each model request. The relevance signal is structural and temporal: root chunks, `start_at`/`end_at`, child edges, moment boundary, continuous coverage, and budget fit. There is no semantic search, embedding similarity, or LLM relevance judge in the inspected cover builder.
+**Targeting and signal.** The memory-cover push is `coarse`. It fires for each model request and selects a continuity cover from the memory branch using root chunks, `start_at`/`end_at`, child edges, moment boundary, continuous coverage, and budget fit. Signal is n/a because the selected cover is not keyed to this task by an identifier, lexical query, embedding similarity, or LLM relevance judgment. Static code verifies the cover-selection mechanics, not precision, context dilution, or effective behavioral use.
 
 **Timing relative to action.** The selected memory cover is assembled before the model call that produces the next shell command. It is therefore pre-action context, not a post-action reflection.
 

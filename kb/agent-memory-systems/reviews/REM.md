@@ -62,7 +62,7 @@ REM is stronger than Commonplace as a service-shaped runtime substrate. It has A
 
 The largest design difference is the authority boundary. REM can put memory back into a model call quickly, especially through LangChain memory variables. Commonplace makes behavioral authority more explicit: instructions, collection contracts, validators, and review gates are intentionally authored or promoted system-definition artifacts. REM's extracted semantic memories are useful advisory context, but the code does not show a review step that decides when a distilled fact should become a rule or enforcement mechanism.
 
-**Read-back:** `both` — The API and SDK are pull surfaces, while LangChain `REMMemory.load_memory_variables()` is a relevance-gated pre-invoke push path from the receiving chain's perspective
+**Read-back:** `both` — The API and SDK are pull surfaces, while LangChain `REMMemory.load_memory_variables()` is an instance-targeted, embedding-selected pre-invoke memory push from the receiving chain's perspective
 
 ### Borrowable Ideas
 
@@ -90,9 +90,9 @@ The largest design difference is the authority boundary. REM can put memory back
 
 ## Read-back placement
 
-**Direction.** REM is both pull and push. Direct API/SDK retrieval is pull. LangChain memory injection is push to the receiving chain because the framework calls `load_memory_variables()` before the LLM invocation and supplies returned memory as `relevant_memories`.
+**Read-back:** `both` — Direct API/SDK retrieval is pull. LangChain memory injection is push to the receiving chain because the framework calls `load_memory_variables()` before the LLM invocation and supplies returned retained episodes and semantic memories as `relevant_memories`.
 
-**Trigger and relevance signal.** Pull retrieval triggers on `POST /api/v1/retrieve` or `REMClient.retrieve()`. LangChain push triggers on the chain's pre-invoke memory loading step and uses the current input/question/human_input as the retrieval query. The relevance signal is query embedding similarity against Qdrant episode and semantic-memory collections, agent-id filtering, graph-neighbor expansion for top episode hits, recency, retrieval count, and `top_k`.
+**Targeting and signal.** Pull retrieval triggers on `POST /api/v1/retrieve` or `REMClient.retrieve()`. LangChain push targets the current invocation instance: the framework's pre-invoke memory loading step derives a query from the current `input`, `question`, or `human_input`, uses the configured `agent_id` as an identifier filter, and sends the resulting prompt to that chain call. The final relevance selector is `inferred / embedding`: REM embeds the current query, searches Qdrant episode and semantic-memory collections under the `agent_id` filter, then uses graph-neighbor expansion, recency, retrieval count, and `top_k` to shape the returned set. Precision, recall, and context dilution are not verified from code.
 
 **Timing relative to action.** Retrieval and LangChain memory loading happen before model response and can change the next action. Episode writes and consolidation happen after a task/turn or in background jobs, so they affect later retrievals rather than the current response.
 

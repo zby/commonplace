@@ -72,7 +72,7 @@ Synapptic is a sharper trace-derived system than most "memory file" tools becaus
 
 The tradeoff is provenance and artifact discipline. Synapptic keeps source session ids and profile snapshots, but the generated archetype does not carry per-claim citations, reviewer state, schema validation, or invalidation rules. That is a tolerable choice for a personal assistant profile where local usefulness matters more than public argument quality. It is too weak for Commonplace's methodology layer, where durable claims should remain reviewable as claims.
 
-**Read-back:** `push` — With engineered project/model scoping and faithfulness testing. Future agents receive the archetype through host memory/instruction files rather than asking Synapptic to search. The push is not per-query relevance-gated; the `push-activation` tag is justified by the implemented read-back engineering plus WITH/WITHOUT guard benchmark, not by semantic retrieval
+**Read-back:** `push` — With engineered project/model scoping and faithfulness testing. Future agents receive the archetype through host memory/instruction files rather than asking Synapptic to search. The memory push is instance-targeted by project and target-assistant identifiers, not by per-query semantic retrieval.
 
 ### Borrowable Ideas
 
@@ -100,9 +100,9 @@ The tradeoff is provenance and artifact discipline. Synapptic keeps source sessi
 
 ## Read-back placement
 
-**Direction.** Push, with auxiliary pull surfaces. The acting assistant does not ask Synapptic for memory at action time; Synapptic writes an archetype into files that the target assistant is expected to load. Humans can pull profile/archetype/stats through CLI commands and browse sessions through the relay UI.
+**Direction.** Push, with auxiliary pull surfaces. The acting assistant does not ask Synapptic for memory at action time; Synapptic writes retained archetype memory into files that the target assistant is expected to load. Humans can pull profile/archetype/stats through CLI commands and browse sessions through the relay UI.
 
-**Trigger and relevance signal.** The read-back trigger is host-specific memory loading: Claude Code memory references, Cursor always-apply rules, Copilot/Gemini/Codex-style instruction files, and similar target conventions. Relevance is project/model scoped rather than semantic: Synapptic combines global plus project archetypes and filters guards by model-family verdicts when those verdicts exist. It does not select rules per user query.
+**Targeting and signal.** Targeting is `instance` at project/session scope: Synapptic resolves a Claude Code project directory into a project slug and project root, combines global memory with that project's archetype, and writes the result to the configured assistant target for that project. The signal is `identifier`: project slug/path and configured output target/model family decide which retained archetype reaches the future assistant. Host loading then uses always-on memory or instruction conventions such as Claude Code memory references, Cursor always-apply rules, Copilot/Gemini/Codex-style instruction files, and similar target files. It does not infer relevance from the current user query.
 
 **Timing relative to action.** Read-back happens before the future assistant session or request acts, through startup or host instruction loading. Session-end extraction and synthesis run after a session, so they can only affect later sessions.
 

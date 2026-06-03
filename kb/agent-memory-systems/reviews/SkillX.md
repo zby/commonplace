@@ -65,7 +65,7 @@ SkillX is a clean example of trace-derived artifact learning: it does not ask th
 
 The important divergence is the quality oracle. SkillX uses benchmark reward and LLM judges to decide what to extract, keep, merge, or filter. Commonplace normally treats semantic quality as reviewable and source-grounded, not only benchmark-success-derived. That difference matters because a task-successful trajectory can still produce overfit, stale, or misleading advice.
 
-**Read-back:** `both` — The retrieval service is pull machinery internally, but from the receiving agent's perspective selected plans and skills are pushed into the system prompt before action through `SkillUsageService.prepare_prompt()`
+**Read-back:** `both` — The retrieval service is pull machinery internally, but from the receiving agent's perspective selected trajectory-derived plans and skills are pushed into the system prompt before action through `SkillUsageService.prepare_prompt()`
 
 ### Borrowable Ideas
 
@@ -93,9 +93,9 @@ The important divergence is the quality oracle. SkillX uses benchmark reward and
 
 ## Read-back placement
 
-**Direction.** SkillX uses both pull and push. The host or service pulls from a skill library through retrieval APIs, but the selected artifacts are pushed into the receiving agent's prompt before it acts.
+**Direction.** SkillX uses both pull and push. The host or service pulls from a skill library through retrieval APIs, but the selected artifacts are retained memory, not shipped baseline documentation, and they are pushed into the receiving agent's prompt before it acts.
 
-**Trigger and relevance signal.** The trigger is a new task or plan step. Plans are retrieved by embedding similarity to the task, skills are retrieved by embedding similarity to the plan or task, available-tool filtering can narrow candidates, and an LLM selector can reduce a large candidate set to `max_skills`.
+**Targeting and signal.** The memory push is `instance`-targeted. Plans are retrieved by embedding similarity to the current task, and skills are retrieved by embedding similarity to the retrieved plan steps or directly to the task, so the primary signal is `inferred / embedding`. Available-tool filtering can narrow candidates by tool-name identifiers, and the optional `SkillSelector` can apply an LLM relevance `judgment` when the candidate set exceeds `max_skills`; precision, recall, and context dilution are not verified from code.
 
 **Timing relative to action.** `prepare_prompt()` builds a system prompt before task execution. That makes selected plans and skills pre-action context, not after-action reflection.
 

@@ -64,7 +64,7 @@ The strongest contrast is reviewability. Commonplace can inspect the exact rule,
 
 The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout generation, path pairing, verifier calls, and training. At runtime it does not load past trajectories, so it avoids prompt bloat. Commonplace pays a smaller ongoing retrieval/navigation cost and keeps the loaded material explainable.
 
-**Read-back:** `push` — By unconditional parameterization after fine-tuning; the code does not implement pull retrieval or relevance-gated push activation over stored trajectories
+**Read-back:** `push` — Coarse always-on parameterization after fine-tuning; the code does not implement pull retrieval or instance-targeted push activation over stored trajectories
 
 ### Borrowable Ideas
 

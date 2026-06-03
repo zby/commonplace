@@ -66,7 +66,7 @@ The strongest overlap is the retained-artifact ladder. Hindsight's raw document 
 
 The biggest divergence is reviewability. Hindsight has more automatic adaptation, but a reader cannot review a memory change as a normal repo diff unless the deployment exports it. Commonplace has weaker automatic recall but stronger artifact audit: source-pinned citations, replacement archives, explicit type contracts, and deterministic validation.
 
-**Read-back:** `both` — Ordinary API/MCP/client usage is pull, while Claude Code and similar hook integrations push relevance-gated recall into the agent's pre-action context
+**Read-back:** `both` — Ordinary API/MCP/client usage is pull, while Claude Code and similar hook integrations push instance-targeted retained-memory recall into the agent's pre-action context
 
 ### Borrowable Ideas
 
@@ -98,7 +98,7 @@ The biggest divergence is reviewability. Hindsight has more automatic adaptation
 
 **Direction.** Hindsight is both pull and push. The REST/SDK/MCP surfaces are pull: the agent or host explicitly calls recall, reflect, or mental-model tools. The Claude Code integration is push from the receiving agent's perspective: `UserPromptSubmit` automatically queries Hindsight and injects `additionalContext` before Claude acts on the user's prompt.
 
-**Trigger and relevance signal.** The engineered push trigger is a host hook on user prompt submission. Relevance comes from a composed query built from the latest prompt plus optional prior turns, query truncation, selected banks, configured fact types, retrieval budget, max token cap, and Hindsight's semantic/BM25/graph/temporal retrieval and reranking ([hindsight-integrations/claude-code/scripts/recall.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/recall.py), [hindsight-integrations/claude-code/settings.json](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/settings.json)).
+**Targeting and signal.** The engineered push trigger is a host hook on user prompt submission, but the selected memories are instance-targeted rather than coarse always-load. The hook narrows by identifiers such as the selected bank, optional dynamic bank id, additional banks, and configured fact types, then uses the current prompt plus optional prior turns as a content query. The final relevance signal is mixed: identifier narrowing followed by inferred content selection through semantic embeddings, BM25 lexical matching, graph/temporal expansion, and reranking ([hindsight-integrations/claude-code/scripts/recall.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/recall.py), [hindsight-integrations/claude-code/settings.json](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/settings.json)).
 
 **Timing relative to action.** Auto-recall runs before prompt construction for the next user request and can change the next model response. Auto-retain runs after the assistant response or at session end and can only affect later turns/sessions after retain and consolidation complete.
 

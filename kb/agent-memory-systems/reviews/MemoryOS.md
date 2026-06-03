@@ -64,7 +64,7 @@ MemoryOS is closer to an application memory subsystem than to a governed knowled
 
 The most important difference is that MemoryOS collapses memory maintenance into runtime heuristics. Capacity pressure, heat, embedding similarity, LLM extraction prompts, and prompt assembly decide what is retained and reused. Commonplace keeps those decisions visible as files, type specs, validation runs, review artifacts, and diffs. MemoryOS makes personalization cheap; Commonplace makes memory authority reviewable.
 
-**Read-back:** `both` — MCP tools are pull, but `get_response()` implements engineered push from the receiving model's perspective by retrieving relevant memory before the model call and inserting it into the generated system/user prompt
+**Read-back:** `both` — MCP tools are pull, but `get_response()` implements an instance-targeted, embedding-selected memory push from the receiving model's perspective by retrieving relevant memory before the model call and inserting it into the generated system/user prompt
 
 ### Borrowable Ideas
 
@@ -94,9 +94,9 @@ The most important difference is that MemoryOS collapses memory maintenance into
 
 ## Read-back placement
 
-**Direction.** MemoryOS is both pull and push. MCP `retrieve_memory` and `get_user_profile` are explicit pull tools. The library `get_response()` path is push from the receiving model's perspective because retrieval happens before the model call and recalled memory is placed into the prompt.
+**Direction.** MemoryOS is both pull and push. MCP `retrieve_memory` and `get_user_profile` are explicit pull tools. The library `get_response()` path is push from the receiving model's perspective because retrieval happens before the model call and recalled memory is placed into the prompt. This is implemented as a response-wrapper API surface rather than MCP hook wiring; callers get push activation when they delegate the answer generation path to MemoryOS.
 
-**Trigger and relevance signal.** Push is triggered by a host application calling `get_response(query)`. The relevance signal is embedding similarity over mid-term session summaries/pages and long-term knowledge entries, filtered by segment/page/knowledge thresholds and top-k capacities. Short-term history and the raw user profile are included without semantic selection.
+**Targeting and signal.** The engineered memory push is `instance` targeted: `get_response(query)` uses the current query as the instance payload. Its selector is `inferred / embedding`, not an identifier match: the code embeds the query, runs FAISS inner-product search over mid-term session summaries/pages and long-term knowledge entries, then filters by segment/page/knowledge thresholds and top-k capacities. Short-term history and the raw user profile are included by the wrapper without semantic selection, so those inclusions are coarse context inside the same pre-call path.
 
 **Timing relative to action.** Retrieval and prompt assembly happen before the final LLM response, so memory can change the next answer. The new QA pair is written after generation, so that trace affects later turns. Heat-triggered profile and knowledge extraction can also run after a write and shape later retrieval.
 

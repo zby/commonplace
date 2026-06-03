@@ -62,7 +62,7 @@ xMemory is stronger than Commonplace on one narrow axis: high-volume dialogue me
 
 The architectural lesson is not "use themes instead of notes." xMemory's themes are retrieval-control summaries over many small semantic facts, not durable explanatory notes. In Commonplace terms they look more like generated indexes or search-side clusters than library artifacts. Treating them as notes would overstate their lineage and authority.
 
-**Read-back:** `both` — The `xMemory.search()` facade is an explicit pull interface, while the LoCoMo `adaptive_hier` answer loop performs relevance- and entropy-gated retrieval before `answer()` assembles memory context for the LLM
+**Read-back:** `both` — The `xMemory.search()` facade is an explicit pull interface, while the LoCoMo `adaptive_hier` answer loop performs relevance- and entropy-gated retrieval over retained memories before `answer()` assembles them into the LLM prompt
 
 ### Borrowable Ideas
 
@@ -88,9 +88,9 @@ The architectural lesson is not "use themes instead of notes." xMemory's themes 
 
 ## Read-back placement
 
-**Direction.** xMemory is both pull and push. The library facade exposes explicit pull through `search()`. The LoCoMo QA harness turns a question into pre-answer retrieval, then pushes selected memories into the answer prompt.
+**Direction.** xMemory is both pull and push over retained memory. The library facade exposes explicit pull through `search()`. The LoCoMo QA harness turns a question into pre-answer retrieval, then pushes selected episode, semantic, and theme memories into the answer prompt. That push is memory read-back, not shipped baseline documentation.
 
-**Trigger and relevance signal.** Baseline retrieval triggers on an explicit search call and uses BM25/vector/hybrid ranking. The `adaptive_hier` path triggers before answer generation, embeds the question, chooses a semantic pool, maps semantics to themes, selects representative themes and semantic facts by query score plus neighbor coverage, builds an episode pool from source episodes plus vector hits, and uses entropy/information-gain thresholds to decide which episodes and original messages to include ([evaluation/locomo/xMemory_search_framework.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/xMemory_search_framework.py)).
+**Targeting and signal.** The push path is instance-targeted: it keys on the current question, not on an always-load or generic session-start event. The primary signal is `inferred / embedding`: `adaptive_hier` embeds the question, scores semantic memories and themes by cosine similarity, then builds episode candidates from source episodes plus vector hits. The selection is mixed because semantic/theme neighbor coverage and entropy/information-gain checks refine the final payload, but the first instance selector is content-derived embedding similarity rather than an assigned identifier ([evaluation/locomo/xMemory_search_framework.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/xMemory_search_framework.py)). The baseline explicit `search()` path also supports `inferred / lexical` BM25 and vector/hybrid ranking, but that is pull unless a host wraps it into pre-action prompt assembly.
 
 **Timing relative to action.** Read-back happens before answer generation in the evaluation loop, so it can change the response. Semantic generation and theme updates happen after prior conversations, so they affect later questions rather than the current trace.
 

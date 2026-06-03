@@ -72,7 +72,7 @@ The strongest design divergence is authority placement. Commonplace keeps durabl
 
 Phantom's context story is operationally better for a chat agent. A user message automatically retrieves relevant memories and attaches evolved state before the agent acts. Commonplace is more inspectable and cheaper in prompt terms, but it depends on the acting agent remembering to search, follow indexes, and load the right notes. Phantom proves that a stateful agent benefits from an engineered read-back path, not just a place to store memories.
 
-**Read-back:** `both` — Phantom has pull surfaces through MCP, UI, and reflective tools, plus push from relevance-gated per-query Qdrant memory injection and always-loaded evolved/working-memory prompt blocks. The `push-activation` tag is justified by the relevance-gated pre-action memory context, not by static config or ordinary memory-search tools
+**Read-back:** `both` — Phantom has pull surfaces through MCP, UI, and reflective tools, plus memory push from relevance-gated per-query Qdrant injection and coarse always-loaded evolved/working-memory prompt blocks. The `push-activation` tag is justified by the instance-targeted pre-action Qdrant memory context, not by baseline docs, coarse always-loaded memory, or ordinary memory-search tools
 
 ### Borrowable Ideas
 
@@ -102,7 +102,7 @@ On the survey axes, Phantom combines online trace extraction, LLM-mediated refle
 
 **Direction.** Both push and pull. Pull surfaces include `phantom_memory_query`, `phantom_memory_search`, `phantom_config`, MCP resources, reflective in-process memory tools, and dashboard memory/config APIs. Push occurs when the runtime builds memory context from the incoming message and appends it to the system prompt before the SDK query.
 
-**Trigger and relevance signal.** Dynamic vector-memory push is triggered on every runtime/web-chat query when memory is ready and user text is available. Relevance comes from current-message embedding and sparse search over episodes, facts, and procedures, followed by ranking, validity filters, and top-k limits. Static evolved config and working memory are always-loaded; they are behaviorally important but not relevance-gated.
+**Targeting and signal.** Phantom has two memory push shapes. Evolved config and working memory are `coarse`: they are retained memory accumulated or edited during use, but `assemblePrompt()` appends them whenever the blocks exist, so they provide generic standing continuity rather than selection for this instance. Dynamic Qdrant memory is `instance`-targeted: each runtime/web-chat query passes the current user text into `MemoryContextBuilder.build()`, which recalls episodes, facts, and one procedure before the SDK call. The signal is mixed `inferred / embedding` plus `inferred / lexical`: stores embed the query and also build sparse BM25-like vectors from the query text, then Qdrant hybrid search and ranking/validity/top-k filters choose the prompt payload. Payload identifiers such as session id, user id, type, category, and timestamps can filter or rank records, but the deployed per-query selector's relevance signal is content-derived.
 
 **Timing relative to action.** Memory context and evolved config are assembled before the Agent SDK call, so they can change the next action. Consolidation and evolution run after the session, so they only affect future sessions.
 

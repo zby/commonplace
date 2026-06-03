@@ -63,7 +63,7 @@ The main difference is artifact typing. Context Guard uses file names, command c
 
 The other difference is lifecycle posture. Context Guard treats the active session as the center: save, resume, audit, paginate, and avoid dropped work. Commonplace treats promoted knowledge as the center: source material and workshop state matter, but library artifacts accumulate only after routing, drafting, review, and validation. Context Guard is stronger as an operational continuity harness; Commonplace is stronger as a durable knowledge system.
 
-**Read-back:** `both` — Plus always-load. `/start`, `/audit`, `/save`, `/end`, and `/itemise` are deliberate command surfaces from the agent's perspective, while `CLAUDE.md` is unconditional project context; the hooks are event-keyed reminders/backups, not qualifying relevance-gated memory read-back
+**Read-back:** `both` — Memory-only. The push paths are coarse: Claude Code always-loads project `CLAUDE.md`, and `/start` or `/audit` user events instruct the agent to read the current safeguard files; there is no instance signal beyond session/audit mode. Archive pages and itemised sidecars remain pull surfaces. The hooks inject shipped checklist/status text or copy files, not selected retained memory
 
 ### Borrowable Ideas
 

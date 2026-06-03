@@ -90,13 +90,13 @@ ReasoningBank also makes the read-back boundary unusually explicit. The selected
 
 ## Read-back placement
 
-**Direction.** ReasoningBank uses both pull and push. The harness performs a pull-style embedding lookup over the memory bank, but the selected memory is pushed into the WebArena or SWE-Bench agent before the agent chooses actions.
+**Direction.** ReasoningBank uses both pull and push over retained memory. The harness performs a pull-style embedding lookup over the memory bank, but the selected memory is pushed into the WebArena or SWE-Bench agent before the agent chooses actions.
 
-**Trigger and relevance signal.** The trigger is task start when a memory path or benchmark memory mode is configured. Relevance is embedding similarity between the current query/problem statement and cached prior task embeddings, with an instruction-aware query embedding used for scoring. The deployed code requests one memory entry.
+**Targeting and signal.** Targeting is `instance`: task start with a configured memory path or benchmark memory mode causes the harness to select a memory for this WebArena task or SWE-Bench instance. The signal is `inferred / embedding`: relevance is derived from embedding similarity between the current query or problem statement and cached prior task embeddings, with an instruction-aware query embedding used for scoring. The deployed code requests one memory entry. Precision, recall, and context dilution are runtime properties not verified by the code.
 
 **Timing relative to action.** Read-back happens before the action loop: WebArena writes the selected memory file before constructing `ExpArgs`, and the legacy agent appends the file content to the system message on every `get_action` call; SWE-Bench appends selected memory before adding the first user task message.
 
-**Selection, scope, and complexity.** Selection is top-1 by task id. Scope is website/memory-mode for WebArena and model-name for SWE-Bench. Volume is bounded by one prior task record, but the memory record can contain several memory items and there is no token budget or schema-aware trimming for the selected memory text. Precision, recall, and context dilution are runtime properties not verified by the code.
+**Selection, scope, and complexity.** Selection is top-1 after embedding ranking, then mapped back by task id. Scope is website/memory-mode for WebArena and model-name for SWE-Bench. Volume is bounded by one prior task record, but the memory record can contain several memory items and there is no token budget or schema-aware trimming for the selected memory text.
 
 **Authority at consumption.** The injected memory is advisory prose, but because it is appended to the system message and paired with an instruction to explicitly discuss whether to use it, it has soft system-definition authority over the receiving agent's next actions. The memory item itself remains a knowledge artifact when stored in JSONL.
 

@@ -62,7 +62,7 @@ Zikkaron is stronger than Commonplace as an always-on runtime memory layer. It c
 
 Commonplace is stronger as a governed knowledge substrate. Its retained artifacts are inspectable Markdown files with collection contracts, type specs, citations, validation, semantic review, and git history. Zikkaron has many local control signals, but memories can become injected advisory context without the kind of explicit source review and authority promotion Commonplace requires.
 
-**Read-back:** `both` — With engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts
+**Read-back:** `both` — With engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts.
 
 ### Borrowable Ideas
 
@@ -90,9 +90,9 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 ## Read-back placement
 
-**Direction.** Zikkaron is both pull and push. MCP tools such as `recall`, `get_project_context`, `restore`, `memory_stats`, and `get_rules` are pull. Installed Claude hooks push context on `SessionStart`, `UserPromptSubmit`, `PreCompact`, and post-compaction restore.
+**Direction.** Zikkaron is both pull and push. MCP tools such as `recall`, `get_project_context`, `restore`, `memory_stats`, and `get_rules` are pull. Installed Claude hooks push retained memory on `SessionStart`, `UserPromptSubmit`, and post-compaction restore; `PreCompact` and `PostToolUse` capture memory for later read-back rather than themselves returning memory to the agent.
 
-**Trigger and relevance signal.** Pull retrieval is triggered by tool calls and uses multi-signal scoring. Push read-back is triggered by Claude hook events: session start, user prompt submission, compaction, and tool use. The prompt hook uses FTS5 and optional vector search, boosts project-local memories, boosts non-action-stream memories, multiplies by heat, and enforces result/character/time budgets. Session-start push uses active checkpoint, protected anchors, hot directory memories, and recent actions.
+**Targeting and signal.** Zikkaron has mixed push targeting. The `UserPromptSubmit` hook is `instance`-targeted: it extracts the current prompt, runs FTS5 over prompt terms (`inferred / lexical`) and optionally sqlite-vec over the prompt embedding (`inferred / embedding`), then boosts current-directory, non-action-stream, and high-heat memories within result, character, and time budgets. The `SessionStart` hook is mixed but mostly `instance`: it uses `cwd` as an `identifier` for hot project memories, always includes protected anchors globally, and includes the latest active checkpoint and recent actions as coarse session context. Post-compaction restore is also mixed: active checkpoint and recent/anchored memories are coarse or session-carried state, hot project memories are `identifier`-selected by directory, and SR prediction uses checkpoint task or directory text as an inferred query. Precision, recall, and context dilution are not verified from code.
 
 **Timing relative to action.** `UserPromptSubmit` and `SessionStart` output are injected before the receiving Claude turn acts. `PreCompact` drains before context loss; post-compact restoration prints reconstructed context for the resumed session. `PostToolUse` capture happens after an action and only affects future turns after direct read-back or consolidation.
 

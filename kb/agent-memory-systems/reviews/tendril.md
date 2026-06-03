@@ -61,7 +61,7 @@ The largest divergence is context strategy. Tendril solves tool-surface growth b
 
 Tendril's executable-memory pattern also shifts trust. In Commonplace, a note can be wrong and still mostly act as advice. In Tendril, a wrong retained capability can run code, fetch wrong data, or write files. The Deno wrapper handles some safety boundaries, but the code does not provide built-in capability tests, review status, source citations, deprecation, or rollback.
 
-**Read-back:** `both` — Plus always-load. The system prompt is pushed into every agent session and requires list-first behavior, but capability content enters action when the agent deliberately calls `listCapabilities()` and then `execute`; I did not find a code-grounded relevance-gated or hook-based memory-content push path that warrants `push-activation`
+**Read-back:** `pull` — The retained capability registry enters action when the agent deliberately calls `listCapabilities()` and then `execute`; the always-loaded Tendril system prompt is shipped baseline instruction, not retained memory read-back. I did not find a code-grounded relevance-gated or hook-based memory-content push path that warrants `push-activation`
 
 ### Borrowable Ideas
 

@@ -64,7 +64,7 @@ Self-Training-LLM is useful to Commonplace mainly as the opposite design pole. I
 
 The strongest alignment is the trace-derived split. Both systems distinguish raw evidence from promoted behavior-shaping artifacts. In Self-Training-LLM, the raw layer is generated questions, sampled answers, scores, and result rows; the promoted layer is SFT/DPO weights. In Commonplace, the raw layer is source/work/review evidence, while the promoted layer is a typed note, instruction, schema, or index. The tradeoff is auditability: Commonplace can inspect a promoted artifact directly, while a checkpoint must be evaluated behaviorally.
 
-**Read-back:** `push` — By checkpoint selection/always-load rather than retrieval. Once the caller loads an SFT or DPO checkpoint, the learned behavior is always active in generation; this commit does not implement relevance-gated memory/context injection, so `push-activation` is not warranted
+**Read-back:** `push` — By checkpoint selection/always-load rather than retrieval. Targeting is `coarse`, signal n/a: once the caller loads an SFT or DPO checkpoint, the learned behavior is always active in generation. The `rag` mode inserts the current test document into the prompt, but that is evaluation-time document context rather than retained memory read-back. This commit does not implement relevance-gated memory/context injection, so `push-activation` is not warranted.
 
 ### Borrowable Ideas
 

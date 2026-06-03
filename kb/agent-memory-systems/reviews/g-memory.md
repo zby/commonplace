@@ -66,7 +66,7 @@ Commonplace is stronger on durable provenance and reviewable authority. G-Memory
 
 The systems also differ in their tolerance for opaque storage. Chroma and pickle are acceptable in a benchmark harness where runs are reproducible experiments, but they are weak as a long-lived knowledge library substrate. Commonplace's Markdown and git model makes artifacts slower to promote but easier to inspect, diff, review, invalidate, and retire.
 
-**Read-back:** `push` — With engineered relevance-gated activation through task-graph expansion, vector similarity, thresholds, LLM reranking, top-k limits, and prompt assembly before agent action
+**Read-back:** `push` — With instance-targeted inferred activation through task-graph expansion, embedding similarity, thresholds, LLM judgment reranking, top-k limits, and prompt assembly before agent action
 
 ### Borrowable Ideas
 
@@ -98,7 +98,7 @@ The systems also differ in their tolerance for opaque storage. Chroma and pickle
 
 **Direction.** Read-back is push from the acting agent's perspective. The MAS workflow retrieves memory before task solving and inserts selected successful trajectories and insights into the prompt; agents do not issue a memory lookup themselves (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/autogen/autogen.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/format.py).
 
-**Trigger and relevance signal.** The trigger is each scheduled task. Relevance is engineered: the task layer starts from vector-similar task nodes, expands by k-hop graph neighbors, falls back to label-filtered Chroma similarity when needed, filters by cosine threshold, doubles candidate windows, uses an LLM to rerank successful trajectories by usefulness to the query, and retrieves insights by related-task correlations (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py). This justifies `push-activation`.
+**Targeting and signal.** The trigger is each scheduled task, but the loaded memory is instance-targeted to the current task text rather than coarse always-load. The signal is inferred and mixed: task cases start from embedding similarity over task nodes, expand through k-hop graph neighbors, fall back to label-filtered Chroma similarity when needed, filter by cosine threshold, double candidate windows, and then use LLM judgment to rerank successful trajectories by usefulness to the query; insights are selected by related-task correlations after similar-task retrieval (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py). This instance-targeted inferred signal plus the before-action prompt hook justifies `push-activation`; actual precision and recall are not verified from code.
 
 **Timing relative to action.** Retrieval happens after `init_task_context` and before the task loop. The selected trajectories and role-specific or raw insights are then reused in prompt construction for each action step. `backward` score updates happen after the task and can only affect future retrieval, not the just-finished action.
 

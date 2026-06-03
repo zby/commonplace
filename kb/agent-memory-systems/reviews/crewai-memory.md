@@ -68,7 +68,7 @@ The strongest overlap is the artifact split. CrewAI's memory records, scopes, em
 
 CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve and inject memories before a response, and its ordinary agent loop exposes memory as tools without the developer writing those tools manually. Commonplace is ahead on retained lineage: a review or note keeps source URLs, status, and git diff history, while CrewAI's derived memories do not retain the extraction prompt version, exact source excerpt, consolidation rationale, or review state as durable first-class fields.
 
-**Read-back:** `both` — CrewAI has pull read-back through `Search memory`, `Memory.recall`, scopes, flows, and knowledge queries; it has engineered push activation in LiteAgent, where the last user message triggers relevance-ranked recall and prompt injection before the LLM call
+**Read-back:** `both` — CrewAI has pull read-back through `Search memory`, `Memory.recall`, scopes, flows, and knowledge queries; it has engineered push activation in LiteAgent, where the last user message triggers instance-targeted inferred/embedding recall and prompt injection before the LLM call
 
 ### Borrowable Ideas
 
@@ -98,7 +98,7 @@ CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve
 
 **Direction.** Both. Pull paths include `Memory.recall`, Flow `recall`, `Search memory`, and `query_knowledge`. Push paths are narrower: LiteAgent automatically recalls from the last user message and appends relevant memories to the system message before the LLM call. Ordinary Crew agents get memory tools and post-task saving, but I did not find a source-visible general Crew task pre-prompt injection path equivalent to the LiteAgent path.
 
-**Trigger and relevance signal.** LiteAgent's trigger is a pending LLM call with memory configured. The relevance signal is the last user message, passed to `memory.recall(query, limit=10)`. Recall then uses vector similarity, scopes, recency, importance, privacy filters, and for longer/deeper queries may use LLM query analysis and confidence routing. Precision and recall quality are runtime properties, not established by the code alone.
+**Targeting and signal.** LiteAgent's trigger is a pending LLM call with memory configured, but the memory push is not a coarse always-load: it is `targeting: instance`, keyed by the last user message for this call. The signal is `inferred / embedding` as the primary selector: `_inject_memory_context()` passes the last user message to `memory.recall(query, limit=10)`, and recall embeds the query or LLM-distilled recall queries before vector search. Deep recall can add an LLM `judgment` layer by analyzing longer queries into scopes, time filters, and up to three recall queries, then confidence-routing low-confidence or complex cases; scopes/categories/privacy/recency/importance shape filtering and ranking. Precision, recall, context dilution, and effective authority are runtime properties, not established by the code alone.
 
 **Timing relative to action.** LiteAgent retrieval happens after messages are formatted and before `_execute_core` invokes the LLM, so it can change the next answer. Crew agent auto-saving happens after the task result and only affects future tasks or future runs. Memory tools can affect an action only if the agent chooses or is prompted to call them during its reasoning loop.
 

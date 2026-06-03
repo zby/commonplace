@@ -70,7 +70,7 @@ Letta is much stronger than Commonplace as an online agent runtime. It owns agen
 
 The closest overlap is git-backed memory. Letta's memory repo path acknowledges the same design pressure as Commonplace: durable behavior-shaping prose should be inspectable, versioned, and recoverable. The difference is that Letta still treats git as a backing store behind server APIs, whereas Commonplace treats the repo itself as the operating surface.
 
-**Read-back:** `both` — Core memory blocks, source/file windows, and compiled memory metadata are pushed into the receiving model's system context before action; archival and conversation search are pull tools the agent or host must call explicitly
+**Read-back:** `both` — Core memory blocks and selected source/file windows are pushed into the receiving model's system context before action; archival and conversation memory content is pull through tools the agent or host must call explicitly
 
 ### Borrowable Ideas
 
@@ -100,9 +100,9 @@ The closest overlap is git-backed memory. Letta's memory repo path acknowledges 
 
 ## Read-back placement
 
-**Direction.** Letta is both push and pull. Core memory blocks and selected file/source views are pushed into the model context through system prompt compilation. Conversation and archival memory are pull through tools such as `conversation_search` and `archival_memory_search`.
+**Direction.** Letta is both push and pull. Core memory blocks and selected file/source views are pushed into the model context through system prompt compilation. Conversation and archival memory are pull through tools such as `conversation_search` and `archival_memory_search`; the prompt-rendered counts and archive tags are availability metadata, not a push of archival memory content.
 
-**Trigger and relevance signal.** The core-memory push trigger is prompt rebuild before agent action or after prompt-affecting block changes. Relevance is engineered through agent-block attachment, block labels, `system/` filtering for git-enabled agents, open file state, max-open-file limits, per-file view windows, and explicit block limits. It is not semantic top-k selection for core blocks; archival semantic search remains pull.
+**Targeting and signal.** The pushed memory path is instance-targeted, with an `identifier` signal. Core blocks are selected by the receiving agent's attached memory blocks and block labels; git-enabled rendering narrows direct prompt memory to `system/` labels. File/source views are selected by agent-file/source associations, open-file state, file ids/names, and configured line/window limits. This is not semantic top-k selection for core blocks; archival semantic search remains pull.
 
 **Timing relative to action.** Core blocks and file windows are present before the next LLM call and can change the next action. Sleeptime and compaction run after turns or under context pressure, so their outputs affect later turns after persistence and prompt rebuild. Archival/recall searches affect the current turn only when the model or host calls the tool.
 

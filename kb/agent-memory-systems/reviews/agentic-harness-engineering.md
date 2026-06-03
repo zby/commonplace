@@ -64,7 +64,7 @@ AHE is unusually close to Commonplace because it treats externalized files as th
 
 The main divergence is objective and artifact granularity. AHE optimizes benchmark performance and therefore accepts operational artifacts whose authority comes from future pass/fail attribution. Commonplace optimizes durable methodology and therefore asks each artifact to explain its claim, type, links, and review state. AHE can move faster because a hypothesis only needs to survive the next evaluation; Commonplace moves slower because a promoted note must stay meaningful outside the run that produced it.
 
-**Read-back:** `both` — With engineered push. The evolution agent receives a generated, scoped iteration packet before acting, and it can pull detail reports or raw traces when needed. The evaluated code agent mostly receives whatever harness components are registered or always loaded in its workspace
+**Read-back:** `both` — With instance-targeted engineered push. The evolution agent receives a generated, scoped iteration packet keyed to the current benchmark iteration before acting, and it can pull detail reports or raw traces when needed. The evaluated code agent mostly receives whatever harness components are registered or always loaded in its workspace
 
 ### Borrowable Ideas
 
@@ -90,15 +90,15 @@ The main divergence is objective and artifact granularity. AHE optimizes benchma
 
 ## Read-back placement
 
-**Direction.** AHE uses both push and pull from the evolution agent's perspective. The iteration query pushes a scoped memory packet into the next evolution run; detail reports and raw traces remain available through deliberate file reads.
+**Direction.** AHE uses both push and pull from the evolution agent's perspective. The iteration query pushes a scoped memory packet into the next evolution run; detail reports and raw traces remain available through deliberate file reads. This is memory read-back, not shipped documentation injection: the pushed packet is assembled from retained run traces, debugger reports, history, manifests, scores, and attribution records accumulated by the experiment loop.
 
-**Trigger and relevance signal.** The trigger is the evaluation/evolution loop boundary. Relevance is engineered from current task outcomes, pass/fail grouping, timeout detection, cross-iteration diffs, manifest attribution, best-ever snapshots, stability analysis, and `agent_debugger.max_tasks`. There is no embedding matcher in the inspected code; the selection signal is benchmark structure plus configured budgets.
+**Targeting and signal.** Targeting is `instance`: `build_evolution_query` assembles the packet for the already-known evolution instance, using the current `iteration`, `job_dir`, task results, rollout counts, cross-iteration diff, stability state, best-ever snapshot, change attribution, and optional variant comparison. The signal is `identifier`: benchmark iteration, task names, outcome labels, file paths, and declared experiment/configuration fields identify which retained records belong to this run. Agent Debugger may use an LLM to distill trace content into reports, but the push selector itself is not embedding or LLM relevance retrieval; precision/recall of the packet's practical relevance is not verified from code.
 
 **Timing relative to action.** Read-back happens before the evolution agent edits the workspace. It can change which files are modified, which failure patterns are prioritized, and whether previous changes are kept, improved, or rolled back.
 
-**Selection, scope, and complexity.** The pushed packet is broad enough to orient the agent but avoids loading all traces. The prompt points to per-task detail files and raw traces for deeper inspection. This is progressive disclosure: summary first, sourced reports second, full traces last.
+**Selection, scope, and complexity.** The pushed packet is broad enough to orient the agent but avoids loading all traces. The prompt points to per-task detail files and raw traces for deeper inspection. This is progressive disclosure: summary first, sourced reports second, full traces last. Actual context dilution is not verified from code.
 
-**Authority at consumption.** The pushed packet is advisory but high-authority in practice because the evolution prompt says to read analysis first, use change attribution to decide rollback, and optimize pass@1. Workspace files that result from the packet are stronger system-definition artifacts for the evaluated code agent.
+**Authority at consumption.** The pushed packet is advisory context with structurally high authority because the evolution prompt says to read analysis first, use change attribution to decide rollback, and optimize pass@1. Effective authority is not verified from code. Workspace files that result from the packet are stronger system-definition artifacts for the evaluated code agent.
 
 **Faithfulness.** AHE has a stronger faithfulness story than systems that only assume context presence equals use: the next benchmark iteration can falsify predicted fixes and regressions. It still does not prove that a specific injected report sentence caused a specific harness edit; the evidence is iteration-level attribution, not sentence-level causal tracing.
 

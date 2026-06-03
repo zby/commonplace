@@ -76,7 +76,7 @@ Compared with Commonplace, the system has a sharper quantitative gate but a weak
 
 The most important artifact-authority split is between evidence, optimization policy, and executable agent state. Train traces and train results are knowledge artifacts. `PROGRAM.md`, benchmark templates, file guards, split policy, suite promotion, and score gates are system-definition artifacts for the optimizing loop. `agent/agent.py` is both the retained learned artifact and the executable system-definition artifact consumed by the benchmark.
 
-**Read-back:** `both` — But not relevance-gated push. The benchmark always consumes the evolved `agent/agent.py`, and the coding-agent loop is instructed to use traces and learnings, but I found no engineered matcher, retrieval budget, before-action hook, or relevance-gated memory injection beyond deterministic benchmark execution and program-following
+**Read-back:** `both` — The benchmark gets a coarse memory push because every run imports the evolved `agent/agent.py`; the optimizing coding agent gets retained traces, `workspace/learnings.md`, and train results only by pulling the files that `PROGRAM.md` tells it to inspect. There is no instance-targeted signal, matcher, retrieval budget, before-action hook, or relevance-gated memory injection beyond deterministic benchmark execution and program-following
 
 ## Trace-derived learning placement
 

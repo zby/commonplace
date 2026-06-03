@@ -64,7 +64,7 @@ ACE also has a narrower context model. It does not browse a library, retrieve re
 
 The useful contrast is ACE's willingness to operationalize small learning cycles. A failed task attempt can become a reflection, a new bullet, a counter update, a validation-selected best playbook, and then instruction context for later attempts in the same run. Commonplace has stronger artifact governance, but less automatic conversion from local agent failures into candidate system-definition artifacts.
 
-**Read-back:** `push` — By unconditional always-load; every Generator call receives the playbook in prompt context, but this commit does not implement relevance-gated push activation
+**Read-back:** `push` — The retained playbook is pushed by coarse always-load: every Generator call receives the whole playbook in prompt context. There is no instance-targeted signal or relevance-gated push activation in this commit
 
 ### Borrowable Ideas
 

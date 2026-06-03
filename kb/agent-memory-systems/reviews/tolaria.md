@@ -72,7 +72,7 @@ Tolaria is closest to Commonplace in its files-first instinct: retained artifact
 
 The strongest Commonplace-relevant contribution is the activation layer around local files. Tolaria does not just say "agents can read markdown"; it gives them a managed `AGENTS.md`, a context snapshot from what the user is viewing, MCP read/orientation tools, and CLI launch settings that scope the agent to active vaults.
 
-**Read-back:** `both` — Tolaria exposes pull paths through MCP search/read/context tools and ordinary file/git access, and it implements engineered push activation for built-in AI sessions by injecting a bounded UI-derived context snapshot plus vault instructions before the receiving agent acts
+**Read-back:** `both` — Tolaria exposes pull paths through MCP search/read/context tools and ordinary file/git access, and it implements engineered push activation for built-in AI sessions by injecting a bounded UI-derived snapshot of retained vault notes before the receiving agent acts; bundled Tolaria docs and generic vault instructions are baseline context, not memory read-back
 
 ### Borrowable Ideas
 
@@ -90,9 +90,9 @@ The strongest Commonplace-relevant contribution is the activation layer around l
 
 ## Read-back placement
 
-**Direction.** Tolaria is both pull and push. Pull comes from MCP `search_notes`, `get_vault_context`, `list_vaults`, and `get_note`, plus normal file/git access. Push comes from the built-in AI panel and CLI-agent launch path: the user opens an AI session, and Tolaria injects active UI context and system instructions before the receiving agent responds.
+**Direction.** Tolaria is both pull and push. Pull comes from MCP `search_notes`, `get_vault_context`, `list_vaults`, and `get_note`, plus normal file/git access. Push comes from the built-in AI panel and CLI-agent launch path: the user opens an AI session, and Tolaria injects active vault memory from the UI context before the receiving agent responds. The same prompt path also includes shipped Tolaria product docs and generic vault-use instructions, but those are baseline context surfaces rather than read-back.
 
-**Trigger and relevance signal.** The push trigger is user/event state, not embedding retrieval: active note, active editor content, open tabs, current note list, current note-list filter, and inline wikilink references in the draft prompt. Relevance is therefore UI-scoped and explicit-reference scoped. Precision/recall quality is not verifiable from code, but the selection mechanism is implemented.
+**Targeting and signal.** Targeting is `instance`: the pushed memory is selected for the current UI instance rather than always loaded. The primary signal is `identifier`, because the snapshot keys on active note path, open-tab paths, note-list type/filter state, and inline wikilink references already present in the user interface. If the visible note list was narrowed by a free-text UI query, that sub-path is `inferred / lexical`; the implemented push path itself does not use embedding retrieval or an LLM relevance judge. Precision/recall quality and context dilution are not verifiable from code, but the selection mechanism is implemented.
 
 **Timing relative to action.** The snapshot and agent system prompt are built before `sendAgentMessage()` streams the selected target, and the Rust launchers pass the resulting prompt/system prompt into the external CLI or model call. This can change the next action, not merely summarize it afterward ([src/lib/aiAgentConversation.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/lib/aiAgentConversation.ts), [src/utils/streamAiAgent.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/utils/streamAiAgent.ts)).
 

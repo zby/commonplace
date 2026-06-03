@@ -66,7 +66,7 @@ pi-self-learning is smaller and more directly behavioral than Commonplace. It is
 
 The main divergence is authority control. Commonplace makes promotion explicit: a source can become a note, an instruction, a type spec, or a validator only through a visible artifact boundary. pi-self-learning promotes automatically after every task when enabled. That is useful for rapid adaptation, but it gives LLM-reflected prose a short path into future prompt context with no deterministic validation beyond JSON parse/repair and no semantic review gate.
 
-**Read-back:** `both` — Manual commands such as `/learning-now`, `/learning-daily`, `/learning-status`, `/learning-month`, and `/learning-redistill` are pull surfaces. The `before_agent_start` hook pushes recent runtime notes, configured memory files, and memory policy into the receiving agent's context, but this review does not assign `push-activation`: the inspected read-back is configured always-load prompt context with file inclusion flags and truncation, not relevance-gated or state-scoped activation
+**Read-back:** `both` — Manual commands such as `/learning-now`, `/learning-daily`, `/learning-status`, `/learning-month`, and `/learning-redistill` are pull surfaces. The `before_agent_start` hook pushes retained memory into the receiving agent's context, but targeting is `coarse` and signal is n/a: selection is session-start/config-flag/recency loading of recent runtime notes plus configured core, daily, and monthly memory files, not instance relevance. The appended memory policy is baseline instruction, not memory read-back, and this review does not assign `push-activation`.
 
 ### Borrowable Ideas
 

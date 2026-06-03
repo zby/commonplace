@@ -76,7 +76,7 @@ The strongest parallel is the separation between a library layer and runtime con
 
 The main divergence is authority control. In Nao, `RULES.md`, skills, memory rows, MCP config, and project settings can all affect future agent behavior, but only some are git-visible. Chat-derived user memories live in the app database and are editable in the frontend; they are not naturally reviewed as repository artifacts. Commonplace keeps durable behavior-shaping artifacts in git and validates them, but does not yet have Nao's integrated user-facing memory controls or result-based analytics eval loop.
 
-**Read-back:** `both` — Project context is mostly pull through file/MCP tools and `@`/`/` mentions, while `RULES.md`, skill summaries, connection names, and bounded user memories are pushed into the prompt; the memory push is unconditional when enabled, not relevance-gated
+**Read-back:** `both` — Most project context is pull through file/MCP tools and explicit `@`/`/` mentions; pushed retained memory is coarse, with `RULES.md`, project connection names, project skill summaries, and active user memories loaded when present/enabled rather than selected by an instance signal. Shipped baseline instructions and root skill-pack docs are baseline context surfaces, not read-back.
 
 ### Borrowable Ideas
 

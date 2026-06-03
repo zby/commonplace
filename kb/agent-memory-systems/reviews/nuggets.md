@@ -66,7 +66,7 @@ Nuggets and Commonplace both reject "raw transcript as memory" as the main durab
 
 The central tradeoff is authority without governance. Nuggets can inject remembered facts before every Pi turn, which gives small facts immediate behavioral force. But the fact record has no source pointer, author/reviewer, expiration, confidence, or semantic type beyond the key and inferred kind. Commonplace moves more slowly because durable artifacts carry more contract.
 
-**Read-back:** `both` — Explicit `nuggets` tool recall is pull, while Pi `before_agent_start` injection pushes current remembered facts into the agent before action; gateway heartbeats and cron jobs also push prompts that can cause Pi to consult memory, though the gateway itself does not select memories
+**Read-back:** `both` — Explicit `nuggets` tool recall is pull, while Pi `before_agent_start` injection pushes current remembered facts into the agent before action; gateway heartbeats and cron jobs push prompts to Pi, but the retained-memory push still comes from Pi's injected or tool-accessible Nuggets facts rather than a gateway-side memory selector
 
 ### Borrowable Ideas
 
@@ -96,7 +96,7 @@ The central tradeoff is authority without governance. Nuggets can inject remembe
 
 **Direction.** Nuggets is both pull and push. Pull is the `nuggets` tool's `recall` action and the `/nuggets` inspection command. Push is the Pi extension's `before_agent_start` hook, which appends remembered facts to the system prompt before the agent acts.
 
-**Trigger and relevance signal.** The push trigger is every Pi agent turn after facts are loaded or captured. The relevance signal is weak but state/scoped: only remembered facts currently in the session map are injected, facts are grouped by key prefix, and file facts are capped to the last ten. There is no query-time semantic matcher for injection; explicit recall uses key resolution, token-overlap fallback, and HRR decoding.
+**Targeting and signal.** The push path is `coarse`: the `before_agent_start` hook fires on every Pi agent turn after facts are loaded or captured and injects remembered facts from the current session map. There is no instance-level `identifier` or `inferred` signal for the push; grouping by key prefix and the last-ten file cap are scope controls, not relevance matching for this turn. Explicit pull recall uses key resolution, token-overlap fallback, and HRR decoding.
 
 **Timing relative to action.** Prompt injection happens before the agent turn and can affect the next action. Preference and file captures happen during input/tool events and become available for later turns. Compaction capture and promotion happen around session compaction and affect future turns/sessions.
 

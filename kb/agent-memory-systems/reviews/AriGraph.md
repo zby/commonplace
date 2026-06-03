@@ -80,7 +80,7 @@ The most important distinction is durability. AriGraph learns from observations,
 
 **Direction.** AriGraph has engineered push activation from the planner/action agent's perspective. The pipeline, not the planner/action LLM, calls the memory system every step and supplies the selected "Information from the memory module" and "most relevant episodic memories" in the prompt.
 
-**Trigger and relevance signal.** The trigger is the step loop in `pipeline_arigraph.py`: every nonterminal game step processes the current observation, inventory, plan, location set, and previous action. Relevance is engineered through an LLM entity/depth extractor, embedding retrieval over graph strings, graph expansion, a similarity threshold, and top-k episodic ranking.
+**Targeting and signal.** Targeting is `instance`: every nonterminal game step uses the current observation and plan to select memory for this step, not a generic always-load. The graph-fact signal is `inferred / judgment` followed by `inferred / embedding`: an LLM extracts entity queries and depths from the current observation and plan, then Contriever similarity selects graph strings above a threshold and graph expansion follows those hits. The episodic signal is also `inferred / embedding`, with ranking by current-plan embedding similarity plus overlap with the currently retrieved subgraph.
 
 **Timing relative to action.** Read-back happens before planning and action selection, so memory can change the immediate next plan and command. The graph can also affect environment interaction after action selection when a `go to` action is translated into a route through known navigation edges.
 

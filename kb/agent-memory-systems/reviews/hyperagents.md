@@ -1,7 +1,7 @@
 ---
 description: "Self-improving agent harness that stores generated code patches, evaluation reports, archive metadata, and replays selected lineages into later agents"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
+tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
 ---
@@ -63,7 +63,23 @@ Commonplace is stronger on retained-artifact legibility and governance. HyperAge
 
 The central design divergence is read-back. Commonplace generally asks an agent to navigate stored knowledge. HyperAgents reconstitutes a selected parent by applying patch files before the agent runs. That is behavior activation through code substrate, not prompt-time memory retrieval. It avoids prompt dilution, but it also makes patch quality and evaluation coverage load-bearing.
 
-**Read-back:** `push` — For selected code lineage replay, weak pull affordance for copied archive evidence, and no implemented relevance-gated memory injection into a receiving agent context
+**Read-back:** `push` — For selected code lineage replay over retained patch artifacts and archive metadata; copied archive evidence is only a weak pull affordance, and there is no implemented relevance-gated memory injection into a receiving agent prompt.
+
+## Read-back placement
+
+**Direction.** HyperAgents' memory read-back is push from the receiving generation's perspective: `generate_loop.generate(...)` selects a parent before the meta agent runs, reads that parent's retained patch chain with `get_patch_files(...)`, and applies the diffs in the container before invoking `run_meta_agent.py`. The meta agent does not ask for these patches; it receives an already-mutated code substrate. The separate ensemble path is also push-like behavior read-back because `ensemble(...)` selects a saved archive prediction for the current question id, though that path does not load memory into an LLM context.
+
+**Targeting and signal.** Targeting is `instance` for the executable patch path. The selected generation is keyed by archive generation ids, parent ids, declared run domains, `valid_parent`, score files, and child-count metadata; after parent selection, patch replay is an `identifier` read keyed by the selected `parent_genid` and its metadata-listed patch files. This is score-mediated symbolic routing over retained metadata, not inferred semantic retrieval over patch or transcript content.
+
+**Timing relative to action.** The push happens pre-action. Lineage patches are applied before the new meta-agent call or evaluation, so retained memory can change the code the future agent executes and edits.
+
+**Selection, scope, and complexity.** Selection scope is experiment-local and archive-local. The default selector filters invalid parents, requires per-domain score availability, optionally discounts staged evaluations, and chooses by latest, best, random, score-proportional, or score-plus-child-count policy. The applied scope is the whole selected patch lineage, filtered to exclude `domains/` changes during application; context dilution and patch-chain interaction quality are not verified from code.
+
+**Authority at consumption.** The patch chain has system-definition authority because it mutates executable code before the next agent runs. Archive and metadata have routing authority because they decide which lineage receives that executable authority. Effective behavioral faithfulness is not verified from code beyond compilation checks and benchmark evaluation.
+
+**Faithfulness.** The system evaluates generated agents and uses scores for later routing, but it does not perform a WITH/WITHOUT read-back ablation that isolates whether a particular replayed memory changed behavior.
+
+**Other consumers.** Humans can inspect chat histories, reports, patches, plots, and archive files, but the automatic consumer is the generation loop and optional ensemble evaluator.
 
 ### Borrowable Ideas
 

@@ -64,7 +64,7 @@ Supermemory is stronger than Commonplace as an adoption and activation layer. A 
 
 The main tradeoff is opacity versus ergonomics. Supermemory's hosted API returns useful high-level surfaces like static/dynamic profile and search results, but the reviewed repo does not let us audit the extraction oracle, contradiction handling, embedding model, graph construction, or profile cache. Commonplace exposes the artifact and validator machinery but asks agents to navigate and compose context more deliberately.
 
-**Read-back:** `both` — With engineered push activation. MCP `recall`, API search, and SDK tools are pull surfaces, while OpenAI/Vercel/Mastra/Python middleware and MCP `context` prompt paths can fetch profile/search context before generation and inject it into system or prompt context; the browser extension can also append related memories into the prompt field before submission
+**Read-back:** `both` — With engineered push activation. MCP `recall`, API search, and SDK tools are pull surfaces, while OpenAI/Vercel/Mastra/Python middleware and MCP `context` prompt paths can fetch profile/search context before generation and inject it into system or prompt context; the browser extension can also append related memories into the prompt field before submission.
 
 ### Borrowable Ideas
 
@@ -92,9 +92,9 @@ The main tradeoff is opacity versus ergonomics. Supermemory's hosted API returns
 
 ## Read-back placement
 
-**Direction.** Supermemory is both pull and push. Direct search, MCP `recall`, `memory-graph`, documents listing, and SDK tools are pull. Middleware and prompt/resource paths are push from the receiving model's perspective because they assemble memory before generation or insert it into the prompt field before submission.
+**Read-back:** `both` — Direct search, MCP `recall`, `memory-graph`, documents listing, and SDK tools are pull. Middleware and prompt/resource paths are push from the receiving model's perspective because they assemble retained profile/search memory before generation or insert related memories into the prompt field before submission.
 
-**Trigger and relevance signal.** Pull retrieval triggers on API, SDK, MCP, or extension search calls. Push retrieval triggers on framework input processing, OpenAI/Vercel request wrapping, MCP prompt invocation, browser icon/auto-search flows, or prompt submission. The relevance signal is either profile-only scope, latest user message query text, API search/profile ranking, container tag/project filtering, optional threshold/limit parameters, and client-side deduplication; backend precision is not verifiable from local code.
+**Targeting and signal.** Push targeting is mixed. `profile` mode and MCP `context` are `coarse`: they load the configured container's static/dynamic profile without deriving relevance from the current instance. `query` and `full` middleware modes, OpenAI Responses wrapping, MCP `recall` when used by a host for another agent, and browser auto-search/prompt insertion are `instance` targeted: the local code extracts the latest user message or prompt text and sends it as `q` to the hosted profile/search API. The instance signal is `inferred`, primarily content-based search; Supermemory docs and MCP search expose semantic/hybrid search, but the hosted `/v4/profile` ranking sub-kind and precision/recall are not locally verifiable from this checkout. Container tag, project, custom id, threshold/limit parameters, cache keys, and client-side deduplication are scoping and complexity controls rather than the relevance signal itself.
 
 **Timing relative to action.** Read-back happens before model generation in middleware and before user prompt submission in the browser extension. Trace saves happen after response or on prompt submission and affect later turns, not the already-completed response.
 

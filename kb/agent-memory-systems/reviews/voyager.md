@@ -66,7 +66,7 @@ Voyager is stronger than Commonplace on embodied trace-to-action learning. A suc
 
 The main design contrast is authority. Voyager's raw traces, QA answers, chest memory, and completed/failed task lists are mostly knowledge artifacts until prompt assembly consumes them. Generated JavaScript skills are system-definition artifacts: selected functions are inserted into the action prompt and passed to the execution environment. Chroma indexes are also system-definition artifacts because they decide which skills gain that authority.
 
-**Read-back:** `push` — Voyager's orchestrator runs relevance-gated skill retrieval before the action agent writes its next program, then injects selected skills into the system prompt and execution context
+**Read-back:** `push` — Voyager's orchestrator runs instance-targeted skill retrieval before the action agent writes its next program, then injects selected skills into the action prompt while making the full active skill set available to execution
 
 ### Borrowable Ideas
 
@@ -98,7 +98,7 @@ The main design contrast is authority. Voyager's raw traces, QA answers, chest m
 
 **Direction.** Push. The acting `ActionAgent` does not choose to search memory; Voyager's orchestration layer retrieves skills before rendering the action-agent system message. The retrieval call is pull from the orchestrator's implementation perspective, but it is push for the receiving agent.
 
-**Trigger and relevance signal.** Skill retrieval fires at task reset using the current context and again after each step using context plus summarized chat-log needs. The relevance signal is Chroma similarity over generated skill descriptions, bounded by `retrieval_top_k`.
+**Targeting and signal.** The action-prompt push is `instance`-targeted. Skill retrieval fires at task reset using the current task context and again after each step using context plus summarized chat-log needs; `SkillManager.retrieve_skills(...)` runs Chroma similarity over generated skill descriptions and returns the matching skill code, bounded by `retrieval_top_k`. The signal is `inferred / embedding`, because relevance is derived from the current task/chat content rather than from an assigned task or skill identifier. Separately, each Mineflayer `/step` receives `self.skill_manager.programs`, which makes the full active skill set available to execution; that execution-side availability is `coarse` rather than instance-selected.
 
 **Timing relative to action.** Retrieval happens before the next action-agent LLM call and before Mineflayer execution, so selected skills can change both the generated plan and the callable program set.
 

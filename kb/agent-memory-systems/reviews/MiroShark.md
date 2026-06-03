@@ -72,7 +72,7 @@ Compared with Commonplace, MiroShark has richer activation machinery. It injects
 
 The report reasoning trace is a strong analogue to Commonplace review reports. Both preserve why an output happened, not only the output. The difference is substrate and lifecycle. MiroShark stores traces in Neo4j and report folders for later inspection; Commonplace stores review artifacts in the repo with status, validation, and replacement conventions.
 
-**Read-back:** `both` — External graph/report/MCP queries are pull, while simulation round memory, belief state, director events, market/media context, and per-agent MCP results are pushed into active agents before later actions
+**Read-back:** `both` — External graph/report/MCP queries are pull, while retained simulation memory, belief state, cross-platform digests, and per-agent MCP results are pushed into active agents before later actions
 
 ### Borrowable Ideas
 
@@ -100,11 +100,11 @@ The report reasoning trace is a strong analogue to Commonplace review reports. B
 
 ## Read-back placement
 
-**Direction.** MiroShark is both pull and push. Graph search, report tools, CLI report/status/frame commands, and the standalone MCP server are pull surfaces. Inside the simulation loop, agents receive pushed memory/context before action: belief state, compacted round history, market/media context, director events, and per-agent MCP results.
+**Direction.** MiroShark is both pull and push. Graph search, report tools, CLI report/status/frame commands, and the standalone MCP server are pull surfaces. Inside the simulation loop, agents receive pushed retained memory before action: persisted or in-process belief state, compacted round history, cross-platform digests, market/sentiment state derived from prior simulated actions, and per-agent MCP results from earlier calls. Director/counterfactual events and the MCP tool catalogue are pushed situational context or baseline tool surface, but they are not the memory path that makes the verdict `both`.
 
-**Trigger and relevance signal.** Push activation is engineered by simulation round, platform membership, active-agent selection, feature flags, and persona/tool configuration. It is not semantic relevance matching over the whole graph, but it is a before-action hook with scope controls: only active agents in the current platform round receive the relevant marker-delimited blocks, and tool results are delivered to the agent that requested them.
+**Targeting and signal.** The memory push is `instance`-targeted with an `identifier` signal. The code keys on already-available identifiers: simulation round, platform membership, active-agent id, per-agent belief-state id, excluded platform for cross-platform digests, feature flags, and persona/tool configuration. It is not semantic relevance matching over the whole graph. The before-action hook has scope controls: active agents in the current platform round receive the relevant marker-delimited blocks, and MCP results are delivered to the agent id that requested them.
 
-**Timing relative to action.** Round memory, beliefs, market/media context, director events, and MCP results are injected before `env.step`, so they can change the next post, trade, or comment. Belief updates and MCP dispatch happen after a round, then affect the next activation. Report reasoning traces are post-hoc and do not affect the simulation that produced them.
+**Timing relative to action.** Round memory, beliefs, market/sentiment state, cross-platform digests, and MCP results are injected before `env.step`, so they can change the next post, trade, or comment. Belief updates, action recording, market/sentiment refresh, and MCP dispatch happen after a round, then affect the next activation. Report reasoning traces are post-hoc and do not affect the simulation that produced them.
 
 **Selection, scope, and complexity.** Round memory limits complexity by summarizing ancient rounds, keeping recent compacted summaries, preserving the previous round in full detail, and using current partial context. Belief state is per-agent and compact. MCP results are capped in the injection layer. The graph search path has a `limit`, candidate-pool sizing, kind/time filters, and reranking, but graph search only acts when called by a report agent, MCP client, or API consumer.
 

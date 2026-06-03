@@ -68,7 +68,7 @@ Commonplace is stronger on library governance and provenance. EQUIPA can trace a
 
 The deepest design difference is authority assignment. Commonplace tends to keep knowledge artifacts advisory until an agent or maintainer promotes them through an explicit type, instruction, validator, or workflow. EQUIPA gives extracted lessons and selected episodes prompt authority immediately when their feature flag is on. That makes it more adaptive, but also raises the risk that a misleading reflection, bad reviewer finding, or overfit SIMBA rule becomes a repeated behavioral constraint.
 
-**Read-back:** `push` — With engineered relevance-gated activation for lessons and episodes during prompt construction; MCP lesson/log/context queries also provide a pull path for hosts and humans
+**Read-back:** `both` — Acting agents receive engineered relevance-gated memory during prompt construction, while MCP lesson/log/context queries provide a pull path for hosts and humans
 
 ### Borrowable Ideas
 
@@ -100,7 +100,7 @@ The deepest design difference is authority assignment. Commonplace tends to keep
 
 **Direction.** Read-back is both push and pull. Acting agents receive memory by push during `build_system_prompt`; hosts and humans can pull lessons, logs, context, and session notes through MCP tools (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/prompts.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/mcp_server.py).
 
-**Trigger and relevance signal.** Lesson injection is feature-flagged and role/error filtered, then deduplicated and capped. Episode injection is feature-flagged and relevance-gated by project, role, task type, Q-value threshold, recency, keyword overlap, optional embedding similarity, and optional graph reranking (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/config.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/lessons.py). This is stronger than unconditional always-load and justifies `push-activation`.
+**Targeting and signal.** Lesson injection is feature-flagged and instance-targeted by role and optional error-type identifiers, then deduplicated and capped. Episode injection is feature-flagged and instance-targeted by role, project, and task-type identifiers, then reranked by mixed inferred signals: lexical keyword overlap, optional embedding similarity, and optional graph reranking over retained episode relations (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/config.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/lessons.py). This is stronger than unconditional always-load and justifies `push-activation`.
 
 **Timing relative to action.** Memory is loaded before agent work begins. Resume state can also be inserted on loop entry before redispatch after prior capture (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/loops.py). Post-task Q-value updates and ForgeSmith passes affect future dispatches, not the just-finished action.
 

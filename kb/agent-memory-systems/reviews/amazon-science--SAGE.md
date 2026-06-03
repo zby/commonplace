@@ -65,7 +65,7 @@ SAGE is a useful contrast case because it treats "memory" as reusable executable
 
 The biggest divergence is authority. In SAGE, retained skill code crosses into the environment and model weights quickly. Once a skill is pushed into context or learned into the policy, it can change behavior without a prose review layer. Commonplace intentionally keeps most retained knowledge as readable evidence or typed guidance until validation or instruction machinery gives it stronger force.
 
-**Read-back:** `push` — With engineered selection. From the acting AppWorld agent's perspective, skill functions arrive in the initial prompt before it asks for them; selection may be same-scenario, embedding-based, query-based, n-gram-based, or staged from the first subtask to the second
+**Read-back:** `push` — With engineered memory selection. From the acting AppWorld agent's perspective, retained skill functions arrive in the initial prompt before it asks for them; the deployed evaluation path is same-scenario identifier selection, while optional modes use embedding or lexical inference and the GRPO loop stages first-subtask skills into the second subtask.
 
 ### Borrowable Ideas
 
@@ -91,13 +91,13 @@ The biggest divergence is authority. In SAGE, retained skill code crosses into t
 
 ## Read-back placement
 
-**Direction.** SAGE uses push from the acting agent's perspective. Retrieved or staged functions are inserted into the initial prompt before code generation; the agent does not choose a separate memory-search action.
+**Direction.** SAGE uses push from the acting agent's perspective. Retrieved or staged retained functions are inserted into the initial prompt before code generation; the agent does not choose a separate memory-search action.
 
-**Trigger and relevance signal.** The trigger is task initialization or the second subtask of a SAGE rollout. Relevance can be same-scenario task id, skill-function embedding similarity, query embedding similarity against prior task instructions, n-gram similarity, or the explicit two-subtask training schedule. The code gives thresholds and top-k limits for some modes, but precision and recall are not established by inspection.
+**Targeting and signal.** The push is instance-targeted. In the deployed evaluation config, the selector matches the current task's scenario group to retained skill `task_id` values, so the signal is `identifier`. Optional skill-embedding retrieval uses `inferred / embedding` over the current instruction and retained function text; optional query-embedding retrieval uses `inferred / embedding` to select prior query ids and then joins skills by `task_id`; optional n-gram retrieval is `inferred / lexical` followed by the same task-id join. In the GRPO loop, first-subtask skills are carried to the paired second subtask through the rollout's subtask schedule and per-environment skill-library slot, an instance-scoped identifier/schedule signal. The code gives thresholds and top-k limits for some modes, but precision and recall are not verified from code.
 
 **Timing relative to action.** Read-back happens before the agent's first code action for the task or subtask. That means a pushed function can change the first plan, first API call, and subsequent execution path.
 
-**Selection, scope, and complexity.** Evaluation-time default retrieval loads functions from earlier tasks in the same scenario group. Embedding and n-gram modes cap retrieved query groups or functions. RL-time read-back is narrower: only functions generated in the first subtask's in-memory library are available to the second subtask. Complexity is bounded by prompt length and observation truncation, but the system does not deeply summarize or cite source traces behind each function.
+**Selection, scope, and complexity.** Evaluation-time default retrieval loads functions from earlier tasks in the same scenario group. Embedding and n-gram modes cap retrieved query groups or functions. RL-time read-back is narrower: only functions generated in the first subtask's in-memory library are available to the second subtask. Complexity is bounded by prompt length and observation truncation, but actual context dilution is not verified from code, and the system does not deeply summarize or cite source traces behind each function.
 
 **Authority at consumption.** Pushed skills are advisory prompt context and executable environment definitions. They are stronger than examples because the environment receives function definitions before later code can call them, but weaker than hard constraints because the model may ignore them. In RL training, use of a skill becomes reward-relevant, increasing authority through the learning loop.
 

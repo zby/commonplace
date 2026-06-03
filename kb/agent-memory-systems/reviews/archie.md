@@ -29,9 +29,9 @@ Archie is Gabriel Chamon's repo-backed Arch Linux desktop configuration and main
 
 **The Python CLI turns one operational lesson into executable support.** `archie downgrade` resolves Arch Linux Archive package URLs for packages at or before a target time and can either print or execute a `pacman -U` command ([cli.py](https://github.com/gchamon/archie/blob/698900ee209f471698987adb595df72b4a4a5961/src/archie/cli.py), [downgrade.py](https://github.com/gchamon/archie/blob/698900ee209f471698987adb595df72b4a4a5961/src/archie/downgrade.py), [tests](https://github.com/gchamon/archie/blob/698900ee209f471698987adb595df72b4a4a5961/tests/test_downgrade.py)). This is a small example of promotion from bug/work-item memory into symbolic behavior.
 
-**Context posture is progressive disclosure.** A small always-loaded `AGENTS.md` routes; manuals, work items, ADRs, and bug notes load only on explicit lookup — bounding an agent session to a router plus pulled specifics.
+**Context posture is progressive disclosure.** A small always-loaded `AGENTS.md` is a static baseline router; manuals, work items, ADRs, and bug notes load only on explicit lookup — bounding an agent session to a router plus pulled specifics.
 
-**Read-back:** `both` — Root agent instructions and deployed configs are push by always-loaded location or runtime consumption; manuals, work items, ADRs, and bug notes are mostly pull by explicit lookup. There is no relevance-gated push activation layer in the inspected code
+**Read-back:** `pull` — Root agent instructions and deployed configs are shipped baseline context or runtime configuration, not read-back; retained manuals, work items, ADRs, and bug notes re-enter future work by explicit lookup. There is no relevance-gated push activation layer in the inspected code.
 
 ## Artifact analysis
 
@@ -73,7 +73,7 @@ Archie is Gabriel Chamon's repo-backed Arch Linux desktop configuration and main
 | Agent-facing surface | Root `AGENTS.md`, task briefs, work items, Codex-log docs, model aliases | Skills, collection contracts, type specs, review gates, AGENTS.md, navigation |
 | Behavior-changing artifacts | Stow packages, copied system files, install script, shell library, CLI | Instructions, validators, skills, type specs, generated indexes, review commands |
 | Lineage model | Mostly prose conventions and file-pair briefs; some ADR/work-item history | Frontmatter, source snapshots, citations, status fields, generated indexes, review outputs |
-| Read-back | Always-loaded repo instructions and live deployed config, plus manual lookup | Agent loads instructions/skills, searches notes/indexes, runs validators and review gates |
+| Read-back | Pull-only for retained project memory; always-loaded repo instructions and live deployed config are baseline context or runtime surfaces | Agent loads instructions/skills, searches notes/indexes, runs validators and review gates |
 
 Archie resembles Commonplace less as a knowledge system and more as an operating environment whose repository doubles as memory. Its strongest retained artifacts are system-definition artifacts: deployed configuration, installer behavior, shell functions, and the package downgrade CLI. Its knowledge artifacts are the guides, work items, ADRs, bug notes, and Codex-log schema docs that future maintainers consult before changing those system-definition surfaces.
 
@@ -106,5 +106,5 @@ Relevant Notes:
 - [system-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Archie deployment packages, scripts, shell functions, AGENTS.md, and CLI code instruct or configure future behavior.
 - [knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: guides, work items, ADRs, bug reports, and Codex-log docs serve as evidence, context, and maintenance memory.
 - [lineage](../../notes/definitions/lineage.md) - frames: Archie uses guide-to-script, code-to-doc, work-item-to-implementation, and ADR-to-future-planning lineage rather than a formal artifact graph.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Archie stores many docs, but most only affect agents or maintainers after explicit lookup; always-loaded AGENTS.md is the simpler push path.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Archie stores many docs, but most only affect agents or maintainers after explicit lookup; always-loaded AGENTS.md is static baseline context rather than retained-memory read-back.
 - [Files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) - exemplifies: Archie keeps operational memory in inspectable repo files and shell/Python code instead of a separate memory service.

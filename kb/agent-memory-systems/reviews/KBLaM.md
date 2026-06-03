@@ -1,6 +1,7 @@
 ---
 description: "KBLaM review: research model architecture that encodes KB triples into learned key/value tensors attended by modified Llama/Phi layers"
 type: ../types/agent-memory-system-review.md
+tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
 ---
@@ -62,7 +63,23 @@ KBLaM is valuable evidence for a different class of memory system: one where ret
 
 The context-efficiency contrast is sharp. Commonplace uses lexical search, indexes, type contracts, and skills so an agent can choose a small amount of text to load and explain why. KBLaM moves the KB outside the text prompt and into extra attention keys/values. That can be efficient for model inference, but the complexity of many KB tensors is hidden inside attention rather than exposed as a readable context bundle.
 
-**Read-back:** `push` — Over caller-supplied KB tensors at inference, with optional Llama top-k sparsification, but no agent-level relevance-gated memory/context push path in this review taxonomy
+**Read-back:** `push` — Caller-supplied KB tensors are pushed into modified attention layers at generation time. Default KB supply is coarse; optional Llama `dynamic_sparsify` is instance-targeted inferred/embedding selection over current query states and KB keys. This is a library/model API surface, not a deployed agent loop.
+
+## Read-back placement
+
+**Direction.** KBLaM is push from the receiving model's perspective. `KBLaMProcessor` turns a supplied knowledge base into `kb_kvs`, and the modified Llama/Phi generation path consumes those tensors without the model or an agent calling a retrieval tool. Because this repository is a research package, the review treats that as an API capability: the host or evaluation script decides which KB tensors to provide.
+
+**Targeting and signal.** There are two memory push shapes. The default path is `coarse`: a caller supplies a KB tensor batch or subset, and all supplied KB keys/values are exposed to KB-enabled layers. The Llama `dynamic_sparsify` path is `instance`-targeted when enabled: the current hidden states are projected through the separate query head, scored against KB keys by learned vector dot product, and pruned to `top_k_kb` before attention. The signal is therefore `inferred / embedding`. The Phi path at this commit concatenates supplied KB tensors and can use a separate query head for attention scoring, but it does not implement the same top-k pruning branch.
+
+**Timing relative to action.** Read-back occurs during generation, before token choices are made, so supplied or pruned KB tensors can affect the immediate answer.
+
+**Selection, scope, and complexity.** Scope is mostly host-supplied: the caller chooses the KB rows or embeddings passed as `kb_kvs`. Inside Llama, `dynamic_sparsify`, `top_k_kb`, `kb_layer_frequency`, `sep_query_head`, and `kb_scale_factor` control which KB tensors are exposed at each KB-enabled layer and how their attention scores are scaled. Actual precision, recall, and context dilution are not verified from code.
+
+**Authority at consumption.** The KB tensors have direct model-conditioning authority through attention-side keys and values. They are not human-readable prompt context at consumption time, and the receiving model cannot inspect their source rows unless the host separately preserves that mapping.
+
+**Faithfulness.** The repository evaluates answer accuracy, refusal, precision, recall, ROUGE, BERTScore, and can dump attention weights, but I did not find a WITH/WITHOUT activation ablation proving that a particular fired KB tensor changed a decision. The `push-activation` tag rests on the implemented attention-side activation mechanism, not on measured downstream faithfulness.
+
+**Other consumers.** Researchers consume datasets, checkpoints, metrics, and attention dumps. Those artifacts are evaluation evidence; the inspected code does not feed them back into a durable memory selector or governance loop.
 
 The governance contrast is also sharp. KBLaM evaluates answer accuracy, refusal, precision, recall, ROUGE, and BERTScore; it does not keep a source snapshot, citation, reviewer decision, or replacement history for each durable fact. Commonplace would treat those missing surfaces as central if a fact can later shape agent behavior.
 

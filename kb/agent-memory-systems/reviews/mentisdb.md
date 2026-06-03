@@ -69,7 +69,7 @@ The largest design difference is artifact authority. In MentisDB, most thoughts 
 
 MentisDB's hash-chain and sidecar design is a useful contrast to Commonplace's plain-file approach. MentisDB gives append-order integrity, rebuildable search sidecars, and transport-ready service state. Commonplace gives line-diffable prose and simpler review of semantic claims. The right borrow is not "replace Markdown with thought chains"; it is "treat derived search state as disposable and trace it back to canonical artifacts."
 
-**Read-back:** `both` — Mostly pull, with unconditional or host-mediated context loading in some integrations. Agents or hosts call MCP/REST/CLI/dashboard/Python/LangChain search/read APIs, and the MCP bootstrap pushes instructions to load the core skill; I did not find a code-grounded relevance-gated pre-action memory-content injection path that warrants `push-activation`
+**Read-back:** `both` — Mostly pull through MCP/REST/CLI/dashboard/Python/LangChain search/read APIs, plus coarse host-mediated memory push in the LangChain `load_memory_variables()` adapter; targeting is `coarse`, signal is n/a, because selection is chain/type/recent-window loading rather than instance relevance. The MCP bootstrap loads shipped core skill docs as a baseline context surface, not read-back, and I did not find a code-grounded relevance-gated pre-action memory-content injection path that warrants `push-activation`
 
 ### Borrowable Ideas
 
@@ -93,7 +93,7 @@ MentisDB's hash-chain and sidecar design is a useful contrast to Commonplace's p
 
 **Append-only does not mean immutable meaning.** Later thoughts can supersede, correct, invalidate, summarize, branch from, or support earlier thoughts. Retrieval decides which relations matter at read time, so the chain is immutable while the effective knowledge state is temporal.
 
-**LangChain memory is a push-capable host adapter, but not a relevance-gated recall engine.** `MentisDbMemory.load_memory_variables()` retrieves recent matching thought types and formats them into a prompt variable ([pymentisdb/langchain.py](https://github.com/cloudllm-ai/mentisdb/blob/5a7d9a1588617f3e40a7fd62178da515b99e4390/pymentisdb/langchain.py)). That is host-mediated context loading, but it is not the kind of engineered relevance-gated memory activation this collection tracks with `push-activation`.
+**LangChain memory is a coarse push-capable host adapter, but not a relevance-gated recall engine.** `MentisDbMemory.load_memory_variables()` retrieves recent matching thought types and formats them into a prompt variable ([pymentisdb/langchain.py](https://github.com/cloudllm-ai/mentisdb/blob/5a7d9a1588617f3e40a7fd62178da515b99e4390/pymentisdb/langchain.py)). That is host-mediated context loading with `coarse` targeting and no instance signal, but it is not the kind of engineered relevance-gated memory activation this collection tracks with `push-activation`.
 
 **Operational features are unusually complete for a memory substrate.** Backup/restore, bearer tokens, TLS, dashboard, webhooks, migration, benchmark directories, and host setup writers make MentisDB more like a local memory appliance than a pure library.
 

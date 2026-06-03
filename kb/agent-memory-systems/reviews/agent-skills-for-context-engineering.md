@@ -1,7 +1,7 @@
 ---
-description: "Agent Skills for Context Engineering review: plugin-packaged context-engineering skills, researcher OS, routed read-back, and trace-to-skill example"
+description: "Agent Skills for Context Engineering review: plugin-packaged context-engineering skills, researcher OS, routed baseline skill activation, and trace-to-skill example"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived, push-activation]
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
 ---
@@ -22,7 +22,7 @@ Agent Skills for Context Engineering, from Muratcan Koylan's `muratcankoylan/Age
 
 **Progressive disclosure is the organizing contract.** The README says agents should load names and descriptions first, then full skill content only when activated; several skills teach the same pattern explicitly ([README.md](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/README.md), [skills/filesystem-context/SKILL.md](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/skills/filesystem-context/SKILL.md)). This is a context-cost design: keep static context to lightweight routing handles, then pull the heavier artifact only when the task justifies it.
 
-**Activation quality is treated as an evaluable surface.** The repo includes a deterministic activation-boundary checker that tokenizes skill descriptions plus "When to Activate" sections and verifies expected top-three matches for fixture prompts; it also documents an SDK-based router benchmark for LLM router behavior ([researcher/scripts/check_activation_cases.py](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/check_activation_cases.py), [researcher/benchmarks/router/README.md](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/benchmarks/router/README.md)). The actual production router lives in the host platform, but the retained descriptions and tests are engineered to improve relevance-gated skill read-back.
+**Activation quality is treated as an evaluable surface.** The repo includes a deterministic activation-boundary checker that tokenizes skill descriptions plus "When to Activate" sections and verifies expected top-three matches for fixture prompts; it also documents an SDK-based router benchmark for LLM router behavior ([researcher/scripts/check_activation_cases.py](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/check_activation_cases.py), [researcher/benchmarks/router/README.md](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/benchmarks/router/README.md)). The actual production router lives in the host platform, but the retained descriptions and tests are engineered to improve relevance-gated activation of shipped skill documents.
 
 **The researcher subsystem turns external research into governed skill changes.** `researcher/` defines run directories, state files, rubrics, mechanism ledgers, claim provenance, corpus indexes, activation fixtures, benchmarks, and validators for source-to-skill work ([researcher/README.md](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/README.md), [researcher/scripts/research_loop.py](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/research_loop.py), [researcher/mechanisms/registry.jsonl](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/mechanisms/registry.jsonl)). This is not autonomous memory retrieval at runtime; it is a file-based institutional memory and governance layer for maintaining the skill corpus.
 
@@ -51,7 +51,7 @@ Agent Skills for Context Engineering, from Muratcan Koylan's `muratcankoylan/Age
 |---|---|---|
 | Primary purpose | Publish reusable context-engineering skills and examples | Maintain a typed methodology KB and framework for agent-operated knowledge bases |
 | Main retained unit | Markdown skill package with routing frontmatter | Typed Markdown artifact with collection contract, schema, links, and validation |
-| Read-back | Host-routed skill activation plus direct file lookup | Mostly deliberate pull through `rg`, indexes, links, skills, and generated reports |
+| Read-back | Direct file lookup for memory; host-routed installed skills are shipped baseline context, not memory read-back | Mostly deliberate pull through `rg`, indexes, links, skills, and generated reports |
 | Governance | Manifest sync, deterministic validators, rubrics, mechanism ledgers, router benchmarks | Collection/type contracts, validation, semantic review, generated indexes, curated notes |
 | Learning loop | Research-to-skill maintenance; example trace-to-skill generator | Source-grounded writing, review gates, connect reports, workshop-to-library promotion |
 
@@ -61,7 +61,7 @@ Agent Skills is more portable and platform-facing. A user can install the plugin
 
 The researcher subsystem is the strongest convergence. It resembles a smaller Commonplace-like operating layer: rubrics are locked surfaces, mechanism ledgers preserve accepted and rejected design deltas, run directories externalize state, and deterministic validators protect the corpus before model judgment. The difference is scope: the researcher OS exists to maintain one skill library, while Commonplace generalizes the method into a KB framework.
 
-**Read-back:** `both` — Skill bodies are pulled by humans or agents from files, but installed plugin skills are pushed into the agent's working context by a relevance router supplied by the host platform; this repo engineers the routing handles and tests, not the host router itself
+**Read-back:** `pull` — Memory read-back is file lookup: humans, agents, examples, and researcher scripts read known skills, run files, ledgers, traces, generated skills, and corpus files on demand. Host plugin routers may push installed `SKILL.md` files into the agent's context, but those files ship with the system as baseline documentation/instructions, so that activation does not count as memory read-back.
 
 ### Borrowable Ideas
 
@@ -84,22 +84,6 @@ The researcher subsystem is the strongest convergence. It resembles a smaller Co
 **Scope and timing.** The trace loop is task-local and iterative. It can save per-iteration trace, analysis, optimization, optimized prompt, final prompt, and summary files under `optimization_artifacts/`, then optionally write a generated skill under `generated_skills/`. It is not wired into the root plugin's normal release process in this checkout; generated skills are example outputs unless a maintainer promotes them.
 
 **Survey placement.** On the trace-derived learning survey, this belongs in the trace-to-instruction family: raw reasoning/action traces become diagnostic patterns, prompt edits, and eventually reusable skill prose. It strengthens the distinction between raw trace retention and behavior-changing distilled artifacts because the generated skill is the durable behavior-shaping object, not the trace itself.
-
-## Read-back placement
-
-**Direction.** The system uses both pull and push. Pull is ordinary file lookup: users can copy or read an individual `SKILL.md`, examples can load module files on demand, and researcher scripts read known run/corpus files. Push occurs when the installed plugin exposes skill descriptions to a host platform that automatically activates and loads a relevant skill into the agent's context before or during a task.
-
-**Trigger and relevance signal.** The relevance signal is primarily the skill frontmatter `description` and "When to Activate" prose. The host platform supplies the runtime router, but this repo engineers the activation surface through descriptions, non-activation boundaries, deterministic activation fixtures, and published router-benchmark methodology. Precision and recall of the actual installed host router are not verified by this repository alone.
-
-**Timing relative to action.** Skill read-back is pre-action context. A selected skill can change the agent's next plan, tool choice, retrieval pattern, or quality gate before work begins. Researcher run files and mechanism ledgers are usually pulled during maintenance work rather than injected automatically into every task.
-
-**Selection, scope, and complexity.** Selection is mostly skill-level: a routed skill brings one full `SKILL.md` into context, and that skill may then point to references or examples for deeper loading. The design intentionally avoids loading all 15 skills at startup. The repo does not implement token budgets for host skill activation; it relies on progressive disclosure and skill-local references to bound follow-on complexity.
-
-**Authority at consumption.** A loaded skill has soft system-definition authority: it instructs the agent how to work, but the host and higher-priority instructions can override it. Researcher validators and CI have harder evaluation authority over repository maintenance. Example data files such as Digital Brain JSONL logs are knowledge artifacts until module instructions or scripts consume them.
-
-**Faithfulness.** The repo tests activation boundaries and skill corpus health, but I did not find a deployed WITH/WITHOUT ablation showing that a pushed skill changed downstream agent behavior in the intended direction. Router benchmarks measure selection quality, not behavioral compliance after selection.
-
-**Other consumers.** Humans consume the same artifacts through README tables, docs, examples, published benchmark reports, and marketplace metadata. CI consumes validators and fixtures, while host plugin systems consume the manifests and skill descriptions.
 
 ## Curiosity Pass
 

@@ -1,7 +1,7 @@
 ---
 description: "OpenSage review: dynamic subagents, sandbox/file memory, generated Skills, Neo4j history/memory, plugins, and RL adapters"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived]
+tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
 ---
@@ -68,8 +68,6 @@ The strongest alignment is that both systems treat retained artifacts as operati
 
 OpenSage is stronger where the memory must sit inside an active agent framework. It has before/after tool callbacks, child-agent sessions, sandbox mounts, web-session resume, output compaction, and training adapters. Commonplace is stronger where durable knowledge must be inspectable, source-grounded, validated, and comparable across time. OpenSage's trace-derived graph memory can be useful, but the default lineage from a tool result to an extracted entity is weaker than Commonplace's source-pinned review/snapshot practice.
 
-**Read-back:** `both` — But no `push-activation` tag. Long-term memory is pulled through `search_memory` and related history/file tools; Skills and file-memory guidance are unconditionally injected into prompts when configured, and plugin callbacks can add warnings or summaries around tool use, but this review did not find relevance-gated or state-scoped pre-action injection of matching memories
-
 ### Borrowable Ideas
 
 **Treat generated Skills as a promotion target.** Ready with governance. Commonplace could make "write a reusable command/skill" an explicit promotion path from repeated workflow notes, but only with type checks, review, and clear provenance before the Skill gains instruction authority.
@@ -93,6 +91,14 @@ OpenSage is stronger where the memory must sit inside an active agent framework.
 **Scope and timing.** Memory observation is online and after-tool: it cannot change the tool action that just happened, but it can affect later explicit `search_memory` calls. History compaction is online after tool callbacks when the folded history exceeds budget. Evaluation export is per-task and offline after a benchmark run. RL adapters run per rollout and pass trace-derived training data to external frameworks.
 
 **Survey placement.** OpenSage sits in a mixed trace-to-graph and trace-to-training branch of the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md). It strengthens the survey's distinction between raw trace retention and distilled behavior-shaping artifacts: Neo4j history preserves traces for audit, Neo4j memory extracts searchable entities/relationships, and RL adapters produce training samples without making the resulting model artifact part of the repository.
+
+## Read-back placement
+
+**Read-back:** `both` — Long-term Neo4j memory is explicit pull through `search_memory` or the memory-management agent, while configured Skills, history/session summaries, and ensemble message-board diffs can arrive without the receiving agent making a memory lookup.
+
+The strongest memory push is the ensemble message-board path. `message_board_diff_plugin` runs after a tool call, resolves the receiving agent instance id and current board id, reads unread JSONL records with a per-agent cursor, and appends the diff into the tool result. Targeting is `instance`; the signal is `identifier`, because selection keys on `board_id` plus the receiving `agent_id`/instance id rather than semantic similarity. It is after-tool rather than pre-action, so it can shape the next model turn rather than the tool call that just completed; scope is capped by `read_diff(max_bytes=32000)`. Precision, context dilution, and effective authority are not verified from code.
+
+Other push-like surfaces are weaker or outside memory read-back. History compaction automatically appends a session-summary event when the folded history exceeds budget, which is a coarse session-memory push rather than an instance-relevance signal. Built-in Skill descriptions and the `/mem` layout instructions are shipped baseline prompt surfaces, not read-back; user-local or plugin Skill metadata can be retained memory when selected by `enabled_skills`, but full `SKILL.md` content is normally pulled through `list_available_scripts`. Long-term Neo4j memory remains pull-only: `search_memory` requires an explicit query and then uses LLM strategy selection, embedding search, keyword search, or title browsing.
 
 ## Curiosity Pass
 

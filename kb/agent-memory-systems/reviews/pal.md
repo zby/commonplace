@@ -74,7 +74,7 @@ The strongest alignment is progressive disclosure. Pal's `pal_knowledge` and wik
 
 Pal's specialist team also highlights a design tradeoff. Splitting Navigator, Researcher, Compiler, Linter, and Syncer reduces per-agent tool complexity, and it makes scheduled maintenance natural. But the semantics of a successful action are spread across instructions, tools, framework behavior, database state, and schedule prompts. Commonplace keeps more of its methodology in explicit artifacts that can be validated independently.
 
-**Read-back:** `both` — Pull paths include explicit tool calls such as wiki index reads, file reads, SQL queries, and knowledge searches. Push paths include Agno-added learnings, past-session/history context, and scheduled maintenance prompts before the agent's next action
+**Read-back:** `both` — Pull paths include explicit tool calls such as wiki index reads, file reads, SQL queries, and knowledge searches. Push paths include Agno-added learnings and past-session/history context before the agent's next action; scheduled maintenance prompts start runs that can activate those retained memories.
 
 ### Borrowable Ideas
 
@@ -90,9 +90,9 @@ Pal's specialist team also highlights a design tradeoff. Splitting Navigator, Re
 
 ## Read-back placement
 
-**Direction.** Pal has both pull and engineered push. Pull is ordinary tool use: Navigator searches knowledge, reads files, queries SQL, reads wiki state/index, checks raw manifests, and optionally uses Gmail/Calendar/Exa. Push is configured through Agno memory/session settings and AgentOS schedules.
+**Direction.** Pal has both pull and engineered push over retained memory. Pull is ordinary tool use: Navigator searches knowledge, reads files, queries SQL, reads wiki state/index, checks raw manifests, and optionally uses Gmail/Calendar/Exa. Push is configured through Agno memory/session settings and AgentOS schedules. The scheduled prompt text itself is not memory read-back; it is a run trigger whose team run can then receive Agno learnings, past-session/history context, and other retained records before acting.
 
-**Trigger and relevance signal.** The code exposes two relevance-scoped push mechanisms. First, `search_past_sessions=True` with bounded counts is configured on the leader and Navigator; from Pal's perspective this is framework-managed past-session retrieval before response generation. Second, `add_learnings_to_context=True` on the leader pushes `pal_learnings` into runtime context. The exact relevance algorithm for Agno's search and learning selection is not visible in this repository, so retrieval quality is not verified from Pal code.
+**Targeting and signal.** Pal's memory push is mixed. `search_past_sessions=True` with bounded counts on the leader and Navigator is an instance-targeted push keyed by the current run/session payload, but the final relevance signal is Agno-managed and not visible in this repository; classify it only as `inferred` from Pal code, with the lexical/embedding/judgment sub-kind unresolved. `add_history_to_context=True` and `read_chat_history=True` add bounded recent history, which is coarser session-context push. `add_learnings_to_context=True` pushes `pal_learnings` into runtime context for the leader and Researcher; local Pal code shows the activation point, but Agno owns any selection policy, so precision, recall, and context dilution are not verified from Pal code.
 
 **Timing relative to action.** Agno learnings, past sessions, chat history, datetime, and schedules are available before the agent acts. Linter and Compiler outputs are post-action maintenance artifacts unless a later query reads them. Scheduled briefing/wiki/lint/weekly-review prompts are also pre-action activations from the scheduler's perspective: they start a team run without a live user query.
 

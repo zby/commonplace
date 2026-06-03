@@ -67,7 +67,7 @@ Atomic is much stronger as an end-user memory product. It has desktop/server/mob
 
 The most interesting convergence is reports. Atomic's scheduled reports look like a productized version of a Commonplace workshop-to-library loop: define a research prompt and source scope, run an agent over a bounded corpus, produce a cited finding, and keep provenance. The tradeoff is that Atomic writes generated findings directly into the same atom substrate, while Commonplace usually prefers human-readable review and promotion gates before generated synthesis becomes durable library knowledge.
 
-**Read-back:** `both` — Ordinary search, chat, MCP, wiki browsing, and canvas use are pull. Scheduled reports are engineered push: a cron/report trigger selects source atoms by tag, kind, time window, and token budget, then injects them into a report agent before it writes a finding
+**Read-back:** `both` — Ordinary search, chat, MCP, wiki browsing, and canvas use are pull. Scheduled reports are engineered push: a cron/report trigger uses the saved report scope to select source atoms by tag, kind, time window, and token budget, then injects them into a report agent before it writes a finding
 
 ### Borrowable Ideas
 
@@ -87,7 +87,7 @@ The most interesting convergence is reports. Atomic's scheduled reports look lik
 
 **Direction.** Atomic uses both pull and push. Pull paths include UI search, global keyword search, chat-agent tool calls, MCP `semantic_search` / `read_atom`, wiki article generation, similar-note lookup, and canvas browsing. Push exists through scheduled reports: the scheduler launches a report run, source resolution selects atoms, and the report agent receives a numbered source list before it takes any action.
 
-**Trigger and relevance signal.** Pull triggers are user or agent queries, tag scopes, current-page references, atom ids, or UI events. The engineered push trigger is a report schedule or manual run against a saved report definition. Its relevance signal is symbolic rather than embedding-first: report source scope, context scope, kind filters, time windows, max source atoms, token budgets, citation policy, and excluded prior findings. The report agent can then use semantic search inside the bounded context.
+**Trigger and relevance signal.** Pull triggers are user or agent queries, tag scopes, current-page references, atom ids, or UI events. The engineered push trigger is a report schedule or manual run against a saved report definition. Targeting is `instance`: the report row is the durable task frame for this run. The push signal is `identifier`: source scope tag ids, kind filters, time windows, max source atoms, token budgets, context scope, citation policy, and excluded prior findings are declared scope fields resolved before the report agent acts. The report agent can then use semantic search inside the bounded context; that later ranking is pull within the already-pushed report frame.
 
 **Timing relative to action.** Report source atoms arrive pre-action. They shape the report agent's initial prompt before it chooses tool calls or writes the finding. Chat search and MCP retrieval happen mid-action only when the agent or external client calls a tool.
 

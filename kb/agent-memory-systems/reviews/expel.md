@@ -64,7 +64,7 @@ Commonplace is stronger on provenance, reviewability, and durable authority boun
 
 ExpeL is stronger on pre-action activation. It does not rely on the agent deciding to search memory: rules are inserted before the task prompt, and retrieved few-shots are selected and swapped into the prompt before LLM calls. That is exactly the storage-to-context step Commonplace often delegates to agent discipline.
 
-**Read-back:** `both` — With static rule push and relevance-gated push activation for retrieved few-shot trajectories; script-level checkpoint loading is a non-agent pull path
+**Read-back:** `both` — With coarse rule push and instance-targeted inferred/embedding push activation for retrieved few-shot trajectories; script-level checkpoint loading is a non-agent pull path
 
 ### Borrowable Ideas
 
@@ -92,9 +92,9 @@ ExpeL is stronger on pre-action activation. It does not rely on the agent decidi
 
 ## Read-back placement
 
-**Direction.** Read-back is both push and script-level pull. Acting agents receive rules and retrieved few-shots by push during prompt construction; scripts pull checkpoints and extracted-insight runs from disk through `load_trajectories_log` (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/eval.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py).
+**Direction.** Read-back is both push and script-level pull. Acting agents receive trace-derived rules and retrieved few-shots by push during prompt construction; scripts pull checkpoints and extracted-insight runs from disk through `load_trajectories_log` (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/eval.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py).
 
-**Trigger and relevance signal.** Rule read-back is fold-scoped and unconditional unless `no_rules` is set. Few-shot read-back is relevance-gated: the system builds a FAISS index over candidate documents filtered by environment and document type, queries by task/thought/action/step depending on `fewshot_strategy`, retrieves a buffered top-k, excludes current-task and overlong trajectories, and optionally reranks by length or cosine similarity over thoughts/tasks (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml). This justifies `push-activation`.
+**Targeting and signal.** Rule read-back is coarse: the current evaluation fold supplies the rule set, and every evaluation task receives it unless `no_rules` is set. Few-shot read-back is instance-targeted with an inferred/embedding signal: the system builds a FAISS index over candidate documents narrowed by environment and document type, queries by the current task, thought, action, or step depending on `fewshot_strategy`, retrieves a buffered top-k, excludes current-task and overlong trajectories, and optionally reranks by length or cosine similarity over thoughts/tasks (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml). The metadata filters narrow the candidate pool, but the final selector is content-keyed embedding similarity, which justifies `push-activation`.
 
 **Timing relative to action.** Rules are inserted before the task prompt when the evaluation agent resets. Few-shots can be replaced before an LLM call because `prompt_agent` calls `update_dynamic_prompt_components` before invoking the model (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/react.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py). Reflections during training are also pushed before retrying the same task, but those are per-task recovery memory rather than the main cross-task ExpeL artifact.
 

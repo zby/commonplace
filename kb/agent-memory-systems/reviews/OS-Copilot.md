@@ -65,7 +65,7 @@ FRIDAY is more operationally aggressive. It lets a successful task trace become 
 
 The design tradeoff is authority without review. A generated Python tool can affect future task decomposition and code generation after one LLM judgment and a score threshold. That is powerful for learning APIs like `openpyxl`; it is risky for durable system behavior because the source does not preserve the full lesson, execution trace, judge rationale, repair history, or reviewer decision alongside the stored code.
 
-**Read-back:** `both` — With engineered push activation. Tool descriptions are automatically retrieved from task text before planning, and tool code is automatically retrieved from Python subtask descriptions before code generation; there are also manual add/delete commands for tool repository management
+**Read-back:** `push` — With engineered push activation. Tool descriptions are automatically retrieved from task text before planning, and tool code is automatically retrieved from Python subtask descriptions before code generation; manual add/delete commands manage the repository but are not agent read-back.
 
 ### Borrowable Ideas
 
@@ -95,9 +95,9 @@ The design tradeoff is authority without review. A generated Python tool can aff
 
 ## Read-back placement
 
-**Direction.** OS-Copilot is both pull and push. Tool management has manual add/delete and code/description lookup surfaces, but FRIDAY also pushes retrieved tool descriptions and source code into future model calls automatically from task/subtask text.
+**Direction.** OS-Copilot is push-only for memory read-back. Tool management has manual add/delete surfaces for repository maintenance, but I did not find a deployed agent-facing lookup command; FRIDAY pushes retrieved tool descriptions and source code into future model calls automatically from task/subtask text.
 
-**Trigger and relevance signal.** Planning calls `retrieve_tool_name(task, k=10)` and then retrieves descriptions for the selected names. Python execution calls `retrieve_tool_name(description, 3)` and retrieves code for those names. The relevance signal is Chroma similarity over tool descriptions; precision and recall are not verified by code.
+**Targeting and signal.** Targeting is `instance`: planning calls `retrieve_tool_name(task, k=10)` and then retrieves descriptions for the selected names, while Python execution calls `retrieve_tool_name(description, 3)` and retrieves code for those names. The signal is `inferred / embedding`, because Chroma similarity selects generated tools by comparing the current task or subtask description to retained tool descriptions; precision and recall are not verified by code.
 
 **Timing relative to action.** Retrieval happens before task decomposition and before Python code generation. It can change the next plan or generated code before the agent acts. Repair and replanning happen after execution and can only affect later attempts or subtasks.
 

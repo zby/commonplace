@@ -63,7 +63,7 @@ The largest divergence is authority. In Commonplace, a note, instruction, index,
 
 S3 is useful as a contrast because it intentionally cuts durable memory out of the main path. It pushes recent reflection, text-buffer notes, and code-agent results into the next action, then bounds context by image/turn flushing. That keeps runtime context manageable and reduces the operational burden of maintaining a KB, but loses S2's cross-task learning surface.
 
-**Read-back:** `both` — S2 uses pull machinery internally, but from the planner/worker perspective embedding-selected narrative and episodic experience are pushed into prompts before action; S3 mainly uses always-loaded transient episode context
+**Read-back:** `push` — S2 uses retrieval machinery internally, but from the planner/worker perspective embedding-selected narrative and episodic experience are pushed into prompts before action; S3 mainly uses always-loaded transient episode context, not durable memory read-back
 
 ### Borrowable Ideas
 
@@ -89,9 +89,9 @@ S3 is useful as a contrast because it intentionally cuts durable memory out of t
 
 ## Read-back placement
 
-**Direction.** Agent-S uses both pull and push. S2 uses pull-style retrieval internally, but the selected memory is pushed into the planner or worker prompt before the receiving agent chooses its next action. S3 always pushes current-episode reflection, text-buffer notes, and code-agent results into the next worker turn when present.
+**Direction.** Agent-S memory read-back is push. S2 uses pull-style retrieval internally, but the selected memory is pushed into the planner or worker prompt before the receiving agent chooses its next action. S3 pushes current-episode reflection, text-buffer notes, and code-agent results into the next worker turn when present, but those objects are transient episode context rather than retained memory read-back.
 
-**Trigger and relevance signal.** S2's strongest trigger is first-turn planning or first-turn subtask execution. Narrative and episodic memories are selected by embedding similarity against the task instruction or subtask query key; web/RAG knowledge is selected through a formulated query and optional search engine. S3's reflection and code-agent result injection is event-keyed rather than semantic retrieval: if a previous action/reflection/code result exists, it is included.
+**Targeting and signal.** S2's memory push is instance-targeted with an inferred / embedding signal. The trigger is first-turn planning or first-turn subtask execution, and narrative and episodic memories are selected by embedding similarity against the task instruction or subtask query key. Optional web/RAG knowledge is selected through a formulated query and optional search engine, but it is not the trace-derived experience path. S3's reflection and code-agent result injection is event-keyed rather than semantic retrieval: if a previous action/reflection/code result exists, it is included.
 
 **Timing relative to action.** S2 read-back happens before planning or subtask execution, so it can change the next plan or action. S3 reflection happens after the previous action and before the next action, so it can steer recovery. Behavior Best-of-N selection happens after complete rollouts, so it changes which trajectory is selected, not the steps inside that already-finished rollout.
 

@@ -68,7 +68,7 @@ The strongest alignment is the retained-artifact split. cass-memory distinguishe
 
 The main divergence is source preservation and auditability. cass-memory keeps source session paths and can show `why`, but playbook bullets do not carry a complete derivation record: reflector prompt version, validator result, exact diary excerpt, curation decision, embedding model, and outcome feedback path are scattered. Commonplace's artifact model is slower but better suited to inspectable lineage.
 
-**Read-back:** `both` — Ordinary playbook and history memory reach the agent by explicit pull through `cm context`, `cm_context`, `memory_search`, or similar calls; trauma entries can reach and block the agent by pre-action hooks without a deliberate memory query
+**Read-back:** `both` — Ordinary playbook and history memory reach the agent by explicit pull through `cm context`, `cm_context`, `memory_search`, or similar calls; retained trauma entries can reach and block the agent by before-action hooks without a deliberate memory query
 
 ### Borrowable Ideas
 
@@ -96,9 +96,9 @@ The main divergence is source preservation and auditability. cass-memory keeps s
 
 ## Read-back placement
 
-**Direction.** cass-memory is both, but asymmetrically. The ordinary memory product is pull: an agent, human, or MCP host asks for context or search results. The trauma subsystem is push/enforcement: installed hooks receive a tool or commit event, match active trauma entries, and return a denial/warning without the agent asking for memory.
+**Direction.** cass-memory is both, but asymmetrically. The ordinary memory product is pull: an agent, human, or MCP host asks for context or search results. The trauma subsystem is push/enforcement: installed hooks receive a tool or commit event, load active retained trauma entries, match them against the pending command or staged diff, and return a denial/warning without the agent asking for memory.
 
-**Trigger and relevance signal.** `cm context` uses an explicit task string, keyword extraction, workspace filters, optional embeddings, minimum relevance thresholds, decayed confidence, cass search, and deprecated-pattern checks. MCP `cm_context` wraps the same call. The trauma guard uses event-keyed activation: Claude Code `PreToolUse` for Bash commands and git pre-commit for staged diffs, with regex trauma patterns as the relevance signal.
+**Targeting and signal.** `cm context` uses an explicit task string, keyword extraction, workspace filters, optional embeddings, minimum relevance thresholds, decayed confidence, cass search, and deprecated-pattern checks. That pull selector is instance-targeted and inferred: lexical by default, with embedding ranking when semantic search is enabled. MCP `cm_context` wraps the same call. The trauma guard's hook entry is action-type keyed (`PreToolUse` for Bash commands or git pre-commit for staged diffs), but the retained-memory selection is instance-targeted: active trauma regexes are matched against the pending command or added diff lines, so the signal is inferred / lexical rather than an identifier match.
 
 **Timing relative to action.** Context retrieval happens before work only if the agent or host calls it. Trauma guard hooks fire before the risky Bash command or commit proceeds, so they can change the next action by denying it and showing the stored reason/reference.
 

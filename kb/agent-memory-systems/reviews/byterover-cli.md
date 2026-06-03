@@ -1,7 +1,7 @@
 ---
 description: "ByteRover CLI review: local context-tree memory with HTML topics, BM25 retrieval, trace-derived ranking signals, hooks, MCP, review, and VC"
 type: ../types/agent-memory-system-review.md
-tags: [trace-derived, push-activation]
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
 ---
@@ -58,7 +58,7 @@ The promotion path is partial. A user or agent can move observations into `<bv-t
 | Retrieval | BM25, symbolic paths, scope filters, maturity filters, score propagation, manifest injection, optional LLM synthesis | `rg`, curated indexes, descriptions, links, skills, validation/review workflows |
 | Trace use | Query/curate traces update sidecar ranking signals and logs; curate can turn work into topics | Trace use is mostly manual review, source snapshots, and generated review artifacts |
 | Governance | HITL review queue, backups, VC, strict topic element validation | Type contracts, link vocabulary, semantic review, validation, archive/replacement lifecycle |
-| Activation | Agent instructions/hooks/MCP push the query/curate workflow; actual topic recall is usually pull/search | Mostly deliberate pull through search/index/links, plus instruction skills when invoked |
+| Activation | Baseline agent instructions/hooks/MCP push the query/curate workflow; retained topic recall is pull/search | Mostly deliberate pull through search/index/links, plus instruction skills when invoked |
 
 The strongest alignment is that both systems treat memory as a typed artifact landscape, not just a vector store. ByteRover's `<bv-topic>` grammar is more UI- and tool-oriented than Commonplace Markdown frontmatter, but both make storage inspectable, versionable, and partially validated.
 
@@ -66,7 +66,7 @@ The largest divergence is where authority lives. Commonplace keeps durable claim
 
 ByteRover is ahead on productized adoption. It has connectors for existing agents, a web dashboard, context-tree version control, worktrees, shared sources, MCP tools, query logs, review UI, cancellation, settings, and a background cleanup path. Commonplace is ahead on methodology governance: review artifacts are source-pinned, type contracts are explicit, link semantics are a first-class vocabulary, and the knowledge layer is not optimized around silent runtime promotion.
 
-**Read-back:** `both` — Topic recall is pull through query/search/read tools, while installed rules/hooks/MCP descriptions push the memory workflow and pre-action obligations into the agent's context
+**Read-back:** `pull` — Retained topic content returns through explicit `brv query`, MCP `brv-query`, `search_knowledge`, or `expand_knowledge` calls; installed rules, hook output, and MCP descriptions inject shipped workflow instructions, which are a baseline context surface rather than memory read-back
 
 ### Borrowable Ideas
 
@@ -94,27 +94,11 @@ ByteRover is ahead on productized adoption. It has connectors for existing agent
 
 **Lineage.** Sidecar signals have clear operational lineage to access hits and curate operations, but they are intentionally not human-readable evidence. Query logs keep the query, matched docs, timing, tier, and response when available. Curate logs can keep agent-supplied reason, impact, confidence, summaries, file paths, and backups. Topic claims themselves have weaker lineage unless the author included source paths or explanation inside the topic body.
 
-**Behavioral authority.** Raw logs are knowledge artifacts for audit and maintenance. Runtime signals are system-definition artifacts because they alter ranking, maturity filtering, manifest allocation, archive candidacy, and dream pruning. Curated topic files are knowledge artifacts when retrieved as evidence; when represented as `<bv-rule>` or injected through MCP/hook-mediated workflows, they can acquire instruction-channel influence over the next agent action.
+**Behavioral authority.** Raw logs are knowledge artifacts for audit and maintenance. Runtime signals are system-definition artifacts because they alter ranking, maturity filtering, manifest allocation, archive candidacy, and dream pruning. Curated topic files are knowledge artifacts when retrieved as evidence; when represented as `<bv-rule>` and returned through query/MCP workflows, they can acquire instruction-channel influence over the next agent action.
 
 **Scope and timing.** Signals are project-scoped and update online from query and curate paths. Query-log summaries are offline operator views. Dream is a staged maintenance loop: scan candidates, let the calling agent decide semantic actions, then finalize archives with undo metadata.
 
 **Survey placement.** ByteRover belongs in the trace-to-operational-signal branch of the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md). It strengthens the survey's split between raw trace retention and distilled behavior-shaping artifacts: the durable learned behavior is not a model weight or automatic rule, but sidecar ranking/lifecycle state plus agent-authored topic files.
-
-## Read-back placement
-
-**Direction.** Both. From the agent's perspective, topic content normally enters by pull: the agent or user runs `brv query`, MCP `brv-query`, `search_knowledge`, or `expand_knowledge`. The installed rule/hook layer is push: ByteRover can place workflow instructions into the agent's prompt before the user task, and MCP tool descriptions push the available memory operations into the host agent's tool context.
-
-**Trigger and relevance signal.** Topic recall uses BM25, symbolic path matching, scope filters, kind/maturity filters, score gap thresholds, OOD heuristics, query-result cache, and optional manifest context. Push activation uses host-agent install surfaces: rule files, skill files, MCP config, and a pre-prompt hook command. The hook is event-keyed rather than relevance-ranked; it pushes a rule table that tells the agent when to run query or curate.
-
-**Timing relative to action.** Hook prompt submission fires before a coding-agent prompt is handled, so it can change the next action by requiring query-first behavior. Query/curate MCP calls happen during the agent loop. Query logs and dream summaries are after-action audit/maintenance signals unless an operator or agent explicitly uses them.
-
-**Selection, scope, and complexity.** Retrieval selection is code-grounded: top-k limits, query score floors, path/scope filters, shared-source origins, summary propagation, manifest budgets, archive drill-down, and query-tool-mode max limits are all wired in the implementation. Effective precision, recall, and context dilution are not verified from code. The hook push surface has no per-topic selection budget; its content is a compact workflow instruction, not retrieved project facts.
-
-**Authority at consumption.** Query results have advisory context authority when rendered to an agent. The hook and connector instructions carry system-definition authority because they tell the host agent what it must do before and after code work. MCP `brv-curate` also carries validation authority: the topic is not written unless it satisfies the closed HTML vocabulary.
-
-**Faithfulness.** The implementation logs query metadata and provides benchmark claims in the README and paper, but this review did not find a checked-in benchmark harness under the repository root. The code shows retrieval, logging, and validation mechanics; it does not by itself prove that agents obey hook instructions or that read-back changed downstream behavior.
-
-**Other consumers.** Human users consume the WebUI/TUI dashboards, review queue, query-log summaries, version-control diffs, and context navigation index. Dream consumes the same topic corpus and sidecar signals as maintenance input. Version-control consumers treat the context tree as a collaborative Git corpus.
 
 ## Curiosity Pass
 
@@ -141,6 +125,6 @@ Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: ByteRover turns query and curate traces into ranking/lifecycle sidecar state rather than model weights.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: ByteRover separates topic files, derived summaries, sidecar signals, logs, connector prompts, and Git state by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: ByteRover's connector and hook layer makes activation an explicit product surface.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: ByteRover's connector and hook layer activates the query/curate workflow, not retained topic content directly.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: topic files and logs advise or evidence future work when read back.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: runtime signals, validators, hook instructions, MCP configs, and review gates carry direct behavioral authority.

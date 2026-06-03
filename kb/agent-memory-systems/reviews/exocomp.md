@@ -65,7 +65,7 @@ Exocomp is stronger on live agent orchestration. The planner can spawn role-boun
 
 Commonplace is stronger on artifact governance. Exocomp's JSON ledgers are easy for agents to read and write, but they have thin schemas, no citation discipline, no validation lifecycle beyond tool-level parsing, and no semantic review before a recorded requirement or bug influences later action. That is appropriate for a local coding workbench but too weak for durable methodology claims.
 
-**Read-back:** `both` — But not relevance-gated. Role prompts and restored sessions are pushed unconditionally into the agent's context; requirements, bugs, changelogs, work reports, file contents, and skills enter through explicit tool calls or manual skill loading
+**Read-back:** `both` — Retained session recovery is pushed coarsely at TTY/web session start, with no instance signal or relevance gate; requirements, bugs, changelogs, work reports, file contents, and skills enter through explicit tool calls or manual skill loading. Role prompts, tool schemas, and shipped role text are baseline context surfaces, not memory read-back
 
 ### Borrowable Ideas
 

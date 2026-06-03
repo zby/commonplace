@@ -63,7 +63,7 @@ The Letta framing is more agent-autonomy-forward: the agent owns its context, mo
 
 The biggest comparison risk is over-reading the source. The documents describe a rich harness with MemFS, message search, compaction, multi-conversation memory, and subagents. This repository does not implement those pieces, so the review can credit the design vocabulary and policy shape but not the runtime behavior.
 
-**Read-back:** `push` — Like when the constitution or derived policy is always loaded into a Letta agent's prompt; pull for external memory files and message history the agent chooses to inspect; no implemented relevance-gated push activation is present in this repo
+**Read-back:** `both` — The described Letta harness coarsely push-loads retained `/system` memory in the prompt, while external memory files and message history require agent pull; the constitution itself is shipped policy text, a baseline context surface rather than read-back, and no implemented relevance-gated push activation is present in this repo
 
 ### Borrowable Ideas
 

@@ -66,8 +66,6 @@ SkillWeaver is stronger where the task domain has a tight simulator and an exter
 
 SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records iteration references and update/test events, but the generated function body and docstring do not carry fine-grained citations to the exact trajectory steps, screenshots, or success evidence that justified each behavior. Commonplace's source-grounded reviews are slower, but they preserve citation and review context more directly.
 
-**Read-back:** `both` — The agent can pull from the skill library through explicit retrieval machinery, but task attempts also run relevance-gated pre-action selection that pushes chosen functions into the acting prompt before code generation
-
 ### Borrowable Ideas
 
 **Promote traces into executable helpers only in bounded domains.** Commonplace could borrow this for narrow operational routines such as validation repair, source snapshot cleanup, or repeated review-bundle triage, where success can be tested. Ready for tool-facing workflows with objective checks; not ready for broad methodology-note writing.
@@ -92,9 +90,11 @@ SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records 
 
 ## Read-back placement
 
+**Read-back:** `both` — The agent can pull from the skill library through explicit retrieval machinery, and task attempts also run relevance-gated pre-action selection that pushes chosen generated skills into the acting prompt before code generation.
+
 **Direction.** SkillWeaver has both pull and engineered push. The retrieval module is explicitly called by the attempt loop, but from the acting agent's perspective selected functions arrive in the prompt before it writes the next `act(page)` function.
 
-**Trigger and relevance signal.** The trigger is each task attempt when retrieval is enabled for exploration/test tasks or whenever the task type is production. The relevance signal is an LLM judgment over the task string and formatted skill signatures/docstrings. There is also an embedding-similarity helper in `KnowledgeBase`, but the active prompt path uses LLM function-name selection.
+**Targeting and signal.** The push path is `instance`-targeted: each attempt turns the current task into a task string and asks retrieval to select functions for that task instance. The signal is `inferred / judgment`, because `KnowledgeBase.retrieve()` asks an LLM to judge relevance over the task string and formatted skill signatures/docstrings. There is also an embedding-similarity helper in `KnowledgeBase`, but the active prompt path uses LLM function-name selection.
 
 **Timing relative to action.** Read-back happens before the first action step of an attempt. The selected functions are available to every generated step in that attempt through the prompt and execution module, so they can change the action plan before any browser operation occurs.
 

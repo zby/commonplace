@@ -62,7 +62,7 @@ Signet is stronger as a live operational substrate. It already wires many harnes
 
 Commonplace is stronger as a durable argument and method library. Signet's behavior-shaping state is distributed across daemon code, config, SQLite rows, hook installers, embeddings, graph state, and generated artifacts. Commonplace keeps its strongest artifacts in reviewable prose and schemas where a later agent can inspect every claim and cite the source. The tradeoff is speed: Signet promotes operational traces quickly; Commonplace promotes slowly but with stronger textual accountability.
 
-**Read-back:** `both` — Agents can explicitly pull through CLI/API/MCP recall and search surfaces, while session-start and entity-gated prompt-submit hooks push selected memory/context into the receiving agent's prompt path before action
+**Read-back:** `both` — Agents can explicitly pull through CLI/API/MCP recall and search surfaces, while session-start and entity-gated prompt-submit hooks push selected retained memory into the receiving agent's prompt path before action.
 
 ### Borrowable Ideas
 
@@ -92,9 +92,9 @@ Commonplace is stronger as a durable argument and method library. Signet's behav
 
 ## Read-back placement
 
-**Direction.** Signet is both pull and push. Pull is explicit `signet recall`, `/recall`, MCP/API recall, dashboard inspection, session search, and source expansion. Push is session-start injection and entity-gated user-prompt-submit injection from the receiving agent's perspective.
+**Direction.** Signet is both pull and push. Pull is explicit `signet recall`, `/recall`, MCP/API recall, dashboard inspection, session search, and source expansion. Push is session-start injection and entity-gated user-prompt-submit injection from the receiving agent's perspective. Shipped system prompts, plugin prompt contributions, secret listings, and command affordance text are baseline context surfaces; the read-back verdict rests on retained identity/user/working-memory files, SQLite memory rows, session recovery context, inherited session context, and entity attributes.
 
-**Trigger and relevance signal.** Session-start is a lifecycle hook with configured recall limits, identity inclusion, recent context inclusion, and recency bias. Prompt-submit is relevance-gated: it rejects low-signal prompts, resolves known entity and alias matches, computes the prompt residue after entity matching, embeds that semantic query when possible, scores entity attributes against a min score, filters broad uncategorized attributes, and selects lines within `maxInjectChars` (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/hooks.ts).
+**Targeting and signal.** Signet has mixed push targeting. Session-start is mostly `coarse`: a lifecycle hook always attempts bounded memory loading, scoring recent/project-matching memories by effective score, pinned state, recency, and configured budgets, with additional project/session-key scoped recovery and traversal blocks. Prompt-submit is `instance`: it first resolves known entity names and aliases carried by the current prompt, so that narrowing is `identifier`, then computes the non-entity prompt residue and selects entity attributes by `inferred / embedding` when embeddings are available, falling back to `inferred / lexical` scoring. Precision/recall, prompt dilution, and actual model uptake are not verified from code (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/hooks.ts).
 
 **Timing relative to action.** Session-start injects before the new session begins. Prompt-submit runs before each user turn is handed to the model. Pre-compaction and compaction-complete run around summarization and can only affect later actions, not the action already taken.
 

@@ -67,8 +67,6 @@ The strongest alignment is that both systems treat a file-backed knowledge base 
 
 The main divergence is runtime ambition. WUPHF is an office runtime first, so it accepts a broad mix of broker state, tool manifests, per-turn prompt assembly, wiki files, fact logs, generated briefs, playbook compilers, and UI surfaces. Commonplace is slower and more inspectable: it usually keeps durable methodology claims in Markdown with explicit status and validation before making them behavior-shaping.
 
-**Read-back:** `both` — WUPHF has pull through MCP/wiki/notebook/context tools and engineered push through broker-woken agent turns that append scoped private/shared memory briefs before the next provider action
-
 ### Borrowable Ideas
 
 **Notebook-to-wiki promotion as a first-class workflow.** Commonplace already has a workshop/library distinction, but WUPHF's notebook tools make the draft-to-shared-memory transition explicit in the agent's tool surface. Ready to borrow as a pattern for workshop notes: a promote command should preserve source, rationale, reviewer, target path, and state.
@@ -97,9 +95,11 @@ The main divergence is runtime ambition. WUPHF is an office runtime first, so it
 
 ## Read-back placement
 
-**Direction.** WUPHF uses both pull and push. Pull paths include notebook search/read/list, wiki search/read/list/lookup, context lookup, playbook list, team learning search, and legacy Nex/GBrain shared queries. Push exists when broker events wake agents and the headless runner appends scoped private/shared memory briefs to the incoming notification before the provider acts.
+**Read-back:** `both` — WUPHF has pull through MCP/wiki/notebook/context tools and engineered push through broker-woken agent turns that append scoped memory briefs before the next provider action.
 
-**Trigger and relevance signal.** Pull triggers are explicit agent/user tool calls and slash commands. Push memory trigger is each headless turn's notification text: `fetchScopedMemoryBrief` searches the agent's private memory namespace and the active shared backend with the notification query, applies small private top-k limits, and uses backend query limits/timeouts. The broker wake itself is also event-keyed by messages, focus/collab mode, mentions, active tasks, and channel membership, but the memory selection is text-query scoped rather than a learned action classifier.
+**Direction.** Pull paths include notebook search/read/list, wiki search/read/list/lookup, context lookup, playbook list, team learning search, and legacy Nex/GBrain shared queries. Push exists when broker events wake agents and the headless runner appends scoped memory briefs to the incoming notification before the provider acts. The default Markdown wiki/notebook surface is pull by tool call; the automatic prompt brief uses broker private memory and any active external memory backend rather than pushing the wiki by default.
+
+**Targeting and signal.** Pull triggers are explicit agent/user tool calls and slash commands. Push memory targeting is `instance`: each headless turn's notification text becomes the query for `fetchScopedMemoryBrief`. The private-memory path is `inferred / lexical`, because it matches the notification against the retained note key, title, and content with substring/token scoring and a small top-k cap. The shared external path is backend-dependent: GBrain is `inferred / embedding` when vector search is configured, with keyword/reduced-mode fallback; Nex recall is an opaque external API query, so the review can identify it only as inferred query-based recall from local code. The broker wake itself is also event-keyed by messages, focus/collab mode, mentions, active tasks, and channel membership, but those symbols decide which agent wakes, not which memory snippet is selected.
 
 **Timing relative to action.** Pushed memory arrives before the provider turn performs tool calls or writes output. It is appended to stdin after the operator notification and before the model acts, which means it can change the next action rather than only audit the result.
 

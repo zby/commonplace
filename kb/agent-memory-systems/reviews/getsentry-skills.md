@@ -65,7 +65,7 @@ The closest Commonplace analogue is not the note library; it is `kb/instructions
 
 `getsentry/skills` is stronger on adoption packaging. Claude plugin manifests, README installation commands, a settings allowlist, and a root `skills/` tree make the system easier to install as a team-wide instruction distribution channel. Commonplace is stronger on artifact taxonomy and durable review. It makes the distinction between knowledge artifact, instruction, source, review, and generated index explicit, while `getsentry/skills` leaves many authority distinctions implicit inside skill prose and optional specs.
 
-**Read-back:** `both` — Plus host-mediated static activation. Skills can be manually invoked or selected by the host from descriptions, and Warden can run `skill-scanner` on PR events, but I did not find repository code implementing relevance-gated memory injection into an agent's context
+**Read-back:** `pull` — Memory-only. Agents and maintainers can deliberately read or invoke the repository's skill packages, helper scripts, settings, and Warden configuration, but host-selected `SKILL.md` files and Warden-triggered `skill-scanner` runs are shipped system-definition surfaces, not accumulated memory read-back; I did not find code implementing relevance-gated memory injection into an agent's context
 
 ### Borrowable Ideas
 

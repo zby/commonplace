@@ -90,7 +90,7 @@ The tradeoff is governance. Virtual Context has rich operational lineage and reg
 
 **Direction.** Both. From the answering model's perspective, proxy injection is push: selected `<virtual-context>` sections and `<facts>` arrive in the system/instructions field without the model first asking for them. Tool/MCP/CLI paths are pull when an agent or user deliberately asks for recall, quote search, topic expansion, fact query, or restoration.
 
-**Trigger and relevance signal.** The automatic path triggers on an inbound provider request or SDK `on_message_inbound` call. Relevance is engineered from inbound tags, related tags, active-tag skipping, IDF/tag overlap, text search, embedding similarity, alias ride-alongs, fact prefetch, and budget-aware assembly. Precision and recall are not verifiable from static code alone.
+**Targeting and signal.** The automatic memory push is instance-targeted: it keys on the current inbound message and recent conversation context before the upstream model call. The signal is mixed. Query-time tag generation or embedding matching infers tags from the message, stored tag overlap and alias ride-alongs then provide identifier-like narrowing inside the conversation's retained vocabulary, and the final selector also uses inferred lexical BM25/FTS matches, embedding similarity, fact overlap, recency, and budget-aware assembly. Precision and recall are not verifiable from static code alone.
 
 **Timing relative to action.** Push read-back occurs before the upstream model call, so it can change the next answer. Tagging, compaction, tag-summary rebuilding, fact extraction, and supersession occur after completed turns or in manual/batch paths, so they can only affect later requests.
 

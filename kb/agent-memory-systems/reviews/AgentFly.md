@@ -65,7 +65,7 @@ The strongest alignment is the separation between raw evidence and loaded contex
 
 The tradeoff is auditability versus immediacy. AgentFly can improve the next run by appending a few JSONL rows, but the row itself carries little support for source review or invalidation. Commonplace makes promotion slower because the artifact must explain itself, but that friction is what lets future agents inspect why a rule or note should still have authority.
 
-**Read-back:** `push` — With relevance-gated selection. From the acting planner's perspective, retrieved cases arrive before it asks for them; non-parametric CBR gates by embedding similarity, and parametric CBR gates by a trained query-case classifier
+**Read-back:** `push` — With instance-targeted inferred selection. From the acting planner's perspective, retrieved case memory arrives before it asks for it; non-parametric CBR gates by SimCSE embedding similarity over the current query and case question, and parametric CBR gates by a trained neural query-case classifier.
 
 ### Borrowable Ideas
 
@@ -93,7 +93,7 @@ The tradeoff is auditability versus immediacy. AgentFly can improve the next run
 
 **Direction.** AgentFly uses push from the planner's perspective. The agent does not issue a memory query as an action; the host client retrieves cases from the current user query and inserts the resulting examples into `shared_history` before the planner call.
 
-**Trigger and relevance signal.** The trigger is every processed benchmark query when memory is available. The non-parametric path uses SimCSE embedding similarity over case questions. The parametric path uses a trained classifier over current query and candidate case text, then sorts by predicted relevance score. Precision and recall are not established by code alone.
+**Targeting and signal.** Targeting is `instance`: the client selects cases for the current benchmark query, not a generic always-load bundle. The signal is `inferred`, keyed on content rather than an assigned identifier: the non-parametric path uses SimCSE embedding similarity over case questions, and the parametric path uses a trained neural classifier over the current query and candidate case text, then sorts by predicted relevance score. Precision and recall are not established by code alone.
 
 **Timing relative to action.** Read-back happens before task decomposition, not after execution. It can change the planner's first emitted subtask list, which then changes which tools the executor calls.
 

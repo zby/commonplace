@@ -63,7 +63,7 @@ The strongest alignment is file-native knowledge. Both systems prefer inspectabl
 
 LLM Wiki's L1/L2 split is more concrete than Commonplace's current phrasing around always-loaded context versus library retrieval. It distinguishes operational guardrails that must be present before action from contextual knowledge that should stay out of the base prompt until queried. The repo also makes the adoption surface unusually practical: it meets users where their notes already live, with Logseq/Obsidian serialization and Claude Code memory.
 
-**Read-back:** `both` — Dominant with host-provided always-load for L1. L2 knowledge enters action through explicit `/wiki query` or command workflows; L1 is described as auto-loaded Claude memory, but this repo only records/recommends that boundary and does not implement an engineered relevance-gated push path into a receiving agent/model context
+**Read-back:** `both` — L1 memory is a coarse host-provided always-load path at session start, while L2 wiki pages and query-time L1 supplements enter through explicit `/wiki query` or command workflows using namespace/entity/keyword matching. The repo records the memory path and recommends L1/L2 routing, but it does not implement a relevance-gated memory push hook into a receiving agent/model context, so this does not warrant `push-activation`
 
 This review does not mark the system `trace-derived`. A user may ingest chat transcripts or manually promote gotchas into L1, and the docs call feedback/gotchas first-class page types, but the source does not implement durable artifact derivation from session/tool/evaluation traces. Ordinary source ingestion and manual L1/L2 promotion advice are not enough for the trace-derived tag.
 

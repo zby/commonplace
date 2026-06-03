@@ -68,7 +68,7 @@ Decapod's most useful contrast is that it treats agent memory as part of governa
 
 Decapod's weaker point for Commonplace purposes is that many retained facts live in SQLite rows or generated JSON rather than reviewable prose artifacts. Its provenance and event logs are good, but a lesson or federation node is not the same as a source-pinned review note unless a promotion path makes it inspectable, curated, and semantically checked.
 
-**Read-back:** `both` — But mostly pull. Decapod has unconditional entrypoint/config push when an agent workbench loads `AGENTS.md`; its distinctive context, memory, proof, and governance content reaches the agent through explicit CLI/RPC calls, so it does not qualify for `push-activation` under the stricter relevance-gated rule
+**Read-back:** `pull` — Decapod's entrypoint contracts, embedded docs, and context capsules are shipped or generated baseline context surfaces, not retained-memory read-back. Retained knowledge, lessons, archives, federation nodes, and decisions re-enter through explicit CLI/RPC searches, restores, or task/workflow calls; the source-visible worker loop records only knowledge-hit summaries into task comments, not unsolicited memory content.
 
 ### Borrowable Ideas
 
