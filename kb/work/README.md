@@ -13,6 +13,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [pi-agent-zerostack-comparison](./pi-agent-zerostack-comparison/README.md) — preparing a code-grounded comparison instruction for the two Rust coding-agent CLIs cloned under `related-systems/`
 - [vocabulary-governance](./vocabulary-governance/README.md) — deciding how global, collection-local, and type-specific vocabularies should be declared and used by shipped KBs
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
+- [read-back-symbol-availability](./read-back-symbol-availability/README.md) — folding the symbol-availability bound on push into the agent-memory-system review framework's read-back treatment, and planning a re-characterization pass over existing reviews
 - [research-wiki-integration](./research-wiki-integration/README.md) — evaluating whether ARIS Research Wiki should become a commonplace workshop subsystem, source workflow upgrade, or only a set of borrowed lifecycle patterns
 - [gate-refactor](./gate-refactor/README.md) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
 - [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
