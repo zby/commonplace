@@ -1,0 +1,1070 @@
+{
+  "source": "https://x.com/trq212/status/2061907337154367865",
+  "captured": "2026-06-03T06:56:27.332770+00:00",
+  "family": "x-article",
+  "status_id": "2061907337154367865",
+  "conversation_id": "2061907337154367865",
+  "target_post": {
+    "text": "https://t.co/R6exTuF7P8",
+    "article": {
+      "cover_media": "3_2061851391308750849",
+      "plain_text": "Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand.\nWhile the default Claude Code harness is built for coding, it is also useful for many other types of tasks because, as it turns out, many tasks resemble coding tasks. But there are certain classes of tasks where we have had to build custom harnesses on top of Claude Code to achieve peak performance such as Research, security analysis, agent teams, or Code Review.\nWorkflows allow you to dynamically create harnesses that enable Claude to solve all of those problems and more natively inside of Claude Code. You can also share and re-use these workflows with others.\nIn this article, I\u2019ll cover my initial workflows experiences and learnings so you can take full advantage. \nThat said, best practices are still developing! Dynamic workflows often use more tokens, so think carefully about when and how to use them.\n\nNote: this post is also available on the Claude Blog\nExample prompts\nBefore diving into the technical details, I\u2019d like to start with some example prompts to get you thinking about the possibilities with workflows:\n\"This test fails maybe 1 in 50 runs. Set up a workflow to reproduce it, form theories and adversarially test them in worktrees /goal don't stop until one theory works.\"\n\"Using a workflow, go through my last 50 sessions and mine them for corrections I keep making and turn the recurring ones into CLAUDE.md rules\"\n\u201cUse a workflow to dig through #incidents in Slack for the past six months and find recurring root causes where nobody has filed a ticket.\"\n\"Take my business plan and run a workflow where different agents tear it apart from an investor's, a customer's, and a competitor's perspective.\"\n\"Here's a folder of 80 resumes, use a workflow to rank them for the backend role and double-check the top ten. Interview me using the AskUserQuestion tool for a rubric.\"\n\"I need a name for this CLI tool. Use a workflow to brainstorm a bunch of options and run a tournament to pick the top 3.\"\n\"Use a workflow to rename our User model to Account everywhere.\"\n\u201cGo through my blog post draft and using a workflow verify every technical claim against the codebase, I don't want to ship anything wrong.\"\nHow dynamic workflows work\nDynamic workflows execute a javascript file with a few special functions that help spawn and coordinate subagents:\n \nDynamic workflows also include standard JavaScript functions like JSON, Math, and Array, to help process data.\nIt\u2019s particularly useful to know that dynamic workflows can decide which models an agent uses and whether subagents are run in their own worktree, allowing Claude to choose the intelligence level and isolation needed.\nIf a workflow is interrupted, for example by user action or quitting the terminal, resuming the session will allow the workflow to pick up where it left off.\nWhy dynamic workflows\nWhen you ask the default Claude Code harness to do a task, it needs to both plan and execute in the same context window. For many coding tasks, this is highly effective, but it can sometimes break down over long-running, massively parallel and/or highly structured adversarial tasks.\nThis is because the longer Claude works on a complex task in a single context window, the more it becomes susceptible to a few specific failure modes:\nAgentic laziness refers to when Claude stops before finishing a particularly complex, multi-part task and declares the job done after partial progress, for example addressing 20 of the 50 items in a security review.\nSelf-preferential bias refers to Claude\u2019s tendency to prefer its own results or findings, especially when asked to verify or judge them against a rubric.\nGoal drift refers to the gradual loss of fidelity to the original objective across many turns, especially after compaction. Each summarization step is lossy, and details like edge-case requirements or \"don't do X\" constraints can get lost.\nCreating a workflow helps combat these by orchestrating separate Claudes with their own context windows and focused, isolated goals.\nDynamic vs static workflows\nYou may have previously created a static workflow using the Claude Agent SDK or claude -p to coordinate multiple instances of Claude Code together.\nBut because static workflows need to work for all edge cases, they are usually more generic. With Claude Opus 4.8 and dynamic workflows, Claude is now intelligent enough to write a custom harness tailor-made for your use case.\n \nHelpful patterns when using dynamic workflows\nYou can start using dynamic workflows just by asking Claude to make one, or by using the trigger word \u201cultracode\u201d to ensure that Claude Code creates a workflow.\nBut building a mental model for how dynamic workflows work will help you understand when to use them and how you might nudge Claude via prompts.\nThere are a few common patterns that Claude might use and compose together when building workflows:\n \nClassify-and-act\nUse a classifier agent to decide on the type of task, and then route to different agents or behavior based on the task. Or, use a classifier at the end to determine output.\nFan-out-and-synthesize\nSplit up a task into many smaller steps, run an agent on each step and then synthesize those results. This is particularly useful for when there are a large number of smaller steps, or when each step benefits from its own clean context window so they don't interfere or cross-contaminate. The synthesize step is a barrier\u2014it waits for all the fan-out agents, then merges their structured outputs into one result.\nAdversarial verification\nFor each spawned agent, run a separate spawned agent to adversarially verify its output against a rubric or criteria.\nGenerate-and-filter\nGenerate a number of ideas on a topic and then filter them by a rubric or by verification, dedupe duplicates and return only the highest quality, tested ideas.\nTournament\nInstead of dividing the work, have agents compete on it. Spawn N agents that each attempt the same task using different approaches. Prompts or models then judge the results in a pairwise fashion using a judging agent until you have a winner.\nLoop until done\nFor tasks with an unknown amount of work, loop spawning agents until a stop condition is met (no new findings, or no more errors in the logs) instead of a fixed number of passes.\nUse cases\nThink creatively of when and how to ask Claude Code to make dynamic workflows. I\u2019ve found that workflows are sometimes even more useful for non-technical work.\n \nMigrations and refactors\nBun was rewritten from Zig to Rust using workflows. You can read more about how that was done in Jarred\u2019s X thread.\nThe key is to break down the task into a series of steps that need to be operated on for example callsites, failing tests, modules, etc. Spin off a subagent for every fix in a worktree to make the fix, then have another agent adversarially review, and merge them. Consider telling the agent not to use resource intensive commands so that you can maximally parallelize without running out of resources on your machine.\nDeep research\nWe published a deep research skill (/deep-research) inside Claude Code that uses dynamic workflows. Specifically, it fans-out web searches, fetches sources, adversarially verifies their claims, and synthesizes a cited report.\nBut you may do this sort of research for more than just web searches. For example, asking Claude to compile a status report from context in Slack or to research how a feature works by exploring a codebase in-depth.\nDeep verification\n \nOn the other hand, if you have a report where you want to check and source every factual claim that it references you may want to generate a workflow which has one agent identify all of the factual claims and then spin off a subagent to check each one in-detail. You could also have a verification agent check the source subagent to make sure its source is high quality.\nSorting\n \nYou may have a list of items that you want to sort by some qualitative measurement that you believe that Claude Code is good at evaluating, for example: support tickets sorted by severity of the bug. But if you try to sort 1000+ rows in one prompt, quality degrades and it won't fit in context. Instead run a tournament, a pipeline of pairwise-comparison agents (comparative judgment is more reliable than absolute scoring), or bucket-rank in parallel then merge. Each comparison is its own agent, so the deterministic loop holds the bracket and only the running order stays in context.\nMemory and rule adherence\n \nIf you have a particular set of rules that you find Claude misses or struggles with, even when put into the CLAUDE.mds, create a workflow with a list of rules that must be checked by verifier agents\u2014one verifier per rule. Creating a skeptic persona subagent to review the rules to make sure they are in line will help avoid too many false positives.\nThe reverse direction works too: mine your recent sessions and code review comments for corrections you keep making, cluster them with parallel agents, adversarially verify each candidate (would this rule have prevented a real mistake?), and then distill the survivors back into a CLAUDE.md.\nRoot-cause investigation\nDebugging works best when you come up with several independent hypotheses and test them, but if you\u2019re only using one context window, Claude can run into self-preferential bias.\n\nA workflow can structurally prevent this by spinning up agents to generate hypotheses from disjoint evidence. For example, separate agents for logs, files, and data. Each hypothesis can then face a panel of verifiers and refuters.\nThis isn't just for code. Workflows can be used for sales (why did sales drop in March?), data engineering (why did this pipeline fail?), or any post-mortem exercise.\nTriaging at scale\n \nEvery team has a support queue, bug reports, or some other backlog that cannot be fully processed by humans.\nA triage workflow classifies each item, dedupes against what's already tracked, and takes action. This could mean attempting the fix or escalating to a human user.\nA useful pattern for triage workflows is quarantine. This involves barring the agents that read untrusted public content from taking high-privilege actions, which are instead done by the agents in charge of acting on the information.\nPair triage workflows with /loop to have Claude do this continuously.\nExploration and taste\nWorkflows can be useful when exploring different approaches to a solution, especially when it is taste based, like design or naming, and would benefit from a rubric.\nTry asking Claude to explore a bunch of solutions, and give a review agent  a rubric for what a good solution looks like. The task is complete when the review agent feels like it has met the criteria. Solutions can also be ordered or selected via a tournament based on the rubric.\nEvals\nYou can run lightweight evals for particular tasks by spinning off separate agents in a worktree and then spinning off comparison agents to compare and grade the specific outputs against a rubric. For example, evaluating and then refining a skill you\u2019ve created against a particular criteria.\nModel and intelligence routing\nCreate a classifier agent tuned to your tasks that decides which model to use. This can be helpful when your task will involve many tool calls and conducting research prior to execution can identify the best model for the job.\nFor example, the best model for the task \u201cexplain how the auth module works\u201d depends on how many files in the auth module there are and the shape of the codebase. A classifier agent can do this research and then route to Sonnet or Opus based on the expected complexity of the task.\nWhen not to use dynamic workflows\nWorkflows are new. While there are many use cases where it will create outsized results, they are not needed for every task and may end up using significantly more tokens.\nIt\u2019s best to use workflows creatively to push Claude Code in ways that you haven\u2019t previously. For regular coding tasks, try and ask yourself does it really need more compute? For example, most traditional coding tasks do not need a panel of 5 reviewers.\nTips for building dynamic workflows\nPrompting\nDetailed prompting, using the specific techniques we described above, for dynamic workflows creates the best results.\nWorkflows are not just for large tasks. You can prompt the model to use a \u201cquick workflow.\u201d For example, you can create a quick adversarial review of an assumption.\nCombine with /goal and /loop\nWhen using workflows that can be repeated, for example triage, research, or verification, pair them with /loop to be run at regular intervals, and /goal to set a hard completion requirement.\nToken usage budgets\nYou can set explicit token usage budgets for dynamic workflows to limit how many tokens a task uses. You can prompt it with a budget like: \u201cuse 10k tokens,\u201d which will set the cap.\nSaving and sharing dynamic workflows\nYou can save workflows by pressing \u201cs\u201d in the workflow menu. You can check these into ~/.claude/workflows or distribute them via a skill.\n \nTo share them via a skill, put your JavaScript workflow files in the skill and folder and reference them in the SKILL.MD. To allow for more flexibility, you may want to prompt Claude to think of the workflows in the skill as a template instead of a script that needs to be run verbatim.\n \nA whole new world\nWorkflows are a helpful new way to extend Claude Code. I encourage you to think of this as a starting point, there's still much to discover in how to use them best. Let us know what you find.\nThariq Shihipar and Sid Bidasaria (@sidbid) are members of technical staff at Anthropic, working on Claude Code.",
+      "preview_text": "Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand.\nWhile the default Claude Code harness is built for coding,",
+      "media_entities": [
+        "3_2061857447795695616",
+        "3_2061857211803193344",
+        "3_2061857082945728512",
+        "3_2061854734441725952",
+        "3_2061878367687954432",
+        "3_2061856981523312640",
+        "3_2061856090279800832",
+        "3_2061863516173463552",
+        "3_2061857370310094848",
+        "3_2061855878886928384"
+      ],
+      "entities": {
+        "hashtags": [
+          {
+            "start": 31,
+            "end": 41,
+            "text": "incidents"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 35,
+            "end": 42,
+            "username": "sidbid"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://code.claude.com/docs/en/agent-teams"
+          },
+          {
+            "text": "https://www.anthropic.com/news/claude-opus-4-8"
+          },
+          {
+            "text": "https://bun.com/"
+          },
+          {
+            "text": "https://code.claude.com/docs/en/code-review"
+          },
+          {
+            "text": "http://skill.md/"
+          },
+          {
+            "text": "https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code"
+          },
+          {
+            "text": "https://code.claude.com/docs/en/glossary#agentic-harness"
+          },
+          {
+            "text": "https://x.com/jarredsumner/status/2060050578026189172"
+          },
+          {
+            "text": "https://code.claude.com/docs/en/workflows"
+          },
+          {
+            "text": "https://support.claude.com/en/articles/11088861-using-research-on-claude"
+          },
+          {
+            "text": "http://claude.md/"
+          },
+          {
+            "text": "https://code.claude.com/docs/en/sub-agents"
+          },
+          {
+            "text": "https://support.claude.com/en/articles/11932705-automated-security-reviews-in-claude-code"
+          }
+        ]
+      },
+      "title": "A harness for every task: dynamic workflows in Claude Code "
+    },
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/R6exTuF7P8",
+          "expanded_url": "http://x.com/i/article/2061850535708483585",
+          "display_url": "x.com/i/article/2061\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2061850535708483585"
+        }
+      ]
+    },
+    "author_id": "352806502",
+    "edit_history_tweet_ids": [
+      "2061907337154367865"
+    ],
+    "id": "2061907337154367865",
+    "conversation_id": "2061907337154367865",
+    "created_at": "2026-06-02T20:26:32.000Z"
+  },
+  "posts": [
+    {
+      "article": {
+        "title": "A harness for every task: dynamic workflows in Claude Code ",
+        "entities": {
+          "hashtags": [
+            {
+              "start": 31,
+              "end": 41,
+              "text": "incidents"
+            }
+          ],
+          "mentions": [
+            {
+              "start": 35,
+              "end": 42,
+              "username": "sidbid"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://code.claude.com/docs/en/agent-teams"
+            },
+            {
+              "text": "https://www.anthropic.com/news/claude-opus-4-8"
+            },
+            {
+              "text": "https://bun.com/"
+            },
+            {
+              "text": "https://code.claude.com/docs/en/code-review"
+            },
+            {
+              "text": "http://skill.md/"
+            },
+            {
+              "text": "https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code"
+            },
+            {
+              "text": "https://code.claude.com/docs/en/glossary#agentic-harness"
+            },
+            {
+              "text": "https://x.com/jarredsumner/status/2060050578026189172"
+            },
+            {
+              "text": "https://code.claude.com/docs/en/workflows"
+            },
+            {
+              "text": "https://support.claude.com/en/articles/11088861-using-research-on-claude"
+            },
+            {
+              "text": "http://claude.md/"
+            },
+            {
+              "text": "https://code.claude.com/docs/en/sub-agents"
+            },
+            {
+              "text": "https://support.claude.com/en/articles/11932705-automated-security-reviews-in-claude-code"
+            }
+          ]
+        },
+        "cover_media": "3_2061851391308750849",
+        "preview_text": "Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand.\nWhile the default Claude Code harness is built for coding,",
+        "media_entities": [
+          "3_2061857447795695616",
+          "3_2061857211803193344",
+          "3_2061857082945728512",
+          "3_2061854734441725952",
+          "3_2061878367687954432",
+          "3_2061856981523312640",
+          "3_2061856090279800832",
+          "3_2061863516173463552",
+          "3_2061857370310094848",
+          "3_2061855878886928384"
+        ],
+        "plain_text": "Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand.\nWhile the default Claude Code harness is built for coding, it is also useful for many other types of tasks because, as it turns out, many tasks resemble coding tasks. But there are certain classes of tasks where we have had to build custom harnesses on top of Claude Code to achieve peak performance such as Research, security analysis, agent teams, or Code Review.\nWorkflows allow you to dynamically create harnesses that enable Claude to solve all of those problems and more natively inside of Claude Code. You can also share and re-use these workflows with others.\nIn this article, I\u2019ll cover my initial workflows experiences and learnings so you can take full advantage. \nThat said, best practices are still developing! Dynamic workflows often use more tokens, so think carefully about when and how to use them.\n\nNote: this post is also available on the Claude Blog\nExample prompts\nBefore diving into the technical details, I\u2019d like to start with some example prompts to get you thinking about the possibilities with workflows:\n\"This test fails maybe 1 in 50 runs. Set up a workflow to reproduce it, form theories and adversarially test them in worktrees /goal don't stop until one theory works.\"\n\"Using a workflow, go through my last 50 sessions and mine them for corrections I keep making and turn the recurring ones into CLAUDE.md rules\"\n\u201cUse a workflow to dig through #incidents in Slack for the past six months and find recurring root causes where nobody has filed a ticket.\"\n\"Take my business plan and run a workflow where different agents tear it apart from an investor's, a customer's, and a competitor's perspective.\"\n\"Here's a folder of 80 resumes, use a workflow to rank them for the backend role and double-check the top ten. Interview me using the AskUserQuestion tool for a rubric.\"\n\"I need a name for this CLI tool. Use a workflow to brainstorm a bunch of options and run a tournament to pick the top 3.\"\n\"Use a workflow to rename our User model to Account everywhere.\"\n\u201cGo through my blog post draft and using a workflow verify every technical claim against the codebase, I don't want to ship anything wrong.\"\nHow dynamic workflows work\nDynamic workflows execute a javascript file with a few special functions that help spawn and coordinate subagents:\n \nDynamic workflows also include standard JavaScript functions like JSON, Math, and Array, to help process data.\nIt\u2019s particularly useful to know that dynamic workflows can decide which models an agent uses and whether subagents are run in their own worktree, allowing Claude to choose the intelligence level and isolation needed.\nIf a workflow is interrupted, for example by user action or quitting the terminal, resuming the session will allow the workflow to pick up where it left off.\nWhy dynamic workflows\nWhen you ask the default Claude Code harness to do a task, it needs to both plan and execute in the same context window. For many coding tasks, this is highly effective, but it can sometimes break down over long-running, massively parallel and/or highly structured adversarial tasks.\nThis is because the longer Claude works on a complex task in a single context window, the more it becomes susceptible to a few specific failure modes:\nAgentic laziness refers to when Claude stops before finishing a particularly complex, multi-part task and declares the job done after partial progress, for example addressing 20 of the 50 items in a security review.\nSelf-preferential bias refers to Claude\u2019s tendency to prefer its own results or findings, especially when asked to verify or judge them against a rubric.\nGoal drift refers to the gradual loss of fidelity to the original objective across many turns, especially after compaction. Each summarization step is lossy, and details like edge-case requirements or \"don't do X\" constraints can get lost.\nCreating a workflow helps combat these by orchestrating separate Claudes with their own context windows and focused, isolated goals.\nDynamic vs static workflows\nYou may have previously created a static workflow using the Claude Agent SDK or claude -p to coordinate multiple instances of Claude Code together.\nBut because static workflows need to work for all edge cases, they are usually more generic. With Claude Opus 4.8 and dynamic workflows, Claude is now intelligent enough to write a custom harness tailor-made for your use case.\n \nHelpful patterns when using dynamic workflows\nYou can start using dynamic workflows just by asking Claude to make one, or by using the trigger word \u201cultracode\u201d to ensure that Claude Code creates a workflow.\nBut building a mental model for how dynamic workflows work will help you understand when to use them and how you might nudge Claude via prompts.\nThere are a few common patterns that Claude might use and compose together when building workflows:\n \nClassify-and-act\nUse a classifier agent to decide on the type of task, and then route to different agents or behavior based on the task. Or, use a classifier at the end to determine output.\nFan-out-and-synthesize\nSplit up a task into many smaller steps, run an agent on each step and then synthesize those results. This is particularly useful for when there are a large number of smaller steps, or when each step benefits from its own clean context window so they don't interfere or cross-contaminate. The synthesize step is a barrier\u2014it waits for all the fan-out agents, then merges their structured outputs into one result.\nAdversarial verification\nFor each spawned agent, run a separate spawned agent to adversarially verify its output against a rubric or criteria.\nGenerate-and-filter\nGenerate a number of ideas on a topic and then filter them by a rubric or by verification, dedupe duplicates and return only the highest quality, tested ideas.\nTournament\nInstead of dividing the work, have agents compete on it. Spawn N agents that each attempt the same task using different approaches. Prompts or models then judge the results in a pairwise fashion using a judging agent until you have a winner.\nLoop until done\nFor tasks with an unknown amount of work, loop spawning agents until a stop condition is met (no new findings, or no more errors in the logs) instead of a fixed number of passes.\nUse cases\nThink creatively of when and how to ask Claude Code to make dynamic workflows. I\u2019ve found that workflows are sometimes even more useful for non-technical work.\n \nMigrations and refactors\nBun was rewritten from Zig to Rust using workflows. You can read more about how that was done in Jarred\u2019s X thread.\nThe key is to break down the task into a series of steps that need to be operated on for example callsites, failing tests, modules, etc. Spin off a subagent for every fix in a worktree to make the fix, then have another agent adversarially review, and merge them. Consider telling the agent not to use resource intensive commands so that you can maximally parallelize without running out of resources on your machine.\nDeep research\nWe published a deep research skill (/deep-research) inside Claude Code that uses dynamic workflows. Specifically, it fans-out web searches, fetches sources, adversarially verifies their claims, and synthesizes a cited report.\nBut you may do this sort of research for more than just web searches. For example, asking Claude to compile a status report from context in Slack or to research how a feature works by exploring a codebase in-depth.\nDeep verification\n \nOn the other hand, if you have a report where you want to check and source every factual claim that it references you may want to generate a workflow which has one agent identify all of the factual claims and then spin off a subagent to check each one in-detail. You could also have a verification agent check the source subagent to make sure its source is high quality.\nSorting\n \nYou may have a list of items that you want to sort by some qualitative measurement that you believe that Claude Code is good at evaluating, for example: support tickets sorted by severity of the bug. But if you try to sort 1000+ rows in one prompt, quality degrades and it won't fit in context. Instead run a tournament, a pipeline of pairwise-comparison agents (comparative judgment is more reliable than absolute scoring), or bucket-rank in parallel then merge. Each comparison is its own agent, so the deterministic loop holds the bracket and only the running order stays in context.\nMemory and rule adherence\n \nIf you have a particular set of rules that you find Claude misses or struggles with, even when put into the CLAUDE.mds, create a workflow with a list of rules that must be checked by verifier agents\u2014one verifier per rule. Creating a skeptic persona subagent to review the rules to make sure they are in line will help avoid too many false positives.\nThe reverse direction works too: mine your recent sessions and code review comments for corrections you keep making, cluster them with parallel agents, adversarially verify each candidate (would this rule have prevented a real mistake?), and then distill the survivors back into a CLAUDE.md.\nRoot-cause investigation\nDebugging works best when you come up with several independent hypotheses and test them, but if you\u2019re only using one context window, Claude can run into self-preferential bias.\n\nA workflow can structurally prevent this by spinning up agents to generate hypotheses from disjoint evidence. For example, separate agents for logs, files, and data. Each hypothesis can then face a panel of verifiers and refuters.\nThis isn't just for code. Workflows can be used for sales (why did sales drop in March?), data engineering (why did this pipeline fail?), or any post-mortem exercise.\nTriaging at scale\n \nEvery team has a support queue, bug reports, or some other backlog that cannot be fully processed by humans.\nA triage workflow classifies each item, dedupes against what's already tracked, and takes action. This could mean attempting the fix or escalating to a human user.\nA useful pattern for triage workflows is quarantine. This involves barring the agents that read untrusted public content from taking high-privilege actions, which are instead done by the agents in charge of acting on the information.\nPair triage workflows with /loop to have Claude do this continuously.\nExploration and taste\nWorkflows can be useful when exploring different approaches to a solution, especially when it is taste based, like design or naming, and would benefit from a rubric.\nTry asking Claude to explore a bunch of solutions, and give a review agent  a rubric for what a good solution looks like. The task is complete when the review agent feels like it has met the criteria. Solutions can also be ordered or selected via a tournament based on the rubric.\nEvals\nYou can run lightweight evals for particular tasks by spinning off separate agents in a worktree and then spinning off comparison agents to compare and grade the specific outputs against a rubric. For example, evaluating and then refining a skill you\u2019ve created against a particular criteria.\nModel and intelligence routing\nCreate a classifier agent tuned to your tasks that decides which model to use. This can be helpful when your task will involve many tool calls and conducting research prior to execution can identify the best model for the job.\nFor example, the best model for the task \u201cexplain how the auth module works\u201d depends on how many files in the auth module there are and the shape of the codebase. A classifier agent can do this research and then route to Sonnet or Opus based on the expected complexity of the task.\nWhen not to use dynamic workflows\nWorkflows are new. While there are many use cases where it will create outsized results, they are not needed for every task and may end up using significantly more tokens.\nIt\u2019s best to use workflows creatively to push Claude Code in ways that you haven\u2019t previously. For regular coding tasks, try and ask yourself does it really need more compute? For example, most traditional coding tasks do not need a panel of 5 reviewers.\nTips for building dynamic workflows\nPrompting\nDetailed prompting, using the specific techniques we described above, for dynamic workflows creates the best results.\nWorkflows are not just for large tasks. You can prompt the model to use a \u201cquick workflow.\u201d For example, you can create a quick adversarial review of an assumption.\nCombine with /goal and /loop\nWhen using workflows that can be repeated, for example triage, research, or verification, pair them with /loop to be run at regular intervals, and /goal to set a hard completion requirement.\nToken usage budgets\nYou can set explicit token usage budgets for dynamic workflows to limit how many tokens a task uses. You can prompt it with a budget like: \u201cuse 10k tokens,\u201d which will set the cap.\nSaving and sharing dynamic workflows\nYou can save workflows by pressing \u201cs\u201d in the workflow menu. You can check these into ~/.claude/workflows or distribute them via a skill.\n \nTo share them via a skill, put your JavaScript workflow files in the skill and folder and reference them in the SKILL.MD. To allow for more flexibility, you may want to prompt Claude to think of the workflows in the skill as a template instead of a script that needs to be run verbatim.\n \nA whole new world\nWorkflows are a helpful new way to extend Claude Code. I encourage you to think of this as a starting point, there's still much to discover in how to use them best. Let us know what you find.\nThariq Shihipar and Sid Bidasaria (@sidbid) are members of technical staff at Anthropic, working on Claude Code."
+      },
+      "conversation_id": "2061907337154367865",
+      "author_id": "352806502",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/R6exTuF7P8",
+            "expanded_url": "http://x.com/i/article/2061850535708483585",
+            "display_url": "x.com/i/article/2061\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2061850535708483585"
+          }
+        ]
+      },
+      "text": "https://t.co/R6exTuF7P8",
+      "id": "2061907337154367865",
+      "created_at": "2026-06-02T20:26:32.000Z",
+      "edit_history_tweet_ids": [
+        "2061907337154367865"
+      ]
+    },
+    {
+      "conversation_id": "2061907337154367865",
+      "author_id": "352806502",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061928191078408617"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "bbishdotdev",
+            "id": "1729375010"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1729375010",
+      "text": "@bbishdotdev lmao this is relatively cheap from a token perspective because names dont need much context/toolcalls and naming is important!",
+      "id": "2061928448948592714",
+      "created_at": "2026-06-02T21:50:25.000Z",
+      "edit_history_tweet_ids": [
+        "2061928448948592714"
+      ]
+    },
+    {
+      "conversation_id": "2061907337154367865",
+      "author_id": "352806502",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061932016833057031"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "numerounochef",
+            "id": "178853819"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "178853819",
+      "text": "@numerounochef what was your prompt?",
+      "id": "2061932198517968959",
+      "created_at": "2026-06-02T22:05:19.000Z",
+      "edit_history_tweet_ids": [
+        "2061932198517968959"
+      ]
+    },
+    {
+      "conversation_id": "2061907337154367865",
+      "author_id": "352806502",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061930469566943327"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "badlogicgames",
+            "id": "189876762"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "189876762",
+      "text": "@badlogicgames yeah it's definitely not like we shipped temporal inside of your terminal, but we do things in the JS environment to make it more deterministic\n\nI would model it as roughly as durable as \"/resume\"ing every subagent",
+      "id": "2061933039643685316",
+      "created_at": "2026-06-02T22:08:40.000Z",
+      "edit_history_tweet_ids": [
+        "2061933039643685316"
+      ]
+    },
+    {
+      "conversation_id": "2061907337154367865",
+      "author_id": "352806502",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061936713849835566"
+        }
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 8,
+            "username": "norlava",
+            "id": "1919072982963728384"
+          }
+        ]
+      },
+      "in_reply_to_user_id": "1919072982963728384",
+      "text": "@norlava I thought so too before trying it out.. but I feel like workflows just mostly works as is, though you can prompt it to follow particular patterns",
+      "id": "2061937123880824861",
+      "created_at": "2026-06-02T22:24:53.000Z",
+      "edit_history_tweet_ids": [
+        "2061937123880824861"
+      ]
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 7,
+            "username": "M0ckaj",
+            "id": "999735721"
+          }
+        ]
+      },
+      "id": "2061945395669000519",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061944570242285707"
+        }
+      ],
+      "created_at": "2026-06-02T22:57:46.000Z",
+      "edit_history_tweet_ids": [
+        "2061945395669000519"
+      ],
+      "conversation_id": "2061907337154367865",
+      "text": "@M0ckaj I think it can make sense to do a bunch of research or exploration of different areas before building a spec!",
+      "author_id": "352806502",
+      "in_reply_to_user_id": "999735721"
+    },
+    {
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 5,
+            "username": "aHev",
+            "id": "13187822"
+          }
+        ]
+      },
+      "id": "2061951254998507751",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2061950886130462801"
+        }
+      ],
+      "created_at": "2026-06-02T23:21:03.000Z",
+      "edit_history_tweet_ids": [
+        "2061951254998507751"
+      ],
+      "conversation_id": "2061907337154367865",
+      "text": "@aHev ah really, what have you tried?",
+      "author_id": "352806502",
+      "in_reply_to_user_id": "13187822"
+    }
+  ],
+  "users": {
+    "352806502": {
+      "id": "352806502",
+      "name": "Thariq",
+      "username": "trq212"
+    },
+    "1899832852910624768": {
+      "id": "1899832852910624768",
+      "name": "CrazyAI Tech",
+      "username": "CrazyAITech"
+    },
+    "1795688361392504833": {
+      "id": "1795688361392504833",
+      "name": "Lilys.ai",
+      "username": "LilysAI_"
+    },
+    "1469334987132776455": {
+      "id": "1469334987132776455",
+      "name": "\u6cb3\u6751\u98a8\u771f",
+      "username": "fumanpnp"
+    },
+    "1877498319846486017": {
+      "id": "1877498319846486017",
+      "name": "Ravi",
+      "username": "ravilutionx"
+    },
+    "8951592": {
+      "id": "8951592",
+      "name": "Gautham Pai",
+      "username": "gauthampai"
+    },
+    "1520474958": {
+      "id": "1520474958",
+      "name": "significandexponent",
+      "username": "nssvkpraveen"
+    },
+    "2061412494707421185": {
+      "id": "2061412494707421185",
+      "name": "BuildWithAI",
+      "username": "BuildWithAIl"
+    },
+    "1167555216": {
+      "id": "1167555216",
+      "name": "Adithya | adi.so",
+      "username": "AdiSreyaj"
+    },
+    "1765489434999558144": {
+      "id": "1765489434999558144",
+      "name": "Kinpoe.Ray",
+      "username": "kinpoe_ray"
+    },
+    "1631219077745131522": {
+      "id": "1631219077745131522",
+      "name": "Devine_L_Expression",
+      "username": "prnomno85861500"
+    },
+    "25694513": {
+      "id": "25694513",
+      "name": "Santosh Dodamani",
+      "username": "santoshsd"
+    },
+    "47105640": {
+      "id": "47105640",
+      "name": "Geet Khosla",
+      "username": "geetkhosla"
+    },
+    "189876762": {
+      "id": "189876762",
+      "name": "Mario Zechner",
+      "username": "badlogicgames"
+    },
+    "1594162656541229056": {
+      "id": "1594162656541229056",
+      "name": "bchoor",
+      "username": "iambchoor"
+    },
+    "1639994648155369472": {
+      "id": "1639994648155369472",
+      "name": "Lohit boruah",
+      "username": "YourVibeGuy"
+    },
+    "1469243428881907718": {
+      "id": "1469243428881907718",
+      "name": "Ashwini",
+      "username": "AshwiniNK21"
+    },
+    "780165984": {
+      "id": "780165984",
+      "name": "ThomAub",
+      "username": "ThomAub"
+    },
+    "1466995432429551616": {
+      "id": "1466995432429551616",
+      "name": "\u4e00\u9875\u7e41\u534e",
+      "username": "jiangding01"
+    },
+    "1099648757954564097": {
+      "id": "1099648757954564097",
+      "name": "YJ Chang",
+      "username": "Tryhardpickle"
+    },
+    "920321515077414912": {
+      "id": "920321515077414912",
+      "name": "Readwise",
+      "username": "readwise"
+    },
+    "1721650402376949760": {
+      "id": "1721650402376949760",
+      "name": "StuyBoy From NYC",
+      "username": "StuyBoyNY"
+    },
+    "874497560030846976": {
+      "id": "874497560030846976",
+      "name": "a_shokn",
+      "username": "A_shock009"
+    },
+    "75728951": {
+      "id": "75728951",
+      "name": "Varun Maliwal",
+      "username": "vroom_"
+    },
+    "127539338": {
+      "id": "127539338",
+      "name": "web3nomad.eth | atypica.ai",
+      "username": "web3nomad"
+    },
+    "1452628121589592069": {
+      "id": "1452628121589592069",
+      "name": "Frank \u2708\ufe0f (\ud83d\udcdc,\ud83d\udcdc)",
+      "username": "gpt3_eth"
+    },
+    "842957864": {
+      "id": "842957864",
+      "name": "Ming Yoo",
+      "username": "mingyouagi"
+    },
+    "1547889951936692225": {
+      "id": "1547889951936692225",
+      "name": "valy",
+      "username": "faychuk"
+    },
+    "1512312772385812481": {
+      "id": "1512312772385812481",
+      "name": "Kinder \u2022 Grinder",
+      "username": "kinder_grinder"
+    },
+    "827441935132528643": {
+      "id": "827441935132528643",
+      "name": "Garry",
+      "username": "techyygarry"
+    },
+    "1691800607190110208": {
+      "id": "1691800607190110208",
+      "name": "Rohit Yelmar",
+      "username": "Rohit150904"
+    },
+    "94832601": {
+      "id": "94832601",
+      "name": "Shantinath Chaudhary",
+      "username": "shantihp"
+    },
+    "49005974": {
+      "id": "49005974",
+      "name": "Ashish Meena",
+      "username": "ashishmeena8"
+    },
+    "703122697232863233": {
+      "id": "703122697232863233",
+      "name": "Thomas Burkhart \ud83d\udc99",
+      "username": "ThomasBurkhartB"
+    },
+    "15781023": {
+      "id": "15781023",
+      "name": "vu",
+      "username": "_vu"
+    },
+    "818052460413497344": {
+      "id": "818052460413497344",
+      "name": "Himanshu Singh",
+      "username": "hsyvy"
+    },
+    "3105633992": {
+      "id": "3105633992",
+      "name": "Nikhil Kulkarni",
+      "username": "nsk1755"
+    },
+    "1436008492830105601": {
+      "id": "1436008492830105601",
+      "name": "Edi",
+      "username": "edi_sf"
+    },
+    "2506974464": {
+      "id": "2506974464",
+      "name": "Nico",
+      "username": "GogHeng"
+    },
+    "11871272": {
+      "id": "11871272",
+      "name": "John Brophy",
+      "username": "JohnBr0"
+    },
+    "171752528": {
+      "id": "171752528",
+      "name": "Daniel Tung",
+      "username": "tytung2020"
+    },
+    "2016406845456592896": {
+      "id": "2016406845456592896",
+      "name": "TrueStandard",
+      "username": "truestandardai"
+    },
+    "1452455344068694019": {
+      "id": "1452455344068694019",
+      "name": "Penguin",
+      "username": "0xpenguin2"
+    },
+    "2054039687506116608": {
+      "id": "2054039687506116608",
+      "name": "kitchen-engineer42",
+      "username": "ktchn_ngnr42"
+    },
+    "3277922160": {
+      "id": "3277922160",
+      "name": "Jefferson",
+      "username": "JeffersonDjango"
+    },
+    "1354603839228403718": {
+      "id": "1354603839228403718",
+      "name": "Rai",
+      "username": "RaiNausherwan"
+    },
+    "1566687953421619200": {
+      "id": "1566687953421619200",
+      "name": "D",
+      "username": "0xv_id"
+    },
+    "1634423520242302977": {
+      "id": "1634423520242302977",
+      "name": "MindBranches",
+      "username": "MindBranches"
+    },
+    "1491055450619478017": {
+      "id": "1491055450619478017",
+      "name": "Austin Xu",
+      "username": "austinyuhao"
+    },
+    "224480133": {
+      "id": "224480133",
+      "name": "Ray Kwan",
+      "username": "consideray"
+    },
+    "2055706619372318720": {
+      "id": "2055706619372318720",
+      "name": "Founder of Implexa",
+      "username": "ImplexaAI"
+    },
+    "181765452": {
+      "id": "181765452",
+      "name": "Mohsine Mahzi",
+      "username": "Mohsine_Mahzi"
+    },
+    "1410171130267140099": {
+      "id": "1410171130267140099",
+      "name": "Tejas AI",
+      "username": "VPsing06"
+    },
+    "900824139203739648": {
+      "id": "900824139203739648",
+      "name": "Omar Zhan",
+      "username": "OMAR_JAHN"
+    },
+    "979299550283292672": {
+      "id": "979299550283292672",
+      "name": "Tom van der Linden",
+      "username": "tomvanders_"
+    },
+    "2290005150": {
+      "id": "2290005150",
+      "name": "Ty Stephens",
+      "username": "SaberScrollRuck"
+    },
+    "2547494683": {
+      "id": "2547494683",
+      "name": "rahul",
+      "username": "ErRahul337"
+    },
+    "1585985466469437441": {
+      "id": "1585985466469437441",
+      "name": "Cam Blossom \ud83c\udf38",
+      "username": "fergie2x2"
+    },
+    "1443291621810970628": {
+      "id": "1443291621810970628",
+      "name": "shrishti prabhagar",
+      "username": "shrishtiprabha1"
+    },
+    "1207258810512838656": {
+      "id": "1207258810512838656",
+      "name": "Smith\u94dc\u5320\u30fb\u5341\u70b9\u7761\u89c9",
+      "username": "smithandai"
+    },
+    "1856762071578284032": {
+      "id": "1856762071578284032",
+      "name": "Artem Zhutov",
+      "username": "ArtemXTech"
+    },
+    "1862141669384257536": {
+      "id": "1862141669384257536",
+      "name": "Lethe.Li",
+      "username": "zhijun28566"
+    },
+    "2056544201488351232": {
+      "id": "2056544201488351232",
+      "name": "\u30bc\u30ed\uff5cAI\u306b\u793e\u9577\u3092\u3084\u3089\u305b\u3066\u307f\u305f",
+      "username": "claude_company"
+    },
+    "2165489000": {
+      "id": "2165489000",
+      "name": "Roberto Stagi",
+      "username": "rstagi_"
+    },
+    "1911824714168668160": {
+      "id": "1911824714168668160",
+      "name": "Testament4378",
+      "username": "testament424163"
+    },
+    "520078869": {
+      "id": "520078869",
+      "name": "Lee Penkman",
+      "username": "LeeLeepenkman"
+    },
+    "243887405": {
+      "id": "243887405",
+      "name": "Mark5 Labs",
+      "username": "mark5lab"
+    },
+    "2044202203481505793": {
+      "id": "2044202203481505793",
+      "name": "Trident",
+      "username": "knowtrident"
+    },
+    "2005640846700687361": {
+      "id": "2005640846700687361",
+      "name": "Ada Novak",
+      "username": "theadanovak"
+    },
+    "1163720986925182977": {
+      "id": "1163720986925182977",
+      "name": "Ray Amjad",
+      "username": "theramjad"
+    },
+    "2047657064613212160": {
+      "id": "2047657064613212160",
+      "name": "woniu",
+      "username": "woniu513513"
+    },
+    "1823977200070352896": {
+      "id": "1823977200070352896",
+      "name": "X-Dimension",
+      "username": "X_DimensionNews"
+    },
+    "48263": {
+      "id": "48263",
+      "name": "Eric Friedman \u2699\ufe0f",
+      "username": "EricFriedman"
+    },
+    "198774836": {
+      "id": "198774836",
+      "name": "seshu bonam",
+      "username": "seshubon"
+    },
+    "1680702840": {
+      "id": "1680702840",
+      "name": "Bhushan",
+      "username": "bhushan_55"
+    },
+    "13187822": {
+      "id": "13187822",
+      "name": "Adam Hevenor",
+      "username": "aHev"
+    },
+    "1092535736522428417": {
+      "id": "1092535736522428417",
+      "name": "Tristan Hurley",
+      "username": "Satoshi87164293"
+    },
+    "2052506321782734848": {
+      "id": "2052506321782734848",
+      "name": "Buildur",
+      "username": "BuildurBrand_io"
+    },
+    "840221632992051200": {
+      "id": "840221632992051200",
+      "name": "Hemachandiran",
+      "username": "Hem_chandiran"
+    },
+    "2046217713207361536": {
+      "id": "2046217713207361536",
+      "name": "PcapAI",
+      "username": "bawan269"
+    },
+    "501390127": {
+      "id": "501390127",
+      "name": "Dan Advantage",
+      "username": "DanAdvantage"
+    },
+    "1254102299649040384": {
+      "id": "1254102299649040384",
+      "name": "Joshua Waller",
+      "username": "hashwarlock"
+    },
+    "780546182": {
+      "id": "780546182",
+      "name": "Vahi G\u00fcner",
+      "username": "VahiGuner"
+    },
+    "1265935674684792835": {
+      "id": "1265935674684792835",
+      "name": "Lemomo",
+      "username": "lemomo_ai"
+    },
+    "271705344": {
+      "id": "271705344",
+      "name": "fucory",
+      "username": "FUCORY"
+    },
+    "999735721": {
+      "id": "999735721",
+      "name": "Ladislav Hust\u00fd",
+      "username": "M0ckaj"
+    },
+    "1653501660784742426": {
+      "id": "1653501660784742426",
+      "name": "Artale",
+      "username": "artale93"
+    },
+    "1421372039886249986": {
+      "id": "1421372039886249986",
+      "name": "Marc Gregory",
+      "username": "marcgregory_"
+    },
+    "3420976349": {
+      "id": "3420976349",
+      "name": "Nathan Helmig",
+      "username": "NateHelmig"
+    },
+    "1729375010": {
+      "id": "1729375010",
+      "name": "Brenden Bishop",
+      "username": "bbishdotdev"
+    },
+    "1919072982963728384": {
+      "id": "1919072982963728384",
+      "name": "Norin",
+      "username": "norlava"
+    },
+    "2028551917832720386": {
+      "id": "2028551917832720386",
+      "name": "Tlonbot President & CEO",
+      "username": "tloncorpbot"
+    },
+    "2022926703782440960": {
+      "id": "2022926703782440960",
+      "name": "Dayu",
+      "username": "DayuBuilds"
+    },
+    "2059219731442176000": {
+      "id": "2059219731442176000",
+      "name": "\ua9c1r\ua9c2Tech@Pro\ua9c1\ua9c2",
+      "username": "CrypticAI369"
+    },
+    "1875922574556733440": {
+      "id": "1875922574556733440",
+      "name": "Silence",
+      "username": "6Silence3"
+    },
+    "1617422744655888384": {
+      "id": "1617422744655888384",
+      "name": "Kenny",
+      "username": "kennyai_exe"
+    },
+    "178853819": {
+      "id": "178853819",
+      "name": "((((Tom))))",
+      "username": "numerounochef"
+    },
+    "1063512222": {
+      "id": "1063512222",
+      "name": "Memer",
+      "username": "_6954_"
+    },
+    "1874697089592209408": {
+      "id": "1874697089592209408",
+      "name": "irshit",
+      "username": "irshit0"
+    },
+    "796225951344558080": {
+      "id": "796225951344558080",
+      "name": "TT \ud83d\ude0b",
+      "username": "MotivatingPeng"
+    },
+    "1883226035971596288": {
+      "id": "1883226035971596288",
+      "name": "Al",
+      "username": "MrAlex595"
+    },
+    "1152036054062587905": {
+      "id": "1152036054062587905",
+      "name": "Chris",
+      "username": "Cory29565470"
+    },
+    "913290711604137984": {
+      "id": "913290711604137984",
+      "name": "Dark Knight",
+      "username": "Aooos_18"
+    },
+    "2033191815336148992": {
+      "id": "2033191815336148992",
+      "name": "embw_l0x",
+      "username": "embw_l0x"
+    },
+    "2734837075": {
+      "id": "2734837075",
+      "name": "edward",
+      "username": "edwardmarkdown"
+    },
+    "2047420700017696768": {
+      "id": "2047420700017696768",
+      "name": "Sufiyan Junaidi",
+      "username": "its_sj13"
+    },
+    "2049961335165763584": {
+      "id": "2049961335165763584",
+      "name": "Zeinolabedin",
+      "username": "ZeinolabedinV"
+    },
+    "20132963": {
+      "id": "20132963",
+      "name": "EJ Campbell",
+      "username": "ejc3"
+    },
+    "883498340": {
+      "id": "883498340",
+      "name": "James Honsa",
+      "username": "jameshonsa"
+    },
+    "2892300355": {
+      "id": "2892300355",
+      "name": "Shubhankar",
+      "username": "_shubhankar"
+    },
+    "2011520495875997698": {
+      "id": "2011520495875997698",
+      "name": "Glitch Truth",
+      "username": "glitchtruth"
+    },
+    "32136264": {
+      "id": "32136264",
+      "name": "Marc Hamel",
+      "username": "hamelcubsfan"
+    },
+    "1721015188059738112": {
+      "id": "1721015188059738112",
+      "name": "Vincent Po Li",
+      "username": "Vincent_Po_Li"
+    },
+    "1904961920249049088": {
+      "id": "1904961920249049088",
+      "name": "CrabOfTruth",
+      "username": "truth_crab"
+    },
+    "1946183285295521796": {
+      "id": "1946183285295521796",
+      "name": "Archive",
+      "username": "ArchiveExplorer"
+    },
+    "216727067": {
+      "id": "216727067",
+      "name": "Ahmad Awais",
+      "username": "MrAhmadAwais"
+    },
+    "966986879626301440": {
+      "id": "966986879626301440",
+      "name": "Yong.c",
+      "username": "william40152988"
+    },
+    "1356504253188214785": {
+      "id": "1356504253188214785",
+      "name": "xrp_beast",
+      "username": "ProgrammerGuy4"
+    },
+    "74335627": {
+      "id": "74335627",
+      "name": "Fox",
+      "username": "ryanRfox"
+    },
+    "1259715824123695106": {
+      "id": "1259715824123695106",
+      "name": "Adish Jain \u2615\ufe0f",
+      "username": "_adishj"
+    },
+    "2010195360329936897": {
+      "id": "2010195360329936897",
+      "name": "Annie",
+      "username": "anniebuildz"
+    },
+    "1064773231632994304": {
+      "id": "1064773231632994304",
+      "name": "Omniphage",
+      "username": "ReshAimFire"
+    },
+    "1675230154916876288": {
+      "id": "1675230154916876288",
+      "name": "egesea",
+      "username": "egesea009"
+    },
+    "1281175702788702210": {
+      "id": "1281175702788702210",
+      "name": "Kyle Jeong",
+      "username": "kylejeong"
+    },
+    "11217362": {
+      "id": "11217362",
+      "name": "Tarry Singh",
+      "username": "tarrysingh"
+    },
+    "1732425440705347584": {
+      "id": "1732425440705347584",
+      "name": "Zengyi Qin",
+      "username": "qinzytech"
+    },
+    "1641102336906121216": {
+      "id": "1641102336906121216",
+      "name": "Levi",
+      "username": "Levi_Researcher"
+    },
+    "3868545913": {
+      "id": "3868545913",
+      "name": "Finn",
+      "username": "finnster"
+    },
+    "20977339": {
+      "id": "20977339",
+      "name": "Jeroen Dee",
+      "username": "jeroendee"
+    },
+    "16786978": {
+      "id": "16786978",
+      "name": "Yannis Larios",
+      "username": "larios"
+    },
+    "46093252": {
+      "id": "46093252",
+      "name": "Hicham",
+      "username": "e_hicham"
+    },
+    "1253711352717287426": {
+      "id": "1253711352717287426",
+      "name": "Mouad",
+      "username": "nadzi_mouad"
+    },
+    "2044384054343020544": {
+      "id": "2044384054343020544",
+      "name": "Javier V.",
+      "username": "J_VillaDev"
+    },
+    "1108902849813966848": {
+      "id": "1108902849813966848",
+      "name": "Dineth Pramodya",
+      "username": "dinethlive"
+    },
+    "1031459564": {
+      "id": "1031459564",
+      "name": "Samuel Roy | Contextual AI, macOS, Founder",
+      "username": "samuelroy_"
+    },
+    "1332704456446676993": {
+      "id": "1332704456446676993",
+      "name": "swordholder0",
+      "username": "swordholder0"
+    },
+    "1590716769433427968": {
+      "id": "1590716769433427968",
+      "name": "vogel",
+      "username": "ryanvogel"
+    },
+    "1712907612021313537": {
+      "id": "1712907612021313537",
+      "name": "retto",
+      "username": "rettooooo"
+    },
+    "1940807256377118724": {
+      "id": "1940807256377118724",
+      "name": "Akram Ahmed",
+      "username": "CodeAkram"
+    },
+    "1934565826465513472": {
+      "id": "1934565826465513472",
+      "name": "Andrey",
+      "username": "Andrey__HQ"
+    }
+  },
+  "thread_fetch_error": null
+}
