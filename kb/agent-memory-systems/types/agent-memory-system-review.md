@@ -35,7 +35,7 @@ If any required input is missing, stop and report which. Verify `source_dir` is 
 
 ## Sections
 
-Write from the code outward. Required sections are enforced by the schema; the two placement sections are optional and governed by their own trigger rules below.
+Write from the code outward. The schema checks the required sections. `## Write-side placement` is **required** — it carries the `**Write agency:**` verdict; the `## Read-back placement` full section is conditional (push-activation path), but its one-line `**Read-back:**` verdict is **always required**.
 
 - **Opening paragraph** — what the system is, what it is for, who built it. Include caller-supplied source identity.
 - **Source metadata** — source identity and reviewed revision, before the section headings, using the caller's labels: a repo + commit (code-grounded) or a document + version/date (doc-grounded).

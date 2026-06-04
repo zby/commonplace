@@ -35,10 +35,10 @@ def parse_review(path: Path, source_tier: str) -> tuple[dict[str, str], list[str
     return parse_review_text(path.read_text(encoding="utf-8"), review_file, source_tier)
 
 
-def read_source_tier(path: Path, default: str = "code-grounded") -> str:
-    """Read the `source-tier` frontmatter value; default until Phase 1 backfills it."""
+def read_source_tier(path: Path) -> str | None:
+    """Read the `source-tier` frontmatter value, or None if absent (flagged in main)."""
     m = re.search(r"^source-tier:\s*(\S+)", path.read_text(encoding="utf-8"), re.MULTILINE)
-    return m.group(1).strip() if m else default
+    return m.group(1).strip() if m else None
 
 
 def load_inventory() -> list[dict[str, str]]:
@@ -83,7 +83,11 @@ def main() -> int:
     all_flags: list[tuple[str, str]] = []
     joined = 0
     for path, tier in review_files:
-        row, flags = parse_review(path, tier)
+        # reviews/ are code-grounded by location; record that but flag the missing
+        # frontmatter field as a worklist item rather than defaulting silently.
+        row, flags = parse_review(path, tier or "code-grounded")
+        if tier is None:
+            flags.append("source-tier: missing lead token")
         # preserve hand-classified columns from a prior run
         old = prior.get(row["review_file"])
         if old:

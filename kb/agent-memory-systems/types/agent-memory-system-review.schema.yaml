@@ -79,4 +79,4 @@ allOf:
     then:
       properties:
         body:
-          pattern: "Read-back placement"
+          pattern: "## Read-back placement"
