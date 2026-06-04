@@ -1,5 +1,5 @@
 ---
-description: Separates knowledge that exists, knowledge loaded into context, and knowledge that actually changes behavior; explains why retrieval and long context do not guarantee activation
+description: Separates knowledge that exists, knowledge loaded into context (read-back), and knowledge that actually changes behavior (activation); explains why retrieval and long context do not guarantee activation
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
@@ -14,9 +14,11 @@ The missing step is **contextual activation**: making available knowledge action
 
 This is why "the model knows X" is often the wrong operational question. The useful question is: will X be brought to bear at the moment when it matters?
 
+Bringing stored memory into that context is what the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) call **read-back** (defined there): the necessary first move, not activation itself. The gap between read-back and activation is what a faithfulness test measures — "we read it back" is not the claim "it worked."
+
 ## Two Places The Transition Fails
 
-Activation can fail before knowledge reaches the context window, or after it is already there.
+Activation can fail before knowledge reaches the context window — read-back failing — or after it is already there.
 
 **Storage-to-context failure.** Relevant knowledge exists somewhere, but the workflow never retrieves or loads it. This is the ordinary second-brain failure: a note, memory, or prior lesson is stored, but nothing cues it during the task. PlugLab AI's [Second Brain Trap ingest](../sources/the-second-brain-trap-2041486539067154753.ingest.md) is a practitioner example: abundant stored notes still left the author "starting from zero" because the material was not available in the working context.
 
